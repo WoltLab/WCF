@@ -28,7 +28,7 @@ define(['Core', 'Dictionary', 'Environment'], function(Core, Dictionary, Environ
 		'screen-md-up': '(min-width: 769px)',                            /* tablet (landscape) + desktop */
 		'screen-lg': '(min-width: 1025px)',                              /* desktop */
 		'screen-lg-only': '(min-width: 1025px) and (max-width: 1280px)',
-		'screen-lg-down': '(max-width: 1280)',
+		'screen-lg-down': '(max-width: 1280px)',
 		'screen-xl': '(min-width: 1281px)'
 	});
 	

@@ -68,6 +68,12 @@ define([], function() {
 			
 			_editor = 'redactor';
 			_touch = (!!('ontouchstart' in window) || (!!('msMaxTouchPoints' in window.navigator) && window.navigator.msMaxTouchPoints > 0) || window.DocumentTouch && document instanceof DocumentTouch);
+			
+			// The iPad Pro 12.9" masquerades as a desktop browser.
+			if (window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1) {
+				_browser = 'safari';
+				_platform = 'ios';
+			}
 		},
 		
 		/**

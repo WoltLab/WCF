@@ -6,7 +6,6 @@ use wcf\data\object\type\ObjectTypeEditor;
 use wcf\data\DatabaseObjectList;
 use wcf\data\page\PageNode;
 use wcf\data\page\PageNodeTree;
-use wcf\data\user\group\option\UserGroupOption;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\condition\AbstractIntegerCondition;
 use wcf\system\condition\UserGroupCondition;
@@ -42,7 +41,7 @@ use wcf\util\DirectoryUtil;
  * Installs, updates and deletes object types.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  */

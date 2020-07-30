@@ -159,6 +159,10 @@ final class ImageUtil {
 					}
 					
 					if ($newImage !== null) {
+						if ($newImage instanceof \Imagick) {
+							$newImage->setImageOrientation(\Imagick::ORIENTATION_TOPLEFT);
+						}
+						
 						$adapter->load($newImage, $adapter->getType());
 					}
 					

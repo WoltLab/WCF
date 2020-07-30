@@ -113,34 +113,41 @@ define([
 		 */
 		loadFile: function (file) {
 			var exif = undefined;
+			var fileData = Promise.resolve(file);
 			if (file.type === 'image/jpeg') {
 				// Extract EXIF data
 				exif = ExifUtil.getExifBytesFromJpeg(file);
+				
+				// Strip EXIF data
+				fileData = fileData.then(ExifUtil.removeExifData.bind(ExifUtil));
 			}
 			
-			var loader = new Promise(function (resolve, reject) {
-				var reader = new FileReader();
-				var image = new Image();
-				
-				reader.addEventListener('load', function () {
-					image.src = reader.result;
+			var fileData = fileData
+				.then(function (blob) {
+					return new Promise(function (resolve, reject) {
+						var reader = new FileReader();
+						var image = new Image();
+						
+						reader.addEventListener('load', function () {
+							image.src = reader.result;
+						});
+						
+						reader.addEventListener('error', function () {
+							reader.abort();
+							reject(reader.error);
+						});
+						
+						image.addEventListener('error', reject);
+						
+						image.addEventListener('load', function () {
+							resolve(image);
+						});
+						
+						reader.readAsDataURL(blob);
+					});
 				});
-				
-				reader.addEventListener('error', function () {
-					reader.abort();
-					reject(reader.error);
-				});
-				
-				image.addEventListener('error', reject);
-				
-				image.addEventListener('load', function () {
-					resolve(image);
-				});
-				
-				reader.readAsDataURL(file);
-			});
 			
-			return Promise.all([ exif, loader ])
+			return Promise.all([ exif, fileData ])
 				.then(function (result) {
 					return { exif: result[0], image: result[1] };
 				});
@@ -164,6 +171,10 @@ define([
 			force = force || false;
 			
 			var canvas = document.createElement('canvas');
+			
+			var chromeBug = createImageBitmap(image).then(function (bitmap) {
+				if (bitmap.height != image.height) throw new Error('Chrome Bug #1069965');
+			});
 			
 			// Prevent upscaling
 			var newWidth = Math.min(maxWidth, image.width);
@@ -193,7 +204,9 @@ define([
 				alpha: true
 			};
 			
-			return pica.resize(image, canvas, options);
+			return chromeBug.then(function() {
+				return pica.resize(image, canvas, options)
+			});
 		}
 	};
 	

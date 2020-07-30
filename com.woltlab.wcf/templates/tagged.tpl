@@ -12,7 +12,7 @@
 	<link rel="canonical" href="{link controller='Tagged' object=$tag}objectType={@$objectType}{if $pageNo > 1}&pageNo={@$pageNo}{/if}{/link}">
 {/capture}
 
-{capture assign='sidebarLeft'}
+{capture assign='sidebarRight'}
 	<section class="box" data-static-box-identifier="com.woltlab.wcf.TaggedMenu">
 		<h2 class="boxTitle">{lang}wcf.tagging.objectTypes{/lang}</h2>
 		
@@ -25,13 +25,15 @@
 		</nav>
 	</section>
 	
-	<section class="box" data-static-box-identifier="com.woltlab.wcf.TaggedTagCloud">
-		<h2 class="boxTitle">{lang}wcf.tagging.tags{/lang}</h2>
-		
-		<div class="boxContent">
-			{include file='tagCloudBox' taggableObjectType=$objectType}
-		</div>
-	</section>
+	{if !$tags|empty}
+		<section class="box" data-static-box-identifier="com.woltlab.wcf.TaggedTagCloud">
+			<h2 class="boxTitle">{lang}wcf.tagging.tags{/lang}</h2>
+			
+			<div class="boxContent">
+				{include file='tagCloudBox' taggableObjectType=$objectType}
+			</div>
+		</section>
+	{/if}
 {/capture}
 
 {include file='header'}

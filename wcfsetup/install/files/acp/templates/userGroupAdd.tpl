@@ -4,7 +4,7 @@
 	$(function() {
 		new WCF.Option.Handler();
 		
-		{if $action == 'edit' && $group->groupType == 4 && $__wcf->session->getPermission('admin.user.canAddGroup')}
+		{if $action == 'edit' && $group->canCopy()}
 			WCF.Language.addObject({
 				'wcf.acp.group.copy.confirmMessage': '{lang}wcf.acp.group.copy.confirmMessage{/lang}',
 				'wcf.acp.group.copy.copyACLOptions': '{lang}wcf.acp.group.copy.copyACLOptions{/lang}',
@@ -53,7 +53,7 @@
 					</li>
 				{/if}
 				
-				{if $__wcf->session->getPermission('admin.user.canAddGroup') && $group->groupType == 4}
+				{if $group->canCopy()}
 					<li><a class="jsButtonUserGroupCopy button"><span class="icon icon16 fa-copy"></span> <span>{lang}wcf.acp.group.button.copy{/lang}</span></a></li>
 				{/if}
 			{/if}
@@ -88,7 +88,7 @@
 		<dl{if $errorType.groupName|isset} class="formError"{/if}>
 			<dt><label for="groupName">{lang}wcf.global.name{/lang}</label></dt>
 			<dd>
-				<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" autofocus class="medium">
+				<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" autofocus maxlength="255" class="medium">
 				{if $errorType.groupName|isset}
 					<small class="innerError">
 						{if $errorType.groupName == 'empty'}
@@ -136,7 +136,7 @@
 			<dl{if $errorType.userOnlineMarking|isset} class="formError"{/if}>
 				<dt><label for="userOnlineMarking">{lang}wcf.acp.group.userOnlineMarking{/lang}</label></dt>
 				<dd>
-					<input type="text" id="userOnlineMarking" name="userOnlineMarking" value="{$userOnlineMarking}" class="long">
+					<input type="text" id="userOnlineMarking" name="userOnlineMarking" value="{$userOnlineMarking}" maxlength="255" class="long">
 					{if $errorType.userOnlineMarking|isset}
 						<small class="innerError">
 							{lang}wcf.acp.group.userOnlineMarking.error.{@$errorType.userOnlineMarking}{/lang}

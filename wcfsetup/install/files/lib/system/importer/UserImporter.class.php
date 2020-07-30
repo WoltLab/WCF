@@ -97,7 +97,7 @@ class UserImporter extends AbstractImporter {
 		}
 		
 		// check existing user id
-		if (is_numeric($oldID)) {
+		if (ctype_digit((string)$oldID)) {
 			$user = new User($oldID);
 			if (!$user->userID) $data['userID'] = $oldID;
 		}
@@ -176,7 +176,7 @@ class UserImporter extends AbstractImporter {
 			}
 		}
 		
-		if (!$user->activationCode) $defaultGroupIDs = UserGroup::getGroupIDsByType([UserGroup::EVERYONE, UserGroup::USERS]);
+		if (!$user->pendingActivation()) $defaultGroupIDs = UserGroup::getGroupIDsByType([UserGroup::EVERYONE, UserGroup::USERS]);
 		else $defaultGroupIDs = UserGroup::getGroupIDsByType([UserGroup::EVERYONE, UserGroup::GUESTS]);
 		
 		$groupIDs = array_merge($groupIDs, $defaultGroupIDs);

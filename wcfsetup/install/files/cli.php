@@ -8,8 +8,9 @@
  * @package	WoltLabSuite\Core
  */
 if (PHP_SAPI !== 'cli') exit;
-// define the wcf-root-dir
-define('WCF_DIR', dirname(__FILE__).'/');
+
+// include config
+require_once(__DIR__.'/app.config.inc.php');
 
 // initiate wcf core
 require_once(WCF_DIR.'lib/system/WCF.class.php');

@@ -212,8 +212,8 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 						SearchIndexManager::getInstance()->set(
 							'com.woltlab.wcf.page',
 							$pageContent->pageContentID,
-							$pageContent->content,
-							$pageContent->title,
+							isset($content['content']) ? $content['content'] : $pageContent->content,
+							isset($content['title']) ? $content['title'] : $pageContent->title,
 							0,
 							null,
 							'',
@@ -389,6 +389,8 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 		if (!empty($pageContentIDs)) {
 			// delete entry from search index
 			SearchIndexManager::getInstance()->delete('com.woltlab.wcf.page', $pageContentIDs);
+			// delete embedded object references
+			MessageEmbeddedObjectManager::getInstance()->removeObjects('com.woltlab.wcf.page.content', $pageContentIDs);
 		}
 	}
 	

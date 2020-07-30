@@ -7,11 +7,16 @@ define(['Ajax', 'Core', 'Language'], function(Ajax, Core, Language) {
 	return {
 		init: function () {
 			var smtpCheckbox = null;
-			elBySelAll('input[name="values[mail_send_method]"]', undefined, (function (radioCheckbox) {
+			var methods = elBySelAll('input[name="values[mail_send_method]"]', undefined, (function (radioCheckbox) {
 				radioCheckbox.addEventListener('change', this._onChange.bind(this));
 				
 				if (radioCheckbox.value === 'smtp') smtpCheckbox = radioCheckbox;
 			}).bind(this));
+			
+			// This configuration part is unavailable when running in enterprise mode.
+			if (methods.length === 0) {
+				return;
+			}
 			
 			Core.triggerEvent(smtpCheckbox, 'change');
 		},

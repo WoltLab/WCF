@@ -97,15 +97,20 @@ class EmailActivationForm extends AbstractForm {
 			'newEmail' => '',
 			'reactivationCode' => 0
 		];
-		if ($this->user->activationCode != 0 && REGISTER_ACTIVATION_METHOD == 1) {
-			$data['activationCode'] = 0;
-		}
 		
 		// enable new email
 		$this->objectAction = new UserAction([$this->user], 'update', [
 			'data' => array_merge($this->additionalFields, $data)
 		]);
 		$this->objectAction->executeAction();
+		
+		// confirm email
+		if (!$this->user->isEmailConfirmed() && empty($this->user->blacklistMatches)) {
+			// enable new email
+			$this->objectAction = new UserAction([$this->user], 'confirmEmail');
+			$this->objectAction->executeAction();
+		}
+		
 		$this->saved();
 		
 		// forward to index page
@@ -129,7 +134,7 @@ class EmailActivationForm extends AbstractForm {
 	 * @inheritDoc
 	 */
 	public function show() {
-		if (REGISTER_ACTIVATION_METHOD != 1) {
+		if (!(REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
 			throw new IllegalLinkException();
 		}
 		

@@ -1,7 +1,11 @@
 <?php
 namespace wcf\data\package;
+use wcf\acp\page\PackagePage;
 use wcf\data\DatabaseObject;
+use wcf\data\ILinkableObject;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\request\IRouteController;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -27,7 +31,7 @@ use wcf\util\FileUtil;
  * @property-read	string		$author			author of the package
  * @property-read	string		$authorURL		external url to the website of the package author
  */
-class Package extends DatabaseObject {
+class Package extends DatabaseObject implements ILinkableObject, IRouteController {
 	/**
 	 * recursive list of packages that were given as required packages during installation
 	 * @var		Package[]
@@ -70,6 +74,22 @@ class Package extends DatabaseObject {
 	 * @var	array
 	 */
 	protected static $requirements = null;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getLink() {
+		return LinkHandler::getInstance()->getControllerLink(PackagePage::class, [
+			'object' => $this,
+		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getTitle() {
+		return $this->getName();
+	}
 	
 	/**
 	 * Returns true if this package is required by other packages.

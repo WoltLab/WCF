@@ -9,7 +9,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
-use wcf\system\request\LinkHandler;
 use wcf\system\upload\DefaultUploadFileSaveStrategy;
 use wcf\system\upload\DefaultUploadFileValidationStrategy;
 use wcf\system\upload\UploadFile;
@@ -136,7 +135,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 		
 		// save files
 		$saveStrategy = new DefaultUploadFileSaveStrategy(self::class, [
-			'generateThumbnails' => ATTACHMENT_ENABLE_THUMBNAILS,
+			'generateThumbnails' => true,
 			'rotateImages' => true
 		], [
 			'objectID' => intval($this->parameters['objectID']),
@@ -172,9 +171,9 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 					'formattedFilesize' => FileUtil::formatFilesize($attachment->filesize),
 					'isImage' => $attachment->isImage,
 					'attachmentID' => $attachment->attachmentID,
-					'tinyURL' => $attachment->tinyThumbnailType ? LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment], 'tiny=1') : '',
-					'thumbnailURL' => $attachment->thumbnailType ? LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment], 'thumbnail=1') : '',
-					'url' => LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment]),
+					'tinyURL' => $attachment->tinyThumbnailType ? $attachment->getThumbnailLink('tiny') : '',
+					'thumbnailURL' => $attachment->thumbnailType ? $attachment->getThumbnailLink('thumbnail') : '',
+					'url' => $attachment->getLink(),
 					'height' => $attachment->height,
 					'width' => $attachment->width,
 					'iconName' => $attachment->getIconName()

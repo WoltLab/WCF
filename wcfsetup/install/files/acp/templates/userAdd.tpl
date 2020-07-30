@@ -137,7 +137,7 @@
 						<dl{if $errorType.password|isset} class="formError"{/if}>
 							<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
 							<dd>
-								<input type="password" id="password" name="password" value="{$password}" class="medium" autocomplete="off">
+								<input type="password" id="password" name="password" value="{$password}" class="medium" autocomplete="new-password">
 								{if $errorType.password|isset}
 									<small class="innerError">
 										{if $errorType.password == 'empty'}
@@ -153,7 +153,7 @@
 						<dl{if $errorType.confirmPassword|isset} class="formError"{/if}>
 							<dt><label for="confirmPassword">{lang}wcf.user.confirmPassword{/lang}</label></dt>
 							<dd>
-								<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" class="medium" autocomplete="off">
+								<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" class="medium" autocomplete="new-password">
 								{if $errorType.confirmPassword|isset}
 									<small class="innerError">
 										{lang}wcf.user.confirmPassword.error.{@$errorType.confirmPassword}{/lang}
@@ -241,23 +241,49 @@
 					<section class="section">
 						<h2 class="sectionTitle">{lang}wcf.user.option.category.{@$categoryLevel2[object]->categoryName}{/lang}</h2>
 						
-						{if $categoryLevel2[object]->categoryName == 'settings.general' && $availableLanguages|count > 1}
-							<dl>
-								<dt><label for="languageID">{lang}wcf.user.language{/lang}</label></dt>
-								<dd>
-									{htmlOptions options=$availableLanguages selected=$languageID name=languageID id=languageID disableEncoding=true}
-								</dd>
-							</dl>
-							
-							{if $availableContentLanguages|count > 1}
+						{if $categoryLevel2[object]->categoryName == 'settings.general'}
+							{if $availableLanguages|count > 1}
 								<dl>
-									<dt>
-										<label>{lang}wcf.user.visibleLanguages{/lang}</label>
-									</dt>
+									<dt><label for="languageID">{lang}wcf.user.language{/lang}</label></dt>
 									<dd>
-										{foreach from=$availableContentLanguages key=availableLanguageID item=availableLanguage}
-											<label><input type="checkbox" name="visibleLanguages[]" value="{@$availableLanguageID}"{if $availableLanguageID|in_array:$visibleLanguages} checked{/if}> {@$availableLanguage}</label>
-										{/foreach}
+										{htmlOptions options=$availableLanguages selected=$languageID name=languageID id=languageID disableEncoding=true}
+									</dd>
+								</dl>
+								
+								{if $availableContentLanguages|count > 1}
+									<dl>
+										<dt>
+											<label>{lang}wcf.user.visibleLanguages{/lang}</label>
+										</dt>
+										<dd>
+											{foreach from=$availableContentLanguages key=availableLanguageID item=availableLanguage}
+												<label><input type="checkbox" name="visibleLanguages[]" value="{@$availableLanguageID}"{if $availableLanguageID|in_array:$visibleLanguages} checked{/if}> {@$availableLanguage}</label>
+											{/foreach}
+										</dd>
+									</dl>
+								{/if}
+							{/if}
+							
+							{if $action === 'edit' && $availableStyles|count > 1}
+								<dl>
+									<dt><label for="styleID">{lang}wcf.user.style{/lang}</label></dt>
+									<dd>
+										<select id="styleID" name="styleID">
+											<option value="0">{lang}wcf.global.defaultValue{/lang}</option>
+											{foreach from=$availableStyles item=style}
+												<option value="{@$style->styleID}"{if $style->styleID == $styleID} selected{/if}>{$style->styleName}</option>
+											{/foreach}
+										</select>
+										{if $errorField === 'styleID'}
+											<small class="innerError">
+												{if $errorType === 'empty' || $errorType === 'noValidSelection'}
+													{lang}wcf.global.form.error.{@$errorType}{/lang}
+												{else}
+													{lang}wcf.user.style.error.{@$errorType.password}{/lang}
+												{/if}
+											</small>
+										{/if}
+										<small>{lang}wcf.user.style.description{/lang}</small>
 									</dd>
 								</dl>
 							{/if}

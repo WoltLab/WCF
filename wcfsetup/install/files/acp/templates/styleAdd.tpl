@@ -21,10 +21,6 @@
 		new AcpUiStyleImageUpload({if $action == 'add'}0{else}{@$style->styleID}{/if}, '{$tmpHash}', false);
 		new AcpUiStyleImageUpload({if $action == 'add'}0{else}{@$style->styleID}{/if}, '{$tmpHash}', true);
 		
-		new UiToggleInput('input[name="useGoogleFont"]', {
-			show: ['#wcfFontFamilyGoogleContainer']
-		});
-		
 		{if $action === 'edit'}
 			new AcpUiStyleFaviconUpload({@$style->styleID});
 			
@@ -55,8 +51,8 @@
 			'wcf.acp.style.favicon.error.invalidExtension': '{lang}wcf.acp.style.favicon.error.invalidExtension{/lang}',
 			'wcf.acp.style.image.error.invalidExtension': '{lang}wcf.acp.style.image.error.invalidExtension{/lang}'
 		});
-		new WCF.ACP.Style.LogoUpload('{$tmpHash}', '{@$__wcf->getPath()}images/');
-		new WCF.ACP.Style.LogoUploadMobile('{$tmpHash}', '{@$__wcf->getPath()}images/');
+		new WCF.ACP.Style.LogoUpload('{$tmpHash}');
+		new WCF.ACP.Style.LogoUploadMobile('{$tmpHash}');
 		
 		{if $action == 'edit'}
 			new WCF.ACP.Style.CopyStyle({@$style->styleID});
@@ -294,9 +290,7 @@
 						<dd>
 							<select name="templateGroupID" id="templateGroupID">
 								<option value="0">{lang}wcf.acp.template.group.default{/lang}</option>
-								{foreach from=$availableTemplateGroups item=templateGroup}
-									<option value="{@$templateGroup->templateGroupID}"{if $templateGroup->templateGroupID == $templateGroupID} selected{/if}>{$templateGroup->getName()}</option>
-								{/foreach}
+							    	{htmlOptions options=$availableTemplateGroups selected=$templateGroupID disableEncoding=true}
 							</select>
 							{if $errorField == 'templateGroupID'}
 								<small class="innerError">
@@ -534,17 +528,20 @@
 					</dd>
 				</dl>
 				
-				<dl>
-					<dt></dt>
-					<dd><label>
-						<input type="checkbox" id="useGoogleFont" name="useGoogleFont" value="1"{if !$variables[useGoogleFont]|empty} checked{/if}>
-						<span>{lang}wcf.acp.style.globals.useGoogleFont{/lang}</span>
-					</label></dd>
-				</dl>
-				<dl id="wcfFontFamilyGoogleContainer">
+				<dl id="wcfFontFamilyGoogleContainer"{if $errorField == 'wcfFontFamilyGoogle'} class="formError"{/if}>
 					<dt><label for="wcfFontFamilyGoogle">{lang}wcf.acp.style.globals.fontFamilyGoogle{/lang}</label></dt>
 					<dd>
 						<input type="text" id="wcfFontFamilyGoogle" name="wcfFontFamilyGoogle" value="{$variables[wcfFontFamilyGoogle]}" class="medium">
+						<small>{lang}wcf.acp.style.globals.fontFamilyGoogle.description{/lang}</small>
+						{if $errorField == 'wcfFontFamilyGoogle'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.acp.style.globals.fontFamilyGoogle.error.{$errorType}{/lang}
+								{/if}
+							</small>
+						{/if}
 					</dd>
 				</dl>
 				<dl>
@@ -1020,6 +1017,7 @@
 							<dd>
 								<div dir="ltr">
 									<textarea id="individualScssCustom" rows="20" cols="40" name="individualScssCustom">{$variables[individualScssCustom]}</textarea>
+									<input class="codeMirrorScrollOffset" name="scrollOffsets[individualScssCustom]" value="{if $scrollOffsets[individualScssCustom]|isset}{$scrollOffsets[individualScssCustom]}{else}0{/if}" type="hidden">
 								</div>
 								<small>{lang}wcf.acp.style.advanced.individualScss.description{/lang}</small>
 							</dd>
@@ -1034,6 +1032,7 @@
 							<dd>
 								<div dir="ltr">
 									<textarea id="overrideScssCustom" rows="20" cols="40" name="overrideScssCustom">{$variables[overrideScssCustom]}</textarea>
+									<input class="codeMirrorScrollOffset" name="scrollOffsets[overrideScssCustom]" value="{if $scrollOffsets[overrideScssCustom]|isset}{$scrollOffsets[overrideScssCustom]}{else}0{/if}" type="hidden">
 								</div>
 								{if $errorField == 'overrideScssCustom'}
 									<small class="innerError">
@@ -1062,6 +1061,7 @@
 					<dd>
 						<div dir="ltr">
 							<textarea id="individualScss" rows="20" cols="40" name="individualScss">{$variables[individualScss]}</textarea>
+							<input class="codeMirrorScrollOffset" name="scrollOffsets[individualScss]" value="{if $scrollOffsets[individualScss]|isset}{$scrollOffsets[individualScss]}{else}0{/if}" type="hidden">
 						</div>
 						<small>{lang}wcf.acp.style.advanced.individualScss.description{/lang}</small>
 					</dd>
@@ -1076,6 +1076,7 @@
 					<dd>
 						<div dir="ltr">
 							<textarea id="overrideScss" rows="20" cols="40" name="overrideScss">{$variables[overrideScss]}</textarea>
+							<input class="codeMirrorScrollOffset" name="scrollOffsets[overrideScss]" value="{if $scrollOffsets[overrideScss]|isset}{$scrollOffsets[overrideScss]}{else}0{/if}" type="hidden">
 						</div>
 						{if $errorField == 'overrideScss'}
 							<small class="innerError">

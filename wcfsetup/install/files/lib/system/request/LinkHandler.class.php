@@ -48,7 +48,7 @@ class LinkHandler extends SingletonFactory {
 	 */
 	protected function init() {
 		$this->titleRegex = new Regex('[^\p{L}\p{N}]+', Regex::UTF_8);
-		$this->controllerRegex = new Regex('^(?P<application>[a-z]+)\\\\(?P<isAcp>acp\\\\)?.+\\\\(?P<controller>[^\\\\]+)(?:Action|Form|Page)$');
+		$this->controllerRegex = new Regex('^(?P<application>[a-z][a-z0-9]*)\\\\(?P<isAcp>acp\\\\)?.+\\\\(?P<controller>[^\\\\]+)(?:Action|Form|Page)$');
 		
 		if (defined('URL_TITLE_COMPONENT_REPLACEMENT') && URL_TITLE_COMPONENT_REPLACEMENT) {
 			$replacements = explode("\n", StringUtil::unifyNewlines(StringUtil::trim(URL_TITLE_COMPONENT_REPLACEMENT)));

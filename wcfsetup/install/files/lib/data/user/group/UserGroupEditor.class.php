@@ -131,8 +131,11 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 		
 		if (!$optionID) throw new SystemException("Unable to find 'admin.user.accessibleGroups' user option");
 		
+		$ownerGroupID = UserGroup::getOwnerGroupID();
+		
 		$userGroupList = new UserGroupList();
 		$userGroupList->getConditionBuilder()->add('user_group.groupID <> ?', [$groupID]);
+		if ($ownerGroupID) $userGroupList->getConditionBuilder()->add('user_group.groupID <> ?', [$ownerGroupID]);
 		$userGroupList->readObjects();
 		$groupIDs = [];
 		foreach ($userGroupList as $userGroup) {
@@ -151,7 +154,10 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$optionID]);
 		while ($row = $statement->fetchArray()) {
-			$valueIDs = explode(',', $row['optionValue']);
+			$valueIDs = array_filter(explode(',', $row['optionValue']), function ($groupID) use ($ownerGroupID) {
+				return $groupID != $ownerGroupID;
+			});
+			
 			if ($delete) {
 				$valueIDs = array_filter($valueIDs, function ($item) use ($groupID) {
 					return $item != $groupID;
@@ -161,6 +167,10 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 				if (count(array_diff($groupIDs, $valueIDs)) == 0) {
 					$valueIDs[] = $groupID;
 				}
+			}
+			
+			if ($row['groupID'] == $ownerGroupID) {
+				$valueIDs[] = $ownerGroupID;
 			}
 			
 			$updateStatement->execute([implode(',', $valueIDs), $row['groupID'], $optionID]);

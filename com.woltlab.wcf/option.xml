@@ -221,7 +221,6 @@
 			</category>
 			<category name="message.attachment">
 				<parent>message</parent>
-				<options>module_attachment</options>
 			</category>
 			<category name="message.attachment.autoscale">
 				<parent>message.attachment</parent>
@@ -303,6 +302,11 @@
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<option name="module_article">
+				<categoryname>module.content</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="module_amp">
 				<categoryname>module.content</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
@@ -549,7 +553,7 @@
 				<categoryname>general.system.ipAddress</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-				<enableoptions>prune_ip_address,ip_address_search_engine</enableoptions>
+				<enableoptions>prune_ip_address</enableoptions>
 			</option>
 			<option name="prune_ip_address">
 				<categoryname>general.system.ipAddress</categoryname>
@@ -595,7 +599,7 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 			<option name="cookie_prefix">
 				<categoryname>general.system.cookie</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue>wsc31_</defaultvalue>
+				<defaultvalue>wsc52_</defaultvalue>
 				<validationpattern>^[a-zA-Z0-9_]+$</validationpattern>
 			</option>
 			<!-- /general.system.cookie-->
@@ -915,6 +919,11 @@ physical:wcf.acp.option.google_maps_type.physical</selectoptions>
 				<optiontype>textareaI18n</optiontype>
 				<supporti18n>1</supporti18n>
 			</option>
+			<option name="mail_signature_html">
+				<categoryname>general.mail.general</categoryname>
+				<optiontype>textareaI18n</optiontype>
+				<supporti18n>1</supporti18n>
+			</option>
 			<!-- /general.mail.general -->
 			<!-- general.mail.send -->
 			<option name="mail_send_method">
@@ -1008,12 +1017,6 @@ redis:wcf.acp.option.cache_source_type.redis</selectoptions>
 				<optiontype>text</optiontype>
 			</option>
 			<!-- /general.payment -->
-			<option name="attachment_enable_thumbnails">
-				<categoryname>message.attachment</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-				<enableoptions>attachment_retain_dimensions,attachment_thumbnail_height,attachment_thumbnail_width</enableoptions>
-			</option>
 			<option name="attachment_retain_dimensions">
 				<categoryname>message.attachment</categoryname>
 				<optiontype>boolean</optiontype>
@@ -1235,7 +1238,8 @@ XING</selectoptions>
 				<defaultvalue>1</defaultvalue>
 				<selectoptions>0:wcf.acp.option.register_activation_method.disabled
 1:wcf.acp.option.register_activation_method.byUser
-2:wcf.acp.option.register_activation_method.byAdmin</selectoptions>
+2:wcf.acp.option.register_activation_method.byAdmin
+3:wcf.acp.option.register_activation_method.byUserAndAdmin</selectoptions>
 			</option>
 			<option name="register_username_min_length">
 				<categoryname>user.register</categoryname>
@@ -1487,12 +1491,6 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>
-			<option name="message_sidebar_enable_user_online_marking">
-				<categoryname>message.sidebar</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-				<options>module_users_online</options>
-			</option>
 			<option name="message_sidebar_enable_trophy_points">
 				<categoryname>message.sidebar</categoryname>
 				<optiontype>boolean</optiontype>
@@ -1545,6 +1543,19 @@ csharp
 ruby
 rust
 go</defaultvalue>
+			</option>
+			<option name="message_enable_user_consent">
+				<categoryname>message.general</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="modification_log_expiration">
+				<categoryname>message.general</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<minvalue>0</minvalue>
+				<maxvalue>365</maxvalue>
+				<suffix>days</suffix>
 			</option>
 			<!-- /message.general -->
 			<option name="search_results_per_page">
@@ -1751,9 +1762,7 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		</options>
 	</import>
 	<delete>
-		<option name="attachment_storage" />
-		<option name="like_allow_for_own_content" />
-		<option name="like_enable_dislike" />
-		<option name="module_attachment"/>
+		<option name="attachment_enable_thumbnails" />
+		<option name="message_sidebar_enable_user_online_marking" />
 	</delete>
 </data>

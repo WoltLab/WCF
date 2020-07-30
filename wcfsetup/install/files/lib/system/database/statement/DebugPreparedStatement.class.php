@@ -72,6 +72,15 @@ class DebugPreparedStatement extends PreparedStatement {
 	/**
 	 * @inheritDoc
 	 */
+	public function fetchSingleObject($className) {
+		$this->debugThrowIfNotExecutedBefore();
+		
+		return parent::fetchSingleObject($className);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function fetchObjects($className, $keyProperty = null) {
 		$this->debugThrowIfNotExecutedBefore();
 		

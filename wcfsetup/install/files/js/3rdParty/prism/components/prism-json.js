@@ -9,7 +9,7 @@ Prism.languages.json = {
 		greedy: true
 	},
 	'comment': /\/\/.*|\/\*[\s\S]*?(?:\*\/|$)/,
-	'number': /-?\d+\.?\d*(e[+-]?\d+)?/i,
+	'number': /-?\d+\.?\d*(?:e[+-]?\d+)?/i,
 	'punctuation': /[{}[\],]/,
 	'operator': /:/,
 	'boolean': /\b(?:true|false)\b/,

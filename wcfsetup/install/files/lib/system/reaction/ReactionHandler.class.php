@@ -789,4 +789,23 @@ class ReactionHandler extends SingletonFactory {
 		
 		return null;
 	}
+	
+	/**
+	 * Renders an inline list of reaction counts.
+	 * 
+	 * @param       int[]   $reactionCounts         format: `[reactionID => count]`
+	 * @return      string
+	 * @since       5.3
+	 */
+	public function renderInlineList(array $reactionCounts) {
+		$reactionsOuput = [];
+		foreach ($reactionCounts as $reactionTypeID => $count) {
+			$reactionsOuput[] = WCF::getLanguage()->getDynamicVariable('wcf.reactions.reactionTypeCount', [
+				'count' => $count,
+				'reaction' => $this->getReactionTypeByID($reactionTypeID),
+			]);
+		}
+		
+		return implode(',', $reactionsOuput);
+	}
 }

@@ -106,15 +106,21 @@ define(['Dictionary', 'Dom/Util'], function(Dictionary, DomUtil) {
 			var button = _buttons.get(buttonName);
 			if (button !== undefined) {
 				var listItem = button.parentNode;
-				listItem.addEventListener('animationend', function () {
+				var callback = function () {
 					try {
-						_container.removeChild(listItem);
-						_buttons.delete(buttonName);
+						if (elAttrBool(listItem, 'aria-hidden')) {
+							_container.removeChild(listItem);
+							_buttons.delete(buttonName);
+						}
+						
+						listItem.removeEventListener('animationend', callback);
 					}
 					catch (e) {
 						// ignore errors if the element has already been removed
 					}
-				});
+				};
+				
+				listItem.addEventListener('animationend', callback);
 				
 				this.hide(buttonName);
 			}

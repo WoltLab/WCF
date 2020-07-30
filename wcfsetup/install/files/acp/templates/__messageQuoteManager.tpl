@@ -6,7 +6,7 @@ WCF.Language.addObject({
 	'wcf.message.quote.quoteAndReply': '{lang}wcf.message.quote.quoteAndReply{/lang}',
 	'wcf.message.quote.removeAllQuotes': '{lang}wcf.message.quote.removeAllQuotes{/lang}',
 	'wcf.message.quote.removeSelectedQuotes': '{lang}wcf.message.quote.removeSelectedQuotes{/lang}',
-	'wcf.message.quote.showQuotes': '{lang}wcf.message.quote.showQuotes{/lang}'
+	'wcf.message.quote.showQuotes': '{lang __literal=true}wcf.message.quote.showQuotes{/lang}'
 });
 
 {if !$wysiwygSelector|isset}{assign var=wysiwygSelector value=''}{/if}

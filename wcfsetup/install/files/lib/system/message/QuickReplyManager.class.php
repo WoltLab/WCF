@@ -211,7 +211,7 @@ class QuickReplyManager extends SingletonFactory {
 		$parameters['data'] = array_merge($additionalFields, $parameters['data']);
 		
 		// attachment support
-		if (MODULE_ATTACHMENT && !empty($parameters['tmpHash']) && $object instanceof IAttachmentMessageQuickReplyAction) {
+		if (!empty($parameters['tmpHash']) && $object instanceof IAttachmentMessageQuickReplyAction) {
 			$parameters['attachmentHandler'] = $object->getAttachmentHandler($this->container);
 		}
 		

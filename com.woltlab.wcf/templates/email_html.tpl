@@ -156,10 +156,12 @@
 	{hascontent}
 	<span style="font-size: 0;">-- <br></span>
 	{content}
+	{if MAIL_SIGNATURE_HTML|language}
+	{@MAIL_SIGNATURE_HTML|language}
+	{else}
 	{@MAIL_SIGNATURE|language|newlineToBreak}
-	{/content}
-	{/hascontent}
-	{/capture}
+	{/if}
+	{/content}{/hascontent}{/capture}
 	{include file='email_paddingHelper' block=true class='footer' content=$footer sandbox=true}
 	
 	<table>{* Do not remove: This table is needed by certain less able email clients to properly support background colors. Don't ask. *}</table>

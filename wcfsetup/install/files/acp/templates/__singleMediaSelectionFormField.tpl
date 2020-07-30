@@ -18,7 +18,7 @@
 			{/if}
 		</div>
 	{/if}
-	<p class="button jsMediaSelectButton jsMediaSelectButton_{@$form->getPrefixedId()}" data-store="{@$field->getPrefixedId()}"{if $field->isImageOnly()} data-display="{@$field->getPrefixedId()}_preview"{/if}>{lang}wcf.media.choose{if $field->isImageOnly()}Image{else}File{/if}{/lang}</p>
+	<p class="button jsMediaSelectButton jsMediaSelectButton_{@$field->getPrefixedId()}" data-store="{@$field->getPrefixedId()}"{if $field->isImageOnly()} data-display="{@$field->getPrefixedId()}_preview"{/if}>{lang}wcf.media.choose{if $field->isImageOnly()}Image{else}File{/if}{/lang}</p>
 	<input type="hidden" name="{@$field->getPrefixedId()}" id="{@$field->getPrefixedId()}"{if $field->getValue()} value="{@$field->getValue()}"{/if}>
 	
 	<script data-relocate="true">
@@ -26,7 +26,7 @@
 		
 		require(['WoltLabSuite/Core/Media/Manager/Select'], function(MediaManagerSelect) {
 			new MediaManagerSelect({
-				buttonClass: 'jsMediaSelectButton_{@$form->getPrefixedId()}',
+				buttonClass: 'jsMediaSelectButton_{@$field->getPrefixedId()}',
 				{if $field->isImageOnly()}
 					dialogTitle: '{lang}wcf.media.chooseImage{/lang}',
 					imagesOnly: 1

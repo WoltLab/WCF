@@ -137,7 +137,7 @@
 			
 			{event name='changeEmailFields'}
 			
-			{if REGISTER_ACTIVATION_METHOD == 1 && $__wcf->getUser()->reactivationCode != 0}
+			{if $__wcf->user->mustSelfEmailConfirm() && $__wcf->getUser()->reactivationCode != 0}
 				<dl>
 					<dt></dt>
 					<dd>

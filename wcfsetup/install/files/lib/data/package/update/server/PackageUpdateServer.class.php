@@ -60,13 +60,19 @@ class PackageUpdateServer extends DatabaseObject {
 	 * @param	integer[]	$packageUpdateServerIDs
 	 * @return	PackageUpdateServer[]
 	 */
-	public static function getActiveUpdateServers(array $packageUpdateServerIDs = []) {
+	public static final function getActiveUpdateServers(array $packageUpdateServerIDs = []) {
 		$list = new PackageUpdateServerList();
 		$list->getConditionBuilder()->add("isDisabled = ?", [0]);
 		if (!empty($packageUpdateServerIDs)) {
 			$list->getConditionBuilder()->add("packageUpdateServerID IN (?)", [$packageUpdateServerIDs]);
 		}
 		$list->readObjects();
+		
+		if (ENABLE_ENTERPRISE_MODE) {
+			return array_filter($list->getObjects(), function (PackageUpdateServer $server) {
+				return $server->isWoltLabStoreServer() || $server->isTrustedServer();
+			});
+		}
 		
 		return $list->getObjects();
 	}
@@ -89,6 +95,13 @@ class PackageUpdateServer extends DatabaseObject {
 	 * @return	string[]
 	 */
 	public function getAuthData() {
+		if (ENABLE_ENTERPRISE_MODE && defined('ENTERPRISE_MODE_AUTH_DATA')) {
+			$host = Url::parse($this->serverURL)['host'];
+			if (!empty(ENTERPRISE_MODE_AUTH_DATA[$host])) {
+				return ENTERPRISE_MODE_AUTH_DATA[$host];
+			}
+		}
+		
 		$authData = [];
 		// database data
 		if ($this->loginUsername != '' && $this->loginPassword != '') {
@@ -230,7 +243,7 @@ class PackageUpdateServer extends DatabaseObject {
 	 * 
 	 * @return      boolean
 	 */
-	public function isWoltLabUpdateServer() {
+	public final function isWoltLabUpdateServer() {
 		return Url::parse($this->serverURL)['host'] === 'update.woltlab.com';
 	}
 	
@@ -239,7 +252,7 @@ class PackageUpdateServer extends DatabaseObject {
 	 * 
 	 * @return      boolean
 	 */
-	public function isWoltLabStoreServer() {
+	public final function isWoltLabStoreServer() {
 		return Url::parse($this->serverURL)['host'] === 'store.woltlab.com';
 	}
 	
@@ -265,7 +278,7 @@ class PackageUpdateServer extends DatabaseObject {
 		}
 		
 		// custom override to allow testing and mirrors in enterprise environments
-		if (defined('UPDATE_SERVER_TRUSTED_MIRROR') && $host === UPDATE_SERVER_TRUSTED_MIRROR) {
+		if (defined('UPDATE_SERVER_TRUSTED_MIRROR') && !empty(UPDATE_SERVER_TRUSTED_MIRROR) && $host === UPDATE_SERVER_TRUSTED_MIRROR) {
 			return true;
 		}
 		

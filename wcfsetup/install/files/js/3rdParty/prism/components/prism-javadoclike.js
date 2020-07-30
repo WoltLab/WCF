@@ -1,4 +1,4 @@
-define(["prism/prism","prism/components/prism-java","prism/components/prism-javascript","prism/components/prism-php"], function () {
+define(["prism/prism"], function () {
 (function (Prism) {
 
 	var javaDocLike = Prism.languages.javadoclike = {
@@ -36,6 +36,7 @@ define(["prism/prism","prism/components/prism-java","prism/components/prism-java
 			var definition = {};
 			definition[tokenName] = {
 				pattern: /(^|[^\\])\/\*\*[^/][\s\S]*?(?:\*\/|$)/,
+				lookbehind: true,
 				alias: 'comment'
 			};
 

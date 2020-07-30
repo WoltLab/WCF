@@ -8,6 +8,7 @@ use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use function wcf\functions\exception\logThrowable;
 
 /**
  * Provides functions to execute cronjobs.
@@ -23,12 +24,6 @@ class CronjobScheduler extends SingletonFactory {
 	 * @var	integer[]
 	 */
 	protected $cache = [];
-	
-	/**
-	 * list of editors for outstanding cronjobs
-	 * @var	CronjobEditor[]
-	 */
-	protected $cronjobEditors = [];
 	
 	/**
 	 * @inheritDoc
@@ -49,12 +44,12 @@ class CronjobScheduler extends SingletonFactory {
 		$this->resetFailedCronjobs();
 		
 		// get outstanding cronjobs
-		$this->loadCronjobs();
+		$cronjobEditors = $this->loadCronjobs();
 		
 		// clear cache
 		self::clearCache();
 		
-		foreach ($this->cronjobEditors as $cronjobEditor) {
+		foreach ($cronjobEditors as $cronjobEditor) {
 			// mark cronjob as being executed
 			$cronjobEditor->update([
 				'state' => Cronjob::EXECUTING
@@ -86,16 +81,9 @@ class CronjobScheduler extends SingletonFactory {
 				$this->logResult($logEditor);
 			}
 			
-			// get time of next execution
-			$nextExec = $cronjobEditor->getNextExec();
-			$afterNextExec = $cronjobEditor->getNextExec($nextExec + 120);
-			
 			// mark cronjob as done
 			$cronjobEditor->update([
-				'lastExec' => TIME_NOW,
-				'afterNextExec' => $afterNextExec,
 				'failCount' => 0,
-				'nextExec' => $nextExec,
 				'state' => Cronjob::READY
 			]);
 		}
@@ -162,7 +150,7 @@ class CronjobScheduler extends SingletonFactory {
 							'execTime' => TIME_NOW
 						]);
 						$logEditor = new CronjobLogEditor($log);
-						$this->logResult($logEditor, new \Exception('Cronjob stuck in state '.$cronjob->state.' for two periods, resetting.'));
+						$this->logResult($logEditor, new \Exception("Cronjob stuck in state '".$cronjob->state."' for two periods (nextExec '".$cronjob->nextExec."', afterNextExec '".$cronjob->afterNextExec."', now '".TIME_NOW."')."));
 						break;
 					default:
 						throw new \LogicException('Unreachable');
@@ -207,21 +195,36 @@ class CronjobScheduler extends SingletonFactory {
 				Cronjob::READY,
 				TIME_NOW
 			]);
+			
+			$cronjobEditors = [];
+			/** @var Cronjob $cronjob */
 			while ($cronjob = $statement->fetchObject(Cronjob::class)) {
 				$cronjobEditor = new CronjobEditor($cronjob);
 				
 				// Mark the cronjob as pending to prevent concurrent requests from executing it.
-				$cronjobEditor->update(['state' => Cronjob::PENDING]);
+				$data = ['state' => Cronjob::PENDING];
 				
-				$this->cronjobEditors[] = $cronjobEditor;
+				// Update next execution time.
+				// This needs to be done before executing the job to allow for a proper detection of
+				// stuck jobs. If the timestamps are updated after executing then concurrent requests
+				// might believe that a cronjob is stuck, despite the cronjob just having started just
+				// a few milliseconds before.
+				$data['nextExec'] = $cronjob->getNextExec();
+				$data['afterNextExec'] = $cronjob->getNextExec($data['nextExec'] + 120);
+				$data['lastExec'] = TIME_NOW;
+				
+				$cronjobEditor->update($data);
+				
+				$cronjobEditors[] = $cronjobEditor;
 			}
 			WCF::getDB()->commitTransaction();
 			$committed = true;
+			
+			return $cronjobEditors;
 		}
 		finally {
 			if (!$committed) {
 				WCF::getDB()->rollBackTransaction();
-				$this->cronjobEditors = [];
 			}
 		}
 	}
@@ -260,6 +263,8 @@ class CronjobScheduler extends SingletonFactory {
 	 */
 	protected function logResult(CronjobLogEditor $logEditor, $exception = null) {
 		if ($exception !== null) {
+			logThrowable($exception);
+			
 			$errString = implode("\n", [
 				$exception->getMessage(),
 				$exception->getCode(),

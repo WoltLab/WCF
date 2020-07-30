@@ -149,7 +149,7 @@ class LoginForm extends AbstractCaptchaForm {
 					'data' => [
 						'environment' => RequestHandler::getInstance()->isACPRequest() ? 'admin' : 'user',
 						'userID' => $user->userID ?: null,
-						'username' => $this->username,
+						'username' => mb_substr($this->username, 0, 100),
 						'time' => TIME_NOW,
 						'ipAddress' => UserUtil::getIpAddress(),
 						'userAgent' => UserUtil::getUserAgent()

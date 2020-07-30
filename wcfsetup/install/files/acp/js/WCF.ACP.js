@@ -993,18 +993,22 @@ WCF.ACP.Package.Update.Search = Class.extend({
 		this._dialog = null;
 		
 		if (bindOnExistingButtons === true) {
-			$('.jsButtonPackageUpdate').click($.proxy(this._click, this));
+			$('.jsButtonSearchForUpdates').click($.proxy(this._click, this));
 		}
 		else {
-			var $button = $('<li><a class="button"><span class="icon icon16 fa-refresh"></span> <span>' + WCF.Language.get('wcf.acp.package.searchForUpdates') + '</span></a></li>');
+			var $button = $('<li><a class="button jsButtonSearchForUpdates"><span class="icon icon16 fa-refresh"></span> <span>' + WCF.Language.get('wcf.acp.package.searchForUpdates') + '</span></a></li>');
 			$button.click(this._click.bind(this)).prependTo($('.contentHeaderNavigation > ul'));
 		}
 	},
 	
 	/**
 	 * Handles clicks on the search button.
+	 * 
+	 * @param {Event} event
 	 */
-	_click: function() {
+	_click: function(event) {
+		event.preventDefault();
+		
 		if (this._dialog === null) {
 			new WCF.Action.Proxy({
 				autoSend: true,
@@ -1031,6 +1035,11 @@ WCF.ACP.Package.Update.Search = Class.extend({
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
+		if (typeof window._trackSearchForUpdates === 'function') {
+			window._trackSearchForUpdates(data);
+			return;
+		}
+		
 		if (data.returnValues.url) {
 			window.location = data.returnValues.url;
 		}
@@ -2051,7 +2060,8 @@ WCF.ACP.Stat.Chart = Class.extend({
 					$("#chartTooltip").html(item.series.xaxis.tickFormatter(item.datapoint[0], item.series.xaxis) + ', ' + WCF.String.formatNumeric(item.datapoint[1]) + ' ' + item.series.label).show();
 					UiAlignment.set($("#chartTooltip")[0], span, {
 						verticalOffset: 5,
-						horizontal: 'center'
+						horizontal: 'center',
+						vertical: 'top'
 					});
 				}
 				else {

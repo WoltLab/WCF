@@ -542,6 +542,17 @@ CREATE TABLE wcf1_devtools_project (
 	UNIQUE KEY name (name)
 );
 
+DROP TABLE IF EXISTS wcf1_devtools_missing_language_item;
+CREATE TABLE wcf1_devtools_missing_language_item (
+	itemID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	languageID INT(10),
+	languageItem VARCHAR(191) NOT NULL,
+	lastTime INT(10) NOT NULL,
+	stackTrace MEDIUMTEXT NOT NULL,
+	
+	UNIQUE KEY (languageID, languageItem)
+);
+
 DROP TABLE IF EXISTS wcf1_edit_history_entry;
 CREATE TABLE wcf1_edit_history_entry (
 	entryID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -695,6 +706,7 @@ CREATE TABLE wcf1_media (
 	fileType VARCHAR(255) NOT NULL DEFAULT '',
 	fileHash VARCHAR(255) NOT NULL DEFAULT '',
 	uploadTime INT(10) NOT NULL DEFAULT 0,
+	fileUpdateTime INT(10) NOT NULL DEFAULT 0,
 	userID INT(10),
 	username VARCHAR(255) NOT NULL,
 	languageID INT(10),
@@ -1452,6 +1464,7 @@ CREATE TABLE wcf1_user (
 	banReason MEDIUMTEXT NULL,
 	banExpires INT(10) NOT NULL DEFAULT 0,
 	activationCode INT(10) NOT NULL DEFAULT 0,
+	emailConfirmed CHAR(40) DEFAULT NULL,
 	lastLostPasswordRequestTime INT(10) NOT NULL DEFAULT 0,
 	lostPasswordKey CHAR(40) DEFAULT NULL,
 	lastUsernameChange INT(10) NOT NULL DEFAULT 0,
@@ -1939,6 +1952,8 @@ ALTER TABLE wcf1_cronjob ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (pa
 
 ALTER TABLE wcf1_cronjob_log ADD FOREIGN KEY (cronjobID) REFERENCES wcf1_cronjob (cronjobID) ON DELETE CASCADE;
 
+ALTER TABLE wcf1_devtools_missing_language_item ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE SET NULL;
+
 ALTER TABLE wcf1_edit_history_entry ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_edit_history_entry ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 ALTER TABLE wcf1_edit_history_entry ADD FOREIGN KEY (obsoletedByUserID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
@@ -2234,11 +2249,8 @@ INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES
 INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES (4, 3, '1');	-- Administrators
 
 -- default update servers
--- TODO: change 2019 servers to `online`
-INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/2019/', 'offline', 0, NULL, 0, '', '');
-INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/vortex/', 'online', 0, NULL, 0, '', '');
-INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/tornado/', 'online', 0, NULL, 0, '', '');
-INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/2019/', 'offline', 0, NULL, 0, '', '');
+INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/2019/', 'online', 0, NULL, 0, '', '');
+INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/2019/', 'online', 0, NULL, 0, '', '');
 INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/vortex/', 'online', 0, NULL, 0, '', '');
 INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/tornado/', 'online', 0, NULL, 0, '', '');
 
@@ -2251,7 +2263,6 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogoWi
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogoHeight', '40');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogoMobile', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useFluidLayout', '1');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useGoogleFont', '1');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonBackground', 'rgba(207, 216, 220, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonBackgroundActive', 'rgba(120, 144, 156, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonDisabledBackground', 'rgba(223, 223, 223, 1)');

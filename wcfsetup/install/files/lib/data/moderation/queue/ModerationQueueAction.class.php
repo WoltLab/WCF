@@ -7,7 +7,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\moderation\queue\ModerationQueueManager;
-use wcf\system\request\LinkHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
@@ -16,7 +15,7 @@ use wcf\system\WCF;
  * Executes moderation queue-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Moderation\Queue
  * 
@@ -263,7 +262,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 		$username = $this->user->userID ? $this->user->username : WCF::getLanguage()->get('wcf.moderation.assignedUser.nobody');
 		$link = '';
 		if ($this->user->userID) {
-			$link = LinkHandler::getInstance()->getLink('User', ['object' => $this->user]);
+			$link = $this->user->getLink();
 		}
 		
 		$newStatus = '';

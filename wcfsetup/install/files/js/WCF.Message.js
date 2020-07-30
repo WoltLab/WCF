@@ -1076,6 +1076,26 @@ if (COMPILER_TARGET_DEFAULT) {
 			
 			// register with DOMNodeInsertedHandler
 			WCF.DOMNodeInsertedHandler.addCallback('WCF.Message.Quote.Handler' + objectType.hashCode(), $.proxy(this._initContainers, this));
+			
+			// Prevent the tooltip from being selectable while the touch pointer is being moved.
+			var timer = null;
+			window.addEventListener('touchmove', (function() {
+				if (!this._copyQuote[0].classList.contains('active')) {
+					return;
+				}
+				
+				this._copyQuote[0].classList.add('touchForceInaccessible');
+				
+				if (timer !== null) {
+					window.clearTimeout(timer);
+				}
+				
+				timer = window.setTimeout((function() {
+					this._copyQuote[0].classList.remove('touchForceInaccessible');
+					
+					timer = null;
+				}).bind(this), 50);
+			}).bind(this));
 		},
 		
 		/**
@@ -1813,12 +1833,14 @@ if (COMPILER_TARGET_DEFAULT) {
 						UiPageAction.add(buttonName, button);
 					}
 					
-					button.textContent = WCF.Language.get('wcf.message.quote.showQuotes').replace(/#count#/, this._count);
+					button.textContent = WCF.Language.get('wcf.message.quote.showQuotes', {
+						count: this._count
+					});
 					
 					UiPageAction.show(buttonName);
 				}
 				else {
-					UiPageAction.hide(buttonName);
+					UiPageAction.remove(buttonName);
 				}
 				
 				this._hasTemplate = false;
@@ -2253,7 +2275,7 @@ WCF.Message.Share.Content = Class.extend({
 			// remove dialog contents
 			var $dialogInitialized = false;
 			if (this._dialog === null) {
-				this._dialog = $('<div />').hide().appendTo(document.body);
+				this._dialog = $('<div id="shareContentDialog" />').hide().appendTo(document.body);
 				$dialogInitialized = true;
 			}
 			else {

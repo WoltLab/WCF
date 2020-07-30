@@ -2,7 +2,6 @@
 namespace wcf\system\search\acp;
 use wcf\data\package\Package;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -59,10 +58,7 @@ class PackageACPSearchResultProvider implements IACPSearchResultProvider {
 		
 		/** @var Package $package */
 		while ($package = $statement->fetchObject(Package::class)) {
-			$results[] = new ACPSearchResult($package->getName(), LinkHandler::getInstance()->getLink('Package', [
-				'id' => $package->packageID,
-				'title' => $package->getName()
-			]));
+			$results[] = new ACPSearchResult($package->getName(), $package->getLink());
 		}
 		
 		return $results;

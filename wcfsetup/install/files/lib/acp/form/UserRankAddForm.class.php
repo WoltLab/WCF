@@ -3,6 +3,7 @@ namespace wcf\acp\form;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\rank\UserRankAction;
 use wcf\data\user\rank\UserRankEditor;
+use wcf\data\user\UserProfile;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
@@ -174,7 +175,7 @@ class UserRankAddForm extends AbstractForm {
 		}
 		
 		// required gender
-		if ($this->requiredGender < 0 || $this->requiredGender > 2) {
+		if ($this->requiredGender < 0 || $this->requiredGender > UserProfile::GENDER_OTHER) {
 			$this->requiredGender = 0;
 		}
 		
@@ -241,7 +242,7 @@ class UserRankAddForm extends AbstractForm {
 			'customCssClassName' => $this->customCssClassName,
 			'groupID' => $this->groupID,
 			'rankTitle' => $this->rankTitle,
-			'availableGroups' => UserGroup::getGroupsByType([], [UserGroup::GUESTS, UserGroup::EVERYONE]),
+			'availableGroups' => UserGroup::getSortedGroupsByType([], [UserGroup::GUESTS, UserGroup::EVERYONE]),
 			'requiredPoints' => $this->requiredPoints,
 			'rankImage' => $this->rankImage,
 			'repeatImage' => $this->repeatImage,

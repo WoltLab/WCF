@@ -1,9 +1,7 @@
 <?php
 namespace wcf\system\search;
-use wcf\data\search\keyword\SearchKeyword;
 use wcf\data\search\keyword\SearchKeywordAction;
 use wcf\system\SingletonFactory;
-use wcf\system\WCF;
 
 /**
  * Manages the search keywords.
@@ -12,6 +10,7 @@ use wcf\system\WCF;
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Search
+ * @deprecated  5.2
  */
 class SearchKeywordManager extends SingletonFactory {
 	/**
@@ -20,28 +19,8 @@ class SearchKeywordManager extends SingletonFactory {
 	 * @param	string		$keyword
 	 */
 	public function add($keyword) {
-		$keyword = mb_substr($keyword, 0, 191);
-		
-		// search existing entry
-		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_search_keyword
-			WHERE	keyword = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$keyword]);
-		if (($object = $statement->fetchObject(SearchKeyword::class)) !== null) {
-			$action = new SearchKeywordAction([$object], 'update', ['data' => [
-				'searches' => $object->searches + 1,
-				'lastSearchTime' => TIME_NOW
-			]]);
-			$action->executeAction();
-		}
-		else {
-			$action = new SearchKeywordAction([], 'create', ['data' => [
-				'keyword' => $keyword,
-				'searches' => 1,
-				'lastSearchTime' => TIME_NOW
-			]]);
-			$action->executeAction();
-		}
+		(new SearchKeywordAction([], 'upsert', ['data' => [
+			'keyword' => $keyword,
+		]]))->executeAction();
 	}
 }

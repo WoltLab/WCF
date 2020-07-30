@@ -1,14 +1,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="format-detection" content="telephone=no">
-{if $allowSpidersToIndexThisPage|empty && ($__wcf->getActivePage() == null || !$__wcf->getActivePage()->allowSpidersToIndex)}<meta name="robots" content="noindex,nofollow">{/if}
+{include file='headIncludeRobotsMetaTag'}
 {implode from=$__wcf->getMetaTagHandler() item=__metaTag glue="\n"}{@$__metaTag}{/implode}
 {event name='metaTags'}
 
 <!-- Stylesheets -->
-{if $__wcf->getStyleHandler()->getStyle()->getVariable('useGoogleFont')}
-	<link href='//fonts.googleapis.com/css?family={$__wcf->getStyleHandler()->getStyle()->getVariable('wcfFontFamilyGoogle')|urlencode}:400,300,600&amp;display=swap' rel='stylesheet' type='text/css'>
-{/if}
 {@$__wcf->getStyleHandler()->getStylesheet()}
 {event name='stylesheets'}
 

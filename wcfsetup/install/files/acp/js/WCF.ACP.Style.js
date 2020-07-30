@@ -199,17 +199,10 @@ WCF.ACP.Style.LogoUpload = WCF.Upload.extend({
 	_tmpHash: '',
 	
 	/**
-	 * absolute path to WCF directory
-	 * @var	string
-	 */
-	_wcfPath: '',
-	
-	/**
 	 * @see	WCF.Upload.init()
 	 */
-	init: function(tmpHash, wcfPath) {
+	init: function(tmpHash) {
 		this._tmpHash = tmpHash;
-		this._wcfPath = wcfPath;
 		
 		this._button = $('#uploadLogo');
 		this._image = $('#styleLogo');
@@ -232,12 +225,9 @@ WCF.ACP.Style.LogoUpload = WCF.Upload.extend({
 		var $src = this._pageLogo.val();
 		if ($src.length) {
 			if (!$src.match(/^https?:\/\//)) {
-				var $path = this._imagePath.val();
-				if (!$path) {
-					$path = 'images/';
-				}
+				var $path = this._getImagePath();
 				
-				$path = this._wcfPath + $path.replace(/^\/?images\/?/, '');
+				$path = WCF_PATH + $path;
 				if ($path.substr(-1) !== '/') {
 					$path += '/';
 				}
@@ -256,6 +246,13 @@ WCF.ACP.Style.LogoUpload = WCF.Upload.extend({
 	},
 	
 	/**
+	 * Returns the style's image path.
+	 */
+	_getImagePath: function () {
+		return this._imagePath.val() || 'images/';
+	},
+	
+	/**
 	 * @see	WCF.Upload._initFile()
 	 */
 	_initFile: function(file) {
@@ -267,7 +264,9 @@ WCF.ACP.Style.LogoUpload = WCF.Upload.extend({
 	 */
 	_getParameters: function() {
 		return {
-			tmpHash: this._tmpHash
+			tmpHash: this._tmpHash,
+			imagePath: this._getImagePath(),
+			type: 'styleLogo',
 		};
 	},
 	
@@ -277,8 +276,8 @@ WCF.ACP.Style.LogoUpload = WCF.Upload.extend({
 	_success: function(uploadID, data) {
 		if (data.returnValues.url) {
 			// show image
-			this._image.attr('src', data.returnValues.url + '?timestamp=' + Date.now());
 			this._pageLogo.val(data.returnValues.url);
+			this._updateLogo();
 			
 			// hide error
 			this._button.next('.innerError').remove();
@@ -348,24 +347,17 @@ WCF.ACP.Style.LogoUploadMobile = WCF.Upload.extend({
 	_tmpHash: '',
 	
 	/**
-	 * absolute path to WCF directory
-	 * @var	string
-	 */
-	_wcfPath: '',
-	
-	/**
 	 * @see	WCF.Upload.init()
 	 */
-	init: function(tmpHash, wcfPath) {
+	init: function(tmpHash) {
 		this._tmpHash = tmpHash;
-		this._wcfPath = wcfPath;
 		
 		this._button = $('#uploadLogoMobile');
 		this._image = $('#styleLogoMobile');
 		this._imagePath = $('#imagePath');
 		this._pageLogo = $('#pageLogoMobile');
 		
-		this._super(this._button, undefined, 'wcf\\data\\style\\StyleAction', { action: 'uploadLogoMobile' });
+		this._super(this._button, undefined, 'wcf\\data\\style\\StyleAction', { action: 'uploadLogo' });
 		
 		if (!this._image.attr('src').length) {
 			this._updateLogo();
@@ -381,12 +373,9 @@ WCF.ACP.Style.LogoUploadMobile = WCF.Upload.extend({
 		var $src = this._pageLogo.val();
 		if ($src.length) {
 			if (!$src.match(/^https?:\/\//)) {
-				var $path = this._imagePath.val();
-				if (!$path) {
-					$path = 'images/';
-				}
+				var $path = this._getImagePath();
 				
-				$path = this._wcfPath + $path.replace(/^\/?images\/?/, '');
+				$path = WCF_PATH + $path;
 				if ($path.substr(-1) !== '/') {
 					$path += '/';
 				}
@@ -403,6 +392,13 @@ WCF.ACP.Style.LogoUploadMobile = WCF.Upload.extend({
 	},
 	
 	/**
+	 * Returns the style's image path.
+	 */
+	_getImagePath: function () {
+		return this._imagePath.val() || 'images/';
+	},
+	
+	/**
 	 * @see	WCF.Upload._initFile()
 	 */
 	_initFile: function(file) {
@@ -414,7 +410,9 @@ WCF.ACP.Style.LogoUploadMobile = WCF.Upload.extend({
 	 */
 	_getParameters: function() {
 		return {
-			tmpHash: this._tmpHash
+			tmpHash: this._tmpHash,
+			imagePath: this._getImagePath(),
+			type: 'styleLogo-mobile',
 		};
 	},
 	
@@ -424,8 +422,8 @@ WCF.ACP.Style.LogoUploadMobile = WCF.Upload.extend({
 	_success: function(uploadID, data) {
 		if (data.returnValues.url) {
 			// show image
-			this._image.attr('src', data.returnValues.url + '?timestamp=' + Date.now());
 			this._pageLogo.val(data.returnValues.url);
+			this._updateLogo();
 			
 			// hide error
 			this._button.next('.innerError').remove();

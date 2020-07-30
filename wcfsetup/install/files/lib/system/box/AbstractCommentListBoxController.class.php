@@ -86,7 +86,7 @@ abstract class AbstractCommentListBoxController extends AbstractDatabaseObjectLi
 		$this->applyObjectTypeFilters($commentList);
 		
 		if (!empty(UserProfileHandler::getInstance()->getIgnoredUsers())) {
-			$commentList->getConditionBuilder()->add("comment.userID NOT IN (?)", [UserProfileHandler::getInstance()->getIgnoredUsers()]);
+			$commentList->getConditionBuilder()->add("(comment.userID IS NULL OR comment.userID NOT IN (?))", [UserProfileHandler::getInstance()->getIgnoredUsers()]);
 		}
 		
 		return $commentList;

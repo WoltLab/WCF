@@ -20,12 +20,12 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $actionClassActions = ['delete', 'resendActivationMail'];
+	protected $actionClassActions = ['delete', 'resendActivationMail', 'confirmEmail', 'unconfirmEmail'];
 	
 	/**
 	 * @inheritDoc
 	 */
-	protected $supportedActions = ['assignToGroup', 'ban', 'delete', 'enable', 'exportMailAddress', 'merge', 'sendMail', 'sendNewPassword', 'resendActivationMail'];
+	protected $supportedActions = ['assignToGroup', 'ban', 'confirmEmail', 'delete', 'enable', 'exportMailAddress', 'merge', 'sendMail', 'sendNewPassword', 'resendActivationMail', 'unconfirmEmail'];
 	
 	/**
 	 * @inheritDoc
@@ -152,13 +152,55 @@ class UserClipboardAction extends AbstractClipboardAction {
 		$userToGroup = $statement->fetchMap('userID', 'groupID', false);
 		
 		// validate if user's group is accessible for current user
-		foreach ($userIDs as $userID) {
+		foreach ($userIDs as $index => $userID) {
 			if (!isset($userToGroup[$userID]) || !UserGroup::isAccessibleGroup($userToGroup[$userID])) {
-				unset($userIDs[$userID]);
+				unset($userIDs[$index]);
 			}
 		}
 		
 		return array_values($userIDs);
+	}
+	
+	/**
+	 * Returns the ids of the users which can be marked as email confirmed.
+	 *
+	 * @return	integer[]
+	 * @since	5.3
+	 */
+	protected function validateConfirmEmail() {
+		// check permissions
+		if (!WCF::getSession()->getPermission('admin.user.canEnableUser')) {
+			return [];
+		}
+		
+		$userIDs = [];
+		foreach ($this->objects as $user) {
+			/** @var User $user */
+			if (!$user->isEmailConfirmed()) $userIDs[] = $user->userID;
+		}
+		
+		return $this->__validateAccessibleGroups($userIDs);
+	}
+	
+	/**
+	 * Returns the ids of the users which can be unmarked as email confirmed.
+	 *
+	 * @return	integer[]
+	 * @since	5.3
+	 */
+	protected function validateUnconfirmEmail() {
+		// check permissions
+		if (!WCF::getSession()->getPermission('admin.user.canEnableUser')) {
+			return [];
+		}
+		
+		$userIDs = [];
+		foreach ($this->objects as $user) {
+			/** @var User $user */
+			if ($user->isEmailConfirmed()) $userIDs[] = $user->userID;
+		}
+		
+		return $this->__validateAccessibleGroups($userIDs);
 	}
 	
 	/**
@@ -195,7 +237,8 @@ class UserClipboardAction extends AbstractClipboardAction {
 		
 		$userIDs = [];
 		foreach ($this->objects as $user) {
-			if ($user->activationCode) $userIDs[] = $user->userID;
+			/** @var User $user */
+			if ($user->pendingActivation()) $userIDs[] = $user->userID;
 		}
 		
 		return $userIDs;
@@ -227,13 +270,14 @@ class UserClipboardAction extends AbstractClipboardAction {
 	 */
 	protected function validateResendActivationMail() {
 		// check permissions
-		if (!WCF::getSession()->getPermission('admin.user.canEnableUser') || REGISTER_ACTIVATION_METHOD != 1) {
+		if (!WCF::getSession()->getPermission('admin.user.canEnableUser') || !(REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
 			return [];
 		}
 		
 		$userIDs = [];
 		foreach ($this->objects as $user) {
-			if ($user->activationCode) $userIDs[] = $user->userID;
+			/** @var User $user */
+			if ($user->canEmailConfirm()) $userIDs[] = $user->userID;
 		}
 		
 		return $userIDs;

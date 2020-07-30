@@ -2,7 +2,7 @@ define(["prism/prism"], function () {
 (function (Prism) {
 
 	var interpolation = /\\\((?:[^()]|\([^()]*\))*\)/.source;
-	var string = RegExp(/"(?:[^"\r\n\\]|\\[^\r\n(]|__)*"/.source.replace(/__/g, interpolation));
+	var string = RegExp(/"(?:[^"\r\n\\]|\\[^\r\n(]|__)*"/.source.replace(/__/g, function () { return interpolation; }));
 	var stringInterpolation = {
 		'interpolation': {
 			pattern: RegExp(/((?:^|[^\\])(?:\\{2})*)/.source + interpolation),

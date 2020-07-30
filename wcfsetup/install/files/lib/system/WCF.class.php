@@ -49,7 +49,7 @@ if (!@ini_get('date.timezone')) {
 }
 
 // define current woltlab suite version
-define('WCF_VERSION', '5.2.2');
+define('WCF_VERSION', '5.3.0 Alpha 1');
 
 // define current API version
 // @deprecated 5.2
@@ -336,7 +336,7 @@ class WCF {
 	 */
 	public static final function handleError($severity, $message, $file, $line) {
 		// this is necessary for the shut-up operator
-		if (error_reporting() == 0) return;
+		if (!(error_reporting() & $severity)) return;
 		
 		throw new ErrorException($message, 0, $severity, $file, $line);
 	}
@@ -367,6 +367,14 @@ class WCF {
 		// https://github.com/WoltLab/WCF/issues/2975
 		define('LIKE_ALLOW_FOR_OWN_CONTENT', 0);
 		define('LIKE_ENABLE_DISLIKE', 0);
+		
+		// Thumbnails for attachments are already enabled since 5.3.
+		// https://github.com/WoltLab/WCF/pull/3444
+		define('ATTACHMENT_ENABLE_THUMBNAILS', 1);
+		
+		// User markings are always applied in sidebars since 5.3.
+		// https://github.com/WoltLab/WCF/issues/3330
+		define('MESSAGE_SIDEBAR_ENABLE_USER_ONLINE_MARKING', 1);
 		
 		$filename = WCF_DIR.'options.inc.php';
 		
@@ -931,7 +939,11 @@ class WCF {
 			return self::getPath();
 		}
 		
-		return self::getPath(ApplicationHandler::getInstance()->getAbbreviation(ApplicationHandler::getInstance()->getActiveApplication()->packageID));
+		// We cannot rely on the ApplicationHandler's `getActiveApplication()` because
+		// it uses the requested controller to determine the namespace. However, starting
+		// with WoltLab Suite 5.2, system pages can be virtually assigned to a different
+		// app, resolving against the target app without changing the namespace.
+		return self::getPath(ApplicationHandler::getInstance()->getAbbreviation(PACKAGE_ID));
 	}
 	
 	/**
@@ -1001,10 +1013,10 @@ class WCF {
 		
 		if (self::$zendOpcacheEnabled) {
 			if (empty($script)) {
-				opcache_reset();
+				\opcache_reset();
 			}
 			else {
-				opcache_invalidate($script, true);
+				\opcache_invalidate($script, true);
 			}
 		}
 	}

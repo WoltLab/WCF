@@ -97,6 +97,7 @@ define(['Environment', 'Dom/ChangeListener', 'Ui/Alignment'], function(Environme
 			
 			if (title !== '') {
 				elData(element, 'tooltip', title);
+				elAttr(element, 'aria-label', title);
 				element.removeAttribute('title');
 			}
 			

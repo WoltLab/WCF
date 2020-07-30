@@ -288,10 +288,28 @@ define(
 			var listItem = this._listItems.get(~~media.mediaID);
 			var p = elByClass('mediaTitle', listItem)[0];
 			if (media.isMultilingual) {
-				p.textContent = media.title[LANGUAGE_ID] || media.filename;
+				if (media.title && media.title[LANGUAGE_ID]) {
+					p.textContent = media.title[LANGUAGE_ID];
+				}
+				else {
+					p.textContent = media.filename;
+				}
 			}
 			else {
-				p.textContent = media.title[media.languageID] || media.filename;
+				if (media.title && media.title[media.languageID]) {
+					p.textContent = media.title[media.languageID];
+				}
+				else {
+					p.textContent = media.filename;
+				}
+			}
+			
+			var thumbnail = elByClass('mediaThumbnail', listItem)[0];
+			thumbnail.innerHTML = media.elementTag;
+			// Bust browser cache by adding additional parameter.
+			var imgs = elByTag('img', thumbnail);
+			if (imgs.length) {
+				imgs[0].src += '&refresh=' + Date.now();
 			}
 		},
 		

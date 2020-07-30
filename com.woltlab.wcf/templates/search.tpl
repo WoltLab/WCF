@@ -11,7 +11,7 @@
 		<nav class="tabMenu">
 			<ul>
 				<li class="active"><a href="{link controller='Search'}{/link}">{lang}wcf.search.type.keywords{/lang}</a></li>
-				{if $__wcf->session->getPermission('user.tag.canViewTag')}<li><a href="{link controller='TagSearch'}{/link}">{lang}wcf.search.type.tags{/lang}</a></li>{/if}
+				{if MODULE_TAGGING && $__wcf->session->getPermission('user.tag.canViewTag')}<li><a href="{link controller='TagSearch'}{/link}">{lang}wcf.search.type.tags{/lang}</a></li>{/if}
 				
 				{event name='tabMenuTabs'}
 			</ul>

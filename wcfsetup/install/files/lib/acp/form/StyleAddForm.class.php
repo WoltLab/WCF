@@ -5,14 +5,16 @@ use wcf\data\style\Style;
 use wcf\data\style\StyleAction;
 use wcf\data\style\StyleEditor;
 use wcf\data\template\group\TemplateGroup;
-use wcf\data\template\group\TemplateGroupList;
 use wcf\form\AbstractForm;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\Regex;
+use wcf\system\style\exception\FontDownloadFailed;
+use wcf\system\style\FontManager;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 use wcf\util\DateUtil;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
@@ -201,6 +203,12 @@ class StyleAddForm extends AbstractForm {
 	public $specialVariables = [];
 	
 	/**
+	 * current scroll offsets before submitting the form
+	 * @var integer[]
+	 */
+	public $scrollOffsets = [];
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -213,11 +221,7 @@ class StyleAddForm extends AbstractForm {
 			$this->readStyleVariables();
 		}
 		
-		$templateGroupList = new TemplateGroupList();
-		$templateGroupList->sqlOrderBy = "templateGroupName";
-		$templateGroupList->getConditionBuilder()->add('templateGroupFolderName <> ?', ['_wcf_email/']);
-		$templateGroupList->readObjects();
-		$this->availableTemplateGroups = $templateGroupList->getObjects();
+		$this->availableTemplateGroups = TemplateGroup::getSelectList([-1], 1);
 		
 		if (isset($_REQUEST['tmpHash'])) {
 			$this->tmpHash = StringUtil::trim($_REQUEST['tmpHash']);
@@ -271,7 +275,6 @@ class StyleAddForm extends AbstractForm {
 			}
 		}
 		$this->variables['useFluidLayout'] = isset($_POST['useFluidLayout']) ? 1 : 0;
-		$this->variables['useGoogleFont'] = isset($_POST['useGoogleFont']) ? 1 : 0;
 		
 		// style data
 		if (isset($_POST['authorName'])) $this->authorName = StringUtil::trim($_POST['authorName']);
@@ -286,6 +289,27 @@ class StyleAddForm extends AbstractForm {
 		if (isset($_POST['styleVersion'])) $this->styleVersion = StringUtil::trim($_POST['styleVersion']);
 		if (isset($_POST['templateGroupID'])) $this->templateGroupID = intval($_POST['templateGroupID']);
 		if (isset($_POST['apiVersion']) && in_array($_POST['apiVersion'], Style::$supportedApiVersions)) $this->apiVersion = $_POST['apiVersion'];
+		
+		// codemirror scroll offset
+		if (isset($_POST['scrollOffsets']) && is_array($_POST['scrollOffsets'])) $this->scrollOffsets = ArrayUtil::toIntegerArray($_POST['scrollOffsets']); 
+	}
+	
+	/**
+	 * @since	5.3
+	 */
+	protected function downloadGoogleFont() {
+		$fontManager = FontManager::getInstance();
+		$family = $this->variables['wcfFontFamilyGoogle'];
+		if ($family) {
+			if (!$fontManager->isFamilyDownloaded($family)) {
+				try {
+					$fontManager->downloadFamily($family);
+				}
+				catch (FontDownloadFailed $e) {
+					throw new UserInputException('wcfFontFamilyGoogle', 'downloadFailed'.($e->getReason() ? '.'.$e->getReason() : ''));
+				}
+			}
+		}
 	}
 	
 	/**
@@ -352,6 +376,8 @@ class StyleAddForm extends AbstractForm {
 		}
 		
 		$this->validateApiVersion();
+		
+		$this->downloadGoogleFont();
 	}
 	
 	/**
@@ -547,7 +573,6 @@ class StyleAddForm extends AbstractForm {
 			'pageLogoHeight',
 			'pageLogoMobile',
 			'useFluidLayout',
-			'useGoogleFont',
 			'wcfFontFamilyGoogle',
 			'wcfFontFamilyFallback'
 		];
@@ -657,7 +682,8 @@ class StyleAddForm extends AbstractForm {
 			'tmpHash' => $this->tmpHash,
 			'variables' => $this->variables,
 			'supportedApiVersions' => Style::$supportedApiVersions,
-			'newVariables' => $this->newVariables
+			'newVariables' => $this->newVariables,
+			'scrollOffsets' => $this->scrollOffsets,
 		]);
 	}
 	

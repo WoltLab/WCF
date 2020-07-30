@@ -26,6 +26,11 @@ class PaidSubscriptionListPage extends AbstractPage {
 	public $neededModules = ['MODULE_PAID_SUBSCRIPTION'];
 	
 	/**
+	 * @inheritDoc
+	 */
+	public $neededPermissions = ['user.profile.payment.canBuyPaidSubscription'];
+	
+	/**
 	 * list of available paid subscriptions
 	 * @var	array
 	 */
@@ -43,7 +48,7 @@ class PaidSubscriptionListPage extends AbstractPage {
 	public function checkPermissions() {
 		parent::checkPermissions();
 		
-		if (WCF::getUser()->activationCode != 0) {
+		if (WCF::getUser()->pendingActivation()) {
 			throw new PermissionDeniedException();
 		}
 	}

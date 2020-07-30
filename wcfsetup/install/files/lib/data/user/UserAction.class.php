@@ -619,16 +619,76 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 	
 	/**
+	 * Validates the confirm email action.
+	 * @since       5.3
+	 */
+	public function validateConfirmEmail() {
+		$this->validateEnable();
+	}
+	
+	/**
+	 * Validates the unconfirm email action.
+	 * @since       5.3
+	 */
+	public function validateUnconfirmEmail() {
+		$this->validateEnable();
+	}
+	
+	/**
+	 * Marks the email address as confirmed. It also enables the user, iff the register method is user activation only.
+	 * @since       5.3
+	 */
+	public function confirmEmail() {
+		if (empty($this->objects)) $this->readObjects();
+		
+		(new UserAction($this->objects, 'update', [
+			'data' => [
+				'emailConfirmed' => null,
+			]
+		]))->executeAction();
+		
+		if (!(REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN)) {
+			$this->enable();
+		}
+		
+		$this->unmarkItems();
+	}
+	
+	/**
+	 * Marks the email address as unconfirmed.
+	 * @since       5.3
+	 */
+	public function unconfirmEmail() {
+		if (empty($this->objects)) $this->readObjects();
+		
+		foreach ($this->objects as $object) {
+			(new UserAction([$object], 'update', [
+				'data' => [
+					'emailConfirmed' => bin2hex(\random_bytes(20))
+				]
+			]))->executeAction();
+		}
+		
+		$this->unmarkItems();
+	}
+	
+	/**
 	 * Enables users.
 	 */
 	public function enable() {
 		if (empty($this->objects)) $this->readObjects();
 		
+		$data = [
+			'activationCode' => 0,
+			'blacklistMatches' => '',
+		];
+		
+		if (!(REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
+			$data['emailConfirmed'] = null;
+		}
+		
 		$action = new UserAction($this->objects, 'update', [
-			'data' => [
-				'activationCode' => 0,
-				'blacklistMatches' => '',
-			],
+			'data' => $data,
 			'removeGroups' => UserGroup::getGroupIDsByType([UserGroup::GUESTS])
 		]);
 		$action->executeAction();
@@ -668,9 +728,14 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	public function disable() {
 		if (empty($this->objects)) $this->readObjects();
 		
+		// We reset the activationCode (which indicates, that the user is not enabled) AND disable the email
+		// confirm status, because if the user can enable himself by an email confirmation and we do not reset 
+		// the email confirmed status, the behavior is undefined, because an user exists, which is not enabled
+		// but has a valid email address (Which doesn't usually happen). 
 		$action = new UserAction($this->objects, 'update', [
 			'data' => [
-				'activationCode' => UserRegistrationUtil::getActivationCode()
+				'activationCode' => UserRegistrationUtil::getActivationCode(),
+				'emailConfirmed' => bin2hex(\random_bytes(20)),
 			],
 			'removeGroups' => UserGroup::getGroupIDsByType([UserGroup::USERS])
 		]);
@@ -990,6 +1055,21 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 	
 	/**
+	 * @since 5.3
+	 */
+	public function validateSaveUserConsent() {}
+	
+	/**
+	 * @since 5.3
+	 */
+	public function saveUserConsent() {
+		$userEditor = new UserEditor(WCF::getUser());
+		$userEditor->updateUserOptions([
+			User::getUserOptionID('enableEmbeddedMedia') => 1,
+		]);
+	}
+	
+	/**
 	 * Validates the 'resendActivationMail' action.
 	 * 
 	 * @throws	IllegalLinkException
@@ -1004,12 +1084,13 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			throw new PermissionDeniedException();
 		}
 		
-		if (REGISTER_ACTIVATION_METHOD != 1) {
+		if (!(REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
 			throw new IllegalLinkException();
 		}  
 		
 		foreach ($this->objects as $object) {
-			if (!$object->activationCode) {
+			/** @var UserEditor $object */
+			if (!$object->canEmailConfirm()) {
 				throw new UserInputException('objectIDs');
 			}
 		}
@@ -1024,7 +1105,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		foreach ($this->objects as $object) {
 			$action = new UserAction([$object], 'update', [
 				'data' => [
-					'activationCode' => UserRegistrationUtil::getActivationCode()
+					'emailConfirmed' => bin2hex(\random_bytes(20))
 				]
 			]);
 			$action->executeAction();

@@ -3,7 +3,6 @@ namespace wcf\system\user\notification\event;
 use wcf\data\user\follow\UserFollow;
 use wcf\data\user\follow\UserFollowAction;
 use wcf\data\user\UserProfile;
-use wcf\system\request\LinkHandler;
 use wcf\system\user\notification\object\IUserNotificationObject;
 use wcf\system\user\notification\object\UserFollowUserNotificationObject;
 
@@ -11,7 +10,7 @@ use wcf\system\user\notification\object\UserFollowUserNotificationObject;
  * Notification event for followers.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Event
  * 
@@ -70,7 +69,7 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
 	 * @inheritDoc
 	 */
 	public function getLink() {
-		return LinkHandler::getInstance()->getLink('User', ['object' => $this->author]);
+		return $this->author->getLink();
 	}
 	
 	/**

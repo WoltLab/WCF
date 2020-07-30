@@ -21,7 +21,7 @@ use wcf\system\WCFACP;
  * Shows the user group option form to edit a single option.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -86,7 +86,7 @@ class UserGroupOptionForm extends AbstractForm {
 		
 		if (isset($_REQUEST['id'])) $this->userGroupOptionID = intval($_REQUEST['id']);
 		$this->userGroupOption = new UserGroupOption($this->userGroupOptionID);
-		if (!$this->userGroupOption) {
+		if (!$this->userGroupOption->optionID) {
 			throw new IllegalLinkException();
 		}
 		
@@ -117,7 +117,7 @@ class UserGroupOptionForm extends AbstractForm {
 		}
 		
 		// read accessible groups
-		$this->groups = UserGroup::getAccessibleGroups();
+		$this->groups = UserGroup::getSortedAccessibleGroups();
 		if ($this->userGroupOption->usersOnly) {
 			$guestGroup = UserGroup::getGroupByType(UserGroup::GUESTS);
 			if (isset($this->groups[$guestGroup->groupID])) {
@@ -152,13 +152,6 @@ class UserGroupOptionForm extends AbstractForm {
 		parent::validate();
 		
 		$this->errorType = [];
-		$isAdmin = false;
-		foreach (WCF::getUser()->getGroupIDs() as $groupID) {
-			if (UserGroup::getGroupByID($groupID)->isAdminGroup()) {
-				$isAdmin = true;
-				break;
-			}
-		}
 		
 		// validate option values
 		foreach ($this->values as $groupID => &$optionValue) {
@@ -175,7 +168,15 @@ class UserGroupOptionForm extends AbstractForm {
 				$this->errorType[$groupID] = $e->getType();
 			}
 			
-			if (!$isAdmin && $this->optionType->compare($optionValue, WCF::getSession()->getPermission($this->userGroupOption->optionName)) == 1) {
+			if (WCF::getUser()->hasOwnerAccess()) {
+				continue;
+			}
+			
+			if (WCF::getUser()->hasAdministrativeAccess() && (!ENABLE_ENTERPRISE_MODE || !in_array($this->userGroupOption->optionName, UserGroupOption::ENTERPRISE_BLACKLIST))) {
+				continue;
+			}
+			
+			if ($this->optionType->compare($optionValue, WCF::getSession()->getPermission($this->userGroupOption->optionName)) == 1) {
 				$this->errorType[$groupID] = 'exceedsOwnPermission';
 			}
 		}

@@ -101,6 +101,11 @@
 			<permissions>admin.configuration.package.canInstallPackage</permissions>
 			<icon>fa-plus</icon>
 		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.devtools.missingLanguageItem.list">
+			<controller>wcf\acp\page\DevtoolsMissingLanguageItemListPage</controller>
+			<parent>wcf.acp.menu.link.devtools</parent>
+			<permissions>admin.configuration.package.canInstallPackage</permissions>
+		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.devtools.notificationTest">
 			<controller>wcf\acp\page\DevtoolsNotificationTestPage</controller>
 			<parent>wcf.acp.menu.link.devtools</parent>
@@ -508,7 +513,6 @@
 		<acpmenuitem name="wcf.acp.menu.link.attachment.list">
 			<controller>wcf\acp\page\AttachmentListPage</controller>
 			<parent>wcf.acp.menu.link.attachment</parent>
-			<options>module_attachment</options>
 			<permissions>admin.attachment.canManageAttachment</permissions>
 		</acpmenuitem>
 		<!-- /attachment -->

@@ -131,7 +131,7 @@ define(["prism/prism"], function () {
 		},
 		punctuation: [
 			// open paren, brackets, and close paren
-			/(['`,]?\(|[)\[\]])/,
+			/(?:['`,]?\(|[)\[\]])/,
 			// cons
 			{
 				pattern: /(\s)\.(?=\s)/,

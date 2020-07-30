@@ -33,6 +33,11 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController {
 	/**
 	 * @inheritDoc
 	 */
+	protected $conditionDefinition = 'com.woltlab.wcf.box.userList.condition';
+	
+	/**
+	 * @inheritDoc
+	 */
 	public $defaultLimit = 5;
 	
 	/**

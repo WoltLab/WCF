@@ -80,12 +80,14 @@ class OptionHandler implements IOptionHandler {
 			'general.system.http',
 			'general.system.image',
 			'general.system.packageServer',
+			'general.system.proxy',
+			'general.system.search',
 			'module.development',
-			'security.general.secrets'
+			'security.general.secrets',
 		],
 		'options' => [
+			'mail_from_address',
 			'register_activation_method',
-			'search_engine'
 		]
 	];
 	

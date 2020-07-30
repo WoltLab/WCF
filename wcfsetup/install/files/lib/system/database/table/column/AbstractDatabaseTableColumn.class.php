@@ -176,6 +176,10 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn {
 			$column->autoIncrement($data['autoIncrement'] ?: null);
 		}
 		
+		if ($column instanceof ILengthDatabaseTableColumn) {
+			$column->length($data['length'] ?: null);
+		}
+		
 		if ($column instanceof IDecimalsDatabaseTableColumn) {
 			$column->decimals($data['decimals'] ?: null);
 		}
@@ -191,10 +195,6 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn {
 			}, $values);
 			
 			$column->enumValues($values);
-		}
-		
-		if ($column instanceof ILengthDatabaseTableColumn) {
-			$column->length($data['length'] ?: null);
 		}
 		
 		return $column;

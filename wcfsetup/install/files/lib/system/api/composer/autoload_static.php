@@ -4,11 +4,17 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit4a4e0e985ef68770d710dc260edc44ab
+class ComposerStaticInitf07e6bf6487a19c1ad4a7f66aa2be118
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
+        '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
+        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
+        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
+        'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -18,16 +24,22 @@ class ComposerStaticInit4a4e0e985ef68770d710dc260edc44ab
         ),
         'S' => 
         array (
+            'Symfony\\Polyfill\\Php72\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
+            'Symfony\\Polyfill\\Intl\\Idn\\' => 26,
             'Symfony\\Component\\CssSelector\\' => 30,
+            'ScssPhp\\ScssPhp\\' => 16,
         ),
         'P' => 
         array (
+            'Psr\\Http\\Message\\' => 17,
             'Pelago\\' => 7,
         ),
-        'L' => 
+        'G' => 
         array (
-            'Leafo\\ScssPhp\\' => 14,
+            'GuzzleHttp\\Psr7\\' => 16,
+            'GuzzleHttp\\Promise\\' => 19,
+            'GuzzleHttp\\' => 11,
         ),
     );
 
@@ -36,21 +48,45 @@ class ComposerStaticInit4a4e0e985ef68770d710dc260edc44ab
         array (
             0 => __DIR__ . '/..' . '/true/punycode/src',
         ),
+        'Symfony\\Polyfill\\Php72\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-php72',
+        ),
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
+        'Symfony\\Polyfill\\Intl\\Idn\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-intl-idn',
         ),
         'Symfony\\Component\\CssSelector\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/css-selector',
         ),
+        'ScssPhp\\ScssPhp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/scssphp/scssphp/src',
+        ),
+        'Psr\\Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
         'Pelago\\' => 
         array (
             0 => __DIR__ . '/..' . '/pelago/emogrifier/src',
         ),
-        'Leafo\\ScssPhp\\' => 
+        'GuzzleHttp\\Psr7\\' => 
         array (
-            0 => __DIR__ . '/..' . '/leafo/scssphp/src',
+            0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
+        ),
+        'GuzzleHttp\\Promise\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/promises/src',
+        ),
+        'GuzzleHttp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
     );
 
@@ -60,10 +96,6 @@ class ComposerStaticInit4a4e0e985ef68770d710dc260edc44ab
             'Parsedown' => 
             array (
                 0 => __DIR__ . '/..' . '/erusev/parsedown',
-            ),
-            'PEAR' => 
-            array (
-                0 => __DIR__ . '/..' . '/pear/pear_exception',
             ),
         ),
         'N' => 
@@ -83,16 +115,17 @@ class ComposerStaticInit4a4e0e985ef68770d710dc260edc44ab
     );
 
     public static $classMap = array (
+        'PEAR_Exception' => __DIR__ . '/..' . '/pear/pear_exception/PEAR/Exception.php',
         'PHP_ICO' => __DIR__ . '/..' . '/chrisjean/php-ico/class-php-ico.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit4a4e0e985ef68770d710dc260edc44ab::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit4a4e0e985ef68770d710dc260edc44ab::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit4a4e0e985ef68770d710dc260edc44ab::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit4a4e0e985ef68770d710dc260edc44ab::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitf07e6bf6487a19c1ad4a7f66aa2be118::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitf07e6bf6487a19c1ad4a7f66aa2be118::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitf07e6bf6487a19c1ad4a7f66aa2be118::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitf07e6bf6487a19c1ad4a7f66aa2be118::$classMap;
 
         }, null, ClassLoader::class);
     }

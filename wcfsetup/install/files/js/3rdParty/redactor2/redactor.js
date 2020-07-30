@@ -25,6 +25,15 @@
 	
 	var uuid = 0;
 	
+	var Environment = null;
+	if (typeof window.require === 'function') {
+		// Load the Environment class for a better browser detection, guarded by a function check
+		// to avoid bricking any calls to this file in a different context.
+		require(['Environment'], function(Env) {
+			Environment = Env;
+		});
+	}
+	
 	// Plugin
 	$.fn.redactor = function (options) {
 		var val = [];
@@ -2644,7 +2653,7 @@
 							}
 						}
 					});
-
+					
 					// lists
 					var lastList = false;
 					var lastLevel = 1;
@@ -5713,9 +5722,13 @@
 					
 					// on Shift+Enter or Ctrl+Enter
 					if (key === this.keyCode.ENTER && (e.ctrlKey || e.shiftKey)) {
-						e.preventDefault();
-						
-						return this.keydown.onShiftEnter(e);
+						// iOS Safari will report the shift key to be pressed, if the caret is at the
+						// front of the line and the next character should be an uppercase character.
+						if (Environment === null || Environment.platform() !== 'ios') {
+							e.preventDefault();
+
+							return this.keydown.onShiftEnter(e);
+						}
 					}
 					
 					// on enter
@@ -6340,8 +6353,25 @@
 						this.selection.restore();
 					}
 					else {
-						this.core.editor().html(this.opts.emptyHtml);
-						this.focus.start();
+						var updateHtml = function() {
+							this.core.editor().html(this.opts.emptyHtml);
+							this.focus.start();
+						}.bind(this);
+						
+						if (Environment !== null && Environment.platform() === 'ios') {
+							// In iOS Safari the backspace sometimes appears to be triggered twice if the editor
+							// is completely empty. After debugging for way too much time, and realizing that
+							// the remote debugger's breakpoints alter the behavior of async callbacks (*), this
+							// should solve the issue.
+							//
+							// (*) Set up a `console.log()` inside a MutationObserver and then make use of the
+							// `debugger;` statement to halt the execution flow. The observer is executed, but
+							// the output never appears on the console. Output works if there is no breakpoint.
+							setTimeout(updateHtml, 50);
+						}
+						else {
+							updateHtml();
+						}
 					}
 					
 					return false;

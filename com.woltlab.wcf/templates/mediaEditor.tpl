@@ -1,3 +1,7 @@
+<ul class="mediaEditorButtons buttonGroup">
+	<li><div class="mediaManagerMediaReplaceButton"></div></li>
+</ul>
+
 {if $media->isImage && $media->hasThumbnail('small')}
 	<div class="mediaThumbnail">
 		{@$media->getThumbnailTag('small')}
@@ -24,7 +28,7 @@
 		{/if}
 		
 		<dt>{lang}wcf.media.uploader{/lang}</dt>
-		<dd id="mediaUploader">{@$media->getUserProfile()->getAnchorTag()}</dd>
+		<dd id="mediaUploader">{user object=$media->getUserProfile()}</dd>
 		
 		<dt>{lang}wcf.media.downloads{/lang}</dt>
 		<dd id="mediaDownloads">{#$media->downloads}</dd>

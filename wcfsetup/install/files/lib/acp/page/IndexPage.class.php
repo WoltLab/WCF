@@ -1,19 +1,21 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\user\User;
+use wcf\data\devtools\missing\language\item\DevtoolsMissingLanguageItemList;
 use wcf\page\AbstractPage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\OptionCacheBuilder;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\io\RemoteFile;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Shows the welcome page in admin control panel.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Page
  */
@@ -57,12 +59,18 @@ class IndexPage extends AbstractPage {
 		parent::assignVariables();
 		
 		$usersAwaitingApproval = 0;
-		if (REGISTER_ACTIVATION_METHOD == 2) {
+		if (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) {
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('activationCode <> ?', [0]);
+			if (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER) {
+				$conditionBuilder->add('emailConfirmed IS NULL');
+			}
+			
 			$sql = "SELECT	COUNT(*)
-				FROM	wcf".WCF_N."_user
-				WHERE	activationCode <> 0";
+				FROM	wcf".WCF_N."_user ".
+				$conditionBuilder;
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute();
+			$statement->execute($conditionBuilder->getParameters());
 			$usersAwaitingApproval = $statement->fetchSingleColumn();
 		}
 		
@@ -121,7 +129,15 @@ class IndexPage extends AbstractPage {
 			&& file_exists(WCF_DIR . 'log/missingLanguageItems.txt')
 			&& filesize(WCF_DIR . 'log/missingLanguageItems.txt') > 0
 		) {
-			$missingLanguageItemsMTime = filemtime(WCF_DIR . 'log/missingLanguageItems.txt');
+			$logList = new DevtoolsMissingLanguageItemList();
+			$logList->sqlOrderBy = 'lastTime DESC';
+			$logList->sqlLimit = 1;
+			$logList->readObjects();
+			$logEntry = $logList->getSingleObject();
+			
+			if ($logEntry !== null) {
+				$missingLanguageItemsMTime = $logEntry->lastTime;
+			}
 		}
 		
 		WCF::getTPL()->assign([

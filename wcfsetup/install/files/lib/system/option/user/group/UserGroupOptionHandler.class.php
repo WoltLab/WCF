@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\option\user\group;
 use wcf\data\option\Option;
+use wcf\data\user\group\option\UserGroupOption;
 use wcf\data\user\group\UserGroup;
 use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
 use wcf\system\exception\ImplementationException;
@@ -147,32 +148,17 @@ class UserGroupOptionHandler extends OptionHandler {
 	protected function validateOption(Option $option) {
 		parent::validateOption($option);
 		
-		if (!$this->isAdmin()) {
-			// get type object
-			$typeObj = $this->getTypeObject($option->optionType);
-			
-			if ($typeObj->compare($this->optionValues[$option->optionName], WCF::getSession()->getPermission($option->optionName)) == 1) {
-				throw new UserInputException($option->optionName, 'exceedsOwnPermission');
-			}
+		if ($this->isOwner()) {
+			return;
 		}
-		else if (!$this->isOwner() && $option->optionName == 'admin.user.accessibleGroups' && $this->group !== null && $this->group->isAdminGroup()) {
-			$hasOtherAdminGroup = false;
-			foreach (UserGroup::getGroupsByType() as $userGroup) {
-				if ($userGroup->groupID != $this->group->groupID && $userGroup->isAdminGroup()) {
-					$hasOtherAdminGroup = true;
-					break;
-				}
-			}
-			
-			// prevent users from dropping their own admin state
-			if (!$hasOtherAdminGroup) {
-				// get type object
-				$typeObj = $this->getTypeObject($option->optionType);
-				
-				if ($typeObj->compare($this->optionValues[$option->optionName], WCF::getSession()->getPermission($option->optionName)) == -1) {
-					throw new UserInputException($option->optionName, 'cannotDropPrivileges');
-				}
-			}
+		
+		if ($this->isAdmin() && (!ENABLE_ENTERPRISE_MODE || !in_array($option->optionName, UserGroupOption::ENTERPRISE_BLACKLIST))) {
+			return;
+		}
+		
+		$typeObj = $this->getTypeObject($option->optionType);
+		if ($typeObj->compare($this->optionValues[$option->optionName], WCF::getSession()->getPermission($option->optionName)) == 1) {
+			throw new UserInputException($option->optionName, 'exceedsOwnPermission');
 		}
 	}
 }

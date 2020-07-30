@@ -21,6 +21,11 @@ class ArticleAmpPage extends AbstractArticlePage {
 	public $templateName = 'ampArticle';
 	
 	/**
+	 * @inheritDoc
+	 */
+	public $neededModules = ['MODULE_ARTICLE', 'MODULE_AMP'];
+	
+	/**
 	 * list of additional articles
 	 * @var ViewableArticle[]
 	 */

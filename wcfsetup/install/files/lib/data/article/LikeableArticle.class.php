@@ -1,6 +1,11 @@
 <?php
 namespace wcf\data\article;
+use wcf\data\like\Like;
 use wcf\data\like\object\AbstractLikeObject;
+use wcf\data\reaction\object\IReactionObject;
+use wcf\system\user\notification\object\LikeUserNotificationObject;
+use wcf\system\user\notification\UserNotificationHandler;
+use wcf\system\WCF;
 
 /**
  * Likeable object implementation for cms articles.
@@ -14,7 +19,7 @@ use wcf\data\like\object\AbstractLikeObject;
  * @method	Article	getDecoratedObject()
  * @mixin	Article
  */
-class LikeableArticle extends AbstractLikeObject {
+class LikeableArticle extends AbstractLikeObject implements IReactionObject {
 	/**
 	 * @inheritDoc
 	 */
@@ -64,5 +69,21 @@ class LikeableArticle extends AbstractLikeObject {
 	 */
 	public function getLanguageID() {
 		return null;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function sendNotification(Like $like) {
+		if ($this->getDecoratedObject()->userID != WCF::getUser()->userID) {
+			$notificationObject = new LikeUserNotificationObject($like);
+			UserNotificationHandler::getInstance()->fireEvent(
+				'like',
+				'com.woltlab.wcf.likeableArticle.notification',
+				$notificationObject,
+				[$this->getDecoratedObject()->userID],
+				['objectID' => $this->getDecoratedObject()->entryID]
+			);
+		}
 	}
 }

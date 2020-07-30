@@ -19,6 +19,17 @@ class DecimalDatabaseTableColumn extends AbstractDecimalDatabaseTableColumn {
 	/**
 	 * @inheritDoc
 	 */
+	public function decimals($decimals) {
+		if ($this->getLength() === null) {
+			throw new \BadMethodCallException("Before setting the decimals, the length has to be set.");
+		}
+		
+		return parent::decimals($decimals);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function getMaximumDecimals() {
 		return 30;
 	}

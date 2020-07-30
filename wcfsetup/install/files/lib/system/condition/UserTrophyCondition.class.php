@@ -10,6 +10,7 @@ use wcf\data\DatabaseObjectList;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
+use wcf\util\StringUtil;
 
 /**
  * Condition implementation for trophies.
@@ -65,7 +66,7 @@ class UserTrophyCondition extends AbstractMultipleFieldsCondition implements ICo
 		}
 		
 		if (isset($conditionData['userTrophyIDs'])) {
-			$objectList->getConditionBuilder()->add('user_table.userID IN (SELECT userID FROM wcf'.WCF_N.'_user_trophy WHERE trophyID IN (?) GROUP BY userID HAVING COUNT(userID) = ?)', [$conditionData['userTrophyIDs'], count($conditionData['userTrophyIDs'])]);
+			$objectList->getConditionBuilder()->add('user_table.userID IN (SELECT userID FROM wcf'.WCF_N.'_user_trophy WHERE trophyID IN (?) GROUP BY userID HAVING COUNT(DISTINCT trophyID) = ?)', [$conditionData['userTrophyIDs'], count($conditionData['userTrophyIDs'])]);
 		}
 		if (isset($conditionData['notUserTrophyIDs'])) {
 			$objectList->getConditionBuilder()->add('user_table.userID NOT IN (SELECT userID FROM wcf'.WCF_N.'_user_trophy WHERE trophyID IN (?))', [$conditionData['notUserTrophyIDs']]);
@@ -150,7 +151,7 @@ HTML;
 		$returnValue = "";
 		foreach ($trophies as $trophy) {
 			/** @noinspection PhpVariableVariableInspection */
-			$returnValue .= "<label><input type=\"checkbox\" name=\"".$identifier."[]\" value=\"".$trophy->trophyID."\"".(in_array($trophy->trophyID, $this->$identifier) ? ' checked' : "")."> ".$trophy->getTitle()."</label>";
+			$returnValue .= "<label><input type=\"checkbox\" name=\"".$identifier."[]\" value=\"".$trophy->trophyID."\"".(in_array($trophy->trophyID, $this->$identifier) ? ' checked' : "")."> " . StringUtil::encodeHTML($trophy->getTitle()) . "</label>";
 		}
 		
 		return $returnValue;

@@ -58,10 +58,17 @@ class RemoteFile extends File {
 		if (!preg_match('/^[a-z0-9]+:/', $this->host)) $this->host = 'tcp://'.$this->host;
 		
 		$context = stream_context_create($options);
-		$this->resource = @stream_socket_client($this->host.':'.$this->port, $this->errorNumber, $this->errorDesc, $timeout, STREAM_CLIENT_CONNECT, $context);
-		if ($this->resource === false) {
-			throw new SystemException('Can not connect to ' . $host, 0, $this->errorDesc);
+		try {
+			$this->resource = stream_socket_client($this->host.':'.$this->port, $this->errorNumber, $this->errorDesc, $timeout, STREAM_CLIENT_CONNECT, $context);
+			if ($this->resource === false) {
+				throw new \Exception('stream_socket_client returned false: ' . $this->errorDesc, $this->errorNumber);
+			}
 		}
+		catch (\Exception $e) {
+			throw new SystemException('Can not connect to ' . $host, 0, $this->errorDesc, $e);
+		}
+		
+		stream_set_timeout($this->resource, $timeout);
 	}
 	
 	/**
@@ -97,12 +104,17 @@ class RemoteFile extends File {
 		// PHP 5.6.8+ defines STREAM_CRYPTO_METHOD_TLS_CLIENT as STREAM_CRYPTO_METHOD_TLSv1_0_CLIENT for BC reasons.
 		// STREAM_CRYPTO_METHOD_TLS_ANY_CLIENT was introduced in PHP 5.6.8, but is not exposed to userland. Try to use
 		// it for forward compatibility.
-		if (defined('STREAM_CRYPTO_METHOD_TLS_ANY_CLIENT')) $cryptoType = STREAM_CRYPTO_METHOD_TLS_ANY_CLIENT;
+		// 
+		// As of PHP 7.2+ STREAM_CRYPTO_METHOD_TLS_CLIENT is equivalent to STREAM_CRYPTO_METHOD_TLS_ANY_CLIENT.
+		// see: https://wiki.php.net/rfc/improved-tls-constants
+		// see: https://github.com/php/php-src/blob/197cac65fdf712effb19ad3e40688ceb7ebc7f7d/main/streams/php_stream_transport.h#L173-L175
+		if (defined('STREAM_CRYPTO_METHOD_TLS_ANY_CLIENT')) $cryptoType |= STREAM_CRYPTO_METHOD_TLS_ANY_CLIENT;
 		
 		// Add bits for all known TLS versions for the reasons above.
 		if (defined('STREAM_CRYPTO_METHOD_TLSv1_0_CLIENT')) $cryptoType |= STREAM_CRYPTO_METHOD_TLSv1_0_CLIENT;
 		if (defined('STREAM_CRYPTO_METHOD_TLSv1_1_CLIENT')) $cryptoType |= STREAM_CRYPTO_METHOD_TLSv1_1_CLIENT;
 		if (defined('STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT')) $cryptoType |= STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT;
+		if (defined('STREAM_CRYPTO_METHOD_TLSv1_3_CLIENT')) $cryptoType |= STREAM_CRYPTO_METHOD_TLSv1_3_CLIENT;
 		
 		return stream_socket_enable_crypto($this->resource, $enable, $cryptoType);
 	}

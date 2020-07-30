@@ -99,7 +99,6 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction {
 		$getRenderedException = function($e) {
 			\wcf\functions\exception\logThrowable($e);
 			
-			// TODO: output could/should be improved in the future
 			return $e->getMessage();
 		};
 		

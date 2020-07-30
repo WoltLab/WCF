@@ -378,6 +378,7 @@ define(
 			if (options.closable) {
 				var closeButton = elCreate('a');
 				closeButton.className = 'dialogCloseButton jsTooltip';
+				closeButton.href = '#';
 				elAttr(closeButton, 'role', 'button');
 				elAttr(closeButton, 'tabindex', '0');
 				elAttr(closeButton, 'title', options.closeButtonLabel);
@@ -675,11 +676,14 @@ define(
 			// Chrome and Safari use heavy anti-aliasing when the dialog's width
 			// cannot be evenly divided, causing the whole text to become blurry
 			if (Environment.browser() === 'chrome' || Environment.browser() === 'safari') {
-				// `clientWidth` will report an integer value that isn't rounded properly (e.g. 0.59 -> 0)
-				var floatWidth = parseFloat(window.getComputedStyle(data.content).width);
-				var needsFix = (Math.round(floatWidth) % 2) !== 0;
-				
-				data.content.parentNode.classList[(needsFix ? 'add' : 'remove')]('jsWebKitFractionalPixel');
+				// The new Microsoft Edge is detected as "chrome", because effectively we're detecting
+				// Chromium rather than Chrome specifically. The workaround for fractional pixels does
+				// not work well in Edge, there seems to be a different logic for fractional positions,
+				// causing the text to be blurry.
+				// 
+				// We can use `backface-visibility: hidden` to prevent the anti aliasing artifacts in
+				// WebKit/Blink, which will also prevent some weird font rendering issues when resizing.
+				data.content.parentNode.classList.add('jsWebKitFractionalPixelFix');
 			}
 			
 			var callbackObject = _dialogToObject.get(id);
@@ -836,6 +840,8 @@ define(
 				}
 			}
 			
+			UiScreen.pageOverlayClose();
+			
 			if (_activeDialog === null) {
 				elAttr(_container, 'aria-hidden', 'true');
 				elData(_container, 'close-on-click', 'false');
@@ -843,8 +849,6 @@ define(
 				if (data.closable) {
 					window.removeEventListener('keyup', _keyupListener);
 				}
-				
-				UiScreen.pageOverlayClose();
 			}
 			else {
 				data = _dialogs.get(_activeDialog);
@@ -893,7 +897,13 @@ define(
 					this.close(id);
 				}
 				
-				_dialogs.delete(id);
+				// If the dialog is destroyed in the close callback, this method is
+				// called twice resulting in `_dialogs.get(id)` being undefined for
+				// the initial call.
+				if (_dialogs.has(id)) {
+					elRemove(_dialogs.get(id).dialog);
+					_dialogs.delete(id);
+				}
 				_dialogObjects.delete(callbackObject);
 			}
 		},

@@ -4,7 +4,7 @@
 			*}type="radio" {*
 			*}name="{@$field->getPrefixedId()}" {*
 			*}value="{$__fieldValue}"{*
-			*}{if $field->getValue() === $__fieldValue} checked{/if}{*
+			*}{if $field->getValue() !== null && $field->getValue() == $__fieldValue} checked{/if}{*
 			*}{if $field->isImmutable()} disabled{/if}{*
 		*}> {@$__fieldLabel}
 	</label>

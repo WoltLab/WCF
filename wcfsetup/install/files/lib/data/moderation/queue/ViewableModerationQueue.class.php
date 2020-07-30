@@ -157,9 +157,8 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
 		$queueList->getConditionBuilder()->add("moderation_queue.queueID = ?", [$queueID]);
 		$queueList->sqlLimit = 1;
 		$queueList->readObjects();
-		$queues = $queueList->getObjects();
 		
-		return (isset($queues[$queueID]) ? $queues[$queueID] : null);
+		return $queueList->getSingleObject();
 	}
 	
 	/**

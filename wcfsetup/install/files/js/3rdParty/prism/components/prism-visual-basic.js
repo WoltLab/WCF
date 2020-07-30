@@ -1,7 +1,7 @@
 define(["prism/prism"], function () {
 Prism.languages['visual-basic'] = {
 	'comment': {
-		pattern: /(?:['‘’]|REM\b).*/i,
+		pattern: /(?:['‘’]|REM\b)(?:[^\r\n_]|_(?:\r\n?|\n)?)*/i,
 		inside: {
 			'keyword': /^REM/i
 		}
@@ -12,7 +12,7 @@ Prism.languages['visual-basic'] = {
 		greedy: true
 	},
 	'string': {
-		pattern: /["“”](?:["“”]{2}|[^"“”])*["“”]C?/i,
+		pattern: /\$?["“”](?:["“”]{2}|[^"“”])*["“”]C?/i,
 		greedy: true
 	},
 	'date': {
@@ -33,4 +33,5 @@ Prism.languages['visual-basic'] = {
 };
 
 Prism.languages.vb = Prism.languages['visual-basic'];
+
 return Prism; })

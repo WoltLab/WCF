@@ -212,7 +212,7 @@ if (isset($_GET['language']) && in_array($_GET['language'], ['de', 'en'])) {
 	<main>
 <?php
 const WSC_SRT_VERSION = '5.2.0';
-$requiredExtensions = ['dom', 'json', 'hash', 'libxml', 'mbstring', 'pcre', 'pdo', 'pdo_mysql', 'zlib'];
+$requiredExtensions = ['ctype', 'dom', 'json', 'hash', 'libxml', 'mbstring', 'pcre', 'pdo', 'pdo_mysql', 'zlib'];
 $requiredPHPVersion = '7.0.22';
 $phrases = [
 	'php_requirements' => [
@@ -254,6 +254,10 @@ $phrases = [
 	'php_memory_limit_failure' => [
 		'de' => 'Arbeitsspeicher-Limit %s ist nicht ausreichend. 128M oder mehr wird benötigt.',
 		'en' => 'Memory limit %s is too low. It needs to be set to 128M or more.',
+	],
+	'php_opcache_failure' => [
+		'de' => 'OPcache ist aktiviert aber die erforderlichen Verwaltungsfunktionen (opcache_reset, opcache_invalidate) sind deaktiviert.',
+		'en' => 'OPcache is enabled but the required management functions (opcache_reset, opcache_invalidate) are disabled.',
 	],
 	'mysql_requirements' => [
 		'de' => 'MySQL',
@@ -335,7 +339,7 @@ function checkHashAlgorithms() {
 function checkResult() {
 	global $requiredExtensions;
 	
-	if (!checkPHPVersion() || !checkHashAlgorithms() || !checkMemoryLimit()) return false;
+	if (!checkPHPVersion() || !checkHashAlgorithms() || !checkMemoryLimit() || !checkOpcache()) return false;
 	
 	foreach ($requiredExtensions as $extension) {
 		if (!extension_loaded($extension)) return false;
@@ -347,6 +351,15 @@ function checkResult() {
 }
 function checkInstallFile() {
 	return @file_exists('install.php');
+}
+function checkOpcache() {
+	if (extension_loaded('Zend Opcache') && @ini_get('opcache.enable')) {
+		if (!function_exists('\opcache_reset') || !function_exists('\opcache_invalidate')) {
+			return false;
+		}
+	}
+	
+	return true;
 }
 ?>
 		<h2>WoltLab Suite System Requirements Test</h2>
@@ -386,6 +399,10 @@ function checkInstallFile() {
 				<li class="success"><?=getPhrase('php_memory_limit_success', [ini_get('memory_limit')])?></li>
 			<?php } else { ?>
 				<li class="failure"><?=getPhrase('php_memory_limit_failure', [ini_get('memory_limit')])?></li>
+			<?php } ?>
+			
+			<?php if (!checkOpcache()) { ?>
+				<li class="failure"><?=getPhrase('php_opcache_failure')?></li>
 			<?php } ?>
 		</ul>
 		

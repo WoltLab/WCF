@@ -1,6 +1,6 @@
 <?php
 namespace wcf\acp\page;
-use wcf\data\cronjob\CronjobList;
+use wcf\data\cronjob\I18nCronjobList;
 use wcf\page\SortablePage;
 
 /**
@@ -11,7 +11,7 @@ use wcf\page\SortablePage;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Page
  * 
- * @property	CronjobList	$objectList
+ * @property	I18nCronjobList	$objectList
  */
 class CronjobListPage extends SortablePage {
 	/**
@@ -27,7 +27,7 @@ class CronjobListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $defaultSortField = 'cronjobID';
+	public $defaultSortField = 'descriptionI18n';
 	
 	/**
 	 * @inheritDoc
@@ -37,12 +37,12 @@ class CronjobListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $validSortFields = ['cronjobID', 'nextExec', 'startMinute', 'startHour', 'startDom', 'startMonth', 'startDow'];
+	public $validSortFields = ['cronjobID', 'nextExec', 'startMinute', 'startHour', 'startDom', 'startMonth', 'startDow', 'descriptionI18n'];
 	
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = CronjobList::class;
+	public $objectListClassName = I18nCronjobList::class;
 	
 	/**
 	 * @inheritDoc

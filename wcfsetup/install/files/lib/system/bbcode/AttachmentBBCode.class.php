@@ -107,7 +107,7 @@ class AttachmentBBCode extends AbstractBBCode {
 						$class = 'messageFloatObject'.ucfirst($alignment);
 					}
 					
-					$source = StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment]));
+					$source = StringUtil::encodeHTML($attachment->getLink());
 					$title = StringUtil::encodeHTML($attachment->filename);
 					
 					if ($parser instanceof HtmlBBCodeParser && $parser->getIsGoogleAmp()) {
@@ -160,14 +160,18 @@ class AttachmentBBCode extends AbstractBBCode {
 			else if (substr($attachment->fileType, 0, 6) === 'video/' && $parser->getOutputType() == 'text/html') {
 				return WCF::getTPL()->fetch('__videoAttachmentBBCode', 'wcf', [
 					'attachment' => $attachment,
-					'attachmentIdentifier' => StringUtil::getRandomID()
+					'attachmentIdentifier' => StringUtil::getRandomID(),
+				]);
+			}
+			else if (substr($attachment->fileType, 0, 6) === 'audio/' && $parser->getOutputType() == 'text/html') {
+				return WCF::getTPL()->fetch('__audioAttachmentBBCode', 'wcf', [
+					'attachment' => $attachment,
+					'attachmentIdentifier' => StringUtil::getRandomID(),
 				]);
 			}
 			else {
 				// file
-				return StringUtil::getAnchorTag(LinkHandler::getInstance()->getLink('Attachment', [
-					'object' => $attachment
-				]), $attachment->filename);
+				return StringUtil::getAnchorTag($attachment->getLink(), $attachment->filename);
 			}
 		}
 		

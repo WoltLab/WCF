@@ -7,7 +7,7 @@
 		{if $__wcf->user->userID}
 			<!-- user menu -->
 			<li id="userMenu">
-				<a class="jsTooltip" href="{link controller='User' object=$__wcf->user}{/link}" title="{lang}wcf.user.controlPanel{/lang}">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)} <span>{lang}wcf.user.userNote{/lang}</span></a>
+				<a class="jsTooltip" href="{$__wcf->user->getLink()}" title="{lang}wcf.user.controlPanel{/lang}">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)} <span>{lang}wcf.user.userNote{/lang}</span></a>
 				<div class="interactiveDropdown interactiveDropdownStatic interactiveDropdownUserMenu">
 					<div class="interactiveDropdownHeader">
 						<span class="interactiveDropdownTitle">{lang}wcf.user.controlPanel{/lang}</span>
@@ -24,11 +24,11 @@
 						<ul class="interactiveDropdownItems interactiveDropdownItemsUserMenu">
 							<li>
 								<div class="box48">
-									<a href="{link controller='User' object=$__wcf->user}{/link}" aria-hidden="true">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(48)}</a>
+									{user object=$__wcf->getUserProfileHandler()->getUserProfile() type='avatar48' ariaHidden='true'}
 									
 									<div class="containerHeadline">
 										<h3>
-											<a href="{link controller='User' object=$__wcf->user}{/link}">{$__wcf->user->username}</a>
+											{user object=$__wcf->getUserProfileHandler()->getUserProfile()}
 											{if MODULE_USER_RANK}
 												{if $__wcf->getUserProfileHandler()->getUserTitle()}
 													<span class="badge userTitleBadge{if $__wcf->getUserProfileHandler()->getRank() && $__wcf->getUserProfileHandler()->getRank()->cssClassName} {@$__wcf->getUserProfileHandler()->getRank()->cssClassName}{/if}">{$__wcf->getUserProfileHandler()->getUserTitle()}</span>
@@ -40,7 +40,7 @@
 										</h3>
 										
 										<ul class="inlineList dotSeparated">
-											<li><a href="{link controller='User' object=$__wcf->user}{/link}">{lang}wcf.user.myProfile{/lang}</a></li>
+											<li><a href="{$__wcf->user->getLink()}">{lang}wcf.user.myProfile{/lang}</a></li>
 											{if $__wcf->getUserProfileHandler()->canEditOwnProfile()}<li><a href="{link controller='User' object=$__wcf->user}editOnInit=true#about{/link}" class="jsUserPanelEditProfile">{lang}wcf.user.editProfile{/lang}</a></li>{/if}
 											{if $__wcf->session->getPermission('admin.general.canUseAcp')}<li><a href="{link isACP=true}{/link}">{lang}wcf.global.acp.short{/lang}</a></li>{/if}
 										</ul>

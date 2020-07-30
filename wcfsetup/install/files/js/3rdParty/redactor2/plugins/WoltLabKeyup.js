@@ -43,6 +43,17 @@ $.Redactor.prototype.WoltLabKeyup = function() {
 				}
 			}
 			
+			// Chromium browsers will cripple a nested list when exiting with [Enter], causing lists
+			// to become siblings of the previously parent <li>. This leads to situations where the
+			// code `<li><ul /></li>` ends up as `<li /><ul />` (HTML shortened for brevity).
+			var listItem = elClosest(selection.anchorNode, 'li');
+			if (listItem !== null && editor.contains(listItem)) {
+				var previousList = listItem.previousElementSibling;
+				if (previousList !== null && (previousList.nodeName === 'OL' || previousList.nodeName === 'UL')) {
+					previousList.previousElementSibling.appendChild(previousList);
+				}
+			}
+			
 			var node = selection.anchorNode;
 			while (node.parentNode) {
 				if (node.parentNode === editor) {

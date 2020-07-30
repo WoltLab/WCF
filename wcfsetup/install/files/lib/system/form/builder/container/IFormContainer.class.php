@@ -16,6 +16,14 @@ use wcf\system\form\builder\IFormParentNode;
  */
 interface IFormContainer extends IFormChildNode, IFormElement, IFormParentNode {
 	/**
+	 * Returns `true` if the whole container should be marked as required in the form output.
+	 * 
+	 * @return	bool
+	 * @since	5.3
+	 */
+	public function markAsRequired();
+	
+	/**
 	 * Informs the form container of the updated object and this method is called by
 	 * `IFormDocument::updatedObject()` to inform the container that object data is being loaded.
 	 * 

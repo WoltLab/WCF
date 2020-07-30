@@ -4,6 +4,7 @@ use wcf\data\article\category\ArticleCategory;
 use wcf\data\category\CategoryList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObject;
+use wcf\data\page\PageCache;
 
 /**
  * Article category sitemap implementation.
@@ -45,6 +46,6 @@ class ArticleCategorySitemapObject extends AbstractSitemapObjectObjectType {
 	 * @inheritDoc
 	 */
 	public function isAvailableType() {
-		return MODULE_ARTICLE;
+		return MODULE_ARTICLE && PageCache::getInstance()->getPageByIdentifier('com.woltlab.wcf.CategoryArticleList')->allowSpidersToIndex;
 	}
 }

@@ -32,7 +32,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		$styleEditor = StyleHandler::getInstance()->getStyleByName($this->installation->getPackageName(), false);
 		
 		// import style
-		$style = StyleEditor::import($filename, $this->installation->getPackageID(), $styleEditor);
+		$style = StyleEditor::import($filename, $this->installation->getPackageID(), $styleEditor, !PACKAGE_ID);
 		
 		// set style as default
 		if (isset($this->instruction['attributes']['default'])) {
@@ -69,11 +69,10 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			$styleList->sqlOrderBy = 'style.styleID ASC';
 			$styleList->sqlLimit = 1;
 			$styleList->readObjects();
-			$styles = $styleList->getObjects();
+			$style = $styleList->getSingleObject();
 			
-			if (!empty($styles)) {
-				$styleEditor = new StyleEditor(current($styles));
-				$styleEditor->setAsDefault();
+			if ($style !== null) {
+				(new StyleEditor($style))->setAsDefault();
 			}
 		}
 	}

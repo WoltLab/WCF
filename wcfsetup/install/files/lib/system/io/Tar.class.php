@@ -180,14 +180,10 @@ class Tar implements IArchive {
 		$this->file->seek($header['offset']);
 		
 		// read data
-		$content = '';
-		$n = floor($header['size'] / 512);
-		for ($i = 0; $i < $n; $i++) {
-			$content .= $this->file->read(512);
-		}
-		if (($header['size'] % 512) != 0) {
-			$buffer = $this->file->read(512);
-			$content .= substr($buffer, 0, $header['size'] % 512);
+		$content = $this->file->read($header['size']);
+		
+		if (strlen($content) != $header['size']) {
+			throw new SystemException("Could not untar file '".$header['filename']."' to string. Maybe the archive is truncated?");
 		}
 		
 		return $content;
@@ -314,7 +310,7 @@ class Tar implements IArchive {
 		$data = unpack($format, $binaryData);
 		
 		// Extract the properties
-		$header['checksum'] = octdec(trim($data['checksum']));
+		$header['checksum'] = @octdec(trim($data['checksum']));
 		if ($header['checksum'] == $checksum) {
 			$header['filename'] = trim($data['filename']);
 			$header['mode'] = octdec(trim($data['mode']));

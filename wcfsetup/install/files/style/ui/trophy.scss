@@ -19,23 +19,24 @@
 .trophyIcon {
 	display: inline-block;
 	border-radius: 50%;
-	font-size: 27px;
 	
-	/* Factor: 0.5625 */
-	&.icon16 {
-		font-size: 9px;
-	}
-	
-	&.icon32 {
-		font-size: 18px;
-	}
-	
-	&.icon64 {
-		font-size: 36px;
-	}
-	
-	&.icon144 {
-		font-size: 81px;
+	&.icon {
+		/* Factor: 0.5625 */
+		&.icon16 {
+			font-size: 9px;
+		}
+		
+		&.icon32 {
+			font-size: 18px;
+		}
+		
+		&.icon64 {
+			font-size: 36px;
+		}
+		
+		&.icon144 {
+			font-size: 81px;
+		}
 	}
 }
 
@@ -59,14 +60,19 @@
 	}
 }
 
+/* trophies in message sidebar */
 .specialTrophyContainer {
 	margin-top: 10px;
 	
 	> ul {
 		display: flex;
 		justify-content: center;
+		flex-wrap: wrap;
+		margin-bottom: -5px;
+		margin-right: -5px;
 		
-		> li:not(:last-child) {
+		> li {
+			margin-bottom: 5px;
 			margin-right: 5px;
 		}
 	}
@@ -78,12 +84,16 @@
 	}
 }
 
+/* trophies in user profile header */
 .specialTrophyUserContainer > ul {
+	align-items: center;
 	display: flex;
+	flex-wrap: wrap;
+	margin-right: -5px;
 	margin-top: -15px;
-	margin-bottom: 5px;
 	
-	> li:not(:last-child) {
+	> li {
+		margin-bottom: 5px;
 		margin-right: 5px;
 	}
 }

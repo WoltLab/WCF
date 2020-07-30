@@ -64,7 +64,7 @@ define(["prism/prism","prism/components/prism-markup"], function () {
 			alias: 'function'
 		},
 		'directive-block-open': {
-			pattern: /\$\w+:{|\$\w(?:#\d+\+?)?(?:\[[-\w.]+])?:[-\w.]+:{(![A-Z]+)?/,
+			pattern: /\$\w+:{|\$\w(?:#\d+\+?)?(?:\[[-\w.]+])?:[-\w.]+:{(?:![A-Z]+)?/,
 			inside: {
 				'punctuation': {
 					pattern: /\$(?:\w:|C(?:\[|#\d))?|[:{[\]]/,
@@ -113,4 +113,5 @@ define(["prism/prism","prism/components/prism-markup"], function () {
 	Prism.languages.xeoracube = Prism.languages.xeora;
 
 }(Prism));
+
 return Prism; })

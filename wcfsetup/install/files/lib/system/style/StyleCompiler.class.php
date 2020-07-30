@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\style;
-use Leafo\ScssPhp\Compiler;
+use ScssPhp\ScssPhp\Compiler;
+use ScssPhp\ScssPhp\Formatter\Crunched as CrunchedFormatter;
 use wcf\data\application\Application;
 use wcf\data\option\Option;
 use wcf\data\style\Style;
@@ -17,14 +18,14 @@ use wcf\util\StyleUtil;
  * Provides access to the SCSS PHP compiler.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Style
  */
 class StyleCompiler extends SingletonFactory {
 	/**
 	 * SCSS compiler object
-	 * @var	\Leafo\ScssPhp\Compiler
+	 * @var	Compiler
 	 */
 	protected $compiler = null;
 	
@@ -273,6 +274,36 @@ class StyleCompiler extends SingletonFactory {
 			$content .= $this->prepareFile($mixin);
 		}
 		
+		if (ApplicationHandler::getInstance()->isMultiDomainSetup()) {
+			$content .= <<<'EOT'
+				@function getFont($filename, $family: "/", $version: "") {
+					@return "../font/getFont.php?family=" + $family + "&filename=" + $filename + "&v=" + $version;
+				}
+EOT;
+		}
+		else {
+			$content .= <<<'EOT'
+				@function getFont($filename, $family: "/", $version: "") {
+					@if ($family != "") {
+						$family: "families/" + $family + "/";
+					}
+					@if ($version != "") {
+						$version: "?v=" + $version;
+					}
+					
+					@return "../font/" + $family + $filename + $version;
+				}
+EOT;
+		}
+		
+		// add google fonts
+		if (!empty($variables['wcfFontFamilyGoogle']) && PACKAGE_ID) {
+			$cssFile = FontManager::getInstance()->getCssFilename(substr($variables['wcfFontFamilyGoogle'], 1, -1));
+			if (is_readable($cssFile)) {
+				$content .= file_get_contents($cssFile);
+			}
+		}
+		
 		return $content;
 	}
 	
@@ -356,7 +387,7 @@ class StyleCompiler extends SingletonFactory {
 		}
 		
 		try {
-			$this->compiler->setFormatter('Leafo\ScssPhp\Formatter\Crunched');
+			$this->compiler->setFormatter(CrunchedFormatter::class);
 			$content = $this->compiler->compile($scss);
 		}
 		catch (\Exception $e) {

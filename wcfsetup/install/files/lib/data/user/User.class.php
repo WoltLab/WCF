@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\user;
+use wcf\data\IPopoverObject;
 use wcf\data\language\Language;
 use wcf\data\user\group\UserGroup;
 use wcf\data\DatabaseObject;
@@ -19,7 +20,7 @@ use wcf\util\UserUtil;
  * Represents a user.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User
  * 
@@ -34,7 +35,8 @@ use wcf\util\UserUtil;
  * @property-read	integer		$banned				is `1` if the user is banned, otherwise `0`
  * @property-read	string		$banReason			reason why the user is banned
  * @property-read	integer		$banExpires			timestamp at which the banned user is automatically unbanned
- * @property-read	integer		$activationCode			code sent to the user's email address used for account activation
+ * @property-read	integer		$activationCode			flag which determines, whether the user is activated (for legacy reasons an random integer, if the user is *not* activated)
+ * @property-read	string		$emailConfirmed			code sent to the user's email address used for account activation or null if the email is confirmed
  * @property-read	integer		$lastLostPasswordRequestTime	timestamp at which the user has reported that they lost their password or 0 if password has not been reported as lost
  * @property-read	string		$lostPasswordKey		code used for authenticating setting new password after password loss or empty if password has not been reported as lost
  * @property-read	integer		$lastUsernameChange		timestamp at which the user changed their name the last time or 0 if username has not been changed
@@ -50,9 +52,7 @@ use wcf\util\UserUtil;
  * @property-read	integer		$enableGravatar			is `1` if the user uses a gravatar as avatar, otherwise `0`
  * @property-read	string		$gravatarFileExtension		extension of the user's gravatar file
  * @property-read	string		$signature			text of the user's signature
- * @property-read	integer		$signatureEnableBBCodes		is `1` if BBCodes will rendered in the user's signature, otherwise `0`
  * @property-read	integer		$signatureEnableHtml		is `1` if HTML will rendered in the user's signature, otherwise `0`
- * @property-read	integer		$signatureEnableSmilies		is `1` if smilies will rendered in the user's signature, otherwise `0`
  * @property-read	integer		$disableSignature		is `1` if the user's signature has been disabled, otherwise `0`
  * @property-read	string		$disableSignatureReason		reason why the user's signature is disabled
  * @property-read	integer		$disableSignatureExpires	timestamp at which the user's signature will automatically be enabled again
@@ -73,7 +73,7 @@ use wcf\util\UserUtil;
  * @property-read	integer		$articles			number of articles written by the user
  * @property-read       string          $blacklistMatches               JSON string of an array with all matches in the blacklist, otherwise an empty string 
  */
-final class User extends DatabaseObject implements IRouteController, IUserContent {
+final class User extends DatabaseObject implements IPopoverObject, IRouteController, IUserContent {
 	/**
 	 * list of group ids
 	 * @var integer[]
@@ -103,6 +103,11 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 * @var	UserOption[]
 	 */
 	protected static $userOptions;
+	
+	const REGISTER_ACTIVATION_NONE = 0;
+	const REGISTER_ACTIVATION_USER = 1;
+	const REGISTER_ACTIVATION_ADMIN = 2;
+	const REGISTER_ACTIVATION_USER_AND_ADMIN = self::REGISTER_ACTIVATION_USER | self::REGISTER_ACTIVATION_ADMIN;
 	
 	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
@@ -405,6 +410,16 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	}
 	
 	/**
+	 * Returns true if the email is confirmed.
+	 *
+	 * @return	boolean
+	 * @since       5.3
+	 */
+	public function isEmailConfirmed() {
+		return $this->emailConfirmed === null;
+	}
+	
+	/**
 	 * Returns the time zone of this user.
 	 * 
 	 * @return	\DateTimeZone
@@ -593,7 +608,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 * @return      boolean
 	 */
 	public function canPurchasePaidSubscriptions() {
-		return WCF::getUser()->userID && WCF::getUser()->activationCode == 0;
+		return WCF::getUser()->userID && !$this->pendingActivation();
 	}
 	
 	/**
@@ -604,7 +619,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 * @since 5.2
 	 */
 	public function getBlacklistMatches() {
-		if ($this->activationCode && $this->blacklistMatches) {
+		if ($this->pendingActivation() && $this->blacklistMatches) {
 			$matches = JSON::decode($this->blacklistMatches);
 			if (is_array($matches)) {
 				return $matches;
@@ -624,7 +639,65 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 */
 	public function getBlacklistMatchesTitle() {
 		return array_map(function($field) {
+			if ($field === 'ip') $field = 'ipAddress';
 			return WCF::getLanguage()->get('wcf.user.' . $field);
 		}, $this->getBlacklistMatches());
+	}
+	
+	/**
+	 * Returns true if this user is not activated.
+	 *
+	 * @return	boolean
+	 * @since       5.3
+	 */
+	public function pendingActivation() {
+		return $this->activationCode != 0;
+	}
+	
+	/**
+	 * Returns true if this user requires activation by the user.
+	 *
+	 * @return	boolean
+	 * @since       5.3
+	 */
+	public function requiresEmailActivation() {
+		return REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER && $this->pendingActivation() && !$this->isEmailConfirmed();
+	}
+	
+	/**
+	 * Returns true if this user requires the activation by an admin.
+	 *
+	 * @return	boolean
+	 * @since       5.3
+	 */
+	public function requiresAdminActivation() {
+		return REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_ADMIN && $this->pendingActivation();
+	}
+	
+	/**
+	 * Returns true if this user can confirm the email themself.
+	 *
+	 * @return	boolean
+	 * @since       5.3
+	 */
+	public function canEmailConfirm() {
+		return REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER && !$this->isEmailConfirmed();
+	}
+	
+	/**
+	 * Returns true, if the user must confirm his email by themself. 
+	 * 
+	 * @return      boolean
+	 * @since       5.3
+	 */
+	public function mustSelfEmailConfirm() {
+		return REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getPopoverLinkClass() {
+		return 'userLink';
 	}
 }

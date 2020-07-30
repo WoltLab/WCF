@@ -390,7 +390,7 @@
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.reactionType"><![CDATA[Reaktions-Typen]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.page"><![CDATA[CMS-Seiten]]></item>
 		<item name="wcf.acp.dataImport.existingMapping.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die bestehenden Zuordnungen wirklich löschen?]]></item>
-		<item name="wcf.acp.dataImport.existingMapping.notice"><![CDATA[Es existieren Zuordnungen eines früheren Import-Vorganges, diese werden verwendet, um Inhalte aus dem importierten Forum einwandfrei zuzuordnen. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} den Import-Vorgang vollständig abgeschlossen {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese Zuordnungen <a id="deleteMapping">löschen</a>. {if LANGUAGE_USE_INFORMAL_VARIANT}Du solltest{else}Sie sollten{/if} die Zuordnungen nicht löschen, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} jetzt oder zukünftig noch weitere Inhalte aus dem selben Forum übernehmen {if LANGUAGE_USE_INFORMAL_VARIANT}willst{else}wollen{/if}.]]></item>
+		<item name="wcf.acp.dataImport.existingMapping.notice"><![CDATA[Es existieren Zuordnungen eines früheren Import-Vorganges, diese werden verwendet, um Inhalte aus dem importierten Forum einwandfrei zuzuordnen. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} den Import-Vorgang vollständig abgeschlossen {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese Zuordnungen <a id="deleteMapping">löschen</a>. {if LANGUAGE_USE_INFORMAL_VARIANT}Du solltest{else}Sie sollten{/if} die Zuordnungen nicht löschen, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} jetzt oder zukünftig noch weitere Inhalte aus dem selben Forum übernehmen {if LANGUAGE_USE_INFORMAL_VARIANT}willst{else}wollen{/if}. Diese Zuordnungen können nicht genutzt werden, um einzelne Inhalte inkrementell zu übernehmen. Sie sind dazu gedacht, um weitere Arten von Inhalten in separaten Vorgängen zu übernehmen, beispielsweise unter Zuhilfenahme von Importern aus installierten Plugins.]]></item>
 		<item name="wcf.acp.dataImport.exporter"><![CDATA[Datenquelle]]></item>
 		<item name="wcf.acp.dataImport.selectExporter"><![CDATA[Datenquelle wählen]]></item>
 		<item name="wcf.acp.dataImport.selectExporter.error.invalid"><![CDATA[Die ausgewählte Datenquelle ist ungültig.]]></item>
@@ -600,6 +600,15 @@
 		<item name="wcf.acp.devtools.project.edit.error.brokenPath"><![CDATA[Es existiert keine <kbd>package.xml</kbd> im angegebenen Pfad. Die Paket-Dateien wurden entweder gelöscht oder verschoben.]]></item>
 		<item name="wcf.acp.devtools.project.edit.warning.missingElements"><![CDATA[Die folgenden Informationen fehlen in der <kbd>package.xml</kbd>-Datei: {implode from=$missingElements item=missingElement}<kbd>{$missingElement}</kbd>{/implode}.]]></item>
 		<item name="wcf.acp.devtools.project.license"><![CDATA[Lizenz]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.languageID"><![CDATA[Sprache]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.languageItem"><![CDATA[Name des Texts]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.lastTime"><![CDATA[Zeitpunkt des letzten Auftretens]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Eintrag wirklich löschen?]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.stackTrace"><![CDATA[Stacktrace]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.showStackTrace"><![CDATA[Stacktrace anzeigen]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.clearLog"><![CDATA[Alle Einträge löschen]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.clearLog.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich alle Einträge löschen?]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.stackTrace.toggleOutputFormat"><![CDATA[Zeilenumbrüche einschalten/ausschalten]]></item>
 	</category>
 	<category name="wcf.acp.email">
 		<item name="wcf.acp.email.smtp.test"><![CDATA[SMTP-Verbindungstest]]></item>
@@ -636,9 +645,8 @@
 die folgenden Fehlermeldungen auf Ihrer Website {@PAGE_TITLE|language} wurden seit dem {$date|plainTime} protokolliert:
 
 {foreach from=$files key=file item=data}
-log/{$file}.txt {* this line ends with a space *}
+log/{$file}.txt ({#$data[count]} Fehlermeldung{if $data[count] > 1}en{/if}) {* this line ends with a space *}
 ==================
-
 {if $data[verdict]|isset}
 {if $data[verdict] == 'corrupt'}
 Das Fehlerprotokoll ist defekt. Bitte prüfen Sie das Protokoll händisch: {'WCF_DIR'|constant}log/{$file}.txt
@@ -646,13 +654,14 @@ Das Fehlerprotokoll ist defekt. Bitte prüfen Sie das Protokoll händisch: {'WCF
 Das Fehlerprotokoll ist sehr groß. Bitte prüfen Sie das Protokoll händisch: {'WCF_DIR'|constant}log/{$file}.txt
 {/if}
 {else}
-Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in dieser E-Mail noch nicht genannten, Fehlermeldungen lauten:
 {foreach from=$data[messages] item=message}
 - {@$message} {* this line ends with a space *}
 {/foreach}
 {/if}
 {* this line is intentionally left empty *}
-{/foreach}]]></item>
+{/foreach}
+
+ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details zu einzelnen Fehlermeldungen in der Administrationsoberfläche unter „Protokoll » Fehler“ einsehen.]]></item>
 	</category>
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Benutzergruppe hinzufügen]]></item>
@@ -677,7 +686,7 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.group.option.admin.management.canViewLog"><![CDATA[Kann Protokolle abrufen]]></item>
 		<item name="wcf.acp.group.option.admin.configuration.canManageApplication"><![CDATA[Kann Apps verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.management.canManageCronjob"><![CDATA[Kann zeitgesteuerte Aufgaben verwalten]]></item>
-		<item name="wcf.acp.group.option.admin.configuration.package.canEditServer"><![CDATA[Kann Update-Server bearbeiten]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.package.canEditServer"><![CDATA[Kann Paket-Server bearbeiten]]></item>
 		<item name="wcf.acp.group.option.admin.configuration.package.canInstallPackage"><![CDATA[Kann Pakete installieren]]></item>
 		<item name="wcf.acp.group.option.admin.configuration.package.canUninstallPackage"><![CDATA[Kann Pakete deinstallieren]]></item>
 		<item name="wcf.acp.group.option.admin.configuration.package.canUpdatePackage"><![CDATA[Kann Pakete aktualisieren]]></item>
@@ -709,7 +718,6 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.group.option.category.user"><![CDATA[Allgemeine Rechte]]></item>
 		<item name="wcf.acp.group.option.category.user.message"><![CDATA[Nachrichten]]></item>
 		<item name="wcf.acp.group.option.category.user.message.comment"><![CDATA[Kommentare]]></item>
-		<item name="wcf.acp.group.option.error.cannotDropPrivileges"><![CDATA[Es muss immer mindestens eine Benutzergruppe mit vollen Rechten geben, es ist daher nicht möglich diese Berechtigung einzuschränken.]]></item>
 		<item name="wcf.acp.group.option.error.exceedsOwnPermission"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} Benutzergruppen keine Berechtigungen gewähren, die {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} eigenen Berechtigungen übersteigen.]]></item>
 		<item name="wcf.acp.group.option.error.tooHigh"><![CDATA[Der angegebene Wert ist zu hoch.{if $option->maxvalue !== null} Der maximale Wert ist {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.group.option.error.tooLow"><![CDATA[Der angegebene Wert ist zu gering.{if $option->minvalue !== null} Der minimale Wert ist {#$option->minvalue}.{/if}]]></item>
@@ -758,7 +766,6 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.group.option.user.profile.avatar.maxSize"><![CDATA[Maximale Dateigröße]]></item>
 		<item name="wcf.acp.group.option.user.profile.canChangeEmail"><![CDATA[Kann E-Mail-Adresse ändern]]></item>
 		<item name="wcf.acp.group.option.user.profile.canEditUserTitle"><![CDATA[Kann eigenen Benutzertitel bearbeiten]]></item>
-		<item name="wcf.acp.group.option.user.profile.canMail"><![CDATA[Kann E-Mails an andere Benutzer senden]]></item>
 		<item name="wcf.acp.group.option.user.profile.canQuit"><![CDATA[Kann Benutzerkonto löschen]]></item>
 		<item name="wcf.acp.group.option.user.profile.canRename"><![CDATA[Kann Benutzernamen ändern]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewMembersList"><![CDATA[Kann Mitglieder-Liste sehen]]></item>
@@ -769,8 +776,8 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.group.option.user.signature.disallowedBBCodes.description"><![CDATA[Die hier ausgewählten BBCodes dürfen von Mitgliedern dieser Benutzergruppe in ihrer Signatur <em>nicht</em> verwendet werden.]]></item>
 		<item name="wcf.acp.group.priority"><![CDATA[Priorisierung]]></item>
 		<item name="wcf.acp.group.priority.description"><![CDATA[Bestimmt u.a. die Reihenfolge auf der Team-Seite sowie die Auswahl von Benutzerrängen und „Wer ist online“-Darstellungen auf Basis der höchsten Priorität.]]></item>
-		<item name="wcf.acp.group.userOnlineMarking"><![CDATA[„Benutzer online“-Darstellung]]></item>
-		<item name="wcf.acp.group.userOnlineMarking.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die HTML-Formatierung für Mitglieder dieser Benutzergruppe in der „Wer ist online“-Anzeige anpassen. <em>&lt;strong&gt;%s&lt;/strong&gt;</em> stellt Mitglieder dieser Gruppe beispielsweise in Fettdruck dar.]]></item>
+		<item name="wcf.acp.group.userOnlineMarking"><![CDATA[Benutzer-Darstellung]]></item>
+		<item name="wcf.acp.group.userOnlineMarking.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die HTML-Formatierung für Mitglieder dieser Benutzergruppe anpassen. <em>&lt;strong&gt;%s&lt;/strong&gt;</em> stellt Mitglieder dieser Gruppe beispielsweise in Fettdruck dar.]]></item>
 		<item name="wcf.acp.group.userOnlineMarking.error.invalid"><![CDATA[Die Darstellung muss „%s“ enthalten]]></item>
 		<item name="wcf.acp.group.showOnTeamPage"><![CDATA[Mitglieder dieser Benutzergruppe auf der Team-Seite anzeigen]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEnableUser"><![CDATA[Kann Benutzer aktivieren]]></item>
@@ -873,17 +880,20 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.group.option.user.profile.trophy.canSeeTrophies"><![CDATA[Kann Trophäen sehen]]></item>
 		<item name="wcf.acp.group.option.user.profile.trophy.maxUserSpecialTrophies"><![CDATA[Maximale Anzahl an besonderen Trophäen]]></item>
 		<item name="wcf.acp.group.option.user.profile.trophy.maxUserSpecialTrophies.description"><![CDATA[Besondere Trophäen können vom Benutzer individuell ausgewählt werden und werden in der Message-Sidebar und im Benutzerprofil angezeigt.]]></item>
+		<item name="wcf.acp.group.option.category.user.profile.payment"><![CDATA[Zahlungsoptionen]]></item>
+		<item name="wcf.acp.group.option.user.profile.payment.canBuyPaidSubscription"><![CDATA[Kann bezahlte Mitgliedschaften kaufen]]></item>
 		<item name="wcf.acp.group.option.category.user.profile.coverPhoto"><![CDATA[Titelbilder]]></item>
 		<item name="wcf.acp.group.option.user.profile.coverPhoto.canSeeCoverPhotos"><![CDATA[Kann Titelbilder sehen]]></item>
 		<item name="wcf.acp.group.option.user.profile.coverPhoto.canUploadCoverPhoto"><![CDATA[Kann eigenes Titelbild hochladen]]></item>
 		<item name="wcf.acp.group.option.user.profile.coverPhoto.maxSize"><![CDATA[Maximale Dateigröße]]></item>
 		<item name="wcf.acp.group.option.admin.content.reaction.canManageReactionType"><![CDATA[Kann Reaktions-Typen verwalten]]></item>
-		<item name="wcf.acp.group.option.category.user.message.contactForm"><![CDATA[Kontakt-Formular]]></item>
+		<item name="wcf.acp.group.option.category.user.message.contactForm"><![CDATA[Kontaktformular]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.maxSize"><![CDATA[Maximale Dateianhangsgröße]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.allowedExtensions"><![CDATA[Erlaubte Dateiendungen]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.allowedExtensions.description"><![CDATA[Eine Dateiendung pro Zeile]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.maxCount"><![CDATA[Maximale Dateianhänge pro Nachricht]]></item>
 		<item name="wcf.acp.group.option.user.profile.canEditUserProfile"><![CDATA[Kann eigenes Profil bearbeiten]]></item>
+		<item name="wcf.acp.group.option.user.profile.canHideOnlineStatus"><![CDATA[Kann Online-Status verbergen]]></item>
 		<item name="wcf.acp.group.allowMention"><![CDATA[Benutzergruppe kann erwähnt werden]]></item>
 		<item name="wcf.acp.group.type.owner"><![CDATA[Besitzer]]></item>
 		<item name="wcf.acp.group.type.owner.description"><![CDATA[Die Besitzer-Gruppe verfügt über nicht entziehbare Berechtigungen und kann von anderen Gruppen nicht bearbeitet werden, diese Gruppe kann nur durch die Besitzer-Gruppe selbst bearbeitet werden. Mitglieder dieser Gruppe können andere Benutzer zu dieser Gruppe hinzufügen, sich aber selbst nicht daraus entfernen.]]></item>
@@ -930,7 +940,7 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.index.woltlab.pluginStore"><![CDATA[Plugin-Store]]></item>
 		<item name="wcf.acp.index.tinyBuild"><![CDATA[Die Seitenbeschleunigung für Gäste verbessert die Ladezeiten für Besucher und Suchmaschinen, es wird empfohlen diese <a href="{link controller='Option' id=1 optionName="visitor_use_tiny_build"}#category_module.system{/link}">zu aktivieren</a>.]]></item>
 		<item name="wcf.acp.index.recaptchaWithoutKey"><![CDATA[Die Nutzung von reCAPTCHA ohne einen individuellen Website-Schlüssel wird von Google nicht mehr unterstützt.<br><br>Für eine weitere Nutzung {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} <a href="{$recaptchaKeyLink}">einen Schlüssel in den Optionen hinterlegen</a>, unterhalb des Eingabefeldes befindet sich eine Anleitung zum Anfordern des Schlüssels.]]></item>
-		<item name="wcf.acp.index.missingLanguageItems"><![CDATA[Es wurden fehlende Sprachvariablen protokolliert (zuletzt: {@$missingLanguageItemsMTime|time}). {if LANGUAGE_USE_INFORMAL_VARIANT}Überprüfe{else}Überprüfen Sie{/if} die Datei <kbd>{'WCF_DIR'|constant}log/missingLanguageItems.txt</kbd> für weitere Informationen.]]></item>
+		<item name="wcf.acp.index.missingLanguageItems"><![CDATA[Es wurden fehlende Sprachvariablen protokolliert (zuletzt: {@$missingLanguageItemsMTime|time}). {if LANGUAGE_USE_INFORMAL_VARIANT}Überprüfe{else}Überprüfen Sie{/if} die <a href="{link controller='DevtoolsMissingLanguageItemList'}{/link}">Liste der fehlenden Texten</a> für weitere Informationen.]]></item>
 	</category>
 	<category name="wcf.acp.label">
 		<item name="wcf.acp.label.add"><![CDATA[Label hinzufügen]]></item>
@@ -1188,6 +1198,7 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.menu.link.reactionType.edit"><![CDATA[Reaktions-Typ bearbeiten]]></item>
 		<item name="wcf.acp.menu.link.language.item.add"><![CDATA[Text hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.systemCheck"><![CDATA[Systemüberprüfung]]></item>
+		<item name="wcf.acp.menu.link.devtools.missingLanguageItem.list"><![CDATA[Fehlende Texte]]></item>
 	</category>
 	<category name="wcf.acp.modificationLog">
 		<item name="wcf.acp.modificationLog.list"><![CDATA[Globales Änderungsprotokoll]]></item>
@@ -1328,8 +1339,10 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.option.mail_send_method.debugFolder"><![CDATA[Debug (Ordner mit .eml-Dateien)]]></item>
 		<item name="wcf.acp.option.mail_send_method.php"><![CDATA[PHP]]></item>
 		<item name="wcf.acp.option.mail_send_method.smtp"><![CDATA[SMTP]]></item>
-		<item name="wcf.acp.option.mail_signature"><![CDATA[Signatur]]></item>
+		<item name="wcf.acp.option.mail_signature"><![CDATA[Signatur (Text)]]></item>
 		<item name="wcf.acp.option.mail_signature.description"><![CDATA[Die Signatur wird an jede automatisch generierte E-Mail angehängt.]]></item>
+		<item name="wcf.acp.option.mail_signature_html"><![CDATA[Signatur (HTML)]]></item>
+		<item name="wcf.acp.option.mail_signature_html.description"><![CDATA[Die Signatur für die HTML-Version der versendeten E-Mails. Wenn keine HTML-Variante angegeben ist, dann wird die Text-Signatur verwendet.]]></item>
 		<item name="wcf.acp.option.mail_smtp_host"><![CDATA[SMTP-Server]]></item>
 		<item name="wcf.acp.option.mail_smtp_host.description"><![CDATA[Bei SMTP-Port 465 muss zusätzlich der Präfix <kbd>ssl://</kbd> angegeben werden, etwa <kbd>ssl://mail.example.com</kbd> statt nur <kbd>mail.woltlab.com</kbd>.]]></item>
 		<item name="wcf.acp.option.mail_smtp_port"><![CDATA[SMTP-Port]]></item>
@@ -1381,7 +1394,7 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.option.external_link_target_blank.description"><![CDATA[Setzt das Attribut „target="_blank"“ auf externe Links und weist den Browser dadurch an, einen aufgerufenen Link in einem neuen Browser-Fenster zu öffnen.]]></item>
 		<item name="wcf.acp.option.enable_benchmark"><![CDATA[Benchmark aktivieren]]></item>
 		<item name="wcf.acp.option.enable_benchmark.description"><![CDATA[Erfasst zusätzliche Daten zur Ressourcennutzung von Komponenten. Diese Option sollte im Live-Betrieb abgeschaltet werden.]]></item>
-		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Update-Server]]></item>
+		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Paket-Server]]></item>
 		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[Authentifizierung-Code]]></item>
 		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deinen{else}Ihren{/if} Authentifizierung-Code {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} in {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Kundenkonto auf woltlab.com.]]></item>
 		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[WoltLab-Nachrichten anzeigen]]></item>
@@ -1394,7 +1407,6 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.option.recaptcha_publickey_invisible.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Trage{else}Tragen Sie{/if} hier, <b>zusätzlich</b> zu den obigen Schlüsseln, Schlüssel für das unsichtbare reCAPTCHA ein, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} diese Variante nutzen {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}.]]></item>
 		<item name="wcf.acp.option.recaptcha_privatekey_invisible"><![CDATA[Geheimer Schlüssel (Unsichtbares reCAPTCHA)]]></item>
 		<item name="wcf.acp.option.category.message.attachment"><![CDATA[Dateianhänge]]></item>
-		<item name="wcf.acp.option.attachment_enable_thumbnails"><![CDATA[Vorschaugrafiken von hochgeladenen Bilder erzeugen]]></item>
 		<item name="wcf.acp.option.attachment_retain_dimensions"><![CDATA[Bildformat beim Erzeugen von Vorschaugrafiken beibehalten]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_height"><![CDATA[Höhe der Vorschaugrafiken]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_width"><![CDATA[Breite der Vorschaugrafiken]]></item>
@@ -1408,7 +1420,6 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.option.attachment_image_autoscale_file_type"><![CDATA[Dateityp]]></item>
 		<item name="wcf.acp.option.attachment_image_autoscale_file_type.jpeg"><![CDATA[JPEG (verlustbehaftet, erzeugt in der Regel kleine Dateien)]]></item>
 		<item name="wcf.acp.option.attachment_image_autoscale_file_type.keep"><![CDATA[Dateityp beibehalten]]></item>
-		<item name="wcf.acp.option.module_attachment"><![CDATA[Dateianhänge]]></item>
 		<item name="wcf.acp.option.module_smiley"><![CDATA[Smileys]]></item>
 		<item name="wcf.acp.option.category.message.censorship"><![CDATA[Zensur-Funktion]]></item>
 		<item name="wcf.acp.option.censored_words"><![CDATA[Zu zensierende Wörter]]></item>
@@ -1483,6 +1494,7 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.option.register_activation_method"><![CDATA[Aktivierungsmethode]]></item>
 		<item name="wcf.acp.option.register_activation_method.byAdmin"><![CDATA[Aktivierung erfolgt durch Administrator]]></item>
 		<item name="wcf.acp.option.register_activation_method.byUser"><![CDATA[Benutzer aktiviert sich durch E-Mail-Bestätigung]]></item>
+		<item name="wcf.acp.option.register_activation_method.byUserAndAdmin"><![CDATA[Aktivierung erfolgt durch Administrator nach erfolgreicher E-Mail-Bestätigung]]></item>
 		<item name="wcf.acp.option.register_activation_method.disabled"><![CDATA[Keine Aktivierung notwendig]]></item>
 		<item name="wcf.acp.option.signature_max_image_height"><![CDATA[Maximale Höhe von Signatur-Bildern]]></item>
 		<item name="wcf.acp.option.sitemap_index_time_frame"><![CDATA[Zeitfenster der Indexierung]]></item>
@@ -1567,7 +1579,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.google_maps_default_longitude"><![CDATA[Standard-Kartenposition (Längengrad)]]></item>
 		<item name="wcf.acp.option.google_maps_access_user_location"><![CDATA[Aktuelle Benutzerposition verwenden]]></item>
 		<item name="wcf.acp.option.google_maps_access_user_location.description"><![CDATA[Bei der Angabe von Positionen wird die aktuelle Position des Benutzers als Ausgangspunkt auf der Karte verwendet.]]></item>
-		<item name="wcf.acp.option.message_sidebar_enable_user_online_marking"><![CDATA[„Benutzer online“-Darstellung für Benutzernamen verwenden]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page"><![CDATA[Erklärung zum „Einsatz von Cookies“ aktivieren]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[Weist Besucher beim ersten Aufruf der Seite gemäß EU-Richtlinie 2009/136/EG auf den Einsatz von Cookies hin.]]></item>
 		<item name="wcf.acp.option.show_update_notice_frontend"><![CDATA[Hinweis bei neuen Updates für Pakete im Frontend anzeigen]]></item>
@@ -1721,8 +1732,8 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.prune_ip_address"><![CDATA[Speicherzeit für IP-Adressen]]></item>
 		<item name="wcf.acp.option.prune_ip_address.description"><![CDATA[Zeitraum, nachdem alte IP-Adressen automatisch gelöscht werden. [0, um die Löschung zu deaktivieren]]]></item>
 		<item name="wcf.acp.option.breadcrumbs_home_use_page_title"><![CDATA[Titel der Seite für die Startseite in den Breadcrumbs verwenden]]></item>
-		<item name="wcf.acp.option.category.message.contactForm"><![CDATA[Kontakt-Formular]]></item>
-		<item name="wcf.acp.option.contact_form_enable_attachments"><![CDATA[Dateianhänge im Kontakt-Formular aktivieren]]></item>
+		<item name="wcf.acp.option.category.message.contactForm"><![CDATA[Kontaktformular]]></item>
+		<item name="wcf.acp.option.contact_form_enable_attachments"><![CDATA[Dateianhänge im Kontaktformular aktivieren]]></item>
 		<item name="wcf.acp.option.contact_form_prune_attachments"><![CDATA[Dateianhänge automatisch entfernen]]></item>
 		<item name="wcf.acp.option.contact_form_prune_attachments.description"><![CDATA[Alte Dateianhänge werden nach Ablauf der Frist automatisch gelöscht. [0, um die Löschung zu deaktivieren]]]></item>
 		<item name="wcf.acp.option.firstTimeSetup"><![CDATA[Erstmalige Einrichtung]]></item>
@@ -1755,6 +1766,10 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.option.blacklist_sfs_action.block"><![CDATA[Blockieren]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_action.description"><![CDATA[Es besteht immer das Risiko eines fehlerhaften Eintrages, daher wird die Einstellung <strong>Deaktivierung, erfordert manuelle Freischaltung</strong> ausdrücklich empfohlen.]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_action.disable"><![CDATA[Deaktivierung, erfordert manuelle Freischaltung]]></item>
+		<item name="wcf.acp.option.module_amp"><![CDATA[<abbr title="Accelerated Mobile Pages">AMP</abbr>]]></item>
+		<item name="wcf.acp.option.message_enable_user_consent"><![CDATA[Inhalte von externen Anbietern erst nach Zustimmung anzuzeigen]]></item>
+		<item name="wcf.acp.option.modification_log_expiration"><![CDATA[Speicherzeit für Änderungen]]></item>
+		<item name="wcf.acp.option.modification_log_expiration.description"><![CDATA[Zeitraum, nachdem alte Änderungen aus dem Änderungsprotokoll entfernt werden [0, um die Entfernung gänzlich zu deaktivieren]]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Eingabefelder]]></item>
@@ -1807,7 +1822,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.acp.package.error.cli.installIsApplication"><![CDATA[Apps können per CLI nicht installiert werden.]]></item>
 		<item name="wcf.acp.package.error.exceedsPhpLimit"><![CDATA[Die Datei ist größer als das PHP-Limit „upload_max_filesize“ und/oder „post_max_size“.]]></item>
-		<item name="wcf.acp.package.error.noUniqueAbbrevation"><![CDATA[Es ist bereits eine App installiert, die die gleiche Abkürzung besitzt.]]></item>
+		<item name="wcf.acp.package.error.noUniqueAbbreviation"><![CDATA[Es ist bereits eine App installiert, die die gleiche Abkürzung besitzt.]]></item>
 		<item name="wcf.acp.package.error.noValidPackage"><![CDATA[Das angegebene Archiv ist kein gültiges Paket.]]></item>
 		<item name="wcf.acp.package.error.sql.createTable"><![CDATA[Existierende Tabellen überschreiben]]></item>
 		<item name="wcf.acp.package.error.sql.createTable.description"><![CDATA[Die oben genannten Tabellen existieren bereits und werden beim Fortfahren der Installation überschrieben. Alle Daten dieser Tabellen gehen unwiderruflich verloren.]]></item>
@@ -1896,6 +1911,8 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.update.excludedPackages.excluding"><![CDATA[Zu installierende Pakete]]></item>
 		<item name="wcf.acp.package.update.excludedPackages.excluding.description"><![CDATA[Die folgenden zu installierenden Pakete sind mit installierten Paketen nicht kompatibel]]></item>
 		<item name="wcf.acp.package.update.excludedPackages.excluding.package"><![CDATA[„{$excludedPackage[packageName]}“ in Version „{$excludedPackage[packageVersion]}“ ist mit dem bereits installieren Paket „{$excludedPackage[existingPackageName]}“ nicht kompatibel]]></item>
+		<item name="wcf.acp.package.update.path.incoherent"><![CDATA[Das Update erfordert eine Aktualisierung des Paketes „{$packageName}“ (installierte Version: {$currentVersion}) auf Version {$newVersion}, es wurden aber keine passenden Updates gefunden.]]></item>
+		<item name="wcf.acp.package.update.path.unknown"><![CDATA[Das Update erfordert eine Aktualisierung des Paketes „{$packageName}“ (installierte Version: {$currentVersion}) auf Version {$newVersion}, es wurden aber keine verfügbaren Updates gefunden. Möglicherweise fehlt der passende Paket-Server?]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.package.packageDir.input"><![CDATA[Installationsverzeichnis]]></item>
 		<item name="wcf.acp.package.upload"><![CDATA[Paket hochladen]]></item>
@@ -1923,6 +1940,8 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.validation.errorCode.13"><![CDATA[Die API-Version „{$version}“ ist ungültig.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.14"><![CDATA[Das Paket wurde für eine {if $isOlderVersion}ältere{else}neuere{/if} Version von WoltLab Suite entwickelt und ist nicht kompatibel.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.15"><![CDATA[Das Paket verfügt über keine Angaben zur API-Kompatibilität, eine Installation  mit aktivierten Entwickler-Werkzeugen ist daher nicht möglich.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.16"><![CDATA[Neben der &lt;void/&gt;-Anweisung werden weitere Package Installation Plugins angegeben.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.17"><![CDATA[Die &lt;void/&gt;-Anweisung ist in den Installations-Anweisungen unzulässig.]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[Das hochgeladene Paket kann nicht installiert werden, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}beachte{else}beachten Sie{/if} das unten stehende Prüfungsergebnis.]]></item>
 		<item name="wcf.acp.package.evaluation.expired"><![CDATA[Die Testphase von <strong>{$packageName}</strong> ist abgelaufen. Bitte aktualisiere{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} auf die aktuellste Version um diese Software weiterhin legal betreiben zu können.{if $pluginStoreFileID || $isWoltLab}<br>{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die aktuelle Version sicher und bequem <strong>{if $pluginStoreFileID}<a href="https://pluginstore.woltlab.com/file/{$pluginStoreFileID}/">im WoltLab Plugin-Store</a>{else}<a href="https://www.woltlab.com/purchase/">auf WoltLab.com</a>{/if}</strong> erwerben.{/if}]]></item>
 		<item name="wcf.acp.package.evaluation.pending"><![CDATA[Bei den folgenden installierten Apps handelt es sich um Testversionen, die am <strong>{$evaluationEndDate|plainTime}</strong> ({@$evaluationEndDate|dateDiff:TIME_NOW:true}) ablaufen. Mit Ablauf der Frist deaktiviert sich die App automatisch, es ist dann notwendig diese auf die endgültige Version zu aktualisieren, um den legalen Betrieb fortzusetzen.
@@ -2336,8 +2355,8 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.eventListener.environment.description"><![CDATA[Die Umgebung entscheidet, ob der Event-Listener im Frontend (<kbd>user</kbd>) oder in der Administrationsoberfläche (<kbd>admin</kbd>) ausgeführt wird.]]></item>
 		<item name="wcf.acp.pip.eventListener.eventClassName"><![CDATA[PHP-Event-Klasse]]></item>
 		<item name="wcf.acp.pip.eventListener.eventClassName.description"><![CDATA[Die angegebene Klasse (ohne Backslash als erstes Zeichen) feuert das Event ab. Alternativ erbt die angegebene Klasse von der Klasse, die das Event abfeuert,]]></item>
-		<item name="wcf.acp.pip.eventListener.eventName"><![CDATA[Eventname]]></item>
-		<item name="wcf.acp.pip.eventListener.eventName.description"><![CDATA[Name des Events der relevanten Klasse, auf das der Event-Listener reagiert.]]></item>
+		<item name="wcf.acp.pip.eventListener.eventName"><![CDATA[Eventnamen]]></item>
+		<item name="wcf.acp.pip.eventListener.eventName.description"><![CDATA[Namen der Events der relevanten Klasse, auf die der Event-Listener reagiert.]]></item>
 		<item name="wcf.acp.pip.eventListener.inherit"><![CDATA[Vererbung unterstützen]]></item>
 		<item name="wcf.acp.pip.eventListener.inherit.description"><![CDATA[Wird Vererbung unterstützt, reagiert der Event-Listener nicht nur, wenn das Event von der oben angegebenen Klasse ausgelöst wird, sondern auch wenn es von Kindklassen der angegebenen Klasse ausgelöst wird.]]></item>
 		<item name="wcf.acp.pip.eventListener.listenerClassName"><![CDATA[PHP-Event-Listener-Klasse]]></item>
@@ -2606,7 +2625,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.rebuildData"><![CDATA[Anzeigen aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.description"><![CDATA[Für eine vollständige Aktualisierung aller Daten (z.B. nach einem Datenimport) {if LANGUAGE_USE_INFORMAL_VARIANT}führst du{else}führen Sie{/if} die Aktionen bitte in der hier angegebenen Reihenfolge durch.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user"><![CDATA[Benutzer aktualisieren]]></item>
-		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user.description"><![CDATA[Aktualisiert Zähler der Benutzer, aktualisiert Benutzerränge]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user.description"><![CDATA[Aktualisiert Zähler der Benutzer]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like"><![CDATA[Reaktionen aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like.description"><![CDATA[Berechnet die Reaktionen neu]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment"><![CDATA[Dateianhänge aktualisieren]]></item>
@@ -2632,7 +2651,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.activityPointEvent"><![CDATA[Punkte pro Aktivität aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.activityPointEvent.description"><![CDATA[Berechnet Punkte pro Aktivität neu]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.activityPointItems"><![CDATA[Punkte-Aktivitäten aktualisieren]]></item>
-		<item name="wcf.acp.rebuildData.com.woltlab.wcf.activityPointItems.description"><![CDATA[Berechnet Anzahl an Aktivitäten neu, für die Benutzer Punkte erhalten]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.activityPointItems.description"><![CDATA[Berechnet Anzahl an Aktivitäten neu, für die Benutzer Punkte erhalten; aktualisiert Benutzerränge]]></item>
 	</category>
 	<category name="wcf.acp.rescueMode">
 		<item name="wcf.acp.rescueMode"><![CDATA[Systemwiederherstellung]]></item>
@@ -2648,6 +2667,8 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.rewrite.apache"><![CDATA[Apache (.htaccess)]]></item>
 		<item name="wcf.acp.rewrite.generate"><![CDATA[Rewrite-Regeln generieren]]></item>
 		<item name="wcf.acp.rewrite.description"><![CDATA[Generiert die Inhalte der benötigten .htaccess-Dateien und gibt sie aus. Beachte{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} bitte, dass die benötigten Regeln bei speziellen Server-Konfigurationen abweichen können.]]></item>
+		<item name="wcf.acp.rewrite.filename"><![CDATA[Dateiname]]></item>
+		<item name="wcf.acp.rewrite.fileContent"><![CDATA[Inhalt]]></item>
 	</category>
 	<category name="wcf.acp.search">
 		<item name="wcf.acp.search.noResults"><![CDATA[Keine Treffer]]></item>
@@ -2679,7 +2700,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.sitemap.rebuildTime.description"><![CDATA[Die Zeit nachdem die Sitemap erneuert werden soll.]]></item>
 		<item name="wcf.acp.sitemap.isDisabled"><![CDATA[Sitemap deaktivieren]]></item>
 		<item name="wcf.acp.sitemap.edit"><![CDATA[Sitemap bearbeiten]]></item>
-		<item name="wcf.acp.sitemap.cliInfo"><![CDATA[Die Sitemap kann auch mittels CLI neu generiert werden. {if LANGUAGE_USE_INFORMAL_VARIANT}Führe{else}Führen Sie{/if} dafür <kbd>worker wcf\system\worker\SitemapRebuildWorker</kbd> in einer CLI Session aus.]]></item>
+		<item name="wcf.acp.sitemap.cliInfo"><![CDATA[Die Sitemap kann auch mittels CLI neu generiert werden. {if LANGUAGE_USE_INFORMAL_VARIANT}Führe{else}Führen Sie{/if} dafür <kbd>worker wcf\\system\\worker\\SitemapRebuildWorker</kbd> in einer CLI Session aus.]]></item>
 		<item name="wcf.acp.sitemap.submitToSearchEngines"><![CDATA[<p>Die generierte Sitemap muss einmalig bei den gewünschten Suchmaschinen manuell hinterlegt werden, die vollständige Adresse lautet: <kbd>{$__wcf->getPath()}sitemaps/sitemap.xml</kbd>.</p>
 <p><br></p>
 <p>Anleitung zum Hinterlegen der XML-Sitemaps:</p>
@@ -2755,7 +2776,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.updateServer.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Server <span class="confirmationObject">{$updateServer->serverURL}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.updateServer.edit"><![CDATA[Server bearbeiten]]></item>
 		<item name="wcf.acp.updateServer.errorMessage"><![CDATA[Fehlermeldungen]]></item>
-		<item name="wcf.acp.updateServer.list"><![CDATA[Update-Server]]></item>
+		<item name="wcf.acp.updateServer.list"><![CDATA[Paket-Server]]></item>
 		<item name="wcf.acp.updateServer.lastErrorMessage"><![CDATA[Beim letzten Verbindungsversuch trat folgender Fehler auf:]]></item>
 		<item name="wcf.acp.updateServer.loginPassword"><![CDATA[Kennwort]]></item>
 		<item name="wcf.acp.updateServer.loginPassword.description"><![CDATA[Kennwort für Authentifizierung (optional)]]></item>
@@ -2884,7 +2905,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.style.globalValues.description"><![CDATA[Das unten stehende CSS und SCSS wird auf alle Stile angewandt, die individuelle Anpassungen in den Stilen sind jedoch höherwertig.]]></item>
 		<item name="wcf.acp.style.globalValues.input"><![CDATA[Individuelles CSS und SCSS]]></item>
 		<item name="wcf.acp.style.image"><![CDATA[Vorschaubild]]></item>
-		<item name="wcf.acp.style.image.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Lade{else}Laden Sie{/if} hier ein Vorschaubild dieses Stiles hoch, als Bildformate sind JPG und PNG zulässig. Es wird empfohlen Vorschaubilder immer mit der Größe 102px × 64px anzulegen, größere Grafiken werden automatisch skaliert.]]></item>
+		<item name="wcf.acp.style.image.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Lade{else}Laden Sie{/if} hier ein Vorschaubild dieses Stiles hoch, als Bildformate sind JPG und PNG zulässig. Es wird empfohlen Vorschaubilder immer mit der Größe 102×64 Pixel anzulegen, größere Grafiken werden automatisch skaliert.]]></item>
 		<item name="wcf.acp.style.image2x"><![CDATA[Vorschaubild (HD)]]></item>
 		<item name="wcf.acp.style.image2x.description"><![CDATA[Diese Grafik wird für hochauflösende Bildschirme (z. B. Apple Retina-Display oder 4K/UHD-Monitore) verwendet und muss doppelt so groß sein wie das normale Vorschaubild.]]></item>
 		<item name="wcf.acp.style.imagePath"><![CDATA[Bilder-Pfad]]></item>
@@ -2926,13 +2947,15 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.style.globals.fontSizeHeadline"><![CDATA[Schriftgröße (Überschrift)]]></item>
 		<item name="wcf.acp.style.globals.fontSizeSection"><![CDATA[Schriftgröße (Sektions-Überschrift)]]></item>
 		<item name="wcf.acp.style.globals.fontSizeTitle"><![CDATA[Schriftgröße (Seiten-Titel)]]></item>
-		<item name="wcf.acp.style.globals.useGoogleFont"><![CDATA[Google-Schriftart aktivieren]]></item>
 		<item name="wcf.acp.style.globals.fontFamilyGoogle"><![CDATA[Schriftart]]></item>
+		<item name="wcf.acp.style.globals.fontFamilyGoogle.description"><![CDATA[Die angegebene Schriftart wird beim Speichern des Stils heruntergeladen und zwischengespeichert. Benutzer beziehen die Schriftart datenschutzkonform anschließend direkt von {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Seite.]]></item>
+		<item name="wcf.acp.style.globals.fontFamilyGoogle.error.downloadFailed"><![CDATA[Der Download der Schriftart ist fehlgeschlagen.]]></item>
+		<item name="wcf.acp.style.globals.fontFamilyGoogle.error.downloadFailed.notFound"><![CDATA[Die angegebene Schriftart konnte nicht gefunden werden.]]></item>
 		<item name="wcf.acp.style.globals.fontFamilyFallback"><![CDATA[Schriftart (Fallback)]]></item>
 		<item name="wcf.acp.style.general.favicon"><![CDATA[Favicon]]></item>
 		<item name="wcf.acp.style.favicon"><![CDATA[Individuelles Favicon]]></item>
-		<item name="wcf.acp.style.favicon.description"><![CDATA[Laden Sie hier ein 256px × 256px großes Bild hoch, als Bildformate sind JPG und PNG zulässig. Das hochgeladene Bild wird für die Erzeugung aller notwendigen Grafiken verwendet.]]></item>
-		<item name="wcf.acp.style.favicon.error.dimensions"><![CDATA[Das Bild muss exakt 256px × 256px groß sein.]]></item>
+		<item name="wcf.acp.style.favicon.description"><![CDATA[Laden Sie hier ein 256×256 Pixel großes Bild hoch, als Bildformate sind JPG und PNG zulässig. Das hochgeladene Bild wird für die Erzeugung aller notwendigen Grafiken verwendet.]]></item>
+		<item name="wcf.acp.style.favicon.error.dimensions"><![CDATA[Das Bild muss exakt 256×256 Pixel groß sein.]]></item>
 		<item name="wcf.acp.style.favicon.error.invalidExtension"><![CDATA[Die Datei hat eine ungültige Dateiendung.]]></item>
 	</category>
 	<category name="wcf.acp.tag">
@@ -3032,7 +3055,6 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.user.search.display.itemsPerPage"><![CDATA[Benutzer pro Seite]]></item>
 		<item name="wcf.acp.user.search.display.sort"><![CDATA[Sortierung]]></item>
 		<item name="wcf.acp.user.search.error.noMatches"><![CDATA[Zu den angegebenen Kriterien wurde kein Benutzer gefunden.]]></item>
-		<item name="wcf.acp.user.search.matches"><![CDATA[{if $items == 1}Ein Ergebnis{else}{#$items} Ergebnisse{/if}]]></item>
 		<item name="wcf.acp.user.sendMail"><![CDATA[E-Mail an Benutzer senden]]></item>
 		<item name="wcf.acp.user.sendMail.all"><![CDATA[E-Mail an alle Benutzer senden]]></item>
 		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[E-Mail als HTML versenden]]></item>
@@ -3139,6 +3161,7 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter „Konfiguration �
 		<item name="wcf.acp.user.disable"><![CDATA[Deaktivieren]]></item>
 		<item name="wcf.acp.user.enable"><![CDATA[Aktivieren]]></item>
 		<item name="wcf.acp.user.quickSearch.disabled"><![CDATA[Nicht aktivierte Benutzer]]></item>
+		<item name="wcf.acp.user.quickSearch.pendingActivation"><![CDATA[Benutzer die auf Freischaltung warten]]></item>
 		<item name="wcf.acp.user.quickSearch.disabledAvatars"><![CDATA[Gesperrte Avatare]]></item>
 		<item name="wcf.acp.user.quickSearch.disabledSignatures"><![CDATA[Gesperrte Signaturen]]></item>
 		<item name="wcf.acp.user.usersAwaitingApprovalInfo"><![CDATA[<a href="{link controller='UserQuickSearch'}mode=disabled{/link}">{#$usersAwaitingApproval} Benutzer</a> {if $usersAwaitingApproval == 1}wartet auf seine{else}warten auf ihre{/if} Aktivierung.]]></item>
@@ -3181,9 +3204,7 @@ aus Sicherheitsgründen erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{
 freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Funktionen {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Benutzerkontos nun in vollem Umfang nutzen.</p>]]></item>
 		<item name="wcf.acp.user.activation.mail.plaintext"><![CDATA[Hallo {@$mailbox->getUser()->username},
 
-{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto auf der Website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] wurde von
-einem Administrator freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Funktionen {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if}
-Benutzerkontos nun in vollem Umfang nutzen.]]></item>
+{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto auf der Website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] wurde von einem Administrator freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Funktionen {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings"><![CDATA[Vorgabewerte für Benachrichtigungen bearbeiten]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} auf dieser Seite die Standardeinstellungen für neue Benutzer festlegen, dies wirkt sich nicht auf bestehende Benutzer aus. Benutzer können abweichende Einstellungen festlegen.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers"><![CDATA[Änderungen auch auf bestehende Benutzerkonten anwenden]]></item>
@@ -3202,6 +3223,8 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.acp.user.action.sendMail"><![CDATA[E-Mail senden]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword"><![CDATA[Neues Passwort zusenden]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesem Benutzer wirklich ein neues Kennwort zusenden?]]></item>
+		<item name="wcf.acp.user.action.confirmEmail"><![CDATA[E-Mail-Adresse bestätigen]]></item>
+		<item name="wcf.acp.user.action.unconfirmEmail"><![CDATA[Bestätigung der E-Mail-Adresse widerrufen]]></item>
 		<item name="wcf.acp.user.exportGdpr"><![CDATA[Persönliche Daten exportieren (DSGVO)]]></item>
 		<item name="wcf.acp.user.coverPhoto.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} ein Titelbild im Profil des Benutzers hochladen.]]></item>
 	</category>
@@ -3248,6 +3271,10 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.article.search.results"><![CDATA[Suchergebnisse]]></item>
 		<item name="wcf.article.publicationStatus.0"><![CDATA[Dieser Artikel wurde noch nicht veröffentlicht.]]></item>
 		<item name="wcf.article.publicationStatus.2"><![CDATA[Dieser Artikel wird am {@$publicationDate|plainTime} veröffentlicht.]]></item>
+		<item name="wcf.article.like.notification.title"><![CDATA[Reaktion auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Artikel]]></item>
+		<item name="wcf.article.like.notification.title.stacked"><![CDATA[{#$count} Benutzer haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Artikel reagiert]]></item>
+		<item name="wcf.article.like.notification.message"><![CDATA[<strong>{$author}</strong> hat auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Artikel <strong>{$article->getTitle()}</strong> reagiert ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
+		<item name="wcf.article.like.notification.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Artikel <strong>{$article->getTitle()}</strong> reagiert ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
 	</category>
 	<category name="wcf.attachment">
 		<item name="wcf.attachment.file.info"><![CDATA[({@$attachment->filesize|filesize}, <b>{#$attachment->downloads}</b> Mal heruntergeladen{if $attachment->downloads > 0}, zuletzt: {@$attachment->lastDownloadTime|time}{/if})]]></item>
@@ -3344,9 +3371,12 @@ Fehler sind beispielsweise:
 - Nicht gefundene Befehle
 - Befehle, welche ihre Aktion nicht erfolgreich ausführen konnten
 - Systemfehler]]></item>
-		<item name="wcf.cli.help.packageID"><![CDATA[Die App mit der angegebenen Paket-ID wird als Standard für diese Sitzung verwendet.]]></item>
 		<item name="wcf.cli.worker.setParameter"><![CDATA[Übergibt einen Parameter an den Worker. Bsp.: --setParameter param=wert]]></item>
 		<item name="wcf.cli.worker.list"><![CDATA[Listet alle Worker auf.]]></item>
+		<item name="wcf.cli.worker.threads"><![CDATA[Gewünschte Anzahl von parallelen Prozessen.]]></item>
+		<item name="wcf.cli.worker.threads.windows"><![CDATA[Die parallele Verarbeitung mittels --threads steht unter Windows nicht zur Verfügung.]]></item>
+		<item name="wcf.cli.worker.threadId"><![CDATA[Gibt die Thread-ID während einer parallelen Verarbeitung an. Wird intern genutzt, wenn --threads gesetzt ist.]]></item>
+		<item name="wcf.cli.worker.threadId.invalid"><![CDATA[Die angegebene Thread-ID ist nicht gültig.]]></item>
 		<item name="wcf.cli.error.help.noArguments"><![CDATA[Der Befehl "{$command}" unterstützt keine Parameter.]]></item>
 		<item name="wcf.cli.error.language.notFound"><![CDATA[Die Sprache mit dem Sprachcode "{$languageCode}" konnte nicht gefunden werden.]]></item>
 		<item name="wcf.cli.error.command.notFound"><![CDATA[Der Befehl "{$command}" konnte nicht gefunden werden. Benutze "commands", um verfügbare Befehle aufzulisten.]]></item>
@@ -3382,6 +3412,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendMail"><![CDATA[E-Mail senden]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword"><![CDATA[Neues Kennwort senden ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich {if $count == 1}einem Benutzer{else}{#$count} Benutzern{/if} ein neues Kennwort zusenden?]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.confirmEmail"><![CDATA[E-Mail-Adresse bestätigen ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.unconfirmEmail"><![CDATA[Bestätigung der E-Mail-Adresse widerrufen ({#$count})]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.article.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Artikel]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.media.marked"><![CDATA[{if $count == 1}Eine Datei{else}{#$count} Dateien{/if}]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.tag.marked"><![CDATA[{if $count == 1}Ein Tag{else}{#$count} Tags{/if}]]></item>
@@ -4011,14 +4043,14 @@ Dateianhänge:
 		<item name="wcf.like.likes.noMoreEntries"><![CDATA[Keine weiteren Reaktionen]]></item>
 		<item name="wcf.like.dislikes.more"><![CDATA[Weitere Dislikes]]></item>
 		<item name="wcf.like.dislikes.noMoreEntries"><![CDATA[Keine weiteren Dislikes]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment"><![CDATA[Hat mit <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> auf den Kommentar {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">von {$commentAuthor->username}</a>{else}eines Gasts{/if} an der <a href="{$comment->getLink()}">Pinnwand von {$user->username}</a> reagiert.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment.response"><![CDATA[Hat mit <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> auf die Antwort {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">von {$responseAuthor->username}</a>{else}eines Gasts{/if} zum Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} an der <a href="{$response->getLink()}">Pinnwand von {$user->username}</a> reagiert.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment"><![CDATA[Hat mit {@$reaction->render()} auf den Kommentar {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">von {$commentAuthor->username}</a>{else}eines Gasts{/if} an der <a href="{$comment->getLink()}">Pinnwand von {$user->username}</a> reagiert.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment.response"><![CDATA[Hat mit {@$reaction->render()} auf die Antwort {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">von {$responseAuthor->username}</a>{else}eines Gasts{/if} zum Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} an der <a href="{$response->getLink()}">Pinnwand von {$user->username}</a> reagiert.]]></item>
 		<item name="wcf.like.objectType.com.woltlab.wcf.likeableArticle"><![CDATA[Artikel]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.likeableArticle"><![CDATA[Hat mit <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> auf den Artikel <a href="{$article->getLink()}">{$article->getTitle()}</a> reagiert.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.articleComment"><![CDATA[Hat mit <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> auf den Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} zum Artikel <a href="{$comment->getLink()}">{$articleContent->getTitle()}</a> reagiert.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.articleComment.response"><![CDATA[Hat mit <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> auf die Antwort {if $responseAuthor}von <a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}eines Gasts{/if} zum Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} zum Artikel <a href="{$response->getLink()}">{$articleContent->getTitle()}</a> reagiert.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.pageComment"><![CDATA[Hat mit <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> auf den Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} zu der Seite <a href="{$comment->getLink()}">{$page->getTitle()}</a> reagiert.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.pageComment.response"><![CDATA[Hat mit <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> auf die Antwort {if $responseAuthor}von <a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}eines Gasts{/if} zum Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} zu der Seite <a href="{$response->getLink()}">{$page->getTitle()}</a> reagiert.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.likeableArticle"><![CDATA[Hat mit {@$reaction->render()} auf den Artikel <a href="{$article->getLink()}">{$article->getTitle()}</a> reagiert.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.articleComment"><![CDATA[Hat mit {@$reaction->render()} auf den Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} zum Artikel <a href="{$comment->getLink()}">{$articleContent->getTitle()}</a> reagiert.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.articleComment.response"><![CDATA[Hat mit {@$reaction->render()} auf die Antwort {if $responseAuthor}von <a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}eines Gasts{/if} zum Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} zum Artikel <a href="{$response->getLink()}">{$articleContent->getTitle()}</a> reagiert.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.pageComment"><![CDATA[Hat mit {@$reaction->render()} auf den Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} zu der Seite <a href="{$comment->getLink()}">{$page->getTitle()}</a> reagiert.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.pageComment.response"><![CDATA[Hat mit {@$reaction->render()} auf die Antwort {if $responseAuthor}von <a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}eines Gasts{/if} zum Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} zu der Seite <a href="{$response->getLink()}">{$page->getTitle()}</a> reagiert.]]></item>
 		<item name="wcf.like.reaction.label"><![CDATA[{#$reactions} Reaktion{if $reactions != 1}en{/if}]]></item>
 		<item name="wcf.like.reaction.more"><![CDATA[Weitere Reaktionen]]></item>
 		<item name="wcf.like.reaction.noMoreEntries"><![CDATA[Keine weiteren Reaktionen]]></item>
@@ -4046,6 +4078,7 @@ Dateianhänge:
 	<category name="wcf.media">
 		<item name="wcf.media.altText"><![CDATA[Alternativ-Text]]></item>
 		<item name="wcf.media.button.insert"><![CDATA[Einfügen]]></item>
+		<item name="wcf.media.button.replaceFile"><![CDATA[Datei ersetzen]]></item>
 		<item name="wcf.media.button.select"><![CDATA[Auswählen]]></item>
 		<item name="wcf.media.caption"><![CDATA[Bildunterschrift]]></item>
 		<item name="wcf.media.caption.enableHtml"><![CDATA[HTML in der Bildunterschrift verwenden]]></item>
@@ -4072,6 +4105,8 @@ Dateianhänge:
 		<item name="wcf.media.media.pageTitle"><![CDATA[{if $__wcf->session->getPermission('admin.content.cms.canOnlyAccessOwnMedia')}Eigene {/if}Medien]]></item>
 		<item name="wcf.media.search.cancel"><![CDATA[Suche abbrechen]]></item>
 		<item name="wcf.media.search.placeholder"><![CDATA[Datei suchen]]></item>
+		<item name="wcf.media.upload.error.differentFileExtension"><![CDATA[Die neue Datei muss die gleiche Dateiendung haben wie die aktuelle Datei.]]></item>
+		<item name="wcf.media.upload.error.differentFileType"><![CDATA[Die neue Datei muss vom gleichen Dateityp sein wie die aktuelle Datei.]]></item>
 		<item name="wcf.media.upload.error.noImage"><![CDATA[Die hochgeladene Datei ist kein Bild.]]></item>
 		<item name="wcf.media.upload.error.uploadFailed"><![CDATA[Beim Hochladen der Datei ist ein unbekannter Fehler aufgetreten.]]></item>
 		<item name="wcf.media.upload.success"><![CDATA[Die Datei wurde erfolgreich hochgeladen.]]></item>
@@ -4101,7 +4136,7 @@ Dateianhänge:
 		<item name="wcf.message.quote.manageQuotes"><![CDATA[Zitate verwalten]]></item>
 		<item name="wcf.message.quote.quoteSelected"><![CDATA[Zitat speichern]]></item>
 		<item name="wcf.message.quote.quoteAndReply"><![CDATA[Zitat einfügen]]></item>
-		<item name="wcf.message.quote.showQuotes"><![CDATA[Zitate (#count#)]]></item>
+		<item name="wcf.message.quote.showQuotes"><![CDATA[{if $count == 1}Ein Zitat{else}{#$count} Zitate{/if}]]></item>
 		<item name="wcf.message.quote.quoteMessage"><![CDATA[Zitieren]]></item>
 		<item name="wcf.message.quote.removeAllQuotes"><![CDATA[Alle Zitate entfernen]]></item>
 		<item name="wcf.message.quote.removeSelectedQuotes"><![CDATA[Markierte Zitate entfernen]]></item>
@@ -4130,6 +4165,10 @@ Dateianhänge:
 		<item name="wcf.message.toc"><![CDATA[Inhaltsverzeichnis]]></item>
 		<item name="wcf.message.toc.hide"><![CDATA[Verbergen]]></item>
 		<item name="wcf.message.toc.show"><![CDATA[Anzeigen]]></item>
+		<item name="wcf.message.user.consent.button.enable"><![CDATA[Alle externen Inhalte anzeigen]]></item>
+		<item name="wcf.message.user.consent.description"><![CDATA[Inhalte von externen Seiten werden ohne {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Zustimmung nicht automatisch geladen und angezeigt.]]></item>
+		<item name="wcf.message.user.consent.notice"><![CDATA[Durch die Aktivierung der externen Inhalte {if LANGUAGE_USE_INFORMAL_VARIANT}erklärst du dich{else}erklären Sie sich{/if} damit einverstanden, dass personenbezogene Daten an Drittplattformen übermittelt werden. Mehr Informationen dazu haben wir in unserer Datenschutzerklärung zur Verfügung gestellt.]]></item>
+		<item name="wcf.message.user.consent.title"><![CDATA[Externer Inhalt]]></item>
 	</category>
 	<category name="wcf.menu">
 		<!-- category for menus and menu items -->
@@ -4144,6 +4183,8 @@ Dateianhänge:
 		<item name="wcf.moderation.assignedUser.change"><![CDATA[Zugewiesenen Benutzer ändern]]></item>
 		<item name="wcf.moderation.assignedUser.error.notAffected"><![CDATA[Dieser Benutzer hat unzureichende Zugriffsrechte]]></item>
 		<item name="wcf.moderation.assignedUser.nobody"><![CDATA[Niemand]]></item>
+		<item name="wcf.moderation.assignedUsername"><![CDATA[Zugewiesener Benutzer]]></item>
+		<item name="wcf.moderation.filter"><![CDATA[Einträge filtern]]></item>
 		<item name="wcf.moderation.filterByType"><![CDATA[Typ]]></item>
 		<item name="wcf.moderation.filterByUser"><![CDATA[Zugewiesener Benutzer]]></item>
 		<item name="wcf.moderation.filterByUser.allEntries"><![CDATA[Alle Einträge]]></item>
@@ -4156,14 +4197,14 @@ Dateianhänge:
 		<item name="wcf.moderation.noMoreItems"><![CDATA[Keine weiteren Einträge]]></item>
 		<item name="wcf.moderation.notification.comment.title"><![CDATA[Neuer Kommentar (Moderation)]]></item>
 		<item name="wcf.moderation.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} neue Kommentare (Moderation)]]></item>
-		<item name="wcf.moderation.notification.comment.message"><![CDATA[{if !$author->userID}Ein Gast{else}{@$author->getAnchorTag()}{/if} hat einen Kommentar zum Moderationseintrag <a href="{@$moderationQueue->getLink()}#comment{@$commentID}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
-		<item name="wcf.moderation.notification.comment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weitere Benutzer{/if} haben Kommentare zum Moderationseintrag <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.moderation.notification.comment.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat einen Kommentar zum Moderationseintrag <strong>{$moderationQueue}</strong> verfasst.]]></item>
+		<item name="wcf.moderation.notification.comment.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben Kommentare zum Moderationseintrag <strong>{$moderationQueue}</strong> verfasst.]]></item>
 		<item name="wcf.moderation.notification.comment.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat einen Kommentar{else}haben Kommentare{/if} zum Moderationseintrag {@$notificationContent[variables][moderationQueue]->getTitle()} [URL:{@$notificationContent[variables][moderationQueue]->getLink()}] verfasst{if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}:{else}.{/if}]]></item>
 		<item name="wcf.moderation.notification.comment.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat einen Kommentar{else}haben Kommentare{/if} zum Moderationseintrag <a href="{$notificationContent[variables][moderationQueue]->getLink()}">{$notificationContent[variables][moderationQueue]->getTitle()}</a> verfasst:</p>]]></item>
 		<item name="wcf.moderation.notification.commentResponse.title"><![CDATA[Neue Antwort (Moderation)]]></item>
 		<item name="wcf.moderation.notification.commentResponse.title.stacked"><![CDATA[{#$timesTriggered} neue Antworten (Moderation)]]></item>
-		<item name="wcf.moderation.notification.commentResponse.message"><![CDATA[{if !$author->userID}Ein Gast{else}{@$author->getAnchorTag()}{/if} hat eine Antwort zum Kommentar von {if $commentAuthor->userID}<a href="{link controller='User' object=$commentAuthor}{/link}" class="userLink" data-user-id="{@$commentAuthor->userID}">{$commentAuthor->username}</a>{else}{$commentAuthor->username}{/if} zum Moderationseintrag <a href="{@$moderationQueue->getLink()}#comment{@$commentID}/response{@$responseID}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
-		<item name="wcf.moderation.notification.commentResponse.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}und {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weitere Benutzer{/if} haben Antworten zum Kommentar zum Moderationseintrag <a href="{@$moderationQueue->getLink()}#comment{@$commentID}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.moderation.notification.commentResponse.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat eine Antwort zum Kommentar von <strong>{$commentAuthor->username}</strong> zum Moderationseintrag <strong>{$moderationQueue}</strong> verfasst.]]></item>
+		<item name="wcf.moderation.notification.commentResponse.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben Antworten zum Kommentar zum Moderationseintrag <strong>{$moderationQueue}</strong> verfasst.]]></item>
 		<item name="wcf.moderation.notification.commentResponse.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} zum Kommentar von {@$notificationContent[variables][commentAuthor]->username}{if $notificationContent[variables][commentAuthor]->userID} [URL:{link controller='User' object=$notificationContent[variables][commentAuthor] isEmail=true}{/link}]{/if} zum Moderationseintrag {@$notificationContent[variables][moderationQueue]->getTitle()} [URL:{@$notificationContent[variables][moderationQueue]->getLink()}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.moderation.notification.commentResponse.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} zum Kommentar von {if $notificationContent[variables][commentAuthor]->userID}<a href="{link controller='User' object=$notificationContent[variables][commentAuthor] isHtmlEmail=true}{/link}">{$notificationContent[variables][commentAuthor]->username}</a>{else}{$notificationContent[variables][commentAuthor]->username}{/if} zum Moderationseintrag <a href="{$notificationContent[variables][moderationQueue]->getLink()}">{$notificationContent[variables][moderationQueue]->getTitle()}</a> verfasst:</p>]]></item>
 		<item name="wcf.moderation.status"><![CDATA[Status]]></item>
@@ -4193,6 +4234,9 @@ Dateianhänge:
 		<item name="wcf.moderation.jumpToContent"><![CDATA[Zum Inhalt gehen]]></item>
 		<item name="wcf.moderation.markAllAsRead"><![CDATA[Alle Einträge als gelesen markieren]]></item>
 		<item name="wcf.moderation.markAsRead.doubleClick"><![CDATA[Eintrag durch Doppelklick als gelesen markieren]]></item>
+		<item name="wcf.moderation.comments"><![CDATA[Kommentare]]></item>
+		<item name="wcf.moderation.username"><![CDATA[Autor]]></item>
+		<item name="wcf.moderation.noEntries"><![CDATA[Es wurden keine Einträge gefunden.{if $hasActiveFilter} <a href="#" class="jsStaticDialog" data-dialog-id="moderationListSortFilter" role="button">Die aktiven Filter anpassen.</a>{/if}]]></item>
 	</category>
 	<category name="wcf.moderation.activation">
 		<item name="wcf.moderation.activation"><![CDATA[Freischaltung]]></item>
@@ -4202,14 +4246,14 @@ Dateianhänge:
 		<item name="wcf.moderation.activation.enableContent.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Inhalt wirklich freischalten?]]></item>
 		<item name="wcf.moderation.activation.notification.comment.title"><![CDATA[Neuer Kommentar (Freischaltung)]]></item>
 		<item name="wcf.moderation.activation.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} neue Kommentare (Freischaltung)]]></item>
-		<item name="wcf.moderation.activation.notification.comment.message"><![CDATA[{if !$author->userID}Ein Gast{else}{@$author->getAnchorTag()}{/if} hat einen Kommentar zum freizuschaltenden Inhalt <a href="{@$moderationQueue->getLink()}#comment{@$commentID}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
-		<item name="wcf.moderation.activation.notification.comment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}und {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weitere Benutzer{/if} haben Kommentare zum freizuschaltenden Inhalt <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.moderation.activation.notification.comment.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat einen Kommentar zum freizuschaltenden Inhalt <strong>{$moderationQueue}</strong> verfasst.]]></item>
+		<item name="wcf.moderation.activation.notification.comment.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben Kommentare zum freizuschaltenden Inhalt <strong>{$moderationQueue}</strong> verfasst.]]></item>
 		<item name="wcf.moderation.activation.notification.comment.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat einen Kommentar{else}haben Kommentare{/if} zum freizuschaltenden Inhalt {@$notificationContent[variables][moderationQueue]->getTitle()} [URL:{@$notificationContent[variables][moderationQueue]->getLink()}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.moderation.activation.notification.comment.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat einen Kommentar{else}haben Kommentare{/if} zum freizuschaltenden Inhalt <a href="{$notificationContent[variables][moderationQueue]->getLink()}">{$notificationContent[variables][moderationQueue]->getTitle()}</a> verfasst:</p>]]></item>
 		<item name="wcf.moderation.activation.notification.commentResponse.title"><![CDATA[Neue Antwort (Freischaltung)]]></item>
 		<item name="wcf.moderation.activation.notification.commentResponse.title.stacked"><![CDATA[{#$timesTriggered} neue Antworten (Freischaltung)]]></item>
-		<item name="wcf.moderation.activation.notification.commentResponse.message"><![CDATA[{if !$author->userID}Ein Gast{else}{@$author->getAnchorTag()}{/if} hat eine Antwort zum Kommentar von {if $commentAuthor->userID}<a href="{link controller='User' object=$commentAuthor}{/link}" class="userLink" data-user-id="{@$commentAuthor->userID}">{$commentAuthor->username}</a>{else}{$commentAuthor->username}{/if} zum freizuschaltenden Inhalt <a href="{@$moderationQueue->getLink()}#comment{@$commentID}/response{@$responseID}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
-		<item name="wcf.moderation.activation.notification.commentResponse.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weitere Benutzer{/if} haben Antworten zu Kommentaren zum freizuschaltenden Inhalt <a href="{@$moderationQueue->getLink()}#comment{@$commentID}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.moderation.activation.notification.commentResponse.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat eine Antwort zum Kommentar von <strong>{$commentAuthor}</strong> zum freizuschaltenden Inhalt <strong>{$moderationQueue}</strong> verfasst.]]></item>
+		<item name="wcf.moderation.activation.notification.commentResponse.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben Antworten zu Kommentaren zum freizuschaltenden Inhalt <strong>{$moderationQueue}</strong> verfasst.]]></item>
 		<item name="wcf.moderation.activation.notification.commentResponse.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} zum Kommentar von {@$notificationContent[variables][commentAuthor]->username}{if $notificationContent[variables][commentAuthor]->userID} [URL:{link controller='User' object=$notificationContent[variables][commentAuthor] isEmail=true}{/link}]{/if} zum freizuschaltenden Inhalt {@$notificationContent[variables][moderationQueue]->getTitle()} [URL:{@$notificationContent[variables][moderationQueue]->getLink()}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.moderation.activation.notification.commentResponse.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} zum Kommentar von {if $notificationContent[variables][commentAuthor]->userID}<a href="{link controller='User' object=$notificationContent[variables][commentAuthor] isHtmlEmail=true}{/link}">{$notificationContent[variables][commentAuthor]->username}</a>{else}{$notificationContent[variables][commentAuthor]->username}{/if} zum freizuschaltenden Inhalt <a href="{$notificationContent[variables][moderationQueue]->getLink()}">{$notificationContent[variables][moderationQueue]->getTitle()}</a> verfasst:</p>]]></item>
 		<item name="wcf.moderation.activation.removeContent"><![CDATA[Inhalt löschen]]></item>
@@ -4221,14 +4265,14 @@ Dateianhänge:
 		<item name="wcf.moderation.report.details"><![CDATA[Informationen]]></item>
 		<item name="wcf.moderation.report.notification.comment.title"><![CDATA[Neuer Kommentar (Meldung)]]></item>
 		<item name="wcf.moderation.report.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} neue Kommentare (Meldung)]]></item>
-		<item name="wcf.moderation.report.notification.comment.message"><![CDATA[{if !$author->userID}Ein Gast{else}{@$author->getAnchorTag()}{/if} hat einen Kommentar zur Meldung <a href="{@$moderationQueue->getLink()}#comment{@$commentID}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
-		<item name="wcf.moderation.report.notification.comment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weitere Benutzer{/if} haben Kommentare zur Meldung <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.moderation.report.notification.comment.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat einen Kommentar zur Meldung <strong>{$moderationQueue}</strong> verfasst.]]></item>
+		<item name="wcf.moderation.report.notification.comment.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben Kommentare zur Meldung <strong>{$moderationQueue}</strong> verfasst.]]></item>
 		<item name="wcf.moderation.report.notification.comment.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat einen Kommentar{else}haben Kommentare{/if} zu der Meldung {@$notificationContent[variables][moderationQueue]->getTitle()} [URL:{@$notificationContent[variables][moderationQueue]->getLink()}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.moderation.report.notification.comment.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat einen Kommentar{else}haben Kommentare{/if} zu der Meldung <a href="{$notificationContent[variables][moderationQueue]->getLink()}">{$notificationContent[variables][moderationQueue]->getTitle()}</a> verfasst:</p>]]></item>
 		<item name="wcf.moderation.report.notification.commentResponse.title"><![CDATA[Neue Antwort (Meldung)]]></item>
 		<item name="wcf.moderation.report.notification.commentResponse.title.stacked"><![CDATA[{#$timesTriggered} neue Antworten (Meldung)]]></item>
-		<item name="wcf.moderation.report.notification.commentResponse.message"><![CDATA[{if !$author->userID}Ein Gast{else}{@$author->getAnchorTag()}{/if} hat eine Antwort zum Kommentar von {if $commentAuthor->userID}<a href="{link controller='User' object=$commentAuthor}{/link}" class="userLink" data-user-id="{@$commentAuthor->userID}">{$commentAuthor->username}</a>{else}{$commentAuthor->username}{/if} zur Meldung <a href="{@$moderationQueue->getLink()}#comment{@$commentID}/response{@$responseID}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
-		<item name="wcf.moderation.report.notification.commentResponse.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weitere Benutzer{/if} haben Antworten zu Kommentare zur Meldung <a href="{@$moderationQueue->getLink()}#comment{@$commentID}">{$moderationQueue->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.moderation.report.notification.commentResponse.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat eine Antwort zum Kommentar von <strong>{$commentAuthor}</strong> zur Meldung <strong>{$moderationQueue}</strong> verfasst.]]></item>
+		<item name="wcf.moderation.report.notification.commentResponse.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben Antworten zu Kommentare zur Meldung <strong>{$moderationQueue}</strong> verfasst.]]></item>
 		<item name="wcf.moderation.report.notification.commentResponse.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} zum Kommentar von {@$notificationContent[variables][commentAuthor]->username}{if $notificationContent[variables][commentAuthor]->userID} [URL:{link controller='User' object=$notificationContent[variables][commentAuthor] isEmail=true}{/link}]{/if} zur Meldung {@$notificationContent[variables][moderationQueue]->getTitle()} [URL:{@$notificationContent[variables][moderationQueue]->getLink()}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.moderation.report.notification.commentResponse.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} zum Kommentar von {if $notificationContent[variables][commentAuthor]->userID}<a href="{link controller='User' object=$notificationContent[variables][commentAuthor] isHtmlEmail=true}{/link}">{$notificationContent[variables][commentAuthor]->username}</a>{else}{$notificationContent[variables][commentAuthor]->username}{/if} zur Meldung <a href="{$notificationContent[variables][moderationQueue]->getLink()}">{$notificationContent[variables][moderationQueue]->getTitle()}</a> verfasst:</p>]]></item>
 		<item name="wcf.moderation.report.reason"><![CDATA[Grund der Meldung]]></item>
@@ -4259,7 +4303,7 @@ Dateianhänge:
 		<item name="wcf.page.copyright"><![CDATA[<a href="https://www.woltlab.com/de/" rel="nofollow"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>Community-Software: <strong>WoltLab Suite&trade;{if SHOW_VERSION_NUMBER} {@WCF_VERSION}{/if}</strong></a>]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Article"><![CDATA[Artikel <a href="{$article->getLink()}">{$article->getTitle()}</a>]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.CategoryArticleList"><![CDATA[Artikel-Kategorie <a href="{$category->getLink()}">{$category->getTitle()}</a>]]></item>
-		<item name="wcf.page.onlineLocation.com.woltlab.wcf.User"><![CDATA[Benutzerprofil von <a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{@$user->userID}">{$user->username}</a>]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.User"><![CDATA[Benutzerprofil von {user object=$userOnline}]]></item>
 		<item name="wcf.page.availableUpdates"><![CDATA[Es sind <a href="{link controller='PackageUpdate' isACP=true}{/link}">Aktualisierungen für installierte Pakete</a> verfügbar.]]></item>
 		<item name="wcf.page.error.permissionDenied"><![CDATA[Der Zutritt zu dieser Seite ist {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} leider verwehrt. {if LANGUAGE_USE_INFORMAL_VARIANT}Du besitzt{else}Sie besitzen{/if} nicht die notwendigen Zugriffsrechte, um diese Seite aufrufen zu können.]]></item>
 		<item name="wcf.page.error.permissionDenied.title"><![CDATA[Zugriff verweigert]]></item>
@@ -4309,9 +4353,9 @@ Dateianhänge:
 		<item name="wcf.paidSubscription.confirmTOS"><![CDATA[Hiermit bestätige ich mein Einverständnis mit den <a href="{PAID_SUBSCRIPTION_TOS_URL}">Nutzungsbedingungen</a>]]></item>
 		<item name="wcf.paidSubscription.button.moreInformation"><![CDATA[Mehr Informationen]]></item>
 		<item name="wcf.paidSubscription.expiringSubscription.notification.title"><![CDATA[Ablaufende Mitgliedschaft]]></item>
-		<item name="wcf.paidSubscription.expiringSubscription.notification.message"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Mitgliedschaft „{$userNotificationObject->getTitle()}“ läuft {dateInterval start=$notification->time end=$userNotificationObject->endDate format='sentence'} (am {$userNotificationObject->endDate|date:'d. F'}) ab.]]></item>
-		<item name="wcf.paidSubscription.expiringSubscription.notification.mail.plaintext"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Mitgliedschaft „{@$subscription->getTitle()}“ läuft {dateInterval start=$notification->time end=$subscription->endDate format='sentence'} (am {@$subscription->endDate|date:'d. F'}) ab.]]></item>
-		<item name="wcf.paidSubscription.expiringSubscription.notification.mail.html"><![CDATA[<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Mitgliedschaft „{$subscription->getTitle()}“ läuft <b>{dateInterval start=$notification->time end=$subscription->endDate format='sentence'}</b> (am {$subscription->endDate|date:'d. F'}) ab.</p>]]></item>
+		<item name="wcf.paidSubscription.expiringSubscription.notification.message"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Mitgliedschaft <strong>{$userNotificationObject->getTitle()}</strong> läuft {dateInterval start=$notification->time end=$userNotificationObject->endDate full=true format='sentence'} (am {$userNotificationObject->endDate|date:'d. F'}) ab.]]></item>
+		<item name="wcf.paidSubscription.expiringSubscription.notification.mail.plaintext"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Mitgliedschaft „{@$subscription->getTitle()}“ läuft {dateInterval start=$notification->time end=$subscription->endDate full=true format='sentence'} (am {@$subscription->endDate|date:'d. F'}) ab.]]></item>
+		<item name="wcf.paidSubscription.expiringSubscription.notification.mail.html"><![CDATA[<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Mitgliedschaft „{$subscription->getTitle()}“ läuft <b>{dateInterval start=$notification->time end=$subscription->endDate full=true format='sentence'}</b> (am {$subscription->endDate|date:'d. F'}) ab.</p>]]></item>
 	</category>
 	<category name="wcf.payment">
 		<item name="wcf.payment.com.woltlab.wcf.payment.method.paypal"><![CDATA[PayPal]]></item>
@@ -4349,6 +4393,7 @@ Dateianhänge:
 		<item name="wcf.reactions.summary.noReactions"><![CDATA[Es gibt bisher keine Reaktionen dieses Types auf das Objekt.]]></item>
 		<item name="wcf.reactions.summary.listReactions"><![CDATA[Reaktionen auflisten]]></item>
 		<item name="wcf.reactions.react"><![CDATA[Reagieren]]></item>
+		<item name="wcf.reactions.reactionTypeCount"><![CDATA[{@$reaction->renderIcon()}×{#$count}]]></item>
 	</category>
 	<category name="wcf.reactionType">
 		<item name="wcf.reactionType.title1"><![CDATA[Gefällt mir]]></item>
@@ -4472,6 +4517,7 @@ Dateianhänge:
 		<item name="wcf.user.usernameOrEmail"><![CDATA[Benutzername oder E-Mail-Adresse]]></item>
 		<item name="wcf.user.gender.male"><![CDATA[Männlich]]></item>
 		<item name="wcf.user.gender.female"><![CDATA[Weiblich]]></item>
+		<item name="wcf.user.gender.other"><![CDATA[Divers]]></item>
 		<item name="wcf.user.members"><![CDATA[Mitglieder]]></item>
 		<item name="wcf.user.members.filter"><![CDATA[Mitglieder filtern]]></item>
 		<item name="wcf.user.members.noMembers"><![CDATA[Es wurden keine Mitglieder gefunden. <a href="{link controller='MembersList'}{/link}">Die aktiven Filter zurücksetzen.</a>]]></item>
@@ -4584,17 +4630,18 @@ Zum Abschließen dieser Änderung {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{els
 dich{else}Sie
 sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese E-Mail ignorieren.]]></item>
 		<item name="wcf.user.changePassword.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Kennwort wurde erfolgreich geändert.]]></item>
-		<item name="wcf.user.activationCode"><![CDATA[9-stelliger Aktivierungscode]]></item>
+		<item name="wcf.user.activationCode"><![CDATA[Aktivierungscode]]></item>
 		<item name="wcf.user.newActivationCode"><![CDATA[Neuen Aktivierungscode anfordern]]></item>
 		<item name="wcf.user.registerActivation"><![CDATA[Registrierung abschließen]]></item>
 		<item name="wcf.user.registerActivation.error.userAlreadyEnabled"><![CDATA[Dieser Benutzer ist bereits freigeschaltet.]]></item>
 		<item name="wcf.user.registerActivation.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wurde erfolgreich freigeschaltet.]]></item>
+		<item name="wcf.user.registerActivation.success.awaitAdminActivation"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} E-Mail-Adresse wurde erfolgreich bestätigt. {if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto muss nun noch von einem Administrator freigeschaltet werden.]]></item>
 		<item name="wcf.user.activationCode.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Aktivierungscode eingegeben. {if LANGUAGE_USE_INFORMAL_VARIANT}Klicke auf den unten stehenden Link, falls du einen neuen Aktivierungscode anfordern möchtest.{else}Klicken Sie auf den unten stehenden Link, falls Sie einen neuen Aktivierungscode anfordern möchten.{/if}]]></item>
 		<item name="wcf.user.registerNewActivationCode.email.description"><![CDATA[Optional {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} hier eine neue E-Mail-Adresse eintragen, an die der neue Aktivierungscode gesendet werden soll. {if LANGUAGE_USE_INFORMAL_VARIANT}Lasse{else}Lassen Sie{/if} dieses Feld frei, wenn der Aktivierungscode an die bestehende Adresse geschickt werden soll.]]></item>
 		<item name="wcf.user.newActivationCode.success"><![CDATA[Eine E-Mail mit dem neuen Aktivierungscode wurde an {$email} versendet.]]></item>
 		<item name="wcf.user.emailActivation.error.emailAlreadyEnabled"><![CDATA[Die neue E-Mail-Adresse ist bereits aktiviert.]]></item>
 		<item name="wcf.user.emailActivation.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} neue E-Mail-Adresse wurde erfolgreich aktiviert.]]></item>
-		<item name="wcf.user.registerActivation.info"><![CDATA[Eine E-Mail mit dem 9-stelligen Aktivierungscode wurde an {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse {$__wcf->user->email} verschickt.]]></item>
+		<item name="wcf.user.registerActivation.info"><![CDATA[Eine E-Mail mit dem Aktivierungscode wurde an {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse {$__wcf->user->email} verschickt.]]></item>
 		<item name="wcf.user.username.error.alreadyRenamed"><![CDATA[Der Benutzername wurde innerhalb der letzten {#$__wcf->getSession()->getPermission('user.profile.renamePeriod')} Tage bereits einmal verändert.]]></item>
 		<item name="wcf.user.guest"><![CDATA[Gast]]></item>
 		<item name="wcf.user.signature"><![CDATA[Signatur]]></item>
@@ -4700,7 +4747,7 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 Benutzerkonto vollständig verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}, ist es notwendig, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} einmalig die Gültigkeit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse {if LANGUAGE_USE_INFORMAL_VARIANT}bestätigst{else}bestätigen{/if}:</p>]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.activate"><![CDATA[Benutzerkonto aktivieren]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.outro"><![CDATA[
-<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Aktivierungscode lautet: <kbd>{$mailbox->getUser()->activationCode}</kbd>.</p>
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Aktivierungscode lautet: <kbd>{$mailbox->getUser()->emailConfirmed}</kbd>.</p>
 <p>Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} Probleme mit der Aktivierung {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Benutzerkontos {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich{else}wenden Sie sich{/if} bitte an den Administrator
 unter: <a href="mailto:{MAIL_ADMIN_ADDRESS}">{MAIL_ADMIN_ADDRESS}</a>. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du dich{else}Sie sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if},
 dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese E-Mail ignorieren.</p>]]></item>
@@ -4711,15 +4758,17 @@ Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du dein{else}Sie Ihr{/if} Benutzerkonto 
 dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} einmalig durch Klicken des folgenden Links die Gültigkeit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} 
 E-Mail-Adresse {if LANGUAGE_USE_INFORMAL_VARIANT}bestätigst{else}bestätigen{/if}:
 
-    {link controller='RegisterActivation' isEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->activationCode}{/link} {* this line ends with a space *}
+    {link controller='RegisterActivation' isEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->emailConfirmed}{/link} {* this line ends with a space *}
 
-{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Aktivierungscode lautet: {@$mailbox->getUser()->activationCode} {* this line ends with a space *}
+{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Aktivierungscode lautet: {@$mailbox->getUser()->emailConfirmed} {* this line ends with a space *}
 
 Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} Probleme mit der Aktivierung Ihres Benutzerkontos {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}wende
 dich{else}wenden
 Sie sich{/if} bitte an den Administrator unter: {@MAIL_ADMIN_ADDRESS}. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du
 dich{else}Sie
 sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese E-Mail ignorieren.]]></item>
+		<item name="wcf.user.register.needAdminActivation"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto muss noch von einem Administrator freigeschaltet werden, um den vollen Funktionsumfang dieser Seite nutzen zu können.]]></item>
+		<item name="wcf.user.register.needEmailConfirmation"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} E-Mail-Adresse muss bestätigt werden. {if $__wcf->user->canEmailConfirm()}<a href="{link controller='RegisterNewActivationCode'}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}Bestätige jetzt deine{else}Bestätigen Sie jetzt Ihre{/if} E-Mail-Adresse</a>{else}Wenden Sie sich dafür direkt an den Administrator dieser Seite{/if}.]]></item>
 		<!-- Success Messages -->
 		<item name="wcf.user.register.success"><![CDATA[Vielen Dank für die Registrierung, {$user->username}. {if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Registrierung ist hiermit vollständig abgeschlossen.]]></item>
 		<item name="wcf.user.register.success.needActivation"><![CDATA[Vielen Dank für die Registrierung, {$user->username}.<br>
@@ -4766,13 +4815,14 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.trophy.dialogTitle"><![CDATA[Trophäen von {$username}]]></item>
 		<item name="wcf.user.trophy.trophies"><![CDATA[Trophäen]]></item>
 		<item name="wcf.user.trophy.specialTrophies"><![CDATA[Besondere Trophäen]]></item>
-		<item name="wcf.user.trophy.specialTrophies.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} hier {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} besonderen Trophäen aus, welche im Profil und in der Nachrichten-Seitenleiste angezeigt werden.]]></item>
+		<item name="wcf.user.trophy.specialTrophies.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} hier {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} {if $__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies') > 1}besonderen Trophäen{else}besondere Trophäe{/if} aus, welche im Profil und in der Nachrichten-Seitenleiste angezeigt {if $__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies') > 1}werden. Es können maximal {#$__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies')} Trophäen ausgewählt werden.{else}wird.{/if}]]></item>
 		<item name="wcf.user.trophy.specialTrophies.error.tooMany"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} maximal {#$__wcf->session->getPermission('user.profile.trophy.maxUserSpecialTrophies')} Trophäen auswählen.]]></item>
 		<item name="wcf.user.trophy.specialTrophies.error.invalid"><![CDATA[Die angegebenen Trophäen sind ungültig.]]></item>
 		<item name="wcf.user.trophy.recentActivity.received"><![CDATA[Hat die Trophäe <a href="{$userTrophy->getTrophy()->getLink()}">{$userTrophy->getTrophy()->getTitle()}</a> erhalten.]]></item>
 		<item name="wcf.user.trophy.condition.excludedTrophies"><![CDATA[Ausgeschlossene Trophäen]]></item>
 		<item name="wcf.user.trophy.condition.excludedTrophyCategories"><![CDATA[Ausgeschlossene Trophäen Kategorien]]></item>
 		<item name="wcf.user.trophy.trophyAwarded"><![CDATA[{#$items} Mal vergeben]]></item>
+		<item name="wcf.user.trophy.showMoreTrophies"><![CDATA[und {#$trophyCount} weitere]]></item>
 	</category>
 	<category name="wcf.acp.trophy">
 		<item name="wcf.acp.trophy"><![CDATA[Trophäe]]></item>
@@ -4941,12 +4991,25 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.condition.state.isEnabled"><![CDATA[Aktiviert]]></item>
 		<item name="wcf.user.condition.state.isEnabled.error.conflict"><![CDATA[„Aktiviert“ und „Nicht aktiviert“ können nicht gleichzeitig ausgewählt werden.]]></item>
 		<item name="wcf.user.condition.state.isNotBanned"><![CDATA[Nicht gesperrt]]></item>
+		<item name="wcf.user.condition.state.isEmailConfirmed"><![CDATA[Hat eine bestätigte E-Mail-Adresse]]></item>
+		<item name="wcf.user.condition.state.isEmailConfirmed.error.conflict"><![CDATA[„Hat eine bestätigte E-Mail-Adresse“ und „Hat keine bestätigte E-Mail-Adresse“ können nicht gleichzeitig ausgewählt werden.]]></item>
+		<item name="wcf.user.condition.state.isNotEmailConfirmed"><![CDATA[Hat keine bestätigte E-Mail-Adresse]]></item>
 		<item name="wcf.user.condition.userTrophyIDs"><![CDATA[hat Trophäe]]></item>
 		<item name="wcf.user.condition.userTrophyIDs.description"><![CDATA[Benutzer müssen alle ausgewählten Trophäen mindestens einmal erhalten haben.]]></item>
 		<item name="wcf.user.condition.notUserTrophyIDs"><![CDATA[hat nicht Trophäe]]></item>
 		<item name="wcf.user.condition.notUserTrophyIDs.description"><![CDATA[Benutzer dürfen keine der ausgewählten Trophäen erhalten haben.]]></item>
 		<item name="wcf.user.condition.notUserTrophyIDs.error.userTrophyIntersection"><![CDATA[Die ausgewählten Trophäen in „hat Trophäe“ und „hat nicht Trophäe“ sind widersprüchlich.]]></item>
 		<item name="wcf.user.condition.trophyPoints"><![CDATA[Trophäen]]></item>
+		<item name="wcf.user.condition.coverPhoto"><![CDATA[Titelbild]]></item>
+		<item name="wcf.user.condition.coverPhoto.coverPhoto"><![CDATA[Hat Titelbild]]></item>
+		<item name="wcf.user.condition.coverPhoto.noCoverPhoto"><![CDATA[Hat kein Titelbild]]></item>
+		<item name="wcf.user.condition.signature"><![CDATA[Signatur]]></item>
+		<item name="wcf.user.condition.signature.signature"><![CDATA[Hat Signatur]]></item>
+		<item name="wcf.user.condition.signature.noSignature"><![CDATA[Hat kein Signatur]]></item>
+		<item name="wcf.user.condition.lastActivityTimeIntervalDays"><![CDATA[Letzten Aktivität vor … Tagen]]></item>
+		<item name="wcf.user.condition.lastActivityTimeIntervalDays.error.endBeforeStart"><![CDATA[Der Endwert ist kleiner als der Startwert.]]></item>
+		<item name="wcf.user.condition.lastActivityTimeIntervalDays.error.invalidEnd"><![CDATA[Der Endwert ist ungültig.]]></item>
+		<item name="wcf.user.condition.lastActivityTimeIntervalDays.error.invalidStart"><![CDATA[Der Startwert ist ungültig.]]></item>
 	</category>
 	<category name="wcf.user.coverPhoto">
 		<item name="wcf.user.coverPhoto"><![CDATA[Titelbild]]></item>
@@ -4981,7 +5044,11 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.notification.notifications.disabled"><![CDATA[Deaktiviert]]></item>
 		<item name="wcf.user.notification.notifications.enabled"><![CDATA[Aktiviert]]></item>
 		<item name="wcf.user.notification.showAll"><![CDATA[Alle Benachrichtigungen anzeigen]]></item>
-		<item name="wcf.user.notification.mail.disabled"><![CDATA[Die E-Mail-Benachrichtigung wurde erfolgreich abgeschaltet.]]></item>
+		<item name="wcf.user.notification.mail.disabled"><![CDATA[Die gewählten E-Mail-Benachrichtigungen wurde erfolgreich abbestellt.]]></item>
+		<item name="wcf.user.notification.mail.unsubscribe.confirm"><![CDATA[Gewählte E-Mail-Benachrichtigungen abbstellen]]></item>
+		<item name="wcf.user.notification.mail.unsubscribe.description"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}wähle{else}wählen Sie{/if} die Benachrichtigungsart, die {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} abbestellen {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if} aus und {if LANGUAGE_USE_INFORMAL_VARIANT}bestätige{else}bestätigen Sie{/if} die Abbestellung.]]></item>
+		<item name="wcf.user.notification.mail.unsubscribe.event"><![CDATA[Benachrichtigungsart]]></item>
+		<item name="wcf.user.notification.mail.unsubscribe.event.all"><![CDATA[Alle E-Mail-Benachrichtigungen]]></item>
 		<item name="wcf.user.notification.mailNotificationType.none"><![CDATA[Keine E-Mail-Benachrichtigung]]></item>
 		<item name="wcf.user.notification.mailNotificationType.instant"><![CDATA[Sofortige E-Mail-Benachrichtigung]]></item>
 		<item name="wcf.user.notification.mailNotificationType.daily"><![CDATA[Tägliche E-Mail-Benachrichtigung]]></item>
@@ -4994,14 +5061,14 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 {if LANGUAGE_USE_INFORMAL_VARIANT}Besuche deine{else}Besuchen Sie Ihre{/if} Benachrichtigungseinstellungen [URL:{link controller='NotificationSettings' isEmail=true}{/link}], um die
 Benachrichtigungen auf {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] nach {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Wünschen zu konfigurieren.
 
-Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nur diese E-Mail-Benachrichtigung nicht mehr erhalten {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese direkt abbestellen: {link controller='NotificationDisable' isEmail=true}eventID={@$event->eventID}&userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}.]]></item>
+Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nur diese E-Mail-Benachrichtigung nicht mehr erhalten {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese direkt abbestellen: {link controller='NotificationUnsubscribe' isEmail=true}eventID={@$event->eventID}&userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}.]]></item>
 		<item name="wcf.user.notification.mail.html.intro"><![CDATA[<h2>Hallo {$mailbox->getUser()->username},</h2>]]></item>
 		<item name="wcf.user.notification.mail.html.outro"><![CDATA[<p>Diese E-Mail ist eine automatische Benachrichtigung. <b>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}antworte{else}antworten Sie{/if} nicht auf diese E-Mail</b>.</p>
 
 <p>{if LANGUAGE_USE_INFORMAL_VARIANT}Besuche deine{else}Besuchen Sie Ihre{/if} <a href="{link controller='NotificationSettings' isHtmlEmail=true}{/link}">Benachrichtigungseinstellungen</a>, um die
 Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|language}</a> nach {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Wünschen zu konfigurieren.</p>
 
-<p>Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nur diese E-Mail-Benachrichtigung nicht mehr erhalten {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese direkt <a href="{link controller='NotificationDisable' isHtmlEmail=true}eventID={@$event->eventID}&userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}">abbestellen</a>.</p>]]></item>
+<p>Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nur diese E-Mail-Benachrichtigung nicht mehr erhalten {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese direkt <a href="{link controller='NotificationUnsubscribe' isHtmlEmail=true}eventID={@$event->eventID}&userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}">abbestellen</a>.</p>]]></item>
 		<item name="wcf.user.notification.mail.daily.subject"><![CDATA[{if $count == 1}Neue Benachrichtigung{else}{#$count} neue Benachrichtigungen{/if}]]></item>
 		<item name="wcf.user.notification.mail.daily.plaintext.intro"><![CDATA[Hallo {@$mailbox->getUser()->username},
 
@@ -5013,7 +5080,7 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 {if LANGUAGE_USE_INFORMAL_VARIANT}Besuche deine{else}Besuchen Sie Ihre{/if} Benachrichtigungseinstellungen [URL:{link controller='NotificationSettings' isEmail=true}{/link}], um die
 Benachrichtigungen auf {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] nach {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Wünschen zu konfigurieren.
 
-Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} keine E-Mail-Benachrichtigungen mehr erhalten {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese direkt abbestellen: {link controller='NotificationDisable' isEmail=true}userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}.]]></item>
+Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} keine E-Mail-Benachrichtigungen mehr erhalten {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese direkt abbestellen: {link controller='NotificationUnsubscribe' isEmail=true}userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}.]]></item>
 		<item name="wcf.user.notification.mail.daily.html.intro"><![CDATA[<h2>Hallo {@$mailbox->getUser()->username},</h2>
 
 <p>{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} derzeit insgesamt {#$notifications|count} ungelesene Benachrichtigung{if $notifications|count != 1}en{/if}, die älter als 24 Stunden {if $notifications|count == 1}ist{else}sind{/if}:</p>]]></item>
@@ -5024,53 +5091,54 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} keine E-Mail-Benachricht
 <p>{if LANGUAGE_USE_INFORMAL_VARIANT}Besuche deine{else}Besuchen Sie Ihre{/if} <a href="{link controller='NotificationSettings' isHtmlEmail=true}{/link}">Benachrichtigungseinstellungen</a>, um die
 Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|language}</a> nach {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Wünschen zu konfigurieren.</p>
 
-<p>Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} keine E-Mail-Benachrichtigungen mehr erhalten {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese direkt <a href="{link controller='NotificationDisable' isHtmlEmail=true}userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}">abbestellen</a>.</p>]]></item>
+<p>Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} keine E-Mail-Benachrichtigungen mehr erhalten {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese direkt <a href="{link controller='NotificationUnsubscribe' isHtmlEmail=true}userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}">abbestellen</a>.</p>]]></item>
 		<item name="wcf.user.notification.mail.authorList.plaintext"><![CDATA[{if !$event->getAuthor()->userID}{if $guestTimesTriggered > 1}Gäste{else}Ein Gast{/if}{else}{@$event->getAuthor()->username} [URL:{link controller='User' object=$event->getAuthor() isEmail=true}{/link}]{/if}{if $count > 1 && $count < 4}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->username} [URL:{link controller='User' object=$authors[1] isEmail=true}{/link}]{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if}{@$authors[2]->username} [URL:{link controller='User' object=$authors[2] isEmail=true}{/link}]{/if}{elseif $count >= 4}{if $guestTimesTriggered},{else} und{/if} {#$count-1} weitere Benutzer{/if}{if $event->getAuthor()->userID && $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}{#$guestTimesTriggered} Gäste{/if}{/if}]]></item>
 		<item name="wcf.user.notification.mail.authorList.html"><![CDATA[{if !$event->getAuthor()->userID}{if $guestTimesTriggered > 1}Gäste{else}Ein Gast{/if}{else}<a href="{link controller='User' object=$event->getAuthor() isHtmlEmail=true}{/link}">{$event->getAuthor()->username}</a>{/if}{if $count > 1 && $count < 4}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}<a href="{link controller='User' object=$authors[1] isHtmlEmail=true}{/link}">{$authors[1]->username}</a>{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if}<a href="{link controller='User' object=$authors[2] isHtmlEmail=true}{/link}">{$authors[2]->username}</a>{/if}{elseif $count >= 4}{if $guestTimesTriggered},{else} und{/if} {#$count-1} weitere Benutzer{/if}{if $event->getAuthor()->userID && $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}{#$guestTimesTriggered} Gäste{/if}{/if}]]></item>
+		<item name="wcf.user.notification.stacked.authorList"><![CDATA[{if !$guestTimesTriggered|isset}{assign var=guestTimesTriggered value=0}{/if}{if $count < 4}<strong>{$authors[0]}</strong>{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}<strong>{$authors[1]}</strong>{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} <strong>{$authors[2]}</strong>{/if}{/if}{if $guestTimesTriggered} und {plural value=$guestTimesTriggered one='ein Gast' other='# Gäste'}{/if}{else}<strong>{$authors[0]}</strong>{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {plural value=$guestTimesTriggered one='ein Gast' other='# Gäste'}{/if}{/if}]]></item>
 		<!-- Notifications -->
 		<item name="wcf.user.notification.com.woltlab.wcf.user"><![CDATA[Benutzer-Profile]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.follow.following"><![CDATA[Jemand folgt {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if}]]></item>
 		<item name="wcf.user.notification.follow.title"><![CDATA[Neuer Follower]]></item>
 		<item name="wcf.user.notification.follow.title.stacked"><![CDATA[{#$count} neue Follower]]></item>
-		<item name="wcf.user.notification.follow.message"><![CDATA[{@$author->getAnchorTag()} folgt {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if}.]]></item>
-		<item name="wcf.user.notification.follow.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weitere Benutzer{/if} folgen {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if}.]]></item>
+		<item name="wcf.user.notification.follow.message"><![CDATA[<strong>{$author}</strong> folgt {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if}.]]></item>
+		<item name="wcf.user.notification.follow.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} folgen {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if}.]]></item>
 		<item name="wcf.user.notification.follow.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1}folgt{else}folgen{/if} {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if}.]]></item>
 		<item name="wcf.user.notification.follow.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1}folgt{else}folgen{/if} {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if}:</p>]]></item>
 		<item name="wcf.user.notification.comment.title"><![CDATA[Neuer Kommentar (Pinnwand)]]></item>
 		<item name="wcf.user.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} neue Kommentare (Pinnwand)]]></item>
-		<item name="wcf.user.notification.comment.message"><![CDATA[{if !$author->userID}Ein Gast{else}{@$author->getAnchorTag()}{/if} hat einen Kommentar an <a href="{link controller='User' object=$__wcf->getUser()}#wall/comment{@$commentID}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand</a> verfasst.]]></item>
-		<item name="wcf.user.notification.comment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben Kommentare an <a href="{link controller='User' object=$__wcf->getUser()}#wall/comment{@$commentID}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand</a> verfasst.]]></item>
+		<item name="wcf.user.notification.comment.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat einen Kommentar an {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand verfasst.]]></item>
+		<item name="wcf.user.notification.comment.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben Kommentare an {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand verfasst.]]></item>
 		<item name="wcf.user.notification.comment.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat einen Kommentar{else}haben Kommentare{/if} an {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand [URL:{link controller='User' object=$notificationContent[variables][owner] isEmail=true}#wall/comment{@$commentID}{/link}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.user.notification.comment.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat einen Kommentar{else}haben Kommentare{/if} an <a href="{link controller='User' object=$notificationContent[variables][owner] isHtmlEmail=true}#wall/comment{@$commentID}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand</a> verfasst:</p>]]></item>
 		<item name="wcf.user.notification.comment.like.title"><![CDATA[Reaktion auf einen Kommentar (Pinnwand)]]></item>
 		<item name="wcf.user.notification.comment.like.title.stacked"><![CDATA[{#$count} Benutzern haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar reagiert (Pinnwand)]]></item>
-		<item name="wcf.user.notification.comment.like.message"><![CDATA[{@$author->getAnchorTag()} hat auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar an {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall/comment{@$commentID}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall/comment{@$commentID}{/link}">Pinnwand von {$owner->username}</a>{/if} reagiert ({implode from=$reactions key=reactionID item=count}{@$__wcf->getReactionHandler()->getReactionTypeByID($reactionID)->renderIcon()}×{#$count}{/implode}).]]></item>
-		<item name="wcf.user.notification.comment.like.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weitere Benutzer{/if} haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar an {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall/comment{@$commentID}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall/comment{@$commentID}{/link}">Pinnwand von {$owner->username}</a>{/if} reagiert ({implode from=$reactions key=reactionID item=count}{@$__wcf->getReactionHandler()->getReactionTypeByID($reactionID)->renderIcon()}×{#$count}{/implode}).]]></item>
+		<item name="wcf.user.notification.comment.like.message"><![CDATA[<strong>{$author}</strong> hat auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar an {if $owner === null}{if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand{else}der Pinnwand von <strong>{$owner}</strong>{/if} reagiert ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
+		<item name="wcf.user.notification.comment.like.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language}  haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar an {if $owner === null}{if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand{else}der Pinnwand von <strong>{$owner}</strong>{/if} reagiert ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
 		<item name="wcf.user.notification.commentResponse.title"><![CDATA[Neue Antwort (Pinnwand)]]></item>
 		<item name="wcf.user.notification.commentResponse.title.stacked"><![CDATA[{#$timesTriggered} neue Antworten (Pinnwand)]]></item>
-		<item name="wcf.user.notification.commentResponse.message"><![CDATA[{if !$author->userID}Ein Gast{else}{@$author->getAnchorTag()}{/if} hat eine Antwort zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Kommentar an {if $owner->userID == $__wcf->getUser()->userID}<a href="{link controller='User' object=$owner}#wall/comment{@$commentID}/response{@$responseID}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall/comment{@$commentID}/response{@$responseID}{/link}">Pinnwand von {$owner->username}</a>{/if} verfasst.]]></item>
-		<item name="wcf.user.notification.commentResponse.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar an {if $owner->userID == $__wcf->getUser()->userID}<a href="{link controller='User' object=$owner}#wall/comment{@$commentID}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall/comment{@$commentID}{/link}">Pinnwand von {$owner->username}</a>{/if} geantwortet.]]></item>
-		<item name="wcf.user.notification.commentResponse.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar an{if $mailbox->getUser()->userID == $notificationContent[variables][owner]->userID}{if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand{else}der Pinnwand von {@$notificationContent[variables][owner]->username}{/if} [URL:{link controller='User' object=$notificationContent[variables][owner] isEmail=true}#wall/comment{@$commentID}/response{@$responseID}{/link}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
+		<item name="wcf.user.notification.commentResponse.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat eine Antwort zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Kommentar an {if $owner->userID == $__wcf->getUser()->userID}{if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand{else}der Pinnwand von <strong>{$owner}</strong>{/if} verfasst.]]></item>
+		<item name="wcf.user.notification.commentResponse.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar an {if $owner->userID == $__wcf->getUser()->userID}{if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand{else}der Pinnwand von <strong>{$owner}</strong>{/if} geantwortet.]]></item>
+		<item name="wcf.user.notification.commentResponse.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar an {if $mailbox->getUser()->userID == $notificationContent[variables][owner]->userID}{if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand{else}der Pinnwand von {@$notificationContent[variables][owner]->username}{/if} [URL:{link controller='User' object=$notificationContent[variables][owner] isEmail=true}#wall/comment{@$commentID}/response{@$responseID}{/link}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.user.notification.commentResponse.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Kommentar an {if $mailbox->getUser()->userID == $notificationContent[variables][owner]->userID}<a href="{link controller='User' object=$notificationContent[variables][owner] isHtmlEmail=true}#wall/comment{@$commentID}/response{@$responseID}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand</a>{else}der <a href="{link controller='User' object=$notificationContent[variables][owner] isHtmlEmail=true}#wall/comment{@$commentID}/response{@$responseID}{/link}">Pinnwand von {$notificationContent[variables][owner]->username}</a>{/if} verfasst:</p>]]></item>
 		<item name="wcf.user.notification.commentResponse.like.title"><![CDATA[Reaktion auf eine Antwort eines Kommentares (Pinnwand)]]></item>
 		<item name="wcf.user.notification.commentResponse.like.title.stacked"><![CDATA[{#$count} Benutzer haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Antwort auf einen Kommentar reagiert (Pinnwand)]]></item>
-		<item name="wcf.user.notification.commentResponse.like.message"><![CDATA[{@$author->getAnchorTag()} hat auf {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Antwort auf einen Kommentar an {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall/comment{@$commentID}/response{@$responseID}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall/comment{@$commentID}/response{@$responseID}{/link}">Pinnwand von {$owner->username}</a>{/if} reagiert ({implode from=$reactions key=reactionID item=count}{@$__wcf->getReactionHandler()->getReactionTypeByID($reactionID)->renderIcon()}×{#$count}{/implode}).]]></item>
-		<item name="wcf.user.notification.commentResponse.like.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weitere Benutzer{/if} haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Antwort auf einen Kommentar an {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall/comment{@$commentID}/response{@$responseID}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall/comment{@$commentID}/response{@$responseID}{/link}">Pinnwand von {$owner->username}</a>{/if} reagiert ({implode from=$reactions key=reactionID item=count}{@$__wcf->getReactionHandler()->getReactionTypeByID($reactionID)->renderIcon()}×{#$count}{/implode}).]]></item>
+		<item name="wcf.user.notification.commentResponse.like.message"><![CDATA[<strong>{$author}</strong> hat auf {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Antwort auf einen Kommentar an {if $owner === null}{if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand{else}der Pinnwand von <strong>{$owner}</strong>{/if} reagiert ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
+		<item name="wcf.user.notification.commentResponse.like.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Antwort auf einen Kommentar an {if $owner === null}{if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand{else}der Pinnwand von <strong>{$owner}</strong>{/if} reagiert ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.title"><![CDATA[Neue Antwort (Pinnwand)]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.title.stacked"><![CDATA[{#$timesTriggered} neue Antworten (Pinnwand)]]></item>
-		<item name="wcf.user.notification.commentResponseOwner.message"><![CDATA[{if !$author->userID}Ein Gast{else}{@$author->getAnchorTag()}{/if} hat eine Antwort zum Kommentar von {if $commentAuthor->userID}<a href="{link controller='User' object=$commentAuthor}{/link}" class="userLink" data-user-id="{@$commentAuthor->userID}">{$commentAuthor->username}</a>{else}{$commentAuthor->username}{/if} an <a href="{link controller='User' object=$__wcf->getUser()}#wall/comment{@$commentID}/response{@$responseID}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand</a> verfasst.]]></item>
-		<item name="wcf.user.notification.commentResponseOwner.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben auf den Kommentar von {if $author->userID}<a href="{link controller='User' object=$author}{/link}" class="userLink" data-user-id="{@$author->userID}">{$author->username}</a>{else}{$author->username}{/if} an <a href="{link controller='User' object=$__wcf->getUser()}#wall/comment{@$commentID}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand</a> geantwortet.]]></item>
+		<item name="wcf.user.notification.commentResponseOwner.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat eine Antwort zum Kommentar von <strong>{$commentAuthor}</strong> an {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand verfasst.]]></item>
+		<item name="wcf.user.notification.commentResponseOwner.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben auf den Kommentar von <strong>{$author}</strong> an {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand geantwortet.]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} zum Kommentar von {@$notificationContent[variables][commentAuthor]->username}{if $notificationContent[variables][commentAuthor]->userID} [URL:{link controller='User' object=$notificationContent[variables][commentAuthor] isEmail=true}{/link}]{/if} an {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand [URL:{link controller='User' object=$notificationContent[variables][owner] isEmail=true}#wall/comment{@$commentID}/response{@$responseID}{/link}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} zum Kommentar von {if $notificationContent[variables][commentAuthor]->userID}<a href="{link controller='User' object=$notificationContent[variables][commentAuthor] isHtmlEmail=true}{/link}">{$notificationContent[variables][commentAuthor]->username}</a>{else}{$notificationContent[variables][commentAuthor]->username}{/if} an <a href="{link controller='User' object=$notificationContent[variables][owner] isHtmlEmail=true}#wall/comment{@$commentID}/response{@$responseID}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand</a> verfasst:</p>]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.notification.comment"><![CDATA[Neuer Kommentar an {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponse"><![CDATA[Neue Antwort auf einen Kommentar von {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if}]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf einen Kommentar an {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.like.notification.like"><![CDATA[Jemandem hat auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar reagiert]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.like.notification.like"><![CDATA[Jemandem hat auf {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Antwort auf einen Kommentar reagiert]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.like.notification.like"><![CDATA[Jemand hat auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar reagiert]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.like.notification.like"><![CDATA[Jemand hat auf {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Antwort auf einen Kommentar reagiert]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.paidSubscription.user.expiring"><![CDATA[Eine {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Mitgliedschaften läuft bald ab]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.userTrophy.notification.received"><![CDATA[Trophäe erhalten]]></item>
 		<item name="wcf.user.notification.trophy.received.title"><![CDATA[Trophäe erhalten]]></item>
-		<item name="wcf.user.notification.trophy.received.message"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} die Trophäe <a href="{$userTrophy->getTrophy()->getLink()}">{$userTrophy->getTrophy()->getTitle()}</a> erhalten.]]></item>
+		<item name="wcf.user.notification.trophy.received.message"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} die Trophäe <strong>{$userTrophy->getTrophy()}</strong> erhalten.]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.administration"><![CDATA[Administration]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.registration.notification.registration"><![CDATA[Neue Registrierung durch Benutzer]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
@@ -5080,22 +5148,23 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 		<item name="wcf.user.notification.com.woltlab.wcf.page.notification.comment"><![CDATA[Neuer Kommentar auf einer Seite]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.page.response.notification.commentResponse"><![CDATA[Neue Antwort auf einen Kommentar auf einer Seite]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.page.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar auf einer Seite]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.likeableArticle.notification.like"><![CDATA[Jemand hat auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Artikel reagiert]]></item>
 		<item name="wcf.user.notification.pageComment.title"><![CDATA[Neuer Kommentar (Seite)]]></item>
 		<item name="wcf.user.notification.pageComment.title.stacked"><![CDATA[{#$timesTriggered} neue Kommentare (Seite)]]></item>
-		<item name="wcf.user.notification.pageComment.message"><![CDATA[{if !$author->userID}Ein Gast{else}{@$author->getAnchorTag()}{/if} hat einen Kommentar auf der Seite <a href="{$page->getLink()}#comment{@$commentID}">{$page->getTitle()}</a> verfasst.]]></item>
-		<item name="wcf.user.notification.pageComment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben Kommentare auf der Seite <a href="{$page->getLink()}#comment{@$commentID}">{$page->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.user.notification.pageComment.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat einen Kommentar auf der Seite <strong>{$page->getTitle()}</strong> verfasst.]]></item>
+		<item name="wcf.user.notification.pageComment.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben Kommentare auf der Seite <strong>{$page->getTitle()}</strong> verfasst.]]></item>
 		<item name="wcf.user.notification.pageComment.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat einen Kommentar{else}haben Kommentare{/if} auf der Seite „{@$notificationContent[variables][page]->getTitle()}“ [URL:{@$notificationContent[variables][page]->getLink()}#comment{@$commentID}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.user.notification.pageComment.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat einen Kommentar{else}haben Kommentare{/if} auf der Seite <a href="{$notificationContent[variables][page]->getLink()}#comment{@$commentID}">{$notificationContent[variables][page]->getTitle()}</a> verfasst:</p>]]></item>
 		<item name="wcf.user.notification.pageComment.response.title"><![CDATA[Neue Antwort (Seite)]]></item>
 		<item name="wcf.user.notification.pageComment.response.title.stacked"><![CDATA[{#$timesTriggered} neue Antworten (Seite)]]></item>
-		<item name="wcf.user.notification.pageComment.response.message"><![CDATA[{if !$author->userID}Ein Gast{else}{@$author->getAnchorTag()}{/if} hat eine Antwort zu dem Kommentar von {if $commentAuthor->userID}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}{$commentAuthor->username}{/if} auf der Seite <a href="{$page->getLink()}#comment{@$commentID}/response{@$responseID}">{$page->getTitle()}</a> verfasst.]]></item>
-		<item name="wcf.user.notification.pageComment.response.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben auf den Kommentar von {if $commentAuthor->userID}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}{$commentAuthor->username}{/if} auf der Seite <a href="{$page->getLink()}#comment{@$commentID}">{$page->getTitle()}</a> geantwortet.]]></item>
+		<item name="wcf.user.notification.pageComment.response.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat eine Antwort zu dem Kommentar von <strong>{$commentAuthor}</strong> auf der Seite <strong>{$page->getTitle()}</strong> verfasst.]]></item>
+		<item name="wcf.user.notification.pageComment.response.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben auf den Kommentar von <strong>{$commentAuthor}</strong> auf der Seite <strong>{$page->getTitle()}</strong> geantwortet.]]></item>
 		<item name="wcf.user.notification.pageComment.response.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} zum Kommentar von {@$notificationContent[variables][commentAuthor]->username}{if $notificationContent[variables][commentAuthor]->userID} [URL:{link controller='User' object=$notificationContent[variables][commentAuthor] isEmail=true}{/link}]{/if} auf der Seite „{@$notificationContent[variables][page]->getTitle()}“ [URL:{@$notificationContent[variables][page]->getLink()}#comment{@$commentID}/response{@$responseID}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.user.notification.pageComment.response.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} zum Kommentar von {if $notificationContent[variables][commentAuthor]->userID}<a href="{link controller='User' object=$notificationContent[variables][commentAuthor] isHtmlEmail=true}{/link}">{$notificationContent[variables][commentAuthor]->username}</a>{else}{$notificationContent[variables][commentAuthor]->username}{/if} auf der Seite <a href="{$notificationContent[variables][page]->getLink()}#comment{@$commentID}">{$notificationContent[variables][page]->getTitle()}</a> verfasst:</p>]]></item>
 		<item name="wcf.user.notification.pageComment.responseOwner.title"><![CDATA[Neue Antwort (Seite)]]></item>
 		<item name="wcf.user.notification.pageComment.responseOwner.title.stacked"><![CDATA[{#$timesTriggered} neue Antworten (Seite)]]></item>
-		<item name="wcf.user.notification.pageComment.responseOwner.message"><![CDATA[{if !$author->userID}Ein Gast{else}{@$author->getAnchorTag()}{/if} hat eine Antwort auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar auf der Seite <a href="{$page->getLink()}#comment{@$commentID}/response{@$responseID}">{$page->getTitle()}</a> verfasst.]]></item>
-		<item name="wcf.user.notification.pageComment.responseOwner.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar auf der Seite <a href="{$page->getLink()}#comment{@$commentID}">{$page->getTitle()}</a> geantwortet.]]></item>
+		<item name="wcf.user.notification.pageComment.responseOwner.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat eine Antwort auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar auf der Seite <strong>{$page->getTitle()}</strong> verfasst.]]></item>
+		<item name="wcf.user.notification.pageComment.responseOwner.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar auf der Seite <strong>{$page->getTitle()}</strong> geantwortet.]]></item>
 		<item name="wcf.user.notification.pageComment.responseOwner.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar auf der Seite „{@$notificationContent[variables][page]->getTitle()}“ [URL:{@$notificationContent[variables][page]->getLink()}#comment{@$commentID}/response{@$responseID}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.user.notification.pageComment.responseOwner.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar auf der Seite <a href="{$notificationContent[variables][page]->getLink()}#comment{@$commentID}">{$notificationContent[variables][page]->getTitle()}</a> verfasst:</p>]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.article.comment.notification.comment"><![CDATA[Neuer Kommentar zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Artikel]]></item>
@@ -5103,25 +5172,25 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 		<item name="wcf.user.notification.com.woltlab.wcf.article.comment.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf einen Kommentar zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Artikel]]></item>
 		<item name="wcf.user.notification.articleComment.title"><![CDATA[Neuer Kommentar (Artikel)]]></item>
 		<item name="wcf.user.notification.articleComment.title.stacked"><![CDATA[{#$timesTriggered} neue Kommentare (Artikel)]]></item>
-		<item name="wcf.user.notification.articleComment.message"><![CDATA[{if !$author->userID}Ein Gast{else}{@$author->getAnchorTag()}{/if} hat einen Kommentar zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Artikel <a href="{$article->getLink()}#comment{@$commentID}">{$article->getTitle()}</a> verfasst.]]></item>
-		<item name="wcf.user.notification.articleComment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben Kommentare zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Artikel <a href="{$article->getLink()}#comment{@$commentID}">{$article->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.user.notification.articleComment.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat einen Kommentar zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Artikel <strong>{$article->getTitle()}</strong> verfasst.]]></item>
+		<item name="wcf.user.notification.articleComment.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben Kommentare zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Artikel <strong>{$article->getTitle()}</strong> verfasst.]]></item>
 		<item name="wcf.user.notification.articleComment.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat einen Kommentar{else}haben Kommentare{/if} zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Artikel „{@$notificationContent[variables][article]->getTitle()}“ [URL:{@$notificationContent[variables][article]->getLink()}#comment{@$commentID}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.user.notification.articleComment.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat einen Kommentar{else}haben Kommentare{/if} zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Artikel <a href="{$notificationContent[variables][article]->getLink()}#comment{@$commentID}">{$notificationContent[variables][article]->getTitle()}</a> verfasst:</p>]]></item>
 		<item name="wcf.user.notification.articleComment.response.title"><![CDATA[Neue Antwort (Artikel)]]></item>
 		<item name="wcf.user.notification.articleComment.response.title.stacked"><![CDATA[{#$timesTriggered} neue Antworten (Artikel)]]></item>
-		<item name="wcf.user.notification.articleComment.response.message"><![CDATA[{if !$author->userID}Ein Gast{else}{@$author->getAnchorTag()}{/if} hat eine Antwort zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Kommentar in dem Artikel <a href="{$article->getLink()}#comment{@$commentID}/response{@$responseID}">{$article->getTitle()}</a> verfasst.]]></item>
-		<item name="wcf.user.notification.articleComment.response.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben Antworten zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Kommentar zu dem Artikel <a href="{$article->getLink()}#comment{@$commentID}">{$article->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.user.notification.articleComment.response.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat eine Antwort zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Kommentar in dem Artikel <strong>{$article->getTitle()}</strong> verfasst.]]></item>
+		<item name="wcf.user.notification.articleComment.response.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben Antworten zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Kommentar zu dem Artikel <strong>{$article->getTitle()}</strong> verfasst.]]></item>
 		<item name="wcf.user.notification.articleComment.response.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar zu dem Artikel „{@$notificationContent[variables][article]->getTitle()}“ [URL:{link controller='Article' object=$notificationContent[variables][article] isEmail=true}#comments/comment{@$commentID}/response{@$responseID}{/link}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.user.notification.articleComment.response.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar zu dem Artikel <a href="{link controller='Article' object=$notificationContent[variables][article] isHtmlEmail=true}#comments/comment{@$commentID}/response{@$responseID}{/link}">{$notificationContent[variables][article]->getTitle()}</a> verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}</p>]]></item>
 		<item name="wcf.user.notification.articleComment.responseOwner.title"><![CDATA[Neue Antwort (Artikel)]]></item>
 		<item name="wcf.user.notification.articleComment.responseOwner.title.stacked"><![CDATA[{#$timesTriggered} neue Antworten (Artikel)]]></item>
-		<item name="wcf.user.notification.articleComment.responseOwner.message"><![CDATA[{if !$author->userID}Ein Gast{else}{@$author->getAnchorTag()}{/if} hat eine Antwort zum Kommentar von {if $commentAuthor->userID}<a href="{link controller='User' object=$commentAuthor}{/link}" class="userLink" data-user-id="{@$commentAuthor->userID}">{$commentAuthor->username}</a>{else}{$commentAuthor->username}{/if} zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Artikel <a href="{$article->getLink()}#comment{@$commentID}/response{@$responseID}">{$article->getTitle()}</a> verfasst.]]></item>
-		<item name="wcf.user.notification.articleComment.responseOwner.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben Antworten zum Kommentar von {if $commentAuthor->userID}<a href="{link controller='User' object=$commentAuthor}{/link}" class="userLink" data-user-id="{@$commentAuthor->userID}">{$commentAuthor->username}</a>{else}{$commentAuthor->username}{/if} zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Artikel <a href="{$article->getLink()}#comment{@$commentID}/response{@$responseID}">{$article->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.user.notification.articleComment.responseOwner.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat eine Antwort zum Kommentar von <strong>{$commentAuthor}</strong> zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Artikel <strong>{$article->getTitle()}</strong> verfasst.]]></item>
+		<item name="wcf.user.notification.articleComment.responseOwner.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben Antworten zum Kommentar von <strong>{$commentAuthor}</strong> zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Artikel <strong>{$article->getTitle()}</strong> verfasst.]]></item>
 		<item name="wcf.user.notification.articleComment.responseOwner.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} zum Kommentar von {@$notificationContent[variables][commentAuthor]->username}{if $notificationContent[variables][commentAuthor]->userID} [URL:{link controller='User' object=$notificationContent[variables][commentAuthor] isEmail=true}{/link}]{/if} zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Artikel „{@$notificationContent[variables][article]->getTitle()}“ [URL:{link controller='Article' object=$notificationContent[variables][article] isEmail=true}#comments/comment{@$commentID}/response{@$responseID}{/link}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.user.notification.articleComment.responseOwner.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} zum Kommentar von {if $notificationContent[variables][commentAuthor]->userID}<a href="{link controller='User' object=$notificationContent[variables][commentAuthor] isHtmlEmail=true}{/link}">{@$notificationContent[variables][commentAuthor]->username}</a>{else}{@$notificationContent[variables][commentAuthor]->username}{/if} zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Artikel <a href="{link controller='Article' object=$notificationContent[variables][article] isHtmlEmail=true}#comments/comment{@$commentID}/response{@$responseID}{/link}">{$notificationContent[variables][article]->getTitle()}</a> verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}</p>]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.article.notification.article"><![CDATA[Neuer Artikel in abonnierter Kategorie]]></item>
 		<item name="wcf.user.notification.article.title"><![CDATA[Neuer Artikel]]></item>
-		<item name="wcf.user.notification.article.message"><![CDATA[{if $author->userID}{@$author->getAnchorTag()}{else}Ein Gast{/if} hat den Artikel <a href="{$article->getLink()}">{$article->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.user.notification.article.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat den Artikel <strong>{$article->getTitle()}</strong> verfasst.]]></item>
 		<item name="wcf.user.notification.article.mail.plaintext"><![CDATA[{if $event->getAuthor()->userID}{@$event->getAuthor()->username} [URL:{link controller='User' object=$event->getAuthor() isEmail=true}{/link}]{else}Ein Gast{/if} hat den Artikel „{@$notificationContent[variables][articleContent]->getTitle()}“ [URL:{link controller='Article' object=$notificationContent[variables][articleContent] isEmail=true}{/link}] verfasst:]]></item>
 		<item name="wcf.user.notification.article.mail.html"><![CDATA[<p>{if $event->getAuthor()->userID}<a href="{link controller='User' object=$event->getAuthor() isHtmlEmail=true}{/link}">{$event->getAuthor()->username}</a>{else}Ein Gast{/if} hat den Artikel <a href="{link controller='Article' object=$notificationContent[variables][articleContent] isHtmlEmail=true}{/link}">{$notificationContent[variables][articleContent]->getTitle()}</a> verfasst:</p>]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf einen Kommentar zu Ihrem Artikel]]></item>
@@ -5129,10 +5198,12 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.notification.comment"><![CDATA[Neuer Kommentar zu Ihrem Artikel]]></item>
 		<item name="wcf.user.notification.userRegistration.title"><![CDATA[Neue Benutzer-Registrierung]]></item>
 		<item name="wcf.user.notification.userRegistration.title.stacked"><![CDATA[{#$count} neue Benutzer-Registrierungen]]></item>
-		<item name="wcf.user.notification.userRegistration.message"><![CDATA[{@$author->getAnchorTag()} hat sich registriert.]]></item>
-		<item name="wcf.user.notification.userRegistration.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weitere Benutzer{/if} haben sich registriert.]]></item>
+		<item name="wcf.user.notification.userRegistration.message"><![CDATA[<strong>{$author}</strong> hat sich registriert.]]></item>
+		<item name="wcf.user.notification.userRegistration.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben sich registriert.]]></item>
 		<item name="wcf.user.notification.userRegistration.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1}hat{else}haben{/if} sich registriert.]]></item>
 		<item name="wcf.user.notification.userRegistration.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1}hat{else}haben{/if} sich registriert:</p>]]></item>
+		<item name="wcf.user.notification.status.active"><![CDATA[Aktiv]]></item>
+		<item name="wcf.user.notification.status.email"><![CDATA[E-Mail]]></item>
 	</category>
 	<category name="wcf.user.profile">
 		<item name="wcf.user.profile.content.about.noPublicData"><![CDATA[{if $userID == $__wcf->getUser()->userID}{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} noch keine sichtbaren Informationen hinterlegt.{else}Der Benutzer hat noch keine für {if LANGUAGE_USE_INFORMAL_VARIANT}dich{else}Sie{/if} sichtbaren Informationen hinterlegt.{/if}]]></item>
@@ -5171,7 +5242,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 		<item name="wcf.user.option.birthday"><![CDATA[Geburtstag]]></item>
 		<item name="wcf.user.option.birthdayShowYear"><![CDATA[Geburtsjahr im Profil anzeigen]]></item>
 		<item name="wcf.user.option.birthdayShowYear.description"><![CDATA[Mitglieder können dadurch {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Alter sehen.]]></item>
-		<item name="wcf.user.option.canMail"><![CDATA[Kann E-Mails senden]]></item>
 		<item name="wcf.user.option.canViewEmailAddress"><![CDATA[Kann E-Mail-Adresse sehen]]></item>
 		<item name="wcf.user.option.canViewOnlineStatus"><![CDATA[Kann Online-Status sehen]]></item>
 		<item name="wcf.user.option.canViewProfile"><![CDATA[Kann Benutzerprofil sehen]]></item>
@@ -5195,7 +5265,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 		<item name="wcf.user.option.occupation"><![CDATA[Beruf]]></item>
 		<item name="wcf.user.option.showSignature"><![CDATA[Persönliche Signatur anderer Mitglieder anzeigen]]></item>
 		<item name="wcf.user.option.timezone"><![CDATA[Zeitzone]]></item>
-		<item name="wcf.user.option.icq"><![CDATA[ICQ]]></item>
 		<item name="wcf.user.option.skype"><![CDATA[Skype]]></item>
 		<item name="wcf.user.option.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.option.twitter"><![CDATA[Twitter]]></item>
@@ -5205,10 +5274,9 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 		<item name="wcf.user.option.searchRadioButtonOption"><![CDATA[Auswahl des Benutzers bei „{$option->getTitle()}“:]]></item>
 		<item name="wcf.user.option.searchTextOption"><![CDATA[„{$option->getTitle()}“ enthält:]]></item>
 		<item name="wcf.user.option.searchBooleanOption"><![CDATA[Auswahl des Benutzers bei „{$option->getTitle()}“:]]></item>
+		<item name="wcf.user.option.enableEmbeddedMedia"><![CDATA[Alle externen Inhalte anzeigen]]></item>
 	</category>
 	<category name="wcf.user.mail">
-		<item name="wcf.user.mail.information"><![CDATA[Informationen]]></item>
-		<item name="wcf.user.mail.mail.subject"><![CDATA[Nachricht von {@$username}: {@$subject}]]></item>
 		<item name="wcf.user.mail.mail.plaintext"><![CDATA[Hallo {@$mailbox->getUser()->username},
 
 „{@$username}“ hat {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} über die Website {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] folgende Nachricht gesandt:
@@ -5219,11 +5287,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 <p>„{$username}“ hat {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} über die Website <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|language}</a> folgende Nachricht gesandt:</p>
 
 <p>{@$message|newlineToBreak}</p>]]></item>
-		<item name="wcf.user.mail.message"><![CDATA[Nachricht]]></item>
-		<item name="wcf.user.mail.senderEmail"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} E-Mail-Adresse]]></item>
-		<item name="wcf.user.mail.sent"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Nachricht an {$user->username} wurde erfolgreich versandt.]]></item>
-		<item name="wcf.user.mail.showAddress"><![CDATA[Meine E-Mail-Adresse als Absender-Adresse benutzen. Der Empfänger kann direkt auf die Nachricht antworten.]]></item>
-		<item name="wcf.user.mail.subject"><![CDATA[Betreff]]></item>
 	</category>
 	<category name="wcf.user.rank">
 		<item name="wcf.user.rank.administrator"><![CDATA[Administrator]]></item>

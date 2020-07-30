@@ -17,7 +17,7 @@
 				<dd>
 					<span>
 						{if $queue->assignedUserID}
-							<a href="{link controller='User' id=$assignedUserID}{/link}" class="userLink" data-user-id="{@$assignedUserID}">{$queue->assignedUsername}</a>
+							<a href="{link controller='User' id=$assignedUserID}{/link}" class="userLink" data-object-id="{@$assignedUserID}">{$queue->assignedUsername}</a>
 						{else}
 							{lang}wcf.moderation.assignedUser.nobody{/lang}
 						{/if}

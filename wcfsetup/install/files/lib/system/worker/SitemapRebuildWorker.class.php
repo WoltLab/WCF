@@ -9,6 +9,7 @@ use wcf\system\exception\ImplementationException;
 use wcf\system\exception\ParentClassException;
 use wcf\system\io\AtomicWriter;
 use wcf\system\io\File;
+use wcf\system\registry\RegistryHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\Regex;
 use wcf\system\WCF;
@@ -29,6 +30,12 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker {
 	 * The limit of objects in one sitemap file.
 	 */
 	const SITEMAP_OBJECT_LIMIT = 50000;
+	
+	/**
+	 * Prefix for stored data in the registry.
+	 * @since 5.3
+	 */
+	const REGISTRY_PREFIX = 'sitemapData_';
 	
 	/**
 	 * @inheritDoc
@@ -83,6 +90,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker {
 				// read sitemaps
 				$sitemapObjects = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.sitemap.object');
 				foreach ($sitemapObjects as $sitemapObject) {
+					self::prepareSitemapObject($sitemapObject);
 					$processor = $sitemapObject->getProcessor();
 					
 					if ($processor->isAvailableType() && ($sitemapObject->isDisabled === null || !$sitemapObject->isDisabled)) {
@@ -231,11 +239,8 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker {
 	protected function checkCache() {
 		$object = (isset($this->sitemapObjects[$this->workerData['sitemap']])) ? $this->sitemapObjects[$this->workerData['sitemap']] : false;
 		while ($object && file_exists(self::getSitemapPath() . $object->objectType . '.xml') && filectime(self::getSitemapPath() . $object->objectType . '.xml') > TIME_NOW - (($object->rebuildTime !== null) ? $object->rebuildTime : 60 * 60 * 24 * 7)) {
-			$files = @glob(self::getSitemapPath() . $object->objectType . '*');
-			if (is_array($files)) {
-				foreach ($files as $filename) {
-					$this->workerData['sitemaps'][] = self::getSitemapURL() . basename($filename);
-				}
+			foreach (array_merge(glob(self::getSitemapPath() . $object->objectType . '_*'), [self::getSitemapPath() . $object->objectType . '.xml']) as $filename) {
+				$this->workerData['sitemaps'][] = self::getSitemapURL() . basename($filename);
 			}
 			
 			$this->workerData['sitemap']++;
@@ -423,5 +428,26 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker {
 	 */
 	private function changeToActualUser() {
 		WCF::getSession()->changeUser($this->actualUser, true);
+	}
+	
+	/**
+	 * Reads the columns changed by the user for this sitemap object from the registry and modifies the object accordingly.
+	 * 
+	 * @param       ObjectType      $object
+	 * @since       5.3
+	 */
+	public static function prepareSitemapObject(ObjectType $object) {
+		$sitemapData = RegistryHandler::getInstance()->get('com.woltlab.wcf', self::REGISTRY_PREFIX . $object->objectType);
+		
+		if ($sitemapData !== null) {
+			$sitemapData = @unserialize($sitemapData);
+			
+			if (is_array($sitemapData)) {
+				$object->priority = $sitemapData['priority'];
+				$object->changeFreq = $sitemapData['changeFreq'];
+				$object->rebuildTime = $sitemapData['rebuildTime'];
+				$object->isDisabled = $sitemapData['isDisabled'];
+			}
+		}
 	}
 }

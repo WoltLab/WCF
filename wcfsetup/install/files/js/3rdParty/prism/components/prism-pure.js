@@ -1,4 +1,4 @@
-define(["prism/prism","prism/components/prism-c","prism/components/prism-cpp","prism/components/prism-fortran"], function () {
+define(["prism/prism"], function () {
 (function (Prism) {
 	Prism.languages.pure = {
 		'comment': [

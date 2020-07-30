@@ -18,14 +18,20 @@ class MediaBBCode extends AbstractBBCode {
 	public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser) {
 		$content = StringUtil::trim($openingTag['attributes'][0]);
 		
+		/** @var HtmlBBCodeParser $parser */
 		if ($parser->getOutputType() == 'text/html') {
 			foreach (BBCodeMediaProvider::getCache() as $provider) {
 				if ($provider->matches($content)) {
-					return $provider->getOutput($content);
+					if ($parser instanceof HtmlBBCodeParser && $parser->getIsGoogleAmp()) {
+						return StringUtil::getAnchorTag($content);
+					}
+					else {
+						return $provider->getOutput($content);
+					}
 				}
 			}
 		}
-		else if ($parser->getOutputType() == 'text/simplified-html') {
+		else if ($parser->getOutputType() == 'text/simplified-html' && !$parser->getRemoveLinks()) {
 			foreach (BBCodeMediaProvider::getCache() as $provider) {
 				if ($provider->matches($content)) {
 					return StringUtil::getAnchorTag($content);

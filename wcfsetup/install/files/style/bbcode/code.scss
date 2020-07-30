@@ -48,12 +48,14 @@
 	border-radius: 2px;
 	clear: both;
 	margin: 1em 0;
-	overflow: hidden;
 	padding: 10px;
 	position: relative;
 	
 	&.collapsed {
-		max-height: 200px;
+		.codeBoxCode {
+			max-height: 200px;
+			overflow: hidden;
+		}
 		
 		> .toggleButton {
 			bottom: 0;
@@ -66,54 +68,60 @@
 		}
 	}
 	
-	> div {
-		> .codeBoxHeader {
-			align-items: center;
-			display: flex;
+	.codeBoxHeader {
+		position: sticky;
+		top: 50px;
+		z-index: 1;
+		padding: 10px 10px 10px;
+		margin: -10px -10px 0;
+		background-color: $wcfContentBackground;
+		
+		align-items: center;
+		display: flex;
+		
+		/* required to avoid layout jumping caused by the dynamically added 24px button */
+		min-height: 24px;
+		
+		> .codeBoxHeadline {
+			flex: 1 1 auto;
+			padding: 0 10px;
 			
-			/* required to avoid layout jumping caused by the dynamically added 24px button */
-			min-height: 24px;
-			
-			> .codeBoxHeadline {
-				flex: 1 1 auto;
-				padding: 0 10px;
-				
-				@include wcfFontHeadline;
-			}
+			@include wcfFontHeadline;
 		}
+	}
+	
+	.codeBoxCode {
+		position: relative;
+		padding-left: 7ch;
 		
-		> .codeBoxCode {
-			padding-left: 7ch;
+		> code {
+			display: block;
+			overflow-x: auto;
+			font-family: Consolas, 'Courier New', monospace;
 			
-			> code {
-				display: block;
-				overflow-x: auto;
-				font-family: Consolas, 'Courier New', monospace;
+			.codeBoxLine {
+				> a {
+					margin-left: -7ch;
+					overflow: hidden;
+					position: absolute;
+					text-align: right;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					/* No one has line numbers greater than 999999 */
+					width: 6ch;
+	
+					&::before {
+						content: attr(title);
+					}
+				}
 				
-				.codeBoxLine {
-					> a {
-						margin-left: -7ch;
-						overflow: hidden;
-						position: absolute;
-						text-align: right;
-						text-overflow: ellipsis;
-						white-space: nowrap;
-						/* No one has line numbers greater than 999999 */
-						width: 6ch;
-		
-						&::before {
-							content: attr(title);
-						}
-					}
-					
-					> span {
-						white-space: pre-wrap;
-						word-break: break-all;
-					}
-					
-					&:target {
-						background-color: rgba(255, 255, 102, 1);
-					}
+				> span {
+					white-space: pre-wrap;
+					word-break: break-all;
+				}
+				
+				&:target {
+					background-color: rgba(255, 255, 102, 1);
 				}
 			}
 		}
@@ -128,6 +136,10 @@
 		
 		@include wcfFontSmall;
 	}
+}
+
+.anchorFixedHeader:not(.disableAnchorFixedHeader):target .codeBoxHeader {
+	top: -30px; /* see wsc31.scss */
 }
 
 

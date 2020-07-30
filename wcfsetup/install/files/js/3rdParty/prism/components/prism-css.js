@@ -1,4 +1,4 @@
-define(["prism/prism","prism/components/prism-markup"], function () {
+define(["prism/prism"], function () {
 (function (Prism) {
 
 	var string = /("|')(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/;
@@ -8,12 +8,18 @@ define(["prism/prism","prism/components/prism-markup"], function () {
 		'atrule': {
 			pattern: /@[\w-]+[\s\S]*?(?:;|(?=\s*\{))/,
 			inside: {
-				'rule': /@[\w-]+/
+				'rule': /^@[\w-]+/,
+				'selector-function-argument': {
+					pattern: /(\bselector\s*\((?!\s*\))\s*)(?:[^()]|\((?:[^()]|\([^()]*\))*\))+?(?=\s*\))/,
+					lookbehind: true,
+					alias: 'selector'
+				}
 				// See rest below
 			}
 		},
 		'url': {
 			pattern: RegExp('url\\((?:' + string.source + '|[^\n\r()]*)\\)', 'i'),
+			greedy: true,
 			inside: {
 				'function': /^url/i,
 				'punctuation': /^\(|\)$/

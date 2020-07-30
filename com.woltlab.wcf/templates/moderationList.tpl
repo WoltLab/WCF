@@ -3,47 +3,6 @@
 {capture assign='contentTitle'}{if $status == 2}{lang}wcf.moderation.doneItems{/lang}{else}{lang}wcf.moderation.outstandingItems{/lang}{/if} <span class="badge">{#$items}</span>{/capture}
 
 {capture assign='sidebarRight'}
-	<section class="box" data-static-box-identifier="com.woltlab.wcf.ModerationListFilters">
-		{* moderation type *}
-		<h2 class="boxTitle">{lang}wcf.moderation.filterByType{/lang}</h2>
-		
-		<nav class="boxContent">
-			<ul class="boxMenu">
-				<li{if $definitionID == 0} class="active"{/if}><a class="boxMenuLink" href="{link controller='ModerationList'}definitionID=0&assignedUserID={@$assignedUserID}&status={@$status}&pageNo={@$pageNo}&sortField={@$sortField}&sortOrder={@$sortOrder}{/link}">{lang}wcf.moderation.type.all{/lang}</a></li>
-				{foreach from=$availableDefinitions key=__definitionID item=definitionName}
-					<li{if $definitionID == $__definitionID} class="active"{/if}><a class="boxMenuLink" href="{link controller='ModerationList'}definitionID={@$__definitionID}&assignedUserID={@$assignedUserID}&status={@$status}&pageNo={@$pageNo}&sortField={@$sortField}&sortOrder={@$sortOrder}{/link}">{lang}wcf.moderation.type.{$definitionName}{/lang}</a></li>
-				{/foreach}
-				
-				{event name='sidebarModerationType'}
-			</ul>
-		</nav>
-		
-		{* assigned user *}
-		<h2 class="boxTitle">{lang}wcf.moderation.filterByUser{/lang}</h2>
-		
-		<nav class="boxContent">
-			<ul class="boxMenu">
-				<li{if $assignedUserID == -1} class="active"{/if}><a class="boxMenuLink" href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID=-1&status={@$status}&pageNo={@$pageNo}&sortField={@$sortField}&sortOrder={@$sortOrder}{/link}">{lang}wcf.moderation.filterByUser.allEntries{/lang}</a></li>
-				<li{if $assignedUserID == 0} class="active"{/if}><a class="boxMenuLink" href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID=0&status={@$status}&pageNo={@$pageNo}&sortField={@$sortField}&sortOrder={@$sortOrder}{/link}">{lang}wcf.moderation.filterByUser.nobody{/lang}</a></li>
-				<li{if $assignedUserID == $__wcf->getUser()->userID} class="active"{/if}><a class="boxMenuLink" href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$__wcf->getUser()->userID}&status={@$status}&pageNo={@$pageNo}&sortField={@$sortField}&sortOrder={@$sortOrder}{/link}">{lang}wcf.moderation.filterByUser.myself{/lang}</a></li>
-				
-				{event name='sidebarAssignedUser'}
-			</ul>
-		</nav>
-		
-		{* status *}
-		<h2 class="boxTitle">{lang}wcf.moderation.status{/lang}</h2>
-		
-		<nav class="boxContent">
-			<ul class="boxMenu">
-				<li{if $status == -1} class="active"{/if}><a class="boxMenuLink" href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status=-1&pageNo={@$pageNo}&sortField={@$sortField}&sortOrder={@$sortOrder}{/link}">{lang}wcf.moderation.status.outstanding{/lang}</a></li>
-				<li{if $status == 2} class="active"{/if}><a class="boxMenuLink" href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status=2&pageNo={@$pageNo}&sortField={@$sortField}&sortOrder={@$sortOrder}{/link}">{lang}wcf.moderation.status.done{/lang}</a></li>
-				
-				{event name='sidebarStatus'}
-			</ul>
-		</nav>
-	</section>
-	
 	{event name='sidebarBoxes'}
 {/capture}
 
@@ -64,11 +23,66 @@
 		<ol class="tabularList">
 			<li class="tabularListRow tabularListRowHead">
 				<ol class="tabularListColumns">
-					<li class="columnSubject">{lang}wcf.moderation.title{/lang}</li>
-					<li class="columnStats{if $sortField == 'comments'} active {@$sortOrder}{/if}"><a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status={@$status}&pageNo={@$pageNo}&sortField=comments&sortOrder={if $sortField == 'comments' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.comments{/lang}</a></li>
-					<li class="columnLastPost{if $sortField === 'lastChangeTime'} active {@$sortOrder}{/if}"><a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status={@$status}&pageNo={@$pageNo}&sortField=lastChangeTime&sortOrder={if $sortField == 'lastChangeTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.moderation.lastChangeTime{/lang}</a></li>
-					
-					{event name='columnHeads'}
+					<li class="columnSort">
+						<ul class="inlineList">
+							<li>
+								<a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status={@$status}&pageNo={@$pageNo}&sortField={$sortField}&sortOrder={if $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">
+									<span class="icon icon16 fa-sort-amount-{$sortOrder|strtolower} jsTooltip" title="{lang}wcf.search.sortBy{/lang} ({lang}wcf.global.sortOrder.{if $sortOrder === 'ASC'}ascending{else}descending{/if}{/lang})"></span>
+								</a>
+							</li>
+							<li>
+								<div class="dropdown">
+									<span class="dropdownToggle">{lang}wcf.moderation.{$sortField}{/lang}</span>
+		
+									<ul class="dropdownMenu">
+										{foreach from=$validSortFields item=_sortField}
+											<li{if $_sortField === $sortField} class="active"{/if}><a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status={@$status}&pageNo={@$pageNo}&sortField={$_sortField}&sortOrder={if $sortField == $_sortField && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.moderation.{$_sortField}{/lang}</a></li>
+										{/foreach}
+									</ul>
+								</div>
+							</li>
+						</ul>
+					</li>
+					{hascontent}
+						<li class="columnFilter">
+							<ul class="inlineList">
+								{content}
+									{if $definitionID}
+										<li>
+											<span class="icon icon16 fa-tag jsTooltip" title="{lang}wcf.moderation.filterByType{/lang}"></span>
+											{lang}wcf.moderation.type.{$availableDefinitions[$definitionID]}{/lang}
+										</li>
+									{/if}
+									
+									{if !$assignedUserID || $assignedUserID == $__wcf->getUser()->userID}
+										<li>
+											<span class="icon icon16 fa-user jsTooltip" title="{lang}wcf.moderation.filterByUser{/lang}"></span>
+											{if !$assignedUserID}
+												{lang}wcf.moderation.filterByUser.nobody{/lang}
+											{else}
+												{lang}wcf.moderation.filterByUser.myself{/lang}
+											{/if}
+										</li>
+									{/if}
+									
+									{if $status == -1 || $status == 2}
+										<li>
+											{if $status == -1}
+												<span class="icon icon16 fa-circle-o jsTooltip" title="{lang}wcf.moderation.status{/lang}"></span>
+												{lang}wcf.moderation.status.outstanding{/lang}
+											{else}
+												<span class="icon icon16 fa-check-circle-o jsTooltip" title="{lang}wcf.moderation.status{/lang}"></span>
+												{lang}wcf.moderation.status.done{/lang}
+											{/if}
+										</li>
+									{/if}
+								{/content}
+							</ul>
+						</li>
+					{/hascontent}
+					<li class="columnApplyFilter jsOnly">
+						<button class="small jsStaticDialog" data-dialog-id="moderationListSortFilter"><span class="icon icon16 fa-filter"></span> {lang}wcf.global.filter{/lang}</button>
+					</li>
 				</ol>
 			</li>
 			
@@ -97,7 +111,13 @@
 							</h3>
 							
 							<ul class="inlineList dotSeparated small messageGroupInfo">
-								<li class="messageGroupAuthor">{if $entry->getAffectedObject()->getUserID()}<a href="{link controller='User' id=$entry->getAffectedObject()->getUserID() title=$entry->getAffectedObject()->getUsername()}{/link}" class="userLink" data-user-id="{@$entry->getAffectedObject()->getUserID()}">{$entry->getAffectedObject()->getUsername()}</a>{else}{$entry->getAffectedObject()->getUsername()}{/if}</li>
+								<li class="messageGroupAuthor">
+									{if $entry->getAffectedObject()->getUserID()}
+										{user object=$entry->getUserProfile()}
+									{else}
+										{$entry->getAffectedObject()->getUsername()}
+									{/if}
+								</li>
 								<li class="messageGroupTime">{@$entry->getAffectedObject()->getTime()|time}</li>
 								<li>{lang}wcf.moderation.type.{@$entry->getObjectTypeName()}{/lang}</li>
 								
@@ -111,7 +131,7 @@
 							
 							{if $entry->assignedUserID}
 								<small class="moderationQueueEntryAssignedUser">
-									{lang}wcf.moderation.assignedUser{/lang}: <a href="{link controller='User' id=$entry->assignedUserID}{/link}" class="userLink" data-user-id="{@$entry->assignedUserID}">{$entry->assignedUsername}</a>
+									{lang}wcf.moderation.assignedUser{/lang}: <a href="{link controller='User' id=$entry->assignedUserID}{/link}" class="userLink" data-object-id="{@$entry->assignedUserID}">{$entry->assignedUsername}</a>
 								</small>
 							{/if}
 							
@@ -145,8 +165,60 @@
 		{/hascontent}
 	</footer>
 {else}
-	<p class="info" role="status">{lang}wcf.global.noItems{/lang}</p>
+	<p class="info" role="status">{lang}wcf.moderation.noEntries{/lang}</p>
 {/if}
+
+<div id="moderationListSortFilter" class="jsStaticDialogContent" data-title="{lang}wcf.moderation.filter{/lang}">
+	<form method="post" action="{link controller='ModerationList'}{/link}">
+		<div class="section">
+			<dl>
+				<dt><label for="definitionID">{lang}wcf.moderation.filterByType{/lang}</label></dt>
+				<dd>
+					<select name="definitionID" id="definitionID">
+						<option value="0">{lang}wcf.moderation.type.all{/lang}</option>
+						{foreach from=$availableDefinitions key=__definitionID item=definitionName}
+							<option value="{$__definitionID}"{if $__definitionID == $definitionID} selected{/if}>{lang}wcf.moderation.type.{$definitionName}{/lang}</option>
+						{/foreach}
+
+						{event name='filterModerationType'}
+					</select>
+				</dd>
+			</dl>
+			
+			<dl>
+				<dt><label for="assignedUserID">{lang}wcf.moderation.filterByUser{/lang}</label></dt>
+				<dd>
+					<select name="assignedUserID" id="assignedUserID">
+						<option value="-1"{if $assignedUserID == -1} selected{/if}>{lang}wcf.moderation.filterByUser.allEntries{/lang}</option>
+						<option value="0"{if $assignedUserID == 0} selected{/if}>{lang}wcf.moderation.filterByUser.nobody{/lang}</option>
+						<option value="{@$__wcf->getUser()->userID}"{if $assignedUserID == $__wcf->getUser()->userID} selected{/if}>{lang}wcf.moderation.filterByUser.myself{/lang}</option>
+						
+						{event name='filterAssignedUser'}
+					</select>
+				</dd>
+			</dl>
+
+			<dl>
+				<dt><label for="status">{lang}wcf.moderation.status{/lang}</label></dt>
+				<dd>
+					<select name="status" id="status">
+						<option value="-1"{if $status == -1} selected{/if}>{lang}wcf.moderation.status.outstanding{/lang}</option>
+						<option value="2"{if $status == 2} selected{/if}>{lang}wcf.moderation.status.done{/lang}</option>
+						
+						{event name='filterStatus'}
+					</select>
+				</dd>
+			</dl>
+		</div>
+
+		<div class="formSubmit">
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+			<a href="{link controller='ModerationList'}{/link}" class="button">{lang}wcf.global.button.reset{/lang}</a>
+			<input type="hidden" name="sortField" value="{$sortField}">
+			<input type="hidden" name="sortOrder" value="{$sortOrder}">
+		</div>
+	</form>
+</div>
 
 <script data-relocate="true">
 	$(function() {

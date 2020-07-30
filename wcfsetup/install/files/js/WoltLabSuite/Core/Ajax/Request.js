@@ -231,7 +231,7 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			
 			if (typeof options.success === 'function') {
 				var data = null;
-				if (xhr.getResponseHeader('Content-Type') === 'application/json') {
+				if (xhr.getResponseHeader('Content-Type').split(';', 1)[0].trim() === 'application/json') {
 					try {
 						data = JSON.parse(xhr.responseText);
 					}
@@ -314,6 +314,10 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			var message = '';
 			
 			if (data !== null) {
+				if (data.returnValues && data.returnValues.description) {
+					details += '<br><p>Description:</p><p>' + data.returnValues.description + '</p>';
+				}
+				
 				if (data.file && data.line) {
 					details += '<br><p>File:</p><p>' + data.file + ' in line ' + data.line + '</p>';
 				}

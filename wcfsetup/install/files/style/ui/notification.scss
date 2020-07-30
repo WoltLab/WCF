@@ -1,0 +1,81 @@
+.notificationSettings {
+	margin-top: 30px;
+}
+
+.notificationSettingsCategory,
+.notificationSettingsItem {
+	display: flex;
+}
+
+.notificationSettingsCategory {
+	border-bottom: 2px solid currentColor;
+	color: $wcfTabularBoxHeadline;
+	font-weight: 600;
+	padding: 5px 0;
+}
+
+.notificationSettingsItem {
+	align-items: center;
+	padding: 5px 0;
+}
+
+.notificationSettingsItem:not(:last-child) {
+	border-bottom: 1px solid $wcfContentBorderInner;
+}
+
+.notificationSettingsEvent {
+	flex: 1 auto;
+	
+	> label {
+		cursor: pointer;
+	}
+}
+
+.notificationSettingsState {
+	align-items: center;
+	display: flex;
+	flex: 0 0 34px;
+	justify-content: center;
+	
+	@include screen-sm-up {
+		margin: 0 20px;
+	}
+	
+	@include screen-xs {
+		margin: 0 10px;
+	}
+	
+	input[type="checkbox"] {
+		opacity: 0;
+		position: absolute;
+		z-index: -1;
+		
+		&.focus-visible:focus ~ .icon {
+			transform: scale(1.2);
+		}
+		
+		&:not(:checked) + .fa-bell {
+			display: none;
+		}
+		
+		&:checked ~ .fa-bell-slash {
+			display: none;
+		}
+	}
+}
+
+.notificationSettingsEmail {
+	align-items: center;
+	display: flex;
+	flex: 0 0 45px;
+	justify-content: flex-end;
+}
+.notificationSettingsEmailType {
+	align-items: center;
+	display: flex;
+	
+	&.disabled {
+		filter: grayscale(1);
+		opacity: .75;
+	}
+}

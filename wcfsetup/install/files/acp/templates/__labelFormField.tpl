@@ -7,7 +7,7 @@
 			<ul class="scrollableDropdownMenu">
 				{foreach from=$field->getLabelGroup() item=label}
 					<li data-label-id="{@$label->labelID}">
-						<span><span class="badge label{if $label->getClassNames()} {@$label->getClassNames()}{/if}">{$label->getTitle()}</span></span>
+						<span>{@$label->render()}</span>
 					</li>
 				{/foreach}
 			</ul>

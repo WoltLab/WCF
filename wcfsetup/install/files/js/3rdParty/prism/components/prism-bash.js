@@ -108,7 +108,7 @@ define(["prism/prism"], function () {
 		'string': [
 			// Support for Here-documents https://en.wikipedia.org/wiki/Here_document
 			{
-				pattern: /((?:^|[^<])<<-?\s*)(\w+?)\s*(?:\r?\n|\r)(?:[\s\S])*?(?:\r?\n|\r)\2/,
+				pattern: /((?:^|[^<])<<-?\s*)(\w+?)\s*(?:\r?\n|\r)[\s\S]*?(?:\r?\n|\r)\2/,
 				lookbehind: true,
 				greedy: true,
 				inside: insideString
@@ -116,13 +116,14 @@ define(["prism/prism"], function () {
 			// Here-document with quotes around the tag
 			// → No expansion (so no “inside”).
 			{
-				pattern: /((?:^|[^<])<<-?\s*)(["'])(\w+)\2\s*(?:\r?\n|\r)(?:[\s\S])*?(?:\r?\n|\r)\3/,
+				pattern: /((?:^|[^<])<<-?\s*)(["'])(\w+)\2\s*(?:\r?\n|\r)[\s\S]*?(?:\r?\n|\r)\3/,
 				lookbehind: true,
 				greedy: true
 			},
 			// “Normal” string
 			{
-				pattern: /(["'])(?:\\[\s\S]|\$\([^)]+\)|`[^`]+`|(?!\1)[^\\])*\1/,
+				pattern: /(^|[^\\](?:\\\\)*)(["'])(?:\\[\s\S]|\$\([^)]+\)|`[^`]+`|(?!\2)[^\\])*\2/,
+				lookbehind: true,
 				greedy: true,
 				inside: insideString
 			}

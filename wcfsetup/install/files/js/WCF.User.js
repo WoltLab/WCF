@@ -2165,6 +2165,7 @@ WCF.User.LikeLoader = Class.extend({
  * Loads user profile previews.
  * 
  * @see	WCF.Popover
+ * @deprecated	since 5.3, taken care of by `WoltLabSuite/Core/BootstrapFrontend` via `WoltLabSuite/Core/Controller/Popover`
  */
 WCF.User.ProfilePreview = WCF.Popover.extend({
 	/**

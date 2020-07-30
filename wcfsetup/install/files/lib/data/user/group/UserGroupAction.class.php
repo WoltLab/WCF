@@ -94,7 +94,7 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 		$this->readBoolean('copyUserGroupOptions');
 		
 		$this->groupEditor = $this->getSingleObject();
-		if (!$this->groupEditor->isAccessible() || $this->groupEditor->groupType != UserGroup::OTHER) {
+		if (!$this->groupEditor->canCopy()) {
 			throw new PermissionDeniedException();
 		}
 	}
@@ -120,18 +120,25 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 		
 		$optionValues = $statement->fetchMap('optionID', 'optionValue');
 		
-		$groupAction = new UserGroupAction([], 'create', [
+		$groupType = $this->groupEditor->groupType;
+		// When copying special user groups of which only one may exist,
+		// change the group type to 'other'.
+		if (in_array($groupType, [UserGroup::EVERYONE, UserGroup::GUESTS, UserGroup::USERS, UserGroup::OWNER])) {
+			$groupType = UserGroup::OTHER;
+		}
+		
+		/** @var UserGroup $group */
+		$group = (new UserGroupAction([], 'create', [
 			'data' => [
 				'groupName' => $this->groupEditor->groupName,
 				'groupDescription' => $this->groupEditor->groupDescription,
 				'priority' => $this->groupEditor->priority,
 				'userOnlineMarking' => $this->groupEditor->userOnlineMarking,
-				'showOnTeamPage' => $this->groupEditor->showOnTeamPage
+				'showOnTeamPage' => $this->groupEditor->showOnTeamPage,
+				'groupType' => $groupType,
 			],
-			'options' => $optionValues
-		]);
-		$returnValues = $groupAction->executeAction();
-		$group = $returnValues['returnValues'];
+			'options' => $optionValues,
+		]))->executeAction()['returnValues'];
 		$groupEditor = new UserGroupEditor($group);
 		
 		// update group name
@@ -169,7 +176,7 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 		
 		$groupEditor->update([
 			'groupDescription' => $groupDescription,
-			'groupName' => $groupName
+			'groupName' => $groupName,
 		]);
 		
 		// copy members
@@ -207,9 +214,10 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 		UserGroupEditor::resetCache();
 		
 		return [
+			'groupID' => $group->groupID,
 			'redirectURL' => LinkHandler::getInstance()->getLink('UserGroupEdit', [
-				'id' => $group->groupID
-			])
+				'id' => $group->groupID,
+			]),
 		];
 	}
 	

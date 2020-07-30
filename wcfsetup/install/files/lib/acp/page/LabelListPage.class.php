@@ -36,6 +36,11 @@ class LabelListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
+	public $itemsPerPage = 50;
+	
+	/**
+	 * @inheritDoc
+	 */
 	public $validSortFields = ['labelID', 'label', 'groupName', 'showOrder'];
 	
 	/**

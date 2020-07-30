@@ -20,7 +20,7 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			
 			var mpStart = this.caret.start;
 			this.caret.start = (function (node) {
-				if (_isSafari && _iOS) {
+				if (_isSafari) {
 					var sel, range;
 					node = this.caret.prepare(node);
 
@@ -298,7 +298,12 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			var sibling = block.nextElementSibling;
 			if (sibling && sibling.nodeName !== 'P') {
 				sibling = elCreate('p');
-				sibling.textContent = '\u200B';
+				if (this.opts.emptyHtml === '<p><br></p>') {
+					sibling.innerHTML = '<br>';
+				}
+				else {
+					sibling.textContent = '\u200B';
+				}
 				block.parentNode.insertBefore(sibling, block.nextSibling);
 			}
 			

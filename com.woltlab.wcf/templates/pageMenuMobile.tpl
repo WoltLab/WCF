@@ -17,10 +17,36 @@
 				
 				{if $menuItemNode->hasChildren()}<ol class="menuOverlayItemList">{else}</li>{/if}
 					
-					{if !$menuItemNode->hasChildren() && $menuItemNode->isLastSibling()}
-						{@"</ol></li>"|str_repeat:$menuItemNode->getOpenParentNodes()}
-					{/if}
+				{if !$menuItemNode->hasChildren() && $menuItemNode->isLastSibling()}
+					{@"</ol></li>"|str_repeat:$menuItemNode->getOpenParentNodes()}
+				{/if}
 		{/foreach}
+
+                {if $__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.FooterMenu')}
+			{hascontent}
+				<li class="menuOverlayItemSpacer"></li>
+				{content}	
+			                {foreach from=$__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.FooterMenu')->getMenu()->getMenuItemNodeList() item=menuItemNode}
+			                        {* Does not use `data-identifier` to prevent compatibility issues. See https://github.com/WoltLab/WCF/pull/2813 *}
+						<li class="menuOverlayItem" data-mobile-identifier="{@$menuItemNode->identifier}">
+			                                {assign var=__outstandingItems value=$menuItemNode->getOutstandingItems()}
+							<a href="{$menuItemNode->getURL()}" class="menuOverlayItemLink{if $__outstandingItems} menuOverlayItemBadge{/if}{if $menuItemNode->isActiveNode()} active{/if}"{if $menuItemNode->isExternalLink() && EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>
+								<span class="menuOverlayItemTitle">{$menuItemNode->getTitle()}</span>
+			                                        {if $__outstandingItems}
+									<span class="badge badgeUpdate">{#$__outstandingItems}</span>
+			                                        {/if}
+							</a>
+			
+			                                {if $menuItemNode->hasChildren()}<ol class="menuOverlayItemList">{else}</li>{/if}
+			
+			                                {if !$menuItemNode->hasChildren() && $menuItemNode->isLastSibling()}
+			                                        {@"</ol></li>"|str_repeat:$menuItemNode->getOpenParentNodes()}
+			                                {/if}
+			                {/foreach}
+				{/content}
+			{/hascontent}
+		{/if}
+
 		<li class="menuOverlayItemSpacer"></li>
 		<li class="menuOverlayItem" data-more="com.woltlab.wcf.search">
 			<a href="#" class="menuOverlayItemLink box24">
@@ -63,7 +89,7 @@
 			{* logged-in *}
 			<li class="menuOverlayTitle">{lang}wcf.menu.user{/lang}</li>
 			<li class="menuOverlayItem">
-				<a href="{link controller='User' object=$__wcf->user}{/link}" class="menuOverlayItemLink box24">
+				<a href="{$__wcf->user->getLink()}" class="menuOverlayItemLink box24">
 					{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(24)}
 					<span class="menuOverlayItemTitle">{$__wcf->user->username}</span>
 				</a>
@@ -130,15 +156,7 @@
 				<li class="menuOverlayItem" data-more="com.woltlab.wcf.login">
 					<a href="#" class="menuOverlayItemLink box24">
 						<span class="icon icon24 fa-sign-in"></span>
-						<span class="menuOverlayItemTitle">{lang}wcf.user.login{/lang}</span>
-					</a>
-				</li>
-			{/if}
-			{if !REGISTER_DISABLED}
-				<li class="menuOverlayItem">
-					<a href="{link controller='Register'}{/link}" class="menuOverlayItemLink box24">
-						<span class="icon icon24 fa-user-plus"></span>
-						<span class="menuOverlayItemTitle">{lang}wcf.user.register{/lang}</span>
+						<span class="menuOverlayItemTitle">{lang}wcf.user.loginOrRegister{/lang}</span>
 					</a>
 				</li>
 			{/if}

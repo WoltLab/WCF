@@ -7,8 +7,8 @@
  * @module	WoltLabSuite/Core/Ui/Mobile
  */
 define(
-	[        'Core', 'Environment', 'EventHandler', 'Language', 'List', 'Dom/ChangeListener', 'Dom/Traverse', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', './Page/Menu/Main', './Page/Menu/User', 'WoltLabSuite/Core/Ui/Dropdown/Reusable'],
-	function(Core,    Environment,   EventHandler,   Language,   List,   DomChangeListener,    DomTraverse,    UiAlignment, UiCloseOverlay,    UiScreen,    UiPageMenuMain,     UiPageMenuUser, UiDropdownReusable)
+	[        'Core', 'Environment', 'EventHandler', 'Language', 'List', 'Dom/ChangeListener', 'Dom/Traverse', 'Dom/Util', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', './Page/Menu/Main', './Page/Menu/User', 'WoltLabSuite/Core/Ui/Dropdown/Reusable'],
+	function(Core,    Environment,   EventHandler,   Language,   List,   DomChangeListener,    DomTraverse,   DomUtil,    UiAlignment, UiCloseOverlay,    UiScreen,    UiPageMenuMain,     UiPageMenuUser, UiDropdownReusable)
 {
 	"use strict";
 	
@@ -21,12 +21,12 @@ define(
 	var _knownMessages = new List();
 	var _main = null;
 	var _messages = elByClass('message');
+	var _mobileSidebarEnabled = false;
 	var _options = {};
 	var _pageMenuMain = null;
 	var _pageMenuUser = null;
 	var _messageGroups = null;
 	var _sidebars = [];
-	var _sidebarXsEnabled = false;
 	
 	/**
 	 * @exports	WoltLabSuite/Core/Ui/Mobile
@@ -71,17 +71,17 @@ define(
 				setup: this.enableShadow.bind(this)
 			});
 			
-			UiScreen.on('screen-xs', {
-				match: this._enableSidebarXS.bind(this),
-				unmatch: this._disableSidebarXS.bind(this),
-				setup: this._setupSidebarXS.bind(this)
+			UiScreen.on('screen-md-down', {
+				match: this._enableMobileSidebar.bind(this),
+				unmatch: this._disableMobileSidebar.bind(this),
+				setup: this._setupMobileSidebar.bind(this)
 			});
 			
-			// On the iPad Pro the navigation is not usable, because there is not the mobile layout displayed, 
-			// but the normal one for the desktop. The navigation reacts to a hover status if a menu item has 
-			// several submenu items. Logically, this cannot be created with the iPad, so that we display the 
-			// submenu here after a single click and only follow the link after another click. 
-			if (Environment.touch() && Environment.platform() === 'ios' && (Environment.browser() === 'safari' || Environment.browser() === 'chrome')) {
+			// On the large tablets (e.g. iPad Pro) the navigation is not usable, because there is not the mobile
+			// layout displayed, but the normal one for the desktop. The navigation reacts to a hover status if a
+			// menu item has several submenu items. Logically, this cannot be created with the tablet, so that we
+			// display the submenu here after a single click and only follow the link after another click.
+			if (Environment.touch() && (Environment.platform() === 'ios' || Environment.platform() === 'android')) {
 				UiScreen.on('screen-lg', {
 					match: this._enableLGTouchNavigation.bind(this),
 					unmatch: this._disableLGTouchNavigation.bind(this),
@@ -244,7 +244,7 @@ define(
 					if (quickOptions && navigation.childElementCount) {
 						quickOptions.classList.add('active');
 						quickOptions.addEventListener(WCF_CLICK_EVENT, (function (event) {
-							if (_enabled && event.target.nodeName !== 'LABEL' && event.target.nodeName !== 'INPUT') {
+							if (_enabled && UiScreen.is('screen-sm-down') && event.target.nodeName !== 'LABEL' && event.target.nodeName !== 'INPUT') {
 								event.preventDefault();
 								event.stopPropagation();
 								
@@ -310,22 +310,22 @@ define(
 			}
 		},
 		
-		_enableSidebarXS: function() {
-			_sidebarXsEnabled = true;
+		_enableMobileSidebar: function() {
+			_mobileSidebarEnabled = true;
 		},
 		
-		_disableSidebarXS: function() {
-			_sidebarXsEnabled = false;
+		_disableMobileSidebar: function() {
+			_mobileSidebarEnabled = false;
 			
 			_sidebars.forEach(function (sidebar) {
 				sidebar.classList.remove('open');
 			});
 		},
 		
-		_setupSidebarXS: function() {
+		_setupMobileSidebar: function() {
 			_sidebars.forEach(function (sidebar) {
 				sidebar.addEventListener('mousedown', function(event) {
-					if (_sidebarXsEnabled && event.target === sidebar) {
+					if (_mobileSidebarEnabled && event.target === sidebar) {
 						event.preventDefault();
 						
 						sidebar.classList.toggle('open');
@@ -333,7 +333,7 @@ define(
 				});
 			});
 			
-			_sidebarXsEnabled = true;
+			_mobileSidebarEnabled = true;
 		},
 		
 		_toggleMobileNavigation: function (message, quickOptions, navigation) {
@@ -384,10 +384,10 @@ define(
 			
 			elBySelAll('.boxMenuHasChildren > a', null, function (element) {
 				element.addEventListener('touchstart', function (event) {
-					if (_enabledLGTouchNavigation && !~~elData(event.target, 'dropdown-open')) {
+					if (_enabledLGTouchNavigation && elAttr(element, 'aria-expanded') === 'false') {
 						event.preventDefault();
 						
-						elData(event.target, 'dropdown-open', 1);
+						elAttr(element, 'aria-expanded', 'true');
 						
 						// Register an new event listener after the touch ended, which is triggered once when an 
 						// element on the page is pressed. This allows us to reset the touch status of the navigation 
@@ -395,7 +395,13 @@ define(
 						// click it again. 
 						element.addEventListener('touchend', function () {
 							document.body.addEventListener('touchstart', function () {
-								elData(event.target, 'dropdown-open', 0);
+								document.body.addEventListener('touchend', function (event) {
+									if (!DomUtil.contains(element.parentNode, event.target) && event.target !== element.parentNode) {
+										elAttr(element, 'aria-expanded', 'false');
+									}
+								}, {
+									once: true
+								});
 							}, {
 								once: true
 							});
@@ -416,7 +422,16 @@ define(
 		},
 		
 		_rebuildMobileNavigation: function (navigation) {
-			elBySelAll('.button:not(.ignoreMobileNavigation)', navigation, function (button) {
+			elBySelAll('.button', navigation, function (button) {
+				if (button.classList.contains('ignoreMobileNavigation')) {
+					// The reaction button was hidden up until 5.2.2, but was enabled again in 5.2.3. This check
+					// exists to make sure that there is no unexpected behavior in 3rd party apps or plugins that
+					// used the same code and hid the reaction button via a CSS class in the template.
+					if (!button.classList.contains('reactButton')) {
+						return;
+					}
+				}
+				
 				var item = elCreate('li');
 				if (button.classList.contains('active')) item.className = 'active';
 				item.innerHTML = '<a href="#">' + elBySel('span:not(.icon)', button).textContent + '</a>';

@@ -17,15 +17,15 @@
 			
 			{if $userProfile->getAvatar()}
 				<div class="userAvatar">
-					<a href="{link controller='User' object=$userProfile->getDecoratedObject()}{/link}" aria-hidden="true">{@$userProfile->getAvatar()->getImageTag(128)}</a>
+					{user object=$userProfile type='avatar128' ariaHidden='true'}
 					
 					{if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && !$isReply && $userProfile->isOnline()}<span class="badge green badgeOnline" title="{lang}wcf.user.online.title{/lang}">{lang}wcf.user.online{/lang}</span>{/if}
 				</div>
 			{/if}
 			
 			<div class="messageAuthorContainer">
-				<a href="{link controller='User' object=$userProfile->getDecoratedObject()}{/link}" class="username userLink" data-user-id="{@$userProfile->userID}"{if $enableMicrodata} itemprop="url"{/if}>
-					<span{if $enableMicrodata} itemprop="name"{/if}>{if MESSAGE_SIDEBAR_ENABLE_USER_ONLINE_MARKING}{@$userProfile->getFormattedUsername()}{else}{$username}{/if}</span>
+				<a href="{$userProfile->getLink()}" class="username userLink" data-object-id="{@$userProfile->userID}"{if $enableMicrodata} itemprop="url"{/if}>
+					<span{if $enableMicrodata} itemprop="name"{/if}>{@$userProfile->getFormattedUsername()}</span>
 				</a>
 				{if !$isReply}
 					{if $userProfile->banned}<span class="icon icon16 fa-lock jsTooltip jsUserBanned" title="{lang user=$userProfile}wcf.user.banned{/lang}"></span>{/if}
@@ -34,13 +34,22 @@
 				{/if}
 			</div>
 			
-			{if MODULE_USER_RANK && !$isReply}
-				{if $userProfile->getUserTitle()}
+			{if !$isReply}
+				{hascontent}
 					<div class="userTitle">
-						<span class="badge userTitleBadge{if $userProfile->getRank() && $userProfile->getRank()->cssClassName} {@$userProfile->getRank()->cssClassName}{/if}">{$userProfile->getUserTitle()}</span>
+						{content}
+							{event name='beforeUserTitle'}
+						
+							{if MODULE_USER_RANK && $userProfile->getUserTitle()}
+								<span class="badge userTitleBadge{if $userProfile->getRank() && $userProfile->getRank()->cssClassName} {@$userProfile->getRank()->cssClassName}{/if}">{$userProfile->getUserTitle()}</span>
+							{/if}
+						
+							{event name='afterUserTitle'}
+						{/content}
 					</div>
-				{/if}
-				{if $userProfile->getRank() && $userProfile->getRank()->rankImage}
+				{/hascontent}
+				
+				{if MODULE_USER_RANK && $userProfile->getRank() && $userProfile->getRank()->rankImage}
 					<div class="userRank">{@$userProfile->getRank()->getImage()}</div>
 				{/if}
 			{/if}
@@ -82,7 +91,7 @@
 					<dl class="plain dataList">
 						{content}
 							{if MODULE_LIKE && MESSAGE_SIDEBAR_ENABLE_LIKES_RECEIVED && !$isReply && $userProfile->likesReceived}
-								<dt><a href="{link controller='User' object=$userProfile}{/link}#likes" class="jsTooltip" title="{lang user=$userProfile}wcf.like.showLikesReceived{/lang}">{lang}wcf.like.likesReceived{/lang}</a></dt>
+								<dt><a href="{$userProfile->getLink()}#likes" class="jsTooltip" title="{lang user=$userProfile}wcf.like.showLikesReceived{/lang}">{lang}wcf.like.likesReceived{/lang}</a></dt>
 								<dd>{#$userProfile->likesReceived}</dd>
 							{/if}
 							

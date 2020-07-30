@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\style\Style;
 use wcf\data\user\avatar\Gravatar;
 use wcf\data\user\avatar\UserAvatar;
 use wcf\data\user\avatar\UserAvatarAction;
@@ -15,6 +16,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\moderation\queue\ModerationQueueManager;
+use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -22,7 +24,7 @@ use wcf\util\StringUtil;
  * Shows the user edit form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -134,6 +136,20 @@ class UserEditForm extends UserAddForm {
 	public $disconnect3rdParty = 0;
 	
 	/**
+	 * list of available styles for the edited user
+	 * @var         Style[]
+	 * @since       5.3
+	 */
+	public $availableStyles = [];
+	
+	/**
+	 * id of the used style
+	 * @var         int
+	 * @since       5.3
+	 */
+	public $styleID = 0;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -175,6 +191,7 @@ class UserEditForm extends UserAddForm {
 		}
 		
 		if (isset($_POST['avatarType'])) $this->avatarType = $_POST['avatarType'];
+		if (isset($_POST['styleID'])) $this->styleID = intval($_POST['styleID']);
 		
 		if (WCF::getSession()->getPermission('admin.user.canDisableAvatar')) {
 			if (!empty($_POST['disableAvatar'])) $this->disableAvatar = 1;
@@ -208,6 +225,13 @@ class UserEditForm extends UserAddForm {
 			$this->readDefaultValues();
 		}
 		
+		$userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
+		foreach (StyleHandler::getInstance()->getStyles() as $style) {
+			if (!$style->isDisabled || $userProfile->getPermission('admin.style.canUseDisabledStyle')) {
+				$this->availableStyles[$style->styleID] = $style;
+			}
+		}
+		
 		parent::readData();
 		
 		// get the avatar object
@@ -217,7 +241,13 @@ class UserEditForm extends UserAddForm {
 		
 		// get the user cover photo object
 		if ($this->user->coverPhotoHash) {
-			$this->userCoverPhoto = UserProfileRuntimeCache::getInstance()->getObject($this->userID)->getCoverPhoto(true);
+			// If the editing user lacks the permissions to view the cover photo, the system
+			// will try to load the default cover photo. However, the default cover photo depends
+			// on the style, eventually triggering a change to the template group which will
+			// fail in the admin panel.
+			if ($userProfile->canSeeCoverPhoto()) {
+				$this->userCoverPhoto = UserProfileRuntimeCache::getInstance()->getObject($this->userID)->getCoverPhoto(true);
+			}
 		}
 	}
 	
@@ -240,6 +270,7 @@ class UserEditForm extends UserAddForm {
 		$this->banReason = $this->user->banReason;
 		$this->banExpires = $this->user->banExpires;
 		$this->userTitle = $this->user->userTitle;
+		$this->styleID = $this->user->styleID;
 		
 		$this->signature = $this->user->signature;
 		$this->disableSignature = $this->user->disableSignature;
@@ -284,6 +315,8 @@ class UserEditForm extends UserAddForm {
 			'disableCoverPhotoExpires' => $this->disableCoverPhotoExpires,
 			'deleteCoverPhoto' => $this->deleteCoverPhoto,
 			'ownerGroupID' => UserGroup::getOwnerGroupID(),
+			'availableStyles' => $this->availableStyles,
+			'styleID' => $this->styleID,
 		]);
 	}
 	
@@ -343,7 +376,7 @@ class UserEditForm extends UserAddForm {
 		
 		// save user
 		$saveOptions = $this->optionHandler->save();
-
+		
 		$data = [
 			'data' => array_merge($this->additionalFields, [
 				'username' => $this->username,
@@ -351,13 +384,19 @@ class UserEditForm extends UserAddForm {
 				'password' => $this->password,
 				'languageID' => $this->languageID,
 				'userTitle' => $this->userTitle,
-				'signature' => $this->htmlInputProcessor->getHtml()
+				'signature' => $this->htmlInputProcessor->getHtml(),
+				'styleID' => $this->styleID,
 			]),
 			'groups' => $this->groupIDs,
 			'languageIDs' => $this->visibleLanguages,
-			'options' => $saveOptions
+			'options' => $saveOptions,
 		];
-
+		// handle changed username
+		if (mb_strtolower($this->username) != mb_strtolower($this->user->username)) {
+			$data['data']['lastUsernameChange'] = TIME_NOW;
+			$data['data']['oldUsername'] = $this->user->username;
+		}
+		
 		// handle ban
 		if (WCF::getSession()->getPermission('admin.user.canBanUser')) {
 			$data['data']['banned'] = $this->banned;
@@ -507,5 +546,9 @@ class UserEditForm extends UserAddForm {
 		$this->validateAvatar();
 		
 		parent::validate();
+		
+		if (!isset($this->availableStyles[$this->styleID])) {
+			$this->styleID = 0;
+		}
 	}
 }

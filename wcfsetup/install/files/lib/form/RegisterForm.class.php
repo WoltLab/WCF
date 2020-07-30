@@ -17,6 +17,7 @@ use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\Email;
 use wcf\system\email\Mailbox;
 use wcf\system\email\UserMailbox;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
@@ -38,7 +39,7 @@ use wcf\util\UserUtil;
  * Shows the user registration form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Form
  */
@@ -423,15 +424,25 @@ class RegisterForm extends UserAddForm {
 			// create fake password
 			$this->password = bin2hex(\random_bytes(20));
 		}
+
+		$eventParameters = [
+			'saveOptions' => $saveOptions,
+			'registerVia3rdParty' => $registerVia3rdParty,
+		];
+		EventHandler::getInstance()->fireAction($this, 'registerVia3rdParty', $eventParameters);
+		$saveOptions = $eventParameters['saveOptions'];
+		$registerVia3rdParty = $eventParameters['registerVia3rdParty'];
 		
 		$this->additionalFields['languageID'] = $this->languageID;
 		if (LOG_IP_ADDRESS) $this->additionalFields['registrationIpAddress'] = WCF::getSession()->ipAddress;
 		
 		// generate activation code
 		$addDefaultGroups = true;
-		if (!empty($this->blacklistMatches) || (REGISTER_ACTIVATION_METHOD == 1 && !$registerVia3rdParty) || REGISTER_ACTIVATION_METHOD == 2) {
+		if (!empty($this->blacklistMatches) || (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER && !$registerVia3rdParty) || (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN)) {
 			$activationCode = UserRegistrationUtil::getActivationCode();
+			$emailConfirmCode = bin2hex(\random_bytes(20));
 			$this->additionalFields['activationCode'] = $activationCode;
+			$this->additionalFields['emailConfirmed'] = $emailConfirmCode;
 			$addDefaultGroups = false;
 			$this->groupIDs = UserGroup::getGroupIDsByType([UserGroup::EVERYONE, UserGroup::GUESTS]);
 		}
@@ -474,12 +485,12 @@ class RegisterForm extends UserAddForm {
 		}
 		
 		// activation management
-		if (REGISTER_ACTIVATION_METHOD == 0 && empty($this->blacklistMatches)) {
+		if (REGISTER_ACTIVATION_METHOD == User::REGISTER_ACTIVATION_NONE && empty($this->blacklistMatches)) {
 			$this->message = 'wcf.user.register.success';
 			
 			UserGroupAssignmentHandler::getInstance()->checkUsers([$user->userID]);
 		}
-		else if (REGISTER_ACTIVATION_METHOD == 1 && empty($this->blacklistMatches)) {
+		else if (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER && empty($this->blacklistMatches)) {
 			// registering via 3rdParty leads to instant activation
 			if ($registerVia3rdParty) {
 				$this->message = 'wcf.user.register.success';
@@ -496,7 +507,7 @@ class RegisterForm extends UserAddForm {
 				$this->message = 'wcf.user.register.success.needActivation';
 			}
 		}
-		else if (REGISTER_ACTIVATION_METHOD == 2 || !empty($this->blacklistMatches)) {
+		else if (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN || !empty($this->blacklistMatches)) {
 			$this->message = 'wcf.user.register.success.awaitActivation';
 		}
 		

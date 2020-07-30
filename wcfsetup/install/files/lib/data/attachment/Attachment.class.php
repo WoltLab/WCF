@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\attachment;
+use wcf\data\ILinkableObject;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObject;
 use wcf\data\IThumbnailFile;
@@ -42,7 +43,7 @@ use wcf\util\StringUtil;
  * @property-read	integer		$uploadTime		timestamp at which the attachment has been uploaded
  * @property-read	integer		$showOrder		position of the attachment in relation to the other attachment to the same message
  */
-class Attachment extends DatabaseObject implements IRouteController, IThumbnailFile {
+class Attachment extends DatabaseObject implements ILinkableObject, IRouteController, IThumbnailFile {
 	/**
 	 * indicates if the attachment is embedded
 	 * @var	boolean
@@ -54,6 +55,17 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 	 * @var	boolean[]
 	 */
 	protected $permissions = [];
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getLink() {
+		// Do not use `LinkHandler::getControllerLink()` or `forceFrontend` as attachment
+		// links can be opened in the frontend and in the ACP.
+		return LinkHandler::getInstance()->getLink('Attachment', [
+			'object' => $this,
+		]);
+	}
 	
 	/**
 	 * Returns true if a user has the permission to download this attachment.
@@ -197,6 +209,9 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 		if ($size == 'tiny') {
 			$parameters['tiny'] = 1;
 		}
+		else if ($size == 'thumbnail') {
+			$parameters['thumbnail'] = 1;
+		}
 		
 		return LinkHandler::getInstance()->getLink('Attachment', $parameters);
 	}
@@ -231,7 +246,7 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 	 */
 	public function showAsImage() {
 		if ($this->isImage) {
-			if (ATTACHMENT_ENABLE_THUMBNAILS && !$this->hasThumbnail() && ($this->width > ATTACHMENT_THUMBNAIL_WIDTH || $this->height > ATTACHMENT_THUMBNAIL_HEIGHT)) return false;
+			if (!$this->hasThumbnail() && ($this->width > ATTACHMENT_THUMBNAIL_WIDTH || $this->height > ATTACHMENT_THUMBNAIL_HEIGHT)) return false;
 			
 			if ($this->canDownload()) return true;
 			

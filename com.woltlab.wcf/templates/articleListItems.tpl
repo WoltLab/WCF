@@ -3,7 +3,7 @@
 <div class="contentItemList">
 	{foreach from=$objects item='article' name='articles'}
 		<article class="contentItem contentItemMultiColumn" role="article">
-			<a href="{$article->getLink()}" class="contentItemLink">
+			<div class="contentItemLink">
 				<div class="contentItemImage contentItemImageLarge" style="background-image: url({if $article->getTeaserImage()}{$article->getTeaserImage()->getThumbnailLink('medium')}{else}{$__wcf->getStyleHandler()->getStyle()->getCoverPhotoURL()}{/if})">
 					{hascontent}
 						<div class="contentItemBadges">
@@ -22,7 +22,7 @@
 					{if $article->hasLabels()}
 						<div class="contentItemLabels">
 							{foreach from=$article->getLabels() item=label}
-								<span class="label badge contentItemLabel{if $label->getClassNames()} {$label->getClassNames()}{/if}">{$label->getTitle()}</span>
+								{@$label->render('contentItemLabel')}
 							{/foreach}
 						</div>
 					{/if}
@@ -33,7 +33,9 @@
 						{@$article->getFormattedTeaser()}
 					</div>
 				</div>
-			</a>
+				
+				<a href="{$article->getLink()}" class="contentItemLinkShadow"></a>
+			</div>
 			
 			<div class="contentItemMeta">
 				<a href="{$article->getUserProfile()->getLink()}" class="contentItemMetaImage" aria-hidden="true" tabindex="-1">
@@ -43,7 +45,7 @@
 				<div class="contentItemMetaContent">
 					<div class="contentItemMetaAuthor">
 						{if $article->userID}
-							<a href="{$article->getUserProfile()->getLink()}" class="userLink" data-user-id="{@$article->userID}">{$article->getUserProfile()->username}</a>
+							{user object=$article->getUserProfile()}
 						{else}
 							{$article->username}
 						{/if}
@@ -65,6 +67,8 @@
 							{$article->getDiscussionProvider()->getDiscussionCount()}
 						</span>
 					</div>
+					
+					{event name='contentItemMetaIcons'}
 				</div>
 			</div>
 		</article>

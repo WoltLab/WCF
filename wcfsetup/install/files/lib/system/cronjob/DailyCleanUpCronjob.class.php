@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\cronjob;
 use wcf\data\cronjob\Cronjob;
+use wcf\data\modification\log\ModificationLog;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
@@ -152,11 +153,20 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 			]);
 		}
 		
+		if (MODIFICATION_LOG_EXPIRATION > 0) {
+			$sql = "DELETE FROM	wcf".WCF_N."_modification_log
+				WHERE		time < ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				TIME_NOW - 86400 * MODIFICATION_LOG_EXPIRATION
+			]);
+		}
+		
 		// clean up error logs
 		$files = @glob(WCF_DIR.'log/*.txt');
 		if (is_array($files)) {
 			foreach ($files as $filename) {
-				if (filectime($filename) < TIME_NOW - 86400 * 14) {
+				if (filemtime($filename) < TIME_NOW - 86400 * 14) {
 					@unlink($filename);
 				}
 			}

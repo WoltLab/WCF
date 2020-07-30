@@ -12,6 +12,7 @@
 {if $poll->canVote()}
 	{if $poll->maxVotes > 1}<p><small>{lang}wcf.poll.multipleVotes{/lang}</small></p>{/if}
 	{if $poll->endTime}<p><small>{lang}wcf.poll.endTimeInfo{/lang}</small></p>{/if}
+	{if $poll->isPublic}<p><small>{lang}wcf.poll.isPublic{/lang}</small></p>{/if}
 {else}
 	<p><small>{lang}wcf.poll.restrictedResult{/lang}</small></p>
 {/if}

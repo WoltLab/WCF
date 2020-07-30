@@ -169,7 +169,7 @@
 									{if $article->hasLabels()}
 										<ul class="labelList" style="float: right; padding-left: 7px;">
 											{foreach from=$article->getLabels() item=label}
-												<li><span class="badge label{if $label->getClassNames()} {$label->getClassNames()}{/if}">{$label->getTitle()}</span></li>
+												<li>{@$label->render()}</li>
 											{/foreach}
 										</ul>
 									{/if}

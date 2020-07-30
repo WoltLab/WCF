@@ -389,7 +389,6 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 									range.selectNodeContents(listItem);
 									range.collapse(false);
 									
-									var selection = window.getSelection();
 									selection.removeAllRanges();
 									selection.addRange(range);
 								}
@@ -628,7 +627,7 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 					return;
 				}
 				
-				var container = this.$editor[0].closest('form, .message');
+				var container = this.$editor[0].closest('form, .message, .jsOuterEditorContainer');
 				if (container === null) return;
 				
 				var formSubmit = elBySel('.formSubmit', container);
@@ -974,8 +973,50 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 						}
 					});
 				});
+			}).bind(this);
+			
+			var firefoxCustomElementCounter = 0;
+			var firefoxUnwrapDuplicatedCustomElements = (function () {
+				var checkForInvalidNesting = false;
+				elBySelAll(getSelectorForCustomElements(), this.core.editor()[0], function(element) {
+					var index = elData(element, 'firefox-duplication-bug');
+					if (index !== '') {
+						var expectedElement = firefoxKnownCustomElements[parseInt(index, 10)];
+						if (expectedElement !== null && expectedElement.parentNode !== null) {
+							// Deleting contents inside block-styled inline elements causes Firefox to
+							// nest bogus elements by duplicating the parent node.
+							// See https://bugzilla.mozilla.org/show_bug.cgi?id=1329639
+							if (element !== expectedElement && expectedElement.contains(element)) {
+								while (element.childNodes.length) {
+									element.parentNode.insertBefore(element.childNodes[0], element);
+								}
+								
+								element.parentNode.removeChild(element);
+								
+								checkForInvalidNesting = true;
+								return;
+							}
+						}
+						
+						element.removeAttribute('data-firefox-duplication-bug');
+					}
+				});
 				
-				firefoxKnownCustomElements = [];
+				// The duplication bug prevents some normalization to not take place, causing
+				// paragraphs nested inside headlines.
+				if (checkForInvalidNesting) {
+					elBySelAll('h1,h2,h3,h4,h5,h6', this.core.editor()[0], function(heading) {
+						elBySelAll('p', heading, function(element) {
+							while (element.childNodes.length) {
+								element.parentNode.insertBefore(element.childNodes[0], element);
+							}
+							
+							element.parentNode.removeChild(element);
+						});
+					});
+				}
+				
+				firefoxCustomElementCounter = 0;
 			}).bind(this);
 			
 			this.keydown.onBackspaceAndDeleteAfter = (function (e) {
@@ -992,7 +1033,9 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 					else {
 						if (e.which === this.keyCode.BACKSPACE || e.which === this.keyCode.DELETE) {
 							elBySelAll(getSelectorForCustomElements(), this.core.editor()[0], function(element) {
-								firefoxKnownCustomElements.push(element);	
+								firefoxKnownCustomElements.push(element);
+								
+								elData(element, 'firefox-duplication-bug', firefoxCustomElementCounter++);
 							});
 						}
 					}
@@ -1012,7 +1055,14 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 					var current;
 					
 					if (firefoxKnownCustomElements.length > 0) {
+						this.selection.save();
+						
 						firefoxDetectSplitCustomElements();
+						firefoxUnwrapDuplicatedCustomElements();
+						
+						this.selection.restore();
+						
+						firefoxKnownCustomElements = [];
 					}
 					
 					// The caret was previously inside a `<pre>`, check if we have backspaced out

@@ -84,7 +84,7 @@ define(['EventHandler', 'StringUtil'], function(EventHandler, StringUtil) {
 						link: elBySel('.jsShareWhatsApp', container),
 						share: (function(event) {
 							event.preventDefault();
-							window.location.href = 'whatsapp://send?text=' + this._pageDescription + '%20' + pageUrl;
+							window.location.href = 'https://api.whatsapp.com/send?text=' + this._pageDescription + '%20' + this._pageUrl;
 						}).bind(this)
 					}
 				};

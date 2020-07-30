@@ -6,8 +6,7 @@ use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\data\user\follow\UserFollowerList;
 use wcf\data\user\follow\UserFollowingList;
 use wcf\data\user\group\UserGroup;
-use wcf\data\user\profile\visitor\UserProfileVisitor;
-use wcf\data\user\profile\visitor\UserProfileVisitorEditor;
+use wcf\data\user\profile\visitor\UserProfileVisitorAction;
 use wcf\data\user\profile\visitor\UserProfileVisitorList;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfile;
@@ -95,7 +94,7 @@ class UserPage extends AbstractPage {
 		
 		if (isset($_REQUEST['editOnInit'])) $this->editOnInit = true;
 		
-		$this->canonicalURL = LinkHandler::getInstance()->getLink('User', ['object' => $this->user]);
+		$this->canonicalURL = $this->user->getLink();
 	}
 	
 	/**
@@ -164,7 +163,8 @@ class UserPage extends AbstractPage {
 			'visitors' => $this->visitorList !== null ? $this->visitorList->getObjects() : [],
 			'visitorCount' => $this->visitorList !== null ? $this->visitorList->countObjects() : 0,
 			'isAccessible' => UserGroup::isAccessibleGroup($this->user->getGroupIDs()),
-			'coverPhotoDimensions' => UserCoverPhoto::getCoverPhotoDimensions()
+			'coverPhotoDimensions' => UserCoverPhoto::getCoverPhotoDimensions(),
+			'specialTrophyCount' => (MODULE_TROPHY ? count($this->user->getSpecialTrophies()) : 0),
 		]);
 	}
 	
@@ -180,17 +180,12 @@ class UserPage extends AbstractPage {
 			// save visitor
 			/** @noinspection PhpUndefinedFieldInspection */
 			if (PROFILE_ENABLE_VISITORS && WCF::getUser()->userID && !WCF::getUser()->canViewOnlineStatus) {
-				if (($visitor = UserProfileVisitor::getObject($this->user->userID, WCF::getUser()->userID)) !== null) {
-					$editor = new UserProfileVisitorEditor($visitor);
-					$editor->update(['time' => TIME_NOW]);
-				}
-				else {
-					UserProfileVisitorEditor::create([
+				(new UserProfileVisitorAction([], 'registerVisitor', [
+					'data' => [
 						'ownerID' => $this->user->userID,
 						'userID' => WCF::getUser()->userID,
-						'time' => TIME_NOW
-					]);
-				}
+					]
+				]))->executeAction();
 			}
 		}
 		

@@ -3,7 +3,6 @@ namespace wcf\system\user\notification\event;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\comment\CommentHandler;
-use wcf\system\request\LinkHandler;
 use wcf\system\user\notification\object\LikeUserNotificationObject;
 use wcf\system\WCF;
 
@@ -96,7 +95,7 @@ class UserProfileCommentLikeUserNotificationEvent extends AbstractSharedUserNoti
 			$owner = UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID']);
 		}
 		
-		return LinkHandler::getInstance()->getLink('User', ['object' => $owner], '#wall/comment' . $this->getCommentID());
+		return $owner->getLink() . '#wall/comment' . $this->getCommentID();
 	}
 	
 	/**

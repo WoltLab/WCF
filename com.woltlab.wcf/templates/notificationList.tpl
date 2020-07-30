@@ -80,7 +80,7 @@
 								<ul class="userAvatarList small">
 									{foreach from=$notification[event]->getAuthors() item=author}
 										{if $author->userID}
-											<li class="jsTooltip" title="{$author->username}"><a href="{link controller='User' object=$author}{/link}">{@$author->getAvatar()->getImageTag(24)}</a></li>
+											<li class="jsTooltip" title="{$author->username}">{user object=$author type='avatar24'}</li>
 										{/if}
 									{/foreach}
 								</ul>

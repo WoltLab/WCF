@@ -237,6 +237,7 @@
 				woltlab: {
 					allowImages: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}true{else}false{/if},
 					attachments: (elDataBool(element, 'disable-attachments') === false),
+					attachmentThumbnailWidth: {@ATTACHMENT_THUMBNAIL_WIDTH},
 					autosave: autosave,
 					allowedInlineStyles: allowedInlineStyles,
 					buttons: buttonOptions,

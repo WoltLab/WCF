@@ -115,6 +115,18 @@ class PackageValidationException extends SystemException {
 	const MISSING_API_VERSION = 15;
 	
 	/**
+	 * the void is not the only instruction
+	 * @var integer
+	 */
+	const VOID_NOT_ALONE = 16;
+	
+	/**
+	 * the void is used during installation
+	 * @var integer
+	 */
+	const VOID_ON_INSTALL = 17;
+	
+	/**
 	 * Creates a new PackageArchiveValidationException.
 	 * 
 	 * @param	integer		$code

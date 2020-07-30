@@ -3,6 +3,7 @@ namespace wcf\system;
 use phpline\console\ConsoleReader;
 use phpline\internal\Log;
 use phpline\TerminalFactory;
+use wcf\data\session\SessionEditor;
 use wcf\system\cli\command\CLICommandHandler;
 use wcf\system\cli\command\CLICommandNameCompleter;
 use wcf\system\cli\DatabaseCLICommandHistory;
@@ -28,7 +29,7 @@ set_exception_handler([CLIWCF::class, 'handleCLIException']);
  * Extends WCF class with functions for CLI.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System
  */
@@ -62,13 +63,6 @@ class CLIWCF extends WCF {
 		$zendLoader = new ZendLoader([ZendLoader::AUTOREGISTER_ZF => true]);
 		$zendLoader->register();
 		
-		$argv = new ArgvParser([
-			'packageID=i' => ''
-		]);
-		$argv->setOption(ArgvParser::CONFIG_FREEFORM_FLAGS, true);
-		$argv->parse();
-		define('PACKAGE_ID', $argv->packageID ?: 1);
-		
 		// disable benchmark
 		define('ENABLE_BENCHMARK', 0);
 		
@@ -95,21 +89,26 @@ class CLIWCF extends WCF {
 	 * @inheritDoc
 	 */
 	public static function destruct() {
-		if (self::getReader() !== null && self::getReader()->getHistory() instanceof DatabaseCLICommandHistory) {
-			/** @var DatabaseCLICommandHistory $history */
-			$history = self::getReader()->getHistory();
-			
-			$history->save();
-			$history->autoSave = false;
+		// Giving WCF_SESSION_ID disables saving of the command history.
+		if (empty($_ENV['WCF_SESSION_ID'])) {
+			if (self::getReader() !== null && self::getReader()->getHistory() instanceof DatabaseCLICommandHistory) {
+				/** @var DatabaseCLICommandHistory $history */
+				$history = self::getReader()->getHistory();
+				
+				$history->save();
+				$history->autoSave = false;
+			}
 		}
 		
-		self::getSession()->delete();
+		if (empty($_ENV['WCF_SESSION_ID'])) {
+			self::getSession()->delete();
+		}
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public static final function handleCLIException(\Exception $e) {
+	public static final function handleCLIException($e) {
 		die($e->getMessage()."\n".$e->getTraceAsString());
 	}
 	
@@ -126,7 +125,6 @@ class CLIWCF extends WCF {
 			'version' => WCF::getLanguage()->get('wcf.cli.help.version'),
 			'disableUpdateCheck' => WCF::getLanguage()->get('wcf.cli.help.disableUpdateCheck'),
 			'exitOnFail' => WCF::getLanguage()->get('wcf.cli.help.exitOnFail'),
-			'packageID=i' => WCF::getLanguage()->get('wcf.cli.help.packageID')
 		]);
 		self::getArgvParser()->setOptions([
 			ArgvParser::CONFIG_CUMULATIVE_FLAGS => true,
@@ -228,29 +226,39 @@ class CLIWCF extends WCF {
 	 * Does the user authentification.
 	 */
 	protected function initAuth() {
-		do {
-			$line = self::getReader()->readLine(WCF::getLanguage()->get('wcf.user.username').'> ');
-			if ($line === null) exit;
-			$username = StringUtil::trim($line);
+		if (!empty($_ENV['WCF_SESSION_ID'])) {
+			self::getSession()->delete();
+			self::getSession()->load(SessionEditor::class, $_ENV['WCF_SESSION_ID']);
+			if (!self::getUser()->userID) {
+				self::getReader()->println('Invalid sessionID');
+				exit(1);
+			}
 		}
-		while ($username === '');
-		
-		do {
-			$line = self::getReader()->readLine(WCF::getLanguage()->get('wcf.user.password').'> ', '*');
-			if ($line === null) exit;
-			$password = StringUtil::trim($line);
-		}
-		while ($password === '');
-		
-		// check credentials and switch user
-		try {
-			$user = UserAuthenticationFactory::getInstance()->getUserAuthentication()->loginManually($username, $password);
-			WCF::getSession()->changeUser($user);
-		}
-		catch (UserInputException $e) {
-			$message = WCF::getLanguage()->getDynamicVariable('wcf.user.'.$e->getField().'.error.'.$e->getType(), ['username' => $username]);
-			self::getReader()->println($message);
-			exit(1);
+		else {
+			do {
+				$line = self::getReader()->readLine(WCF::getLanguage()->get('wcf.user.username').'> ');
+				if ($line === null) exit;
+				$username = StringUtil::trim($line);
+			}
+			while ($username === '');
+			
+			do {
+				$line = self::getReader()->readLine(WCF::getLanguage()->get('wcf.user.password').'> ', '*');
+				if ($line === null) exit;
+				$password = StringUtil::trim($line);
+			}
+			while ($password === '');
+			
+			// check credentials and switch user
+			try {
+				$user = UserAuthenticationFactory::getInstance()->getUserAuthentication()->loginManually($username, $password);
+				WCF::getSession()->changeUser($user);
+			}
+			catch (UserInputException $e) {
+				$message = WCF::getLanguage()->getDynamicVariable('wcf.user.'.$e->getField().'.error.'.$e->getType(), ['username' => $username]);
+				self::getReader()->println($message);
+				exit(1);
+			}
 		}
 		
 		// initialize history

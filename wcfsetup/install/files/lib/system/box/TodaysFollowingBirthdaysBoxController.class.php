@@ -14,6 +14,12 @@ use wcf\system\WCF;
 class TodaysFollowingBirthdaysBoxController extends TodaysBirthdaysBoxController {
 	/**
 	 * @inheritDoc
+	 * @since       5.3
+	 */
+	protected $conditionDefinition = 'com.woltlab.wcf.box.todaysFollowingBirthdays.condition';
+	
+	/**
+	 * @inheritDoc
 	 */
 	protected $templateName = 'boxTodaysFollowingBirthdays';
 	

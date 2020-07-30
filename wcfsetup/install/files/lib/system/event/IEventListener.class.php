@@ -15,7 +15,7 @@ interface IEventListener {
 	/**
 	 * Executes this action.
 	 * 
-	 * @param	object		$eventObj
+	 * @param	mixed		$eventObj
 	 * @param	string		$className
 	 * @param	string		$eventName
 	 */

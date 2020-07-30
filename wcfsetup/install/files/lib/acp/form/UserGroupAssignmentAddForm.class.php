@@ -79,7 +79,7 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 	 * @inheritDoc
 	 */
 	public function readData() {
-		$this->userGroups = UserGroup::getGroupsByType([], [
+		$this->userGroups = UserGroup::getSortedGroupsByType([], [
 			UserGroup::EVERYONE,
 			UserGroup::GUESTS,
 			UserGroup::OWNER,
@@ -90,10 +90,6 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 				unset($this->userGroups[$key]);
 			}
 		}
-		
-		uasort($this->userGroups, function(UserGroup $groupA, UserGroup $groupB) {
-			return strcmp($groupA->getName(), $groupB->getName());
-		});
 		
 		$this->conditions = UserGroupAssignmentHandler::getInstance()->getGroupedObjectTypes();
 		

@@ -21,6 +21,12 @@ class EmailBBCode extends AbstractBBCode {
 		}
 		$email = StringUtil::decodeHTML($email);
 		
-		return '<a href="mailto:' . StringUtil::encodeAllChars($email) . '">' . StringUtil::encodeHTML($email) . '</a>';
+		/** @var HtmlBBCodeParser $parser */
+		if ($parser->getRemoveLinks()) {
+			return StringUtil::encodeHTML($email);
+		}
+		else {
+			return '<a href="mailto:' . StringUtil::encodeAllChars($email) . '">' . StringUtil::encodeHTML($email) . '</a>';
+		}
 	}
 }

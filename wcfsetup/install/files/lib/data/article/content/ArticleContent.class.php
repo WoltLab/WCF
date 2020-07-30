@@ -61,7 +61,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 	}
 	
 	/**
-	 * Returns the article's unformatted content.
+	 * Returns the article's unformatted teaser.
 	 *
 	 * @return      string
 	 */
@@ -70,7 +70,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 	}
 	
 	/**
-	 * Returns the article's formatted content.
+	 * Returns the article's formatted teaser.
 	 *
 	 * @return      string
 	 */

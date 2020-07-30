@@ -270,7 +270,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	 */
 	public function readData() {
 		// get attachments
-		if (MODULE_ATTACHMENT && $this->attachmentObjectType) {
+		if ($this->attachmentObjectType) {
 			$this->attachmentHandler = new AttachmentHandler($this->attachmentObjectType, $this->attachmentObjectID, $this->tmpHash, $this->attachmentParentObjectID);
 		}
 		

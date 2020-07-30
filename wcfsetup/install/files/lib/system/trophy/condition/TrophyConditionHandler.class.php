@@ -149,8 +149,16 @@ class TrophyConditionHandler extends SingletonFactory {
 		// extract the condition builder from the object.  
 		$pseudoUserList = new UserList();
 		
-		// Assign the condition to the pseudo DBOList object 
 		$conditions = $trophy->getConditions();
+		
+		// Check if there are conditions for the award of the trophy for the given trophy.
+		// If there are no conditions, we simply return an empty list and do not remove any trophy. 
+		// A trophy without conditions that is awarded automatically cannot be created by default. 
+		if (empty($conditions)) {
+			return [];
+		}
+		
+		// Assign the condition to the pseudo DBOList object 
 		foreach ($conditions as $condition) {
 			$condition->getObjectType()->getProcessor()->addUserCondition($condition, $pseudoUserList);
 		}

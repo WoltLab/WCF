@@ -17,6 +17,16 @@ namespace {
 	// set autoload function
 	spl_autoload_register([WCF::class, 'autoload']);
 	
+	spl_autoload_register(function ($className) {
+		/**
+		 * @deprecated 5.3 This file is a compatibility layer mapping from Leafo\\ to ScssPhp\\
+		 */
+		$leafo = 'Leafo\\';
+		if (substr($className, 0, strlen($leafo)) === $leafo) {
+			class_alias('ScssPhp\\'.substr($className, strlen($leafo)), $className, true);
+		}
+	});
+	
 	/**
 	 * Escapes a string for use in sql query.
 	 * 
@@ -127,12 +137,12 @@ namespace wcf\functions\exception {
 			return str_replace("\n", ' ', $item);
 		};
 		
-		// don't forget to update ExceptionLogViewPage, when changing the log file format
+		// don't forget to update ExceptionLogUtil / ExceptionLogViewPage, when changing the log file format
 		$message = gmdate('r', TIME_NOW)."\n".
 			'Message: '.$stripNewlines($e->getMessage())."\n".
 			'PHP version: '.phpversion()."\n".
 			'WoltLab Suite version: '.WCF_VERSION."\n".
-			'Request URI: '.$stripNewlines($_SERVER['REQUEST_URI'] ?? '').(\wcf\getRequestId() ? ' ('.\wcf\getRequestId().')' : '')."\n".
+			'Request URI: '.$stripNewlines(($_SERVER['REQUEST_METHOD'] ?? '').' '.($_SERVER['REQUEST_URI'] ?? '')).(\wcf\getRequestId() ? ' ('.\wcf\getRequestId().')' : '')."\n".
 			'Referrer: '.$stripNewlines($_SERVER['HTTP_REFERER'] ?? '')."\n".
 			'User Agent: '.$stripNewlines($_SERVER['HTTP_USER_AGENT'] ?? '')."\n".
 			'Peak Memory Usage: '.memory_get_peak_usage().'/'.FileUtil::getMemoryLimit()."\n";
@@ -141,7 +151,7 @@ namespace wcf\functions\exception {
 			$message .= "======\n".
 			'Error Class: '.get_class($prev)."\n".
 			'Error Message: '.$stripNewlines($prev->getMessage())."\n".
-			'Error Code: '.intval($prev->getCode())."\n".
+			'Error Code: '.$stripNewlines($prev->getCode())."\n".
 			'File: '.$stripNewlines($prev->getFile()).' ('.$prev->getLine().')'."\n".
 			'Extra Information: '.($prev instanceof IExtraInformationException ? base64_encode(serialize($prev->getExtraInformation())) : '-')."\n".
 			'Stack Trace: '.json_encode(array_map(function ($item) {
@@ -457,7 +467,7 @@ EXPLANATION;
 							</li>
 							<li class="exceptionSystemInformation2">
 								<p class="exceptionFieldTitle">Request URI<span class="exceptionColon">:</span></p>
-								<p class="exceptionFieldValue"><?php if (isset($_SERVER['REQUEST_URI'])) echo StringUtil::encodeHTML($_SERVER['REQUEST_URI']); ?></p>
+								<p class="exceptionFieldValue"><?php if (isset($_SERVER['REQUEST_METHOD'])) echo StringUtil::encodeHTML($_SERVER['REQUEST_METHOD']); ?> <?php if (isset($_SERVER['REQUEST_URI'])) echo StringUtil::encodeHTML($_SERVER['REQUEST_URI']); ?></p>
 							</li>
 							<li class="exceptionSystemInformation4">
 								<p class="exceptionFieldTitle">Referrer<span class="exceptionColon">:</span></p>
@@ -499,7 +509,7 @@ EXPLANATION;
 							<?php if ($e->getCode()) { ?>
 								<li>
 									<p class="exceptionFieldTitle">Error Code<span class="exceptionColon">:</span></p>
-									<p class="exceptionFieldValue"><?php echo intval($e->getCode()); ?></p>
+									<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML($e->getCode()); ?></p>
 								</li>
 							<?php } ?>
 							<li>
@@ -563,6 +573,8 @@ EXPLANATION;
 														return get_class($item);
 													case 'resource':
 														return 'resource('.get_resource_type($item).')';
+													case 'resource (closed)':
+														return 'resource (closed)';
 												}
 												
 												throw new \LogicException('Unreachable');

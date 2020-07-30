@@ -1,4 +1,4 @@
-define(["prism/prism","prism/components/prism-markup","prism/components/prism-css"], function () {
+define(["prism/prism","prism/components/prism-markup"], function () {
 (function (Prism) {
 	// We don't allow for pipes inside parentheses
 	// to not break table pattern |(. foo |). bar |

@@ -1,15 +1,6 @@
 {capture assign='sidebarLeft'}
 	{assign var=__userMenuActiveItems value=$__wcf->getUserMenu()->getActiveMenuItems()}
 	
-	<script data-relocate="true">
-		$(function() {
-			// mobile safari hover workaround
-			if ($(window).width() <= 800) {
-				$('.sidebar').addClass('mobileSidebar').hover(function() { });
-			}
-		});
-	</script>
-	
 	<section class="box" data-static-box-identifier="com.woltlab.wcf.UserMenu">
 		{foreach from=$__wcf->getUserMenu()->getMenuItems('') item=menuCategory}
 			<h2 class="boxTitle">{$menuCategory->getTitle()}</h2>

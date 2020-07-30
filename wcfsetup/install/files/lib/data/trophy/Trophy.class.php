@@ -55,6 +55,16 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
 	const DEFAULT_SIZE = 32;
 	
 	/**
+	 * Returns the title of the trophy.
+	 * 
+	 * @return      string
+	 * @since       5.3
+	 */
+	public function __toString() {
+		return $this->getTitle();
+	}
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function getTitle() {

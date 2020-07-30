@@ -1,6 +1,5 @@
 <?php
 namespace wcf\data;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
@@ -15,7 +14,7 @@ use wcf\util\StringUtil;
  * Default implementation for DatabaseObject-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data
  */
@@ -505,7 +504,13 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	protected function readValue($variableName, $allowEmpty, $arrayIndex, $type, $structure) {
 		if ($arrayIndex) {
 			if (!isset($this->parameters[$arrayIndex])) {
-				throw new SystemException("Corrupt parameters, index '".$arrayIndex."' is missing");
+				if ($allowEmpty) {
+					// Implicitly create the structure to permit implicitly defined values.
+					$this->parameters[$arrayIndex] = [];
+				}
+				else {
+					throw new SystemException("Corrupt parameters, index '" . $arrayIndex . "' is missing");
+				}
 			}
 			
 			$target =& $this->parameters[$arrayIndex];
@@ -558,7 +563,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 				else {
 					if ($structure === self::STRUCT_FLAT) {
 						$target[$variableName] = StringUtil::trim($target[$variableName]);
-						if (!$allowEmpty && empty($target[$variableName])) {
+						if (!$allowEmpty && $target[$variableName] === '') {
 							throw new UserInputException($variableName);
 						}
 					}
@@ -569,7 +574,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 						}
 						
 						for ($i = 0, $length = count($target[$variableName]); $i < $length; $i++) {
-							if (empty($target[$variableName][$i])) {
+							if ($target[$variableName][$i] === '') {
 								throw new UserInputException($variableName);
 							}
 						}

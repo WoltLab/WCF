@@ -449,6 +449,8 @@
 									</dd>
 								</dl>
 								
+								{event name='informationFieldsMultilingual'}
+								
 								{if $pageType != 'system'}
 									{assign var='__errorFieldName' value='content_'|concat:$availableLanguage->languageID}
 									<dl{if $errorField == $__errorFieldName} class="formError"{/if}>
@@ -467,6 +469,8 @@
 											{/if}
 										</dd>
 									</dl>
+									
+									{event name='messageFieldsMultilingual'}
 									
 									{if $pageType == 'text'}
 										{include file='messageFormTabs' wysiwygContainerID='content'|concat:$availableLanguage->languageID}
@@ -505,6 +509,8 @@
 											{/if}
 										</dd>
 									</dl>
+									
+									{event name='metaFieldsMultilingual'}
 								{/if}
 							</div>
 						</div>

@@ -41,6 +41,12 @@ requirejs.config({
 	}
 	{/hascontent}
 });
+{* Safari ignores the HTTP cache headers for the back/forward navigation. *}
+window.addEventListener('pageshow', function(event) {
+	if (event.persisted) {
+		window.location.reload();
+	}
+});
 {event name='requireConfig'}
 </script>
 <script data-relocate="true">

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\html\output;
 use wcf\system\bbcode\HtmlBBCodeParser;
+use wcf\system\html\output\node\AmpHtmlOutputNodeProcessor;
 use wcf\util\DOMUtil;
 
 /**
@@ -64,18 +65,6 @@ class AmpHtmlOutputProcessor extends HtmlOutputProcessor {
 			while ($elements->length) {
 				/** @var \DOMElement $element */
 				$element = $elements->item(0);
-				if ($tag === 'img') {
-					$styles = $element->getAttribute('style');
-					if (preg_match('~\bheight:\s*(\d+)px\b~', $styles, $matches)) $element->setAttribute('height', $matches[1]);
-					if (preg_match('~\bwidth:\s*(\d+)px\b~', $styles, $matches)) $element->setAttribute('width', $matches[1]);
-					
-					if (!$element->getAttribute('height') || !$element->getAttribute('width')) {
-						DOMUtil::removeNode($element);
-						continue;
-					}
-					
-					$element->removeAttribute('style');
-				}
 				
 				$newElement = $element->ownerDocument->createElement('amp-' . $tag);
 				
@@ -84,6 +73,22 @@ class AmpHtmlOutputProcessor extends HtmlOutputProcessor {
 					$attr = $element->attributes->item($i);
 					
 					$newElement->setAttribute($attr->localName, $attr->nodeValue);
+				}
+				
+				if ($tag === 'img') {
+					$styles = $newElement->getAttribute('style');
+					$newElement->removeAttribute('style');
+					if (preg_match('~\bheight:\s*(\d+)px\b~', $styles, $matches)) $newElement->setAttribute('height', $matches[1]);
+					if (preg_match('~\bwidth:\s*(\d+)px\b~', $styles, $matches)) $newElement->setAttribute('width', $matches[1]);
+					
+					if (!$newElement->getAttribute('height') || !$newElement->getAttribute('width')) {
+						$newElement->setAttribute('layout', 'fill');
+						
+						$container = $newElement->ownerDocument->createElement('span');
+						$container->setAttribute('class', 'unknownDimensionContainer');
+						$container->appendChild($newElement);
+						$newElement = $container;
+					}
 				}
 				
 				$element->parentNode->insertBefore($newElement, $element);
@@ -145,4 +150,16 @@ class AmpHtmlOutputProcessor extends HtmlOutputProcessor {
 		
 		return $badElements;
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function getHtmlOutputNodeProcessor() {
+		if ($this->htmlOutputNodeProcessor === null) {
+			$this->htmlOutputNodeProcessor = new AmpHtmlOutputNodeProcessor();
+		}
+		
+		return $this->htmlOutputNodeProcessor;
+	}
+	
 }

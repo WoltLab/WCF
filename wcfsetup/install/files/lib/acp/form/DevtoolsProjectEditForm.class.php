@@ -209,10 +209,10 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 			$this->missingElements[] = 'date';
 		}
 		
-		if ($packageArchive->getPackageInfo('packageurl') !== null) {
+		if ($packageArchive->getPackageInfo('packageURL') !== null) {
 			/** @var TextFormField $packageUrl */
-			$packageUrl = $this->form->getNodeById('packageurl');
-			$packageUrl->value($packageArchive->getPackageInfo('packageurl'));
+			$packageUrl = $this->form->getNodeById('packageUrl');
+			$packageUrl->value($packageArchive->getPackageInfo('packageURL'));
 		}
 		
 		/** @var TextFormField $license */

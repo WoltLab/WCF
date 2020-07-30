@@ -74,7 +74,8 @@ class GithubAuthAction extends AbstractAction {
 			
 			try {
 				// fetch userdata
-				$request = new HTTPRequest('https://api.github.com/user?access_token='.$data['access_token']);
+				$request = new HTTPRequest('https://api.github.com/user');
+				$request->addHeader('Authorization', 'token '.$data['access_token']);
 				$request->execute();
 				$reply = $request->getReply();
 				$userData = JSON::decode(StringUtil::trim($reply['body']));
@@ -130,7 +131,8 @@ class GithubAuthAction extends AbstractAction {
 					WCF::getSession()->register('__username', $userData['login']);
 					
 					try {
-						$request = new HTTPRequest('https://api.github.com/user/emails?access_token='.$data['access_token']);
+						$request = new HTTPRequest('https://api.github.com/user/emails');
+						$request->addHeader('Authorization', 'token '.$data['access_token']);
 						$request->execute();
 						$reply = $request->getReply();
 						$emails = JSON::decode(StringUtil::trim($reply['body']));
@@ -138,8 +140,10 @@ class GithubAuthAction extends AbstractAction {
 						// search primary email
 						$email = $emails[0]['email'];
 						foreach ($emails as $tmp) {
-							if ($tmp['primary']) $email = $tmp['email'];
-							break;
+							if ($tmp['primary']) {
+								$email = $tmp['email'];
+								break;
+							}
 						}
 						WCF::getSession()->register('__email', $email);
 					}

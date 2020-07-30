@@ -31,7 +31,9 @@ define(['Core', 'Language', 'Dom/Util', 'WoltLabSuite/Core/Ui/File/Delete', 'Upl
 			// image preview
 			imagePreview: false,
 			// max files
-			maxFiles: null
+			maxFiles: null,
+			// array of acceptable file types, null if any file type is acceptable
+			acceptableFiles: null,
 		}, options);
 		
 		this._options.multiple = this._options.maxFiles === null || this._options.maxFiles > 1; 

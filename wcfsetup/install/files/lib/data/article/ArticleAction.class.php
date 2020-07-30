@@ -230,13 +230,13 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 					SearchIndexManager::getInstance()->set(
 						'com.woltlab.wcf.article',
 						$articleContent->articleContentID,
-						$articleContent->content,
-						$articleContent->title,
+						isset($content['content']) ? $content['content'] : $articleContent->content,
+						isset($content['title']) ? $content['title'] : $articleContent->title,
 						$article->time,
 						$article->userID,
 						$article->username, 
 						$languageID ?: null,
-						$articleContent->teaser
+						isset($content['teaser']) ? $content['teaser'] : $articleContent->teaser
 					);
 					
 					// save embedded objects
@@ -307,6 +307,22 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 				ArticleEditor::updateArticleCounter($usersToArticles);
 			}
 		}
+		
+		// update author in recent activities
+		if (isset($this->parameters['data']['userID'])) {
+			$sql = "UPDATE wcf".WCF_N."_user_activity_event SET userID = ? WHERE objectTypeID = ? AND objectID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			foreach ($this->objects as $articleEditor) {
+				if ($articleEditor->userID != $this->parameters['data']['userID']) {
+					$statement->execute([
+						$this->parameters['data']['userID'],
+						UserActivityEventHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.article.recentActivityEvent'),
+						$articleEditor->articleID,
+					]);
+				}
+			}
+		}
 	}
 	
 	/**
@@ -363,6 +379,8 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 			UserNotificationHandler::getInstance()->removeNotifications('com.woltlab.wcf.article.notification', $articleIDs);
 			// delete recent activity events
 			UserActivityEventHandler::getInstance()->removeEvents('com.woltlab.wcf.article.recentActivityEvent', $articleIDs);
+			// delete embedded object references
+			MessageEmbeddedObjectManager::getInstance()->removeObjects('com.woltlab.wcf.article.content', $articleContentIDs);
 		}
 		
 		$this->unmarkItems();
@@ -743,7 +761,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	 * @return      array   list of matching articles
 	 */
 	public function search() {
-		$sql = "SELECT          DISTINCT articleID
+		$sql = "SELECT          articleID
 			FROM            wcf".WCF_N."_article_content
 			WHERE           title LIKE ?
 					AND (

@@ -77,7 +77,8 @@
 				<defaultvalue>0</defaultvalue>
 				<selectoptions>0:wcf.global.noDeclaration
 1:wcf.user.gender.male
-2:wcf.user.gender.female</selectoptions>
+2:wcf.user.gender.female
+3:wcf.user.gender.other</selectoptions>
 				<outputclass>wcf\system\option\user\SelectOptionsUserOptionOutput</outputclass>
 				<searchable>1</searchable>
 				<visible>15</visible>
@@ -119,16 +120,6 @@
 				<searchable>1</searchable>
 				<visible>15</visible>
 				<editable>3</editable>
-			</option>
-			<option name="icq">
-				<categoryname>profile.contact</categoryname>
-				<optiontype>text</optiontype>
-				<validationpattern>^$|^([0-9](-| )?)+[0-9]$</validationpattern>
-				<searchable>1</searchable>
-				<visible>15</visible>
-				<editable>3</editable>
-				<isdisabled>1</isdisabled>
-				<contentpattern>^(\d{3})-(\d{3})-(\d{3})$</contentpattern>
 			</option>
 			<option name="skype">
 				<categoryname>profile.contact</categoryname>
@@ -193,6 +184,7 @@
 2:wcf.user.access.following
 3:wcf.user.access.nobody</selectoptions>
 				<editable>3</editable>
+				<permissions>user.profile.canHideOnlineStatus</permissions>
 			</option>
 			<option name="canViewProfile">
 				<categoryname>settings.privacy.content</categoryname>
@@ -216,21 +208,18 @@
 3:wcf.user.access.nobody</selectoptions>
 				<editable>3</editable>
 			</option>
+			<option name="enableEmbeddedMedia">
+				<categoryname>settings.privacy.content</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<editable>3</editable>
+				<options>message_enable_user_consent</options>
+			</option>
 			<!-- settings.privacy.messaging -->
 			<option name="canViewEmailAddress">
 				<categoryname>settings.privacy.messaging</categoryname>
 				<optiontype>select</optiontype>
 				<defaultvalue>3</defaultvalue>
-				<selectoptions>0:wcf.user.access.everyone
-1:wcf.user.access.registered
-2:wcf.user.access.following
-3:wcf.user.access.nobody</selectoptions>
-				<editable>3</editable>
-			</option>
-			<option name="canMail">
-				<categoryname>settings.privacy.messaging</categoryname>
-				<optiontype>select</optiontype>
-				<defaultvalue>1</defaultvalue>
 				<selectoptions>0:wcf.user.access.everyone
 1:wcf.user.access.registered
 2:wcf.user.access.following
@@ -257,4 +246,7 @@
 			</option>
 		</options>
 	</import>
+	<delete>
+		<option name="canMail" />
+	</delete>
 </data>
