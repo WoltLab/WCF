@@ -65,7 +65,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 	}
 	
 	/**
-	 * Follows an user.
+	 * Follows a user.
 	 * 
 	 * @return	array
 	 */
@@ -107,7 +107,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 	}
 	
 	/**
-	 * Stops following an user.
+	 * Stops following a user.
 	 * 
 	 * @return	array
 	 */

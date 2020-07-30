@@ -7,7 +7,7 @@ use wcf\data\DatabaseObjectList;
 use wcf\system\WCF;
 
 /**
- * Condition implementation for the user id of an user.
+ * Condition implementation for the user id of a user.
  * 
  * @author      Alexander Ebert
  * @copyright	2001-2019 WoltLab GmbH

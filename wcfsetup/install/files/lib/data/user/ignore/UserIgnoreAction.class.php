@@ -41,7 +41,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Ignores an user.
+	 * Ignores a user.
 	 * 
 	 * @return	array
 	 */
@@ -97,7 +97,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Unignores an user.
+	 * Unignores a user.
 	 * 
 	 * @return	array
 	 */
