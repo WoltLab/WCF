@@ -119,7 +119,6 @@ class TemplateScriptingCompiler {
 		'substr',
 		'trim',
 		'ucfirst',
-		'unserialize',
 		'uniqid',
 		'urlencode',
 		'wcfDebug',
