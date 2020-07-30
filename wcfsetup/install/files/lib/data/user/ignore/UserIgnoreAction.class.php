@@ -46,15 +46,14 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function ignore() {
-		$ignore = UserIgnore::getIgnore($this->parameters['data']['userID']);
+		/** @var UserIgnore $ignore */
+		$ignore = UserIgnoreEditor::createOrIgnore([
+			'ignoreUserID' => $this->parameters['data']['userID'],
+			'time' => TIME_NOW,
+			'userID' => WCF::getUser()->userID,
+		]);
 		
-		if (!$ignore->ignoreID) {
-			UserIgnoreEditor::create([
-				'ignoreUserID' => $this->parameters['data']['userID'],
-				'time' => TIME_NOW,
-				'userID' => WCF::getUser()->userID
-			]);
-			
+		if ($ignore !== null) {
 			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'ignoredUserIDs');
 			UserStorageHandler::getInstance()->reset([$this->parameters['data']['userID']], 'ignoredByUserIDs');
 			

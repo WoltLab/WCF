@@ -70,16 +70,14 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 	 * @return	array
 	 */
 	public function follow() {
-		$follow = UserFollow::getFollow(WCF::getUser()->userID, $this->parameters['data']['userID']);
+		/** @var UserFollow $follow */
+		$follow = UserFollowEditor::createOrIgnore([
+			'userID' => WCF::getUser()->userID,
+			'followUserID' => $this->parameters['data']['userID'],
+			'time' => TIME_NOW,
+		]);
 		
-		// not following right now
-		if (!$follow->followID) {
-			$follow = UserFollowEditor::create([
-				'userID' => WCF::getUser()->userID,
-				'followUserID' => $this->parameters['data']['userID'],
-				'time' => TIME_NOW
-			]);
-			
+		if ($follow !== null) {
 			// send notification
 			UserNotificationHandler::getInstance()->fireEvent(
 				'following',
