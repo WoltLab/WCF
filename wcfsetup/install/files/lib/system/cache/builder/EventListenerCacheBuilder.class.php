@@ -56,7 +56,7 @@ class EventListenerCacheBuilder extends AbstractCacheBuilder {
 						
 						$actions[$environment][$key][] = $eventListener;
 					}
-				}
+				} 
 				else {
 					if (!isset($inheritedActions[$environment])) {
 						$inheritedActions[$environment] = [];

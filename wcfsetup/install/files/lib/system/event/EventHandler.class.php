@@ -126,8 +126,6 @@ class EventHandler extends SingletonFactory {
 	 * @param mixed         $eventObj
 	 * @param string        $eventName
 	 * @param array        &$parameters
-	 *
-	 * @throws    SystemException
 	 */
 	public function fireAction($eventObj, $eventName, array &$parameters = []) {
 		// get class name
@@ -172,12 +170,11 @@ class EventHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Create the event object and check if this implements the interfaces
+	 * Validates and creates the event listener.
 	 *
 	 * @param EventListener $eventListener
 	 *
 	 * @return IEventListener|IParameterizedEventListener|null
-	 * @throws SystemException
 	 */
 	protected function createEventObject($eventListener) {
 		if ($eventListener->validateOptions() && $eventListener->validatePermissions()) {
@@ -209,17 +206,13 @@ class EventHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * This function calls the event listener
-	 * Function to reduce duplicate code in the fire action between inherited and not inherited actions
+	 * Invokes the event listener and checks for unwanted side effects.
 	 *
 	 * @param object $eventObj
 	 * @param object $actionObj
 	 * @param string $className
 	 * @param string $eventName
 	 * @param array &$parameters
-	 *
-	 * @throws SystemException
-	 * @throws \BadMethodCallException
 	 */
 	protected function callEvent($eventObj, $actionObj, $className, $eventName, &$parameters) {
 		if ($actionObj instanceof IParameterizedEventListener) {
