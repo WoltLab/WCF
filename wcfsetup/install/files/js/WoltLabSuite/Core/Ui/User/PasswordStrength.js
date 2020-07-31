@@ -7,7 +7,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/User/PasswordStrength
  */
-define(['zxcvbn', 'Core'], function(zxcvbn, Core) {
+define(['zxcvbn', 'Core', 'Language'], function(zxcvbn, Core, Language) {
 	"use strict";
 	
 	var STATIC_DICTIONARY = [];
@@ -52,6 +52,20 @@ define(['zxcvbn', 'Core'], function(zxcvbn, Core) {
 				staticDictionary: [],
 			}, options);
 			
+			if (!this._options.feedbacker) {
+				var phrases = Core.extend({}, zxcvbn.Feedback.default_phrases);
+				for (var type in phrases) {
+					for (var phrase in phrases[type]) {
+						var languageItem = 'wcf.user.password.zxcvbn.' + type + '.' + phrase;
+						var value = Language.get(languageItem);
+						if (value !== languageItem) {
+							phrases[type][phrase] = value;
+						}
+					}
+				}
+				this._options.feedbacker = new zxcvbn.Feedback(phrases);
+			}
+			
 			this._meter = createMeter({
 				min: 0,
 				max: 4,
@@ -86,6 +100,7 @@ define(['zxcvbn', 'Core'], function(zxcvbn, Core) {
 			// To bound runtime latency for really long passwords, consider sending zxcvbn() only
 			// the first 100 characters or so of user input.
 			var verdict = zxcvbn(this._input.value.substr(0, 100), dictionary);
+			verdict.feedback = this._options.feedbacker.from_result(verdict);
 			
 			this._meter.value = verdict.score;
 			this._verdictResult.value = JSON.stringify(verdict);

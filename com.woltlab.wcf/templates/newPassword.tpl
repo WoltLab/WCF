@@ -37,7 +37,9 @@
 		{event name='fields'}
 		
 		<script data-relocate="true">
-			require(['WoltLabSuite/Core/Ui/User/PasswordStrength'], function (PasswordStrength) {
+			require(['WoltLabSuite/Core/Ui/User/PasswordStrength', 'Language'], function (PasswordStrength, Language) {
+				{include file='passwordStrengthLanguage'}
+				
 				new PasswordStrength(elById('newPassword'), {
 					staticDictionary: [
 						'{$user->username|encodeJS}',

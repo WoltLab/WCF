@@ -163,7 +163,9 @@
 						</dl>
 						
 						<script data-relocate="true">
-							require(['WoltLabSuite/Core/Ui/User/PasswordStrength'], function (PasswordStrength) {
+							require(['WoltLabSuite/Core/Ui/User/PasswordStrength', 'Language'], function (PasswordStrength, Language) {
+								{include file='passwordStrengthLanguage'}
+								
 								var relatedInputs = [];
 								if (elById('username')) relatedInputs.push(elById('username'));
 								if (elById('email')) relatedInputs.push(elById('email'));
