@@ -85,7 +85,7 @@ class VisitTracker extends SingletonFactory {
 					$this->userVisits = @unserialize($data);
 				}
 			}
-			else {
+			else if (WCF::getSession()->spiderID === null) {
 				$this->userVisits = WCF::getSession()->getVar('trackedUserVisits');
 			}
 			
@@ -128,7 +128,7 @@ class VisitTracker extends SingletonFactory {
 			$row = $statement->fetchArray();
 			if ($row) return $row['visitTime'];
 		}
-		else {
+		else if (WCF::getSession()->spiderID === null) {
 			if ($visitTime = WCF::getSession()->getVar('trackedUserVisit_'.$this->getObjectTypeID($objectType).'_'.$objectID)) {
 				return $visitTime;
 			}
