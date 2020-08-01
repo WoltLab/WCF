@@ -5,60 +5,15 @@
  */
 WCF.Label = {};
 
+/** @deprecated 5.3 */
+WCF.Label.ACPList = Class.extend({
+	_labelInput: {},
+	_labelList: {},
+	init: function() {},
+	_keyPressed: function() {}
+});
+
 if (COMPILER_TARGET_DEFAULT) {
-	/**
-	 * Provides enhancements for ACP label management.
-	 */
-	WCF.Label.ACPList = Class.extend({
-		/**
-		 * input element
-		 * @var        jQuery
-		 */
-		_labelInput: null,
-		
-		/**
-		 * list of pre-defined label items
-		 * @var        array<jQuery>
-		 */
-		_labelList: [],
-		
-		/**
-		 * Initializes the ACP label list.
-		 */
-		init: function () {
-			this._labelInput = $('#label').keydown($.proxy(this._keyPressed, this)).keyup($.proxy(this._keyPressed, this)).blur($.proxy(this._keyPressed, this));
-			
-			if ($.browser.mozilla && $.browser.touch) {
-				this._labelInput.on('input', $.proxy(this._keyPressed, this));
-			}
-			
-			$('#labelList').find('input[type="radio"]').each($.proxy(function (index, input) {
-				var $input = $(input);
-				
-				// ignore custom values
-				if ($input.prop('value') !== 'custom') {
-					this._labelList.push($($input.next('span')));
-				}
-			}, this));
-			
-			if (this._labelInput[0].value.length > 0) {
-				this._keyPressed();
-			}
-		},
-		
-		/**
-		 * Renders label name as label or falls back to a default value if label is empty.
-		 */
-		_keyPressed: function () {
-			var $text = this._labelInput.prop('value');
-			if ($text === '') $text = WCF.Language.get('wcf.acp.label.defaultValue');
-			
-			for (var $i = 0, $length = this._labelList.length; $i < $length; $i++) {
-				this._labelList[$i].text($text);
-			}
-		}
-	});
-	
 	/**
 	 * Provides simple logic to inherit associations within structured lists.
 	 */
@@ -105,13 +60,6 @@ if (COMPILER_TARGET_DEFAULT) {
 	});
 }
 else {
-	WCF.Label.ACPList = Class.extend({
-		_labelInput: {},
-		_labelList: {},
-		init: function() {},
-		_keyPressed: function() {}
-	});
-	
 	WCF.Label.ACPList.Connect = Class.extend({
 		init: function() {},
 		_click: function() {}
