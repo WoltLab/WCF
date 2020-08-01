@@ -10,7 +10,7 @@ use wcf\system\SingletonFactory;
 
 /**
  * EventHandler executes all registered actions for a specific event.
- *
+ * 
  * @author	Tim Duesterhus, Marcel Werk
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -72,7 +72,7 @@ class EventHandler extends SingletonFactory {
 	
 	/**
 	 * Executes all inherited listeners for the given event.
-	 *
+	 * 
 	 * @param	mixed		$eventObj
 	 * @param	string		$eventName
 	 * @param	string		$className
@@ -148,12 +148,12 @@ class EventHandler extends SingletonFactory {
 	
 	/**
 	 * Executes all registered listeners for the given event.
-	 *
+	 * 
 	 * $parameters is an optional array of parameters. Event listeners
 	 * are able to modify these. Any modification will be passed on to
 	 * the next event listener and be available after execution of every
 	 * event listener.
-	 *
+	 * 
 	 * @param	mixed		$eventObj
 	 * @param	string		$eventName
 	 * @param	array		&$parameters
@@ -232,7 +232,7 @@ class EventHandler extends SingletonFactory {
 	
 	/**
 	 * Generates an unique name for an action.
-	 *
+	 * 
 	 * @param	string  $className
 	 * @param	string  $eventName
 	 * @return	string  unique action name
