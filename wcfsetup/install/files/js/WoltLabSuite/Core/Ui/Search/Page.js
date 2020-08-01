@@ -9,6 +9,7 @@ define(['Core', 'Dom/Traverse', 'Dom/Util', 'Ui/Screen', 'Ui/SimpleDropdown', '.
 				ajax: {
 					className: 'wcf\\data\\search\\keyword\\SearchKeywordAction'
 				},
+				autoFocus: false,
 				callbackDropdownInit: function(dropdownMenu) {
 					dropdownMenu.classList.add('dropdownMenuPageSearch');
 					
