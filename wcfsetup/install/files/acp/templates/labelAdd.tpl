@@ -1,18 +1,27 @@
 {include file='header' pageTitle='wcf.acp.label.'|concat:$action}
 
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Label.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true">
-	$(function() {
-		WCF.Language.addObject({
-			'wcf.acp.label.defaultValue': '{lang}wcf.acp.label.defaultValue{/lang}'
+	(function() {
+		var previews = [];
+		elBySelAll('#labelList .jsLabelPreview', undefined, function(preview) {
+			previews.push(preview);
 		});
 		
-		new WCF.Label.ACPList();
+		var input = elById('label');
+		function updatePreview() {
+			var value = input.value.trim() || '{lang}wcf.acp.label.defaultValue{/lang}';
+			previews.forEach(function(preview) {
+				preview.textContent = value;
+			});
+		}
+		input.addEventListener('input', updatePreview, { passive: true });
 		
-		$('#customCssClassName').click(function() {
-			$(this).parents('li').find('input[type=radio]').click();
+		updatePreview();
+		
+		elById('customCssClassName').addEventListener('focus', function () {
+			elBySel('.jsCustomCssClassName').checked = true;
 		});
-	});
+	})();
 </script>
 
 <header class="contentHeader">
@@ -93,9 +102,9 @@
 					<ul id="labelList" class="inlineList">
 						{foreach from=$availableCssClassNames item=className}
 							{if $className == 'custom'}
-								<li class="labelCustomClass"><input type="radio" name="cssClassName" value="custom"{if $cssClassName == 'custom'} checked{/if}> <span><input type="text" id="customCssClassName" name="customCssClassName" value="{$customCssClassName}" class="long"></span></li>
+								<li class="labelCustomClass"><input type="radio" name="cssClassName" class="jsCustomCssClassName" value="custom"{if $cssClassName == 'custom'} checked{/if}> <span><input type="text" id="customCssClassName" name="customCssClassName" value="{$customCssClassName}" class="long"></span></li>
 							{else}
-								<li><label><input type="radio" name="cssClassName" value="{$className}"{if $cssClassName == $className} checked{/if}> <span class="badge label{if $className != 'none'} {$className}{/if}">Label</span></label></li>
+								<li><label><input type="radio" name="cssClassName" value="{$className}"{if $cssClassName == $className} checked{/if}> <span class="badge label{if $className != 'none'} {$className}{/if} jsLabelPreview">Label</span></label></li>
 							{/if}
 						{/foreach}
 					</ul>
