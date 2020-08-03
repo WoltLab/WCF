@@ -120,4 +120,8 @@
 			see: https://github.com/WoltLab/WCF/issues/3429
 			see: https://github.com/WoltLab/WCF/pull/3450
 		-->
+	
+	<!-- add page PIP for the next update
+			see: https://github.com/WoltLab/WCF/issues/3474
+		-->
 </package>
