@@ -40,32 +40,35 @@ class EventListenerCacheBuilder extends AbstractCacheBuilder {
 		/** @var EventListener $eventListener */
 		while ($eventListener = $statement->fetchObject(EventListener::class)) {
 			$eventNames = $eventListener->getEventNames();
+			$environments = $eventListener->environment == 'all' ? ['admin', 'user'] : [$eventListener->environment];
 			
-			if (!$eventListener->inherit) {
-				if (!isset($actions[$eventListener->environment])) {
-					$actions[$eventListener->environment] = [];
-				}
-				
-				foreach ($eventNames as $eventName) {
-					$key = EventHandler::generateKey($eventListener->eventClassName, $eventName);
-					if (!isset($actions[$eventListener->environment][$key])) {
-						$actions[$eventListener->environment][$key] = [];
+			foreach ($environments as $environment) {
+				if (!$eventListener->inherit) {
+					if (!isset($actions[$environment])) {
+						$actions[$environment] = [];
 					}
 					
-					$actions[$eventListener->environment][$key][] = $eventListener;
-				}
-			}
-			else {
-				if (!isset($inheritedActions[$eventListener->environment])) {
-					$inheritedActions[$eventListener->environment] = [];
-				}
-				
-				foreach ($eventNames as $eventName) {
-					if (!isset($inheritedActions[$eventListener->environment][$eventListener->eventClassName])) {
-						$inheritedActions[$eventListener->environment][$eventListener->eventClassName] = [];
+					foreach ($eventNames as $eventName) {
+						$key = EventHandler::generateKey($eventListener->eventClassName, $eventName);
+						if (!isset($actions[$environment][$key])) {
+							$actions[$environment][$key] = [];
+						}
+						
+						$actions[$environment][$key][] = $eventListener;
+					}
+				} 
+				else {
+					if (!isset($inheritedActions[$environment])) {
+						$inheritedActions[$environment] = [];
 					}
 					
-					$inheritedActions[$eventListener->environment][$eventListener->eventClassName][$eventName][] = $eventListener;
+					foreach ($eventNames as $eventName) {
+						if (!isset($inheritedActions[$environment][$eventListener->eventClassName])) {
+							$inheritedActions[$environment][$eventListener->eventClassName] = [];
+						}
+						
+						$inheritedActions[$environment][$eventListener->eventClassName][$eventName][] = $eventListener;
+					}
 				}
 			}
 		}
