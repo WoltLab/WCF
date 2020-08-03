@@ -315,7 +315,8 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 					'options' => $data['options'] ?? '',
 					'permissions' => $data['permissions'] ?? '',
 					'excludeFromLandingPage' => $data['excludeFromLandingPage'] ?? 0,
-					'allowSpidersToIndex' => $allowSpidersToIndex
+					'allowSpidersToIndex' => $allowSpidersToIndex,
+					'requireObjectID' => $data['requireObjectID'],
 				]);
 			}
 			else {
