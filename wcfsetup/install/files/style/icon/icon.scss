@@ -1,11 +1,11 @@
 /* do NOT reference fonts directly, always make use of 'getFont.php' */
 @font-face {
 	font-family: 'FontAwesome';
-	src: url('../font/getFont.php?type=eot&v=4.7.0');
-	src: url('../font/getFont.php?type=eot&v=4.7.0#iefix') format('embedded-opentype'),
-	url('../font/getFont.php?type=woff2&v=4.7.0') format('woff2'),
-	url('../font/getFont.php?type=woff&v=4.7.0') format('woff'),
-	url('../font/getFont.php?type=ttf&v=4.7.0') format('truetype');
+	src: url(getFont('fontawesome-webfont.eot', '', '4.7.0'));
+	src: url(getFont('fontawesome-webfont.eot', '', '4.7.0') + "#iefix") format('embedded-opentype'),
+	url(getFont('fontawesome-webfont.woff2', '', '4.7.0')) format('woff2'),
+	url(getFont('fontawesome-webfont.woff', '', '4.7.0')) format('woff'),
+	url(getFont('fontawesome-webfont.ttf', '', '4.7.0')) format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }

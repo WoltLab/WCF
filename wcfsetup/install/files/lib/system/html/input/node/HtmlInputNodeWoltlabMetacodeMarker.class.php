@@ -18,6 +18,12 @@ use wcf\util\DOMUtil;
  */
 class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 	/**
+	 * list of tag names that should be considered as block level elements
+	 * @var string[]
+	 */
+	public static $customBlockElementTagNames = [];
+	
+	/**
 	 * list of bbcodes that represent block elements
 	 * @var	string[]
 	 */
@@ -508,17 +514,14 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 			case 'woltlab-quote':
 			case 'woltlab-spoiler':
 				return true;
-				break;
 			
 			case 'woltlab-metacode':
 				/** @var \DOMElement $node */
-				if (in_array($node->getAttribute('data-name'), $this->blockElements)) {
-					return true;
-				}
-				break;
+				return in_array($node->getAttribute('data-name'), $this->blockElements);
+				
+			default:
+				return in_array($node->nodeName, self::$customBlockElementTagNames);
 		}
-		
-		return false;
 	}
 	
 	/**

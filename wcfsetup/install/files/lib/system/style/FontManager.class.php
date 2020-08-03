@@ -99,7 +99,7 @@ class FontManager extends SingletonFactory {
 				$file->flush();
 				$file->close();
 				
-				$css = str_replace('url("' . $filename . '")', 'url("../font/getFont.php?family='.rawurlencode($family).'&filename='.rawurlencode($filename).'")', $css);
+				$css = str_replace('url("' . $filename . '")', 'url(getFont("'.rawurlencode($filename).'", "'.rawurlencode($family).'", "'.TIME_NOW.'"))', $css);
 			}
 			
 			file_put_contents($this->getCssFilename($family), $css);
