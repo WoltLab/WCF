@@ -1,11 +1,27 @@
 {include file='header' pageTitle='wcf.acp.user.rank.'|concat:$action}
 
 <script data-relocate="true">
-	$(function() {
-		$('#customCssClassName').click(function() {
-			$(this).parents('li').find('input[type=radio]').click();
+	(function() {
+		var previews = [];
+		elBySelAll('#labelList .jsRankPreview', undefined, function(preview) {
+			previews.push(preview);
 		});
-	});
+		
+		var input = elById('rankTitle');
+		function updatePreview() {
+			var value = input.value.trim() || '{lang}wcf.acp.user.rank.title{/lang}';
+			previews.forEach(function(preview) {
+				preview.textContent = value;
+			});
+		}
+		input.addEventListener('input', updatePreview, { passive: true });
+		
+		updatePreview();
+		
+		elById('customCssClassName').addEventListener('focus', function () {
+			elBySel('.jsCustomCssClassName').checked = true;
+		});
+	})();
 </script>
 
 <header class="contentHeader">
@@ -55,9 +71,9 @@
 				<ul id="labelList">
 					{foreach from=$availableCssClassNames item=className}
 						{if $className == 'custom'}
-							<li class="labelCustomClass"><input type="radio" name="cssClassName" value="custom"{if $cssClassName == 'custom'} checked{/if}> <span><input type="text" id="customCssClassName" name="customCssClassName" value="{$customCssClassName}" class="long"></span></li>
+							<li class="labelCustomClass"><input type="radio" name="cssClassName" class="jsCustomCssClassName" value="custom"{if $cssClassName == 'custom'} checked{/if}> <span><input type="text" id="customCssClassName" name="customCssClassName" value="{$customCssClassName}" class="long"></span></li>
 						{else}
-							<li><label><input type="radio" name="cssClassName" value="{$className}"{if $cssClassName == $className} checked{/if}> <span class="badge label{if $className != 'none'} {$className}{/if}">{lang}wcf.acp.user.rank.title{/lang}</span></label></li>
+							<li><label><input type="radio" name="cssClassName" value="{$className}"{if $cssClassName == $className} checked{/if}> <span class="badge label{if $className != 'none'} {$className}{/if} jsRankPreview">{lang}wcf.acp.user.rank.title{/lang}</span></label></li>
 						{/if}
 					{/foreach}
 				</ul>

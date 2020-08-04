@@ -3,6 +3,7 @@ namespace wcf\system\html\input\node;
 use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
 use wcf\system\bbcode\BBCodeHandler;
+use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\DOMUtil;
 use wcf\util\JSON;
@@ -153,6 +154,39 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode {
 		$newElement->setAttribute('data-name', 'wsm');
 		$newElement->setAttribute('data-attributes', base64_encode(JSON::encode($attributes)));
 		DOMUtil::replaceElement($element, $newElement, false);
+		
+		// The media bbcode is a block element that may not be placed inside inline elements.
+		$parent = $newElement;
+		$blockLevelParent = null;
+		$blockElements = HtmlBBCodeParser::getInstance()->getBlockBBCodes();
+		while ($parent = $parent->parentNode) {
+			switch ($parent->nodeName) {
+				case 'blockquote':
+				case 'body':
+				case 'code':
+				case 'div':
+				case 'p':
+				case 'td':
+				case 'woltlab-quote':
+				case 'woltlab-spoiler':
+					$blockLevelParent = $parent;
+					break 2;
+				
+				case 'woltlab-metacode':
+					if (in_array($parent->getAttribute('data-name'), $blockElements)) {
+						$blockLevelParent = $parent;
+						break 2;
+					}
+					break;
+			}
+		}
+		
+		if ($blockLevelParent !== null) {
+			$element = DOMUtil::splitParentsUntil($newElement, $parent);
+			if ($element !== $newElement) {
+				DOMUtil::insertBefore($newElement, $element);
+			}
+		}
 	}
 	
 	/**

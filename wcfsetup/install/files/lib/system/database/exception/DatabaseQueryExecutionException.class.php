@@ -19,6 +19,18 @@ class DatabaseQueryExecutionException extends DatabaseQueryException implements 
 	 */
 	protected $parameters = [];
 	
+	/**
+	 * @var	string|null
+	 * @since 5.3
+	 */
+	protected $sqlState;
+	
+	/**
+	 * @var	string|null
+	 * @since 5.3
+	 */
+	protected $driverCode;
+	
 	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
 	 * @inheritDoc
@@ -27,6 +39,31 @@ class DatabaseQueryExecutionException extends DatabaseQueryException implements 
 		parent::__construct($message, $previous);
 		
 		$this->parameters = $parameters;
+		if ($previous) {
+			$errorInfo = $previous->errorInfo;
+			$this->sqlState = $errorInfo[0] ?? null;
+			$this->driverCode = $errorInfo[1] ?? null;
+		}
+	}
+	
+	/**
+	 * Returns the ANSI SQLSTATE or null.
+	 * 
+	 * @return string|null
+	 * @since 5.3
+	 */
+	public function getSqlState() {
+		return $this->sqlState;
+	}
+
+	/**
+	 * Returns the driver specific error code or null.
+	 * 
+	 * @return string|null
+	 * @since 5.3
+	 */
+	public function getDriverCode() {
+		return $this->driverCode;
 	}
 	
 	/**

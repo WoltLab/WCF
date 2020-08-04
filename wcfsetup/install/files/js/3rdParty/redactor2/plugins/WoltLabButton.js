@@ -83,6 +83,13 @@ $.Redactor.prototype.WoltLabButton = function() {
 				}
 			}
 			
+			// If both the "Code" and "Inline Code" button exist, then place them next to each other.
+			var inlineCodeButtonIndex = this.opts.buttons.indexOf('tt');
+			if (this.opts.buttons.indexOf('code') !== -1 && inlineCodeButtonIndex !== -1) {
+				this.opts.buttons.splice(inlineCodeButtonIndex, 1);
+				this.opts.buttons.splice(this.opts.buttons.indexOf('code') + 1, 0, 'tt');
+			}
+			
 			// enforce button order as provided with `opts.buttons`
 			var listItem, toolbarButtons = {}, toolbarOrder = [];
 			while (toolbar.childElementCount) {

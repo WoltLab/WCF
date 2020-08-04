@@ -5,42 +5,12 @@
 {js application='wcf' acp='true' file='WCF.ACP.Style'}
 {js application='wcf' file='WCF.ColorPicker' bundle='WCF.Combined'}
 <script data-relocate="true">
-	require([
-		'WoltLabSuite/Core/Acp/Ui/Style/CoverPhoto/Delete', 'WoltLabSuite/Core/Acp/Ui/Style/CoverPhoto/Upload', 'WoltLabSuite/Core/Acp/Ui/Style/Favicon/Upload', 'WoltLabSuite/Core/Acp/Ui/Style/Image/Upload',
-		'WoltLabSuite/Core/Acp/Ui/Style/Editor', 'WoltLabSuite/Core/Ui/Toggle/Input', 'Language'
-	], function(
-		AcpUiStyleCoverPhotoDelete, AcpUiStyleCoverPhotoUpload, AcpUiStyleFaviconUpload, AcpUiStyleImageUpload,
-		AcpUiStyleEditor, UiToggleInput, Language
-	) {
+	require(['WoltLabSuite/Core/Acp/Ui/Style/Editor'], function(AcpUiStyleEditor) {
 		AcpUiStyleEditor.setup({
 			isTainted: {if $isTainted}true{else}false{/if},
 			styleId: {if $action === 'edit'}{@$style->styleID}{else}0{/if},
 			styleRuleMap: styleRuleMap
 		});
-		
-		new AcpUiStyleImageUpload({if $action == 'add'}0{else}{@$style->styleID}{/if}, '{$tmpHash}', false);
-		new AcpUiStyleImageUpload({if $action == 'add'}0{else}{@$style->styleID}{/if}, '{$tmpHash}', true);
-		
-		new UiToggleInput('input[name="useGoogleFont"]', {
-			show: ['#wcfFontFamilyGoogleContainer']
-		});
-		
-		{if $action === 'edit'}
-			new AcpUiStyleFaviconUpload({@$style->styleID});
-			
-			{if MODULE_USER_COVER_PHOTO}
-				Language.addObject({
-					'wcf.acp.style.coverPhoto.delete.confirmMessage': '{lang}wcf.acp.style.coverPhoto.delete.confirmMessage{/lang}',
-					'wcf.user.coverPhoto.upload.error.invalidExtension': '{lang}wcf.user.coverPhoto.upload.error.invalidExtension{/lang}',
-					'wcf.user.coverPhoto.upload.error.minHeight': '{lang}wcf.user.coverPhoto.upload.error.minHeight{/lang}',
-					'wcf.user.coverPhoto.upload.error.minWidth': '{lang}wcf.user.coverPhoto.upload.error.minWidth{/lang}',
-					'wcf.user.coverPhoto.upload.error.uploadFailed': '{lang}wcf.user.coverPhoto.upload.error.uploadFailed{/lang}'
-				});
-				
-				AcpUiStyleCoverPhotoDelete.init({@$style->styleID});
-				new AcpUiStyleCoverPhotoUpload({@$style->styleID});
-			{/if}
-		{/if}
 	});
 	
 	$(function() {
@@ -51,12 +21,8 @@
 			'wcf.style.colorPicker.new': '{lang}wcf.style.colorPicker.new{/lang}',
 			'wcf.style.colorPicker.current': '{lang}wcf.style.colorPicker.current{/lang}',
 			'wcf.style.colorPicker.button.apply': '{lang}wcf.style.colorPicker.button.apply{/lang}',
-			'wcf.acp.style.favicon.error.dimensions': '{lang}wcf.acp.style.favicon.error.dimensions{/lang}',
-			'wcf.acp.style.favicon.error.invalidExtension': '{lang}wcf.acp.style.favicon.error.invalidExtension{/lang}',
 			'wcf.acp.style.image.error.invalidExtension': '{lang}wcf.acp.style.image.error.invalidExtension{/lang}'
 		});
-		new WCF.ACP.Style.LogoUpload('{$tmpHash}');
-		new WCF.ACP.Style.LogoUploadMobile('{$tmpHash}');
 		
 		{if $action == 'edit'}
 			new WCF.ACP.Style.CopyStyle({@$style->styleID});
@@ -271,20 +237,32 @@
 				<dl{if $errorField == 'image'} class="formError"{/if}>
 					<dt><label for="image">{lang}wcf.acp.style.image{/lang}</label></dt>
 					<dd>
-						<div class="selectedImagePreview">
-							<img src="{if $action == 'add'}{@$__wcf->getPath()}images/stylePreview.png{else}{@$style->getPreviewImage()}{/if}" alt="" id="styleImage">
-						</div>
-						<div id="uploadImage"></div>
+						{@$__wcf->getUploadHandler()->renderField('image')}
+						{if $errorField == 'image'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.acp.style.image.error.{$errorType}{/lang}
+								{/if}
+							</small>
+						{/if}
 						<small>{lang}wcf.acp.style.image.description{/lang}</small>
 					</dd>
 				</dl>
-				<dl{if $errorField == 'image'} class="formError"{/if}>
+				<dl{if $errorField == 'image2x'} class="formError"{/if}>
 					<dt><label for="image2x">{lang}wcf.acp.style.image2x{/lang}</label></dt>
 					<dd>
-						<div class="selectedImagePreview">
-							<img src="{if $action == 'add'}{@$__wcf->getPath()}images/stylePreview@2x.png{else}{@$style->getPreviewImage2x()}{/if}" alt="" id="styleImage2x">
-						</div>
-						<div id="uploadImage2x"></div>
+						{@$__wcf->getUploadHandler()->renderField('image2x')}
+						{if $errorField == 'image2x'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.acp.style.image2x.error.{$errorType}{/lang}
+								{/if}
+							</small>
+						{/if}
 						<small>{lang}wcf.acp.style.image2x.description{/lang}</small>
 					</dd>
 				</dl>
@@ -308,64 +286,62 @@
 						</dd>
 					</dl>
 				{/if}
-				<dl{if $errorField == 'imagePath'} class="formError"{/if}>
-					<dt><label for="imagePath">{lang}wcf.acp.style.imagePath{/lang}</label></dt>
-					<dd>
-						<input type="text" name="imagePath" id="imagePath" value="{$imagePath}" class="long">
-						{if $errorField == 'imagePath'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{else}
-									{lang}wcf.acp.style.imagePath.error.{$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
-						<small>{lang}wcf.acp.style.imagePath.description{/lang}</small>
-					</dd>
-				</dl>
 				
 				{event name='fileFields'}
 			</section>
 			
-			{if $action === 'edit'}
-				<section class="section">
-					<h2 class="sectionTitle">{lang}wcf.acp.style.general.favicon{/lang}</h2>
-					
-					<dl>
-						<dt><label for="favicon">{lang}wcf.acp.style.favicon{/lang}</label></dt>
-						<dd>
-							<div class="selectedFaviconPreview">
-								<img src="{@$style->getFaviconAppleTouchIcon()}" alt="" id="faviconImage" style="height: 32px; width: 32px;">
-							</div>
-							<div id="uploadFavicon"></div>
-							<small>{lang}wcf.acp.style.favicon.description{/lang}</small>
-						</dd>
-					</dl>
-					
-					{event name='faviconFields'}
-				</section>
+			<section class="section">
+				<h2 class="sectionTitle">{lang}wcf.acp.style.general.favicon{/lang}</h2>
 				
-				<section class="section">
-					<header class="sectionHeader">
-						<h2 class="sectionTitle">{lang}wcf.acp.style.general.coverPhoto{/lang}</h2>
-						<p class="sectionDescription">{lang}wcf.acp.style.general.coverPhoto.description{/lang}</p>
-					</header>
-					
-					<dl>
-						<dt><label for="coverPhoto">{lang}wcf.acp.style.coverPhoto{/lang}</label></dt>
-						<dd>
-							<div id="coverPhotoPreview" style="background-image: url({@$__wcf->getPath()}images/coverPhotos/{@$style->getCoverPhoto()})"></div>
-							<div id="uploadCoverPhoto">
-								<a href="#" class="button jsButtonDeleteCoverPhoto"{if !$style->coverPhotoExtension} style="display:none"{/if}>{lang}wcf.global.button.delete{/lang}</a>
-							</div>
-							<small>{lang}wcf.acp.style.coverPhoto.description{/lang}</small>
-						</dd>
-					</dl>
-					
-					{event name='coverPhotoFields'}
-				</section>
-			{/if}
+				<dl{if $errorField == 'image'} class="formError"{/if}>
+					<dt><label for="favicon">{lang}wcf.acp.style.favicon{/lang}</label></dt>
+					<dd>
+						{@$__wcf->getUploadHandler()->renderField('favicon')}
+						{if $errorField == 'favicon'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{elseif $errorType == 'minWidth' || $errorType == 'minHeight' || $errorType == 'maxWidth' || $errorType == 'maxHeight'}
+									{lang}wcf.image.coverPhoto.upload.error.dimensions{/lang}
+								{else}
+									{lang}wcf.acp.style.favicon.error.{$errorType}{/lang}
+								{/if}
+							</small>
+						{/if}
+						<small>{lang}wcf.acp.style.favicon.description{/lang}</small>
+					</dd>
+				</dl>
+				
+				{event name='faviconFields'}
+			</section>
+			
+			<section class="section">
+				<header class="sectionHeader">
+					<h2 class="sectionTitle">{lang}wcf.acp.style.general.coverPhoto{/lang}</h2>
+					<p class="sectionDescription">{lang}wcf.acp.style.general.coverPhoto.description{/lang}</p>
+				</header>
+				
+				<dl{if $errorField == 'coverPhoto'} class="formError"{/if}>
+					<dt><label for="coverPhoto">{lang}wcf.acp.style.coverPhoto{/lang}</label></dt>
+					<dd>
+						{@$__wcf->getUploadHandler()->renderField('coverPhoto')}
+						{if $errorField == 'coverPhoto'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{elseif $errorType == 'minWidth' || $errorType == 'minHeight'}
+									{lang}wcf.image.coverPhoto.upload.error.{$errorType}{/lang}
+								{else}
+									{lang}wcf.acp.style.coverPhoto.error.{$errorType}{/lang}
+								{/if}
+							</small>
+						{/if}
+						<small>{lang}wcf.acp.style.coverPhoto.description{/lang}</small>
+					</dd>
+				</dl>
+				
+				{event name='coverPhotoFields'}
+			</section>
 			
 			{event name='generalFieldsets'}
 		</div>
@@ -429,14 +405,23 @@
 				<dl>
 					<dt><label for="pageLogo">{lang}wcf.acp.style.globals.pageLogo{/lang}</label></dt>
 					<dd>
-						<div class="selectedImagePreview">
-							<img src="" alt="" id="styleLogo" style="max-width: 100%">
-						</div>
-						<div id="uploadLogo"></div>
-					</dd>
-					<dd>
-						<input type="text" name="pageLogo" id="pageLogo" value="{$variables[pageLogo]}" class="long">
+						{@$__wcf->getUploadHandler()->renderField('pageLogo')}
 						<small>{lang}wcf.acp.style.globals.pageLogo.description{/lang}</small>
+						<script data-relocate="true">
+						elBySel('#pageLogouploadFileList').addEventListener('change', function (ev) {
+							var img = elBySel('#pageLogouploadFileList img');
+							if (!img) return;
+							
+							function updateSizes() {
+								elById('pageLogoWidth').value = img.width;
+								elById('pageLogoHeight').value = img.height;
+							}
+							img.addEventListener('load', updateSizes);
+							if (img.complete) {
+								updateSizes();
+							}
+						})
+						</script>
 					</dd>
 				</dl>
 				
@@ -456,13 +441,7 @@
 				<dl>
 					<dt><label for="pageLogoMobile">{lang}wcf.acp.style.globals.pageLogoMobile{/lang}</label></dt>
 					<dd>
-						<div class="selectedImagePreview">
-							<img src="" alt="" id="styleLogoMobile" style="max-width: 100%">
-						</div>
-						<div id="uploadLogoMobile"></div>
-					</dd>
-					<dd>
-						<input type="text" name="pageLogoMobile" id="pageLogoMobile" value="{$variables[pageLogoMobile]}" class="long">
+						{@$__wcf->getUploadHandler()->renderField('pageLogoMobile')}
 						<small>{lang}wcf.acp.style.globals.pageLogoMobile.description{/lang}</small>
 					</dd>
 				</dl>
@@ -532,17 +511,20 @@
 					</dd>
 				</dl>
 				
-				<dl>
-					<dt></dt>
-					<dd><label>
-						<input type="checkbox" id="useGoogleFont" name="useGoogleFont" value="1"{if !$variables[useGoogleFont]|empty} checked{/if}>
-						<span>{lang}wcf.acp.style.globals.useGoogleFont{/lang}</span>
-					</label></dd>
-				</dl>
-				<dl id="wcfFontFamilyGoogleContainer">
+				<dl id="wcfFontFamilyGoogleContainer"{if $errorField == 'wcfFontFamilyGoogle'} class="formError"{/if}>
 					<dt><label for="wcfFontFamilyGoogle">{lang}wcf.acp.style.globals.fontFamilyGoogle{/lang}</label></dt>
 					<dd>
 						<input type="text" id="wcfFontFamilyGoogle" name="wcfFontFamilyGoogle" value="{$variables[wcfFontFamilyGoogle]}" class="medium">
+						<small>{lang}wcf.acp.style.globals.fontFamilyGoogle.description{/lang}</small>
+						{if $errorField == 'wcfFontFamilyGoogle'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.acp.style.globals.fontFamilyGoogle.error.{$errorType}{/lang}
+								{/if}
+							</small>
+						{/if}
 					</dd>
 				</dl>
 				<dl>

@@ -303,11 +303,7 @@
 			</dl>
 			
 			{if MODULE_TAGGING}
-				{if !$tags[0]|empty}
-					{include file='tagInput' tagInputSuffix='0' tagSubmitFieldName='tags[0][]' tags=$tags[0] sandbox=true}
-				{else}
-					{include file='tagInput' tagInputSuffix='0' tagSubmitFieldName='tags[0][]' sandbox=true}
-				{/if}
+				{include file='tagInput' tagInputSuffix='0' tagSubmitFieldName='tags[0][]' tags=$tags[0] sandbox=true}
 			{/if}
 			
 			{event name='informationFields'}
@@ -434,11 +430,7 @@
 						
 						{if MODULE_TAGGING}
 							{assign var='tagSubmitFieldName' value='tags['|concat:$availableLanguage->languageID:'][]'}
-							{if !$tags[$availableLanguage->languageID]|empty}
-								{include file='tagInput' tagInputSuffix=$availableLanguage->languageID tagSubmitFieldName=$tagSubmitFieldName tags=$tags[$availableLanguage->languageID] sandbox=true}
-							{else}
-								{include file='tagInput' tagInputSuffix=$availableLanguage->languageID tagSubmitFieldName=$tagSubmitFieldName sandbox=true}
-							{/if}
+							{include file='tagInput' tagInputSuffix=$availableLanguage->languageID tagSubmitFieldName=$tagSubmitFieldName tags=$tags[$availableLanguage->languageID] sandbox=true}
 						{/if}
 						
 						{event name='informationFieldsMultilingual'}

@@ -1,11 +1,17 @@
 <?php
 namespace wcf\util;
+use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Exception\TooManyRedirectsException;
+use GuzzleHttp\Exception\TransferException;
+use GuzzleHttp\Psr7\Request;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\UriInterface;
 use wcf\system\exception\HTTPNotFoundException;
 use wcf\system\exception\HTTPServerErrorException;
 use wcf\system\exception\HTTPUnauthorizedException;
 use wcf\system\exception\SystemException;
-use wcf\system\io\RemoteFile;
-use wcf\system\Regex;
+use wcf\system\io\HttpFactory;
 use wcf\system\WCF;
 use wcf\util\exception\HTTPException;
 
@@ -17,6 +23,7 @@ use wcf\util\exception\HTTPException;
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
+ * @deprecated	5.3 - Use Guzzle via \wcf\system\io\HttpFactory.
  */
 final class HTTPRequest {
 	/**
@@ -38,54 +45,6 @@ final class HTTPRequest {
 	private $files = [];
 	
 	/**
-	 * indicates if request will be made via SSL
-	 * @var	boolean
-	 */
-	private $useSSL = false;
-	
-	/**
-	 * indicates if the connection to the proxy target will be made via SSL
-	 * @var	boolean
-	 */
-	private $originUseSSL = false;
-	
-	/**
-	 * target host
-	 * @var	string
-	 */
-	private $host;
-	
-	/**
-	 * target host if a proxy is used
-	 * @var	string
-	 */
-	private $originHost;
-	
-	/**
-	 * target port
-	 * @var	integer
-	 */
-	private $port;
-	
-	/**
-	 * target port if a proxy is used
-	 * @var	integer
-	 */
-	private $originPort;
-	
-	/**
-	 * target path
-	 * @var	string
-	 */
-	private $path;
-	
-	/**
-	 * target query string
-	 * @var	string
-	 */
-	private $query;
-	
-	/**
 	 * request URL
 	 * @var	string
 	 */
@@ -98,34 +57,21 @@ final class HTTPRequest {
 	private $headers = [];
 	
 	/**
-	 * legacy headers
-	 * @var	string[]
-	 */
-	private $legacyHeaders = [];
-	
-	/**
 	 * request body
 	 * @var	string
 	 */
 	private $body = '';
 	
 	/**
-	 * reply headers
-	 * @var	string[]
-	 */
-	private $replyHeaders = [];
-	
-	/**
 	 * reply body
 	 * @var	string
 	 */
-	private $replyBody = '';
+	private $replyBody;
 	
 	/**
-	 * reply status code
-	 * @var	integer
+	 * @var ResponseInterface
 	 */
-	private $statusCode = 0;
+	private $response;
 	
 	/**
 	 * Constructs a new instance of HTTPRequest.
@@ -136,7 +82,7 @@ final class HTTPRequest {
 	 * @param	array		$files		Files to attach to the request
 	 */
 	public function __construct($url, array $options = [], $postParameters = [], array $files = []) {
-		$this->setURL($url);
+		$this->url = $url;
 		
 		$this->postParameters = $postParameters;
 		$this->files = $files;
@@ -206,385 +152,105 @@ final class HTTPRequest {
 				
 				$this->body .= "--".$boundary."--";
 			}
-			$this->addHeader('content-length', strlen($this->body));
-		}
-		if (isset($this->options['auth'])) {
-			$this->addHeader('authorization', "Basic ".base64_encode($options['auth']['username'].":".$options['auth']['password']));
 		}
 		$this->addHeader('connection', 'Close');
-	}
-	
-	/**
-	 * Parses the given URL and applies PROXY_SERVER_HTTP.
-	 * 
-	 * @param	string		$url
-	 * @throws	SystemException
-	 */
-	private function setURL($url) {
-		$parsedUrl = $originUrl = Url::parse($url);
-		if (empty($originUrl['scheme']) || empty($originUrl['host'])) {
-			throw new SystemException("Invalid URL '{$url}' given");
-		}
-		
-		$this->originUseSSL = $originUrl['scheme'] === 'https';
-		$this->originHost = $originUrl['host'];
-		$this->originPort = isset($originUrl['port']) ? $originUrl['port'] : ($this->originUseSSL ? 443 : 80);
-		
-		if (PROXY_SERVER_HTTP && !$this->originUseSSL) {
-			$this->path = $url;
-			$this->query = '';
-		}
-		else {
-			$this->path = isset($parsedUrl['path']) ? $parsedUrl['path'] : '/';
-			$this->query = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
-		}
-		
-		if (PROXY_SERVER_HTTP && Url::is(PROXY_SERVER_HTTP)) {
-			$parsedUrl = Url::parse(PROXY_SERVER_HTTP);
-		}
-		
-		$this->useSSL = $parsedUrl['scheme'] === 'https';
-		$this->host = $parsedUrl['host'];
-		$this->port = isset($parsedUrl['port']) ? $parsedUrl['port'] : ($this->useSSL ? 443 : 80);
-		
-		// update the 'Host:' header if URL has changed
-		if ($this->url != $url) {
-			$this->addHeader('host', $this->originHost.($this->originPort != ($this->originUseSSL ? 443 : 80) ? ':'.$this->originPort : ''));
-		}
-		
-		$this->url = $url;
 	}
 	
 	/**
 	 * Executes the HTTP request.
 	 */
 	public function execute() {
-		// connect
-		$remoteFile = new RemoteFile(($this->useSSL ? 'ssl://' : '').$this->host, $this->port, $this->options['timeout'], [
-			'ssl' => [
-				'peer_name' => $this->originHost
-			]
-		]);
+		$redirectHandler = function(RequestInterface $request, ResponseInterface $response, UriInterface $uri) {
+			$this->url = (string) $uri;
+			$this->response = $response;
+		};
 		
-		if ($this->originUseSSL && PROXY_SERVER_HTTP) {
-			if ($this->useSSL) throw new SystemException("Unable to proxy HTTPS when using TLS for proxy connection");
-			
-			$request = "CONNECT ".$this->originHost.":".$this->originPort." HTTP/1.0\r\n";
-			if (isset($this->headers['user-agent'])) {
-				$request .= 'user-agent: '.reset($this->headers['user-agent'])."\r\n";
-			}
-			$request .= "Host: ".$this->originHost.":".$this->originPort."\r\n";
-			$request .= "\r\n";
-			$remoteFile->puts($request);
-			$this->replyHeaders = [];
-			while (!$remoteFile->eof()) {
-				$line = $remoteFile->gets();
-				if (rtrim($line) === '') {
-					$this->parseReplyHeaders();
-					
-					break;
-				}
-				$this->replyHeaders[] = $line;
-			}
-			if ($this->statusCode != 200) throw new HTTPException($this, "Expected 200 Ok as reply to my CONNECT", $this->statusCode);
-			$remoteFile->setTLS(true);
+		$options = [
+			'timeout' => $this->options['timeout'],
+			'allow_redirects' => [
+				'max' => $this->options['maxDepth'],
+				'track_redirects' => true,
+				'on_redirect' => $redirectHandler,
+			],
+		];
+		if (isset($this->options['auth'])) {
+			$options['auth'] = [
+				$this->options['auth']['username'],
+				$this->options['auth']['password'],
+			];
 		}
 		
-		$request = $this->options['method']." ".$this->path.($this->query ? '?'.$this->query : '')." HTTP/1.1\r\n";
-		
-		// add headers
-		foreach ($this->headers as $name => $values) {
-			foreach ($values as $value) {
-				$request .= $name.": ".$value."\r\n";
-			}
-		}
-		$request .= "\r\n";
-		
-		// add post parameters
-		if ($this->options['method'] !== 'GET') $request .= $this->body."\r\n\r\n";
-		
-		$remoteFile->puts($request);
-		
-		$inHeader = true;
-		$this->replyHeaders = [];
-		$this->replyBody = '';
-		$chunkLength = 0;
-		$bodyLength = 0;
-		
-		$chunkedTransferRegex = new Regex('(^|,)[ \t]*chunked[ \t]*$', Regex::CASE_INSENSITIVE);
-		// read http response, until one of is true
-		// a) EOF is reached
-		// b) bodyLength is at least maxLength
-		// c) bodyLength is at least Content-Length
-		while (!(
-			$remoteFile->eof() ||
-			(isset($this->options['maxLength']) && $bodyLength >= $this->options['maxLength']) ||
-			(isset($this->replyHeaders['content-length']) && $bodyLength >= end($this->replyHeaders['content-length']))
-		)) {
-			
-			if ($chunkLength) {
-				if (isset($this->options['maxLength'])) $chunkLength = min($chunkLength, $this->options['maxLength'] - $bodyLength);
-				$line = $remoteFile->read($chunkLength);
-			}
-			else if (!$inHeader && (!isset($this->replyHeaders['transfer-encoding']) || !$chunkedTransferRegex->match(end($this->replyHeaders['transfer-encoding'])))) {
-				$length = 1024;
-				if (isset($this->options['maxLength'])) $length = min($length, $this->options['maxLength'] - $bodyLength);
-				if (isset($this->replyHeaders['content-length'])) $length = min($length, end($this->replyHeaders['content-length']) - $bodyLength);
-				
-				$line = $remoteFile->read($length);
-			}
-			else {
-				$line = $remoteFile->gets();
-			}
-			
-			if ($inHeader) {
-				if (rtrim($line) === '') {
-					$inHeader = false;
-					$this->parseReplyHeaders();
-					
-					continue;
-				}
-				$this->replyHeaders[] = $line;
-			}
-			else {
-				if (isset($this->replyHeaders['transfer-encoding']) && $chunkedTransferRegex->match(end($this->replyHeaders['transfer-encoding']))) {
-					// last chunk finished
-					if ($chunkLength === 0) {
-						// read hex data and trash chunk-extension
-						list($hex) = explode(';', $line, 2);
-						$chunkLength = hexdec($hex);
-						
-						// $chunkLength === 0 -> no more data
-						if ($chunkLength === 0) {
-							// clear remaining response
-							while (!$remoteFile->gets(1024));
-							
-							// remove chunked from transfer-encoding
-							$this->replyHeaders['transfer-encoding'] = array_filter(array_map(function ($element) use ($chunkedTransferRegex) {
-								return $chunkedTransferRegex->replace($element, '');
-							}, $this->replyHeaders['transfer-encoding']), 'trim');
-							if (empty($this->replyHeaders['transfer-encoding'])) unset($this->replyHeaders['transfer-encoding']);
-							
-							// break out of main reading loop
-							break;
-						}
-					}
-					else {
-						$this->replyBody .= $line;
-						$chunkLength -= strlen($line);
-						$bodyLength += strlen($line);
-						if ($chunkLength === 0) $remoteFile->read(2); // CRLF
-					}
-				}
-				else {
-					$this->replyBody .= $line;
-					$bodyLength += strlen($line);
-				}
-			}
-		}
-		
-		if (isset($this->options['maxLength'])) $this->replyBody = substr($this->replyBody, 0, $this->options['maxLength']);
-		
-		$remoteFile->close();
-		
-		$this->parseReply();
-	}
-	
-	/**
-	 * Parses the reply headers.
-	 */
-	private function parseReplyHeaders() {
-		$statusLine = array_shift($this->replyHeaders);
-		
-		// get status code
-		$regex = new Regex('^HTTP/1.\d+\s+(\d{3})');
-		if (!$regex->match($statusLine)) throw new HTTPException($this, "Unexpected status '".$statusLine."'");
-		$matches = $regex->getMatches();
-		$this->statusCode = $matches[1];
+		$client = HttpFactory::makeClient($options);
 		
 		$headers = [];
-		$lastKey = '';
-		foreach ($this->replyHeaders as $header) {
-			if (strpos($header, ':') === false) {
-				$headers[trim($header)] = [trim($header)];
-				continue;
-			}
-			
-			// 4.2 Header fields can be
-			// extended over multiple lines by preceding each extra line with at
-			// least one SP or HT.
-			if (ltrim($header, "\t ") !== $header) {
-				$headers[$lastKey][] = array_pop($headers[$lastKey]).' '.trim($header);
-			}
-			else {
-				list($key, $value) = explode(':', $header, 2);
-				
-				$lastKey = $key;
-				if (!isset($headers[$key])) $headers[$key] = [];
-				$headers[$key][] = trim($value);
-			}
-		}
-		// 4.2 Field names are case-insensitive.
-		$this->replyHeaders = array_change_key_case($headers);
-		if (isset($this->replyHeaders['transfer-encoding'])) $this->replyHeaders['transfer-encoding'] = [implode(',', $this->replyHeaders['transfer-encoding'])];
-		$this->legacyHeaders = array_map('end', $headers);
-	}
-	
-	/**
-	 * Parses the reply.
-	 */
-	private function parseReply() {
-		// 4.4 Messages MUST NOT include both a Content-Length header field and a
-		// non-identity transfer-coding. If the message does include a non-
-		// identity transfer-coding, the Content-Length MUST be ignored.
-		if (isset($this->replyHeaders['content-length']) && (!isset($this->replyHeaders['transfer-encoding']) || strtolower(end($this->replyHeaders['transfer-encoding'])) !== 'identity') && !isset($this->options['maxLength'])) {
-			if (strlen($this->replyBody) != end($this->replyHeaders['content-length'])) {
-				throw new HTTPException($this, 'Body length does not match length given in header');
-			}
+		foreach ($this->headers as $name => $values) {
+			$headers[$name] = implode(', ', $values);
 		}
 		
-		// validate status code
-		switch ($this->statusCode) {
-			case '301':
-			case '302':
-			case '303':
-			case '307':
-				// redirect
-				if ($this->options['maxDepth'] <= 0) {
-					throw new HTTPException(
-						$this,
-						"Received status code '".$this->statusCode."' from server, but recursion level is exhausted",
-						$this->statusCode
-					);
-				}
-				
-				$newRequest = clone $this;
-				$newRequest->options['maxDepth']--;
-				
-				// 10.3.4 The response to the request can be found under a different URI and SHOULD
-				// be retrieved using a GET method on that resource.
-				if ($this->statusCode == '303') {
-					$newRequest->options['method'] = 'GET';
-					$newRequest->postParameters = [];
-					$newRequest->addHeader('content-length', '');
-					$newRequest->addHeader('content-type', '');
-				}
-				
-				try {
-					$newRequest->setURL(end($this->replyHeaders['location']));
-				}
-				catch (SystemException $e) {
-					throw new HTTPException(
-						$this,
-						"Received 'Location: ".end($this->replyHeaders['location'])."' from server, which is invalid.",
-						0,
-						$e
-					);
-				}
-				
-				try {
-					$newRequest->execute();
-				}
-				finally {
-					// update data with data from the inner request
-					$this->url = $newRequest->url;
-					$this->statusCode = $newRequest->statusCode;
-					$this->replyHeaders = $newRequest->replyHeaders;
-					$this->legacyHeaders = $newRequest->legacyHeaders;
-					$this->replyBody = $newRequest->replyBody;
-				}
-				
-				return;
-			break;
+		$request = new Request($this->options['method'], $this->url, $headers, $this->body);
+		
+		try {
+			$this->response = $client->send($request, [
+				// https://github.com/guzzle/guzzle/issues/2735
+				'sink' => fopen("php://temp", "w+"),
+			]);
+		}
+		catch (TooManyRedirectsException $e) {
+			throw new HTTPException(
+				$this,
+				"Received status code '".$this->response->getStatusCode()."' from server, but recursion level is exhausted",
+				$this->response->getStatusCode(),
+				$e
+			);
+		}
+		catch (BadResponseException $e) {
+			$this->response = $e->getResponse();
 			
-			case '206':
-				// check, if partial content was expected
-				if (!isset($this->headers['range'])) {
-					throw new HTTPServerErrorException(
-						"Received unexpected status code '206' from server",
-						0,
-						'',
-						new HTTPException(
-							$this, 
-							'Received partial response, without sending a range header', 
-							206
-						)
-					);
-				}
-				else if (!isset($this->replyHeaders['content-range'])) {
-					throw new HTTPServerErrorException(
-						"Content-Range is missing in reply header",
+			switch ($this->response->getStatusCode()) {
+				case '401':
+				case '402':
+				case '403':
+					throw new HTTPUnauthorizedException(
+						"Received status code '".$this->response->getStatusCode()."' from server",
 						0,
 						'',
 						new HTTPException(
 							$this,
-							'Server replied with 206 Partial Content, without sending a Content-Range header', 
-							206
+							"Received status code '".$this->response->getStatusCode()."' from server",
+							(string) $this->response->getStatusCode(),
+							$e
 						)
 					);
-				}
-			break;
-			
-			case '401':
-			case '402':
-			case '403':
-				throw new HTTPUnauthorizedException(
-					"Received status code '".$this->statusCode."' from server",
-					0,
-					'',
-					new HTTPException(
-						$this,
-						"Received status code '".$this->statusCode."' from server",
-						$this->statusCode
-					)
-				);
-			break;
-			
-			case '404':
-				throw new HTTPNotFoundException(
-					"Received status code '404' from server",
-					0,
-					'',
-					new HTTPException(
-						$this,
-						"Received status code '".$this->statusCode."' from server",
-						$this->statusCode
-					)
-				);
-			break;
-			
-			default:
-				// 6.1.1 However, applications MUST
-				// understand the class of any status code, as indicated by the first
-				// digit, and treat any unrecognized response as being equivalent to the
-				// x00 status code of that class, with the exception that an
-				// unrecognized response MUST NOT be cached.
-				switch (substr($this->statusCode, 0, 1)) {
-					case '2': // 200 and unknown 2XX
-					case '3': // 300 and unknown 3XX
-						// we are fine
-					break;
-					case '5': // 500 and unknown 5XX
+				case '404':
+					throw new HTTPNotFoundException(
+						"Received status code '404' from server",
+						0,
+						'',
+						new HTTPException(
+							$this,
+							"Received status code '".$this->response->getStatusCode()."' from server",
+							(string) $this->response->getStatusCode(),
+							$e
+						)
+					);
+				default:
+					if (substr($this->response->getStatusCode(), 0, 1) == '5') {
 						throw new HTTPServerErrorException(
-							"Received status code '".$this->statusCode."' from server",
+							"Received status code '".$this->response->getStatusCode()."' from server",
 							0,
 							'',
 							new HTTPException(
 								$this,
-								"Received status code '".$this->statusCode."' from server",
-								$this->statusCode
+								"Received status code '".$this->response->getStatusCode()."' from server",
+								(string) $this->response->getStatusCode(),
+								$e
 							)
 						);
-					break;
-					default:
-						throw new HTTPException(
-							$this,
-							"Received unhandled status code '".$this->statusCode."' from server",
-							$this->statusCode
-						);
-					break;
-				}
-			break;
+					}
+			}
+		}
+		catch (TransferException $e) {
+			throw new SystemException('Failed to HTTPRequest', 0, '', $e);
 		}
 	}
 	
@@ -595,12 +261,42 @@ final class HTTPRequest {
 	 * @return	array
 	 */
 	public function getReply() {
+		$headers = [];
+		$legacyHeaders = [];
+		
+		foreach ($this->response->getHeaders() as $name => $values) {
+			$headers[strtolower($name)] = $values;
+			$legacyHeaders[$name] = end($values);
+		}
+		
+		if ($this->replyBody === null) {
+			$bodyLength = 0;
+			while (!$this->response->getBody()->eof()) {
+				$toRead = 8192;
+				if (isset($this->options['maxLength'])) {
+					$toRead = min($toRead, $this->options['maxLength'] - $bodyLength);
+				}
+				
+				$data = $this->response->getBody()->read($toRead);
+				$this->replyBody .= $data;
+				$bodyLength += strlen($data);
+				
+				if (isset($this->options['maxLength']) && $bodyLength >= $this->options['maxLength']) {
+					$this->response->getBody()->close();
+					break;
+				}
+			}
+			if (isset($this->options['maxLength'])) {
+				$this->replyBody = substr($this->replyBody, 0, $this->options['maxLength']);
+			}
+		}
+		
 		return [
-			'statusCode' => $this->statusCode, 
-			'headers' => $this->legacyHeaders,
-			'httpHeaders' => $this->replyHeaders,
+			'statusCode' => (string) $this->response->getStatusCode(), 
+			'headers' => $legacyHeaders,
+			'httpHeaders' => $headers,
 			'body' => $this->replyBody,
-			'url' => $this->url
+			'url' => $this->url,
 		];
 	}
 	
@@ -665,8 +361,6 @@ final class HTTPRequest {
 	 * Resets reply data when cloning.
 	 */
 	private function __clone() {
-		$this->replyHeaders = [];
-		$this->replyBody = '';
-		$this->statusCode = 0;
+		$this->response = null;
 	}
 }

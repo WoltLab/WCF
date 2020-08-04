@@ -2,7 +2,9 @@
 namespace wcf\data\object\type;
 use wcf\data\IToggleAction;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\registry\RegistryHandler;
 use wcf\system\WCF;
+use wcf\system\worker\SitemapRebuildWorker;
 
 /**
  * Executes sitemap object type-related actions.
@@ -33,9 +35,22 @@ class SitemapObjectTypeAction extends ObjectTypeAction implements IToggleAction 
 	 */
 	public function toggle() {
 		foreach ($this->getObjects() as $objectEditor) {
-			$objectEditor->update([
-				'additionalData' => serialize(array_merge($objectEditor->additionalData, ['isDisabled' => !$objectEditor->isDisabled ? 1 : 0]))
-			]);
+			$sitemapData = RegistryHandler::getInstance()->get('com.woltlab.wcf', SitemapRebuildWorker::REGISTRY_PREFIX . $objectEditor->objectType);
+			$sitemapData = @unserialize($sitemapData);
+			
+			if (is_array($sitemapData)) {
+				$sitemapData['isDisabled'] = $sitemapData['isDisabled'] ? 0 : 1;
+			}
+			else {
+				$sitemapData = [
+					'priority' => $objectEditor->priority,
+					'changeFreq' => $objectEditor->changeFreq,
+					'rebuildTime' => $objectEditor->rebuildTime,
+					'isDisabled' => $objectEditor->isDisabled ? 0 : 1,
+				];
+			}
+			
+			RegistryHandler::getInstance()->set('com.woltlab.wcf', SitemapRebuildWorker::REGISTRY_PREFIX . $objectEditor->objectType, serialize($sitemapData));
 		}
 	}
 	

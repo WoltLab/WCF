@@ -7,6 +7,8 @@ use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\file\upload\UploadFile;
+use wcf\system\file\upload\UploadHandler;
 use wcf\system\language\I18nHandler;
 use wcf\system\style\StyleCompiler;
 use wcf\system\WCF;
@@ -129,6 +131,19 @@ class StyleEditForm extends StyleAddForm {
 			$this->variables['overrideScss'] = $tmp['preset'];
 			$this->variables['overrideScssCustom'] = $tmp['custom'];
 		}
+		
+		if ($this->variables['pageLogo']) {
+			$file = new UploadFile($this->style->getAssetPath().$this->variables['pageLogo'], basename($this->variables['pageLogo']), true, true, true);
+			UploadHandler::getInstance()->registerFilesByField('pageLogo', [
+				$file,
+			]);
+		}
+		if ($this->variables['pageLogoMobile']) {
+			$file = new UploadFile($this->style->getAssetPath().$this->variables['pageLogoMobile'], basename($this->variables['pageLogoMobile']), true, true, true);
+			UploadHandler::getInstance()->registerFilesByField('pageLogoMobile', [
+				$file,
+			]);
+		}
 	}
 	
 	/**
@@ -156,7 +171,6 @@ class StyleEditForm extends StyleAddForm {
 			$this->authorName = $this->style->authorName;
 			$this->authorURL = $this->style->authorURL;
 			$this->copyright = $this->style->copyright;
-			$this->imagePath = $this->style->imagePath;
 			$this->isTainted = $this->style->isTainted;
 			$this->license = $this->style->license;
 			$this->packageName = $this->style->packageName;
@@ -165,6 +179,37 @@ class StyleEditForm extends StyleAddForm {
 			$this->styleName = $this->style->styleName;
 			$this->styleVersion = $this->style->styleVersion;
 			$this->templateGroupID = $this->style->templateGroupID;
+			if ($this->style->image) {
+				$file = new UploadFile(WCF_DIR.'images/'.$this->style->image, $this->style->image, true, true, false);
+				UploadHandler::getInstance()->registerFilesByField('image', [
+					$file,
+				]);
+			}
+			if ($this->style->image2x) {
+				$file = new UploadFile(WCF_DIR.'images/'.$this->style->image2x, $this->style->image2x, true, true, false);
+				UploadHandler::getInstance()->registerFilesByField('image2x', [
+					$file,
+				]);
+			}
+			if ($this->style->coverPhotoExtension) {
+				$file = new UploadFile($this->style->getCoverPhotoLocation(), $this->style->getCoverPhoto(), true, true, false);
+				UploadHandler::getInstance()->registerFilesByField('coverPhoto', [
+					$file,
+				]);
+			}
+			if ($this->style->hasFavicon) {
+				foreach (['png', 'jpg', 'gif'] as $extension) {
+					$filename = "favicon.template.".$extension;
+					if (file_exists($this->style->getAssetPath().$filename)) {
+						$file = new UploadFile($this->style->getAssetPath().$filename, $filename, true, true, false);
+						UploadHandler::getInstance()->registerFilesByField('favicon', [
+							$file,
+						]);
+						break;
+					}
+				}
+				
+			}
 		}
 	}
 	
@@ -191,7 +236,6 @@ class StyleEditForm extends StyleAddForm {
 				'templateGroupID' => $this->templateGroupID,
 				'styleVersion' => $this->styleVersion,
 				'styleDate' => $this->styleDate,
-				'imagePath' => $this->imagePath,
 				'copyright' => $this->copyright,
 				'packageName' => $this->packageName,
 				'license' => $this->license,
@@ -199,6 +243,7 @@ class StyleEditForm extends StyleAddForm {
 				'authorURL' => $this->authorURL,
 				'apiVersion' => $this->apiVersion
 			]),
+			'uploads' => $this->uploads,
 			'tmpHash' => $this->tmpHash,
 			'variables' => $this->variables
 		]);
@@ -239,8 +284,6 @@ class StyleEditForm extends StyleAddForm {
 			'isTainted' => $this->style->isTainted,
 			'style' => $this->style,
 			'styleID' => $this->styleID,
-			'coverPhotoMinHeight' => UserCoverPhoto::MIN_HEIGHT,
-			'coverPhotoMinWidth' => UserCoverPhoto::MIN_WIDTH
 		]);
 	}
 }

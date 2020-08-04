@@ -1,12 +1,13 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\object\type\ObjectType;
-use wcf\data\object\type\ObjectTypeAction;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
+use wcf\system\registry\RegistryHandler;
 use wcf\system\WCF;
+use wcf\system\worker\SitemapRebuildWorker;
 
 /**
  * Shows the sitemap edit form.
@@ -105,10 +106,21 @@ class SitemapEditForm extends AbstractForm {
 		parent::readData();
 		
 		if (empty($_POST)) {
-			if ($this->objectType->priority !== null) $this->priority = $this->objectType->priority; 
-			if ($this->objectType->changeFreq !== null) $this->changeFreq = $this->objectType->changeFreq; 
-			if ($this->objectType->rebuildTime !== null) $this->rebuildTime = $this->objectType->rebuildTime; 
-			if ($this->objectType->isDisabled !== null) $this->isDisabled = $this->objectType->isDisabled;
+			$sitemapData = RegistryHandler::getInstance()->get('com.woltlab.wcf', SitemapRebuildWorker::REGISTRY_PREFIX . $this->objectTypeName);
+			$sitemapData = @unserialize($sitemapData);
+			
+			if (is_array($sitemapData)) {
+				$this->priority = $sitemapData['priority'];
+				$this->changeFreq = $sitemapData['changeFreq'];
+				$this->rebuildTime = $sitemapData['rebuildTime'];
+				$this->isDisabled = $sitemapData['isDisabled'];
+			}
+			else {
+				if ($this->objectType->priority !== null) $this->priority = $this->objectType->priority;
+				if ($this->objectType->changeFreq !== null) $this->changeFreq = $this->objectType->changeFreq;
+				if ($this->objectType->rebuildTime !== null) $this->rebuildTime = $this->objectType->rebuildTime;
+				if ($this->objectType->isDisabled !== null) $this->isDisabled = $this->objectType->isDisabled;
+			}
 		}
 	}
 	
@@ -145,19 +157,12 @@ class SitemapEditForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$data = array_merge($this->objectType->additionalData, [
+		RegistryHandler::getInstance()->set('com.woltlab.wcf', SitemapRebuildWorker::REGISTRY_PREFIX . $this->objectTypeName, serialize([
 			'priority' => $this->priority,
 			'changeFreq' => $this->changeFreq,
 			'rebuildTime' => $this->rebuildTime,
-			'isDisabled' => $this->isDisabled
-		]);
-		
-		$this->objectAction = new ObjectTypeAction([$this->objectType], 'update', [
-			'data' => [
-				'additionalData' => serialize($data)
-			]
-		]);
-		$this->objectAction->executeAction();
+			'isDisabled' => $this->isDisabled,
+		]));
 		
 		$this->saved();
 		

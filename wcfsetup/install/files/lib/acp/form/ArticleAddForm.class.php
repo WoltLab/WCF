@@ -478,6 +478,16 @@ class ArticleAddForm extends AbstractForm {
 		if (empty($_POST)) {
 			$this->setDefaultValues();
 		}
+		
+		// init tags
+		if (!$this->isMultilingual) {
+			if (!isset($this->tags[0])) $this->tags[0] = [];
+		}
+		else {
+			foreach ($this->availableLanguages as $language) {
+				if (!isset($this->tags[$language->languageID])) $this->tags[$language->languageID] = [];
+			}
+		}
 	}
 	
 	/**

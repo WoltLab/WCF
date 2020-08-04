@@ -390,6 +390,36 @@ class StyleCompiler extends SingletonFactory {
 			$content .= $this->prepareFile($mixin);
 		}
 		
+		if (ApplicationHandler::getInstance()->isMultiDomainSetup()) {
+			$content .= <<<'EOT'
+				@function getFont($filename, $family: "/", $version: "") {
+					@return "../font/getFont.php?family=" + $family + "&filename=" + $filename + "&v=" + $version;
+				}
+EOT;
+		}
+		else {
+			$content .= <<<'EOT'
+				@function getFont($filename, $family: "/", $version: "") {
+					@if ($family != "") {
+						$family: "families/" + $family + "/";
+					}
+					@if ($version != "") {
+						$version: "?v=" + $version;
+					}
+					
+					@return "../font/" + $family + $filename + $version;
+				}
+EOT;
+		}
+		
+		// add google fonts
+		if (!empty($variables['wcfFontFamilyGoogle']) && PACKAGE_ID) {
+			$cssFile = FontManager::getInstance()->getCssFilename(substr($variables['wcfFontFamilyGoogle'], 1, -1));
+			if (is_readable($cssFile)) {
+				$content .= file_get_contents($cssFile);
+			}
+		}
+		
 		return $content;
 	}
 	

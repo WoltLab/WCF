@@ -5,8 +5,12 @@
 				<h3><a href="{$boxComment->getLink()}">{$boxComment->title}</a></h3>
 			</div>
 			
-			<p><small>{@$boxComment->getExcerpt(50)}</small></p>
-			<p><small>{if $boxComment->userID}{user object=$boxComment->getUserProfile()}{else}{$boxComment->username}{/if} <span class="separatorLeft">{@$boxComment->time|time}</span></small></p>
+			<div class="sidebarCommentContent">
+				<small>{@$boxComment->getExcerpt(50)}</small>
+			</div>
+			<div>
+				<small>{if $boxComment->userID}{user object=$boxComment->getUserProfile()}{else}{$boxComment->username}{/if} <span class="separatorLeft">{@$boxComment->time|time}</span></small>
+			</div>
 		</li>
 	{/foreach}
 </ul>

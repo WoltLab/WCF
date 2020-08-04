@@ -38,10 +38,10 @@ interface IImageAdapter {
 	 * 
 	 * @param	integer		$maxWidth
 	 * @param	integer		$maxHeight
-	 * @param	boolean		$obtainDimensions
+	 * @param	boolean		$preserveAspectRatio
 	 * @return	mixed
 	 */
-	public function createThumbnail($maxWidth, $maxHeight, $obtainDimensions = true);
+	public function createThumbnail($maxWidth, $maxHeight, $preserveAspectRatio = true);
 	
 	/**
 	 * Clips a part of currently loaded image, overwrites image resource within instance.

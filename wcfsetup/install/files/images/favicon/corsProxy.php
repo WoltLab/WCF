@@ -17,7 +17,12 @@ if (!empty($_GET['type']) || !isset($types[$_GET['type']])) {
 	$type = $_GET['type'];
 	$styleID = (!empty($_GET['styleID'])) ? intval($_GET['styleID']) : 'default';
 	if ($styleID === 'default' || $styleID > 0) {
-		$filename = $styleID . '.' . $types[$type]['filename'];
+		if ($styleID === 'default') {
+			$filename = 'default.' . $types[$type]['filename'];
+		}
+		else {
+			$filename = '../style-'.$styleID.'/'.$types[$type]['filename'];
+		}
 		if (file_exists($filename)) {
 			$filemtime = filemtime($filename);
 			
@@ -33,6 +38,10 @@ if (!empty($_GET['type']) || !isset($types[$_GET['type']])) {
 			}
 			
 			$data = file_get_contents($filename);
+			
+			if ($styleID !== 'default') {
+				$data = str_replace('src": "', 'src": "../style-'.$styleID."/", $data);
+			}
 			
 			// send cache and type headers
 			// allow font fetching from all domains (CORS)

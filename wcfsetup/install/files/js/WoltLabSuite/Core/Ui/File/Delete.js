@@ -146,6 +146,7 @@ define(['Ajax', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Dom/Trave
 			}
 			
 			this._uploadHandler.checkMaxFiles();
+			Core.triggerEvent(this._target, 'change');
 		},
 		
 		_ajaxSetup: function () {

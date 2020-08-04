@@ -589,7 +589,7 @@ define(
 					// causing it to pop out from below and immediately vanish.
 					// 
 					// iOS will only show the keyboard if an input element is focused *and* the
-					// focus is an immediate result of an user interaction. This method must be
+					// focus is an immediate result of a user interaction. This method must be
 					// assumed to be called from within a click event, but we want to set the
 					// focus without triggering the keyboard.
 					// 

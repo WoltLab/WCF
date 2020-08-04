@@ -124,12 +124,12 @@ class GDImageAdapter implements IImageAdapter {
 	/**
 	 * @inheritDoc
 	 */
-	public function createThumbnail($maxWidth, $maxHeight, $obtainDimensions = true) {
+	public function createThumbnail($maxWidth, $maxHeight, $preserveAspectRatio = true) {
 		$x = $y = 0;
 		$sourceWidth = $this->width;
 		$sourceHeight = $this->height;
 		
-		if ($obtainDimensions) {
+		if ($preserveAspectRatio) {
 			if ($maxWidth / $this->width < $maxHeight / $this->height) {
 				$width = $maxWidth;
 				$height = round($this->height * ($width / $this->width));

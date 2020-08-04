@@ -2877,8 +2877,10 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.globals.fontSizeHeadline"><![CDATA[Font Size (Headline)]]></item>
 		<item name="wcf.acp.style.globals.fontSizeSection"><![CDATA[Font Size (Section)]]></item>
 		<item name="wcf.acp.style.globals.fontSizeTitle"><![CDATA[Font Size (Page Title)]]></item>
-		<item name="wcf.acp.style.globals.useGoogleFont"><![CDATA[Use Google font face]]></item>
 		<item name="wcf.acp.style.globals.fontFamilyGoogle"><![CDATA[Font Face]]></item>
+		<item name="wcf.acp.style.globals.fontFamilyGoogle.description"><![CDATA[The selected font face will be downloaded when saving the style and afterwards will be delivered as a web font to your users without connecting to external services.]]></item>
+		<item name="wcf.acp.style.globals.fontFamilyGoogle.error.downloadFailed"><![CDATA[Downloading the given font face failed.]]></item>
+		<item name="wcf.acp.style.globals.fontFamilyGoogle.error.downloadFailed.notFound"><![CDATA[The given font face could not be found.]]></item>
 		<item name="wcf.acp.style.globals.fontFamilyFallback"><![CDATA[Font Face (Fallback)]]></item>
 		<item name="wcf.acp.style.favicon"><![CDATA[Individual Favicon]]></item>
 		<item name="wcf.acp.style.favicon.description"><![CDATA[Upload an 256×256 pixels image, acceptable image types are JPG and PNG. The uploaded image will be used to derive all required favicon sizes.]]></item>

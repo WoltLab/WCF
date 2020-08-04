@@ -70,7 +70,7 @@ class ImageAdapter implements IImageAdapter {
 	/**
 	 * @inheritDoc
 	 */
-	public function createThumbnail($maxWidth, $maxHeight, $obtainDimensions = true) {
+	public function createThumbnail($maxWidth, $maxHeight, $preserveAspectRatio = true) {
 		if ($maxWidth > $this->getWidth() && $maxHeight > $this->getHeight()) {
 			throw new SystemException("Dimensions for thumbnail can not exceed image dimensions.");
 		}
@@ -78,7 +78,7 @@ class ImageAdapter implements IImageAdapter {
 		$maxHeight = min($maxHeight, $this->getHeight());
 		$maxWidth = min($maxWidth, $this->getWidth());
 		
-		return $this->adapter->createThumbnail($maxWidth, $maxHeight, $obtainDimensions);
+		return $this->adapter->createThumbnail($maxWidth, $maxHeight, $preserveAspectRatio);
 	}
 	
 	/**
