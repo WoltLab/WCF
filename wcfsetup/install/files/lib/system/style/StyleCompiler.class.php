@@ -98,10 +98,11 @@ class StyleCompiler extends SingletonFactory {
 	 * @param       string          $apiVersion
 	 * @param       string          $imagePath
 	 * @param       string[]        $variables
+	 * @param       string|null     $customCustomSCSSFile
 	 * @return      bool|string
 	 * @since       5.3           
 	 */
-	public function testStyle($apiVersion, $imagePath, array $variables) {
+	public function testStyle($apiVersion, $imagePath, array $variables, $customCustomSCSSFile = null) {
 		$individualScss = '';
 		if (isset($variables['individualScss'])) {
 			$individualScss = $variables['individualScss'];
@@ -135,9 +136,19 @@ class StyleCompiler extends SingletonFactory {
 		$parameters = ['scss' => ''];
 		EventHandler::getInstance()->fireAction($this, 'compile', $parameters);
 		
+		$files = $this->getFiles();
+		
+		if ($customCustomSCSSFile !== null) {
+			if (($customSCSSFileKey = array_search(WCF_DIR . self::FILE_GLOBAL_VALUES, $files)) !== false) {
+				unset($files[$customSCSSFileKey]);
+			}
+			
+			$files[] = $customCustomSCSSFile;
+		}
+		
 		try {
 			$this->compileStylesheetToString(
-				$this->getFiles(),
+				$files,
 				$variables,
 				$individualScss . (!empty($parameters['scss']) ? "\n" . $parameters['scss'] : ''),
 				function($content) {

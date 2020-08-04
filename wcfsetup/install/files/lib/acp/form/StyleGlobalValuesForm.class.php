@@ -1,10 +1,12 @@
 <?php
 namespace wcf\acp\form;
 use wcf\form\AbstractForm;
+use wcf\system\exception\UserInputException;
 use wcf\system\registry\RegistryHandler;
 use wcf\system\style\StyleCompiler;
 use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -56,6 +58,33 @@ class StyleGlobalValuesForm extends AbstractForm {
 		if (empty($_POST)) {
 			$this->styles = (string)RegistryHandler::getInstance()->get('com.woltlab.wcf', StyleCompiler::REGISTRY_GLOBAL_VALUES);
 		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validate() {
+		parent::validate();
+		
+		$tmpFile = FileUtil::getTemporaryFilename('styleGlobalValues_', '.scss');
+		file_put_contents($tmpFile, $this->styles);
+		
+		try {
+			// Due to performance issues we can only compile the default style and check, 
+			// whether there are syntax issues. 
+			$defaultStyle = StyleHandler::getInstance()->getDefaultStyle();
+			$errorMessage = StyleCompiler::getInstance()->testStyle($defaultStyle->apiVersion, $defaultStyle->imagePath, $defaultStyle->getVariables(), $tmpFile);
+			
+			if ($errorMessage !== true) {
+				throw new UserInputException('styles', [
+					'message' => $errorMessage,
+				]);
+			}
+		}
+		finally {
+			unlink($tmpFile);
+		}
+		
 	}
 	
 	/**

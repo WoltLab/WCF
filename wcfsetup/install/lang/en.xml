@@ -2833,6 +2833,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.globalValues"><![CDATA[Global CSS and SCSS]]></item>
 		<item name="wcf.acp.style.globalValues.description"><![CDATA[The CSS and SCSS entered below is applied to all styles, but custom values in styles take precedence.]]></item>
 		<item name="wcf.acp.style.globalValues.input"><![CDATA[Individual CSS and SCSS]]></item>
+		<item name="wcf.acp.style.globalValues.input.error"><![CDATA[The SCSS code is invalid: {$errorType.message}.]]></item>
 		<item name="wcf.acp.style.image"><![CDATA[Preview Image]]></item>
 		<item name="wcf.acp.style.image.description"><![CDATA[Upload a preview image for this style, acceptable image types are JPG and PNG. Dimensions should be 102×64 pixels, exceeding images will be scaled.]]></item>
 		<item name="wcf.acp.style.image2x"><![CDATA[Preview Image (HD)]]></item>

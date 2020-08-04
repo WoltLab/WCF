@@ -22,7 +22,7 @@
 {/if}
 
 <form method="post" action="{link controller='StyleGlobalValues'}{/link}">
-	<div class="section">
+	<div class="section"{if $errorField == 'styles'} formError{/if}>
 		<dl>
 			<dt>{lang}wcf.acp.style.globalValues.input{/lang}</dt>
 			<dd>
@@ -31,6 +31,11 @@
 					<input class="codeMirrorScrollOffset" name="stylesScrollOffset" value="{$stylesScrollOffset}" type="hidden">
 				</div>
 			</dd>
+			{if $errorField == 'styles'}
+				<small class="innerError">
+					{lang}wcf.acp.style.globalValues.input.error{/lang}
+				</small>
+			{/if}
 		</dl>
 		{include file='codemirror' codemirrorMode='text/x-less' codemirrorSelector='#styles'}
 	</div>
