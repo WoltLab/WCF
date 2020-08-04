@@ -79,9 +79,7 @@ class StyleCompiler extends SingletonFactory {
 			ORDER BY	variable.variableID ASC";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		while ($row = $statement->fetchArray()) {
-			$variables[$row['variableName']] = $row['defaultValue'];
-		}
+		$variables = $statement->fetchMap('variableName', 'defaultValue');
 		
 		// see https://github.com/WoltLab/WCF/issues/2636
 		if (empty($variables['wcfPageThemeColor'])) {
