@@ -465,7 +465,7 @@ class StyleAddForm extends AbstractForm {
 	public function validateIndividualScss() {
 		$variables = array_merge(StyleCompiler::getDefaultVariables(), $this->variables);
 		
-		$result = StyleCompiler::getInstance()->testStyle($this->apiVersion, $this->imagePath, $variables);
+		$result = StyleCompiler::getInstance()->testStyle($this->apiVersion, false, $variables);
 		
 		if ($result !== true) {
 			throw new UserInputException('individualScss', [

@@ -78,7 +78,7 @@ class StyleEditForm extends StyleAddForm {
 		
 		$variables = array_merge(StyleCompiler::getDefaultVariables(), $variables);
 		
-		$result = StyleCompiler::getInstance()->testStyle($this->apiVersion, $this->imagePath, $variables);
+		$result = StyleCompiler::getInstance()->testStyle($this->apiVersion, $this->style->imagePath, $variables);
 		
 		if ($result !== true) {
 			throw new UserInputException('individualScss', [
