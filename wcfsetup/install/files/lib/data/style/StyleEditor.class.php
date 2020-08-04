@@ -512,6 +512,13 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			}
 		}
 		
+		$duplicateLogo = false;
+		// duplicate logo if logo matches mobile logo
+		if (!empty($styleData['variables']['pageLogo']) && !empty($styleData['variables']['pageLogoMobile']) && $styleData['variables']['pageLogo'] == $styleData['variables']['pageLogoMobile']) {
+			$styleData['variables']['pageLogoMobile'] = 'm-'.basename($styleData['variables']['pageLogo']);
+			$duplicateLogo = true;
+		}
+		
 		// save style
 		if ($style === null) {
 			$styleData['packageID'] = $packageID;
@@ -582,6 +589,11 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 						$targetFile = FileUtil::getRealPath($style->getAssetPath().$path);
 						if (strpos(FileUtil::getRelativePath($style->getAssetPath(), $targetFile), '../') !== false) {
 							continue;
+						}
+						
+						// duplicate pageLogo for mobile version
+						if ($duplicateLogo && $val['filename'] == $styleData['variables']['pageLogo']) {
+							$imagesTar->extract($key, $style->getAssetPath().'m-'.basename($targetFile));
 						}
 						
 						$imagesTar->extract($key, $targetFile);
