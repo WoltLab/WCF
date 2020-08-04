@@ -175,6 +175,11 @@ if (COMPILER_TARGET_DEFAULT) {
 		 _callbackFocus: null,
 		
 		/**
+		 * @var {string}
+		 */
+		_callbackCloseUuid: '',
+		
+		/**
 		 * @var        boolean
 		 */
 		_wasInsideDropdown: false,
@@ -193,6 +198,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			this._triggerElement = triggerElement;
 			this._options = options;
 			this._callbackFocus = null;
+			this._callbackCloseUuid = '';
 			
 			this._proxy = new WCF.Action.Proxy({
 				showLoadingOverlay: false,
@@ -259,10 +265,19 @@ if (COMPILER_TARGET_DEFAULT) {
 					this._callbackFocus = this._maintainFocus.bind(this);
 				}
 				document.body.addEventListener('focus', this._callbackFocus, { capture: true });
+				
+				this._callbackCloseUuid = WCF.System.Event.addListener('WCF.Dropdown.Interactive.Instance', 'close', (function (data) {
+					if (data.instance === this._dropdown) {
+						WCF.System.Event.removeListener('WCF.Dropdown.Interactive.Instance', 'close', this._callbackCloseUuid);
+						document.body.removeEventListener('focus', this._callbackFocus, { capture: true });
+					}
+				}).bind(this));
 			}
 			else {
 				elAttr(this._button, 'aria-expanded', false);
-				document.body.removeEventListener('focus', this._callbackFocus);
+				
+				WCF.System.Event.removeListener('WCF.Dropdown.Interactive.Instance', 'close', this._callbackCloseUuid);
+				document.body.removeEventListener('focus', this._callbackFocus, { capture: true });
 			}
 			
 			return false;

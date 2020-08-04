@@ -1203,6 +1203,10 @@ if (COMPILER_TARGET_DEFAULT) {
 		close: function () {
 			this._triggerElement.removeClass('open');
 			this._container.removeClass('open');
+			
+			WCF.System.Event.fireEvent('WCF.Dropdown.Interactive.Instance', 'close', {
+				instance: this
+			});
 		},
 		
 		/**

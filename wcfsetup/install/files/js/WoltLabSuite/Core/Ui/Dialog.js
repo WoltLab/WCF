@@ -511,6 +511,10 @@ define(
 			}
 			
 			if (elAttr(data.dialog, 'aria-hidden') === 'true') {
+				// close existing dropdowns
+				UiSimpleDropdown.closeAll();
+				window.WCF.Dropdown.Interactive.Handler.closeAll();
+				
 				if (_callbackFocus === null) {
 					_callbackFocus = this._maintainFocus.bind(this);
 					document.body.addEventListener('focus', _callbackFocus, { capture: true });
@@ -544,10 +548,6 @@ define(
 						id: id
 					});
 				}
-				
-				// close existing dropdowns
-				UiSimpleDropdown.closeAll();
-				window.WCF.Dropdown.Interactive.Handler.closeAll();
 			}
 			
 			this.rebuild(id);
