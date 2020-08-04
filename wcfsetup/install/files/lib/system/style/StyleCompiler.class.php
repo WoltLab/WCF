@@ -154,7 +154,7 @@ class StyleCompiler extends SingletonFactory {
 				}
 			);
 		}
-		catch (SystemException $e) {
+		catch (\Exception $e) {
 			return $e->getMessage();
 		}
 		
