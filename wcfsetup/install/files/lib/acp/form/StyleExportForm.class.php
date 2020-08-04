@@ -39,12 +39,6 @@ class StyleExportForm extends AbstractForm {
 	public $exportAsPackage = false;
 	
 	/**
-	 * true, if images should be exported
-	 * @var	boolean
-	 */
-	public $exportImages = false;
-	
-	/**
 	 * true, if templates should be exported
 	 * @var	boolean
 	 */
@@ -79,7 +73,6 @@ class StyleExportForm extends AbstractForm {
 			throw new IllegalLinkException();
 		}
 		
-		if ($this->style->imagePath && $this->style->imagePath != 'images/') $this->canExportImages = true;
 		if ($this->style->templateGroupID) $this->canExportTemplates = true;
 	}
 	
@@ -89,7 +82,6 @@ class StyleExportForm extends AbstractForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if ($this->canExportImages && isset($_POST['exportImages'])) $this->exportImages = true;
 		if ($this->canExportTemplates && isset($_POST['exportTemplates'])) $this->exportTemplates = true;
 		
 		if ($this->style->packageName && isset($_POST['exportAsPackage'])) {
@@ -118,7 +110,7 @@ class StyleExportForm extends AbstractForm {
 		
 		// export style
 		$styleEditor = new StyleEditor($this->style);
-		$styleEditor->export($this->exportTemplates, $this->exportImages, ($this->exportAsPackage ? $this->style->packageName : ''));
+		$styleEditor->export($this->exportTemplates, true, ($this->exportAsPackage ? $this->style->packageName : ''));
 		
 		// call saved event
 		$this->saved();
@@ -133,10 +125,8 @@ class StyleExportForm extends AbstractForm {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign([
-			'canExportImages' => $this->canExportImages,
 			'canExportTemplates' => $this->canExportTemplates,
 			'exportAsPackage' => $this->exportAsPackage,
-			'exportImages' => $this->exportImages,
 			'exportTemplates' => $this->exportTemplates,
 			'style' => $this->style,
 			'styleID' => $this->styleID

@@ -117,14 +117,14 @@ class ImagickImageAdapter implements IImageAdapter {
 	/**
 	 * @inheritDoc
 	 */
-	public function createThumbnail($maxWidth, $maxHeight, $obtainDimensions = true) {
+	public function createThumbnail($maxWidth, $maxHeight, $preserveAspectRatio = true) {
 		$thumbnail = clone $this->imagick;
 		
 		if ($thumbnail->getImageFormat() == 'GIF') {
 			$thumbnail = $thumbnail->coalesceImages();
 			
 			do {
-				if ($obtainDimensions) {
+				if ($preserveAspectRatio) {
 					$thumbnail->thumbnailImage($maxWidth, $maxHeight, true);
 					$thumbnail->setImagePage(0, 0, 0, 0);
 				}
@@ -135,7 +135,7 @@ class ImagickImageAdapter implements IImageAdapter {
 			}
 			while ($thumbnail->nextImage());
 		}
-		else if ($obtainDimensions) {
+		else if ($preserveAspectRatio) {
 			$thumbnail->thumbnailImage($maxWidth, $maxHeight, true);
 		}
 		else {

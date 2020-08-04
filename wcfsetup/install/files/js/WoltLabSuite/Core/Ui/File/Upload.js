@@ -186,6 +186,7 @@ define(['Core', 'Language', 'Dom/Util', 'WoltLabSuite/Core/Ui/File/Delete', 'Upl
 			// create delete buttons
 			this._deleteHandler.rebuild();
 			this.checkMaxFiles();
+			Core.triggerEvent(this._target, 'change');
 		},
 		
 		_getFormData: function() {
