@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\upload;
 use wcf\data\user\cover\photo\UserCoverPhoto;
+use wcf\system\image\ImageHandler;
 use wcf\system\WCF;
 use wcf\util\ExifUtil;
-use wcf\util\FileUtil;
 
 /**
  * Upload file validation strategy implementation for user cover photos.
@@ -59,7 +59,7 @@ class UserCoverPhotoUploadFileValidationStrategy implements IUploadFileValidatio
 		// estimate if there is enough memory for a resize, if there is,
 		// we do not need to mark an image which is too high or too wide
 		// as invalid
-		$sufficientMemory = FileUtil::checkMemoryLimit($width * $height * ($uploadFile->getFileExtension() == 'png' ? 4 : 3) * 2.1);
+		$sufficientMemory = ImageHandler::getInstance()->getAdapter()->checkMemoryLimit($width, $height, $imageData['mimeType']);
 		
 		// check width
 		if ($width < UserCoverPhoto::MIN_WIDTH) {
