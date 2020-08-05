@@ -225,8 +225,13 @@ class UserOnline extends UserProfile {
 		}
 		
 		// edge
-		if (preg_match('~edge/(\d{2}\.\d+)~i', $this->userAgent, $match)) {
+		if (preg_match('~edge?/([\d\.]+)~i', $this->userAgent, $match)) {
 			return 'Microsoft Edge '.$match[1];
+		}
+		
+		// edge mobile
+		if (preg_match('~edga/([\d\.]+)~i', $this->userAgent, $match)) {
+			return 'Microsoft Edge Mobile '.$match[1];
 		}
 		
 		// vivaldi
@@ -264,11 +269,6 @@ class UserOnline extends UserProfile {
 			return 'Chrome Mobile '.(isset($match[2]) ? $match[2] : $match[1]);
 		}
 		
-		// chrome
-		if (preg_match('~(?:chromium|chrome)/([\d\.]+)~i', $this->userAgent, $match)) {
-			return 'Chrome '.$match[1];
-		}
-		
 		// kindle
 		if (preg_match('~kindle/([\d\.]+)~i', $this->userAgent, $match)) {
 			return 'Kindle '.$match[1];
@@ -287,6 +287,11 @@ class UserOnline extends UserProfile {
 		// safari mobile
 		if (preg_match('~([\d\.]+) Mobile/\w+ safari~i', $this->userAgent, $match)) {
 			return 'Safari Mobile '.$match[1];
+		}
+		
+		// chrome
+		if (preg_match('~(?:chromium|chrome)/([\d\.]+)~i', $this->userAgent, $match)) {
+			return 'Chrome '.$match[1];
 		}
 		
 		// safari
