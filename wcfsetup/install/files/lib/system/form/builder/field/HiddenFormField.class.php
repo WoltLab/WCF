@@ -14,6 +14,11 @@ class HiddenFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Value';
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected $templateName = '__hiddenFormField';
 	
 	/**
