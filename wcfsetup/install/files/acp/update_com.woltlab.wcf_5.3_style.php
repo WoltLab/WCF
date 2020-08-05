@@ -55,7 +55,7 @@ foreach ($styleList as $style) {
 		}
 	}
 	$styleEditor->update([
-		'imagePath' => 'images/style-' . $style->styleID . '/',
+		'imagePath' => FileUtil::unifyDirSeparator(FileUtil::getRelativePath(WCF_DIR, $style->getAssetPath())),
 	]);
 	
 	// 4) Copy style previews into the asset folder.
