@@ -346,7 +346,9 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 				$articleContentIDs[] = $articleContent->articleContentID;
 			}
 			
-			$usersToArticles[$article->userID] = ($usersToArticles[$article->userID] ?? 0) - 1;
+			if ($article->publicationStatus == Article::PUBLISHED) {
+				$usersToArticles[$article->userID] = ($usersToArticles[$article->userID] ?? 0) - 1;
+			}
 		}
 		
 		// delete articles
