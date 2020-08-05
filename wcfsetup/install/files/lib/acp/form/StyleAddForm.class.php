@@ -206,10 +206,16 @@ class StyleAddForm extends AbstractForm {
 	public $scrollOffsets = [];
 	
 	/**
-	 * @var mixed[]
+	 * @var (null|UploadFile)[]
 	 * @since 5.3
 	 */
 	public $uploads = [];
+	
+	/**
+	 * @var UploadFile[]
+	 * @since 5.3
+	 */
+	public $customAssets = [];
 	
 	/**
 	 * @inheritDoc
@@ -297,6 +303,13 @@ class StyleAddForm extends AbstractForm {
 			$field->maxFiles = 1;
 			$handler->registerUploadField($field);
 		}
+		
+		// This field is special cased, because it may contain arbitrary data.
+		$field = new UploadField('customAssets');
+		$field->setImageOnly(true);
+		$field->setAllowSvgImage(true);
+		$field->maxFiles = null;
+		$handler->registerUploadField($field);
 	}
 	
 	/**
@@ -372,6 +385,12 @@ class StyleAddForm extends AbstractForm {
 				$this->uploads[$field] = $files[0];
 			}
 		}
+		
+		$this->customAssets = [
+			'removed' => UploadHandler::getInstance()->getRemovedFiledByFieldId('customAssets'),
+			'added' => UploadHandler::getInstance()->getFilesByFieldId('customAssets'),
+		];
+		
 	}
 	
 	/**
@@ -754,8 +773,9 @@ class StyleAddForm extends AbstractForm {
 				'apiVersion' => $this->apiVersion
 			]),
 			'uploads' => $this->uploads,
+			'customAssets' => $this->customAssets,
 			'tmpHash' => $this->tmpHash,
-			'variables' => $this->variables
+			'variables' => $this->variables,
 		]);
 		$returnValues = $this->objectAction->executeAction();
 		$style = $returnValues['returnValues'];

@@ -86,7 +86,10 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 		
 		// handle the cover photo
 		$this->updateCoverPhoto($style);
-
+			
+		// handle custom assets
+		$this->updateCustomAssets($style);
+		
 		return $style;
 	}
 	
@@ -108,6 +111,9 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 			
 			// handle the cover photo
 			$this->updateCoverPhoto($style->getDecoratedObject());
+			
+			// handle custom assets
+			$this->updateCustomAssets($style->getDecoratedObject());
 			
 			// reset stylesheet
 			StyleHandler::getInstance()->resetStylesheet($style->getDecoratedObject());
@@ -439,6 +445,31 @@ BROWSERCONFIG;
 				(new StyleEditor($style))->update([
 					'coverPhotoExtension' => '',
 				]);
+			}
+		}
+	}
+	
+	/**
+	 * @since       5.2
+	 */
+	protected function updateCustomAssets(Style $style) {
+		$customAssetPath = $style->getAssetPath().'custom/';
+		
+		if (!empty($this->parameters['customAssets']['removed'])) {
+			/** @var \wcf\system\file\upload\UploadFile $file */
+			foreach ($this->parameters['customAssets']['removed'] as $file) {
+				unlink($file->getLocation());
+			}
+		}
+		if (!empty($this->parameters['customAssets']['added'])) {
+			if (!is_dir($customAssetPath)) {
+				FileUtil::makePath($customAssetPath);
+			}
+			
+			/** @var \wcf\system\file\upload\UploadFile $file */
+			foreach ($this->parameters['customAssets']['added'] as $file) {
+				rename($file->getLocation(), $customAssetPath.$file->getFilename());
+				$file->setProcessed($customAssetPath.$file->getFilename());
 			}
 		}
 	}
