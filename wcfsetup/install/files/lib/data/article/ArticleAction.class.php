@@ -269,12 +269,14 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	 * @inheritDoc
 	 */
 	public function delete() {
-		$articleIDs = $articleContentIDs = [];
+		$usersToArticles = $articleIDs = $articleContentIDs = [];
 		foreach ($this->getObjects() as $article) {
 			$articleIDs[] = $article->articleID;
 			foreach ($article->getArticleContents() as $articleContent) {
 				$articleContentIDs[] = $articleContent->articleContentID;
 			}
+			
+			$usersToArticles[$article->userID] = ($usersToArticles[$article->userID] ?? 0) - 1;
 		}
 		
 		// delete articles
@@ -291,6 +293,8 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 			SearchIndexManager::getInstance()->delete('com.woltlab.wcf.article', $articleContentIDs);
 			// delete embedded object references
 			MessageEmbeddedObjectManager::getInstance()->removeObjects('com.woltlab.wcf.article.content', $articleContentIDs);
+			// update wcf1_user.articles
+			ArticleEditor::updateArticleCounter($usersToArticles);
 		}
 		
 		$this->unmarkItems();
