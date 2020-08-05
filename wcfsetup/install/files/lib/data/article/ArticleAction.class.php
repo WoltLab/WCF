@@ -347,7 +347,10 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 			}
 			
 			if ($article->publicationStatus == Article::PUBLISHED) {
-				$usersToArticles[$article->userID] = ($usersToArticles[$article->userID] ?? 0) - 1;
+				if (!isset($usersToArticles[$article->userID])) {
+					$usersToArticles[$article->userID] = 0;
+				}
+				$usersToArticles[$article->userID]--;
 			}
 		}
 		
