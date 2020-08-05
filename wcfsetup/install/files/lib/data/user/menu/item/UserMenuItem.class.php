@@ -10,7 +10,7 @@ use wcf\system\Regex;
 use wcf\system\WCF;
 
 /**
- * Represents an user menu item.
+ * Represents a user menu item.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2019 WoltLab GmbH

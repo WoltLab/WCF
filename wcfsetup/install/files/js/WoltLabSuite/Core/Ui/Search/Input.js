@@ -44,6 +44,7 @@ define(['Ajax', 'Core', 'EventKey', 'Dom/Util', 'Ui/SimpleDropdown'], function(A
 					className: '',
 					interfaceName: 'wcf\\data\\ISearchAction'
 				},
+				autoFocus: true,
 				callbackDropdownInit: null,
 				callbackSelect: null,
 				delay: 500,
@@ -109,7 +110,7 @@ define(['Ajax', 'Core', 'EventKey', 'Dom/Util', 'Ui/SimpleDropdown'], function(A
 		 */
 		_keyup: function(event) {
 			// handle dropdown keyboard navigation
-			if (this._activeItem !== null) {
+			if (this._activeItem !== null || !this._options.autoFocus) {
 				if (UiSimpleDropdown.isOpen(this._dropdownContainerId)) {
 					if (EventKey.ArrowUp(event)) {
 						event.preventDefault();
@@ -210,15 +211,17 @@ define(['Ajax', 'Core', 'EventKey', 'Dom/Util', 'Ui/SimpleDropdown'], function(A
 		 * @protected
 		 */
 		_keyboardNextItem: function() {
-			this._activeItem.classList.remove('active');
+			var nextItem;
 			
-			if (this._activeItem.nextElementSibling) {
-				this._activeItem = this._activeItem.nextElementSibling;
-			}
-			else {
-				this._activeItem = this._list.children[0];
+			if (this._activeItem !== null) {
+				this._activeItem.classList.remove('active');
+				
+				if (this._activeItem.nextElementSibling) {
+					nextItem = this._activeItem.nextElementSibling;
+				}
 			}
 			
+			this._activeItem = nextItem || this._list.children[0];
 			this._activeItem.classList.add('active');
 		},
 		
@@ -228,15 +231,17 @@ define(['Ajax', 'Core', 'EventKey', 'Dom/Util', 'Ui/SimpleDropdown'], function(A
 		 * @protected
 		 */
 		_keyboardPreviousItem: function() {
-			this._activeItem.classList.remove('active');
+			var nextItem;
 			
-			if (this._activeItem.previousElementSibling) {
-				this._activeItem = this._activeItem.previousElementSibling;
-			}
-			else {
-				this._activeItem = this._list.children[this._list.childElementCount - 1];
+			if (this._activeItem !== null) {
+				this._activeItem.classList.remove('active');
+				
+				if (this._activeItem.previousElementSibling) {
+					nextItem = this._activeItem.previousElementSibling;
+				}
 			}
 			
+			this._activeItem = nextItem || this._list.children[this._list.childElementCount - 1];
 			this._activeItem.classList.add('active');
 		},
 		
@@ -330,7 +335,7 @@ define(['Ajax', 'Core', 'EventKey', 'Dom/Util', 'Ui/SimpleDropdown'], function(A
 					UiSimpleDropdown.open(this._dropdownContainerId, true);
 					
 					// mark first item as active
-					if (this._list.childElementCount && ~~elData(this._list.children[0], 'object-id')) {
+					if (this._options.autoFocus && this._list.childElementCount && ~~elData(this._list.children[0], 'object-id')) {
 						this._activeItem = this._list.children[0];
 						this._activeItem.classList.add('active');
 					}

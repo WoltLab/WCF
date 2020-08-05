@@ -5,16 +5,21 @@ use wcf\data\style\Style;
 use wcf\data\style\StyleAction;
 use wcf\data\style\StyleEditor;
 use wcf\data\template\group\TemplateGroup;
+use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\form\AbstractForm;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\file\upload\UploadField;
+use wcf\system\file\upload\UploadHandler;
+use wcf\system\image\ImageHandler;
 use wcf\system\language\I18nHandler;
 use wcf\system\Regex;
+use wcf\system\style\exception\FontDownloadFailed;
+use wcf\system\style\FontManager;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\DateUtil;
-use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -104,12 +109,6 @@ class StyleAddForm extends AbstractForm {
 	 * @var	array
 	 */
 	public $globals = [];
-	
-	/**
-	 * image path
-	 * @var	string
-	 */
-	public $imagePath = 'images/';
 	
 	/**
 	 * tainted style
@@ -207,6 +206,12 @@ class StyleAddForm extends AbstractForm {
 	public $scrollOffsets = [];
 	
 	/**
+	 * @var mixed[]
+	 * @since 5.3
+	 */
+	public $uploads = [];
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -215,6 +220,9 @@ class StyleAddForm extends AbstractForm {
 		I18nHandler::getInstance()->register('styleDescription');
 		
 		$this->setVariables();
+		
+		$this->rebuildUploadFields();
+		
 		if (empty($_POST)) {
 			$this->readStyleVariables();
 		}
@@ -226,6 +234,68 @@ class StyleAddForm extends AbstractForm {
 		}
 		if (empty($this->tmpHash)) {
 			$this->tmpHash = StringUtil::getRandomID();
+		}
+	}
+	
+	/**
+	 * @since	5.3
+	 */
+	protected function getUploadFields() {
+		return [
+			'image' => [
+				'size' => [
+					'maxWidth' => Style::PREVIEW_IMAGE_MAX_WIDTH,
+					'maxHeight' => Style::PREVIEW_IMAGE_MAX_WIDTH,
+					'preserveAspectRatio' => false,
+				],
+			],
+			'image2x' => [
+				'size' => [
+					'maxWidth' => 2 * Style::PREVIEW_IMAGE_MAX_WIDTH,
+					'maxHeight' => 2 * Style::PREVIEW_IMAGE_MAX_WIDTH,
+					'preserveAspectRatio' => false,
+				],
+			],
+			'pageLogo' => [
+				'allowSvgImage' => true,
+			],
+			'pageLogoMobile' => [
+				'allowSvgImage' => true,
+			],
+			'coverPhoto' => [
+				'size' => [
+					'minWidth' => UserCoverPhoto::MIN_WIDTH,
+					'minHeight' => UserCoverPhoto::MIN_HEIGHT,
+				]
+			],
+			'favicon' => [
+				'size' => [
+					'resize' => false,
+					'minWidth' => Style::FAVICON_IMAGE_WIDTH,
+					'maxWidth' => Style::FAVICON_IMAGE_WIDTH,
+					'minHeight' => Style::FAVICON_IMAGE_HEIGHT,
+					'maxHeight' => Style::FAVICON_IMAGE_HEIGHT,
+				]
+			],
+		];
+	}
+	
+	/**
+	 * @since	5.3
+	 */
+	protected function rebuildUploadFields() {
+		$handler = UploadHandler::getInstance();
+		foreach ($this->getUploadFields() as $name => $options) {
+			if ($handler->isRegisteredFieldId($name)) {
+				$handler->unregisterUploadField($name);
+			}
+			$field = new UploadField($name);
+			$field->setImageOnly(true);
+			if (isset($options['allowSvgImage'])) {
+				$field->setAllowSvgImage($options['allowSvgImage']);
+			}
+			$field->maxFiles = 1;
+			$handler->registerUploadField($field);
 		}
 	}
 	
@@ -273,13 +343,11 @@ class StyleAddForm extends AbstractForm {
 			}
 		}
 		$this->variables['useFluidLayout'] = isset($_POST['useFluidLayout']) ? 1 : 0;
-		$this->variables['useGoogleFont'] = isset($_POST['useGoogleFont']) ? 1 : 0;
 		
 		// style data
 		if (isset($_POST['authorName'])) $this->authorName = StringUtil::trim($_POST['authorName']);
 		if (isset($_POST['authorURL'])) $this->authorURL = StringUtil::trim($_POST['authorURL']);
 		if (isset($_POST['copyright'])) $this->copyright = StringUtil::trim($_POST['copyright']);
-		if (isset($_POST['imagePath'])) $this->imagePath = StringUtil::trim($_POST['imagePath']);
 		if (isset($_POST['license'])) $this->license = StringUtil::trim($_POST['license']);
 		if (isset($_POST['packageName'])) $this->packageName = StringUtil::trim($_POST['packageName']);
 		if (isset($_POST['styleDate'])) $this->styleDate = StringUtil::trim($_POST['styleDate']);
@@ -291,6 +359,37 @@ class StyleAddForm extends AbstractForm {
 		
 		// codemirror scroll offset
 		if (isset($_POST['scrollOffsets']) && is_array($_POST['scrollOffsets'])) $this->scrollOffsets = ArrayUtil::toIntegerArray($_POST['scrollOffsets']); 
+		
+		$this->uploads = [];
+		foreach (array_keys($this->getUploadFields()) as $field) {
+			$removedFiles = UploadHandler::getInstance()->getRemovedFiledByFieldId($field);
+			if (!empty($removedFiles)) {
+				$this->uploads[$field] = null;
+			}
+			
+			$files = UploadHandler::getInstance()->getFilesByFieldId($field);
+			if (!empty($files)) {
+				$this->uploads[$field] = $files[0];
+			}
+		}
+	}
+	
+	/**
+	 * @since	5.3
+	 */
+	protected function downloadGoogleFont() {
+		$fontManager = FontManager::getInstance();
+		$family = $this->variables['wcfFontFamilyGoogle'];
+		if ($family) {
+			if (!$fontManager->isFamilyDownloaded($family)) {
+				try {
+					$fontManager->downloadFamily($family);
+				}
+				catch (FontDownloadFailed $e) {
+					throw new UserInputException('wcfFontFamilyGoogle', 'downloadFailed'.($e->getReason() ? '.'.$e->getReason() : ''));
+				}
+			}
+		}
 	}
 	
 	/**
@@ -344,19 +443,15 @@ class StyleAddForm extends AbstractForm {
 			}
 		}
 		
-		// ensure image path is below WCF_DIR/images/
-		if ($this->imagePath) {
-			$relativePath = FileUtil::unifyDirSeparator(FileUtil::getRelativePath(WCF_DIR.'images/', WCF_DIR.$this->imagePath));
-			if (strpos($relativePath, '../') !== false) {
-				throw new UserInputException('imagePath', 'invalid');
-			}
-		}
-		
 		if (!empty($this->variables['overrideScss'])) {
 			$this->parseOverrides();
 		}
 		
 		$this->validateApiVersion();
+		
+		$this->validateUploads();
+		
+		$this->downloadGoogleFont();
 	}
 	
 	/**
@@ -380,6 +475,71 @@ class StyleAddForm extends AbstractForm {
 	protected function validateApiVersion() {
 		if (!in_array($this->apiVersion, Style::$supportedApiVersions)) {
 			throw new UserInputException('apiVersion', 'invalid');
+		}
+	}
+	
+	/**
+	 * @since	5.3
+	 */
+	protected function validateUploads() {
+		foreach ($this->getUploadFields() as $field => $options) {
+			$files = UploadHandler::getInstance()->getFilesByFieldId($field);
+			if (count($files) > 1) {
+				throw new UserInputException($field, 'invalid');
+			}
+			if (empty($files)) continue;
+			
+			if (isset($options['size'])) {
+				$fileLocation = $files[0]->getLocation();
+				if (($imageData = getimagesize($fileLocation)) === false) {
+					throw new UserInputException($field, 'invalid');
+				}
+				switch ($imageData[2]) {
+					case IMAGETYPE_PNG:
+					case IMAGETYPE_JPEG:
+					case IMAGETYPE_GIF:
+						// fine
+					break;
+					default:
+						throw new UserInputException($field, 'invalid');
+				}
+				
+				$maxWidth = $options['size']['maxWidth'] ?? PHP_INT_MAX;
+				$maxHeight = $options['size']['maxHeight'] ?? PHP_INT_MAX;
+				$minWidth = $options['size']['maxWidth'] ?? 0;
+				$minHeight = $options['size']['maxHeight'] ?? 0;
+				
+				if ($options['size']['resize'] ?? true) {
+					if ($imageData[0] > $maxWidth || $imageData[1] > $maxHeight) {
+						$adapter = ImageHandler::getInstance()->getAdapter();
+						$adapter->loadFile($fileLocation);
+						$thumbnail = $adapter->createThumbnail(
+							$maxWidth,
+							$maxHeight,
+							$options['size']['preserveAspectRatio'] ?? true
+						);
+						$adapter->writeImage($thumbnail, $fileLocation);
+					}
+					
+					// Check again after scaling
+					if (($imageData = getimagesize($fileLocation)) === false) {
+						throw new UserInputException($field, 'invalid');
+					}
+				}
+				
+				if ($imageData[0] > $maxWidth) {
+					throw new UserInputException($field, 'maxWidth');
+				}
+				if ($imageData[0] > $maxHeight) {
+					throw new UserInputException($field, 'maxHeight');
+				}
+				if ($imageData[0] < $minWidth) {
+					throw new UserInputException($field, 'minWidth');
+				}
+				if ($imageData[0] < $minHeight) {
+					throw new UserInputException($field, 'minHeight');
+				}
+			}
 		}
 	}
 	
@@ -547,12 +707,9 @@ class StyleAddForm extends AbstractForm {
 		$this->specialVariables = [
 			'individualScss',
 			'overrideScss',
-			'pageLogo',
 			'pageLogoWidth',
 			'pageLogoHeight',
-			'pageLogoMobile',
 			'useFluidLayout',
-			'useGoogleFont',
 			'wcfFontFamilyGoogle',
 			'wcfFontFamilyFallback'
 		];
@@ -590,13 +747,13 @@ class StyleAddForm extends AbstractForm {
 				'styleDescription' => '',
 				'styleVersion' => $this->styleVersion,
 				'styleDate' => $this->styleDate,
-				'imagePath' => $this->imagePath,
 				'copyright' => $this->copyright,
 				'license' => $this->license,
 				'authorName' => $this->authorName,
 				'authorURL' => $this->authorURL,
 				'apiVersion' => $this->apiVersion
 			]),
+			'uploads' => $this->uploads,
 			'tmpHash' => $this->tmpHash,
 			'variables' => $this->variables
 		]);
@@ -618,9 +775,9 @@ class StyleAddForm extends AbstractForm {
 		$this->authorName = $this->authorURL = $this->copyright = $this->packageName = '';
 		$this->license = $this->styleDate = $this->styleDescription = $this->styleName = $this->styleVersion = '';
 		$this->setDefaultValues();
-		$this->imagePath = 'images/';
 		$this->isTainted = true;
 		$this->templateGroupID = 0;
+		$this->rebuildUploadFields();
 		
 		I18nHandler::getInstance()->reset();
 		
@@ -649,7 +806,6 @@ class StyleAddForm extends AbstractForm {
 			'colorCategories' => $this->colorCategories,
 			'colors' => $this->colors,
 			'copyright' => $this->copyright,
-			'imagePath' => $this->imagePath,
 			'isTainted' => $this->isTainted,
 			'license' => $this->license,
 			'packageName' => $this->packageName,
@@ -664,6 +820,8 @@ class StyleAddForm extends AbstractForm {
 			'supportedApiVersions' => Style::$supportedApiVersions,
 			'newVariables' => $this->newVariables,
 			'scrollOffsets' => $this->scrollOffsets,
+			'coverPhotoMinHeight' => UserCoverPhoto::MIN_HEIGHT,
+			'coverPhotoMinWidth' => UserCoverPhoto::MIN_WIDTH,
 		]);
 	}
 	

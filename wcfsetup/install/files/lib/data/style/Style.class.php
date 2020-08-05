@@ -3,6 +3,7 @@ namespace wcf\data\style;
 use wcf\data\DatabaseObject;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
 
 /**
  * Represents a style.
@@ -55,6 +56,8 @@ class Style extends DatabaseObject {
 	const FAVICON_IMAGE_HEIGHT = 256;
 	const FAVICON_IMAGE_WIDTH = 256;
 	
+	const BASE_ASSET_PATH = WCF_DIR.'images/';
+	
 	/**
 	 * Returns the name of this style.
 	 * 
@@ -62,6 +65,16 @@ class Style extends DatabaseObject {
 	 */
 	public function __toString() {
 		return $this->styleName;
+	}
+	
+	/**
+	 * Returns the absolute path to the style's asset folder.
+	 * 
+	 * @return	string
+	 * @since	5.3
+	 */
+	public function getAssetPath() {
+		return FileUtil::addTrailingSlash(static::BASE_ASSET_PATH . 'style-' . $this->styleID);
 	}
 	
 	/**
@@ -221,7 +234,7 @@ class Style extends DatabaseObject {
 	 */
 	public function getCoverPhoto() {
 		if ($this->coverPhotoExtension) {
-			return $this->styleID . '.' . $this->coverPhotoExtension;
+			return 'coverPhoto.'.$this->coverPhotoExtension;
 		}
 		
 		return 'default.jpg';
@@ -232,7 +245,10 @@ class Style extends DatabaseObject {
 	 * @since 5.2
 	 */
 	public function getCoverPhotoLocation() {
-		return WCF_DIR . 'images/coverPhotos/' . $this->getCoverPhoto();
+		if ($this->coverPhotoExtension) {
+			return $this->getAssetPath().'coverPhoto.'.$this->coverPhotoExtension;
+		}
+		return WCF_DIR . 'images/coverPhotos/default.jpg';
 	}
 	
 	/**
@@ -240,6 +256,9 @@ class Style extends DatabaseObject {
 	 * @since 5.2
 	 */
 	public function getCoverPhotoUrl() {
+		if ($this->coverPhotoExtension) {
+			return WCF::getPath() . FileUtil::getRelativePath(WCF_DIR, $this->getAssetPath()).'coverPhoto.'.$this->coverPhotoExtension;
+		}
 		return WCF::getPath() . 'images/coverPhotos/' . $this->getCoverPhoto();
 	}
 	
@@ -257,7 +276,13 @@ class Style extends DatabaseObject {
 			}
 		}
 		
-		$path = 'images/favicon/'. ($this->hasFavicon ? $this->styleID : 'default') . ".{$filename}";
+		if ($this->hasFavicon) {
+			$path = FileUtil::getRelativePath(WCF_DIR, $this->getAssetPath()).$filename;
+		}
+		else {
+			$path = 'images/favicon/default.'.$filename;
+		}
+		
 		if ($absolutePath) {
 			return WCF::getPath() . $path;
 		}

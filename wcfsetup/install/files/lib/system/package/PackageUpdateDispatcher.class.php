@@ -472,127 +472,149 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * @param	integer		$packageUpdateServerID
 	 */
 	protected function savePackageUpdates(array &$allNewPackages, $packageUpdateServerID) {
-		// insert updates
 		$excludedPackagesParameters = $fromversionParameters = $insertParameters = $optionalInserts = $requirementInserts = $compatibilityInserts = [];
+		$sql = "INSERT INTO     wcf" . WCF_N . "_package_update
+					(packageUpdateServerID, package, packageName, packageDescription, author, authorURL, isApplication, pluginStoreFileID)
+			VALUES          (?, ?, ?, ?, ?, ?, ?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
 		WCF::getDB()->beginTransaction();
 		foreach ($allNewPackages as $identifier => $packageData) {
-			// create new database entry
-			$packageUpdate = PackageUpdateEditor::create([
-				'packageUpdateServerID' => $packageUpdateServerID,
-				'package' => $identifier,
-				'packageName' => $packageData['packageName'],
-				'packageDescription' => $packageData['packageDescription'],
-				'author' => $packageData['author'],
-				'authorURL' => $packageData['authorURL'],
-				'isApplication' => $packageData['isApplication'],
-				'pluginStoreFileID' => $packageData['pluginStoreFileID']
+			$statement->execute([
+				$packageUpdateServerID,
+				$identifier,
+				$packageData['packageName'],
+				$packageData['packageDescription'],
+				$packageData['author'],
+				$packageData['authorURL'],
+				$packageData['isApplication'],
+				$packageData['pluginStoreFileID'],
 			]);
+		}
+		WCF::getDB()->commitTransaction();
+		
+		$sql = "SELECT  packageUpdateID, package
+			FROM    wcf" . WCF_N . "_package_update
+			WHERE   packageUpdateServerID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$packageUpdateServerID]);
+		$packageUpdateIDs = $statement->fetchMap('package', 'packageUpdateID');
+		
+		$sql = "INSERT INTO     wcf" . WCF_N . "_package_update_version
+					(filename, license, licenseURL, isAccessible, packageDate, packageUpdateID, packageVersion)
+			VALUES          (?, ?, ?, ?, ?, ?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		WCF::getDB()->beginTransaction();
+		foreach ($allNewPackages as $package => $packageData) {
+			foreach ($packageData['versions'] as $packageVersion => $versionData) {
+				$statement->execute([
+					$versionData['file'] ?? '',
+					$versionData['license']['license'] ?? '',
+					$versionData['license']['licenseURL'] ?? '',
+					$versionData['isAccessible'] ? 1 : 0,
+					$versionData['packageDate'],
+					$packageUpdateIDs[$package],
+					$packageVersion,
+				]);
+			}
+		}
+		WCF::getDB()->commitTransaction();
+		
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add('packageUpdateID IN (?)', [array_values($packageUpdateIDs)]);
+		$sql = "SELECT  packageUpdateVersionID, packageUpdateID, packageVersion
+			FROM    wcf" . WCF_N . "_package_update_version
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditions->getParameters());
+		$packageUpdateVersions = [];
+		while ($row = $statement->fetchArray()) {
+			if (!isset($packageUpdateVersions[$row['packageUpdateID']])) {
+				$packageUpdateVersions[$row['packageUpdateID']] = [];
+			}
 			
-			$packageUpdateID = $packageUpdate->packageUpdateID;
-			
-			// register version(s) of this update package.
-			if (isset($packageData['versions'])) {
-				foreach ($packageData['versions'] as $packageVersion => $versionData) {
-					if (isset($versionData['file'])) $packageFile = $versionData['file'];
-					else $packageFile = '';
-					
-					// create new database entry
-					$version = PackageUpdateVersionEditor::create([
-						'filename' => $packageFile,
-						'license' => isset($versionData['license']['license']) ? $versionData['license']['license'] : '',
-						'licenseURL' => isset($versionData['license']['license']) ? $versionData['license']['licenseURL'] : '',
-						'isAccessible' => $versionData['isAccessible'] ? 1 : 0,
-						'packageDate' => $versionData['packageDate'],
-						'packageUpdateID' => $packageUpdateID,
-						'packageVersion' => $packageVersion
-					]);
-					
-					$packageUpdateVersionID = $version->packageUpdateVersionID;
-					
-					// register requirement(s) of this update package version.
-					if (isset($versionData['requiredPackages'])) {
-						foreach ($versionData['requiredPackages'] as $requiredIdentifier => $required) {
-							$requirementInserts[] = [
-								'packageUpdateVersionID' => $packageUpdateVersionID,
-								'package' => $requiredIdentifier,
-								'minversion' => isset($required['minversion']) ? $required['minversion'] : ''
-							];
-						}
+			$packageUpdateVersions[$row['packageUpdateID']][$row['packageVersion']] = $row['packageUpdateVersionID'];
+		}
+		
+		foreach ($allNewPackages as $package => $packageData) {
+			foreach ($packageData['versions'] as $packageVersion => $versionData) {
+				$packageUpdateID = $packageUpdateIDs[$package];
+				$packageUpdateVersionID = $packageUpdateVersions[$packageUpdateID][$packageVersion];
+				
+				if (isset($versionData['requiredPackages'])) {
+					foreach ($versionData['requiredPackages'] as $requiredIdentifier => $required) {
+						$requirementInserts[] = [
+							'packageUpdateVersionID' => $packageUpdateVersionID,
+							'package' => $requiredIdentifier,
+							'minversion' => $required['minversion'] ?? ''
+						];
+					}
+				}
+				
+				if (isset($versionData['optionalPackages'])) {
+					foreach ($versionData['optionalPackages'] as $optionalPackage) {
+						$optionalInserts[] = [
+							'packageUpdateVersionID' => $packageUpdateVersionID,
+							'package' => $optionalPackage
+						];
+					}
+				}
+				
+				if (isset($versionData['excludedPackages'])) {
+					foreach ($versionData['excludedPackages'] as $excludedIdentifier => $exclusion) {
+						$excludedPackagesParameters[] = [
+							'packageUpdateVersionID' => $packageUpdateVersionID,
+							'excludedPackage' => $excludedIdentifier,
+							'excludedPackageVersion' => $exclusion['version'] ?? ''
+						];
+					}
+				}
+				
+				if (isset($versionData['fromversions'])) {
+					foreach ($versionData['fromversions'] as $fromversion) {
+						$fromversionInserts[] = [
+							'packageUpdateVersionID' => $packageUpdateVersionID,
+							'fromversion' => $fromversion
+						];
+					}
+				}
+				
+				// @deprecated 5.2
+				if (isset($versionData['compatibility'])) {
+					foreach ($versionData['compatibility'] as $version) {
+						$compatibilityInserts[] = [
+							'packageUpdateVersionID' => $packageUpdateVersionID,
+							'version' => $version
+						];
 					}
 					
-					// register optional packages of this update package version
-					if (isset($versionData['optionalPackages'])) {
-						foreach ($versionData['optionalPackages'] as $optionalPackage) {
-							$optionalInserts[] = [
-								'packageUpdateVersionID' => $packageUpdateVersionID,
-								'package' => $optionalPackage
-							];
-						}
-					}
-					
-					// register excluded packages of this update package version.
-					if (isset($versionData['excludedPackages'])) {
-						foreach ($versionData['excludedPackages'] as $excludedIdentifier => $exclusion) {
-							$excludedPackagesParameters[] = [
-								'packageUpdateVersionID' => $packageUpdateVersionID,
-								'excludedPackage' => $excludedIdentifier,
-								'excludedPackageVersion' => isset($exclusion['version']) ? $exclusion['version'] : ''
-							];
-						}
-					}
-					
-					// register fromversions of this update package version.
-					if (isset($versionData['fromversions'])) {
-						foreach ($versionData['fromversions'] as $fromversion) {
-							$fromversionInserts[] = [
-								'packageUpdateVersionID' => $packageUpdateVersionID,
-								'fromversion' => $fromversion
-							];
-						}
-					}
-					
-					// register compatibility versions of this update package version.
-					// @deprecated 5.2
-					if (isset($versionData['compatibility'])) {
-						foreach ($versionData['compatibility'] as $version) {
-							$compatibilityInserts[] = [
-								'packageUpdateVersionID' => $packageUpdateVersionID,
-								'version' => $version
-							];
-						}
+					// The API compatibility versions are deprecated, any package that exposes them must
+					// exclude at most `com.woltlab.wcf` in version `6.0.0 Alpha 1`.
+					if (!empty($compatibilityInserts)) {
+						if (!isset($versionData['excludedPackages'])) $versionData['excludedPackages'] = [];
+						$excludeCore60 = '6.0.0 Alpha 1';
 						
-						// The API compatibility versions are deprecated, any package that exposes them must
-						// exclude at most `com.woltlab.wcf` in version `6.0.0 Alpha 1`.
-						if (!empty($compatibilityInserts)) {
-							if (!isset($versionData['excludedPackages'])) $versionData['excludedPackages'] = [];
-							$excludeCore60 = '6.0.0 Alpha 1';
-							
-							$coreExclude = null;
-							$versionData['excludedPackages'] = array_filter($versionData['excludedPackages'], function($excludedPackage, $excludedVersion) use (&$coreExclude) {
-								if ($excludedPackage === 'com.woltlab.wcf') {
-									$coreExclude = $excludedVersion;
-									return false;
-								}
-								
-								return true;
-							}, ARRAY_FILTER_USE_BOTH);
-							
-							if ($coreExclude === null || Package::compareVersion($coreExclude, $excludeCore60, '>')) {
-								$versionData['excludedPackages'][] = [
-									'packageUpdateVersionID' => $packageUpdateVersionID,
-									'excludedPackage' => 'com.woltlab.wcf',
-									'excludedPackageVersion' => $excludeCore60,
-								];
+						$coreExclude = null;
+						$versionData['excludedPackages'] = array_filter($versionData['excludedPackages'], function($excludedPackage, $excludedVersion) use (&$coreExclude) {
+							if ($excludedPackage === 'com.woltlab.wcf') {
+								$coreExclude = $excludedVersion;
+								return false;
 							}
+							
+							return true;
+						}, ARRAY_FILTER_USE_BOTH);
+						
+						if ($coreExclude === null || Package::compareVersion($coreExclude, $excludeCore60, '>')) {
+							$versionData['excludedPackages'][] = [
+								'packageUpdateVersionID' => $packageUpdateVersionID,
+								'excludedPackage' => 'com.woltlab.wcf',
+								'excludedPackageVersion' => $excludeCore60,
+							];
 						}
 					}
 				}
 			}
 		}
-		WCF::getDB()->commitTransaction();
 		
-		// save requirements, excluded packages and fromversions
-		// insert requirements
 		if (!empty($requirementInserts)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_package_update_requirement
 						(packageUpdateVersionID, package, minversion)
@@ -609,7 +631,6 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			WCF::getDB()->commitTransaction();
 		}
 		
-		// insert optionals
 		if (!empty($optionalInserts)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_package_update_optional
 						(packageUpdateVersionID, package)
@@ -625,7 +646,6 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			WCF::getDB()->commitTransaction();
 		}
 		
-		// insert excludes
 		if (!empty($excludedPackagesParameters)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_package_update_exclusion
 						(packageUpdateVersionID, excludedPackage, excludedPackageVersion)
@@ -642,7 +662,6 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			WCF::getDB()->commitTransaction();
 		}
 		
-		// insert fromversions
 		if (!empty($fromversionInserts)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_package_update_fromversion
 						(packageUpdateVersionID, fromversion)
@@ -658,7 +677,6 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			WCF::getDB()->commitTransaction();
 		}
 		
-		// insert compatibility versions
 		// @deprecated 5.2
 		if (!empty($compatibilityInserts)) {
 			$sql = "INSERT INTO     wcf".WCF_N."_package_update_compatibility

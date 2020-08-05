@@ -177,15 +177,15 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 					$object = $parameters['object'];
 				}
 				
+				$adapter = ImageHandler::getInstance()->getAdapter();
 				// rotate image based on the exif data
 				if (!empty($this->options['rotateImages'])) {
 					if ($object->isImage) {
-						if (FileUtil::checkMemoryLimit($object->width * $object->height * ($object->fileType == 'image/png' ? 4 : 3) * 2.1)) {
+						if ($adapter->checkMemoryLimit($object->width, $object->height, $object->fileType)) {
 							$exifData = ExifUtil::getExifData($object->getLocation());
 							if (!empty($exifData)) {
 								$orientation = ExifUtil::getOrientation($exifData);
 								if ($orientation != ExifUtil::ORIENTATION_ORIGINAL) {
-									$adapter = ImageHandler::getInstance()->getAdapter();
 									$adapter->loadFile($object->getLocation());
 									
 									$newImage = null;
@@ -292,12 +292,13 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 			return;
 		}
 		
+		$adapter = ImageHandler::getInstance()->getAdapter();
+		
 		// check memory limit
-		if (!FileUtil::checkMemoryLimit($file->width * $file->height * ($file->fileType == 'image/png' ? 4 : 3) * 2.1)) {
+		if (!$adapter->checkMemoryLimit($file->width, $file->height, $file->fileType)) {
 			return;
 		}
 		
-		$adapter = ImageHandler::getInstance()->getAdapter();
 		$adapter->loadFile($file->getLocation());
 		
 		$updateData = [];

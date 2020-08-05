@@ -20,7 +20,7 @@
 
 	{capture assign=button}
 	<a href="{link controller='NotificationConfirm' isHtmlEmail=true id=$event->getNotification()->notificationID}{/link}">
-		{lang}wcf.user.notification.markAsConfirmed{/lang}
+		{lang}wcf.user.notification.mail.jumpToContent{/lang}
 	</a>
 	{/capture}
 	{include file='email_paddingHelper' class='button' outerClass='paragraphMargin' content=$button sandbox=true}

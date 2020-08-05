@@ -138,9 +138,10 @@ class HtmlNodePlainLink {
 	 * Replaces the entire link, including any formatting, with the provided bbcode. This is
 	 * available for standalone links only.
 	 * 
-	 * @param BBCode $bbcode
+	 * @param BBCode        $bbcode
+	 * @param int|null      $overrideObjectID
 	 */
-	public function replaceWithBBCode(BBCode $bbcode) {
+	public function replaceWithBBCode(BBCode $bbcode, $overrideObjectID = null) {
 		$this->markAsTainted();
 		
 		if ($this->objectID === 0) {
@@ -149,7 +150,7 @@ class HtmlNodePlainLink {
 		
 		$metacodeElement = $this->link->ownerDocument->createElement('woltlab-metacode');
 		$metacodeElement->setAttribute('data-name', $bbcode->bbcodeTag);
-		$metacodeElement->setAttribute('data-attributes', base64_encode(JSON::encode([$this->objectID])));
+		$metacodeElement->setAttribute('data-attributes', base64_encode(JSON::encode([($overrideObjectID !== null ? $overrideObjectID : $this->objectID)])));
 		
 		if ($bbcode->isBlockElement) {
 			if (!$this->isStandalone()) {

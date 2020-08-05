@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data;
+use wcf\system\database\exception\DatabaseQueryExecutionException;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
@@ -122,5 +123,26 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 		WCF::getDB()->commitTransaction();
 		
 		return $affectedCount;
+	}
+	
+	/**
+	 * Creates a new object, returns null if the row already exists.
+	 *
+	 * @param	array	$parameters
+	 * @return	IStorableObject|null
+	 * @since       5.3
+	 */
+	public static function createOrIgnore(array $parameters = []) {
+		try {
+			return static::create($parameters);
+		}
+		catch (DatabaseQueryExecutionException $e) {
+			// Error code 23000 = duplicate key
+			if ($e->getCode() == '23000' && $e->getDriverCode() == '1062') {
+				return null;
+			}
+			
+			throw $e;
+		}
 	}
 }

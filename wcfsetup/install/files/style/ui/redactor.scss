@@ -520,10 +520,6 @@
 		&::after {
 			color: $wcfSidebarText;
 			content: attr(data-placeholder);
-			
-			@include screen-sm-up {
-				@include wcfFontSection;
-			}
 		}
 		
 		> .messageBody {

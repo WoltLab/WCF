@@ -1203,6 +1203,10 @@ if (COMPILER_TARGET_DEFAULT) {
 		close: function () {
 			this._triggerElement.removeClass('open');
 			this._container.removeClass('open');
+			
+			WCF.System.Event.fireEvent('WCF.Dropdown.Interactive.Instance', 'close', {
+				instance: this
+			});
 		},
 		
 		/**
@@ -5096,7 +5100,7 @@ WCF.System.Fullscreen = {
 	/**
 	 * Puts the given element into full screen mode.
 	 * Note: This must be a raw HTMLElement, not a jQuery wrapped one.
-	 * Note: This must be called from an user triggered event listener for
+	 * Note: This must be called from a user triggered event listener for
 	 * 	security reasons.
 	 * 
 	 * @param	object		Element to show full screen.

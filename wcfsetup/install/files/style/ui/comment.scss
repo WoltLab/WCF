@@ -127,10 +127,6 @@
 			content: attr(data-placeholder);
 			position: relative;
 			top: 2px;
-			
-			@include screen-sm-up {
-				@include wcfFontSection;
-			}
 		}
 		
 		> .commentListAddCommentEditorContainer {
@@ -259,4 +255,12 @@
 
 .commentModerationDisabledComment {
 	margin: 0 -20px;
+}
+
+/* Prevent images in comments in the sidebar box from becoming too large */
+.sidebarCommentContent {
+	img {
+		max-width: 100%;
+		max-height: 300px;
+	}
 }

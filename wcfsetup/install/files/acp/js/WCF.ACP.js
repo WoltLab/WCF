@@ -1003,8 +1003,12 @@ WCF.ACP.Package.Update.Search = Class.extend({
 	
 	/**
 	 * Handles clicks on the search button.
+	 * 
+	 * @param {Event} event
 	 */
-	_click: function() {
+	_click: function(event) {
+		event.preventDefault();
+		
 		if (this._dialog === null) {
 			new WCF.Action.Proxy({
 				autoSend: true,

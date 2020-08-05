@@ -1,26 +1,20 @@
 <?php
 namespace wcf\data\style;
 use wcf\data\TDatabaseObjectToggle;
-use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\data\user\UserAction;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
-use wcf\data\IUploadAction;
 use wcf\system\cache\builder\StyleCacheBuilder;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\image\ImageHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\style\StyleHandler;
-use wcf\system\upload\DefaultUploadFileValidationStrategy;
-use wcf\system\upload\UploadFile;
-use wcf\system\upload\UploadHandler;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\ImageUtil;
 
 /**
  * Executes style-related actions.
@@ -33,7 +27,7 @@ use wcf\util\FileUtil;
  * @method	StyleEditor[]	getObjects()
  * @method	StyleEditor	getSingleObject()
  */
-class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction, IUploadAction {
+class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	use TDatabaseObjectToggle;
 	
 	/**
@@ -59,7 +53,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = ['copy', 'delete', 'deleteCoverPhoto', 'markAsTainted', 'setAsDefault', 'toggle', 'update', 'upload', 'uploadCoverPhoto', 'uploadLogo', 'uploadLogoMobile'];
+	protected $requireACP = ['copy', 'delete', 'markAsTainted', 'setAsDefault', 'toggle', 'update', 'upload',];
 	
 	/**
 	 * style object
@@ -87,6 +81,12 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 		// handle style preview image
 		$this->updateStylePreviewImage($style);
 		
+		// create favicon data
+		$this->updateFavicons($style);
+		
+		// handle the cover photo
+		$this->updateCoverPhoto($style);
+
 		return $style;
 	}
 	
@@ -172,6 +172,33 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 			return;
 		}
 		
+		$style->loadVariables();
+		foreach (['pageLogo', 'pageLogoMobile'] as $type) {
+			if (array_key_exists($type, $this->parameters['uploads'])) {
+				/** @var \wcf\system\file\upload\UploadFile $file */
+				$file = $this->parameters['uploads'][$type];
+				
+				if ($style->getVariable($type) && file_exists($style->getAssetPath().basename($style->getVariable($type)))) {
+					if (!$file || $style->getAssetPath().basename($style->getVariable($type)) !== $file->getLocation()) {
+						unlink($style->getAssetPath().basename($style->getVariable($type)));
+					}
+				}
+				
+				if ($file !== null) {
+					$fileLocation = $file->getLocation();
+					$extension = pathinfo($file->getFilename(), PATHINFO_EXTENSION);
+					$newName = $type.'-'.\bin2hex(\random_bytes(4)).'.'.$extension;
+					$newLocation = $style->getAssetPath().$newName;
+					rename($fileLocation, $newLocation);
+					$this->parameters['variables'][$type] = $newName;
+					$file->setProcessed($newLocation);
+				}
+				else {
+					$this->parameters['variables'][$type] = '';
+				}
+			}
+		}
+		
 		$sql = "SELECT	variableID, variableName, defaultValue
 			FROM	wcf".WCF_N."_style_variable";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -224,51 +251,43 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	 * @param	Style		$style
 	 */
 	protected function updateStylePreviewImage(Style $style) {
-		if (!isset($this->parameters['tmpHash'])) {
-			return;
-		}
-		
-		foreach (['', '@2x'] as $type) {
-			$fileExtension = WCF::getSession()->getVar('stylePreview-' . $this->parameters['tmpHash'] . $type);
-			if ($fileExtension !== null) {
-				$oldFilename = WCF_DIR . 'images/stylePreview-' . $this->parameters['tmpHash'] . $type . '.' . $fileExtension;
-				if (file_exists($oldFilename)) {
-					$filename = 'stylePreview-' . $style->styleID . $type . '.' . $fileExtension;
-					if (@rename($oldFilename, WCF_DIR . 'images/' . $filename)) {
-						// delete old file if it has a different file extension
-						if ($type === '') {
-							if ($style->image != $filename) {
-								@unlink(WCF_DIR . 'images/' . $style->image);
-								
-								// update filename in database
-								$sql = "UPDATE	wcf" . WCF_N . "_style
-									SET	image = ?
-									WHERE	styleID = ?";
-								$statement = WCF::getDB()->prepareStatement($sql);
-								$statement->execute([
-									$filename, $style->styleID
-								]);
-							}
-						}
-						else {
-							if ($style->image2x != $filename) {
-								@unlink(WCF_DIR . 'images/' . $style->image2x);
-								
-								// update filename in database
-								$sql = "UPDATE	wcf" . WCF_N . "_style
-									SET	image2x = ?
-									WHERE	styleID = ?";
-								$statement = WCF::getDB()->prepareStatement($sql);
-								$statement->execute([
-									$filename, $style->styleID
-								]);
-							}
-						}
+		foreach (['image', 'image2x'] as $type) {
+			if (array_key_exists($type, $this->parameters['uploads'])) {
+				/** @var \wcf\system\file\upload\UploadFile $file */
+				$file = $this->parameters['uploads'][$type];
+				
+				if ($style->{$type} && file_exists($style->getAssetPath().basename($style->{$type}))) {
+					if (!$file || $style->getAssetPath().basename($style->{$type}) !== $file->getLocation()) {
+						unlink($style->getAssetPath().basename($style->{$type}));
+					}
+				}
+				if ($file !== null) {
+					$fileLocation = $file->getLocation();
+					if (($imageData = getimagesize($fileLocation)) === false) {
+						throw new \InvalidArgumentException('The given '.$type.' is not an image');
+					}
+					$extension = ImageUtil::getExtensionByMimeType($imageData['mime']);
+					if ($type === 'image') {
+						$newName = 'stylePreview.'.$extension;
+					}
+					else if ($type === 'image2x') {
+						$newName = 'stylePreview@2x.'.$extension;
 					}
 					else {
-						// remove temp file
-						@unlink($oldFilename);
+						throw new \LogicException('Unreachable');
 					}
+					$newLocation = $style->getAssetPath().$newName;
+					rename($fileLocation, $newLocation);
+					(new StyleEditor($style))->update([
+						$type => FileUtil::getRelativePath(WCF_DIR.'images/', $style->getAssetPath()).$newName,
+					]);
+					
+					$file->setProcessed($newLocation);
+				}
+				else {
+					(new StyleEditor($style))->update([
+						$type => '',
+					]);
 				}
 			}
 		}
@@ -281,37 +300,66 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	 * @since       3.1
 	 */
 	protected function updateFavicons(Style $style) {
-		$styleID = $style->styleID;
-		$fileExtension = WCF::getSession()->getVar('styleFavicon-template-'.$styleID);
-		$hasFavicon = (bool)$style->hasFavicon;
-		if ($fileExtension) {
-			$template = WCF_DIR . "images/favicon/{$styleID}.favicon-template.{$fileExtension}";
-			$images = [
-				'android-chrome-192x192.png' => 192,
-				'android-chrome-256x256.png' => 256,
-				'apple-touch-icon.png' => 180,
-				'mstile-150x150.png' => 150
-			];
+		$images = [
+			'android-chrome-192x192.png' => 192,
+			'android-chrome-256x256.png' => 256,
+			'apple-touch-icon.png' => 180,
+			'mstile-150x150.png' => 150
+		];
+		
+		$hasFavicon = $style->hasFavicon;
+		if (array_key_exists('favicon', $this->parameters['uploads'])) {
+			/** @var \wcf\system\file\upload\UploadFile $file */
+			$file = $this->parameters['uploads']['favicon'];
 			
-			$adapter = ImageHandler::getInstance()->getAdapter();
-			$adapter->loadFile($template);
-			foreach ($images as $filename => $length) {
-				$thumbnail = $adapter->createThumbnail($length, $length);
-				$adapter->writeImage($thumbnail, WCF_DIR."images/favicon/{$styleID}.{$filename}");
+			if ($file !== null) {
+				$fileLocation = $file->getLocation();
+				if (($imageData = getimagesize($fileLocation)) === false) {
+					throw new \InvalidArgumentException('The given favicon is not an image');
+				}
+				$extension = ImageUtil::getExtensionByMimeType($imageData['mime']);
+				$newName = "favicon.template.".$extension;
+				$newLocation = $style->getAssetPath().$newName;
+				rename($fileLocation, $newLocation);
+				
+				// Create browser specific files.
+				$adapter = ImageHandler::getInstance()->getAdapter();
+				$adapter->loadFile($newLocation);
+				foreach ($images as $filename => $length) {
+					$thumbnail = $adapter->createThumbnail($length, $length);
+					$adapter->writeImage($thumbnail, $style->getAssetPath().$filename);
+				}
+				
+				// Create ICO file.
+				require(WCF_DIR . 'lib/system/api/chrisjean/php-ico/class-php-ico.php');
+				(new \PHP_ICO($newLocation, [
+					[16, 16],
+					[32, 32]
+				]))->save_ico($style->getAssetPath()."favicon.ico");
+				
+				(new StyleEditor($style))->update([
+					'hasFavicon' => 1,
+				]);
+				
+				$file->setProcessed($newLocation);
+				$hasFavicon = true;
 			}
-			
-			// create ico
-			require(WCF_DIR . 'lib/system/api/chrisjean/php-ico/class-php-ico.php');
-			$phpIco = new \PHP_ICO($template, [
-				[16, 16],
-				[32, 32]
-			]);
-			$phpIco->save_ico(WCF_DIR . "images/favicon/{$styleID}.favicon.ico");
-			
-			$hasFavicon = true;
-			
-			(new StyleEditor($style))->update(['hasFavicon' => 1]);
-			WCF::getSession()->unregister('styleFavicon-template-'.$style->styleID);
+			else {
+				foreach ($images as $filename => $length) {
+					unlink($style->getAssetPath().$filename);
+				}
+				unlink($style->getAssetPath()."favicon.ico");
+				foreach (['png', 'jpg', 'gif'] as $extension) {
+					if (file_exists($style->getAssetPath()."favicon.template.".$extension)) {
+						unlink($style->getAssetPath()."favicon.template.".$extension);
+					}
+				}
+				(new StyleEditor($style))->update([
+					'hasFavicon' => 0,
+				]);
+				
+				$hasFavicon = false;
+			}
 		}
 		
 		if ($hasFavicon) {
@@ -321,12 +369,12 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
     "name": "",
     "icons": [
         {
-            "src": "{$styleID}.android-chrome-192x192.png",
+            "src": "android-chrome-192x192.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "{$styleID}.android-chrome-256x256.png",
+            "src": "android-chrome-256x256.png",
             "sizes": "256x256",
             "type": "image/png"
         }
@@ -336,7 +384,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
     "display": "standalone"
 }
 MANIFEST;
-			file_put_contents(WCF_DIR . "images/favicon/{$styleID}.manifest.json", $manifest);
+			file_put_contents($style->getAssetPath()."manifest.json", $manifest);
 			
 			$style->loadVariables();
 			$tileColor = $style->getVariable('wcfHeaderBackground', true);
@@ -347,13 +395,13 @@ MANIFEST;
 <browserconfig>
     <msapplication>
         <tile>
-            <square150x150logo src="{$styleID}.mstile-150x150.png"/>
+            <square150x150logo src="mstile-150x150.png"/>
             <TileColor>{$tileColor}</TileColor>
         </tile>
     </msapplication>
 </browserconfig>
 BROWSERCONFIG;
-			file_put_contents(WCF_DIR . "images/favicon/{$styleID}.browserconfig.xml", $browserconfig);
+			file_put_contents($style->getAssetPath()."browserconfig.xml", $browserconfig);
 		}
 	}
 	
@@ -364,380 +412,35 @@ BROWSERCONFIG;
 	 * @since       3.1
 	 */
 	protected function updateCoverPhoto(Style $style) {
-		$styleID = $style->styleID;
-		$fileExtension = WCF::getSession()->getVar('styleCoverPhoto-'.$styleID);
-		if ($fileExtension) {
-			// remove old image
-			if ($style->coverPhotoExtension) {
-				@unlink(WCF_DIR . 'images/coverPhotos/' . $style->getCoverPhoto());
+		if (array_key_exists('coverPhoto', $this->parameters['uploads'])) {
+			/** @var \wcf\system\file\upload\UploadFile $file */
+			$file = $this->parameters['uploads']['coverPhoto'];
+			
+			if ($style->coverPhotoExtension && file_exists($style->getCoverPhotoLocation())) {
+				if (!$file || $style->getCoverPhotoLocation() !== $file->getLocation()) {
+					unlink($style->getCoverPhotoLocation());
+				}
 			}
-			
-			rename(
-				WCF_DIR . 'images/coverPhotos/' . $styleID . '.tmp.' . $fileExtension,
-				WCF_DIR . 'images/coverPhotos/' . $styleID . '.' . $fileExtension
-			);
-			
-			(new StyleEditor($style))->update(['coverPhotoExtension' => $fileExtension]);
-			WCF::getSession()->unregister('styleCoverPhoto-'.$style->styleID);
-		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function validateUpload() {
-		// check upload permissions
-		if (!WCF::getSession()->getPermission('admin.style.canManageStyle')) {
-			throw new PermissionDeniedException();
-		}
-		
-		$this->readBoolean('is2x', true);
-		$this->readString('tmpHash');
-		$this->readInteger('styleID', true);
-		
-		if ($this->parameters['styleID']) {
-			$styles = StyleHandler::getInstance()->getStyles();
-			if (!isset($styles[$this->parameters['styleID']])) {
-				throw new UserInputException('styleID');
-			}
-			
-			$this->style = $styles[$this->parameters['styleID']];
-		}
-		
-		/** @var UploadHandler $uploadHandler */
-		$uploadHandler = $this->parameters['__files'];
-		
-		if (count($uploadHandler->getFiles()) != 1) {
-			throw new IllegalLinkException();
-		}
-		
-		// check max filesize, allowed file extensions etc.
-		$uploadHandler->validateFiles(new DefaultUploadFileValidationStrategy(PHP_INT_MAX, ['jpg', 'jpeg', 'png', 'gif', 'svg']));
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function upload() {
-		// save files
-		/** @noinspection PhpUndefinedMethodInspection */
-		/** @var UploadFile[] $files */
-		$files = $this->parameters['__files']->getFiles();
-		$file = $files[0];
-		
-		$multiplier = ($this->parameters['is2x']) ? 2 : 1;
-		
-		try {
-			if (!$file->getValidationErrorType()) {
-				// shrink preview image if necessary
+			if ($file !== null) {
 				$fileLocation = $file->getLocation();
-				try {
-					if (($imageData = getimagesize($fileLocation)) === false) {
-						throw new UserInputException('image');
-					}
-					switch ($imageData[2]) {
-						case IMAGETYPE_PNG:
-						case IMAGETYPE_JPEG:
-						case IMAGETYPE_GIF:
-							// fine
-						break;
-						default:
-							throw new UserInputException('image');
-					}
-					
-					if ($imageData[0] > (Style::PREVIEW_IMAGE_MAX_WIDTH * $multiplier) || $imageData[1] > (Style::PREVIEW_IMAGE_MAX_HEIGHT * $multiplier)) {
-						$adapter = ImageHandler::getInstance()->getAdapter();
-						$adapter->loadFile($fileLocation);
-						$fileLocation = FileUtil::getTemporaryFilename();
-						$thumbnail = $adapter->createThumbnail(Style::PREVIEW_IMAGE_MAX_WIDTH * $multiplier, Style::PREVIEW_IMAGE_MAX_HEIGHT * $multiplier, false);
-						$adapter->writeImage($thumbnail, $fileLocation);
-					}
+				if (($imageData = getimagesize($fileLocation)) === false) {
+					throw new \InvalidArgumentException('The given coverPhoto is not an image');
 				}
-				catch (SystemException $e) {
-					throw new UserInputException('image');
-				}
+				$extension = ImageUtil::getExtensionByMimeType($imageData['mime']);
+				$newLocation = $style->getAssetPath().'coverPhoto.'.$extension;
+				rename($fileLocation, $newLocation);
+				(new StyleEditor($style))->update([
+					'coverPhotoExtension' => $extension,
+				]);
 				
-				// move uploaded file
-				if (@copy($fileLocation, WCF_DIR.'images/stylePreview-'.$this->parameters['tmpHash'].($this->parameters['is2x'] ? '@2x' : '').'.'.$file->getFileExtension())) {
-					@unlink($fileLocation);
-					
-					// store extension within session variables
-					WCF::getSession()->register('stylePreview-'.$this->parameters['tmpHash'].($this->parameters['is2x'] ? '@2x' : ''), $file->getFileExtension());
-					
-					if ($this->parameters['styleID']) {
-						$this->updateStylePreviewImage($this->style);
-						
-						return [
-							'url' => WCF::getPath().'images/stylePreview-'.$this->parameters['styleID'].($this->parameters['is2x'] ? '@2x' : '').'.'.$file->getFileExtension()
-						];
-					}
-					
-					// return result
-					return [
-						'url' => WCF::getPath().'images/stylePreview-'.$this->parameters['tmpHash'].($this->parameters['is2x'] ? '@2x' : '').'.'.$file->getFileExtension()
-					];
-				}
-				else {
-					throw new UserInputException('image', 'uploadFailed');
-				}
+				$file->setProcessed($newLocation);
+			}
+			else {
+				(new StyleEditor($style))->update([
+					'coverPhotoExtension' => '',
+				]);
 			}
 		}
-		catch (UserInputException $e) {
-			$file->setValidationErrorType($e->getType());
-		}
-		
-		return ['errorType' => $file->getValidationErrorType()];
-	}
-	
-	/**
-	 * Validates parameters to update a logo.
-	 */
-	public function validateUploadLogo() {
-		$this->validateUpload();
-	}
-	
-	/**
-	 * Handles logo upload.
-	 * 
-	 * @return	string[]
-	 */
-	public function uploadLogo() {
-		// save files
-		/** @noinspection PhpUndefinedMethodInspection */
-		/** @var UploadFile[] $files */
-		$files = $this->parameters['__files']->getFiles();
-		$file = $files[0];
-		
-		try {
-			$relativePath = FileUtil::unifyDirSeparator(FileUtil::getRelativePath(WCF_DIR.'images/', WCF_DIR.$this->parameters['imagePath']));
-			if (strpos($relativePath, '../') !== false) {
-				throw new UserInputException('imagePath', 'invalid');
-			}
-			
-			if ($this->parameters['type'] !== 'styleLogo' && $this->parameters['type'] !== 'styleLogo-mobile') {
-				throw new UserInputException('type', 'invalid');
-			}
-			
-			if (!$file->getValidationErrorType()) {
-				// shrink avatar if necessary
-				$fileLocation = $file->getLocation();
-				
-				$basename = $this->parameters['type'].'-'.$this->parameters['tmpHash'].'.'.$file->getFileExtension();
-				$target = WCF_DIR.$this->parameters['imagePath'].'/'.$basename;
-				
-				// move uploaded file
-				if (@copy($fileLocation, $target)) {
-					@unlink($fileLocation);
-					
-					// get logo size
-					list($width, $height) = getimagesize($target);
-					
-					// return result
-					return [
-						'url' => $basename,
-						'width' => $width,
-						'height' => $height
-					];
-				}
-				else {
-					throw new UserInputException('image', 'uploadFailed');
-				}
-			}
-		}
-		catch (UserInputException $e) {
-			$file->setValidationErrorType($e->getType());
-		}
-		
-		return ['errorType' => $file->getValidationErrorType()];
-	}
-	
-	/**
-	 * Validates parameters to upload a favicon.
-	 * 
-	 * @since       3.1
-	 */
-	public function validateUploadFavicon() {
-		// ignore tmp hash, uploading is supported for existing styles only
-		// and files will be finally processed on form submit
-		$this->parameters['tmpHash'] = '@@@WCF_INVALID_TMP_HASH@@@';
-		
-		$this->validateUpload();
-	}
-	
-	/**
-	 * Handles favicon upload.
-	 *
-	 * @return	string[]
-	 * @since       3.1
-	 */
-	public function uploadFavicon() {
-		// save files
-		/** @noinspection PhpUndefinedMethodInspection */
-		/** @var UploadFile[] $files */
-		$files = $this->parameters['__files']->getFiles();
-		$file = $files[0];
-		
-		try {
-			if (!$file->getValidationErrorType()) {
-				$fileLocation = $file->getLocation();
-				try {
-					if (($imageData = getimagesize($fileLocation)) === false) {
-						throw new UserInputException('favicon');
-					}
-					switch ($imageData[2]) {
-						case IMAGETYPE_PNG:
-						case IMAGETYPE_JPEG:
-						case IMAGETYPE_GIF:
-							// fine
-							break;
-						default:
-							throw new UserInputException('favicon');
-					}
-					
-					if ($imageData[0] != Style::FAVICON_IMAGE_WIDTH || $imageData[1] != Style::FAVICON_IMAGE_HEIGHT) {
-						throw new UserInputException('favicon', 'dimensions');
-					}
-				}
-				catch (SystemException $e) {
-					throw new UserInputException('favicon');
-				}
-				
-				// move uploaded file
-				if (@copy($fileLocation, WCF_DIR.'images/favicon/'.$this->style->styleID.'.favicon-template.'.$file->getFileExtension())) {
-					@unlink($fileLocation);
-					
-					// store extension within session variables
-					WCF::getSession()->register('styleFavicon-template-'.$this->style->styleID, $file->getFileExtension());
-					
-					// return result
-					return [
-						'url' => WCF::getPath().'images/favicon/'.$this->style->styleID.'.favicon-template.'.$file->getFileExtension()
-					];
-				}
-				else {
-					throw new UserInputException('favicon', 'uploadFailed');
-				}
-			}
-		}
-		catch (UserInputException $e) {
-			$file->setValidationErrorType($e->getType());
-		}
-		
-		return ['errorType' => $file->getValidationErrorType()];
-	}
-	
-	/**
-	 * Validates parameters to upload a cover photo.
-	 *
-	 * @since       3.1
-	 */
-	public function validateUploadCoverPhoto() {
-		if (!MODULE_USER_COVER_PHOTO) {
-			throw new PermissionDeniedException();
-		}
-		
-		// ignore tmp hash, uploading is supported for existing styles only
-		// and files will be finally processed on form submit
-		$this->parameters['tmpHash'] = '@@@WCF_INVALID_TMP_HASH@@@';
-		
-		$this->validateUpload();
-	}
-	
-	/**
-	 * Handles the cover photo upload.
-	 *
-	 * @return	string[]
-	 * @since       3.1
-	 */
-	public function uploadCoverPhoto() {
-		// save files
-		/** @noinspection PhpUndefinedMethodInspection */
-		/** @var UploadFile[] $files */
-		$files = $this->parameters['__files']->getFiles();
-		$file = $files[0];
-		
-		try {
-			if (!$file->getValidationErrorType()) {
-				$fileLocation = $file->getLocation();
-				try {
-					if (($imageData = getimagesize($fileLocation)) === false) {
-						throw new UserInputException('coverPhoto');
-					}
-					switch ($imageData[2]) {
-						case IMAGETYPE_PNG:
-						case IMAGETYPE_JPEG:
-						case IMAGETYPE_GIF:
-							// fine
-							break;
-						default:
-							throw new UserInputException('coverPhoto');
-					}
-					
-					if ($imageData[0] < UserCoverPhoto::MIN_WIDTH) {
-						throw new UserInputException('coverPhoto', 'minWidth');
-					}
-					else if ($imageData[1] < UserCoverPhoto::MIN_HEIGHT) {
-						throw new UserInputException('coverPhoto', 'minHeight');
-					}
-				}
-				catch (SystemException $e) {
-					throw new UserInputException('coverPhoto');
-				}
-				
-				// move uploaded file
-				if (@copy($fileLocation, WCF_DIR.'images/coverPhotos/'.$this->style->styleID.'.tmp.'.$file->getFileExtension())) {
-					@unlink($fileLocation);
-					
-					// store extension within session variables
-					WCF::getSession()->register('styleCoverPhoto-'.$this->style->styleID, $file->getFileExtension());
-					
-					// return result
-					return [
-						'url' => WCF::getPath().'images/coverPhotos/'.$this->style->styleID.'.tmp.'.$file->getFileExtension()
-					];
-				}
-				else {
-					throw new UserInputException('coverPhoto', 'uploadFailed');
-				}
-			}
-		}
-		catch (UserInputException $e) {
-			$file->setValidationErrorType($e->getType());
-		}
-		
-		return ['errorType' => $file->getValidationErrorType()];
-	}
-	
-	/**
-	 * Validates the parameters to delete a style's default cover photo.
-	 * 
-	 * @throws      PermissionDeniedException
-	 * @throws      UserInputException
-	 * @since       3.1
-	 */
-	public function validateDeleteCoverPhoto() {
-		if (!MODULE_USER_COVER_PHOTO) {
-			throw new PermissionDeniedException();
-		}
-		
-		$this->styleEditor = $this->getSingleObject();
-		if (!$this->styleEditor->coverPhotoExtension) {
-			throw new UserInputException('objectIDs');
-		}
-	}
-	
-	/**
-	 * Deletes a style's default cover photo.
-	 * 
-	 * @return      string[]
-	 * @since       3.1
-	 */
-	public function deleteCoverPhoto() {
-		$this->styleEditor->deleteCoverPhoto();
-		
-		return [
-			'url' => WCF::getPath().'images/coverPhotos/'.(new Style($this->styleEditor->styleID))->getCoverPhoto()
-		];
 	}
 	
 	/**
@@ -826,8 +529,12 @@ BROWSERCONFIG;
 			'authorName' => $this->styleEditor->authorName,
 			'authorURL' => $this->styleEditor->authorURL,
 			'imagePath' => $this->styleEditor->imagePath,
-			'apiVersion' => $this->styleEditor->apiVersion
+			'apiVersion' => $this->styleEditor->apiVersion,
+			
+			'coverPhotoExtension' => $this->styleEditor->coverPhotoExtension,
+			'hasFavicon' => $this->styleEditor->hasFavicon,
 		]);
+		$styleEditor = new StyleEditor($newStyle);
 		
 		// check if style description uses i18n
 		if (preg_match('~^wcf.style.styleDescription\d+$~', $newStyle->styleDescription)) {
@@ -849,7 +556,6 @@ BROWSERCONFIG;
 			$statement->execute([$newStyle->styleDescription]);
 			
 			// update style description
-			$styleEditor = new StyleEditor($newStyle);
 			$styleEditor->update([
 				'styleDescription' => $styleDescription
 			]);
@@ -870,94 +576,36 @@ BROWSERCONFIG;
 		foreach (['image', 'image2x'] as $imageType) {
 			$image = $this->styleEditor->{$imageType};
 			if ($image) {
-				// get extension
-				$fileExtension = mb_substr($image, mb_strrpos($image, '.'));
-				
-				// copy existing preview image
-				if (@copy(WCF_DIR . 'images/' . $image, WCF_DIR . 'images/stylePreview-' . $newStyle->styleID . $fileExtension)) {
-					// bypass StyleEditor::update() to avoid scaling of already fitting image
-					$sql = "UPDATE	wcf" . WCF_N . "_style
-						SET	".$imageType." = ?
-						WHERE	styleID = ?";
-					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute([
-						'stylePreview-' . $newStyle->styleID . $fileExtension,
-						$newStyle->styleID
-					]);
-				}
-			}
-		}
-		
-		// copy cover photo
-		if ($this->styleEditor->coverPhotoExtension) {
-			if (@copy(WCF_DIR . "images/coverPhotos/{$this->styleEditor->styleID}.{$this->styleEditor->coverPhotoExtension}", WCF_DIR . "images/coverPhotos/{$newStyle->styleID}.{$this->styleEditor->coverPhotoExtension}")) {
-				$sql = "UPDATE	wcf" . WCF_N . "_style
-					SET	coverPhotoExtension = ?
-					WHERE	styleID = ?";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute([
-					$this->styleEditor->coverPhotoExtension,
-					$newStyle->styleID
+				$styleEditor->update([
+					$imageType => preg_replace('/^style-\d+/', 'style-'.$styleEditor->styleID, $image),
 				]);
 			}
 		}
 		
-		// copy favicon
-		if ($this->styleEditor->hasFavicon) {
-			$path = WCF_DIR . 'images/favicon/';
-			foreach (glob($path . "{$this->styleEditor->styleID}.*") as $filepath) {
-				@copy($filepath, $path . preg_replace('~^\d+\.~', "{$newStyle->styleID}.", basename($filepath)));
+		// Copy asset path
+		$iterator = new \RecursiveIteratorIterator(
+			new \RecursiveDirectoryIterator(
+				$this->styleEditor->getAssetPath(),
+				\FilesystemIterator::SKIP_DOTS
+			), 
+			\RecursiveIteratorIterator::SELF_FIRST
+		);
+		foreach ($iterator as $file) {
+			/** @var \SplFileInfo $file */
+			if ($file->isDir()) {
+				$relativePath = FileUtil::getRelativePath($this->styleEditor->getAssetPath(), $file->getPathname());
 			}
-			
-			$sql = "UPDATE	wcf" . WCF_N . "_style
-				SET	hasFavicon = ?
-				WHERE	styleID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([
-				1,
-				$newStyle->styleID
-			]);
-		}
-		
-		// copy images
-		if ($this->styleEditor->imagePath && is_dir(WCF_DIR . $this->styleEditor->imagePath)) {
-			$path = FileUtil::removeTrailingSlash($this->styleEditor->imagePath);
-			$newPath = '';
-			$i = 2;
-			while (true) {
-				$newPath = "{$path}-{$i}/";
-				if (!file_exists(WCF_DIR . $newPath)) {
-					break;
-				}
-				
-				$i++;
+			else if ($file->isFile()) {
+				$relativePath = FileUtil::getRelativePath($this->styleEditor->getAssetPath(), $file->getPath());
 			}
-			
-			if (!FileUtil::makePath(WCF_DIR . $newPath)) {
-				$newPath = '';
+			else {
+				throw new \LogicException('Unreachable');
 			}
-			
-			if ($newPath) {
-				$src = FileUtil::addTrailingSlash(WCF_DIR . $this->styleEditor->imagePath);
-				$dst = WCF_DIR . $newPath;
-				
-				$dir = opendir($src);
-				while (($file = readdir($dir)) !== false) {
-					if ($file != '.' && $file != '..' && !is_dir($file)) {
-						@copy($src . $file, $dst . $file);
-					}
-				}
-				closedir($dir);
+			$targetFolder = $newStyle->getAssetPath().$relativePath;
+			FileUtil::makePath($targetFolder);
+			if ($file->isFile()) {
+				copy($file->getPathname(), $targetFolder.$file->getFilename());
 			}
-			
-			$sql = "UPDATE	wcf".WCF_N."_style
-				SET	imagePath = ?
-				WHERE	styleID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([
-				$newPath,
-				$newStyle->styleID
-			]);
 		}
 		
 		StyleCacheBuilder::getInstance()->reset();
