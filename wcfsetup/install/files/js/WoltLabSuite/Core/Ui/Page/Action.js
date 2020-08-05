@@ -142,6 +142,7 @@ define(['Dictionary', 'Language'], function (Dictionary, Language) {
 			}
 			
 			_container.insertBefore(wrapper, insertBefore);
+			_wrapper.classList.remove('scrolledDown');
 			
 			_buttons.set(buttonName, button);
 			this._renderContainer();
@@ -222,6 +223,7 @@ define(['Dictionary', 'Language'], function (Dictionary, Language) {
 				}
 				
 				elAttr(button.parentNode, 'aria-hidden', 'false');
+				_wrapper.classList.remove('scrolledDown');
 				this._renderContainer();
 			}
 		},
