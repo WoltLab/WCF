@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\image\adapter;
 use wcf\system\exception\SystemException;
+use wcf\util\FileUtil;
 
 /**
  * Wrapper for image adapters.
@@ -10,7 +11,7 @@ use wcf\system\exception\SystemException;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Image\Adapter
  */
-class ImageAdapter implements IImageAdapter {
+class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter {
 	/**
 	 * IImageAdapter object
 	 * @var	IImageAdapter
@@ -350,6 +351,19 @@ class ImageAdapter implements IImageAdapter {
 		}
 		
 		$this->overlayImage($file, $x, $y, $opacity);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function checkMemoryLimit($width, $height, $mimeType) {
+		if ($this->adapter instanceof IMemoryAwareImageAdapter) {
+			return $this->adapter->checkMemoryLimit($width, $height, $mimeType);
+		}
+		
+		$channels = $mimeType == 'image/png' ? 4 : 3;
+		
+		return FileUtil::checkMemoryLimit($width * $height * $channels * 2.1);
 	}
 	
 	/**
