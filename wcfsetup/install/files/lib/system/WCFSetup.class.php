@@ -1281,7 +1281,7 @@ class WCFSetup extends WCF {
 			$useRandomCookiePrefix = false;
 		}
 		
-		$prefix = 'wsc52_';
+		$prefix = 'wsc_';
 		if ($useRandomCookiePrefix) {
 			$cookieNames = array_keys($_COOKIE);
 			while (true) {
