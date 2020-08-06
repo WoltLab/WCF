@@ -73,7 +73,7 @@ define(['Dictionary', 'Language'], function (Dictionary, Language) {
 		 */
 		_onScroll: function (event) {
 			var offset = window.pageYOffset;
-			console.log(offset, _lastPosition);
+			
 			if (offset >= 300) {
 				if (_toTopButton.classList.contains('initiallyHidden')) {
 					_toTopButton.classList.remove('initiallyHidden');
@@ -120,7 +120,7 @@ define(['Dictionary', 'Language'], function (Dictionary, Language) {
 			var wrapper = elCreate('div');
 			wrapper.className = 'pageActionButton';
 			wrapper.name = buttonName;
-			elAttr(wrapper, 'aria-hidden', 'false');
+			elAttr(wrapper, 'aria-hidden', 'true');
 			
 			button.classList.add('button');
 			button.classList.add('buttonPrimary');
@@ -145,6 +145,14 @@ define(['Dictionary', 'Language'], function (Dictionary, Language) {
 			_wrapper.classList.remove('scrolledDown');
 			
 			_buttons.set(buttonName, button);
+			
+			// Query a layout related property to force a reflow, otherwise the transition is optimized away.
+			// noinspection BadExpressionStatementJS
+			wrapper.offsetParent;
+			
+			// Toggle the visibility to force the transition to be applied.
+			elAttr(wrapper, 'aria-hidden', 'false');
+			
 			this._renderContainer();
 		},
 		
@@ -184,14 +192,14 @@ define(['Dictionary', 'Language'], function (Dictionary, Language) {
 							_buttons.delete(buttonName);
 						}
 						
-						listItem.removeEventListener('animationend', callback);
+						listItem.removeEventListener('transitionend', callback);
 					}
 					catch (e) {
 						// ignore errors if the element has already been removed
 					}
 				};
 				
-				listItem.addEventListener('animationend', callback);
+				listItem.addEventListener('transitionend', callback);
 				
 				this.hide(buttonName);
 			}
