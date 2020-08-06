@@ -11,7 +11,7 @@
 		<span class="quoteBoxTitle">
 			{if $quoteAuthor}
 				{if $quoteLink}
-					<a {anchorAttributes url=$quoteLink}>{lang}wcf.bbcode.quote.title{/lang}</a>
+					<a {anchorAttributes url=$quoteLink isUgc=true}>{lang}wcf.bbcode.quote.title{/lang}</a>
 				{else}
 					{lang}wcf.bbcode.quote.title{/lang}
 				{/if}

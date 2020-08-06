@@ -32,7 +32,8 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode {
 				$element->setAttribute('href', preg_replace('~^https?://~', RouteHandler::getProtocol(), $href));
 			}
 			else {
-				self::markLinkAsExternal($element);
+				/** @var HtmlOutputNodeProcessor $htmlNodeProcessor */
+				self::markLinkAsExternal($element, $htmlNodeProcessor->getHtmlProcessor()->isUgc());
 			}
 			
 			$value = StringUtil::trim($element->textContent);
@@ -67,8 +68,9 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode {
 	 * Marks an element as external.
 	 * 
 	 * @param       \DOMElement     $element
+	 * @param       bool            $isUgc
 	 */
-	public static function markLinkAsExternal(\DOMElement $element) {
+	public static function markLinkAsExternal(\DOMElement $element, $isUgc = false) {
 		$element->setAttribute('class', 'externalURL');
 		
 		$rel = 'nofollow';
@@ -77,6 +79,10 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode {
 			
 			$element->setAttribute('target', '_blank');
 		}
+		if ($isUgc) {
+			$rel .= ' ugc';
+		}
+		
 		$element->setAttribute('rel', $rel);
 		
 		// If the link contains only a single image that is floated to the right,

@@ -19,6 +19,6 @@ class FacebookUserOptionOutput implements IUserOptionOutput {
 	public function getOutput(User $user, UserOption $option, $value) {
 		if (empty($value)) return '';
 		
-		return StringUtil::getAnchorTag('https://www.facebook.com/'.$value, $value);
+		return StringUtil::getAnchorTag('https://www.facebook.com/'.$value, $value, true, true);
 	}
 }

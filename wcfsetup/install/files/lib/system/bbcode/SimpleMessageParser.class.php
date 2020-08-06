@@ -201,7 +201,7 @@ class SimpleMessageParser extends SingletonFactory {
 				$url = 'http://'.$url;
 			}
 			
-			$text = str_replace($hash, StringUtil::getAnchorTag($url), $text);
+			$text = str_replace($hash, StringUtil::getAnchorTag($url, '', true, true), $text);
 		}
 		
 		foreach ($this->cachedEmails as $hash => $email) {

@@ -23,7 +23,7 @@ class MediaBBCode extends AbstractBBCode {
 			foreach (BBCodeMediaProvider::getCache() as $provider) {
 				if ($provider->matches($content)) {
 					if ($parser instanceof HtmlBBCodeParser && $parser->getIsGoogleAmp()) {
-						return StringUtil::getAnchorTag($content);
+						return StringUtil::getAnchorTag($content, '', true, true);
 					}
 					else {
 						return $provider->getOutput($content);
@@ -34,7 +34,7 @@ class MediaBBCode extends AbstractBBCode {
 		else if ($parser->getOutputType() == 'text/simplified-html' && !$parser->getRemoveLinks()) {
 			foreach (BBCodeMediaProvider::getCache() as $provider) {
 				if ($provider->matches($content)) {
-					return StringUtil::getAnchorTag($content);
+					return StringUtil::getAnchorTag($content, '', true, true);
 				}
 			}
 		}

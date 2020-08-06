@@ -21,7 +21,7 @@ class URLUserOptionOutput implements IUserOptionOutput {
 		
 		$value = self::getURL($value);
 		
-		return StringUtil::getAnchorTag($value, $value);
+		return StringUtil::getAnchorTag($value, $value, true, true);
 	}
 	
 	/**

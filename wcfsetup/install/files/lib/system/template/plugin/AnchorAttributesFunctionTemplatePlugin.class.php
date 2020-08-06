@@ -13,6 +13,7 @@ use wcf\util\StringUtil;
  * Optional parameter:
  *      `appendHref` (bool, default true)
  * 	`appendClassname` (bool, default true)
+ *      `isUgc` (bool, default false)
  *
  * Usage:
  * 	{anchorAttributes url=$url}
@@ -34,6 +35,7 @@ class AnchorAttributesFunctionTemplatePlugin implements IFunctionTemplatePlugin 
 		$url = $tagArgs['url'];
 		$appendClassname = $tagArgs['appendClassname'] ?? true;
 		$appendHref = $tagArgs['appendHref'] ?? true;
+		$isUgc = $tagArgs['isUgc'] ?? false;
 		
 		$external = true;
 		if (ApplicationHandler::getInstance()->isInternalURL($url)) {
@@ -55,6 +57,9 @@ class AnchorAttributesFunctionTemplatePlugin implements IFunctionTemplatePlugin 
 			if (EXTERNAL_LINK_TARGET_BLANK) {
 				$rel .= ' noopener noreferrer';
 				$attributes .= 'target="_blank"';
+			}
+			if ($isUgc) {
+				$rel .= ' ugc';
 			}
 			
 			$attributes .= ' rel="' . $rel . '"';

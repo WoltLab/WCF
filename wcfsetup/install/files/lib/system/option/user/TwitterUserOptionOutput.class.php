@@ -19,6 +19,6 @@ class TwitterUserOptionOutput implements IUserOptionOutput {
 	public function getOutput(User $user, UserOption $option, $value) {
 		if (empty($value)) return '';
 		
-		return StringUtil::getAnchorTag('https://twitter.com/'.$value, $value);
+		return StringUtil::getAnchorTag('https://twitter.com/'.$value, $value, true, true);
 	}
 }

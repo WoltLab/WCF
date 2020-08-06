@@ -48,6 +48,12 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 	protected $outputType = 'text/html';
 	
 	/**
+	 * enables rel=ugc for external links
+	 * @var bool
+	 */
+	protected $ugc = true;
+	
+	/**
 	 * Processes the input html string.
 	 *
 	 * @param       string          $html                           html string
@@ -112,5 +118,23 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 		}
 		
 		return $this->htmlOutputNodeProcessor;
+	}
+	
+	/**
+	 * Enables rel=ugc for external links.
+	 * 
+	 * @param bool $enable
+	 */
+	public function enableUgc($enable = true) {
+		$this->ugc = $enable;
+	}
+	
+	/**
+	 * Returns true, if content is user-generated.
+	 * 
+	 * @return bool
+	 */
+	public function isUgc() {
+		return $this->ugc;
 	}
 }
