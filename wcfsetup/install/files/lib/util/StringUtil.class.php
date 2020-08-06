@@ -672,12 +672,6 @@ final class StringUtil {
 	public static function getAnchorTag($url, $title = '', $encodeTitle = true) {
 		$url = self::trim($url);
 		
-		$external = true;
-		if (ApplicationHandler::getInstance()->isInternalURL($url)) {
-			$external = false;
-			$url = preg_replace('~^https?://~', RouteHandler::getProtocol(), $url);
-		}
-		
 		// cut visible url
 		if (empty($title)) {
 			// use URL and remove protocol and www subdomain
@@ -690,7 +684,36 @@ final class StringUtil {
 			if (!$encodeTitle) $title = self::encodeHTML($title);
 		}
 		
-		return '<a href="'.self::encodeHTML($url).'"'.($external ? (' class="externalURL"'.((EXTERNAL_LINK_REL_NOFOLLOW || EXTERNAL_LINK_TARGET_BLANK) ? (' rel="'.(EXTERNAL_LINK_REL_NOFOLLOW ? 'nofollow' : '').((EXTERNAL_LINK_REL_NOFOLLOW && EXTERNAL_LINK_TARGET_BLANK) ? ' ' : '').(EXTERNAL_LINK_TARGET_BLANK ? 'noopener noreferrer' : '').'"') : '').(EXTERNAL_LINK_TARGET_BLANK ? ' target="_blank"' : '')) : '').'>'.($encodeTitle ? self::encodeHTML($title) : $title).'</a>';
+		return '<a '. self::getAnchorTagAttributes($url) .'>' . ($encodeTitle ? self::encodeHTML($title) : $title) . '</a>';
+	}
+	
+	/**
+	 * Generates the attributes for an anchor tag from given URL.
+	 *
+	 * @param	string		$url
+	 * @return	string		attributes
+	 * @since       5.3
+	 */
+	public static function getAnchorTagAttributes($url) {
+		$external = true;
+		if (ApplicationHandler::getInstance()->isInternalURL($url)) {
+			$external = false;
+			$url = preg_replace('~^https?://~', RouteHandler::getProtocol(), $url);
+		}
+		
+		$attributes = 'href="' . self::encodeHTML($url) . '"';
+		if ($external) {
+			$attributes .= ' class="externalURL"';
+			$rel = 'nofollow';
+			if (EXTERNAL_LINK_TARGET_BLANK) {
+				$rel .= ' noopener noreferrer';
+				$attributes .= 'target="_blank"';
+			}
+			
+			$attributes .= ' rel="' . $rel . '"';
+		}
+		
+		return $attributes;
 	}
 	
 	/**
