@@ -442,11 +442,6 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			<option name="external_link_rel_nofollow">
-				<categoryname>general.page</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
 			<option name="external_link_target_blank">
 				<categoryname>general.page</categoryname>
 				<optiontype>boolean</optiontype>

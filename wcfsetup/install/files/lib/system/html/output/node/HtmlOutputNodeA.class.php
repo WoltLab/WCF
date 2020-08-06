@@ -71,22 +71,13 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode {
 	public static function markLinkAsExternal(\DOMElement $element) {
 		$element->setAttribute('class', 'externalURL');
 		
-		$rel = '';
-		if (EXTERNAL_LINK_REL_NOFOLLOW) {
-			$rel = 'nofollow';
-		}
-		
+		$rel = 'nofollow';
 		if (EXTERNAL_LINK_TARGET_BLANK) {
-			if (!empty($rel)) $rel .= ' ';
-			
-			$rel .= 'noopener noreferrer';
+			$rel .= ' noopener noreferrer';
 			
 			$element->setAttribute('target', '_blank');
 		}
-		
-		if (!empty($rel)) {
-			$element->setAttribute('rel', $rel);
-		}
+		$element->setAttribute('rel', $rel);
 		
 		// If the link contains only a single image that is floated to the right,
 		// then the external link marker is misaligned. Inheriting the CSS class
