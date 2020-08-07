@@ -3,7 +3,7 @@
 		<ul class="buttonList iconList">
 			{content}
 				{if $user->homepage && $user->homepage != 'http://'}
-					<li><a class="jsTooltip" title="{lang}wcf.user.option.homepage{/lang}" {anchorAttributes url=$user->homepage appendClassname=false  isUgc=true}><span class="icon icon16 fa-home"></span> <span class="invisible">{lang}wcf.user.option.homepage{/lang}</span></a></li>
+					<li><a class="jsTooltip" title="{lang}wcf.user.option.homepage{/lang}" {anchorAttributes url=$user->homepage appendClassname=false isUgc=true}><span class="icon icon16 fa-home"></span> <span class="invisible">{lang}wcf.user.option.homepage{/lang}</span></a></li>
 				{/if}
 				
 				{if $user->userID != $__wcf->user->userID}

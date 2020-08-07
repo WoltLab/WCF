@@ -125,7 +125,7 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 	 * 
 	 * @param bool $enable
 	 */
-	public function enableUgc($enable = true) {
+	public function setUgc($enable = true) {
 		$this->ugc = $enable;
 	}
 	

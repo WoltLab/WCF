@@ -9,14 +9,14 @@ use wcf\util\StringUtil;
  * Template function plugin which generates attributes for `a` HTML elements.
  *
  * Required parameter:
- * 	`url` (string)
+ *      `url` (string)
  * Optional parameter:
  *      `appendHref` (bool, default true)
- * 	`appendClassname` (bool, default true)
+ *      `appendClassname` (bool, default true)
  *      `isUgc` (bool, default false)
  *
  * Usage:
- * 	{anchorAttributes url=$url}
+ *      {anchorAttributes url=$url}
  *
  * @author	Marcel Werk
  * @copyright	2001-2020 WoltLab GmbH
@@ -56,7 +56,7 @@ class AnchorAttributesFunctionTemplatePlugin implements IFunctionTemplatePlugin 
 			$rel = 'nofollow';
 			if (EXTERNAL_LINK_TARGET_BLANK) {
 				$rel .= ' noopener noreferrer';
-				$attributes .= 'target="_blank"';
+				$attributes .= ' target="_blank"';
 			}
 			if ($isUgc) {
 				$rel .= ' ugc';

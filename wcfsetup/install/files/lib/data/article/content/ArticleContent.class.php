@@ -81,7 +81,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 		else {
 			$htmlOutputProcessor = new HtmlOutputProcessor();
 			$htmlOutputProcessor->setOutputType('text/plain');
-			$htmlOutputProcessor->enableUgc(false);
+			$htmlOutputProcessor->setUgc(false);
 			$htmlOutputProcessor->process($this->content, 'com.woltlab.wcf.article.content', $this->articleContentID, false, $this->languageID);
 			
 			return nl2br(StringUtil::encodeHTML(StringUtil::truncate($htmlOutputProcessor->getHtml(), 500)), false);
@@ -95,7 +95,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 	 */
 	public function getFormattedContent() {
 		$processor = new HtmlOutputProcessor();
-		$processor->enableUgc(false);
+		$processor->setUgc(false);
 		$processor->process($this->content, 'com.woltlab.wcf.article.content', $this->articleContentID, false, $this->languageID);
 		
 		return $processor->getHtml();
@@ -108,7 +108,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 	 */
 	public function getAmpFormattedContent() {
 		$processor = new AmpHtmlOutputProcessor();
-		$processor->enableUgc(false);
+		$processor->setUgc(false);
 		$processor->process($this->content, 'com.woltlab.wcf.article.content', $this->articleContentID);
 		
 		return $processor->getHtml();
@@ -152,7 +152,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 			case 'text/plain':
 				$processor = new HtmlOutputProcessor();
 				$processor->setOutputType('text/plain');
-				$processor->enableUgc(false);
+				$processor->setUgc(false);
 				$processor->process($this->content, 'com.woltlab.wcf.article.content', $this->articleContentID);
 				
 				return $processor->getHtml();
@@ -160,7 +160,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 				// parse and return message
 				$processor = new HtmlOutputProcessor();
 				$processor->setOutputType('text/simplified-html');
-				$processor->enableUgc(false);
+				$processor->setUgc(false);
 				$processor->process($this->content, 'com.woltlab.wcf.article.content', $this->articleContentID);
 				
 				return $processor->getHtml();
