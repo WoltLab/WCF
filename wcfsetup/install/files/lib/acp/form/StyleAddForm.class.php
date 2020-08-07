@@ -390,7 +390,6 @@ class StyleAddForm extends AbstractForm {
 			'removed' => UploadHandler::getInstance()->getRemovedFiledByFieldId('customAssets'),
 			'added' => UploadHandler::getInstance()->getFilesByFieldId('customAssets'),
 		];
-		
 	}
 	
 	/**
