@@ -45,7 +45,7 @@ class AnchorAttributesFunctionTemplatePlugin implements IFunctionTemplatePlugin 
 		
 		$attributes = '';
 		if ($appendHref) {
-			$attributes = 'href="' . StringUtil::encodeHTML($url) . '"';
+			$attributes .= ' href="' . StringUtil::encodeHTML($url) . '"';
 		}
 		
 		if ($external) {

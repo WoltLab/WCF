@@ -51,7 +51,7 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 	 * enables rel=ugc for external links
 	 * @var bool
 	 */
-	protected $ugc = true;
+	public $enableUgc = true;
 	
 	/**
 	 * Processes the input html string.
@@ -118,23 +118,5 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 		}
 		
 		return $this->htmlOutputNodeProcessor;
-	}
-	
-	/**
-	 * Enables rel=ugc for external links.
-	 * 
-	 * @param bool $enable
-	 */
-	public function setUgc($enable = true) {
-		$this->ugc = $enable;
-	}
-	
-	/**
-	 * Returns true, if content is user-generated.
-	 * 
-	 * @return bool
-	 */
-	public function isUgc() {
-		return $this->ugc;
 	}
 }

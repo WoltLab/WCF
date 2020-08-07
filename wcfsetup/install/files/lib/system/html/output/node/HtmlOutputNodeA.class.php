@@ -33,7 +33,7 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode {
 			}
 			else {
 				/** @var HtmlOutputNodeProcessor $htmlNodeProcessor */
-				self::markLinkAsExternal($element, $htmlNodeProcessor->getHtmlProcessor()->isUgc());
+				self::markLinkAsExternal($element, $htmlNodeProcessor->getHtmlProcessor()->enableUgc);
 			}
 			
 			$value = StringUtil::trim($element->textContent);

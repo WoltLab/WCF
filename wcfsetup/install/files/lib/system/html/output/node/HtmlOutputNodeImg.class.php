@@ -86,7 +86,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 						// proxy is enabled for insecure connections only
 						if (!IMAGE_ALLOW_EXTERNAL_SOURCE && !$this->isAllowedOrigin($src)) {
 							/** @var HtmlOutputNodeProcessor $htmlNodeProcessor */
-							$this->replaceExternalSource($element, $src, $htmlNodeProcessor->getHtmlProcessor()->isUgc());
+							$this->replaceExternalSource($element, $src, $htmlNodeProcessor->getHtmlProcessor()->enableUgc);
 						}
 						
 						continue;
@@ -135,7 +135,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 				}
 				else if (!IMAGE_ALLOW_EXTERNAL_SOURCE && !$this->isAllowedOrigin($src)) {
 					/** @var HtmlOutputNodeProcessor $htmlNodeProcessor */
-					$this->replaceExternalSource($element, $src, $htmlNodeProcessor->getHtmlProcessor()->isUgc());
+					$this->replaceExternalSource($element, $src, $htmlNodeProcessor->getHtmlProcessor()->enableUgc);
 				}
 				else if (MESSAGE_FORCE_SECURE_IMAGES && Url::parse($src)['scheme'] === 'http') {
 					// rewrite protocol to `https`

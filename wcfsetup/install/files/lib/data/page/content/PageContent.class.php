@@ -47,7 +47,7 @@ class PageContent extends DatabaseObject implements ILinkableObject {
 		MessageEmbeddedObjectManager::getInstance()->loadObjects('com.woltlab.wcf.page.content', [$this->pageContentID]);
 		
 		$processor = new HtmlOutputProcessor();
-		$processor->setUgc(false);
+		$processor->enableUgc = false;
 		$processor->process($this->content, 'com.woltlab.wcf.page.content', $this->pageContentID);
 		
 		return $processor->getHtml();
