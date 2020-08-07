@@ -231,4 +231,11 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 		return $this->getLink($response->getComment()->objectTypeID, $response->getComment()->objectID)
 			. '#comment' . $response->commentID . '/response' . $response->responseID;
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function isContentAuthor($commentOrResponse) {
+		return false;
+	}
 }

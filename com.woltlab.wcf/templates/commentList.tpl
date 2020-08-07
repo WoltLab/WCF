@@ -38,6 +38,10 @@
 								{if $comment->isDisabled}
 									<span class="badge label green jsIconDisabled">{lang}wcf.message.status.disabled{/lang}</span>
 								{/if}
+								
+								{if $commentManager->isContentAuthor($comment)}
+									<span class="badge label">{lang}wcf.comment.objectAuthor{/lang}</span>
+								{/if}
 							</h3>
 						</div>
 						
