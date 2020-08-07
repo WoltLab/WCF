@@ -128,7 +128,7 @@ class TemplateListPage extends SortablePage {
 		}
 		
 		uasort($this->availableApplications, function (Package $a, Package $b) {
-			return $a->getName() > $b->getName();
+			return $a->getName() <=> $b->getName();
 		});
 	}
 	
