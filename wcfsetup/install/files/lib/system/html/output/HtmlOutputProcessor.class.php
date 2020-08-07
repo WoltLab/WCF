@@ -48,6 +48,12 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 	protected $outputType = 'text/html';
 	
 	/**
+	 * enables rel=ugc for external links
+	 * @var bool
+	 */
+	public $enableUgc = true;
+	
+	/**
 	 * Processes the input html string.
 	 *
 	 * @param       string          $html                           html string

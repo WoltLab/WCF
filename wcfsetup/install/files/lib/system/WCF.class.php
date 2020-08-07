@@ -376,6 +376,10 @@ class WCF {
 		// https://github.com/WoltLab/WCF/issues/3330
 		define('MESSAGE_SIDEBAR_ENABLE_USER_ONLINE_MARKING', 1);
 		
+		// rel=nofollow is always applied to external link since 5.3
+		// https://github.com/WoltLab/WCF/issues/3339
+		define('EXTERNAL_LINK_REL_NOFOLLOW', 1);
+		
 		$filename = WCF_DIR.'options.inc.php';
 		
 		// create options file if doesn't exist

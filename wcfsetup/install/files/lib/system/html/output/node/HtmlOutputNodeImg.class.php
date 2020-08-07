@@ -85,7 +85,8 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 					if (IMAGE_PROXY_INSECURE_ONLY && $urlComponents['scheme'] === 'https') {
 						// proxy is enabled for insecure connections only
 						if (!IMAGE_ALLOW_EXTERNAL_SOURCE && !$this->isAllowedOrigin($src)) {
-							$this->replaceExternalSource($element, $src);
+							/** @var HtmlOutputNodeProcessor $htmlNodeProcessor */
+							$this->replaceExternalSource($element, $src, $htmlNodeProcessor->getHtmlProcessor()->enableUgc);
 						}
 						
 						continue;
@@ -133,7 +134,8 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 					}
 				}
 				else if (!IMAGE_ALLOW_EXTERNAL_SOURCE && !$this->isAllowedOrigin($src)) {
-					$this->replaceExternalSource($element, $src);
+					/** @var HtmlOutputNodeProcessor $htmlNodeProcessor */
+					$this->replaceExternalSource($element, $src, $htmlNodeProcessor->getHtmlProcessor()->enableUgc);
 				}
 				else if (MESSAGE_FORCE_SECURE_IMAGES && Url::parse($src)['scheme'] === 'http') {
 					// rewrite protocol to `https`
@@ -148,15 +150,16 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 	 * 
 	 * @param       \DOMElement     $element
 	 * @param       string          $src
+	 * @param       bool            $isUgc
 	 */
-	protected function replaceExternalSource(\DOMElement $element, $src) {
+	protected function replaceExternalSource(\DOMElement $element, $src, $isUgc = false) {
 		$element->parentNode->insertBefore($element->ownerDocument->createTextNode('['.WCF::getLanguage()->get('wcf.bbcode.image.blocked').': '), $element);
 		
 		if (!DOMUtil::hasParent($element, 'a')) {
 			$link = $element->ownerDocument->createElement('a');
 			$link->setAttribute('href', $src);
 			$link->textContent = $src;
-			HtmlOutputNodeA::markLinkAsExternal($link);
+			HtmlOutputNodeA::markLinkAsExternal($link, $isUgc);
 		}
 		else {
 			$link = $element->ownerDocument->createTextNode($src);

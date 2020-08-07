@@ -667,16 +667,11 @@ final class StringUtil {
 	 * @param	string		$url
 	 * @param	string		$title
 	 * @param	boolean		$encodeTitle
+	 * @param       boolean         $isUgc          true to add rel=ugc to the anchor tag 
 	 * @return	string		anchor tag
 	 */
-	public static function getAnchorTag($url, $title = '', $encodeTitle = true) {
+	public static function getAnchorTag($url, $title = '', $encodeTitle = true, $isUgc = false) {
 		$url = self::trim($url);
-		
-		$external = true;
-		if (ApplicationHandler::getInstance()->isInternalURL($url)) {
-			$external = false;
-			$url = preg_replace('~^https?://~', RouteHandler::getProtocol(), $url);
-		}
 		
 		// cut visible url
 		if (empty($title)) {
@@ -690,7 +685,40 @@ final class StringUtil {
 			if (!$encodeTitle) $title = self::encodeHTML($title);
 		}
 		
-		return '<a href="'.self::encodeHTML($url).'"'.($external ? (' class="externalURL"'.((EXTERNAL_LINK_REL_NOFOLLOW || EXTERNAL_LINK_TARGET_BLANK) ? (' rel="'.(EXTERNAL_LINK_REL_NOFOLLOW ? 'nofollow' : '').((EXTERNAL_LINK_REL_NOFOLLOW && EXTERNAL_LINK_TARGET_BLANK) ? ' ' : '').(EXTERNAL_LINK_TARGET_BLANK ? 'noopener noreferrer' : '').'"') : '').(EXTERNAL_LINK_TARGET_BLANK ? ' target="_blank"' : '')) : '').'>'.($encodeTitle ? self::encodeHTML($title) : $title).'</a>';
+		return '<a '. self::getAnchorTagAttributes($url, $isUgc) .'>' . ($encodeTitle ? self::encodeHTML($title) : $title) . '</a>';
+	}
+	
+	/**
+	 * Generates the attributes for an anchor tag from given URL.
+	 *
+	 * @param	string		$url
+	 * @param       boolean         $isUgc          true to add rel=ugc to the attributes
+	 * @return	string		attributes
+	 * @since       5.3
+	 */
+	public static function getAnchorTagAttributes($url, $isUgc = false) {
+		$external = true;
+		if (ApplicationHandler::getInstance()->isInternalURL($url)) {
+			$external = false;
+			$url = preg_replace('~^https?://~', RouteHandler::getProtocol(), $url);
+		}
+		
+		$attributes = 'href="' . self::encodeHTML($url) . '"';
+		if ($external) {
+			$attributes .= ' class="externalURL"';
+			$rel = 'nofollow';
+			if (EXTERNAL_LINK_TARGET_BLANK) {
+				$rel .= ' noopener noreferrer';
+				$attributes .= 'target="_blank"';
+			}
+			if ($isUgc) {
+				$rel .= ' ugc';
+			}
+			
+			$attributes .= ' rel="' . $rel . '"';
+		}
+		
+		return $attributes;
 	}
 	
 	/**

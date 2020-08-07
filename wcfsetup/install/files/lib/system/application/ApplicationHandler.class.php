@@ -200,8 +200,9 @@ class ApplicationHandler extends SingletonFactory {
 		$protocolRegex = new Regex('^https(?=://)');
 		if (empty($this->pageURLs)) {
 			foreach ($this->getApplications() as $application) {
-				$this->pageURLs[] = preg_replace('~/$~', '', $protocolRegex->replace($application->getPageURL(), 'http'));
+				$this->pageURLs[] = preg_replace('~/$~', '', $protocolRegex->replace(RouteHandler::getProtocol() . $application->domainName, 'http'));
 			}
+			$this->pageURLs = array_unique($this->pageURLs);
 		}
 		
 		foreach ($this->pageURLs as $pageURL) {

@@ -177,7 +177,7 @@ abstract class CustomOption extends Option implements ITitledObject {
 			
 			/** @noinspection PhpMissingBreakStatementInspection */
 			case 'URL':
-				if (!$forcePlaintext) return StringUtil::getAnchorTag($this->optionValue);
+				if (!$forcePlaintext) return StringUtil::getAnchorTag($this->optionValue, '', true, true);
 				// fallthrough
 				
 			default:
