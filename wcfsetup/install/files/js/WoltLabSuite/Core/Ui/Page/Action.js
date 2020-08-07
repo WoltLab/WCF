@@ -72,7 +72,18 @@ define(['Dictionary', 'Language'], function (Dictionary, Language) {
 		 * @param {Event=} event
 		 */
 		_onScroll: function (event) {
+			if (document.documentElement.classList.contains('disableScrolling')) {
+				// Ignore any scroll events that take place while body scrolling is disabled,
+				// because it messes up the scroll offsets.
+				return;
+			}
+			
 			var offset = window.pageYOffset;
+			if (offset === _lastPosition) {
+				// Ignore any scroll event that is fired but without a position change. This can
+				// happen after closing a dialog that prevented the body from being scrolled.
+				return;
+			}
 			
 			if (offset >= 300) {
 				if (_toTopButton.classList.contains('initiallyHidden')) {
