@@ -4540,6 +4540,7 @@ Attachments:
 		<item name="wcf.user.style.description"><![CDATA[Forces a specific style instead of the default one.]]></item>
 		<item name="wcf.user.username.description"><![CDATA[Username must be {REGISTER_USERNAME_MIN_LENGTH} up to {REGISTER_USERNAME_MAX_LENGTH} characters long.]]></item>
 		<item name="wcf.user.password.description"><![CDATA[A secure password should be at least 10 characters long.]]></item>
+		<item name="wcf.user.password.strength"><![CDATA[Password Strength]]></item>
 		<item name="wcf.user.password.zxcvbn.suggestions.use_words_avoid_common_phrases"><![CDATA[Use a few words, avoid common phrases.]]></item>
 		<item name="wcf.user.password.zxcvbn.suggestions.no_need_for_symbols_digits_uppercase"><![CDATA[No need for symbols, digits, or uppercase letters.]]></item>
 		<item name="wcf.user.password.zxcvbn.suggestions.add_word_uncommon_better"><![CDATA[Add another word or two. Uncommon words are better.]]></item>

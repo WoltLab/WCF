@@ -1,4 +1,5 @@
 Language.addObject({
+	'wcf.user.password.strength': '{lang}wcf.user.password.strength{/lang}',
 	'wcf.user.password.zxcvbn.suggestions.use_words_avoid_common_phrases': '{lang}wcf.user.password.zxcvbn.suggestions.use_words_avoid_common_phrases{/lang}',
 	'wcf.user.password.zxcvbn.suggestions.no_need_for_symbols_digits_uppercase': '{lang}wcf.user.password.zxcvbn.suggestions.no_need_for_symbols_digits_uppercase{/lang}',
 	'wcf.user.password.zxcvbn.suggestions.add_word_uncommon_better': '{lang}wcf.user.password.zxcvbn.suggestions.add_word_uncommon_better{/lang}',

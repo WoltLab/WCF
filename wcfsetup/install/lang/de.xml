@@ -4539,6 +4539,7 @@ Dateianhänge:
 		<item name="wcf.user.style.description"><![CDATA[Stil der Benutzeroberfläche]]></item>
 		<item name="wcf.user.username.description"><![CDATA[Der Benutzername muss mindestens {REGISTER_USERNAME_MIN_LENGTH} und darf maximal {REGISTER_USERNAME_MAX_LENGTH} Zeichen lang sein.]]></item>
 		<item name="wcf.user.password.description"><![CDATA[Ein sicheres Kennwort sollte mindestens 10 Zeichen lang sein.]]></item>
+		<item name="wcf.user.password.strength"><![CDATA[Passwortstärke]]></item>
 		<item name="wcf.user.password.zxcvbn.suggestions.use_words_avoid_common_phrases"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Verwende{else}Verwenden Sie{/if} einige Wörter. {if LANGUAGE_USE_INFORMAL_VARIANT}Verweide{else}Vermeiden Sie{/if} gängige Phrasen.]]></item>
 		<item name="wcf.user.password.zxcvbn.suggestions.no_need_for_symbols_digits_uppercase"><![CDATA[Sonderzeichen, Zahlen oder Großbuchstaben werden nicht benötigt.]]></item>
 		<item name="wcf.user.password.zxcvbn.suggestions.add_word_uncommon_better"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Ergänze{else}Ergänzen Sie{/if} ein oder zwei weitere Worte. Unübliche Worte sind zu bevorzugen.]]></item>
