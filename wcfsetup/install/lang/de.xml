@@ -2877,6 +2877,8 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.style.coverPhoto"><![CDATA[Standard-Titelbild]]></item>
 		<item name="wcf.acp.style.coverPhoto.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Standard-Titelbild dieses Stils wirklich löschen? Nach dem Löschen wird das allgemeine, Stil-unabhängige Standard-Titelbild verwendet.]]></item>
 		<item name="wcf.acp.style.coverPhoto.description"><![CDATA[Das Bild muss mindestens {$coverPhotoMinWidth}×{$coverPhotoMinHeight} Pixel groß sein, als Bildformate sind GIF, JPG, JPEG und PNG zulässig.]]></item>
+		<item name="wcf.acp.style.customAssets"><![CDATA[Zusätzliche Bilder]]></item>
+		<item name="wcf.acp.style.customAssets.description"><![CDATA[{literal}Die hochgeladenen Bilder werden unter dem selben Dateinamen im <kbd>custom/</kbd>-Ordner innerhalb des Stil-Ordners gespeichert. Im CSS muss der Ordner mit der Variable <kbd>#{$style_image_path}custom/</kbd> verlinkt werden.{/literal}]]></item>
 		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Stil <span class="confirmationObject">{$style->styleName}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.style.edit"><![CDATA[Stil bearbeiten]]></item>
 		<item name="wcf.acp.style.exportAsPackage"><![CDATA[Als Paket exportieren]]></item>

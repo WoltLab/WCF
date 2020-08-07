@@ -181,8 +181,11 @@ class StyleEditForm extends StyleAddForm {
 						break;
 					}
 				}
-				
 			}
+			
+			UploadHandler::getInstance()->registerFilesByField('customAssets', array_map(function ($filename) {
+				return new UploadFile($filename, basename($filename), false, true, true);
+			}, glob($this->style->getAssetPath().'custom/*')));
 		}
 	}
 	
@@ -217,8 +220,9 @@ class StyleEditForm extends StyleAddForm {
 				'apiVersion' => $this->apiVersion
 			]),
 			'uploads' => $this->uploads,
+			'customAssets' => $this->customAssets,
 			'tmpHash' => $this->tmpHash,
-			'variables' => $this->variables
+			'variables' => $this->variables,
 		]);
 		$this->objectAction->executeAction();
 		
