@@ -3358,6 +3358,7 @@ Errors are:
 		<item name="wcf.comment.guestDialog.title"><![CDATA[Guest Comment]]></item>
 		<item name="wcf.comment.sortField.cumulativeLikes"><![CDATA[Reactions]]></item>
 		<item name="wcf.comment.sortField.time"><![CDATA[Date]]></item>
+		<item name="wcf.comment.objectAuthor"><![CDATA[Author]]></item>
 	</category>
 	<category name="wcf.condition">
 		<item name="wcf.condition.greaterThan"><![CDATA[greater than]]></item>

@@ -3435,6 +3435,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.comment.guestDialog.title"><![CDATA[Gastkommentar]]></item>
 		<item name="wcf.comment.sortField.cumulativeLikes"><![CDATA[Reaktionen]]></item>
 		<item name="wcf.comment.sortField.time"><![CDATA[Datum]]></item>
+		<item name="wcf.comment.objectAuthor"><![CDATA[Autor]]></item>
 	</category>
 	<category name="wcf.condition">
 		<item name="wcf.condition.greaterThan"><![CDATA[mehr als]]></item>
