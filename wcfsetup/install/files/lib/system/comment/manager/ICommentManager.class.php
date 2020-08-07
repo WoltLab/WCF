@@ -147,4 +147,13 @@ interface ICommentManager {
 	 * Sets the list of disallowed bbcodes.
 	 */
 	public function setDisallowedBBCodes();
+	
+	/**
+	 * Returns whether the given Comment or CommentResponse was created by
+	 * the content's author.
+	 * 
+	 * @param	Comment|CommentResponse	$commentOrResponse
+	 * @return	boolean
+	 */
+	public function isContentAuthor($commentOrResponse);
 }
