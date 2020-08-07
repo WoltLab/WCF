@@ -515,17 +515,16 @@ function handleException($e) {
  * @throws	SystemException
  */
 function handleError($errorNo, $message, $filename, $lineNo) {
-	if (error_reporting() != 0) {
-		$type = 'error';
-		switch ($errorNo) {
-			case 2: $type = 'warning';
-				break;
-			case 8: $type = 'notice';
-				break;
-		}
-		
-		throw new SystemException('PHP '.$type.' in file '.$filename.' ('.$lineNo.'): '.$message, 0);
+	if (!(error_reporting() & $errorNo)) return;
+	$type = 'error';
+	switch ($errorNo) {
+		case 2: $type = 'warning';
+			break;
+		case 8: $type = 'notice';
+			break;
 	}
+	
+	throw new SystemException('PHP '.$type.' in file '.$filename.' ('.$lineNo.'): '.$message, 0);
 }
 
 if (!function_exists('is_countable')) {
