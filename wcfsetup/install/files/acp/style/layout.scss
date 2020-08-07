@@ -466,6 +466,28 @@ $wcfAcpSubMenuWidth: 300px;
 }
 
 /* Search for Packages */
+.packageSearchResultRow {
+	.columnText {
+		padding: 15px 10px;
+	}
+	
+	td.columnIcon {
+		position: relative;
+		width: 44px;
+		
+		a {
+			align-items: center;
+			bottom: 5px;
+			display: flex;
+			justify-content: center;
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 5px;
+		}
+	}
+}
+
 .packageSearchName {
 	@include wcfFontHeadline;
 	@include wcfFontBold;
@@ -474,15 +496,32 @@ $wcfAcpSubMenuWidth: 300px;
 .packageSearchVersion {
 	color: $wcfContentDimmedText;
 	font-weight: 400;
-	padding-left: 5px;
+}
+
+.packageSearchDescription {
+	margin-top: 3px;
 }
 
 .packageSearchPackage {
 	color: $wcfContentDimmedText;
 	font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-	font-weight: 400;
-	
-	@include wcfFontSmall;
+}
+
+.packageSearchAuthor,
+.packageSearchLicense {
+	white-space: nowrap;
+}
+
+.packageSearchAuthorWoltlab::before {
+	background-image: url(../../acp/images/woltlabLogo-tiny.png);
+	background-size: contain;
+	content: "";
+	display: inline-block;
+	height: 12px;
+	margin-right: 2px;
+	position: relative;
+	top: 1px;
+	width: 22px;
 }
 
 #packageSearchResultContainer {

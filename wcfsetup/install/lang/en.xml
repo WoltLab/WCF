@@ -1941,6 +1941,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.package.search.status.loading"><![CDATA[Searching…]]></item>
 		<item name="wcf.acp.package.search.status.noResults"><![CDATA[There were no matches.]]></item>
 		<item name="wcf.acp.package.search.status.refreshDatabase"><![CDATA[Retrieving the package lists…]]></item>
+		<item name="wcf.acp.package.search.result.official"><![CDATA[{if $count === 0}No matches{elseif $count === 1}One match{else}{#$count} matches{/if} in official WoltLab® packages]]></item>
 		<item name="wcf.acp.package.search.result.thirdParty"><![CDATA[{if $count === 0}No matches{elseif $count === 1}One match{else}{#$count} matches{/if} in package sources maintained by third parties]]></item>
 		<item name="wcf.acp.package.search.result.trusted"><![CDATA[{if $count === 0}No matches{elseif $count === 1}One match{else}{#$count} matches{/if} in official package sources]]></item>
 		<item name="wcf.acp.package.error.databaseChange"><![CDATA[The database layout could not be changed because of the following errors:

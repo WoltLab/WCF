@@ -66,6 +66,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		// there are no available package update servers
 		if (empty($availableUpdateServers)) {
 			WCF::getTPL()->assign([
+				'officialPackages' => [],
 				'thirdPartySources' => [],
 				'trustedSources' => [],
 			]);
@@ -96,6 +97,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		// no matches found
 		if (empty($packageUpdateIDs)) {
 			WCF::getTPL()->assign([
+				'officialPackages' => [],
 				'thirdPartySources' => [],
 				'trustedSources' => [],
 			]);
@@ -134,6 +136,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		// no matches found
 		if (empty($packageUpdates)) {
 			WCF::getTPL()->assign([
+				'officialPackages' => [],
 				'thirdPartySources' => [],
 				'trustedSources' => [],
 			]);
@@ -459,10 +462,11 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		
 		// assign versions
 		/**
+		 * @var ViewablePackageUpdate[] $officialPackages
 		 * @var ViewablePackageUpdate[] $thirdPartySources
 		 * @var ViewablePackageUpdate[] $trustedSources
 		 */
-		$thirdPartySources = $trustedSources = [];
+		$officialPackages = $thirdPartySources = $trustedSources = [];
 		/**
 		 * @var int $packageUpdateID
 		 * @var ViewablePackageUpdate $packageUpdate
@@ -473,7 +477,10 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 			$packageUpdate->setLatestVersion($updateVersions[$versionIDs['existing']]);
 			$packageUpdate->setUpdateServer($updateServers[$packageUpdate->packageUpdateServerID]);
 			
-			if ($packageUpdate->getUpdateServer()->isTrustedServer() || $packageUpdate->getUpdateServer()->isWoltLabStoreServer()) {
+			if ($packageUpdate->getUpdateServer()->isWoltLabUpdateServer()) {
+				$officialPackages[] = $packageUpdate;
+			}
+			else if ($packageUpdate->getUpdateServer()->isTrustedServer() || $packageUpdate->getUpdateServer()->isWoltLabStoreServer()) {
 				$trustedSources[] = $packageUpdate;
 			}
 			else {
@@ -481,6 +488,9 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 			}
 		}
 		
+		uasort($officialPackages, function(ViewablePackageUpdate $a, ViewablePackageUpdate $b) {
+			return strnatcasecmp($a->getName(), $b->getName());
+		});
 		uasort($thirdPartySources, function(ViewablePackageUpdate $a, ViewablePackageUpdate $b) {
 			return strnatcasecmp($a->getName(), $b->getName());
 		});
@@ -489,12 +499,13 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		});
 		
 		WCF::getTPL()->assign([
+			'officialPackages' => $officialPackages,
 			'thirdPartySources' => $thirdPartySources,
 			'trustedSources' => $trustedSources,
 		]);
 		
 		return [
-			'count' => count($thirdPartySources) + count($trustedSources),
+			'count' => count($officialPackages) + count($thirdPartySources) + count($trustedSources),
 			'template' => WCF::getTPL()->fetch('packageSearchResultList'),
 		];
 	}
