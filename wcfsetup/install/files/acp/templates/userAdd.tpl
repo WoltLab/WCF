@@ -162,6 +162,28 @@
 							</dd>
 						</dl>
 						
+						<script data-relocate="true">
+							require(['WoltLabSuite/Core/Ui/User/PasswordStrength', 'Language'], function (PasswordStrength, Language) {
+								{include file='passwordStrengthLanguage'}
+								
+								var relatedInputs = [];
+								if (elById('username')) relatedInputs.push(elById('username'));
+								if (elById('email')) relatedInputs.push(elById('email'));
+								
+								new PasswordStrength(elById('password'), {
+									relatedInputs: relatedInputs,
+									staticDictionary: [
+										'{$__wcf->user->username|encodeJS}',
+										'{$__wcf->user->email|encodeJS}',
+										{if $user|isset}
+											'{$user->username|encodeJS}',
+											'{$user->email|encodeJS}',
+										{/if}
+									]
+								});
+							})
+						</script>
+						
 						{event name='passwordFields'}
 					</section>
 				{/if}

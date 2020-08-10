@@ -376,6 +376,14 @@ class WCF {
 		// https://github.com/WoltLab/WCF/issues/3330
 		define('MESSAGE_SIDEBAR_ENABLE_USER_ONLINE_MARKING', 1);
 		
+		// Password strength configuration is deprecated since 5.3.
+		define('REGISTER_ENABLE_PASSWORD_SECURITY_CHECK', 0);
+		define('REGISTER_PASSWORD_MIN_LENGTH', 0);
+		define('REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE', 8);
+		define('REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE', 0);
+		define('REGISTER_PASSWORD_MUST_CONTAIN_DIGIT', 0);
+		define('REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR', 0);
+
 		// rel=nofollow is always applied to external link since 5.3
 		// https://github.com/WoltLab/WCF/issues/3339
 		define('EXTERNAL_LINK_REL_NOFOLLOW', 1);

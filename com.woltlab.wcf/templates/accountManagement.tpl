@@ -100,6 +100,24 @@
 			</dl>
 			
 			{event name='changePasswordFields'}
+			
+			<script data-relocate="true">
+				require(['WoltLabSuite/Core/Ui/User/PasswordStrength', 'Language'], function (PasswordStrength, Language) {
+					{include file='passwordStrengthLanguage'}
+					
+					var relatedInputs = [];
+					if (elById('username')) relatedInputs.push(elById('username'));
+					if (elById('email')) relatedInputs.push(elById('email'));
+					
+					new PasswordStrength(elById('newPassword'), {
+						relatedInputs: relatedInputs,
+						staticDictionary: [
+							'{$__wcf->user->username|encodeJS}',
+							'{$__wcf->user->email|encodeJS}',
+						]
+					});
+				})
+			</script>
 		</section>
 	{/if}
 	

@@ -7,10 +7,12 @@ use wcf\system\email\mime\MimePartFacade;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\Email;
 use wcf\system\email\UserMailbox;
+use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
+use wcf\util\JSON;
 use wcf\util\PasswordUtil;
 use wcf\util\StringUtil;
 use wcf\util\UserRegistrationUtil;
@@ -53,6 +55,11 @@ class AccountManagementForm extends AbstractForm {
 	 * @var	string
 	 */
 	public $newPassword = '';
+	
+	/**
+	 * @var mixed[]
+	 */
+	public $newPasswordStrengthVerdict = [];
 	
 	/**
 	 * confirmed new password
@@ -151,6 +158,14 @@ class AccountManagementForm extends AbstractForm {
 		if (isset($_POST['email'])) $this->email = $_POST['email'];
 		if (isset($_POST['confirmEmail'])) $this->confirmEmail = $_POST['confirmEmail'];
 		if (isset($_POST['newPassword'])) $this->newPassword = $_POST['newPassword'];
+		if (isset($_POST['newPassword_passwordStrengthVerdict'])) {
+			try {
+				$this->newPasswordStrengthVerdict = JSON::decode($_POST['newPassword_passwordStrengthVerdict']);
+			}
+			catch (SystemException $e) {
+				// ignore
+			}
+		}
 		if (isset($_POST['confirmNewPassword'])) $this->confirmNewPassword = $_POST['confirmNewPassword'];
 		if (isset($_POST['username'])) $this->username = StringUtil::trim($_POST['username']);
 		if (isset($_POST['quit'])) $this->quit = intval($_POST['quit']);
@@ -215,7 +230,7 @@ class AccountManagementForm extends AbstractForm {
 					throw new UserInputException('confirmNewPassword');
 				}
 				
-				if (!UserRegistrationUtil::isSecurePassword($this->newPassword)) {
+				if (($this->newPasswordStrengthVerdict['score'] ?? 4) < PASSWORD_MIN_SCORE) {
 					throw new UserInputException('newPassword', 'notSecure');
 				}
 				

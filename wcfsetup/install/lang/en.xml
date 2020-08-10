@@ -1445,13 +1445,11 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.module_user_rank"><![CDATA[User ranks]]></item>
 		<item name="wcf.acp.option.module_user_signature"><![CDATA[Signatures]]></item>
 		<item name="wcf.acp.option.module_team_page"><![CDATA[Staff list]]></item>
-		<item name="wcf.acp.option.register_enable_password_security_check"><![CDATA[Enable password validation]]></item>
-		<item name="wcf.acp.option.register_enable_password_security_check.description"><![CDATA[Password complexity will be validated, unsafe passwords will be rejected.]]></item>
-		<item name="wcf.acp.option.register_password_min_length"><![CDATA[Minimum Password Length]]></item>
-		<item name="wcf.acp.option.register_password_must_contain_digit"><![CDATA[Password must contain digits]]></item>
-		<item name="wcf.acp.option.register_password_must_contain_lower_case"><![CDATA[Password must contain lowercase characters]]></item>
-		<item name="wcf.acp.option.register_password_must_contain_special_char"><![CDATA[Password must contain special characters]]></item>
-		<item name="wcf.acp.option.register_password_must_contain_upper_case"><![CDATA[Password must contain uppercase characters]]></item>
+		<item name="wcf.acp.option.password_min_score"><![CDATA[Security Level]]></item>
+		<item name="wcf.acp.option.password_min_score.description"><![CDATA[“Score” value of the <a href="https://github.com/dropbox/zxcvbn" class="externalURL">zxcvbn library</a> that passwords need to achive.]]></item>
+		<item name="wcf.acp.option.password_min_score.0"><![CDATA[0: Disabled]]></item>
+		<item name="wcf.acp.option.password_min_score.1"><![CDATA[1: Very guessable (1 million attempts)]]></item>
+		<item name="wcf.acp.option.password_min_score.2"><![CDATA[2: Somewhat guessable (100 million attempts)]]></item>
 		<item name="wcf.acp.option.register_forbidden_usernames"><![CDATA[Reserved Usernames]]></item>
 		<item name="wcf.acp.option.register_forbidden_usernames.description"><![CDATA[You can specify which usernames are unavailable for registration. Enter one username per line.]]></item>
 		<item name="wcf.acp.option.register_forbidden_emails"><![CDATA[Reserved Email Addresses]]></item>
@@ -4543,12 +4541,35 @@ Attachments:
 		<item name="wcf.user.styles"><![CDATA[Styles]]></item>
 		<item name="wcf.user.style.description"><![CDATA[Forces a specific style instead of the default one.]]></item>
 		<item name="wcf.user.username.description"><![CDATA[Username must be {REGISTER_USERNAME_MIN_LENGTH} up to {REGISTER_USERNAME_MAX_LENGTH} characters long.]]></item>
-		<item name="wcf.user.password.description"><![CDATA[{if REGISTER_ENABLE_PASSWORD_SECURITY_CHECK}Due to security reasons every password must be at least {REGISTER_PASSWORD_MIN_LENGTH} characters long{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_DIGIT || REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR}{*
-		*} and contain {*
-		*}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE}lower-case letters{/if}{*
-		*}{if REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_DIGIT || REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR},{else} and{/if} {/if}upper-case letters{/if}{*
-		*}{if REGISTER_PASSWORD_MUST_CONTAIN_DIGIT}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR},{else} and{/if} {/if}digits{/if}{*
-		*}{if REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_DIGIT} and {/if}special chars{/if}{/if}.{else}A secure password should be at least 8 characters long.{/if}]]></item>
+		<item name="wcf.user.password.description"><![CDATA[A secure password should be at least 10 characters long.]]></item>
+		<item name="wcf.user.password.strength"><![CDATA[Password Strength]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.use_words_avoid_common_phrases"><![CDATA[Use a few words, avoid common phrases.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.no_need_for_symbols_digits_uppercase"><![CDATA[No need for symbols, digits, or uppercase letters.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.add_word_uncommon_better"><![CDATA[Add another word or two. Uncommon words are better.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.use_longer_keyboard_pattern"><![CDATA[Use a longer keyboard pattern with more turns.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.avoid_repeat"><![CDATA[Avoid repeated words and characters.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.avoid_sequence"><![CDATA[Avoid sequences.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.avoid_recent_year"><![CDATA[Avoid recent years.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.avoid_associated_year"><![CDATA[Avoid years that are associated with you.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.avoid_date"><![CDATA[Avoid dates and years that are associated with you.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.start_upper"><![CDATA[Capitalization does nott help very much.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.all_upper"><![CDATA[All-uppercase is almost as easy to guess as all-lowercase.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.reversed"><![CDATA[Reversed words aren’t much harder to guess.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.l33t"><![CDATA[Predictable substitutions like “@” instead of “a” don't help very much.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.straight_row"><![CDATA[Straight rows of keys are easy to guess.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.short_keyboard_pattern"><![CDATA[Short keyboard patterns are easy to guess.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.repeat_single_char"><![CDATA[Repeats like “aaa” are easy to guess.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.repeat"><![CDATA[Repeats like “abcabcabc” are only slightly harder to guess than “abc”.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.sequence"><![CDATA[Sequences like “abc” or “6543” are easy to guess.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.recent_year"><![CDATA[Recent years are easy to guess.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.date"><![CDATA[Dates are often easy to guess.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.top_10"><![CDATA[This is a top-10 common password.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.top_100"><![CDATA[This is a top-100 common password.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.common"><![CDATA[This is a very common password.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.common_alike"><![CDATA[This is similar to a commonly used password.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.sole_word"><![CDATA[A word by itself is easy to guess.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.sole_name"><![CDATA[Names and surnames by themselves are easy to guess.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.name"><![CDATA[Common names and surnames are easy to guess.]]></item>
 		<item name="wcf.user.lostPassword"><![CDATA[Lost Password]]></item>
 		<item name="wcf.user.lostPassword.description"><![CDATA[You must provide your username or email address to request a new password. Contact the site’s administrator if you need assistance.]]></item>
 		<item name="wcf.user.lostPassword.email.error.notFound"><![CDATA[“{$email}” is not used by any account.]]></item>
@@ -4595,12 +4616,7 @@ the website <a href="{link isHtmlEmail=true}{/link}">{@PAGE_TITLE|language}</a>.
 		<item name="wcf.user.quit.success"><![CDATA[Your user account will be deleted on {TIME_NOW+7*86400|date}. During this time period you can abort the deletion on this page.]]></item>
 		<item name="wcf.user.quit.cancel.success"><![CDATA[The account deletion has been aborted.]]></item>
 		<item name="wcf.user.emailActivation"><![CDATA[Verify New Email Address]]></item>
-		<item name="wcf.user.password.error.notSecure"><![CDATA[Due to security reasons, every password must be at least {REGISTER_PASSWORD_MIN_LENGTH} characters long{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_DIGIT || REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR}{*
-		*} and contain {*
-		*}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE}lower-case letters{/if}{*
-		*}{if REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_DIGIT || REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR},{else} and{/if} {/if}upper-case letters{/if}{*
-		*}{if REGISTER_PASSWORD_MUST_CONTAIN_DIGIT}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR},{else} and{/if} {/if}digits{/if}{*
-		*}{if REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_DIGIT} and {/if}special chars{/if}{/if}.]]></item>
+		<item name="wcf.user.password.error.notSecure"><![CDATA[Please select a more secure password.]]></item>
 		<item name="wcf.user.changeUsername.success"><![CDATA[The username has been changed.]]></item>
 		<item name="wcf.user.changeEmail.success"><![CDATA[The email address has been changed.]]></item>
 		<item name="wcf.user.changeEmail.needReactivation"><![CDATA[Your new email address{if $newEmail|isset} (“{$newEmail}”){/if} must be verified first. You should have received an email which was sent to your new email address containing an activation link. Open the link to verify your new email address.]]></item>

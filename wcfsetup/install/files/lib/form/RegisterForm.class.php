@@ -100,6 +100,11 @@ class RegisterForm extends UserAddForm {
 	public static $minRegistrationTime = 10;
 	
 	/**
+	 * @var mixed[]
+	 */
+	public $passwordStrengthVerdict = [];
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -145,6 +150,14 @@ class RegisterForm extends UserAddForm {
 		if (isset($_POST[$this->randomFieldNames['email']])) $this->email = StringUtil::trim($_POST[$this->randomFieldNames['email']]);
 		if (isset($_POST[$this->randomFieldNames['confirmEmail']])) $this->confirmEmail = StringUtil::trim($_POST[$this->randomFieldNames['confirmEmail']]);
 		if (isset($_POST[$this->randomFieldNames['password']])) $this->password = $_POST[$this->randomFieldNames['password']];
+		if (isset($_POST[$this->randomFieldNames['password'].'_passwordStrengthVerdict'])) {
+			try {
+				$this->passwordStrengthVerdict = JSON::decode($_POST[$this->randomFieldNames['password'].'_passwordStrengthVerdict']);
+			}
+			catch (SystemException $e) {
+				// ignore
+			}
+		}
 		if (isset($_POST[$this->randomFieldNames['confirmPassword']])) $this->confirmPassword = $_POST[$this->randomFieldNames['confirmPassword']];
 		
 		$this->groupIDs = [];
@@ -295,7 +308,7 @@ class RegisterForm extends UserAddForm {
 			parent::validatePassword($password, $confirmPassword);
 			
 			// check security of the given password
-			if (!UserRegistrationUtil::isSecurePassword($password)) {
+			if (($this->passwordStrengthVerdict['score'] ?? 4) < PASSWORD_MIN_SCORE) {
 				throw new UserInputException('password', 'notSecure');
 			}
 		}

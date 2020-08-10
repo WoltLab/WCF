@@ -239,6 +239,17 @@
 			minlength: {@REGISTER_USERNAME_MIN_LENGTH},
 			maxlength: {@REGISTER_USERNAME_MAX_LENGTH}
 		});
+		
+		require(['WoltLabSuite/Core/Ui/User/PasswordStrength', 'Language'], function (PasswordStrength, Language) {
+			{include file='passwordStrengthLanguage'}
+			
+			new PasswordStrength(elById('{@$randomFieldNames[password]}'), {
+				relatedInputs: [
+					elById('{@$randomFieldNames[username]}'),
+					elById('{@$randomFieldNames[email]}')
+				]
+			});
+		})
 	});
 </script>
 

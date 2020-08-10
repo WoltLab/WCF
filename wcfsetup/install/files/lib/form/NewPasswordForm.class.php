@@ -5,10 +5,12 @@ use wcf\data\user\UserAction;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
+use wcf\util\JSON;
 use wcf\util\StringUtil;
 use wcf\util\UserRegistrationUtil;
 
@@ -46,6 +48,11 @@ class NewPasswordForm extends AbstractForm {
 	 * @var	string
 	 */
 	public $newPassword = '';
+	
+	/**
+	 * @var	mixed[]
+	 */
+	public $newPasswordStrengtVerdict = [];
 	
 	/**
 	 * confirmed new password
@@ -102,6 +109,14 @@ class NewPasswordForm extends AbstractForm {
 		parent::readFormParameters();
 		
 		if (isset($_POST['newPassword'])) $this->newPassword = $_POST['newPassword'];
+		if (isset($_POST['newPassword_passwordStrengthVerdict'])) {
+			try {
+				$this->newPasswordStrengthVerdict = JSON::decode($_POST['newPassword_passwordStrengthVerdict']);
+			}
+			catch (SystemException $e) {
+				// ignore
+			}
+		}
 		if (isset($_POST['confirmNewPassword'])) $this->confirmNewPassword = $_POST['confirmNewPassword'];
 	}
 	
@@ -119,7 +134,7 @@ class NewPasswordForm extends AbstractForm {
 			throw new UserInputException('confirmNewPassword');
 		}
 		
-		if (!UserRegistrationUtil::isSecurePassword($this->newPassword)) {
+		if (($this->newPasswordStrengthVerdict['score'] ?? 4) < PASSWORD_MIN_SCORE) {
 			throw new UserInputException('newPassword', 'notSecure');
 		}
 		

@@ -1466,13 +1466,11 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.module_user_rank"><![CDATA[Benutzerränge]]></item>
 		<item name="wcf.acp.option.module_user_signature"><![CDATA[Signaturen]]></item>
 		<item name="wcf.acp.option.module_team_page"><![CDATA[Team-Seite]]></item>
-		<item name="wcf.acp.option.register_enable_password_security_check"><![CDATA[Sicherheitsüberprüfung aktivieren]]></item>
-		<item name="wcf.acp.option.register_enable_password_security_check.description"><![CDATA[Kennwörter werden auf ihre Sicherheit geprüft. Unsichere Kennwörter werden abgelehnt.]]></item>
-		<item name="wcf.acp.option.register_password_min_length"><![CDATA[Minimale Kennwortlänge]]></item>
-		<item name="wcf.acp.option.register_password_must_contain_digit"><![CDATA[Kennwort muss Zahlen enthalten]]></item>
-		<item name="wcf.acp.option.register_password_must_contain_lower_case"><![CDATA[Kennwort muss Kleinbuchstaben enthalten]]></item>
-		<item name="wcf.acp.option.register_password_must_contain_special_char"><![CDATA[Kennwort muss Sonderzeichen enthalten]]></item>
-		<item name="wcf.acp.option.register_password_must_contain_upper_case"><![CDATA[Kennwort muss Großbuchstaben enthalten]]></item>
+		<item name="wcf.acp.option.password_min_score"><![CDATA[Sicherheitslevel]]></item>
+		<item name="wcf.acp.option.password_min_score.description"><![CDATA[„Score“-Wert der <a href="https://github.com/dropbox/zxcvbn" class="externalURL">zxcvbn-Bibliothek</a>, den Kennwörter mindestens erreichen müssen.]]></item>
+		<item name="wcf.acp.option.password_min_score.0"><![CDATA[0: Deaktiviert]]></item>
+		<item name="wcf.acp.option.password_min_score.1"><![CDATA[1: Sehr leicht zu erraten (Eine Million Versuche)]]></item>
+		<item name="wcf.acp.option.password_min_score.2"><![CDATA[2: Leicht zu erraten (100 Millionen Versuche)]]></item>
 		<item name="wcf.acp.option.register_forbidden_usernames"><![CDATA[Reservierte Namen]]></item>
 		<item name="wcf.acp.option.register_forbidden_usernames.description"><![CDATA[Namen, die nicht als Benutzername verwendet werden dürfen. Ein Name pro Zeile]]></item>
 		<item name="wcf.acp.option.register_forbidden_emails"><![CDATA[Reservierte E-Mail-Adressen]]></item>
@@ -4542,13 +4540,35 @@ Dateianhänge:
 		<item name="wcf.user.styles"><![CDATA[Stile]]></item>
 		<item name="wcf.user.style.description"><![CDATA[Stil der Benutzeroberfläche]]></item>
 		<item name="wcf.user.username.description"><![CDATA[Der Benutzername muss mindestens {REGISTER_USERNAME_MIN_LENGTH} und darf maximal {REGISTER_USERNAME_MAX_LENGTH} Zeichen lang sein.]]></item>
-		<item name="wcf.user.password.description"><![CDATA[{if REGISTER_ENABLE_PASSWORD_SECURITY_CHECK}Das Kennwort muss aus Sicherheitsgründen mindestens {REGISTER_PASSWORD_MIN_LENGTH} Zeichen lang sein{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_DIGIT || REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR}{*
-		*} und {*
-		*}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE}kleine Buchstaben{/if}{*
-		*}{if REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_DIGIT || REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR},{else} und{/if} {/if}große Buchstaben{/if}{*
-		*}{if REGISTER_PASSWORD_MUST_CONTAIN_DIGIT}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR},{else} und{/if} {/if}Zahlen{/if}{*
-		*}{if REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_DIGIT} und {/if}Sonderzeichen{/if} {*
-		*}enthalten{/if}.{else}Ein sicheres Kennwort sollte mindestens 8 Zeichen lang sein.{/if}]]></item>
+		<item name="wcf.user.password.description"><![CDATA[Ein sicheres Kennwort sollte mindestens 10 Zeichen lang sein.]]></item>
+		<item name="wcf.user.password.strength"><![CDATA[Passwortstärke]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.use_words_avoid_common_phrases"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Verwende{else}Verwenden Sie{/if} einige Wörter. {if LANGUAGE_USE_INFORMAL_VARIANT}Verweide{else}Vermeiden Sie{/if} gängige Phrasen.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.no_need_for_symbols_digits_uppercase"><![CDATA[Sonderzeichen, Zahlen oder Großbuchstaben werden nicht benötigt.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.add_word_uncommon_better"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Ergänze{else}Ergänzen Sie{/if} ein oder zwei weitere Worte. Unübliche Worte sind zu bevorzugen.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.use_longer_keyboard_pattern"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Verwende{else}Verwenden Sie{/if} ein längeres und zufälligeres Muster auf der Tastatur.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.avoid_repeat"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Verweide{else}Vermeiden Sie{/if} Wiederholungen.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.avoid_sequence"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Verweide{else}Vermeiden Sie{/if} Sequenzen.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.avoid_recent_year"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Verweide{else}Vermeiden Sie{/if} Jahreszahlen der letzten Jahre.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.avoid_associated_year"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Verweide{else}Vermeiden Sie{/if} Jahreszahlen, die {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} zugeordnet werden können.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.avoid_date"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Verweide{else}Vermeiden Sie{/if} Daten und Jahreszahlen, die {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} zugeordnet werden können.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.start_upper"><![CDATA[Großbuchstaben zu Beginn erhöhen die Sicherheit nicht.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.all_upper"><![CDATA[Nur Großbuchstaben sind genau so einfach zu erraten, wie nur Kleinbuchstaben.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.reversed"><![CDATA[Umgekehrte Worte sind nicht viel schwieriger zu erraten.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.l33t"><![CDATA[Vorhersehbare Ersetzungen, wie beispielsweise „@“ statt „a“, erhöhen die Sicherheit nicht.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.straight_row"><![CDATA[Geradlinige Sequenzen auf der Tastatur sind einfach zu erraten.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.short_keyboard_pattern"><![CDATA[Kurze Sequenzen auf der Tastatur sind einfach zu erraten.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.repeat_single_char"><![CDATA[Wiederholungen wie beispielsweise „aaa“ sind einfach zu erraten.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.repeat"><![CDATA[Wiederholungen wie beispielsweise „abcabcabc“ sind nicht viel schwieriger zu erraten als „abc“.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.sequence"><![CDATA[Sequenzen wie „abc“ oder „6543“ sind einfach zu erraten.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.recent_year"><![CDATA[Kürzliche Jahreszahlen sind einfach zu erraten.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.date"><![CDATA[Daten sind einfach zu erraten.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.top_10"><![CDATA[Dies ist eines der 10 häufigsten Kennwörter.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.top_100"><![CDATA[Dies ist eines der 100 häufigsten Kennwörter.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.common"><![CDATA[Dies ist ein sehr häufiges Kennwort.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.common_alike"><![CDATA[Dies ist ähnlich zu einem sehr häufigen Kennwort.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.sole_word"><![CDATA[Ein einzelnes Wort ist einfach zu erraten.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.sole_name"><![CDATA[Alleinstehende Namen sind einfach zu erraten.]]></item>
+		<item name="wcf.user.password.zxcvbn.warnings.name"><![CDATA[Häufige Namen sind einfach zu erraten.]]></item>
 		<item name="wcf.user.lostPassword"><![CDATA[Kennwort vergessen]]></item>
 		<item name="wcf.user.lostPassword.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wenn du dein Kennwort vergessen hast, musst du entweder den Benutzernamen oder die E-Mail-Adresse angeben, die du in deinem Profil hinterlegt hast. Du kannst dabei nur eines der beiden Felder ausfüllen. Wenn du beide Daten nicht mehr weißt, wende dich bitte an den Administrator.{else}Wenn Sie Ihr Kennwort vergessen haben, müssen Sie entweder den Benutzernamen oder die E-Mail-Adresse angeben, die Sie in Ihrem Profil hinterlegt haben. Sie können dabei nur eines der beiden Felder ausfüllen. Wenn Sie beide Daten nicht mehr wissen, wenden Sie sich bitte an den Administrator.{/if}]]></item>
 		<item name="wcf.user.lostPassword.email.error.notFound"><![CDATA[Es wurde kein Benutzer mit der E-Mail-Adresse: „{$email}“ gefunden.]]></item>
@@ -4598,13 +4618,7 @@ dann wird diese Anfrage am {$mailbox->getUser()->lastLostPasswordRequestTime+864
 		<item name="wcf.user.quit.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wird am {TIME_NOW+7*86400|date} gelöscht. Bis dahin {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} die Löschung auf dieser Seite abbrechen.]]></item>
 		<item name="wcf.user.quit.cancel.success"><![CDATA[Die Löschung {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Benutzerkontos wurde erfolgreich abgebrochen.]]></item>
 		<item name="wcf.user.emailActivation"><![CDATA[Neue E-Mail-Adresse aktivieren]]></item>
-		<item name="wcf.user.password.error.notSecure"><![CDATA[Das Kennwort muss aus Sicherheitsgründen mindestens {REGISTER_PASSWORD_MIN_LENGTH} Zeichen lang sein{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_DIGIT || REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR}{*
-		*} und {*
-		*}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE}kleine Buchstaben{/if}{*
-		*}{if REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_DIGIT || REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR},{else} und{/if} {/if}große Buchstaben{/if}{*
-		*}{if REGISTER_PASSWORD_MUST_CONTAIN_DIGIT}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR},{else} und{/if} {/if}Zahlen{/if}{*
-		*}{if REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_DIGIT} und {/if}Sonderzeichen{/if} {*
-		*}enthalten{/if}.]]></item>
+		<item name="wcf.user.password.error.notSecure"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}wähle{else}wählen Sie{/if} ein sichereres Kennwort aus.]]></item>
 		<item name="wcf.user.changeUsername.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzername wurde erfolgreich geändert.]]></item>
 		<item name="wcf.user.changeEmail.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} E-Mail-Adresse wurde erfolgreich geändert.]]></item>
 		<item name="wcf.user.changeEmail.needReactivation"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} neue E-Mail-Adresse{if $newEmail|isset} („{$newEmail}“){/if} muss noch aktiviert werden. Dazu wurde eine E-Mail mit einem Aktivierungslink an die neue Adresse gesandt. {if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} diesen Aktivierungslink aufrufen, um die neue E-Mail-Adresse zu aktivieren.]]></item>

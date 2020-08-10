@@ -283,3 +283,66 @@ input {
 .customOptionRequired {
 	color: rgba(204, 0, 1, 1) !important;
 }
+
+/* password strength estimator */
+.inputAddonPasswordStrength {
+	align-items: flex-start;
+	
+	@include screen-xs {
+		flex-direction: column;
+	}
+}
+
+.passwordStrengthRating {
+	flex: 0 0 auto;
+	
+	@include screen-sm-up {
+		margin-left: 10px;
+	}
+	
+	@include screen-xs {
+		margin-top: 5px;
+		width: 100%;
+	}
+}
+
+.passwordStrengthScore {
+	background-color: rgb(224, 224, 224);
+	border-radius: 3px;
+	display: block;
+	height: 10px;
+	overflow: hidden;
+	position: relative;
+	
+	&::before {
+		background-color: transparent;
+		bottom: 0;
+		content: "";
+		left: 0;
+		position: absolute;
+		top: 0;
+		transition: background-color .12s linear, width .12s linear;
+		width: 0;
+	}
+	
+	&[data-score="0"]::before {
+		background-color: #DD2C00;
+		width: 5%;
+	}
+	&[data-score="1"]::before {
+		background-color: #FF9100;
+		width: 20%;
+	}
+	&[data-score="2"]::before {
+		background-color: #CDDC39;
+		width: 50%;
+	}
+	&[data-score="3"]::before {
+		background-color: #64DD17;
+		width: 85%;
+	}
+	&[data-score="4"]::before {
+		background-color: #2E7D32;
+		width: 100%;
+	}
+}

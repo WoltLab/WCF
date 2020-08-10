@@ -6,6 +6,7 @@ requirejs.config({
 		'perfect-scrollbar': '3rdParty/perfect-scrollbar',
 		'Pica': '3rdParty/pica',
 		prism: '3rdParty/prism',
+		zxcvbn: '3rdParty/zxcvbn',
 	},
 	shim: {
 		enquire: { exports: 'enquire' },
