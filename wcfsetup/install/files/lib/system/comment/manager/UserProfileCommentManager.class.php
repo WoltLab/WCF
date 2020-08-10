@@ -257,6 +257,6 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 	 */
 	public function isContentAuthor($commentOrResponse) {
 		$userID = $this->getObjectID($commentOrResponse);
-		return $userID == $commentOrResponse->userID;
+		return $commentOrResponse->userID && $userID == $commentOrResponse->userID;
 	}
 }

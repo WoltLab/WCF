@@ -215,6 +215,6 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
 	 */
 	public function isContentAuthor($commentOrResponse) {
 		$article = ViewableArticleRuntimeCache::getInstance()->getObject($this->getObjectID($commentOrResponse));
-		return $article->userID == $commentOrResponse->userID;
+		return $commentOrResponse->userID && $article->userID == $commentOrResponse->userID;
 	}
 }
