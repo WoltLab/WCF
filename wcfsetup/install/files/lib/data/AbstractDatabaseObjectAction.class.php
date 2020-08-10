@@ -186,8 +186,8 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 			throw new PermissionDeniedException();
 		}
 		
-		// execute action
-		call_user_func_array([$this, $actionName], $this->getParameters());
+		// validate action
+		$this->{$actionName}();
 		
 		// fire event action
 		EventHandler::getInstance()->fireAction($this, 'validateAction');
@@ -202,7 +202,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 			throw new SystemException("call to undefined function '".$this->getActionName()."'");
 		}
 		
-		$this->returnValues = call_user_func([$this, $this->getActionName()]);
+		$this->returnValues = $this->{$this->getActionName()}();
 		
 		// reset cache
 		if (in_array($this->getActionName(), $this->resetCache)) {
