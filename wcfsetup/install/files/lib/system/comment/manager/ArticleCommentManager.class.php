@@ -5,8 +5,6 @@ use wcf\data\article\content\ArticleContentList;
 use wcf\data\article\ArticleEditor;
 use wcf\data\comment\response\CommentResponseList;
 use wcf\data\comment\CommentList;
-use wcf\data\comment\response\CommentResponse;
-use wcf\data\DatabaseObjectDecorator;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\cache\runtime\ViewableArticleRuntimeCache;
@@ -216,12 +214,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
 	 * @inheritDoc
 	 */
 	public function isContentAuthor($commentOrResponse) {
-		if ($commentOrResponse instanceof CommentResponse || ($commentOrResponse instanceof DatabaseObjectDecorator && $commentOrResponse->getDecoratedObject() instanceof CommentResponse)) {
-			$article = ViewableArticleRuntimeCache::getInstance()->getObject($commentOrResponse->getComment()->objectID);
-		}
-		else {
-			$article = ViewableArticleRuntimeCache::getInstance()->getObject($commentOrResponse->objectID);
-		}
+		$article = ViewableArticleRuntimeCache::getInstance()->getObject($this->getObjectID($commentOrResponse));
 		return $article->userID == $commentOrResponse->userID;
 	}
 }

@@ -2,6 +2,7 @@
 namespace wcf\system\comment\manager;
 use wcf\data\comment\response\CommentResponse;
 use wcf\data\comment\Comment;
+use wcf\data\DatabaseObjectDecorator;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -237,5 +238,19 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 	 */
 	public function isContentAuthor($commentOrResponse) {
 		return false;
+	}
+	
+	/**
+	 * Returns the object ID for the given Comment or CommentResponse.
+	 * 
+	 * @return integer
+	 */
+	protected final function getObjectID($commentOrResponse) {
+		if ($commentOrResponse instanceof CommentResponse || ($commentOrResponse instanceof DatabaseObjectDecorator && $commentOrResponse->getDecoratedObject() instanceof CommentResponse)) {
+			return $commentOrResponse->getComment()->objectID;
+		}
+		else {
+			return $commentOrResponse->objectID;
+		}
 	}
 }
