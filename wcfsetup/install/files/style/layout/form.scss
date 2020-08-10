@@ -327,19 +327,19 @@ input {
 	
 	&[data-score="0"]::before {
 		background-color: #DD2C00;
-		width: 20%;
+		width: 5%;
 	}
 	&[data-score="1"]::before {
 		background-color: #FF9100;
-		width: 40%;
+		width: 20%;
 	}
 	&[data-score="2"]::before {
 		background-color: #CDDC39;
-		width: 60%;
+		width: 50%;
 	}
 	&[data-score="3"]::before {
 		background-color: #64DD17;
-		width: 80%;
+		width: 85%;
 	}
 	&[data-score="4"]::before {
 		background-color: #2E7D32;
