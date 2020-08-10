@@ -95,18 +95,19 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 		// update activity points
 		UserActivityPointHandler::getInstance()->fireEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $itemsToUser, false);
 		
-		$statementConditions = [];
+		$statementConditionParameters = [];
 		foreach ($likeObjectData as $objectTypeID => $objects) {
-			$statementConditions = array_merge(array_map(function ($objectID) use ($objectTypeID) {
-				return '('. $objectTypeID .', '. $objectID .')';
-			}, array_keys($objects)), $statementConditions);
+			foreach ($objects as $objectID => $object) {
+				$statementConditionParameters[] = $objectTypeID;
+				$statementConditionParameters[] = $objectID;
+			}
 		}
 		
 		$sql = "SELECT          objectTypeID, objectID, objectUserID, likes, dislikes, cumulativeLikes, cachedReactions
 			FROM            wcf".WCF_N."_like_object
-			WHERE           (objectTypeID, objectID) IN (". implode(', ', $statementConditions) .")";
+			WHERE           (objectTypeID, objectID) IN (". str_repeat('(?, ?), ', (count($statementConditionParameters) / 2) - 1) ." (?, ?))";
 		$objectStatement = WCF::getDB()->prepareStatement($sql);
-		$objectStatement->execute();
+		$objectStatement->execute($statementConditionParameters);
 		$rows = [];
 		while ($row = $objectStatement->fetchArray()) {
 			if (!isset($rows[$row['objectTypeID']])) $rows[$row['objectTypeID']] = [];
@@ -173,12 +174,7 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 		}
 		
 		foreach ($newCachedReactions as $reactionTypeID => $count) {
-			if (isset($oldCachedReactions[$reactionTypeID])) {
-				$oldCachedReactions[$reactionTypeID] += $count;
-			}
-			else {
-				$oldCachedReactions[$reactionTypeID] = $count;
-			}
+			$oldCachedReactions[$reactionTypeID] = ($oldCachedReactions[$reactionTypeID] ?? 0) + $count;
 		}
 		
 		return $oldCachedReactions;
