@@ -65,7 +65,7 @@ class UploadField {
 	 * @return boolean
 	 */
 	public function supportMultipleFiles() {
-		return $this->maxFiles > 1;
+		return $this->maxFiles === null || $this->maxFiles > 1;
 	}
 	
 	/**

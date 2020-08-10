@@ -7,6 +7,7 @@ use wcf\data\article\ArticleAction;
 use wcf\data\article\ArticleEditor;
 use wcf\data\article\ViewableArticle;
 use wcf\data\tag\Tag;
+use wcf\system\cache\runtime\ViewableArticleRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -83,7 +84,7 @@ abstract class AbstractArticlePage extends AbstractPage {
 			throw new IllegalLinkException();
 		}
 		
-		$this->article = ViewableArticle::getArticle($this->articleContent->articleID, false);
+		$this->article = ViewableArticleRuntimeCache::getInstance()->getObject($this->articleContent->articleID);
 		$this->article->getDiscussionProvider()->setArticleContent($this->articleContent->getDecoratedObject());
 		$this->category = $this->article->getCategory();
 		

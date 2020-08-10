@@ -383,6 +383,10 @@ class WCF {
 		define('REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE', 0);
 		define('REGISTER_PASSWORD_MUST_CONTAIN_DIGIT', 0);
 		define('REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR', 0);
+
+		// rel=nofollow is always applied to external link since 5.3
+		// https://github.com/WoltLab/WCF/issues/3339
+		define('EXTERNAL_LINK_REL_NOFOLLOW', 1);
 		
 		$filename = WCF_DIR.'options.inc.php';
 		

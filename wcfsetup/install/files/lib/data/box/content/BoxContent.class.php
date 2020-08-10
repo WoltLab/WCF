@@ -103,6 +103,7 @@ class BoxContent extends DatabaseObject {
 	 */
 	public function getFormattedContent() {
 		$processor = new HtmlOutputProcessor();
+		$processor->enableUgc = false;
 		$processor->process($this->content, 'com.woltlab.wcf.box.content', $this->boxContentID);
 		
 		return $processor->getHtml();

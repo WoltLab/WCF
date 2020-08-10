@@ -1388,8 +1388,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.enable_debug_mode.description"><![CDATA[Aktiviert ausführliche Fehlerberichte. Diese Option sollte im Live-Betrieb abgeschaltet werden.]]></item>
 		<item name="wcf.acp.option.enable_production_debug_mode"><![CDATA[Problemanalyse im Live-Betrieb]]></item>
 		<item name="wcf.acp.option.enable_production_debug_mode.description"><![CDATA[Hängt die aktuelle URL an Datenbankabfragen an, um diese im Log des Datenbankservers einfacher identifizieren zu können.]]></item>
-		<item name="wcf.acp.option.external_link_rel_nofollow"><![CDATA[Externe Links mit dem Attribut „rel="nofollow"“ versehen]]></item>
-		<item name="wcf.acp.option.external_link_rel_nofollow.description"><![CDATA[Das Attribut „rel="nofollow"“ weist Suchmaschinen an, einen bestimmten Link auf einer Seite zu ignorieren.]]></item>
 		<item name="wcf.acp.option.external_link_target_blank"><![CDATA[Externe Links in neuem Fenster öffnen]]></item>
 		<item name="wcf.acp.option.external_link_target_blank.description"><![CDATA[Setzt das Attribut „target="_blank"“ auf externe Links und weist den Browser dadurch an, einen aufgerufenen Link in einem neuen Browser-Fenster zu öffnen.]]></item>
 		<item name="wcf.acp.option.enable_benchmark"><![CDATA[Benchmark aktivieren]]></item>
@@ -1955,6 +1953,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.search.status.loading"><![CDATA[Suche läuft …]]></item>
 		<item name="wcf.acp.package.search.status.noResults"><![CDATA[Die Suche ergab keine Treffer.]]></item>
 		<item name="wcf.acp.package.search.status.refreshDatabase"><![CDATA[Die Paketlisten werden aktualisiert …]]></item>
+		<item name="wcf.acp.package.search.result.official"><![CDATA[{if $count === 0}Keine{elseif $count === 1}Ein{else}{#$count}{/if} Treffer in offiziellen WoltLab®-Paketen]]></item>
 		<item name="wcf.acp.package.search.result.thirdParty"><![CDATA[{if $count === 0}Keine{elseif $count === 1}Ein{else}{#$count}{/if} Treffer in Paketquellen von Drittanbietern]]></item>
 		<item name="wcf.acp.package.search.result.trusted"><![CDATA[{if $count === 0}Keine{elseif $count === 1}Ein{else}{#$count}{/if} Treffer in offiziellen Paketquellen]]></item>
 		<item name="wcf.acp.package.error.databaseChange"><![CDATA[Das Datenbanklayout konnte aufgrund folgender Fehler nicht aktualisiert werden:
@@ -2876,6 +2875,8 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.style.coverPhoto"><![CDATA[Standard-Titelbild]]></item>
 		<item name="wcf.acp.style.coverPhoto.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Standard-Titelbild dieses Stils wirklich löschen? Nach dem Löschen wird das allgemeine, Stil-unabhängige Standard-Titelbild verwendet.]]></item>
 		<item name="wcf.acp.style.coverPhoto.description"><![CDATA[Das Bild muss mindestens {$coverPhotoMinWidth}×{$coverPhotoMinHeight} Pixel groß sein, als Bildformate sind GIF, JPG, JPEG und PNG zulässig.]]></item>
+		<item name="wcf.acp.style.customAssets"><![CDATA[Zusätzliche Bilder]]></item>
+		<item name="wcf.acp.style.customAssets.description"><![CDATA[{literal}Die hochgeladenen Bilder werden unter demselben Dateinamen im <kbd>custom/</kbd>-Ordner innerhalb des Stil-Ordners gespeichert. Im CSS muss der Ordner mit der Variable <kbd>#{$style_image_path}custom/</kbd> verlinkt werden.{/literal}]]></item>
 		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Stil <span class="confirmationObject">{$style->styleName}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.style.edit"><![CDATA[Stil bearbeiten]]></item>
 		<item name="wcf.acp.style.exportAsPackage"><![CDATA[Als Paket exportieren]]></item>
@@ -3432,6 +3433,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.comment.guestDialog.title"><![CDATA[Gastkommentar]]></item>
 		<item name="wcf.comment.sortField.cumulativeLikes"><![CDATA[Reaktionen]]></item>
 		<item name="wcf.comment.sortField.time"><![CDATA[Datum]]></item>
+		<item name="wcf.comment.objectAuthor"><![CDATA[Autor]]></item>
 	</category>
 	<category name="wcf.condition">
 		<item name="wcf.condition.greaterThan"><![CDATA[mehr als]]></item>
@@ -5208,9 +5210,9 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 		<item name="wcf.user.notification.article.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat den Artikel <strong>{$article->getTitle()}</strong> verfasst.]]></item>
 		<item name="wcf.user.notification.article.mail.plaintext"><![CDATA[{if $event->getAuthor()->userID}{@$event->getAuthor()->username} [URL:{link controller='User' object=$event->getAuthor() isEmail=true}{/link}]{else}Ein Gast{/if} hat den Artikel „{@$notificationContent[variables][articleContent]->getTitle()}“ [URL:{link controller='Article' object=$notificationContent[variables][articleContent] isEmail=true}{/link}] verfasst:]]></item>
 		<item name="wcf.user.notification.article.mail.html"><![CDATA[<p>{if $event->getAuthor()->userID}<a href="{link controller='User' object=$event->getAuthor() isHtmlEmail=true}{/link}">{$event->getAuthor()->username}</a>{else}Ein Gast{/if} hat den Artikel <a href="{link controller='Article' object=$notificationContent[variables][articleContent] isHtmlEmail=true}{/link}">{$notificationContent[variables][articleContent]->getTitle()}</a> verfasst:</p>]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf einen Kommentar zu Ihrem Artikel]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.response.notification.commentResponse"><![CDATA[Neue Antwort auf einen Kommentar von Ihnen]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.notification.comment"><![CDATA[Neuer Kommentar zu Ihrem Artikel]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf einen Kommentar zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Artikel]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.response.notification.commentResponse"><![CDATA[Neue Antwort auf einen Kommentar von {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if}]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.notification.comment"><![CDATA[Neuer Kommentar zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Artikel]]></item>
 		<item name="wcf.user.notification.userRegistration.title"><![CDATA[Neue Benutzer-Registrierung]]></item>
 		<item name="wcf.user.notification.userRegistration.title.stacked"><![CDATA[{#$count} neue Benutzer-Registrierungen]]></item>
 		<item name="wcf.user.notification.userRegistration.message"><![CDATA[<strong>{$author}</strong> hat sich registriert.]]></item>

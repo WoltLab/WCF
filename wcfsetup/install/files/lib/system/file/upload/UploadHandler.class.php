@@ -180,7 +180,7 @@ class UploadHandler extends SingletonFactory {
 		$storage = $this->getStorage();
 		
 		if ($file->isProcessed()) {
-			$storage[$internalId]['removedFiles'] = array_unique(array_merge($storage[$internalId]['removedFiles'], [$file]));
+			$storage[$internalId]['removedFiles'] = array_merge($storage[$internalId]['removedFiles'], [$file]);
 		}
 		else {
 			@unlink($file->getLocation());

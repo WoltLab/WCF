@@ -19,6 +19,7 @@ use wcf\system\io\File;
 use wcf\system\io\Tar;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageArchive;
+use wcf\system\request\RouteHandler;
 use wcf\system\session\ACPSessionFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\setup\Installer;
@@ -225,6 +226,8 @@ class WCFSetup extends WCF {
 		if (isset($_REQUEST['step'])) $step = $_REQUEST['step'];
 		else $step = 'selectSetupLanguage';
 		
+		header('set-cookie: wcfsetup_cookietest='.TMP_FILE_PREFIX.'; domain=' . str_replace(RouteHandler::getProtocol(), '', RouteHandler::getHost()) . (RouteHandler::secureConnection() ? '; secure' : ''));
+		
 		// execute current step
 		switch ($step) {
 			/** @noinspection PhpMissingBreakStatementInspection */
@@ -383,6 +386,16 @@ class WCFSetup extends WCF {
 		
 		// openssl extension
 		$system['openssl']['result'] = @extension_loaded('openssl');
+		
+		// misconfigured reverse proxy / cookies
+		$system['hostname']['result'] = true;
+		list($system['hostname']['value']) = explode(':', $_SERVER['HTTP_HOST'], 2);
+		if (!empty($_SERVER['HTTP_REFERER'])) {
+			$refererHostname = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
+			$system['hostname']['result'] = $_SERVER['HTTP_HOST'] == $refererHostname;
+		}
+		
+		$system['cookie']['result'] = !empty($_COOKIE['wcfsetup_cookietest']) && $_COOKIE['wcfsetup_cookietest'] == TMP_FILE_PREFIX;
 		
 		WCF::getTPL()->assign([
 			'system' => $system,
@@ -1268,7 +1281,7 @@ class WCFSetup extends WCF {
 			$useRandomCookiePrefix = false;
 		}
 		
-		$prefix = 'wsc52_';
+		$prefix = 'wsc_';
 		if ($useRandomCookiePrefix) {
 			$cookieNames = array_keys($_COOKIE);
 			while (true) {

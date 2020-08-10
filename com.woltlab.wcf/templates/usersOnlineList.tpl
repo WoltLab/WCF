@@ -144,7 +144,7 @@
 					
 					<div class="details userInformation">
 						<div class="containerHeadline">
-							<h3>{if $user->getSpider()->spiderURL}<a href="{$user->getSpider()->spiderURL}" class="externalURL"{if EXTERNAL_LINK_REL_NOFOLLOW || EXTERNAL_LINK_TARGET_BLANK} rel="{if EXTERNAL_LINK_REL_NOFOLLOW}nofollow{/if}{if EXTERNAL_LINK_TARGET_BLANK}{if EXTERNAL_LINK_REL_NOFOLLOW} {/if}noopener noreferrer{/if}"{/if}{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$user->getSpider()->spiderName}</a>{else}{$user->getSpider()->spiderName}{/if}</h3>
+							<h3>{if $user->getSpider()->spiderURL}<a {anchorAttributes url=$user->getSpider()->spiderURL}>{$user->getSpider()->spiderName}</a>{else}{$user->getSpider()->spiderName}{/if}</h3>
 							{@$locationData}
 						</div>
 						

@@ -442,11 +442,6 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			<option name="external_link_rel_nofollow">
-				<categoryname>general.page</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
 			<option name="external_link_target_blank">
 				<categoryname>general.page</categoryname>
 				<optiontype>boolean</optiontype>
@@ -599,7 +594,7 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 			<option name="cookie_prefix">
 				<categoryname>general.system.cookie</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue>wsc52_</defaultvalue>
+				<defaultvalue>wsc_</defaultvalue>
 				<validationpattern>^[a-zA-Z0-9_]+$</validationpattern>
 			</option>
 			<!-- /general.system.cookie-->

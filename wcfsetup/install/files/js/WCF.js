@@ -3698,7 +3698,7 @@ if (COMPILER_TARGET_DEFAULT) {
 						this._enableOption($target, !isActive);
 					}
 					else {
-						var $dl = $('.' + $target + 'Input');
+						var $dl = $('.' + $.wcfEscapeID($target) + 'Input');
 						if ($dl.length) {
 							this._enableOptions($dl.children('dd').find('input, select, textarea'), !isActive);
 						}
@@ -3713,7 +3713,7 @@ if (COMPILER_TARGET_DEFAULT) {
 						this._enableOption($target, isActive);
 					}
 					else {
-						var $dl = $('.' + $target + 'Input');
+						var $dl = $('.' + $.wcfEscapeID($target) + 'Input');
 						if ($dl.length) {
 							this._enableOptions($dl.children('dd').find('input, select, textarea'), isActive);
 						}

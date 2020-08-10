@@ -4,6 +4,7 @@ use wcf\data\comment\response\CommentResponse;
 use wcf\data\comment\response\CommentResponseList;
 use wcf\data\comment\Comment;
 use wcf\data\comment\CommentList;
+use wcf\data\DatabaseObjectDecorator;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\like\IViewableLikeProvider;
@@ -250,5 +251,15 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 				}
 			}
 		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function isContentAuthor($commentOrResponse) {
+		if ($commentOrResponse instanceof CommentResponse || ($commentOrResponse instanceof DatabaseObjectDecorator && $commentOrResponse->getDecoratedObject() instanceof CommentResponse)) {
+			return $commentOrResponse->userID == $commentOrResponse->getComment()->objectID;
+		}
+		return $commentOrResponse->userID == $commentOrResponse->objectID;
 	}
 }

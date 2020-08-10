@@ -550,8 +550,9 @@ define(['Core', 'Environment', 'EventHandler', 'Language', 'ObjectMap', 'Dom/Tra
 		
 		_updateButtonState: function() {
 			var hasNewContent = false;
+			var itemList = elBySel('.menuOverlayItemList', this._menu);
 			elBySelAll('.badgeUpdate', this._menu, function (badge) {
-				if (~~badge.textContent > 0) {
+				if (~~badge.textContent > 0 && badge.closest('.menuOverlayItemList') === itemList) {
 					hasNewContent = true;
 				}
 			});

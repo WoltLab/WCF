@@ -38,6 +38,11 @@
 		<item name="wcf.global.systemRequirements.memoryLimit.description"><![CDATA[The maximum available memory of PHP scripts is too low to properly run the software.]]></item>
 		<item name="wcf.global.systemRequirements.openSSL"><![CDATA['OpenSSL' PHP extension]]></item>
 		<item name="wcf.global.systemRequirements.openSSL.description"><![CDATA[Your PHP version has been compiled without OpenSSL support, it is required to establish secure connections.]]></item>
+		<item name="wcf.global.systemRequirements.hostname"><![CDATA[Host Name]]></item>
+		<item name="wcf.global.systemRequirements.hostname.requirement"><![CDATA[Correct Host Name]]></item>
+		<item name="wcf.global.systemRequirements.hostname.description"><![CDATA[The host name determined by the web server must match the host name within the web browser's URL bar.]]></item>
+		<item name="wcf.global.systemRequirements.cookie"><![CDATA[Cookies]]></item>
+		<item name="wcf.global.systemRequirements.cookie.description"><![CDATA[The web browser must send cookies back to the web server.]]></item>
 		<item name="wcf.global.next"><![CDATA[Loading next step …]]></item>
 		<item name="wcf.global.next.description"><![CDATA[The installation is currently loading the next step, please wait.]]></item>
 		<item name="wcf.global.languages"><![CDATA[Choose languages to install]]></item>

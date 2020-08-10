@@ -1365,8 +1365,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.enable_debug_mode.description"><![CDATA[Enables extensive error messages, it should always be disabled in production environments!]]></item>
 		<item name="wcf.acp.option.enable_production_debug_mode"><![CDATA[Problem analysis in production environments]]></item>
 		<item name="wcf.acp.option.enable_production_debug_mode.description"><![CDATA[Appends the current URL to database queries to assist looking them up in the database server’s log files.]]></item>
-		<item name="wcf.acp.option.external_link_rel_nofollow"><![CDATA[Append the attribute “rel="nofollow"” to all external links]]></item>
-		<item name="wcf.acp.option.external_link_rel_nofollow.description"><![CDATA[The attribute “rel="nofollow"” tells search engines to disregard external links.]]></item>
 		<item name="wcf.acp.option.external_link_target_blank"><![CDATA[Open external links in a new window]]></item>
 		<item name="wcf.acp.option.external_link_target_blank.description"><![CDATA[Appends the attribute “target="_blank"” to external links, causing the user’s browser to open the link in a new window.]]></item>
 		<item name="wcf.acp.option.enable_benchmark"><![CDATA[Enable benchmark]]></item>
@@ -1939,6 +1937,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.package.search.status.loading"><![CDATA[Searching…]]></item>
 		<item name="wcf.acp.package.search.status.noResults"><![CDATA[There were no matches.]]></item>
 		<item name="wcf.acp.package.search.status.refreshDatabase"><![CDATA[Retrieving the package lists…]]></item>
+		<item name="wcf.acp.package.search.result.official"><![CDATA[{if $count === 0}No matches{elseif $count === 1}One match{else}{#$count} matches{/if} in official WoltLab® packages]]></item>
 		<item name="wcf.acp.package.search.result.thirdParty"><![CDATA[{if $count === 0}No matches{elseif $count === 1}One match{else}{#$count} matches{/if} in package sources maintained by third parties]]></item>
 		<item name="wcf.acp.package.search.result.trusted"><![CDATA[{if $count === 0}No matches{elseif $count === 1}One match{else}{#$count} matches{/if} in official package sources]]></item>
 		<item name="wcf.acp.package.error.databaseChange"><![CDATA[The database layout could not be changed because of the following errors:
@@ -2803,6 +2802,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.coverPhoto"><![CDATA[Default Cover Photo]]></item>
 		<item name="wcf.acp.style.coverPhoto.delete.confirmMessage"><![CDATA[Do you really want to delete the default cover photo? Once deleted, the global default photo will be used instead.]]></item>
 		<item name="wcf.acp.style.coverPhoto.description"><![CDATA[The image must be at least {$coverPhotoMinWidth}×{$coverPhotoMinHeight} pixels large, acceptable image types are GIF, JPG, JPEG and PNG.]]></item>
+		<item name="wcf.acp.style.customAssets"><![CDATA[Additional Images]]></item>
+		<item name="wcf.acp.style.customAssets.description"><![CDATA[{literal}The uploaded images will be stored with the same file name within the <kbd>custom/</kbd> folder in the style’s image folder. You can retrieve the folder’s path within the CSS by using <kbd>#{$style_image_path}custom/</kbd>.{/literal}]]></item>
 		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[Do you really want to delete the style <span class="confirmationObject">{$style->styleName}</span>?]]></item>
 		<item name="wcf.acp.style.edit"><![CDATA[Edit Style]]></item>
 		<item name="wcf.acp.style.exportAsPackage"><![CDATA[Export as package]]></item>
@@ -3355,6 +3356,7 @@ Errors are:
 		<item name="wcf.comment.guestDialog.title"><![CDATA[Guest Comment]]></item>
 		<item name="wcf.comment.sortField.cumulativeLikes"><![CDATA[Reactions]]></item>
 		<item name="wcf.comment.sortField.time"><![CDATA[Date]]></item>
+		<item name="wcf.comment.objectAuthor"><![CDATA[Author]]></item>
 	</category>
 	<category name="wcf.condition">
 		<item name="wcf.condition.greaterThan"><![CDATA[greater than]]></item>

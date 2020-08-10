@@ -287,6 +287,23 @@
 					</dl>
 				{/if}
 				
+				<dl{if $errorField == 'customAssets'} class="formError"{/if}>
+					<dt><label for="customAssets">{lang}wcf.acp.style.customAssets{/lang}</label></dt>
+					<dd>
+						{@$__wcf->getUploadHandler()->renderField('customAssets')}
+						{if $errorField == 'customAssets'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.acp.style.customAssets.error.{$errorType}{/lang}
+								{/if}
+							</small>
+						{/if}
+						<small>{lang}wcf.acp.style.customAssets.description{/lang}</small>
+					</dd>
+				</dl>
+				
 				{event name='fileFields'}
 			</section>
 			
