@@ -260,6 +260,11 @@
 	}
 }
 
+/* Prevents username overflow in the message sidebar */
+.messageAuthorContainer {
+	overflow: hidden;
+}
+
 .messageAuthorContainer:not(:last-child) {
 	@include screen-md-up {
 		margin-bottom: 5px;
