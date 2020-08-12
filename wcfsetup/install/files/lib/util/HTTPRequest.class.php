@@ -131,7 +131,7 @@ final class HTTPRequest {
 	 * Constructs a new instance of HTTPRequest.
 	 * 
 	 * @param	string		$url		URL to connect to
-	 * @param	string[]	$options
+	 * @param	array		$options
 	 * @param	mixed		$postParameters	Parameters to send via POST
 	 * @param	array		$files		Files to attach to the request
 	 */
