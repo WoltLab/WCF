@@ -115,6 +115,9 @@ final class ImageUtil {
 			$filename = FileUtil::getTemporaryFilename();
 			$thumbnail = $adapter->createThumbnail($maxWidth, $maxHeight, $obtainDimensions);
 			$adapter->writeImage($thumbnail, $filename);
+			// Clear thumbnail as soon as possible to free up the memory.
+			// This is technically useless, but done for consistency.
+			$thumbnail = null;
 		}
 		
 		return $filename;

@@ -205,6 +205,8 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 					
 					$thumbnail = $adapter->createThumbnail($width, $height, false);
 					$adapter->writeImage($thumbnail, $avatar->getLocation());
+					// Clear thumbnail as soon as possible to free up the memory.
+					$thumbnail = null;
 				}
 				
 				if ($width != UserAvatar::AVATAR_SIZE || $height != UserAvatar::AVATAR_SIZE) {
