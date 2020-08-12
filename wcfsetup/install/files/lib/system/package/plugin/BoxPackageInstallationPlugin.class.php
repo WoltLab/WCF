@@ -292,6 +292,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			if (!empty($row) && $row['boxType'] === 'system') {
 				unset($data['visibleEverywhere']);
 				unset($this->visibilityExceptions[$data['identifier']]);
+				unset($data['showOrder']);
 			}
 			
 			$box = parent::import($row, $data);
