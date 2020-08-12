@@ -67,7 +67,7 @@ class GoogleAuthAction extends AbstractAction {
 			}
 			
 			// validate state, validation of state is executed after fetching the access_token to invalidate 'code'
-			if (!isset($_GET['state']) || $_GET['state'] != WCF::getSession()->getVar('__googleInit')) throw new IllegalLinkException();
+			if (!isset($_GET['state']) || !\hash_equals(WCF::getSession()->getVar('__googleInit'), $_GET['state'])) throw new IllegalLinkException();
 			WCF::getSession()->unregister('__googleInit');
 			
 			$data = JSON::decode($content);
