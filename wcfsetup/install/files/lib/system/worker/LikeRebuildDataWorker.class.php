@@ -48,7 +48,8 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 			$sql = "UPDATE	wcf".WCF_N."_like_object
 				SET	likes = 0,
 					dislikes = 0,
-					cumulativeLikes = 0";
+					cumulativeLikes = 0, 
+					cachedReactions = NULL";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute();
 		}
@@ -86,31 +87,96 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 			$likeObjectData[$like->objectTypeID][$like->objectID]['cachedReactions'][$like->getReactionType()->reactionTypeID]++;
 		}
 		
+		// No objects are fetched. We can abort the execution. 
+		if (empty($likeObjectData)) {
+			return;
+		}
+		
 		// update activity points
 		UserActivityPointHandler::getInstance()->fireEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $itemsToUser, false);
 		
-		$sql = "INSERT INTO			wcf".WCF_N."_like_object
+		$statementConditionParameters = [];
+		foreach ($likeObjectData as $objectTypeID => $objects) {
+			foreach ($objects as $objectID => $object) {
+				$statementConditionParameters[] = $objectTypeID;
+				$statementConditionParameters[] = $objectID;
+			}
+		}
+		
+		$sql = "SELECT          objectTypeID, objectID, objectUserID, likes, dislikes, cumulativeLikes, cachedReactions
+			FROM            wcf".WCF_N."_like_object
+			WHERE           (objectTypeID, objectID) IN (". str_repeat('(?, ?), ', (count($statementConditionParameters) / 2) - 1) ." (?, ?))";
+		$objectStatement = WCF::getDB()->prepareStatement($sql);
+		$objectStatement->execute($statementConditionParameters);
+		$rows = [];
+		while ($row = $objectStatement->fetchArray()) {
+			if (!isset($rows[$row['objectTypeID']])) $rows[$row['objectTypeID']] = [];
+			
+			$rows[$row['objectTypeID']][$row['objectID']] = $row;
+		}
+		
+		$sql = "INSERT INTO		        wcf".WCF_N."_like_object
 							(objectTypeID, objectID, objectUserID, likes, dislikes, cumulativeLikes, cachedReactions)
-			VALUES				(?, ?, ?, ?, ?, ?, ?)
-			ON DUPLICATE KEY UPDATE		likes = likes + VALUES(likes),
-							cumulativeLikes = cumulativeLikes + VALUES(cumulativeLikes),
-							cachedReactions = VALUES(cachedReactions)";
-		$statement = WCF::getDB()->prepareStatement($sql);
+			VALUES				(?, ?, ?, ?, ?, ?, ?)";
+		$insertStatement = WCF::getDB()->prepareStatement($sql);
+		
+		$sql = "UPDATE          wcf".WCF_N."_like_object
+			SET             objectUserID = ?,
+					likes = ?,
+					dislikes = 0,
+					cumulativeLikes = ?, 
+					cachedReactions = ?
+			WHERE           objectTypeID = ?
+			AND             objectID = ?";
+		$updateStatement = WCF::getDB()->prepareStatement($sql);
 		
 		WCF::getDB()->beginTransaction();
 		foreach ($likeObjectData as $objectTypeID => $objects) {
 			foreach ($objects as $objectID => $data) {
-				$statement->execute([
-					$objectTypeID,
-					$objectID,
-					$data['objectUserID'],
-					$data['likes'],
-					0,
-					$data['cumulativeLikes'], 
-					serialize($data['cachedReactions'])
-				]);
+				if (isset($rows[$objectTypeID][$objectID])) {
+					$existingRow = $rows[$objectTypeID][$objectID];
+					
+					$updateStatement->execute([
+						$data['objectUserID'],
+						$existingRow['likes'] + $data['likes'],
+						$existingRow['cumulativeLikes'] + $data['cumulativeLikes'],
+						serialize($this->mergeCachedReactions(@unserialize($existingRow['cachedReactions']), $data['cachedReactions'])),
+						$objectTypeID,
+						$objectID
+					]);
+				}
+				else {
+					$insertStatement->execute([
+						$objectTypeID,
+						$objectID,
+						$data['objectUserID'],
+						$data['likes'],
+						0,
+						$data['cumulativeLikes'],
+						serialize($data['cachedReactions'])
+					]);
+				}
 			}
 		}
 		WCF::getDB()->commitTransaction();
+	}
+	
+	/**
+	 * Merges two cached reaction objects into one object. 
+	 * 
+	 * @param       int[]|null      $oldCachedReactions
+	 * @param       int[]           $newCachedReactions
+	 * @return      int[]
+	 */
+	private function mergeCachedReactions($oldCachedReactions, array $newCachedReactions) {
+		if (!is_array($oldCachedReactions)) {
+			$oldCachedReactions = [];
+		}
+		
+		foreach ($newCachedReactions as $reactionTypeID => $count) {
+			$oldCachedReactions[$reactionTypeID] = ($oldCachedReactions[$reactionTypeID] ?? 0) + $count;
+		}
+		
+		return $oldCachedReactions;
 	}
 }
