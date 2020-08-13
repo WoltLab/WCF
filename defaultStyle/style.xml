@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<style xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/style.xsd">
+<style xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/2019/style.xsd">
 	<general>
-		<stylename>Lantia Default Style</stylename>
-		<date>2015-10-22</date>
-		<copyright>WoltLab GmbH</copyright>
-		<license>GNU Lesser General Public License</license>
-		<version>3.0.0 Alpha 1</version>
-		<image>stylePreview-defaultStyle.png</image>
+		<stylename><![CDATA[WoltLab Suite Core 5.2]]></stylename>
+		<packageName><![CDATA[com.woltlab.wcf]]></packageName>
+		<date><![CDATA[2019-01-30]]></date>
+		<version><![CDATA[5.2.0]]></version>
+		<apiVersion><![CDATA[5.2]]></apiVersion>
+		<image><![CDATA[stylePreview.png]]></image>
+		<image2x><![CDATA[stylePreview@2x.png]]></image2x>
+		<copyright><![CDATA[WoltLab GmbH]]></copyright>
+		<license><![CDATA[GNU Lesser General Public License]]></license>
 	</general>
-	
 	<author>
-		<authorname>Alexander Ebert, Marcel Werk</authorname>
-		<authorurl>https://www.woltlab.com</authorurl>
+		<authorname><![CDATA[Alexander Ebert, Marcel Werk]]></authorname>
+		<authorurl><![CDATA[https://www.woltlab.com]]></authorurl>
 	</author>
-	
 	<files>
-		<variables>variables.xml</variables>
+		<variables><![CDATA[variables.xml]]></variables>
+		<images path="images/style-1/"><![CDATA[images.tar]]></images>
 	</files>
 </style>
