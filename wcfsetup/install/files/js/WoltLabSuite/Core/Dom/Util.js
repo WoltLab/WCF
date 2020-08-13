@@ -165,6 +165,7 @@ define(['Environment', 'StringUtil'], function(Environment, StringUtil) {
 		 * 
 		 * @param	{Element}	el		element to prepend
 		 * @param	{Element}	parentEl	future containing element
+		 * @deprecated 5.3 Use `parentEl.insertBefore(el, parentEl.firstChild)` instead.
 		 */
 		prepend: function(el, parentEl) {
 			if (parentEl.childNodes.length === 0) {
@@ -180,6 +181,7 @@ define(['Environment', 'StringUtil'], function(Environment, StringUtil) {
 		 * 
 		 * @param	{Element}	newEl		element to insert
 		 * @param	{Element}	el		reference element
+		 * @deprecated 5.3 Use `el.parentNode.insertBefore(newEl, el.nextSibling)` instead.
 		 */
 		insertAfter: function(newEl, el) {
 			if (el.nextSibling !== null) {

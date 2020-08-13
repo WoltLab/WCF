@@ -1,71 +1,68 @@
-@keyframes wcfPageAction {
-	0%   { visibility: visible; transform: translateY(-10px); opacity: 0; }
-	100% { visibility: visible; transform: translateY(0);     opacity: 1; }
-}
-
-@keyframes wcfPageActionOut {
-	0%   { visibility: visible; transform: translateY(0);     opacity: 1; }
-	100% { visibility: hidden;  transform: translateY(-10px); opacity: 0; }
-}
-
-@keyframes wcfPageActionRemove {
-	0%   { visibility: visible; transform: translateY(0);     opacity: 1; }
-	60%  { visibility: hidden;  transform: translateY(-10px); opacity: 0; }
-	100% { visibility: hidden;  transform: translateY(-10px); opacity: 0; max-width: 0; }
-}
-
 .pageAction {
 	bottom: 10px;
+	display: flex;
+	justify-content: flex-end;
+	left: 10px;
+	pointer-events: none;
 	position: fixed;
 	right: 10px;
 	z-index: 400;
 	
-	@include inlineList;
-	
-	> li {
-		animation: wcfPageActionOut .3s;
-		animation-fill-mode: forwards;
+	.pageActionButtons {
 		display: flex;
-		
-		// required to animate 'max-width' properly when removing items
-		max-width: 400px;
+		flex: 0 auto;
+		overflow: auto;
+	}
+	
+	.pageActionButtons,
+	.pageActionButtonToTop {
+		pointer-events: all;
+	}
+	
+	.pageActionButton {
+		display: flex;
+		flex: 0 0 auto;
 		white-space: nowrap;
 		
-		&[aria-hidden="false"] {
-			animation: wcfPageAction .3s;
-			animation-fill-mode: forwards;
+		&:not(:first-child) {
+			margin-left: 5px;
 		}
 		
 		&.remove {
-			animation: wcfPageActionRemove .5s;
-			animation-fill-mode: forwards;
-		}
-		
-		&.initiallyHidden {
-			animation: 0;
-			visibility: hidden;
-		}
-		
-		&.toTop > a {
-			padding: 2px;
+			opacity: 0 !important;
+			visibility: hidden !important;
 		}
 	}
 	
-	@include screen-xs {
-		flex-wrap: nowrap;
-		left: 10px;
+	.pageActionButton,
+	.pageActionButtonToTop {
+		opacity: 0;
+		transition: visibility .12s linear, opacity .12s linear;
+		visibility: hidden;
 		
-		> li {
-			flex: 1 1 auto;
-			max-width: none;
-			overflow: hidden;
-			
-			> a {
-				overflow: hidden;
-				text-align: center;
-				text-overflow: ellipsis;
-				width: 100%;
-			}
+		&[aria-hidden="false"] {
+			opacity: 1;
+			visibility: visible;
+		}
+	}
+	
+	.pageActionButtonToTop {
+		align-self: flex-start;
+		flex: 0 0 auto;
+		margin-left: 5px;
+		padding: 2px;
+	}
+	
+	@include screen-sm-down {
+		/* The iOS bottom touch zone is approximately 44px high. Any touches within will show the
+		   menu instead of registering any touch on a button. */
+		bottom: 44px;
+		
+		&.scrolledDown .pageActionButton,
+		&.scrolledDown .pageActionButtonToTop {
+			opacity: 0;
+			visibility: hidden;
+			transition-delay: .4s;
 		}
 	}
 }

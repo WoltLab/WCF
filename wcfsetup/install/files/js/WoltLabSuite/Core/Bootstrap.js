@@ -13,14 +13,14 @@ define(
 		'favico',                  'enquire',                'perfect-scrollbar',      'WoltLabSuite/Core/Date/Time/Relative',
 		'Ui/SimpleDropdown',       'WoltLabSuite/Core/Ui/Mobile',  'WoltLabSuite/Core/Ui/TabMenu', 'WoltLabSuite/Core/Ui/FlexibleMenu',
 		'Ui/Dialog',               'WoltLabSuite/Core/Ui/Tooltip', 'WoltLabSuite/Core/Language',   'WoltLabSuite/Core/Environment',
-		'WoltLabSuite/Core/Date/Picker', 'EventHandler',           'Core',                   'WoltLabSuite/Core/Ui/Page/JumpToTop',
+		'WoltLabSuite/Core/Date/Picker', 'EventHandler',           'Core',                   'WoltLabSuite/Core/Ui/Page/Action',
 		'Devtools', 'Dom/ChangeListener'
 	], 
 	function(
 		 favico,                   enquire,                  perfectScrollbar,         DateTimeRelative,
 		 UiSimpleDropdown,         UiMobile,                 UiTabMenu,                UiFlexibleMenu,
 		 UiDialog,                 UiTooltip,                Language,                 Environment,
-		 DatePicker,               EventHandler,             Core,                     UiPageJumpToTop,
+		 DatePicker,               EventHandler,             Core,                     UiPageAction,
 	         Devtools, DomChangeListener
 	)
 {
@@ -91,7 +91,7 @@ define(
 					// putting it at the end of the jQuery queue avoids trashing the
 					// layout too early and thus delaying the page initialization
 					window.jQuery(function() {
-						new UiPageJumpToTop();
+						UiPageAction.setup();
 					});
 					
 					window.jQuery.holdReady(false);
