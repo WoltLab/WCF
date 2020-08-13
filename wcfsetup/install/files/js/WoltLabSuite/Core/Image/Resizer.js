@@ -172,9 +172,9 @@ define([
 			
 			var canvas = document.createElement('canvas');
 			
-			var chromeBug = createImageBitmap(image).then(function (bitmap) {
+			var chromeBug = (window.createImageBitmap ? createImageBitmap(image).then(function (bitmap) {
 				if (bitmap.height != image.height) throw new Error('Chrome Bug #1069965');
-			});
+			}) : Promise.resolve());
 			
 			// Prevent upscaling
 			var newWidth = Math.min(maxWidth, image.width);
