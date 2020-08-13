@@ -4921,7 +4921,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.3rdparty.github"><![CDATA[GitHub]]></item>
 		<item name="wcf.user.3rdparty.github.login"><![CDATA[Login with GitHub]]></item>
 		<item name="wcf.user.3rdparty.github.login.error.access_denied"><![CDATA[Access to your GitHub account has been rejected.]]></item>
-		<item name="wcf.user.3rdparty.github.register"><![CDATA[You are creating an account through <span class="icon icon16 fa-github"></span>&nbsp;GitHub.]]></item>
+		<item name="wcf.user.3rdparty.github.register"><![CDATA[You are creating an account through <span class="icon icon16 fa-github"></span>&nbsp;GitHub. The username and your email address have therefore already been entered.]]></item>
 		<item name="wcf.user.3rdparty.github.connect"><![CDATA[Connect with your GitHub account{if $__wcf->session->getVar('__githubUsername')} “<a href="https://github.com/{$__wcf->session->getVar('__githubUsername')}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__githubUsername')}</a>”{/if}.]]></item>
 		<item name="wcf.user.3rdparty.github.connect.success"><![CDATA[Your user account has been connected with GitHub.]]></item>
 		<item name="wcf.user.3rdparty.github.connect.error.inuse"><![CDATA[Your GitHub account is already connected to a different user.]]></item>
@@ -4930,7 +4930,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.3rdparty.twitter"><![CDATA[Twitter]]></item>
 		<item name="wcf.user.3rdparty.twitter.login"><![CDATA[Login with Twitter]]></item>
 		<item name="wcf.user.3rdparty.twitter.login.error.denied"><![CDATA[Access to your Twitter account has been rejected.]]></item>
-		<item name="wcf.user.3rdparty.twitter.register"><![CDATA[You are creating an account through <span class="icon icon16 fa-twitter"></span>&nbsp;Twitter.]]></item>
+		<item name="wcf.user.3rdparty.twitter.register"><![CDATA[You are creating an account through <span class="icon icon16 fa-twitter"></span>&nbsp;Twitter. The username has therefore already been entered. Now enter your email address and you can start right away!]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect"><![CDATA[Connect with your Twitter account{if $__wcf->session->getVar('__twitterUsername')} “<a href="https://twitter.com/{$__wcf->session->getVar('__twitterUsername')}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__twitterUsername')}</a>”{/if}.]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect.success"><![CDATA[Your user account has been connected with Twitter.]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect.error.inuse"><![CDATA[Your Twitter account is already connected to a different user.]]></item>
@@ -4939,7 +4939,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.3rdparty.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.3rdparty.facebook.login"><![CDATA[Login with Facebook]]></item>
 		<item name="wcf.user.3rdparty.facebook.login.error.access_denied"><![CDATA[Access to your Facebook account has been rejected.]]></item>
-		<item name="wcf.user.3rdparty.facebook.register"><![CDATA[You are creating an account through <span class="icon icon16 fa-facebook"></span>&nbsp;Facebook.]]></item>
+		<item name="wcf.user.3rdparty.facebook.register"><![CDATA[You are creating an account through <span class="icon icon16 fa-facebook"></span>&nbsp;Facebook. The username and your email address have therefore already been entered.]]></item>
 		<item name="wcf.user.3rdparty.facebook.connect"><![CDATA[Connect with your Facebook account{if $__wcf->session->getVar('__facebookUsername')} “{$__wcf->session->getVar('__facebookUsername')}”{/if}.]]></item>
 		<item name="wcf.user.3rdparty.facebook.connect.success"><![CDATA[Your user account has been connected with Facebook.]]></item>
 		<item name="wcf.user.3rdparty.facebook.connect.error.inuse"><![CDATA[Your Facebook account is already connected to a different user.]]></item>
@@ -4948,7 +4948,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.3rdparty.google"><![CDATA[Google]]></item>
 		<item name="wcf.user.3rdparty.google.login"><![CDATA[Login with Google]]></item>
 		<item name="wcf.user.3rdparty.google.login.error.access_denied"><![CDATA[Access to your Google account has been rejected.]]></item>
-		<item name="wcf.user.3rdparty.google.register"><![CDATA[You are creating an account through <span class="icon icon16 fa-google"></span>&nbsp;Google.]]></item>
+		<item name="wcf.user.3rdparty.google.register"><![CDATA[You are creating an account through <span class="icon icon16 fa-google"></span>&nbsp;Google. The username and your email address have therefore already been entered.]]></item>
 		<item name="wcf.user.3rdparty.google.connect"><![CDATA[Connect with your Google account{if $__wcf->session->getVar('__googleUsername')} “{$__wcf->session->getVar('__googleUsername')}”{/if}.]]></item>
 		<item name="wcf.user.3rdparty.google.connect.success"><![CDATA[Your user account has been connected with Google.]]></item>
 		<item name="wcf.user.3rdparty.google.connect.error.inuse"><![CDATA[Your Google account is already connected to a different user.]]></item>
