@@ -334,6 +334,8 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 				foreach ($images as $filename => $length) {
 					$thumbnail = $adapter->createThumbnail($length, $length);
 					$adapter->writeImage($thumbnail, $style->getAssetPath().$filename);
+					// Clear thumbnail as soon as possible to free up the memory.
+					$thumbnail = null;
 				}
 				
 				// Create ICO file.

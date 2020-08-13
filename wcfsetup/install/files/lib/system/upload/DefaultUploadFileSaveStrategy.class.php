@@ -322,6 +322,9 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 			if ($file->width > $sizeData['width'] || $file->height > $sizeData['height']) {
 				$thumbnail = $adapter->createThumbnail($sizeData['width'], $sizeData['height'], isset($sizeData['retainDimensions']) ? $sizeData['retainDimensions'] : true);
 				$adapter->writeImage($thumbnail, $thumbnailLocation);
+				// Clear thumbnail as soon as possible to free up the memory for the next size.
+				$thumbnail = null;
+				
 				if (file_exists($thumbnailLocation) && ($imageData = @getimagesize($thumbnailLocation)) !== false) {
 					$updateData[$prefix.'Type'] = $imageData['mime'];
 					$updateData[$prefix.'Size'] = @filesize($thumbnailLocation);

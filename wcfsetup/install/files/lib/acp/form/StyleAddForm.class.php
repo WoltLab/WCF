@@ -537,6 +537,8 @@ class StyleAddForm extends AbstractForm {
 							$options['size']['preserveAspectRatio'] ?? true
 						);
 						$adapter->writeImage($thumbnail, $fileLocation);
+						// Clear thumbnail as soon as possible to free up the memory.
+						$thumbnail = null;
 					}
 					
 					// Check again after scaling
