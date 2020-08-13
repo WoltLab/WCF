@@ -3634,7 +3634,6 @@
 				},
 				dragover: function (e) {
 					e.preventDefault();
-					e.stopPropagation();
 					
 					if (e.target.tagName === 'IMG') {
 						$(e.target).addClass('redactor-image-dragover');
