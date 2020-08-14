@@ -85,6 +85,8 @@ class StyleGlobalValuesForm extends AbstractForm {
 				$errorMessage = StyleCompiler::getInstance()->testStyle($this->styleTestFileDir, $defaultStyle->apiVersion, $defaultStyle->imagePath, $defaultStyle->getVariables(), $tmpFile);
 				
 				if ($errorMessage !== null) {
+					rmdir($this->styleTestFileDir);
+					
 					throw new UserInputException('styles', [
 						'message' => $errorMessage->getMessage(),
 					]);

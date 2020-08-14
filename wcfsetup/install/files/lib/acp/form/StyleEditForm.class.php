@@ -85,6 +85,8 @@ class StyleEditForm extends StyleAddForm {
 		$result = StyleCompiler::getInstance()->testStyle($this->styleTestFileDir, $this->apiVersion, false, $variables);
 		
 		if ($result !== null) {
+			rmdir($this->styleTestFileDir);
+			
 			throw new UserInputException('individualScss', [
 				'message' => $result->getMessage(),
 			]);

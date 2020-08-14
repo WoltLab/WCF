@@ -477,6 +477,8 @@ class StyleAddForm extends AbstractForm {
 		$result = StyleCompiler::getInstance()->testStyle($this->styleTestFileDir, $this->apiVersion, false, $variables);
 		
 		if ($result !== null) {
+			rmdir($this->styleTestFileDir);
+			
 			throw new UserInputException('individualScss', [
 				'message' => $result->getMessage(),
 			]);
@@ -797,11 +799,10 @@ class StyleAddForm extends AbstractForm {
 			'styleDescription' => 'wcf.style.styleDescription'.$style->styleID
 		]);
 		
-		// save compiled style
+		// Do not save the compiled style, because the image path was unknown during the style generation. 
 		if ($this->styleTestFileDir && file_exists($this->styleTestFileDir . '/style.css') && file_exists($this->styleTestFileDir . '/style-rtl.css')) {
-			$styleFilename = StyleCompiler::getFilenameForStyle($style);
-			rename($this->styleTestFileDir . '/style.css', $styleFilename . '.css');
-			rename($this->styleTestFileDir . '/style-rtl.css', $styleFilename . '-rtl.css');
+			unlink($this->styleTestFileDir . '/style.css');
+			unlink($this->styleTestFileDir . '/style-rtl.css');
 			
 			rmdir($this->styleTestFileDir);
 		}
