@@ -36,6 +36,11 @@ class StyleGlobalValuesForm extends AbstractForm {
 	public $stylesScrollOffset = 0;
 	
 	/**
+	 * @var string
+	 */
+	public $styleTestFileDir;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readFormParameters() {
@@ -73,12 +78,17 @@ class StyleGlobalValuesForm extends AbstractForm {
 			// Due to performance issues we can only compile the default style and check, 
 			// whether there are syntax issues. 
 			$defaultStyle = StyleHandler::getInstance()->getDefaultStyle();
-			$errorMessage = StyleCompiler::getInstance()->testStyle($defaultStyle->apiVersion, $defaultStyle->imagePath, $defaultStyle->getVariables(), $tmpFile);
-			
-			if ($errorMessage !== true) {
-				throw new UserInputException('styles', [
-					'message' => $errorMessage,
-				]);
+			if ($defaultStyle !== null) {
+				$this->styleTestFileDir = FileUtil::getTemporaryFilename('style_');
+				FileUtil::makePath($this->styleTestFileDir);
+				
+				$errorMessage = StyleCompiler::getInstance()->testStyle($this->styleTestFileDir, $defaultStyle->apiVersion, $defaultStyle->imagePath, $defaultStyle->getVariables(), $tmpFile);
+				
+				if ($errorMessage !== null) {
+					throw new UserInputException('styles', [
+						'message' => $errorMessage->getMessage(),
+					]);
+				}
 			}
 		}
 		finally {
@@ -111,6 +121,16 @@ class StyleGlobalValuesForm extends AbstractForm {
 		
 		// reset stylesheets
 		StyleHandler::resetStylesheets(false);
+		
+		// save compiled style
+		$defaultStyle = StyleHandler::getInstance()->getDefaultStyle();
+		if ($defaultStyle !== null && $this->styleTestFileDir && file_exists($this->styleTestFileDir . '/style.css') && file_exists($this->styleTestFileDir . '/style-rtl.css')) {
+			$styleFilename = StyleCompiler::getFilenameForStyle($defaultStyle);
+			rename($this->styleTestFileDir . '/style.css', $styleFilename . '.css');
+			rename($this->styleTestFileDir . '/style-rtl.css', $styleFilename . '-rtl.css');
+			
+			rmdir($this->styleTestFileDir);
+		}
 		
 		WCF::getTPL()->assign('success', true);
 	}

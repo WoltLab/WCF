@@ -91,16 +91,17 @@ class StyleCompiler extends SingletonFactory {
 	
 	/**
 	 * Test a style with the given apiVersion, imagePath and variables. If the style is valid and does not throw an
-	 * error, true is returned. Otherwise a string with the error message.
+	 * error, null is returned. Otherwise the exception is returned (!).
 	 * 
-	 * @param       string          $apiVersion
-	 * @param       string          $imagePath
-	 * @param       string[]        $variables
-	 * @param       string|null     $customCustomSCSSFile
-	 * @return      bool|string
+	 * @param       string                  $testFileDir
+	 * @param       string                  $apiVersion
+	 * @param       string                  $imagePath
+	 * @param       string[]                $variables
+	 * @param       string|null             $customCustomSCSSFile
+	 * @return      null|\Exception
 	 * @since       5.3           
 	 */
-	public function testStyle($apiVersion, $imagePath, array $variables, $customCustomSCSSFile = null) {
+	public function testStyle($testFileDir, $apiVersion, $imagePath, array $variables, $customCustomSCSSFile = null) {
 		$individualScss = '';
 		if (isset($variables['individualScss'])) {
 			$individualScss = $variables['individualScss'];
@@ -145,20 +146,21 @@ class StyleCompiler extends SingletonFactory {
 		}
 		
 		try {
-			$this->compileStylesheetToString(
+			$this->compileStylesheet(
+				FileUtil::addTrailingSlash($testFileDir) . 'style',
 				$files,
 				$variables,
 				$individualScss . (!empty($parameters['scss']) ? "\n" . $parameters['scss'] : ''),
 				function($content) {
-					return $content;
+					return "/* stylesheet, generated on ".gmdate('r')." -- DO NOT EDIT */\n\n" . $content;
 				}
 			);
 		}
 		catch (\Exception $e) {
-			return $e->getMessage();
+			return $e;
 		}
 		
-		return true;
+		return null;
 	}
 	
 	/**
@@ -242,7 +244,7 @@ class StyleCompiler extends SingletonFactory {
 		EventHandler::getInstance()->fireAction($this, 'compile', $parameters);
 		
 		$this->compileStylesheet(
-			WCF_DIR.'style/style-'.$style->styleID,
+			$this->getFilenameForStyle($style),
 			$this->getFiles(),
 			$variables,
 			$individualScss . (!empty($parameters['scss']) ? "\n" . $parameters['scss'] : ''),
@@ -451,28 +453,6 @@ EOT;
 	 * @param	callable	$callback
 	 */
 	protected function compileStylesheet($filename, array $files, array $variables, $individualScss, callable $callback) {
-		$content = $this->compileStylesheetToString($files, $variables, $individualScss, $callback);
-		
-		// write stylesheet
-		file_put_contents($filename.'.css', $content['ltr']);
-		FileUtil::makeWritable($filename.'.css');
-		
-		// write stylesheet for RTL
-		file_put_contents($filename.'-rtl.css', $content['rtl']);
-		FileUtil::makeWritable($filename.'-rtl.css');
-	}
-	
-	/**
-	 * Compiles SCSS stylesheets and returns them as an array for the `ltr` and the `rtl` version.
-	 *
-	 * @param	string[]	$files
-	 * @param	string[]	$variables
-	 * @param	string		$individualScss
-	 * @param	callable	$callback
-	 * @return      String[]
-	 * @since       5.3
-	 */
-	public function compileStylesheetToString(array $files, array $variables, $individualScss, callable $callback) {
 		foreach ($variables as &$value) {
 			if (StringUtil::startsWith($value, '../')) {
 				$value = '~"'.$value.'"';
@@ -531,15 +511,32 @@ EOT;
 			throw new SystemException("Could not compile SCSS: ".$e->getMessage(), 0, '', $e);
 		}
 		
-		$data['ltr'] = $callback($content);
+		$content = $callback($content);
+		
+		// write stylesheet
+		file_put_contents($filename.'.css', $content);
+		FileUtil::makeWritable($filename.'.css');
 		
 		// convert stylesheet to RTL
-		$data['rtl'] = StyleUtil::convertCSSToRTL($content);
+		$content = StyleUtil::convertCSSToRTL($content);
 		
 		// force code boxes to be always LTR
-		$data['rtl'] .= "\n/* RTL fix for code boxes */\n";
-		$data['rtl'] .= '.codeBox > div > ol > li > span:last-child, .redactor-layer pre { direction: ltr; text-align: left; } .codeBox > div > ol > li > span:last-child { display: block; }';
+		$content .= "\n/* RTL fix for code boxes */\n";
+		$content .= '.codeBox > div > ol > li > span:last-child, .redactor-layer pre { direction: ltr; text-align: left; } .codeBox > div > ol > li > span:last-child { display: block; }';
 		
-		return $data;
+		// write stylesheet for RTL
+		file_put_contents($filename.'-rtl.css', $content);
+		FileUtil::makeWritable($filename.'-rtl.css');
+	}
+	
+	/**
+	 * Returns the name of the CSS file for a specific style. 
+	 * 
+	 * @param       Style           $style
+	 * @return      string
+	 * @since       5.3
+	 */
+	public static function getFilenameForStyle(Style $style) {
+		return WCF_DIR.'style/style-'.$style->styleID;
 	}
 }

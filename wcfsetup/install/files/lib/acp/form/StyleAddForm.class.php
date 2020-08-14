@@ -21,6 +21,7 @@ use wcf\system\style\FontManager;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\DateUtil;
+use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -187,6 +188,11 @@ class StyleAddForm extends AbstractForm {
 	 * @var	string
 	 */
 	public $tmpHash = '';
+	
+	/**
+	 * @var string
+	 */
+	public $styleTestFileDir;
 	
 	/**
 	 * list of variables and their value
@@ -465,11 +471,14 @@ class StyleAddForm extends AbstractForm {
 	public function validateIndividualScss() {
 		$variables = array_merge(StyleCompiler::getDefaultVariables(), $this->variables);
 		
-		$result = StyleCompiler::getInstance()->testStyle($this->apiVersion, false, $variables);
+		$this->styleTestFileDir = FileUtil::getTemporaryFilename('style_');
+		FileUtil::makePath($this->styleTestFileDir);
 		
-		if ($result !== true) {
+		$result = StyleCompiler::getInstance()->testStyle($this->styleTestFileDir, $this->apiVersion, false, $variables);
+		
+		if ($result !== null) {
 			throw new UserInputException('individualScss', [
-				'message' => $result,
+				'message' => $result->getMessage(),
 			]);
 		}
 	}
@@ -788,6 +797,15 @@ class StyleAddForm extends AbstractForm {
 			'styleDescription' => 'wcf.style.styleDescription'.$style->styleID
 		]);
 		
+		// save compiled style
+		if ($this->styleTestFileDir && file_exists($this->styleTestFileDir . '/style.css') && file_exists($this->styleTestFileDir . '/style-rtl.css')) {
+			$styleFilename = StyleCompiler::getFilenameForStyle($style);
+			rename($this->styleTestFileDir . '/style.css', $styleFilename . '.css');
+			rename($this->styleTestFileDir . '/style-rtl.css', $styleFilename . '-rtl.css');
+			
+			rmdir($this->styleTestFileDir);
+		}
+		
 		// call saved event
 		$this->saved();
 		
@@ -797,6 +815,7 @@ class StyleAddForm extends AbstractForm {
 		$this->setDefaultValues();
 		$this->isTainted = true;
 		$this->templateGroupID = 0;
+		$this->styleTestFilename = null;
 		$this->rebuildUploadFields();
 		
 		I18nHandler::getInstance()->reset();

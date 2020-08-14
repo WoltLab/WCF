@@ -12,6 +12,7 @@ use wcf\system\file\upload\UploadHandler;
 use wcf\system\language\I18nHandler;
 use wcf\system\style\StyleCompiler;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
 
 /**
  * Shows the style edit form.
@@ -78,11 +79,14 @@ class StyleEditForm extends StyleAddForm {
 		
 		$variables = array_merge(StyleCompiler::getDefaultVariables(), $variables);
 		
-		$result = StyleCompiler::getInstance()->testStyle($this->apiVersion, $this->style->imagePath, $variables);
+		$this->styleTestFileDir = FileUtil::getTemporaryFilename('style_');
+		FileUtil::makePath($this->styleTestFileDir);
 		
-		if ($result !== true) {
+		$result = StyleCompiler::getInstance()->testStyle($this->styleTestFileDir, $this->apiVersion, false, $variables);
+		
+		if ($result !== null) {
 			throw new UserInputException('individualScss', [
-				'message' => $result,
+				'message' => $result->getMessage(),
 			]);
 		}
 	}
@@ -248,6 +252,15 @@ class StyleEditForm extends StyleAddForm {
 			'variables' => $this->variables
 		]);
 		$this->objectAction->executeAction();
+		
+		// save compiled style
+		if ($this->styleTestFileDir && file_exists($this->styleTestFileDir . '/style.css') && file_exists($this->styleTestFileDir . '/style-rtl.css')) {
+			$styleFilename = StyleCompiler::getFilenameForStyle($this->style);
+			rename($this->styleTestFileDir . '/style.css', $styleFilename . '.css');
+			rename($this->styleTestFileDir . '/style-rtl.css', $styleFilename . '-rtl.css');
+			
+			rmdir($this->styleTestFileDir);
+		}
 		
 		// save description
 		I18nHandler::getInstance()->save('styleDescription', $this->style->styleDescription, 'wcf.style');
