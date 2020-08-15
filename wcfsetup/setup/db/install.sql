@@ -1502,7 +1502,7 @@ CREATE TABLE wcf1_user (
 	articles INT(10) NOT NULL DEFAULT 0,
 	blacklistMatches VARCHAR(255) NOT NULL DEFAULT '',
 	
-	KEY username (username),
+	UNIQUE KEY username (username),
 	KEY email (email),
 	KEY registrationDate (registrationDate),
 	KEY styleID (styleID),
