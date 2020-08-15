@@ -562,7 +562,7 @@
 			<option name="user.attachment.maxSize">
 				<categoryname>user.message.attachment</categoryname>
 				<optiontype>fileSize</optiontype>
-				<defaultvalue>1000000</defaultvalue>
+				<defaultvalue>2000000</defaultvalue>
 				<minvalue>10000</minvalue>
 			</option>
 			<option name="user.attachment.allowedExtensions">
@@ -614,7 +614,7 @@ pdf</defaultvalue>
 			<option name="user.contactForm.attachment.maxSize">
 				<categoryname>user.message.contactForm</categoryname>
 				<optiontype>fileSize</optiontype>
-				<defaultvalue>1000000</defaultvalue>
+				<defaultvalue>2000000</defaultvalue>
 				<minvalue>10000</minvalue>
 			</option>
 			<option name="user.contactForm.attachment.allowedExtensions">
