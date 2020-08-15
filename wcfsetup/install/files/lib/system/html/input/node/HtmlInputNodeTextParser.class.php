@@ -323,9 +323,9 @@ class HtmlInputNodeTextParser {
 			return [];
 		}
 		
-		// Sorting the usernames by length allows for more precise matches.
-		usort($usernames, function ($usernameA, $usernameB) {
-			return mb_strlen($usernameA) - mb_strlen($usernameB);
+		// Sorting the group names by length allows for more precise matches.
+		usort($availableUserGroups, function (UserGroup $groupA, UserGroup $groupB) {
+			return mb_strlen($groupA->getName()) - mb_strlen($groupB->getName());
 		});
 		
 		$groups = [];
