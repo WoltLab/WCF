@@ -617,6 +617,16 @@ if (COMPILER_TARGET_DEFAULT) {
 			}
 			
 			this.updateBadge(count);
+		},
+		
+		_success: function(data) {
+			this._super(data);
+			
+			elBySelAll('.interactiveDropdownItemShadowLink', this._dropdown.getItemList()[0], (function (link) {
+				link.addEventListener('click', (function (event) {
+					this._dropdown.close();
+				}).bind(this));
+			}.bind(this)));
 		}
 	});
 	
