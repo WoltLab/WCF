@@ -8,6 +8,7 @@ use wcf\data\user\option\UserOptionEditor;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -331,7 +332,10 @@ class UserOptionAddForm extends AbstractForm {
 		I18nHandler::getInstance()->reset();
 		
 		// show success
-		WCF::getTPL()->assign('success', true);
+		WCF::getTPL()->assign([
+			'success' => true,
+			'objectEditLink' => LinkHandler::getInstance()->getLink('UserOptionEdit', ['id' => $userOption->optionID]),
+		]);
 	}
 	
 	/**

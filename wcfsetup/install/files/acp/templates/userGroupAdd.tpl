@@ -79,9 +79,7 @@
 	<p class="warning">{lang}wcf.acp.group.edit.warning.selfIsMember{/lang}</p>
 {/if}
 
-{if $success|isset}
-	<p class="success">{lang}wcf.global.success.{@$action}{/lang}</p>
-{/if}
+{include file='formSuccess'}
 
 <form method="post" action="{if $action == 'add'}{link controller='UserGroupAdd'}{/link}{else}{link controller='UserGroupEdit' id=$groupID}{/link}{/if}">
 	<div class="section">

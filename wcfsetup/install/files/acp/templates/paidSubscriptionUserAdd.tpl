@@ -33,9 +33,7 @@
 
 {include file='formError'}
 
-{if $success|isset}
-	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
-{/if}
+{include file='formSuccess'}
 
 <form method="post" action="{if $action == 'add'}{link controller='PaidSubscriptionUserAdd' id=$subscriptionID}{/link}{else}{link controller='PaidSubscriptionUserEdit' id=$subscriptionUserID}{/link}{/if}">
 	<div class="section">

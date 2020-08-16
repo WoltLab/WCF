@@ -18,9 +18,7 @@
 
 <p class="info">{lang}wcf.acp.cronjob.intro{/lang}</p>
 
-{if $success|isset}
-	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
-{/if}
+{include file='formSuccess'}
 
 <form method="post" action="{if $action == 'add'}{link controller='CronjobAdd'}{/link}{else}{link controller='CronjobEdit' id=$cronjobID}{/link}{/if}">
 	<div class="section">

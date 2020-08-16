@@ -9,6 +9,7 @@ use wcf\system\condition\ConditionHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\Regex;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -240,7 +241,10 @@ class NoticeAddForm extends AbstractForm {
 			$condition->getProcessor()->reset();
 		}
 		
-		WCF::getTPL()->assign('success', true);
+		WCF::getTPL()->assign([
+			'success' => true,
+			'objectEditLink' => LinkHandler::getInstance()->getLink('NoticeEdit', ['id' => $returnValues['returnValues']->noticeID]),
+		]);
 	}
 	
 	/**

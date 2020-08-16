@@ -9,6 +9,7 @@ use wcf\form\AbstractForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -196,7 +197,7 @@ class TemplateAddForm extends AbstractForm {
 			'packageID' => $this->packageID,
 			'templateGroupID' => $this->templateGroupID
 		]), 'source' => $this->templateSource]);
-		$this->objectAction->executeAction();
+		$returnValues = $this->objectAction->executeAction();
 		$this->saved();
 		
 		// reset values
@@ -204,7 +205,10 @@ class TemplateAddForm extends AbstractForm {
 		$this->templateGroupID = 0;
 		
 		// show success message
-		WCF::getTPL()->assign('success', true);
+		WCF::getTPL()->assign([
+			'success' => true,
+			'objectEditLink' => LinkHandler::getInstance()->getLink('TemplateEdit', ['id' => $returnValues['returnValues']->templateID]),
+		]);
 	}
 	
 	/**

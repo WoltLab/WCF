@@ -59,6 +59,20 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 	public $objectActionClass;
 	
 	/**
+	 * name of the controller for the link to the edit form
+	 * @var string
+	 * @since 5.3
+	 */
+	public $objectEditLinkController = '';
+	
+	/**
+	 * name of the application for the link to the edit form
+	 * @var string
+	 * @since 5.3
+	 */
+	public $objectEditLinkApplication = 'wcf';
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function assignVariables() {
@@ -166,6 +180,13 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 		$this->saved();
 		
 		WCF::getTPL()->assign('success', true);
+		
+		if ($this->formAction === 'create' && $this->objectEditLinkController) {
+			WCF::getTPL()->assign('objectEditLink', LinkHandler::getInstance()->getLink($this->objectEditLinkController, [
+				'application' => $this->objectEditLinkApplication,
+				'id' => $this->objectAction->getReturnValues()['returnValues']->getObjectID(),
+			]));
+		}
 	}
 	
 	/**

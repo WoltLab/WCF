@@ -20,9 +20,7 @@
 	<p class="warning">{lang}wcf.acp.updateServer.lastErrorMessage{/lang}<br>{$packageUpdateServer->errorMessage}</p>
 {/if}
 
-{if $success|isset}
-	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
-{/if}
+{include file='formSuccess'}
 
 <form method="post" action="{if $action == 'add'}{link controller='PackageUpdateServerAdd'}{/link}{else}{link controller='PackageUpdateServerEdit' id=$packageUpdateServerID}{/link}{/if}">
 	<div class="section">

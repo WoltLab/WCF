@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\form;
 use wcf\system\exception\UserInputException;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -83,6 +84,10 @@ class ArticleCategoryAddForm extends AbstractCategoryAddForm {
 		$this->additionalData['sortOrder'] = $this->sortOrder;
 		
 		parent::save();
+		
+		WCF::getTPL()->assign([
+			'objectEditLink' => LinkHandler::getInstance()->getLink('ArticleCategoryEdit', ['id' => $this->objectAction->getReturnValues()['returnValues']->categoryID]),
+		]);
 		
 		$this->sortField = 'publicationDate';
 		$this->sortOrder = 'DESC';

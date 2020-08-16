@@ -40,9 +40,7 @@
 
 {include file='formError'}
 
-{if $success|isset}
-	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
-{/if}
+{include file='formSuccess'}
 
 {if $labelGroupList|count}
 	<form method="post" action="{if $action == 'add'}{link controller='LabelAdd'}{/link}{else}{link controller='LabelEdit' object=$label}{/link}{/if}">

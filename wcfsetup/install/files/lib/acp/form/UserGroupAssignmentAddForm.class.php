@@ -6,6 +6,7 @@ use wcf\data\user\group\UserGroup;
 use wcf\form\AbstractForm;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\exception\UserInputException;
+use wcf\system\request\LinkHandler;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -150,7 +151,10 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 			}
 		}
 		
-		WCF::getTPL()->assign('success', true);
+		WCF::getTPL()->assign([
+			'success' => true,
+			'objectEditLink' => LinkHandler::getInstance()->getLink('UserGroupAssignmentEdit', ['id' => $returnValues['returnValues']->assignmentID]),
+		]);
 	}
 	
 	/**

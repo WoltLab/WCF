@@ -19,9 +19,7 @@
 
 {include file='formError'}
 
-{if $success|isset}
-	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
-{/if}
+{include file='formSuccess'}
 
 <form method="post" action="{if $action == 'add'}{link controller='MenuAdd'}{/link}{else}{link controller='MenuEdit' id=$menuID}{/link}{/if}">
 	{if $action == 'edit' && $menu->identifier == 'com.woltlab.wcf.MainMenu'}

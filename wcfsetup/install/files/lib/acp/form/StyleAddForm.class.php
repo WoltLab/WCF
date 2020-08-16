@@ -15,6 +15,7 @@ use wcf\system\file\upload\UploadHandler;
 use wcf\system\image\ImageHandler;
 use wcf\system\language\I18nHandler;
 use wcf\system\Regex;
+use wcf\system\request\LinkHandler;
 use wcf\system\style\exception\FontDownloadFailed;
 use wcf\system\style\FontManager;
 use wcf\system\WCF;
@@ -805,7 +806,10 @@ class StyleAddForm extends AbstractForm {
 		// reload variables
 		$this->readStyleVariables();
 		
-		WCF::getTPL()->assign('success', true);
+		WCF::getTPL()->assign([
+			'success' => true,
+			'objectEditLink' => LinkHandler::getInstance()->getLink('StyleEdit', ['id' => $style->styleID]),
+		]);
 	}
 	
 	/**

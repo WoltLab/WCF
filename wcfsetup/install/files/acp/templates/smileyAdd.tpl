@@ -16,9 +16,7 @@
 
 {include file='formError'}
 
-{if $success|isset}
-	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
-{/if}
+{include file='formSuccess'}
 
 <form method="post" action="{if $action == 'add'}{link controller='SmileyAdd'}{/link}{else}{link controller='SmileyEdit' id=$smiley->smileyID}{/link}{/if}" enctype="multipart/form-data">
 	<section class="section">

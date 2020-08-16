@@ -5,6 +5,7 @@ use wcf\data\user\option\category\UserOptionCategoryEditor;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -101,7 +102,10 @@ class UserOptionCategoryAddForm extends AbstractForm {
 		I18nHandler::getInstance()->reset();
 		
 		// show success message
-		WCF::getTPL()->assign('success', true);
+		WCF::getTPL()->assign([
+			'success' => true,
+			'objectEditLink' => LinkHandler::getInstance()->getLink('UserOptionCategoryEdit', ['id' => $categoryID]),
+		]);
 	}
 	
 	/**

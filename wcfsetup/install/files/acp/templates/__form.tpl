@@ -24,7 +24,13 @@
 {/if}
 
 {if $form->showsSuccessMessage()}
-	<p class="success">{@$form->getSuccessMessage()}</p>
+	<p class="success">
+		<span class="icon icon16 fa fa-check green"></span>
+		<span>{@$form->getSuccessMessage()}</span>
+		{if !$objectEditLink|empty}
+			<a href="{$objectEditLink}" class="button buttonPrimary small"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.global.success.add.button.editCreatedObject{/lang}</span></a>
+		{/if}
+	</p>
 {/if}
 
 {if $form->isAjax()}

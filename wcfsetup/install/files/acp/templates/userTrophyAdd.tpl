@@ -37,9 +37,7 @@
 
 {include file='formError'}
 
-{if $success|isset}
-	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
-{/if}
+{include file='formSuccess'}
 
 {if $hasSuitableTrophy}
 	<form method="post" action="{if $action == 'add'}{link controller='UserTrophyAdd'}{/link}{else}{link controller='UserTrophyEdit' id=$userTrophy->getObjectID()}{/link}{/if}">

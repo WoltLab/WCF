@@ -50,9 +50,7 @@
 
 {include file='formError'}
 
-{if $success|isset}
-	<p class="success">{lang}wcf.global.success.{@$action}{/lang}</p>
-{/if}
+{include file='formSuccess'}
 
 <form method="post" action="{if $action == 'add'}{link controller=$addController application=$objectType->getProcessor()->getApplication()}{/link}{else}{link controller=$editController application=$objectType->getProcessor()->getApplication() object=$category}{/link}{/if}">
 	{event name='beforeSections'}

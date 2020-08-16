@@ -5,6 +5,7 @@ use wcf\data\language\LanguageEditor;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -155,7 +156,10 @@ class LanguageAddForm extends AbstractForm {
 		$this->saved();
 		
 		// show success message
-		WCF::getTPL()->assign('success', true);
+		WCF::getTPL()->assign([
+			'success' => true,
+			'objectEditLink' => LinkHandler::getInstance()->getLink('LanguageEdit', ['id' => $this->language->languageID]),
+		]);
 		
 		// reset values
 		$this->countryCode = $this->languageCode = $this->languageName = '';

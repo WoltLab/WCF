@@ -17,9 +17,7 @@
 
 {include file='formError'}
 
-{if $success|isset}
-	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
-{/if}
+{include file='formSuccess'}
 
 {if !$availableCategories|empty}
 	<form method="post" action="{if $action == 'add'}{link controller='UserOptionAdd'}{/link}{else}{link controller='UserOptionEdit' id=$optionID}{/link}{/if}">

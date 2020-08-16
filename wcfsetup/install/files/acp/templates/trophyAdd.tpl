@@ -64,9 +64,7 @@
 
 {include file='formError'}
 
-{if $success|isset}
-	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
-{/if}
+{include file='formSuccess'}
 
 {if $trophyCategories|count}
 	<form id="trophyForm" method="post" action="{if $action == 'add'}{link controller='TrophyAdd'}{/link}{else}{link controller='TrophyEdit' id=$trophy->getObjectID()}{/link}{/if}">

@@ -454,7 +454,10 @@ class ArticleAddForm extends AbstractForm {
 		$this->saved();
 		
 		// show success message
-		WCF::getTPL()->assign('success', true);
+		WCF::getTPL()->assign([
+			'success' => true,
+			'objectEditLink' => LinkHandler::getInstance()->getLink('ArticleEdit', ['id' => $article->getObjectID()]),
+		]);
 		
 		// reset variables
 		$this->publicationDate = '';

@@ -8,6 +8,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\language\LanguageFactory;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
@@ -269,12 +270,13 @@ class UserAddForm extends UserOptionListForm {
 		}
 		
 		$this->objectAction = new UserAction([], 'create', $data);
-		$this->objectAction->executeAction();
+		$returnValues = $this->objectAction->executeAction();
 		$this->saved();
 		
 		// show empty add form
 		WCF::getTPL()->assign([
-			'success' => true
+			'success' => true,
+			'objectEditLink' => LinkHandler::getInstance()->getLink('UserEdit', ['id' => $returnValues['returnValues']->userID]),
 		]);
 		
 		// reset values

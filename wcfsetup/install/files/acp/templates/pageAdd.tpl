@@ -98,9 +98,7 @@
 
 {include file='formError'}
 
-{if $success|isset}
-	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
-{/if}
+{include file='formSuccess'}
 
 {if $action == 'edit' && !$lastVersion|empty}
 	<p class="info">{lang}wcf.acp.page.lastVersion{/lang}</p>

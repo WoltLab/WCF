@@ -5,6 +5,7 @@ use wcf\data\user\group\UserGroupEditor;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\option\user\group\UserGroupOptionHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\StringUtil;
@@ -188,7 +189,10 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		$this->saved();
 		
 		// show success message
-		WCF::getTPL()->assign('success', true);
+		WCF::getTPL()->assign([
+			'success' => true,
+			'objectEditLink' => LinkHandler::getInstance()->getLink('UserGroupEdit', ['id' => $groupID]),
+		]);
 		
 		// reset values
 		$this->groupName = '';

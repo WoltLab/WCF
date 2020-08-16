@@ -15,4 +15,11 @@ class ContactOptionEditForm extends ContactOptionAddForm {
 	 * @inheritDoc
 	 */
 	public $action = 'edit';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function save() {
+		AbstractCustomOptionForm::save();
+	}
 }

@@ -3,6 +3,8 @@ namespace wcf\acp\form;
 use wcf\data\contact\option\ContactOption;
 use wcf\data\contact\option\ContactOptionAction;
 use wcf\data\contact\option\ContactOptionEditor;
+use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
  * Shows the contact option add form.
@@ -60,5 +62,16 @@ class ContactOptionAddForm extends AbstractCustomOptionForm {
 		
 		$this->getI18nValue('optionTitle')->setLanguageItem('wcf.contact.option', 'wcf.contact', 'com.woltlab.wcf');
 		$this->getI18nValue('optionDescription')->setLanguageItem('wcf.contact.optionDescription', 'wcf.contact', 'com.woltlab.wcf');
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function save() {
+		parent::save();
+		
+		WCF::getTPL()->assign([
+			'objectEditLink' => LinkHandler::getInstance()->getLink('ContactOptionEdit', ['id' => $this->objectAction->executeAction()['returnValues']->getObjectID()]),
+		]);
 	}
 }

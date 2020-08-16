@@ -8,6 +8,7 @@ use wcf\system\ad\AdHandler;
 use wcf\system\ad\location\IAdLocation;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\exception\UserInputException;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -216,7 +217,10 @@ class AdAddForm extends AbstractForm {
 			$condition->getProcessor()->reset();
 		}
 		
-		WCF::getTPL()->assign('success', true);
+		WCF::getTPL()->assign([
+			'success' => true,
+			'objectEditLink' => LinkHandler::getInstance()->getLink('AdEdit', ['id' => $returnValues['returnValues']->adID]),
+		]);
 	}
 	
 	/**

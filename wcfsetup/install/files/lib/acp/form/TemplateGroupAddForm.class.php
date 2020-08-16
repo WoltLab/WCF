@@ -4,6 +4,7 @@ use wcf\data\template\group\TemplateGroup;
 use wcf\data\template\group\TemplateGroupAction;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
@@ -132,7 +133,7 @@ class TemplateGroupAddForm extends AbstractForm {
 			'templateGroupFolderName' => $this->templateGroupFolderName,
 			'parentTemplateGroupID' => $this->parentTemplateGroupID ?: null
 		])]);
-		$this->objectAction->executeAction();
+		$returnValues = $this->objectAction->executeAction();
 		$this->saved();
 		
 		// reset values
@@ -140,7 +141,10 @@ class TemplateGroupAddForm extends AbstractForm {
 		$this->parentTemplateGroupID = 0;
 		
 		// show success message
-		WCF::getTPL()->assign('success', true);
+		WCF::getTPL()->assign([
+			'success' => true,
+			'objectEditLink' => LinkHandler::getInstance()->getLink('TemplateGroupEdit', ['id' => $returnValues['returnValues']->templateGroupID]),
+		]);
 	}
 	
 	/**

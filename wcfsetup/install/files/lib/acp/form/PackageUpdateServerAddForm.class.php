@@ -4,6 +4,7 @@ use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\update\server\PackageUpdateServerAction;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\StringUtil;
@@ -83,14 +84,17 @@ class PackageUpdateServerAddForm extends AbstractForm {
 			'loginUsername' => $this->loginUsername,
 			'loginPassword' => $this->loginPassword
 		])]);
-		$this->objectAction->executeAction();
+		$returnValues = $this->objectAction->executeAction();
 		$this->saved();
 		
 		// reset values
 		$this->serverURL = $this->loginUsername = $this->loginPassword = '';
 		
 		// show success message
-		WCF::getTPL()->assign('success', true);
+		WCF::getTPL()->assign([
+			'success' => true,
+			'objectEditLink' => LinkHandler::getInstance()->getLink('PackageUpdateServerEdit', ['id' => $returnValues['returnValues']->packageUpdateServerID]),
+		]);
 	}
 	
 	/**
