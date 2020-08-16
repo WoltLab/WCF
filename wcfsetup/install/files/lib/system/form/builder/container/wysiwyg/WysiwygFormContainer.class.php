@@ -47,7 +47,7 @@ class WysiwygFormContainer extends FormContainer {
 	protected $attachmentData;
 	
 	/**
-	 * `true` if the preview-button should be generated automatically and `false` otherwise
+	 * `true` if the preview button should be shown and `false` otherwise
 	 * @var         bool
 	 * @since       5.3
 	 */
@@ -214,9 +214,9 @@ class WysiwygFormContainer extends FormContainer {
 	}
 	
 	/**
-	 * Sets whether the preview-button should be generated or not and returns this form container.
+	 * Sets whether the preview button should be shown or not and returns this form container.
 	 * 
-	 * By default, the preview-button is enabled will be generated.
+	 * By default, the preview button is shown.
 	 * 
 	 * @param       bool                    $enablePreviewButton
 	 * @return      WysiwygFormContainer    this form container
@@ -339,8 +339,9 @@ class WysiwygFormContainer extends FormContainer {
 	}
 	
 	/**
-	 * Returns `true` if the preview-button should be generated automatically and returns `false` otherwise.
-	 * By default, the preview-button is generated automatically.
+	 * Returns `true` if the preview button will be shown and returns `false` otherwise.
+	 * 
+	 * By default, the preview button is shown.
 	 * 
 	 * @return      bool
 	 * @since       5.3
