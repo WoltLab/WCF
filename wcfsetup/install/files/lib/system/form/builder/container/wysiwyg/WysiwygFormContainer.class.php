@@ -48,7 +48,8 @@ class WysiwygFormContainer extends FormContainer {
 	
 	/**
 	 * `true` if the preview-button should be generated automatically and `false` otherwise
-	 * @var bool
+	 * @var         bool
+	 * @since       5.3
 	 */
 	protected $enablePreviewButton = true;
 	
