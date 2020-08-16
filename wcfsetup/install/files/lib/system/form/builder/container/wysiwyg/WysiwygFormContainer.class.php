@@ -339,8 +339,9 @@ class WysiwygFormContainer extends FormContainer {
 	/**
 	 * Returns `true` if the preview-button should be generated automatically and returns `false` otherwise.
 	 * By default, the preview-button is generated automatically.
-	 *
-	 * @return	bool
+	 * 
+	 * @return      bool
+	 * @since       5.3
 	 */
 	public function isPreviewButtonEnabled() {
 		return $this->enablePreviewButton;
