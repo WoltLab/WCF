@@ -485,7 +485,7 @@ class WysiwygFormContainer extends FormContainer {
 					->objectType($this->messageObjectType)
 					->wysiwygId($this->getWysiwygId())
 					->objectId($this->getObjectId())
-				);
+			);
 		}
 		
 		EventHandler::getInstance()->fireAction($this, 'populate');
