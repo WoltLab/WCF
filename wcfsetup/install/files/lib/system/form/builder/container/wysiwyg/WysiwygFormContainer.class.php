@@ -218,8 +218,9 @@ class WysiwygFormContainer extends FormContainer {
 	 * 
 	 * By default, the preview-button is enabled will be generated.
 	 * 
-	 * @param	boolean		$enablePreviewButton
-	 * @return	WysiwygFormContainer		this form container
+	 * @param       bool                    $enablePreviewButton
+	 * @return      WysiwygFormContainer    this form container
+	 * @since       5.3
 	 */
 	public function enablePreviewButton($enablePreviewButton = true) {
 		$this->enablePreviewButton = $enablePreviewButton;
