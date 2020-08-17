@@ -82,7 +82,7 @@ class StyleEditForm extends StyleAddForm {
 		$this->styleTestFileDir = FileUtil::getTemporaryFilename('style_');
 		FileUtil::makePath($this->styleTestFileDir);
 		
-		$result = StyleCompiler::getInstance()->testStyle($this->styleTestFileDir, $this->apiVersion, false, $variables);
+		$result = StyleCompiler::getInstance()->testStyle($this->styleTestFileDir, $this->apiVersion, $this->style->imagePath, $variables);
 		
 		if ($result !== null) {
 			rmdir($this->styleTestFileDir);
