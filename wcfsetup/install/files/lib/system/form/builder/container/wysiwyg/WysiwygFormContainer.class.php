@@ -47,6 +47,13 @@ class WysiwygFormContainer extends FormContainer {
 	protected $attachmentData;
 	
 	/**
+	 * `true` if the preview button should be shown and `false` otherwise
+	 * @var         bool
+	 * @since       5.3
+	 */
+	protected $enablePreviewButton = true;
+	
+	/**
 	 * name of the relevant message object type
 	 * @var	string
 	 */
@@ -207,6 +214,21 @@ class WysiwygFormContainer extends FormContainer {
 	}
 	
 	/**
+	 * Sets whether the preview button should be shown or not and returns this form container.
+	 * 
+	 * By default, the preview button is shown.
+	 * 
+	 * @param       bool                    $enablePreviewButton
+	 * @return      WysiwygFormContainer    this form container
+	 * @since       5.3
+	 */
+	public function enablePreviewButton($enablePreviewButton = true) {
+		$this->enablePreviewButton = $enablePreviewButton;
+		
+		return $this;
+	}
+	
+	/**
 	 * Returns the form field handling attachments.
 	 * 
 	 * @return	WysiwygAttachmentFormField
@@ -314,6 +336,18 @@ class WysiwygFormContainer extends FormContainer {
 	 */
 	public function isRequired() {
 		return $this->required;
+	}
+	
+	/**
+	 * Returns `true` if the preview button will be shown and returns `false` otherwise.
+	 * 
+	 * By default, the preview button is shown.
+	 * 
+	 * @return      bool
+	 * @since       5.3
+	 */
+	public function isPreviewButtonEnabled() {
+		return $this->enablePreviewButton;
 	}
 	
 	/**
@@ -448,12 +482,14 @@ class WysiwygFormContainer extends FormContainer {
 			$this->setAttachmentHandler();
 		}
 		
-		$this->getDocument()->addButton(
-			WysiwygPreviewFormButton::create($this->getWysiwygId() . 'PreviewButton')
-				->objectType($this->messageObjectType)
-				->wysiwygId($this->getWysiwygId())
-				->objectId($this->getObjectId())
-		);
+		if ($this->enablePreviewButton) {
+			$this->getDocument()->addButton(
+				WysiwygPreviewFormButton::create($this->getWysiwygId() . 'PreviewButton')
+					->objectType($this->messageObjectType)
+					->wysiwygId($this->getWysiwygId())
+					->objectId($this->getObjectId())
+			);
+		}
 		
 		EventHandler::getInstance()->fireAction($this, 'populate');
 	}
