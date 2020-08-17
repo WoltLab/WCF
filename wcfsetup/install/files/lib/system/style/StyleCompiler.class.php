@@ -30,6 +30,12 @@ class StyleCompiler extends SingletonFactory {
 	protected $compiler = null;
 	
 	/**
+	 * Contains all files, which are compiled for a style.
+	 * @var string[]
+	 */
+	protected $files; 
+	
+	/**
 	 * names of option types which are supported as additional variables
 	 * @var	string[]
 	 */
@@ -60,38 +66,151 @@ class StyleCompiler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns the default style variables as array. 
+	 * 
+	 * @return      string[]
+	 * @since       5.3
+	 */
+	public static function getDefaultVariables() {
+		$variables = [];
+		
+		$sql = "SELECT		variable.variableName, variable.defaultValue
+			FROM		wcf".WCF_N."_style_variable variable
+			ORDER BY	variable.variableID ASC";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute();
+		$variables = $statement->fetchMap('variableName', 'defaultValue');
+		
+		// see https://github.com/WoltLab/WCF/issues/2636
+		if (empty($variables['wcfPageThemeColor'])) {
+			$variables['wcfPageThemeColor'] = $variables['wcfHeaderBackground'];
+		}
+		
+		return $variables;
+	}
+	
+	/**
+	 * Test a style with the given apiVersion, imagePath and variables. If the style is valid and does not throw an
+	 * error, null is returned. Otherwise the exception is returned (!).
+	 * 
+	 * @param       string                  $testFileDir
+	 * @param       string                  $styleName
+	 * @param       string                  $apiVersion
+	 * @param       string                  $imagePath
+	 * @param       string[]                $variables
+	 * @param       string|null             $customCustomSCSSFile
+	 * @return      null|\Exception
+	 * @since       5.3           
+	 */
+	public function testStyle($testFileDir, $styleName, $apiVersion, $imagePath, array $variables, $customCustomSCSSFile = null) {
+		$individualScss = '';
+		if (isset($variables['individualScss'])) {
+			$individualScss = $variables['individualScss'];
+			unset($variables['individualScss']);
+		}
+		
+		// add style image path
+		if ($imagePath) {
+			$imagePath = FileUtil::getRelativePath(WCF_DIR . 'style/', WCF_DIR . $imagePath);
+			$imagePath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($imagePath));
+		} 
+		else {
+			$imagePath = '../images/';
+		}
+		$variables['style_image_path'] = "'{$imagePath}'";
+		
+		// apply overrides
+		if (isset($variables['overrideScss'])) {
+			$lines = explode("\n", StringUtil::unifyNewlines($variables['overrideScss']));
+			foreach ($lines as $line) {
+				if (preg_match('~^@([a-zA-Z]+): ?([@a-zA-Z0-9 ,\.\(\)\%\#-]+);$~', $line, $matches)) {
+					$variables[$matches[1]] = $matches[2];
+				}
+			}
+			unset($variables['overrideScss']);
+		}
+		
+		// api version
+		$variables['apiVersion'] = $apiVersion;
+		
+		$parameters = ['scss' => ''];
+		EventHandler::getInstance()->fireAction($this, 'compile', $parameters);
+		
+		$files = $this->getFiles();
+		
+		if ($customCustomSCSSFile !== null) {
+			if (($customSCSSFileKey = array_search(WCF_DIR . self::FILE_GLOBAL_VALUES, $files)) !== false) {
+				unset($files[$customSCSSFileKey]);
+			}
+			
+			$files[] = $customCustomSCSSFile;
+		}
+		
+		try {
+			$this->compileStylesheet(
+				FileUtil::addTrailingSlash($testFileDir) . 'style',
+				$files,
+				$variables,
+				$individualScss . (!empty($parameters['scss']) ? "\n" . $parameters['scss'] : ''),
+				function($content) use ($styleName) {
+					return "/* stylesheet for '". $styleName ."', generated on ".gmdate('r')." -- DO NOT EDIT */\n\n" . $content;
+				}
+			);
+		}
+		catch (\Exception $e) {
+			return $e;
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Returns a array with all files, which should be compiled for a style. 
+	 * 
+	 * @return      string[]
+	 * @since       5.3
+	 */
+	protected function getFiles() {
+		if (!$this->files) {
+			$files = $this->getCoreFiles();
+			
+			// read stylesheets in dependency order
+			$sql = "SELECT		filename, application
+				FROM		wcf".WCF_N."_package_installation_file_log
+				WHERE           CONVERT(filename using utf8) REGEXP ?
+						AND packageID <> ?
+				ORDER BY	packageID";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				'style/([a-zA-Z0-9\-\.]+)\.scss',
+				1
+			]);
+			while ($row = $statement->fetchArray()) {
+				// the global values will always be evaluated last
+				if ($row['filename'] === self::FILE_GLOBAL_VALUES) {
+					continue;
+				}
+				
+				$files[] = Application::getDirectory($row['application']).$row['filename'];
+			}
+			
+			// global SCSS
+			if (file_exists(WCF_DIR . self::FILE_GLOBAL_VALUES)) {
+				$files[] = WCF_DIR . self::FILE_GLOBAL_VALUES;
+			}
+			
+			$this->files = $files;
+		}
+		
+		return $this->files;
+	}
+	
+	/**
 	 * Compiles SCSS stylesheets.
 	 * 
 	 * @param	Style	$style
 	 */
 	public function compile(Style $style) {
-		$files = $this->getCoreFiles();
-		
-		// read stylesheets in dependency order
-		$sql = "SELECT		filename, application
-			FROM		wcf".WCF_N."_package_installation_file_log
-			WHERE           CONVERT(filename using utf8) REGEXP ?
-					AND packageID <> ?
-			ORDER BY	packageID";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([
-			'style/([a-zA-Z0-9\-\.]+)\.scss',
-			1
-		]);
-		while ($row = $statement->fetchArray()) {
-			// the global values will always be evaluated last
-			if ($row['filename'] === self::FILE_GLOBAL_VALUES) {
-				continue;
-			}
-			
-			$files[] = Application::getDirectory($row['application']).$row['filename'];
-		}
-		
-		// global SCSS
-		if (file_exists(WCF_DIR . self::FILE_GLOBAL_VALUES)) {
-			$files[] = WCF_DIR . self::FILE_GLOBAL_VALUES;
-		}
-		
 		// get style variables
 		$variables = $style->getVariables();
 		$individualScss = '';
@@ -126,8 +245,8 @@ class StyleCompiler extends SingletonFactory {
 		EventHandler::getInstance()->fireAction($this, 'compile', $parameters);
 		
 		$this->compileStylesheet(
-			WCF_DIR.'style/style-'.$style->styleID,
-			$files,
+			$this->getFilenameForStyle($style),
+			$this->getFiles(),
 			$variables,
 			$individualScss . (!empty($parameters['scss']) ? "\n" . $parameters['scss'] : ''),
 			function($content) use ($style) {
@@ -333,7 +452,6 @@ EOT;
 	 * @param	string[]	$variables
 	 * @param	string		$individualScss
 	 * @param	callable	$callback
-	 * @throws	SystemException
 	 */
 	protected function compileStylesheet($filename, array $files, array $variables, $individualScss, callable $callback) {
 		foreach ($variables as &$value) {
@@ -410,5 +528,16 @@ EOT;
 		// write stylesheet for RTL
 		file_put_contents($filename.'-rtl.css', $content);
 		FileUtil::makeWritable($filename.'-rtl.css');
+	}
+	
+	/**
+	 * Returns the name of the CSS file for a specific style. 
+	 * 
+	 * @param       Style           $style
+	 * @return      string
+	 * @since       5.3
+	 */
+	public static function getFilenameForStyle(Style $style) {
+		return WCF_DIR.'style/style-'.$style->styleID;
 	}
 }

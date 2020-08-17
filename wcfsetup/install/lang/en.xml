@@ -2763,6 +2763,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.advanced.overrideScss.error.invalid"><![CDATA[The input for “{$error[text]}” invalid.]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss.error.predefined"><![CDATA[The variable “{$error[text]}” is already defined by the style editor.]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss.error.unknown"><![CDATA[The variable “{$error[text]}” is not recognized.]]></item>
+		<item name="wcf.acp.style.advanced.individualScss.error"><![CDATA[The SCSS code contains an error: {$errorType.message}.]]></item>
 		<item name="wcf.acp.style.apiVersion"><![CDATA[Enable Compatibility Mode with WoltLab Suite]]></item>
 		<item name="wcf.acp.style.apiVersion.deprecated"><![CDATA[deprecated]]></item>
 		<item name="wcf.acp.style.apiVersion.description"><![CDATA[Disables selected style improvements in order to maximize compatibility with styles for earlier versions of WoltLab Suite.]]></item>
@@ -2831,6 +2832,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.globalValues"><![CDATA[Global CSS and SCSS]]></item>
 		<item name="wcf.acp.style.globalValues.description"><![CDATA[The CSS and SCSS entered below is applied to all styles, but custom values in styles take precedence.]]></item>
 		<item name="wcf.acp.style.globalValues.input"><![CDATA[Individual CSS and SCSS]]></item>
+		<item name="wcf.acp.style.globalValues.input.error"><![CDATA[The SCSS code contains an error: {$errorType.message}.]]></item>
 		<item name="wcf.acp.style.image"><![CDATA[Preview Image]]></item>
 		<item name="wcf.acp.style.image.description"><![CDATA[Upload a preview image for this style, acceptable image types are JPG and PNG. Dimensions should be 102×64 pixels, exceeding images will be scaled.]]></item>
 		<item name="wcf.acp.style.image2x"><![CDATA[Preview Image (HD)]]></item>

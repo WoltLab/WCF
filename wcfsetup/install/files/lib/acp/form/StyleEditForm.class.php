@@ -5,10 +5,14 @@ use wcf\data\style\StyleAction;
 use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\SystemException;
+use wcf\system\exception\UserInputException;
 use wcf\system\file\upload\UploadFile;
 use wcf\system\file\upload\UploadHandler;
 use wcf\system\language\I18nHandler;
+use wcf\system\style\StyleCompiler;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
 
 /**
  * Shows the style edit form.
@@ -57,6 +61,35 @@ class StyleEditForm extends StyleAddForm {
 		
 		if (!$this->style->isTainted) {
 			$this->parseOverrides('overrideScssCustom');
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validateIndividualScss() {
+		$variables = $this->variables;
+		if (!$this->style->isTainted) {
+			$variables['individualScss'] = Style::joinLessVariables($variables['individualScss'], $variables['individualScssCustom']);
+			$variables['overrideScss'] = Style::joinLessVariables($variables['overrideScss'], $variables['overrideScssCustom']);
+			
+			unset($variables['individualScssCustom']);
+			unset($variables['overrideScssCustom']);
+		}
+		
+		$variables = array_merge(StyleCompiler::getDefaultVariables(), $variables);
+		
+		$this->styleTestFileDir = FileUtil::getTemporaryFilename('style_');
+		FileUtil::makePath($this->styleTestFileDir);
+		
+		$result = StyleCompiler::getInstance()->testStyle($this->styleTestFileDir, $this->styleName, $this->apiVersion, $this->style->imagePath, $variables);
+		
+		if ($result !== null) {
+			rmdir($this->styleTestFileDir);
+			
+			throw new UserInputException('individualScss', [
+				'message' => $result->getMessage(),
+			]);
 		}
 	}
 	
@@ -225,6 +258,15 @@ class StyleEditForm extends StyleAddForm {
 			'variables' => $this->variables,
 		]);
 		$this->objectAction->executeAction();
+		
+		// save compiled style
+		if ($this->styleTestFileDir && file_exists($this->styleTestFileDir . '/style.css') && file_exists($this->styleTestFileDir . '/style-rtl.css')) {
+			$styleFilename = StyleCompiler::getFilenameForStyle($this->style);
+			rename($this->styleTestFileDir . '/style.css', $styleFilename . '.css');
+			rename($this->styleTestFileDir . '/style-rtl.css', $styleFilename . '-rtl.css');
+			
+			rmdir($this->styleTestFileDir);
+		}
 		
 		// save description
 		I18nHandler::getInstance()->save('styleDescription', $this->style->styleDescription, 'wcf.style');
