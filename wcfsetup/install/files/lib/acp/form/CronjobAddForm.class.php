@@ -191,7 +191,7 @@ class CronjobAddForm extends AbstractForm {
 		// show success message
 		WCF::getTPL()->assign([
 			'success' => true,
-			'objectEditLink' => LinkHandler::getInstance()->getLink('CronjobEdit', ['id' => $cronjobID]),
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(CronjobEditForm::class, ['id' => $cronjobID]),
 		]);
 	}
 	

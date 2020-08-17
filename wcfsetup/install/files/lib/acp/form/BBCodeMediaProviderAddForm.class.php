@@ -136,7 +136,7 @@ class BBCodeMediaProviderAddForm extends AbstractForm {
 		// show success message
 		WCF::getTPL()->assign([
 			'success' => true,
-			'objectEditLink' => LinkHandler::getInstance()->getLink('BBCodeMediaProviderEdit', ['id' => $provider->providerID]),
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(BBCodeMediaProviderEditForm::class, ['id' => $provider->providerID]),
 		]);
 	}
 	

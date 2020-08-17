@@ -272,7 +272,7 @@ class MenuItemAddForm extends AbstractForm {
 		// show success message
 		WCF::getTPL()->assign([
 			'success' => true,
-			'objectEditLink' => LinkHandler::getInstance()->getLink('MenuItemEdit', ['id' => $menuItem->itemID]),
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(MenuItemEditForm::class, ['id' => $menuItem->itemID]),
 		]);
 		
 		// reset variables

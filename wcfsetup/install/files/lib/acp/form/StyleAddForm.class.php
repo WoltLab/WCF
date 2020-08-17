@@ -808,7 +808,7 @@ class StyleAddForm extends AbstractForm {
 		
 		WCF::getTPL()->assign([
 			'success' => true,
-			'objectEditLink' => LinkHandler::getInstance()->getLink('StyleEdit', ['id' => $style->styleID]),
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(StyleEditForm::class, ['id' => $style->styleID]),
 		]);
 	}
 	

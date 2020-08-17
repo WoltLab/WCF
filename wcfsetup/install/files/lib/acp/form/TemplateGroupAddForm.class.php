@@ -143,7 +143,7 @@ class TemplateGroupAddForm extends AbstractForm {
 		// show success message
 		WCF::getTPL()->assign([
 			'success' => true,
-			'objectEditLink' => LinkHandler::getInstance()->getLink('TemplateGroupEdit', ['id' => $returnValues['returnValues']->templateGroupID]),
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(TemplateGroupEditForm::class, ['id' => $returnValues['returnValues']->templateGroupID]),
 		]);
 	}
 	

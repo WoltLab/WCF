@@ -276,7 +276,7 @@ class UserAddForm extends UserOptionListForm {
 		// show empty add form
 		WCF::getTPL()->assign([
 			'success' => true,
-			'objectEditLink' => LinkHandler::getInstance()->getLink('UserEdit', ['id' => $returnValues['returnValues']->userID]),
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(UserEditForm::class, ['id' => $returnValues['returnValues']->userID]),
 		]);
 		
 		// reset values

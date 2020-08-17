@@ -286,7 +286,7 @@ class PaidSubscriptionAddForm extends AbstractForm {
 		// show success message
 		WCF::getTPL()->assign([
 			'success' => true,
-			'objectEditLink' => LinkHandler::getInstance()->getLink('PaidSubscriptionEdit', ['id' => $returnValues['returnValues']->subscriptionID]),
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(PaidSubscriptionEditForm::class, ['id' => $returnValues['returnValues']->subscriptionID]),
 		]);
 	}
 	

@@ -158,7 +158,7 @@ class ContactRecipientAddForm extends AbstractForm {
 		// show success message
 		WCF::getTPL()->assign([
 			'success' => true,
-			'objectEditLink' => LinkHandler::getInstance()->getLink('ContactRecipientEdit', ['id' => $recipientID]),
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(ContactRecipientEditForm::class, ['id' => $recipientID]),
 		]);
 		
 		// reset values

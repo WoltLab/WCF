@@ -207,7 +207,7 @@ class TemplateAddForm extends AbstractForm {
 		// show success message
 		WCF::getTPL()->assign([
 			'success' => true,
-			'objectEditLink' => LinkHandler::getInstance()->getLink('TemplateEdit', ['id' => $returnValues['returnValues']->templateID]),
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(TemplateEditForm::class, ['id' => $returnValues['returnValues']->templateID]),
 		]);
 	}
 	

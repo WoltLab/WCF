@@ -227,7 +227,7 @@ class SmileyAddForm extends AbstractForm {
 		// show success message
 		WCF::getTPL()->assign([
 			'success' => true,
-			'objectEditLink' => LinkHandler::getInstance()->getLink('SmileyEdit', ['id' => $smileyID]),
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(SmileyEditForm::class, ['id' => $smileyID]),
 		]);
 	}
 	

@@ -638,7 +638,7 @@ class PageAddForm extends AbstractForm {
 		// show success message
 		WCF::getTPL()->assign([
 			'success' => true,
-			'objectEditLink' => LinkHandler::getInstance()->getLink('PageEdit', ['id' => $page->pageID]),
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(PageEditForm::class, ['id' => $page->pageID]),
 		]);
 		
 		// reset variables

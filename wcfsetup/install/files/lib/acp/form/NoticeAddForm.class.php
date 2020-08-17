@@ -243,7 +243,7 @@ class NoticeAddForm extends AbstractForm {
 		
 		WCF::getTPL()->assign([
 			'success' => true,
-			'objectEditLink' => LinkHandler::getInstance()->getLink('NoticeEdit', ['id' => $returnValues['returnValues']->noticeID]),
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(NoticeEditForm::class, ['id' => $returnValues['returnValues']->noticeID]),
 		]);
 	}
 	

@@ -564,7 +564,7 @@ class BoxAddForm extends AbstractForm {
 		// show success message
 		WCF::getTPL()->assign([
 			'success' => true,
-			'objectEditLink' => LinkHandler::getInstance()->getLink('BoxEdit', ['id' => $box->getObjectID()]),
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(BoxEditForm::class, ['id' => $box->getObjectID()]),
 		]);
 		
 		// reset variables

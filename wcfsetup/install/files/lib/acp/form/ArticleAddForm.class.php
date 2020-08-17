@@ -456,7 +456,7 @@ class ArticleAddForm extends AbstractForm {
 		// show success message
 		WCF::getTPL()->assign([
 			'success' => true,
-			'objectEditLink' => LinkHandler::getInstance()->getLink('ArticleEdit', ['id' => $article->getObjectID()]),
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(ArticleEditForm::class, ['id' => $article->getObjectID()]),
 		]);
 		
 		// reset variables

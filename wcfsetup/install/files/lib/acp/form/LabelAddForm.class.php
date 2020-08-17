@@ -203,7 +203,7 @@ class LabelAddForm extends AbstractForm {
 		// show success message
 		WCF::getTPL()->assign([
 			'success' => true,
-			'objectEditLink' => LinkHandler::getInstance()->getLink('LabelEdit', ['id' => $labelID]),
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(LabelEditForm::class, ['id' => $labelID]),
 		]);
 	}
 	

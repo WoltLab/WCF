@@ -191,7 +191,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		// show success message
 		WCF::getTPL()->assign([
 			'success' => true,
-			'objectEditLink' => LinkHandler::getInstance()->getLink('UserGroupEdit', ['id' => $groupID]),
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(UserGroupEditForm::class, ['id' => $groupID]),
 		]);
 		
 		// reset values

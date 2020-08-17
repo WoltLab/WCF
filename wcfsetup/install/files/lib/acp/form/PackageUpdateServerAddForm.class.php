@@ -93,7 +93,7 @@ class PackageUpdateServerAddForm extends AbstractForm {
 		// show success message
 		WCF::getTPL()->assign([
 			'success' => true,
-			'objectEditLink' => LinkHandler::getInstance()->getLink('PackageUpdateServerEdit', ['id' => $returnValues['returnValues']->packageUpdateServerID]),
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(PackageUpdateServerEditForm::class, ['id' => $returnValues['returnValues']->packageUpdateServerID]),
 		]);
 	}
 	

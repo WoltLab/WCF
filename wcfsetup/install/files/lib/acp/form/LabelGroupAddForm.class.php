@@ -200,7 +200,7 @@ class LabelGroupAddForm extends AbstractForm {
 		// show success message
 		WCF::getTPL()->assign([
 			'success' => true,
-			'objectEditLink' => LinkHandler::getInstance()->getLink('LabelGroupEdit', ['id' => $returnValues['returnValues']->groupID]),
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(LabelGroupEditForm::class, ['id' => $returnValues['returnValues']->groupID]),
 		]);
 		
 		I18nHandler::getInstance()->reset();

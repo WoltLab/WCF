@@ -120,7 +120,7 @@ class CaptchaQuestionAddForm extends AbstractForm {
 		// show success message
 		WCF::getTPL()->assign([
 			'success' => true,
-			'objectEditLink' => LinkHandler::getInstance()->getLink('CaptchaQuestionEdit', ['id' => $questionID]),
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(CaptchaQuestionEditForm::class, ['id' => $questionID]),
 		]);
 	}
 	

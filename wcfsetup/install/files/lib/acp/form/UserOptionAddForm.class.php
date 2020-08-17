@@ -334,7 +334,7 @@ class UserOptionAddForm extends AbstractForm {
 		// show success
 		WCF::getTPL()->assign([
 			'success' => true,
-			'objectEditLink' => LinkHandler::getInstance()->getLink('UserOptionEdit', ['id' => $userOption->optionID]),
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(UserOptionEditForm::class, ['id' => $userOption->optionID]),
 		]);
 	}
 	

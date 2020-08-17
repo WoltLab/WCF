@@ -331,7 +331,7 @@ class TrophyAddForm extends AbstractAcpForm {
 		$this->reset();
 		
 		WCF::getTPL()->assign([
-			'objectEditLink' => LinkHandler::getInstance()->getLink('TrophyEdit', ['id' => $returnValues['returnValues']->trophyID]),
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(TrophyEditForm::class, ['id' => $returnValues['returnValues']->trophyID]),
 		]);
 	}
 	

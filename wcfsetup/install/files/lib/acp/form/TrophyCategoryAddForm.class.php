@@ -40,7 +40,7 @@ class TrophyCategoryAddForm extends AbstractCategoryAddForm {
 		parent::save();
 		
 		WCF::getTPL()->assign([
-			'objectEditLink' => LinkHandler::getInstance()->getLink('TrophyCategoryEdit', ['id' => $this->objectAction->getReturnValues()['returnValues']->categoryID]),
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(TrophyCategoryEditForm::class, ['id' => $this->objectAction->getReturnValues()['returnValues']->categoryID]),
 		]);
 	}
 }
