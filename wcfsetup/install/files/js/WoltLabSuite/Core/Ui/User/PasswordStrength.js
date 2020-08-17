@@ -77,9 +77,6 @@ define(['Core', 'Language'], function (Core, Language) {
 			this._input.parentNode.insertBefore(this._wrapper, this._input);
 			this._wrapper.appendChild(this._input);
 			
-			var passwordStrengthWrapper = elCreate('div');
-			passwordStrengthWrapper.className = 'passwordStrengthWrapper';
-			
 			var rating = elCreate('div');
 			rating.className = 'passwordStrengthRating';
 			
