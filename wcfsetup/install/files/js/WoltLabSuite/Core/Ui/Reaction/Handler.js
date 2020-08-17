@@ -23,6 +23,8 @@ define(
 	{
 		"use strict";
 		
+		var UiScreen = require('Ui/Screen');
+		
 		/**
 		 * @constructor
 		 */
@@ -175,6 +177,24 @@ define(
 					if (~~elData(reactionTypeButton, 'is-assignable') === 0) {
 						elShow(reactionTypeButton);
 					}
+					
+					this._scrollReactionIntoView(reactionTypeButton);
+				}
+			},
+			
+			_scrollReactionIntoView: function (reactionTypeButton) {
+				var scrollableContainer = elBySel('.reactionPopoverContent', this._getPopover());
+				
+				// Do not scroll if the button is located in the upper 75%.
+				if (reactionTypeButton.offsetTop < scrollableContainer.clientHeight * 0.75) {
+					scrollableContainer.scrollTop = 0;
+				}
+				else {
+					// `Element.scrollTop` permits arbitrary values and will always clamp them to
+					// the maximum possible offset value. We can abuse this behavior by calculating
+					// the values to place the selected reaction in the center of the popover,
+					// regardless of the offset being out of range.
+					scrollableContainer.scrollTop = reactionTypeButton.offsetTop + reactionTypeButton.clientHeight / 2 - scrollableContainer.clientHeight / 2;
 				}
 			},
 			
@@ -221,20 +241,30 @@ define(
 				}
 				
 				this._popoverCurrentObjectId = objectId;
-				this._markReactionAsActive();
 				
 				UiAlignment.set(this._getPopover(), element, {
 					pointer: true,
-					horizontal: (this._options.isButtonGroupNavigation) ? 'left' :'center',
-					vertical: 'top'
+					horizontal: (this._options.isButtonGroupNavigation) ? 'left' : 'center',
+					vertical: UiScreen.is('screen-xs') ? 'bottom' : 'top'
 				});
 				
 				if (this._options.isButtonGroupNavigation) {
 					element.closest('nav').style.setProperty('opacity', '1', '');
 				}
 				
-				this._getPopover().classList.remove('forceHide');
-				this._getPopover().classList.add('active');
+				var popover = this._getPopover();
+				
+				// The popover could be rendered below the input field on mobile, in which case
+				// the "first" button is displayed at the bottom and thus farthest away. Reversing
+				// the display order will restore the logic by placing the "first" button as close
+				// to the react button as possible.
+				var inverseOrder = popover.style.getPropertyValue('bottom') === 'auto';
+				popover.classList[inverseOrder ? 'add' : 'remove']('inverseOrder');
+				
+				this._markReactionAsActive();
+				
+				popover.classList.remove('forceHide');
+				popover.classList.add('active');
 			},
 			
 			/**
@@ -251,6 +281,7 @@ define(
 					_popoverContent.className = 'reactionPopoverContent';
 					
 					var popoverContentHTML = elCreate('ul');
+					popoverContentHTML.className = 'reactionTypeButtonList';
 					
 					var sortedReactionTypes = this._getSortedReactionTypes();
 					
@@ -286,6 +317,14 @@ define(
 					}
 					
 					_popoverContent.appendChild(popoverContentHTML);
+					_popoverContent.addEventListener('scroll', function () {
+						var hasTopOverflow = _popoverContent.scrollTop > 0;
+						_popoverContent.classList[hasTopOverflow ? 'add' : 'remove']('overflowTop');
+						
+						var hasBottomOverflow = _popoverContent.scrollTop + _popoverContent.clientHeight < _popoverContent.scrollHeight;
+						_popoverContent.classList[hasBottomOverflow ? 'add' : 'remove']('overflowBottom');
+					}, {passive: true});
+					
 					this._popover.appendChild(_popoverContent);
 					
 					var pointer = elCreate('span');
