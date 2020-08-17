@@ -1382,7 +1382,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.recaptcha_publickey_invisible.description"><![CDATA[Enter the keys <b>in addition</b> to the keys above if you want to use the invisible variant of reCAPTCHA.]]></item>
 		<item name="wcf.acp.option.recaptcha_privatekey_invisible"><![CDATA[Private API Key (Invisible reCAPTCHA)]]></item>
 		<item name="wcf.acp.option.category.message.attachment"><![CDATA[Attachments]]></item>
-		<item name="wcf.acp.option.attachment_retain_dimensions"><![CDATA[Retain thumbnail dimensions]]></item>
+		<item name="wcf.acp.option.attachment_retain_dimensions"><![CDATA[Retain Thumbnail Aspect Ratio]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_height"><![CDATA[Thumbnail Height]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_width"><![CDATA[Thumbnail Width]]></item>
 		<item name="wcf.acp.option.category.message.attachment.autoscale"><![CDATA[Automatic Image Scaling]]></item>
@@ -1655,13 +1655,13 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.language_use_informal_variant"><![CDATA[Use informal language variant]]></item>
 		<item name="wcf.acp.option.category.cms.media.thumbnail"><![CDATA[Thumbnails]]></item>
 		<item name="wcf.acp.option.media_large_thumbnail_height"><![CDATA[Large Thumbnail Height]]></item>
-		<item name="wcf.acp.option.media_large_thumbnail_retain_dimensions"><![CDATA[Retain thumbnail dimensions (large)]]></item>
+		<item name="wcf.acp.option.media_large_thumbnail_retain_dimensions"><![CDATA[Retain Thumbnail Aspect Ratio (large)]]></item>
 		<item name="wcf.acp.option.media_large_thumbnail_width"><![CDATA[Large Thumbnail Width]]></item>
 		<item name="wcf.acp.option.media_medium_thumbnail_height"><![CDATA[Medium Thumbnail Height]]></item>
-		<item name="wcf.acp.option.media_medium_thumbnail_retain_dimensions"><![CDATA[Retain thumbnail dimensions (medium)]]></item>
+		<item name="wcf.acp.option.media_medium_thumbnail_retain_dimensions"><![CDATA[Retain Thumbnail Aspect Ratio (medium)]]></item>
 		<item name="wcf.acp.option.media_medium_thumbnail_width"><![CDATA[Medium Thumbnail Width]]></item>
 		<item name="wcf.acp.option.media_small_thumbnail_height"><![CDATA[Small Thumbnail Height]]></item>
-		<item name="wcf.acp.option.media_small_thumbnail_retain_dimensions"><![CDATA[Retain thumbnail dimensions (small)]]></item>
+		<item name="wcf.acp.option.media_small_thumbnail_retain_dimensions"><![CDATA[Retain Thumbnail Aspect Ratio (small)]]></item>
 		<item name="wcf.acp.option.media_small_thumbnail_width"><![CDATA[Small Thumbnail Width]]></item>
 		<item name="wcf.acp.option.article_sort_order"><![CDATA[Sort Order]]></item>
 		<item name="wcf.acp.option.article_sort_order.description"><![CDATA[Choose default sort order of articles.]]></item>
