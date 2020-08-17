@@ -482,7 +482,7 @@ class WysiwygFormContainer extends FormContainer {
 			$this->setAttachmentHandler();
 		}
 		
-		if ($this->enablePreviewButton === true) {
+		if ($this->enablePreviewButton) {
 			$this->getDocument()->addButton(
 				WysiwygPreviewFormButton::create($this->getWysiwygId() . 'PreviewButton')
 					->objectType($this->messageObjectType)
