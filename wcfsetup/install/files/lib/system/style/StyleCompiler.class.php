@@ -94,6 +94,7 @@ class StyleCompiler extends SingletonFactory {
 	 * error, null is returned. Otherwise the exception is returned (!).
 	 * 
 	 * @param       string                  $testFileDir
+	 * @param       string                  $styleName
 	 * @param       string                  $apiVersion
 	 * @param       string                  $imagePath
 	 * @param       string[]                $variables
@@ -101,7 +102,7 @@ class StyleCompiler extends SingletonFactory {
 	 * @return      null|\Exception
 	 * @since       5.3           
 	 */
-	public function testStyle($testFileDir, $apiVersion, $imagePath, array $variables, $customCustomSCSSFile = null) {
+	public function testStyle($testFileDir, $styleName, $apiVersion, $imagePath, array $variables, $customCustomSCSSFile = null) {
 		$individualScss = '';
 		if (isset($variables['individualScss'])) {
 			$individualScss = $variables['individualScss'];
@@ -151,8 +152,8 @@ class StyleCompiler extends SingletonFactory {
 				$files,
 				$variables,
 				$individualScss . (!empty($parameters['scss']) ? "\n" . $parameters['scss'] : ''),
-				function($content) {
-					return "/* stylesheet, generated on ".gmdate('r')." -- DO NOT EDIT */\n\n" . $content;
+				function($content) use ($styleName) {
+					return "/* stylesheet for '". $styleName ."', generated on ".gmdate('r')." -- DO NOT EDIT */\n\n" . $content;
 				}
 			);
 		}

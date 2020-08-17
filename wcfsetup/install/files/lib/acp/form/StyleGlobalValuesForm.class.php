@@ -82,7 +82,7 @@ class StyleGlobalValuesForm extends AbstractForm {
 				$this->styleTestFileDir = FileUtil::getTemporaryFilename('style_');
 				FileUtil::makePath($this->styleTestFileDir);
 				
-				$errorMessage = StyleCompiler::getInstance()->testStyle($this->styleTestFileDir, $defaultStyle->apiVersion, $defaultStyle->imagePath, $defaultStyle->getVariables(), $tmpFile);
+				$errorMessage = StyleCompiler::getInstance()->testStyle($this->styleTestFileDir, $defaultStyle->styleName, $defaultStyle->apiVersion, $defaultStyle->imagePath, $defaultStyle->getVariables(), $tmpFile);
 				
 				if ($errorMessage !== null) {
 					rmdir($this->styleTestFileDir);
