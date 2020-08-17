@@ -16,11 +16,13 @@ use wcf\system\image\ImageHandler;
 use wcf\system\language\I18nHandler;
 use wcf\system\Regex;
 use wcf\system\request\LinkHandler;
+use wcf\system\style\StyleCompiler;
 use wcf\system\style\exception\FontDownloadFailed;
 use wcf\system\style\FontManager;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\DateUtil;
+use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -187,6 +189,11 @@ class StyleAddForm extends AbstractForm {
 	 * @var	string
 	 */
 	public $tmpHash = '';
+	
+	/**
+	 * @var string
+	 */
+	public $styleTestFileDir;
 	
 	/**
 	 * list of variables and their value
@@ -466,11 +473,35 @@ class StyleAddForm extends AbstractForm {
 			$this->parseOverrides();
 		}
 		
+		$this->validateIndividualScss();
+		
 		$this->validateApiVersion();
 		
 		$this->validateUploads();
 		
 		$this->downloadGoogleFont();
+	}
+	
+	/**
+	 * Validates the individual scss.
+	 * @throws      UserInputException
+	 * @since       5.3
+	 */
+	public function validateIndividualScss() {
+		$variables = array_merge(StyleCompiler::getDefaultVariables(), $this->variables);
+		
+		$this->styleTestFileDir = FileUtil::getTemporaryFilename('style_');
+		FileUtil::makePath($this->styleTestFileDir);
+		
+		$result = StyleCompiler::getInstance()->testStyle($this->styleTestFileDir, $this->styleName, $this->apiVersion, false, $variables);
+		
+		if ($result !== null) {
+			rmdir($this->styleTestFileDir);
+			
+			throw new UserInputException('individualScss', [
+				'message' => $result->getMessage(),
+			]);
+		}
 	}
 	
 	/**
@@ -790,6 +821,14 @@ class StyleAddForm extends AbstractForm {
 			'styleDescription' => 'wcf.style.styleDescription'.$style->styleID
 		]);
 		
+		// Do not save the compiled style, because the image path was unknown during the style generation. 
+		if ($this->styleTestFileDir && file_exists($this->styleTestFileDir . '/style.css') && file_exists($this->styleTestFileDir . '/style-rtl.css')) {
+			unlink($this->styleTestFileDir . '/style.css');
+			unlink($this->styleTestFileDir . '/style-rtl.css');
+			
+			rmdir($this->styleTestFileDir);
+		}
+		
 		// call saved event
 		$this->saved();
 		
@@ -799,6 +838,7 @@ class StyleAddForm extends AbstractForm {
 		$this->setDefaultValues();
 		$this->isTainted = true;
 		$this->templateGroupID = 0;
+		$this->styleTestFilename = null;
 		$this->rebuildUploadFields();
 		
 		I18nHandler::getInstance()->reset();

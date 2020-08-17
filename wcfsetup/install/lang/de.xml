@@ -1405,7 +1405,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.recaptcha_publickey_invisible.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Trage{else}Tragen Sie{/if} hier, <b>zusätzlich</b> zu den obigen Schlüsseln, Schlüssel für das unsichtbare reCAPTCHA ein, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} diese Variante nutzen {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}.]]></item>
 		<item name="wcf.acp.option.recaptcha_privatekey_invisible"><![CDATA[Geheimer Schlüssel (Unsichtbares reCAPTCHA)]]></item>
 		<item name="wcf.acp.option.category.message.attachment"><![CDATA[Dateianhänge]]></item>
-		<item name="wcf.acp.option.attachment_retain_dimensions"><![CDATA[Bildformat beim Erzeugen von Vorschaugrafiken beibehalten]]></item>
+		<item name="wcf.acp.option.attachment_retain_dimensions"><![CDATA[Seitenverhältnis beim Erzeugen von Vorschaugrafiken beibehalten]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_height"><![CDATA[Höhe der Vorschaugrafiken]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_width"><![CDATA[Breite der Vorschaugrafiken]]></item>
 		<item name="wcf.acp.option.category.message.attachment.autoscale"><![CDATA[Automatische Bildskalierung]]></item>
@@ -1671,13 +1671,13 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.language_use_informal_variant"><![CDATA[Informelle Anrede verwenden]]></item>
 		<item name="wcf.acp.option.category.cms.media.thumbnail"><![CDATA[Vorschaugrafiken]]></item>
 		<item name="wcf.acp.option.media_large_thumbnail_height"><![CDATA[Höhe der großen Vorschaugrafiken]]></item>
-		<item name="wcf.acp.option.media_large_thumbnail_retain_dimensions"><![CDATA[Bildformat beim Erzeugen von großen Vorschaugrafiken beibehalten]]></item>
+		<item name="wcf.acp.option.media_large_thumbnail_retain_dimensions"><![CDATA[Seitenverhältnis beim Erzeugen von großen Vorschaugrafiken beibehalten]]></item>
 		<item name="wcf.acp.option.media_large_thumbnail_width"><![CDATA[Breite der großen Vorschaugrafiken]]></item>
 		<item name="wcf.acp.option.media_medium_thumbnail_height"><![CDATA[Höhe der mittleren Vorschaugrafiken]]></item>
-		<item name="wcf.acp.option.media_medium_thumbnail_retain_dimensions"><![CDATA[Bildformat beim Erzeugen von mittleren Vorschaugrafiken beibehalten]]></item>
+		<item name="wcf.acp.option.media_medium_thumbnail_retain_dimensions"><![CDATA[Seitenverhältnis beim Erzeugen von mittleren Vorschaugrafiken beibehalten]]></item>
 		<item name="wcf.acp.option.media_medium_thumbnail_width"><![CDATA[Breite der mittleren Vorschaugrafiken]]></item>
 		<item name="wcf.acp.option.media_small_thumbnail_height"><![CDATA[Höhe der kleinen Vorschaugrafiken]]></item>
-		<item name="wcf.acp.option.media_small_thumbnail_retain_dimensions"><![CDATA[Bildformat beim Erzeugen von kleinen Vorschaugrafiken beibehalten]]></item>
+		<item name="wcf.acp.option.media_small_thumbnail_retain_dimensions"><![CDATA[Seitenverhältnis beim Erzeugen von kleinen Vorschaugrafiken beibehalten]]></item>
 		<item name="wcf.acp.option.media_small_thumbnail_width"><![CDATA[Breite der kleinen Vorschaugrafiken]]></item>
 		<item name="wcf.acp.option.article_sort_order"><![CDATA[Sortierungsreihenfolge]]></item>
 		<item name="wcf.acp.option.article_sort_order.description"><![CDATA[Standard-Reihenfolge für die Liste der Artikel.]]></item>
@@ -2836,6 +2836,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.style.advanced.overrideScss.error.invalid"><![CDATA[Eingabe „{$error[text]}“ ungültig]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss.error.predefined"><![CDATA[Variable „{$error[text]}“ wird bereits durch den Stil-Editor gesetzt]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss.error.unknown"><![CDATA[Variable „{$error[text]}“ unbekannt]]></item>
+		<item name="wcf.acp.style.advanced.individualScss.error"><![CDATA[Der SCSS-Code enthält einen Fehler: {$errorType.message}.]]></item>
 		<item name="wcf.acp.style.apiVersion"><![CDATA[Kompatibilität mit WoltLab Suite in Version]]></item>
 		<item name="wcf.acp.style.apiVersion.deprecated"><![CDATA[veraltet]]></item>
 		<item name="wcf.acp.style.apiVersion.description"><![CDATA[Deaktiviert ausgewählte Stil-Verbesserungen, um die Kompatibilität mit Stilen für eine ältere Version von WoltLab Suite zu gewährleisten.]]></item>
@@ -2903,6 +2904,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.style.globalValues"><![CDATA[Stilunabhängiges CSS und SCSS]]></item>
 		<item name="wcf.acp.style.globalValues.description"><![CDATA[Das unten stehende CSS und SCSS wird auf alle Stile angewandt, die individuelle Anpassungen in den Stilen sind jedoch höherwertig.]]></item>
 		<item name="wcf.acp.style.globalValues.input"><![CDATA[Individuelles CSS und SCSS]]></item>
+		<item name="wcf.acp.style.globalValues.input.error"><![CDATA[Der SCSS-Code enthält einen Fehler: {$errorType.message}.]]></item>
 		<item name="wcf.acp.style.image"><![CDATA[Vorschaubild]]></item>
 		<item name="wcf.acp.style.image.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Lade{else}Laden Sie{/if} hier ein Vorschaubild dieses Stiles hoch, als Bildformate sind JPG und PNG zulässig. Es wird empfohlen Vorschaubilder immer mit der Größe 102×64 Pixel anzulegen, größere Grafiken werden automatisch skaliert.]]></item>
 		<item name="wcf.acp.style.image2x"><![CDATA[Vorschaubild (HD)]]></item>

@@ -7,7 +7,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/User/PasswordStrength
  */
-define(['zxcvbn', 'Core', 'Language', 'StringUtil'], function (zxcvbn, Core, Language, StringUtil) {
+define(['Core', 'Language'], function (Core, Language) {
 	'use strict';
 	
 	var STATIC_DICTIONARY = [];
@@ -25,17 +25,42 @@ define(['zxcvbn', 'Core', 'Language', 'StringUtil'], function (zxcvbn, Core, Lan
 		return [].concat(value, value.split(/\W+/));
 	}
 	
+	function initializeFeedbacker(Feedback) {
+		var phrases = Core.extend({}, Feedback.default_phrases);
+		for (var type in phrases) {
+			if (phrases.hasOwnProperty(type)) {
+				for (var phrase in phrases[type]) {
+					if (phrases[type].hasOwnProperty(phrase)) {
+						var languageItem = 'wcf.user.password.zxcvbn.' + type + '.' + phrase;
+						var value = Language.get(languageItem);
+						if (value !== languageItem) {
+							phrases[type][phrase] = value;
+						}
+					}
+				}
+			}
+		}
+		return new Feedback(phrases);
+	}
+	
 	/**
 	 * @constructor
 	 */
-	function PasswordStrength(input, options) { this.init(input, options); }
+	function PasswordStrength(input, options) {
+		require(['zxcvbn']).then(function (modules) {
+			var zxcvbn = modules[0];
+			this.init(zxcvbn, input, options);
+		}.bind(this));
+	}
 	
 	PasswordStrength.prototype = {
 		/**
-		 * @param       {Element}       input
+		 * @param	{*}		zxcvbn
+		 * @param	{Element}	input
 		 * @param	{object}	options
 		 */
-		init: function (input, options) {
+		init: function (zxcvbn, input, options) {
+			this._zxcvbn = zxcvbn;
 			this._input = input;
 			
 			this._options = Core.extend({
@@ -44,30 +69,13 @@ define(['zxcvbn', 'Core', 'Language', 'StringUtil'], function (zxcvbn, Core, Lan
 			}, options);
 			
 			if (!this._options.feedbacker) {
-				var phrases = Core.extend({}, zxcvbn.Feedback.default_phrases);
-				for (var type in phrases) {
-					if (phrases.hasOwnProperty(type)) {
-						for (var phrase in phrases[type]) {
-							if (phrases[type].hasOwnProperty(phrase)) {
-								var languageItem = 'wcf.user.password.zxcvbn.' + type + '.' + phrase;
-								var value = Language.get(languageItem);
-								if (value !== languageItem) {
-									phrases[type][phrase] = value;
-								}
-							}
-						}
-					}
-				}
-				this._options.feedbacker = new zxcvbn.Feedback(phrases);
+				this._options.feedbacker = initializeFeedbacker(zxcvbn.Feedback);
 			}
 			
 			this._wrapper = elCreate('div');
 			this._wrapper.className = 'inputAddon inputAddonPasswordStrength';
 			this._input.parentNode.insertBefore(this._wrapper, this._input);
 			this._wrapper.appendChild(this._input);
-			
-			var passwordStrengthWrapper = elCreate('div');
-			passwordStrengthWrapper.className = 'passwordStrengthWrapper';
 			
 			var rating = elCreate('div');
 			rating.className = 'passwordStrengthRating';
@@ -119,7 +127,7 @@ define(['zxcvbn', 'Core', 'Language', 'StringUtil'], function (zxcvbn, Core, Lan
 			
 			// To bound runtime latency for really long passwords, consider sending zxcvbn() only
 			// the first 100 characters or so of user input.
-			var verdict = zxcvbn(value.substr(0, 100), dictionary);
+			var verdict = this._zxcvbn(value.substr(0, 100), dictionary);
 			verdict.feedback = this._options.feedbacker.from_result(verdict);
 			
 			elData(this._score, 'score', value.length === 0 ? '-1' : verdict.score);
