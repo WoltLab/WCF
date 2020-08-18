@@ -16,7 +16,7 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\System\Worker
  * @since	5.2
  */
-class UserContentRemoveWorker extends AbstractWorker implements IWorker {
+class UserContentRemoveWorker extends AbstractWorker {
 	/**
 	 * variable name for the session to store the data
 	 */
