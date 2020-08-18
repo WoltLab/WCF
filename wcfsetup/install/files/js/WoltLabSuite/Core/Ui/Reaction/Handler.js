@@ -178,6 +178,7 @@ define(
 					element.classList.remove('active');
 				});
 				
+				var scrollableContainer = elBySel('.reactionPopoverContent', this._getPopover());
 				if (reactionTypeID) {
 					var reactionTypeButton = elBySel('.reactionTypeButton[data-reaction-type-id="' + reactionTypeID + '"]', this._getPopover());
 					reactionTypeButton.classList.add('active');
@@ -186,13 +187,19 @@ define(
 						elShow(reactionTypeButton);
 					}
 					
-					this._scrollReactionIntoView(reactionTypeButton);
+					this._scrollReactionIntoView(scrollableContainer, reactionTypeButton);
+				}
+				else {
+					// The "first" reaction is positioned as close as possible to the toggle button,
+					// which means that we need to scroll the list to the bottom if the popover is
+					// displayed above the toggle button.
+					if (UiScreen.is('screen-xs') && !this._getPopover().classList.contains('inverseOrder')) {
+						scrollableContainer.scrollTop = scrollableContainer.scrollHeight - scrollableContainer.clientHeight;
+					}
 				}
 			},
 			
-			_scrollReactionIntoView: function (reactionTypeButton) {
-				var scrollableContainer = elBySel('.reactionPopoverContent', this._getPopover());
-				
+			_scrollReactionIntoView: function (scrollableContainer, reactionTypeButton) {
 				// Do not scroll if the button is located in the upper 75%.
 				if (reactionTypeButton.offsetTop < scrollableContainer.clientHeight * 0.75) {
 					scrollableContainer.scrollTop = 0;
@@ -271,6 +278,8 @@ define(
 				
 				this._markReactionAsActive();
 				
+				this._rebuildOverflowIndicator();
+				
 				popover.classList.remove('forceHide');
 				popover.classList.add('active');
 			},
@@ -336,7 +345,6 @@ define(
 					
 					document.body.appendChild(this._popover);
 					
-					this._rebuildOverflowIndicator();
 					DomChangeListener.trigger();
 				}
 				

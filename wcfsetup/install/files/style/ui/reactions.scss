@@ -27,7 +27,7 @@
 	
 	@include screen-xs {
 		&.inverseOrder .reactionTypeButtonList {
-			flex-direction: column-reverse;
+			flex-direction: column;
 		}
 	}
 }
@@ -201,7 +201,7 @@
 @include screen-xs {
 	.reactionTypeButtonList {
 		display: flex;
-		flex-direction: column;
+		flex-direction: column-reverse;
 	}
 }
 
