@@ -71,7 +71,7 @@ class ContactOptionAddForm extends AbstractCustomOptionForm {
 		parent::save();
 		
 		WCF::getTPL()->assign([
-			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(ContactOptionEditForm::class, ['id' => $this->objectAction->executeAction()['returnValues']->getObjectID()]),
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(ContactOptionEditForm::class, ['id' => $this->objectAction->getReturnValues()['returnValues']->getObjectID()]),
 		]);
 	}
 }
