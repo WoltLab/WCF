@@ -88,9 +88,7 @@
 	<p class="info">{lang}wcf.acp.bbcode.add.userGroupOptionInfo{/lang}</p>
 {/if}
 
-{include file='formError'}
-
-{include file='formSuccess'}
+{include file='formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link controller='BBCodeAdd'}{/link}{else}{link controller='BBCodeEdit' object=$bbcode}{/link}{/if}">
 	<div class="section">

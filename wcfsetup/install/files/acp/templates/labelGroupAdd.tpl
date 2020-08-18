@@ -33,9 +33,7 @@
 	</nav>
 </header>
 
-{include file='formError'}
-
-{include file='formSuccess'}
+{include file='formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link controller='LabelGroupAdd'}{/link}{else}{link controller='LabelGroupEdit' object=$labelGroup}{/link}{/if}">
 	<div class="section tabMenuContainer">

@@ -38,9 +38,7 @@
 	</nav>
 </header>
 
-{include file='formError'}
-
-{include file='formSuccess'}
+{include file='formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link controller='UserRankAdd'}{/link}{else}{link controller='UserRankEdit' id=$rankID}{/link}{/if}">
 	<div class="section">

@@ -62,9 +62,7 @@
 	</nav>
 </header>
 
-{include file='formError'}
-
-{include file='formSuccess'}
+{include file='formNotice'}
 
 {if $trophyCategories|count}
 	<form id="trophyForm" method="post" action="{if $action == 'add'}{link controller='TrophyAdd'}{/link}{else}{link controller='TrophyEdit' id=$trophy->getObjectID()}{/link}{/if}">

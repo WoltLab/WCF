@@ -22,9 +22,7 @@
 	</nav>
 </header>
 
-{include file='formError'}
-
-{include file='formSuccess'}
+{include file='formNotice'}
 
 <form id="adForm" method="post" action="{if $action == 'add'}{link controller='AdAdd'}{/link}{else}{link controller='AdEdit' object=$adObject}{/link}{/if}">
 	<div class="section">

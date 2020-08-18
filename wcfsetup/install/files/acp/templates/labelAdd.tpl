@@ -38,9 +38,7 @@
 	</nav>
 </header>
 
-{include file='formError'}
-
-{include file='formSuccess'}
+{include file='formNotice'}
 
 {if $labelGroupList|count}
 	<form method="post" action="{if $action == 'add'}{link controller='LabelAdd'}{/link}{else}{link controller='LabelEdit' object=$label}{/link}{/if}">

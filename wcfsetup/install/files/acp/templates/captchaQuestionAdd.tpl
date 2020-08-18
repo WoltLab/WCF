@@ -14,9 +14,7 @@
 	</nav>
 </header>
 
-{include file='formError'}
-
-{include file='formSuccess'}
+{include file='formNotice'}
 
 <form id="adForm" method="post" action="{if $action == 'add'}{link controller='CaptchaQuestionAdd'}{/link}{else}{link controller='CaptchaQuestionEdit' id=$captchaQuestion->questionID}{/link}{/if}">
 	<div class="section">

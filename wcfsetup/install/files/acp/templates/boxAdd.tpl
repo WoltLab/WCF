@@ -84,9 +84,7 @@
 	</nav>
 </header>
 
-{include file='formError'}
-
-{include file='formSuccess'}
+{include file='formNotice'}
 
 {if $action == 'edit' && !$lastVersion|empty}
 	<p class="info">{lang}wcf.acp.box.lastVersion{/lang}</p>

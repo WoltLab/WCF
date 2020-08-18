@@ -14,11 +14,9 @@
 	</nav>
 </header>
 
-{include file='formError'}
-
 <p class="info">{lang}wcf.acp.cronjob.intro{/lang}</p>
 
-{include file='formSuccess'}
+{include file='formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link controller='CronjobAdd'}{/link}{else}{link controller='CronjobEdit' id=$cronjobID}{/link}{/if}">
 	<div class="section">

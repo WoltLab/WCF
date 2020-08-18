@@ -89,9 +89,7 @@
 	{@$__contentHeader}
 {/if}
 
-{include file='formError'}
-
-{include file='formSuccess'}
+{include file='formNotice'}
 
 {if $action == 'edit'}
 	<p class="info jsArticleNoticeTrash"{if !$article->isDeleted} style="display: none;"{/if}>{lang}wcf.acp.article.trash.notice{/lang}</p>

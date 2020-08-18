@@ -65,8 +65,6 @@
 	</nav>
 </header>
 
-{include file='formError'}
-
 {if VISITOR_USE_TINY_BUILD && $groupIsGuest}
 	<p class="warning">{lang}wcf.acp.group.excludedInTinyBuild.notice{/lang}</p>
 {/if}
@@ -79,7 +77,7 @@
 	<p class="warning">{lang}wcf.acp.group.edit.warning.selfIsMember{/lang}</p>
 {/if}
 
-{include file='formSuccess'}
+{include file='formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link controller='UserGroupAdd'}{/link}{else}{link controller='UserGroupEdit' id=$groupID}{/link}{/if}">
 	<div class="section">

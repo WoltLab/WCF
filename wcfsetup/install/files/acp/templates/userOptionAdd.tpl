@@ -15,9 +15,7 @@
 
 </header>
 
-{include file='formError'}
-
-{include file='formSuccess'}
+{include file='formNotice'}
 
 {if !$availableCategories|empty}
 	<form method="post" action="{if $action == 'add'}{link controller='UserOptionAdd'}{/link}{else}{link controller='UserOptionEdit' id=$optionID}{/link}{/if}">
