@@ -218,11 +218,16 @@ class WysiwygFormContainer extends FormContainer {
 	 * 
 	 * By default, the preview button is shown.
 	 * 
-	 * @param       bool                    $enablePreviewButton
-	 * @return      WysiwygFormContainer    this form container
+	 * @param       bool                            $enablePreviewButton
+	 * @return      WysiwygFormContainer            this form container
 	 * @since       5.3
+	 * @throws      \BadMethodCallException         if the form field container has already been populated yet
 	 */
 	public function enablePreviewButton($enablePreviewButton = true) {
+		if ($this->isPopulated) {
+			throw new \BadMethodCallException('Enabling and disabling the preview button is only possible the form has been built.');
+		}
+		
 		$this->enablePreviewButton = $enablePreviewButton;
 		
 		return $this;
