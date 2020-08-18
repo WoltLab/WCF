@@ -56,6 +56,7 @@ define(
 				this._popoverCurrentObjectId = 0;
 				
 				this._popover = null;
+				this._popoverContent = null;
 				
 				this._options = Core.extend({
 					// selectors
@@ -128,7 +129,7 @@ define(
 					elementData.reactButton = elBySel(this._options.buttonSelector, element);
 				}
 				
-				if (elementData.reactButton === null || elementData.reactButton.length === 0) {
+				if (elementData.reactButton === null || elementData.reactButton.length === 0) {
 					// The element may have no react button. 
 					return;
 				}
@@ -284,8 +285,8 @@ define(
 					this._popover = elCreate('div');
 					this._popover.className = 'reactionPopover forceHide';
 					
-					var _popoverContent = elCreate('div');
-					_popoverContent.className = 'reactionPopoverContent';
+					this._popoverContent = elCreate('div');
+					this._popoverContent.className = 'reactionPopoverContent';
 					
 					var popoverContentHTML = elCreate('ul');
 					popoverContentHTML.className = 'reactionTypeButtonList';
@@ -323,16 +324,10 @@ define(
 						popoverContentHTML.appendChild(reactionTypeItem);
 					}
 					
-					_popoverContent.appendChild(popoverContentHTML);
-					_popoverContent.addEventListener('scroll', function () {
-						var hasTopOverflow = _popoverContent.scrollTop > 0;
-						_popoverContent.classList[hasTopOverflow ? 'add' : 'remove']('overflowTop');
-						
-						var hasBottomOverflow = _popoverContent.scrollTop + _popoverContent.clientHeight < _popoverContent.scrollHeight;
-						_popoverContent.classList[hasBottomOverflow ? 'add' : 'remove']('overflowBottom');
-					}, {passive: true});
+					this._popoverContent.appendChild(popoverContentHTML);
+					this._popoverContent.addEventListener('scroll', this._rebuildOverflowIndicator.bind(this), {passive: true});
 					
-					this._popover.appendChild(_popoverContent);
+					this._popover.appendChild(this._popoverContent);
 					
 					var pointer = elCreate('span');
 					pointer.className = 'elementPointer';
@@ -341,10 +336,19 @@ define(
 					
 					document.body.appendChild(this._popover);
 					
+					this._rebuildOverflowIndicator();
 					DomChangeListener.trigger();
 				}
 				
 				return this._popover;
+			},
+			
+			_rebuildOverflowIndicator: function () {
+				var hasTopOverflow = this._popoverContent.scrollTop > 0;
+				this._popoverContent.classList[hasTopOverflow ? 'add' : 'remove']('overflowTop');
+				
+				var hasBottomOverflow = this._popoverContent.scrollTop + this._popoverContent.clientHeight < this._popoverContent.scrollHeight;
+				this._popoverContent.classList[hasBottomOverflow ? 'add' : 'remove']('overflowBottom');
 			},
 			
 			/**
