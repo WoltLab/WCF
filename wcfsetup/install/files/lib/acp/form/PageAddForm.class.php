@@ -636,7 +636,10 @@ class PageAddForm extends AbstractForm {
 		$this->saved();
 		
 		// show success message
-		WCF::getTPL()->assign('success', true);
+		WCF::getTPL()->assign([
+			'success' => true,
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(PageEditForm::class, ['id' => $page->pageID]),
+		]);
 		
 		// reset variables
 		$this->parentPageID = $this->isDisabled = $this->isLandingPage = $this->availableDuringOfflineMode = $this->enableShareButtons = $this->addPageToMainMenu = 0;

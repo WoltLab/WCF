@@ -6,6 +6,7 @@ use wcf\data\tag\TagEditor;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
@@ -179,7 +180,10 @@ class TagAddForm extends AbstractForm {
 		$this->synonyms = [];
 		
 		// show success message
-		WCF::getTPL()->assign('success', true);
+		WCF::getTPL()->assign([
+			'success' => true,
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(TagEditForm::class, ['id' => $returnValues['returnValues']->tagID]),
+		]);
 	}
 	
 	/**

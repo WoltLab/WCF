@@ -562,7 +562,10 @@ class BoxAddForm extends AbstractForm {
 		$this->saved();
 		
 		// show success message
-		WCF::getTPL()->assign('success', true);
+		WCF::getTPL()->assign([
+			'success' => true,
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(BoxEditForm::class, ['id' => $box->getObjectID()]),
+		]);
 		
 		// reset variables
 		$this->cssClassName = $this->name = '';

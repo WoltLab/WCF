@@ -1,5 +1,7 @@
 <?php
 namespace wcf\acp\form;
+use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
  * Represents the trophy category add form.
@@ -30,4 +32,15 @@ class TrophyCategoryAddForm extends AbstractCategoryAddForm {
 	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.trophy.canManageTrophy'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function save() {
+		parent::save();
+		
+		WCF::getTPL()->assign([
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(TrophyCategoryEditForm::class, ['id' => $this->objectAction->getReturnValues()['returnValues']->categoryID]),
+		]);
+	}
 }

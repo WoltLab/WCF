@@ -9,6 +9,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\label\object\type\ILabelObjectTypeHandler;
 use wcf\system\label\object\type\LabelObjectTypeContainer;
 use wcf\system\language\I18nHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -197,7 +198,10 @@ class LabelGroupAddForm extends AbstractForm {
 		$this->setObjectTypeRelations();
 		
 		// show success message
-		WCF::getTPL()->assign('success', true);
+		WCF::getTPL()->assign([
+			'success' => true,
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(LabelGroupEditForm::class, ['id' => $returnValues['returnValues']->groupID]),
+		]);
 		
 		I18nHandler::getInstance()->reset();
 	}

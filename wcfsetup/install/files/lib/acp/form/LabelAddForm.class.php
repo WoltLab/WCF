@@ -8,6 +8,7 @@ use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\Regex;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -173,10 +174,10 @@ class LabelAddForm extends AbstractForm {
 			'showOrder' => $this->showOrder
 		])]);
 		$this->objectAction->executeAction();
+		$returnValues = $this->objectAction->getReturnValues();
+		$labelID = $returnValues['returnValues']->labelID;
 		
 		if (!I18nHandler::getInstance()->isPlainValue('label')) {
-			$returnValues = $this->objectAction->getReturnValues();
-			$labelID = $returnValues['returnValues']->labelID;
 			I18nHandler::getInstance()->save('label', 'wcf.acp.label.label'.$labelID, 'wcf.acp.label', 1);
 			
 			// update group name
@@ -200,7 +201,10 @@ class LabelAddForm extends AbstractForm {
 		I18nHandler::getInstance()->reset();
 		
 		// show success message
-		WCF::getTPL()->assign('success', true);
+		WCF::getTPL()->assign([
+			'success' => true,
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(LabelEditForm::class, ['id' => $labelID]),
+		]);
 	}
 	
 	/**

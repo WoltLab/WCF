@@ -15,15 +15,11 @@
 	</nav>
 </header>
 
-{include file='formError'}
-
 {if $userID|isset && $__wcf->user->userID == $userID}
 	<p class="warning">{lang}wcf.acp.user.edit.warning.selfEdit{/lang}</p>
 {/if}
 
-{if $success|isset}
-	<p class="success">{lang}wcf.global.success.{@$action}{/lang}</p>
-{/if}
+{include file='formNotice'}
 
 <form method="post" action="{if $action == 'add'}{link controller='UserAdd'}{/link}{else}{link controller='UserEdit' id=$userID}{/link}{/if}">
 	<div class="section tabMenuContainer">

@@ -6,6 +6,7 @@ use wcf\data\bbcode\media\provider\BBCodeMediaProviderEditor;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\Regex;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -133,7 +134,10 @@ class BBCodeMediaProviderAddForm extends AbstractForm {
 		$this->title = $this->regex = $this->html = $this->className = '';
 		
 		// show success message
-		WCF::getTPL()->assign('success', true);
+		WCF::getTPL()->assign([
+			'success' => true,
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(BBCodeMediaProviderEditForm::class, ['id' => $provider->providerID]),
+		]);
 	}
 	
 	/**

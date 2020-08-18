@@ -89,11 +89,7 @@
 	{@$__contentHeader}
 {/if}
 
-{include file='formError'}
-
-{if $success|isset}
-	<p class="success" role="status">{lang}wcf.global.success.{$action}{/lang}</p>
-{/if}
+{include file='formNotice'}
 
 {if $action == 'edit'}
 	<p class="info jsArticleNoticeTrash"{if !$article->isDeleted} style="display: none;"{/if}>{lang}wcf.acp.article.trash.notice{/lang}</p>

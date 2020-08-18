@@ -7,6 +7,7 @@ use wcf\form\AbstractForm;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\CronjobUtil;
 use wcf\util\StringUtil;
@@ -188,7 +189,10 @@ class CronjobAddForm extends AbstractForm {
 		I18nHandler::getInstance()->reset();
 		
 		// show success message
-		WCF::getTPL()->assign('success', true);
+		WCF::getTPL()->assign([
+			'success' => true,
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(CronjobEditForm::class, ['id' => $cronjobID]),
+		]);
 	}
 	
 	/**

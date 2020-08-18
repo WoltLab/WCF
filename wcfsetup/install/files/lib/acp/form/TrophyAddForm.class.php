@@ -9,6 +9,7 @@ use wcf\data\trophy\TrophyEditor;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nValue;
+use wcf\system\request\LinkHandler;
 use wcf\system\trophy\condition\TrophyConditionHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -308,9 +309,9 @@ class TrophyAddForm extends AbstractAcpForm {
 			]),
 			'tmpHash' => $this->tmpHash
 		]);
-		$this->objectAction->executeAction();
+		$returnValues = $this->objectAction->executeAction();
 		
-		$this->saveI18n($this->objectAction->getReturnValues()['returnValues'], TrophyEditor::class);
+		$this->saveI18n($returnValues['returnValues'], TrophyEditor::class);
 		
 		// transform conditions array into one-dimensional array
 		$conditions = [];
@@ -325,9 +326,13 @@ class TrophyAddForm extends AbstractAcpForm {
 			}
 		}
 		
-		ConditionHandler::getInstance()->createConditions($this->objectAction->getReturnValues()['returnValues']->trophyID, $conditions);
+		ConditionHandler::getInstance()->createConditions($returnValues['returnValues']->trophyID, $conditions);
 		
 		$this->reset();
+		
+		WCF::getTPL()->assign([
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(TrophyEditForm::class, ['id' => $returnValues['returnValues']->trophyID]),
+		]);
 	}
 	
 	/**

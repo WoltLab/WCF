@@ -8,6 +8,7 @@ use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\Regex;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -201,11 +202,10 @@ class UserRankAddForm extends AbstractForm {
 			'requiredGender' => $this->requiredGender,
 			'hideTitle' => ($this->hideTitle ? 1 : 0)
 		])]);
-		$this->objectAction->executeAction();
+		$returnValues = $this->objectAction->executeAction();
+		$rankID = $returnValues['returnValues']->rankID;
 		
 		if (!I18nHandler::getInstance()->isPlainValue('rankTitle')) {
-			$returnValues = $this->objectAction->getReturnValues();
-			$rankID = $returnValues['returnValues']->rankID;
 			I18nHandler::getInstance()->save('rankTitle', 'wcf.user.rank.userRank'.$rankID, 'wcf.user', 1);
 			
 			// update name
@@ -224,7 +224,10 @@ class UserRankAddForm extends AbstractForm {
 		I18nHandler::getInstance()->reset();
 		
 		// show success message
-		WCF::getTPL()->assign('success', true);
+		WCF::getTPL()->assign([
+			'success' => true,
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(UserRankEditForm::class, ['id' => $rankID]),
+		]);
 	}
 	
 	/**

@@ -3820,6 +3820,7 @@ Attachments:
 		<item name="wcf.global.filter.visibility.showAll"><![CDATA[Show all]]></item>
 		<item name="wcf.global.success"><![CDATA[The action completed successfully.]]></item>
 		<item name="wcf.global.success.add"><![CDATA[The entry has been saved.]]></item>
+		<item name="wcf.global.success.add.editCreatedObject"><![CDATA[You can create another one now or <a href="{$objectEditLink}">edit the previously created entry</a>.]]></item>
 		<item name="wcf.global.success.edit"><![CDATA[Your changes have been saved.]]></item>
 		<item name="wcf.global.language.noSelection"><![CDATA[No Selection]]></item>
 		<item name="wcf.global.loading"><![CDATA[Loading …]]></item>

@@ -1,5 +1,7 @@
 <?php
 namespace wcf\acp\form;
+use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
  * Shows the smiley category add form.
@@ -29,4 +31,15 @@ class SmileyCategoryAddForm extends AbstractCategoryAddForm {
 	 * @inheritDoc
 	 */
 	public $neededModules = ['MODULE_SMILEY'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function save() {
+		parent::save();
+		
+		WCF::getTPL()->assign([
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(SmileyCategoryEditForm::class, ['id' => $this->objectAction->getReturnValues()['returnValues']->categoryID]),
+		]);
+	}
 }

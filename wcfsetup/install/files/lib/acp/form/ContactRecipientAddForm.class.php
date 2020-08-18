@@ -7,6 +7,7 @@ use wcf\form\AbstractForm;
 use wcf\system\email\Mailbox;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -155,7 +156,10 @@ class ContactRecipientAddForm extends AbstractForm {
 		$this->saved();
 		
 		// show success message
-		WCF::getTPL()->assign('success', true);
+		WCF::getTPL()->assign([
+			'success' => true,
+			'objectEditLink' => LinkHandler::getInstance()->getControllerLink(ContactRecipientEditForm::class, ['id' => $recipientID]),
+		]);
 		
 		// reset values
 		$this->email = $this->name = 0;
