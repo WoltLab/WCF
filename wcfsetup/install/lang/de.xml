@@ -3875,7 +3875,7 @@ Dateianhänge:
 		<item name="wcf.global.filter.visibility.showAll"><![CDATA[Alles anzeigen]]></item>
 		<item name="wcf.global.success"><![CDATA[Die Aktion wurde erfolgreich ausgeführt.]]></item>
 		<item name="wcf.global.success.add"><![CDATA[Der Eintrag wurde gespeichert.]]></item>
-		<item name="wcf.global.success.add.button.editCreatedObject"><![CDATA[Erstellten Eintrag bearbeiten]]></item>
+		<item name="wcf.global.success.add.editCreatedObject"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} jetzt einen weiteren erstellen oder den <a href="{$objectEditLink}">zuvor erstellten Eintrag bearbeiten</a>.]]></item>
 		<item name="wcf.global.success.edit"><![CDATA[Die Änderungen wurden gespeichert.]]></item>
 		<item name="wcf.global.language.noSelection"><![CDATA[Keine Auswahl]]></item>
 		<item name="wcf.global.loading"><![CDATA[Lädt …]]></item>

@@ -25,10 +25,9 @@
 
 {if $form->showsSuccessMessage()}
 	<p class="success">
-		<span class="icon icon16 fa fa-check green"></span>
 		<span>{@$form->getSuccessMessage()}</span>
 		{if !$objectEditLink|empty}
-			<a href="{$objectEditLink}" class="button buttonPrimary small"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.global.success.add.button.editCreatedObject{/lang}</span></a>
+			<span>{lang}wcf.global.success.add.editCreatedObject{/lang}</span>
 		{/if}
 	</p>
 {/if}
