@@ -9,21 +9,28 @@
  */
 define(
 	[
-		'Ajax',      'Core',                            'Dictionary',           'Language',
-		'ObjectMap', 'StringUtil',                      'Dom/ChangeListener',   'Dom/Util',
-		'Ui/Dialog', 'WoltLabSuite/Core/Ui/User/List',  'User',                 'WoltLabSuite/Core/Ui/Reaction/CountButtons',
-		'Ui/Alignment', 'Ui/CloseOverlay'
+		'Ajax',
+		'Core',
+		'Dictionary',           
+		'Dom/ChangeListener',
+		'Dom/Util',
+		'Ui/Alignment',
+		'Ui/CloseOverlay',
+		'Ui/Screen',
+		'WoltLabSuite/Core/Ui/Reaction/CountButtons',
 	],
 	function(
-		Ajax,        Core,              Dictionary,             Language,
-		ObjectMap,   StringUtil,        DomChangeListener,      DomUtil,
-		UiDialog,    UiUserList,        User,                   CountButtons,
-		UiAlignment, UiCloseOverlay
-	)
-	{
+		Ajax,
+		Core,
+		Dictionary,             
+		DomChangeListener,
+		DomUtil,
+		UiAlignment,
+		UiCloseOverlay,
+		UiScreen,
+		CountButtons
+	) {
 		"use strict";
-		
-		var UiScreen = require('Ui/Screen');
 		
 		/**
 		 * @constructor
