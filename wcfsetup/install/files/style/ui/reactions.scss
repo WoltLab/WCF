@@ -180,11 +180,6 @@
 	}
 }
 
-.reactionTypeButtonList {
-	display: flex;
-	flex-direction: column;
-}
-
 @include screen-lg {
 	html.touch .reactionPopoverContent .reactionTypeButton {
 		display: block;
@@ -200,6 +195,13 @@
 @include screen-sm-down {
 	.reactionStatusContainer {
 		display: none;
+	}
+}
+
+@include screen-xs {
+	.reactionTypeButtonList {
+		display: flex;
+		flex-direction: column;
 	}
 }
 
