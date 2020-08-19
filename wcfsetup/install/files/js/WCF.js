@@ -1142,10 +1142,10 @@ if (COMPILER_TARGET_DEFAULT) {
 			
 			this._pointer = $('<span class="elementPointer"><span /></span>').appendTo(this._container);
 			
-			require(['Environment'], (function (Environment) {
-				if (Environment.platform() === 'desktop') {
+			require(['Ui/Screen'], (function (UiScreen) {
+				if (UiScreen.is('screen-lg')) {
 					if ($itemContainer !== null) {
-						// use jQuery scrollbar on desktop, mobile browsers have a similar display built-in
+						// use jQuery scrollbar on desktop, mobile views have a similar display built-in
 						$itemContainer.perfectScrollbar({
 							suppressScrollX: true
 						});
@@ -1269,8 +1269,8 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * Rebuilds the desktop scrollbar.
 		 */
 		rebuildScrollbar: function () {
-			require(['Environment'], function (Environment) {
-				if (Environment.platform() === 'desktop') {
+			require(['Ui/Screen'], function (UiScreen) {
+				if (UiScreen.is('screen-lg')) {
 					var $itemContainer = this._itemList.parent();
 					
 					// do NOT use 'update', seems to be broken
