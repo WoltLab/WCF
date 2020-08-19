@@ -80,7 +80,7 @@ class PackageUpdateServerAddForm extends AbstractForm {
 			throw new UserInputException('serverURL', 'invalid');
 		}
 		
-		if (preg_match('/^.*\.woltlab.com$/', Url::parse($this->serverURL)['host'])) {
+		if (StringUtil::endsWith(Url::parse($this->serverURL)['host'], '.woltlab.com', true)) {
 			throw new UserInputException('serverURL', 'woltlab');
 		}
 		
