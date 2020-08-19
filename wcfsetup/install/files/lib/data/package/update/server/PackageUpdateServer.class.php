@@ -52,6 +52,13 @@ class PackageUpdateServer extends DatabaseObject {
 		}
 		
 		parent::handleData($data);
+		
+		if ($this->isWoltLabUpdateServer()) {
+			$this->data['serverURL'] = 'http://update.woltlab.com/5.3/';
+		}
+		if ($this->isWoltLabStoreServer()) {
+			$this->data['serverURL'] = 'http://store.woltlab.com/5.3/';
+		}
 	}
 	
 	/**
