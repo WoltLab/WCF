@@ -9,18 +9,27 @@
  */
 define(
 	[
-		'Ajax',      'Core',                            'Dictionary',           'Language',
-		'ObjectMap', 'StringUtil',                      'Dom/ChangeListener',   'Dom/Util',
-		'Ui/Dialog', 'WoltLabSuite/Core/Ui/User/List',  'User',                 'WoltLabSuite/Core/Ui/Reaction/CountButtons',
-		'Ui/Alignment', 'Ui/CloseOverlay'
+		'Ajax',
+		'Core',
+		'Dictionary',           
+		'Dom/ChangeListener',
+		'Dom/Util',
+		'Ui/Alignment',
+		'Ui/CloseOverlay',
+		'Ui/Screen',
+		'WoltLabSuite/Core/Ui/Reaction/CountButtons',
 	],
 	function(
-		Ajax,        Core,              Dictionary,             Language,
-		ObjectMap,   StringUtil,        DomChangeListener,      DomUtil,
-		UiDialog,    UiUserList,        User,                   CountButtons,
-		UiAlignment, UiCloseOverlay
-	)
-	{
+		Ajax,
+		Core,
+		Dictionary,             
+		DomChangeListener,
+		DomUtil,
+		UiAlignment,
+		UiCloseOverlay,
+		UiScreen,
+		CountButtons
+	) {
 		"use strict";
 		
 		/**
@@ -47,6 +56,7 @@ define(
 				this._popoverCurrentObjectId = 0;
 				
 				this._popover = null;
+				this._popoverContent = null;
 				
 				this._options = Core.extend({
 					// selectors
@@ -119,7 +129,7 @@ define(
 					elementData.reactButton = elBySel(this._options.buttonSelector, element);
 				}
 				
-				if (elementData.reactButton === null || elementData.reactButton.length === 0) {
+				if (elementData.reactButton === null || elementData.reactButton.length === 0) {
 					// The element may have no react button. 
 					return;
 				}
@@ -168,6 +178,7 @@ define(
 					element.classList.remove('active');
 				});
 				
+				var scrollableContainer = elBySel('.reactionPopoverContent', this._getPopover());
 				if (reactionTypeID) {
 					var reactionTypeButton = elBySel('.reactionTypeButton[data-reaction-type-id="' + reactionTypeID + '"]', this._getPopover());
 					reactionTypeButton.classList.add('active');
@@ -175,6 +186,35 @@ define(
 					if (~~elData(reactionTypeButton, 'is-assignable') === 0) {
 						elShow(reactionTypeButton);
 					}
+					
+					this._scrollReactionIntoView(scrollableContainer, reactionTypeButton);
+				}
+				else {
+					// The "first" reaction is positioned as close as possible to the toggle button,
+					// which means that we need to scroll the list to the bottom if the popover is
+					// displayed above the toggle button.
+					if (UiScreen.is('screen-xs')) {
+						if (this._getPopover().classList.contains('inverseOrder')) {
+							scrollableContainer.scrollTop = 0;
+						}
+						else {
+							scrollableContainer.scrollTop = scrollableContainer.scrollHeight - scrollableContainer.clientHeight;
+						}
+					}
+				}
+			},
+			
+			_scrollReactionIntoView: function (scrollableContainer, reactionTypeButton) {
+				// Do not scroll if the button is located in the upper 75%.
+				if (reactionTypeButton.offsetTop < scrollableContainer.clientHeight * 0.75) {
+					scrollableContainer.scrollTop = 0;
+				}
+				else {
+					// `Element.scrollTop` permits arbitrary values and will always clamp them to
+					// the maximum possible offset value. We can abuse this behavior by calculating
+					// the values to place the selected reaction in the center of the popover,
+					// regardless of the offset being out of range.
+					scrollableContainer.scrollTop = reactionTypeButton.offsetTop + reactionTypeButton.clientHeight / 2 - scrollableContainer.clientHeight / 2;
 				}
 			},
 			
@@ -221,20 +261,32 @@ define(
 				}
 				
 				this._popoverCurrentObjectId = objectId;
-				this._markReactionAsActive();
 				
 				UiAlignment.set(this._getPopover(), element, {
 					pointer: true,
-					horizontal: (this._options.isButtonGroupNavigation) ? 'left' :'center',
-					vertical: 'top'
+					horizontal: (this._options.isButtonGroupNavigation) ? 'left' : 'center',
+					vertical: UiScreen.is('screen-xs') ? 'bottom' : 'top'
 				});
 				
 				if (this._options.isButtonGroupNavigation) {
 					element.closest('nav').style.setProperty('opacity', '1', '');
 				}
 				
-				this._getPopover().classList.remove('forceHide');
-				this._getPopover().classList.add('active');
+				var popover = this._getPopover();
+				
+				// The popover could be rendered below the input field on mobile, in which case
+				// the "first" button is displayed at the bottom and thus farthest away. Reversing
+				// the display order will restore the logic by placing the "first" button as close
+				// to the react button as possible.
+				var inverseOrder = popover.style.getPropertyValue('bottom') === 'auto';
+				popover.classList[inverseOrder ? 'add' : 'remove']('inverseOrder');
+				
+				this._markReactionAsActive();
+				
+				this._rebuildOverflowIndicator();
+				
+				popover.classList.remove('forceHide');
+				popover.classList.add('active');
 			},
 			
 			/**
@@ -247,10 +299,11 @@ define(
 					this._popover = elCreate('div');
 					this._popover.className = 'reactionPopover forceHide';
 					
-					var _popoverContent = elCreate('div');
-					_popoverContent.className = 'reactionPopoverContent';
+					this._popoverContent = elCreate('div');
+					this._popoverContent.className = 'reactionPopoverContent';
 					
 					var popoverContentHTML = elCreate('ul');
+					popoverContentHTML.className = 'reactionTypeButtonList';
 					
 					var sortedReactionTypes = this._getSortedReactionTypes();
 					
@@ -285,8 +338,10 @@ define(
 						popoverContentHTML.appendChild(reactionTypeItem);
 					}
 					
-					_popoverContent.appendChild(popoverContentHTML);
-					this._popover.appendChild(_popoverContent);
+					this._popoverContent.appendChild(popoverContentHTML);
+					this._popoverContent.addEventListener('scroll', this._rebuildOverflowIndicator.bind(this), {passive: true});
+					
+					this._popover.appendChild(this._popoverContent);
 					
 					var pointer = elCreate('span');
 					pointer.className = 'elementPointer';
@@ -299,6 +354,14 @@ define(
 				}
 				
 				return this._popover;
+			},
+			
+			_rebuildOverflowIndicator: function () {
+				var hasTopOverflow = this._popoverContent.scrollTop > 0;
+				this._popoverContent.classList[hasTopOverflow ? 'add' : 'remove']('overflowTop');
+				
+				var hasBottomOverflow = this._popoverContent.scrollTop + this._popoverContent.clientHeight < this._popoverContent.scrollHeight;
+				this._popoverContent.classList[hasBottomOverflow ? 'add' : 'remove']('overflowBottom');
 			},
 			
 			/**

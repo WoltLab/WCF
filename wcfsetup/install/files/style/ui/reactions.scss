@@ -4,6 +4,7 @@
 	background-color: $wcfContentBackground;
 	border-radius: 2px;
 	box-shadow: 0 2px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	overflow: hidden;
 	position: absolute;
 	top: 0;
 	vertical-align: middle;
@@ -22,6 +23,12 @@
 	
 	> .elementPointer {
 		display: none;
+	}
+	
+	@include screen-xs {
+		&.inverseOrder .reactionTypeButtonList {
+			flex-direction: column;
+		}
 	}
 }
 
@@ -83,6 +90,39 @@
 		
 		&:hover {
 			transform: scale(1.2);
+		}
+	}
+	
+	@include screen-xs {
+		max-height: 200px;
+		overflow: auto;
+		
+		&::after,
+		&::before {
+			content: "";
+			height: 40px;
+			left: 0;
+			opacity: 0;
+			pointer-events: none;
+			position: absolute;
+			right: 0;
+			transition: opacity .12s linear;
+		}
+		
+		&::after {
+			background-image: linear-gradient(to bottom, transparent, $wcfContentBackground);
+			bottom: 0;
+		}
+		&.overflowBottom::after {
+			opacity: 1;
+		}
+		
+		&::before {
+			background-image: linear-gradient(to top, transparent, $wcfContentBackground);
+			top: 0;
+		}
+		&.overflowTop::before {
+			opacity: 1;
 		}
 	}
 	
@@ -155,6 +195,13 @@
 @include screen-sm-down {
 	.reactionStatusContainer {
 		display: none;
+	}
+}
+
+@include screen-xs {
+	.reactionTypeButtonList {
+		display: flex;
+		flex-direction: column-reverse;
 	}
 }
 
