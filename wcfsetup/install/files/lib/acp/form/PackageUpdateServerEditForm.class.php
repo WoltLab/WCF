@@ -51,12 +51,16 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 	public function save() {
 		AbstractForm::save();
 		
-		// save server
-		$this->objectAction = new PackageUpdateServerAction([$this->packageUpdateServerID], 'update', ['data' => array_merge($this->additionalFields, [
+		$data = [
 			'serverURL' => $this->serverURL,
-			'loginUsername' => $this->loginUsername,
-			'loginPassword' => $this->loginPassword
-		])]);
+		];
+		if ($this->loginUsername != $this->updateServer->loginUsername || $this->loginPassword) {
+			$data['loginUsername'] = $this->loginUsername;
+			$data['loginPassword'] = $this->loginPassword;
+		}
+		
+		// save server
+		$this->objectAction = new PackageUpdateServerAction([$this->packageUpdateServerID], 'update', ['data' => array_merge($this->additionalFields, $data)]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
@@ -73,7 +77,6 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 		if (empty($_POST)) {
 			$this->serverURL = $this->updateServer->serverURL;
 			$this->loginUsername = $this->updateServer->loginUsername;
-			$this->loginPassword = $this->updateServer->loginPassword;
 		}
 	}
 	

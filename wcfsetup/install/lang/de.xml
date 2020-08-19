@@ -2777,6 +2777,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.updateServer.lastErrorMessage"><![CDATA[Beim letzten Verbindungsversuch trat folgender Fehler auf:]]></item>
 		<item name="wcf.acp.updateServer.loginPassword"><![CDATA[Kennwort]]></item>
 		<item name="wcf.acp.updateServer.loginPassword.description"><![CDATA[Kennwort für Authentifizierung (optional)]]></item>
+		<item name="wcf.acp.updateServer.loginPassword.noChange"><![CDATA[(keine Änderung)]]></item>
 		<item name="wcf.acp.updateServer.loginUsername"><![CDATA[Benutzername]]></item>
 		<item name="wcf.acp.updateServer.loginUsername.description"><![CDATA[Benutzernamen für Authentifizierung (optional)]]></item>
 		<item name="wcf.acp.updateServer.packages"><![CDATA[Pakete]]></item>

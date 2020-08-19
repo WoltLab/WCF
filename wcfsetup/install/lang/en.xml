@@ -2704,6 +2704,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.updateServer.lastErrorMessage"><![CDATA[Errors occurred on last connection attempt:]]></item>
 		<item name="wcf.acp.updateServer.loginPassword"><![CDATA[Password]]></item>
 		<item name="wcf.acp.updateServer.loginPassword.description"><![CDATA[Enter your authentication password (optional).]]></item>
+		<item name="wcf.acp.updateServer.loginPassword.noChange"><![CDATA[(no change)]]></item>
 		<item name="wcf.acp.updateServer.loginUsername"><![CDATA[Username]]></item>
 		<item name="wcf.acp.updateServer.loginUsername.description"><![CDATA[Enter your authentication username (optional).]]></item>
 		<item name="wcf.acp.updateServer.packages"><![CDATA[Packages]]></item>
