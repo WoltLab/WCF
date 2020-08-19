@@ -978,6 +978,9 @@ WCF.ACP.Package.Update.Manager = Class.extend({
  * @param	boolean		bindOnExistingButtons
  */
 WCF.ACP.Package.Update.Search = Class.extend({
+	/** @var {Element} */
+	_button: null,
+	
 	/**
 	 * dialog overlay
 	 * @var	jQuery
@@ -987,18 +990,17 @@ WCF.ACP.Package.Update.Search = Class.extend({
 	/**
 	 * Initializes the WCF.ACP.Package.SearchForUpdates class.
 	 * 
-	 * @param	boolean		bindOnExistingButtons
+	 * @param	{boolean}		bindOnExistingButtons
 	 */
 	init: function(bindOnExistingButtons) {
 		this._dialog = null;
 		
-		if (bindOnExistingButtons === true) {
-			$('.jsButtonSearchForUpdates').click($.proxy(this._click, this));
+		if (!bindOnExistingButtons === true) {
+			$('<li><a href="#" class="button jsButtonSearchForUpdates"><span class="icon icon16 fa-refresh"></span> <span>' + WCF.Language.get('wcf.acp.package.searchForUpdates') + '</span></a></li>').prependTo($('.contentHeaderNavigation > ul'));
 		}
-		else {
-			var $button = $('<li><a class="button jsButtonSearchForUpdates"><span class="icon icon16 fa-refresh"></span> <span>' + WCF.Language.get('wcf.acp.package.searchForUpdates') + '</span></a></li>');
-			$button.click(this._click.bind(this)).prependTo($('.contentHeaderNavigation > ul'));
-		}
+		
+		this._button = elBySel('.jsButtonSearchForUpdates');
+		if (this._button) this._button.addEventListener('click', this._click.bind(this));
 	},
 	
 	/**
@@ -1008,6 +1010,12 @@ WCF.ACP.Package.Update.Search = Class.extend({
 	 */
 	_click: function(event) {
 		event.preventDefault();
+		
+		if (this._button.classList.contains('disabled')) {
+			return;
+		}
+		
+		this._button.classList.add('disabled');
 		
 		if (this._dialog === null) {
 			new WCF.Action.Proxy({
@@ -1048,6 +1056,8 @@ WCF.ACP.Package.Update.Search = Class.extend({
 			this._dialog.wcfDialog({
 				title: WCF.Language.get('wcf.acp.package.searchForUpdates')
 			});
+			
+			this._button.classList.remove('disabled');
 		}
 	}
 });
