@@ -193,8 +193,13 @@ define(
 					// The "first" reaction is positioned as close as possible to the toggle button,
 					// which means that we need to scroll the list to the bottom if the popover is
 					// displayed above the toggle button.
-					if (UiScreen.is('screen-xs') && !this._getPopover().classList.contains('inverseOrder')) {
-						scrollableContainer.scrollTop = scrollableContainer.scrollHeight - scrollableContainer.clientHeight;
+					if (UiScreen.is('screen-xs')) {
+						if (this._getPopover().classList.contains('inverseOrder')) {
+							scrollableContainer.scrollTop = 0;
+						}
+						else {
+							scrollableContainer.scrollTop = scrollableContainer.scrollHeight - scrollableContainer.clientHeight;
+						}
 					}
 				}
 			},
