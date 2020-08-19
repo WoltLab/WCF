@@ -46,6 +46,13 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 	}
 	
 	/**
+	 * Does nothing.
+	 */
+	public function validateServerURL() {
+		// The server URL cannot be modified, thus we do not need to validate it.
+	}
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function save() {

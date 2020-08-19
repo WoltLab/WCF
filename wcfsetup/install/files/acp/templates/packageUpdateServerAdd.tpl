@@ -30,6 +30,8 @@
 					<small class="innerError">
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
+						{elseif $errorType[duplicate]|isset}
+							{lang}wcf.acp.updateServer.serverURL.error.duplicate{/lang}
 						{else}
 							{lang}wcf.acp.updateServer.serverURL.error.{@$errorType}{/lang}
 						{/if}
