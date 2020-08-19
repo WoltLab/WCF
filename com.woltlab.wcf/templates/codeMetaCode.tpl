@@ -15,8 +15,7 @@
 		<span class="toggleButton" data-title-collapse="{lang}wcf.bbcode.button.collapse{/lang}" data-title-expand="{lang}wcf.bbcode.button.showAll{/lang}">{lang}wcf.bbcode.button.showAll{/lang}</span>
 	{/if}
 </div>
-{if !$isAmp && !$__wcfCodeBBCodeJavaScript|isset}
-	{assign var='__wcfCodeBBCodeJavaScript' value=true}
+{if !$isAmp}
 	<script data-relocate="true">
 		require(['Language', 'WoltLabSuite/Core/Bbcode/Collapsible', 'WoltLabSuite/Core/Bbcode/Code'], function (Language, BbcodeCollapsible, BbcodeCode) {
 			Language.addObject({
