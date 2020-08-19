@@ -9,6 +9,7 @@ use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\StringUtil;
+use wcf\util\Url;
 
 /**
  * Shows the server add form.
@@ -77,6 +78,10 @@ class PackageUpdateServerAddForm extends AbstractForm {
 		
 		if (!PackageUpdateServer::isValidServerURL($this->serverURL)) {
 			throw new UserInputException('serverURL', 'invalid');
+		}
+		
+		if (preg_match('/^.*\.woltlab.com$/', Url::parse($this->serverURL)['host'])) {
+			throw new UserInputException('serverURL', 'woltlab');
 		}
 		
 		if (($duplicate = $this->findDuplicateServer())) {
