@@ -225,7 +225,7 @@ class WysiwygFormContainer extends FormContainer {
 	 */
 	public function enablePreviewButton($enablePreviewButton = true) {
 		if ($this->isPopulated) {
-			throw new \BadMethodCallException('Enabling and disabling the preview button is only possible the form has been built.');
+			throw new \BadMethodCallException('Enabling and disabling the preview button is only possible before the form has been built.');
 		}
 		
 		$this->enablePreviewButton = $enablePreviewButton;
