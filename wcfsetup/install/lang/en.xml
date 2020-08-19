@@ -2710,8 +2710,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.updateServer.packages"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.updateServer.serverURL"><![CDATA[Address]]></item>
 		<item name="wcf.acp.updateServer.serverURL.error.invalid"><![CDATA[The address is invalid.]]></item>
-		<item name="wcf.acp.updateServer.serverURL.error.woltlab"><![CDATA[The official servers are already stored and correctly configured.]]></item>
-		<item name="wcf.acp.updateServer.serverURL.error.duplicate"><![CDATA[The given server is already configured. You can <a href="{link controller="PackageUpdateServerEdit" id=$errorType[duplicate]->packageUpdateServerID}{/link}"><strong>edit the existing server</strong></a>.]]></item>
+		<item name="wcf.acp.updateServer.serverURL.error.woltlab"><![CDATA[The official servers are already set up and correctly configured.]]></item>
+		<item name="wcf.acp.updateServer.serverURL.error.duplicate"><![CDATA[The given server already exists. You can <a href="{link controller="PackageUpdateServerEdit" id=$errorType[duplicate]->packageUpdateServerID}{/link}"><strong>edit this server instead</strong></a>.]]></item>
 		<item name="wcf.acp.updateServer.status"><![CDATA[Status]]></item>
 		<item name="wcf.acp.updateServer.lastUpdateTime"><![CDATA[Last Access]]></item>
 	</category>
