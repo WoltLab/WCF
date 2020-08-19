@@ -51,9 +51,7 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 	public function save() {
 		AbstractForm::save();
 		
-		$data = [
-			'serverURL' => $this->serverURL,
-		];
+		$data = [];
 		if ($this->loginUsername != $this->updateServer->loginUsername || $this->loginPassword) {
 			$data['loginUsername'] = $this->loginUsername;
 			$data['loginPassword'] = $this->loginPassword;
@@ -74,8 +72,8 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 	public function readData() {
 		parent::readData();
 		
+		$this->serverURL = $this->updateServer->serverURL;
 		if (empty($_POST)) {
-			$this->serverURL = $this->updateServer->serverURL;
 			$this->loginUsername = $this->updateServer->loginUsername;
 		}
 	}
