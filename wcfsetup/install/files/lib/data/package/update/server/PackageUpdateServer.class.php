@@ -68,11 +68,12 @@ class PackageUpdateServer extends DatabaseObject {
 	 * @return	PackageUpdateServer[]
 	 */
 	public static final function getActiveUpdateServers(array $packageUpdateServerIDs = []) {
+		if (!empty($packageUpdateServerIDs)) {
+			throw new \InvalidArgumentException("Filtering package update servers by ID is no longer supported.");
+		}
+		
 		$list = new PackageUpdateServerList();
 		$list->getConditionBuilder()->add("isDisabled = ?", [0]);
-		if (!empty($packageUpdateServerIDs)) {
-			$list->getConditionBuilder()->add("packageUpdateServerID IN (?)", [$packageUpdateServerIDs]);
-		}
 		$list->readObjects();
 		
 		if (ENABLE_ENTERPRISE_MODE) {
