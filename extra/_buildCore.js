@@ -118,7 +118,7 @@ fs.readdirSync("./")
     .forEach(filename => {
         console.time(filename);
         {
-            let output = compiler.compile(process.cwd() + `/${filename}`);
+            let output = compiler.compile(fs.readFileSync(process.cwd() + `/${filename}`, 'utf-8'));
             fs.writeFileSync(filename.replace(/\.js$/, '.min.js'), output.code);
         }
         console.timeEnd(filename);
