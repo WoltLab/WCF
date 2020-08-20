@@ -201,5 +201,7 @@ class PollAction extends AJAXProxyAction {
 		}
 		
 		$returnValues['canVote'] = $this->poll->isChangeable ? 1 : 0;
+		$returnValues['totalVotes'] = $this->poll->votes;
+		$returnValues['totalVotesTooltip'] = WCF::getLanguage()->getDynamicVariable('wcf.poll.totalVotes', ['poll' => $this->poll]);
 	}
 }

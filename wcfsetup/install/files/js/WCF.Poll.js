@@ -603,6 +603,10 @@ WCF.Poll.Manager = Class.extend({
 					this._canViewParticipants[$pollID] = true;
 				}
 				
+				var totalVotes = elBySel('.jsPollTotalVotes', this._polls[$pollID][0]);
+				totalVotes.textContent = WCF.String.formatNumeric(data.totalVotes);
+				elData(totalVotes, 'tooltip', data.totalVotesTooltip);
+				
 				this._showResult(null, $pollID);
 			break;
 		}
