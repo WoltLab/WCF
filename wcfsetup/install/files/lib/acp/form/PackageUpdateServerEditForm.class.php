@@ -47,6 +47,8 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 	
 	/**
 	 * Does nothing.
+	 * 
+	 * @since       5.3
 	 */
 	public function validateServerURL() {
 		// The server URL cannot be modified, thus we do not need to validate it.

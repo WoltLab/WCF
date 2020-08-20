@@ -70,6 +70,8 @@ class PackageUpdateServerAddForm extends AbstractForm {
 	
 	/**
 	 * Validates the server URL.
+	 * 
+	 * @since       5.3
 	 */
 	protected function validateServerURL() {
 		if (empty($this->serverURL)) {
@@ -93,6 +95,8 @@ class PackageUpdateServerAddForm extends AbstractForm {
 	
 	/**
 	 * Returns the first package update server with a matching serverURL.
+	 * 
+	 * @since       5.3
 	 */
 	protected function findDuplicateServer() {
 		$packageServerList = new PackageUpdateServerList();

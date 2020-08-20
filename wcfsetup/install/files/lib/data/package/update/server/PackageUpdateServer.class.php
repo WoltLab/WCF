@@ -249,6 +249,7 @@ class PackageUpdateServer extends DatabaseObject {
 	 * Returns whether the current user may delete this update server.
 	 * 
 	 * @return      boolean
+	 * @since       5.3
 	 */
 	public final function canDelete() {
 		return !$this->isWoltLabUpdateServer() && !$this->isWoltLabStoreServer();
