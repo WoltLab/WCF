@@ -455,6 +455,11 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * @param {Event} event
 		 */
 		_maintainFocus: function(event) {
+			// Ignore a focus shift that was not the result of a keyboard interaction.
+			if (document.activeElement && !document.activeElement.classList.contains('focus-visible')) {
+				return;
+			}
+			
 			var dropdown = this._dropdown.getContainer()[0];
 			
 			if (!dropdown.contains(event.target)) {
