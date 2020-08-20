@@ -113,6 +113,10 @@ namespace wcf {
 		
 		return $_SERVER[WCF_REQUEST_ID_HEADER] ?? '';
 	}
+	
+	function getMinorVersion() {
+		return preg_replace('/^(\d+\.\d+)\..*$/', '\\1', WCF_VERSION);
+	}
 }
 
 namespace wcf\functions\exception {

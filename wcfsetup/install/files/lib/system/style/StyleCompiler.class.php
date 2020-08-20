@@ -259,11 +259,6 @@ class StyleCompiler extends SingletonFactory {
 	 * Compiles SCSS stylesheets for ACP usage.
 	 */
 	public function compileACP() {
-		if (substr(WCF_VERSION, 0, 3) == '2.1') {
-			// work-around for wcf2.1 update
-			return;
-		}
-		
 		$files = $this->getCoreFiles();
 		
 		// ACP uses a slightly different layout
