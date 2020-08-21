@@ -32,7 +32,7 @@
 {js application='wcf' file='closest' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
 <script>
 requirejs.config({
-	baseUrl: '{@$__wcf->getPath()}js', 
+	baseUrl: '{@$__wcf->getPath()}js/out',
 	urlArgs: 't={@LAST_UPDATE_TIME}'
 	{hascontent}
 	, paths: {
