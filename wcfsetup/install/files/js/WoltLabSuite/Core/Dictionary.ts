@@ -9,9 +9,8 @@
  * @module	Dictionary (alias)
  * @module	WoltLabSuite/Core/Dictionary
  */
-define(['Core'], function(Core) {
-	"use strict";
-	
+import Core from './Core';
+
 	var _hasMap = objOwns(window, 'Map') && typeof window.Map === 'function';
 	
 	/**
@@ -172,5 +171,4 @@ define(['Core'], function(Core) {
 		}
 	});
 	
-	return Dictionary;
-});
+	export = Dictionary;

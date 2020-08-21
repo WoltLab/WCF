@@ -7,9 +7,7 @@
  * @module	Core (alias)
  * @module	WoltLabSuite/Core/Core
  */
-define([], function() {
-	"use strict";
-	
+
 	var _clone = function(variable) {
 		if (typeof variable === 'object' && (Array.isArray(variable) || Core.isPlainObject(variable))) {
 			return _cloneObject(variable);
@@ -254,6 +252,5 @@ define([], function() {
 			return _prefix;
 		}
 	};
-	
-	return Core;
-});
+
+	export = Core;

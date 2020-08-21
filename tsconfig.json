@@ -1,0 +1,18 @@
+{
+    "include": [
+        "wcfsetup/install/files/js/WoltLabSuite/**/*"
+    ],
+    "compilerOptions": {
+        "allowJs": true,
+        "target": "es2015",
+        "module": "amd",
+        "rootDir": "wcfsetup/install/files/js/",
+        "outDir": "wcfsetup/install/files/js/out/",
+        "strictNullChecks": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "sourceMap": true,
+        "declarationDir": "out.d",
+        "declaration": true
+    }
+}
