@@ -491,6 +491,10 @@ define(
 					window.addEventListener('keyup', _keyupListener);
 				}
 				
+				// Move the dialog to the front to prevent it being hidden behind already open dialogs
+				// if it was previously visible.
+				data.dialog.parentNode.insertBefore(data.dialog, data.dialog.parentNode.firstChild);
+				
 				elAttr(data.dialog, 'aria-hidden', 'false');
 				elAttr(_container, 'aria-hidden', 'false');
 				elData(_container, 'close-on-click', (data.backdropCloseOnClick ? 'true' : 'false'));
