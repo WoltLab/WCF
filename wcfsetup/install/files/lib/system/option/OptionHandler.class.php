@@ -87,8 +87,7 @@ class OptionHandler implements IOptionHandler {
 		],
 		'options' => [
 			'mail_from_address',
-			'register_activation_method',
-		]
+		],
 	];
 	
 	/**
