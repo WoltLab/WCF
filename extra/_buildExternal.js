@@ -44,7 +44,7 @@ fs.readdirSync("./")
                         let outFilename = filename.replace(/\.js$/, (COMPILER_TARGET_DEFAULT ? "" : ".tiny") + ".min.js");
                         console.time(outFilename);
                         {
-                            let output = compiler.compile(path + filename, {
+                            let output = compiler.compile(fs.readFileSync(path + filename, 'utf-8'), {
                                 compress: {
                                     global_defs: {
                                         COMPILER_TARGET_DEFAULT: COMPILER_TARGET_DEFAULT
