@@ -236,7 +236,8 @@ define(['Dom/Util'], function(DomUtil) {
 			// the caret position.
 			var range = selection.getRangeAt(0);
 			var helperTextNode = null;
-			if (range.collapsed) {
+			var rangeIsCollapsed = range.collapsed;
+			if (rangeIsCollapsed) {
 				var container = range.startContainer;
 				var tree = [container];
 				while (true) {
@@ -299,6 +300,18 @@ define(['Dom/Util'], function(DomUtil) {
 				strikeElements = elByTag(selectionMarker[0], editorElement);
 			}
 			
+			// Safari 13 sometimes refuses to execute the `strikeThrough` command.
+			if (rangeIsCollapsed && helperTextNode !== null && strikeElements.length === 0) {
+				// Executing the command again will toggle off the previous command that had no
+				// effect anyway, effectively cancelling out the previous call. Only works if the
+				// first call had no effect, otherwise it will enable it.
+				document.execCommand(selectionMarker[1]);
+				
+				var tmp = elCreate(selectionMarker[0]);
+				helperTextNode.parentNode.insertBefore(tmp, helperTextNode);
+				tmp.appendChild(helperTextNode);
+			}
+			
 			var lastMatchingParent, strikeElement;
 			while (strikeElements.length) {
 				strikeElement = strikeElements[0];
@@ -331,11 +344,6 @@ define(['Dom/Util'], function(DomUtil) {
 					}
 				}
 			});
-			
-			if (helperTextNode !== null) {
-				window.jQuery(editorElement).redactor('caret.after', range.parentNode);
-				elRemove(helperTextNode);
-			}
 		},
 		
 		/**
