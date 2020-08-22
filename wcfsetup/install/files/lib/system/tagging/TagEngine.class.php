@@ -6,6 +6,7 @@ use wcf\data\tag\TagAction;
 use wcf\data\tag\TagList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\InvalidObjectTypeException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
@@ -163,9 +164,17 @@ class TagEngine extends SingletonFactory {
 				if (!$languageID) unset($languageIDs[$index]);
 			}
 			
-			if (!empty($languageIDs)) {
-				$conditions->add("tag_to_object.languageID IN (?)", [$languageIDs]);
+			// The `languageID` is part of the index, skipping it will cause MySQL to skip the
+			// `objectID` column, causing a partial table scan.
+			if (empty($languageIDs)) {
+				// The `languageID` column is never null, tags are always assigned to a language
+				// thus we cannot use the content language ids here.
+				foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+					$languageIDs[] = $language->languageID;
+				}
 			}
+			
+			$conditions->add("tag_to_object.languageID IN (?)", [$languageIDs]);
 		}
 		
 		$sql = "SELECT		tag.*, tag_to_object.objectID
