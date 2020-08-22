@@ -4559,7 +4559,25 @@
 						this.indent.repositionItem($item);
 					}
 					
+					var tmpWrapper = null;
 					if ($item.length === 0) {
+						// `formatBlock` does not handle custom elements gracefully, always
+						// treating them as inline elements, causing these to be chopped up
+						// into separate elements. We can mitigate this problem by introducing
+						// a temporary intermediate `<div>` which will serve as a block wrapper.
+						var block = this.selection.block();
+						if (block && block.nodeName.indexOf('-') !== -1) {
+							this.selection.save();
+							
+							tmpWrapper = elCreate('div');
+							while (block.childNodes.length) {
+								tmpWrapper.appendChild(block.childNodes[0]);
+							}
+							block.appendChild(tmpWrapper);
+							
+							this.selection.restore();
+						}
+						
 						document.execCommand('formatblock', false, 'p');
 						$item = $(this.selection.current());
 						var $next = $item.next();
@@ -4570,6 +4588,15 @@
 					
 					// normalize
 					this.selection.save();
+					
+					if (tmpWrapper !== null) {
+						var parent = tmpWrapper.parentNode;
+						while (tmpWrapper.childNodes.length) {
+							parent.insertBefore(tmpWrapper.childNodes[0], tmpWrapper);
+						}
+						parent.removeChild(tmpWrapper);
+					}
+					
 					this.indent.removeEmpty();
 					this.indent.normalize();
 					this.selection.restore();
