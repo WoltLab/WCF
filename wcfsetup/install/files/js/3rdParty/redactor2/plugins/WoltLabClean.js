@@ -364,7 +364,18 @@ $.Redactor.prototype.WoltLabClean = function() {
 						return;
 					}
 					
-					if (parent.nodeName === 'P') {
+					// Check if any of the parents is a `<p>`.
+					var isInsideParagraph = false;
+					var current = parent;
+					while (current !== null) {
+						if (current.nodeName === 'P') {
+							isInsideParagraph = true;
+						}
+						
+						current = current.parentNode;
+					}
+					
+					if (isInsideParagraph) {
 						var p = elCreate('p');
 						p.innerHTML = '<br>';
 						
