@@ -11,8 +11,6 @@
 			<ul>
 				{content}
 					{if $diff}
-						<li><a id="requestFullscreen" class="button" style="display: none;"><span class="icon icon16 fa-arrows-alt"></span> <span>{lang}wcf.global.button.fullscreen{/lang}</span></a></li>
-						
 						{if $parent->templateGroupID}
 							<li><a href="{link controller='TemplateEdit' id=$parent->templateID}{/link}" class="button"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.global.button.edit{/lang}</span></a></li>
 						{/if}
@@ -128,10 +126,6 @@
 	</div>
 	<script data-relocate="true">
 	$(function() {
-		if (WCF.System.Fullscreen.isSupported()) {
-			$('#requestFullscreen').show();
-		}
-		
 		// sync scrolling
 		var sync = $('#left, #right');
 		function syncPosition() {
@@ -143,11 +137,6 @@
 		}
 		
 		sync.on('scroll', syncPosition);
-		
-		$('#requestFullscreen').on('click', function() {
-			var element = $('#fullscreenContainer')[0];
-			WCF.System.Fullscreen.toggleFullscreen(element);
-		});
 	});
 	</script>
 {/if}
