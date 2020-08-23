@@ -8,8 +8,8 @@
 <script data-relocate="true">
 	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Package/Search'], function(Language, AcpUiPackageSearch) {
 		Language.addObject({
-			'wcf.acp.package.install.title': '{lang}wcf.acp.package.install.title{/lang}',
-			'wcf.acp.package.update.unauthorized': '{lang}wcf.acp.package.update.unauthorized{/lang}'
+			'wcf.acp.package.install.title': '{jslang}wcf.acp.package.install.title{/jslang}',
+			'wcf.acp.package.update.unauthorized': '{jslang}wcf.acp.package.update.unauthorized{/jslang}'
 		});
 		
 		new AcpUiPackageSearch();

@@ -22,13 +22,13 @@
 <script data-relocate="true">
 	require(['Language', 'WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/OptionalPackages'], function(Language, OptionalPackagesFormField) {
 		Language.addObject({
-			'wcf.acp.devtools.project.packageIdentifier.error.duplicate': '{lang}wcf.acp.devtools.project.packageIdentifier.error.duplicate{/lang}',
-			'wcf.acp.devtools.project.packageIdentifier.error.format': '{lang}wcf.acp.devtools.project.packageIdentifier.error.format{/lang}',
-			'wcf.acp.devtools.project.packageIdentifier.error.maximumLength': '{lang}wcf.acp.devtools.project.packageIdentifier.error.maximumLength{/lang}',
-			'wcf.acp.devtools.project.packageIdentifier.error.minimumLength': '{lang}wcf.acp.devtools.project.packageIdentifier.error.minimumLength{/lang}',
-			'wcf.acp.devtools.project.packageVersion.error.format': '{lang}wcf.acp.devtools.project.packageVersion.error.format{/lang}',
-			'wcf.acp.devtools.project.packageVersion.error.maximumLength': '{lang}wcf.acp.devtools.project.packageVersion.error.maximumLength{/lang}',
-			'wcf.acp.devtools.project.optionalPackage.optionalPackage': '{lang __literal=true}wcf.acp.devtools.project.optionalPackage.optionalPackage{/lang}'
+			'wcf.acp.devtools.project.packageIdentifier.error.duplicate': '{jslang}wcf.acp.devtools.project.packageIdentifier.error.duplicate{/jslang}',
+			'wcf.acp.devtools.project.packageIdentifier.error.format': '{jslang}wcf.acp.devtools.project.packageIdentifier.error.format{/jslang}',
+			'wcf.acp.devtools.project.packageIdentifier.error.maximumLength': '{jslang}wcf.acp.devtools.project.packageIdentifier.error.maximumLength{/jslang}',
+			'wcf.acp.devtools.project.packageIdentifier.error.minimumLength': '{jslang}wcf.acp.devtools.project.packageIdentifier.error.minimumLength{/jslang}',
+			'wcf.acp.devtools.project.packageVersion.error.format': '{jslang}wcf.acp.devtools.project.packageVersion.error.format{/jslang}',
+			'wcf.acp.devtools.project.packageVersion.error.maximumLength': '{jslang}wcf.acp.devtools.project.packageVersion.error.maximumLength{/jslang}',
+			'wcf.acp.devtools.project.optionalPackage.optionalPackage': '{jslang __literal=true}wcf.acp.devtools.project.optionalPackage.optionalPackage{/jslang}'
 		});
 		
 		new OptionalPackagesFormField('{@$field->getPrefixedId()}', [

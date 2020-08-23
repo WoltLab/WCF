@@ -2,11 +2,11 @@
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.addObject({
-			'wcf.acl.option.deny': '{lang}wcf.acl.option.deny{/lang}',
-			'wcf.acl.option.fullAccess': '{lang}wcf.acl.option.fullAccess{/lang}',
-			'wcf.acl.option.grant': '{lang}wcf.acl.option.grant{/lang}',
-			'wcf.acl.search.user.description': '{lang}wcf.acl.search.user.description{/lang}',
-			'wcf.acl.search.description': '{lang}wcf.acl.search.description{/lang}',
+			'wcf.acl.option.deny': '{jslang}wcf.acl.option.deny{/jslang}',
+			'wcf.acl.option.fullAccess': '{jslang}wcf.acl.option.fullAccess{/jslang}',
+			'wcf.acl.option.grant': '{jslang}wcf.acl.option.grant{/jslang}',
+			'wcf.acl.search.user.description': '{jslang}wcf.acl.search.user.description{/jslang}',
+			'wcf.acl.search.description': '{jslang}wcf.acl.search.description{/jslang}',
 		});
 	});
 </script>

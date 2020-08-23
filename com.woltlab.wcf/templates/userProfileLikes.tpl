@@ -1,8 +1,8 @@
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Ui/Reaction/Profile/Loader', 'Language'], function(UiReactionProfileLoader, Language) {
 		Language.addObject({
-			'wcf.like.reaction.noMoreEntries': '{lang}wcf.like.reaction.noMoreEntries{/lang}',
-			'wcf.like.reaction.more': '{lang}wcf.like.reaction.more{/lang}'
+			'wcf.like.reaction.noMoreEntries': '{jslang}wcf.like.reaction.noMoreEntries{/jslang}',
+			'wcf.like.reaction.more': '{jslang}wcf.like.reaction.more{/jslang}'
 		});
 		
 		new UiReactionProfileLoader({@$userID});

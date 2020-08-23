@@ -11,7 +11,7 @@
 {if $mailID|isset}
 	<script data-relocate="true">
 		$(function() {
-			WCF.Language.add('wcf.acp.worker.abort.confirmMessage', '{lang}wcf.acp.worker.abort.confirmMessage{/lang}');
+			WCF.Language.add('wcf.acp.worker.abort.confirmMessage', '{jslang}wcf.acp.worker.abort.confirmMessage{/jslang}');
 			
 			new WCF.ACP.Worker('mail', 'wcf\\system\\worker\\MailWorker', '', {
 				mailID: {@$mailID}

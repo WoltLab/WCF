@@ -2,10 +2,10 @@
 	<script data-relocate="true">
 		$(function() {
 			WCF.Language.addObject({
-				'wcf.poll.button.addOption': '{lang}wcf.poll.button.addOption{/lang}',
-				'wcf.poll.button.removeOption': '{lang}wcf.poll.button.removeOption{/lang}',
-				'wcf.poll.endTime.error.invalid': '{lang}wcf.poll.endTime.error.invalid{/lang}',
-				'wcf.poll.maxVotes.error.invalid': '{lang}wcf.poll.maxVotes.error.invalid{/lang}'
+				'wcf.poll.button.addOption': '{jslang}wcf.poll.button.addOption{/jslang}',
+				'wcf.poll.button.removeOption': '{jslang}wcf.poll.button.removeOption{/jslang}',
+				'wcf.poll.endTime.error.invalid': '{jslang}wcf.poll.endTime.error.invalid{/jslang}',
+				'wcf.poll.maxVotes.error.invalid': '{jslang}wcf.poll.maxVotes.error.invalid{/jslang}'
 			});
 			
 			new WCF.Poll.Management(

@@ -115,8 +115,8 @@
 <script data-relocate="true">
 	require(['Dictionary', 'Language', 'WoltLabSuite/Core/Acp/Ui/Page/BoxOrder'], function (Dictionary, Language, AcpUiPageBoxOrder) {
 		Language.addObject({
-			'wcf.acp.box.isDisabled': '{lang}wcf.acp.box.isDisabled{/lang}',
-			'wcf.acp.page.boxOrder.discard.confirmMessage': '{lang}wcf.acp.page.boxOrder.discard.confirmMessage{/lang}'
+			'wcf.acp.box.isDisabled': '{jslang}wcf.acp.box.isDisabled{/jslang}',
+			'wcf.acp.page.boxOrder.discard.confirmMessage': '{jslang}wcf.acp.page.boxOrder.discard.confirmMessage{/jslang}'
 		});
 		
 		var boxes = new Dictionary();

@@ -1,17 +1,17 @@
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.addObject({
-			'wcf.comment.add': '{lang}wcf.comment.add{/lang}',
-			'wcf.comment.button.response.add': '{lang}wcf.comment.button.response.add{/lang}',
-			'wcf.comment.delete.confirmMessage': '{lang}wcf.comment.delete.confirmMessage{/lang}',
-			'wcf.comment.description': '{lang}wcf.comment.description{/lang}',
-			'wcf.comment.guestDialog.title': '{lang}wcf.comment.guestDialog.title{/lang}',
-			'wcf.comment.more': '{lang}wcf.comment.more{/lang}',
-			'wcf.comment.response.add': '{lang}wcf.comment.response.add{/lang}',
-			'wcf.comment.response.more': '{lang}wcf.comment.response.more{/lang}',
-			'wcf.message.error.editorAlreadyInUse': '{lang}wcf.message.error.editorAlreadyInUse{/lang}',
-			'wcf.moderation.report.reportContent': '{lang}wcf.moderation.report.reportContent{/lang}',
-			'wcf.moderation.report.success': '{lang}wcf.moderation.report.success{/lang}'
+			'wcf.comment.add': '{jslang}wcf.comment.add{/jslang}',
+			'wcf.comment.button.response.add': '{jslang}wcf.comment.button.response.add{/jslang}',
+			'wcf.comment.delete.confirmMessage': '{jslang}wcf.comment.delete.confirmMessage{/jslang}',
+			'wcf.comment.description': '{jslang}wcf.comment.description{/jslang}',
+			'wcf.comment.guestDialog.title': '{jslang}wcf.comment.guestDialog.title{/jslang}',
+			'wcf.comment.more': '{jslang}wcf.comment.more{/jslang}',
+			'wcf.comment.response.add': '{jslang}wcf.comment.response.add{/jslang}',
+			'wcf.comment.response.more': '{jslang}wcf.comment.response.more{/jslang}',
+			'wcf.message.error.editorAlreadyInUse': '{jslang}wcf.message.error.editorAlreadyInUse{/jslang}',
+			'wcf.moderation.report.reportContent': '{jslang}wcf.moderation.report.reportContent{/jslang}',
+			'wcf.moderation.report.success': '{jslang}wcf.moderation.report.success{/jslang}'
 		});
 		
 		new {if $commentHandlerClass|isset}{@$commentHandlerClass}{else}WCF.Comment.Handler{/if}('{@$commentContainerID}');

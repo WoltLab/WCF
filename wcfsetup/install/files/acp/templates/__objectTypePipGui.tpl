@@ -1,9 +1,9 @@
 <script data-relocate="true">
 	require(['Language'], function(Language) {
 		Language.addObject({
-			'wcf.form.field.className.description.interface': '{lang __literal=true}wcf.form.field.className.description.interface{/lang}',
+			'wcf.form.field.className.description.interface': '{jslang __literal=true}wcf.form.field.className.description.interface{/jslang}',
 			{implode from=$definitionNames item=definitionName}
-				'wcf.acp.pip.objectType.definitionName.{@$definitionName}.description': '{lang __literal=true __optional=true}wcf.acp.pip.objectType.definitionName.{@$definitionName}.description{/lang}'
+				'wcf.acp.pip.objectType.definitionName.{@$definitionName}.description': '{jslang __literal=true __optional=true}wcf.acp.pip.objectType.definitionName.{@$definitionName}.description{/jslang}'
 			{/implode}
 		});
 		

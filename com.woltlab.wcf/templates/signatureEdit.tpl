@@ -69,7 +69,7 @@
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.addObject({
-			'wcf.global.preview': '{lang}wcf.global.preview{/lang}'
+			'wcf.global.preview': '{jslang}wcf.global.preview{/jslang}'
 		});
 		
 		new WCF.User.SignaturePreview('wcf\\data\\user\\UserProfileAction', 'text', 'previewButton');

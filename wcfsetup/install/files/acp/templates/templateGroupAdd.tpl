@@ -4,12 +4,12 @@
 	<script data-relocate="true">
 		require(['Language', 'WoltLabSuite/Core/Acp/Ui/Template/Group/Copy'], function (Language, AcpUiTemplateGroupCopy) {
 			Language.addObject({
-				'wcf.acp.template.group.copy': '{lang}wcf.acp.template.group.copy{/lang}',
-				'wcf.acp.template.group.name.error.notUnique': '{lang}wcf.acp.template.group.name.error.notUnique{/lang}',
-				'wcf.acp.template.group.folderName': '{lang}wcf.acp.template.group.folderName{/lang}',
-				'wcf.acp.template.group.folderName.error.invalid': '{lang}wcf.acp.template.group.folderName.error.invalid{/lang}',
-				'wcf.acp.template.group.folderName.error.notUnique': '{lang}wcf.acp.template.group.folderName.error.notUnique{/lang}',
-				'wcf.global.name': '{lang}wcf.global.name{/lang}'
+				'wcf.acp.template.group.copy': '{jslang}wcf.acp.template.group.copy{/jslang}',
+				'wcf.acp.template.group.name.error.notUnique': '{jslang}wcf.acp.template.group.name.error.notUnique{/jslang}',
+				'wcf.acp.template.group.folderName': '{jslang}wcf.acp.template.group.folderName{/jslang}',
+				'wcf.acp.template.group.folderName.error.invalid': '{jslang}wcf.acp.template.group.folderName.error.invalid{/jslang}',
+				'wcf.acp.template.group.folderName.error.notUnique': '{jslang}wcf.acp.template.group.folderName.error.notUnique{/jslang}',
+				'wcf.global.name': '{jslang}wcf.global.name{/jslang}'
 			});
 			
 			AcpUiTemplateGroupCopy.init({$templateGroupID});

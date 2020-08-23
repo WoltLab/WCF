@@ -1,8 +1,8 @@
 <script data-relocate="true">
 	require(['Language'], function(Language) {
 		Language.addObject({
-			'wcf.acp.pip.box.visibilityExceptions.hiddenEverywhere': '{lang}wcf.acp.pip.box.visibilityExceptions.hiddenEverywhere{/lang}',
-			'wcf.acp.pip.box.visibilityExceptions.visibleEverywhere': '{lang}wcf.acp.pip.box.visibilityExceptions.visibleEverywhere{/lang}'
+			'wcf.acp.pip.box.visibilityExceptions.hiddenEverywhere': '{jslang}wcf.acp.pip.box.visibilityExceptions.hiddenEverywhere{/jslang}',
+			'wcf.acp.pip.box.visibilityExceptions.visibleEverywhere': '{jslang}wcf.acp.pip.box.visibilityExceptions.visibleEverywhere{/jslang}'
 		});
 		
 		var visibleEverywhere = elById('visibleEverywhere');

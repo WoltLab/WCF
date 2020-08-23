@@ -32,8 +32,8 @@
 <script data-relocate="true">
 	require(['Language', 'WoltLabSuite/Core/Ui/User/Activity/Recent'], function (Language, UiUserActivityRecent) {
 		Language.addObject({
-			'wcf.user.recentActivity.more': '{lang}wcf.user.recentActivity.more{/lang}',
-			'wcf.user.recentActivity.noMoreEntries': '{lang}wcf.user.recentActivity.noMoreEntries{/lang}'
+			'wcf.user.recentActivity.more': '{jslang}wcf.user.recentActivity.more{/jslang}',
+			'wcf.user.recentActivity.noMoreEntries': '{jslang}wcf.user.recentActivity.noMoreEntries{/jslang}'
 		});
 		
 		new UiUserActivityRecent('boxRecentActivity{@$boxID}');

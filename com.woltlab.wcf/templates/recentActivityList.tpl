@@ -23,8 +23,8 @@
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.addObject({
-			'wcf.user.recentActivity.more': '{lang}wcf.user.recentActivity.more{/lang}',
-			'wcf.user.recentActivity.noMoreEntries': '{lang}wcf.user.recentActivity.noMoreEntries{/lang}'
+			'wcf.user.recentActivity.more': '{jslang}wcf.user.recentActivity.more{/jslang}',
+			'wcf.user.recentActivity.noMoreEntries': '{jslang}wcf.user.recentActivity.noMoreEntries{/jslang}'
 		});
 		
 		new WCF.User.RecentActivityLoader(null);

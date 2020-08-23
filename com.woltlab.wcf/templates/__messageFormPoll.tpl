@@ -2,8 +2,8 @@
 	<script data-relocate="true">
 		$(function() {
 			WCF.Language.addObject({
-				'wcf.poll.button.addOption': '{lang}wcf.poll.button.addOption{/lang}',
-				'wcf.poll.button.removeOption': '{lang}wcf.poll.button.removeOption{/lang}'
+				'wcf.poll.button.addOption': '{jslang}wcf.poll.button.addOption{/jslang}',
+				'wcf.poll.button.removeOption': '{jslang}wcf.poll.button.removeOption{/jslang}'
 			});
 			
 			new WCF.Poll.Management('pollOptionContainer', [ {implode from=$pollOptions item=pollOption}{ optionID: {@$pollOption[optionID]}, optionValue: '{$pollOption[optionValue]|encodeJS}' }{/implode} ], {@POLL_MAX_OPTIONS});

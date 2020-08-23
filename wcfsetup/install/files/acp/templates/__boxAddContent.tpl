@@ -14,11 +14,11 @@
 			AcpUiCodeMirrorPage
 		) {
 			Language.addObject({
-				'wcf.page.search': '{lang}wcf.page.search{/lang}',
-				'wcf.page.search.error.tooShort': '{lang}wcf.page.search.error.tooShort{/lang}',
-				'wcf.page.search.error.noResults': '{lang}wcf.page.search.error.noResults{/lang}',
-				'wcf.page.search.name': '{lang}wcf.page.search.name{/lang}',
-				'wcf.page.search.results': '{lang}wcf.page.search.results{/lang}',
+				'wcf.page.search': '{jslang}wcf.page.search{/jslang}',
+				'wcf.page.search.error.tooShort': '{jslang}wcf.page.search.error.tooShort{/jslang}',
+				'wcf.page.search.error.noResults': '{jslang}wcf.page.search.error.noResults{/jslang}',
+				'wcf.page.search.name': '{jslang}wcf.page.search.name{/jslang}',
+				'wcf.page.search.results': '{jslang}wcf.page.search.results{/jslang}',
 			});
 			
 			new AcpUiCodeMirrorMedia('content{@$languageID}');

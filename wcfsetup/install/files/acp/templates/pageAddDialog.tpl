@@ -32,7 +32,7 @@
 <script data-relocate="true">
 	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Page/Add'], function(Language, AcpUiPageAdd) {
 		Language.addObject({
-			'wcf.acp.page.add': '{lang}wcf.acp.page.add{/lang}'
+			'wcf.acp.page.add': '{jslang}wcf.acp.page.add{/jslang}'
 		});
 		
 		AcpUiPageAdd.init('{link controller='PageAdd' encode=false}{literal}pageType={$pageType}&isMultilingual={$isMultilingual}{/literal}{/link}', {@$availableLanguages|count});

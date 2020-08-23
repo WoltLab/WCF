@@ -1,16 +1,16 @@
 <script data-relocate="true">
 	require(['Language'], function (Language) {
 		Language.addObject({
-			'wcf.article.search': '{lang}wcf.article.search{/lang}',
-			'wcf.article.search.error.tooShort': '{lang}wcf.article.search.error.tooShort{/lang}',
-			'wcf.article.search.error.noResults': '{lang}wcf.article.search.error.noResults{/lang}',
-			'wcf.article.search.name': '{lang}wcf.article.search.name{/lang}',
-			'wcf.article.search.results': '{lang}wcf.article.search.results{/lang}',
-			'wcf.page.search': '{lang}wcf.page.search{/lang}',
-			'wcf.page.search.error.tooShort': '{lang}wcf.page.search.error.tooShort{/lang}',
-			'wcf.page.search.error.noResults': '{lang}wcf.page.search.error.noResults{/lang}',
-			'wcf.page.search.name': '{lang}wcf.page.search.name{/lang}',
-			'wcf.page.search.results': '{lang}wcf.page.search.results{/lang}',
+			'wcf.article.search': '{jslang}wcf.article.search{/jslang}',
+			'wcf.article.search.error.tooShort': '{jslang}wcf.article.search.error.tooShort{/jslang}',
+			'wcf.article.search.error.noResults': '{jslang}wcf.article.search.error.noResults{/jslang}',
+			'wcf.article.search.name': '{jslang}wcf.article.search.name{/jslang}',
+			'wcf.article.search.results': '{jslang}wcf.article.search.results{/jslang}',
+			'wcf.page.search': '{jslang}wcf.page.search{/jslang}',
+			'wcf.page.search.error.tooShort': '{jslang}wcf.page.search.error.tooShort{/jslang}',
+			'wcf.page.search.error.noResults': '{jslang}wcf.page.search.error.noResults{/jslang}',
+			'wcf.page.search.name': '{jslang}wcf.page.search.name{/jslang}',
+			'wcf.page.search.results': '{jslang}wcf.page.search.results{/jslang}',
 		});
 	})
 </script>

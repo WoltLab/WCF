@@ -3,9 +3,9 @@
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.addObject({
-			'wcf.acp.package.update.excludedPackages': '{lang}wcf.acp.package.update.excludedPackages{/lang}',
-			'wcf.acp.package.update.title': '{lang}wcf.acp.package.update.title{/lang}',
-			'wcf.acp.package.update.unauthorized': '{lang}wcf.acp.package.update.unauthorized{/lang}'
+			'wcf.acp.package.update.excludedPackages': '{jslang}wcf.acp.package.update.excludedPackages{/jslang}',
+			'wcf.acp.package.update.title': '{jslang}wcf.acp.package.update.title{/jslang}',
+			'wcf.acp.package.update.unauthorized': '{jslang}wcf.acp.package.update.unauthorized{/jslang}'
 		})
 		
 		new WCF.ACP.Package.Update.Manager();

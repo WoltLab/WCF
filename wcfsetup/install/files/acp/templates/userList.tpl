@@ -23,17 +23,17 @@
 		new WCF.Table.EmptyTableHandler($('#userTableContainer'), 'jsUserRow', options);
 		
 		WCF.Language.addObject({
-			'wcf.acp.user.banReason': '{lang}wcf.acp.user.banReason{/lang}',
-			'wcf.acp.user.banReason.description': '{lang}wcf.acp.user.banReason.description{/lang}',
-			'wcf.acp.user.ban.sure': '{lang}wcf.acp.user.ban.sure{/lang}',
-			'wcf.acp.user.ban.expires': '{lang}wcf.acp.user.ban.expires{/lang}',
-			'wcf.acp.user.ban.expires.description': '{lang}wcf.acp.user.ban.expires.description{/lang}',
-			'wcf.acp.user.ban.neverExpires': '{lang}wcf.acp.user.ban.neverExpires{/lang}',
-			'wcf.acp.user.sendNewPassword.workerTitle': '{lang}wcf.acp.user.sendNewPassword.workerTitle{/lang}',
-			'wcf.acp.worker.abort.confirmMessage': '{lang}wcf.acp.worker.abort.confirmMessage{/lang}',
-			'wcf.acp.content.removeContent': '{lang}wcf.acp.content.removeContent{/lang}',
-			'wcf.user.status.banned': '{lang}wcf.user.status.banned{/lang}',
-			'wcf.user.status.isDisabled': '{lang}wcf.user.status.isDisabled{/lang}'
+			'wcf.acp.user.banReason': '{jslang}wcf.acp.user.banReason{/jslang}',
+			'wcf.acp.user.banReason.description': '{jslang}wcf.acp.user.banReason.description{/jslang}',
+			'wcf.acp.user.ban.sure': '{jslang}wcf.acp.user.ban.sure{/jslang}',
+			'wcf.acp.user.ban.expires': '{jslang}wcf.acp.user.ban.expires{/jslang}',
+			'wcf.acp.user.ban.expires.description': '{jslang}wcf.acp.user.ban.expires.description{/jslang}',
+			'wcf.acp.user.ban.neverExpires': '{jslang}wcf.acp.user.ban.neverExpires{/jslang}',
+			'wcf.acp.user.sendNewPassword.workerTitle': '{jslang}wcf.acp.user.sendNewPassword.workerTitle{/jslang}',
+			'wcf.acp.worker.abort.confirmMessage': '{jslang}wcf.acp.worker.abort.confirmMessage{/jslang}',
+			'wcf.acp.content.removeContent': '{jslang}wcf.acp.content.removeContent{/jslang}',
+			'wcf.user.status.banned': '{jslang}wcf.user.status.banned{/jslang}',
+			'wcf.user.status.isDisabled': '{jslang}wcf.user.status.isDisabled{/jslang}'
 		});
 		WCF.ACP.User.BanHandler.init();
 		
@@ -47,7 +47,7 @@
 		
 		require(['Language', 'WoltLabSuite/Core/Acp/Ui/User/Editor'], function (Language, AcpUiUserList) {
 			Language.addObject({
-				'wcf.acp.user.action.sendNewPassword.confirmMessage': '{lang}wcf.acp.user.action.sendNewPassword.confirmMessage{/lang}'
+				'wcf.acp.user.action.sendNewPassword.confirmMessage': '{jslang}wcf.acp.user.action.sendNewPassword.confirmMessage{/jslang}'
 			});
 			
 			AcpUiUserList.init();

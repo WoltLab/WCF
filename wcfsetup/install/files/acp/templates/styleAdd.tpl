@@ -17,18 +17,18 @@
 		new WCF.ColorPicker('.jsColorPicker');
 		
 		WCF.Language.addObject({
-			'wcf.style.colorPicker': '{lang}wcf.style.colorPicker{/lang}',
-			'wcf.style.colorPicker.new': '{lang}wcf.style.colorPicker.new{/lang}',
-			'wcf.style.colorPicker.current': '{lang}wcf.style.colorPicker.current{/lang}',
-			'wcf.style.colorPicker.button.apply': '{lang}wcf.style.colorPicker.button.apply{/lang}',
-			'wcf.acp.style.image.error.invalidExtension': '{lang}wcf.acp.style.image.error.invalidExtension{/lang}'
+			'wcf.style.colorPicker': '{jslang}wcf.style.colorPicker{/jslang}',
+			'wcf.style.colorPicker.new': '{jslang}wcf.style.colorPicker.new{/jslang}',
+			'wcf.style.colorPicker.current': '{jslang}wcf.style.colorPicker.current{/jslang}',
+			'wcf.style.colorPicker.button.apply': '{jslang}wcf.style.colorPicker.button.apply{/jslang}',
+			'wcf.acp.style.image.error.invalidExtension': '{jslang}wcf.acp.style.image.error.invalidExtension{/jslang}'
 		});
 		
 		{if $action == 'edit'}
 			new WCF.ACP.Style.CopyStyle({@$style->styleID});
 			
 			WCF.Language.addObject({
-				'wcf.acp.style.copyStyle.confirmMessage': '{@"wcf.acp.style.copyStyle.confirmMessage"|language|encodeJS}'
+				'wcf.acp.style.copyStyle.confirmMessage': '{jslang}wcf.acp.style.copyStyle.confirmMessage{/jslang}'
 			});
 		{/if}
 		

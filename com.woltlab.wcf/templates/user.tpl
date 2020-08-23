@@ -6,39 +6,39 @@
 		{if $__wcf->getUser()->userID && $__wcf->getUser()->userID != $user->userID}
 			require(['Language', 'WoltLabSuite/Core/Ui/User/Editor', 'WoltLabSuite/Core/Ui/User/Profile/Menu/Item/Ignore', 'WoltLabSuite/Core/Ui/User/Profile/Menu/Item/Follow'], function(Language, UiUserEditor, UiUserProfileMenuItemIgnore, UiUserProfileMenuItemFollow) {
 				Language.addObject({
-					'wcf.acp.user.disable': '{lang}wcf.acp.user.disable{/lang}',
-					'wcf.acp.user.enable': '{lang}wcf.acp.user.enable{/lang}',
-					'wcf.user.ban': '{lang}wcf.user.ban{/lang}',
+					'wcf.acp.user.disable': '{jslang}wcf.acp.user.disable{/jslang}',
+					'wcf.acp.user.enable': '{jslang}wcf.acp.user.enable{/jslang}',
+					'wcf.user.ban': '{jslang}wcf.user.ban{/jslang}',
 					'wcf.user.banned': '{"wcf.user.banned"|language|encodeJS}',
-					'wcf.user.ban.confirmMessage': '{lang}wcf.user.ban.confirmMessage{/lang}',
-					'wcf.user.ban.expires': '{lang}wcf.user.ban.expires{/lang}',
-					'wcf.user.ban.expires.description': '{lang}wcf.user.ban.expires.description{/lang}',
-					'wcf.user.ban.neverExpires': '{lang}wcf.user.ban.neverExpires{/lang}',
-					'wcf.user.ban.reason.description': '{lang}wcf.user.ban.reason.description{/lang}',
-					'wcf.user.button.follow': '{lang}wcf.user.button.follow{/lang}',
-					'wcf.user.button.unfollow': '{lang}wcf.user.button.unfollow{/lang}',
-					'wcf.user.button.ignore': '{lang}wcf.user.button.ignore{/lang}',
-					'wcf.user.button.unignore': '{lang}wcf.user.button.unignore{/lang}',
-					'wcf.user.disableAvatar': '{lang}wcf.user.disableAvatar{/lang}',
-					'wcf.user.disableAvatar.confirmMessage': '{lang}wcf.user.disableAvatar.confirmMessage{/lang}',
-					'wcf.user.disableAvatar.expires': '{lang}wcf.user.disableAvatar.expires{/lang}',
-					'wcf.user.disableAvatar.expires.description': '{lang}wcf.user.disableAvatar.expires.description{/lang}',
-					'wcf.user.disableAvatar.neverExpires': '{lang}wcf.user.disableAvatar.neverExpires{/lang}',
-					'wcf.user.disableCoverPhoto': '{lang}wcf.user.disableCoverPhoto{/lang}',
-					'wcf.user.disableCoverPhoto.confirmMessage': '{lang}wcf.user.disableCoverPhoto.confirmMessage{/lang}',
-					'wcf.user.disableCoverPhoto.expires': '{lang}wcf.user.disableCoverPhoto.expires{/lang}',
-					'wcf.user.disableCoverPhoto.expires.description': '{lang}wcf.user.disableCoverPhoto.expires.description{/lang}',
-					'wcf.user.disableCoverPhoto.neverExpires': '{lang}wcf.user.disableCoverPhoto.neverExpires{/lang}',
-					'wcf.user.disableSignature': '{lang}wcf.user.disableSignature{/lang}',
-					'wcf.user.disableSignature.confirmMessage': '{lang}wcf.user.disableSignature.confirmMessage{/lang}',
-					'wcf.user.disableSignature.expires': '{lang}wcf.user.disableSignature.expires{/lang}',
-					'wcf.user.disableSignature.expires.description': '{lang}wcf.user.disableSignature.expires.description{/lang}',
-					'wcf.user.disableSignature.neverExpires': '{lang}wcf.user.disableSignature.neverExpires{/lang}',
-					'wcf.user.edit': '{lang}wcf.user.edit{/lang}',
-					'wcf.user.enableAvatar': '{lang}wcf.user.enableAvatar{/lang}',
-					'wcf.user.enableCoverPhoto': '{lang}wcf.user.enableCoverPhoto{/lang}',
-					'wcf.user.enableSignature': '{lang}wcf.user.enableSignature{/lang}',
-					'wcf.user.unban': '{lang}wcf.user.unban{/lang}'
+					'wcf.user.ban.confirmMessage': '{jslang}wcf.user.ban.confirmMessage{/jslang}',
+					'wcf.user.ban.expires': '{jslang}wcf.user.ban.expires{/jslang}',
+					'wcf.user.ban.expires.description': '{jslang}wcf.user.ban.expires.description{/jslang}',
+					'wcf.user.ban.neverExpires': '{jslang}wcf.user.ban.neverExpires{/jslang}',
+					'wcf.user.ban.reason.description': '{jslang}wcf.user.ban.reason.description{/jslang}',
+					'wcf.user.button.follow': '{jslang}wcf.user.button.follow{/jslang}',
+					'wcf.user.button.unfollow': '{jslang}wcf.user.button.unfollow{/jslang}',
+					'wcf.user.button.ignore': '{jslang}wcf.user.button.ignore{/jslang}',
+					'wcf.user.button.unignore': '{jslang}wcf.user.button.unignore{/jslang}',
+					'wcf.user.disableAvatar': '{jslang}wcf.user.disableAvatar{/jslang}',
+					'wcf.user.disableAvatar.confirmMessage': '{jslang}wcf.user.disableAvatar.confirmMessage{/jslang}',
+					'wcf.user.disableAvatar.expires': '{jslang}wcf.user.disableAvatar.expires{/jslang}',
+					'wcf.user.disableAvatar.expires.description': '{jslang}wcf.user.disableAvatar.expires.description{/jslang}',
+					'wcf.user.disableAvatar.neverExpires': '{jslang}wcf.user.disableAvatar.neverExpires{/jslang}',
+					'wcf.user.disableCoverPhoto': '{jslang}wcf.user.disableCoverPhoto{/jslang}',
+					'wcf.user.disableCoverPhoto.confirmMessage': '{jslang}wcf.user.disableCoverPhoto.confirmMessage{/jslang}',
+					'wcf.user.disableCoverPhoto.expires': '{jslang}wcf.user.disableCoverPhoto.expires{/jslang}',
+					'wcf.user.disableCoverPhoto.expires.description': '{jslang}wcf.user.disableCoverPhoto.expires.description{/jslang}',
+					'wcf.user.disableCoverPhoto.neverExpires': '{jslang}wcf.user.disableCoverPhoto.neverExpires{/jslang}',
+					'wcf.user.disableSignature': '{jslang}wcf.user.disableSignature{/jslang}',
+					'wcf.user.disableSignature.confirmMessage': '{jslang}wcf.user.disableSignature.confirmMessage{/jslang}',
+					'wcf.user.disableSignature.expires': '{jslang}wcf.user.disableSignature.expires{/jslang}',
+					'wcf.user.disableSignature.expires.description': '{jslang}wcf.user.disableSignature.expires.description{/jslang}',
+					'wcf.user.disableSignature.neverExpires': '{jslang}wcf.user.disableSignature.neverExpires{/jslang}',
+					'wcf.user.edit': '{jslang}wcf.user.edit{/jslang}',
+					'wcf.user.enableAvatar': '{jslang}wcf.user.enableAvatar{/jslang}',
+					'wcf.user.enableCoverPhoto': '{jslang}wcf.user.enableCoverPhoto{/jslang}',
+					'wcf.user.enableSignature': '{jslang}wcf.user.enableSignature{/jslang}',
+					'wcf.user.unban': '{jslang}wcf.user.unban{/jslang}'
 				});
 				
 				{if $isAccessible}
@@ -58,7 +58,7 @@
 		$(function() {
 			{if $__wcf->getUser()->userID && $__wcf->getUser()->userID != $user->userID}
 				WCF.Language.addObject({
-					'wcf.user.activityPoint': '{lang}wcf.user.activityPoint{/lang}'
+					'wcf.user.activityPoint': '{jslang}wcf.user.activityPoint{/jslang}'
 				});
 			{/if}
 			
@@ -66,7 +66,7 @@
 			
 			{if $user->canEdit() || ($__wcf->getUser()->userID == $user->userID && $user->canEditOwnProfile())}
 				WCF.Language.addObject({
-					'wcf.user.editProfile': '{lang}wcf.user.editProfile{/lang}'
+					'wcf.user.editProfile': '{jslang}wcf.user.editProfile{/jslang}'
 				});
 				
 				var userProfileEditor = new WCF.User.Profile.Editor({@$user->userID}, {if $editOnInit}true{else}false{/if});
@@ -115,8 +115,8 @@
 			
 			{if $__wcf->session->getPermission('user.profile.canReportContent')}
 				WCF.Language.addObject({
-					'wcf.moderation.report.reportContent': '{lang}wcf.user.profile.report{/lang}',
-					'wcf.moderation.report.success': '{lang}wcf.moderation.report.success{/lang}'
+					'wcf.moderation.report.reportContent': '{jslang}wcf.user.profile.report{/jslang}',
+					'wcf.moderation.report.success': '{jslang}wcf.moderation.report.success{/jslang}'
 				});
 				new WCF.Moderation.Report.Content('com.woltlab.wcf.user', '.jsReportUser');
 			{/if}
@@ -370,11 +370,11 @@
 		<script data-relocate="true">
 			require(['Language', 'WoltLabSuite/Core/Ui/User/CoverPhoto/Upload'], function (Language, UiUserCoverPhotoUpload) {
 				Language.addObject({
-					'wcf.user.coverPhoto.delete.confirmMessage': '{lang}wcf.user.coverPhoto.delete.confirmMessage{/lang}',
-					'wcf.user.coverPhoto.upload.error.fileExtension': '{lang}wcf.user.coverPhoto.upload.error.fileExtension{/lang}',
-					'wcf.user.coverPhoto.upload.error.tooLarge': '{lang}wcf.user.coverPhoto.upload.error.tooLarge{/lang}',
-					'wcf.user.coverPhoto.upload.error.uploadFailed': '{lang}wcf.user.coverPhoto.upload.error.uploadFailed{/lang}',
-					'wcf.user.coverPhoto.upload.error.badImage': '{lang}wcf.user.coverPhoto.upload.error.badImage{/lang}'
+					'wcf.user.coverPhoto.delete.confirmMessage': '{jslang}wcf.user.coverPhoto.delete.confirmMessage{/jslang}',
+					'wcf.user.coverPhoto.upload.error.fileExtension': '{jslang}wcf.user.coverPhoto.upload.error.fileExtension{/jslang}',
+					'wcf.user.coverPhoto.upload.error.tooLarge': '{jslang}wcf.user.coverPhoto.upload.error.tooLarge{/jslang}',
+					'wcf.user.coverPhoto.upload.error.uploadFailed': '{jslang}wcf.user.coverPhoto.upload.error.uploadFailed{/jslang}',
+					'wcf.user.coverPhoto.upload.error.badImage': '{jslang}wcf.user.coverPhoto.upload.error.badImage{/jslang}'
 				});
 				
 				{if !$__wcf->user->disableCoverPhoto}
@@ -386,7 +386,7 @@
 	<script data-relocate="true">
 		require(['Language', 'WoltLabSuite/Core/Ui/User/CoverPhoto/Delete'], function (Language, UiUserCoverPhotoDelete) {
 			Language.addObject({
-				'wcf.user.coverPhoto.delete.confirmMessage': '{lang}wcf.user.coverPhoto.delete.confirmMessage{/lang}'
+				'wcf.user.coverPhoto.delete.confirmMessage': '{jslang}wcf.user.coverPhoto.delete.confirmMessage{/jslang}'
 			});
 			
 			UiUserCoverPhotoDelete.init({@$user->userID});

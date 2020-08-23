@@ -169,18 +169,18 @@
 		Template
 	) {
 		Language.addObject({
-			'wcf.acp.devtools.project.instruction.delete.confirmMessages': '{lang}wcf.acp.devtools.project.instruction.delete.confirmMessages{/lang}',
-			'wcf.acp.devtools.project.instruction.edit': '{lang}wcf.acp.devtools.project.instruction.edit{/lang}',
-			'wcf.acp.devtools.project.instruction.instruction': '{capture assign=__languageItem}{lang __literal=true}wcf.acp.devtools.project.instruction.instruction{/lang}{/capture}{@$__languageItem|encodeJS}',
-			'wcf.acp.devtools.project.instruction.value.description': '{lang}wcf.acp.devtools.project.instruction.value.description{/lang}',
-			'wcf.acp.devtools.project.instruction.value.description.defaultFilename': '{lang __literal=true}wcf.acp.devtools.project.instruction.value.description.defaultFilename{/lang}',
-			'wcf.acp.devtools.project.instructions.delete.confirmMessages': '{lang}wcf.acp.devtools.project.instructions.delete.confirmMessages{/lang}',
-			'wcf.acp.devtools.project.instructions.edit': '{lang}wcf.acp.devtools.project.instructions.edit{/lang}',
-			'wcf.acp.devtools.project.instructions.instructions.description': '{lang}wcf.acp.devtools.project.instructions.instructions.description{/lang}',
-			'wcf.acp.devtools.project.instructions.type.install.title': '{lang}wcf.acp.devtools.project.instructions.type.install.title{/lang}',
-			'wcf.acp.devtools.project.instructions.type.update.error.duplicate': '{lang}wcf.acp.devtools.project.instructions.type.update.error.duplicate{/lang}',
-			'wcf.acp.devtools.project.instructions.type.update.title': '{lang __literal=true}wcf.acp.devtools.project.instructions.type.update.title{/lang}',
-			'wcf.global.form.error.noValidSelection': '{lang}wcf.global.form.error.noValidSelection{/lang}'
+			'wcf.acp.devtools.project.instruction.delete.confirmMessages': '{jslang}wcf.acp.devtools.project.instruction.delete.confirmMessages{/jslang}',
+			'wcf.acp.devtools.project.instruction.edit': '{jslang}wcf.acp.devtools.project.instruction.edit{/jslang}',
+			'wcf.acp.devtools.project.instruction.instruction': '{jslang __literal=true}wcf.acp.devtools.project.instruction.instruction{/jslang}',
+			'wcf.acp.devtools.project.instruction.value.description': '{jslang}wcf.acp.devtools.project.instruction.value.description{/jslang}',
+			'wcf.acp.devtools.project.instruction.value.description.defaultFilename': '{jslang __literal=true}wcf.acp.devtools.project.instruction.value.description.defaultFilename{/jslang}',
+			'wcf.acp.devtools.project.instructions.delete.confirmMessages': '{jslang}wcf.acp.devtools.project.instructions.delete.confirmMessages{/jslang}',
+			'wcf.acp.devtools.project.instructions.edit': '{jslang}wcf.acp.devtools.project.instructions.edit{/jslang}',
+			'wcf.acp.devtools.project.instructions.instructions.description': '{jslang}wcf.acp.devtools.project.instructions.instructions.description{/jslang}',
+			'wcf.acp.devtools.project.instructions.type.install.title': '{jslang}wcf.acp.devtools.project.instructions.type.install.title{/jslang}',
+			'wcf.acp.devtools.project.instructions.type.update.error.duplicate': '{jslang}wcf.acp.devtools.project.instructions.type.update.error.duplicate{/jslang}',
+			'wcf.acp.devtools.project.instructions.type.update.title': '{jslang __literal=true}wcf.acp.devtools.project.instructions.type.update.title{/jslang}',
+			'wcf.global.form.error.noValidSelection': '{jslang}wcf.global.form.error.noValidSelection{/jslang}'
 		});
 		
 		var instructionsTemplate = new Template('{@$instructionsTemplate|encodeJS}');

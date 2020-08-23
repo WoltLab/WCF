@@ -375,8 +375,8 @@
 	<script data-relocate="true">
 		$(function() {
 			WCF.Language.addObject({
-				'wcf.moderation.report.reportContent': '{lang}wcf.moderation.report.reportContent{/lang}',
-				'wcf.moderation.report.success': '{lang}wcf.moderation.report.success{/lang}'
+				'wcf.moderation.report.reportContent': '{jslang}wcf.moderation.report.reportContent{/jslang}',
+				'wcf.moderation.report.success': '{jslang}wcf.moderation.report.success{/jslang}'
 			});
 			new WCF.Moderation.Report.Content('com.woltlab.wcf.article', '.jsReportArticle');
 		});
