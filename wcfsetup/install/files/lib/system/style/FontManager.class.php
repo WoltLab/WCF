@@ -88,7 +88,7 @@ class FontManager extends SingletonFactory {
 				
 				$response = $this->http->send(new Request('GET', $family.'/'.$filename), [
 					// https://github.com/guzzle/guzzle/issues/2735
-					'sink' => fopen("php://temp", "w+"),
+					'sink' => \GuzzleHttp\Psr7\stream_for(fopen("php://temp", "w+")),
 				]);
 				
 				$file = new AtomicWriter($familyDirectory.'/'.$filename);

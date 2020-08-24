@@ -192,7 +192,7 @@ final class HTTPRequest {
 		try {
 			$this->response = $client->send($request, [
 				// https://github.com/guzzle/guzzle/issues/2735
-				'sink' => fopen("php://temp", "w+"),
+				'sink' => \GuzzleHttp\Psr7\stream_for(fopen("php://temp", "w+")),
 			]);
 		}
 		catch (TooManyRedirectsException $e) {
