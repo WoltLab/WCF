@@ -71,6 +71,7 @@ class TemplateScriptingCompiler {
 		'hash',
 		'htmlspecialchars',
 		'html_entity_decode',
+		'http_build_query',
 		'implode',
 		'in_array',
 		'is_array',
