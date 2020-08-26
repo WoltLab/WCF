@@ -8,7 +8,7 @@
 </style>
 <script data-relocate="true">
 	$(function() {
-		WCF.Language.add('wcf.acp.package.install.title', '{lang}wcf.acp.package.install.title{/lang}');
+		WCF.Language.add('wcf.acp.package.install.title', '{jslang}wcf.acp.package.install.title{/jslang}');
 		
 		var $installation = new WCF.ACP.Package.Installation({@$queueID});
 		$installation.prepareInstallation();

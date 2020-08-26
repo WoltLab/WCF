@@ -4,10 +4,10 @@
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.addObject({
-			'wcf.acp.package.install.title': '{lang}wcf.acp.package.install.title{/lang}',
-			'wcf.acp.package.installation.rollback': '{lang}wcf.acp.package.installation.rollback{/lang}',
-			'wcf.acp.package.uninstallation.title': '{lang}wcf.acp.package.uninstallation.title{/lang}',
-			'wcf.acp.package.update.title': '{lang}wcf.acp.package.update.title{/lang}'
+			'wcf.acp.package.install.title': '{jslang}wcf.acp.package.install.title{/jslang}',
+			'wcf.acp.package.installation.rollback': '{jslang}wcf.acp.package.installation.rollback{/jslang}',
+			'wcf.acp.package.uninstallation.title': '{jslang}wcf.acp.package.uninstallation.title{/jslang}',
+			'wcf.acp.package.update.title': '{jslang}wcf.acp.package.update.title{/jslang}'
 		});
 		
 		new WCF.ACP.Package.Installation({@$queue->queueID}, undefined, {if $queue->action == 'install'}{if $queue->isApplication}false{else}true{/if}, false{else}false, true{/if});

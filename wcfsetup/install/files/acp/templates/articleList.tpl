@@ -4,9 +4,9 @@
 	require(['Language', 'WoltLabSuite/Core/Controller/Clipboard', 'WoltLabSuite/Core/Ui/User/Search/Input', 'WoltLabSuite/Core/Acp/Ui/Article/InlineEditor'],
 		function(Language, ControllerClipboard, UiUserSearchInput, AcpUiArticleInlineEditor) {
 		Language.addObject({
-			'wcf.acp.article.publicationStatus.unpublished': '{lang}wcf.acp.article.publicationStatus.unpublished{/lang}',
-			'wcf.acp.article.setCategory': '{lang}wcf.acp.article.setCategory{/lang}',
-			'wcf.message.status.deleted': '{lang}wcf.message.status.deleted{/lang}'
+			'wcf.acp.article.publicationStatus.unpublished': '{jslang}wcf.acp.article.publicationStatus.unpublished{/jslang}',
+			'wcf.acp.article.setCategory': '{jslang}wcf.acp.article.setCategory{/jslang}',
+			'wcf.message.status.deleted': '{jslang}wcf.message.status.deleted{/jslang}'
 		});
 		
 		new UiUserSearchInput(elBySel('input[name="username"]'));

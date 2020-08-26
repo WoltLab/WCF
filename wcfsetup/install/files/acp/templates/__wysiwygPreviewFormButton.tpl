@@ -7,7 +7,7 @@
 <script data-relocate="true">
 	require(['Language'], function(Language) {
 		Language.addObject({
-			'wcf.global.preview': '{lang}wcf.global.preview{/lang}'
+			'wcf.global.preview': '{jslang}wcf.global.preview{/jslang}'
 		});
 		
 		new WCF.Message.DefaultPreview({

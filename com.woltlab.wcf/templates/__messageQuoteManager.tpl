@@ -1,12 +1,12 @@
 WCF.Language.addObject({
-	'wcf.message.quote.insertAllQuotes': '{lang}wcf.message.quote.insertAllQuotes{/lang}',
-	'wcf.message.quote.insertSelectedQuotes': '{lang}wcf.message.quote.insertSelectedQuotes{/lang}',
-	'wcf.message.quote.manageQuotes': '{lang}wcf.message.quote.manageQuotes{/lang}',
-	'wcf.message.quote.quoteSelected': '{lang}wcf.message.quote.quoteSelected{/lang}',
-	'wcf.message.quote.quoteAndReply': '{lang}wcf.message.quote.quoteAndReply{/lang}',
-	'wcf.message.quote.removeAllQuotes': '{lang}wcf.message.quote.removeAllQuotes{/lang}',
-	'wcf.message.quote.removeSelectedQuotes': '{lang}wcf.message.quote.removeSelectedQuotes{/lang}',
-	'wcf.message.quote.showQuotes': '{lang __literal=true}wcf.message.quote.showQuotes{/lang}'
+	'wcf.message.quote.insertAllQuotes': '{jslang}wcf.message.quote.insertAllQuotes{/jslang}',
+	'wcf.message.quote.insertSelectedQuotes': '{jslang}wcf.message.quote.insertSelectedQuotes{/jslang}',
+	'wcf.message.quote.manageQuotes': '{jslang}wcf.message.quote.manageQuotes{/jslang}',
+	'wcf.message.quote.quoteSelected': '{jslang}wcf.message.quote.quoteSelected{/jslang}',
+	'wcf.message.quote.quoteAndReply': '{jslang}wcf.message.quote.quoteAndReply{/jslang}',
+	'wcf.message.quote.removeAllQuotes': '{jslang}wcf.message.quote.removeAllQuotes{/jslang}',
+	'wcf.message.quote.removeSelectedQuotes': '{jslang}wcf.message.quote.removeSelectedQuotes{/jslang}',
+	'wcf.message.quote.showQuotes': '{jslang __literal=true}wcf.message.quote.showQuotes{/jslang}'
 });
 
 {if !$wysiwygSelector|isset}{assign var=wysiwygSelector value=''}{/if}

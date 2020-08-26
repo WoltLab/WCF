@@ -3,8 +3,8 @@
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.addObject({
-			'wcf.acp.cronjob.log.clear.confirm': '{lang}wcf.acp.cronjob.log.clear.confirm{/lang}',
-			'wcf.acp.cronjob.log.error.details': '{lang}wcf.acp.cronjob.log.error.details{/lang}'
+			'wcf.acp.cronjob.log.clear.confirm': '{jslang}wcf.acp.cronjob.log.clear.confirm{/jslang}',
+			'wcf.acp.cronjob.log.error.details': '{jslang}wcf.acp.cronjob.log.error.details{/jslang}'
 		});
 		
 		new WCF.ACP.Cronjob.LogList();

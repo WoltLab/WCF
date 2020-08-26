@@ -6,13 +6,13 @@
 		
 		{if $action == 'edit' && $group->canCopy()}
 			WCF.Language.addObject({
-				'wcf.acp.group.copy.confirmMessage': '{lang}wcf.acp.group.copy.confirmMessage{/lang}',
-				'wcf.acp.group.copy.copyACLOptions': '{lang}wcf.acp.group.copy.copyACLOptions{/lang}',
-				'wcf.acp.group.copy.copyACLOptions.description': '{lang}wcf.acp.group.copy.copyACLOptions.description{/lang}',
-				'wcf.acp.group.copy.copyMembers': '{lang}wcf.acp.group.copy.copyMembers{/lang}',
-				'wcf.acp.group.copy.copyMembers.description': '{lang}wcf.acp.group.copy.copyMembers.description{/lang}',
-				'wcf.acp.group.copy.copyUserGroupOptions': '{lang}wcf.acp.group.copy.copyUserGroupOptions{/lang}',
-				'wcf.acp.group.copy.copyUserGroupOptions.description': '{lang}wcf.acp.group.copy.copyUserGroupOptions.description{/lang}'
+				'wcf.acp.group.copy.confirmMessage': '{jslang}wcf.acp.group.copy.confirmMessage{/jslang}',
+				'wcf.acp.group.copy.copyACLOptions': '{jslang}wcf.acp.group.copy.copyACLOptions{/jslang}',
+				'wcf.acp.group.copy.copyACLOptions.description': '{jslang}wcf.acp.group.copy.copyACLOptions.description{/jslang}',
+				'wcf.acp.group.copy.copyMembers': '{jslang}wcf.acp.group.copy.copyMembers{/jslang}',
+				'wcf.acp.group.copy.copyMembers.description': '{jslang}wcf.acp.group.copy.copyMembers.description{/jslang}',
+				'wcf.acp.group.copy.copyUserGroupOptions': '{jslang}wcf.acp.group.copy.copyUserGroupOptions{/jslang}',
+				'wcf.acp.group.copy.copyUserGroupOptions.description': '{jslang}wcf.acp.group.copy.copyUserGroupOptions.description{/jslang}'
 			});
 			
 			new WCF.ACP.User.Group.Copy({@$groupID});

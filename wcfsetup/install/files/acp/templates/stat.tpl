@@ -6,11 +6,11 @@
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.addObject({
-			'wcf.acp.stat.timeFormat.daily': '{lang}wcf.acp.stat.timeFormat.daily{/lang}',
-			'wcf.acp.stat.timeFormat.weekly': '{lang}wcf.acp.stat.timeFormat.weekly{/lang}',
-			'wcf.acp.stat.timeFormat.monthly': '{lang}wcf.acp.stat.timeFormat.monthly{/lang}',
-			'wcf.acp.stat.timeFormat.yearly': '{lang}wcf.acp.stat.timeFormat.yearly{/lang}',
-			'wcf.acp.stat.noData': '{lang}wcf.acp.stat.noData{/lang}'
+			'wcf.acp.stat.timeFormat.daily': '{jslang}wcf.acp.stat.timeFormat.daily{/jslang}',
+			'wcf.acp.stat.timeFormat.weekly': '{jslang}wcf.acp.stat.timeFormat.weekly{/jslang}',
+			'wcf.acp.stat.timeFormat.monthly': '{jslang}wcf.acp.stat.timeFormat.monthly{/jslang}',
+			'wcf.acp.stat.timeFormat.yearly': '{jslang}wcf.acp.stat.timeFormat.yearly{/jslang}',
+			'wcf.acp.stat.noData': '{jslang}wcf.acp.stat.noData{/jslang}'
 		});
 		
 		new WCF.ACP.Stat.Chart();

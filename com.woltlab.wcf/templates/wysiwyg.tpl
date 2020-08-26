@@ -56,65 +56,65 @@
 	], function () {
 		require(['Environment', 'Language', 'WoltLabSuite/Core/Ui/Redactor/Autosave', 'WoltLabSuite/Core/Ui/Redactor/Metacode'], function(Environment, Language, UiRedactorAutosave, UiRedactorMetacode) {
 			Language.addObject({
-				'wcf.attachment.dragAndDrop.dropHere': '{lang}wcf.attachment.dragAndDrop.dropHere{/lang}',
-				'wcf.attachment.dragAndDrop.dropNow': '{lang}wcf.attachment.dragAndDrop.dropNow{/lang}',
+				'wcf.attachment.dragAndDrop.dropHere': '{jslang}wcf.attachment.dragAndDrop.dropHere{/jslang}',
+				'wcf.attachment.dragAndDrop.dropNow': '{jslang}wcf.attachment.dragAndDrop.dropNow{/jslang}',
 				
-				'wcf.editor.autosave.discard': '{lang}wcf.editor.autosave.discard{/lang}',
-				'wcf.editor.autosave.keep': '{lang}wcf.editor.autosave.keep{/lang}',
-				'wcf.editor.autosave.restored': '{lang}wcf.editor.autosave.restored{/lang}',
+				'wcf.editor.autosave.discard': '{jslang}wcf.editor.autosave.discard{/jslang}',
+				'wcf.editor.autosave.keep': '{jslang}wcf.editor.autosave.keep{/jslang}',
+				'wcf.editor.autosave.restored': '{jslang}wcf.editor.autosave.restored{/jslang}',
 				
-				'wcf.editor.code.edit': '{lang}wcf.editor.code.edit{/lang}',
-				'wcf.editor.code.file': '{lang}wcf.editor.code.file{/lang}',
-				'wcf.editor.code.file.description': '{lang}wcf.editor.code.file.description{/lang}',
-				'wcf.editor.code.highlighter': '{lang}wcf.editor.code.highlighter{/lang}',
-				'wcf.editor.code.highlighter.description': '{lang}wcf.editor.code.highlighter.description{/lang}',
-				'wcf.editor.code.highlighter.detect': '{lang}wcf.editor.code.highlighter.detect{/lang}',
-				'wcf.editor.code.highlighter.plain': '{lang}wcf.editor.code.highlighter.plain{/lang}',
-				'wcf.editor.code.line': '{lang}wcf.editor.code.line{/lang}',
-				'wcf.editor.code.line.description': '{lang}wcf.editor.code.line.description{/lang}',
-				'wcf.editor.code.title': '{lang __literal=true}wcf.editor.code.title{/lang}',
+				'wcf.editor.code.edit': '{jslang}wcf.editor.code.edit{/jslang}',
+				'wcf.editor.code.file': '{jslang}wcf.editor.code.file{/jslang}',
+				'wcf.editor.code.file.description': '{jslang}wcf.editor.code.file.description{/jslang}',
+				'wcf.editor.code.highlighter': '{jslang}wcf.editor.code.highlighter{/jslang}',
+				'wcf.editor.code.highlighter.description': '{jslang}wcf.editor.code.highlighter.description{/jslang}',
+				'wcf.editor.code.highlighter.detect': '{jslang}wcf.editor.code.highlighter.detect{/jslang}',
+				'wcf.editor.code.highlighter.plain': '{jslang}wcf.editor.code.highlighter.plain{/jslang}',
+				'wcf.editor.code.line': '{jslang}wcf.editor.code.line{/jslang}',
+				'wcf.editor.code.line.description': '{jslang}wcf.editor.code.line.description{/jslang}',
+				'wcf.editor.code.title': '{jslang __literal=true}wcf.editor.code.title{/jslang}',
 				
-				'wcf.editor.html.description': '{lang}wcf.editor.html.description{/lang}',
-				'wcf.editor.html.title': '{lang}wcf.editor.html.title{/lang}',
+				'wcf.editor.html.description': '{jslang}wcf.editor.html.description{/jslang}',
+				'wcf.editor.html.title': '{jslang}wcf.editor.html.title{/jslang}',
 				
-				'wcf.editor.image.edit': '{lang}wcf.editor.image.edit{/lang}',
-				'wcf.editor.image.insert': '{lang}wcf.editor.image.insert{/lang}',
-				'wcf.editor.image.link': '{lang}wcf.editor.image.link{/lang}',
-				'wcf.editor.image.link.error.invalid': '{lang}wcf.editor.image.link.error.invalid{/lang}',
-				'wcf.editor.image.float': '{lang}wcf.editor.image.float{/lang}',
-				'wcf.editor.image.float.left': '{lang}wcf.editor.image.float.left{/lang}',
-				'wcf.editor.image.float.right': '{lang}wcf.editor.image.float.right{/lang}',
-				'wcf.editor.image.source': '{lang}wcf.editor.image.source{/lang}',
-				'wcf.editor.image.source.error.blocked': '{lang}wcf.editor.image.source.error.blocked{/lang}',
-				'wcf.editor.image.source.error.insecure': '{lang}wcf.editor.image.source.error.insecure{/lang}',
-				'wcf.editor.image.source.error.invalid': '{lang}wcf.editor.image.source.error.invalid{/lang}',
+				'wcf.editor.image.edit': '{jslang}wcf.editor.image.edit{/jslang}',
+				'wcf.editor.image.insert': '{jslang}wcf.editor.image.insert{/jslang}',
+				'wcf.editor.image.link': '{jslang}wcf.editor.image.link{/jslang}',
+				'wcf.editor.image.link.error.invalid': '{jslang}wcf.editor.image.link.error.invalid{/jslang}',
+				'wcf.editor.image.float': '{jslang}wcf.editor.image.float{/jslang}',
+				'wcf.editor.image.float.left': '{jslang}wcf.editor.image.float.left{/jslang}',
+				'wcf.editor.image.float.right': '{jslang}wcf.editor.image.float.right{/jslang}',
+				'wcf.editor.image.source': '{jslang}wcf.editor.image.source{/jslang}',
+				'wcf.editor.image.source.error.blocked': '{jslang}wcf.editor.image.source.error.blocked{/jslang}',
+				'wcf.editor.image.source.error.insecure': '{jslang}wcf.editor.image.source.error.insecure{/jslang}',
+				'wcf.editor.image.source.error.invalid': '{jslang}wcf.editor.image.source.error.invalid{/jslang}',
 				
-				'wcf.editor.link.add': '{lang}wcf.editor.link.add{/lang}',
-				'wcf.editor.link.edit': '{lang}wcf.editor.link.edit{/lang}',
-				'wcf.editor.link.error.invalid': '{lang}wcf.editor.link.error.invalid{/lang}',
-				'wcf.editor.link.url': '{lang}wcf.editor.link.url{/lang}',
-				'wcf.editor.link.text': '{lang}wcf.editor.link.text{/lang}',
+				'wcf.editor.link.add': '{jslang}wcf.editor.link.add{/jslang}',
+				'wcf.editor.link.edit': '{jslang}wcf.editor.link.edit{/jslang}',
+				'wcf.editor.link.error.invalid': '{jslang}wcf.editor.link.error.invalid{/jslang}',
+				'wcf.editor.link.url': '{jslang}wcf.editor.link.url{/jslang}',
+				'wcf.editor.link.text': '{jslang}wcf.editor.link.text{/jslang}',
 				
-				'wcf.editor.list.indent': '{lang}wcf.editor.list.indent{/lang}',
-				'wcf.editor.list.outdent': '{lang}wcf.editor.list.outdent{/lang}',
+				'wcf.editor.list.indent': '{jslang}wcf.editor.list.indent{/jslang}',
+				'wcf.editor.list.outdent': '{jslang}wcf.editor.list.outdent{/jslang}',
 				
-				'wcf.editor.quote.author': '{lang}wcf.editor.quote.author{/lang}',
-				'wcf.editor.quote.edit': '{lang}wcf.editor.quote.edit{/lang}',
-				'wcf.editor.quote.title': '{lang __literal=true}wcf.editor.quote.title{/lang}',
-				'wcf.editor.quote.url': '{lang}wcf.editor.quote.url{/lang}',
-				'wcf.editor.quote.url.description': '{lang}wcf.editor.quote.url.description{/lang}',
-				'wcf.editor.quote.url.error.invalid': '{lang}wcf.editor.quote.url.error.invalid{/lang}',
+				'wcf.editor.quote.author': '{jslang}wcf.editor.quote.author{/jslang}',
+				'wcf.editor.quote.edit': '{jslang}wcf.editor.quote.edit{/jslang}',
+				'wcf.editor.quote.title': '{jslang __literal=true}wcf.editor.quote.title{/jslang}',
+				'wcf.editor.quote.url': '{jslang}wcf.editor.quote.url{/jslang}',
+				'wcf.editor.quote.url.description': '{jslang}wcf.editor.quote.url.description{/jslang}',
+				'wcf.editor.quote.url.error.invalid': '{jslang}wcf.editor.quote.url.error.invalid{/jslang}',
 				
-				'wcf.editor.table.cols': '{lang}wcf.editor.table.cols{/lang}',
-				'wcf.editor.table.insertTable': '{lang}wcf.editor.table.insertTable{/lang}',
-				'wcf.editor.table.rows': '{lang}wcf.editor.table.rows{/lang}',
+				'wcf.editor.table.cols': '{jslang}wcf.editor.table.cols{/jslang}',
+				'wcf.editor.table.insertTable': '{jslang}wcf.editor.table.insertTable{/jslang}',
+				'wcf.editor.table.rows': '{jslang}wcf.editor.table.rows{/jslang}',
 				
-				'wcf.editor.source.error.active': '{lang}wcf.editor.source.error.active{/lang}',
+				'wcf.editor.source.error.active': '{jslang}wcf.editor.source.error.active{/jslang}',
 				
-				'wcf.editor.spoiler.label': '{lang}wcf.editor.spoiler.label{/lang}',
-				'wcf.editor.spoiler.label.description': '{lang}wcf.editor.spoiler.label.description{/lang}',
-				'wcf.editor.spoiler.edit': '{lang}wcf.editor.spoiler.edit{/lang}',
-				'wcf.editor.spoiler.title': '{lang __literal=true}wcf.editor.spoiler.title{/lang}'
+				'wcf.editor.spoiler.label': '{jslang}wcf.editor.spoiler.label{/jslang}',
+				'wcf.editor.spoiler.label.description': '{jslang}wcf.editor.spoiler.label.description{/jslang}',
+				'wcf.editor.spoiler.edit': '{jslang}wcf.editor.spoiler.edit{/jslang}',
+				'wcf.editor.spoiler.title': '{jslang __literal=true}wcf.editor.spoiler.title{/jslang}'
 			});
 			
 			var allowedInlineStyles = [], buttons = [], buttonMobile = [], buttonOptions = [], customButtons = [];
@@ -137,7 +137,7 @@
 			var config = {
 				buttons: buttons,
 				clipboardImageUpload: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('attach')}true{else}false{/if},
-				direction: '{lang}wcf.global.pageDirection{/lang}',
+				direction: '{jslang}wcf.global.pageDirection{/jslang}',
 				formatting: ['p', 'h2', 'h3', 'h4'],
 				imageCaption: false,
 				imageUpload: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('attach')}true{else}false{/if},
@@ -145,45 +145,45 @@
 				langs: {
 					wsc: {
 						// general
-						edit: '{lang}wcf.global.button.edit{/lang}',
+						edit: '{jslang}wcf.global.button.edit{/jslang}',
 						
 						// formatting dropdown
-						heading2: '{lang}wcf.editor.format.heading2{/lang}',
-						heading3: '{lang}wcf.editor.format.heading3{/lang}',
-						heading4: '{lang}wcf.editor.format.heading4{/lang}',
-						paragraph: '{lang}wcf.editor.format.paragraph{/lang}',
+						heading2: '{jslang}wcf.editor.format.heading2{/jslang}',
+						heading3: '{jslang}wcf.editor.format.heading3{/jslang}',
+						heading4: '{jslang}wcf.editor.format.heading4{/jslang}',
+						paragraph: '{jslang}wcf.editor.format.paragraph{/jslang}',
 						
 						// links
-						'link-edit': '{lang}wcf.editor.link.edit{/lang}',
-						'link-insert': '{lang}wcf.editor.link.add{/lang}',
-						unlink: '{lang}wcf.editor.link.unlink{/lang}',
+						'link-edit': '{jslang}wcf.editor.link.edit{/jslang}',
+						'link-insert': '{jslang}wcf.editor.link.add{/jslang}',
+						unlink: '{jslang}wcf.editor.link.unlink{/jslang}',
 						
 						// text alignment
-						'align-center': '{lang}wcf.editor.alignment.center{/lang}',
-						'align-justify': '{lang}wcf.editor.alignment.justify{/lang}',
-						'align-left': '{lang}wcf.editor.alignment.left{/lang}',
-						'align-right': '{lang}wcf.editor.alignment.right{/lang}',
+						'align-center': '{jslang}wcf.editor.alignment.center{/jslang}',
+						'align-justify': '{jslang}wcf.editor.alignment.justify{/jslang}',
+						'align-left': '{jslang}wcf.editor.alignment.left{/jslang}',
+						'align-right': '{jslang}wcf.editor.alignment.right{/jslang}',
 						
 						// table plugin
-						'add-head': '{lang}wcf.editor.table.addHead{/lang}',
-						'delete-column': '{lang}wcf.editor.table.deleteColumn{/lang}',
-						'delete-head': '{lang}wcf.editor.table.deleteHead{/lang}',
-						'delete-row': '{lang}wcf.editor.table.deleteRow{/lang}',
-						'delete-table': '{lang}wcf.editor.table.deleteTable{/lang}',
-						'insert-table': '{lang}wcf.editor.table.insertTable{/lang}',
-						'insert-column-left': '{lang}wcf.editor.table.insertColumnLeft{/lang}',
-						'insert-column-right': '{lang}wcf.editor.table.insertColumnRight{/lang}',
-						'insert-row-above': '{lang}wcf.editor.table.insertRowAbove{/lang}',
-						'insert-row-below': '{lang}wcf.editor.table.insertRowBelow{/lang}',
+						'add-head': '{jslang}wcf.editor.table.addHead{/jslang}',
+						'delete-column': '{jslang}wcf.editor.table.deleteColumn{/jslang}',
+						'delete-head': '{jslang}wcf.editor.table.deleteHead{/jslang}',
+						'delete-row': '{jslang}wcf.editor.table.deleteRow{/jslang}',
+						'delete-table': '{jslang}wcf.editor.table.deleteTable{/jslang}',
+						'insert-table': '{jslang}wcf.editor.table.insertTable{/jslang}',
+						'insert-column-left': '{jslang}wcf.editor.table.insertColumnLeft{/jslang}',
+						'insert-column-right': '{jslang}wcf.editor.table.insertColumnRight{/jslang}',
+						'insert-row-above': '{jslang}wcf.editor.table.insertRowAbove{/jslang}',
+						'insert-row-below': '{jslang}wcf.editor.table.insertRowBelow{/jslang}',
 						
 						// size
-						'remove-size': '{lang}wcf.editor.button.size.removeSize{/lang}',
+						'remove-size': '{jslang}wcf.editor.button.size.removeSize{/jslang}',
 						
 						// color
-						'remove-color': '{lang}wcf.editor.button.color.removeColor{/lang}',
+						'remove-color': '{jslang}wcf.editor.button.color.removeColor{/jslang}',
 						
 						// font
-						'remove-font': '{lang}wcf.editor.button.font.removeFont{/lang}'
+						'remove-font': '{jslang}wcf.editor.button.font.removeFont{/jslang}'
 					}
 				},
 				linkify: false,

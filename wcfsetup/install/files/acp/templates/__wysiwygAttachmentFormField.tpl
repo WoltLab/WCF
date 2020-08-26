@@ -41,17 +41,17 @@
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.addObject({
-			'wcf.attachment.upload.error.invalidExtension': '{lang}wcf.attachment.upload.error.invalidExtension{/lang}',
-			'wcf.attachment.upload.error.tooLarge': '{lang}wcf.attachment.upload.error.tooLarge{/lang}',
-			'wcf.attachment.upload.error.reachedLimit': '{lang}wcf.attachment.upload.error.reachedLimit{/lang}',
-			'wcf.attachment.upload.error.reachedRemainingLimit': '{lang}wcf.attachment.upload.error.reachedRemainingLimit{/lang}',
-			'wcf.attachment.upload.error.uploadFailed': '{lang}wcf.attachment.upload.error.uploadFailed{/lang}',
-			'wcf.attachment.upload.error.uploadPhpLimit': '{lang}wcf.attachment.upload.error.uploadPhpLimit{/lang}',
-			'wcf.attachment.insert': '{lang}wcf.attachment.insert{/lang}',
-			'wcf.attachment.insertAll': '{lang}wcf.attachment.insertAll{/lang}',
-			'wcf.attachment.insertFull': '{lang}wcf.attachment.insertFull{/lang}',
-			'wcf.attachment.insertThumbnail': '{lang}wcf.attachment.insertThumbnail{/lang}',
-			'wcf.attachment.delete.sure': '{lang}wcf.attachment.delete.sure{/lang}'
+			'wcf.attachment.upload.error.invalidExtension': '{jslang}wcf.attachment.upload.error.invalidExtension{/jslang}',
+			'wcf.attachment.upload.error.tooLarge': '{jslang}wcf.attachment.upload.error.tooLarge{/jslang}',
+			'wcf.attachment.upload.error.reachedLimit': '{jslang}wcf.attachment.upload.error.reachedLimit{/jslang}',
+			'wcf.attachment.upload.error.reachedRemainingLimit': '{jslang}wcf.attachment.upload.error.reachedRemainingLimit{/jslang}',
+			'wcf.attachment.upload.error.uploadFailed': '{jslang}wcf.attachment.upload.error.uploadFailed{/jslang}',
+			'wcf.attachment.upload.error.uploadPhpLimit': '{jslang}wcf.attachment.upload.error.uploadPhpLimit{/jslang}',
+			'wcf.attachment.insert': '{jslang}wcf.attachment.insert{/jslang}',
+			'wcf.attachment.insertAll': '{jslang}wcf.attachment.insertAll{/jslang}',
+			'wcf.attachment.insertFull': '{jslang}wcf.attachment.insertFull{/jslang}',
+			'wcf.attachment.insertThumbnail': '{jslang}wcf.attachment.insertThumbnail{/jslang}',
+			'wcf.attachment.delete.sure': '{jslang}wcf.attachment.delete.sure{/jslang}'
 		});
 		
 		new WCF.Attachment.Upload(

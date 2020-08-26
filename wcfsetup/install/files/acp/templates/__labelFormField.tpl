@@ -26,8 +26,8 @@
 <script data-relocate="true">
 	require(['Dom/Util', 'Language', 'WoltLabSuite/Core/Form/Builder/Field/Controller/Label'], function(DomUtil, Language, FormBuilderFieldLabel) {
 		Language.addObject({
-			'wcf.label.none': '{lang}wcf.label.none{/lang}',
-			'wcf.label.withoutSelection': '{lang}wcf.label.withoutSelection{/lang}'
+			'wcf.label.none': '{jslang}wcf.label.none{/jslang}',
+			'wcf.label.withoutSelection': '{jslang}wcf.label.withoutSelection{/jslang}'
 		});
 		
 		new FormBuilderFieldLabel(

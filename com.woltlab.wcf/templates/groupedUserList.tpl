@@ -24,10 +24,10 @@
 <script data-relocate="true">
 		$(function() {
 			WCF.Language.addObject({
-				'wcf.user.button.follow': '{lang}wcf.user.button.follow{/lang}',
-				'wcf.user.button.ignore': '{lang}wcf.user.button.ignore{/lang}',
-				'wcf.user.button.unfollow': '{lang}wcf.user.button.unfollow{/lang}',
-				'wcf.user.button.unignore': '{lang}wcf.user.button.unignore{/lang}'
+				'wcf.user.button.follow': '{jslang}wcf.user.button.follow{/jslang}',
+				'wcf.user.button.ignore': '{jslang}wcf.user.button.ignore{/jslang}',
+				'wcf.user.button.unfollow': '{jslang}wcf.user.button.unfollow{/jslang}',
+				'wcf.user.button.unignore': '{jslang}wcf.user.button.unignore{/jslang}'
 			});
 			
 			new WCF.User.Action.Follow($('.jsGroupedUserList > li'));

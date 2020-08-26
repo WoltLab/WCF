@@ -128,9 +128,9 @@
 <script data-relocate="true">
 	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Devtools/Project/Pip/Entry/List'], function(Language, DevtoolsProjectPipEntryList) {
 		Language.addObject({
-			'wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction': '{lang}wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction{/lang}',
-			'wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description': '{lang}wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description{/lang}',
-			'wcf.acp.devtools.project.pip.entry.delete.confirmMessage': '{lang}wcf.acp.devtools.project.pip.entry.delete.confirmMessage{/lang}'
+			'wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction': '{jslang}wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction{/jslang}',
+			'wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description': '{jslang}wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description{/jslang}',
+			'wcf.acp.devtools.project.pip.entry.delete.confirmMessage': '{jslang}wcf.acp.devtools.project.pip.entry.delete.confirmMessage{/jslang}'
 		});
 		
 		new DevtoolsProjectPipEntryList('devtoolsProjectPipEntryList', '{@$project->projectID}', '{@$pip}', '{@$entryType}', {if $pipObject->getPip()->supportsDeleteInstruction()}true{else}false{/if});

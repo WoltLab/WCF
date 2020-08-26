@@ -555,12 +555,12 @@
 				<script data-relocate="true">
 					$(function() {
 						WCF.Language.addObject({
-							'wcf.user.avatar.upload.error.invalidExtension': '{lang}wcf.user.avatar.upload.error.invalidExtension{/lang}',
-							'wcf.user.avatar.upload.error.tooSmall': '{lang}wcf.user.avatar.upload.error.tooSmall{/lang}',
-							'wcf.user.avatar.upload.error.tooLarge': '{lang}wcf.user.avatar.upload.error.tooLarge{/lang}',
-							'wcf.user.avatar.upload.error.uploadFailed': '{lang}wcf.user.avatar.upload.error.uploadFailed{/lang}',
-							'wcf.user.avatar.upload.error.badImage': '{lang}wcf.user.avatar.upload.error.badImage{/lang}',
-							'wcf.user.avatar.upload.success': '{lang}wcf.user.avatar.upload.success{/lang}'
+							'wcf.user.avatar.upload.error.invalidExtension': '{jslang}wcf.user.avatar.upload.error.invalidExtension{/jslang}',
+							'wcf.user.avatar.upload.error.tooSmall': '{jslang}wcf.user.avatar.upload.error.tooSmall{/jslang}',
+							'wcf.user.avatar.upload.error.tooLarge': '{jslang}wcf.user.avatar.upload.error.tooLarge{/jslang}',
+							'wcf.user.avatar.upload.error.uploadFailed': '{jslang}wcf.user.avatar.upload.error.uploadFailed{/jslang}',
+							'wcf.user.avatar.upload.error.badImage': '{jslang}wcf.user.avatar.upload.error.badImage{/jslang}',
+							'wcf.user.avatar.upload.success': '{jslang}wcf.user.avatar.upload.success{/jslang}'
 						});
 						
 						new WCF.User.Avatar.Upload({@$user->userID});

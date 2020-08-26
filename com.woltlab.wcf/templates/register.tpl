@@ -223,14 +223,14 @@
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.addObject({
-			'wcf.global.form.error.empty': '{lang}wcf.global.form.error.empty{/lang}',
-			'wcf.user.username.error.invalid': '{lang}wcf.user.username.error.invalid{/lang}',
-			'wcf.user.username.error.notUnique': '{lang}wcf.user.username.error.notUnique{/lang}',
-			'wcf.user.email.error.invalid' : '{lang}wcf.user.email.error.invalid{/lang}',
-			'wcf.user.email.error.notUnique' : '{lang}wcf.user.email.error.notUnique{/lang}',
-			'wcf.user.confirmEmail.error.notEqual' : '{lang}wcf.user.confirmEmail.error.notEqual{/lang}',
-			'wcf.user.password.error.notSecure' : '{lang}wcf.user.password.error.notSecure{/lang}',
-			'wcf.user.confirmPassword.error.notEqual' : '{lang}wcf.user.confirmPassword.error.notEqual{/lang}'
+			'wcf.global.form.error.empty': '{jslang}wcf.global.form.error.empty{/jslang}',
+			'wcf.user.username.error.invalid': '{jslang}wcf.user.username.error.invalid{/jslang}',
+			'wcf.user.username.error.notUnique': '{jslang}wcf.user.username.error.notUnique{/jslang}',
+			'wcf.user.email.error.invalid' : '{jslang}wcf.user.email.error.invalid{/jslang}',
+			'wcf.user.email.error.notUnique' : '{jslang}wcf.user.email.error.notUnique{/jslang}',
+			'wcf.user.confirmEmail.error.notEqual' : '{jslang}wcf.user.confirmEmail.error.notEqual{/jslang}',
+			'wcf.user.password.error.notSecure' : '{jslang}wcf.user.password.error.notSecure{/jslang}',
+			'wcf.user.confirmPassword.error.notEqual' : '{jslang}wcf.user.confirmPassword.error.notEqual{/jslang}'
 		});
 		
 		new WCF.User.Registration.Validation.EmailAddress($('#{@$randomFieldNames[email]}'), $('#{@$randomFieldNames[confirmEmail]}'), null);

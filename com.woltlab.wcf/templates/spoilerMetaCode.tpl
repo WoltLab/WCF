@@ -10,8 +10,8 @@
 <script data-relocate="true">
 	require(['Language', 'WoltLabSuite/Core/Bbcode/Spoiler'], function (Language, BbcodeSpoiler) {
 		Language.addObject({
-			'wcf.bbcode.spoiler.hide' : '{lang}wcf.bbcode.spoiler.hide{/lang}',
-			'wcf.bbcode.spoiler.show' : '{lang}wcf.bbcode.spoiler.show{/lang}'
+			'wcf.bbcode.spoiler.hide' : '{jslang}wcf.bbcode.spoiler.hide{/jslang}',
+			'wcf.bbcode.spoiler.show' : '{jslang}wcf.bbcode.spoiler.show{/jslang}'
 		});
 		
 		BbcodeSpoiler.observe();

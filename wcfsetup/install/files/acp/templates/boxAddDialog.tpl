@@ -34,7 +34,7 @@
 <script data-relocate="true">
 	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Box/Add'], function(Language, AcpUiBoxAdd) {
 		Language.addObject({
-			'wcf.acp.box.add': '{lang}wcf.acp.box.add{/lang}'
+			'wcf.acp.box.add': '{jslang}wcf.acp.box.add{/jslang}'
 		});
 		
 		AcpUiBoxAdd.init('{link controller='BoxAdd' encode=false}{literal}boxType={$boxType}&isMultilingual={$isMultilingual}{/literal}{/link}', {@$availableLanguages|count});

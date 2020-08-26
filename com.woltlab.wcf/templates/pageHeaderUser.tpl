@@ -238,9 +238,9 @@
 					<script data-relocate="true">
 						$(function() {
 							WCF.Language.addObject({
-								'wcf.user.button.login': '{lang}wcf.user.button.login{/lang}',
-								'wcf.user.button.register': '{lang}wcf.user.button.register{/lang}',
-								'wcf.user.login': '{lang}wcf.user.login{/lang}'
+								'wcf.user.button.login': '{jslang}wcf.user.button.login{/jslang}',
+								'wcf.user.button.register': '{jslang}wcf.user.button.register{/jslang}',
+								'wcf.user.login': '{jslang}wcf.user.login{/jslang}'
 							});
 							new WCF.User.Login(true);
 						});

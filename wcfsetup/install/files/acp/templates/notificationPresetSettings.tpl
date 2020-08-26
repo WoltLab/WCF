@@ -3,9 +3,9 @@
 <script data-relocate="true">
 	require(['Language', 'WoltLabSuite/Core/Controller/User/Notification/Settings'], function(Language, ControllerUserNotificationSettings) {
 		Language.addObject({
-			'wcf.user.notification.mailNotificationType.daily': '{lang}wcf.user.notification.mailNotificationType.daily{/lang}',
-			'wcf.user.notification.mailNotificationType.instant': '{lang}wcf.user.notification.mailNotificationType.instant{/lang}',
-			'wcf.user.notification.mailNotificationType.none': '{lang}wcf.user.notification.mailNotificationType.none{/lang}'
+			'wcf.user.notification.mailNotificationType.daily': '{jslang}wcf.user.notification.mailNotificationType.daily{/jslang}',
+			'wcf.user.notification.mailNotificationType.instant': '{jslang}wcf.user.notification.mailNotificationType.instant{/jslang}',
+			'wcf.user.notification.mailNotificationType.none': '{jslang}wcf.user.notification.mailNotificationType.none{/jslang}'
 		});
 		
 		ControllerUserNotificationSettings.setup();

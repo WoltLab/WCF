@@ -7,20 +7,20 @@
 	<script data-relocate="true">
 		$(function() {
 			WCF.Language.addObject({
-				'wcf.map.noLocationSuggestions': '{lang}wcf.map.noLocationSuggestions{/lang}',
-				'wcf.map.route.error.not_found': '{lang}wcf.map.route.error.not_found{/lang}',
-				'wcf.map.route.error.over_query_limit': '{lang}wcf.map.route.error.over_query_limit{/lang}',
-				'wcf.map.route.error.request_denied': '{lang}wcf.map.route.error.request_denied{/lang}',
-				'wcf.map.route.origin': '{lang}wcf.map.route.origin{/lang}',
-				'wcf.map.route.planner': '{lang}wcf.map.route.planner{/lang}',
-				'wcf.map.route.travelMode': '{lang}wcf.map.route.travelMode{/lang}',
-				'wcf.map.route.travelMode.bicycling': '{lang}wcf.map.route.travelMode.bicycling{/lang}',
-				'wcf.map.route.travelMode.driving': '{lang}wcf.map.route.travelMode.driving{/lang}',
-				'wcf.map.route.travelMode.transit': '{lang}wcf.map.route.travelMode.transit{/lang}',
-				'wcf.map.route.travelMode.walking': '{lang}wcf.map.route.travelMode.walking{/lang}',
-				'wcf.map.route.viewOnGoogleMaps': '{lang}wcf.map.route.viewOnGoogleMaps{/lang}',
-				'wcf.map.showLocationSuggestions': '{lang}wcf.map.showLocationSuggestions{/lang}',
-				'wcf.map.useLocationSuggestion': '{lang}wcf.map.useLocationSuggestion{/lang}'
+				'wcf.map.noLocationSuggestions': '{jslang}wcf.map.noLocationSuggestions{/jslang}',
+				'wcf.map.route.error.not_found': '{jslang}wcf.map.route.error.not_found{/jslang}',
+				'wcf.map.route.error.over_query_limit': '{jslang}wcf.map.route.error.over_query_limit{/jslang}',
+				'wcf.map.route.error.request_denied': '{jslang}wcf.map.route.error.request_denied{/jslang}',
+				'wcf.map.route.origin': '{jslang}wcf.map.route.origin{/jslang}',
+				'wcf.map.route.planner': '{jslang}wcf.map.route.planner{/jslang}',
+				'wcf.map.route.travelMode': '{jslang}wcf.map.route.travelMode{/jslang}',
+				'wcf.map.route.travelMode.bicycling': '{jslang}wcf.map.route.travelMode.bicycling{/jslang}',
+				'wcf.map.route.travelMode.driving': '{jslang}wcf.map.route.travelMode.driving{/jslang}',
+				'wcf.map.route.travelMode.transit': '{jslang}wcf.map.route.travelMode.transit{/jslang}',
+				'wcf.map.route.travelMode.walking': '{jslang}wcf.map.route.travelMode.walking{/jslang}',
+				'wcf.map.route.viewOnGoogleMaps': '{jslang}wcf.map.route.viewOnGoogleMaps{/jslang}',
+				'wcf.map.showLocationSuggestions': '{jslang}wcf.map.showLocationSuggestions{/jslang}',
+				'wcf.map.useLocationSuggestion': '{jslang}wcf.map.useLocationSuggestion{/jslang}'
 			});
 			
 			WCF.Location.GoogleMaps.Settings.set({

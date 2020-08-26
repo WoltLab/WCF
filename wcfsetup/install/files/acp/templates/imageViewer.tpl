@@ -3,14 +3,14 @@
 		var $imageViewer = null;
 		$(function() {
 			WCF.Language.addObject({
-				'wcf.imageViewer.button.enlarge': '{lang}wcf.imageViewer.button.enlarge{/lang}',
-				'wcf.imageViewer.button.full': '{lang}wcf.imageViewer.button.full{/lang}',
-				'wcf.imageViewer.seriesIndex': '{lang __literal=true}wcf.imageViewer.seriesIndex{/lang}',
-				'wcf.imageViewer.counter': '{lang}wcf.imageViewer.counter{/lang}',
-				'wcf.imageViewer.close': '{lang}wcf.imageViewer.close{/lang}',
-				'wcf.imageViewer.enlarge': '{lang}wcf.imageViewer.enlarge{/lang}',
-				'wcf.imageViewer.next': '{lang}wcf.imageViewer.next{/lang}',
-				'wcf.imageViewer.previous': '{lang}wcf.imageViewer.previous{/lang}'
+				'wcf.imageViewer.button.enlarge': '{jslang}wcf.imageViewer.button.enlarge{/jslang}',
+				'wcf.imageViewer.button.full': '{jslang}wcf.imageViewer.button.full{/jslang}',
+				'wcf.imageViewer.seriesIndex': '{jslang __literal=true}wcf.imageViewer.seriesIndex{/jslang}',
+				'wcf.imageViewer.counter': '{jslang}wcf.imageViewer.counter{/jslang}',
+				'wcf.imageViewer.close': '{jslang}wcf.imageViewer.close{/jslang}',
+				'wcf.imageViewer.enlarge': '{jslang}wcf.imageViewer.enlarge{/jslang}',
+				'wcf.imageViewer.next': '{jslang}wcf.imageViewer.next{/jslang}',
+				'wcf.imageViewer.previous': '{jslang}wcf.imageViewer.previous{/jslang}'
 			});
 			
 			$imageViewer = new WCF.ImageViewer();

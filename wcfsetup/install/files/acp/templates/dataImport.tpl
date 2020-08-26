@@ -4,9 +4,9 @@
 	$(function() {
 		{if $queue|isset}
 			WCF.Language.addObject({
-				'wcf.acp.dataImport': '{lang}wcf.acp.dataImport{/lang}',
-				'wcf.acp.dataImport.completed': '{lang}wcf.acp.dataImport.completed{/lang}',
-				{implode from=$importers item=importer}'wcf.acp.dataImport.data.{@$importer}': '{lang}wcf.acp.dataImport.data.{@$importer}{/lang}'{/implode}
+				'wcf.acp.dataImport': '{jslang}wcf.acp.dataImport{/jslang}',
+				'wcf.acp.dataImport.completed': '{jslang}wcf.acp.dataImport.completed{/jslang}',
+				{implode from=$importers item=importer}'wcf.acp.dataImport.data.{@$importer}': '{jslang}wcf.acp.dataImport.data.{@$importer}{/jslang}'{/implode}
 			});
 			
 			var $queues = [ {implode from=$queue item=item}'{@$item}'{/implode} ];

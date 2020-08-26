@@ -114,8 +114,8 @@
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.addObject({
-			'wcf.user.notification.markAsConfirmed': '{lang}wcf.user.notification.markAsConfirmed{/lang}',
-			'wcf.user.notification.markAllAsConfirmed.confirmMessage': '{lang}wcf.user.notification.markAllAsConfirmed.confirmMessage{/lang}'
+			'wcf.user.notification.markAsConfirmed': '{jslang}wcf.user.notification.markAsConfirmed{/jslang}',
+			'wcf.user.notification.markAllAsConfirmed.confirmMessage': '{jslang}wcf.user.notification.markAllAsConfirmed.confirmMessage{/jslang}'
 		});
 		
 		new WCF.Notification.List();

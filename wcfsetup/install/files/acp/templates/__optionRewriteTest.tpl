@@ -26,9 +26,9 @@
 	<script data-relocate="true">
 		require(['Dictionary', 'Language', 'WoltLabSuite/Core/Acp/Ui/Option/RewriteTest'], function (Dictionary, Language, AcpUiOptionRewriteTest) {
 			Language.addObject({
-				'wcf.acp.option.url_omit_index_php': '{lang}wcf.acp.option.url_omit_index_php{/lang}',
-				'wcf.acp.option.url_omit_index_php.test.status.failure': '{lang}wcf.acp.option.url_omit_index_php.test.status.failure{/lang}',
-				'wcf.acp.option.url_omit_index_php.test.status.success': '{lang}wcf.acp.option.url_omit_index_php.test.status.success{/lang}'
+				'wcf.acp.option.url_omit_index_php': '{jslang}wcf.acp.option.url_omit_index_php{/jslang}',
+				'wcf.acp.option.url_omit_index_php.test.status.failure': '{jslang}wcf.acp.option.url_omit_index_php.test.status.failure{/jslang}',
+				'wcf.acp.option.url_omit_index_php.test.status.success': '{jslang}wcf.acp.option.url_omit_index_php.test.status.success{/jslang}'
 			});
 			
 			var apps = Dictionary.fromObject({

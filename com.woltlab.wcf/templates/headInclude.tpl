@@ -14,7 +14,7 @@
 <script data-relocate="true">
 	WCF.Language.addObject({
 		{* dummy language item to preserve compatibility with WCF 2.0, move this to headIncludeJavaScript *}
-		'wcf.global.error.title': '{lang}wcf.global.error.title{/lang}'
+		'wcf.global.error.title': '{jslang}wcf.global.error.title{/jslang}'
 		
 		{* DEPRECATED -- PLEASE USE javascriptLanguageImport@headIncludeJavaScript *}
 		{event name='javascriptLanguageImport'}

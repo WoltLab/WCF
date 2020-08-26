@@ -6,15 +6,15 @@
 <script data-relocate="true">
 	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Trophy/Badge'], function (Language, BadgeHandler) {
 		Language.addObject({
-			'wcf.style.colorPicker': '{lang}wcf.style.colorPicker{/lang}',
-			'wcf.style.colorPicker.new': '{lang}wcf.style.colorPicker.new{/lang}',
-			'wcf.style.colorPicker.current': '{lang}wcf.style.colorPicker.current{/lang}',
-			'wcf.style.colorPicker.button.apply': '{lang}wcf.style.colorPicker.button.apply{/lang}',
-			'wcf.acp.style.image.error.invalidExtension': '{lang}wcf.acp.style.image.error.invalidExtension{/lang}',
-			'wcf.acp.trophy.badge.edit': '{lang}wcf.acp.trophy.badge.edit{/lang}',
-			'wcf.acp.trophy.imageUpload.error.notSquared': '{lang}wcf.acp.trophy.imageUpload.error.notSquared{/lang}',
-			'wcf.acp.trophy.imageUpload.error.tooSmall': '{lang}wcf.acp.trophy.imageUpload.error.tooSmall{/lang}',
-			'wcf.acp.trophy.imageUpload.error.noImage': '{lang}wcf.acp.trophy.imageUpload.error.noImage{/lang}'
+			'wcf.style.colorPicker': '{jslang}wcf.style.colorPicker{/jslang}',
+			'wcf.style.colorPicker.new': '{jslang}wcf.style.colorPicker.new{/jslang}',
+			'wcf.style.colorPicker.current': '{jslang}wcf.style.colorPicker.current{/jslang}',
+			'wcf.style.colorPicker.button.apply': '{jslang}wcf.style.colorPicker.button.apply{/jslang}',
+			'wcf.acp.style.image.error.invalidExtension': '{jslang}wcf.acp.style.image.error.invalidExtension{/jslang}',
+			'wcf.acp.trophy.badge.edit': '{jslang}wcf.acp.trophy.badge.edit{/jslang}',
+			'wcf.acp.trophy.imageUpload.error.notSquared': '{jslang}wcf.acp.trophy.imageUpload.error.notSquared{/jslang}',
+			'wcf.acp.trophy.imageUpload.error.tooSmall': '{jslang}wcf.acp.trophy.imageUpload.error.tooSmall{/jslang}',
+			'wcf.acp.trophy.imageUpload.error.noImage': '{jslang}wcf.acp.trophy.imageUpload.error.noImage{/jslang}'
 		});
 		
 		elBySel('select[name=type]').addEventListener('change', function () {

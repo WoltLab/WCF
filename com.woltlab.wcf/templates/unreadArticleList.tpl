@@ -35,8 +35,8 @@
 		<script data-relocate="true">
 			$(function() {
 				WCF.Language.addObject({
-					'wcf.label.none': '{lang}wcf.label.none{/lang}',
-					'wcf.label.withoutSelection': '{lang}wcf.label.withoutSelection{/lang}'
+					'wcf.label.none': '{jslang}wcf.label.none{/jslang}',
+					'wcf.label.withoutSelection': '{jslang}wcf.label.withoutSelection{/jslang}'
 				});
 				
 				new WCF.Label.Chooser({ {implode from=$labelIDs key=groupID item=labelID}{@$groupID}: {@$labelID}{/implode} }, '#sidebarForm', undefined, true);

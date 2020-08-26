@@ -744,7 +744,7 @@ class WCF {
 			$wcf = new TemplateScriptingCore($wcf);
 		}
 		
-		self::getTPL()->registerPrefilter(['event', 'hascontent', 'lang']);
+		self::getTPL()->registerPrefilter(['event', 'hascontent', 'lang', 'jslang']);
 		self::getTPL()->assign([
 			'__wcf' => $wcf,
 			'__wcfVersion' => LAST_UPDATE_TIME // @deprecated 2.1, use LAST_UPDATE_TIME directly
@@ -762,7 +762,7 @@ class WCF {
 			}
 		}
 		
-		EmailTemplateEngine::getInstance()->registerPrefilter(['event', 'hascontent', 'lang']);
+		EmailTemplateEngine::getInstance()->registerPrefilter(['event', 'hascontent', 'lang', 'jslang']);
 		EmailTemplateEngine::getInstance()->assign([
 			'__wcf' => $wcf
 		]);

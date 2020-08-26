@@ -11,20 +11,20 @@
 	
 	require(['Dictionary', 'Language', 'WoltLabSuite/Core/Acp/Ui/Box/Handler'], function(Dictionary, Language, AcpUiBoxHandler) {
 		Language.addObject({
-			'wcf.page.pageObjectID': '{lang}wcf.page.pageObjectID{/lang}',
+			'wcf.page.pageObjectID': '{jslang}wcf.page.pageObjectID{/jslang}',
 			{foreach from=$pageNodeList item=pageNode}
 				{capture assign='pageObjectIDLanguageItem'}{lang __optional=true}wcf.page.pageObjectID.{@$pageNode->identifier}{/lang}{/capture}
 				{if $pageObjectIDLanguageItem}
-					'wcf.page.pageObjectID.{@$pageNode->identifier}': '{@$pageObjectIDLanguageItem}',
+					'wcf.page.pageObjectID.{@$pageNode->identifier}': '{@$pageObjectIDLanguageItem|encodeJS}',
 				{/if}
 				{capture assign='pageObjectIDLanguageItem'}{lang __optional=true}wcf.page.pageObjectID.search.{@$pageNode->identifier}{/lang}{/capture}
 				{if $pageObjectIDLanguageItem}
-					'wcf.page.pageObjectID.search.{@$pageNode->identifier}': '{@$pageObjectIDLanguageItem}',
+					'wcf.page.pageObjectID.search.{@$pageNode->identifier}': '{@$pageObjectIDLanguageItem|encodeJS}',
 				{/if}
 			{/foreach}
-			'wcf.page.pageObjectID.search.noResults': '{lang}wcf.page.pageObjectID.search.noResults{/lang}',
-			'wcf.page.pageObjectID.search.results': '{lang}wcf.page.pageObjectID.search.results{/lang}',
-			'wcf.page.pageObjectID.search.terms': '{lang}wcf.page.pageObjectID.search.terms{/lang}'
+			'wcf.page.pageObjectID.search.noResults': '{jslang}wcf.page.pageObjectID.search.noResults{/jslang}',
+			'wcf.page.pageObjectID.search.results': '{jslang}wcf.page.pageObjectID.search.results{/jslang}',
+			'wcf.page.pageObjectID.search.terms': '{jslang}wcf.page.pageObjectID.search.terms{/jslang}'
 		});
 		
 		var handlers = new Dictionary();
@@ -47,7 +47,7 @@
 	{if $action === 'edit'}
 		require(['Language', 'WoltLabSuite/Core/Acp/Ui/Box/Copy'], function (Language, AcpUiBoxCopy) {
 			Language.addObject({
-				'wcf.acp.box.copy': '{lang}wcf.acp.box.copy{/lang}'
+				'wcf.acp.box.copy': '{jslang}wcf.acp.box.copy{/jslang}'
 			});
 			
 			AcpUiBoxCopy.init();

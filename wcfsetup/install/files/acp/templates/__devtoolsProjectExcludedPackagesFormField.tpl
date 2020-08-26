@@ -28,13 +28,13 @@
 <script data-relocate="true">
 	require(['Language', 'WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/ExcludedPackages'], function(Language, ExcludedPackagesFormField) {
 		Language.addObject({
-			'wcf.acp.devtools.project.packageIdentifier.error.duplicate': '{lang}wcf.acp.devtools.project.packageIdentifier.error.duplicate{/lang}',
-			'wcf.acp.devtools.project.packageIdentifier.error.format': '{lang}wcf.acp.devtools.project.packageIdentifier.error.format{/lang}',
-			'wcf.acp.devtools.project.packageIdentifier.error.maximumLength': '{lang}wcf.acp.devtools.project.packageIdentifier.error.maximumLength{/lang}',
-			'wcf.acp.devtools.project.packageIdentifier.error.minimumLength': '{lang}wcf.acp.devtools.project.packageIdentifier.error.minimumLength{/lang}',
-			'wcf.acp.devtools.project.packageVersion.error.format': '{lang}wcf.acp.devtools.project.packageVersion.error.format{/lang}',
-			'wcf.acp.devtools.project.packageVersion.error.maximumLength': '{lang}wcf.acp.devtools.project.packageVersion.error.maximumLength{/lang}',
-			'wcf.acp.devtools.project.excludedPackage.excludedPackage': '{capture assign=__languageItem}{lang __literal=true}wcf.acp.devtools.project.excludedPackage.excludedPackage{/lang}{/capture}{@$__languageItem|encodeJS}'
+			'wcf.acp.devtools.project.packageIdentifier.error.duplicate': '{jslang}wcf.acp.devtools.project.packageIdentifier.error.duplicate{/jslang}',
+			'wcf.acp.devtools.project.packageIdentifier.error.format': '{jslang}wcf.acp.devtools.project.packageIdentifier.error.format{/jslang}',
+			'wcf.acp.devtools.project.packageIdentifier.error.maximumLength': '{jslang}wcf.acp.devtools.project.packageIdentifier.error.maximumLength{/jslang}',
+			'wcf.acp.devtools.project.packageIdentifier.error.minimumLength': '{jslang}wcf.acp.devtools.project.packageIdentifier.error.minimumLength{/jslang}',
+			'wcf.acp.devtools.project.packageVersion.error.format': '{jslang}wcf.acp.devtools.project.packageVersion.error.format{/jslang}',
+			'wcf.acp.devtools.project.packageVersion.error.maximumLength': '{jslang}wcf.acp.devtools.project.packageVersion.error.maximumLength{/jslang}',
+			'wcf.acp.devtools.project.excludedPackage.excludedPackage': '{jslang __literal=true}wcf.acp.devtools.project.excludedPackage.excludedPackage{/jslang}'
 		});
 		
 		new ExcludedPackagesFormField('{@$field->getPrefixedId()}', [

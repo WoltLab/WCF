@@ -52,10 +52,10 @@
 <script data-relocate="true">
 	require(['Language', 'WoltLabSuite/Core/Ui/User/Search/Input', 'WoltLabSuite/Core/Acp/Ui/Article/InlineEditor'], function(Language, UiUserSearchInput, AcpUiArticleInlineEditor) {
 		Language.addObject({
-			'wcf.acp.article.i18n.source': '{lang}wcf.acp.article.i18n.source{/lang}',
-			'wcf.acp.article.i18n.toI18n.confirmMessage': '{lang}wcf.acp.article.i18n.toI18n.confirmMessage{/lang}',
-			'wcf.acp.article.i18n.fromI18n.confirmMessage': '{lang}wcf.acp.article.i18n.fromI18n.confirmMessage{/lang}',
-			'wcf.message.status.deleted': '{lang}wcf.message.status.deleted{/lang}',
+			'wcf.acp.article.i18n.source': '{jslang}wcf.acp.article.i18n.source{/jslang}',
+			'wcf.acp.article.i18n.toI18n.confirmMessage': '{jslang}wcf.acp.article.i18n.toI18n.confirmMessage{/jslang}',
+			'wcf.acp.article.i18n.fromI18n.confirmMessage': '{jslang}wcf.acp.article.i18n.fromI18n.confirmMessage{/jslang}',
+			'wcf.message.status.deleted': '{jslang}wcf.message.status.deleted{/jslang}',
 		});
 		
 		new UiUserSearchInput(elBySel('input[name="username"]'));
@@ -490,7 +490,7 @@
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.addObject({
-			'wcf.label.none': '{lang}wcf.label.none{/lang}',
+			'wcf.label.none': '{jslang}wcf.label.none{/jslang}',
 		});
 		
 		{if !$labelGroups|empty}

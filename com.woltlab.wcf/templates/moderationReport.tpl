@@ -108,15 +108,15 @@
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.addObject({
-			'wcf.moderation.assignedUser': '{lang}wcf.moderation.assignedUser{/lang}',
-			'wcf.moderation.assignedUser.error.notAffected': '{lang}wcf.moderation.assignedUser.error.notAffected{/lang}',
-			'wcf.moderation.report.removeContent.confirmMessage': '{lang}wcf.moderation.report.removeContent.confirmMessage{/lang}',
-			'wcf.moderation.report.removeContent.reason': '{lang}wcf.moderation.report.removeContent.reason{/lang}',
-			'wcf.moderation.report.removeReport.confirmMessage': '{lang}wcf.moderation.report.removeReport.confirmMessage{/lang}',
-			'wcf.moderation.report.removeReport.markAsJustified': '{lang}wcf.moderation.report.removeReport.markAsJustified{/lang}',
-			'wcf.moderation.status.outstanding': '{lang}wcf.moderation.status.outstanding{/lang}',
-			'wcf.moderation.status.processing': '{lang}wcf.moderation.status.processing{/lang}',
-			'wcf.user.username.error.notFound': '{lang __literal=true}wcf.user.username.error.notFound{/lang}'
+			'wcf.moderation.assignedUser': '{jslang}wcf.moderation.assignedUser{/jslang}',
+			'wcf.moderation.assignedUser.error.notAffected': '{jslang}wcf.moderation.assignedUser.error.notAffected{/jslang}',
+			'wcf.moderation.report.removeContent.confirmMessage': '{jslang}wcf.moderation.report.removeContent.confirmMessage{/jslang}',
+			'wcf.moderation.report.removeContent.reason': '{jslang}wcf.moderation.report.removeContent.reason{/jslang}',
+			'wcf.moderation.report.removeReport.confirmMessage': '{jslang}wcf.moderation.report.removeReport.confirmMessage{/jslang}',
+			'wcf.moderation.report.removeReport.markAsJustified': '{jslang}wcf.moderation.report.removeReport.markAsJustified{/jslang}',
+			'wcf.moderation.status.outstanding': '{jslang}wcf.moderation.status.outstanding{/jslang}',
+			'wcf.moderation.status.processing': '{jslang}wcf.moderation.status.processing{/jslang}',
+			'wcf.user.username.error.notFound': '{jslang __literal=true}wcf.user.username.error.notFound{/jslang}'
 		});
 		
 		new WCF.Moderation.Report.Management({@$queue->queueID}, '{link controller='ModerationList' encode=false}{/link}');

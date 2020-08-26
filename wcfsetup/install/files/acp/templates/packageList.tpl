@@ -3,13 +3,13 @@
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.addObject({
-			'wcf.acp.package.searchForUpdates': '{lang}wcf.acp.package.searchForUpdates{/lang}',
-			'wcf.acp.package.searchForUpdates.noResults': '{lang}wcf.acp.package.searchForUpdates.noResults{/lang}',
-			'wcf.acp.package.uninstallation.title': '{lang}wcf.acp.package.uninstallation.title{/lang}',
-			'wcf.acp.pluginStore.authorization': '{lang}wcf.acp.pluginStore.authorization{/lang}',
-			'wcf.acp.pluginStore.purchasedItems': '{lang}wcf.acp.pluginStore.purchasedItems{/lang}',
-			'wcf.acp.pluginStore.purchasedItems.button.search': '{lang}wcf.acp.pluginStore.purchasedItems.button.search{/lang}',
-			'wcf.acp.pluginStore.purchasedItems.noResults': '{lang}wcf.acp.pluginStore.purchasedItems.noResults{/lang}'
+			'wcf.acp.package.searchForUpdates': '{jslang}wcf.acp.package.searchForUpdates{/jslang}',
+			'wcf.acp.package.searchForUpdates.noResults': '{jslang}wcf.acp.package.searchForUpdates.noResults{/jslang}',
+			'wcf.acp.package.uninstallation.title': '{jslang}wcf.acp.package.uninstallation.title{/jslang}',
+			'wcf.acp.pluginStore.authorization': '{jslang}wcf.acp.pluginStore.authorization{/jslang}',
+			'wcf.acp.pluginStore.purchasedItems': '{jslang}wcf.acp.pluginStore.purchasedItems{/jslang}',
+			'wcf.acp.pluginStore.purchasedItems.button.search': '{jslang}wcf.acp.pluginStore.purchasedItems.button.search{/jslang}',
+			'wcf.acp.pluginStore.purchasedItems.noResults': '{jslang}wcf.acp.pluginStore.purchasedItems.noResults{/jslang}'
 		});
 		
 		{if $__wcf->session->getPermission('admin.configuration.package.canUninstallPackage')}
