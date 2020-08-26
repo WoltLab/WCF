@@ -81,7 +81,7 @@
 				'wcf.date.relative.minutes': '{jslang __literal=true}wcf.date.relative.minutes{/jslang}',
 				'wcf.date.relative.hours': '{jslang __literal=true}wcf.date.relative.hours{/jslang}',
 				'wcf.date.relative.pastDays': '{jslang __literal=true}wcf.date.relative.pastDays{/jslang}',
-				'wcf.date.dateFormat': '{"wcf.date.dateFormat"|language|encodeJS}',
+				'wcf.date.dateFormat': '{jslang}wcf.date.dateFormat{/jslang}',
 				'wcf.date.dateTimeFormat': '{jslang}wcf.date.dateTimeFormat{/jslang}',
 				'wcf.date.shortDateTimeFormat': '{jslang}wcf.date.shortDateTimeFormat{/jslang}',
 				'wcf.date.hour': '{jslang}wcf.date.hour{/jslang}',
