@@ -9,7 +9,7 @@
 					'wcf.acp.user.disable': '{jslang}wcf.acp.user.disable{/jslang}',
 					'wcf.acp.user.enable': '{jslang}wcf.acp.user.enable{/jslang}',
 					'wcf.user.ban': '{jslang}wcf.user.ban{/jslang}',
-					'wcf.user.banned': '{"wcf.user.banned"|language|encodeJS}',
+					'wcf.user.banned': '{jslang}wcf.user.banned{/jslang}',
 					'wcf.user.ban.confirmMessage': '{jslang}wcf.user.ban.confirmMessage{/jslang}',
 					'wcf.user.ban.expires': '{jslang}wcf.user.ban.expires{/jslang}',
 					'wcf.user.ban.expires.description': '{jslang}wcf.user.ban.expires.description{/jslang}',
