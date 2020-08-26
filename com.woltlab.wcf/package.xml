@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>5.2.8</version> <!-- codename: hurricane -->
-		<date>2020-07-13</date>
+		<version>5.2.9</version> <!-- codename: hurricane -->
+		<date>2020-08-26</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -108,20 +108,19 @@
 		<instruction type="script">acp/update_com.woltlab.wcf_preventMailAbuse.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="5.2.7">
+	<instructions type="update" fromversion="5.2.8">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
 		
 		<instruction type="language" />
+		
+		<!-- https://github.com/WoltLab/WCF/issues/3474 -->
+		<instruction type="page" />
+		
+		<instruction type="mediaProvider" />
+		
+		<!-- https://github.com/WoltLab/WCF/issues/3429 -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_embeddedObjectOrphans.php</instruction>
 	</instructions>
-	
-	<!-- run: update_com.woltlab.wcf_embeddedObjectOrphans.php
-			see: https://github.com/WoltLab/WCF/issues/3429
-			see: https://github.com/WoltLab/WCF/pull/3450
-		-->
-	
-	<!-- add page PIP for the next update
-			see: https://github.com/WoltLab/WCF/issues/3474
-		-->
 </package>
