@@ -244,6 +244,15 @@ class UserMergeForm extends AbstractForm {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array_merge([$this->destinationUserID], $conditions->getParameters()));
 		
+		// user notifications
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("authorID IN (?)", [$this->mergedUserIDs]);
+		$sql = "UPDATE IGNORE	wcf".WCF_N."_user_notification_author
+			SET	        authorID = ?
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array_merge([$this->destinationUserID], $conditions->getParameters()));
+		
 		// delete merged users
 		$action = new UserAction($this->mergedUserIDs, 'delete');
 		$action->executeAction();
