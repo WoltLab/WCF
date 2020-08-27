@@ -3,6 +3,7 @@ namespace wcf\data\package\update\server;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
 use wcf\data\TDatabaseObjectToggle;
+use wcf\system\exception\PermissionDeniedException;
 
 /**
  * Executes package update server-related actions.
@@ -43,4 +44,16 @@ class PackageUpdateServerAction extends AbstractDatabaseObjectAction implements 
 	 * @inheritDoc
 	 */
 	protected $requireACP = ['create', 'delete', 'toggle', 'update'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validateDelete() {
+		parent::validateDelete();
+		
+		/** @var PackageUpdateServer $updateServer */
+		foreach ($this->getObjects() as $updateServer) {
+			if (!$updateServer->canDelete()) throw new PermissionDeniedException();
+		}
+	}
 }

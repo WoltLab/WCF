@@ -36,7 +36,7 @@
 	
 	<dl>
 		<dt><label for="packageUpdateServerPassword">{lang}wcf.acp.package.update.{if $updateServer->requiresLicense()}serialNo{else}password{/if}{/lang}</label></dt>
-		<dd><input type="{if $updateServer->requiresLicense()}text{else}password{/if}" id="packageUpdateServerPassword" value="{if $serverAuthData[password]|isset}{$serverAuthData[password]}{/if}" class="long"></dd>
+		<dd><input type="{if $updateServer->requiresLicense()}text{else}password{/if}" id="packageUpdateServerPassword" value="" class="long"></dd>
 	</dl>
 	
 	<dl>

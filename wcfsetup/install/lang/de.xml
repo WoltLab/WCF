@@ -2777,11 +2777,14 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.updateServer.lastErrorMessage"><![CDATA[Beim letzten Verbindungsversuch trat folgender Fehler auf:]]></item>
 		<item name="wcf.acp.updateServer.loginPassword"><![CDATA[Kennwort]]></item>
 		<item name="wcf.acp.updateServer.loginPassword.description"><![CDATA[Kennwort für Authentifizierung (optional)]]></item>
+		<item name="wcf.acp.updateServer.loginPassword.noChange"><![CDATA[(keine Änderung)]]></item>
 		<item name="wcf.acp.updateServer.loginUsername"><![CDATA[Benutzername]]></item>
 		<item name="wcf.acp.updateServer.loginUsername.description"><![CDATA[Benutzernamen für Authentifizierung (optional)]]></item>
 		<item name="wcf.acp.updateServer.packages"><![CDATA[Pakete]]></item>
 		<item name="wcf.acp.updateServer.serverURL"><![CDATA[Adresse]]></item>
 		<item name="wcf.acp.updateServer.serverURL.error.invalid"><![CDATA[Die eingetragene Adresse ist ungültig.]]></item>
+		<item name="wcf.acp.updateServer.serverURL.error.woltlab"><![CDATA[Die offiziellen Paketserver sind bereits hinterlegt und korrekt konfiguriert.]]></item>
+		<item name="wcf.acp.updateServer.serverURL.error.duplicate"><![CDATA[Dieser Paketserver ist bereits hinterlegt. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} <a href="{link controller="PackageUpdateServerEdit" id=$errorType[duplicate]->packageUpdateServerID}{/link}"><strong>den bestehenden Paketserver bearbeiten</strong></a>.]]></item>
 		<item name="wcf.acp.updateServer.status"><![CDATA[Status]]></item>
 		<item name="wcf.acp.updateServer.lastUpdateTime"><![CDATA[Letzter Zugriff]]></item>
 	</category>

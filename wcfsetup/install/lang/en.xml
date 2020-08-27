@@ -2704,11 +2704,14 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.updateServer.lastErrorMessage"><![CDATA[Errors occurred on last connection attempt:]]></item>
 		<item name="wcf.acp.updateServer.loginPassword"><![CDATA[Password]]></item>
 		<item name="wcf.acp.updateServer.loginPassword.description"><![CDATA[Enter your authentication password (optional).]]></item>
+		<item name="wcf.acp.updateServer.loginPassword.noChange"><![CDATA[(no change)]]></item>
 		<item name="wcf.acp.updateServer.loginUsername"><![CDATA[Username]]></item>
 		<item name="wcf.acp.updateServer.loginUsername.description"><![CDATA[Enter your authentication username (optional).]]></item>
 		<item name="wcf.acp.updateServer.packages"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.updateServer.serverURL"><![CDATA[Address]]></item>
 		<item name="wcf.acp.updateServer.serverURL.error.invalid"><![CDATA[The address is invalid.]]></item>
+		<item name="wcf.acp.updateServer.serverURL.error.woltlab"><![CDATA[The official servers are already set up and correctly configured.]]></item>
+		<item name="wcf.acp.updateServer.serverURL.error.duplicate"><![CDATA[The given server already exists. You can <a href="{link controller="PackageUpdateServerEdit" id=$errorType[duplicate]->packageUpdateServerID}{/link}"><strong>edit this server instead</strong></a>.]]></item>
 		<item name="wcf.acp.updateServer.status"><![CDATA[Status]]></item>
 		<item name="wcf.acp.updateServer.lastUpdateTime"><![CDATA[Last Access]]></item>
 	</category>

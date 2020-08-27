@@ -2,12 +2,14 @@
 namespace wcf\acp\form;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\update\server\PackageUpdateServerAction;
+use wcf\data\package\update\server\PackageUpdateServerList;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\StringUtil;
+use wcf\util\Url;
 
 /**
  * Shows the server add form.
@@ -63,6 +65,15 @@ class PackageUpdateServerAddForm extends AbstractForm {
 	public function validate() {
 		parent::validate();
 		
+		$this->validateServerURL();
+	}
+	
+	/**
+	 * Validates the server URL.
+	 * 
+	 * @since       5.3
+	 */
+	protected function validateServerURL() {
 		if (empty($this->serverURL)) {
 			throw new UserInputException('serverURL');
 		}
@@ -70,6 +81,33 @@ class PackageUpdateServerAddForm extends AbstractForm {
 		if (!PackageUpdateServer::isValidServerURL($this->serverURL)) {
 			throw new UserInputException('serverURL', 'invalid');
 		}
+		
+		if (StringUtil::endsWith(Url::parse($this->serverURL)['host'], '.woltlab.com', true)) {
+			throw new UserInputException('serverURL', 'woltlab');
+		}
+		
+		if (($duplicate = $this->findDuplicateServer())) {
+			throw new UserInputException('serverURL', [
+				'duplicate' => $duplicate,
+			]);
+		}
+	}
+	
+	/**
+	 * Returns the first package update server with a matching serverURL.
+	 * 
+	 * @since       5.3
+	 */
+	protected function findDuplicateServer() {
+		$packageServerList = new PackageUpdateServerList();
+		$packageServerList->readObjects();
+		foreach ($packageServerList as $packageServer) {
+			if ($packageServer->serverURL == $this->serverURL) {
+				return $packageServer;
+			}
+		}
+		
+		return null;
 	}
 	
 	/**

@@ -52,6 +52,13 @@ class PackageUpdateServer extends DatabaseObject {
 		}
 		
 		parent::handleData($data);
+		
+		if ($this->isWoltLabUpdateServer()) {
+			$this->data['serverURL'] = 'http://update.woltlab.com/'.\wcf\getMinorVersion().'/';
+		}
+		if ($this->isWoltLabStoreServer()) {
+			$this->data['serverURL'] = 'http://store.woltlab.com/'.\wcf\getMinorVersion().'/';
+		}
 	}
 	
 	/**
@@ -61,20 +68,42 @@ class PackageUpdateServer extends DatabaseObject {
 	 * @return	PackageUpdateServer[]
 	 */
 	public static final function getActiveUpdateServers(array $packageUpdateServerIDs = []) {
-		$list = new PackageUpdateServerList();
-		$list->getConditionBuilder()->add("isDisabled = ?", [0]);
 		if (!empty($packageUpdateServerIDs)) {
-			$list->getConditionBuilder()->add("packageUpdateServerID IN (?)", [$packageUpdateServerIDs]);
+			throw new \InvalidArgumentException("Filtering package update servers by ID is no longer supported.");
 		}
+		
+		$list = new PackageUpdateServerList();
 		$list->readObjects();
 		
+		$woltlabUpdateServer = null;
+		$woltlabStoreServer = null;
+		$results = [];
+		foreach ($list as $packageServer) {
+			if ($packageServer->isWoltLabUpdateServer()) $woltlabUpdateServer = $packageServer;
+			if ($packageServer->isWoltLabStoreServer()) $woltlabStoreServer = $packageServer;
+			if ($packageServer->isDisabled) continue;
+			
+			$results[] = $packageServer;
+		}
+		
+		if (!$woltlabUpdateServer) {
+			$results[] = PackageUpdateServerEditor::create([
+				'serverURL' => 'http://update.woltlab.com/'.\wcf\getMinorVersion().'/',
+			]);
+		}
+		if (!$woltlabStoreServer) {
+			$results[] = PackageUpdateServerEditor::create([
+				'serverURL' => 'http://store.woltlab.com/'.\wcf\getMinorVersion().'/',
+			]);
+		}
+		
 		if (ENABLE_ENTERPRISE_MODE) {
-			return array_filter($list->getObjects(), function (PackageUpdateServer $server) {
+			return array_filter($results, function (PackageUpdateServer $server) {
 				return $server->isWoltLabStoreServer() || $server->isTrustedServer();
 			});
 		}
 		
-		return $list->getObjects();
+		return $results;
 	}
 	
 	/**
@@ -236,6 +265,16 @@ class PackageUpdateServer extends DatabaseObject {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Returns whether the current user may delete this update server.
+	 * 
+	 * @return      boolean
+	 * @since       5.3
+	 */
+	public final function canDelete() {
+		return !$this->isWoltLabUpdateServer() && !$this->isWoltLabStoreServer();
 	}
 	
 	/**

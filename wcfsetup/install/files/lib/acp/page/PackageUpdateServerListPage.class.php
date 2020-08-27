@@ -32,7 +32,7 @@ class PackageUpdateServerListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $validSortFields = ['packageUpdateServerID', 'serverURL', 'status', 'errorMessage', 'lastUpdateTime', 'packages'];
+	public $validSortFields = ['packageUpdateServerID', 'serverURL', 'loginUsername', 'status', 'errorMessage', 'lastUpdateTime', 'packages'];
 	
 	/**
 	 * @inheritDoc

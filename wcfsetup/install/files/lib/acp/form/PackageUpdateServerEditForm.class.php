@@ -46,17 +46,28 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 	}
 	
 	/**
+	 * Does nothing.
+	 * 
+	 * @since       5.3
+	 */
+	public function validateServerURL() {
+		// The server URL cannot be modified, thus we do not need to validate it.
+	}
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
 		
+		$data = [];
+		if ($this->loginUsername != $this->updateServer->loginUsername || $this->loginPassword) {
+			$data['loginUsername'] = $this->loginUsername;
+			$data['loginPassword'] = $this->loginPassword;
+		}
+		
 		// save server
-		$this->objectAction = new PackageUpdateServerAction([$this->packageUpdateServerID], 'update', ['data' => array_merge($this->additionalFields, [
-			'serverURL' => $this->serverURL,
-			'loginUsername' => $this->loginUsername,
-			'loginPassword' => $this->loginPassword
-		])]);
+		$this->objectAction = new PackageUpdateServerAction([$this->packageUpdateServerID], 'update', ['data' => array_merge($this->additionalFields, $data)]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
@@ -70,10 +81,9 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 	public function readData() {
 		parent::readData();
 		
+		$this->serverURL = $this->updateServer->serverURL;
 		if (empty($_POST)) {
-			$this->serverURL = $this->updateServer->serverURL;
 			$this->loginUsername = $this->updateServer->loginUsername;
-			$this->loginPassword = $this->updateServer->loginPassword;
 		}
 	}
 	

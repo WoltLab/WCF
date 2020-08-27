@@ -28,9 +28,7 @@ final class HttpFactory {
 	 * @return string
 	 */
 	public static function getDefaultUserAgent() {
-		$version = preg_replace('/^(\d+\.\d+)\..*$/', '\\1', WCF_VERSION);
-		
-		return 'WoltLabSuite/'.$version;
+		return 'WoltLabSuite/'.\wcf\getMinorVersion();
 	}
 	
 	/**

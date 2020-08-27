@@ -54,5 +54,6 @@
 		<!-- Delete wcfsetup/install/files/lib/form/MailForm.class.php during the upgrade to make it 100% non-functional. -->
 		<!-- Remove useGoogleFont style variable. -->
 		<!-- Run update_com.woltlab.wcf_5.3_style.php -->
+		<!-- Remove obsolete *.woltlab.com update servers -->
 	</instructions>
 </package>

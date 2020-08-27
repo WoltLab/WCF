@@ -25,11 +25,13 @@
 		<dl{if $errorField == 'serverURL'} class="formError"{/if}>
 			<dt><label for="serverURL">{lang}wcf.acp.updateServer.serverURL{/lang}</label></dt>
 			<dd>
-				<input type="url" id="serverURL" name="serverURL" value="{$serverURL}" required autofocus class="long">
+				<input type="url" id="serverURL" name="serverURL" value="{$serverURL}" required autofocus class="long"{if $action != 'add'} readonly{/if}>
 				{if $errorField == 'serverURL'}
 					<small class="innerError">
 						{if $errorType == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
+						{elseif $errorType[duplicate]|isset}
+							{lang}wcf.acp.updateServer.serverURL.error.duplicate{/lang}
 						{else}
 							{lang}wcf.acp.updateServer.serverURL.error.{@$errorType}{/lang}
 						{/if}
@@ -49,7 +51,7 @@
 		<dl>
 			<dt><label for="loginPassword">{lang}wcf.acp.updateServer.loginPassword{/lang}</label></dt>
 			<dd>
-				<input type="password" id="loginPassword" name="loginPassword" value="{$loginPassword}" class="medium" autocomplete="off">
+				<input type="password" id="loginPassword" name="loginPassword" value="{$loginPassword}" class="medium" autocomplete="off"{if $action != 'add' && $loginUsername} placeholder="{lang}wcf.acp.updateServer.loginPassword.noChange{/lang}"{/if}>
 				<small>{lang}wcf.acp.updateServer.loginPassword.description{/lang}</small>
 			</dd>
 		</dl>
