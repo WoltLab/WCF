@@ -2,10 +2,8 @@
 namespace wcf\acp\form;
 use wcf\data\style\Style;
 use wcf\data\style\StyleAction;
-use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\file\upload\UploadFile;
 use wcf\system\file\upload\UploadHandler;
@@ -13,6 +11,8 @@ use wcf\system\language\I18nHandler;
 use wcf\system\style\StyleCompiler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\HTTPRequest;
+use wcf\util\Url;
 
 /**
  * Shows the style edit form.
@@ -139,17 +139,52 @@ class StyleEditForm extends StyleAddForm {
 		}
 		
 		if ($this->variables['pageLogo']) {
-			$file = new UploadFile($this->style->getAssetPath().$this->variables['pageLogo'], basename($this->variables['pageLogo']), true, true, true);
-			UploadHandler::getInstance()->registerFilesByField('pageLogo', [
-				$file,
-			]);
+			if (Url::is($this->variables['pageLogo'])) {
+				$filename = basename(Url::parse($this->variables['pageLogo'])['path']);
+				$this->getLogoFromUrl($this->variables['pageLogo'], $this->style->getAssetPath().$filename);
+				$this->variables['pageLogo'] = $filename;
+			}
+			if (file_exists($this->style->getAssetPath().$this->variables['pageLogo'])) {
+				$file = new UploadFile($this->style->getAssetPath().$this->variables['pageLogo'], basename($this->variables['pageLogo']), true, true, true);
+				UploadHandler::getInstance()->registerFilesByField('pageLogo', [
+					$file,
+				]);
+			}
+			else {
+				$this->variables['pageLogo'] = '';
+			}
 		}
 		if ($this->variables['pageLogoMobile']) {
-			$file = new UploadFile($this->style->getAssetPath().$this->variables['pageLogoMobile'], basename($this->variables['pageLogoMobile']), true, true, true);
-			UploadHandler::getInstance()->registerFilesByField('pageLogoMobile', [
-				$file,
-			]);
+			if (Url::is($this->variables['pageLogoMobile'])) {
+				$filename = basename(Url::parse($this->variables['pageLogoMobile'])['path']);
+				$this->getLogoFromUrl($this->variables['pageLogoMobile'], $this->style->getAssetPath().$filename);
+				$this->variables['pageLogoMobile'] = $filename;
+			}
+			if (file_exists($this->style->getAssetPath().$this->variables['pageLogoMobile'])) {
+				$file = new UploadFile($this->style->getAssetPath().$this->variables['pageLogoMobile'], basename($this->variables['pageLogoMobile']), true, true, true);
+				UploadHandler::getInstance()->registerFilesByField('pageLogoMobile', [
+					$file,
+				]);
+			}
+			else {
+				$this->variables['pageLogoMobile'] = '';
+			}
 		}
+	}
+	
+	/**
+	 * Downloads a file and stores it to the given path.
+	 * This is needed for compatibility reasons since it was possible and default to use an URL and not a relative file path.
+	 * 
+	 * @param       string        $url
+	 * @param       string        $target
+	 */
+	protected function getLogoFromUrl($url, $target) {
+		$request = new HTTPRequest($url);
+		$request->execute();
+		$reply = $request->getReply();
+		
+		file_put_contents($target, $reply['body']);
 	}
 	
 	/**
