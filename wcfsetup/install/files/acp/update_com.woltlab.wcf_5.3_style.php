@@ -1,5 +1,4 @@
 <?php
-require('global.php');
 
 use wcf\data\style\StyleEditor;
 use wcf\data\style\StyleList;
@@ -32,8 +31,8 @@ foreach ($styleList as $style) {
 	
 	// 3) If the file had a custom image folder we need to copy all files into the asset folder.
 	// Moving the files is unsafe, because multiple styles can share a single image folder.
-	if ($style->imagePath != 'images/') {
-		$srcPath = FileUtil::addTrailingSlash(WCF_DIR.$style->imagePath);
+	$srcPath = FileUtil::addTrailingSlash(WCF_DIR.$style->imagePath);
+	if ($srcPath !== WCF_DIR && $srcPath !== WCF_DIR.'images/') {
 		if ($srcPath == $style->getAssetPath()) {
 			$srcPath = FileUtil::removeTrailingSlash($style->getAssetPath()) . '.old53/';
 		}
