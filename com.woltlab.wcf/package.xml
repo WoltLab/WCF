@@ -51,9 +51,38 @@
 	</instructions>
 
 	<instructions type="update" fromversion="5.2.*">
-		<!-- Delete wcfsetup/install/files/lib/form/MailForm.class.php during the upgrade to make it 100% non-functional. -->
-		<!-- Remove useGoogleFont style variable. -->
-		<!-- Run update_com.woltlab.wcf_5.3_style.php -->
-		<!-- Remove obsolete *.woltlab.com update servers -->
+		<!-- we need /lib/core.functions.php and /lib/system/api/* otherwise we're getting issues with Guzzle being not found when executing the file-PIP -->
+		<instruction type="file" run="standalone">files_pre.tar</instruction>
+		
+		<instruction type="file" />
+		<instruction type="acpTemplate" />
+		<instruction type="template" />
+		
+		<instruction type="option" run="standalone" />
+		
+		<instruction type="script">acp/update_com.woltlab.wcf_5.3.php</instruction>
+		<instruction type="script">acp/update_com.woltlab.wcf_5.3_invalidateMailForm.php</instruction>
+		<instruction type="sql">update_5.3.sql</instruction>
+		
+		<instruction type="acpMenu" />
+		<instruction type="clipboardAction" />
+		<instruction type="mediaProvider" />
+		<instruction type="userGroupOption" />
+		<instruction type="userMenu" />
+		<instruction type="page" />
+		
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.3_style.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.3_emailConfirmation.php</instruction>
+		
+		<instruction type="objectTypeDefinition" />
+		<instruction type="objectType" />
+		<instruction type="script">acp/update_com.woltlab.wcf_5.3_sitemaps.php</instruction>
+		
+		<instruction type="userNotificationEvent" />
+		<instruction type="userOption" />
+		
+		<instruction type="style" run="standalone">defaultStyle.tar</instruction>
+		
+		<instruction type="language" />
 	</instructions>
 </package>
