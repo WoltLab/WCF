@@ -28,6 +28,14 @@
 	
 	> label {
 		cursor: pointer;
+		display: block;
+	}
+}
+
+.notificationSettingsEvent:hover + .notificationSettingsState,
+.notificationSettingsState > label:hover {
+	.fa-bell, .fa-bell-slash {
+		transform: scale(1.2);
 	}
 }
 
