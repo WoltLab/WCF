@@ -51,7 +51,8 @@
 	</instructions>
 
 	<instructions type="update" fromversion="5.2.*">
-		<!-- we need /lib/core.functions.php and /lib/system/api/* otherwise we're getting issues with Guzzle being not found when executing the file-PIP -->
+		<!-- We need to deploy `lib/core.functions.php` and `lib/system/api/*` first, otherwise
+		     Guzzle can not be found during the development of the regular file PIP. -->
 		<instruction type="file" run="standalone">files_pre.tar</instruction>
 		
 		<instruction type="file" />
