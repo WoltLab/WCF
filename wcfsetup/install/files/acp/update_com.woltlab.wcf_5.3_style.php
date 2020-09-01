@@ -19,11 +19,26 @@ foreach ($styleList as $style) {
 	$variables = $style->getVariables();
 	$styleEditor = new StyleEditor($style);
 	
-	
 	// 1) Move existing asset path folder out of the way.
 	// It's unlikely that one exists, but having an existing folder will create a small mess.
+	$assetBackupPath = FileUtil::removeTrailingSlash($style->getAssetPath()) . '.old53/';
 	if (file_exists($style->getAssetPath())) {
-		rename($style->getAssetPath(), FileUtil::removeTrailingSlash($style->getAssetPath()) . '.old53/');
+		if (file_exists($assetBackupPath)) {
+			// If the assetBackupPath exists then we have one of the following situations.
+			// 
+			// 1) The source installation is configured pretty strangely.
+			//    This situation can be ignored due to its unlikelyness.
+			// 2) The style was successfully migrated, but the update failed at a later point.
+			//    There is no harm in skipping this style.
+			// 3) The style was unsuccessfully migrated and failed in steps 3 to 7.
+			//    To reach this situation this script has to fail twice (except in the unlikely situation that the assetPath existed previously).
+			//    It's unlikely that it succeeds this time. To skipping this style is a sane option.
+			//    Also the administrator is able to manually fix up the style later, because nothing is deleted.
+			//
+			// Concluding: This is a sufficiently reliable test to check whether this script was executed.
+			continue;
+		}
+		rename($style->getAssetPath(), $assetBackupPath);
 	}
 	
 	// 2) Create asset folder.
@@ -34,7 +49,7 @@ foreach ($styleList as $style) {
 	$srcPath = FileUtil::addTrailingSlash(WCF_DIR.$style->imagePath);
 	if ($srcPath !== WCF_DIR && $srcPath !== WCF_DIR.'images/') {
 		if ($srcPath == $style->getAssetPath()) {
-			$srcPath = FileUtil::removeTrailingSlash($style->getAssetPath()) . '.old53/';
+			$srcPath = $assetBackupPath;
 		}
 		
 		$iterator = new \RecursiveIteratorIterator(
