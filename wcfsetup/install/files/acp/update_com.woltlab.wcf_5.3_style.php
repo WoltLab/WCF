@@ -2,7 +2,10 @@
 
 use wcf\data\style\StyleEditor;
 use wcf\data\style\StyleList;
+use wcf\system\background\BackgroundQueueHandler;
+use wcf\system\background\job\DownloadStyleLogoJob;
 use wcf\util\FileUtil;
+use wcf\util\Url;
 
 /**
  * @author	Tim Duesterhus
@@ -112,8 +115,14 @@ foreach ($styleList as $style) {
 	
 	// 7) Copy styleLogo.
 	// Moving is unsafe, we cannot even guarantee that the logo is a file on the local filesystem.
+	$queueDownload = false;
 	foreach (['pageLogo', 'pageLogoMobile'] as $type) {
 		if (empty($variables[$type])) continue;
+		if (Url::is($variables[$type])) {
+			$queueDownload = true;
+			continue;
+		}
+		
 		$srcPath = WCF_DIR . 'images/' . $variables[$type];
 		if (!file_exists($srcPath)) {
 			$srcPath = WCF_DIR . $style->imagePath . '/' . $style->getVariable($type);
@@ -128,4 +137,7 @@ foreach ($styleList as $style) {
 		$variables[$type] = basename($srcPath);
 	}
 	$styleEditor->setVariables($variables);
+	if ($queueDownload) {
+		BackgroundQueueHandler::getInstance()->enqueueIn(new DownloadStyleLogoJob($style), 150);
+	}
 }
