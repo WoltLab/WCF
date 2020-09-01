@@ -2,8 +2,6 @@
 
 {capture assign='contentTitle'}{lang}wcf.user.menu.settings{/lang}: {lang}wcf.user.notification.notifications{/lang}{/capture}
 
-{capture assign='contentDescription'}{lang}wcf.user.notification.notifications.description{/lang}{/capture}
-
 {include file='userMenuSidebar'}
 
 {include file='header' __disableAds=true __sidebarLeftHasMenu=true}
