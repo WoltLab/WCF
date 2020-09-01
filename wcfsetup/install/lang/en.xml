@@ -5059,7 +5059,6 @@ Open the link below to access the user profile:
 		<item name="wcf.user.notification.noMoreNotifications"><![CDATA[You have no recent notifications.]]></item>
 		<item name="wcf.user.notification.noNotifications"><![CDATA[There are no notifications at the moment.]]></item>
 		<item name="wcf.user.notification.notifications"><![CDATA[Notifications]]></item>
-		<item name="wcf.user.notification.notifications.description"><![CDATA[Email notifications may not be supported for every available notification]]></item>
 		<item name="wcf.user.notification.notifications.disabled"><![CDATA[Disabled]]></item>
 		<item name="wcf.user.notification.notifications.enabled"><![CDATA[Enabled]]></item>
 		<item name="wcf.user.notification.showAll"><![CDATA[Display All Notifications]]></item>
