@@ -55,6 +55,9 @@
 		     Guzzle can not be found during the development of the regular file PIP. -->
 		<instruction type="file" run="standalone">files_pre.tar</instruction>
 		
+		<!-- Verify that there are no duplicate usernames and warn about them if any are found. -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.3_preUpdate.php</instruction>
+		
 		<!-- Deploy the database changes as early as possible to avoid any conflicts by calls to
 		     tables that do not exist in 5.2, in particular `wcfN_devtools_missing_language_item`.-->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.3.php</instruction>
