@@ -153,7 +153,7 @@ define(['Language'], function(Language) {
 					// year
 					case 'y':
 						// `00` through `99`
-						char = date.getYear().toString().replace(/^\d{2}/, '');
+						char = date.getFullYear().toString().substr(2);
 						break;
 					case 'Y':
 						// Examples: `1988` or `2015`
