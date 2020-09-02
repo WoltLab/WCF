@@ -214,6 +214,10 @@
 		});
 	</script>
 	{event name='javascriptInclude'}
+	
+	{if !$headContent|empty}
+		{@$headContent}
+	{/if}
 </head>
 
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}" class="wcfAcp">
