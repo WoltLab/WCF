@@ -584,7 +584,7 @@
 		<item name="wcf.acp.devtools.project.instruction.error.noArchive"><![CDATA[Die angegebene Datei ist kein Archiv, das mit <kbd>.tar</kbd> endet.]]></item>
 		<item name="wcf.acp.devtools.project.instruction.error.missingDirectoryForUpdatedFiles"><![CDATA[Bei Archiven, deren Dateiname mit <kbd>_update.tar</kbd> endet, wird angenommen, dass diese nur die Dateien enthalten, die seit der letzten Version verändert wurden. Für solche Archive muss der Name des zugehörige Ordner mit den entpackten Dateien der Dateiname des Archives ohne die <kbd>_update.tar</kbd>-Endung sein. Dieses Verzeichnis, <kbd>{$directory}</kbd>, existiert jedoch nicht.]]></item>
 		<item name="wcf.acp.devtools.project.instruction.script.error.missingFile"><![CDATA[Die angegebene Skript-Datei konnte an keiner der folgenden Stellen gefunden werden: {implode from=$checkedFileLocations item=checkedFileLocation}<kbd>{$checkedFileLocation}</kbd>{/implode}.]]></item>
-		<item name="wcf.acp.devtools.project.instruction.script.error.noPhpFile"><![CDATA[Die angegebene Datei ist keine PHP-Datei, die mit <kbd>.phpkbd> endet.]]></item>
+		<item name="wcf.acp.devtools.project.instruction.script.error.noPhpFile"><![CDATA[Die angegebene Datei ist keine PHP-Datei, die mit <kbd>.php</kbd> endet.]]></item>
 		<item name="wcf.acp.devtools.project.instructions.error.missingInstructions"><![CDATA[Es wurden keine Anweisungen angegeben.]]></item>
 		<item name="wcf.acp.devtools.project.instructions.edit"><![CDATA[Anweisungen bearbeiten]]></item>
 		<item name="wcf.acp.devtools.project.instruction.edit"><![CDATA[Anweisung bearbeiten]]></item>
