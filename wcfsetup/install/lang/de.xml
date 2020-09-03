@@ -3474,7 +3474,7 @@ Dateianhänge:
 {/if}]]></item>
 		<item name="wcf.contact.mail.html"><![CDATA[<h2>Hallo,</h2>
 
-<p>„{$name}“ hat {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} über das Kontaktformular auf Website <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|language}</a> folgende Nachricht gesandt:</p>
+<p>„{$name}“ hat {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} über das Kontaktformular auf der Website <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|language}</a> folgende Nachricht gesandt:</p>
 <p><br></p>
 <p>E-Mail-Adresse: <a href="mailto:{$emailAddress}">{$emailAddress}</a></p>
 {foreach from=$options item=option}
