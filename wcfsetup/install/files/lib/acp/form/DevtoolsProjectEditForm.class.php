@@ -110,7 +110,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 	protected function setFormObjectData() {
 		parent::setFormObjectData();
 		
-		if ($this->hasBrokenPath) {
+		if ($this->hasBrokenPath || !empty($_POST)) {
 			return;
 		}
 		
