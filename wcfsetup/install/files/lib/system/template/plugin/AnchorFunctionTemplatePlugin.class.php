@@ -55,7 +55,7 @@ class AnchorFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			$content = $object->getTitle();
 		}
 		else if (isset($tagArgs['link']) && isset($tagArgs['content'])) {
-			if (!($tagArgs['link'] instanceof ILinkableObject) && !ClassUtil::isDecoratedInstanceOf($tagArgs['link'], ITitledLinkObject::class)) {
+			if (!($tagArgs['link'] instanceof ILinkableObject) && !ClassUtil::isDecoratedInstanceOf($tagArgs['link'], ILinkableObject::class)) {
 				throw new \InvalidArgumentException("'link' attribute does not implement interface '" . ILinkableObject::class . "'.");
 			}
 			
