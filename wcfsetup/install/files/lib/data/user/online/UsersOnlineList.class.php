@@ -223,7 +223,7 @@ class UsersOnlineList extends SessionList {
 				
 				case UserProfile::ACCESS_FOLLOWING:
 					/** @noinspection PhpUndefinedMethodInspection */
-					if (WCF::getUserProfileHandler()->isFollower($userID)) $data['result'] = true;
+					if (WCF::getUserProfileHandler()->isFollower($userOnline->userID)) $data['result'] = true;
 					break;
 			}
 		}
