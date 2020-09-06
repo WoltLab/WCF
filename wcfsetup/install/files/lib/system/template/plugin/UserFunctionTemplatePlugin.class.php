@@ -80,6 +80,10 @@ class UserFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			}
 		}
 		
+		if (isset($tagArgs['href'])) {
+			throw new \InvalidArgumentException("'href' attribute is not allowed.");
+		}
+		
 		$append = '';
 		if (isset($tagArgs['append'])) {
 			$append = $tagArgs['append'];
