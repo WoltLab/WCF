@@ -58,7 +58,7 @@ class UserFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			unset($tagArgs['type']);
 			
 			if ($type === 'plain') {
-				$content = $object->getTitle();
+				$content = StringUtil::encodeHTML($object->getTitle());
 			}
 			else if (preg_match('~^avatar(\d+)$~', $type, $matches)) {
 				$content = $object->getAvatar()->getImageTag($matches[1]);
