@@ -37,11 +37,6 @@
 
 {event name='userNotice'}
 
-{*if ENABLE_PLUGINSTORE_WIDGET}
-	<div id="pluginstore"></div>
-	<script data-relocate="true" src="https://assets.woltlab.com/widget/pluginstore/featuredFiles.min.js"></script>
-{/if*}
-
 <div class="section tabMenuContainer" data-active="{if ENABLE_WOLTLAB_NEWS}news{else}system{/if}" data-store="activeTabMenuItem">
 	<nav class="tabMenu">
 		<ul>
