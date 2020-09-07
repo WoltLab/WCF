@@ -140,6 +140,10 @@
 			color: $wcfContentDimmedText;
 			display: flex;
 			margin-top: 3px;
+			
+			.separatorLeft {
+				margin-left: 0.25em;
+			}
 		}
 		
 		@include screen-sm-down {
