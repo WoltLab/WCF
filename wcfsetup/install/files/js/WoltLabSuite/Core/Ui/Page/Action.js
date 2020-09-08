@@ -32,6 +32,10 @@ define(['Dictionary', 'Language'], function (Dictionary, Language) {
 		 * Initializes the page action container.
 		 */
 		setup: function () {
+			if (_didInit) {
+				return;
+			}
+			
 			_didInit = true;
 			
 			_wrapper = elCreate('div');
@@ -124,7 +128,7 @@ define(['Dictionary', 'Language'], function (Dictionary, Language) {
 		 * @param       {string=}       insertBeforeButton      insert button before element identified by provided button name
 		 */
 		add: function (buttonName, button, insertBeforeButton) {
-			if (_didInit === false) this.setup();
+			this.setup();
 			
 			// The wrapper is required for backwards compatibility, because some implementations rely on a
 			// dedicated parent element to insert elements, for example, for drop-down menus.
