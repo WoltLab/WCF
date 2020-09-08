@@ -7913,7 +7913,7 @@
 			return {
 				isKey: function(key)
 				{
-					return key === this.keyCode.ENTER || key === this.keyCode.SPACE;
+					return false;
 				},
 				isLink: function(node)
 				{
