@@ -4561,7 +4561,7 @@ Attachments:
 		<item name="wcf.user.password.zxcvbn.suggestions.start_upper"><![CDATA[Capitalization does nott help very much.]]></item>
 		<item name="wcf.user.password.zxcvbn.suggestions.all_upper"><![CDATA[All-uppercase is almost as easy to guess as all-lowercase.]]></item>
 		<item name="wcf.user.password.zxcvbn.suggestions.reversed"><![CDATA[Reversed words aren’t much harder to guess.]]></item>
-		<item name="wcf.user.password.zxcvbn.suggestions.l33t"><![CDATA[Predictable substitutions like “@” instead of “a” don't help very much.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.l33t"><![CDATA[Predictable substitutions like “@” instead of “a” don’t help very much.]]></item>
 		<item name="wcf.user.password.zxcvbn.warnings.straight_row"><![CDATA[Straight rows of keys are easy to guess.]]></item>
 		<item name="wcf.user.password.zxcvbn.warnings.short_keyboard_pattern"><![CDATA[Short keyboard patterns are easy to guess.]]></item>
 		<item name="wcf.user.password.zxcvbn.warnings.repeat_single_char"><![CDATA[Repeats like “aaa” are easy to guess.]]></item>
