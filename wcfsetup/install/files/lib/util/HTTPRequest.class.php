@@ -427,7 +427,9 @@ final class HTTPRequest {
 		// 4.2 Field names are case-insensitive.
 		$this->replyHeaders = array_change_key_case($headers);
 		if (isset($this->replyHeaders['transfer-encoding'])) $this->replyHeaders['transfer-encoding'] = [implode(',', $this->replyHeaders['transfer-encoding'])];
-		$this->legacyHeaders = array_map('end', $headers);
+		$this->legacyHeaders = array_map(function ($item) {
+			return end($item);
+		}, $headers);
 	}
 	
 	/**
