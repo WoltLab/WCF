@@ -139,5 +139,8 @@
    Therefore we are using the unicode character to identify
    the correct selector. In a nutshell: the selector is #3rdParty.section */
 #\33 rdParty.section .thirdPartyLoginButton {
+	align-items: center;
+	display: inline-flex;
+	
 	@include thirdPartyLoginButtons;
 }
