@@ -57,10 +57,19 @@ class GDImageAdapter implements IImageAdapter {
 	}
 	
 	/**
+	 * Returns whether the given image is a valid GD resource / GD object
+	 * 
+	 * @return	boolean
+	 */
+	public function isImage($image) {
+		return (is_resource($image) && get_resource_type($image) === 'gd') || (is_object($image) && $image instanceof \GdImage);
+	}
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function load($image, $type = '') {
-		if (!is_resource($image)) {
+		if (!$this->isImage($image)) {
 			throw new SystemException("Image resource is invalid.");
 		}
 		
@@ -325,7 +334,7 @@ class GDImageAdapter implements IImageAdapter {
 	 * @inheritDoc
 	 */
 	public function writeImage($image, $filename) {
-		if (!is_resource($image)) {
+		if (!$this->isImage($image)) {
 			throw new SystemException("Given image is not a valid image resource.");
 		}
 		
