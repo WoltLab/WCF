@@ -66,6 +66,8 @@
     "checkboxesSearchableOptionType",
     "fontAwesomeJavaScript",
     "formError",
+    "formNotice",
+    "formSuccess",
     "languageChooser",
     "mediaBBCodeTag",
     "mediaManager",
