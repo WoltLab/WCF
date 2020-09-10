@@ -1697,7 +1697,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.enable_polling"><![CDATA[Hintergrund-Aktualisierung von Benachrichtigungen aktivieren]]></item>
 		<item name="wcf.acp.option.enable_polling.description"><![CDATA[Neue Benachrichtigungen werden in periodischen Abständen automatisch abgerufen. Der Aktualisierungs-Intervall beträgt 5 Minuten und wird bei Inaktivität schrittweise auf 15 Minuten reduziert.]]></item>
 		<item name="wcf.acp.option.enable_desktop_notifications"><![CDATA[Desktop-Benachrichtigungen verwenden]]></item>
-		<item name="wcf.acp.option.enable_desktop_notifications.description"><![CDATA[Neue Benachrichtigungen, die im Hintergrund abgerufen wurden, werden als kleines Benachrichtigungsfenster unmittelbar angezeigt. Einige wenige Browser, z. B. Internet Explorer, unterstützen diese Funktion nicht.]]></item>
+		<item name="wcf.acp.option.enable_desktop_notifications.description"><![CDATA[Neue Benachrichtigungen, die im Hintergrund abgerufen wurden, werden als kleines Benachrichtigungsfenster unmittelbar angezeigt.]]></item>
 		<item name="wcf.acp.option.module_contact_form"><![CDATA[Kontaktformular aktivieren]]></item>
 		<item name="wcf.acp.option.module_contact_form.description"><![CDATA[Aktiviert das Kontaktformular, nach Aktivierung können Sie die <a href="{link controller='ContactSettings'}{/link}">Eingabefelder und Empfänger</a> individuell konfigurieren.]]></item>
 		<item name="wcf.acp.option.module_trophy"><![CDATA[Trophäen]]></item>
