@@ -234,7 +234,6 @@
 		});
 		
 		new WCF.User.Registration.Validation.EmailAddress($('#{@$randomFieldNames[email]}'), $('#{@$randomFieldNames[confirmEmail]}'), null);
-		new WCF.User.Registration.Validation.Password($('#{@$randomFieldNames[password]}'), $('#{@$randomFieldNames[confirmPassword]}'), null);
 		new WCF.User.Registration.Validation.Username($('#{@$randomFieldNames[username]}'), null, {
 			minlength: {@REGISTER_USERNAME_MIN_LENGTH},
 			maxlength: {@REGISTER_USERNAME_MAX_LENGTH}

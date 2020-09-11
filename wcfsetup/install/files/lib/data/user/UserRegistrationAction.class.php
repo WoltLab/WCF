@@ -33,6 +33,8 @@ class UserRegistrationAction extends UserAction {
 	
 	/**
 	 * Validates the validate password function.
+	 * 
+	 * @deprecated 5.3
 	 */
 	public function validateValidatePassword() {
 		$this->readString('password');

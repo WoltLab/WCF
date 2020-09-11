@@ -1628,6 +1628,7 @@ WCF.User.Registration.Validation.EmailAddress = WCF.User.Registration.Validation
  * Password validation for registration.
  * 
  * @see	WCF.User.Registration.Validation
+ * @deprecated 5.3
  */
 WCF.User.Registration.Validation.Password = WCF.User.Registration.Validation.extend({
 	/**
