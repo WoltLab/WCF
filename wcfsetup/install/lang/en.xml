@@ -4558,7 +4558,7 @@ Attachments:
 		<item name="wcf.user.password.zxcvbn.suggestions.avoid_recent_year"><![CDATA[Avoid recent years.]]></item>
 		<item name="wcf.user.password.zxcvbn.suggestions.avoid_associated_year"><![CDATA[Avoid years that are associated with you.]]></item>
 		<item name="wcf.user.password.zxcvbn.suggestions.avoid_date"><![CDATA[Avoid dates and years that are associated with you.]]></item>
-		<item name="wcf.user.password.zxcvbn.suggestions.start_upper"><![CDATA[Capitalization does nott help very much.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.start_upper"><![CDATA[Capitalization does not help very much.]]></item>
 		<item name="wcf.user.password.zxcvbn.suggestions.all_upper"><![CDATA[All-uppercase is almost as easy to guess as all-lowercase.]]></item>
 		<item name="wcf.user.password.zxcvbn.suggestions.reversed"><![CDATA[Reversed words aren’t much harder to guess.]]></item>
 		<item name="wcf.user.password.zxcvbn.suggestions.l33t"><![CDATA[Predictable substitutions like “@” instead of “a” don’t help very much.]]></item>
