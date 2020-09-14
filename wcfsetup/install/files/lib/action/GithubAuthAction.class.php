@@ -64,7 +64,7 @@ class GithubAuthAction extends AbstractAction {
 			}
 			
 			// validate state, validation of state is executed after fetching the access_token to invalidate 'code'
-			if (!isset($_GET['state']) || !\hash_equals(WCF::getSession()->getVar('__githubInit'), $_GET['state'])) throw new IllegalLinkException();
+			if (!isset($_GET['state']) || !WCF::getSession()->getVar('__githubInit') || !\hash_equals(WCF::getSession()->getVar('__githubInit'), $_GET['state'])) throw new IllegalLinkException();
 			WCF::getSession()->unregister('__githubInit');
 			
 			parse_str($content, $data);
