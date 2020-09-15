@@ -173,6 +173,10 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 			return 'java';
 		}
 		
+		if (mb_strpos($content, 'using System;') !== false) {
+			return 'csharp';
+		}
+		
 		if (	mb_strpos($content, "---") !== false
 		&&	mb_strpos($content, "\n+++") !== false) {
 			return 'diff';
