@@ -157,50 +157,89 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 	 * @return string
 	 */
 	public function guessHighlighter($content) {
-		$highlighter = '';
+		// PHP at the beginning is almost surely PHP.
+		if (mb_strpos($content, '<?php') === 0) {
+			return 'php';
+		}
 		
+		if (	mb_strpos($content, 'SELECT') === 0
+		||	mb_strpos($content, 'UPDATE') === 0
+		||	mb_strpos($content, 'INSERT') === 0
+		||	mb_strpos($content, 'DELETE') === 0) {
+			return 'sql';
+		}
+		
+		if (mb_strpos($content, 'import java.') !== false) {
+			return 'java';
+		}
+		
+		if (	mb_strpos($content, "---") !== false
+		&&	mb_strpos($content, "\n+++") !== false) {
+			return 'diff';
+		}
+		
+		if (mb_strpos($content, "\n#include ") !== false) {
+			return 'c';
+		}
+		
+		if (mb_strpos($content, '#!/usr/bin/perl') === 0) {
+			return 'perl';
+		}
+		
+		if (	mb_strpos($content, '#!/usr/bin/python') === 0
+		||	mb_strpos($content, 'def __init__(self') !== false
+		||	Regex::compile("from (\S+) import (\S+)")->match($content)) {
+			return 'python';
+		}
+		
+		if (Regex::compile('^#!/bin/(ba|z)?sh')->match($content)) {
+			return 'bash';
+		}
+		
+		if (	mb_strpos($content, 'FROM') === 0
+		&&	mb_strpos($content, "RUN") !== false) {
+			return 'docker';
+		}
+		
+		if (	mb_stripos($content, "RewriteRule") !== false
+		||	mb_stripos($content, "RewriteEngine On") !== false
+		||	mb_stripos($content, "AuthUserFile") !== false) {
+			return 'apacheconf';
+		}
+		
+		if (mb_strpos($content, '\\documentclass') !== false) {
+			return 'latex';
+		}
+		
+		// PHP somewhere later might not necessarily be PHP, it could also be
+		// a .patch or a Dockerfile.
 		if (mb_strpos($content, '<?php') !== false) {
-			$highlighter = 'php';
-		}
-		else if (mb_strpos($content, '<html') !== false) {
-			$highlighter = 'html';
-		}
-		else if (mb_strpos($content, '<?xml') === 0) {
-			$highlighter = 'xml';
-		}
-		else if (	mb_strpos($content, 'SELECT') === 0
-			||	mb_strpos($content, 'UPDATE') === 0
-			||	mb_strpos($content, 'INSERT') === 0
-			||	mb_strpos($content, 'DELETE') === 0) {
-			$highlighter = 'sql';
-		}
-		else if (mb_strpos($content, 'import java.') !== false) {
-			$highlighter = 'java';
-		}
-		else if (	mb_strpos($content, "---") !== false
-			&&	mb_strpos($content, "\n+++") !== false) {
-			$highlighter = 'diff';
-		}
-		else if (mb_strpos($content, "\n#include ") !== false) {
-			$highlighter = 'c';
-		}
-		else if (mb_strpos($content, '#!/usr/bin/perl') === 0) {
-			$highlighter = 'perl';
-		}
-		else if (mb_strpos($content, 'def __init__(self') !== false) {
-			$highlighter = 'python';
-		}
-		else if (Regex::compile('^#!/bin/(ba|z)?sh')->match($content)) {
-			$highlighter = 'bash';
-		}
-		else if (mb_strpos($content, '\\documentclass') !== false) {
-			$highlighter = 'latex';
-		}
-		else if (mb_strpos($content, '!important;') !== false) {
-			$highlighter = 'css';
+			return 'php';
 		}
 		
-		return $highlighter;
+		if (	mb_strpos($content, '{/if}') !== false
+		&&	(	mb_strpos($content, '<div') !== false
+			||	mb_strpos($content, '<span') !== false)) {
+			return 'smarty';
+		}
+		
+		if (mb_strpos($content, '<html') !== false) {
+			return 'html';
+		}
+		
+		if (mb_strpos($content, '<?xml') === 0) {
+			return 'xml';
+		}
+		
+		if (mb_strpos($content, '@mixin') !== false) {
+			return 'scss';
+		}
+		
+		if (mb_strpos($content, '!important;') !== false) {
+			return 'css';
+		}
+		
+		return '';
 	}
 	
 	/**
