@@ -2,7 +2,8 @@ define(["prism/prism","prism/components/prism-clike"], function () {
 Prism.languages.groovy = Prism.languages.extend('clike', {
 	'string': [
 		{
-			pattern: /("""|''')(?:[^\\]|\\[\s\S])*?\1|\$\/(?:\$\/\$|[\s\S])*?\/\$/,
+			// https://groovy-lang.org/syntax.html#_dollar_slashy_string
+			pattern: /("""|''')(?:[^\\]|\\[\s\S])*?\1|\$\/(?:[^/$]|\$(?:[/$]|(?![/$]))|\/(?!\$))*\/\$/,
 			greedy: true
 		},
 		{

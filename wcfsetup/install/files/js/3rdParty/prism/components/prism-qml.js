@@ -2,7 +2,7 @@ define(["prism/prism","prism/components/prism-javascript"], function () {
 (function (Prism) {
 
 	var jsString = /"(?:\\.|[^\\"\r\n])*"|'(?:\\.|[^\\'\r\n])*'/.source;
-	var jsComment = /\/\/.*|\/\*(?:(?!\*\/)[\s\S])*\*\//.source;
+	var jsComment = /\/\/.*(?!.)|\/\*(?:[^*]|\*(?!\/))*\*\//.source;
 
 	var jsExpr = /(?:[^\\()[\]{}"'/]|<string>|\/(?![*/])|<comment>|\(<expr>*\)|\[<expr>*\]|\{<expr>*\}|\\[\s\S])/
 		.source.replace(/<string>/g, function () { return jsString; }).replace(/<comment>/g, function () { return jsComment; });

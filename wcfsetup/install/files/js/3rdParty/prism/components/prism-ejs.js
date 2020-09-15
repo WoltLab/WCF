@@ -22,6 +22,8 @@ define(["prism/prism","prism/components/prism-javascript","prism/components/pris
 		Prism.languages['markup-templating'].tokenizePlaceholders(env, 'ejs');
 	});
 
+	Prism.languages.eta = Prism.languages.ejs;
+
 }(Prism));
 
 return Prism; })

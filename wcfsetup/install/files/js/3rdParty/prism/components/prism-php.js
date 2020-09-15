@@ -63,14 +63,14 @@ define(["prism/prism","prism/components/prism-clike","prism/components/prism-mar
 	});
 
 	var string_interpolation = {
-		pattern: /{\$(?:{(?:{[^{}]+}|[^{}]+)}|[^{}])+}|(^|[^\\{])\$+(?:\w+(?:\[.+?]|->\w+)*)/,
+		pattern: /{\$(?:{(?:{[^{}]+}|[^{}]+)}|[^{}])+}|(^|[^\\{])\$+(?:\w+(?:\[[^\r\n\[\]]+\]|->\w+)*)/,
 		lookbehind: true,
 		inside: Prism.languages.php
 	};
 
 	Prism.languages.insertBefore('php', 'string', {
 		'nowdoc-string': {
-			pattern: /<<<'([^']+)'(?:\r\n?|\n)(?:.*(?:\r\n?|\n))*?\1;/,
+			pattern: /<<<'([^']+)'[\r\n](?:.*[\r\n])*?\1;/,
 			greedy: true,
 			alias: 'string',
 			inside: {
@@ -84,7 +84,7 @@ define(["prism/prism","prism/components/prism-clike","prism/components/prism-mar
 			}
 		},
 		'heredoc-string': {
-			pattern: /<<<(?:"([^"]+)"(?:\r\n?|\n)(?:.*(?:\r\n?|\n))*?\1;|([a-z_]\w*)(?:\r\n?|\n)(?:.*(?:\r\n?|\n))*?\2;)/i,
+			pattern: /<<<(?:"([^"]+)"[\r\n](?:.*[\r\n])*?\1;|([a-z_]\w*)[\r\n](?:.*[\r\n])*?\2;)/i,
 			greedy: true,
 			alias: 'string',
 			inside: {
