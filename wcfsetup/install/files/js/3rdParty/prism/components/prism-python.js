@@ -5,7 +5,7 @@ Prism.languages.python = {
 		lookbehind: true
 	},
 	'string-interpolation': {
-		pattern: /(?:f|rf|fr)(?:("""|''')[\s\S]+?\1|("|')(?:\\.|(?!\2)[^\\\r\n])*\2)/i,
+		pattern: /(?:f|rf|fr)(?:("""|''')[\s\S]*?\1|("|')(?:\\.|(?!\2)[^\\\r\n])*\2)/i,
 		greedy: true,
 		inside: {
 			'interpolation': {
@@ -28,7 +28,7 @@ Prism.languages.python = {
 		}
 	},
 	'triple-quoted-string': {
-		pattern: /(?:[rub]|rb|br)?("""|''')[\s\S]+?\1/i,
+		pattern: /(?:[rub]|rb|br)?("""|''')[\s\S]*?\1/i,
 		greedy: true,
 		alias: 'string'
 	},

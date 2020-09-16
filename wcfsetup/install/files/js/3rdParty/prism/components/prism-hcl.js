@@ -27,9 +27,7 @@ Prism.languages.hcl = {
 				}
 			}
 		},
-		{
-			pattern: /[\w-]+(?=\s+{)/
-		}
+		/[\w-]+(?=\s+{)/
 	],
 	'property': [
 		/[\w-\.]+(?=\s*=(?!=))/,
@@ -54,13 +52,13 @@ Prism.languages.hcl = {
 						pattern: /"(?:\\[\s\S]|[^\\"])*"/,
 						greedy: true,
 					},
-					'number': /\b0x[\da-f]+|\d+\.?\d*(?:e[+-]?\d+)?/i,
+					'number': /\b0x[\da-f]+\b|\b\d+\.?\d*(?:e[+-]?\d+)?/i,
 					'punctuation': /[!\$#%&'()*+,.\/;<=>@\[\\\]^`{|}~?:]/,
 				}
 			},
 		}
 	},
-	'number': /\b0x[\da-f]+|\d+\.?\d*(?:e[+-]?\d+)?/i,
+	'number': /\b0x[\da-f]+\b|\b\d+\.?\d*(?:e[+-]?\d+)?/i,
 	'boolean': /\b(?:true|false)\b/i,
 	'punctuation': /[=\[\]{}]/,
 };

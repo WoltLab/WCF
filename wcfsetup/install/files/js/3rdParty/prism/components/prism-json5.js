@@ -18,7 +18,7 @@ define(["prism/prism","prism/components/prism-json"], function () {
 			pattern: string,
 			greedy: true
 		},
-		'number': /[+-]?(?:NaN|Infinity|0x[a-fA-F\d]+|(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?)/
+		'number': /[+-]?\b(?:NaN|Infinity|0x[a-fA-F\d]+)\b|[+-]?(?:\b\d+\.?\d*|\B\.\d+)(?:[eE][+-]?\d+\b)?/
 	});
 
 }(Prism));

@@ -5,8 +5,15 @@ define(["prism/prism"], function () {
 		pattern: /\\[\\(){}[\]^$+*?|.]/,
 		alias: 'escape'
 	};
-	var escape = /\\(?:x[\da-fA-F]{2}|u[\da-fA-F]{4}|u\{[\da-fA-F]+\}|c[a-zA-Z]|0[0-7]{0,2}|[123][0-7]{2}|.)/
-	var charClass = /\\[wsd]|\.|\\p{[^{}]+}/i
+	var escape = /\\(?:x[\da-fA-F]{2}|u[\da-fA-F]{4}|u\{[\da-fA-F]+\}|c[a-zA-Z]|0[0-7]{0,2}|[123][0-7]{2}|.)/;
+	var charClass = {
+		pattern: /\.|\\[wsd]|\\p{[^{}]+}/i,
+		alias: 'class-name'
+	};
+	var charClassWithoutDot = {
+		pattern: /\\[wsd]|\\p{[^{}]+}/i,
+		alias: 'class-name'
+	};
 
 	var rangeChar = '(?:[^\\\\-]|' + escape.source + ')';
 	var range = RegExp(rangeChar + '-' + rangeChar);
@@ -18,16 +25,6 @@ define(["prism/prism"], function () {
 		alias: 'variable'
 	};
 
-	var backreference = [
-		/\\(?![123][0-7]{2})[1-9]/, // a backreference which is not an octal escape
-		{
-			pattern: /\\k<[^<>']+>/,
-			inside: {
-				'group-name': groupName
-			}
-		}
-	];
-
 	Prism.languages.regex = {
 		'charset': {
 			pattern: /((?:^|[^\\])(?:\\\\)*)\[(?:[^\\\]]|\\[\s\S])*\]/,
@@ -36,25 +33,47 @@ define(["prism/prism"], function () {
 				'charset-negation': {
 					pattern: /(^\[)\^/,
 					lookbehind: true,
+					alias: 'operator'
 				},
-				'charset-punctuation': /^\[|\]$/,
+				'charset-punctuation': {
+					pattern: /^\[|\]$/,
+					alias: 'punctuation'
+				},
 				'range': {
 					pattern: range,
 					inside: {
 						'escape': escape,
-						'range-punctuation': /-/
+						'range-punctuation': {
+							pattern: /-/,
+							alias: 'operator'
+						}
 					}
 				},
 				'special-escape': specialEscape,
-				'charclass': charClass,
-				'backreference': backreference,
+				'charclass': charClassWithoutDot,
 				'escape': escape
 			}
 		},
 		'special-escape': specialEscape,
 		'charclass': charClass,
-		'backreference': backreference,
-		'anchor': /[$^]|\\[ABbGZz]/,
+		'backreference': [
+			{
+				// a backreference which is not an octal escape
+				pattern: /\\(?![123][0-7]{2})[1-9]/,
+				alias: 'keyword'
+			},
+			{
+				pattern: /\\k<[^<>']+>/,
+				alias: 'keyword',
+				inside: {
+					'group-name': groupName
+				}
+			}
+		],
+		'anchor': {
+			pattern: /[$^]|\\[ABbGZz]/,
+			alias: 'function'
+		},
 		'escape': escape,
 		'group': [
 			{
@@ -63,14 +82,24 @@ define(["prism/prism"], function () {
 
 				// (), (?<name>), (?'name'), (?>), (?:), (?=), (?!), (?<=), (?<!), (?is-m), (?i-m:)
 				pattern: /\((?:\?(?:<[^<>']+>|'[^<>']+'|[>:]|<?[=!]|[idmnsuxU]+(?:-[idmnsuxU]+)?:?))?/,
+				alias: 'punctuation',
 				inside: {
 					'group-name': groupName
 				}
 			},
-			/\)/
+			{
+				pattern: /\)/,
+				alias: 'punctuation'
+			}
 		],
-		'quantifier': /[+*?]|\{(?:\d+,?\d*)\}/,
-		'alternation': /\|/
+		'quantifier': {
+			pattern: /(?:[+*?]|\{(?:\d+,?\d*)\})[?+]?/,
+			alias: 'number'
+		},
+		'alternation': {
+			pattern: /\|/,
+			alias: 'keyword'
+		}
 	};
 
 
@@ -85,12 +114,13 @@ define(["prism/prism"], function () {
 		var grammar = Prism.languages[lang];
 		if (grammar) {
 			grammar['regex'].inside = {
-				'regex-flags': /[a-z]+$/,
-				'regex-delimiter': /^\/|\/$/,
 				'language-regex': {
-					pattern: /[\s\S]+/,
+					pattern: /^(\/)[\s\S]+(?=\/[a-z]*$)/i,
+					lookbehind: true,
 					inside: Prism.languages.regex
-				}
+				},
+				'regex-flags': /[a-z]+$/i,
+				'regex-delimiter': /^\/|\/$/,
 			};
 		}
 	});

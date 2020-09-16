@@ -5,7 +5,7 @@ Prism.languages.apl = {
 		pattern: /'(?:[^'\r\n]|'')*'/,
 		greedy: true
 	},
-	'number': /¯?(?:\d*\.?\d+(?:e[+¯]?\d+)?|¯|∞)(?:j¯?(?:\d*\.?\d+(?:e[+¯]?\d+)?|¯|∞))?/i,
+	'number': /¯?(?:\d*\.?\b\d+(?:e[+¯]?\d+)?|¯|∞)(?:j¯?(?:\d*\.?\d+(?:e[+¯]?\d+)?|¯|∞))?/i,
 	'statement': /:[A-Z][a-z][A-Za-z]*\b/,
 	'system-function': {
 		pattern: /⎕[A-Z]+/i,
@@ -18,7 +18,7 @@ Prism.languages.apl = {
 		alias: 'operator'
 	},
 	'dyadic-operator': {
-		pattern: /[.⍣⍠⍤∘⌸@⌺]/,
+		pattern: /[.⍣⍠⍤∘⌸@⌺⍥]/,
 		alias: 'operator'
 	},
 	'assignment': {
@@ -31,4 +31,5 @@ Prism.languages.apl = {
 		alias: 'builtin'
 	}
 };
+
 return Prism; })

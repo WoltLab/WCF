@@ -5,7 +5,7 @@ Prism.languages.lolcode = {
 		/\bBTW.+/
 	],
 	'string': {
-		pattern: /"(?::.|[^"])*"/,
+		pattern: /"(?::.|[^":])*"/,
 		inside: {
 			'variable': /:\{[^}]+\}/,
 			'symbol': [
@@ -54,4 +54,5 @@ Prism.languages.lolcode = {
 	},
 	'punctuation': /\.{3}|…|,|!/
 };
+
 return Prism; })

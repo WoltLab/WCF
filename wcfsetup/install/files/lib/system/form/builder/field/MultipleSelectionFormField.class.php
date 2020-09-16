@@ -111,7 +111,7 @@ class MultipleSelectionFormField extends AbstractFormField implements IFilterabl
 		
 		$unknownValues = array_diff($value, array_keys($this->getOptions()));
 		if (!empty($unknownValues)) {
-			throw new \InvalidArgumentException("Unknown values '" . implode("', '", $unknownValues) . '"');
+			throw new \InvalidArgumentException("Unknown values '" . implode("', '", $unknownValues) . "'");
 		}
 		
 		return parent::value($value);
