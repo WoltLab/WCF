@@ -111,13 +111,7 @@
 							</h3>
 							
 							<ul class="inlineList dotSeparated small messageGroupInfo">
-								<li class="messageGroupAuthor">
-									{if $entry->getAffectedObject()->getUserID()}
-										{user object=$entry->getUserProfile()}
-									{else}
-										{$entry->getAffectedObject()->getUsername()}
-									{/if}
-								</li>
+								<li class="messageGroupAuthor">{if $entry->getAffectedObject()->getUserID()}{user object=$entry->getUserProfile()}{else}{$entry->getAffectedObject()->getUsername()}{/if}</li>
 								<li class="messageGroupTime">{@$entry->getAffectedObject()->getTime()|time}</li>
 								<li>{lang}wcf.moderation.type.{@$entry->getObjectTypeName()}{/lang}</li>
 								
