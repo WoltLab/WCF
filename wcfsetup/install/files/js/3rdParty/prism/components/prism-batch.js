@@ -8,7 +8,7 @@ define(["prism/prism"], function () {
 			'punctuation': /:/
 		}
 	};
-	var string = /"[^"]*"/;
+	var string = /"(?:[\\"]"|[^"])*"(?!")/;
 	var number = /(?:\b|-)\d+\b/;
 
 	Prism.languages.batch = {
@@ -77,7 +77,7 @@ define(["prism/prism"], function () {
 			},
 			{
 				// Other commands
-				pattern: /((?:^|[&(])[ \t]*@?)\w+\b(?:[^^&)\r\n]|\^(?:\r\n|[\s\S]))*/im,
+				pattern: /((?:^|[&(])[ \t]*@?)\w+\b(?:"(?:[\\"]"|[^"])*"(?!")|[^"^&)\r\n]|\^(?:\r\n|[\s\S]))*/im,
 				lookbehind: true,
 				inside: {
 					'keyword': /^\w+\b/i,
@@ -98,4 +98,5 @@ define(["prism/prism"], function () {
 		'punctuation': /[()']/
 	};
 }(Prism));
+
 return Prism; })

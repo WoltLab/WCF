@@ -60,6 +60,8 @@ define(["prism/prism","prism/components/prism-clike"], function () {
 		interpolation: interpolation
 	};
 
+	Prism.languages.kt = Prism.languages.kotlin;
+	Prism.languages.kts = Prism.languages.kotlin;
 }(Prism));
 
 return Prism; })

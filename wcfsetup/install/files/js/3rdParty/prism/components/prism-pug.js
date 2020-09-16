@@ -131,7 +131,9 @@ define(["prism/prism","prism/components/prism-markup","prism/components/prism-ja
 						}
 					}
 				],
-				'punctuation': /:/
+				'punctuation': /:/,
+				'attr-id': /#[\w\-]+/,
+				'attr-class': /\.[\w\-]+/
 			}
 		},
 		'code': [

@@ -20,4 +20,6 @@ Prism.languages.insertBefore('solidity', 'number', {
 	}
 });
 
+Prism.languages.sol = Prism.languages.solidity;
+
 return Prism; })

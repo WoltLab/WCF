@@ -4,11 +4,11 @@ define(["prism/prism","prism/components/prism-markup-templating"], function () {
 	// https://freemarker.apache.org/docs/dgui_template_exp.html
 
 	// FTL expression with 4 levels of nesting supported
-	var FTL_EXPR = /(?!<#--)[^()"']|\((?:<expr>)*\)|<#--[\s\S]*?-->|"(?:[^\\"]|\\.)*"|'(?:[^\\']|\\.)*'/.source;
+	var FTL_EXPR = /[^<()"']|\((?:<expr>)*\)|<(?!#--)|<#--(?:[^-]|-(?!->))*-->|"(?:[^\\"]|\\.)*"|'(?:[^\\']|\\.)*'/.source;
 	for (var i = 0; i < 2; i++) {
 		FTL_EXPR = FTL_EXPR.replace(/<expr>/g, function () { return FTL_EXPR; });
 	}
-	FTL_EXPR = FTL_EXPR.replace(/<expr>/g, '[^\s\S]');
+	FTL_EXPR = FTL_EXPR.replace(/<expr>/g, /[^\s\S]/.source);
 
 	var ftl = {
 		'comment': /<#--[\s\S]*?-->/,

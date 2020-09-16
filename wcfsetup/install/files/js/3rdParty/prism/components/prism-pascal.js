@@ -12,7 +12,7 @@ Prism.languages.pascal = {
 		/\/\/.*/
 	],
 	'string': {
-		pattern: /(?:'(?:''|[^'\r\n])*'|#[&$%]?[a-f\d]+)+|\^[a-z]/i,
+		pattern: /(?:'(?:''|[^'\r\n])*'(?!')|#[&$%]?[a-f\d]+)+|\^[a-z]/i,
 		greedy: true
 	},
 	'keyword': [
@@ -54,4 +54,5 @@ Prism.languages.pascal = {
 };
 
 Prism.languages.objectpascal = Prism.languages.pascal;
+
 return Prism; })
