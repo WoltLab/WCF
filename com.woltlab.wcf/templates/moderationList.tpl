@@ -131,8 +131,15 @@
 							
 							{event name='moderationQueueEntryData'}
 						</li>
-						<li class="columnStats">{@$entry->comments|shortUnit}</li>
-						<li class="columnLastPost">
+						<li class="columnStats">
+							<dl class="plain statsDataList">
+								<dt>{lang}wcf.global.comments{/lang}</dt>
+								<dd>{@$entry->comments|shortUnit}</dd>
+							</dl>
+							
+							<div class="messageGroupListStatsSimple">{if $entry->comments}<span class="icon icon16 fa-comment-o" aria-label="{lang}wcf.global.comments{/lang}"></span> {@$entry->comments|shortUnit}{/if}</div>
+						</li>
+						<li class="columnLastPost columnDate">
 							{if $entry->lastChangeTime}{@$entry->lastChangeTime|time}{/if}
 						</li>
 						
