@@ -88,7 +88,7 @@ class StyleGlobalValuesForm extends AbstractForm {
 					rmdir($this->styleTestFileDir);
 					
 					throw new UserInputException('styles', [
-						'message' => $errorMessage->getMessage(),
+						'message' => str_replace($tmpFile, '', $errorMessage->getMessage()),
 					]);
 				}
 			}
@@ -96,7 +96,6 @@ class StyleGlobalValuesForm extends AbstractForm {
 		finally {
 			unlink($tmpFile);
 		}
-		
 	}
 	
 	/**
