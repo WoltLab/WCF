@@ -361,14 +361,6 @@
 }
 
 .messageTitle {
-	@include screen-sm-up {
-		@include wcfFontHeadline;
-	}
-	
-	@include screen-xs {
-		@include wcfFontDefault;
-	}
-	
 	color: $wcfContentHeadlineText;
 		
 	a {
