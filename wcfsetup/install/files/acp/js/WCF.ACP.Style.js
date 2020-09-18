@@ -185,7 +185,10 @@ WCF.ACP.Style.List = Class.extend({
 			var $styleID = $list.data('styleID');
 			
 			var self = this;
-			$list.find('.jsSetAsDefault').click(function() { self._click('setAsDefault', $styleID); });
+			$list.find('.jsSetAsDefault').click(function(event) {
+				event.preventDefault();
+				self._click('setAsDefault', $styleID);
+			});
 			$list.find('.jsDelete').click(function(event) { self._delete(event, $styleID); });
 		}, this));
 	},
@@ -212,6 +215,8 @@ WCF.ACP.Style.List = Class.extend({
 	 * @param	integer		styleID
 	 */
 	_delete: function(event, styleID) {
+		event.preventDefault();
+		
 		var $confirmMessage = $(event.currentTarget).data('confirmMessageHtml');
 		if ($confirmMessage) {
 			var self = this;
