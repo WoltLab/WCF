@@ -313,7 +313,11 @@ class StyleAddForm extends AbstractForm {
 		}
 		
 		// This field is special cased, because it may contain arbitrary data.
-		$field = new UploadField('customAssets');
+		$name = 'customAssets';
+		if ($handler->isRegisteredFieldId($name)) {
+			$handler->unregisterUploadField($name);
+		}
+		$field = new UploadField($name);
 		$field->setImageOnly(true);
 		$field->setAllowSvgImage(true);
 		$field->maxFiles = null;
