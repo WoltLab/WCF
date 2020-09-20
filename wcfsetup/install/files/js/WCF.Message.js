@@ -1079,7 +1079,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			
 			// Prevent the tooltip from being selectable while the touch pointer is being moved.
 			var timer = null;
-			window.addEventListener('touchmove', (function() {
+			document.addEventListener('selectionchange', (function() {
 				if (!this._copyQuote[0].classList.contains('active')) {
 					return;
 				}
