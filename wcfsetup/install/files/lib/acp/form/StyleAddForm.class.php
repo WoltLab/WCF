@@ -214,13 +214,13 @@ class StyleAddForm extends AbstractForm {
 	public $scrollOffsets = [];
 	
 	/**
-	 * @var (null|UploadFile)[]
+	 * @var (null|UploadField)[]
 	 * @since 5.3
 	 */
 	public $uploads = [];
 	
 	/**
-	 * @var UploadFile[]
+	 * @var UploadField[]
 	 * @since 5.3
 	 */
 	public $customAssets = [];
