@@ -328,6 +328,10 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 						));
 					}
 					
+					if (StringUtil::trim($itemName) !== $itemName) {
+						throw new \InvalidArgumentException("The name '{$itemName}' contains leading or trailing whitespaces.");
+					}
+					
 					$itemValue = $element->nodeValue;
 					
 					$itemData[] = $this->languageID;
