@@ -2,8 +2,6 @@
 namespace wcf\system\package;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\update\server\PackageUpdateServerEditor;
-use wcf\data\package\update\version\PackageUpdateVersionEditor;
-use wcf\data\package\update\PackageUpdateEditor;
 use wcf\data\package\Package;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;

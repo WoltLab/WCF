@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\cronjob;
 use wcf\data\cronjob\Cronjob;
-use wcf\data\modification\log\ModificationLog;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;

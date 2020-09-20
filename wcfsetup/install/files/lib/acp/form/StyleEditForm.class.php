@@ -2,10 +2,8 @@
 namespace wcf\acp\form;
 use wcf\data\style\Style;
 use wcf\data\style\StyleAction;
-use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\file\upload\UploadFile;
 use wcf\system\file\upload\UploadHandler;
