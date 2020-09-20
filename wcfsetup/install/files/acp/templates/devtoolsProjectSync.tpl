@@ -114,9 +114,10 @@
 			overflow: hidden;
 		}
 	</style>
+	
+	{include file='__devtoolsProjectInstallationJavaScript'}
 {else}
 	<p class="error">{@$object->validate()}</p>
 {/if}
 
-{include file='__devtoolsProjectInstallationJavaScript'}
 {include file='footer'}
