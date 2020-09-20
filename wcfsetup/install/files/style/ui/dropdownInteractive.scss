@@ -20,9 +20,19 @@
 		display: none;
 	}
 	
-	&.interactiveDropdownUserMenu > .interactiveDropdownItemsContainer {
-		overflow: visible;
-		max-height: none;
+	&.interactiveDropdownUserMenu {
+		> .interactiveDropdownItemsContainer {
+			overflow: visible;
+			max-height: none;
+			
+			a {
+				color: $wcfContentLink;
+				
+				&:hover {
+					color: $wcfContentLinkActive;
+				}
+			}
+		}
 	}
 	
 	@include screen-sm-md {
@@ -123,11 +133,15 @@
 		}
 		
 		a {
-			color: $wcfContentLink;
+			color: inherit;
 			
 			&:hover {
-				color: $wcfContentLinkActive;
+				color: inherit;
 			}
+		}
+		
+		h3 a {
+			font-weight: 600;
 		}
 		
 		.box48 {
@@ -203,10 +217,6 @@
 	> .interactiveDropdownItemMarkAsRead {
 		pointer-events: none;
 		z-index: 20;
-		
-		a {
-			pointer-events: all;
-		}
 	}
 	
 	> .interactiveDropdownItemShadowLink {
