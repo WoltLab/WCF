@@ -30,6 +30,7 @@ final class PasswordUtil {
 	 * @var	string[]
 	 */
 	private static $supportedEncryptionTypes = [
+		'argon2',	// vBulletin 5.x
 		'ipb2',		// Invision Power Board 2.x
 		'ipb3',		// Invision Power Board 3.x
 		'mybb1',	// MyBB 1.x
@@ -269,6 +270,19 @@ final class PasswordUtil {
 		$salt = mb_substr($salt, 0, 22);
 		
 		return '$' . self::BCRYPT_TYPE . '$' . self::BCRYPT_COST . '$' . $salt;
+	}
+	
+	/**
+	 * Validates the password hash for Argon2 (argon2).
+	 * 
+	 * @param	string		$username
+	 * @param	string		$password
+	 * @param	string		$salt
+	 * @param	string		$dbHash
+	 * @return	boolean
+	 */
+	protected static function argon2($username, $password, $salt, $dbHash) {
+		return password_verify($password, $dbHash);
 	}
 	
 	/**
