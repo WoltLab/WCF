@@ -18,6 +18,9 @@ $.Redactor.prototype.WoltLabPaste = function() {
 			var mpInitChromeOnAndroid = (function (e) {
 				this.rtePaste = true;
 				var pre = !!(this.opts.type === 'pre' || this.utils.isCurrentOrParent('pre'));
+				if (pre) {
+					e.preventDefault();
+				}
 				
 				this.utils.saveScroll();
 				this.selection.save();
