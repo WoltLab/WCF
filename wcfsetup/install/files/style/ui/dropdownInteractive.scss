@@ -203,6 +203,10 @@
 	align-self: center;
 	flex: 0 0 auto;
 	margin-left: 5px;
+	
+	a {
+		pointer-events: all;
+	}
 }
 
 /* Adds a link spanning the entire item while being placed behind all other links appearing
