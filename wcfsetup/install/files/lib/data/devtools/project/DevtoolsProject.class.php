@@ -72,12 +72,16 @@ class DevtoolsProject extends DatabaseObject {
 	 * Validates the repository and returns the first error message, or
 	 * an empty string on success.
 	 * 
+	 * @param boolean $pathOnly
 	 * @return      string
 	 */
-	public function validate() {
+	public function validate($pathOnly = false) {
 		$errorType = self::validatePath($this->path);
 		if ($errorType !== '') {
 			return WCF::getLanguage()->get('wcf.acp.devtools.project.path.error.' . $errorType);
+		}
+		else if ($pathOnly) {
+			return '';
 		}
 		
 		return $this->validatePackageXml();
