@@ -79,22 +79,30 @@ class PackageUpdateServer extends DatabaseObject {
 		$woltlabStoreServer = null;
 		$results = [];
 		foreach ($list as $packageServer) {
-			if ($packageServer->isWoltLabUpdateServer()) $woltlabUpdateServer = $packageServer;
-			if ($packageServer->isWoltLabStoreServer()) $woltlabStoreServer = $packageServer;
-			if ($packageServer->isDisabled) continue;
+			if ($packageServer->isWoltLabUpdateServer()) {
+				$woltlabUpdateServer = $packageServer;
+			}
+			else if ($packageServer->isWoltLabStoreServer()) {
+				$woltlabStoreServer = $packageServer;
+			}
+			else if ($packageServer->isDisabled) {
+				continue;
+			}
 			
-			$results[] = $packageServer;
+			$results[$packageServer->packageUpdateServerID] = $packageServer;
 		}
 		
 		if (!$woltlabUpdateServer) {
-			$results[] = PackageUpdateServerEditor::create([
+			$packageServer = PackageUpdateServerEditor::create([
 				'serverURL' => 'http://update.woltlab.com/'.\wcf\getMinorVersion().'/',
 			]);
+			$results[$packageServer->packageUpdateServerID] = $packageServer;
 		}
 		if (!$woltlabStoreServer) {
-			$results[] = PackageUpdateServerEditor::create([
+			$packageServer = PackageUpdateServerEditor::create([
 				'serverURL' => 'http://store.woltlab.com/'.\wcf\getMinorVersion().'/',
 			]);
+			$results[$packageServer->packageUpdateServerID] = $packageServer;
 		}
 		
 		if (ENABLE_ENTERPRISE_MODE) {
