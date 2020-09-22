@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\user;
+use wcf\data\DatabaseObject;
 use wcf\data\user\option\UserOption;
 use wcf\data\IGroupedUserListAction;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
@@ -27,9 +28,21 @@ class UserBirthdayAction extends UserProfileAction implements IGroupedUserListAc
 	 */
 	public function validateGetGroupedUserList() {
 		$this->readString('date');
+		$this->readString('sortField', true);
+		$this->readString('sortOrder', true);
 		
 		if (!preg_match('/\d{4}-\d{2}-\d{2}/', $this->parameters['date'])) {
 			throw new UserInputException();
+		}
+		
+		if ($this->parameters['sortField'] && $this->parameters['sortOrder']) {
+			if (!in_array($this->parameters['sortField'], ['username', 'activityPoints', 'registrationDate'])) {
+				throw new UserInputException('sortField');
+			}
+			
+			if (!in_array($this->parameters['sortOrder'], ['ASC', 'DESC'])) {
+				throw new UserInputException('sortOrder');
+			}
 		}
 	}
 	
@@ -60,6 +73,10 @@ class UserBirthdayAction extends UserProfileAction implements IGroupedUserListAc
 					$users[] = $user;
 				}
 			}
+		}
+		
+		if ($this->parameters['sortField'] && $this->parameters['sortOrder']) {
+			DatabaseObject::sort($users, $this->parameters['sortField'], $this->parameters['sortOrder']);
 		}
 		
 		WCF::getTPL()->assign([
