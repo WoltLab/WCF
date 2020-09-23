@@ -563,7 +563,6 @@ if (COMPILER_TARGET_DEFAULT) {
 					$parameters[key] = this._options[key];
 				}
 			}
-			console.log("Submitting these parameters:", $parameters);
 			return $parameters;
 		},
 		
