@@ -506,6 +506,84 @@ if (COMPILER_TARGET_DEFAULT) {
 		}
 	});
 	
+	WCF.Message.I18nPreview = WCF.Message.Preview.extend({
+		_activeMessageField: '',
+		_dialog: null,
+		_options: {},
+		
+		init: function (options) {
+			this._activeMessageField = '';
+			this._options = $.extend({
+				disallowedBBCodesPermission: 'user.message.disallowedBBCodes',
+				messageFields: [],
+				messageObjectType: '',
+				messageObjectID: 0
+			}, options);
+			
+			if (!this._options.messageObjectType) {
+				throw new Error("Field 'messageObjectType' cannot be empty.");
+			}
+			if (this._options.messageFields.length < 1) {
+				throw new TypeError('Expected a non empty list of message field ids');
+			}
+			
+			this._super('wcf\\data\\bbcode\\MessagePreviewAction', this._options.messageFields[0], 'buttonMessagePreview');
+		},
+		
+		_click: function (event) {
+			this._messageFieldID = '';
+			this._textarea = null;
+			
+			// Pick the first message field that is currently visible.
+			var messageFieldId = '', messageField = null;
+			for (var i = 0, length = this._options.messageFields.length; i < length; i++) {
+				messageFieldId = this._options.messageFields[i];
+				messageField = elById(messageFieldId);
+				
+				// Check if the editor instance has an offset parent. If it is null, the editor is invisible.
+				if (elBySel('.redactor-layer[data-element-id="' + messageField.id + '"]').offsetParent !== null) {
+					this._messageFieldID = messageFieldId;
+					this._textarea = $(messageField);
+					break;
+				}
+			}
+			
+			if (this._messageFieldID === '') {
+				throw new Error('Unable to identify the active message field.');
+			}
+			
+			this._super(event);
+		},
+		
+		_getParameters: function (message) {
+			var $parameters = this._super(message);
+			
+			for (var key in this._options) {
+				if (this._options.hasOwnProperty(key) && ['messageFields', 'messageFieldID', 'previewButtonID'].indexOf(key) === -1) {
+					$parameters[key] = this._options[key];
+				}
+			}
+			console.log("Submitting these parameters:", $parameters);
+			return $parameters;
+		},
+		
+		_handleResponse: function (data) {
+			require(['WoltLabSuite/Core/Ui/Dialog'], (function (UiDialog) {
+				UiDialog.open(this, '<div class="htmlContent">' + data.returnValues.message + '</div>');
+			}).bind(this));
+		},
+		
+		_dialogSetup: function () {
+			return {
+				id: 'messagePreview',
+				options: {
+					title: WCF.Language.get('wcf.global.preview')
+				},
+				source: null
+			}
+		}
+	});
+	
 	/**
 	 * Handles multilingualism for messages.
 	 *
