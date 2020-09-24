@@ -14,33 +14,12 @@ use wcf\system\WCF;
  */
 class LoginForm extends \wcf\acp\form\LoginForm {
 	const AVAILABLE_DURING_OFFLINE_MODE = true;
-	
-	/**
-	 * true enables the usage of cookies to save login credentials
-	 * @var	boolean
-	 */
-	public $useCookies = 1;
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function readFormParameters() {
-		parent::readFormParameters();
 		
-		$this->useCookies = 0;
-		if (isset($_POST['useCookies'])) $this->useCookies = intval($_POST['useCookies']);
-	}
-	
 	/**
 	 * @inheritDoc
 	 */
 	public function save() {
 		AbstractForm::save();
-		
-		// set cookies
-		if ($this->useCookies == 1) {
-			UserAuthenticationFactory::getInstance()->getUserAuthentication()->storeAccessData($this->user, $this->username, $this->password);
-		}
 		
 		if (FORCE_LOGIN) WCF::getSession()->unregister('__wsc_forceLoginRedirect');
 		
@@ -62,8 +41,6 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign([
-			'useCookies' => $this->useCookies,
-			'supportsPersistentLogins' => UserAuthenticationFactory::getInstance()->getUserAuthentication()->supportsPersistentLogins(),
 			'loginController' => LinkHandler::getInstance()->getLink('Login'),
 			'forceLoginRedirect' => (FORCE_LOGIN && WCF::getSession()->getVar('__wsc_forceLoginRedirect') !== null)
 		]);

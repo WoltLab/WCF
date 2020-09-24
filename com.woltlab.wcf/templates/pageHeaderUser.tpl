@@ -162,15 +162,6 @@
 									</dd>
 								</dl>
 								
-								{if $__wcf->getUserAuthenticationFactory()->getUserAuthentication()->supportsPersistentLogins()}
-									<dl>
-										<dt></dt>
-										<dd>
-											<label for="useCookies"><input type="checkbox" id="useCookies" name="useCookies" value="1" checked> {lang}wcf.user.useCookies{/lang}</label>
-										</dd>
-									</dl>
-								{/if}
-								
 								{event name='fields'}
 								
 								<div class="userLoginButtons">

@@ -33,18 +33,6 @@ WCF.User.Login = Class.extend({
 	_passwordContainer: null,
 	
 	/**
-	 * cookie input
-	 * @var	jQuery
-	 */
-	_useCookies: null,
-	
-	/**
-	 * cookie input container
-	 * @var	jQuery
-	 */
-	_useCookiesContainer: null,
-	
-	/**
 	 * Initializes the user login
 	 * 
 	 * @param	boolean		isQuickLogin
@@ -53,8 +41,6 @@ WCF.User.Login = Class.extend({
 		this._loginSubmitButton = $('#loginSubmitButton');
 		this._password = $('#password'),
 		this._passwordContainer = this._password.parents('dl');
-		this._useCookies = $('#useCookies');
-		this._useCookiesContainer = this._useCookies.parents('dl');
 		
 		var $loginForm = $('#loginForm');
 		$loginForm.find('input[name=action]').change($.proxy(this._change, this));
@@ -88,14 +74,10 @@ WCF.User.Login = Class.extend({
 		if (enable) {
 			this._password.enable();
 			this._passwordContainer.removeClass('disabled');
-			this._useCookies.enable();
-			this._useCookiesContainer.removeClass('disabled');
 		}
 		else {
 			this._password.disable();
 			this._passwordContainer.addClass('disabled');
-			this._useCookies.disable();
-			this._useCookiesContainer.addClass('disabled');
 		}
 		
 		this._loginSubmitButton.val(buttonTitle);

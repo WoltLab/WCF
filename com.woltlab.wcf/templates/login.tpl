@@ -46,15 +46,6 @@
 				</dd>
 			</dl>
 			
-			{if $supportsPersistentLogins}
-				<dl>
-					<dt></dt>
-					<dd>
-						<label for="useCookies"><input type="checkbox" id="useCookies" name="useCookies" value="1"{if $useCookies} checked{/if}> {lang}wcf.user.useCookies{/lang}</label>
-					</dd>
-				</dl>
-			{/if}
-			
 			{event name='fields'}
 			
 			{include file='captcha' supportsAsyncCaptcha=true}
