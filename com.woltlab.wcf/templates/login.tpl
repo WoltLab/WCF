@@ -112,10 +112,4 @@
 	</form>
 </div>
 
-<script data-relocate="true">
-	$(function() {
-		new WCF.User.Login(false);
-	});
-</script>
-
 {include file='footer' __disableAds=true}

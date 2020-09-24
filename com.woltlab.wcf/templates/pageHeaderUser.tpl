@@ -233,7 +233,7 @@
 								'wcf.user.button.register': '{jslang}wcf.user.button.register{/jslang}',
 								'wcf.user.login': '{jslang}wcf.user.login{/jslang}'
 							});
-							new WCF.User.Login(true);
+							WCF.User.QuickLogin.init();
 						});
 					</script>
 				</li>
