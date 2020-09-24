@@ -55,7 +55,7 @@ $tables = [
 			CharDatabaseTableColumn::create('emailConfirmed')
 				->length(40),
 			NotNullVarchar255DatabaseTableColumn::create('password')
-				->defaultValue(''),
+				->defaultValue('invalid:'),
 		])
 		->indices([
 			DatabaseTableIndex::create('username')
