@@ -175,16 +175,9 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 	}
 	
 	/**
-	 * Returns true if the given password hash from a cookie is the correct password for this user.
-	 * 
-	 * @param	string		$passwordHash
-	 * @return	boolean		password correct
+	 * @deprecated 5.4 - This method always returns false, as user sessions are long-lived now.
 	 */
 	public function checkCookiePassword($passwordHash) {
-		if (PasswordUtil::isBlowfish($this->password) && \hash_equals($this->password, PasswordUtil::getSaltedHash($passwordHash, $this->password))) {
-			return true;
-		}
-		
 		return false;
 	}
 	
