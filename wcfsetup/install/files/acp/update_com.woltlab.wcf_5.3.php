@@ -5,6 +5,7 @@ use wcf\system\database\table\column\IntDatabaseTableColumn;
 use wcf\system\database\table\column\MediumtextDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullInt10DatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar191DatabaseTableColumn;
+use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
 use wcf\system\database\table\column\ObjectIdDatabaseTableColumn;
 use wcf\system\database\table\DatabaseTable;
 use wcf\system\database\table\DatabaseTableChangeProcessor;
@@ -15,8 +16,6 @@ use wcf\system\WCF;
 
 /**
  * Updates the database table layout from WoltLab Suite Core 5.2 to 5.3.
- * 
- * TODO: untested, potentially incomplete
  * 
  * @author	Florian Gail
  * @copyright	2001-2020 WoltLab GmbH
@@ -54,7 +53,9 @@ $tables = [
 	DatabaseTable::create('wcf1_user')
 		->columns([
 			CharDatabaseTableColumn::create('emailConfirmed')
-				->length(40)
+				->length(40),
+			NotNullVarchar255DatabaseTableColumn::create('password')
+				->defaultValue('invalid:'),
 		])
 		->indices([
 			DatabaseTableIndex::create('username')
