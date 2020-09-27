@@ -183,6 +183,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 				}
 			};
 			
+			var apiVersions = elBySel('.spSidebarBox[data-category="apiVersion"]', container);
 			var element;
 			var callbackChange = function() {
 				element = elBySel('.spSidebarBox[data-category="' + lastValue + '"]', container);
@@ -191,6 +192,9 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 				lastValue = select.value;
 				element = elBySel('.spSidebarBox[data-category="' + lastValue + '"]', container);
 				elShow(element);
+				
+				var showCompatibilityNotice = elBySel('.spApiVersion', element) !== null;
+				window[showCompatibilityNotice ? 'elShow' : 'elHide'](apiVersions);
 				
 				// set region marker
 				_updateRegionMarker();
