@@ -101,7 +101,7 @@ define([
 					return blob;
 				})
 				.then(function (blob) {
-					return FileUtil.blobToFile(blob, basename[1] + '_autoscaled');
+					return FileUtil.blobToFile(blob, basename[1]);
 				});
 		},
 		
