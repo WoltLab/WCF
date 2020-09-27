@@ -3898,6 +3898,8 @@ Attachments:
 		<item name="wcf.form.field.upload.error.maximumImageWidth"><![CDATA[The file “{$file->getFilename()}” may have a maximum width of {#$maximumImageWidth} pixels.]]></item>
 		<item name="wcf.form.field.upload.error.minimumImageHeight"><![CDATA[The file „{$file->getFilename()}“ may have a minimum height of {#$minimumImageHeight} pixels.]]></item>
 		<item name="wcf.form.field.upload.error.maximumImageHeight"><![CDATA[The file “{$file->getFilename()}” may have a maximum height of {#$maximumImageHeight} pixels.]]></item>
+		<item name="wcf.form.field.upload.error.minimum"><![CDATA[You must upload at least {if $minimum > 1}{#$minimum} files{else}one file{/if}.]]></item>
+		<item name="wcf.form.field.upload.error.maximum"><![CDATA[You can upload a maximum of {if $maximum > 1}{#$maximum} files{else}one file{/if}.]]></item>
 	</category>
 	<category name="wcf.image">
 		<item name="wcf.image.coverPhoto"><![CDATA[Cover Photo]]></item>
