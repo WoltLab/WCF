@@ -126,7 +126,7 @@
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID">{#($tpl[foreach][edit][total] - $tpl[foreach][edit][iteration] + 1)}</td>
-						<td class="columnText columnUser"><a href="{link controller='User' id=$edit->userID title=$edit->username}{/link}">{$edit->username}</a></td>
+						<td class="columnText columnUser"><a href="{link controller='UserEdit' id=$edit->userID title=$edit->username}{/link}">{$edit->username}</a></td>
 						<td class="columnDate columnTime">{@$edit->time|time}</td>
 						
 						{event name='columns'}

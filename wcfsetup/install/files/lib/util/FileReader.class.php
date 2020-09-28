@@ -140,7 +140,12 @@ class FileReader {
 	 * Handles the given header items.
 	 */
 	protected function handleHeaders() {
-		if ($this->startByte < 0 || $this->startByte >= $this->options['filesize'] || $this->endByte < $this->startByte) {
+		if ($this->options['filesize'] > 0 &&
+			($this->startByte < 0 ||
+				$this->startByte >= $this->options['filesize'] ||
+				$this->endByte < $this->startByte
+			)
+		) {
 			// invalid range given
 			$this->addHeader('', 'HTTP/1.1 416 Requested Range Not Satisfiable');
 			$this->addHeader('Accept-Ranges', 'bytes');
@@ -163,12 +168,14 @@ class FileReader {
 			);
 			
 			// range
-			if ($this->startByte > 0 || $this->endByte < $this->options['filesize'] - 1) {
-				$this->addHeader('', 'HTTP/1.1 206 Partial Content');
-				$this->addHeader('Content-Range', 'bytes '.$this->startByte.'-'.$this->endByte.'/'.$this->options['filesize']);
-			}
-			if ($this->options['enableRangeSupport']) {
-				$this->addHeader('Accept-Ranges', 'bytes');
+			if ($this->options['filesize'] > 0) {
+				if ($this->startByte > 0 || $this->endByte < $this->options['filesize'] - 1) {
+					$this->addHeader('', 'HTTP/1.1 206 Partial Content');
+					$this->addHeader('Content-Range', 'bytes '.$this->startByte.'-'.$this->endByte.'/'.$this->options['filesize']);
+				}
+				if ($this->options['enableRangeSupport']) {
+					$this->addHeader('Accept-Ranges', 'bytes');
+				}
 			}
 			
 			// send file size
@@ -234,7 +241,9 @@ class FileReader {
 	 * Sends the actual file to the client.
 	 */
 	protected function sendFile() {
-		if ($this->startByte > 0 || $this->endByte < $this->options['filesize'] - 1) {
+		if ($this->options['filesize'] > 0 &&
+			($this->startByte > 0 || $this->endByte < $this->options['filesize'] - 1)
+		) {
 			$file = new File($this->location, 'rb');
 			if ($this->startByte > 0) $file->seek($this->startByte);
 			while ($this->startByte <= $this->endByte) {
