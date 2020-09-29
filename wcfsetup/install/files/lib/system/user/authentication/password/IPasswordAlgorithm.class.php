@@ -26,5 +26,5 @@ interface IPasswordAlgorithm {
 	/**
 	 * Returns whether the given $hash still matches the configured security parameters.
 	 */
-	public function needs_rehash(string $hash): bool;
+	public function needsRehash(string $hash): bool;
 }

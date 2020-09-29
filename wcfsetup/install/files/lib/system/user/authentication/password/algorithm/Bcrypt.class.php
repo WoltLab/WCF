@@ -33,7 +33,7 @@ final class Bcrypt implements IPasswordAlgorithm {
 	/**
 	 * @inheritDoc
 	 */
-	public function needs_rehash(string $hash): bool {
+	public function needsRehash(string $hash): bool {
 		return \password_needs_rehash($hash, \PASSWORD_BCRYPT, self::OPTIONS);
 	}
 }

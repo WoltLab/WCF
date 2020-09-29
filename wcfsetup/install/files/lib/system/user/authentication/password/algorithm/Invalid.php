@@ -29,7 +29,7 @@ final class Invalid implements IPasswordAlgorithm {
 	/**
 	 * @inheritDoc
 	 */
-	public function needs_rehash(string $hash): bool {
+	public function needsRehash(string $hash): bool {
 		return false;
 	}
 }
