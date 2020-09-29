@@ -98,9 +98,13 @@ html[dir="rtl"] #spStatus > li > div { border-right: 5px solid #000; }
 .spSidebarBox { background-color: rgb(217, 237, 247); margin-bottom: 10px; padding: 10px; }
 .spColor { align-items: center; }
 .spColor:not(:first-child) { margin-top: 5px; }
+html:not(.touch) .spColor:hover .spColorBox { border: 2px dashed #6e7792; left: -2px; padding: 2px; position: relative; }
 .spColorBox { background-color: #fff; border: 1px solid #ccc; padding: 1px; }
 html[dir="ltr"] .spColorBox { margin-right: 10px !important; }
+html[dir="ltr"]:not(.touch) .spColor:hover .spColorBox { margin-right: 6px !important; }
 html[dir="rtl"] .spColorBox { margin-left: 10px !important; }
+html[dir="rtl"]:not(.touch) .spColor:hover .spColorBox { margin-left: 6px !important; }
+html:not(.touch) .spColorBox { cursor: pointer; }
 .spColorBox > span { display: block; height: 24px; width: 24px; }
 .spVariable, .spDescription { display: block; font-size: 12px; }
 .spVariable { font-family: Consolas, Courier, monospace; }
@@ -174,4 +178,5 @@ html[dir="rtl"] .spColorBox { margin-left: 10px !important; }
         #spWindow.spColorPalette + #spSidebar .spSidebarBox { break-inside: avoid; display: block !important; page-break-inside: avoid; position: relative; }
 	#spWindow.spColorPalette + #spSidebar .spSidebarBox[data-category="none"], #spWindow.spColorPalette + #spSidebar .spSidebarBox.spSidebarBoxCategorySelection { display: none !important; }
 	#spWindow.spColorPalette + #spSidebar .spSidebarBox::before { color: rgb(125, 130, 135); content: attr(data-category); display: block; font-family: Consolas, Courier, monospace; font-size: 1.2rem; margin-bottom: 10px; }
+	#spWindow.spColorPalette + #spSidebar .spSidebarBox[data-category="apiVersion"]::before { display: none; }
 }

@@ -834,9 +834,6 @@
 							
 							<div class="spSidebarBox" data-category="none">
 								<p>{lang}wcf.acp.style.colors.description{/lang}</p>
-								<p><br></p>
-								<p><sup class="spApiVersion">3.1</sup> <small>{lang version='3.1'}wcf.acp.style.colors.description.apiVersion{/lang}</small></p>
-								<p><sup class="spApiVersion">5.2</sup> <small>{lang version='5.2'}wcf.acp.style.colors.description.apiVersion{/lang}</small></p>
 							</div>
 							
 							{foreach from=$colors key=spCategory item=spColors}
@@ -858,6 +855,11 @@
 									</ul>
 								</div>
 							{/foreach}
+							
+							<div class="spSidebarBox" data-category="apiVersion" style="display: none;">
+								<p><sup class="spApiVersion">3.1</sup> <small>{lang version='3.1'}wcf.acp.style.colors.description.apiVersion{/lang}</small></p>
+								<p><sup class="spApiVersion">5.2</sup> <small>{lang version='5.2'}wcf.acp.style.colors.description.apiVersion{/lang}</small></p>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\box;
+use wcf\data\user\online\UserOnline;
 use wcf\data\user\online\UsersOnlineList;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObject;
@@ -102,7 +103,7 @@ class WhoWasOnlineBoxController extends AbstractDatabaseObjectListBoxController 
 			});
 			foreach ($this->users as $key => $user) {
 				// remove invisible users
-				if (!UsersOnlineList::isVisibleUser($user)) {
+				if (!UsersOnlineList::isVisibleUser(new UserOnline($user->getDecoratedObject()))) {
 					unset($this->users[$key]);
 				}
 			}
