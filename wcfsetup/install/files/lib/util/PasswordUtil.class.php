@@ -271,27 +271,16 @@ final class PasswordUtil {
 	protected static function mybb1($username, $password, $salt, $dbHash) {
 		return \hash_equals($dbHash, md5(md5($salt) . md5($password)));
 	}
+	
 	/**
-	 * Validates the password hash for phpBB 3.x (phpbb3).
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function phpbb3($username, $password, $salt, $dbHash) {
 		return self::phpass($username, $password, $salt, $dbHash);
 	}
 	
 	/**
-	 * Validates the password hash for phpass portable hashes (phpass).
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function phpass($username, $password, $salt, $dbHash) {
 		if (mb_strlen($dbHash) !== 34) {

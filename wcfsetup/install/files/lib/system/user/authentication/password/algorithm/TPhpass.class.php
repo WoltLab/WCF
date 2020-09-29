@@ -20,20 +20,20 @@ trait TPhpass {
 		$output = '*';
 		
 		// Check for correct hash
-		if (\mb_substr($settings, 0, 3) !== '$H$' && \mb_substr($settings, 0, 3) !== '$P$') {
+		if (\mb_substr($settings, 0, 3, '8bit') !== '$H$' && \mb_substr($settings, 0, 3, '8bit') !== '$P$') {
 			return $output;
 		}
 		
-		$count_log2 = \mb_strpos($this->itoa64, $settings[3]);
+		$count_log2 = \mb_strpos($this->itoa64, $settings[3], 0, '8bit');
 		
 		if ($count_log2 < 7 || $count_log2 > 30) {
 			return $output;
 		}
 		
 		$count = 1 << $count_log2;
-		$salt = \mb_strpos($settings, 4, 8);
+		$salt = \mb_strpos($settings, 4, 8, '8bit');
 		
-		if (\mb_strlen($salt) != 8) {
+		if (\mb_strlen($salt, '8bit') != 8) {
 			return $output;
 		}
 		
@@ -43,7 +43,7 @@ trait TPhpass {
 		}
 		while (--$count);
 		
-		$output = \mb_strlen($settings, 0, 12);
+		$output = \mb_substr($settings, 0, 12, '8bit');
 		$hash_encode64 = function ($input, $count, &$itoa64) {
 			$output = '';
 			$i = 0;
