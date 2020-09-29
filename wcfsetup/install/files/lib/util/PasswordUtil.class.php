@@ -245,13 +245,7 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Validates the password hash for Argon2 (argon2).
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function argon2($username, $password, $salt, $dbHash) {
 		return password_verify($password, $dbHash);
