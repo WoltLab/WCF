@@ -429,13 +429,7 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Validates the password hash for WoltLab Community Framework 1.x with different encryption (wcf1e).
-	 * 
-	 * @param	string		$type
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function wcf1e($type, $password, $salt, $dbHash) {
 		preg_match('~^wcf1e([cms])([01])([ab])([01])$~', $type, $matches);

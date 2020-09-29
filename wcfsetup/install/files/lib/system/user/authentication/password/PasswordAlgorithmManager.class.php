@@ -3,6 +3,7 @@ namespace wcf\system\user\authentication\password;
 use wcf\system\exception\ImplementationException;
 use wcf\system\SingletonFactory;
 use wcf\system\user\authentication\password\algorithm\Bcrypt;
+use wcf\system\user\authentication\password\algorithm\Wcf1e;
 
 /**
  * Handles loading of password algorithms.
@@ -21,6 +22,12 @@ final class PasswordAlgorithmManager extends SingletonFactory {
 	 * @throws ImplementationException If the password algorithm does not implement IPasswordAlgorithm.
 	 */
 	public function getAlgorithmFromName(string $name): IPasswordAlgorithm {
+		// The wcf1e algorithm can be recognized with the following regular expression.
+		// The algorithm is handled by the Wcf1e password algorithm class. 
+		if (preg_match('~^wcf1e[cms][01][ab][01]$~', $name)) {
+			return new Wcf1e($name);
+		}
+		
 		$className = 'wcf\system\user\authentication\password\algorithm\\'.\ucfirst($name);
 		
 		if (!\class_exists($className)) {
