@@ -93,17 +93,6 @@ class TwitterAuthAction extends AbstractAction {
 				}
 				// perform login
 				else {
-					if (UserAuthenticationFactory::getInstance()->getUserAuthentication()->supportsPersistentLogins()) {
-						$password = bin2hex(\random_bytes(20));
-						$userEditor = new UserEditor($user);
-						$userEditor->update(['password' => $password]);
-						
-						// reload user to retrieve salt
-						$user = new User($user->userID);
-						
-						UserAuthenticationFactory::getInstance()->getUserAuthentication()->storeAccessData($user, $user->username, $password);
-					}
-					
 					WCF::getSession()->changeUser($user);
 					WCF::getSession()->update();
 					HeaderUtil::redirect(LinkHandler::getInstance()->getLink());

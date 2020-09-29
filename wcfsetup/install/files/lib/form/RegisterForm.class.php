@@ -547,7 +547,6 @@ class RegisterForm extends UserAddForm {
 		}
 		
 		// login user
-		UserAuthenticationFactory::getInstance()->getUserAuthentication()->storeAccessData($user, $this->username, $this->password);
 		WCF::getSession()->unregister('registrationRandomFieldNames');
 		WCF::getSession()->unregister('registrationStartTime');
 		$this->saved();

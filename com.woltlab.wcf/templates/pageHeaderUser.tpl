@@ -162,15 +162,6 @@
 									</dd>
 								</dl>
 								
-								{if $__wcf->getUserAuthenticationFactory()->getUserAuthentication()->supportsPersistentLogins()}
-									<dl>
-										<dt></dt>
-										<dd>
-											<label for="useCookies"><input type="checkbox" id="useCookies" name="useCookies" value="1" checked> {lang}wcf.user.useCookies{/lang}</label>
-										</dd>
-									</dl>
-								{/if}
-								
 								{event name='fields'}
 								
 								<div class="userLoginButtons">
@@ -242,7 +233,7 @@
 								'wcf.user.button.register': '{jslang}wcf.user.button.register{/jslang}',
 								'wcf.user.login': '{jslang}wcf.user.login{/jslang}'
 							});
-							new WCF.User.Login(true);
+							WCF.User.QuickLogin.init();
 						});
 					</script>
 				</li>

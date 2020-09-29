@@ -16,7 +16,6 @@ use wcf\system\database\DatabaseException;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\page\PageLocationManager;
-use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -543,8 +542,7 @@ class SessionHandler extends SingletonFactory {
 		// create new session hash
 		$sessionID = bin2hex(\random_bytes(20));
 		
-		// get user automatically
-		$this->user = UserAuthenticationFactory::getInstance()->getUserAuthentication()->loginAutomatically(call_user_func([$this->sessionClassName, 'supportsPersistentLogins']));
+		$this->user = null;
 		
 		// create user
 		if ($this->user === null) {

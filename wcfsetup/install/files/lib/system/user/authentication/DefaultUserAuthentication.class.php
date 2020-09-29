@@ -15,18 +15,17 @@ use wcf\util\PasswordUtil;
  */
 class DefaultUserAuthentication extends AbstractUserAuthentication {
 	/**
-	 * @inheritDoc
+	 * @deprecated 5.4 - This method always returns false, as the legacy automated login was removed.
 	 */
 	public function supportsPersistentLogins() {
-		return true;
+		return false;
 	}
 	
 	/**
-	 * @inheritDoc
+	 * @deprecated 5.4 - This method is a noop, as user sessions are long-lived now.
 	 */
 	public function storeAccessData(User $user, $username, $password) {
-		HeaderUtil::setCookie('userID', $user->userID, TIME_NOW + 365 * 24 * 3600);
-		HeaderUtil::setCookie('password', PasswordUtil::getSaltedHash($password, $user->password), TIME_NOW + 365 * 24 * 3600);
+		// Does nothing
 	}
 	
 	/**
@@ -49,22 +48,10 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	}
 	
 	/**
-	 * @inheritDoc
+	 * @deprecated 5.4 - This method always returns null, as user sessions are long-lived now.
 	 */
 	public function loginAutomatically($persistent = false, $userClassname = User::class) {
-		if (!$persistent) return null;
-		
-		$user = null;
-		if (isset($_COOKIE[COOKIE_PREFIX.'userID']) && isset($_COOKIE[COOKIE_PREFIX.'password'])) {
-			if (!($user = $this->getUserAutomatically(intval($_COOKIE[COOKIE_PREFIX.'userID']), $_COOKIE[COOKIE_PREFIX.'password'], $userClassname))) {
-				$user = null;
-				// reset cookie
-				HeaderUtil::setCookie('userID', '');
-				HeaderUtil::setCookie('password', '');
-			}
-		}
-		
-		return $user;
+		return null;
 	}
 	
 	/**
@@ -78,30 +65,16 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	}
 	
 	/**
-	 * Returns a user object or null on failure.
-	 * 
-	 * @param	integer		$userID
-	 * @param	string		$password
-	 * @param	string		$userClassname
-	 * @return	User
+	 * @deprecated 5.4 - This method always returns null, as user sessions are long-lived now.
 	 */
 	protected function getUserAutomatically($userID, $password, $userClassname = User::class) {
-		$user = new $userClassname($userID);
-		if (!$user->userID || !$this->checkCookiePassword($user, $password)) {
-			$user = null;
-		}
-		
-		return $user;
+		return null;
 	}
 	
 	/**
-	 * Validates the cookie password.
-	 * 
-	 * @param	User		$user
-	 * @param	string		$password
-	 * @return	boolean
+	 * @deprecated 5.4 - This method always returns false, as user sessions are long-lived now.
 	 */
 	protected function checkCookiePassword($user, $password) {
-		return $user->checkCookiePassword($password);
+		return false;
 	}
 }

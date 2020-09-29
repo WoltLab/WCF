@@ -4519,7 +4519,6 @@ Dateianhänge:
 		<item name="wcf.user.username.error.3rdParty"><![CDATA[Das Benutzerkonto ist mit einem Drittanbieter-Konto verbunden, ein Passwort kann nicht angefordert werden.]]></item>
 		<item name="wcf.user.username.error.3rdParty.redirect"><![CDATA[Das Benutzerkonto ist mit {$provider} verbunden, ein Passwort kann nicht angefordert werden. Sie werden jetzt zur Anmeldung mit {$provider} weitergeleitet.]]></item>
 		<item name="wcf.user.loginOrRegister"><![CDATA[Anmelden{if !REGISTER_DISABLED} oder registrieren{/if}]]></item>
-		<item name="wcf.user.useCookies"><![CDATA[Dauerhaft angemeldet bleiben]]></item>
 		<item name="wcf.user.usernameOrEmail"><![CDATA[Benutzername oder E-Mail-Adresse]]></item>
 		<item name="wcf.user.gender.male"><![CDATA[Männlich]]></item>
 		<item name="wcf.user.gender.female"><![CDATA[Weiblich]]></item>
