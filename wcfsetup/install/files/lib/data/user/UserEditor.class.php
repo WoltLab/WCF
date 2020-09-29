@@ -6,8 +6,9 @@ use wcf\data\IEditableCachedObject;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\session\SessionHandler;
+use wcf\system\user\authentication\password\algorithm\Invalid as InvalidPasswordAlgorithm;
+use wcf\system\user\authentication\password\PasswordAlgorithmManager;
 use wcf\system\WCF;
-use wcf\util\PasswordUtil;
 
 /**
  * Provides functions to edit users.
@@ -33,18 +34,32 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	protected static $userOptionDefaultValues = null;
 	
 	/**
+	 * Returns the encoded password hash + algorithm for the given password.
+	 * 
+	 * A `null` password will result in the `Invalid` algorithm, otherwise
+	 * the default algorithm will be used.
+	 * 
+	 * @since 5.4
+	 */
+	private static final function getPasswordHash(?string $password = null): string {
+		$manager = PasswordAlgorithmManager::getInstance();
+		
+		$algorithm = $manager->getDefaultAlgorithm();
+		if ($password === null) {
+			$algorithm = new InvalidPasswordAlgorithm();
+			$password = '';
+		}
+		
+		return $manager->getNameFromAlgorithm($algorithm).':'.$algorithm->hash($password);
+	}
+	
+	/**
 	 * @inheritDoc
 	 * @return	User
 	 */
 	public static function create(array $parameters = []) {
-		// create salt and password hash
 		if ($parameters['password'] !== '') {
-			if ($parameters['password'] !== null) {
-				$parameters['password'] = PasswordUtil::getDoubleSaltedHash($parameters['password']);
-			}
-			else {
-				$parameters['password'] = 'invalid:';
-			}
+			$parameters['password'] = self::getPasswordHash($parameters['password']);
 		}
 		
 		// create accessToken for AbstractAuthedPage
@@ -76,14 +91,8 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	 * @inheritDoc
 	 */
 	public function update(array $parameters = []) {
-		// update salt and create new password hash
 		if (array_key_exists('password', $parameters) && $parameters['password'] !== '') {
-			if ($parameters['password'] === null) {
-				$parameters['password'] = 'invalid:';
-			}
-			else {
-				$parameters['password'] = PasswordUtil::getDoubleSaltedHash($parameters['password']);
-			}
+			$parameters['password'] = self::getPasswordHash($parameters['password']);
 			$parameters['accessToken'] = bin2hex(\random_bytes(20));
 			
 			// update accessToken
