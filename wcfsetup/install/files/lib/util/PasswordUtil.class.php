@@ -20,8 +20,7 @@ final class PasswordUtil {
 	const PASSWORD_CHARSET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
 	/**
-	 * concated list of valid blowfish salt characters
-	 * @var	string
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	private static $blowfishCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789./';
 	
@@ -55,14 +54,12 @@ final class PasswordUtil {
 	];
 	
 	/**
-	 * blowfish cost factor
-	 * @var	string
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	const BCRYPT_COST = '08';
 	
 	/**
-	 * blowfish encryption type
-	 * @var	string
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	const BCRYPT_TYPE = '2a';
 	
@@ -85,20 +82,14 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Returns true if given hash looks like a valid bcrypt hash.
-	 * 
-	 * @param	string		$hash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	public static function isBlowfish($hash) {
 		return (Regex::compile('^\$2[afxy]\$')->match($hash) ? true : false);
 	}
 	
 	/**
-	 * Returns true if given bcrypt hash uses a different cost factor and should be re-computed.
-	 * 
-	 * @param	string		$hash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	public static function isDifferentBlowfish($hash) {
 		$currentCost = intval(self::BCRYPT_COST);
@@ -167,11 +158,7 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Returns a double salted bcrypt hash.
-	 * 
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @return	string
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	public static function getDoubleSaltedHash($password, $salt = null) {
 		if ($salt === null) {
@@ -182,11 +169,7 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Returns a simple salted bcrypt hash.
-	 * 
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @return	string
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	public static function getSaltedHash($password, $salt = null) {
 		if ($salt === null) {
@@ -197,9 +180,7 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Returns a random blowfish-compatible salt.
-	 * 
-	 * @return	string
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	public static function getRandomSalt() {
 		$salt = '';
@@ -229,12 +210,6 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Compares two strings in a constant time manner.
-	 * This function effectively is a polyfill for the PHP 5.6 `hash_equals`.
-	 *
-	 * @param	string		$hash1
-	 * @param	string		$hash2
-	 * @return	boolean
 	 * @deprecated	Use \wcf\util\CryptoUtil::secureCompare()
 	 */
 	public static function secureCompare($hash1, $hash2) {
@@ -261,10 +236,7 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Returns a blowfish salt, e.g. $2a$07$usesomesillystringforsalt$
-	 * 
-	 * @param	string		$salt
-	 * @return	string
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function getSalt($salt) {
 		$salt = mb_substr($salt, 0, 22);

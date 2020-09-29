@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\user\authentication\password\algorithm;
+use wcf\system\Regex;
 use wcf\system\user\authentication\password\IPasswordAlgorithm;
 
 /**
@@ -45,6 +46,13 @@ final class DoubleBcrypt implements IPasswordAlgorithm {
 	 */
 	public function needs_rehash(string $hash): bool {
 		return self::isDifferentBlowfish($hash);
+	}
+	
+	/**
+	 * Returns whether the given hash looks like a legacy DoubleBcrypt hash.
+	 */
+	public static function isLegacyDoubleBcrypt(string $hash): bool {
+		return (Regex::compile('^\$2[afxy]\$')->match($hash) ? true : false);
 	}
 	
 	/**

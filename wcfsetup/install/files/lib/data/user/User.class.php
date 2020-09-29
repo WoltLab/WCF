@@ -10,6 +10,7 @@ use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\authentication\password\algorithm\DoubleBcrypt;
 use wcf\system\user\authentication\password\PasswordAlgorithmManager;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
@@ -147,8 +148,8 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 		$manager = PasswordAlgorithmManager::getInstance();
 		
 		// Compatibility for WoltLab Suite < 5.4.
-		if (PasswordUtil::isBlowfish($this->password)) {
-			$algorithmName = 'doubleBcrypt';
+		if (DoubleBcrypt::isLegacyDoubleBcrypt($this->password)) {
+			$algorithmName = 'DoubleBcrypt';
 			$hash = $this->password;
 		}
 		else {
