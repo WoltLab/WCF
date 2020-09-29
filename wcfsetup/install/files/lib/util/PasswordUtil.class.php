@@ -416,13 +416,7 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Validates the password hash for vBulletin 3 (vb3).
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function vb3($username, $password, $salt, $dbHash) {
 		return \hash_equals($dbHash, md5(md5($password) . $salt));
