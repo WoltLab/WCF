@@ -2,8 +2,6 @@
 namespace wcf\system\user\authentication;
 use wcf\data\user\User;
 use wcf\system\exception\UserInputException;
-use wcf\util\HeaderUtil;
-use wcf\util\PasswordUtil;
 
 /**
  * Default user authentication implementation that uses the username to identify users.
