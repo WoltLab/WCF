@@ -443,14 +443,6 @@ class SessionHandler extends SingletonFactory {
 			$this->virtualSession = SessionVirtual::getExistingSession($sessionID);
 		}
 		
-		if (!$this->validate()) {
-			$this->session = null;
-			$this->user = null;
-			$this->virtualSession = false;
-			
-			return;
-		}
-		
 		$this->loadVirtualSession();
 	}
 	
@@ -488,15 +480,6 @@ class SessionHandler extends SingletonFactory {
 				}
 			}
 		}
-	}
-	
-	/**
-	 * Validates the ip address and the user agent of this session.
-	 * 
-	 * @return	boolean
-	 */
-	protected function validate() {
-		return true;
 	}
 	
 	/**
