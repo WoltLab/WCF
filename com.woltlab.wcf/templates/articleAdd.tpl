@@ -1,7 +1,13 @@
 {capture assign='__contentHeader'}
 	<header class="contentHeader">
 		<div class="contentHeaderTitle">
-			<h1 class="contentTitle">{if $action == 'add'}{lang}wcf.acp.article.add{/lang}{else}{lang}wcf.acp.article.edit{/lang}{/if}</h1>
+			<h1 class="contentTitle">
+				{if $articleIsFrontend|empty}
+					{if $action == 'add'}{lang}wcf.acp.article.add{/lang}{else}{lang}wcf.acp.article.edit{/lang}{/if}
+				{else}
+					{$__wcf->getActivePage()->getTitle()}
+				{/if}
+			</h1>
 		</div>
 		
 		<nav class="contentHeaderNavigation">
