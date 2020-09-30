@@ -1343,8 +1343,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
 		<item name="wcf.acp.option.session_timeout"><![CDATA[User Session Timeout]]></item>
 		<item name="wcf.acp.option.session_timeout.description"><![CDATA[User sessions expire after the following seconds.]]></item>
-		<item name="wcf.acp.option.session_validate_ip_address"><![CDATA[Validate IP address]]></item>
-		<item name="wcf.acp.option.session_validate_ip_address.description"><![CDATA[Enabling this validation might cause issues for users with a rotating IP address.]]></item>
 		<item name="wcf.acp.option.session_validate_user_agent"><![CDATA[Validate user-agent]]></item>
 		<item name="wcf.acp.option.session_enable_virtualization"><![CDATA[Allow session sharing]]></item>
 		<item name="wcf.acp.option.session_enable_virtualization.description"><![CDATA[Users can login from multiple devices (desktop, tablet, smartphone, etc.) concurrently; all devices will share the same session. Disabling this will restrict users to only one device (session) at a time, causing all the other device sessions to terminate. It is not recommended to disable this option.]]></item>

@@ -388,6 +388,10 @@ class WCF {
 		// https://github.com/WoltLab/WCF/issues/3339
 		define('EXTERNAL_LINK_REL_NOFOLLOW', 1);
 		
+		// Session validation is removed since 5.4.
+		// https://github.com/WoltLab/WCF/pull/3583
+		define('SESSION_VALIDATE_IP_ADDRESS', 0);
+		
 		$filename = WCF_DIR.'options.inc.php';
 		
 		// create options file if doesn't exist

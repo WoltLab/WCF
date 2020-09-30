@@ -1366,8 +1366,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
 		<item name="wcf.acp.option.session_timeout"><![CDATA[Gültigkeitslänge einer Sitzung]]></item>
 		<item name="wcf.acp.option.session_timeout.description"/>
-		<item name="wcf.acp.option.session_validate_ip_address"><![CDATA[IP-Adresse der Sitzung überprüfen]]></item>
-		<item name="wcf.acp.option.session_validate_ip_address.description"><![CDATA[Eine Aktivierung dieser Einstellung kann Benutzer ausschließen, die mit wechselnden IP-Adressen im Internet unterwegs sind.]]></item>
 		<item name="wcf.acp.option.session_validate_user_agent"><![CDATA[Browser-Kennung der Sitzung überprüfen]]></item>
 		<item name="wcf.acp.option.session_enable_virtualization"><![CDATA[Virtuelle Sessions erlauben]]></item>
 		<item name="wcf.acp.option.session_enable_virtualization.description"><![CDATA[Benutzer können sich mit mehreren Endgeräten (PC, Tablet, Smartphone, etc.) gleichzeitig anmelden, alle Geräte nutzen dann die selbe Sitzung. Die Abschaltung dieser Option hat zur Folge, dass ein Benutzer nur von einem einzigen Gerät gleichzeitig angemeldet sein darf und sich unter Umständen die Geräte auf diese Weise gegenseitig abmelden. Die Deaktivierung dieser Option wird nicht empfohlen und sollte nur vorgenommen werden, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du dir{else}Sie sich{/if} der Konsequenzen bewusst {if LANGUAGE_USE_INFORMAL_VARIANT}bist{else}sind{/if}.]]></item>
