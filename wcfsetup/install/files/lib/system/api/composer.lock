@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "637eee25ca708b927eb477c205f58476",
+    "content-hash": "84035248a681a0748790233bd2a4189f",
     "packages": [
         {
             "name": "chrisjean/php-ico",
@@ -144,16 +144,16 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "6.5.5",
+            "version": "dev-6.5-windows",
             "source": {
                 "type": "git",
-                "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "9d4290de1cfd701f38099ef7e183b64b4b7b0c5e"
+                "url": "https://github.com/WoltLab/guzzle",
+                "reference": "2d4592a12d3d6757f9969122730e69d6b7c82af0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/9d4290de1cfd701f38099ef7e183b64b4b7b0c5e",
-                "reference": "9d4290de1cfd701f38099ef7e183b64b4b7b0c5e",
+                "url": "https://api.github.com/repos/WoltLab/guzzle/zipball/2d4592a12d3d6757f9969122730e69d6b7c82af0",
+                "reference": "2d4592a12d3d6757f9969122730e69d6b7c82af0",
                 "shasum": ""
             },
             "require": {
@@ -185,7 +185,11 @@
                     "src/functions_include.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "GuzzleHttp\\Tests\\": "tests/"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -199,15 +203,15 @@
             "description": "Guzzle is a PHP HTTP client library",
             "homepage": "http://guzzlephp.org/",
             "keywords": [
+                "HTTP client",
                 "client",
                 "curl",
                 "framework",
                 "http",
-                "http client",
                 "rest",
                 "web service"
             ],
-            "time": "2020-06-16T21:01:06+00:00"
+            "time": "2020-09-30T10:06:20+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -1002,7 +1006,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "guzzlehttp/guzzle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
