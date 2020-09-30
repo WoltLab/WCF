@@ -332,8 +332,117 @@ final class PasswordUtil {
 	 * @param	string		$dbHash
 	 * @return	boolean
 	 */
-	protected static function phpbb3($username, $password, $salt, $dbHash) {
-		return self::phpass($username, $password, $salt, $dbHash);
+	public static function phpbb3($username, $password, $salt, $dbHash) {
+		$phpassResult = self::phpass($username, $password, $salt, $dbHash);
+		
+		if ($phpassResult) {
+			return true;
+		}
+		
+		if (!preg_match('/^\$([^$]+)\$/', $dbHash, $matches)) {
+			return false;
+		}
+		
+		$algorithms = explode('\\', $matches[1]);
+		// Strip the type prefix.
+		$dbHash = substr($dbHash, strlen($matches[0]));
+		
+		// The following loop only supports the multi-hash variant.
+		// Everything else should already be handled at this point.
+		if (count($algorithms) == 1) {
+			return false;
+		}
+		foreach ($algorithms as $algorithm) {
+			$dollar = strpos($dbHash, '$');
+			if ($dollar === false) {
+				return false;
+			}
+			$settings = '$'.$algorithm.'$'.str_replace('\\', '$', substr($dbHash, 0, $dollar));
+			$dbHash = substr($dbHash, $dollar + 1);
+			
+			switch ($algorithm) {
+				case 'H':
+				case 'P':
+					$password = str_replace($settings, '', self::phpass_hash_crypt_private($password, $settings));
+				break;
+				case '2a':
+				case '2y':
+					$password = str_replace($settings, '', self::getSaltedHash($password, $settings));
+				break;
+			}
+		}
+		
+		return \hash_equals($dbHash, $password);
+	}
+	
+	private static function phpass_hash_crypt_private($password, $setting) {
+		static $itoa64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+		
+		$output = '*';
+		
+		// Check for correct hash
+		if (substr($setting, 0, 3) !== '$H$' && substr($setting, 0, 3) !== '$P$') {
+			return $output;
+		}
+		
+		$count_log2 = strpos($itoa64, $setting[3]);
+		
+		if ($count_log2 < 7 || $count_log2 > 30) {
+			return $output;
+		}
+		
+		$count = 1 << $count_log2;
+		$salt = substr($setting, 4, 8);
+		
+		if (strlen($salt) != 8) {
+			return $output;
+		}
+		
+		$hash = md5($salt . $password, true);
+		do {
+			$hash = md5($hash . $password, true);
+		}
+		while (--$count);
+		
+		$output = substr($setting, 0, 12);
+		$hash_encode64 = function ($input, $count, &$itoa64) {
+			$output = '';
+			$i = 0;
+			
+			do {
+				$value = ord($input[$i++]);
+				$output .= $itoa64[$value & 0x3f];
+				
+				if ($i < $count) {
+					$value |= ord($input[$i]) << 8;
+				}
+				
+				$output .= $itoa64[($value >> 6) & 0x3f];
+				
+				if ($i++ >= $count) {
+					break;
+				}
+				
+				if ($i < $count) {
+					$value |= ord($input[$i]) << 16;
+				}
+				
+				$output .= $itoa64[($value >> 12) & 0x3f];
+				
+				if ($i++ >= $count) {
+					break;
+				}
+				
+				$output .= $itoa64[($value >> 18) & 0x3f];
+			}
+			while ($i < $count);
+			
+			return $output;
+		};
+		
+		$output .= $hash_encode64($hash, 16, $itoa64);
+		
+		return $output;
 	}
 	
 	/**
@@ -350,77 +459,7 @@ final class PasswordUtil {
 			return \hash_equals(md5($password), $dbHash);
 		}
 		
-		$hash_crypt_private = function ($password, $setting) {
-			static $itoa64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-			
-			$output = '*';
-			
-			// Check for correct hash
-			if (substr($setting, 0, 3) !== '$H$' && substr($setting, 0, 3) !== '$P$') {
-				return $output;
-			}
-			
-			$count_log2 = strpos($itoa64, $setting[3]);
-			
-			if ($count_log2 < 7 || $count_log2 > 30) {
-				return $output;
-			}
-			
-			$count = 1 << $count_log2;
-			$salt = substr($setting, 4, 8);
-			
-			if (strlen($salt) != 8) {
-				return $output;
-			}
-			
-			$hash = md5($salt . $password, true);
-			do {
-				$hash = md5($hash . $password, true);
-			}
-			while (--$count);
-			
-			$output = substr($setting, 0, 12);
-			$hash_encode64 = function ($input, $count, &$itoa64) {
-				$output = '';
-				$i = 0;
-				
-				do {
-					$value = ord($input[$i++]);
-					$output .= $itoa64[$value & 0x3f];
-					
-					if ($i < $count) {
-						$value |= ord($input[$i]) << 8;
-					}
-					
-					$output .= $itoa64[($value >> 6) & 0x3f];
-					
-					if ($i++ >= $count) {
-						break;
-					}
-					
-					if ($i < $count) {
-						$value |= ord($input[$i]) << 16;
-					}
-					
-					$output .= $itoa64[($value >> 12) & 0x3f];
-					
-					if ($i++ >= $count) {
-						break;
-					}
-					
-					$output .= $itoa64[($value >> 18) & 0x3f];
-				}
-				while ($i < $count);
-				
-				return $output;
-			};
-			
-			$output .= $hash_encode64($hash, 16, $itoa64);
-			
-			return $output;
-		};
-		
-		return \hash_equals($hash_crypt_private($password, $dbHash), $dbHash);
+		return \hash_equals(self::phpass_hash_crypt_private($password, $dbHash), $dbHash);
 	}
 	
 	/**
