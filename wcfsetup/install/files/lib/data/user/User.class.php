@@ -10,6 +10,8 @@ use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\authentication\password\algorithm\DoubleBcrypt;
+use wcf\system\user\authentication\password\PasswordAlgorithmManager;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\JSON;
@@ -142,35 +144,39 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 	 */
 	public function checkPassword($password) {
 		$isValid = false;
-		$rebuild = false;
 		
-		// check if password is a valid bcrypt hash
-		if (PasswordUtil::isBlowfish($this->password)) {
-			if (PasswordUtil::isDifferentBlowfish($this->password)) {
-				$rebuild = true;
-			}
-			
-			// password is correct
-			if (\hash_equals($this->password, PasswordUtil::getDoubleSaltedHash($password, $this->password))) {
-				$isValid = true;
-			}
+		$manager = PasswordAlgorithmManager::getInstance();
+		
+		// Compatibility for WoltLab Suite < 5.4.
+		if (DoubleBcrypt::isLegacyDoubleBcrypt($this->password)) {
+			$algorithmName = 'DoubleBcrypt';
+			$hash = $this->password;
 		}
 		else {
-			// different encryption type
-			if (PasswordUtil::checkPassword($this->username, $password, $this->password)) {
-				$isValid = true;
-				$rebuild = true;
-			}
+			[$algorithmName, $hash] = \explode(':', $this->password, 2);
 		}
 		
-		// create new password hash, either different encryption or different blowfish cost factor
-		if ($rebuild && $isValid) {
+		$algorithm = $manager->getAlgorithmFromName($algorithmName);
+		
+		$isValid = $algorithm->verify($password, $hash);
+		
+		if (!$isValid) {
+			return false;
+		}
+		
+		$defaultAlgorithm = $manager->getDefaultAlgorithm();
+		if (\get_class($algorithm) !== \get_class($defaultAlgorithm) ||
+			$algorithm->needsRehash($hash)
+		) {
 			$userEditor = new UserEditor($this);
 			$userEditor->update([
-				'password' => $password
+				'password' => $password,
 			]);
 		}
 		
+		// $isValid is always true at this point. However we intentionally use a variable
+		// that defaults to false to prevent accidents during refactoring.
+		\assert($isValid);
 		return $isValid;
 	}
 	

@@ -20,8 +20,7 @@ final class PasswordUtil {
 	const PASSWORD_CHARSET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
 	/**
-	 * concated list of valid blowfish salt characters
-	 * @var	string
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	private static $blowfishCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789./';
 	
@@ -55,14 +54,12 @@ final class PasswordUtil {
 	];
 	
 	/**
-	 * blowfish cost factor
-	 * @var	string
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	const BCRYPT_COST = '08';
 	
 	/**
-	 * blowfish encryption type
-	 * @var	string
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	const BCRYPT_TYPE = '2a';
 	
@@ -85,20 +82,14 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Returns true if given hash looks like a valid bcrypt hash.
-	 * 
-	 * @param	string		$hash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	public static function isBlowfish($hash) {
 		return (Regex::compile('^\$2[afxy]\$')->match($hash) ? true : false);
 	}
 	
 	/**
-	 * Returns true if given bcrypt hash uses a different cost factor and should be re-computed.
-	 * 
-	 * @param	string		$hash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	public static function isDifferentBlowfish($hash) {
 		$currentCost = intval(self::BCRYPT_COST);
@@ -167,11 +158,7 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Returns a double salted bcrypt hash.
-	 * 
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @return	string
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	public static function getDoubleSaltedHash($password, $salt = null) {
 		if ($salt === null) {
@@ -182,11 +169,7 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Returns a simple salted bcrypt hash.
-	 * 
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @return	string
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	public static function getSaltedHash($password, $salt = null) {
 		if ($salt === null) {
@@ -197,9 +180,7 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Returns a random blowfish-compatible salt.
-	 * 
-	 * @return	string
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	public static function getRandomSalt() {
 		$salt = '';
@@ -229,12 +210,6 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Compares two strings in a constant time manner.
-	 * This function effectively is a polyfill for the PHP 5.6 `hash_equals`.
-	 *
-	 * @param	string		$hash1
-	 * @param	string		$hash2
-	 * @return	boolean
 	 * @deprecated	Use \wcf\util\CryptoUtil::secureCompare()
 	 */
 	public static function secureCompare($hash1, $hash2) {
@@ -261,10 +236,7 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Returns a blowfish salt, e.g. $2a$07$usesomesillystringforsalt$
-	 * 
-	 * @param	string		$salt
-	 * @return	string
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function getSalt($salt) {
 		$salt = mb_substr($salt, 0, 22);
@@ -273,77 +245,42 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Validates the password hash for Argon2 (argon2).
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function argon2($username, $password, $salt, $dbHash) {
 		return password_verify($password, $dbHash);
 	}
 	
 	/**
-	 * Validates the password hash for Invision Power Board 2.x (ipb2).
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function ipb2($username, $password, $salt, $dbHash) {
 		return self::vb3($username, $password, $salt, $dbHash);
 	}
 	
 	/**
-	 * Validates the password hash for Invision Power Board 3.x (ipb3).
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function ipb3($username, $password, $salt, $dbHash) {
 		return \hash_equals($dbHash, md5(md5($salt) . md5($password)));
 	}
 	
 	/**
-	 * Validates the password hash for MyBB 1.x (mybb1).
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function mybb1($username, $password, $salt, $dbHash) {
 		return \hash_equals($dbHash, md5(md5($salt) . md5($password)));
 	}
+	
 	/**
-	 * Validates the password hash for phpBB 3.x (phpbb3).
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function phpbb3($username, $password, $salt, $dbHash) {
 		return self::phpass($username, $password, $salt, $dbHash);
 	}
 	
 	/**
-	 * Validates the password hash for phpass portable hashes (phpass).
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function phpass($username, $password, $salt, $dbHash) {
 		if (mb_strlen($dbHash) !== 34) {
@@ -424,78 +361,42 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Validates the password hash for Simple Machines Forums 1.x (smf1).
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function smf1($username, $password, $salt, $dbHash) {
 		return \hash_equals($dbHash, sha1(mb_strtolower($username) . $password));
 	}
 	
 	/**
-	 * Validates the password hash for Simple Machines Forums 2.x (smf2).
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function smf2($username, $password, $salt, $dbHash) {
 		return self::smf1($username, $password, $salt, $dbHash);
 	}
 	
 	/**
-	 * Validates the password hash for vBulletin 3 (vb3).
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function vb3($username, $password, $salt, $dbHash) {
 		return \hash_equals($dbHash, md5(md5($password) . $salt));
 	}
 	
 	/**
-	 * Validates the password hash for vBulletin 4 (vb4).
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function vb4($username, $password, $salt, $dbHash) {
 		return self::vb3($username, $password, $salt, $dbHash);
 	}
 	
 	/**
-	 * Validates the password hash for vBulletin 5 (vb5).
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function vb5($username, $password, $salt, $dbHash) {
 		return self::vb3($username, $password, $salt, $dbHash);
 	}
 	
 	/**
-	 * Validates the password hash for WoltLab Burning Board 2 (wbb2).
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function wbb2($username, $password, $salt, $dbHash) {
 		if (\hash_equals($dbHash, md5($password))) {
@@ -509,26 +410,14 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Validates the password hash for WoltLab Community Framework 1.x (wcf1).
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function wcf1($username, $password, $salt, $dbHash) {
 		return \hash_equals($dbHash, sha1($salt . sha1($salt . sha1($password))));
 	}
 	
 	/**
-	 * Validates the password hash for WoltLab Community Framework 1.x with different encryption (wcf1e).
-	 * 
-	 * @param	string		$type
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function wcf1e($type, $password, $salt, $dbHash) {
 		preg_match('~^wcf1e([cms])([01])([ab])([01])$~', $type, $matches);
@@ -579,26 +468,14 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Validates the password hash for Woltlab Suite 3.x / WoltLab Community Framework 2.x (wcf2).
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function wcf2($username, $password, $salt, $dbHash) {
 		return \hash_equals($dbHash, self::getDoubleSaltedHash($password, $dbHash));
 	}
 	
 	/**
-	 * Validates the password hash for XenForo 1.0 / 1.1 (xf1).
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function xf1($username, $password, $salt, $dbHash) {
 		if (\hash_equals($dbHash, sha1(sha1($password) . $salt))) {
@@ -609,13 +486,7 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Validates the password hash for XenForo 1.2+ (xf12).
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function xf12($username, $password, $salt, $dbHash) {
 		if (\hash_equals($dbHash, self::getSaltedHash($password, $dbHash))) {
@@ -626,13 +497,7 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Validates the password hash for Joomla 1.x (kunea)
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function joomla1($username, $password, $salt, $dbHash) {
 		if (\hash_equals($dbHash, md5($password . $salt))) {
@@ -643,41 +508,21 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Validates the password hash for Joomla 2.x (kunea)
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function joomla2($username, $password, $salt, $dbHash) {
 		return self::joomla1($username, $password, $salt, $dbHash);
 	}
 	
 	/**
-	 * Validates the password hash for Joomla 3.x (kunea)
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function joomla3($username, $password, $salt, $dbHash) {
 		return self::joomla1($username, $password, $salt, $dbHash);
 	}
 	
 	/**
-	 * Validates the password hash for phpFox 3.x
-	 * Merge phpfox_user.password and phpfox_user.password_salt with ':' before importing all data row values
-	 * See PasswordUtil::checkPassword() for more info
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	 protected static function phpfox3($username, $password, $salt, $dbHash) {
 		 if (\hash_equals($dbHash, md5(md5($password) . md5($salt)))) {
@@ -688,13 +533,7 @@ final class PasswordUtil {
 	 }
 	
 	/**
-	 * Validates the password hash for MD5 mode of crypt()
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function cryptMD5($username, $password, $salt, $dbHash) {
 		if (\hash_equals($dbHash, self::getSaltedHash($password, $dbHash))) {
@@ -705,13 +544,7 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Returns false.
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function invalid($username, $password, $salt, $dbHash) {
 		return false;
