@@ -520,13 +520,7 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Validates the password hash for Joomla 2.x (kunea)
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function joomla2($username, $password, $salt, $dbHash) {
 		return self::joomla1($username, $password, $salt, $dbHash);
