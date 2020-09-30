@@ -16,10 +16,10 @@ final class Wbb2 implements IPasswordAlgorithm {
 	 * @inheritDoc
 	 */
 	public function verify(string $password, string $hash): bool {
-		if (\hash_equals($hash, md5($password))) {
+		if (\hash_equals($hash, \md5($password))) {
 			return true;
 		}
-		else if (\hash_equals($hash, sha1($password))) {
+		else if (\hash_equals($hash, \sha1($password))) {
 			return true;
 		}
 		
@@ -30,7 +30,7 @@ final class Wbb2 implements IPasswordAlgorithm {
 	 * @inheritDoc
 	 */
 	public function hash(string $password): string {
-		return sha1($password);
+		return \sha1($password);
 	}
 	
 	/**

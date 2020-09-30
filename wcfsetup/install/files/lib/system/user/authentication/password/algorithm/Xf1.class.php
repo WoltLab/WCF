@@ -16,7 +16,7 @@ final class Xf1 implements IPasswordAlgorithm {
 	 * @inheritDoc
 	 */
 	public function verify(string $password, string $hash): bool {
-		[$hash, $salt] = explode(':', $hash, 2);
+		[$hash, $salt] = \explode(':', $hash, 2);
 		
 		if (\hash_equals($hash, \sha1(\sha1($password) . $salt))) {
 			return true; 

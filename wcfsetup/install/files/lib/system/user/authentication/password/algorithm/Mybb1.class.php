@@ -16,7 +16,7 @@ final class Mybb1 implements IPasswordAlgorithm {
 	 * @inheritDoc
 	 */
 	public function verify(string $password, string $hash): bool {
-		[$hash, $salt] = explode(':', $hash, 2);
+		[$hash, $salt] = \explode(':', $hash, 2);
 		
 		return \hash_equals($hash, $this->hashWithSalt($password, $salt));
 	}
@@ -34,7 +34,7 @@ final class Mybb1 implements IPasswordAlgorithm {
 	 * Returns the hashed password, hashed with a given salt.
 	 */
 	private function hashWithSalt(string $password, string $salt): string {
-		return md5(md5($salt) . md5($password));
+		return \md5(\md5($salt) . \md5($password));
 	}
 	
 	/**
