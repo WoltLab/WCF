@@ -361,13 +361,7 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Validates the password hash for Simple Machines Forums 1.x (smf1).
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function smf1($username, $password, $salt, $dbHash) {
 		return \hash_equals($dbHash, sha1(mb_strtolower($username) . $password));
