@@ -436,12 +436,6 @@ class SessionHandler extends SingletonFactory {
 		}
 		
 		$this->user = new User($this->session->userID);
-		if ($this->isACP) {
-			$this->virtualSession = ACPSessionVirtual::getExistingSession($sessionID);
-		}
-		else {
-			$this->virtualSession = SessionVirtual::getExistingSession($sessionID);
-		}
 		
 		$this->loadVirtualSession();
 	}
