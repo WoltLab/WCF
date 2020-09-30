@@ -496,17 +496,6 @@ class SessionHandler extends SingletonFactory {
 	 * @return	boolean
 	 */
 	protected function validate() {
-		if (SESSION_VALIDATE_USER_AGENT) {
-			if ($this->virtualSession instanceof ACPSessionVirtual) {
-				if ($this->virtualSession->userAgent != UserUtil::getUserAgent()) {
-					return false;
-				}
-			}
-			else if ($this->session->userAgent != UserUtil::getUserAgent()) {
-				return false;
-			}
-		}
-		
 		return true;
 	}
 	

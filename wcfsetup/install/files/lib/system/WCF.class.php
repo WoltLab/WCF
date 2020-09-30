@@ -391,6 +391,7 @@ class WCF {
 		// Session validation is removed since 5.4.
 		// https://github.com/WoltLab/WCF/pull/3583
 		define('SESSION_VALIDATE_IP_ADDRESS', 0);
+		define('SESSION_VALIDATE_USER_AGENT', 0);
 		
 		$filename = WCF_DIR.'options.inc.php';
 		
