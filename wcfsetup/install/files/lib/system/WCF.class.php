@@ -393,6 +393,9 @@ class WCF {
 		define('SESSION_VALIDATE_IP_ADDRESS', 0);
 		define('SESSION_VALIDATE_USER_AGENT', 0);
 		
+		// Virtual sessions no longer exist since 5.4.
+		define('SESSION_ENABLE_VIRTUALIZATION', 1);
+		
 		$filename = WCF_DIR.'options.inc.php';
 		
 		// create options file if doesn't exist

@@ -290,15 +290,10 @@ class UserExportGdprAction extends AbstractAction {
 			'acpSessionLog' => []
 		];
 		
-		if (SESSION_ENABLE_VIRTUALIZATION) {
-			// we can safely ignore the wcfN_session table in this case, because its data is
-			// just mirrored from the virtual session table, except that it shows the data
-			// from the last client only
-			$data['session'] = $exportFromVirtual('wcf' . WCF_N . '_session', 'wcf' . WCF_N . '_session_virtual');
-		}
-		else {
-			$data['session'] = $this->exportIpAddresses('wcf' . WCF_N . '_session', 'ipAddress', 'lastActivityTime', 'userID');
-		}
+		// we can safely ignore the wcfN_session table in this case, because its data is
+		// just mirrored from the virtual session table, except that it shows the data
+		// from the last client only
+		$data['session'] = $exportFromVirtual('wcf' . WCF_N . '_session', 'wcf' . WCF_N . '_session_virtual');
 		
 		// ACP sessions always support virtualization
 		$data['acpSession'] = $exportFromVirtual('wcf' . WCF_N . '_acp_session', 'wcf' . WCF_N . '_acp_session_virtual');
