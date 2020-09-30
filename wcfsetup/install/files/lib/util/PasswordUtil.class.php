@@ -545,13 +545,7 @@ final class PasswordUtil {
 	 }
 	
 	/**
-	 * Validates the password hash for MD5 mode of crypt()
-	 * 
-	 * @param	string		$username
-	 * @param	string		$password
-	 * @param	string		$salt
-	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @deprecated	5.4 - Use the new password algorithm framework in \wcf\system\user\authentication\password\*.
 	 */
 	protected static function cryptMD5($username, $password, $salt, $dbHash) {
 		if (\hash_equals($dbHash, self::getSaltedHash($password, $dbHash))) {
