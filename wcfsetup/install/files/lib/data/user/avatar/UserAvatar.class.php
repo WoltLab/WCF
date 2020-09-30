@@ -79,7 +79,7 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 	 * @inheritDoc
 	 */
 	public function getImageTag($size = null) {
-		return '<img src="'.StringUtil::encodeHTML($this->getURL($size)).'" width="'.$size.'" height="'.$size.'" alt="" class="userAvatarImage">';
+		return '<img src="'.StringUtil::encodeHTML($this->getURL($size)).'" width="'.$size.'" height="'.$size.'" alt="'.WCF::getLanguage()->get('wcf.user.avatar').'" class="userAvatarImage">';
 	}
 	
 	/**
