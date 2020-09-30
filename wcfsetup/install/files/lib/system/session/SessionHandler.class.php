@@ -118,12 +118,6 @@ class SessionHandler extends SingletonFactory {
 	protected $sessionEditorClassName = '';
 	
 	/**
-	 * virtual session support
-	 * @var	boolean
-	 */
-	protected $supportsVirtualSessions = false;
-	
-	/**
 	 * style id
 	 * @var	integer
 	 */
@@ -225,7 +219,6 @@ class SessionHandler extends SingletonFactory {
 	public function load($sessionEditorClassName, $sessionID) {
 		$this->sessionEditorClassName = $sessionEditorClassName;
 		$this->sessionClassName = call_user_func([$sessionEditorClassName, 'getBaseClass']);
-		$this->supportsVirtualSessions = call_user_func([$this->sessionClassName, 'supportsVirtualSessions']);
 		
 		// try to get existing session
 		if (!empty($sessionID)) {
@@ -754,11 +747,6 @@ class SessionHandler extends SingletonFactory {
 			// guest -> user (login)
 			//
 			default:
-				if (!$this->supportsVirtualSessions) {
-					// delete all other sessions of this user
-					call_user_func([$this->sessionEditorClassName, 'deleteUserSessions'], [$user->userID]);
-				}
-				
 				// find existing session for this user
 				$session = call_user_func([$this->sessionClassName, 'getSessionByUserID'], $user->userID);
 				
