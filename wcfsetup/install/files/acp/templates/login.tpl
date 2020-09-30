@@ -55,12 +55,15 @@
 				closable: false,
 				title: '{@$pageTitle|language}',
 				onShow: function() {
-					if (elById('username').value === '' || '{$errorField}' === 'username') {
-						elById('username').focus();
-					}
-					else {
-						elById('password').focus();
-					}
+					// The focus is set in Dialog.js via setTimeout(), so this has to be done the same way here.
+					setTimeout(function() {
+						if (elById('username').value === '' || '{$errorField}' === 'username') {
+							elById('username').focus();
+						}
+						else {
+							elById('password').focus();
+						}
+					}, 2);
 				}
 			});
 		});
