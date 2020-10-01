@@ -542,18 +542,7 @@ class SessionHandler extends SingletonFactory {
 		// create new session hash
 		$sessionID = bin2hex(\random_bytes(20));
 		
-		$this->user = null;
-		
-		// create user
-		if ($this->user === null) {
-			// no valid user found
-			// create guest user
-			$this->user = new User(null);
-		}
-		else if (!$this->supportsVirtualSessions) {
-			// delete all other sessions of this user
-			call_user_func([$this->sessionEditorClassName, 'deleteUserSessions'], [$this->user->userID]);
-		}
+		$this->user = new User(null);
 		
 		$createNewSession = true;
 		// find existing session
