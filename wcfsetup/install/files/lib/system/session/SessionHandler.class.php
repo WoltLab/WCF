@@ -542,74 +542,49 @@ class SessionHandler extends SingletonFactory {
 		// create new session hash
 		$sessionID = bin2hex(\random_bytes(20));
 		
-		$this->user = null;
+		$this->user = new User(null);
 		
-		// create user
-		if ($this->user === null) {
-			// no valid user found
-			// create guest user
-			$this->user = new User(null);
+		// save session
+		$sessionData = [
+			'sessionID' => $sessionID,
+			'userID' => $this->user->userID,
+			'ipAddress' => UserUtil::getIpAddress(),
+			'userAgent' => UserUtil::getUserAgent(),
+			'lastActivityTime' => TIME_NOW,
+			'requestURI' => UserUtil::getRequestURI(),
+			'requestMethod' => !empty($_SERVER['REQUEST_METHOD']) ? substr($_SERVER['REQUEST_METHOD'], 0, 7) : ''
+		];
+		
+		if ($spiderID !== null) $sessionData['spiderID'] = $spiderID;
+		
+		try {
+			$this->session = call_user_func([$this->sessionEditorClassName, 'create'], $sessionData);
 		}
-		else if (!$this->supportsVirtualSessions) {
-			// delete all other sessions of this user
-			call_user_func([$this->sessionEditorClassName, 'deleteUserSessions'], [$this->user->userID]);
-		}
-		
-		$createNewSession = true;
-		// find existing session
-		$session = call_user_func([$this->sessionClassName, 'getSessionByUserID'], $this->user->userID);
-		
-		if ($session !== null) {
-			// inherit existing session
-			$this->session = $session;
-			$this->loadVirtualSession(true);
+		catch (DatabaseException $e) {
+			// MySQL error 23000 = unique key
+			// do not check against the message itself, some weird systems localize them
+			if ($e->getCode() == 23000) {
+				// find existing session
+				$session = call_user_func([$this->sessionClassName, 'getSessionByUserID'], $this->user->userID);
 				
-			$createNewSession = false;
-		}
-		
-		if ($createNewSession) {
-			// save session
-			$sessionData = [
-				'sessionID' => $sessionID,
-				'userID' => $this->user->userID,
-				'ipAddress' => UserUtil::getIpAddress(),
-				'userAgent' => UserUtil::getUserAgent(),
-				'lastActivityTime' => TIME_NOW,
-				'requestURI' => UserUtil::getRequestURI(),
-				'requestMethod' => !empty($_SERVER['REQUEST_METHOD']) ? substr($_SERVER['REQUEST_METHOD'], 0, 7) : ''
-			];
-			
-			if ($spiderID !== null) $sessionData['spiderID'] = $spiderID;
-			
-			try {
-				$this->session = call_user_func([$this->sessionEditorClassName, 'create'], $sessionData);
-			}
-			catch (DatabaseException $e) {
-				// MySQL error 23000 = unique key
-				// do not check against the message itself, some weird systems localize them
-				if ($e->getCode() == 23000) {
-					// find existing session
-					$session = call_user_func([$this->sessionClassName, 'getSessionByUserID'], $this->user->userID);
-					
-					if ($session === null) {
-						// MySQL reported a unique key error, but no corresponding session exists, rethrow exception
-						throw $e;
-					}
-					else {
-						// inherit existing session
-						$this->session = $session;
-						$this->loadVirtualSession(true);
-					}
-				}
-				else {
-					// unrelated to user id
+				if ($session === null) {
+					// MySQL reported a unique key error, but no corresponding session exists, rethrow exception
 					throw $e;
 				}
+				else {
+					// inherit existing session
+					$this->session = $session;
+					$this->loadVirtualSession(true);
+				}
 			}
-			
-			$this->firstVisit = true;
-			$this->loadVirtualSession(true);
+			else {
+				// unrelated to user id
+				throw $e;
+			}
 		}
+		
+		$this->firstVisit = true;
+		$this->loadVirtualSession(true);
 	}
 	
 	/**
