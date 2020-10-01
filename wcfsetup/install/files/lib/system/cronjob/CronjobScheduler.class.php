@@ -149,7 +149,14 @@ class CronjobScheduler extends SingletonFactory {
 						]);
 						$logEditor = new CronjobLogEditor($log);
 						
-						$errorMessage = sprintf("The cronjob '%s' (ID %d) appears to have failed. (nextExec %d, afterNextExec %d, now %d)", $cronjob->cronjobName, $cronjob->cronjobID, $cronjob->nextExec, $cronjob->afterNextExec, TIME_NOW);
+						$errorMessage = sprintf(
+							"The cronjob '%s' (ID %d) appears to have failed. (nextExec %d, afterNextExec %d, now %d)",
+							$cronjob->cronjobName,
+							$cronjob->cronjobID,
+							$cronjob->nextExec,
+							$cronjob->afterNextExec,
+							TIME_NOW
+						);
 						$this->logResult($logEditor, new \Exception($errorMessage));
 						break;
 					default:
