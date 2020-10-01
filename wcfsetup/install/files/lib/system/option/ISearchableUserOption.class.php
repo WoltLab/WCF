@@ -16,7 +16,7 @@ interface ISearchableUserOption {
 	 * Returns the html code for the search form element of this option.
 	 * 
 	 * @param	Option		$option
-	 * @param	string		$value
+	 * @param	mixed		$value
 	 * @return	string		html
 	 */
 	public function getSearchFormElement(Option $option, $value);
