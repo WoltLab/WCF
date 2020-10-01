@@ -544,8 +544,6 @@ class SessionHandler extends SingletonFactory {
 		
 		$this->user = new User(null);
 		
-		$session = null;
-		
 		// save session
 		$sessionData = [
 			'sessionID' => $sessionID,
