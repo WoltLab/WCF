@@ -840,17 +840,6 @@ class SessionHandler extends SingletonFactory {
 		/** @var \wcf\data\DatabaseObjectEditor $sessionEditor */
 		$sessionEditor = new $this->sessionEditorClassName($this->session);
 		$sessionEditor->update($data);
-		
-		if ($this->virtualSession instanceof ACPSessionVirtual) {
-			if ($this->isACP) {
-				$virtualSessionEditor = new ACPSessionVirtualEditor($this->virtualSession);
-			}
-			else {
-				$virtualSessionEditor = new SessionVirtualEditor($this->virtualSession);
-			}
-			
-			$virtualSessionEditor->updateLastActivityTime();
-		}
 	}
 	
 	/**
@@ -865,16 +854,6 @@ class SessionHandler extends SingletonFactory {
 		$sessionEditor->update([
 			'lastActivityTime' => TIME_NOW
 		]);
-		
-		if ($this->virtualSession instanceof ACPSessionVirtual) {
-			if ($this->isACP) {
-				$virtualSessionEditor = new ACPSessionVirtualEditor($this->virtualSession);
-			}
-			else {
-				$virtualSessionEditor = new SessionVirtualEditor($this->virtualSession);
-			}
-			$virtualSessionEditor->updateLastActivityTime();
-		}
 	}
 	
 	/**
