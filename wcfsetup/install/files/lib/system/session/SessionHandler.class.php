@@ -429,8 +429,6 @@ class SessionHandler extends SingletonFactory {
 		}
 		
 		$this->user = new User($this->session->userID);
-		
-		$this->loadVirtualSession();
 	}
 	
 	/**
