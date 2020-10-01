@@ -150,7 +150,16 @@ class CronjobScheduler extends SingletonFactory {
 							'execTime' => TIME_NOW
 						]);
 						$logEditor = new CronjobLogEditor($log);
-						$this->logResult($logEditor, new \Exception("Cronjob stuck in state '".$cronjob->state."' for two periods (nextExec '".$cronjob->nextExec."', afterNextExec '".$cronjob->afterNextExec."', now '".TIME_NOW."')."));
+						
+						$errorMessage = sprintf(
+							"The cronjob '%s' (ID %d) appears to have failed. (nextExec %d, afterNextExec %d, now %d)",
+							$cronjob->cronjobName,
+							$cronjob->cronjobID,
+							$cronjob->nextExec,
+							$cronjob->afterNextExec,
+							TIME_NOW
+						);
+						$this->logResult($logEditor, new \Exception($errorMessage));
 						break;
 					default:
 						throw new \LogicException('Unreachable');
