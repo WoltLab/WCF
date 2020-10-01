@@ -547,14 +547,6 @@ class SessionHandler extends SingletonFactory {
 		$createNewSession = true;
 		$session = null;
 		
-		if ($session !== null) {
-			// inherit existing session
-			$this->session = $session;
-			$this->loadVirtualSession(true);
-				
-			$createNewSession = false;
-		}
-		
 		if ($createNewSession) {
 			// save session
 			$sessionData = [
