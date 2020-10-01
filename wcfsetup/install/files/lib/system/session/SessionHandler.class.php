@@ -443,14 +443,6 @@ class SessionHandler extends SingletonFactory {
 			$this->virtualSession = SessionVirtual::getExistingSession($sessionID);
 		}
 		
-		if (!$this->validate()) {
-			$this->session = null;
-			$this->user = null;
-			$this->virtualSession = false;
-			
-			return;
-		}
-		
 		$this->loadVirtualSession();
 	}
 	
@@ -488,37 +480,6 @@ class SessionHandler extends SingletonFactory {
 				}
 			}
 		}
-	}
-	
-	/**
-	 * Validates the ip address and the user agent of this session.
-	 * 
-	 * @return	boolean
-	 */
-	protected function validate() {
-		if (SESSION_VALIDATE_IP_ADDRESS) {
-			if ($this->virtualSession instanceof ACPSessionVirtual) {
-				if ($this->virtualSession->ipAddress != UserUtil::getIpAddress()) {
-					return false;
-				}
-			}
-			else if ($this->session->ipAddress != UserUtil::getIpAddress()) {
-				return false;
-			}
-		}
-		
-		if (SESSION_VALIDATE_USER_AGENT) {
-			if ($this->virtualSession instanceof ACPSessionVirtual) {
-				if ($this->virtualSession->userAgent != UserUtil::getUserAgent()) {
-					return false;
-				}
-			}
-			else if ($this->session->userAgent != UserUtil::getUserAgent()) {
-				return false;
-			}
-		}
-		
-		return true;
 	}
 	
 	/**
