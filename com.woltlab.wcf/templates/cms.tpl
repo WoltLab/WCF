@@ -6,9 +6,7 @@
 {capture assign='headContent'}
 	{if $page->isMultilingual && $page->getPageLanguages()|count > 1}
 		{foreach from=$page->getPageLanguages() item='pageLanguage'}
-			{if $pageLanguage->getLanguage()}
-				<link rel="alternate" hreflang="{$pageLanguage->getLanguage()->languageCode}" href="{$pageLanguage->getLink()}">
-			{/if}
+			<link rel="alternate" hreflang="{$pageLanguage->getLanguage()->languageCode}" href="{$pageLanguage->getLink()}">
 		{/foreach}
 	{/if}
 {/capture}
@@ -22,14 +20,12 @@
 			</a>
 			<ul class="dropdownMenu">
 				{foreach from=$page->getPageLanguages() item='pageLanguage'}
-					{if $pageLanguage->getLanguage()}
-						<li class="boxFlag">
-							<a class="box24" href="{$pageLanguage->getLink()}">
-								<span><img src="{$pageLanguage->getLanguage()->getIconPath()}" alt="" class="iconFlag"></span>
-								<span>{$pageLanguage->getLanguage()->languageName}</span>
-							</a>
-						</li>
-					{/if}
+					<li class="boxFlag">
+						<a class="box24" href="{$pageLanguage->getLink()}">
+							<span><img src="{$pageLanguage->getLanguage()->getIconPath()}" alt="" class="iconFlag"></span>
+							<span>{$pageLanguage->getLanguage()->languageName}</span>
+						</a>
+					</li>
 				{/foreach}
 			</ul>
 		</li>
