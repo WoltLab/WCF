@@ -545,8 +545,7 @@ class SessionHandler extends SingletonFactory {
 		$this->user = new User(null);
 		
 		$createNewSession = true;
-		// find existing session
-		$session = call_user_func([$this->sessionClassName, 'getSessionByUserID'], $this->user->userID);
+		$session = null;
 		
 		if ($session !== null) {
 			// inherit existing session
