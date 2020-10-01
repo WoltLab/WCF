@@ -47,4 +47,13 @@ class DateOptionType extends TextOptionType {
 		
 		return (strtotime($value1) > strtotime($value2)) ? 1 : -1;
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getFormElement(Option $option, $value) {
+		if ($value == '0000-00-00') $value = '';
+		
+		return parent::getFormElement($option, $value);
+	}
 }

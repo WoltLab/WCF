@@ -46,15 +46,6 @@ class BirthdayOptionType extends DateOptionType {
 	/**
 	 * @inheritDoc
 	 */
-	public function getFormElement(Option $option, $value) {
-		if ($value == '0000-00-00') $value = '';
-		
-		return parent::getFormElement($option, $value);
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
 	public function getSearchFormElement(Option $option, $value) {
 		$ageFrom = $ageTo = '';
 		if (!empty($value['ageFrom'])) $ageFrom = intval($value['ageFrom']);
