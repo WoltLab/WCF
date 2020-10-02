@@ -270,33 +270,17 @@ class UserExportGdprAction extends AbstractAction {
 	}
 	
 	protected function exportSessionIpAddresses() {
-		$exportFromVirtual = function ($sessionTable, $sessionVirtualTable) {
-			$sql = "SELECT  sv.ipAddress, sv.lastActivityTime
-				FROM    ${sessionVirtualTable} sv
-				WHERE   sv.sessionID IN (
-						SELECT  sessionID
-						FROM    ${sessionTable}
-						WHERE   userID = ?
-					)";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([$this->user->userID]);
-			
-			return $this->fetchIpAddresses($statement, 'ipAddress', 'lastActivityTime');
-		};
-		
 		$data = [
 			'session' => [],
 			'acpSession' => [],
 			'acpSessionLog' => []
 		];
 		
-		// we can safely ignore the wcfN_session table in this case, because its data is
-		// just mirrored from the virtual session table, except that it shows the data
-		// from the last client only
-		$data['session'] = $exportFromVirtual('wcf' . WCF_N . '_session', 'wcf' . WCF_N . '_session_virtual');
+		// TODO: Fix this.
+		$data['session'] = [];
 		
-		// ACP sessions always support virtualization
-		$data['acpSession'] = $exportFromVirtual('wcf' . WCF_N . '_acp_session', 'wcf' . WCF_N . '_acp_session_virtual');
+		// TODO: Fix this.
+		$data['acpSession'] = [];
 		
 		// we can ignore the wcfN_acp_session_access_log table because it is directly related
 		// to the wcfN_acp_session_log table and ACP sessions are bound to the ip address 

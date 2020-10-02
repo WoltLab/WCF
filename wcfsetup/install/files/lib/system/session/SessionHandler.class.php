@@ -1,7 +1,5 @@
 <?php
 namespace wcf\system\session;
-use wcf\data\acp\session\virtual\ACPSessionVirtual;
-use wcf\data\session\virtual\SessionVirtual;
 use wcf\data\session\SessionEditor;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
@@ -648,12 +646,7 @@ class SessionHandler extends SingletonFactory {
 			// user -> guest (logout)
 			//
 			case 0:
-				if ($this->isACP) {
-					$sessionCount = ACPSessionVirtual::countVirtualSessions($this->session->sessionID);
-				}
-				else {
-					$sessionCount = SessionVirtual::countVirtualSessions($this->session->sessionID);
-				}
+				$sessionCount = 1;
 				
 				// there are still other virtual sessions, create a new session
 				if ($sessionCount) {
