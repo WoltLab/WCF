@@ -99,9 +99,11 @@ CREATE TABLE wcf1_acp_session (
 	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
 	userAgent VARCHAR(255) NOT NULL DEFAULT '',
 	lastActivityTime INT(10) NOT NULL DEFAULT 0,
-	requestURI VARCHAR(255) NOT NULL DEFAULT '',
-	requestMethod VARCHAR(7) NOT NULL DEFAULT '',
-	sessionVariables MEDIUMTEXT
+	requestURI VARCHAR(255) NOT NULL DEFAULT '', -- TODO: Remove this.
+	requestMethod VARCHAR(7) NOT NULL DEFAULT '', -- TODO: Remove this.
+	sessionVariables MEDIUMBLOB,
+	KEY (userID),
+	KEY (lastActivityTime)
 );
 
 DROP TABLE IF EXISTS wcf1_acp_session_access_log;
@@ -1819,6 +1821,18 @@ CREATE TABLE wcf1_user_rank (
 	hideTitle TINYINT(1) NOT NULL DEFAULT 0
 );
 
+DROP TABLE IF EXISTS wcf1_user_session;
+CREATE TABLE wcf1_user_session (
+	sessionID CHAR(40) NOT NULL PRIMARY KEY,
+	userID INT(10),
+	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
+	userAgent VARCHAR(255) NOT NULL DEFAULT '',
+	lastActivityTime INT(10) NOT NULL DEFAULT 0,
+	sessionVariables MEDIUMBLOB,
+	KEY (userID),
+	KEY (lastActivityTime)
+);
+
 DROP TABLE IF EXISTS wcf1_user_storage;
 CREATE TABLE wcf1_user_storage (
 	userID INT(10) NOT NULL,
@@ -2146,6 +2160,8 @@ ALTER TABLE wcf1_user_profile_visitor ADD FOREIGN KEY (userID) REFERENCES wcf1_u
 
 ALTER TABLE wcf1_user_object_watch ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_object_watch ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user_session ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_user_special_trophy ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_special_trophy ADD FOREIGN KEY (trophyID) REFERENCES wcf1_trophy (trophyID) ON DELETE CASCADE;
