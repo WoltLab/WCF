@@ -38,7 +38,7 @@ use wcf\util\UserUtil;
  * @property-read	integer|null	$parentPageObjectID	id of the object the parent page of latest page visited belongs to
  * @property-read	integer		$spiderID		id of the spider the session belongs to
  */
-class SessionHandler extends SingletonFactory {
+final class SessionHandler extends SingletonFactory {
 	/**
 	 * suffix used to tell ACP and frontend cookies apart
 	 * @var string
