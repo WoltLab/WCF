@@ -142,12 +142,6 @@ class SessionHandler extends SingletonFactory {
 	protected $variablesChanged = false;
 	
 	/**
-	 * virtual session object, null for guests
-	 * @var	\wcf\data\session\virtual\SessionVirtual
-	 */
-	protected $virtualSession = false;
-	
-	/**
 	 * true if this is a new session
 	 * @var	boolean
 	 */
@@ -658,17 +652,6 @@ class SessionHandler extends SingletonFactory {
 			// user -> guest (logout)
 			//
 			case 0:
-				// delete virtual session
-				if ($this->virtualSession) {
-					if ($this->isACP) {
-						$virtualSessionEditor = new ACPSessionVirtualEditor($this->virtualSession);
-					}
-					else {
-						$virtualSessionEditor = new SessionVirtualEditor($this->virtualSession);
-					}
-					$virtualSessionEditor->delete();
-				}
-				
 				if ($this->isACP) {
 					$sessionCount = ACPSessionVirtual::countVirtualSessions($this->session->sessionID);
 				}
