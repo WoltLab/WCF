@@ -17,7 +17,7 @@ class ACPSessionFactory {
 	 * suffix used to tell ACP and frontend cookies apart
 	 * @var string
 	 */
-	protected $cookieSuffix = '_acp';
+	protected $cookieSuffix = 'acp_';
 	
 	/**
 	 * session editor class name
@@ -53,8 +53,8 @@ class ACPSessionFactory {
 	 * @since	3.0
 	 */
 	public function hasValidCookie() {
-		if (isset($_COOKIE[COOKIE_PREFIX.'cookieHash'.$this->cookieSuffix])) {
-			if ($_COOKIE[COOKIE_PREFIX.'cookieHash'.$this->cookieSuffix] == SessionHandler::getInstance()->sessionID) {
+		if (isset($_COOKIE[COOKIE_PREFIX.$this->cookieSuffix.'session'])) {
+			if ($_COOKIE[COOKIE_PREFIX.$this->cookieSuffix.'session'] == SessionHandler::getInstance()->sessionID) {
 				return true;
 			}
 		}
@@ -66,11 +66,6 @@ class ACPSessionFactory {
 	 * Initializes the session system.
 	 */
 	protected function init() {
-		if (!$this->hasValidCookie()) {
-			// cookie support will be enabled upon next request
-			HeaderUtil::setCookie('cookieHash'.$this->cookieSuffix, SessionHandler::getInstance()->sessionID);
-		}
-		
 		SessionHandler::getInstance()->initSession();
 	}
 	
@@ -82,8 +77,8 @@ class ACPSessionFactory {
 	 */
 	protected function readSessionID() {
 		// get sessionID from cookie
-		if (isset($_COOKIE[COOKIE_PREFIX.'cookieHash'.$this->cookieSuffix])) {
-			return $_COOKIE[COOKIE_PREFIX . 'cookieHash'.$this->cookieSuffix];
+		if (isset($_COOKIE[COOKIE_PREFIX.$this->cookieSuffix.'session'])) {
+			return $_COOKIE[COOKIE_PREFIX.$this->cookieSuffix.'session'];
 		}
 		
 		return '';

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\session;
+use wcf\data\session\Session;
 use wcf\data\session\SessionEditor;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
@@ -20,8 +21,8 @@ use wcf\util\UserUtil;
 /**
  * Handles sessions.
  * 
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
+ * @author	Tim Duesterhus, Alexander Ebert
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Session
  *
@@ -39,12 +40,6 @@ use wcf\util\UserUtil;
  * @property-read	integer		$spiderID		id of the spider the session belongs to
  */
 final class SessionHandler extends SingletonFactory {
-	/**
-	 * suffix used to tell ACP and frontend cookies apart
-	 * @var string
-	 */
-	protected $cookieSuffix = '';
-	
 	/**
 	 * prevents update on shutdown
 	 * @var	boolean
@@ -94,10 +89,20 @@ final class SessionHandler extends SingletonFactory {
 	protected $languageIDs = null;
 	
 	/**
+	 * @var	string
+	 */
+	private $sessionID;
+	
+	/**
 	 * session object
 	 * @var	\wcf\data\acp\session\ACPSession
 	 */
 	protected $session = null;
+	
+	/**
+	 * @var \wcf\data\session\Session
+	 */
+	protected $legacySession = null;
 	
 	/**
 	 * session class name
@@ -127,7 +132,7 @@ final class SessionHandler extends SingletonFactory {
 	 * session variables
 	 * @var	array
 	 */
-	protected $variables = null;
+	protected $variables = [];
 	
 	/**
 	 * indicates if session variables changed and must be saved upon shutdown
@@ -154,11 +159,19 @@ final class SessionHandler extends SingletonFactory {
 	 * @return	mixed
 	 */
 	public function __get($key) {
-		if (isset($this->environment[$key])) {
+		if ($key === 'sessionID') {
+			return $this->sessionID;
+		}
+		else if ($key === 'userID') {
+			return $this->user->userID;
+		}
+		// TODO: pageID, pageObjectID, parentPageID, parentPageObjectID
+		
+		if (array_key_exists($key, $this->environment)) {
 			return $this->environment[$key];
 		}
 		
-		return $this->session->{$key};
+		return null;
 	}
 	
 	/**
@@ -167,8 +180,6 @@ final class SessionHandler extends SingletonFactory {
 	protected function init() {
 		$this->isACP = (class_exists(WCFACP::class, false) || !PACKAGE_ID);
 		$this->usersOnlyPermissions = UserGroupOptionCacheBuilder::getInstance()->getData([], 'usersOnlyOptions');
-		
-		$this->cookieSuffix = ($this->isACP ? '_acp' : '');
 	}
 	
 	/**
@@ -206,13 +217,13 @@ final class SessionHandler extends SingletonFactory {
 		$this->sessionEditorClassName = $sessionEditorClassName;
 		$this->sessionClassName = call_user_func([$sessionEditorClassName, 'getBaseClass']);
 		
-		// try to get existing session
+		$hasSession = false;
 		if (!empty($sessionID)) {
-			$this->getExistingSession($sessionID);
+			$hasSession = $this->getExistingSession($sessionID);
 		}
 		
 		// create new session
-		if ($this->session === null) {
+		if (!$hasSession) {
 			$this->create();
 		}
 	}
@@ -222,15 +233,8 @@ final class SessionHandler extends SingletonFactory {
 	 */
 	public function initSession() {
 		// init session environment
-		$this->loadVariables();
 		$this->initSecurityToken();
 		
-		// session id change was delayed to the next request
-		// as the SID constants already were defined
-		if ($this->getVar('__changeSessionID')) {
-			$this->unregister('__changeSessionID');
-			$this->changeSessionID();
-		}
 		$this->defineConstants();
 		
 		// assign language and style id
@@ -248,38 +252,19 @@ final class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Changes the session id to a new random one.
-	 * 
-	 * Usually a change is requested after login to ensure
-	 * that the user is not running a fixated session by an
-	 * attacker.
-	 */
-	protected function changeSessionID() {
-		$newSessionID = bin2hex(\random_bytes(20));
-		
-		/** @var \wcf\data\DatabaseObjectEditor $sessionEditor */
-		$sessionEditor = new $this->sessionEditorClassName($this->session);
-		$sessionEditor->update([
-			'sessionID' => $newSessionID
-		]);
-		
-		// fetch new session data from database
-		$this->session = new $this->sessionClassName($newSessionID);
-		
-		HeaderUtil::setCookie('cookieHash'.$this->cookieSuffix, $newSessionID);
-	}
-	
-	/**
 	 * Initializes environment variables.
 	 */
 	protected function initEnvironment() {
 		$this->environment = [
-			'lastRequestURI' => $this->session->requestURI,
-			'lastRequestMethod' => $this->session->requestMethod,
+		//	TODO:
+		//	'lastRequestURI' => $this->session->requestURI,
+		//	'lastRequestMethod' => $this->session->requestMethod,
 			'ipAddress' => UserUtil::getIpAddress(),
 			'userAgent' => UserUtil::getUserAgent(),
 			'requestURI' => UserUtil::getRequestURI(),
-			'requestMethod' => !empty($_SERVER['REQUEST_METHOD']) ? substr($_SERVER['REQUEST_METHOD'], 0, 7) : ''
+			'requestMethod' => !empty($_SERVER['REQUEST_METHOD']) ? substr($_SERVER['REQUEST_METHOD'], 0, 7) : '',
+			'spiderID' => $this->getSpiderID(UserUtil::getUserAgent()),
+			'lastActivityTime' => TIME_NOW,
 		];
 	}
 	
@@ -318,7 +303,7 @@ final class SessionHandler extends SingletonFactory {
 	 */
 	protected function initSecurityToken() {
 		if ($this->getVar('__SECURITY_TOKEN') === null) {
-			$this->register('__SECURITY_TOKEN', bin2hex(\random_bytes(20)));
+			$this->register('__SECURITY_TOKEN', \bin2hex(\random_bytes(20)));
 		}
 	}
 	
@@ -379,21 +364,6 @@ final class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Initializes session variables.
-	 */
-	protected function loadVariables() {
-		if ($this->session->sessionVariables !== null) {
-			$this->variables = @unserialize($this->session->sessionVariables);
-			if (!is_array($this->variables)) {
-				$this->variables = [];
-			}
-		}
-		else {
-			$this->variables = [];
-		}
-	}
-	
-	/**
 	 * Returns the user object of this session.
 	 * 
 	 * @return	User	$user
@@ -403,46 +373,106 @@ final class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Tries to read existing session identified by the given session id.
-	 * 
-	 * @param	string		$sessionID
+	 * Tries to read existing session identified by the given session id. Returns whether
+	 * a session could be found.
 	 */
-	protected function getExistingSession($sessionID) {
-		$this->session = new $this->sessionClassName($sessionID);
-		if (!$this->session->sessionID) {
-			$this->session = null;
-			return;
+	protected function getExistingSession(string $sessionID): bool {
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_".($this->isACP ? 'acp' : 'user')."_session
+			WHERE	sessionID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			$sessionID
+		]);
+		$row = $statement->fetchSingleRow();
+		
+		if (!$row) {
+			return false;
 		}
 		
-		$this->user = new User($this->session->userID);
+		$this->sessionID = $sessionID;
+		$this->user = new User($row['userID']);
+		$this->variables = unserialize($row['sessionVariables']);
+		
+		$sql = "UPDATE	wcf".WCF_N."_".($this->isACP ? 'acp' : 'user')."_session
+			SET	ipAddress = ?,
+				userAgent = ?,
+				lastActivityTime = ?
+			WHERE	sessionID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			UserUtil::getIpAddress(),
+			UserUtil::getUserAgent(),
+			TIME_NOW,
+			$this->sessionID,
+		]);
+		
+		// Refresh cookie.
+		if ($this->user->userID) {
+			HeaderUtil::setCookie(($this->isACP ? 'acp' : 'user')."_session", $this->sessionID, TIME_NOW + 86400 * 14);
+		}
+		
+		// Fetch legacy session.
+		if (!$this->isACP) {
+			$sql = "SELECT	*
+				FROM	wcf".WCF_N."_session
+				WHERE	(userID IS NULL AND sessionID = ?)
+				OR	(userID IS NULL AND spiderID = ?)
+				OR	(userID IS NOT NULL AND userID = ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				$row['sessionID'],
+				$this->getSpiderID(UserUtil::getUserAgent()),
+				$row['userID'],
+			]);
+			$this->legacySession = $statement->fetchSingleObject(Session::class);
+			
+			if (!$this->legacySession) {
+				$this->createLegacySession();
+			}
+		}
+		
+		return true;
 	}
 	
 	/**
 	 * Creates a new session.
 	 */
 	protected function create() {
-		$spiderID = null;
-		if ($this->sessionEditorClassName == SessionEditor::class) {
-			// get spider information
-			$spiderID = $this->getSpiderID(UserUtil::getUserAgent());
-			if ($spiderID !== null) {
-				// try to use existing session
-				if (($session = $this->getExistingSpiderSession($spiderID)) !== null) {
-					$this->user = new User(null);
-					$this->session = $session;
-					return;
-				}
-			}
-		}
+		$this->sessionID = \bin2hex(\random_bytes(20));
 		
-		// create new session hash
-		$sessionID = bin2hex(\random_bytes(20));
+		// Create new session.
+		$sql = "INSERT INTO wcf".WCF_N."_".($this->isACP ? 'acp' : 'user')."_session
+				(sessionID, ipAddress, userAgent, lastActivityTime, sessionVariables)
+			VALUES
+				(?, ?, ?, ?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			$this->sessionID,
+			UserUtil::getIpAddress(),
+			UserUtil::getUserAgent(),
+			TIME_NOW,
+			serialize([]),
+		]);
 		
+		HeaderUtil::setCookie(($this->isACP ? 'acp' : 'user')."_session", $this->sessionID);
+		
+		$this->variables = [];
 		$this->user = new User(null);
+		$this->firstVisit = true;
+		
+		// Maintain legacy session table for users online list.
+		if (!$this->isACP) {
+			$this->createLegacySession();
+		}
+	}
+	
+	private function createLegacySession() {
+		$spiderID = $this->getSpiderID(UserUtil::getUserAgent());
 		
 		// save session
 		$sessionData = [
-			'sessionID' => $sessionID,
+			'sessionID' => $this->sessionID,
 			'userID' => $this->user->userID,
 			'ipAddress' => UserUtil::getIpAddress(),
 			'userAgent' => UserUtil::getUserAgent(),
@@ -453,32 +483,7 @@ final class SessionHandler extends SingletonFactory {
 		
 		if ($spiderID !== null) $sessionData['spiderID'] = $spiderID;
 		
-		try {
-			$this->session = call_user_func([$this->sessionEditorClassName, 'create'], $sessionData);
-		}
-		catch (DatabaseException $e) {
-			// MySQL error 23000 = unique key
-			// do not check against the message itself, some weird systems localize them
-			if ($e->getCode() == 23000) {
-				// find existing session
-				$session = call_user_func([$this->sessionClassName, 'getSessionByUserID'], $this->user->userID);
-				
-				if ($session === null) {
-					// MySQL reported a unique key error, but no corresponding session exists, rethrow exception
-					throw $e;
-				}
-				else {
-					// inherit existing session
-					$this->session = $session;
-				}
-			}
-			else {
-				// unrelated to user id
-				throw $e;
-			}
-		}
-		
-		$this->firstVisit = true;
+		$this->legacySession = SessionEditor::create($sessionData);
 	}
 	
 	/**
@@ -613,7 +618,6 @@ final class SessionHandler extends SingletonFactory {
 		
 		// update user reference
 		$this->user = $user;
-		$this->userID = $this->user->userID ?: 0;
 		
 		// reset caches
 		$this->groupData = null;
@@ -637,95 +641,38 @@ final class SessionHandler extends SingletonFactory {
 	 * @throws	DatabaseException
 	 */
 	protected function changeUserVirtual(User $user) {
-		/** @var \wcf\data\DatabaseObjectEditor $sessionEditor */
+		// We must delete the old session to not carry over any state across different users.
+		$this->delete();
 		
-		switch ($user->userID) {
-			//
-			// user -> guest (logout)
-			//
-			case 0:
-				$sessionCount = 1;
-				
-				// there are still other virtual sessions, create a new session
-				if ($sessionCount) {
-					// save session
-					$sessionData = [
-						'sessionID' => bin2hex(\random_bytes(20)),
-						'userID' => $user->userID,
-						'ipAddress' => UserUtil::getIpAddress(),
-						'userAgent' => UserUtil::getUserAgent(),
-						'lastActivityTime' => TIME_NOW,
-						'requestURI' => UserUtil::getRequestURI(),
-						'requestMethod' => !empty($_SERVER['REQUEST_METHOD']) ? substr($_SERVER['REQUEST_METHOD'], 0, 7) : ''
-					];
-					
-					$this->session = call_user_func([$this->sessionEditorClassName, 'create'], $sessionData);
-					
-					HeaderUtil::setCookie('cookieHash'.$this->cookieSuffix, $this->session->sessionID);
-				}
-				else {
-					// this was the last virtual session, re-use current session
-					// update session
-					$sessionEditor = new $this->sessionEditorClassName($this->session);
-					$sessionEditor->update([
-						'userID' => $user->userID
-					]);
-				}
-			break;
+		// If the target user is a registered user ...
+		if ($user->userID) {
+			// ... we create a new session with a new session ID ...
+			$this->create();
 			
-			//
-			// guest -> user (login)
-			//
-			default:
-				// find existing session for this user
-				$session = call_user_func([$this->sessionClassName, 'getSessionByUserID'], $user->userID);
-				
-				// no session exists, re-use current session
-				if ($session === null) {
-					// update session
-					$sessionEditor = new $this->sessionEditorClassName($this->session);
-					
-					try {
-						$this->register('__changeSessionID', true);
-						
-						$sessionEditor->update([
-							'userID' => $user->userID
-						]);
-					}
-					catch (DatabaseException $e) {
-						// MySQL error 23000 = unique key
-						// do not check against the message itself, some weird systems localize them
-						if ($e->getCode() == 23000) {
-							// delete guest session
-							$sessionEditor = new $this->sessionEditorClassName($this->session);
-							$sessionEditor->delete();
-							
-							// inherit existing session
-							$this->session = $session;
-						}
-						else {
-							// not our business
-							throw $e;
-						}
-					}
-				}
-				else {
-					// delete guest session
-					$sessionEditor = new $this->sessionEditorClassName($this->session);
-					$sessionEditor->delete();
-					
-					// inherit existing session
-					$this->session = $session;
-					
-					// inherit security token
-					$variables = @unserialize($this->session->sessionVariables);
-					if (is_array($variables) && !empty($variables['__SECURITY_TOKEN'])) {
-						$this->register('__SECURITY_TOKEN', $variables['__SECURITY_TOKEN']);
-					}
-					
-					HeaderUtil::setCookie('cookieHash'.$this->cookieSuffix, $this->session->sessionID);
-				}
-			break;
+			// ... delete the newly created legacy session ...
+			if (!$this->isACP) {
+				$sql = "DELETE FROM wcf".WCF_N."_session
+					WHERE	sessionID = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute([$this->sessionID]);
+			}
+			
+			// ... perform the login ...
+			$sql = "UPDATE	wcf".WCF_N."_".($this->isACP ? 'acp' : 'user')."_session
+				SET	userID = ?
+				WHERE	sessionID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				$user->userID,
+				$this->sessionID,
+			]);
+			
+			// ... and reload the session with the updated information.
+			$hasSession = $this->getExistingSession($this->sessionID);
+			
+			if (!$hasSession) {
+				throw new \LogicException('Unreachable');
+			}
 		}
 	}
 	
@@ -735,39 +682,50 @@ final class SessionHandler extends SingletonFactory {
 	public function update() {
 		if ($this->doNotUpdate) return;
 		
-		// set up data
-		$data = [
-			'ipAddress' => UserUtil::getIpAddress(),
-			'userAgent' => $this->userAgent,
-			'requestURI' => $this->requestURI,
-			'requestMethod' => $this->requestMethod,
-			'lastActivityTime' => TIME_NOW
-		];
 		if ($this->variablesChanged) {
-			$data['sessionVariables'] = serialize($this->variables);
+			$sql = "UPDATE	wcf".WCF_N."_".($this->isACP ? 'acp' : 'user')."_session
+				SET	sessionVariables = ?
+				WHERE	sessionID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				serialize($this->variables),
+				$this->sessionID,
+			]);
 		}
-		if (!class_exists('wcf\system\CLIWCF', false) && !$this->isACP && !$this->disableTracking) {
-			$pageLocations = PageLocationManager::getInstance()->getLocations();
-			if (isset($pageLocations[0])) {
-				$data['pageID'] = $pageLocations[0]['pageID'];
-				$data['pageObjectID'] = ($pageLocations[0]['pageObjectID'] ?: null);
-				$data['parentPageID'] = null;
-				$data['parentPageObjectID'] = null;
-				
-				for ($i = 1, $length = count($pageLocations); $i < $length; $i++) {
-					if (!empty($pageLocations[$i]['useAsParentLocation'])) {
-						$data['parentPageID'] = $pageLocations[$i]['pageID'];
-						$data['parentPageObjectID'] = ($pageLocations[$i]['pageObjectID'] ?: null);
-						break;
+		
+		if (!$this->isACP) {
+			$data = [
+				'ipAddress' => $this->ipAddress,
+				'userAgent' => $this->userAgent,
+				'requestURI' => $this->requestURI,
+				'requestMethod' => $this->requestMethod,
+				'lastActivityTime' => TIME_NOW,
+				'userID' => $this->user->userID,
+				'sessionID' => $this->sessionID,
+			];
+			if (!class_exists('wcf\system\CLIWCF', false) && !$this->disableTracking) {
+				$pageLocations = PageLocationManager::getInstance()->getLocations();
+				if (isset($pageLocations[0])) {
+					$data['pageID'] = $pageLocations[0]['pageID'];
+					$data['pageObjectID'] = ($pageLocations[0]['pageObjectID'] ?: null);
+					$data['parentPageID'] = null;
+					$data['parentPageObjectID'] = null;
+					
+					for ($i = 1, $length = count($pageLocations); $i < $length; $i++) {
+						if (!empty($pageLocations[$i]['useAsParentLocation'])) {
+							$data['parentPageID'] = $pageLocations[$i]['pageID'];
+							$data['parentPageObjectID'] = ($pageLocations[$i]['pageObjectID'] ?: null);
+							break;
+						}
 					}
 				}
 			}
+			
+			if ($this->legacySession) {
+				$sessionEditor = new SessionEditor($this->legacySession);
+				$sessionEditor->update($data);
+			}
 		}
-		
-		// update session
-		/** @var \wcf\data\DatabaseObjectEditor $sessionEditor */
-		$sessionEditor = new $this->sessionEditorClassName($this->session);
-		$sessionEditor->update($data);
 	}
 	
 	/**
@@ -785,7 +743,7 @@ final class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Deletes this session and it's related data.
+	 * Deletes this session and its related data.
 	 */
 	public function delete() {
 		// clear storage
@@ -799,17 +757,19 @@ final class SessionHandler extends SingletonFactory {
 			}
 		}
 		
-		// 1st: Change user to guest, otherwise other the entire session, including
-		// all virtual sessions of the user will be deleted
-		$this->changeUser(new User(null));
+		// Delete session.
+		$sql = "DELETE FROM wcf".WCF_N."_".($this->isACP ? 'acp' : 'user')."_session
+			WHERE	sessionID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$this->sessionID]);
 		
-		// 2nd: Actually remove session
-		/** @var \wcf\data\DatabaseObjectEditor $sessionEditor */
-		$sessionEditor = new $this->sessionEditorClassName($this->session);
-		$sessionEditor->delete();
-		
-		// disable update
-		$this->disableUpdate();
+		// Delete legacy session.
+		if (!$this->isACP) {
+			$sql = "DELETE FROM wcf".WCF_N."_session
+				WHERE	sessionID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([$this->sessionID]);
+		}
 	}
 	
 	/**
@@ -898,32 +858,6 @@ final class SessionHandler extends SingletonFactory {
 			if (strpos($userAgent, $spider->spiderIdentifier) !== false) {
 				return $spider->spiderID;
 			}
-		}
-		
-		return null;
-	}
-	
-	/**
-	 * Searches for existing session of a search spider.
-	 * 
-	 * @param	integer		$spiderID
-	 * @return	\wcf\data\session\Session
-	 */
-	protected function getExistingSpiderSession($spiderID) {
-		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_session
-			WHERE	spiderID = ?
-				AND userID IS NULL";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$spiderID]);
-		$row = $statement->fetchArray();
-		if ($row !== false) {
-			// fix session validation
-			$row['ipAddress'] = UserUtil::getIpAddress();
-			$row['userAgent'] = UserUtil::getUserAgent();
-			
-			// return session object
-			return new $this->sessionClassName(null, $row);
 		}
 		
 		return null;

@@ -14,7 +14,7 @@ class SessionFactory extends ACPSessionFactory {
 	/**
 	 * @inheritDoc
 	 */
-	protected $cookieSuffix = '';
+	protected $cookieSuffix = 'user_';
 	
 	/**
 	 * @inheritDoc
