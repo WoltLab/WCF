@@ -432,42 +432,6 @@ class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Loads the virtual session object unless the user is not logged in or the session
-	 * does not support virtual sessions. If there is no virtual session yet, it will be
-	 * created on-the-fly.
-	 * 
-	 * @param	boolean		$forceReload
-	 */
-	protected function loadVirtualSession($forceReload = false) {
-		if ($this->virtualSession === null || $forceReload) {
-			$this->virtualSession = null;
-			if ($this->isACP) {
-				$virtualSessionAction = new ACPSessionVirtualAction([], 'create', ['data' => ['sessionID' => $this->session->sessionID]]);
-			}
-			else {
-				$virtualSessionAction = new SessionVirtualAction([], 'create', ['data' => ['sessionID' => $this->session->sessionID]]);
-			}
-			
-			try {
-				$returnValues = $virtualSessionAction->executeAction();
-				$this->virtualSession = $returnValues['returnValues'];
-			}
-			catch (DatabaseException $e) {
-				// MySQL error 23000 = unique key
-				// do not check against the message itself, some weird systems localize them
-				if ($e->getCode() == 23000) {
-					if ($this->isACP) {
-						$this->virtualSession = ACPSessionVirtual::getExistingSession($this->session->sessionID);
-					}
-					else {
-						$this->virtualSession = SessionVirtual::getExistingSession($this->session->sessionID);
-					}
-				}
-			}
-		}
-	}
-	
-	/**
 	 * Creates a new session.
 	 */
 	protected function create() {
