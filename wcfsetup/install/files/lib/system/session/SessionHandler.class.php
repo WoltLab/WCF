@@ -520,7 +520,6 @@ class SessionHandler extends SingletonFactory {
 				else {
 					// inherit existing session
 					$this->session = $session;
-					$this->loadVirtualSession(true);
 				}
 			}
 			else {
@@ -530,7 +529,6 @@ class SessionHandler extends SingletonFactory {
 		}
 		
 		$this->firstVisit = true;
-		$this->loadVirtualSession(true);
 	}
 	
 	/**
