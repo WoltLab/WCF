@@ -793,8 +793,6 @@ class SessionHandler extends SingletonFactory {
 				}
 			break;
 		}
-		
-		$this->loadVirtualSession(true);
 	}
 	
 	/**
