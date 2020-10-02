@@ -1,9 +1,7 @@
 <?php
 namespace wcf\system\cronjob;
-use wcf\data\acp\session\virtual\ACPSessionVirtualEditor;
 use wcf\data\acp\session\ACPSessionEditor;
 use wcf\data\cronjob\Cronjob;
-use wcf\data\session\virtual\SessionVirtualEditor;
 use wcf\data\session\SessionEditor;
 
 /**
@@ -24,10 +22,8 @@ class SessionCleanUpCronjob extends AbstractCronjob {
 		// Prevent the sessions from expiring while the development mode is active.
 		if (!ENABLE_DEBUG_MODE || !ENABLE_DEVELOPER_TOOLS) {
 			ACPSessionEditor::deleteExpiredSessions(TIME_NOW - SESSION_TIMEOUT);
-			ACPSessionVirtualEditor::deleteExpiredSessions(TIME_NOW - SESSION_TIMEOUT);
 		}
 		
 		SessionEditor::deleteExpiredSessions(TIME_NOW - SESSION_TIMEOUT);
-		SessionVirtualEditor::deleteExpiredSessions(TIME_NOW - SESSION_TIMEOUT);
 	}
 }

@@ -23,11 +23,4 @@ class Session extends ACPSession {
 	public static function supportsPersistentLogins() {
 		return true;
 	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public static function supportsVirtualSessions() {
-		return SESSION_ENABLE_VIRTUALIZATION ? true : false;
-	}
 }

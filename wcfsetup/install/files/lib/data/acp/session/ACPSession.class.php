@@ -36,16 +36,6 @@ class ACPSession extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns true if this session type supports virtual sessions (sharing the same
-	 * session among multiple clients).
-	 * 
-	 * @return	boolean
-	 */
-	public static function supportsVirtualSessions() {
-		return true;
-	}
-	
-	/**
 	 * Returns the existing session object for given user id or null if there
 	 * is no such session.
 	 * 

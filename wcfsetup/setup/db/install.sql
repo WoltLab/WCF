@@ -129,16 +129,6 @@ CREATE TABLE wcf1_acp_session_log (
 	KEY sessionID (sessionID)
 );
 
-DROP TABLE IF EXISTS wcf1_acp_session_virtual;
-CREATE TABLE wcf1_acp_session_virtual (
-	virtualSessionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	sessionID CHAR(40) NOT NULL,
-	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
-	userAgent VARCHAR(191) NOT NULL DEFAULT '',
-	lastActivityTime INT(10) NOT NULL DEFAULT 0,
-	UNIQUE KEY (sessionID, ipAddress, userAgent)
-);
-
 DROP TABLE IF EXISTS wcf1_acp_template;
 CREATE TABLE wcf1_acp_template (
 	templateID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1269,16 +1259,6 @@ CREATE TABLE wcf1_session (
 	UNIQUE KEY uniqueUserID (userID)
 );
 
-DROP TABLE IF EXISTS wcf1_session_virtual;
-CREATE TABLE wcf1_session_virtual (
-	virtualSessionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	sessionID CHAR(40) NOT NULL,
-	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
-	userAgent VARCHAR(191) NOT NULL DEFAULT '',
-	lastActivityTime INT(10) NOT NULL DEFAULT 0,
-	UNIQUE KEY (sessionID, ipAddress, userAgent)
-);
-
 DROP TABLE IF EXISTS wcf1_smiley;
 CREATE TABLE wcf1_smiley (
 	smileyID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1891,8 +1871,6 @@ ALTER TABLE wcf1_acp_session_access_log ADD FOREIGN KEY (sessionLogID) REFERENCE
 
 ALTER TABLE wcf1_acp_session_log ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 
-ALTER TABLE wcf1_acp_session_virtual ADD FOREIGN KEY (sessionID) REFERENCES wcf1_acp_session (sessionID) ON DELETE CASCADE ON UPDATE CASCADE;
-
 ALTER TABLE wcf1_acp_template ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_ad ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
@@ -2057,8 +2035,6 @@ ALTER TABLE wcf1_session ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) 
 ALTER TABLE wcf1_session ADD FOREIGN KEY (spiderID) REFERENCES wcf1_spider (spiderID) ON DELETE CASCADE;
 ALTER TABLE wcf1_session ADD FOREIGN KEY (pageID) REFERENCES wcf1_page (pageID) ON DELETE SET NULL;
 ALTER TABLE wcf1_session ADD FOREIGN KEY (parentPageID) REFERENCES wcf1_page (pageID) ON DELETE SET NULL;
-
-ALTER TABLE wcf1_session_virtual ADD FOREIGN KEY (sessionID) REFERENCES wcf1_session (sessionID) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE wcf1_smiley ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_smiley ADD FOREIGN KEY (categoryID) REFERENCES wcf1_category (categoryID) ON DELETE SET NULL;

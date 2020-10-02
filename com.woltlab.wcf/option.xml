@@ -638,11 +638,6 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<minvalue>1</minvalue>
 				<suffix>seconds</suffix>
 			</option>
-			<option name="session_enable_virtualization">
-				<categoryname>security.general.session</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
 			<!-- /security.general.session -->
 			<!-- security.general.authentication -->
 			<option name="enable_user_authentication_failure">
