@@ -167,16 +167,14 @@ final class SessionHandler extends SingletonFactory {
 	protected function init() {
 		$this->isACP = (class_exists(WCFACP::class, false) || !PACKAGE_ID);
 		$this->usersOnlyPermissions = UserGroupOptionCacheBuilder::getInstance()->getData([], 'usersOnlyOptions');
+		
+		$this->cookieSuffix = ($this->isACP ? '_acp' : '');
 	}
 	
 	/**
-	 * Suffix used to tell ACP and frontend cookies apart
-	 * 
-	 * @param	string  $cookieSuffix   cookie suffix
+	 * @deprecated 5.4 - This method is a noop. The cookie suffix is determined automatically.
 	 */
-	public function setCookieSuffix($cookieSuffix) {
-		$this->cookieSuffix = $cookieSuffix;
-	}
+	public function setCookieSuffix() { }
 	
 	/**
 	 * Sets a boolean value to determine if the client provided a valid session cookie.
