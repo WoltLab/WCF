@@ -2767,6 +2767,8 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.systemCheck.mysql.innodb.description"><![CDATA[InnoDB (XtraDB unter MariaDB) ist eine transaktionale Storage-Engine von MySQL und wird zwingend für den Betrieb benötigt. Dies ist eine Standardfunktion von MySQL.]]></item>
 		<item name="wcf.acp.systemCheck.directories.writable"><![CDATA[Beschreibbare Verzeichnisse]]></item>
 		<item name="wcf.acp.systemCheck.directories.writable.description"><![CDATA[Einige Verzeichnisse werden zur Laufzeit durch die Software beschrieben, der PHP-Benutzer muss Schreibrechte haben.]]></item>
+		<item name="wcf.acp.systemCheck.php.gd"><![CDATA[Unterstützte Formate der GD-Bibliothek]]></item>
+		<item name="wcf.acp.systemCheck.php.gd.description"><![CDATA[Die GD-Bibliothek muss inklusive der Unterstützung der Formate „jpeg“ und „png“ installiert sein.]]></item>
 	</category>
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Server hinzufügen]]></item>

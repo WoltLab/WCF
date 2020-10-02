@@ -104,6 +104,25 @@
 			<small>{lang}wcf.acp.systemCheck.php.sha256.description{/lang}</small>
 		</dd>
 	</dl>
+	
+	<dl{if !$results[php][gd][result]} class="formError"{/if}>
+		<dt>{lang}wcf.acp.systemCheck.php.gd{/lang}</dt>
+		<dd>
+			{if $results[php][gd][result]}
+				{@$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
+			{else}
+				<ul class="nativeList">
+					{if !$results[php][gd][jpeg]}
+						<li>{@$statusInsufficient} <kbd>jpeg</kbd></li>
+					{/if}
+					{if !$results[php][gd][png]}
+						<li>{@$statusInsufficient} <kbd>png</kbd></li>
+					{/if}
+				</ul>
+			{/if}
+			<small>{lang}wcf.acp.systemCheck.php.gd.description{/lang}</small>
+		</dd>
+	</dl>
 </section>
 
 <section class="section">

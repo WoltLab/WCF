@@ -2694,6 +2694,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.systemCheck.mysql.innodb.description"><![CDATA[InnoDB (XtraDB when using MariaDB) is a transaction storage engine for MySQL and is required for the operation of the software. This is a built-in feature of MySQL.]]></item>
 		<item name="wcf.acp.systemCheck.directories.writable"><![CDATA[Writable Directories]]></item>
 		<item name="wcf.acp.systemCheck.directories.writable.description"><![CDATA[Some directories are being written to during the normal operation. The user that runs the PHP process must have write access.]]></item>
+		<item name="wcf.acp.systemCheck.php.gd"><![CDATA[Supported formats of the GD library]]></item>
+		<item name="wcf.acp.systemCheck.php.gd.description"><![CDATA[The GD library must be installed with support for the formats “jpeg” and “png”.]]></item>
 	</category>
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Add Server]]></item>
