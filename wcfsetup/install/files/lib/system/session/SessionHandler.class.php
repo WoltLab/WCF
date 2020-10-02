@@ -1,11 +1,7 @@
 <?php
 namespace wcf\system\session;
 use wcf\data\acp\session\virtual\ACPSessionVirtual;
-use wcf\data\acp\session\virtual\ACPSessionVirtualAction;
-use wcf\data\acp\session\virtual\ACPSessionVirtualEditor;
 use wcf\data\session\virtual\SessionVirtual;
-use wcf\data\session\virtual\SessionVirtualAction;
-use wcf\data\session\virtual\SessionVirtualEditor;
 use wcf\data\session\SessionEditor;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
