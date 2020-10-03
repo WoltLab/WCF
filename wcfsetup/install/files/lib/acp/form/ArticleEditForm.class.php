@@ -89,7 +89,9 @@ class ArticleEditForm extends ArticleAddForm {
 					'content' => !empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : '',
 					'htmlInputProcessor' => isset($this->htmlInputProcessors[$language->languageID]) ? $this->htmlInputProcessors[$language->languageID] : null,
 					'imageID' => !empty($this->imageID[$language->languageID]) ? $this->imageID[$language->languageID] : null,
-					'teaserImageID' => !empty($this->teaserImageID[$language->languageID]) ? $this->teaserImageID[$language->languageID] : null
+					'teaserImageID' => !empty($this->teaserImageID[$language->languageID]) ? $this->teaserImageID[$language->languageID] : null,
+					'metaTitle' => !empty($this->metaTitle[$language->languageID]) ? $this->metaTitle[$language->languageID] : '',
+					'metaDescription' => !empty($this->metaDescription[$language->languageID]) ? $this->metaDescription[$language->languageID] : '',
 				];
 			}
 		}
@@ -101,7 +103,9 @@ class ArticleEditForm extends ArticleAddForm {
 				'content' => !empty($this->content[0]) ? $this->content[0] : '',
 				'htmlInputProcessor' => isset($this->htmlInputProcessors[0]) ? $this->htmlInputProcessors[0] : null,
 				'imageID' => !empty($this->imageID[0]) ? $this->imageID[0] : null,
-				'teaserImageID' => !empty($this->teaserImageID[0]) ? $this->teaserImageID[0] : null
+				'teaserImageID' => !empty($this->teaserImageID[0]) ? $this->teaserImageID[0] : null,
+				'metaTitle' => !empty($this->metaTitle[0]) ? $this->metaTitle[0] : '',
+				'metaDescription' => !empty($this->metaDescription[0]) ? $this->metaDescription[0] : '',
 			];
 		}
 		
@@ -161,6 +165,8 @@ class ArticleEditForm extends ArticleAddForm {
 				$this->content[$languageID] = $content->content;
 				$this->imageID[$languageID] = $content->imageID;
 				$this->teaserImageID[$languageID] = $content->teaserImageID;
+				$this->metaTitle[$languageID] = $content->metaTitle;
+				$this->metaDescription[$languageID] = $content->metaDescription;
 				
 				// get tags
 				if (MODULE_TAGGING) {

@@ -1,6 +1,10 @@
-{capture assign='pageTitle'}{$articleContent->title}{/capture}
+{capture assign='pageTitle'}{if $articleContent->metaTitle}{$articleContent->metaTitle}{else}{$articleContent->title}{/if}{/capture}
 
 {capture assign='headContent'}
+	{if $articleContent->metaDescription}
+		<meta name="description" content="{$articleContent->metaDescription}">
+	{/if}
+	
 	<script type="application/ld+json">
 		{
 			"@context": "http://schema.org",

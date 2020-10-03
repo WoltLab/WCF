@@ -111,6 +111,8 @@
 		<item name="wcf.acp.article.views"><![CDATA[Views]]></item>
 		<item name="wcf.acp.article.lastVersion"><![CDATA[There are <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.article' objectID=$article->articleID isACP=true}{/link}">previous versions</a> of this article, the last change was by “{$lastVersion->username}” ({@$lastVersion->time|time}).]]></item>
 		<item name="wcf.acp.article.isDeleted"><![CDATA[Deleted]]></item>
+		<item name="wcf.acp.article.metaTitle"><![CDATA[Meta Title]]></item>
+		<item name="wcf.acp.article.metaDescription"><![CDATA[Meta Description]]></item>
 	</category>
 	<category name="wcf.acp.attachment">
 		<item name="wcf.acp.attachment.list"><![CDATA[Attachments]]></item>
