@@ -2635,8 +2635,6 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.poll.description"><![CDATA[Aktualisiert Zähler der Umfragen]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.article"><![CDATA[Artikel aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.article.description"><![CDATA[Aktualisiert den Suchindex für Artikel]]></item>
-		<item name="wcf.acp.rebuildData.com.woltlab.wcf.databaseConvertEncoding"><![CDATA[Datenbank-Kodierung konvertieren]]></item>
-		<item name="wcf.acp.rebuildData.com.woltlab.wcf.databaseConvertEncoding.description"><![CDATA[Warnung: Die Ausführung dieser Aktion kann bei umfangreichen Datenbanken sehr lange dauern.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment"><![CDATA[Kommentare aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment.description"><![CDATA[Aktualisiert die Kommentare]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment.response"><![CDATA[Antworten auf Kommentare aktualisieren]]></item>

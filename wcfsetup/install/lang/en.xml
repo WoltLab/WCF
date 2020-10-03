@@ -2562,8 +2562,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.poll.description"><![CDATA[Rebuilds the poll counters.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.article"><![CDATA[Rebuild Articles]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.article.description"><![CDATA[Rebuilds the article search index.]]></item>
-		<item name="wcf.acp.rebuildData.com.woltlab.wcf.databaseConvertEncoding"><![CDATA[Convert Database Encoding]]></item>
-		<item name="wcf.acp.rebuildData.com.woltlab.wcf.databaseConvertEncoding.description"><![CDATA[Warning: This action may take a while to complete on large databases.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment"><![CDATA[Rebuild Comments]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment.description"><![CDATA[Rebuilds the comments.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment.response"><![CDATA[Rebuild Comment Responses]]></item>

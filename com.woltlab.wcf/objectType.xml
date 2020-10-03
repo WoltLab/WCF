@@ -505,12 +505,6 @@
 		<!-- /importers -->
 		<!-- rebuild data workers -->
 		<type>
-			<name>com.woltlab.wcf.databaseConvertEncoding</name>
-			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
-			<classname>wcf\system\worker\DatabaseConvertEncodingWorker</classname>
-			<nicevalue>-200</nicevalue>
-		</type>
-		<type>
 			<name>com.woltlab.wcf.like</name>
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
 			<classname>wcf\system\worker\LikeRebuildDataWorker</classname>
@@ -1743,6 +1737,9 @@
 		</type>
 		<type name="com.woltlab.wcf.dislike">
 			<definitionname>com.woltlab.wcf.statDailyHandler</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.databaseConvertEncoding">
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
 		</type>
 	</delete>
 </data>
