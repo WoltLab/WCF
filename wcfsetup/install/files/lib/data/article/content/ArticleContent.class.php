@@ -30,6 +30,8 @@ use wcf\util\StringUtil;
  * @property-read	integer|null	$imageID		id of the (image) media object used as article image for the associated language or `null` if no image is used
  * @property-read	integer|null	$teaserImageID          id of the (image) media object used as article teaser image for the associated language or `null` if no image is used                                      
  * @property-read	integer		$hasEmbeddedObjects	is `1` if there are embedded objects in the article content, otherwise `0`
+ * @property-read       string          $metaTitle              title of the article used in the title tag
+ * @property-read       string          $metaDescription        meta description of the article
  */
 class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteController {
 	/**

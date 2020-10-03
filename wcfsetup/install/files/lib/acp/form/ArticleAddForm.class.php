@@ -115,6 +115,18 @@ class ArticleAddForm extends AbstractForm {
 	public $title = [];
 	
 	/**
+	 * article meta titles
+	 * @var	string[]
+	 */
+	public $metaTitle = [];
+	
+	/**
+	 * article meta descriptions
+	 * @var	string[]
+	 */
+	public $metaDescription = [];
+	
+	/**
 	 * tags
 	 * @var	string[][]
 	 */
@@ -244,6 +256,8 @@ class ArticleAddForm extends AbstractForm {
 			$this->publicationDateObj = \DateTime::createFromFormat('Y-m-d\TH:i:sP', $this->publicationDate);
 		}
 		if (isset($_POST['title']) && is_array($_POST['title'])) $this->title = ArrayUtil::trim($_POST['title']);
+		if (isset($_POST['metaTitle']) && is_array($_POST['metaTitle'])) $this->metaTitle = ArrayUtil::trim($_POST['metaTitle']);
+		if (isset($_POST['metaDescription']) && is_array($_POST['metaDescription'])) $this->metaDescription = ArrayUtil::trim($_POST['metaDescription']);
 		if (MODULE_TAGGING && isset($_POST['tags']) && is_array($_POST['tags'])) $this->tags = ArrayUtil::trim($_POST['tags']);
 		if (isset($_POST['teaser']) && is_array($_POST['teaser'])) $this->teaser = ArrayUtil::trim($_POST['teaser']);
 		if (isset($_POST['content']) && is_array($_POST['content'])) $this->content = ArrayUtil::trim($_POST['content']);
@@ -410,6 +424,8 @@ class ArticleAddForm extends AbstractForm {
 					'htmlInputProcessor' => isset($this->htmlInputProcessors[$language->languageID]) ? $this->htmlInputProcessors[$language->languageID] : null,
 					'imageID' => !empty($this->imageID[$language->languageID]) ? $this->imageID[$language->languageID] : null,
 					'teaserImageID' => !empty($this->teaserImageID[$language->languageID]) ? $this->teaserImageID[$language->languageID] : null,
+					'metaTitle' => !empty($this->metaTitle[$language->languageID]) ? $this->metaTitle[$language->languageID] : '',
+					'metaDescription' => !empty($this->metaDescription[$language->languageID]) ? $this->metaDescription[$language->languageID] : '',
 				];
 			}
 		}
@@ -422,6 +438,8 @@ class ArticleAddForm extends AbstractForm {
 				'htmlInputProcessor' => isset($this->htmlInputProcessors[0]) ? $this->htmlInputProcessors[0] : null,
 				'imageID' => !empty($this->imageID[0]) ? $this->imageID[0] : null,
 				'teaserImageID' => !empty($this->teaserImageID[0]) ? $this->teaserImageID[0] : null,
+				'metaTitle' => !empty($this->metaTitle[0]) ? $this->metaTitle[0] : '',
+				'metaDescription' => !empty($this->metaDescription[0]) ? $this->metaDescription[0] : '',
 			];
 		}
 		
@@ -530,6 +548,8 @@ class ArticleAddForm extends AbstractForm {
 			'teaserImages' => $this->teaserImages,
 			'tags' => $this->tags,
 			'title' => $this->title,
+			'metaTitle' => $this->metaTitle,
+			'metaDescription' => $this->metaDescription,
 			'teaser' => $this->teaser,
 			'content' => $this->content,
 			'availableLanguages' => $this->availableLanguages,

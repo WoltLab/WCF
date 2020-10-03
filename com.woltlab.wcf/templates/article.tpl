@@ -1,4 +1,4 @@
-{capture assign='pageTitle'}{$articleContent->title}{/capture}
+{capture assign='pageTitle'}{if $articleContent->metaTitle}{$articleContent->metaTitle}{else}{$articleContent->title}{/if}{/capture}
 
 {assign var='__mainItemScope' value='itemprop="mainEntity" itemscope itemtype="http://schema.org/Article"'}
 

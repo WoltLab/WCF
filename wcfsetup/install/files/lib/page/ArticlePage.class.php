@@ -107,6 +107,9 @@ class ArticlePage extends AbstractArticlePage {
 		MetaTagHandler::getInstance()->addTag('og:url', 'og:url', $this->articleContent->getLink(), true);
 		MetaTagHandler::getInstance()->addTag('og:type', 'og:type', 'article', true);
 		MetaTagHandler::getInstance()->addTag('og:description', 'og:description', ($this->articleContent->teaser ?: StringUtil::decodeHTML(StringUtil::stripHTML($this->articleContent->getFormattedTeaser()))), true);
+		if ($this->articleContent->metaDescription) {
+			MetaTagHandler::getInstance()->addTag('description', 'description', $this->articleContent->metaDescription);
+		}
 		
 		if ($this->articleContent->getTeaserImage() && $this->articleContent->getTeaserImage()->width >= 200 && $this->articleContent->getTeaserImage()->height >= 200) {
 			MetaTagHandler::getInstance()->addTag('og:image', 'og:image', $this->articleContent->getTeaserImage()->getLink(), true);

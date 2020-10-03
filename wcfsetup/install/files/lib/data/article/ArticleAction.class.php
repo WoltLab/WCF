@@ -104,7 +104,9 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 					'teaser' => $content['teaser'],
 					'content' => $content['content'],
 					'imageID' => $content['imageID'],
-					'teaserImageID' => $content['teaserImageID']
+					'teaserImageID' => $content['teaserImageID'],
+					'metaTitle' => $content['metaTitle'] ?? '',
+					'metaDescription' => $content['metaDescription'] ?? '',
 				]);
 				$articleContentEditor = new ArticleContentEditor($articleContent);
 				
@@ -191,7 +193,9 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 							'teaser' => $content['teaser'],
 							'content' => $content['content'],
 							'imageID' => ($isRevert) ? $articleContent->imageID : $content['imageID'],
-							'teaserImageID' => ($isRevert) ? $articleContent->teaserImageID : $content['teaserImageID']
+							'teaserImageID' => ($isRevert) ? $articleContent->teaserImageID : $content['teaserImageID'],
+							'metaTitle' => $content['metaTitle'] ?? '',
+							'metaDescription' => $content['metaDescription'] ?? '',
 						]);
 						
 						$versionData[] = $articleContent;
@@ -213,7 +217,9 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 							'teaser' => $content['teaser'],
 							'content' => $content['content'],
 							'imageID' => ($isRevert) ? null : $content['imageID'],
-							'teaserImageID' => ($isRevert) ? null : $content['teaserImageID']
+							'teaserImageID' => ($isRevert) ? null : $content['teaserImageID'],
+							'metaTitle' => $content['metaTitle'] ?? '',
+							'metaDescription' => $content['metaDescription'] ?? '',
 						]);
 						$articleContentEditor = new ArticleContentEditor($articleContent);
 						
