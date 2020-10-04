@@ -5327,5 +5327,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 	<category name="wcf.upload">
 		<item name="wcf.upload.error.noImage"><![CDATA[The uploaded file is no image.]]></item>
 		<item name="wcf.upload.error.reachedRemainingLimit"><![CDATA[You have selected too many files. You can only upload {#$maxFiles} more file{if $maxFiles != 1}s{/if}.]]></item>
+		<item name="wcf.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
 	</category>
 </language>

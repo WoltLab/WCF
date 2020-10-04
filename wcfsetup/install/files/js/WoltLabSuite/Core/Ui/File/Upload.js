@@ -196,7 +196,7 @@ define(['Core', 'Language', 'Dom/Util', 'WoltLabSuite/Core/Ui/File/Delete', 'Upl
 		},
 		
 		validateUpload: function(files) {
-			if (this._options.maxFiles === null || files.length + this.countFiles() <= this._options.maxFiles) {
+			if (this._options.maxFiles === null || files.length + this.countFiles() <= this._options.maxFiles) {
 				return true;
 			}
 			else {
@@ -233,7 +233,7 @@ define(['Core', 'Language', 'Dom/Util', 'WoltLabSuite/Core/Ui/File/Delete', 'Upl
 		/**
 		 * Checks the maximum number of files and enables or disables the upload button.
 		 */
-		checkMaxFiles: function() {
+		checkMaxFiles: function() {
 			if (this._options.maxFiles !== null && this.countFiles() >= this._options.maxFiles) {
 				elHide(this._button);
 			}
