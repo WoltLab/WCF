@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' pageTitle='wcf.acp.systemCheck'}
 
 <header class="contentHeader">
 	<h1 class="contentTitle">{lang}wcf.acp.systemCheck{/lang}</h1>
