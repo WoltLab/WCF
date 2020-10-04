@@ -36,12 +36,6 @@ class RebuildDataPage extends AbstractPage {
 	public $objectTypes = [];
 	
 	/**
-	 * display a warning if InnoDB uses a slow configuration
-	 * @var	boolean
-	 */
-	public $showInnoDBWarning = false;
-	
-	/**
 	 * @inheritDoc
 	 */
 	public function readData() {
@@ -64,14 +58,6 @@ class RebuildDataPage extends AbstractPage {
 			
 			return 0;
 		});
-		
-		$sql = "SHOW VARIABLES LIKE 'innodb_flush_log_at_trx_commit'";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute();
-		$row = $statement->fetchArray();
-		if ($row && $row['Value'] == 1) {
-			$this->showInnoDBWarning = true;
-		}
 		
 		// We're disallowing rebuilding any other data unless the
 		// database encoding has been converted to utf8mb4. The
@@ -102,7 +88,6 @@ class RebuildDataPage extends AbstractPage {
 		WCF::getTPL()->assign([
 			'convertEncoding' => $this->convertEncoding,
 			'objectTypes' => $this->objectTypes,
-			'showInnoDBWarning' => $this->showInnoDBWarning
 		]);
 	}
 }
