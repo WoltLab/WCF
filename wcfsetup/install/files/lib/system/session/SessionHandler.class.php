@@ -742,18 +742,9 @@ final class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Updates last activity time to protect session from expiring.
+	 * @deprecated 5.4 - This method is a noop. The lastActivityTime is always updated immediately after loading.
 	 */
-	public function keepAlive() {
-		$this->disableUpdate();
-		
-		// update last activity time
-		/** @var \wcf\data\DatabaseObjectEditor $sessionEditor */
-		$sessionEditor = new $this->sessionEditorClassName($this->session);
-		$sessionEditor->update([
-			'lastActivityTime' => TIME_NOW
-		]);
-	}
+	public function keepAlive() { }
 	
 	/**
 	 * Deletes this session and its related data.

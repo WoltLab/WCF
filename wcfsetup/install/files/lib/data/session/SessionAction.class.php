@@ -55,9 +55,6 @@ class SessionAction extends AbstractDatabaseObjectAction {
 			return [];
 		}
 		
-		// update last activity time
-		SessionHandler::getInstance()->keepAlive();
-		
 		// update notification counts
 		$this->keepAliveData = [
 			'userNotificationCount' => UserNotificationHandler::getInstance()->getNotificationCount(true)
