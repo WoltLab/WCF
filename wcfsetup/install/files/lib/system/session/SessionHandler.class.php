@@ -287,13 +287,6 @@ final class SessionHandler extends SingletonFactory {
 	 * Defines global wcf constants related to session.
 	 */
 	protected function defineConstants() {
-		/* the SID*-constants below are deprecated since 3.0 */
-		if (!defined('SID_ARG_1ST')) define('SID_ARG_1ST', '');
-		if (!defined('SID_ARG_2ND')) define('SID_ARG_2ND', '');
-		if (!defined('SID_ARG_2ND_NOT_ENCODED')) define('SID_ARG_2ND_NOT_ENCODED', '');
-		if (!defined('SID')) define('SID', '');
-		if (!defined('SID_INPUT_TAG')) define('SID_INPUT_TAG', '');
-		
 		// security token
 		if (!defined('SECURITY_TOKEN')) define('SECURITY_TOKEN', $this->getSecurityToken());
 		if (!defined('SECURITY_TOKEN_INPUT_TAG')) define('SECURITY_TOKEN_INPUT_TAG', '<input type="hidden" name="t" value="'.$this->getSecurityToken().'">');
