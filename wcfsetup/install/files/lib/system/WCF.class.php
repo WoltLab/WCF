@@ -593,8 +593,8 @@ class WCF {
 				$application->__run();
 			}
 			
-			// TODO: Check this
-			self::getTPL()->assign('__sessionKeepAlive', 60 * 50);
+			/** @deprecated The below variable is deprecated. */
+			self::getTPL()->assign('__sessionKeepAlive', 59 * 60);
 		}
 	}
 	

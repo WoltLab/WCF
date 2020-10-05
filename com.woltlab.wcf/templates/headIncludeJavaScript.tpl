@@ -233,18 +233,13 @@ window.addEventListener('pageshow', function(event) {
 			});
 		{/if}
 		
-		{if $__sessionKeepAlive|isset}
-			new WCF.System.KeepAlive({@$__sessionKeepAlive});
-			
-			{if ENABLE_POLLING && $__wcf->user->userID}
-				require(['WoltLabSuite/Core/Notification/Handler'], function(NotificationHandler) {
-					NotificationHandler.setup({
-						enableNotifications: {if $__wcf->useDesktopNotifications()}true{else}false{/if},
-						icon: '{$__wcf->getStyleHandler()->getStyle()->getFaviconAppleTouchIcon()}',
-						sessionKeepAlive: {@$__sessionKeepAlive}
-					});
+		{if ENABLE_POLLING && $__wcf->user->userID}
+			require(['WoltLabSuite/Core/Notification/Handler'], function(NotificationHandler) {
+				NotificationHandler.setup({
+					enableNotifications: {if $__wcf->useDesktopNotifications()}true{else}false{/if},
+					icon: '{$__wcf->getStyleHandler()->getStyle()->getFaviconAppleTouchIcon()}',
 				});
-			{/if}
+			});
 		{/if}
 	});
 </script>
