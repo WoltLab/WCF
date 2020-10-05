@@ -153,6 +153,10 @@ final class SessionHandler extends SingletonFactory {
 	 */
 	protected $usersOnlyPermissions = [];
 	
+	private const ACP_SESSION_LIFETIME = 7200;
+	private const GUEST_SESSION_LIFETIME = 7200;
+	private const USER_SESSION_LIFETIME = 86400 * 14;
+	
 	/**
 	 * Provides access to session data.
 	 * 
@@ -381,6 +385,15 @@ final class SessionHandler extends SingletonFactory {
 		$row = $statement->fetchSingleRow();
 		
 		if (!$row) {
+			return false;
+		}
+		
+		// Check whether the session technically already expired.
+		$lifetime =
+			($this->isACP   ? self::ACP_SESSION_LIFETIME  :
+			($row['userID'] ? self::USER_SESSION_LIFETIME :
+			(                 self::GUEST_SESSION_LIFETIME)));
+		if ($row['lastActivityTime'] < (TIME_NOW - $lifetime)) {
 			return false;
 		}
 		
@@ -774,6 +787,38 @@ final class SessionHandler extends SingletonFactory {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([$this->sessionID]);
 		}
+	}
+	
+	/**
+	 * Prunes expired sessions.
+	 */
+	public function prune() {
+		// Prevent the sessions from expiring while the development mode is active.
+		if (!ENABLE_DEBUG_MODE || !ENABLE_DEVELOPER_TOOLS) {
+			$sql = "DELETE FROM	wcf".WCF_N."_user_session
+				WHERE		lastActivityTime < ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				TIME_NOW - self::ACP_SESSION_LIFETIME,
+			]);
+		}
+		
+		$sql = "DELETE FROM	wcf".WCF_N."_user_session
+			WHERE		(lastActivityTime < ? AND userID IS NULL)
+				OR	(lastActivityTime < ? AND userID IS NOT NULL)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			TIME_NOW - self::GUEST_SESSION_LIFETIME,
+			TIME_NOW - self::USER_SESSION_LIFETIME,
+		]);
+		
+		// Legacy sessions live 120 minutes, they will be re-created on demand.
+		$sql = "DELETE FROM	wcf".WCF_N."_session
+			WHERE		lastActivityTime < ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			TIME_NOW - (3600 * 2),
+		]);
 	}
 	
 	/**

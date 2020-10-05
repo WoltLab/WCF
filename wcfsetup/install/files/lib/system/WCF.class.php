@@ -396,6 +396,9 @@ class WCF {
 		// Virtual sessions no longer exist since 5.4.
 		define('SESSION_ENABLE_VIRTUALIZATION', 1);
 		
+		// The session timeout is fully managed since 5.4.
+		define('SESSION_TIMEOUT', 3600);
+		
 		$filename = WCF_DIR.'options.inc.php';
 		
 		// create options file if doesn't exist
@@ -590,8 +593,8 @@ class WCF {
 				$application->__run();
 			}
 			
-			// refresh the session 1 minute before it expires
-			self::getTPL()->assign('__sessionKeepAlive', SESSION_TIMEOUT - 60);
+			// TODO: Check this
+			self::getTPL()->assign('__sessionKeepAlive', 60 * 50);
 		}
 	}
 	

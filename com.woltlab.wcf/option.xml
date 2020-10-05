@@ -623,19 +623,12 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 			</option>
 			<!-- /general.system.proxy -->
 			<!-- security.general.session -->
-			<option name="session_timeout">
-				<categoryname>security.general.session</categoryname>
-				<optiontype>integer</optiontype>
-				<defaultvalue>1800</defaultvalue>
-				<minvalue>600</minvalue>
-				<maxvalue>86400</maxvalue>
-				<suffix>seconds</suffix>
-			</option>
 			<option name="user_online_timeout">
 				<categoryname>security.general.session</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>900</defaultvalue>
 				<minvalue>1</minvalue>
+				<maxvalue>7200</maxvalue>
 				<suffix>seconds</suffix>
 			</option>
 			<!-- /security.general.session -->
