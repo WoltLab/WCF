@@ -99,8 +99,6 @@ CREATE TABLE wcf1_acp_session (
 	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
 	userAgent VARCHAR(255) NOT NULL DEFAULT '',
 	lastActivityTime INT(10) NOT NULL DEFAULT 0,
-	requestURI VARCHAR(255) NOT NULL DEFAULT '', -- TODO: Remove this.
-	requestMethod VARCHAR(7) NOT NULL DEFAULT '', -- TODO: Remove this.
 	sessionVariables MEDIUMBLOB,
 	KEY (userID),
 	KEY (lastActivityTime)
