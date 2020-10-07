@@ -92,33 +92,33 @@ class SystemCheckPage extends AbstractPage {
 		'wcf'. WCF_N .'_user' => [
 			'avatarID' => [
 				'referenceTable' => 'wcf'. WCF_N .'_user_avatar',
-				'referenceColumn' => 'avatarID'
-			]
+				'referenceColumn' => 'avatarID',
+			],
 		],
 		'wcf'. WCF_N .'_comment' => [
 			'userID' => [
 				'referenceTable' => 'wcf'. WCF_N .'_user',
-				'referenceColumn' => 'userID'
+				'referenceColumn' => 'userID',
 			],
 			'objectTypeID' => [
 				'referenceTable' => 'wcf'. WCF_N .'_object_type',
-				'referenceColumn' => 'objectTypeID'
-			]
+				'referenceColumn' => 'objectTypeID',
+			],
 		],
 		'wcf'. WCF_N .'_moderation_queue' => [
 			'objectTypeID' => [
 				'referenceTable' => 'wcf'. WCF_N .'_object_type',
-				'referenceColumn' => 'objectTypeID'
+				'referenceColumn' => 'objectTypeID',
 			],
 			'assignedUserID' => [
 				'referenceTable' => 'wcf'. WCF_N .'_user',
-				'referenceColumn' => 'userID'
+				'referenceColumn' => 'userID',
 			],
 			'userID' => [
 				'referenceTable' => 'wcf'. WCF_N .'_user',
-				'referenceColumn' => 'userID'
-			]
-		]
+				'referenceColumn' => 'userID',
+			],
+		],
 	];
 	
 	public $results = [
@@ -131,10 +131,15 @@ class SystemCheckPage extends AbstractPage {
 			'foreignKeys' => false,
 			'searchEngine' => [
 				'result' => false, 
-				'incorrectTables' => []
+				'incorrectTables' => [],
 			],
 		],
 		'php' => [
+			'gd' => [
+				'jpeg' => false,
+				'png' => false,
+				'result' => false,
+			],
 			'extension' => [],
 			'memoryLimit' => [
 				'required' => '0',
@@ -181,6 +186,7 @@ class SystemCheckPage extends AbstractPage {
 		$this->validatePhpExtensions();
 		$this->validatePhpMemoryLimit();
 		$this->validatePhpVersion();
+		$this->validatePhpGdSupport();
 		$this->validateWritableDirectories();
 	}
 	
@@ -380,6 +386,21 @@ class SystemCheckPage extends AbstractPage {
 		}
 		
 		$this->results['status']['php'] = $this->results['status']['php'] && ($this->results['php']['version']['result'] !== 'unsupported');
+	}
+	
+	protected function validatePhpGdSupport() {
+		if (!function_exists('\gd_info')) {
+			$this->results['status']['php'] = false;
+			return;
+		}
+		
+		$gdInfo = \gd_info();
+		$this->results['php']['gd']['jpeg'] = !empty($gdInfo['JPEG Support']);
+		$this->results['php']['gd']['png'] = !empty($gdInfo['PNG Support']);
+		
+		$this->results['php']['gd']['result'] = $this->results['php']['gd']['jpeg'] && $this->results['php']['gd']['png'];
+		
+		$this->results['status']['php'] = $this->results['status']['php'] && $this->results['php']['gd']['result'];
 	}
 	
 	protected function validateWritableDirectories() {
