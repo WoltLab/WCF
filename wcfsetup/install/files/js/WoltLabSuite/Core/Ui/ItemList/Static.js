@@ -88,7 +88,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'Ui/Simple
 							for (var i = 0, length = values.length; i < length; i++) {
 								input = elCreate('input');
 								input.type = 'hidden';
-								input.name = options.submitFieldName.replace(/{\$objectId}/, values[i].objectId);
+								input.name = options.submitFieldName.replace(/\{\$objectId\}/, values[i].objectId);
 								input.value = values[i].value;
 								
 								form.appendChild(input);
