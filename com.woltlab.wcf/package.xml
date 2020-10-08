@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>5.3.0 Beta 2</version>
-		<date>2020-10-03</date>
+		<version>5.3.0 RC 1</version>
+		<date>2020-10-08</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -50,11 +50,63 @@
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="5.3.0 Beta 1">
+	<instructions type="update" fromversion="5.2.*">
+		<!-- We need to deploy `lib/core.functions.php` and `lib/system/api/*` first, otherwise
+		     Guzzle can not be found during the development of the regular file PIP. -->
+		<instruction type="file" run="standalone">files_pre.tar</instruction>
+		
+		<!-- Verify that there are no duplicate usernames and warn about them if any are found. -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.3_preUpdate.php</instruction>
+		
+		<!-- Deploy the database changes as early as possible to avoid any conflicts by calls to
+		     tables that do not exist in 5.2, in particular `wcfN_devtools_missing_language_item`.-->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.3.php</instruction>
+		
+		<instruction type="file" />
+		<instruction type="acpTemplate" />
+		<instruction type="template" />
+		
+		<instruction type="option" run="standalone" />
+		
+		<instruction type="acpMenu" />
+		<instruction type="clipboardAction" />
+		<instruction type="mediaProvider" />
+		<instruction type="userGroupOption" />
+		<instruction type="userMenu" />
+		<instruction type="page" />
+		
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.3_emailConfirmation.php</instruction>
+		
+		<!-- The internal data structure of sitemaps have been modified, this script must be run before
+		     the `objectType` pip to prevent any data corruption. -->
+		<instruction type="script">acp/update_com.woltlab.wcf_5.3_sitemaps.php</instruction>
+		
+		<instruction type="objectTypeDefinition" />
+		<instruction type="objectType" />
+		
+		<instruction type="userNotificationEvent" />
+		<instruction type="userOption" />
+		
+		<instruction type="style" run="standalone">defaultStyle.tar</instruction>
+		
+		<instruction type="language" />
+		
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.3_invalidateMailForm.php</instruction>
+		
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.3_style.php</instruction>
+		
+		<!-- This SQL step purges the legacy package servers, this must come last to make sure that an early
+		     abort of the core upgrade does not brick the installation. -->
+		<instruction type="sql">update_5.3.sql</instruction>
+	</instructions>
+	
+	<instructions type="update" fromversion="5.3.0 Beta 2">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
 		
 		<instruction type="language" />
+		
+		<instruction type="objectType" />
 	</instructions>
 </package>

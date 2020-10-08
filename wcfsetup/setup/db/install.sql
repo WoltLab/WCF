@@ -199,8 +199,8 @@ CREATE TABLE wcf1_article_content (
 	imageID INT(10),
 	teaserImageID INT(10),
 	hasEmbeddedObjects TINYINT(1) NOT NULL DEFAULT 0,
-	metaTitle VARCHAR(255) NOT NULL,
-	metaDescription VARCHAR(255) NOT NULL,
+	metaTitle VARCHAR(255) NOT NULL DEFAULT '',
+	metaDescription VARCHAR(255) NOT NULL DEFAULT '',
 	
 	UNIQUE KEY (articleID, languageID)
 );
