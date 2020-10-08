@@ -37,7 +37,7 @@
 		Language.addObject({
 			'wcf.upload.error.reachedRemainingLimit': '{jslang __literal=true}wcf.upload.error.reachedRemainingLimit{/jslang}',
 			'wcf.upload.error.noImage': '{jslang}wcf.upload.error.noImage{/jslang}',
-			'wcf.upload.error.uploadFailed': '{lang}wcf.upload.error.uploadFailed{/lang}',
+			'wcf.upload.error.uploadFailed': '{jslang}wcf.upload.error.uploadFailed{/jslang}',
 		});
 		
 		new Upload("{$uploadFieldId}UploadButtonDiv", "{$uploadFieldId}uploadFileList", {
