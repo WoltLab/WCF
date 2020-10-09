@@ -94,6 +94,7 @@
 			> ul {
 				@include inlineList;
 				
+				align-items: flex-start;
 				flex-wrap: wrap;
 				justify-content: flex-end;
 				margin-top: -5px;
