@@ -148,12 +148,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/WoltLab/guzzle",
-            "reference": "2d4592a12d3d6757f9969122730e69d6b7c82af0"
+            "reference": "40e0ba7d933ec47237adb4f35ba363c3d8ffe453"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/WoltLab/guzzle/zipball/2d4592a12d3d6757f9969122730e69d6b7c82af0",
-            "reference": "2d4592a12d3d6757f9969122730e69d6b7c82af0",
+            "url": "https://api.github.com/repos/WoltLab/guzzle/zipball/40e0ba7d933ec47237adb4f35ba363c3d8ffe453",
+            "reference": "40e0ba7d933ec47237adb4f35ba363c3d8ffe453",
             "shasum": ""
         },
         "require": {
@@ -171,7 +171,7 @@
         "suggest": {
             "psr/log": "Required for using the Log middleware"
         },
-        "time": "2020-09-30T10:06:20+00:00",
+        "time": "2020-10-09T13:06:06+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
