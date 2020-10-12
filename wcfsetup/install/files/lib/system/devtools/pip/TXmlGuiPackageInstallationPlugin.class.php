@@ -500,7 +500,14 @@ XML;
 	 * @param	\DOMElement	$newElement	added new element
 	 */
 	protected function insertNewXmlElement(XML $xml, \DOMElement $newElement) {
-		$xml->xpath()->query('/ns:data/ns:import')->item(0)->appendChild($newElement);
+		$import = $xml->xpath()->query('/ns:data/ns:import')->item(0);
+		if ($import === null) {
+			$data = $xml->xpath()->query('/ns:data')->item(0);
+			$import = $xml->getDocument()->createElement('import');
+			DOMUtil::prepend($import, $data);
+		}
+		
+		$import->appendChild($newElement);
 	}
 	
 	/**
