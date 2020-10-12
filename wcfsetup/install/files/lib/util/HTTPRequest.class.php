@@ -261,6 +261,16 @@ final class HTTPRequest {
 	 * @return	array
 	 */
 	public function getReply() {
+		if (!$this->response) {
+			return [
+				'statusCode' => 0,
+				'headers' => [],
+				'httpHeaders' => [],
+				'body' => '',
+				'url' => $this->url
+			];
+		}
+
 		$headers = [];
 		$legacyHeaders = [];
 		
