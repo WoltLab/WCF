@@ -171,7 +171,7 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
 			'pluginName' => 'wcf.acp.pip.pip.pluginName',
-			'className' => 'wcf.acp.pip.pip.className'
+			'className' => 'wcf.form.field.className',
 		]);
 	}
 	
