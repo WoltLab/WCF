@@ -58,7 +58,7 @@ final class ExceptionLogUtil {
 			$chainRegex = new Regex("======\n".
 			"Error Class: (?P<class>.*?)\s*\n".
 			"Error Message: (?P<message>.*?)\s*\n".
-			"Error Code: (?P<code>\d+)\s*\n".
+			"Error Code: (?P<code>[a-zA-Z0-9]+)\s*\n".
 			"File: (?P<file>.*?) \((?P<line>\d+)\)\s*\n".
 			"Extra Information: (?P<information>(?:-|[a-zA-Z0-9+/]+={0,2}))\s*\n".
 			"Stack Trace: (?P<stack>\[[^\n]+\])", Regex::DOT_ALL);
