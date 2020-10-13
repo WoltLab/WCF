@@ -66,12 +66,6 @@ final class SessionHandler extends SingletonFactory {
 	protected $groupData = null;
 	
 	/**
-	 * true if client provided a valid session cookie
-	 * @var	boolean
-	 */
-	protected $hasValidCookie = false;
-	
-	/**
 	 * true if within ACP or WCFSetup
 	 * @var boolean
 	 */
@@ -104,18 +98,6 @@ final class SessionHandler extends SingletonFactory {
 	 * @var \wcf\data\session\Session
 	 */
 	protected $legacySession = null;
-	
-	/**
-	 * session class name
-	 * @var	string
-	 */
-	protected $sessionClassName = '';
-	
-	/**
-	 * session editor class name
-	 * @var	string
-	 */
-	protected $sessionEditorClassName = '';
 	
 	/**
 	 * style id
@@ -193,14 +175,9 @@ final class SessionHandler extends SingletonFactory {
 	public function setCookieSuffix() { }
 	
 	/**
-	 * Sets a boolean value to determine if the client provided a valid session cookie.
-	 * 
-	 * @param	boolean		$hasValidCookie
-	 * @since	3.0
+	 * @deprecated 5.4 - This method is a noop. Cookie handling works automatically.
 	 */
-	public function setHasValidCookie($hasValidCookie) {
-		$this->hasValidCookie = $hasValidCookie;
-	}
+	public function setHasValidCookie($hasValidCookie) { }
 	
 	/**
 	 * Returns true if client provided a valid session cookie.
@@ -208,22 +185,37 @@ final class SessionHandler extends SingletonFactory {
 	 * @return	boolean
 	 * @since	3.0
 	 */
-	public function hasValidCookie() {
-		return $this->hasValidCookie;
+	public function hasValidCookie(): bool {
+		$cookieName = COOKIE_PREFIX.($this->isACP ? 'acp' : 'user')."_session";
+		$sessionID = $_COOKIE[$cookieName] ?? null;
+		
+		return $sessionID === $this->sessionID;
 	}
 	
 	/**
-	 * Loads an existing session or creates a new one.
-	 * 
-	 * @param	string		$sessionEditorClassName
-	 * @param	string		$sessionID
+	 * @deprecated 5.4 - Sessions are managed automatically. Use loadFromCookie().
 	 */
 	public function load($sessionEditorClassName, $sessionID) {
-		$this->sessionEditorClassName = $sessionEditorClassName;
-		$this->sessionClassName = call_user_func([$sessionEditorClassName, 'getBaseClass']);
-		
 		$hasSession = false;
 		if (!empty($sessionID)) {
+			$hasSession = $this->getExistingSession($sessionID);
+		}
+		
+		// create new session
+		if (!$hasSession) {
+			$this->create();
+		}
+	}
+	
+	/**
+	 * Loads the session matching the session cookie.
+	 */
+	public function loadFromCookie() {
+		$cookieName = COOKIE_PREFIX.($this->isACP ? 'acp' : 'user')."_session";
+		$sessionID = $_COOKIE[$cookieName] ?? null;
+		
+		$hasSession = false;
+		if ($sessionID) {
 			$hasSession = $this->getExistingSession($sessionID);
 		}
 		

@@ -191,8 +191,6 @@ class WCFACP extends WCF {
 		
 		$factory = new ACPSessionFactory();
 		$factory->load();
-		
-		self::$sessionObj->setHasValidCookie($factory->hasValidCookie());
 	}
 	
 	/**

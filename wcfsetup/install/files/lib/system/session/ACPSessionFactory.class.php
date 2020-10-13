@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\session;
 use wcf\data\acp\session\ACPSessionEditor;
+use wcf\data\session\Session;
 use wcf\system\event\EventHandler;
-use wcf\util\HeaderUtil;
 
 /**
  * Handles the ACP session of the active user.
@@ -14,14 +14,12 @@ use wcf\util\HeaderUtil;
  */
 class ACPSessionFactory {
 	/**
-	 * suffix used to tell ACP and frontend cookies apart
-	 * @var string
+	 * @deprecated 5.4 - This property is not read any longer.
 	 */
 	protected $cookieSuffix = 'acp_';
 	
 	/**
-	 * session editor class name
-	 * @var	string
+	 * @deprecated 5.4 - This property is not read any longer.
 	 */
 	protected $sessionEditor = ACPSessionEditor::class;
 	
@@ -29,9 +27,7 @@ class ACPSessionFactory {
 	 * Loads the object of the active session.
 	 */
 	public function load() {
-		// get session
-		$sessionID = $this->readSessionID();
-		SessionHandler::getInstance()->load($this->sessionEditor, $sessionID);
+		SessionHandler::getInstance()->loadFromCookie();
 		
 		// call beforeInit event
 		if (!defined('NO_IMPORTS')) {
@@ -47,19 +43,10 @@ class ACPSessionFactory {
 	}
 	
 	/**
-	 * Returns true if session was based upon a valid cookie.
-	 * 
-	 * @return	boolean
-	 * @since	3.0
+	 * @deprecated 5.4 - Sessions are fully managed by SessionHandler.
 	 */
 	public function hasValidCookie() {
-		if (isset($_COOKIE[COOKIE_PREFIX.$this->cookieSuffix.'session'])) {
-			if ($_COOKIE[COOKIE_PREFIX.$this->cookieSuffix.'session'] == SessionHandler::getInstance()->sessionID) {
-				return true;
-			}
-		}
-		
-		return false;
+		return SessionHandler::getInstance()->hasValidCookie();
 	}
 	
 	/**
@@ -70,10 +57,7 @@ class ACPSessionFactory {
 	}
 	
 	/**
-	 * Returns the session id from cookie. Returns an empty string,
-	 * if no session cookie was provided.
-	 * 
-	 * @return	string
+	 * @deprecated 5.4 - Sessions are fully managed by SessionHandler.
 	 */
 	protected function readSessionID() {
 		// get sessionID from cookie

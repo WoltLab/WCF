@@ -438,7 +438,6 @@ class WCF {
 		$factory->load();
 		
 		self::$sessionObj = SessionHandler::getInstance();
-		self::$sessionObj->setHasValidCookie($factory->hasValidCookie());
 	}
 	
 	/**
