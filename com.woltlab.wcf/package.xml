@@ -100,6 +100,10 @@
 		<instruction type="sql">update_5.3.sql</instruction>
 	</instructions>
 	
+	<!--
+		Update 5.3.0 RC 1 -> 5.3.0 RC 2: Run the script `update_com.woltlab.wcf_5.3.0.rc.2.php`
+	-->
+	
 	<instructions type="update" fromversion="5.3.0 Beta 2">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
