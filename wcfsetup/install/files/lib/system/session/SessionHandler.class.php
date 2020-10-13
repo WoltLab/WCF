@@ -8,6 +8,7 @@ use wcf\system\cache\builder\SpiderCacheBuilder;
 use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\database\DatabaseException;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\page\PageLocationManager;
@@ -414,17 +415,27 @@ final class SessionHandler extends SingletonFactory {
 		
 		// Fetch legacy session.
 		if (!$this->isACP) {
+			$condition = new PreparedStatementConditionBuilder();
+			
+			if ($row['userID']) {
+				// The `userID IS NOT NULL` condition technically is redundant, but is added for
+				// clarity and consistency with the guest case below.
+				$condition->add('userID IS NOT NULL');
+				$condition->add('userID = ?', [$row['userID']]);
+			}
+			else {
+				$condition->add('userID IS NULL');
+				$condition->add('(sessionID = ? OR spiderID = ?)', [
+					$row['sessionID'],
+					$this->getSpiderID(UserUtil::getUserAgent()),
+				]);
+			}
+			
 			$sql = "SELECT	*
 				FROM	wcf".WCF_N."_session
-				WHERE	(userID IS NULL AND sessionID = ?)
-				OR	(userID IS NULL AND spiderID = ?)
-				OR	(userID IS NOT NULL AND userID = ?)";
+				".$condition;
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([
-				$row['sessionID'],
-				$this->getSpiderID(UserUtil::getUserAgent()),
-				$row['userID'],
-			]);
+			$statement->execute($condition->getParameters());
 			$this->legacySession = $statement->fetchSingleObject(Session::class);
 			
 			if (!$this->legacySession) {
