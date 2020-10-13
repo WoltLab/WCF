@@ -87,13 +87,13 @@
 		<instruction type="userNotificationEvent" />
 		<instruction type="userOption" />
 		
-		<instruction type="style" run="standalone">defaultStyle.tar</instruction>
-		
 		<instruction type="language" />
 		
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.3_invalidateMailForm.php</instruction>
 		
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.3_style.php</instruction>
+		
+		<instruction type="style" run="standalone">defaultStyle.tar</instruction>
 		
 		<!-- This SQL step purges the legacy package servers, this must come last to make sure that an early
 		     abort of the core upgrade does not brick the installation. -->
