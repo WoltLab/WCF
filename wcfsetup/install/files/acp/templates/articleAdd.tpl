@@ -1,7 +1,13 @@
 {capture assign='__contentHeader'}
 	<header class="contentHeader">
 		<div class="contentHeaderTitle">
-			<h1 class="contentTitle">{if $action == 'add'}{lang}wcf.acp.article.add{/lang}{else}{lang}wcf.acp.article.edit{/lang}{/if}</h1>
+			<h1 class="contentTitle">
+				{if $articleIsFrontend|empty}
+					{if $action == 'add'}{lang}wcf.acp.article.add{/lang}{else}{lang}wcf.acp.article.edit{/lang}{/if}
+				{else}
+					{$__wcf->getActivePage()->getTitle()}
+				{/if}
+			</h1>
 		</div>
 		
 		<nav class="contentHeaderNavigation">
@@ -298,6 +304,38 @@
 				</dd>
 			</dl>
 			
+			<dl{if $errorField == 'metaTitle'} class="formError"{/if}>
+				<dt><label for="metaTitle0">{lang}wcf.acp.article.metaTitle{/lang}</label></dt>
+				<dd>
+					<input type="text" id="metaTitle0" name="metaTitle[0]" value="{if !$metaTitle[0]|empty}{$metaTitle[0]}{/if}" class="long" maxlength="255">
+					{if $errorField == 'metaTitle'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.article.metaTitle.error.{@$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
+				</dd>
+			</dl>
+			
+			<dl{if $errorField == 'metaDescription'} class="formError"{/if}>
+				<dt><label for="metaDescription0">{lang}wcf.acp.article.metaDescription{/lang}</label></dt>
+				<dd>
+					<input type="text" id="metaDescription0" name="metaDescription[0]" value="{if !$metaDescription[0]|empty}{$metaDescription[0]}{/if}" class="long" maxlength="255">
+					{if $errorField == 'metaDescription'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.article.metaDescription.error.{@$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
+				</dd>
+			</dl>
+			
 			{if MODULE_TAGGING}
 				{include file='tagInput' tagInputSuffix='0' tagSubmitFieldName='tags[0][]' tags=$tags[0] sandbox=true}
 			{/if}
@@ -418,6 +456,38 @@
 											{lang}wcf.global.form.error.empty{/lang}
 										{else}
 											{lang}wcf.acp.article.title.error.{@$errorType}{/lang}
+										{/if}
+									</small>
+								{/if}
+							</dd>
+						</dl>
+						
+						<dl{if $errorField == 'metaTitle'|concat:$availableLanguage->languageID} class="formError"{/if}>
+							<dt><label for="metaTitle{@$availableLanguage->languageID}">{lang}wcf.acp.article.metaTitle{/lang}</label></dt>
+							<dd>
+								<input type="text" id="metaTitle{@$availableLanguage->languageID}" name="metaTitle[{@$availableLanguage->languageID}]" value="{if !$metaTitle[$availableLanguage->languageID]|empty}{$metaTitle[$availableLanguage->languageID]}{/if}" class="long" maxlength="255">
+								{if $errorField == 'metaTitle'|concat:$availableLanguage->languageID}
+									<small class="innerError">
+										{if $errorType == 'empty'}
+											{lang}wcf.global.form.error.empty{/lang}
+										{else}
+											{lang}wcf.acp.article.metaTitle.error.{@$errorType}{/lang}
+										{/if}
+									</small>
+								{/if}
+							</dd>
+						</dl>
+						
+						<dl{if $errorField == 'metaDescription'|concat:$availableLanguage->languageID} class="formError"{/if}>
+							<dt><label for="metaDescription{@$availableLanguage->languageID}">{lang}wcf.acp.article.metaDescription{/lang}</label></dt>
+							<dd>
+								<input type="text" id="metaDescription{@$availableLanguage->languageID}" name="metaDescription[{@$availableLanguage->languageID}]" value="{if !$metaDescription[$availableLanguage->languageID]|empty}{$metaDescription[$availableLanguage->languageID]}{/if}" class="long" maxlength="255">
+								{if $errorField == 'metaDescription'|concat:$availableLanguage->languageID}
+									<small class="innerError">
+										{if $errorType == 'empty'}
+											{lang}wcf.global.form.error.empty{/lang}
+										{else}
+											{lang}wcf.acp.article.metaDescription.error.{@$errorType}{/lang}
 										{/if}
 									</small>
 								{/if}

@@ -38,7 +38,7 @@
 				</dl>
 				
 				<script data-relocate="true">
-					require(['WoltLabSuite/Core/Language/Chooser', 'WoltLabSuite/Core/Ui/ItemList'], function(LanguageChooser, UiItemList) {
+					require(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {
 						UiItemList.init(
 							'tagSearchInput',
 							[{if !$tagNames|empty}{implode from=$tagNames item=tagName}'{@$tagName|encodeJS}'{/implode}{/if}],
@@ -51,14 +51,6 @@
 								submitFieldName: 'tagNames[]'
 							}
 						);
-						
-						var languageId = {@$languageID};
-						LanguageChooser.getChooser('languageID').callback = function (listItem) {
-							var newLanguageId = parseInt(elData(listItem, 'language-id'), 10);
-							if (newLanguageId !== languageId) {
-								languageId = newLanguageId;
-							}
-						};
 					});
 				</script>
 			</div>

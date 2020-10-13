@@ -117,6 +117,13 @@
 					</dl>
 				{/if}
 				
+				{if $server[innodbFlushLogAtTrxCommit] !== false}
+					<dl>
+						<dt>innodb_flush_log_at_trx_commit</dt>
+						<dd>{$server[innodbFlushLogAtTrxCommit]}</dd>
+					</dl>
+				{/if}
+				
 				{event name='serverFields'}
 			</section>
 		

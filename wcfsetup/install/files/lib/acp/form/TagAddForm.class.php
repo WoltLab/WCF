@@ -74,7 +74,7 @@ class TagAddForm extends AbstractForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if (isset($_POST['name'])) $this->name = StringUtil::trim($_POST['name']);
+		if (isset($_POST['name'])) $this->name = str_replace(',', '', StringUtil::trim($_POST['name']));
 		if (isset($_POST['languageID'])) $this->languageID = intval($_POST['languageID']);
 		
 		// actually these are synonyms

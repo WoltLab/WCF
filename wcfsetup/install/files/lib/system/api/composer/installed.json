@@ -143,17 +143,17 @@
     },
     {
         "name": "guzzlehttp/guzzle",
-        "version": "6.5.5",
-        "version_normalized": "6.5.5.0",
+        "version": "dev-6.5-windows",
+        "version_normalized": "dev-6.5-windows",
         "source": {
             "type": "git",
-            "url": "https://github.com/guzzle/guzzle.git",
-            "reference": "9d4290de1cfd701f38099ef7e183b64b4b7b0c5e"
+            "url": "https://github.com/WoltLab/guzzle",
+            "reference": "40e0ba7d933ec47237adb4f35ba363c3d8ffe453"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/guzzle/guzzle/zipball/9d4290de1cfd701f38099ef7e183b64b4b7b0c5e",
-            "reference": "9d4290de1cfd701f38099ef7e183b64b4b7b0c5e",
+            "url": "https://api.github.com/repos/WoltLab/guzzle/zipball/40e0ba7d933ec47237adb4f35ba363c3d8ffe453",
+            "reference": "40e0ba7d933ec47237adb4f35ba363c3d8ffe453",
             "shasum": ""
         },
         "require": {
@@ -171,7 +171,7 @@
         "suggest": {
             "psr/log": "Required for using the Log middleware"
         },
-        "time": "2020-06-16T21:01:06+00:00",
+        "time": "2020-10-09T13:06:06+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -187,7 +187,11 @@
                 "src/functions_include.php"
             ]
         },
-        "notification-url": "https://packagist.org/downloads/",
+        "autoload-dev": {
+            "psr-4": {
+                "GuzzleHttp\\Tests\\": "tests/"
+            }
+        },
         "license": [
             "MIT"
         ],
@@ -201,11 +205,11 @@
         "description": "Guzzle is a PHP HTTP client library",
         "homepage": "http://guzzlephp.org/",
         "keywords": [
+            "HTTP client",
             "client",
             "curl",
             "framework",
             "http",
-            "http client",
             "rest",
             "web service"
         ]

@@ -32,6 +32,15 @@ class IndexPage extends AbstractPage {
 	public function readData() {
 		parent::readData();
 		
+		$sql = "SHOW VARIABLES LIKE 'innodb_flush_log_at_trx_commit'";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute();
+		$row = $statement->fetchArray();
+		$innodbFlushLogAtTrxCommit = false;
+		if ($row !== false) {
+			$innodbFlushLogAtTrxCommit = $row['Value'];
+		}
+		
 		$this->server = [
 			'os' => PHP_OS,
 			'webserver' => isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : '',
@@ -40,7 +49,8 @@ class IndexPage extends AbstractPage {
 			'memoryLimit' => @ini_get('memory_limit'),
 			'upload_max_filesize' => @ini_get('upload_max_filesize'),
 			'postMaxSize' => @ini_get('post_max_size'),
-			'sslSupport' => RemoteFile::supportsSSL()
+			'sslSupport' => RemoteFile::supportsSSL(),
+			'innodbFlushLogAtTrxCommit' => $innodbFlushLogAtTrxCommit,
 		];
 		
 		// get load

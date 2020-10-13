@@ -52,10 +52,6 @@
 
 {include file='formError'}
 
-{if $showInnoDBWarning}
-	<p class="warning">{lang}wcf.acp.index.innoDBWarning{/lang}</p>
-{/if}
-
 {if !$exporterName}
 	{if !$availableExporters|count}
 		<p class="info">{lang}wcf.acp.dataImport.selectExporter.noExporters{/lang}</p>

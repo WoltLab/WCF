@@ -27,6 +27,8 @@ class PluginStorePurchasedItemsPage extends AbstractPage {
 	 */
 	public $neededPermissions = ['admin.configuration.package.canUpdatePackage', 'admin.configuration.package.canUninstallPackage'];
 	
+	public $fetchedPackageServers = false;
+	
 	/**
 	 * list of purchased products grouped by WCF major release
 	 * @var	array<array>
@@ -74,24 +76,18 @@ class PluginStorePurchasedItemsPage extends AbstractPage {
 	public function readData() {
 		parent::readData();
 		
-		$serverList = new PackageUpdateServerList();
-		$serverList->readObjects();
-		foreach ($serverList as $server) {
-			if (preg_match('~https?://store.woltlab.com/(?P<wcfMajorRelease>[a-z]+)/~', $server->serverURL, $matches)) {
-				$this->updateServers[$matches['wcfMajorRelease']] = $server;
+		foreach (PackageUpdateServer::getActiveUpdateServers() as $packageUpdateServer) {
+			if ($packageUpdateServer->isWoltLabUpdateServer() || $packageUpdateServer->isWoltLabStoreServer()) {
+				$this->fetchedPackageServers = $packageUpdateServer->lastUpdateTime > 0;
+				break;
 			}
 		}
 		
 		foreach ($this->products as $packageUpdateID => $product) {
-			$wcfMajorRelease = $product['wcfMajorRelease'];
-			if (!isset($this->productData[$wcfMajorRelease])) {
-				$this->productData[$wcfMajorRelease] = [];
-			}
-			
 			$languageCode = WCF::getLanguage()->languageCode;
 			$packageName = isset($product['packageName'][$languageCode]) ? $product['packageName'][$languageCode] : $product['packageName']['en'];
 			
-			$this->productData[$wcfMajorRelease][$packageUpdateID] = [
+			$this->productData[$packageUpdateID] = [
 				'author' => $product['author'],
 				'authorURL' => $product['authorURL'],
 				'package' => $product['package'],
@@ -101,25 +97,29 @@ class PluginStorePurchasedItemsPage extends AbstractPage {
 					'available' => $product['lastVersion'],
 					'installed' => ''
 				],
-				'status' => isset($this->updateServers[$wcfMajorRelease]) ? 'install' : 'unavailable'
+				'status' => 'install',
 			];
 			
 			$package = PackageCache::getInstance()->getPackageByIdentifier($product['package']);
 			if ($package !== null) {
-				$this->productData[$wcfMajorRelease][$packageUpdateID]['version']['installed'] = $package->packageVersion;
+				$this->productData[$packageUpdateID]['version']['installed'] = $package->packageVersion;
 				
 				if (Package::compareVersion($product['lastVersion'], $package->packageVersion, '>')) {
-					$this->productData[$wcfMajorRelease][$packageUpdateID]['status'] = 'update';
+					$this->productData[$packageUpdateID]['status'] = 'update';
 				}
 				else if (Package::compareVersion($product['lastVersion'], $package->packageVersion, '<=')) {
-					$this->productData[$wcfMajorRelease][$packageUpdateID]['status'] = 'upToDate';
+					$this->productData[$packageUpdateID]['status'] = 'upToDate';
 				}
 			}
 			
-			if (isset($this->updateServers[$wcfMajorRelease]) && $this->updateServers[$wcfMajorRelease]->lastUpdateTime == 0) {
-				$this->productData[$wcfMajorRelease][$packageUpdateID]['status'] = 'requireUpdate';
+			if (!$this->fetchedPackageServers) {
+				$this->productData[$packageUpdateID]['status'] = 'requireUpdate';
 			}
 		}
+		
+		uasort($this->productData, function (array $a, array $b) {
+			return strcasecmp($a['packageName'], $b['packageName']);
+		});
 	}
 	
 	/**
@@ -129,9 +129,8 @@ class PluginStorePurchasedItemsPage extends AbstractPage {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign([
+			'fetchedPackageServers' => $this->fetchedPackageServers,
 			'productData' => $this->productData,
-			'updateServers' => $this->updateServers,
-			'wcfMajorReleases' => $this->wcfMajorReleases
 		]);
 	}
 }

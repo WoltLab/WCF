@@ -8,6 +8,13 @@
 			errorType: {if $errorType|empty}(empty){else}{$errorType|print_r:true}{/if}
 		
 		-->
+		{if ENABLE_DEBUG_MODE}
+			<script>
+				console.debug('FORM_VALIDATION_FAILED');
+				console.debug('errorField:', '{if $errorField|empty}(empty){else}{$errorField|json_encode}{/if}');
+				console.debug('errorType:', '{if $errorType|empty}(empty){else}{$errorType|json_encode}{/if}');
+			</script>
+		{/if}
 	{/if}
 	
 	{assign var=__boxesFooter value=$__wcf->getBoxHandler()->getBoxes('footer')}

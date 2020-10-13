@@ -13,6 +13,7 @@ use wcf\system\cache\builder\ApplicationCacheBuilder;
 use wcf\system\cache\builder\RoutingCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -77,6 +78,12 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	 * @var	PageContent[]
 	 */
 	public $pageContents;
+	
+	/**
+	 * @var PageLanguage[]
+	 * @since 5.3
+	 */
+	public $pageLanguages;
 	
 	/**
 	 * Returns true if the active user can delete this page.
@@ -345,19 +352,23 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	 * @return PageLanguage[]
 	 */
 	public function getPageLanguages() {
-		$pageLanguages = [];
-		if ($this->isMultilingual) {
-			$sql = "SELECT  languageID
+		if ($this->pageLanguages === null) {
+			$this->pageLanguages = [];
+			if ($this->isMultilingual) {
+				$sql = "SELECT  languageID
 				FROM    wcf" . WCF_N . "_page_content
 				WHERE   pageID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([$this->pageID]);
-			while ($languageID = $statement->fetchColumn()) {
-				$pageLanguages[] = new PageLanguage($this->pageID, $languageID);
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute([$this->pageID]);
+				while ($languageID = $statement->fetchColumn()) {
+					if (LanguageFactory::getInstance()->getLanguage($languageID) !== null) {
+						$this->pageLanguages[] = new PageLanguage($this->pageID, $languageID);
+					}
+				}
 			}
 		}
 		
-		return $pageLanguages;
+		return $this->pageLanguages;
 	}
 	
 	/**

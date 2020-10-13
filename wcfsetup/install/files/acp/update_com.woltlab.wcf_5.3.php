@@ -9,6 +9,7 @@ use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
 use wcf\system\database\table\column\ObjectIdDatabaseTableColumn;
 use wcf\system\database\table\DatabaseTable;
 use wcf\system\database\table\DatabaseTableChangeProcessor;
+use wcf\system\database\table\PartialDatabaseTable;
 use wcf\system\database\table\index\DatabaseTableForeignKey;
 use wcf\system\database\table\index\DatabaseTableIndex;
 use wcf\system\package\plugin\ScriptPackageInstallationPlugin;
@@ -24,6 +25,13 @@ use wcf\system\WCF;
  */
 
 $tables = [
+	PartialDatabaseTable::create('wcf1_article_content')
+		->columns([
+			NotNullVarchar255DatabaseTableColumn::create('metaTitle')
+				->defaultValue(''),
+			NotNullVarchar255DatabaseTableColumn::create('metaDescription')
+				->defaultValue(''),
+		]),
 	DatabaseTable::create('wcf1_devtools_missing_language_item')
 		->columns([
 			ObjectIdDatabaseTableColumn::create('itemID'),
@@ -45,12 +53,12 @@ $tables = [
 				->referencedColumns(['languageID'])
 				->onDelete('SET NULL')
 		]),
-	DatabaseTable::create('wcf1_media')
+	PartialDatabaseTable::create('wcf1_media')
 		->columns([
 			NotNullInt10DatabaseTableColumn::create('fileUpdateTime')
 				->defaultValue(0)
 		]),
-	DatabaseTable::create('wcf1_user')
+	PartialDatabaseTable::create('wcf1_user')
 		->columns([
 			CharDatabaseTableColumn::create('emailConfirmed')
 				->length(40),

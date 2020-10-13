@@ -111,6 +111,8 @@
 		<item name="wcf.acp.article.views"><![CDATA[Zugriffe]]></item>
 		<item name="wcf.acp.article.lastVersion"><![CDATA[Es gibt <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.article' objectID=$article->articleID isACP=true}{/link}">vorherige Versionen</a> dieses Artikels, die letzte Änderung erfolgte durch „{$lastVersion->username}“ ({@$lastVersion->time|time}).]]></item>
 		<item name="wcf.acp.article.isDeleted"><![CDATA[Gelöscht]]></item>
+		<item name="wcf.acp.article.metaTitle"><![CDATA[Meta Titel]]></item>
+		<item name="wcf.acp.article.metaDescription"><![CDATA[Meta Description]]></item>
 	</category>
 	<category name="wcf.acp.attachment">
 		<item name="wcf.acp.attachment.list"><![CDATA[Dateianhänge]]></item>
@@ -912,7 +914,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.index.credits.productManager"><![CDATA[Projektleitung]]></item>
 		<item name="wcf.acp.index.credits.trademarks"><![CDATA[„WoltLab&reg;“ und „Burning Board&reg;“ sind eingetragene Gemeinschaftsmarken beim europäischen Harmonisierungsamt für den Binnenmarkt (OHIM) in Alicante, Spanien.]]></item>
 		<item name="wcf.acp.index.credits.contributor.more"><![CDATA[Weitere]]></item>
-		<item name="wcf.acp.index.innoDBWarning"><![CDATA[Die MySQL-Einstellung „innodb_flush_log_at_trx_commit“ steht auf dem Wert „1“ und verursacht dadurch eine starke Verlangsamung bestimmter Datenbankabfragen. Es wird empfohlen diesen Wert auf „2“ zu setzen.]]></item>
 		<item name="wcf.acp.index.inRescueMode"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du rufst{else}Sie rufen{/if} diese Installation über eine abweichende Domain auf, etwa aufgrund eines Umzuges. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}korrigiere{else}korrigieren Sie{/if} die Einstellungen unter <a href="{link controller='ApplicationManagement'}{/link}">Apps verwalten</a>.]]></item>
 		<item name="wcf.acp.index.tmpBroken"><![CDATA[Für den ordnungsgemäßen Betrieb muss das Verzeichnis „{WCF_DIR|concat:'tmp/'}“ existieren und beschreibbar sein. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}überprüfe{else}überprüfen Sie{/if} auch die Zugriffsrechte auf den Ordner „{'WCF_DIR'|constant}“.]]></item>
 		<item name="wcf.acp.index.news"><![CDATA[Nachrichten]]></item>
@@ -2630,8 +2631,6 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.poll.description"><![CDATA[Aktualisiert Zähler der Umfragen]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.article"><![CDATA[Artikel aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.article.description"><![CDATA[Aktualisiert den Suchindex für Artikel]]></item>
-		<item name="wcf.acp.rebuildData.com.woltlab.wcf.databaseConvertEncoding"><![CDATA[Datenbank-Kodierung konvertieren]]></item>
-		<item name="wcf.acp.rebuildData.com.woltlab.wcf.databaseConvertEncoding.description"><![CDATA[Warnung: Die Ausführung dieser Aktion kann bei umfangreichen Datenbanken sehr lange dauern.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment"><![CDATA[Kommentare aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment.description"><![CDATA[Aktualisiert die Kommentare]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.comment.response"><![CDATA[Antworten auf Kommentare aktualisieren]]></item>
@@ -2762,6 +2761,8 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.systemCheck.mysql.innodb.description"><![CDATA[InnoDB (XtraDB unter MariaDB) ist eine transaktionale Storage-Engine von MySQL und wird zwingend für den Betrieb benötigt. Dies ist eine Standardfunktion von MySQL.]]></item>
 		<item name="wcf.acp.systemCheck.directories.writable"><![CDATA[Beschreibbare Verzeichnisse]]></item>
 		<item name="wcf.acp.systemCheck.directories.writable.description"><![CDATA[Einige Verzeichnisse werden zur Laufzeit durch die Software beschrieben, der PHP-Benutzer muss Schreibrechte haben.]]></item>
+		<item name="wcf.acp.systemCheck.php.gd"><![CDATA[Unterstützte Formate der GD-Bibliothek]]></item>
+		<item name="wcf.acp.systemCheck.php.gd.description"><![CDATA[Die GD-Bibliothek muss inklusive der Unterstützung der Formate „jpeg“ und „png“ installiert sein.]]></item>
 	</category>
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Server hinzufügen]]></item>
@@ -5320,5 +5321,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 	<category name="wcf.upload">
 		<item name="wcf.upload.error.noImage"><![CDATA[Die hochgeladene Datei ist kein Bild.]]></item>
 		<item name="wcf.upload.error.reachedRemainingLimit"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} zu viele Dateien ausgewählt. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} nur noch {#$maxFiles} weitere Datei{if $maxFiles != 1}en{/if} hochladen.]]></item>
+		<item name="wcf.upload.error.uploadFailed"><![CDATA[Beim Hochladen der Datei ist ein unbekannter Fehler aufgetreten.]]></item>
 	</category>
 </language>

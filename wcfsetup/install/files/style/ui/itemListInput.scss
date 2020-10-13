@@ -48,3 +48,14 @@
 		padding: 0 !important;
 	}
 }
+
+.inputItemListLimitReached {
+	color: $wcfContentDimmedText;
+	vertical-align: middle;
+	
+	/* The input field does not have a distinct appearance, making the text unselectable
+	   will prevent the browser from displaying a potentially misleading caret cursor. */
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}

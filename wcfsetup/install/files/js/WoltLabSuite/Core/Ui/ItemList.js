@@ -110,7 +110,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 							for (var i = 0, length = values.length; i < length; i++) {
 								input = elCreate('input');
 								input.type = 'hidden';
-								input.name = options.submitFieldName.replace(/{$objectId}/, values[i].objectId);
+								input.name = options.submitFieldName.replace('{$objectId}', values[i].objectId);
 								input.value = values[i].value;
 								
 								form.appendChild(input);
@@ -146,6 +146,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 			_data.set(elementId, {
 				dropdownMenu: null,
 				element: data.element,
+				limitReached: data.limitReached,
 				list: data.list,
 				listItem: data.element.parentNode,
 				options: options,
@@ -286,6 +287,12 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 				elAttr(element, 'maxLength', options.maxLength);
 			}
 			
+			var limitReached = elCreate('span');
+			limitReached.className = 'inputItemListLimitReached';
+			limitReached.textContent = Language.get('wcf.global.form.input.maxItems');
+			elHide(limitReached);
+			listItem.appendChild(limitReached);
+			
 			var shadow = null, values = [];
 			if (options.isCSV) {
 				shadow = elCreate('input');
@@ -319,6 +326,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 			
 			return {
 				element: element,
+				limitReached: limitReached,
 				list: list,
 				shadow: shadow,
 				values: values
@@ -349,14 +357,12 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 		_handleLimit: function(elementId) {
 			var data = _data.get(elementId);
 			if (this._acceptsNewItems(elementId)) {
-				if (data.element.disabled) {
-					data.element.disabled = false;
-					data.element.removeAttribute('placeholder');
-				}
+				elShow(data.element);
+				elHide(data.limitReached);
 			}
-			else if (!data.element.disabled) {
-				data.element.disabled = true;
-				elAttr(data.element, 'placeholder', Language.get('wcf.global.form.input.maxItems'));
+			else {
+				elHide(data.element);
+				elShow(data.limitReached);
 			}
 		},
 		

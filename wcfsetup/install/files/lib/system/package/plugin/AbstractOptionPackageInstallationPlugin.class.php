@@ -1031,6 +1031,13 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 * @since	5.2
 	 */
 	protected function insertNewXmlElement(XML $xml, \DOMElement $newElement) {
+		$import = $xml->xpath()->query('/ns:data/ns:import')->item(0);
+		if ($import === null) {
+			$data = $xml->xpath()->query('/ns:data')->item(0);
+			$import = $xml->getDocument()->createElement('import');
+			DOMUtil::prepend($import, $data);
+		}
+		
 		$options = $xml->xpath()->query('/ns:data/ns:import/ns:options')->item(0);
 		
 		switch ($this->entryType) {

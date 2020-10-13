@@ -56,10 +56,6 @@
 	{/hascontent}
 </header>
 
-{if $showInnoDBWarning}
-	<p class="warning">{lang}wcf.acp.index.innoDBWarning{/lang}</p>
-{/if}
-
 {event name='afterContentHeader'}
 
 <section class="section">
