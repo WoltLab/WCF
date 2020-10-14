@@ -36,6 +36,7 @@ use wcf\system\setup\Installer;
 use wcf\system\style\StyleHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
+use wcf\util\CryptoUtil;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\JSON;
@@ -231,9 +232,14 @@ class PackageInstallationDispatcher {
 					]);
 					
 					$statement->execute([
-						\bin2hex(\random_bytes(20)),
+						$signatureSecret = \bin2hex(\random_bytes(20)),
 						'signature_secret'
 					]);
+					define('SIGNATURE_SECRET', $signatureSecret);
+					HeaderUtil::setCookie(
+						"acp_session",
+						CryptoUtil::createSignedString(WCF::getSession()->sessionID)
+					);
 					
 					if (WCF::getSession()->getVar('__wcfSetup_developerMode')) {
 						$statement->execute([

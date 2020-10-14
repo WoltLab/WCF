@@ -16,6 +16,7 @@ use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
+use wcf\util\CryptoUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\UserUtil;
 
@@ -180,16 +181,41 @@ final class SessionHandler extends SingletonFactory {
 	public function setHasValidCookie($hasValidCookie) { }
 	
 	/**
+	 * Returns the session ID stored in the session cookie or `null`.
+	 */
+	private function getSessionIdFromCookie(): ?string {
+		$cookieName = COOKIE_PREFIX.($this->isACP ? 'acp' : 'user')."_session";
+		
+		if (isset($_COOKIE[$cookieName])) {
+			if (!PACKAGE_ID) {
+				return $_COOKIE[$cookieName];
+			}
+			
+			return CryptoUtil::getValueFromSignedString($_COOKIE[$cookieName]);
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Returns the signed session ID for use in a cookie.
+	 */
+	private function getSessionIdForCookie(string $sessionID): string {
+		if (!PACKAGE_ID) {
+			return $sessionID;
+		}
+		
+		return CryptoUtil::createSignedString($sessionID);
+	}
+	
+	/**
 	 * Returns true if client provided a valid session cookie.
 	 * 
 	 * @return	boolean
 	 * @since	3.0
 	 */
 	public function hasValidCookie(): bool {
-		$cookieName = COOKIE_PREFIX.($this->isACP ? 'acp' : 'user')."_session";
-		$sessionID = $_COOKIE[$cookieName] ?? null;
-		
-		return $sessionID === $this->sessionID;
+		return $this->getSessionIdFromCookie() === $this->sessionID;
 	}
 	
 	/**
@@ -211,8 +237,7 @@ final class SessionHandler extends SingletonFactory {
 	 * Loads the session matching the session cookie.
 	 */
 	public function loadFromCookie() {
-		$cookieName = COOKIE_PREFIX.($this->isACP ? 'acp' : 'user')."_session";
-		$sessionID = $_COOKIE[$cookieName] ?? null;
+		$sessionID = $this->getSessionIdFromCookie();
 		
 		$hasSession = false;
 		if ($sessionID) {
@@ -414,7 +439,11 @@ final class SessionHandler extends SingletonFactory {
 		
 		// Refresh cookie.
 		if ($this->user->userID && !$this->isACP) {
-			HeaderUtil::setCookie(($this->isACP ? 'acp' : 'user')."_session", $this->sessionID, TIME_NOW + 86400 * 14);
+			HeaderUtil::setCookie(
+				($this->isACP ? 'acp' : 'user')."_session",
+				$this->getSessionIdForCookie($this->sessionID),
+				TIME_NOW + 86400 * 14
+			);
 		}
 		
 		// Fetch legacy session.
@@ -470,7 +499,10 @@ final class SessionHandler extends SingletonFactory {
 			serialize([]),
 		]);
 		
-		HeaderUtil::setCookie(($this->isACP ? 'acp' : 'user')."_session", $this->sessionID);
+		HeaderUtil::setCookie(
+			($this->isACP ? 'acp' : 'user')."_session",
+			$this->getSessionIdForCookie($this->sessionID)
+		);
 		
 		$this->variables = [];
 		$this->user = new User(null);

@@ -55,16 +55,4 @@ class ACPSessionFactory {
 	protected function init() {
 		SessionHandler::getInstance()->initSession();
 	}
-	
-	/**
-	 * @deprecated 5.4 - Sessions are fully managed by SessionHandler.
-	 */
-	protected function readSessionID() {
-		// get sessionID from cookie
-		if (isset($_COOKIE[COOKIE_PREFIX.$this->cookieSuffix.'session'])) {
-			return $_COOKIE[COOKIE_PREFIX.$this->cookieSuffix.'session'];
-		}
-		
-		return '';
-	}
 }
