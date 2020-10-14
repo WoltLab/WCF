@@ -29,12 +29,7 @@ use wcf\util\UserUtil;
  * @package	WoltLabSuite\Core\System\Session
  *
  * @property-read	string		$sessionID		unique textual identifier of the session
- * @property-read	integer|null	$userID			id of the user the session belongs to or `null` if the acp session belongs to a guest
- * @property-read	string		$ipAddress		id of the user whom the session belongs to
- * @property-read	string		$userAgent		user agent of the user whom the session belongs to
- * @property-read	integer		$lastActivityTime	timestamp at which the latest activity occurred
- * @property-read	string		$requestURI		uri of the latest request
- * @property-read	string		$requestMethod		used request method of the latest request (`GET`, `POST`)
+ * @property-read	integer|null	$userID			id of the user the session belongs to or `null` if the session belongs to a guest
  * @property-read	integer|null	$pageID			id of the latest page visited
  * @property-read	integer|null	$pageObjectID		id of the object the latest page visited belongs to
  * @property-read	integer|null	$parentPageID		id of the parent page of latest page visited
@@ -53,13 +48,7 @@ final class SessionHandler extends SingletonFactory {
 	 * @var	boolean
 	 */
 	protected $disableTracking = false;
-	
-	/**
-	 * various environment variables
-	 * @var	array
-	 */
-	protected $environment = [];
-	
+		
 	/**
 	 * group data and permissions
 	 * @var	mixed[][]
@@ -155,8 +144,18 @@ final class SessionHandler extends SingletonFactory {
 		}
 		// TODO: pageID, pageObjectID, parentPageID, parentPageObjectID
 		
-		if (array_key_exists($key, $this->environment)) {
-			return $this->environment[$key];
+		/** @deprecated	5.4 - These values can be retrieved more efficiently by directly using the methods in e.g. UserUtil. */
+		$environment = [
+			'ipAddress' => UserUtil::getIpAddress(),
+			'userAgent' => UserUtil::getUserAgent(),
+			'requestURI' => UserUtil::getRequestURI(),
+			'requestMethod' => !empty($_SERVER['REQUEST_METHOD']) ? substr($_SERVER['REQUEST_METHOD'], 0, 7) : '',
+			'spiderID' => $this->getSpiderID(UserUtil::getUserAgent()),
+			'lastActivityTime' => TIME_NOW,
+		];
+		
+		if (array_key_exists($key, $environment)) {
+			return $environment[$key];
 		}
 		
 		return null;
@@ -263,28 +262,11 @@ final class SessionHandler extends SingletonFactory {
 		$this->languageID = ($this->getVar('languageID') === null) ? $this->user->languageID : $this->getVar('languageID');
 		$this->styleID = ($this->getVar('styleID') === null) ? $this->user->styleID : $this->getVar('styleID');
 		
-		// init environment variables
-		$this->initEnvironment();
-		
 		// https://github.com/WoltLab/WCF/issues/2568
 		if ($this->getVar('__wcfIsFirstVisit') === true) {
 			$this->firstVisit = true;
 			$this->unregister('__wcfIsFirstVisit');
 		}
-	}
-	
-	/**
-	 * Initializes environment variables.
-	 */
-	protected function initEnvironment() {
-		$this->environment = [
-			'ipAddress' => UserUtil::getIpAddress(),
-			'userAgent' => UserUtil::getUserAgent(),
-			'requestURI' => UserUtil::getRequestURI(),
-			'requestMethod' => !empty($_SERVER['REQUEST_METHOD']) ? substr($_SERVER['REQUEST_METHOD'], 0, 7) : '',
-			'spiderID' => $this->getSpiderID(UserUtil::getUserAgent()),
-			'lastActivityTime' => TIME_NOW,
-		];
 	}
 	
 	/**
