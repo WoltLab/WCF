@@ -67,6 +67,7 @@
 				</a>
 				<ol class="menuOverlayItemList">
 					<li class="menuOverlayItem"><a href="https://www.woltlab.com/{if $__wcf->getLanguage()->getFixedLanguageCode() === 'de'}de/{/if}" class="menuOverlayItemLink"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.website{/lang}</a></li>
+					<li class="menuOverlayItem"><a href="https://manual.woltlab.com/{if $__wcf->getLanguage()->getFixedLanguageCode() === 'de'}de{else}en{/if}/" class="menuOverlayItemLink"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.manual{/lang}</a></li>
 					<li class="menuOverlayItem"><a href="https://community.woltlab.com" class="menuOverlayItemLink"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.forums{/lang}</a></li>
 					<li class="menuOverlayItem"><a href="https://www.woltlab.com/ticket-add/" class="menuOverlayItemLink"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.tickets{/lang}</a></li>
 					<li class="menuOverlayItem"><a href="https://pluginstore.woltlab.com" class="menuOverlayItemLink"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.pluginStore{/lang}</a></li>

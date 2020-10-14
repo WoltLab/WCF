@@ -39,6 +39,7 @@
 				
 				<ul class="dropdownMenu" data-dropdown-alignment-horizontal="right">
 					<li><a class="externalURL" href="https://www.woltlab.com/{if $__wcf->getLanguage()->getFixedLanguageCode() === 'de'}de/{/if}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.website{/lang}</a></li>
+					<li><a class="externalURL" href="https://manual.woltlab.com/{if $__wcf->getLanguage()->getFixedLanguageCode() === 'de'}de{else}en{/if}/"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.manual{/lang}</a></li>
 					<li><a class="externalURL" href="https://community.woltlab.com"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.forums{/lang}</a></li>
 					<li><a class="externalURL" href="https://community.woltlab.com/ticket-add/"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.tickets{/lang}</a></li>
 					<li><a class="externalURL" href="https://pluginstore.woltlab.com"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.pluginStore{/lang}</a></li>

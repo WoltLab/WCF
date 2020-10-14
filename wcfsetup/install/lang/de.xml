@@ -924,6 +924,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.index.system.mySQLVersion"><![CDATA[MySQL-Version]]></item>
 		<item name="wcf.acp.index.system.load"><![CDATA[Aktueller UNIX Load]]></item>
 		<item name="wcf.acp.index.woltlab.website"><![CDATA[Website]]></item>
+		<item name="wcf.acp.index.woltlab.manual"><![CDATA[Handbuch]]></item>
 		<item name="wcf.acp.index.woltlab.forums"><![CDATA[Supportforum]]></item>
 		<item name="wcf.acp.index.woltlab.tickets"><![CDATA[Ticket-Support]]></item>
 		<item name="wcf.acp.index.woltlab.pluginStore"><![CDATA[Plugin-Store]]></item>
