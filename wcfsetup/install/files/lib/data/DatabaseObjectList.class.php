@@ -253,6 +253,16 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	}
 	
 	/**
+	 * Sets the condition builder dynamically.
+	 * 
+	 * @param	PreparedStatementConditionBuilder $conditionBuilder
+	 * @since	5.3
+	 */
+	public function setConditionBuilder(PreparedStatementConditionBuilder $conditionBuilder) {
+		$this->conditionBuilder = $conditionBuilder;
+	}
+	
+	/**
 	 * Returns the name of the database table.
 	 * 
 	 * @return	string
