@@ -702,6 +702,9 @@ final class SessionHandler extends SingletonFactory {
 				serialize($this->variables),
 				$this->sessionID,
 			]);
+			
+			// Reset the flag, because the variables are no longer dirty.
+			$this->variablesChanged = false;
 		}
 		
 		if (!$this->isACP) {
