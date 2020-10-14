@@ -230,16 +230,10 @@ class PackageInstallationDispatcher {
 						'mail_admin_address'
 					]);
 					
-					try {
-						$statement->execute([
-							bin2hex(\random_bytes(20)),
-							'signature_secret'
-						]);
-					}
-					catch (\Throwable $e) {
-						// ignore, the secret will stay empty and crypto operations
-						// depending on it will fail
-					}
+					$statement->execute([
+						\bin2hex(\random_bytes(20)),
+						'signature_secret'
+					]);
 					
 					if (WCF::getSession()->getVar('__wcfSetup_developerMode')) {
 						$statement->execute([
