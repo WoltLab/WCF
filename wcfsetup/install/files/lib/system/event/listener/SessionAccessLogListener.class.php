@@ -52,7 +52,7 @@ class SessionAccessLogListener implements IParameterizedEventListener {
 			}
 			
 			// format request uri
-			$requestURI = WCF::getSession()->requestURI;
+			$requestURI = UserUtil::getRequestURI();
 			// remove directories
 			$URIComponents = explode('/', $requestURI);
 			$requestURI = array_pop($URIComponents);
@@ -65,7 +65,7 @@ class SessionAccessLogListener implements IParameterizedEventListener {
 				'ipAddress' => UserUtil::getIpAddress(),
 				'time' => TIME_NOW,
 				'requestURI' => $requestURI,
-				'requestMethod' => WCF::getSession()->requestMethod,
+				'requestMethod' => substr($_SERVER['REQUEST_METHOD'] ?? '', 0, 255),
 				'className' => get_class($eventObj)
 			]);
 		}

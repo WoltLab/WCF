@@ -111,7 +111,7 @@ CREATE TABLE wcf1_acp_session_access_log (
 	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
 	time INT(10) NOT NULL DEFAULT 0,
 	requestURI VARCHAR(255) NOT NULL DEFAULT '',
-	requestMethod VARCHAR(7) NOT NULL DEFAULT '',
+	requestMethod VARCHAR(255) NOT NULL DEFAULT '',
 	className VARCHAR(255) NOT NULL DEFAULT '',
 	KEY sessionLogID (sessionLogID)
 );
