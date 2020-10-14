@@ -391,9 +391,15 @@ final class SessionHandler extends SingletonFactory {
 			return false;
 		}
 		
+		$variables = @unserialize($row['sessionVariables']);
+		// Check whether the session variables became corrupted.
+		if (!is_array($variables)) {
+			return false;
+		}
+		
 		$this->sessionID = $sessionID;
 		$this->user = new User($row['userID']);
-		$this->variables = unserialize($row['sessionVariables']);
+		$this->variables = $variables;
 		
 		$sql = "UPDATE	wcf".WCF_N."_".($this->isACP ? 'acp' : 'user')."_session
 			SET	ipAddress = ?,
