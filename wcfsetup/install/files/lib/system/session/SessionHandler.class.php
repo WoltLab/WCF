@@ -4,6 +4,7 @@ use wcf\data\session\Session;
 use wcf\data\session\SessionEditor;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\SpiderCacheBuilder;
 use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
@@ -12,6 +13,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\page\PageLocationManager;
+use wcf\system\request\RouteHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -124,6 +126,11 @@ final class SessionHandler extends SingletonFactory {
 	 * @var	string[]
 	 */
 	protected $usersOnlyPermissions = [];
+	
+	/**
+	 * @var	string
+	 */
+	private $xsrfToken;
 	
 	private const ACP_SESSION_LIFETIME = 7200;
 	private const GUEST_SESSION_LIFETIME = 7200;
@@ -301,9 +308,49 @@ final class SessionHandler extends SingletonFactory {
 	 * Initializes security token.
 	 */
 	protected function initSecurityToken() {
-		if ($this->getVar('__SECURITY_TOKEN') === null) {
-			$this->register('__SECURITY_TOKEN', \bin2hex(\random_bytes(20)));
+		$xsrfToken = '';
+		if (!empty($_COOKIE['XSRF-TOKEN'])) {
+			// We intentionally do not extract the signed value and instead just verify the correctness.
+			//
+			// The reason is that common JavaScript frameworks can use the contents of the `XSRF-TOKEN` cookie as-is,
+			// without performing any processing on it, improving interoperability. Leveraging that JavaScript framework
+			// feature requires the author of the controller to check the value within the `X-XSRF-TOKEN` request header
+			// instead of the WoltLab Suite specific `t` parameter, though.
+			//
+			// The only reason we sign the cookie is that an XSS vulnerability or a rogue application on a subdomain
+			// is not able to create a valid `XSRF-TOKEN`, e.g. by setting the `XSRF-TOKEN` cookie to the static
+			// value `1234`, possibly allowing later exploitation.
+			if (CryptoUtil::validateSignedString($_COOKIE['XSRF-TOKEN'])) {
+				$xsrfToken = $_COOKIE['XSRF-TOKEN'];
+			}
 		}
+		
+		if (!$xsrfToken) {
+			$xsrfToken = CryptoUtil::createSignedString(\bin2hex(\random_bytes(20)));
+			
+			// We construct the cookie manually instead of using HeaderUtil::setCookie(), because:
+			// 1) We don't want the prefix. The `XSRF-TOKEN` cookie name is a standard name across applications
+			//    and it is supported by default in common JavaScript frameworks.
+			// 2) We want to set the SameSite=strict parameter.
+			// 3) We don't want the HttpOnly parameter.
+			$sameSite = $cookieDomain = '';
+			
+			if (ApplicationHandler::getInstance()->isMultiDomainSetup()) {
+				// We need to specify the cookieDomain in a multi domain set-up, because
+				// otherwise no cookies are sent to subdomains.
+				$cookieDomain = HeaderUtil::getCookieDomain();
+				$cookieDomain = ($cookieDomain !== null ? '; domain='.$cookieDomain : '');
+			}
+			else {
+				// SameSite=strict is not supported in a multi domain set-up, because
+				// it breaks cross-application requests.
+				$sameSite = '; SameSite=strict';
+			}
+			
+			header('set-cookie: XSRF-TOKEN='.rawurlencode($xsrfToken).'; path=/'.$cookieDomain.(RouteHandler::secureConnection() ? '; secure' : '').$sameSite, false);
+		}
+		
+		$this->xsrfToken = $xsrfToken;
 	}
 	
 	/**
@@ -312,7 +359,7 @@ final class SessionHandler extends SingletonFactory {
 	 * @return	string
 	 */
 	public function getSecurityToken() {
-		return $this->getVar('__SECURITY_TOKEN');
+		return $this->xsrfToken;
 	}
 	
 	/**
@@ -323,6 +370,10 @@ final class SessionHandler extends SingletonFactory {
 	 * @return	boolean
 	 */
 	public function checkSecurityToken($token) {
+		// The output of CryptoUtil::createSignedString() is not url-safe. For compatibility
+		// reasons the SECURITY_TOKEN in URLs might not be encoded, turning the '+' into a space.
+		// Convert it back before comparing.
+		$token = \str_replace(' ', '+', $token);
 		return \hash_equals($this->getSecurityToken(), $token);
 	}
 	
