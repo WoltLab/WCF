@@ -43,7 +43,7 @@ class SessionAccessLogListener implements IParameterizedEventListener {
 					'sessionID' => WCF::getSession()->sessionID,
 					'userID' => WCF::getUser()->userID,
 					'ipAddress' => UserUtil::getIpAddress(),
-					'hostname' => @gethostbyaddr(WCF::getSession()->ipAddress),
+					'hostname' => @gethostbyaddr(UserUtil::getIpAddress()),
 					'userAgent' => WCF::getSession()->userAgent,
 					'time' => TIME_NOW,
 					'lastActivityTime' => TIME_NOW

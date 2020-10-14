@@ -487,7 +487,7 @@ class WCF {
 		$isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
 		
 		if (defined('BLACKLIST_IP_ADDRESSES') && BLACKLIST_IP_ADDRESSES != '') {
-			if (!StringUtil::executeWordFilter(UserUtil::convertIPv6To4(self::getSession()->ipAddress), BLACKLIST_IP_ADDRESSES)) {
+			if (!StringUtil::executeWordFilter(UserUtil::convertIPv6To4(UserUtil::getIpAddress()), BLACKLIST_IP_ADDRESSES)) {
 				if ($isAjax) {
 					throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
 				}
@@ -495,7 +495,7 @@ class WCF {
 					throw new PermissionDeniedException();
 				}
 			}
-			else if (!StringUtil::executeWordFilter(self::getSession()->ipAddress, BLACKLIST_IP_ADDRESSES)) {
+			else if (!StringUtil::executeWordFilter(UserUtil::getIpAddress(), BLACKLIST_IP_ADDRESSES)) {
 				if ($isAjax) {
 					throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
 				}
@@ -515,7 +515,7 @@ class WCF {
 			}
 		}
 		if (defined('BLACKLIST_HOSTNAMES') && BLACKLIST_HOSTNAMES != '') {
-			if (!StringUtil::executeWordFilter(@gethostbyaddr(self::getSession()->ipAddress), BLACKLIST_HOSTNAMES)) {
+			if (!StringUtil::executeWordFilter(@gethostbyaddr(UserUtil::getIpAddress()), BLACKLIST_HOSTNAMES)) {
 				if ($isAjax) {
 					throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
 				}
