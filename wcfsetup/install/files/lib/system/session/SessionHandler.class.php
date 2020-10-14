@@ -278,9 +278,6 @@ final class SessionHandler extends SingletonFactory {
 	 */
 	protected function initEnvironment() {
 		$this->environment = [
-		//	TODO:
-		//	'lastRequestURI' => $this->session->requestURI,
-		//	'lastRequestMethod' => $this->session->requestMethod,
 			'ipAddress' => UserUtil::getIpAddress(),
 			'userAgent' => UserUtil::getUserAgent(),
 			'requestURI' => UserUtil::getRequestURI(),
