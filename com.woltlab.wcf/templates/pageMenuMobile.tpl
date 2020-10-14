@@ -144,7 +144,7 @@
 			
 			<li class="menuOverlayItemSpacer"></li>
 			<li class="menuOverlayItem">
-				<a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" class="menuOverlayItemLink box24">
+				<a href="{link controller='Logout'}t={csrfToken type=url}{/link}" class="menuOverlayItemLink box24">
 					<span class="icon icon24 fa-sign-out"></span>
 					<span class="menuOverlayItemTitle">{lang}wcf.user.logout{/lang}</span>
 				</a>

@@ -25,7 +25,7 @@
 					<dt></dt>
 					<dd>
 						<input type="text" id="searchUsername" name="username" class="long" placeholder="{lang}wcf.user.username{/lang}">
-						{@SECURITY_TOKEN_INPUT_TAG}
+						{csrfToken}
 					</dd>
 				</dl>
 			</div>

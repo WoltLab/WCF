@@ -483,7 +483,7 @@
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		<input type="hidden" name="isMultilingual" value="{@$isMultilingual}">
 		<input type="hidden" name="boxType" value="{$boxType}">
-		{@SECURITY_TOKEN_INPUT_TAG}
+		{csrfToken}
 	</div>
 </form>
 

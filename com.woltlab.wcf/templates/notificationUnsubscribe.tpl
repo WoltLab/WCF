@@ -22,7 +22,7 @@
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.user.notification.mail.unsubscribe.confirm{/lang}" accesskey="s">
 		{* The tag is not technically required, but the POST data would be empty otherwise. *}
-		{@SECURITY_TOKEN_INPUT_TAG}
+		{csrfToken}
 	</div>
 </form>
 
