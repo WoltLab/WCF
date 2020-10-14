@@ -142,6 +142,9 @@ final class SessionHandler extends SingletonFactory {
 		else if ($key === 'userID') {
 			return $this->user->userID;
 		}
+		else if ($key === 'spiderID') {
+			return $this->getSpiderID(UserUtil::getUserAgent());
+		}
 		// TODO: pageID, pageObjectID, parentPageID, parentPageObjectID
 		
 		/** @deprecated	5.4 - These values can be retrieved more efficiently by directly using the methods in e.g. UserUtil. */
@@ -150,7 +153,6 @@ final class SessionHandler extends SingletonFactory {
 			'userAgent' => UserUtil::getUserAgent(),
 			'requestURI' => UserUtil::getRequestURI(),
 			'requestMethod' => !empty($_SERVER['REQUEST_METHOD']) ? substr($_SERVER['REQUEST_METHOD'], 0, 7) : '',
-			'spiderID' => $this->getSpiderID(UserUtil::getUserAgent()),
 			'lastActivityTime' => TIME_NOW,
 		];
 		
