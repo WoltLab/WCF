@@ -326,7 +326,7 @@ final class SessionHandler extends SingletonFactory {
 		}
 		
 		if (!$xsrfToken) {
-			$xsrfToken = CryptoUtil::createSignedString(\bin2hex(\random_bytes(20)));
+			$xsrfToken = CryptoUtil::createSignedString(\random_bytes(16));
 			
 			// We construct the cookie manually instead of using HeaderUtil::setCookie(), because:
 			// 1) We don't want the prefix. The `XSRF-TOKEN` cookie name is a standard name across applications
