@@ -202,7 +202,7 @@ final class SessionHandler extends SingletonFactory {
 				return $_COOKIE[$cookieName];
 			}
 			
-			return CryptoUtil::getValueFromSignedString($_COOKIE[$cookieName]);
+			return \bin2hex(CryptoUtil::getValueFromSignedString($_COOKIE[$cookieName]));
 		}
 		
 		return null;
@@ -216,7 +216,7 @@ final class SessionHandler extends SingletonFactory {
 			return $sessionID;
 		}
 		
-		return CryptoUtil::createSignedString($sessionID);
+		return CryptoUtil::createSignedString(\hex2bin($sessionID));
 	}
 	
 	/**
