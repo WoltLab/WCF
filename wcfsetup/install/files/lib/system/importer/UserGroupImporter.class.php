@@ -3,6 +3,7 @@ namespace wcf\system\importer;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\group\UserGroupAction;
 use wcf\data\user\group\UserGroupEditor;
+use wcf\system\option\user\group\UserGroupOptionHandler;
 
 /**
  * Imports user groups.
@@ -32,7 +33,8 @@ class UserGroupImporter extends AbstractImporter {
 			}
 			
 			$action = new UserGroupAction([], 'create', [
-				'data' => $data
+				'data' => $data,
+				'options' => $this->getOptionHandler()->save(),
 			]);
 			$returnValues = $action->executeAction();
 			$group = $returnValues['returnValues'];
@@ -74,5 +76,13 @@ class UserGroupImporter extends AbstractImporter {
 		ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.user.group', $oldID, $newGroupID);
 		
 		return $newGroupID;
+	}
+	
+	protected function getOptionHandler() {
+		$optionHandler = new UserGroupOptionHandler(false, '', '');
+		$optionHandler->init();
+		$optionHandler->readData();
+		
+		return $optionHandler;
 	}
 }
