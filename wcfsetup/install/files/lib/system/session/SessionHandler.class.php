@@ -265,9 +265,6 @@ final class SessionHandler extends SingletonFactory {
 	 * Initializes session system.
 	 */
 	public function initSession() {
-		// init session environment
-		$this->initSecurityToken();
-		
 		$this->defineConstants();
 		
 		// assign language and style id
@@ -320,13 +317,18 @@ final class SessionHandler extends SingletonFactory {
 			// The only reason we sign the cookie is that an XSS vulnerability or a rogue application on a subdomain
 			// is not able to create a valid `XSRF-TOKEN`, e.g. by setting the `XSRF-TOKEN` cookie to the static
 			// value `1234`, possibly allowing later exploitation.
-			if (CryptoUtil::validateSignedString($_COOKIE['XSRF-TOKEN'])) {
+			if (!PACKAGE_ID || CryptoUtil::validateSignedString($_COOKIE['XSRF-TOKEN'])) {
 				$xsrfToken = $_COOKIE['XSRF-TOKEN'];
 			}
 		}
 		
 		if (!$xsrfToken) {
-			$xsrfToken = CryptoUtil::createSignedString(\random_bytes(16));
+			if (PACKAGE_ID) {
+				$xsrfToken = CryptoUtil::createSignedString(\random_bytes(16));
+			}
+			else {
+				$xsrfToken = \bin2hex(\random_bytes(16));
+			}
 			
 			// We construct the cookie manually instead of using HeaderUtil::setCookie(), because:
 			// 1) We don't want the prefix. The `XSRF-TOKEN` cookie name is a standard name across applications
@@ -359,6 +361,10 @@ final class SessionHandler extends SingletonFactory {
 	 * @return	string
 	 */
 	public function getSecurityToken() {
+		if ($this->xsrfToken === null) {
+			$this->initSecurityToken();
+		}
+		
 		return $this->xsrfToken;
 	}
 	
