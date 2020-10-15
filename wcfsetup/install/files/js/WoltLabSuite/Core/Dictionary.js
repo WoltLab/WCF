@@ -5,11 +5,15 @@ define(["require", "exports"], function (require, exports) {
      *
      * If you're looking for a dictionary with object keys, please see `WoltLabSuite/Core/ObjectMap`.
      *
+     * This is a legacy implementation, that does not implement all methods of `Map`, furthermore it has
+     * the side effect of converting all numeric keys to string values, treating 1 === "1".
+     *
      * @author  Tim Duesterhus, Alexander Ebert
      * @copyright  2001-2019 WoltLab GmbH
      * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
      * @module  Dictionary (alias)
      * @module  WoltLabSuite/Core/Dictionary
+     * @deprecated 5.4
      */
     /**
      * @constructor
@@ -47,6 +51,9 @@ define(["require", "exports"], function (require, exports) {
          * value as first parameter and the key name second.
          */
         forEach(callback) {
+            if (typeof callback !== 'function') {
+                throw new TypeError('forEach() expects a callback as first parameter.');
+            }
             this._dictionary.forEach(callback);
         }
         /**
