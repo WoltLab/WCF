@@ -408,7 +408,7 @@ final class SessionHandler extends SingletonFactory {
 		]);
 		
 		// Refresh cookie.
-		if ($this->user->userID) {
+		if ($this->user->userID && !$this->isACP) {
 			HeaderUtil::setCookie(($this->isACP ? 'acp' : 'user')."_session", $this->sessionID, TIME_NOW + 86400 * 14);
 		}
 		
