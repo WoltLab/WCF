@@ -59,6 +59,9 @@ class PackageUpdateServer extends DatabaseObject {
 		if ($this->isWoltLabStoreServer()) {
 			$this->data['serverURL'] = 'http://store.woltlab.com/'.\wcf\getMinorVersion().'/';
 		}
+		if ($this->isWoltLabUpdateServer() || $this->isWoltLabStoreServer()) {
+			$this->data['isDisabled'] = 0;
+		}
 	}
 	
 	/**
@@ -282,6 +285,16 @@ class PackageUpdateServer extends DatabaseObject {
 	 * @since       5.3
 	 */
 	public final function canDelete() {
+		return !$this->isWoltLabUpdateServer() && !$this->isWoltLabStoreServer();
+	}
+	
+	/**
+	 * Returns whether the current user may disable this update server.
+	 * 
+	 * @return      boolean
+	 * @since       5.3
+	 */
+	public final function canDisable() {
 		return !$this->isWoltLabUpdateServer() && !$this->isWoltLabStoreServer();
 	}
 	

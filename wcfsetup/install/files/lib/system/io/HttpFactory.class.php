@@ -54,11 +54,28 @@ final class HttpFactory {
 	 * @see Client
 	 */
 	public static function makeClient(array $options = []) {
-		return new Client(array_merge([
+		$defaults = [
 			'proxy' => PROXY_SERVER_HTTP,
-			'headers' => [
-				'user-agent' => self::getDefaultUserAgent(),
-			],
-		], $options));
+			'headers' => [],
+		];
+		
+		foreach ($defaults as $key => $value) {
+			if (!array_key_exists($key, $options)) {
+				$options[$key] = $value;
+			}
+		}
+		
+		$foundUserAgent = false;
+		foreach ($options['headers'] as $headerName => $value) {
+			if (strtolower($headerName) === 'user-agent') {
+				$foundUserAgent = true;
+				break;
+			}
+		}
+		if (!$foundUserAgent) {
+			$options['headers']['user-agent'] = self::getDefaultUserAgent();
+		}
+		
+		return new Client($options);
 	}
 }

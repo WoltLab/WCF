@@ -50,7 +50,7 @@ final class CryptoUtil {
 		list($signature, $value) = $parts;
 		$value = base64_decode($value);
 		
-		return self::secureCompare($signature, self::getSignature($value));
+		return \hash_equals($signature, self::getSignature($value));
 	}
 
 	/**

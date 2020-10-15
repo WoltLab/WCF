@@ -1,5 +1,6 @@
 <?php
 namespace wcf\util;
+use wcf\system\exception\SystemException;
 use wcf\system\Regex;
 
 /**
@@ -65,7 +66,7 @@ final class ExceptionLogUtil {
 		}
 		
 		if (!$regex->match($entry)) {
-			throw new \InvalidArgumentException('The given entry is malformed');
+			throw new \InvalidArgumentException('The given entry is malformed.');
 		}
 		$matches = $regex->getMatches();
 		$chainRegex->match($matches['chain'], true, Regex::ORDER_MATCH_BY_SET);
@@ -75,10 +76,20 @@ final class ExceptionLogUtil {
 				$item['information'] = null;
 			}
 			else {
-				$item['information'] = unserialize(base64_decode($item['information']), ['allowed_classes' => false]);
+				try {
+					$item['information'] = unserialize(base64_decode($item['information']), ['allowed_classes' => false]);
+				}
+				catch (SystemException $e) {
+					throw new \InvalidArgumentException('The additional information section of the given entry is malformed.', 0, $e);
+				}
 			}
 			
-			$item['stack'] = JSON::decode($item['stack']);
+			try {
+				$item['stack'] = JSON::decode($item['stack']);
+			}
+			catch (SystemException $e) {
+				throw new \InvalidArgumentException('The stack trace of the given entry is malformed.', 0, $e);
+			}
 			
 			return $item;
 		}, $chainRegex->getMatches());

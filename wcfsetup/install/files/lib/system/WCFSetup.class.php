@@ -387,6 +387,9 @@ class WCFSetup extends WCF {
 		// openssl extension
 		$system['openssl']['result'] = @extension_loaded('openssl');
 		
+		// curl
+		$system['curl']['result'] = @extension_loaded('curl');
+		
 		// misconfigured reverse proxy / cookies
 		$system['hostname']['result'] = true;
 		list($system['hostname']['value']) = explode(':', $_SERVER['HTTP_HOST'], 2);

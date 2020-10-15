@@ -997,9 +997,7 @@
 .boxWithEditButton {
 	position: relative;
 	
-	&:hover .boxEditButton {
-		opacity: 1;
-	}
+	
 	
 	.boxEditButton {
 		color: inherit;
@@ -1017,6 +1015,10 @@
 			color: inherit;
 		}
 	}
+}
+
+html:not(.touch) .boxWithEditButton:hover .boxEditButton {
+	opacity: 1;
 }
 
 .boxMenuResetFilter {

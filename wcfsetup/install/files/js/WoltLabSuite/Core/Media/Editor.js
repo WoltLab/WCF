@@ -297,6 +297,7 @@ define(
 			
 			// captionEnableHtml
 			if (captionEnableHtml) this._media.captionEnableHtml = ~~captionEnableHtml.checked;
+			else this._media.captionEnableHtml = 0;
 			
 			var aclValues = {
 				allowAll: ~~elById('mediaEditor_' + this._media.mediaID + '_aclAllowAll').checked,

@@ -866,29 +866,32 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * @throws	SystemException
 	 */
 	public function getPackageUpdateVersions($package, $version = '') {
+		$packageUpdateServerIDs = [];
+		foreach (PackageUpdateServer::getActiveUpdateServers() as $packageUpdateServer) {
+			$packageUpdateServerIDs[] = $packageUpdateServer->packageUpdateServerID;
+		}
+		
 		// get newest package version
 		if (empty($version)) {
 			$version = $this->getNewestPackageVersion($package);
 		}
 		
 		// get versions
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add('pu.package = ?', [$package]);
+		$conditions->add('puv.packageVersion = ?', [$version]);
+		$conditions->add('puv.isAccessible = ?', [1]);
+		$conditions->add('pus.packageUpdateServerID IN (?)', [$packageUpdateServerIDs]);
+		
 		$sql = "SELECT		puv.*, pu.*, pus.serverURL, pus.loginUsername, pus.loginPassword
 			FROM		wcf".WCF_N."_package_update_version puv
 			LEFT JOIN	wcf".WCF_N."_package_update pu
 			ON		(pu.packageUpdateID = puv.packageUpdateID)
 			LEFT JOIN	wcf".WCF_N."_package_update_server pus
 			ON		(pus.packageUpdateServerID = pu.packageUpdateServerID)
-			WHERE		pu.package = ?
-					AND puv.packageVersion = ?
-					AND puv.isAccessible = ?
-					AND pus.isDisabled = ?";
+			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([
-			$package,
-			$version,
-			1,
-			0
-		]);
+		$statement->execute($conditions->getParameters());
 		$versions = $statement->fetchAll(\PDO::FETCH_ASSOC);
 		
 		if (empty($versions)) {

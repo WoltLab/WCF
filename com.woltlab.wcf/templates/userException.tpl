@@ -29,6 +29,10 @@
 	Stacktrace:
 	{$stacktrace}
 	-->
+	<script>
+		console.debug('{$name|encodeJS} thrown in {$file|encodeJS} ({@$line})');
+		console.debug('Stacktrace:\n{@$stacktrace|encodeJS}');
+	</script>
 {/if}
 
 {include file='footer' __disableAds=true}

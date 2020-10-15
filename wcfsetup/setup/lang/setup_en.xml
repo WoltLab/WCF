@@ -38,6 +38,8 @@
 		<item name="wcf.global.systemRequirements.memoryLimit.description"><![CDATA[The maximum available memory of PHP scripts is too low to properly run the software.]]></item>
 		<item name="wcf.global.systemRequirements.openSSL"><![CDATA['OpenSSL' PHP extension]]></item>
 		<item name="wcf.global.systemRequirements.openSSL.description"><![CDATA[Your PHP version has been compiled without OpenSSL support, it is required to establish secure connections.]]></item>
+		<item name="wcf.global.systemRequirements.curl"><![CDATA['curl' PHP extension]]></item>
+		<item name="wcf.global.systemRequirements.curl.description"><![CDATA[Your PHP version has been compiled without cURL support, outgoing connections might not be fully supported.]]></item>
 		<item name="wcf.global.systemRequirements.hostname"><![CDATA[Host Name]]></item>
 		<item name="wcf.global.systemRequirements.hostname.requirement"><![CDATA[Correct Host Name]]></item>
 		<item name="wcf.global.systemRequirements.hostname.description"><![CDATA[The host name determined by the web server must match the host name within the web browser's URL bar.]]></item>

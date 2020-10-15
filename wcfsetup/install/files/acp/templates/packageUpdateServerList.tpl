@@ -48,9 +48,13 @@
 				{foreach from=$objects item=updateServer}
 					<tr class="jsUpdateServerRow">
 						<td class="columnIcon">
-							<span class="icon icon16 fa-{if !$updateServer->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$updateServer->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$updateServer->packageUpdateServerID}"></span>
+							{if $updateServer->canDisable()}
+								<span class="icon icon16 fa-{if !$updateServer->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$updateServer->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$updateServer->packageUpdateServerID}"></span>
+							{else}
+								<span class="icon icon16 fa-check-square-o disabled"></span>
+							{/if}
 							<a href="{link controller='PackageUpdateServerEdit' id=$updateServer->packageUpdateServerID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-							<span class="icon icon16 fa-times {if $updateServer->canDelete()}jsDeleteButton jsTooltip pointer{else}disabled{/if}" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$updateServer->packageUpdateServerID}" data-confirm-message-html="{lang __encode=true}wcf.acp.updateServer.delete.sure{/lang}"></span>
+							<span class="icon icon16 fa-times {if $updateServer->canDelete()}jsDeleteButton jsTooltip pointer{else}disabled{/if}"{if $updateServer->canDelete()} title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$updateServer->packageUpdateServerID}" data-confirm-message-html="{lang __encode=true}wcf.acp.updateServer.delete.sure{/lang}"{/if}></span>
 							
 							{event name='itemButtons'}
 						</td>

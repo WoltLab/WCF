@@ -18,7 +18,9 @@ use wcf\system\exception\PermissionDeniedException;
  * @method	PackageUpdateServerEditor	getSingleObject()
  */
 class PackageUpdateServerAction extends AbstractDatabaseObjectAction implements IToggleAction {
-	use TDatabaseObjectToggle;
+	use TDatabaseObjectToggle {
+		validateToggle as traitValidateToggle;
+	}
 	
 	/**
 	 * @inheritDoc
@@ -56,4 +58,17 @@ class PackageUpdateServerAction extends AbstractDatabaseObjectAction implements 
 			if (!$updateServer->canDelete()) throw new PermissionDeniedException();
 		}
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validateToggle() {
+		$this->traitValidateToggle();
+		
+		/** @var PackageUpdateServer $updateServer */
+		foreach ($this->getObjects() as $updateServer) {
+			if (!$updateServer->canDisable()) throw new PermissionDeniedException();
+		}
+	}
+	
 }
