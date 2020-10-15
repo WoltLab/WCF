@@ -66,7 +66,7 @@ define(["require", "exports"], function (require, exports) {
     function extend(out, ...args) {
         out = out || {};
         const newObj = clone(out);
-        for (let i = 1, length = args.length; i < length; i++) {
+        for (let i = 0, length = args.length; i < length; i++) {
             const obj = args[i];
             if (!obj)
                 continue;
