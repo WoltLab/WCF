@@ -136,31 +136,34 @@ final class SessionHandler extends SingletonFactory {
 	 * @return	mixed
 	 */
 	public function __get($key) {
-		if ($key === 'sessionID') {
-			return $this->sessionID;
+		switch ($key) {
+			case 'sessionID':
+				return $this->sessionID;
+			case 'userID':
+				return $this->user->userID;
+			case 'spiderID':
+				return $this->getSpiderID(UserUtil::getUserAgent());
+			case 'pageID':
+			case 'pageObjectID':
+			case 'parentPageID':
+			case 'parentPageObjectID':
+				return $this->legacySession->{$key};
+
+			/** @deprecated	5.4 - The below values are deprecated. */
+			case 'ipAddress':
+				return UserUtil::getIpAddress();
+			case 'userAgent':
+				return UserUtil::getUserAgent();
+			case 'requestURI':
+				return UserUtil::getRequestURI();
+			case 'requestMethod':
+				return !empty($_SERVER['REQUEST_METHOD']) ? substr($_SERVER['REQUEST_METHOD'], 0, 7) : '';
+			case 'lastActivityTime':
+				return TIME_NOW;
+			
+			default:
+				return null;
 		}
-		else if ($key === 'userID') {
-			return $this->user->userID;
-		}
-		else if ($key === 'spiderID') {
-			return $this->getSpiderID(UserUtil::getUserAgent());
-		}
-		// TODO: pageID, pageObjectID, parentPageID, parentPageObjectID
-		
-		/** @deprecated	5.4 - These values can be retrieved more efficiently by directly using the methods in e.g. UserUtil. */
-		$environment = [
-			'ipAddress' => UserUtil::getIpAddress(),
-			'userAgent' => UserUtil::getUserAgent(),
-			'requestURI' => UserUtil::getRequestURI(),
-			'requestMethod' => !empty($_SERVER['REQUEST_METHOD']) ? substr($_SERVER['REQUEST_METHOD'], 0, 7) : '',
-			'lastActivityTime' => TIME_NOW,
-		];
-		
-		if (array_key_exists($key, $environment)) {
-			return $environment[$key];
-		}
-		
-		return null;
 	}
 	
 	/**
