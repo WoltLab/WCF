@@ -28,8 +28,7 @@ define(["require", "exports"], function (require, exports) {
         Object.keys(obj).forEach(key => newObj[key] = _clone(obj[key]));
         return newObj;
     };
-    //noinspection JSUnresolvedVariable
-    const _prefix = 'wsc1337' + /*window.WCF_PATH.hashCode()*/ +'-';
+    const _prefix = 'wsc' + window.WCF_PATH.hashCode() + '-';
     /**
      * Deep clones an object.
      */

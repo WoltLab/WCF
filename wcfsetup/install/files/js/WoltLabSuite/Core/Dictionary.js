@@ -51,6 +51,9 @@ define(["require", "exports"], function (require, exports) {
          * value as first parameter and the key name second.
          */
         forEach(callback) {
+            if (typeof callback !== 'function') {
+                throw new TypeError('forEach() expects a callback as first parameter.');
+            }
             this._dictionary.forEach(callback);
         }
         /**

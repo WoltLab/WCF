@@ -2,7 +2,7 @@
  * Dictionary implementation relying on an object or if supported on a Map to hold key => value data.
  *
  * If you're looking for a dictionary with object keys, please see `WoltLabSuite/Core/ObjectMap`.
- * 
+ *
  * This is a legacy implementation, that does not implement all methods of `Map`, furthermore it has
  * the side effect of converting all numeric keys to string values, treating 1 === "1".
  *
@@ -43,7 +43,7 @@ class Dictionary {
   /**
    * Retrieves a value by key, returns undefined if there is no match.
    */
-  get(key: number | string): any {
+  get(key: number | string): unknown {
     return this._dictionary.get(key.toString());
   }
 
@@ -52,6 +52,10 @@ class Dictionary {
    * value as first parameter and the key name second.
    */
   forEach(callback: (value: any, key: string) => void): void {
+    if (typeof callback !== 'function') {
+      throw new TypeError('forEach() expects a callback as first parameter.');
+    }
+
     this._dictionary.forEach(callback);
   }
 
@@ -81,7 +85,7 @@ class Dictionary {
    * All properties that are owned by the object will be added
    * as keys to the resulting Dictionary.
    */
-  static fromObject (object: object): Dictionary {
+  static fromObject(object: object): Dictionary {
     const result = new Dictionary();
 
     for (const key in object) {
@@ -92,7 +96,7 @@ class Dictionary {
 
     return result;
   }
-  
+
   get size(): number {
     return this._dictionary.size;
   }

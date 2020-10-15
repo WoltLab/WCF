@@ -31,8 +31,7 @@ const _cloneObject = function (obj: object | any[]): object | any[] | null {
   return newObj;
 };
 
-//noinspection JSUnresolvedVariable
-const _prefix = 'wsc1337' + /*window.WCF_PATH.hashCode()*/ +'-';
+const _prefix = 'wsc' + window.WCF_PATH.hashCode() +'-';
 
 /**
  * Deep clones an object.
