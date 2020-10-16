@@ -11,25 +11,28 @@
 import * as Core from '../Core';
 import Devtools from '../Devtools';
 
-const _listeners = new Map<string, Map<string, Map<string, Callback>>>();
+type Identifier = string;
+type Action = string;
+type Uuid = string;
+const _listeners = new Map<Identifier, Map<Action, Map<Uuid, Callback>>>();
 
 /**
  * Registers an event listener.
  */
-export function add(identifier: string, action: string, callback: Callback): string {
+export function add(identifier: Identifier, action: Action, callback: Callback): Uuid {
   if (typeof callback !== 'function') {
     throw new TypeError(`Expected a valid callback for '${action}'@'${identifier}'.`);
   }
 
   let actions = _listeners.get(identifier);
   if (actions === undefined) {
-    actions = new Map<string, Map<string, Callback>>();
+    actions = new Map<Action, Map<Uuid, Callback>>();
     _listeners.set(identifier, actions);
   }
 
   let callbacks = actions.get(action);
   if (callbacks === undefined) {
-    callbacks = new Map<string, Callback>();
+    callbacks = new Map<Uuid, Callback>();
     actions.set(action, callbacks);
   }
 
@@ -42,7 +45,7 @@ export function add(identifier: string, action: string, callback: Callback): str
 /**
  * Fires an event and notifies all listeners.
  */
-export function fire(identifier: string, action: string, data?: object): void {
+export function fire(identifier: Identifier, action: Action, data?: object): void {
   Devtools._internal_.eventLog(identifier, action);
 
   data = data || {};
@@ -55,7 +58,7 @@ export function fire(identifier: string, action: string, data?: object): void {
 /**
  * Removes an event listener, requires the uuid returned by add().
  */
-export function remove(identifier: string, action: string, uuid: string): void {
+export function remove(identifier: Identifier, action: Action, uuid: Uuid): void {
   _listeners.get(identifier)
     ?.get(action)
     ?.delete(uuid);
@@ -65,7 +68,7 @@ export function remove(identifier: string, action: string, uuid: string): void {
  * Removes all event listeners for given action. Omitting the second parameter will
  * remove all listeners for this identifier.
  */
-export function removeAll(identifier: string, action?: string): void {
+export function removeAll(identifier: Identifier, action?: Action): void {
   if (typeof action !== 'string') action = undefined;
 
   const actions = _listeners.get(identifier);
@@ -83,11 +86,8 @@ export function removeAll(identifier: string, action?: string): void {
 /**
  * Removes all listeners registered for an identifier and ending with a special suffix.
  * This is commonly used to unbound event handlers for the editor.
- *
- * @param       {string}        identifier      event identifier
- * @param       {string}        suffix          action suffix
  */
-export function removeAllBySuffix(identifier: string, suffix: string): void {
+export function removeAllBySuffix(identifier: Identifier, suffix: string): void {
   const actions = _listeners.get(identifier);
   if (actions === undefined) {
     return;

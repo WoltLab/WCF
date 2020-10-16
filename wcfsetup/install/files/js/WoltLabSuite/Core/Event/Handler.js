@@ -98,9 +98,6 @@ define(["require", "exports", "../Core", "../Devtools"], function (require, expo
     /**
      * Removes all listeners registered for an identifier and ending with a special suffix.
      * This is commonly used to unbound event handlers for the editor.
-     *
-     * @param       {string}        identifier      event identifier
-     * @param       {string}        suffix          action suffix
      */
     function removeAllBySuffix(identifier, suffix) {
         const actions = _listeners.get(identifier);
