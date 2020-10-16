@@ -1,376 +1,326 @@
 /**
  * Versatile AJAX request handling.
- * 
+ *
  * In case you want to issue JSONP requests, please use `AjaxJsonp` instead.
- * 
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	AjaxRequest (alias)
- * @module	WoltLabSuite/Core/Ajax/Request
+ *
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  AjaxRequest (alias)
+ * @module  WoltLabSuite/Core/Ajax/Request
  */
-define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'WoltLabSuite/Core/Ajax/Status'], function(Core, Language, DomChangeListener, DomUtil, UiDialog, AjaxStatus) {
-	"use strict";
-	
-	var _didInit = false;
-	var _ignoreAllErrors = false;
-	
-	/**
-	 * @constructor
-	 */
-	function AjaxRequest(options) {
-		this._data = null;
-		this._options = {};
-		this._previousXhr = null;
-		this._xhr = null;
-		
-		this._init(options);
-	}
-	AjaxRequest.prototype = {
-		/**
-		 * Initializes the request options.
-		 * 
-		 * @param	{Object}	options		request options
-		 */
-		_init: function(options) {
-			this._options = Core.extend({
-				// request data
-				data: {},
-				contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-				responseType: 'application/json',
-				type: 'POST',
-				url: '',
-				withCredentials: false,
-				
-				// behavior
-				autoAbort: false,
-				ignoreError: false,
-				pinData: false,
-				silent: false,
-				includeRequestedWith: true,
-				
-				// callbacks
-				failure: null,
-				finalize: null,
-				success: null,
-				progress: null,
-				uploadProgress: null,
-				
-				callbackObject: null
-			}, options);
-			
-			if (typeof options.callbackObject === 'object') {
-				this._options.callbackObject = options.callbackObject;
-			}
-			
-			this._options.url = Core.convertLegacyUrl(this._options.url);
-			if (this._options.url.indexOf('index.php') === 0) {
-				this._options.url = WSC_API_URL + this._options.url;
-			}
-			
-			if (this._options.url.indexOf(WSC_API_URL) === 0) {
-				this._options.includeRequestedWith = true;
-				// always include credentials when querying the very own server
-				this._options.withCredentials = true;
-			}
-			
-			if (this._options.pinData) {
-				this._data = Core.extend({}, this._options.data);
-			}
-			
-			if (this._options.callbackObject !== null) {
-				if (typeof this._options.callbackObject._ajaxFailure === 'function') this._options.failure = this._options.callbackObject._ajaxFailure.bind(this._options.callbackObject);
-				if (typeof this._options.callbackObject._ajaxFinalize === 'function') this._options.finalize = this._options.callbackObject._ajaxFinalize.bind(this._options.callbackObject);
-				if (typeof this._options.callbackObject._ajaxSuccess === 'function') this._options.success = this._options.callbackObject._ajaxSuccess.bind(this._options.callbackObject);
-				if (typeof this._options.callbackObject._ajaxProgress === 'function') this._options.progress = this._options.callbackObject._ajaxProgress.bind(this._options.callbackObject);
-				if (typeof this._options.callbackObject._ajaxUploadProgress === 'function') this._options.uploadProgress = this._options.callbackObject._ajaxUploadProgress.bind(this._options.callbackObject);
-			}
-			
-			if (_didInit === false) {
-				_didInit = true;
-				
-				window.addEventListener('beforeunload', function() { _ignoreAllErrors = true; });
-			}
-		},
-		
-		/**
-		 * Dispatches a request, optionally aborting a currently active request.
-		 * 
-		 * @param	{boolean}	abortPrevious	abort currently active request
-		 */
-		sendRequest: function(abortPrevious) {
-			if (abortPrevious === true || this._options.autoAbort) {
-				this.abortPrevious();
-			}
-			
-			if (!this._options.silent) {
-				AjaxStatus.show();
-			}
-			
-			if (this._xhr instanceof XMLHttpRequest) {
-				this._previousXhr = this._xhr;
-			}
-			
-			this._xhr = new XMLHttpRequest();
-			this._xhr.open(this._options.type, this._options.url, true);
-			if (this._options.contentType) {
-				this._xhr.setRequestHeader('Content-Type', this._options.contentType);
-			}
-			if (this._options.withCredentials || this._options.includeRequestedWith) {
-				this._xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-			}
-			if (this._options.withCredentials) {
-				this._xhr.withCredentials = true;
-			}
-			
-			var self = this;
-			var options = Core.clone(this._options);
-			this._xhr.onload = function() {
-				if (this.readyState === XMLHttpRequest.DONE) {
-					if (this.status >= 200 && this.status < 300 || this.status === 304) {
-						if (options.responseType && this.getResponseHeader('Content-Type').indexOf(options.responseType) !== 0) {
-							// request succeeded but invalid response type
-							self._failure(this, options);
-						}
-						else {
-							self._success(this, options);
-						}
-					}
-					else {
-						self._failure(this, options);
-					}
-				}
-			};
-			this._xhr.onerror = function() {
-				self._failure(this, options);
-			};
-			
-			if (this._options.progress) {
-				this._xhr.onprogress = this._options.progress;
-			}
-			if (this._options.uploadProgress) {
-				this._xhr.upload.onprogress = this._options.uploadProgress;
-			}
-			
-			if (this._options.type === 'POST') {
-				var data = this._options.data;
-				if (typeof data === 'object' && Core.getType(data) !== 'FormData') {
-					data = Core.serialize(data);
-				}
-				
-				this._xhr.send(data);
-			}
-			else {
-				this._xhr.send();
-			}
-		},
-		
-		/**
-		 * Aborts a previous request.
-		 */
-		abortPrevious: function() {
-			if (this._previousXhr === null) {
-				return;
-			}
-			
-			this._previousXhr.abort();
-			this._previousXhr = null;
-			
-			if (!this._options.silent) {
-				AjaxStatus.hide();
-			}
-		},
-		
-		/**
-		 * Sets a specific option.
-		 * 
-		 * @param	{string}	key	option name
-		 * @param	{?}		value	option value
-		 */
-		setOption: function(key, value) {
-			this._options[key] = value;
-		},
-		
-		/**
-		 * Returns an option by key or undefined.
-		 * 
-		 * @param	{string}	key	option name
-		 * @return	{(*|null)}	option value or null
-		 */
-		getOption: function(key) {
-			if (objOwns(this._options, key)) {
-				return this._options[key];
-			}
-			
-			return null;
-		},
-		
-		/**
-		 * Sets request data while honoring pinned data from setup callback.
-		 * 
-		 * @param	{Object}	data	request data
-		 */
-		setData: function(data) {
-			if (this._data !== null && Core.getType(data) !== 'FormData') {
-				data = Core.extend(this._data, data);
-			}
-			
-			this._options.data = data;
-		},
-		
-		/**
-		 * Handles a successful request.
-		 * 
-		 * @param	{XMLHttpRequest}	xhr		request object
-		 * @param	{Object}        	options		request options
-		 */
-		_success: function(xhr, options) {
-			if (!options.silent) {
-				AjaxStatus.hide();
-			}
-			
-			if (typeof options.success === 'function') {
-				var data = null;
-				if (xhr.getResponseHeader('Content-Type').split(';', 1)[0].trim() === 'application/json') {
-					try {
-						data = JSON.parse(xhr.responseText);
-					}
-					catch (e) {
-						// invalid JSON
-						this._failure(xhr, options);
-						
-						return;
-					}
-					
-					// trim HTML before processing, see http://jquery.com/upgrade-guide/1.9/#jquery-htmlstring-versus-jquery-selectorstring
-					if (data && data.returnValues && data.returnValues.template !== undefined) {
-						data.returnValues.template = data.returnValues.template.trim();
-					}
-					
-					// force-invoke the background queue
-					if (data && data.forceBackgroundQueuePerform) {
-						require(['WoltLabSuite/Core/BackgroundQueue'], function(BackgroundQueue) {
-							BackgroundQueue.invoke();
-						});
-					}
-				}
-				
-				options.success(data, xhr.responseText, xhr, options.data);
-			}
-			
-			this._finalize(options);
-		},
-		
-		/**
-		 * Handles failed requests, this can be both a successful request with
-		 * a non-success status code or an entirely failed request.
-		 * 
-		 * @param	{XMLHttpRequest}	xhr		request object
-		 * @param	{Object}        	options		request options
-		 */
-		_failure: function (xhr, options) {
-			if (_ignoreAllErrors) {
-				return;
-			}
-			
-			if (!options.silent) {
-				AjaxStatus.hide();
-			}
-			
-			var data = null;
-			try {
-				data = JSON.parse(xhr.responseText);
-			}
-			catch (e) {}
-			
-			var showError = true;
-			if (typeof options.failure === 'function') {
-				showError = options.failure((data || {}), (xhr.responseText || ''), xhr, options.data);
-			}
-			
-			if (options.ignoreError !== true && showError !== false) {
-				var html = this.getErrorHtml(data, xhr);
-				
-				if (html) {
-					if (UiDialog === undefined) UiDialog = require('Ui/Dialog');
-					UiDialog.openStatic(DomUtil.getUniqueId(), html, {
-						title: Language.get('wcf.global.error.title')
-					});
-				}
-			}
-			
-			this._finalize(options);
-		},
-		
-		/**
-		 * Returns the inner HTML for an error/exception display.
-		 * 
-		 * @param       {Object}                data
-		 * @param       {XMLHttpRequest}        xhr
-		 * @return      {string}
-		 */
-		getErrorHtml: function(data, xhr) {
-			var details = '';
-			var message = '';
-			
-			if (data !== null) {
-				if (data.returnValues && data.returnValues.description) {
-					details += '<br><p>Description:</p><p>' + data.returnValues.description + '</p>';
-				}
-				
-				if (data.file && data.line) {
-					details += '<br><p>File:</p><p>' + data.file + ' in line ' + data.line + '</p>';
-				}
-				
-				if (data.stacktrace) details += '<br><p>Stacktrace:</p><p>' + data.stacktrace + '</p>';
-				else if (data.exceptionID) details += '<br><p>Exception ID: <code>' + data.exceptionID + '</code></p>';
-				
-				message = data.message;
-				
-				data.previous.forEach(function(previous) {
-					details += '<hr><p>' + previous.message + '</p>';
-					details += '<br><p>Stacktrace</p><p>' + previous.stacktrace + '</p>';
-				});
-			}
-			else {
-				message = xhr.responseText;
-			}
-			
-			if (!message || message === 'undefined') {
-				if (!ENABLE_DEBUG_MODE) return null;
-				
-				message = 'XMLHttpRequest failed without a responseText. Check your browser console.'
-			}
-			
-			return '<div class="ajaxDebugMessage"><p>' + message + '</p>' + details + '</div>';
-		},
-		
-		/**
-		 * Finalizes a request.
-		 * 
-		 * @param	{Object}	options		request options
-		 */
-		_finalize: function(options) {
-			if (typeof options.finalize === 'function') {
-				options.finalize(this._xhr);
-			}
-			
-			this._previousXhr = null;
-			
-			DomChangeListener.trigger();
-			
-			// fix anchor tags generated through WCF::getAnchor()
-			var links = elBySelAll('a[href*="#"]');
-			for (var i = 0, length = links.length; i < length; i++) {
-				var link = links[i];
-				var href = elAttr(link, 'href');
-				if (href.indexOf('AJAXProxy') !== -1 || href.indexOf('ajax-proxy') !== -1) {
-					href = href.substr(href.indexOf('#'));
-					elAttr(link, 'href', document.location.toString().replace(/#.*/, '') + href);
-				}
-			}
-		}
-	};
-	
-	return AjaxRequest;
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+define(["require", "exports", "./Status", "../Core", "../Dom/Change/Listener"], function (require, exports, AjaxStatus, Core, Listener_1) {
+    "use strict";
+    AjaxStatus = __importStar(AjaxStatus);
+    Core = __importStar(Core);
+    Listener_1 = __importDefault(Listener_1);
+    let _didInit = false;
+    let _ignoreAllErrors = false;
+    /**
+     * @constructor
+     */
+    class AjaxRequest {
+        constructor(options) {
+            this._options = Core.extend({
+                data: {},
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                responseType: 'application/json',
+                type: 'POST',
+                url: '',
+                withCredentials: false,
+                // behavior
+                autoAbort: false,
+                ignoreError: false,
+                pinData: false,
+                silent: false,
+                includeRequestedWith: true,
+                // callbacks
+                failure: null,
+                finalize: null,
+                success: null,
+                progress: null,
+                uploadProgress: null,
+                callbackObject: null,
+            }, options);
+            if (typeof options.callbackObject === 'object') {
+                this._options.callbackObject = options.callbackObject;
+            }
+            this._options.url = Core.convertLegacyUrl(this._options.url);
+            if (this._options.url.indexOf('index.php') === 0) {
+                this._options.url = window.WSC_API_URL + this._options.url;
+            }
+            if (this._options.url.indexOf(window.WSC_API_URL) === 0) {
+                this._options.includeRequestedWith = true;
+                // always include credentials when querying the very own server
+                this._options.withCredentials = true;
+            }
+            if (this._options.pinData) {
+                this._data = this._options.data;
+            }
+            if (this._options.callbackObject) {
+                if (typeof this._options.callbackObject._ajaxFailure === 'function')
+                    this._options.failure = this._options.callbackObject._ajaxFailure.bind(this._options.callbackObject);
+                if (typeof this._options.callbackObject._ajaxFinalize === 'function')
+                    this._options.finalize = this._options.callbackObject._ajaxFinalize.bind(this._options.callbackObject);
+                if (typeof this._options.callbackObject._ajaxSuccess === 'function')
+                    this._options.success = this._options.callbackObject._ajaxSuccess.bind(this._options.callbackObject);
+                if (typeof this._options.callbackObject._ajaxProgress === 'function')
+                    this._options.progress = this._options.callbackObject._ajaxProgress.bind(this._options.callbackObject);
+                if (typeof this._options.callbackObject._ajaxUploadProgress === 'function')
+                    this._options.uploadProgress = this._options.callbackObject._ajaxUploadProgress.bind(this._options.callbackObject);
+            }
+            if (!_didInit) {
+                _didInit = true;
+                window.addEventListener('beforeunload', () => _ignoreAllErrors = true);
+            }
+        }
+        /**
+         * Dispatches a request, optionally aborting a currently active request.
+         */
+        sendRequest(abortPrevious) {
+            if (abortPrevious || this._options.autoAbort) {
+                this.abortPrevious();
+            }
+            if (!this._options.silent) {
+                AjaxStatus.show();
+            }
+            if (this._xhr instanceof XMLHttpRequest) {
+                this._previousXhr = this._xhr;
+            }
+            this._xhr = new XMLHttpRequest();
+            this._xhr.open(this._options.type, this._options.url, true);
+            if (this._options.contentType) {
+                this._xhr.setRequestHeader('Content-Type', this._options.contentType);
+            }
+            if (this._options.withCredentials || this._options.includeRequestedWith) {
+                this._xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            }
+            if (this._options.withCredentials) {
+                this._xhr.withCredentials = true;
+            }
+            const self = this;
+            const options = Core.clone(this._options);
+            this._xhr.onload = function () {
+                if (this.readyState === XMLHttpRequest.DONE) {
+                    if (this.status >= 200 && this.status < 300 || this.status === 304) {
+                        if (options.responseType && this.getResponseHeader('Content-Type').indexOf(options.responseType) !== 0) {
+                            // request succeeded but invalid response type
+                            self._failure(this, options);
+                        }
+                        else {
+                            self._success(this, options);
+                        }
+                    }
+                    else {
+                        self._failure(this, options);
+                    }
+                }
+            };
+            this._xhr.onerror = function () {
+                self._failure(this, options);
+            };
+            if (this._options.progress) {
+                this._xhr.onprogress = this._options.progress;
+            }
+            if (this._options.uploadProgress) {
+                this._xhr.upload.onprogress = this._options.uploadProgress;
+            }
+            if (this._options.type === 'POST') {
+                let data = this._options.data;
+                if (typeof data === 'object' && Core.getType(data) !== 'FormData') {
+                    data = Core.serialize(data);
+                }
+                this._xhr.send(data);
+            }
+            else {
+                this._xhr.send();
+            }
+        }
+        /**
+         * Aborts a previous request.
+         */
+        abortPrevious() {
+            if (!this._previousXhr) {
+                return;
+            }
+            this._previousXhr.abort();
+            this._previousXhr = undefined;
+            if (!this._options.silent) {
+                AjaxStatus.hide();
+            }
+        }
+        /**
+         * Sets a specific option.
+         */
+        setOption(key, value) {
+            this._options[key] = value;
+        }
+        /**
+         * Returns an option by key or undefined.
+         */
+        getOption(key) {
+            if (this._options.hasOwnProperty(key)) {
+                return this._options[key];
+            }
+            return null;
+        }
+        /**
+         * Sets request data while honoring pinned data from setup callback.
+         */
+        setData(data) {
+            if (this._data !== null && Core.getType(data) !== 'FormData') {
+                data = Core.extend(this._data, data);
+            }
+            this._options.data = data;
+        }
+        /**
+         * Handles a successful request.
+         */
+        _success(xhr, options) {
+            if (!options.silent) {
+                AjaxStatus.hide();
+            }
+            if (typeof options.success === 'function') {
+                let data = null;
+                if (xhr.getResponseHeader('Content-Type').split(';', 1)[0].trim() === 'application/json') {
+                    try {
+                        data = JSON.parse(xhr.responseText);
+                    }
+                    catch (e) {
+                        // invalid JSON
+                        this._failure(xhr, options);
+                        return;
+                    }
+                    // trim HTML before processing, see http://jquery.com/upgrade-guide/1.9/#jquery-htmlstring-versus-jquery-selectorstring
+                    if (data && data.returnValues && data.returnValues.template !== undefined) {
+                        data.returnValues.template = data.returnValues.template.trim();
+                    }
+                    // force-invoke the background queue
+                    if (data && data.forceBackgroundQueuePerform) {
+                        // TODO
+                        throw new Error('TODO: Invoking the BackgroundQueue is not yet supported.');
+                        /*
+                        require(['WoltLabSuite/Core/BackgroundQueue'], function (BackgroundQueue) {
+                          BackgroundQueue.invoke();
+                        });
+                         */
+                    }
+                }
+                options.success(data, xhr.responseText, xhr, options.data);
+            }
+            this._finalize(options);
+        }
+        /**
+         * Handles failed requests, this can be both a successful request with
+         * a non-success status code or an entirely failed request.
+         */
+        _failure(xhr, options) {
+            if (_ignoreAllErrors) {
+                return;
+            }
+            if (!options.silent) {
+                AjaxStatus.hide();
+            }
+            let data = null;
+            try {
+                data = JSON.parse(xhr.responseText);
+            }
+            catch (e) {
+            }
+            let showError = true;
+            if (typeof options.failure === 'function') {
+                showError = options.failure((data || {}), (xhr.responseText || ''), xhr, options.data);
+            }
+            if (options.ignoreError !== true && showError) {
+                const html = this.getErrorHtml(data, xhr);
+                if (html) {
+                    // TODO
+                    throw new Error('TODO: Yielding dialogs is not yet supported.');
+                    /*
+                    if (UiDialog === undefined) UiDialog = require('Ui/Dialog');
+                    UiDialog.openStatic(DomUtil.getUniqueId(), html, {
+                      title: Language.get('wcf.global.error.title'),
+                    });
+                     */
+                }
+            }
+            this._finalize(options);
+        }
+        /**
+         * Returns the inner HTML for an error/exception display.
+         */
+        getErrorHtml(data, xhr) {
+            let details = '';
+            let message;
+            if (data !== null) {
+                if (data.returnValues && data.returnValues.description) {
+                    details += '<br><p>Description:</p><p>' + data.returnValues.description + '</p>';
+                }
+                if (data.file && data.line) {
+                    details += '<br><p>File:</p><p>' + data.file + ' in line ' + data.line + '</p>';
+                }
+                if (data.stacktrace)
+                    details += '<br><p>Stacktrace:</p><p>' + data.stacktrace + '</p>';
+                else if (data.exceptionID)
+                    details += '<br><p>Exception ID: <code>' + data.exceptionID + '</code></p>';
+                message = data.message;
+                data.previous.forEach(function (previous) {
+                    details += '<hr><p>' + previous.message + '</p>';
+                    details += '<br><p>Stacktrace</p><p>' + previous.stacktrace + '</p>';
+                });
+            }
+            else {
+                message = xhr.responseText;
+            }
+            if (!message || message === 'undefined') {
+                if (!window.ENABLE_DEBUG_MODE)
+                    return null;
+                message = 'XMLHttpRequest failed without a responseText. Check your browser console.';
+            }
+            return '<div class="ajaxDebugMessage"><p>' + message + '</p>' + details + '</div>';
+        }
+        /**
+         * Finalizes a request.
+         *
+         * @param  {Object}  options    request options
+         */
+        _finalize(options) {
+            if (typeof options.finalize === 'function') {
+                options.finalize(this._xhr);
+            }
+            this._previousXhr = undefined;
+            Listener_1.default.trigger();
+            // fix anchor tags generated through WCF::getAnchor()
+            document.querySelectorAll('a[href*="#"]').forEach(link => {
+                let href = link.href;
+                if (href.indexOf('AJAXProxy') !== -1 || href.indexOf('ajax-proxy') !== -1) {
+                    href = href.substr(href.indexOf('#'));
+                    link.href = document.location.toString().replace(/#.*/, '') + href;
+                }
+            });
+        }
+    }
+    return AjaxRequest;
 });
