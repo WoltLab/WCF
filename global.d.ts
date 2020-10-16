@@ -1,6 +1,6 @@
 import Devtools from './wcfsetup/install/files/ts/WoltLabSuite/Core/Devtools';
 import DomUtil from './wcfsetup/install/files/ts/WoltLabSuite/Core/Dom/Util';
-import ColorUtil from './wcfsetup/install/files/ts/WoltLabSuite/Core/ColorUtil';
+import * as ColorUtil from './wcfsetup/install/files/ts/WoltLabSuite/Core/ColorUtil';
 
 declare global {
   interface Window {
