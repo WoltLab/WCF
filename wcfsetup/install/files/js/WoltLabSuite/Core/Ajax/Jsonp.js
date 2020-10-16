@@ -48,17 +48,16 @@ define(["require", "exports", "../Core"], function (require, exports, Core) {
         }, options || {});
         const callbackName = 'wcf_jsonp_' + Core.getUuid().replace(/-/g, '').substr(0, 8);
         let script;
-        const timeout = window.setTimeout(function () {
+        const timeout = window.setTimeout(() => {
             if (typeof failure === 'function') {
                 failure();
             }
             window[callbackName] = undefined;
             script.parentNode.removeChild(script);
         }, (~~options.timeout || 10) * 1000);
-        window[callbackName] = function () {
+        window[callbackName] = (...args) => {
             window.clearTimeout(timeout);
-            //@ts-ignore
-            success.apply(null, arguments);
+            success.apply(null, args);
             window[callbackName] = undefined;
             script.parentNode.removeChild(script);
         };
