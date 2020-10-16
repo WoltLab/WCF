@@ -8,33 +8,38 @@
  * @module  WoltLabSuite/Core/User
  */
 
-let _link: string | undefined;
+class User {
+  constructor(readonly userId, readonly username, readonly link) {
+  }
+}
+
+let user: User;
 
 export = {
   /**
    * Returns the link to the active user's profile or an empty string
    * if the active user is a guest.
    */
-  getLink: (): string => _link || '',
+  getLink: (): string => {
+    return user.link;
+  },
 
   /**
    * Initializes the user object.
    */
   init: (userId: number, username: string, link: string): void => {
-    if (_link !== undefined) {
+    if (user) {
       throw new Error('User has already been initialized.');
     }
-
-    // define non-writeable properties for userId and username
-    Object.defineProperty(this, 'userId', {
-      value: userId,
-      writable: false,
-    });
-    Object.defineProperty(this, 'username', {
-      value: username,
-      writable: false,
-    });
-
-    _link = link || '';
+    
+    user = new User(userId, username, link);
   },
+  
+  get userId(): number {
+    return user.userId;
+  },
+  
+  get username(): string {
+    return user.username;
+  }
 }
