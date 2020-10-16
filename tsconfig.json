@@ -1,7 +1,7 @@
 {
   "include": [
     "global.d.ts",
-    "wcfsetup/install/files/ts/WoltLabSuite/**/*"
+    "wcfsetup/install/files/ts/**/*"
   ],
   "compilerOptions": {
     "allowJs": true,
