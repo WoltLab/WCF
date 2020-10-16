@@ -1,140 +1,119 @@
 /**
  * Versatile event system similar to the WCF-PHP counter part.
- * 
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	EventHandler (alias)
- * @module	WoltLabSuite/Core/Event/Handler
+ *
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  EventHandler (alias)
+ * @module  WoltLabSuite/Core/Event/Handler
  */
-define(['Core', 'Devtools', 'Dictionary'], function(Core, Devtools, Dictionary) {
-	"use strict";
-	
-	var _listeners = new Dictionary();
-	
-	/**
-	 * @exports	WoltLabSuite/Core/Event/Handler
-	 */
-	return {
-		/**
-		 * Adds an event listener.
-		 * 
-		 * @param	{string}		identifier	event identifier
-		 * @param	{string}		action		action name
-		 * @param	{function(object)}	callback	callback function
-		 * @return	{string}	uuid required for listener removal
-		 */
-		add: function(identifier, action, callback) {
-			if (typeof callback !== 'function') {
-				throw new TypeError("[WoltLabSuite/Core/Event/Handler] Expected a valid callback for '" + action + "@" + identifier + "'.");
-			}
-			
-			var actions = _listeners.get(identifier);
-			if (actions === undefined) {
-				actions = new Dictionary();
-				_listeners.set(identifier, actions);
-			}
-			
-			var callbacks = actions.get(action);
-			if (callbacks === undefined) {
-				callbacks = new Dictionary();
-				actions.set(action, callbacks);
-			}
-			
-			var uuid = Core.getUuid();
-			callbacks.set(uuid, callback);
-			
-			return uuid;
-		},
-		
-		/**
-		 * Fires an event and notifies all listeners.
-		 * 
-		 * @param	{string}	identifier	event identifier
-		 * @param	{string}	action		action name
-		 * @param	{object=}	data		event data
-		 */
-		fire: function(identifier, action, data) {
-			Devtools._internal_.eventLog(identifier, action);
-			
-			data = data || {};
-			
-			var actions = _listeners.get(identifier);
-			if (actions !== undefined) {
-				var callbacks = actions.get(action);
-				if (callbacks !== undefined) {
-					callbacks.forEach(function(callback) {
-						callback(data);
-					});
-				}
-			}
-		},
-		
-		/**
-		 * Removes an event listener, requires the uuid returned by add().
-		 * 
-		 * @param	{string}	identifier	event identifier
-		 * @param	{string}	action		action name
-		 * @param	{string}	uuid		listener uuid
-		 */
-		remove: function(identifier, action, uuid) {
-			var actions = _listeners.get(identifier);
-			if (actions === undefined) {
-				return;
-			}
-			
-			var callbacks = actions.get(action);
-			if (callbacks === undefined) {
-				return;
-			}
-			
-			callbacks['delete'](uuid);
-		},
-		
-		/**
-		 * Removes all event listeners for given action. Omitting the second parameter will
-		 * remove all listeners for this identifier.
-		 * 
-		 * @param	{string}	identifier	event identifier
-		 * @param	{string=}	action		action name
-		 */
-		removeAll: function(identifier, action) {
-			if (typeof action !== 'string') action = undefined;
-			
-			var actions = _listeners.get(identifier);
-			if (actions === undefined) {
-				return;
-			}
-			
-			if (typeof action === 'undefined') {
-				_listeners['delete'](identifier);
-			}
-			else {
-				actions['delete'](action);
-			}
-		},
-		
-		/**
-		 * Removes all listeners registered for an identifier and ending with a special suffix.
-		 * This is commonly used to unbound event handlers for the editor.
-		 * 
-		 * @param       {string}        identifier      event identifier
-		 * @param       {string}        suffix          action suffix
-		 */
-		removeAllBySuffix: function (identifier, suffix) {
-			var actions = _listeners.get(identifier);
-			if (actions === undefined) {
-				return;
-			}
-			
-			suffix = '_' + suffix;
-			var length = suffix.length * -1;
-			actions.forEach((function (callbacks, action) {
-				//noinspection JSUnresolvedFunction
-				if (action.substr(length) === suffix) {
-					this.removeAll(identifier, action);
-				}
-			}).bind(this));
-		}
-	};
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+define(["require", "exports", "../Core", "../Devtools"], function (require, exports, Core, Devtools_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.removeAllBySuffix = exports.removeAll = exports.remove = exports.fire = exports.add = void 0;
+    Core = __importStar(Core);
+    Devtools_1 = __importDefault(Devtools_1);
+    const _listeners = new Map();
+    /**
+     * Registers an event listener.
+     */
+    function add(identifier, action, callback) {
+        if (typeof callback !== 'function') {
+            throw new TypeError(`Expected a valid callback for '${action}'@'${identifier}'.`);
+        }
+        let actions = _listeners.get(identifier);
+        if (actions === undefined) {
+            actions = new Map();
+            _listeners.set(identifier, actions);
+        }
+        let callbacks = actions.get(action);
+        if (callbacks === undefined) {
+            callbacks = new Map();
+            actions.set(action, callbacks);
+        }
+        const uuid = Core.getUuid();
+        callbacks.set(uuid, callback);
+        return uuid;
+    }
+    exports.add = add;
+    /**
+     * Fires an event and notifies all listeners.
+     */
+    function fire(identifier, action, data) {
+        var _a, _b;
+        Devtools_1.default._internal_.eventLog(identifier, action);
+        data = data || {};
+        (_b = (_a = _listeners.get(identifier)) === null || _a === void 0 ? void 0 : _a.get(action)) === null || _b === void 0 ? void 0 : _b.forEach(callback => callback(data));
+    }
+    exports.fire = fire;
+    /**
+     * Removes an event listener, requires the uuid returned by add().
+     */
+    function remove(identifier, action, uuid) {
+        var _a, _b;
+        (_b = (_a = _listeners.get(identifier)) === null || _a === void 0 ? void 0 : _a.get(action)) === null || _b === void 0 ? void 0 : _b.delete(uuid);
+    }
+    exports.remove = remove;
+    /**
+     * Removes all event listeners for given action. Omitting the second parameter will
+     * remove all listeners for this identifier.
+     */
+    function removeAll(identifier, action) {
+        if (typeof action !== 'string')
+            action = undefined;
+        const actions = _listeners.get(identifier);
+        if (actions === undefined) {
+            return;
+        }
+        if (action === undefined) {
+            _listeners.delete(identifier);
+        }
+        else {
+            actions.delete(action);
+        }
+    }
+    exports.removeAll = removeAll;
+    /**
+     * Removes all listeners registered for an identifier and ending with a special suffix.
+     * This is commonly used to unbound event handlers for the editor.
+     *
+     * @param       {string}        identifier      event identifier
+     * @param       {string}        suffix          action suffix
+     */
+    function removeAllBySuffix(identifier, suffix) {
+        const actions = _listeners.get(identifier);
+        if (actions === undefined) {
+            return;
+        }
+        suffix = '_' + suffix;
+        const length = suffix.length * -1;
+        actions.forEach((callbacks, action) => {
+            if (action.substr(length) === suffix) {
+                removeAll(identifier, action);
+            }
+        });
+    }
+    exports.removeAllBySuffix = removeAllBySuffix;
 });
