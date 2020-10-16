@@ -219,13 +219,7 @@ define(["require", "exports", "./Status", "../Core", "../Dom/Change/Listener"], 
                     }
                     // force-invoke the background queue
                     if (data && data.forceBackgroundQueuePerform) {
-                        // TODO
-                        throw new Error('TODO: Invoking the BackgroundQueue is not yet supported.');
-                        /*
-                        require(['WoltLabSuite/Core/BackgroundQueue'], function (BackgroundQueue) {
-                          BackgroundQueue.invoke();
-                        });
-                         */
+                        new Promise((resolve_1, reject_1) => { require(['../BackgroundQueue'], resolve_1, reject_1); }).then(__importStar).then(backgroundQueue => backgroundQueue.invoke());
                     }
                 }
                 options.success(data, xhr.responseText, xhr, options.data);

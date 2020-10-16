@@ -211,7 +211,7 @@ class AjaxRequest {
       let data: ResponseData | null = null;
       if (xhr.getResponseHeader('Content-Type')!.split(';', 1)[0].trim() === 'application/json') {
         try {
-          data = JSON.parse(xhr.responseText);
+          data = JSON.parse(xhr.responseText) as ResponseData;
         } catch (e) {
           // invalid JSON
           this._failure(xhr, options);
@@ -226,13 +226,7 @@ class AjaxRequest {
 
         // force-invoke the background queue
         if (data && data.forceBackgroundQueuePerform) {
-          // TODO
-          throw new Error('TODO: Invoking the BackgroundQueue is not yet supported.');
-          /*
-          require(['WoltLabSuite/Core/BackgroundQueue'], function (BackgroundQueue) {
-            BackgroundQueue.invoke();
-          });
-           */
+          import('../BackgroundQueue').then(backgroundQueue => backgroundQueue.invoke());
         }
       }
 
