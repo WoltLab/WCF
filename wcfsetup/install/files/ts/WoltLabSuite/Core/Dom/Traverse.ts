@@ -29,7 +29,7 @@ function _getChildren(element: Element, type: Type, value: string): Element[] {
 
   const children: Element[] = [];
   for (let i = 0; i < element.childElementCount; i++) {
-    if (_test[type](element.children[i], value)) {
+    if (_test.get(type)!(element.children[i], value)) {
       children.push(element.children[i]);
     }
   }
@@ -48,7 +48,7 @@ function _getParent(element: Element, type: Type, value: string, untilElement?: 
       return null;
     }
 
-    if (_test[type](target, value)) {
+    if (_test.get(type)!(target, value)) {
       return target;
     }
 
@@ -64,7 +64,7 @@ function _getSibling(element: Element, siblingType: string, type: Type, value: s
   }
 
   if (element instanceof Element) {
-    if (element[siblingType] !== null && _test[type](element[siblingType], value)) {
+    if (element[siblingType] !== null && _test.get(type)!(element[siblingType], value)) {
       return element[siblingType];
     }
   }
