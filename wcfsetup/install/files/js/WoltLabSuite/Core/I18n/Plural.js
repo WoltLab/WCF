@@ -43,10 +43,10 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
                 languageCode = document.documentElement.lang;
             }
             // Fallback: handle unknown languages as English
-            if (typeof this[languageCode] !== 'function') {
+            if (typeof Plural[languageCode] !== 'function') {
                 languageCode = 'en';
             }
-            const category = this[languageCode](value);
+            const category = Plural[languageCode](value);
             if (category) {
                 return category;
             }
@@ -74,7 +74,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
                     return parameters[key];
                 }
             }
-            let category = this.getCategory(value);
+            let category = Plural.getCategory(value);
             if (!parameters[category]) {
                 category = PLURAL_OTHER;
             }
@@ -164,8 +164,8 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
         },
         // Bosnian
         bs(n) {
-            const v = this.getV(n);
-            const f = this.getF(n);
+            const v = Plural.getV(n);
+            const f = Plural.getF(n);
             const mod10 = n % 10;
             const mod100 = n % 100;
             const fMod10 = f % 10;
@@ -178,7 +178,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
         },
         // Czech
         cs(n) {
-            const v = this.getV(n);
+            const v = Plural.getV(n);
             if (n == 1 && v === 0)
                 return PLURAL_ONE;
             if (n >= 2 && n <= 4 && v === 0)
@@ -220,7 +220,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
         // Swahili (sw)
         // Urdu (ur)
         en(n) {
-            if (n == 1 && this.getV(n) === 0)
+            if (n == 1 && Plural.getV(n) === 0)
                 return PLURAL_ONE;
         },
         // Spanish
@@ -261,7 +261,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
         },
         // Hebrew
         he(n) {
-            const v = this.getV(n);
+            const v = Plural.getV(n);
             if (n == 1 && v === 0)
                 return PLURAL_ONE;
             if (n == 2 && v === 0)
@@ -277,7 +277,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
         // Croatian
         hr(n) {
             // same as Bosnian
-            return this.bs(n);
+            return Plural.bs(n);
         },
         // Hungarian
         hu(n) {
@@ -294,7 +294,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
         },
         // Icelandic
         is(n) {
-            const f = this.getF(n);
+            const f = Plural.getF(n);
             if (f === 0 && n % 10 === 1 && !(n % 100 === 11) || !(f === 0))
                 return PLURAL_ONE;
         },
@@ -351,15 +351,15 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
                 return PLURAL_ONE;
             if (mod10 >= 2 && mod10 <= 9 && !(mod100 >= 11 && mod100 <= 19))
                 return PLURAL_FEW;
-            if (this.getF(n) != 0)
+            if (Plural.getF(n) != 0)
                 return PLURAL_MANY;
         },
         // Latvian
         lv(n) {
             const mod10 = n % 10;
             const mod100 = n % 100;
-            const v = this.getV(n);
-            const f = this.getF(n);
+            const v = Plural.getV(n);
+            const f = Plural.getF(n);
             const fMod10 = f % 10;
             const fMod100 = f % 100;
             if (mod10 == 0 || (mod100 >= 11 && mod100 <= 19) || (v == 2 && fMod100 >= 11 && fMod100 <= 19))
@@ -369,7 +369,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
         },
         // Macedonian
         mk(n) {
-            return this.bs(n);
+            return Plural.bs(n);
         },
         // Malayalam
         ml(n) {
@@ -424,7 +424,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
         },
         // Polish
         pl(n) {
-            const v = this.getV(n);
+            const v = Plural.getV(n);
             const mod10 = n % 10;
             const mod100 = n % 100;
             if (n == 1 && v == 0)
@@ -446,7 +446,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
         },
         // Romanian
         ro(n) {
-            const v = this.getV(n);
+            const v = Plural.getV(n);
             const mod100 = n % 100;
             if (n == 1 && v === 0)
                 return PLURAL_ONE;
@@ -457,7 +457,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
         ru(n) {
             const mod10 = n % 10;
             const mod100 = n % 100;
-            if (this.getV(n) == 0) {
+            if (Plural.getV(n) == 0) {
                 if (mod10 == 1 && mod100 != 11)
                     return PLURAL_ONE;
                 if (mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14))
@@ -473,17 +473,17 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
         },
         // Sinhala
         si(n) {
-            if (n == 0 || n == 1 || (Math.floor(n) == 0 && this.getF(n) == 1))
+            if (n == 0 || n == 1 || (Math.floor(n) == 0 && Plural.getF(n) == 1))
                 return PLURAL_ONE;
         },
         // Slovak
         sk(n) {
             // same as Czech
-            return this.cs(n);
+            return Plural.cs(n);
         },
         // Slovenian
         sl(n) {
-            const v = this.getV(n);
+            const v = Plural.getV(n);
             const mod100 = n % 100;
             if (v == 0 && mod100 == 1)
                 return PLURAL_ONE;
@@ -500,7 +500,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
         // Serbian
         sr(n) {
             // same as Bosnian
-            return this.bs(n);
+            return Plural.bs(n);
         },
         // Tamil
         ta(n) {
@@ -536,7 +536,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
         // Ukrainian
         uk(n) {
             // same as Russian
-            return this.ru(n);
+            return Plural.ru(n);
         },
         // Uzbek
         uz(n) {

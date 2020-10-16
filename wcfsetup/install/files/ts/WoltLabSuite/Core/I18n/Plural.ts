@@ -26,11 +26,11 @@ const Plural = {
     }
 
     // Fallback: handle unknown languages as English
-    if (typeof this[languageCode] !== 'function') {
+    if (typeof Plural[languageCode] !== 'function') {
       languageCode = 'en';
     }
 
-    const category = this[languageCode](value);
+    const category = Plural[languageCode](value);
     if (category) {
       return category;
     }
@@ -63,7 +63,7 @@ const Plural = {
       }
     }
 
-    let category = this.getCategory(value);
+    let category = Plural.getCategory(value);
     if (!parameters[category]) {
       category = PLURAL_OTHER;
     }
@@ -156,8 +156,8 @@ const Plural = {
 
   // Bosnian
   bs(n: number): string | undefined {
-    const v = this.getV(n);
-    const f = this.getF(n);
+    const v = Plural.getV(n);
+    const f = Plural.getF(n);
     const mod10 = n % 10;
     const mod100 = n % 100;
     const fMod10 = f % 10;
@@ -170,7 +170,7 @@ const Plural = {
 
   // Czech
   cs(n: number): string | undefined {
-    const v = this.getV(n);
+    const v = Plural.getV(n);
 
     if (n == 1 && v === 0) return PLURAL_ONE;
     if (n >= 2 && n <= 4 && v === 0) return PLURAL_FEW;
@@ -207,7 +207,7 @@ const Plural = {
   // Swahili (sw)
   // Urdu (ur)
   en(n: number): string | undefined {
-    if (n == 1 && this.getV(n) === 0) return PLURAL_ONE;
+    if (n == 1 && Plural.getV(n) === 0) return PLURAL_ONE;
   },
 
   // Spanish
@@ -245,7 +245,7 @@ const Plural = {
 
   // Hebrew
   he(n: number): string | undefined {
-    const v = this.getV(n);
+    const v = Plural.getV(n);
 
     if (n == 1 && v === 0) return PLURAL_ONE;
     if (n == 2 && v === 0) return PLURAL_TWO;
@@ -260,7 +260,7 @@ const Plural = {
   // Croatian
   hr(n: number): string | undefined {
     // same as Bosnian
-    return this.bs(n);
+    return Plural.bs(n);
   },
 
   // Hungarian
@@ -279,7 +279,7 @@ const Plural = {
 
   // Icelandic
   is(n: number): string | undefined {
-    const f = this.getF(n);
+    const f = Plural.getF(n);
 
     if (f === 0 && n % 10 === 1 && !(n % 100 === 11) || !(f === 0)) return PLURAL_ONE;
   },
@@ -341,15 +341,15 @@ const Plural = {
 
     if (mod10 == 1 && !(mod100 >= 11 && mod100 <= 19)) return PLURAL_ONE;
     if (mod10 >= 2 && mod10 <= 9 && !(mod100 >= 11 && mod100 <= 19)) return PLURAL_FEW;
-    if (this.getF(n) != 0) return PLURAL_MANY;
+    if (Plural.getF(n) != 0) return PLURAL_MANY;
   },
 
   // Latvian
   lv(n: number): string | undefined {
     const mod10 = n % 10;
     const mod100 = n % 100;
-    const v = this.getV(n);
-    const f = this.getF(n);
+    const v = Plural.getV(n);
+    const f = Plural.getF(n);
     const fMod10 = f % 10;
     const fMod100 = f % 100;
 
@@ -359,7 +359,7 @@ const Plural = {
 
   // Macedonian
   mk(n: number): string | undefined {
-    return this.bs(n);
+    return Plural.bs(n);
   },
 
   // Malayalam
@@ -416,7 +416,7 @@ const Plural = {
 
   // Polish
   pl(n: number): string | undefined {
-    const v = this.getV(n);
+    const v = Plural.getV(n);
     const mod10 = n % 10;
     const mod100 = n % 100;
 
@@ -437,7 +437,7 @@ const Plural = {
 
   // Romanian
   ro(n: number): string | undefined {
-    const v = this.getV(n);
+    const v = Plural.getV(n);
     const mod100 = n % 100;
 
     if (n == 1 && v === 0) return PLURAL_ONE;
@@ -449,7 +449,7 @@ const Plural = {
     const mod10 = n % 10;
     const mod100 = n % 100;
 
-    if (this.getV(n) == 0) {
+    if (Plural.getV(n) == 0) {
       if (mod10 == 1 && mod100 != 11) return PLURAL_ONE;
       if (mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14)) return PLURAL_FEW;
       if (mod10 == 0 || (mod10 >= 5 && mod10 <= 9) || (mod100 >= 11 && mod100 <= 14)) return PLURAL_MANY;
@@ -463,18 +463,18 @@ const Plural = {
 
   // Sinhala
   si(n: number): string | undefined {
-    if (n == 0 || n == 1 || (Math.floor(n) == 0 && this.getF(n) == 1)) return PLURAL_ONE;
+    if (n == 0 || n == 1 || (Math.floor(n) == 0 && Plural.getF(n) == 1)) return PLURAL_ONE;
   },
 
   // Slovak
   sk(n: number): string | undefined {
     // same as Czech
-    return this.cs(n);
+    return Plural.cs(n);
   },
 
   // Slovenian
   sl(n: number): string | undefined {
-    const v = this.getV(n);
+    const v = Plural.getV(n);
     const mod100 = n % 100;
 
     if (v == 0 && mod100 == 1) return PLURAL_ONE;
@@ -490,7 +490,7 @@ const Plural = {
   // Serbian
   sr(n: number): string | undefined {
     // same as Bosnian
-    return this.bs(n);
+    return Plural.bs(n);
   },
 
   // Tamil
@@ -529,7 +529,7 @@ const Plural = {
   // Ukrainian
   uk(n: number): string | undefined {
     // same as Russian
-    return this.ru(n);
+    return Plural.ru(n);
   },
 
   // Uzbek

@@ -43,6 +43,7 @@ export function send(url: string, success: (...args: unknown[]) => void, failure
   window[callbackName] = function () {
     window.clearTimeout(timeout);
 
+    //@ts-ignore
     success.apply(null, arguments);
 
     window[callbackName] = undefined;

@@ -10,7 +10,6 @@
 
 import * as StringUtil from '../StringUtil';
 
-
 function _isBoundaryNode(element: Element, ancestor: Element, position: string): boolean {
   if (!ancestor.contains(element)) {
     throw new Error('Ancestor element does not contain target element.');

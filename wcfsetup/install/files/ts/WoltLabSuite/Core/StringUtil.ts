@@ -7,6 +7,7 @@
  * @module  StringUtil (alias)
  * @module  WoltLabSuite/Core/StringUtil
  */
+
 import * as Language from './Language';
 import * as NumberUtil from './NumberUtil';
 
@@ -52,7 +53,7 @@ export function formatNumeric(number: number, decimalPlaces?: number): string {
   let tmp = NumberUtil.round(number, decimalPlaces || -2).toString();
   const numberParts = tmp.split('.');
 
-  tmp = this.addThousandsSeparator(+numberParts[0]);
+  tmp = addThousandsSeparator(+numberParts[0]);
   if (numberParts.length > 1) tmp += Language.get('wcf.global.decimalPoint') + numberParts[1];
 
   tmp = tmp.replace('-', '\u2212');
@@ -109,5 +110,5 @@ export function shortUnit(number: number): string {
     unitSuffix = 'k';
   }
 
-  return this.formatNumeric(number) + unitSuffix;
+  return formatNumeric(number) + unitSuffix;
 }

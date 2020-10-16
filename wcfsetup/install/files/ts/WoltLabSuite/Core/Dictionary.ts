@@ -11,11 +11,9 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  Dictionary (alias)
  * @module  WoltLabSuite/Core/Dictionary
- * @deprecated 5.4
  */
-/**
- * @constructor
- */
+
+/** @deprecated 5.4 Use a `Map` instead. */
 class Dictionary {
   private readonly _dictionary = new Map<number | string, any>();
 

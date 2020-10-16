@@ -22,7 +22,7 @@ define(["require", "exports"], function (require, exports) {
         /**
          * Prints the list of available commands.
          */
-        help: () => {
+        help() {
             window.console.log('');
             window.console.log('%cAvailable commands:', 'text-decoration: underline');
             const commands = [];
@@ -39,7 +39,7 @@ define(["require", "exports"], function (require, exports) {
         /**
          * Disables/re-enables the editor autosave feature.
          */
-        toggleEditorAutosave: (forceDisable) => {
+        toggleEditorAutosave(forceDisable) {
             _settings.editorAutosave = forceDisable ? false : !_settings.editorAutosave;
             _updateConfig();
             window.console.log('%c\tEditor autosave ' + (_settings.editorAutosave ? 'enabled' : 'disabled'), 'font-style: italic');
@@ -47,7 +47,7 @@ define(["require", "exports"], function (require, exports) {
         /**
          * Enables/disables logging for fired event listener events.
          */
-        toggleEventLogging: function (forceEnable) {
+        toggleEventLogging(forceEnable) {
             _settings.eventLogging = forceEnable ? true : !_settings.eventLogging;
             _updateConfig();
             window.console.log('%c\tEvent logging ' + (_settings.eventLogging ? 'enabled' : 'disabled'), 'font-style: italic');
@@ -56,7 +56,7 @@ define(["require", "exports"], function (require, exports) {
          * Internal methods not meant to be called directly.
          */
         _internal_: {
-            enable: () => {
+            enable() {
                 window.Devtools = Devtools;
                 window.console.log('%cDevtools for WoltLab Suite loaded', 'font-weight: bold');
                 if (window.sessionStorage) {
@@ -76,8 +76,10 @@ define(["require", "exports"], function (require, exports) {
                 window.console.log('Settings are saved per browser session, enter `Devtools.help()` to learn more.');
                 window.console.log('');
             },
-            editorAutosave: () => _settings.editorAutosave,
-            eventLog: (identifier, action) => {
+            editorAutosave() {
+                return _settings.editorAutosave;
+            },
+            eventLog(identifier, action) {
                 if (_settings.eventLogging) {
                     window.console.log('[Devtools.EventLogging] Firing event: ' + action + ' @ ' + identifier);
                 }

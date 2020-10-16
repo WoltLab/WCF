@@ -8,8 +8,6 @@
  * @module  WoltLabSuite/Core/CallbackList
  */
 
-type Callback = () => void;
-
 class CallbackList {
   private readonly _callbacks = new Map<string, Callback[]>();
 
@@ -48,5 +46,7 @@ class CallbackList {
     }
   }
 }
+
+type Callback = () => void;
 
 export = CallbackList;

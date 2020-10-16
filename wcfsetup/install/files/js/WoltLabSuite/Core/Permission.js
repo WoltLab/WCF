@@ -28,7 +28,7 @@ define(["require", "exports"], function (require, exports) {
     function addObject(object) {
         for (const key in object) {
             if (object.hasOwnProperty(key)) {
-                this.add(key, object[key]);
+                add(key, object[key]);
             }
         }
     }

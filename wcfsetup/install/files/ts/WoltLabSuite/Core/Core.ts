@@ -31,7 +31,7 @@ const _cloneObject = function (obj: object | any[]): object | any[] | null {
   return newObj;
 };
 
-const _prefix = 'wsc' + window.WCF_PATH.hashCode() +'-';
+const _prefix = 'wsc' + window.WCF_PATH.hashCode() + '-';
 
 /**
  * Deep clones an object.
@@ -192,17 +192,10 @@ export function serialize(obj: object, prefix?: string): string {
  * Triggers a custom or built-in event.
  */
 export function triggerEvent(element: Element, eventName: string): void {
-  let event: Event;
-
-  try {
-    event = new Event(eventName, {
-      bubbles: true,
-      cancelable: true,
-    });
-  } catch (e) {
-    event = document.createEvent('Event');
-    event.initEvent(eventName, true, true);
-  }
+  const event = new Event(eventName, {
+    bubbles: true,
+    cancelable: true,
+  });
 
   element.dispatchEvent(event);
 }

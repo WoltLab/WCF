@@ -22,13 +22,13 @@ define(["require", "exports"], function (require, exports) {
          * Returns the link to the active user's profile or an empty string
          * if the active user is a guest.
          */
-        getLink: () => {
+        getLink() {
             return user.link;
         },
         /**
          * Initializes the user object.
          */
-        init: (userId, username, link) => {
+        init(userId, username, link) {
             if (user) {
                 throw new Error('User has already been initialized.');
             }
@@ -39,6 +39,6 @@ define(["require", "exports"], function (require, exports) {
         },
         get username() {
             return user.username;
-        }
+        },
     };
 });
