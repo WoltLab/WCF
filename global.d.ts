@@ -5,7 +5,9 @@ import * as ColorUtil from './wcfsetup/install/files/ts/WoltLabSuite/Core/ColorU
 declare global {
   interface Window {
     Devtools?: typeof Devtools;
+    ENABLE_DEBUG_MODE: boolean;
     WCF_PATH: string;
+    WSC_API_URL: string;
 
     bc_wcfDomUtil: typeof DomUtil;
     __wcf_bc_colorUtil: typeof ColorUtil;
