@@ -47,6 +47,6 @@ class CallbackList {
   }
 }
 
-type Callback = () => void;
+type Callback = (...args: any[]) => void;
 
 export = CallbackList;
