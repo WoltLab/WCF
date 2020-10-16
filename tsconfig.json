@@ -9,8 +9,15 @@
     "module": "amd",
     "rootDir": "wcfsetup/install/files/ts/",
     "outDir": "wcfsetup/install/files/js/",
+    "lib": [
+      "dom",
+      "es2015",
+      "es2017.object"
+    ],
     "strictNullChecks": true,
     "moduleResolution": "node",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "noImplicitThis": true,
+    "strictBindCallApply": true
   }
 }

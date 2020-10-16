@@ -15,7 +15,7 @@ define(["require", "exports"], function (require, exports) {
          *
          * @see  https://secure.wikimedia.org/wikipedia/de/wiki/HSV-Farbraum#Transformation_von_RGB_und_HSV
          */
-        hsvToRgb: (h, s, v) => {
+        hsvToRgb(h, s, v) {
             const rgb = { r: 0, g: 0, b: 0 };
             let h2, f, p, q, t;
             h2 = Math.floor(h / 60);
@@ -74,7 +74,7 @@ define(["require", "exports"], function (require, exports) {
          *
          * @see  https://secure.wikimedia.org/wikipedia/de/wiki/HSV-Farbraum#Transformation_von_RGB_und_HSV
          */
-        rgbToHsv: (r, g, b) => {
+        rgbToHsv(r, g, b) {
             let h, s, v;
             let max, min, diff;
             r /= 255;
@@ -116,7 +116,7 @@ define(["require", "exports"], function (require, exports) {
         /**
          * Converts HEX into RGB.
          */
-        hexToRgb: (hex) => {
+        hexToRgb(hex) {
             if (/^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(hex)) {
                 // only convert #abc and #abcdef
                 const parts = hex.split('');
@@ -147,7 +147,7 @@ define(["require", "exports"], function (require, exports) {
          *
          * @see  http://www.linuxtopia.org/online_books/javascript_guides/javascript_faq/rgbtohex.htm
          */
-        rgbToHex: (r, g, b) => {
+        rgbToHex(r, g, b) {
             const charList = '0123456789ABCDEF';
             if (g === undefined) {
                 if (r.toString().match(/^rgba?\((\d+), ?(\d+), ?(\d+)(?:, ?[0-9.]+)?\)$/)) {

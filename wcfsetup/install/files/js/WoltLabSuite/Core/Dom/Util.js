@@ -58,7 +58,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
         /**
          * Returns a DocumentFragment containing the provided HTML string as DOM nodes.
          */
-        createFragmentFromHtml: function (html) {
+        createFragmentFromHtml(html) {
             const tmp = document.createElement('div');
             this.setInnerHtml(tmp, html);
             const fragment = document.createDocumentFragment();
@@ -70,7 +70,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
         /**
          * Returns a unique element id.
          */
-        getUniqueId: function () {
+        getUniqueId() {
             let elementId;
             do {
                 elementId = 'wcf' + _idCounter++;
@@ -81,7 +81,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
          * Returns the element's id. If there is no id set, a unique id will be
          * created and assigned.
          */
-        identify: function (element) {
+        identify(element) {
             if (!(element instanceof Element)) {
                 throw new TypeError('Expected a valid DOM element as argument.');
             }
@@ -95,7 +95,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
         /**
          * Returns the outer height of an element including margins.
          */
-        outerHeight: function (element, styles) {
+        outerHeight(element, styles) {
             styles = styles || window.getComputedStyle(element);
             let height = element.offsetHeight;
             height += ~~styles.marginTop + ~~styles.marginBottom;
@@ -104,7 +104,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
         /**
          * Returns the outer width of an element including margins.
          */
-        outerWidth: function (element, styles) {
+        outerWidth(element, styles) {
             styles = styles || window.getComputedStyle(element);
             let width = element.offsetWidth;
             width += ~~styles.marginLeft + ~~styles.marginRight;
@@ -113,7 +113,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
         /**
          * Returns the outer dimensions of an element including margins.
          */
-        outerDimensions: function (element) {
+        outerDimensions(element) {
             const styles = window.getComputedStyle(element);
             return {
                 height: this.outerHeight(element, styles),
@@ -126,7 +126,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
          * @param  {Element}  element          element
          * @return  {{left: int, top: int}}         offset relative to top left corner
          */
-        offset: function (element) {
+        offset(element) {
             const rect = element.getBoundingClientRect();
             return {
                 top: Math.round(rect.top + (window.scrollY || window.pageYOffset)),
@@ -138,7 +138,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
          *
          * @deprecated 5.3 Use `parent.insertBefore(element, parent.firstChild)` instead.
          */
-        prepend: function (element, parent) {
+        prepend(element, parent) {
             parent.insertBefore(element, parent.firstChild);
         },
         /**
@@ -146,7 +146,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
          *
          * @deprecated 5.3 Use `element.parentNode.insertBefore(newElement, element.nextSibling)` instead.
          */
-        insertAfter: function (newElement, element) {
+        insertAfter(newElement, element) {
             if (element.parentNode === null) {
                 throw new Error('The target element has no parent.');
             }
@@ -155,7 +155,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
         /**
          * Applies a list of CSS properties to an element.
          */
-        setStyles: function (element, styles) {
+        setStyles(element, styles) {
             let important = false;
             for (const property in styles) {
                 if (styles.hasOwnProperty(property)) {
@@ -182,7 +182,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
          * The behavior of this method is undefined for properties that are not considered
          * to have a "numeric" value, e.g. "background-image".
          */
-        styleAsInt: function (styles, propertyName) {
+        styleAsInt(styles, propertyName) {
             const value = styles.getPropertyValue(propertyName);
             if (value === null) {
                 return 0;
@@ -196,7 +196,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
          * @param  {Element}  element    target element
          * @param  {string}  innerHtml  HTML string
          */
-        setInnerHtml: function (element, innerHtml) {
+        setInnerHtml(element, innerHtml) {
             element.innerHTML = innerHtml;
             let newScript, script, scripts = element.querySelectorAll('script');
             for (let i = 0, length = scripts.length; i < length; i++) {
@@ -218,7 +218,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
          * @param {Element} referenceElement
          * @param insertMethod
          */
-        insertHtml: function (html, referenceElement, insertMethod) {
+        insertHtml(html, referenceElement, insertMethod) {
             const element = document.createElement('div');
             this.setInnerHtml(element, html);
             if (!element.childNodes.length) {
@@ -256,7 +256,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
          *
          * @deprecated 5.4 Use `element.contains(child)` instead.
          */
-        contains: function (element, child) {
+        contains(element, child) {
             return element.contains(child);
         },
         /**
@@ -264,7 +264,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
          * a custom prefix that serves two purposes: First it will restrict the results
          * for items starting with it and second it will remove that prefix.
          */
-        getDataAttributes: function (element, prefix, camelCaseName, idToUpperCase) {
+        getDataAttributes(element, prefix, camelCaseName, idToUpperCase) {
             prefix = prefix || '';
             if (!/^data-/.test(prefix))
                 prefix = 'data-' + prefix;
@@ -300,7 +300,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
          * preserving their previous order. Target element will be removed
          * at the end of the operation.
          */
-        unwrapChildNodes: function (element) {
+        unwrapChildNodes(element) {
             if (element.parentNode === null) {
                 throw new Error('The element has no parent.');
             }
@@ -315,7 +315,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
          * while preserving their previous order. The old element will be removed
          * at the end of the operation.
          */
-        replaceElement: function (oldElement, newElement) {
+        replaceElement(oldElement, newElement) {
             if (oldElement.parentNode === null) {
                 throw new Error('The old element has no parent.');
             }
@@ -329,14 +329,14 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
          * Returns true if given element is the most left node of the ancestor, that is
          * a node without any content nor elements before it or its parent nodes.
          */
-        isAtNodeStart: function (element, ancestor) {
+        isAtNodeStart(element, ancestor) {
             return _isBoundaryNode(element, ancestor, 'previous');
         },
         /**
          * Returns true if given element is the most right node of the ancestor, that is
          * a node without any content nor elements after it or its parent nodes.
          */
-        isAtNodeEnd: function (element, ancestor) {
+        isAtNodeEnd(element, ancestor) {
             return _isBoundaryNode(element, ancestor, 'next');
         },
         /**
@@ -345,7 +345,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
          * @param       {Element}               element         target element
          * @returns     {(Element|null)}        first ancestor with position fixed or null
          */
-        getFixedParent: function (element) {
+        getFixedParent(element) {
             while (element && element !== document.body) {
                 if (window.getComputedStyle(element).getPropertyValue('position') === 'fixed') {
                     return element;
