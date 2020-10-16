@@ -192,7 +192,7 @@ define(["require", "exports", "./Dictionary", "./StringUtil"], function (require
      * @returns     {File}          the File object
      */
     function blobToFile(blob, filename) {
-        const ext = this.getExtensionByMimeType(blob.type);
+        const ext = getExtensionByMimeType(blob.type);
         return new File([blob], filename + ext, { type: blob.type });
     }
     exports.blobToFile = blobToFile;

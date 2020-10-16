@@ -45,7 +45,7 @@ const DomUtil = {
   /**
    * Returns a DocumentFragment containing the provided HTML string as DOM nodes.
    */
-  createFragmentFromHtml: function (html: string): DocumentFragment {
+  createFragmentFromHtml(html: string): DocumentFragment {
     const tmp = document.createElement('div');
     this.setInnerHtml(tmp, html);
 
@@ -60,7 +60,7 @@ const DomUtil = {
   /**
    * Returns a unique element id.
    */
-  getUniqueId: function (): string {
+  getUniqueId(): string {
     let elementId: string;
 
     do {
@@ -75,7 +75,7 @@ const DomUtil = {
    * Returns the element's id. If there is no id set, a unique id will be
    * created and assigned.
    */
-  identify: function (element: Element): string {
+  identify(element: Element): string {
     if (!(element instanceof Element)) {
       throw new TypeError('Expected a valid DOM element as argument.');
     }
@@ -92,7 +92,7 @@ const DomUtil = {
   /**
    * Returns the outer height of an element including margins.
    */
-  outerHeight: function (element: HTMLElement, styles?: CSSStyleDeclaration): number {
+  outerHeight(element: HTMLElement, styles?: CSSStyleDeclaration): number {
     styles = styles || window.getComputedStyle(element);
 
     let height = element.offsetHeight;
@@ -104,7 +104,7 @@ const DomUtil = {
   /**
    * Returns the outer width of an element including margins.
    */
-  outerWidth: function (element: HTMLElement, styles?: CSSStyleDeclaration): number {
+  outerWidth(element: HTMLElement, styles?: CSSStyleDeclaration): number {
     styles = styles || window.getComputedStyle(element);
 
     let width = element.offsetWidth;
@@ -116,7 +116,7 @@ const DomUtil = {
   /**
    * Returns the outer dimensions of an element including margins.
    */
-  outerDimensions: function (element: HTMLElement): Dimensions {
+  outerDimensions(element: HTMLElement): Dimensions {
     const styles = window.getComputedStyle(element);
 
     return {
@@ -131,7 +131,7 @@ const DomUtil = {
    * @param  {Element}  element          element
    * @return  {{left: int, top: int}}         offset relative to top left corner
    */
-  offset: function (element: Element): Offset {
+  offset(element: Element): Offset {
     const rect = element.getBoundingClientRect();
 
     return {
@@ -145,7 +145,7 @@ const DomUtil = {
    *
    * @deprecated 5.3 Use `parent.insertBefore(element, parent.firstChild)` instead.
    */
-  prepend: function (element: Element, parent: Element): void {
+  prepend(element: Element, parent: Element): void {
     parent.insertBefore(element, parent.firstChild);
   },
 
@@ -154,7 +154,7 @@ const DomUtil = {
    *
    * @deprecated 5.3 Use `element.parentNode.insertBefore(newElement, element.nextSibling)` instead.
    */
-  insertAfter: function (newElement: Element, element: Element): void {
+  insertAfter(newElement: Element, element: Element): void {
     if (element.parentNode === null) {
       throw new Error('The target element has no parent.');
     }
@@ -165,7 +165,7 @@ const DomUtil = {
   /**
    * Applies a list of CSS properties to an element.
    */
-  setStyles: function (element: HTMLElement, styles: CssDeclarations): void {
+  setStyles(element: HTMLElement, styles: CssDeclarations): void {
     let important = false;
     for (const property in styles) {
       if (styles.hasOwnProperty(property)) {
@@ -195,7 +195,7 @@ const DomUtil = {
    * The behavior of this method is undefined for properties that are not considered
    * to have a "numeric" value, e.g. "background-image".
    */
-  styleAsInt: function (styles: CSSStyleDeclaration, propertyName: string): number {
+  styleAsInt(styles: CSSStyleDeclaration, propertyName: string): number {
     const value = styles.getPropertyValue(propertyName);
     if (value === null) {
       return 0;
@@ -211,7 +211,7 @@ const DomUtil = {
    * @param  {Element}  element    target element
    * @param  {string}  innerHtml  HTML string
    */
-  setInnerHtml: function (element: Element, innerHtml: string): void {
+  setInnerHtml(element: Element, innerHtml: string): void {
     element.innerHTML = innerHtml;
 
     let newScript, script, scripts = element.querySelectorAll('script');
@@ -235,7 +235,7 @@ const DomUtil = {
    * @param {Element} referenceElement
    * @param insertMethod
    */
-  insertHtml: function (html: string, referenceElement: Element, insertMethod: string): void {
+  insertHtml(html: string, referenceElement: Element, insertMethod: string): void {
     const element = document.createElement('div');
     this.setInnerHtml(element, html);
 
@@ -283,7 +283,7 @@ const DomUtil = {
    *
    * @deprecated 5.4 Use `element.contains(child)` instead.
    */
-  contains: function (element: Element, child: Element): boolean {
+  contains(element: Element, child: Element): boolean {
     return element.contains(child);
   },
 
@@ -292,7 +292,7 @@ const DomUtil = {
    * a custom prefix that serves two purposes: First it will restrict the results
    * for items starting with it and second it will remove that prefix.
    */
-  getDataAttributes: function (element: Element, prefix?: string, camelCaseName?: boolean, idToUpperCase?: boolean): DataAttributes {
+  getDataAttributes(element: Element, prefix?: string, camelCaseName?: boolean, idToUpperCase?: boolean): DataAttributes {
     prefix = prefix || '';
     if (!/^data-/.test(prefix)) prefix = 'data-' + prefix;
     camelCaseName = (camelCaseName === true);
@@ -332,11 +332,11 @@ const DomUtil = {
    * preserving their previous order. Target element will be removed
    * at the end of the operation.
    */
-  unwrapChildNodes: function (element: Element): void {
+  unwrapChildNodes(element: Element): void {
     if (element.parentNode === null) {
       throw new Error('The element has no parent.');
     }
-    
+
     let parent = element.parentNode;
     while (element.childNodes.length) {
       parent.insertBefore(element.childNodes[0], element);
@@ -350,11 +350,11 @@ const DomUtil = {
    * while preserving their previous order. The old element will be removed
    * at the end of the operation.
    */
-  replaceElement: function (oldElement: Element, newElement: Element): void {
+  replaceElement(oldElement: Element, newElement: Element): void {
     if (oldElement.parentNode === null) {
       throw new Error('The old element has no parent.');
     }
-    
+
     while (oldElement.childNodes.length) {
       newElement.appendChild(oldElement.childNodes[0]);
     }
@@ -367,7 +367,7 @@ const DomUtil = {
    * Returns true if given element is the most left node of the ancestor, that is
    * a node without any content nor elements before it or its parent nodes.
    */
-  isAtNodeStart: function (element: Element, ancestor: Element): boolean {
+  isAtNodeStart(element: Element, ancestor: Element): boolean {
     return _isBoundaryNode(element, ancestor, 'previous');
   },
 
@@ -375,7 +375,7 @@ const DomUtil = {
    * Returns true if given element is the most right node of the ancestor, that is
    * a node without any content nor elements after it or its parent nodes.
    */
-  isAtNodeEnd: function (element: Element, ancestor: Element): boolean {
+  isAtNodeEnd(element: Element, ancestor: Element): boolean {
     return _isBoundaryNode(element, ancestor, 'next');
   },
 
@@ -385,7 +385,7 @@ const DomUtil = {
    * @param       {Element}               element         target element
    * @returns     {(Element|null)}        first ancestor with position fixed or null
    */
-  getFixedParent: function (element: HTMLElement): Element | null {
+  getFixedParent(element: HTMLElement): Element | null {
     while (element && element !== document.body) {
       if (window.getComputedStyle(element).getPropertyValue('position') === 'fixed') {
         return element;

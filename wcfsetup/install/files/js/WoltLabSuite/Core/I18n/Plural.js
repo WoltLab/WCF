@@ -38,7 +38,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
         /**
          * Returns the plural category for the given value.
          */
-        getCategory: function (value, languageCode) {
+        getCategory(value, languageCode) {
             if (!languageCode) {
                 languageCode = document.documentElement.lang;
             }
@@ -57,7 +57,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
          *
          * @see    wcf\system\template\plugin\PluralFunctionTemplatePlugin::execute()
          */
-        getCategoryFromTemplateParameters: function (parameters) {
+        getCategoryFromTemplateParameters(parameters) {
             if (!parameters['value']) {
                 throw new Error('Missing parameter value');
             }
@@ -87,7 +87,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
         /**
          * `f` is the fractional number as a whole number (1.234 yields 234)
          */
-        getF: function (n) {
+        getF(n) {
             const tmp = n.toString();
             const pos = tmp.indexOf('.');
             if (pos === -1) {
@@ -98,22 +98,22 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
         /**
          * `v` represents the number of digits of the fractional part (1.234 yields 3)
          */
-        getV: function (n) {
+        getV(n) {
             return n.toString().replace(/^[^.]*\.?/, '').length;
         },
         // Afrikaans
-        af: function (n) {
+        af(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Amharic
-        am: function (n) {
+        am(n) {
             const i = Math.floor(Math.abs(n));
             if (n == 1 || i === 0)
                 return PLURAL_ONE;
         },
         // Arabic
-        ar: function (n) {
+        ar(n) {
             if (n == 0)
                 return PLURAL_ZERO;
             if (n == 1)
@@ -127,18 +127,18 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
                 return PLURAL_MANY;
         },
         // Assamese
-        as: function (n) {
+        as(n) {
             const i = Math.floor(Math.abs(n));
             if (n == 1 || i === 0)
                 return PLURAL_ONE;
         },
         // Azerbaijani
-        az: function (n) {
+        az(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Belarusian
-        be: function (n) {
+        be(n) {
             const mod10 = n % 10;
             const mod100 = n % 100;
             if (mod10 == 1 && mod100 != 11)
@@ -149,21 +149,21 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
                 return PLURAL_MANY;
         },
         // Bulgarian
-        bg: function (n) {
+        bg(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Bengali
-        bn: function (n) {
+        bn(n) {
             const i = Math.floor(Math.abs(n));
             if (n == 1 || i === 0)
                 return PLURAL_ONE;
         },
         // Tibetan
-        bo: function (n) {
+        bo(n) {
         },
         // Bosnian
-        bs: function (n) {
+        bs(n) {
             const v = this.getV(n);
             const f = this.getF(n);
             const mod10 = n % 10;
@@ -177,7 +177,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
                 return PLURAL_FEW;
         },
         // Czech
-        cs: function (n) {
+        cs(n) {
             const v = this.getV(n);
             if (n == 1 && v === 0)
                 return PLURAL_ONE;
@@ -187,7 +187,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
                 return PLURAL_MANY;
         },
         // Welsh
-        cy: function (n) {
+        cy(n) {
             if (n == 0)
                 return PLURAL_ZERO;
             if (n == 1)
@@ -200,12 +200,12 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
                 return PLURAL_MANY;
         },
         // Danish
-        da: function (n) {
+        da(n) {
             if (n > 0 && n < 2)
                 return PLURAL_ONE;
         },
         // Greek
-        el: function (n) {
+        el(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
@@ -219,32 +219,32 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
         // Swedish (sv)
         // Swahili (sw)
         // Urdu (ur)
-        en: function (n) {
+        en(n) {
             if (n == 1 && this.getV(n) === 0)
                 return PLURAL_ONE;
         },
         // Spanish
-        es: function (n) {
+        es(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Basque
-        eu: function (n) {
+        eu(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Persian
-        fa: function (n) {
+        fa(n) {
             if (n >= 0 && n <= 1)
                 return PLURAL_ONE;
         },
         // French
-        fr: function (n) {
+        fr(n) {
             if (n >= 0 && n < 2)
                 return PLURAL_ONE;
         },
         // Irish
-        ga: function (n) {
+        ga(n) {
             if (n == 1)
                 return PLURAL_ONE;
             if (n == 2)
@@ -255,12 +255,12 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
                 return PLURAL_MANY;
         },
         // Gujarati
-        gu: function (n) {
+        gu(n) {
             if (n >= 0 && n <= 1)
                 return PLURAL_ONE;
         },
         // Hebrew
-        he: function (n) {
+        he(n) {
             const v = this.getV(n);
             if (n == 1 && v === 0)
                 return PLURAL_ONE;
@@ -270,81 +270,81 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
                 return PLURAL_MANY;
         },
         // Hindi
-        hi: function (n) {
+        hi(n) {
             if (n >= 0 && n <= 1)
                 return PLURAL_ONE;
         },
         // Croatian
-        hr: function (n) {
+        hr(n) {
             // same as Bosnian
             return this.bs(n);
         },
         // Hungarian
-        hu: function (n) {
+        hu(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Armenian
-        hy: function (n) {
+        hy(n) {
             if (n >= 0 && n < 2)
                 return PLURAL_ONE;
         },
         // Indonesian
-        id: function (n) {
+        id(n) {
         },
         // Icelandic
-        is: function (n) {
+        is(n) {
             const f = this.getF(n);
             if (f === 0 && n % 10 === 1 && !(n % 100 === 11) || !(f === 0))
                 return PLURAL_ONE;
         },
         // Japanese
-        ja: function (n) {
+        ja(n) {
         },
         // Javanese
-        jv: function (n) {
+        jv(n) {
         },
         // Georgian
-        ka: function (n) {
+        ka(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Kazakh
-        kk: function (n) {
+        kk(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Khmer
-        km: function (n) {
+        km(n) {
         },
         // Kannada
-        kn: function (n) {
+        kn(n) {
             if (n >= 0 && n <= 1)
                 return PLURAL_ONE;
         },
         // Korean
-        ko: function (n) {
+        ko(n) {
         },
         // Kurdish
-        ku: function (n) {
+        ku(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Kyrgyz
-        ky: function (n) {
+        ky(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Luxembourgish
-        lb: function (n) {
+        lb(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Lao
-        lo: function (n) {
+        lo(n) {
         },
         // Lithuanian
-        lt: function (n) {
+        lt(n) {
             const mod10 = n % 10;
             const mod100 = n % 100;
             if (mod10 == 1 && !(mod100 >= 11 && mod100 <= 19))
@@ -355,7 +355,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
                 return PLURAL_MANY;
         },
         // Latvian
-        lv: function (n) {
+        lv(n) {
             const mod10 = n % 10;
             const mod100 = n % 100;
             const v = this.getV(n);
@@ -368,29 +368,29 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
                 return PLURAL_ONE;
         },
         // Macedonian
-        mk: function (n) {
+        mk(n) {
             return this.bs(n);
         },
         // Malayalam
-        ml: function (n) {
+        ml(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Mongolian 
-        mn: function (n) {
+        mn(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Marathi 
-        mr: function (n) {
+        mr(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Malay 
-        ms: function (n) {
+        ms(n) {
         },
         // Maltese 
-        mt: function (n) {
+        mt(n) {
             const mod100 = n % 100;
             if (n == 1)
                 return PLURAL_ONE;
@@ -400,30 +400,30 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
                 return PLURAL_MANY;
         },
         // Burmese
-        my: function (n) {
+        my(n) {
         },
         // Norwegian
-        no: function (n) {
+        no(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Nepali
-        ne: function (n) {
+        ne(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Odia
-        or: function (n) {
+        or(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Punjabi
-        pa: function (n) {
+        pa(n) {
             if (n == 1 || n == 0)
                 return PLURAL_ONE;
         },
         // Polish
-        pl: function (n) {
+        pl(n) {
             const v = this.getV(n);
             const mod10 = n % 10;
             const mod100 = n % 100;
@@ -435,17 +435,17 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
                 return PLURAL_MANY;
         },
         // Pashto
-        ps: function (n) {
+        ps(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Portuguese
-        pt: function (n) {
+        pt(n) {
             if (n >= 0 && n < 2)
                 return PLURAL_ONE;
         },
         // Romanian
-        ro: function (n) {
+        ro(n) {
             const v = this.getV(n);
             const mod100 = n % 100;
             if (n == 1 && v === 0)
@@ -454,7 +454,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
                 return PLURAL_FEW;
         },
         // Russian
-        ru: function (n) {
+        ru(n) {
             const mod10 = n % 10;
             const mod100 = n % 100;
             if (this.getV(n) == 0) {
@@ -467,22 +467,22 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
             }
         },
         // Sindhi
-        sd: function (n) {
+        sd(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Sinhala
-        si: function (n) {
+        si(n) {
             if (n == 0 || n == 1 || (Math.floor(n) == 0 && this.getF(n) == 1))
                 return PLURAL_ONE;
         },
         // Slovak
-        sk: function (n) {
+        sk(n) {
             // same as Czech
             return this.cs(n);
         },
         // Slovenian
-        sl: function (n) {
+        sl(n) {
             const v = this.getV(n);
             const mod100 = n % 100;
             if (v == 0 && mod100 == 1)
@@ -493,61 +493,61 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
                 return PLURAL_FEW;
         },
         // Albanian
-        sq: function (n) {
+        sq(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Serbian
-        sr: function (n) {
+        sr(n) {
             // same as Bosnian
             return this.bs(n);
         },
         // Tamil
-        ta: function (n) {
+        ta(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Telugu
-        te: function (n) {
+        te(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Tajik
-        tg: function (n) {
+        tg(n) {
         },
         // Thai
-        th: function (n) {
+        th(n) {
         },
         // Turkmen
-        tk: function (n) {
+        tk(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Turkish
-        tr: function (n) {
+        tr(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Uyghur
-        ug: function (n) {
+        ug(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Ukrainian
-        uk: function (n) {
+        uk(n) {
             // same as Russian
             return this.ru(n);
         },
         // Uzbek
-        uz: function (n) {
+        uz(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
         // Vietnamese
-        vi: function (n) {
+        vi(n) {
         },
         // Chinese
-        zh: function (n) {
+        zh(n) {
         },
     };
     return Plural;
