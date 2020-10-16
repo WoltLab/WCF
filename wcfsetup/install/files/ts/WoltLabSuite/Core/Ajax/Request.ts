@@ -11,6 +11,7 @@
  */
 
 import * as AjaxStatus from './Status';
+import { ResponseData, RequestOptions, RequestData } from './Data';
 import * as Core from '../Core';
 import DomChangeListener from '../Dom/Change/Listener';
 
@@ -89,7 +90,7 @@ class AjaxRequest {
   /**
    * Dispatches a request, optionally aborting a currently active request.
    */
-  sendRequest(abortPrevious: boolean): void {
+  sendRequest(abortPrevious?: boolean): void {
     if (abortPrevious || this._options.autoAbort) {
       this.abortPrevious();
     }
@@ -344,56 +345,6 @@ class AjaxRequest {
       }
     });
   }
-}
-
-interface RequestPayload {
-  [key: string]: any;
-}
-
-type RequestData = FormData | RequestPayload;
-
-interface ResponseData {
-  [key: string]: any;
-}
-
-type CallbackFailure = (data: ResponseData, responseText: string, xhr: XMLHttpRequest, requestData: RequestData) => boolean;
-type CallbackFinalize = (xhr: XMLHttpRequest) => void;
-type CallbackProgress = (event: ProgressEvent) => void;
-type CallbackSuccess = (data: ResponseData, responseText: string, xhr: XMLHttpRequest, requestData: RequestData) => void;
-type CallbackUploadProgress = (event: ProgressEvent) => void;
-
-interface CallbackObject {
-  _ajaxFailure?: CallbackFailure;
-  _ajaxFinalize?: CallbackFinalize;
-  _ajaxProgress?: CallbackProgress;
-  _ajaxSuccess: CallbackSuccess;
-  _ajaxUploadProgress?: CallbackUploadProgress;
-}
-
-interface RequestOptions {
-  // request data
-  data?: RequestData,
-  contentType?: string,
-  responseType?: string,
-  type?: string,
-  url?: string,
-  withCredentials?: boolean,
-
-  // behavior
-  autoAbort?: boolean,
-  ignoreError?: boolean,
-  pinData?: boolean,
-  silent?: boolean,
-  includeRequestedWith?: boolean,
-
-  // callbacks
-  failure?: CallbackFailure,
-  finalize?: CallbackFinalize,
-  success?: CallbackSuccess,
-  progress?: CallbackProgress,
-  uploadProgress?: CallbackUploadProgress,
-
-  callbackObject?: CallbackObject | null,
 }
 
 export = AjaxRequest;
