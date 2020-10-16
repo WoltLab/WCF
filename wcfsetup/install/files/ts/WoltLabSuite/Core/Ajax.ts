@@ -17,7 +17,7 @@ const _cache = new WeakMap();
  * Shorthand function to perform a request against the WCF-API with overrides
  * for success and failure callbacks.
  */
-export function api(callbackObject: CallbackObject, data: RequestData, success: CallbackSuccess, failure: CallbackFailure): AjaxRequest {
+export function api(callbackObject: CallbackObject, data?: RequestData, success?: CallbackSuccess, failure?: CallbackFailure): AjaxRequest {
   if (typeof data !== 'object') data = {};
 
   let request = _cache.get(callbackObject);
