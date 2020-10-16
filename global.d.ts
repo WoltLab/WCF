@@ -1,4 +1,5 @@
 import Devtools from './wcfsetup/install/files/ts/WoltLabSuite/Core/Devtools';
+import DomUtil from './wcfsetup/install/files/ts/WoltLabSuite/Core/Dom/Util';
 import ColorUtil from './wcfsetup/install/files/ts/WoltLabSuite/Core/ColorUtil';
 
 declare global {
@@ -6,6 +7,7 @@ declare global {
     Devtools?: typeof Devtools;
     WCF_PATH: string;
 
+    bc_wcfDomUtil: typeof DomUtil;
     __wcf_bc_colorUtil: typeof ColorUtil;
   }
 
