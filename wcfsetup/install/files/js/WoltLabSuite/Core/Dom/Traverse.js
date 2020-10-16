@@ -23,7 +23,7 @@ define(["require", "exports"], function (require, exports) {
         }
         const children = [];
         for (let i = 0; i < element.childElementCount; i++) {
-            if (_test[type](element.children[i], value)) {
+            if (_test.get(type)(element.children[i], value)) {
                 children.push(element.children[i]);
             }
         }
@@ -38,7 +38,7 @@ define(["require", "exports"], function (require, exports) {
             if (target === untilElement) {
                 return null;
             }
-            if (_test[type](target, value)) {
+            if (_test.get(type)(target, value)) {
                 return target;
             }
             target = target.parentNode;
@@ -50,7 +50,7 @@ define(["require", "exports"], function (require, exports) {
             throw new TypeError('Expected a valid element as first argument.');
         }
         if (element instanceof Element) {
-            if (element[siblingType] !== null && _test[type](element[siblingType], value)) {
+            if (element[siblingType] !== null && _test.get(type)(element[siblingType], value)) {
                 return element[siblingType];
             }
         }
