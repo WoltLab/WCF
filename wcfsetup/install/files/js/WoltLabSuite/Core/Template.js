@@ -1,3 +1,14 @@
+/**
+ * WoltLabSuite/Core/Template provides a template scripting compiler similar
+ * to the PHP one of WoltLab Suite Core. It supports a limited
+ * set of useful commands and compiles templates down to a pure
+ * JavaScript Function.
+ *
+ * @author  Tim Duesterhus
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Template
+ */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
@@ -32,12 +43,6 @@ define(["require", "exports", "./Template.grammar", "./StringUtil", "./Language"
     Parser.prototype = parser;
     parser.Parser = Parser;
     parser = new Parser();*/
-    /**
-     * Compiles the given template.
-     *
-     * @param  {string}  template  Template to compile.
-     * @constructor
-     */
     class Template {
         constructor(template) {
             // Fetch Language/StringUtil, as it cannot be provided because of a circular dependency

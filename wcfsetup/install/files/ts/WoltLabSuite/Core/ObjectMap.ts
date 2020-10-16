@@ -10,6 +10,7 @@
  * @module  WoltLabSuite/Core/ObjectMap
  */
 
+/** @deprecated 5.4 Use a `WeakMap` instead. */
 class ObjectMap {
   private _map = new WeakMap<object, object>();
 

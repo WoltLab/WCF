@@ -7,16 +7,18 @@
  * @module  Language (alias)
  * @module  WoltLabSuite/Core/Language
  */
-import Dictionary from './Dictionary';
+
 import Template from './Template';
 
-const _languageItems = new Dictionary();
+const _languageItems = new Map<string, string | Template>();
 
 /**
  * Adds all the language items in the given object to the store.
  */
-export function addObject(object: object): void {
-  _languageItems.merge(Dictionary.fromObject(object));
+export function addObject(object: LanguageItems): void {
+  Object.keys(object).forEach(key => {
+    _languageItems.set(key, object[key]);
+  });
 }
 
 /**
@@ -62,3 +64,7 @@ export function get(key: string, parameters?: object): string {
 
   return value as string;
 }
+
+interface LanguageItems {
+  [key: string]: string;
+} 

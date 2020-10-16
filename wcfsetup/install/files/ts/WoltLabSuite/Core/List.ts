@@ -7,9 +7,8 @@
  * @module  List (alias)
  * @module  WoltLabSuite/Core/List
  */
-/**
- * @constructor
- */
+
+/** @deprecated 5.4 Use a `Set` instead. */
 class List {
   private _set = new Set<any>();
 

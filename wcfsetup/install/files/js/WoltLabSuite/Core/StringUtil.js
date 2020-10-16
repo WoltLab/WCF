@@ -1,3 +1,12 @@
+/**
+ * Provides helper functions for String handling.
+ *
+ * @author  Tim Duesterhus, Joshua Ruesweg
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  StringUtil (alias)
+ * @module  WoltLabSuite/Core/StringUtil
+ */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
@@ -62,7 +71,7 @@ define(["require", "exports", "./Language", "./NumberUtil"], function (require, 
         }
         let tmp = NumberUtil.round(number, decimalPlaces || -2).toString();
         const numberParts = tmp.split('.');
-        tmp = this.addThousandsSeparator(+numberParts[0]);
+        tmp = addThousandsSeparator(+numberParts[0]);
         if (numberParts.length > 1)
             tmp += Language.get('wcf.global.decimalPoint') + numberParts[1];
         tmp = tmp.replace('-', '\u2212');
@@ -115,7 +124,7 @@ define(["require", "exports", "./Language", "./NumberUtil"], function (require, 
             }
             unitSuffix = 'k';
         }
-        return this.formatNumeric(number) + unitSuffix;
+        return formatNumeric(number) + unitSuffix;
     }
     exports.shortUnit = shortUnit;
 });

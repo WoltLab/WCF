@@ -7,11 +7,9 @@
  * @module  WoltLabSuite/Core/FileUtil
  */
 
-import Dictionary from './Dictionary';
 import * as StringUtil from './StringUtil';
 
-
-const _fileExtensionIconMapping = Dictionary.fromObject({
+const _fileExtensionIconMapping = new Map<string, string>(Object.entries({
   // archive
   zip: 'archive',
   rar: 'archive',
@@ -66,9 +64,9 @@ const _fileExtensionIconMapping = Dictionary.fromObject({
   doc: 'word',
   docx: 'word',
   odt: 'word',
-});
+}));
 
-const _mimeTypeExtensionMapping = Dictionary.fromObject({
+const _mimeTypeExtensionMapping = new Map<string, string>(Object.entries({
   // archive
   'application/zip': 'zip',
   'application/x-zip-compressed': 'zip',
@@ -125,7 +123,7 @@ const _mimeTypeExtensionMapping = Dictionary.fromObject({
   'application/msword': 'doc',
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',
   'application/vnd.oasis.opendocument.text': 'odt',
-});
+}));
 
 /**
  * Formats the given filesize.

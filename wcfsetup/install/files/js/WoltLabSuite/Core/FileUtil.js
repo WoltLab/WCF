@@ -25,16 +25,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define(["require", "exports", "./Dictionary", "./StringUtil"], function (require, exports, Dictionary_1, StringUtil) {
+define(["require", "exports", "./StringUtil"], function (require, exports, StringUtil) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.blobToFile = exports.getExtensionByMimeType = exports.getIconNameByFilename = exports.formatFilesize = void 0;
-    Dictionary_1 = __importDefault(Dictionary_1);
     StringUtil = __importStar(StringUtil);
-    const _fileExtensionIconMapping = Dictionary_1.default.fromObject({
+    const _fileExtensionIconMapping = new Map(Object.entries({
         // archive
         zip: 'archive',
         rar: 'archive',
@@ -80,8 +76,8 @@ define(["require", "exports", "./Dictionary", "./StringUtil"], function (require
         doc: 'word',
         docx: 'word',
         odt: 'word',
-    });
-    const _mimeTypeExtensionMapping = Dictionary_1.default.fromObject({
+    }));
+    const _mimeTypeExtensionMapping = new Map(Object.entries({
         // archive
         'application/zip': 'zip',
         'application/x-zip-compressed': 'zip',
@@ -129,7 +125,7 @@ define(["require", "exports", "./Dictionary", "./StringUtil"], function (require
         'application/msword': 'doc',
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',
         'application/vnd.oasis.opendocument.text': 'odt',
-    });
+    }));
     /**
      * Formats the given filesize.
      */

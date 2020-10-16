@@ -20,26 +20,26 @@ export = {
    * Returns the link to the active user's profile or an empty string
    * if the active user is a guest.
    */
-  getLink: (): string => {
+  getLink(): string {
     return user.link;
   },
 
   /**
    * Initializes the user object.
    */
-  init: (userId: number, username: string, link: string): void => {
+  init(userId: number, username: string, link: string): void {
     if (user) {
       throw new Error('User has already been initialized.');
     }
-    
+
     user = new User(userId, username, link);
   },
-  
+
   get userId(): number {
     return user.userId;
   },
-  
+
   get username(): string {
     return user.username;
-  }
+  },
 }

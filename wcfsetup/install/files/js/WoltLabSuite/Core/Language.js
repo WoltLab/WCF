@@ -1,18 +1,28 @@
+/**
+ * Manages language items.
+ *
+ * @author  Tim Duesterhus
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  Language (alias)
+ * @module  WoltLabSuite/Core/Language
+ */
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-define(["require", "exports", "./Dictionary", "./Template"], function (require, exports, Dictionary_1, Template_1) {
+define(["require", "exports", "./Template"], function (require, exports, Template_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.get = exports.add = exports.addObject = void 0;
-    Dictionary_1 = __importDefault(Dictionary_1);
     Template_1 = __importDefault(Template_1);
-    const _languageItems = new Dictionary_1.default();
+    const _languageItems = new Map();
     /**
      * Adds all the language items in the given object to the store.
      */
     function addObject(object) {
-        _languageItems.merge(Dictionary_1.default.fromObject(object));
+        Object.keys(object).forEach(key => {
+            _languageItems.set(key, object[key]);
+        });
     }
     exports.addObject = addObject;
     /**

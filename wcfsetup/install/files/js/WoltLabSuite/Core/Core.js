@@ -183,17 +183,10 @@ define(["require", "exports"], function (require, exports) {
      * Triggers a custom or built-in event.
      */
     function triggerEvent(element, eventName) {
-        let event;
-        try {
-            event = new Event(eventName, {
-                bubbles: true,
-                cancelable: true,
-            });
-        }
-        catch (e) {
-            event = document.createEvent('Event');
-            event.initEvent(eventName, true, true);
-        }
+        const event = new Event(eventName, {
+            bubbles: true,
+            cancelable: true,
+        });
         element.dispatchEvent(event);
     }
     exports.triggerEvent = triggerEvent;

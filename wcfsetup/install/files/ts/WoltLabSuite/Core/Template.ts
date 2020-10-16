@@ -9,6 +9,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Template
  */
+
 import * as parser from './Template.grammar';
 import * as StringUtil from './StringUtil';
 import * as Language from './Language';
@@ -24,12 +25,6 @@ Parser.prototype = parser;
 parser.Parser = Parser;
 parser = new Parser();*/
 
-/**
- * Compiles the given template.
- *
- * @param  {string}  template  Template to compile.
- * @constructor
- */
 class Template {
   constructor(template: string) {
     // Fetch Language/StringUtil, as it cannot be provided because of a circular dependency

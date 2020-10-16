@@ -57,6 +57,7 @@ define(["require", "exports", "../Core"], function (require, exports, Core) {
         }, (~~options.timeout || 10) * 1000);
         window[callbackName] = function () {
             window.clearTimeout(timeout);
+            //@ts-ignore
             success.apply(null, arguments);
             window[callbackName] = undefined;
             script.parentNode.removeChild(script);

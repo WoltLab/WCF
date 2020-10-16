@@ -27,8 +27,7 @@ export function add(permission: string, value: boolean): void {
 export function addObject(object: PermissionObject): void {
   for (const key in object) {
     if (object.hasOwnProperty(key)) {
-
-      this.add(key, object[key]);
+      add(key, object[key]);
     }
   }
 }

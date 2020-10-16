@@ -23,7 +23,7 @@ const Devtools = {
   /**
    * Prints the list of available commands.
    */
-  help: (): void => {
+  help(): void {
     window.console.log('');
     window.console.log('%cAvailable commands:', 'text-decoration: underline');
 
@@ -43,7 +43,7 @@ const Devtools = {
   /**
    * Disables/re-enables the editor autosave feature.
    */
-  toggleEditorAutosave: (forceDisable: boolean): void => {
+  toggleEditorAutosave(forceDisable: boolean): void {
     _settings.editorAutosave = forceDisable ? false : !_settings.editorAutosave;
     _updateConfig();
 
@@ -53,7 +53,7 @@ const Devtools = {
   /**
    * Enables/disables logging for fired event listener events.
    */
-  toggleEventLogging: function (forceEnable: boolean): void {
+  toggleEventLogging(forceEnable: boolean): void {
     _settings.eventLogging = forceEnable ? true : !_settings.eventLogging;
     _updateConfig();
 
@@ -64,7 +64,7 @@ const Devtools = {
    * Internal methods not meant to be called directly.
    */
   _internal_: {
-    enable: (): void => {
+    enable(): void {
       window.Devtools = Devtools;
 
       window.console.log('%cDevtools for WoltLab Suite loaded', 'font-weight: bold');
@@ -86,9 +86,11 @@ const Devtools = {
       window.console.log('');
     },
 
-    editorAutosave: (): boolean => _settings.editorAutosave,
+    editorAutosave(): boolean {
+      return _settings.editorAutosave;
+    },
 
-    eventLog: (identifier: string, action: string): void => {
+    eventLog(identifier: string, action: string): void {
       if (_settings.eventLogging) {
         window.console.log('[Devtools.EventLogging] Firing event: ' + action + ' @ ' + identifier);
       }

@@ -11,6 +11,7 @@
  */
 define(["require", "exports"], function (require, exports) {
     "use strict";
+    /** @deprecated 5.4 Use a `WeakMap` instead. */
     class ObjectMap {
         constructor() {
             this._map = new WeakMap();
