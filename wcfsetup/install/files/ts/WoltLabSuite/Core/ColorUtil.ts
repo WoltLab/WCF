@@ -14,7 +14,7 @@ const ColorUtil = {
    *
    * @see  https://secure.wikimedia.org/wikipedia/de/wiki/HSV-Farbraum#Transformation_von_RGB_und_HSV
    */
-  hsvToRgb: (h: number, s: number, v: number): RGB => {
+  hsvToRgb(h: number, s: number, v: number): RGB {
     const rgb: RGB = {r: 0, g: 0, b: 0};
     let h2: number, f: number, p: number, q: number, t: number;
 
@@ -83,7 +83,7 @@ const ColorUtil = {
    *
    * @see  https://secure.wikimedia.org/wikipedia/de/wiki/HSV-Farbraum#Transformation_von_RGB_und_HSV
    */
-  rgbToHsv: (r: number, g: number, b: number): HSV => {
+  rgbToHsv(r: number, g: number, b: number): HSV {
     let h: number, s: number, v: number;
     let max: number, min: number, diff: number;
 
@@ -134,7 +134,7 @@ const ColorUtil = {
   /**
    * Converts HEX into RGB.
    */
-  hexToRgb: (hex: string): RGB | typeof Number.NaN => {
+  hexToRgb(hex: string): RGB | typeof Number.NaN {
     if (/^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(hex)) {
       // only convert #abc and #abcdef
       const parts = hex.split('');
@@ -168,7 +168,7 @@ const ColorUtil = {
    *
    * @see  http://www.linuxtopia.org/online_books/javascript_guides/javascript_faq/rgbtohex.htm
    */
-  rgbToHex: (r: number, g: number, b: number): string => {
+  rgbToHex(r: number, g: number, b: number): string {
     const charList = '0123456789ABCDEF';
 
     if (g === undefined) {

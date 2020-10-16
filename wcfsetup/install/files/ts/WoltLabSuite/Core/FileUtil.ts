@@ -195,7 +195,7 @@ export function getExtensionByMimeType(mimetype: string): string {
  * @returns     {File}          the File object
  */
 export function blobToFile(blob: Blob, filename: string): File {
-  const ext = this.getExtensionByMimeType(blob.type);
- 
+  const ext = getExtensionByMimeType(blob.type);
+
   return new File([blob], filename + ext, {type: blob.type});
 }

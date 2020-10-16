@@ -20,7 +20,7 @@ const Plural = {
   /**
    * Returns the plural category for the given value.
    */
-  getCategory: function (value: number, languageCode?: string): string {
+  getCategory(value: number, languageCode?: string): string {
     if (!languageCode) {
       languageCode = document.documentElement.lang;
     }
@@ -43,7 +43,7 @@ const Plural = {
    *
    * @see    wcf\system\template\plugin\PluralFunctionTemplatePlugin::execute()
    */
-  getCategoryFromTemplateParameters: function (parameters: object): string {
+  getCategoryFromTemplateParameters(parameters: object): string {
     if (!parameters['value']) {
       throw new Error('Missing parameter value');
     }
@@ -79,7 +79,7 @@ const Plural = {
   /**
    * `f` is the fractional number as a whole number (1.234 yields 234)
    */
-  getF: function (n: number): number {
+  getF(n: number): number {
     const tmp = n.toString();
     const pos = tmp.indexOf('.');
     if (pos === -1) {
@@ -92,23 +92,23 @@ const Plural = {
   /**
    * `v` represents the number of digits of the fractional part (1.234 yields 3)
    */
-  getV: function (n: number): number {
+  getV(n: number): number {
     return n.toString().replace(/^[^.]*\.?/, '').length;
   },
 
   // Afrikaans
-  af: function (n: number): string | undefined {
+  af(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Amharic
-  am: function (n: number): string | undefined {
+  am(n: number): string | undefined {
     const i = Math.floor(Math.abs(n));
     if (n == 1 || i === 0) return PLURAL_ONE;
   },
 
   // Arabic
-  ar: function (n: number): string | undefined {
+  ar(n: number): string | undefined {
     if (n == 0) return PLURAL_ZERO;
     if (n == 1) return PLURAL_ONE;
     if (n == 2) return PLURAL_TWO;
@@ -119,18 +119,18 @@ const Plural = {
   },
 
   // Assamese
-  as: function (n: number): string | undefined {
+  as(n: number): string | undefined {
     const i = Math.floor(Math.abs(n));
     if (n == 1 || i === 0) return PLURAL_ONE;
   },
 
   // Azerbaijani
-  az: function (n: number): string | undefined {
+  az(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Belarusian
-  be: function (n: number): string | undefined {
+  be(n: number): string | undefined {
     const mod10 = n % 10;
     const mod100 = n % 100;
 
@@ -140,22 +140,22 @@ const Plural = {
   },
 
   // Bulgarian
-  bg: function (n: number): string | undefined {
+  bg(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Bengali
-  bn: function (n: number): string | undefined {
+  bn(n: number): string | undefined {
     const i = Math.floor(Math.abs(n));
     if (n == 1 || i === 0) return PLURAL_ONE;
   },
 
   // Tibetan
-  bo: function (n: number) {
+  bo(n: number) {
   },
 
   // Bosnian
-  bs: function (n: number): string | undefined {
+  bs(n: number): string | undefined {
     const v = this.getV(n);
     const f = this.getF(n);
     const mod10 = n % 10;
@@ -169,7 +169,7 @@ const Plural = {
   },
 
   // Czech
-  cs: function (n: number): string | undefined {
+  cs(n: number): string | undefined {
     const v = this.getV(n);
 
     if (n == 1 && v === 0) return PLURAL_ONE;
@@ -178,7 +178,7 @@ const Plural = {
   },
 
   // Welsh
-  cy: function (n: number): string | undefined {
+  cy(n: number): string | undefined {
     if (n == 0) return PLURAL_ZERO;
     if (n == 1) return PLURAL_ONE;
     if (n == 2) return PLURAL_TWO;
@@ -187,12 +187,12 @@ const Plural = {
   },
 
   // Danish
-  da: function (n: number): string | undefined {
+  da(n: number): string | undefined {
     if (n > 0 && n < 2) return PLURAL_ONE;
   },
 
   // Greek
-  el: function (n: number): string | undefined {
+  el(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
@@ -206,32 +206,32 @@ const Plural = {
   // Swedish (sv)
   // Swahili (sw)
   // Urdu (ur)
-  en: function (n: number): string | undefined {
+  en(n: number): string | undefined {
     if (n == 1 && this.getV(n) === 0) return PLURAL_ONE;
   },
 
   // Spanish
-  es: function (n: number): string | undefined {
+  es(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Basque
-  eu: function (n: number): string | undefined {
+  eu(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Persian
-  fa: function (n: number): string | undefined {
+  fa(n: number): string | undefined {
     if (n >= 0 && n <= 1) return PLURAL_ONE;
   },
 
   // French
-  fr: function (n: number): string | undefined {
+  fr(n: number): string | undefined {
     if (n >= 0 && n < 2) return PLURAL_ONE;
   },
 
   // Irish
-  ga: function (n: number): string | undefined {
+  ga(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
     if (n == 2) return PLURAL_TWO;
     if (n == 3 || n == 4 || n == 5 || n == 6) return PLURAL_FEW;
@@ -239,12 +239,12 @@ const Plural = {
   },
 
   // Gujarati
-  gu: function (n: number): string | undefined {
+  gu(n: number): string | undefined {
     if (n >= 0 && n <= 1) return PLURAL_ONE;
   },
 
   // Hebrew
-  he: function (n: number): string | undefined {
+  he(n: number): string | undefined {
     const v = this.getV(n);
 
     if (n == 1 && v === 0) return PLURAL_ONE;
@@ -253,89 +253,89 @@ const Plural = {
   },
 
   // Hindi
-  hi: function (n: number): string | undefined {
+  hi(n: number): string | undefined {
     if (n >= 0 && n <= 1) return PLURAL_ONE;
   },
 
   // Croatian
-  hr: function (n: number): string | undefined {
+  hr(n: number): string | undefined {
     // same as Bosnian
     return this.bs(n);
   },
 
   // Hungarian
-  hu: function (n: number): string | undefined {
+  hu(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Armenian
-  hy: function (n: number): string | undefined {
+  hy(n: number): string | undefined {
     if (n >= 0 && n < 2) return PLURAL_ONE;
   },
 
   // Indonesian
-  id: function (n: number) {
+  id(n: number) {
   },
 
   // Icelandic
-  is: function (n: number): string | undefined {
+  is(n: number): string | undefined {
     const f = this.getF(n);
 
     if (f === 0 && n % 10 === 1 && !(n % 100 === 11) || !(f === 0)) return PLURAL_ONE;
   },
 
   // Japanese
-  ja: function (n: number) {
+  ja(n: number) {
   },
 
   // Javanese
-  jv: function (n: number) {
+  jv(n: number) {
   },
 
   // Georgian
-  ka: function (n: number): string | undefined {
+  ka(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Kazakh
-  kk: function (n: number): string | undefined {
+  kk(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Khmer
-  km: function (n: number) {
+  km(n: number) {
   },
 
   // Kannada
-  kn: function (n: number): string | undefined {
+  kn(n: number): string | undefined {
     if (n >= 0 && n <= 1) return PLURAL_ONE;
   },
 
   // Korean
-  ko: function (n: number) {
+  ko(n: number) {
   },
 
   // Kurdish
-  ku: function (n: number): string | undefined {
+  ku(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Kyrgyz
-  ky: function (n: number): string | undefined {
+  ky(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Luxembourgish
-  lb: function (n: number): string | undefined {
+  lb(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Lao
-  lo: function (n: number) {
+  lo(n: number) {
   },
 
   // Lithuanian
-  lt: function (n: number): string | undefined {
+  lt(n: number): string | undefined {
     const mod10 = n % 10;
     const mod100 = n % 100;
 
@@ -345,7 +345,7 @@ const Plural = {
   },
 
   // Latvian
-  lv: function (n: number): string | undefined {
+  lv(n: number): string | undefined {
     const mod10 = n % 10;
     const mod100 = n % 100;
     const v = this.getV(n);
@@ -358,31 +358,31 @@ const Plural = {
   },
 
   // Macedonian
-  mk: function (n: number): string | undefined {
+  mk(n: number): string | undefined {
     return this.bs(n);
   },
 
   // Malayalam
-  ml: function (n: number): string | undefined {
+  ml(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Mongolian 
-  mn: function (n: number): string | undefined {
+  mn(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Marathi 
-  mr: function (n: number): string | undefined {
+  mr(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Malay 
-  ms: function (n: number) {
+  ms(n: number) {
   },
 
   // Maltese 
-  mt: function (n: number): string | undefined {
+  mt(n: number): string | undefined {
     const mod100 = n % 100;
 
     if (n == 1) return PLURAL_ONE;
@@ -391,31 +391,31 @@ const Plural = {
   },
 
   // Burmese
-  my: function (n: number) {
+  my(n: number) {
   },
 
   // Norwegian
-  no: function (n: number): string | undefined {
+  no(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Nepali
-  ne: function (n: number): string | undefined {
+  ne(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Odia
-  or: function (n: number): string | undefined {
+  or(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Punjabi
-  pa: function (n: number): string | undefined {
+  pa(n: number): string | undefined {
     if (n == 1 || n == 0) return PLURAL_ONE;
   },
 
   // Polish
-  pl: function (n: number): string | undefined {
+  pl(n: number): string | undefined {
     const v = this.getV(n);
     const mod10 = n % 10;
     const mod100 = n % 100;
@@ -426,17 +426,17 @@ const Plural = {
   },
 
   // Pashto
-  ps: function (n: number): string | undefined {
+  ps(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Portuguese
-  pt: function (n: number): string | undefined {
+  pt(n: number): string | undefined {
     if (n >= 0 && n < 2) return PLURAL_ONE;
   },
 
   // Romanian
-  ro: function (n: number): string | undefined {
+  ro(n: number): string | undefined {
     const v = this.getV(n);
     const mod100 = n % 100;
 
@@ -445,7 +445,7 @@ const Plural = {
   },
 
   // Russian
-  ru: function (n: number): string | undefined {
+  ru(n: number): string | undefined {
     const mod10 = n % 10;
     const mod100 = n % 100;
 
@@ -457,23 +457,23 @@ const Plural = {
   },
 
   // Sindhi
-  sd: function (n: number): string | undefined {
+  sd(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Sinhala
-  si: function (n: number): string | undefined {
+  si(n: number): string | undefined {
     if (n == 0 || n == 1 || (Math.floor(n) == 0 && this.getF(n) == 1)) return PLURAL_ONE;
   },
 
   // Slovak
-  sk: function (n: number): string | undefined {
+  sk(n: number): string | undefined {
     // same as Czech
     return this.cs(n);
   },
 
   // Slovenian
-  sl: function (n: number): string | undefined {
+  sl(n: number): string | undefined {
     const v = this.getV(n);
     const mod100 = n % 100;
 
@@ -483,66 +483,66 @@ const Plural = {
   },
 
   // Albanian
-  sq: function (n: number): string | undefined {
+  sq(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Serbian
-  sr: function (n: number): string | undefined {
+  sr(n: number): string | undefined {
     // same as Bosnian
     return this.bs(n);
   },
 
   // Tamil
-  ta: function (n: number): string | undefined {
+  ta(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Telugu
-  te: function (n: number): string | undefined {
+  te(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Tajik
-  tg: function (n: number) {
+  tg(n: number) {
   },
 
   // Thai
-  th: function (n: number) {
+  th(n: number) {
   },
 
   // Turkmen
-  tk: function (n: number): string | undefined {
+  tk(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Turkish
-  tr: function (n: number): string | undefined {
+  tr(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Uyghur
-  ug: function (n: number): string | undefined {
+  ug(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Ukrainian
-  uk: function (n: number): string | undefined {
+  uk(n: number): string | undefined {
     // same as Russian
     return this.ru(n);
   },
 
   // Uzbek
-  uz: function (n: number): string | undefined {
+  uz(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
   // Vietnamese
-  vi: function (n: number) {
+  vi(n: number) {
   },
 
   // Chinese
-  zh: function (n: number) {
+  zh(n: number) {
   },
 };
 
