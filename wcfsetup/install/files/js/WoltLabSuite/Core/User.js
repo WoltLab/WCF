@@ -9,30 +9,36 @@
  */
 define(["require", "exports"], function (require, exports) {
     "use strict";
-    let _link;
+    class User {
+        constructor(userId, username, link) {
+            this.userId = userId;
+            this.username = username;
+            this.link = link;
+        }
+    }
+    let user;
     return {
         /**
          * Returns the link to the active user's profile or an empty string
          * if the active user is a guest.
          */
-        getLink: () => _link || '',
+        getLink: () => {
+            return user.link;
+        },
         /**
          * Initializes the user object.
          */
         init: (userId, username, link) => {
-            if (_link !== undefined) {
+            if (user) {
                 throw new Error('User has already been initialized.');
             }
-            // define non-writeable properties for userId and username
-            Object.defineProperty(this, 'userId', {
-                value: userId,
-                writable: false,
-            });
-            Object.defineProperty(this, 'username', {
-                value: username,
-                writable: false,
-            });
-            _link = link || '';
+            user = new User(userId, username, link);
         },
+        get userId() {
+            return user.userId;
+        },
+        get username() {
+            return user.username;
+        }
     };
 });
