@@ -69,7 +69,7 @@ async function blobToUint8(blob: Blob | File): Promise<Uint8Array> {
 /**
  * Extracts the EXIF / XMP sections of a JPEG blob.
  */
-export async function getExifBytesFromJpeg(blob: Blob | File): Promise<Uint8Array> {
+export async function getExifBytesFromJpeg(blob: Blob | File): Promise<Exif> {
   if (!((blob as any) instanceof Blob) && !(blob instanceof File)) {
     throw new TypeError("The argument must be a Blob or a File");
   }
@@ -156,7 +156,7 @@ export async function removeExifData(blob: Blob | File): Promise<Blob> {
 /**
  * Overrides the APP1 (EXIF / XMP) sections of a JPEG blob with the given data.
  */
-export async function setExifData(blob: Blob, exif: Uint8Array): Promise<Blob> {
+export async function setExifData(blob: Blob, exif: Exif): Promise<Blob> {
   blob = await removeExifData(blob);
 
   const bytes = await blobToUint8(blob);
@@ -175,3 +175,5 @@ export async function setExifData(blob: Blob, exif: Uint8Array): Promise<Blob> {
 
   return new Blob([result], { type: blob.type });
 }
+
+export type Exif = Uint8Array;
