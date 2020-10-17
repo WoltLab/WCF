@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>5.3.0 RC 1</version>
-		<date>2020-10-10</date>
+		<version>5.3.0 RC 2</version>
+		<date>2020-10-19</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -104,13 +104,13 @@
 		Update 5.3.0 RC 1 -> 5.3.0 RC 2: Run the script `update_com.woltlab.wcf_5.3.0.rc.2.php`
 	-->
 	
-	<instructions type="update" fromversion="5.3.0 Beta 2">
+	<instructions type="update" fromversion="5.3.0 RC 1">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
 		
-		<instruction type="language" />
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.3.0.rc.2.php</instruction>
 		
-		<instruction type="objectType" />
+		<instruction type="language" />
 	</instructions>
 </package>
