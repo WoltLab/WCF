@@ -265,6 +265,15 @@ class DatabaseTableChangeProcessor {
 			}
 		}
 		
+		foreach ($this->foreignKeysToDrop as $tableName => $foreignKeys) {
+			foreach ($foreignKeys as $foreignKey) {
+				$appliedAnyChange = true;
+				
+				$this->dropForeignKey($tableName, $foreignKey);
+				$this->deleteForeignKeyLog($tableName, $foreignKey);
+			}
+		}
+		
 		foreach ($this->foreignKeysToAdd as $tableName => $foreignKeys) {
 			foreach ($foreignKeys as $foreignKey) {
 				$appliedAnyChange = true;
@@ -272,15 +281,6 @@ class DatabaseTableChangeProcessor {
 				$this->prepareForeignKeyLog($tableName, $foreignKey);
 				$this->addForeignKey($tableName, $foreignKey);
 				$this->finalizeForeignKeyLog($tableName, $foreignKey);
-			}
-		}
-		
-		foreach ($this->foreignKeysToDrop as $tableName => $foreignKeys) {
-			foreach ($foreignKeys as $foreignKey) {
-				$appliedAnyChange = true;
-				
-				$this->dropForeignKey($tableName, $foreignKey);
-				$this->deleteForeignKeyLog($tableName, $foreignKey);
 			}
 		}
 		
@@ -426,7 +426,7 @@ class DatabaseTableChangeProcessor {
 				foreach ($table->getForeignKeys() as $foreignKey) {
 					$matchingExistingForeignKey = null;
 					foreach ($existingForeignKeys as $existingForeignKey) {
-						if (empty(array_diff($foreignKey->getData(), $existingForeignKey->getData()))) {
+						if (empty(array_diff($foreignKey->getDiffData(), $existingForeignKey->getDiffData()))) {
 							$matchingExistingForeignKey = $existingForeignKey;
 							break;
 						}
@@ -453,6 +453,20 @@ class DatabaseTableChangeProcessor {
 						$this->foreignKeysToAdd[$tableName][] = $foreignKey;
 						
 						$this->splitNodeMessage .= "Added foreign key '{$tableName}." . implode(',', $foreignKey->getColumns()) . "'.";
+						break 2;
+					}
+					else if (!empty(array_diff($foreignKey->getData(), $existingForeignKey->getData()))) {
+						if (!isset($this->foreignKeysToDrop[$tableName])) {
+							$this->foreignKeysToDrop[$tableName] = [];
+						}
+						$this->foreignKeysToDrop[$tableName][] = $matchingExistingForeignKey;
+						
+						if (!isset($this->foreignKeysToAdd[$tableName])) {
+							$this->foreignKeysToAdd[$tableName] = [];
+						}
+						$this->foreignKeysToAdd[$tableName][] = $foreignKey;
+						
+						$this->splitNodeMessage .= "Replaced foreign key '{$tableName}." . implode(',', $foreignKey->getColumns()) . "'.";
 						break 2;
 					}
 				}

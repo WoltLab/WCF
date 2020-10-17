@@ -119,7 +119,20 @@ class DatabaseTableForeignKey {
 			'ON DELETE' => $this->normalizeAction($this->getOnDelete()),
 			'ON UPDATE' => $this->normalizeAction($this->getOnUpdate()),
 			'referencedColumns' => implode(',', $this->getReferencedColumns()),
-			'referencedTable' => $this->getReferencedTable()
+			'referencedTable' => $this->getReferencedTable(),
+		];
+	}
+	
+	/**
+	 * Returns the data used to compare foreign keys.
+	 * 
+	 * @return      array
+	 */
+	public function getDiffData() {
+		return [
+			'columns' => implode(',', $this->getColumns()),
+			'referencedColumns' => implode(',', $this->getReferencedColumns()),
+			'referencedTable' => $this->getReferencedTable(),
 		];
 	}
 	
