@@ -206,4 +206,11 @@ export function triggerEvent(element: Element, eventName: string): void {
 export function getStoragePrefix() {
   return _prefix;
 }
-    
+
+/**
+ * Interprets a string value as a boolean value similar to the behavior of the 
+ * legacy functions `elAttrBool()` and `elDataBool()`.
+ */
+export function stringToBool(value: string | null): boolean {
+  return value === '1' || value === 'true';
+}

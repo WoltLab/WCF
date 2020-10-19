@@ -395,6 +395,20 @@ const DomUtil = {
 
     return null;
   },
+
+  /**
+   * Shorthand function to hide an element by setting its 'display' value to 'none'.
+   */
+  hide(element: HTMLElement): void {
+    element.style.setProperty('display', 'none', '');
+  },
+
+  /**
+   * Shorthand function to show an element previously hidden by using `elHide()`.
+   */
+  show(element: HTMLElement): void {
+    element.style.removeProperty('display');
+  },
 };
 
 interface Dimensions {
