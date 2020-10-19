@@ -6,11 +6,11 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Wrapper/FacebookSdk
  */
-define(['https://connect.facebook.net/en_US/sdk.js'], function (_dummy) {
+define(["require", "exports", "https://connect.facebook.net/en_US/sdk.js"], function (require, exports) {
     "use strict";
     // see: https://developers.facebook.com/docs/javascript/reference/FB.init/v7.0
     FB.init({
-        version: 'v7.0'
+        version: "v7.0",
     });
     return FB;
 });
