@@ -79,8 +79,6 @@ process.chdir("../../");
 	let configFile = "require.build.js";
 	let outFilename = require(process.cwd() + `/${configFile}`).out;
 
-	const promisePolyfill = fs.readFileSync("./3rdParty/polyfill/promise.min.js");
-
 	[true, false].forEach((COMPILER_TARGET_DEFAULT) => {
 		let overrides =
 			"uglify2.compress.global_defs.COMPILER_TARGET_DEFAULT=" +
@@ -96,11 +94,6 @@ process.chdir("../../");
 			stdio: [0, 1, 2],
 		});
 		console.timeEnd(outFilename);
-
-		// prepend the promise polyfill
-		let content =
-			`// promise.min.js\n${promisePolyfill}\n\n// ${outFilename}\n` + fs.readFileSync(outFilename);
-		fs.writeFileSync(outFilename, content);
 	});
 }
 

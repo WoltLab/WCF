@@ -48,7 +48,6 @@
 		var COMPILER_TARGET_DEFAULT = true;
 	</script>
 	
-	{js application='wcf' lib='polyfill' file='promise' bundle='WoltLabSuite.Core' core='true'}
 	{js application='wcf' file='require' bundle='WoltLabSuite.Core' core='true'}
 	{js application='wcf' file='require.config' bundle='WoltLabSuite.Core' core='true'}
 	{js application='wcf' file='require.linearExecution' bundle='WoltLabSuite.Core' core='true'}
