@@ -354,6 +354,18 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
             }
             return null;
         },
+        /**
+         * Shorthand function to hide an element by setting its 'display' value to 'none'.
+         */
+        hide(element) {
+            element.style.setProperty('display', 'none', '');
+        },
+        /**
+         * Shorthand function to show an element previously hidden by using `elHide()`.
+         */
+        show(element) {
+            element.style.removeProperty('display');
+        },
     };
     // expose on window object for backward compatibility
     window.bc_wcfDomUtil = DomUtil;
