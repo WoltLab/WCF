@@ -71,7 +71,7 @@
 							{event name='userMenuItemsAfter'}
 						</ul>
 					</div>
-					<a class="interactiveDropdownShowAll" href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="WCF.Dropdown.Interactive.Handler.close('userMenu'); WCF.System.Confirmation.show('{lang}wcf.user.logout.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;">{lang}wcf.user.logout{/lang}</a>
+					<a class="interactiveDropdownShowAll" href="{link controller='Logout'}t={csrfToken type=url}{/link}" onclick="WCF.Dropdown.Interactive.Handler.close('userMenu'); WCF.System.Confirmation.show('{lang}wcf.user.logout.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;">{lang}wcf.user.logout{/lang}</a>
 				</div>
 				<script data-relocate="true">
 					$(function() {
@@ -167,7 +167,7 @@
 								<div class="userLoginButtons">
 									<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 									<input type="hidden" name="url" value="{$__wcf->session->requestURI}">
-									{@SECURITY_TOKEN_INPUT_TAG}
+									{csrfToken}
 								</div>
 							</section>
 							

@@ -53,7 +53,7 @@
 			<div class="userLoginButtons">
 				<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 				<input type="hidden" name="url" value="{$url}">
-				{@SECURITY_TOKEN_INPUT_TAG}
+				{csrfToken}
 			</div>
 		</section>
 		

@@ -111,7 +111,7 @@
 			<div class="formSubmit">
 				<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 				<input type="hidden" name="sourceSelection" value="1">
-				{@SECURITY_TOKEN_INPUT_TAG}
+				{csrfToken}
 			</div>
 		</form>
 	{/if}
@@ -220,7 +220,7 @@
 		<div class="formSubmit">
 			<input type="hidden" name="exporterName" value="{$exporterName}">
 			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
-			{@SECURITY_TOKEN_INPUT_TAG}
+			{csrfToken}
 		</div>
 	</form>
 {/if}

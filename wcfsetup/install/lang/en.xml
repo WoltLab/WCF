@@ -1343,8 +1343,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.page_description"><![CDATA[Page Description]]></item>
 		<item name="wcf.acp.option.page_title"><![CDATA[Page Title]]></item>
 		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
-		<item name="wcf.acp.option.session_timeout"><![CDATA[User Session Timeout]]></item>
-		<item name="wcf.acp.option.session_timeout.description"><![CDATA[User sessions expire after the following seconds.]]></item>
 		<item name="wcf.acp.option.timezone"><![CDATA[Timezone]]></item>
 		<item name="wcf.acp.option.timezone.description"><![CDATA[The default timezone of your page.]]></item>
 		<item name="wcf.acp.option.ip_address_search_engine"><![CDATA[Search Engine for IP Addresses]]></item>

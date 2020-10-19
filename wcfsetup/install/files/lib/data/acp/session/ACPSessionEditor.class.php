@@ -2,6 +2,7 @@
 namespace wcf\data\acp\session;
 use wcf\data\DatabaseObjectEditor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 
 /**
@@ -46,9 +47,7 @@ class ACPSessionEditor extends DatabaseObjectEditor {
 	}
 	
 	/**
-	 * Deletes active sessions of the given users.
-	 * 
-	 * @param	integer[]	$userIDs
+	 * @deprecated 5.4 - Sessions are managed via the SessionHandler.
 	 */
 	public static function deleteUserSessions(array $userIDs = []) {
 		$conditionBuilder = new PreparedStatementConditionBuilder();
@@ -63,14 +62,9 @@ class ACPSessionEditor extends DatabaseObjectEditor {
 	}
 	
 	/**
-	 * Deletes the expired sessions.
-	 * 
-	 * @param	integer		$timestamp
+	 * @deprecated 5.4 - Sessions are managed via the SessionHandler.
 	 */
 	public static function deleteExpiredSessions($timestamp) {
-		$sql = "DELETE FROM	".call_user_func([static::$baseClass, 'getDatabaseTableName'])."
-			WHERE		lastActivityTime < ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$timestamp]);
+		SessionHandler::getInstance()->prune();
 	}
 }

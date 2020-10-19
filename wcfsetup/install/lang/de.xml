@@ -1366,8 +1366,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.page_description"><![CDATA[Seitenbeschreibung]]></item>
 		<item name="wcf.acp.option.page_title"><![CDATA[Titel der Seite]]></item>
 		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
-		<item name="wcf.acp.option.session_timeout"><![CDATA[Gültigkeitslänge einer Sitzung]]></item>
-		<item name="wcf.acp.option.session_timeout.description"/>
 		<item name="wcf.acp.option.timezone"><![CDATA[Zeitzone]]></item>
 		<item name="wcf.acp.option.timezone.description"><![CDATA[Standard-Zeitzone {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Seite]]></item>
 		<item name="wcf.acp.option.ip_address_search_engine"><![CDATA[Suchmaschine für IP-Adressen]]></item>

@@ -66,7 +66,7 @@
 		<div class="formSubmit">
 			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 			{if $copy}<input type="hidden" name="copy" value="{@$copy}">{/if}
-			{@SECURITY_TOKEN_INPUT_TAG}
+			{csrfToken}
 		</div>
 	</form>
 {else}

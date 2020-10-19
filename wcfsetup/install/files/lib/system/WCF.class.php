@@ -396,6 +396,9 @@ class WCF {
 		// Virtual sessions no longer exist since 5.4.
 		define('SESSION_ENABLE_VIRTUALIZATION', 1);
 		
+		// The session timeout is fully managed since 5.4.
+		define('SESSION_TIMEOUT', 3600);
+		
 		$filename = WCF_DIR.'options.inc.php';
 		
 		// create options file if doesn't exist
@@ -435,7 +438,6 @@ class WCF {
 		$factory->load();
 		
 		self::$sessionObj = SessionHandler::getInstance();
-		self::$sessionObj->setHasValidCookie($factory->hasValidCookie());
 	}
 	
 	/**
@@ -485,7 +487,7 @@ class WCF {
 		$isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
 		
 		if (defined('BLACKLIST_IP_ADDRESSES') && BLACKLIST_IP_ADDRESSES != '') {
-			if (!StringUtil::executeWordFilter(UserUtil::convertIPv6To4(self::getSession()->ipAddress), BLACKLIST_IP_ADDRESSES)) {
+			if (!StringUtil::executeWordFilter(UserUtil::convertIPv6To4(UserUtil::getIpAddress()), BLACKLIST_IP_ADDRESSES)) {
 				if ($isAjax) {
 					throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
 				}
@@ -493,7 +495,7 @@ class WCF {
 					throw new PermissionDeniedException();
 				}
 			}
-			else if (!StringUtil::executeWordFilter(self::getSession()->ipAddress, BLACKLIST_IP_ADDRESSES)) {
+			else if (!StringUtil::executeWordFilter(UserUtil::getIpAddress(), BLACKLIST_IP_ADDRESSES)) {
 				if ($isAjax) {
 					throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
 				}
@@ -503,7 +505,7 @@ class WCF {
 			}
 		}
 		if (defined('BLACKLIST_USER_AGENTS') && BLACKLIST_USER_AGENTS != '') {
-			if (!StringUtil::executeWordFilter(self::getSession()->userAgent, BLACKLIST_USER_AGENTS)) {
+			if (!StringUtil::executeWordFilter(UserUtil::getUserAgent(), BLACKLIST_USER_AGENTS)) {
 				if ($isAjax) {
 					throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
 				}
@@ -513,7 +515,7 @@ class WCF {
 			}
 		}
 		if (defined('BLACKLIST_HOSTNAMES') && BLACKLIST_HOSTNAMES != '') {
-			if (!StringUtil::executeWordFilter(@gethostbyaddr(self::getSession()->ipAddress), BLACKLIST_HOSTNAMES)) {
+			if (!StringUtil::executeWordFilter(@gethostbyaddr(UserUtil::getIpAddress()), BLACKLIST_HOSTNAMES)) {
 				if ($isAjax) {
 					throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
 				}
@@ -590,8 +592,8 @@ class WCF {
 				$application->__run();
 			}
 			
-			// refresh the session 1 minute before it expires
-			self::getTPL()->assign('__sessionKeepAlive', SESSION_TIMEOUT - 60);
+			/** @deprecated The below variable is deprecated. */
+			self::getTPL()->assign('__sessionKeepAlive', 59 * 60);
 		}
 	}
 	
@@ -752,7 +754,7 @@ class WCF {
 			$wcf = new TemplateScriptingCore($wcf);
 		}
 		
-		self::getTPL()->registerPrefilter(['event', 'hascontent', 'lang', 'jslang']);
+		self::getTPL()->registerPrefilter(['event', 'hascontent', 'lang', 'jslang', 'csrfToken']);
 		self::getTPL()->assign([
 			'__wcf' => $wcf,
 			'__wcfVersion' => LAST_UPDATE_TIME // @deprecated 2.1, use LAST_UPDATE_TIME directly

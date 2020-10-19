@@ -36,6 +36,7 @@ use wcf\system\setup\Installer;
 use wcf\system\style\StyleHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
+use wcf\util\CryptoUtil;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\JSON;
@@ -230,16 +231,15 @@ class PackageInstallationDispatcher {
 						'mail_admin_address'
 					]);
 					
-					try {
-						$statement->execute([
-							bin2hex(\random_bytes(20)),
-							'signature_secret'
-						]);
-					}
-					catch (\Throwable $e) {
-						// ignore, the secret will stay empty and crypto operations
-						// depending on it will fail
-					}
+					$statement->execute([
+						$signatureSecret = \bin2hex(\random_bytes(20)),
+						'signature_secret'
+					]);
+					define('SIGNATURE_SECRET', $signatureSecret);
+					HeaderUtil::setCookie(
+						"acp_session",
+						CryptoUtil::createSignedString(\hex2bin(WCF::getSession()->sessionID))
+					);
 					
 					if (WCF::getSession()->getVar('__wcfSetup_developerMode')) {
 						$statement->execute([

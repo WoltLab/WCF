@@ -23,12 +23,10 @@ class SessionAccessLogListener implements IParameterizedEventListener {
 			// try to find existing session log
 			$sql = "SELECT	sessionLogID
 				FROM	wcf".WCF_N."_acp_session_log
-				WHERE	sessionID = ?
-					AND lastActivityTime >= ?";
+				WHERE	sessionID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([
 				WCF::getSession()->sessionID,
-				TIME_NOW - SESSION_TIMEOUT
 			]);
 			$row = $statement->fetchArray();
 			if (!empty($row['sessionLogID'])) {
@@ -45,8 +43,8 @@ class SessionAccessLogListener implements IParameterizedEventListener {
 					'sessionID' => WCF::getSession()->sessionID,
 					'userID' => WCF::getUser()->userID,
 					'ipAddress' => UserUtil::getIpAddress(),
-					'hostname' => @gethostbyaddr(WCF::getSession()->ipAddress),
-					'userAgent' => WCF::getSession()->userAgent,
+					'hostname' => @gethostbyaddr(UserUtil::getIpAddress()),
+					'userAgent' => UserUtil::getUserAgent(),
 					'time' => TIME_NOW,
 					'lastActivityTime' => TIME_NOW
 				]);
@@ -54,7 +52,7 @@ class SessionAccessLogListener implements IParameterizedEventListener {
 			}
 			
 			// format request uri
-			$requestURI = WCF::getSession()->requestURI;
+			$requestURI = UserUtil::getRequestURI();
 			// remove directories
 			$URIComponents = explode('/', $requestURI);
 			$requestURI = array_pop($URIComponents);
@@ -67,7 +65,7 @@ class SessionAccessLogListener implements IParameterizedEventListener {
 				'ipAddress' => UserUtil::getIpAddress(),
 				'time' => TIME_NOW,
 				'requestURI' => $requestURI,
-				'requestMethod' => WCF::getSession()->requestMethod,
+				'requestMethod' => substr($_SERVER['REQUEST_METHOD'] ?? '', 0, 255),
 				'className' => get_class($eventObj)
 			]);
 		}

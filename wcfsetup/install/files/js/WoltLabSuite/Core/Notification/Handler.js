@@ -23,7 +23,6 @@ define(['Ajax', 'Core', 'EventHandler', 'StringUtil'], function(Ajax, Core, Even
 	//noinspection JSUnresolvedVariable
 	var _lastRequestTimestamp = window.TIME_NOW;
 	var _requestTimer = null;
-	var _sessionKeepAlive = 0;
 	
 	/**
 	 * @exports     WoltLabSuite/Core/Notification/Handler
@@ -38,11 +37,9 @@ define(['Ajax', 'Core', 'EventHandler', 'StringUtil'], function(Ajax, Core, Even
 			options = Core.extend({
 				enableNotifications: false,
 				icon: '',
-				sessionKeepAlive: 0
 			}, options);
 			
 			_icon = options.icon;
-			_sessionKeepAlive = options.sessionKeepAlive * 60;
 			
 			this._prepareNextRequest();
 			
@@ -127,8 +124,7 @@ define(['Ajax', 'Core', 'EventHandler', 'StringUtil'], function(Ajax, Core, Even
 		_prepareNextRequest: function() {
 			this._resetTimer();
 			
-			var delay = Math.min(this._getNextDelay(), _sessionKeepAlive);
-			_requestTimer = window.setTimeout(this._dispatchRequest.bind(this), delay * 60000);
+			_requestTimer = window.setTimeout(this._dispatchRequest.bind(this), this._getNextDelay() * 60000);
 		},
 		
 		/**

@@ -6,7 +6,7 @@
 	var SID_ARG_2ND	= '';
 	var WCF_PATH = '{@$__wcf->getPath()}';
 	var WSC_API_URL = '{@$__wcf->getActivePath()}';
-	var SECURITY_TOKEN = '{@SECURITY_TOKEN}';
+	var SECURITY_TOKEN = '{csrfToken type=raw}';
 	var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
 	var LANGUAGE_USE_INFORMAL_VARIANT = {if LANGUAGE_USE_INFORMAL_VARIANT}true{else}false{/if};
 	var TIME_NOW = {@TIME_NOW};
@@ -233,18 +233,13 @@ window.addEventListener('pageshow', function(event) {
 			});
 		{/if}
 		
-		{if $__sessionKeepAlive|isset}
-			new WCF.System.KeepAlive({@$__sessionKeepAlive});
-			
-			{if ENABLE_POLLING && $__wcf->user->userID}
-				require(['WoltLabSuite/Core/Notification/Handler'], function(NotificationHandler) {
-					NotificationHandler.setup({
-						enableNotifications: {if $__wcf->useDesktopNotifications()}true{else}false{/if},
-						icon: '{$__wcf->getStyleHandler()->getStyle()->getFaviconAppleTouchIcon()}',
-						sessionKeepAlive: {@$__sessionKeepAlive}
-					});
+		{if ENABLE_POLLING && $__wcf->user->userID}
+			require(['WoltLabSuite/Core/Notification/Handler'], function(NotificationHandler) {
+				NotificationHandler.setup({
+					enableNotifications: {if $__wcf->useDesktopNotifications()}true{else}false{/if},
+					icon: '{$__wcf->getStyleHandler()->getStyle()->getFaviconAppleTouchIcon()}',
 				});
-			{/if}
+			});
 		{/if}
 	});
 </script>

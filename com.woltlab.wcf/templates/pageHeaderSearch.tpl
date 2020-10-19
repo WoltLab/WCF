@@ -58,7 +58,7 @@
 			
 			{if !$__searchStaticOptions|empty}{@$__searchStaticOptions}{/if}
 			
-			{@SECURITY_TOKEN_INPUT_TAG}
+			{csrfToken}
 		</div>
 	</form>
 </div>
