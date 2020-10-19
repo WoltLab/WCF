@@ -145,6 +145,9 @@ define([], function() {
 								bytes.set(start, 0);
 								bytes.set(end, start.length);
 							}
+							else {
+								i += length;
+							}
 						}
 						else {
 							i += length;
