@@ -56,7 +56,7 @@ class DebugFolderEmailTransport implements IEmailTransport {
 		file_put_contents($this->folder.$filename, $eml);
 		
 		if (PHP_EOL != "\r\n") {
-			symlink('../'.$filename, $this->folder.'new/'.$filename);
+			@symlink('../'.$filename, $this->folder.'new/'.$filename);
 		}
 	}
 }
