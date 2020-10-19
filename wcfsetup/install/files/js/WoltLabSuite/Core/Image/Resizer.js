@@ -25,15 +25,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -93,85 +84,79 @@ define(["require", "exports", "../FileUtil", "./ExifUtil", "pica"], function (re
         /**
          * Converts the given object of exif data and image data into a File.
          */
-        saveFile(data, fileName, fileType = this.fileType, quality = this.quality) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const basename = fileName.match(/(.+)(\..+?)$/);
-                let blob = yield pica.toBlob(data.image, fileType, quality);
-                if (fileType === "image/jpeg" && typeof data.exif !== "undefined") {
-                    blob = yield ExifUtil.setExifData(blob, data.exif);
-                }
-                return FileUtil.blobToFile(blob, basename[1]);
-            });
+        async saveFile(data, fileName, fileType = this.fileType, quality = this.quality) {
+            const basename = fileName.match(/(.+)(\..+?)$/);
+            let blob = await pica.toBlob(data.image, fileType, quality);
+            if (fileType === "image/jpeg" && typeof data.exif !== "undefined") {
+                blob = await ExifUtil.setExifData(blob, data.exif);
+            }
+            return FileUtil.blobToFile(blob, basename[1]);
         }
         /**
          * Loads the given file into an image object and parses Exif information.
          */
-        loadFile(file) {
-            return __awaiter(this, void 0, void 0, function* () {
-                let exifBytes = Promise.resolve(undefined);
-                let fileData = file;
-                if (file.type === "image/jpeg") {
-                    // Extract EXIF data
-                    exifBytes = ExifUtil.getExifBytesFromJpeg(file);
-                    // Strip EXIF data
-                    fileData = yield ExifUtil.removeExifData(fileData);
-                }
-                const imageLoader = new Promise(function (resolve, reject) {
-                    const reader = new FileReader();
-                    const image = new Image();
-                    reader.addEventListener("load", function () {
-                        image.src = reader.result;
-                    });
-                    reader.addEventListener("error", function () {
-                        reader.abort();
-                        reject(reader.error);
-                    });
-                    image.addEventListener("error", reject);
-                    image.addEventListener("load", function () {
-                        resolve(image);
-                    });
-                    reader.readAsDataURL(fileData);
+        async loadFile(file) {
+            let exifBytes = Promise.resolve(undefined);
+            let fileData = file;
+            if (file.type === "image/jpeg") {
+                // Extract EXIF data
+                exifBytes = ExifUtil.getExifBytesFromJpeg(file);
+                // Strip EXIF data
+                fileData = await ExifUtil.removeExifData(fileData);
+            }
+            const imageLoader = new Promise(function (resolve, reject) {
+                const reader = new FileReader();
+                const image = new Image();
+                reader.addEventListener("load", function () {
+                    image.src = reader.result;
                 });
-                const [exif, image] = yield Promise.all([exifBytes, imageLoader]);
-                return { exif, image };
+                reader.addEventListener("error", function () {
+                    reader.abort();
+                    reject(reader.error);
+                });
+                image.addEventListener("error", reject);
+                image.addEventListener("load", function () {
+                    resolve(image);
+                });
+                reader.readAsDataURL(fileData);
             });
+            const [exif, image] = await Promise.all([exifBytes, imageLoader]);
+            return { exif, image };
         }
         /**
          * Downscales an image given as File object.
          */
-        resize(image, maxWidth = this.maxWidth, maxHeight = this.maxHeight, quality = this.quality, force = false, cancelPromise) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const canvas = document.createElement("canvas");
-                if (window.createImageBitmap) {
-                    const bitmap = yield createImageBitmap(image);
-                    if (bitmap.height != image.height)
-                        throw new Error("Chrome Bug #1069965");
-                }
-                // Prevent upscaling
-                const newWidth = Math.min(maxWidth, image.width);
-                const newHeight = Math.min(maxHeight, image.height);
-                if (image.width <= newWidth && image.height <= newHeight && !force) {
-                    return undefined;
-                }
-                // Keep image ratio
-                const ratio = Math.min(newWidth / image.width, newHeight / image.height);
-                canvas.width = Math.floor(image.width * ratio);
-                canvas.height = Math.floor(image.height * ratio);
-                // Map to Pica's quality
-                let resizeQuality = 1;
-                if (quality >= 0.8) {
-                    resizeQuality = 3;
-                }
-                else if (quality >= 0.4) {
-                    resizeQuality = 2;
-                }
-                const options = {
-                    quality: resizeQuality,
-                    cancelToken: cancelPromise,
-                    alpha: true,
-                };
-                return pica.resize(image, canvas, options);
-            });
+        async resize(image, maxWidth = this.maxWidth, maxHeight = this.maxHeight, quality = this.quality, force = false, cancelPromise) {
+            const canvas = document.createElement("canvas");
+            if (window.createImageBitmap) {
+                const bitmap = await createImageBitmap(image);
+                if (bitmap.height != image.height)
+                    throw new Error("Chrome Bug #1069965");
+            }
+            // Prevent upscaling
+            const newWidth = Math.min(maxWidth, image.width);
+            const newHeight = Math.min(maxHeight, image.height);
+            if (image.width <= newWidth && image.height <= newHeight && !force) {
+                return undefined;
+            }
+            // Keep image ratio
+            const ratio = Math.min(newWidth / image.width, newHeight / image.height);
+            canvas.width = Math.floor(image.width * ratio);
+            canvas.height = Math.floor(image.height * ratio);
+            // Map to Pica's quality
+            let resizeQuality = 1;
+            if (quality >= 0.8) {
+                resizeQuality = 3;
+            }
+            else if (quality >= 0.4) {
+                resizeQuality = 2;
+            }
+            const options = {
+                quality: resizeQuality,
+                cancelToken: cancelPromise,
+                alpha: true,
+            };
+            return pica.resize(image, canvas, options);
         }
     }
     return ImageResizer;

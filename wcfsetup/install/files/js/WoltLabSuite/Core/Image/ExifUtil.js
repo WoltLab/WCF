@@ -6,15 +6,6 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Image/ExifUtil
  */
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -56,117 +47,109 @@ define(["require", "exports"], function (require, exports) {
         });
         return result;
     }
-    function blobToUint8(blob) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.addEventListener("error", () => {
-                    reader.abort();
-                    reject(reader.error);
-                });
-                reader.addEventListener("load", () => {
-                    resolve(new Uint8Array(reader.result));
-                });
-                reader.readAsArrayBuffer(blob);
+    async function blobToUint8(blob) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.addEventListener("error", () => {
+                reader.abort();
+                reject(reader.error);
             });
+            reader.addEventListener("load", () => {
+                resolve(new Uint8Array(reader.result));
+            });
+            reader.readAsArrayBuffer(blob);
         });
     }
     /**
      * Extracts the EXIF / XMP sections of a JPEG blob.
      */
-    function getExifBytesFromJpeg(blob) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!(blob instanceof Blob) && !(blob instanceof File)) {
-                throw new TypeError("The argument must be a Blob or a File");
-            }
-            const bytes = yield blobToUint8(blob);
-            let exif = new Uint8Array(0);
-            if (bytes[0] !== 0xff && bytes[1] !== Tag.SOI) {
-                throw new Error("Not a JPEG");
-            }
-            for (let i = 2; i < bytes.length;) {
-                // each sequence starts with 0xFF
-                if (bytes[i] !== 0xff)
-                    break;
-                const length = 2 + ((bytes[i + 2] << 8) | bytes[i + 3]);
-                // Check if the next byte indicates an EXIF sequence
-                if (bytes[i + 1] === Tag.APP1) {
-                    let signature = "";
-                    for (let j = i + 4; bytes[j] !== 0 && j < bytes.length; j++) {
-                        signature += String.fromCharCode(bytes[j]);
-                    }
-                    // Only copy Exif and XMP data
-                    if (isExifSignature(signature)) {
-                        // append the found EXIF sequence, usually only a single EXIF (APP1) sequence should be defined
-                        const sequence = bytes.slice(i, length + i);
-                        exif = concatUint8Arrays(exif, sequence);
-                    }
+    async function getExifBytesFromJpeg(blob) {
+        if (!(blob instanceof Blob) && !(blob instanceof File)) {
+            throw new TypeError("The argument must be a Blob or a File");
+        }
+        const bytes = await blobToUint8(blob);
+        let exif = new Uint8Array(0);
+        if (bytes[0] !== 0xff && bytes[1] !== Tag.SOI) {
+            throw new Error("Not a JPEG");
+        }
+        for (let i = 2; i < bytes.length;) {
+            // each sequence starts with 0xFF
+            if (bytes[i] !== 0xff)
+                break;
+            const length = 2 + ((bytes[i + 2] << 8) | bytes[i + 3]);
+            // Check if the next byte indicates an EXIF sequence
+            if (bytes[i + 1] === Tag.APP1) {
+                let signature = "";
+                for (let j = i + 4; bytes[j] !== 0 && j < bytes.length; j++) {
+                    signature += String.fromCharCode(bytes[j]);
                 }
-                i += length;
+                // Only copy Exif and XMP data
+                if (isExifSignature(signature)) {
+                    // append the found EXIF sequence, usually only a single EXIF (APP1) sequence should be defined
+                    const sequence = bytes.slice(i, length + i);
+                    exif = concatUint8Arrays(exif, sequence);
+                }
             }
-            return exif;
-        });
+            i += length;
+        }
+        return exif;
     }
     exports.getExifBytesFromJpeg = getExifBytesFromJpeg;
     /**
      * Removes all EXIF and XMP sections of a JPEG blob.
      */
-    function removeExifData(blob) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!(blob instanceof Blob) && !(blob instanceof File)) {
-                throw new TypeError("The argument must be a Blob or a File");
-            }
-            const bytes = yield blobToUint8(blob);
-            if (bytes[0] !== 0xff && bytes[1] !== Tag.SOI) {
-                throw new Error("Not a JPEG");
-            }
-            let result = bytes;
-            for (let i = 2; i < result.length;) {
-                // each sequence starts with 0xFF
-                if (result[i] !== 0xff)
-                    break;
-                const length = 2 + ((result[i + 2] << 8) | result[i + 3]);
-                // Check if the next byte indicates an EXIF sequence
-                if (result[i + 1] === Tag.APP1) {
-                    let signature = "";
-                    for (let j = i + 4; result[j] !== 0 && j < result.length; j++) {
-                        signature += String.fromCharCode(result[j]);
-                    }
-                    // Only remove known signatures
-                    if (isExifSignature(signature)) {
-                        const start = result.slice(0, i);
-                        const end = result.slice(i + length);
-                        result = concatUint8Arrays(start, end);
-                    }
-                    else {
-                        i += length;
-                    }
+    async function removeExifData(blob) {
+        if (!(blob instanceof Blob) && !(blob instanceof File)) {
+            throw new TypeError("The argument must be a Blob or a File");
+        }
+        const bytes = await blobToUint8(blob);
+        if (bytes[0] !== 0xff && bytes[1] !== Tag.SOI) {
+            throw new Error("Not a JPEG");
+        }
+        let result = bytes;
+        for (let i = 2; i < result.length;) {
+            // each sequence starts with 0xFF
+            if (result[i] !== 0xff)
+                break;
+            const length = 2 + ((result[i + 2] << 8) | result[i + 3]);
+            // Check if the next byte indicates an EXIF sequence
+            if (result[i + 1] === Tag.APP1) {
+                let signature = "";
+                for (let j = i + 4; result[j] !== 0 && j < result.length; j++) {
+                    signature += String.fromCharCode(result[j]);
+                }
+                // Only remove known signatures
+                if (isExifSignature(signature)) {
+                    const start = result.slice(0, i);
+                    const end = result.slice(i + length);
+                    result = concatUint8Arrays(start, end);
                 }
                 else {
                     i += length;
                 }
             }
-            return new Blob([result], { type: blob.type });
-        });
+            else {
+                i += length;
+            }
+        }
+        return new Blob([result], { type: blob.type });
     }
     exports.removeExifData = removeExifData;
     /**
      * Overrides the APP1 (EXIF / XMP) sections of a JPEG blob with the given data.
      */
-    function setExifData(blob, exif) {
-        return __awaiter(this, void 0, void 0, function* () {
-            blob = yield removeExifData(blob);
-            const bytes = yield blobToUint8(blob);
-            let offset = 2;
-            // check if the second tag is the JFIF tag
-            if (bytes[2] === 0xff && bytes[3] === Tag.APP0) {
-                offset += 2 + ((bytes[4] << 8) | bytes[5]);
-            }
-            const start = bytes.slice(0, offset);
-            const end = bytes.slice(offset);
-            const result = concatUint8Arrays(start, exif, end);
-            return new Blob([result], { type: blob.type });
-        });
+    async function setExifData(blob, exif) {
+        blob = await removeExifData(blob);
+        const bytes = await blobToUint8(blob);
+        let offset = 2;
+        // check if the second tag is the JFIF tag
+        if (bytes[2] === 0xff && bytes[3] === Tag.APP0) {
+            offset += 2 + ((bytes[4] << 8) | bytes[5]);
+        }
+        const start = bytes.slice(0, offset);
+        const end = bytes.slice(offset);
+        const result = concatUint8Arrays(start, exif, end);
+        return new Blob([result], { type: blob.type });
     }
     exports.setExifData = setExifData;
 });

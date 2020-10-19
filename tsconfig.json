@@ -5,14 +5,13 @@
   ],
   "compilerOptions": {
     "allowJs": true,
-    "target": "es2015",
+    "target": "es2017",
     "module": "amd",
     "rootDir": "wcfsetup/install/files/ts/",
     "outDir": "wcfsetup/install/files/js/",
     "lib": [
       "dom",
-      "es2015",
-      "es2017.object"
+      "es2017"
     ],
     "strictNullChecks": true,
     "moduleResolution": "node",
