@@ -52,10 +52,8 @@ class SystemCheckPage extends AbstractPage {
 	
 	public $mysqlVersions = [
 		'mysql' => [
-			// MySQL 8.0 < 8.0.14 contains a nasty bug
-			// https://bugs.mysql.com/bug.php?id=88718
 			'5' => '5.7.31',
-			'8' => '8.0.14',
+			'8' => '8.0.19',
 		],
 		'mariadb' => [
 			'10' => '10.1.44',
@@ -214,8 +212,6 @@ class SystemCheckPage extends AbstractPage {
 			$this->results['mysql']['result'] = (version_compare($compareSQLVersion, $this->mysqlVersions['mariadb']['10']) >= 0);
 		}
 		else {
-			// For MySQL 8.0, MySQL 8.0.14+ is required
-			// https://bugs.mysql.com/bug.php?id=88718
 			if ($compareSQLVersion[0] === '5') {
 				$this->results['mysql']['result'] = (version_compare($compareSQLVersion, $this->mysqlVersions['mysql']['5']) >= 0);
 			}

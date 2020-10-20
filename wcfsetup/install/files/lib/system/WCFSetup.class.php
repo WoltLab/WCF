@@ -724,17 +724,15 @@ class WCFSetup extends WCF {
 					}
 				}
 				else {
-					// MySQL 5.7.31+ or MySQL 8.0.14+ are required
-					// https://bugs.mysql.com/bug.php?id=88718
 					if ($compareSQLVersion[0] === '8') {
-						// MySQL 8.0.14+
-						if (!(version_compare($compareSQLVersion, '8.0.14') >= 0)) {
-							throw new SystemException("Insufficient MySQL version '".$compareSQLVersion."'. Version '5.7.31' or greater, or version '8.0.14' or greater is needed.");
+						// MySQL 8.0.19+
+						if (!(version_compare($compareSQLVersion, '8.0.19') >= 0)) {
+							throw new SystemException("Insufficient MySQL version '".$compareSQLVersion."'. Version '5.7.31' or greater, or version '8.0.19' or greater is needed.");
 						}
 					}
 					else if (!(version_compare($compareSQLVersion, '5.7.31') >= 0)) {
 						// MySQL 5.7.31+
-						throw new SystemException("Insufficient MySQL version '".$compareSQLVersion."'. Version '5.7.31' or greater, or version '8.0.14' or greater is needed.");
+						throw new SystemException("Insufficient MySQL version '".$compareSQLVersion."'. Version '5.7.31' or greater, or version '8.0.19' or greater is needed.");
 					}
 				}
 				
