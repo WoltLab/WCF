@@ -11,7 +11,7 @@ use wcf\util\FileUtil;
 
 /**
  * @author      Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright   2001-2020 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\Acp\Page
  * @since       5.2
@@ -83,9 +83,9 @@ class SystemCheckPage extends AbstractPage {
 	public $phpMemoryLimit = 128;
 	
 	public $phpVersions = [
-		'minimum' => '7.0.22',
-		'sufficient' => ['7.0', '7.1'],
-		'recommended' => ['7.2', '7.3', '7.4'],
+		'minimum' => '7.2.24',
+		'sufficient' => ['7.2'],
+		'recommended' => ['7.3', '7.4', '8.0'],
 	];
 	
 	public $foreignKeys = [

@@ -355,7 +355,7 @@ class WCFSetup extends WCF {
 		// php version
 		$system['phpVersion']['value'] = phpversion();
 		$comparePhpVersion = preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $system['phpVersion']['value']);
-		$system['phpVersion']['result'] = (version_compare($comparePhpVersion, '7.0.22') >= 0);
+		$system['phpVersion']['result'] = (version_compare($comparePhpVersion, '7.2.24') >= 0);
 		
 		// sql
 		$system['sql']['result'] = MySQLDatabase::isSupported();

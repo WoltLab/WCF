@@ -3,7 +3,7 @@
         "vendor-dir": "./",
         "prepend-autoloader": false,
         "platform": {
-            "php": "7.0.22",
+            "php": "7.2.24",
             "ext-gd": "0"
         }
     },

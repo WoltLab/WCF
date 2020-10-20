@@ -211,9 +211,9 @@ if (isset($_GET['language']) && in_array($_GET['language'], ['de', 'en'])) {
 	
 	<main>
 <?php
-const WSC_SRT_VERSION = '5.2.0';
+const WSC_SRT_VERSION = '5.4.0';
 $requiredExtensions = ['ctype', 'dom', 'json', 'hash', 'libxml', 'mbstring', 'pcre', 'pdo', 'pdo_mysql', 'zlib'];
-$requiredPHPVersion = '7.0.22';
+$requiredPHPVersion = '7.2.24';
 $phrases = [
 	'php_requirements' => [
 		'de' => 'PHP',
