@@ -198,7 +198,9 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
          */
         setInnerHtml(element, innerHtml) {
             element.innerHTML = innerHtml;
-            let newScript, script, scripts = element.querySelectorAll('script');
+            let newScript;
+            let script;
+            const scripts = element.querySelectorAll('script');
             for (let i = 0, length = scripts.length; i < length; i++) {
                 script = scripts[i];
                 newScript = document.createElement('script');
@@ -209,7 +211,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
                     newScript.textContent = script.textContent;
                 }
                 element.appendChild(newScript);
-                script.parentNode.removeChild(script);
+                script.remove();
             }
         },
         /**
@@ -308,7 +310,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
             while (element.childNodes.length) {
                 parent.insertBefore(element.childNodes[0], element);
             }
-            element.parentNode.removeChild(element);
+            element.remove();
         },
         /**
          * Replaces an element by moving all child nodes into the new element
@@ -323,7 +325,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
                 newElement.appendChild(oldElement.childNodes[0]);
             }
             oldElement.parentNode.insertBefore(newElement, oldElement);
-            oldElement.parentNode.removeChild(oldElement);
+            oldElement.remove();
         },
         /**
          * Returns true if given element is the most left node of the ancestor, that is
@@ -365,6 +367,44 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
          */
         show(element) {
             element.style.removeProperty('display');
+        },
+        /**
+         * Displays or removes an error message below the provided element.
+         */
+        innerError(element, errorMessage, isHtml) {
+            const parent = element.parentNode;
+            if (parent === null) {
+                throw new Error('Only elements that have a parent element or document are valid.');
+            }
+            if (typeof errorMessage !== 'string') {
+                if (!errorMessage) {
+                    errorMessage = '';
+                }
+                else {
+                    throw new TypeError('The error message must be a string; `false`, `null` or `undefined` can be used as a substitute for an empty string.');
+                }
+            }
+            let innerError = element.nextElementSibling;
+            if (innerError === null || innerError.nodeName !== 'SMALL' || !innerError.classList.contains('innerError')) {
+                if (errorMessage === '') {
+                    innerError = null;
+                }
+                else {
+                    innerError = document.createElement('small');
+                    innerError.className = 'innerError';
+                    parent.insertBefore(innerError, element.nextSibling);
+                }
+            }
+            if (errorMessage === '') {
+                if (innerError !== null) {
+                    innerError.remove();
+                    innerError = null;
+                }
+            }
+            else {
+                innerError[isHtml ? 'innerHTML' : 'textContent'] = errorMessage;
+            }
+            return innerError;
         },
     };
     // expose on window object for backward compatibility
