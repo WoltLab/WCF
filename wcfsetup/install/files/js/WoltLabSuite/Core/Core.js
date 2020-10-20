@@ -10,7 +10,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.getStoragePrefix = exports.triggerEvent = exports.serialize = exports.getUuid = exports.getType = exports.isPlainObject = exports.inherit = exports.extend = exports.convertLegacyUrl = exports.clone = void 0;
+    exports.stringToBool = exports.getStoragePrefix = exports.triggerEvent = exports.serialize = exports.getUuid = exports.getType = exports.isPlainObject = exports.inherit = exports.extend = exports.convertLegacyUrl = exports.clone = void 0;
     const _clone = function (variable) {
         if (typeof variable === 'object' && (Array.isArray(variable) || isPlainObject(variable))) {
             return _cloneObject(variable);
@@ -197,4 +197,12 @@ define(["require", "exports"], function (require, exports) {
         return _prefix;
     }
     exports.getStoragePrefix = getStoragePrefix;
+    /**
+     * Interprets a string value as a boolean value similar to the behavior of the
+     * legacy functions `elAttrBool()` and `elDataBool()`.
+     */
+    function stringToBool(value) {
+        return value === '1' || value === 'true';
+    }
+    exports.stringToBool = stringToBool;
 });

@@ -213,7 +213,9 @@ const DomUtil = {
   setInnerHtml(element: Element, innerHtml: string): void {
     element.innerHTML = innerHtml;
 
-    let newScript, script, scripts = element.querySelectorAll('script');
+    let newScript: HTMLScriptElement;
+    let script: HTMLScriptElement;
+    const scripts = element.querySelectorAll<HTMLScriptElement>('script');
     for (let i = 0, length = scripts.length; i < length; i++) {
       script = scripts[i];
       newScript = document.createElement('script');
@@ -224,7 +226,7 @@ const DomUtil = {
       }
 
       element.appendChild(newScript);
-      script.parentNode.removeChild(script);
+      script.remove();
     }
   },
 
@@ -341,7 +343,7 @@ const DomUtil = {
       parent.insertBefore(element.childNodes[0], element);
     }
 
-    element.parentNode.removeChild(element);
+    element.remove();
   },
 
   /**
@@ -359,7 +361,7 @@ const DomUtil = {
     }
 
     oldElement.parentNode.insertBefore(newElement, oldElement);
-    oldElement.parentNode.removeChild(oldElement);
+    oldElement.remove();
   },
 
   /**
@@ -408,6 +410,46 @@ const DomUtil = {
    */
   show(element: HTMLElement): void {
     element.style.removeProperty('display');
+  },
+
+  /**
+   * Displays or removes an error message below the provided element.
+   */
+  innerError(element: HTMLElement, errorMessage?: string | false | null, isHtml?: boolean): HTMLElement | null {
+    const parent = element.parentNode;
+    if (parent === null) {
+      throw new Error('Only elements that have a parent element or document are valid.');
+    }
+
+    if (typeof errorMessage !== 'string') {
+      if (!errorMessage) {
+        errorMessage = '';
+      } else {
+        throw new TypeError('The error message must be a string; `false`, `null` or `undefined` can be used as a substitute for an empty string.');
+      }
+    }
+
+    let innerError = element.nextElementSibling;
+    if (innerError === null || innerError.nodeName !== 'SMALL' || !innerError.classList.contains('innerError')) {
+      if (errorMessage === '') {
+        innerError = null;
+      } else {
+        innerError = document.createElement('small');
+        innerError.className = 'innerError';
+        parent.insertBefore(innerError, element.nextSibling);
+      }
+    }
+
+    if (errorMessage === '') {
+      if (innerError !== null) {
+        innerError.remove();
+        innerError = null;
+      }
+    } else {
+      innerError![isHtml ? 'innerHTML' : 'textContent'] = errorMessage;
+    }
+
+    return innerError as HTMLElement | null;
   },
 };
 
