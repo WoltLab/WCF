@@ -2,6 +2,7 @@
 namespace wcf\system\template\plugin;
 use wcf\system\exception\SystemException;
 use wcf\system\template\TemplateEngine;
+use wcf\system\WCF;
 
 /**
  * Template compiler plugin that prints the CSRF token ("Security Token").
@@ -21,17 +22,18 @@ class CsrfTokenFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
-		if (isset($tagArgs['type']) && $tagArgs['type'] === 'raw') {
-			return \wcf\system\WCF::getSession()->getSecurityToken();
-		}
-		else if (isset($tagArgs['type']) && $tagArgs['type'] === 'url') {
-			return \rawurlencode(\wcf\system\WCF::getSession()->getSecurityToken());
-		}
-		else if (!isset($tagArgs['type']) || $tagArgs['type'] === 'form') {
-			return sprintf('<input type="hidden" name="t" value="%s">', \wcf\system\WCF::getSession()->getSecurityToken());
-		}
-		else {
-			throw new SystemException("Invalid type '".$tagArgs['type']."' given.");
+		$token = WCF::getSession()->getSecurityToken();
+		$type = $tagArgs['type'] ?? 'form';
+		
+		switch ($type) {
+			case 'raw':
+				return $token;
+			case 'url':
+				return \rawurlencode($token);
+			case 'form':
+				return \sprintf('<input type="hidden" name="t" value="%s">', $token);
+			default:
+				throw new SystemException("Invalid type '".$type."' given.");
 		}
 	}
 }
