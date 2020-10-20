@@ -54,7 +54,7 @@ class SystemCheckPage extends AbstractPage {
 		'mysql' => [
 			// MySQL 8.0 < 8.0.14 contains a nasty bug
 			// https://bugs.mysql.com/bug.php?id=88718
-			'5' => '5.5.35',
+			'5' => '5.7.31',
 			'8' => '8.0.14',
 		],
 		'mariadb' => [
