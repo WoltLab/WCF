@@ -58,10 +58,7 @@ class SystemCheckPage extends AbstractPage {
 			'8' => '8.0.14',
 		],
 		'mariadb' => [
-			// MariaDB 5.5.47+ or 10.0.22+ are required
-			// https://jira.mariadb.org/browse/MDEV-8756
-			'5' => '5.5.47',
-			'10' => '10.0.22',
+			'10' => '10.1.44',
 		],
 	];
 	
@@ -214,13 +211,7 @@ class SystemCheckPage extends AbstractPage {
 		if (stripos($sqlVersion, 'MariaDB') !== false) {
 			$this->results['mysql']['mariadb'] = true;
 			
-			// MariaDB has some legacy version that use the major version '5'.
-			if ($compareSQLVersion[0] === '5') {
-				$this->results['mysql']['result'] = (version_compare($compareSQLVersion, $this->mysqlVersions['mariadb']['5']) >= 0);
-			}
-			else {
-				$this->results['mysql']['result'] = (version_compare($compareSQLVersion, $this->mysqlVersions['mariadb']['10']) >= 0);
-			}
+			$this->results['mysql']['result'] = (version_compare($compareSQLVersion, $this->mysqlVersions['mariadb']['10']) >= 0);
 		}
 		else {
 			// For MySQL 8.0, MySQL 8.0.14+ is required

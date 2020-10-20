@@ -719,17 +719,8 @@ class WCFSetup extends WCF {
 				$sqlVersion = $db->getVersion();
 				$compareSQLVersion = preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $sqlVersion);
 				if (stripos($sqlVersion, 'MariaDB')) {
-					// MariaDB 5.5.47+ or 10.0.22+ are required
-					// https://jira.mariadb.org/browse/MDEV-8756
-					if ($compareSQLVersion[0] === '5') {
-						// MariaDB 5.5.47+
-						if (!(version_compare($compareSQLVersion, '5.5.47') >= 0)) {
-							throw new SystemException("Insufficient MariaDB version '".$compareSQLVersion."'. Version '5.5.47' or greater, or version '10.0.22' or greater is needed.");
-						}
-					}
-					else if (!(version_compare($compareSQLVersion, '10.0.22') >= 0)) {
-						// MariaDB 10.0.22+
-						throw new SystemException("Insufficient MariaDB version '".$compareSQLVersion."'. Version '5.5.47' or greater, or version '10.0.22' or greater is needed.");
+					if (!(version_compare($compareSQLVersion, '10.1.44') >= 0)) {
+						throw new SystemException("Insufficient MariaDB version '".$compareSQLVersion."'. Version '10.1.44' or greater is needed.");
 					}
 				}
 				else {
