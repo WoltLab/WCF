@@ -10,6 +10,7 @@ declare global {
     WCF_PATH: string;
     WSC_API_URL: string;
 
+    WCF: any;
     bc_wcfDomUtil: typeof DomUtil;
     __wcf_bc_colorUtil: typeof ColorUtil;
   }
