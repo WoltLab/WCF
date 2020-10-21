@@ -41,7 +41,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	 * 
 	 * @since 5.4
 	 */
-	private static final function getPasswordHash(?string $password = null): string {
+	private static function getPasswordHash(?string $password = null): string {
 		$manager = PasswordAlgorithmManager::getInstance();
 		
 		$algorithm = $manager->getDefaultAlgorithm();
