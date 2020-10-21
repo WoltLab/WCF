@@ -24,4 +24,5 @@ jobs:
         php-version: ${{ matrix.php }}
     - uses: actions/checkout@v2
     - run: echo "::add-matcher::.github/php-syntax.json"
-    - run: find . -type f -name '*.php' -print0 |xargs -0 -P 4 -L1 php -l
+    - run: |
+        ! find . -type f -name '*.php' -exec php -l '{}' \; 2>&1 |grep -v '^No syntax errors detected'
