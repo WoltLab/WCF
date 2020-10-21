@@ -129,11 +129,11 @@ export = {
   /**
    * Opens the dialog and implicitly creates it on first usage.
    */
-  open(callbackObject: CallbackObject, html: DialogHtml): DialogData | object {
+  open(callbackObject: CallbackObject, html?: DialogHtml): DialogData | object {
     let dialogData = _dialogObjects.get(callbackObject);
     if (dialogData && Core.isPlainObject(dialogData)) {
       // dialog already exists
-      return this.openStatic(dialogData.id, html);
+      return this.openStatic(dialogData.id, typeof html === 'undefined' ? null : html);
     }
 
     // initialize a new dialog
@@ -183,7 +183,7 @@ export = {
             }
           });
         });
-        
+
         return {};
       }
     } else {
@@ -243,15 +243,14 @@ export = {
 
       if (!options.closable) options.backdropCloseOnClick = false;
       if (options.closeConfirmMessage) {
-        // TODO
-        /*
         options.onBeforeClose = id => {
-          UiConfirmation.show({
-            confirm: this.close.bind(this, id),
-            message: options.closeConfirmMessage,
+          import('./Confirmation').then(UiConfirmation => {
+            UiConfirmation.show({
+              confirm: this.close.bind(this, id),
+              message: options!.closeConfirmMessage || '',
+            });
           });
         };
-        */
       }
 
       this._createDialog(id, html, options as InternalDialogOptions, createOnly || false);

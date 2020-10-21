@@ -14,6 +14,8 @@ import * as AjaxStatus from './Status';
 import { ResponseData, RequestOptions, RequestData } from './Data';
 import * as Core from '../Core';
 import DomChangeListener from '../Dom/Change/Listener';
+import DomUtil from '../Dom/Util';
+import * as Language from '../Language';
 
 let _didInit = false;
 let _ignoreAllErrors = false;
@@ -264,14 +266,11 @@ class AjaxRequest {
       const html = this.getErrorHtml(data, xhr);
 
       if (html) {
-        // TODO
-        throw new Error('TODO: Yielding dialogs is not yet supported.');
-        /*
-        if (UiDialog === undefined) UiDialog = require('Ui/Dialog');
-        UiDialog.openStatic(DomUtil.getUniqueId(), html, {
-          title: Language.get('wcf.global.error.title'),
+        import('../Ui/Dialog').then(UiDialog => {
+          UiDialog.openStatic(DomUtil.getUniqueId(), html, {
+            title: Language.get('wcf.global.error.title'),
+          });
         });
-         */
       }
     }
 
