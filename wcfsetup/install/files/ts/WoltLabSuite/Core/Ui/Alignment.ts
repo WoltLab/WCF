@@ -159,13 +159,13 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
   if (!Array.isArray(options.pointerClassNames) || options.pointerClassNames.length !== (options.pointer ? 1 : 2)) {
     options.pointerClassNames = [];
   }
-  if (['left', 'right', 'center'].indexOf(options.horizontal) === -1) {
+  if (['left', 'right', 'center'].indexOf(options.horizontal!) === -1) {
     options.horizontal = 'left';
   }
   if (options.vertical !== 'bottom') {
     options.vertical = 'top';
   }
-  if (['both', 'horizontal', 'vertical', 'none'].indexOf(options.allowFlip) === -1) {
+  if (['both', 'horizontal', 'vertical', 'none'].indexOf(options.allowFlip!) === -1) {
     options.allowFlip = 'both';
   }
 
@@ -205,7 +205,7 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
 
   if (horizontal === null || !horizontal.result) {
     const horizontalCenter = horizontal;
-    horizontal = tryAlignmentHorizontal(options.horizontal, elDimensions, refDimensions, refOffsets, windowWidth);
+    horizontal = tryAlignmentHorizontal(options.horizontal!, elDimensions, refDimensions, refOffsets, windowWidth);
     if (!horizontal.result && (options.allowFlip === 'both' || options.allowFlip === 'horizontal')) {
       const horizontalFlipped = tryAlignmentHorizontal((options.horizontal === 'left' ? 'right' : 'left'), elDimensions, refDimensions, refOffsets, windowWidth);
       // only use these results if it fits into the boundaries, otherwise both directions exceed and we honor the demanded direction
@@ -268,20 +268,20 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
   element.style.removeProperty('visibility');
 }
 
-type AllowFlip = 'both' | 'horizontal' | 'none' | 'vertical';
+export type AllowFlip = 'both' | 'horizontal' | 'none' | 'vertical';
 
 export interface AlignmentOptions {
   // offset to reference element
-  verticalOffset: number;
+  verticalOffset?: number;
   // align the pointer element, expects .elementPointer as a direct child of given element
-  pointer: boolean;
+  pointer?: boolean;
   // use static pointer positions, expects two items: class to move it to the bottom and the second to move it to the right
-  pointerClassNames: string[];
+  pointerClassNames?: string[];
   // alternate element used to calculate dimensions
   refDimensionsElement: HTMLElement | null;
   // preferred alignment, possible values: left/right/center and top/bottom
-  horizontal: HorizontalAlignment;
-  vertical: VerticalAlignment;
+  horizontal?: HorizontalAlignment;
+  vertical?: VerticalAlignment;
   // allow flipping over axis, possible values: both, horizontal, vertical and none
-  allowFlip: AllowFlip;
+  allowFlip?: AllowFlip;
 }
