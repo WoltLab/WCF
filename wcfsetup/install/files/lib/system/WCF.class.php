@@ -40,6 +40,8 @@ use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 use wcf\util\UserUtil;
 
+// phpcs:disable PSR1.Files.SideEffects
+
 // try to set a time-limit to infinite
 @set_time_limit(0);
 

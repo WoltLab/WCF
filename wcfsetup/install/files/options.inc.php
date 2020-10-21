@@ -6,6 +6,8 @@
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
+// phpcs:disable PSR1.Files.SideEffects
+
 define('LAST_UPDATE_TIME', TIME_NOW);
 
 $prefix = 'wsc52_';
