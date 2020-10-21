@@ -1,42 +1,35 @@
 /**
  * Allows to be informed when a click event bubbled up to the document's body.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	Ui/CloseOverlay (alias)
- * @module	WoltLabSuite/Core/Ui/CloseOverlay
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  Ui/CloseOverlay (alias)
+ * @module  WoltLabSuite/Core/Ui/CloseOverlay
  */
-define(['CallbackList'], function (CallbackList) {
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+define(["require", "exports", "../CallbackList"], function (require, exports, CallbackList_1) {
     "use strict";
-    var _callbackList = new CallbackList();
-    /**
-     * @exports	WoltLabSuite/Core/Ui/CloseOverlay
-     */
-    var UiCloseOverlay = {
+    CallbackList_1 = __importDefault(CallbackList_1);
+    const _callbackList = new CallbackList_1.default();
+    const UiCloseOverlay = {
         /**
-         * Sets up global event listener for bubbled clicks events.
-         */
-        setup: function () {
-            document.body.addEventListener(WCF_CLICK_EVENT, this.execute.bind(this));
-        },
-        /**
-         * @see	WoltLabSuite/Core/CallbackList#add
+         * @see CallbackList.add
          */
         add: _callbackList.add.bind(_callbackList),
         /**
-         * @see	WoltLabSuite/Core/CallbackList#remove
+         * @see CallbackList.remove
          */
         remove: _callbackList.remove.bind(_callbackList),
         /**
          * Invokes all registered callbacks.
          */
-        execute: function () {
-            _callbackList.forEach(null, function (callback) {
-                callback();
-            });
-        }
+        execute() {
+            _callbackList.forEach(null, callback => callback());
+        },
     };
-    UiCloseOverlay.setup();
+    document.body.addEventListener('click', UiCloseOverlay.execute);
     return UiCloseOverlay;
 });
