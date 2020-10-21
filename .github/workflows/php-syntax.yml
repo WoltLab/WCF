@@ -19,7 +19,7 @@ jobs:
         - '8.0'
     steps:
     - name: Set up PHP
-      uses: shivammathur/setup-php@2.7.0
+      uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php }}
     - uses: actions/checkout@v2
