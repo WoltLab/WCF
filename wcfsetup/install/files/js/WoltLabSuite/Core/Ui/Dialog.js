@@ -105,7 +105,7 @@ define(["require", "exports", "../Core", "../Dom/Change/Listener", "./Screen", "
             window.addEventListener('resize', () => {
                 _dialogs.forEach(dialog => {
                     if (!Core.stringToBool(dialog.dialog.getAttribute('aria-hidden'))) {
-                        this.rebuild(dialog.dialog.getAttribute('data-id'));
+                        this.rebuild(dialog.dialog.dataset.id || '');
                     }
                 });
             });
@@ -113,16 +113,16 @@ define(["require", "exports", "../Core", "../Dom/Change/Listener", "./Screen", "
         _initStaticDialogs() {
             document.querySelectorAll('.jsStaticDialog').forEach(button => {
                 button.classList.remove('jsStaticDialog');
-                const id = button.getAttribute('data-dialog-id');
+                const id = button.dataset.dialogId || '';
                 if (id) {
                     const container = document.getElementById(id);
                     if (container !== null) {
                         container.classList.remove('jsStaticDialogContent');
-                        container.setAttribute('data-is-static-dialog', 'true');
+                        container.dataset.isStaticDialog = 'true';
                         Util_1.default.hide(container);
                         button.addEventListener('click', event => {
                             event.preventDefault();
-                            this.openStatic(container.id, null, { title: container.getAttribute('data-title') || '' });
+                            this.openStatic(container.id, null, { title: container.dataset.title || '' });
                         });
                     }
                 }
@@ -135,7 +135,7 @@ define(["require", "exports", "../Core", "../Dom/Change/Listener", "./Screen", "
             let dialogData = _dialogObjects.get(callbackObject);
             if (dialogData && Core.isPlainObject(dialogData)) {
                 // dialog already exists
-                return this.openStatic(dialogData.id, html);
+                return this.openStatic(dialogData.id, typeof html === 'undefined' ? null : html);
             }
             // initialize a new dialog
             if (typeof callbackObject._dialogSetup !== 'function') {
@@ -234,15 +234,14 @@ define(["require", "exports", "../Core", "../Dom/Change/Listener", "./Screen", "
                 if (!options.closable)
                     options.backdropCloseOnClick = false;
                 if (options.closeConfirmMessage) {
-                    // TODO
-                    /*
                     options.onBeforeClose = id => {
-                      UiConfirmation.show({
-                        confirm: this.close.bind(this, id),
-                        message: options.closeConfirmMessage,
-                      });
+                        new Promise((resolve_2, reject_2) => { require(['./Confirmation'], resolve_2, reject_2); }).then(__importStar).then(UiConfirmation => {
+                            UiConfirmation.show({
+                                confirm: this.close.bind(this, id),
+                                message: options.closeConfirmMessage || '',
+                            });
+                        });
                     };
-                    */
                 }
                 this._createDialog(id, html, options, createOnly || false);
             }
@@ -469,7 +468,7 @@ define(["require", "exports", "../Core", "../Dom/Change/Listener", "./Screen", "
                 if (typeof data.onShow === 'function') {
                     data.onShow(data.content);
                 }
-                if (Core.stringToBool(data.content.getAttribute('data-is-static-dialog'))) {
+                if (Core.stringToBool(data.content.dataset.isStaticDialog || '')) {
                     EventHandler.fire('com.woltlab.wcf.dialog', 'openStatic', {
                         content: data.content,
                         id: id,
@@ -696,21 +695,21 @@ define(["require", "exports", "../Core", "../Dom/Change/Listener", "./Screen", "
             for (let i = 0; i < _container.childElementCount; i++) {
                 const child = _container.children[i];
                 if (!Core.stringToBool(child.getAttribute('aria-hidden'))) {
-                    _activeDialog = child.getAttribute('data-id');
+                    _activeDialog = child.dataset.id || '';
                     break;
                 }
             }
             UiScreen.pageOverlayClose();
             if (_activeDialog === null) {
                 _container.setAttribute('aria-hidden', 'true');
-                _container.setAttribute('data-close-on-click', 'false');
+                _container.dataset.closeOnClick = 'false';
                 if (data.closable) {
                     window.removeEventListener('keyup', _keyupListener);
                 }
             }
             else {
                 data = _dialogs.get(_activeDialog);
-                _container.setAttribute('data-close-on-click', (data.backdropCloseOnClick ? 'true' : 'false'));
+                _container.dataset.closeOnClick = data.backdropCloseOnClick ? 'true' : 'false';
             }
             if (Environment.platform() !== 'desktop') {
                 UiScreen.scrollEnable();

@@ -31,11 +31,13 @@ var __importStar = (this && this.__importStar) || function (mod) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-define(["require", "exports", "./Status", "../Core", "../Dom/Change/Listener"], function (require, exports, AjaxStatus, Core, Listener_1) {
+define(["require", "exports", "./Status", "../Core", "../Dom/Change/Listener", "../Dom/Util", "../Language"], function (require, exports, AjaxStatus, Core, Listener_1, Util_1, Language) {
     "use strict";
     AjaxStatus = __importStar(AjaxStatus);
     Core = __importStar(Core);
     Listener_1 = __importDefault(Listener_1);
+    Util_1 = __importDefault(Util_1);
+    Language = __importStar(Language);
     let _didInit = false;
     let _ignoreAllErrors = false;
     /**
@@ -250,14 +252,11 @@ define(["require", "exports", "./Status", "../Core", "../Dom/Change/Listener"], 
             if (options.ignoreError !== true && showError) {
                 const html = this.getErrorHtml(data, xhr);
                 if (html) {
-                    // TODO
-                    throw new Error('TODO: Yielding dialogs is not yet supported.');
-                    /*
-                    if (UiDialog === undefined) UiDialog = require('Ui/Dialog');
-                    UiDialog.openStatic(DomUtil.getUniqueId(), html, {
-                      title: Language.get('wcf.global.error.title'),
+                    new Promise((resolve_2, reject_2) => { require(['../Ui/Dialog'], resolve_2, reject_2); }).then(__importStar).then(UiDialog => {
+                        UiDialog.openStatic(Util_1.default.getUniqueId(), html, {
+                            title: Language.get('wcf.global.error.title'),
+                        });
                     });
-                     */
                 }
             }
             this._finalize(options);
