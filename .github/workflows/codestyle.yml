@@ -1,0 +1,17 @@
+name: Code Style
+
+on:
+  push:
+    branches:
+    - "5.2"
+    - "5.3"
+    - master
+  pull_request:
+
+jobs:
+  php:
+    name: Run PHP CodeSniffer
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: chekalsky/phpcs-action@e269c2f264f400adcda7c6b24c8550302350d495
