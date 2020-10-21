@@ -1,11 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="WCF">
 	<description>WoltLab Suite Coding Standard</description>
-	<exclude-pattern>*/zend/*</exclude-pattern>
-	<exclude-pattern>*/CodeSniff/*</exclude-pattern>
-	<exclude-pattern>*/parsedown/*</exclude-pattern>
-	<exclude-pattern>*/scssphp/*</exclude-pattern>
-	<exclude-pattern>*/api/*</exclude-pattern>
 	
 	<rule ref="Generic.Classes.DuplicateClassName" />
 	<rule ref="Generic.CodeAnalysis.ForLoopShouldBeWhileLoop" />
