@@ -8,5 +8,4 @@ before_install:
   - composer global require "squizlabs/php_codesniffer=3.*"
   - phpenv rehash
 script:
-  - find . -type f -name '*.php' -not -path './wcfsetup/install/files/lib/system/api/composer/autoload_static.php' -print0 |xargs -0 -I file -P 4 php -l file > /dev/null
   - phpcs -p --extensions=php --standard="`pwd`/CodeSniff/WCF" .
