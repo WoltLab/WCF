@@ -1,128 +1,416 @@
 /**
- * Simple dropdown implementation.
+ * Simple drop-down implementation.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	Ui/SimpleDropdown (alias)
- * @module	WoltLabSuite/Core/Ui/Dropdown/Simple
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  Ui/SimpleDropdown (alias)
+ * @module  WoltLabSuite/Core/Ui/Dropdown/Simple
  */
-define(['CallbackList', 'Core', 'Dictionary', 'EventKey', 'Ui/Alignment', 'Dom/ChangeListener', 'Dom/Traverse', 'Dom/Util', 'Ui/CloseOverlay'], function (CallbackList, Core, Dictionary, EventKey, UiAlignment, DomChangeListener, DomTraverse, DomUtil, UiCloseOverlay) {
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+define(["require", "exports", "../../CallbackList", "../../Core", "../../Dom/Change/Listener", "../../Dom/Traverse", "../../Dom/Util", "../Alignment", "../CloseOverlay"], function (require, exports, CallbackList_1, Core, Listener_1, DomTraverse, Util_1, UiAlignment, CloseOverlay_1) {
     "use strict";
-    var _availableDropdowns = null;
-    var _callbacks = new CallbackList();
-    var _didInit = false;
-    var _dropdowns = new Dictionary();
-    var _menus = new Dictionary();
-    var _menuContainer = null;
-    var _callbackDropdownMenuKeyDown = null;
-    var _activeTargetId = '';
+    CallbackList_1 = __importDefault(CallbackList_1);
+    Core = __importStar(Core);
+    Listener_1 = __importDefault(Listener_1);
+    DomTraverse = __importStar(DomTraverse);
+    Util_1 = __importDefault(Util_1);
+    UiAlignment = __importStar(UiAlignment);
+    CloseOverlay_1 = __importDefault(CloseOverlay_1);
+    let _availableDropdowns;
+    const _callbacks = new CallbackList_1.default();
+    let _didInit = false;
+    const _dropdowns = new Map();
+    const _menus = new Map();
+    let _menuContainer;
+    let _activeTargetId = '';
     /**
-     * @exports	WoltLabSuite/Core/Ui/Dropdown/Simple
+     * Handles drop-down positions in overlays when scrolling in the overlay.
      */
-    return {
+    function onDialogScroll(event) {
+        const dialogContent = event.currentTarget;
+        const dropdowns = dialogContent.querySelectorAll('.dropdown.dropdownOpen');
+        for (let i = 0, length = dropdowns.length; i < length; i++) {
+            const dropdown = dropdowns[i];
+            const containerId = Util_1.default.identify(dropdown);
+            const offset = Util_1.default.offset(dropdown);
+            const dialogOffset = Util_1.default.offset(dialogContent);
+            // check if dropdown toggle is still (partially) visible
+            if (offset.top + dropdown.clientHeight <= dialogOffset.top) {
+                // top check
+                UiDropdownSimple.toggleDropdown(containerId);
+            }
+            else if (offset.top >= dialogOffset.top + dialogContent.offsetHeight) {
+                // bottom check
+                UiDropdownSimple.toggleDropdown(containerId);
+            }
+            else if (offset.left <= dialogOffset.left) {
+                // left check
+                UiDropdownSimple.toggleDropdown(containerId);
+            }
+            else if (offset.left >= dialogOffset.left + dialogContent.offsetWidth) {
+                // right check
+                UiDropdownSimple.toggleDropdown(containerId);
+            }
+            else {
+                UiDropdownSimple.setAlignment(_dropdowns.get(containerId), _menus.get(containerId));
+            }
+        }
+    }
+    /**
+     * Recalculates drop-down positions on page scroll.
+     */
+    function onScroll() {
+        _dropdowns.forEach((dropdown, containerId) => {
+            if (dropdown.classList.contains('dropdownOpen')) {
+                if (Core.stringToBool(dropdown.dataset.isOverlayDropdownButton || '')) {
+                    UiDropdownSimple.setAlignment(dropdown, _menus.get(containerId));
+                }
+                else {
+                    const menu = _menus.get(dropdown.id);
+                    if (!Core.stringToBool(menu.dataset.dropdownIgnorePageScroll || '')) {
+                        UiDropdownSimple.close(containerId);
+                    }
+                }
+            }
+        });
+    }
+    /**
+     * Notifies callbacks on status change.
+     */
+    function notifyCallbacks(containerId, action) {
+        _callbacks.forEach(containerId, callback => {
+            callback(containerId, action);
+        });
+    }
+    /**
+     * Toggles the drop-down's state between open and close.
+     */
+    function toggle(event, targetId, alternateElement, disableAutoFocus) {
+        if (event !== null) {
+            event.preventDefault();
+            event.stopPropagation();
+            const target = event.currentTarget;
+            targetId = target.dataset.target;
+            if (disableAutoFocus === undefined && event instanceof MouseEvent) {
+                disableAutoFocus = true;
+            }
+        }
+        let dropdown = _dropdowns.get(targetId);
+        let preventToggle = false;
+        if (dropdown !== undefined) {
+            let button, parent;
+            // check if the dropdown is still the same, as some components (e.g. page actions)
+            // re-create the parent of a button
+            if (event) {
+                button = event.currentTarget;
+                parent = button.parentNode;
+                if (parent !== dropdown) {
+                    parent.classList.add('dropdown');
+                    parent.id = dropdown.id;
+                    // remove dropdown class and id from old parent
+                    dropdown.classList.remove('dropdown');
+                    dropdown.id = '';
+                    dropdown = parent;
+                    _dropdowns.set(targetId, parent);
+                }
+            }
+            if (disableAutoFocus === undefined) {
+                button = dropdown.closest('.dropdownToggle');
+                if (!button) {
+                    button = dropdown.querySelector('.dropdownToggle');
+                    if (!button && dropdown.id) {
+                        button = document.querySelector('[data-target="' + dropdown.id + '"]');
+                    }
+                }
+                if (button && Core.stringToBool(button.dataset.dropdownLazyInit || '')) {
+                    disableAutoFocus = true;
+                }
+            }
+            // Repeated clicks on the dropdown button will not cause it to close, the only way
+            // to close it is by clicking somewhere else in the document or on another dropdown
+            // toggle. This is used with the search bar to prevent the dropdown from closing by
+            // setting the caret position in the search input field.
+            if (Core.stringToBool(dropdown.dataset.dropdownPreventToggle || '') && dropdown.classList.contains('dropdownOpen')) {
+                preventToggle = true;
+            }
+            // check if 'isOverlayDropdownButton' is set which indicates that the dropdown toggle is within an overlay
+            if (dropdown.dataset.isOverlayDropdownButton === '') {
+                const dialogContent = DomTraverse.parentByClass(dropdown, 'dialogContent');
+                dropdown.dataset.isOverlayDropdownButton = (dialogContent !== null) ? 'true' : 'false';
+                if (dialogContent !== null) {
+                    dialogContent.addEventListener('scroll', onDialogScroll);
+                }
+            }
+        }
+        // close all dropdowns
+        _activeTargetId = '';
+        _dropdowns.forEach((dropdown, containerId) => {
+            const menu = _menus.get(containerId);
+            let firstListItem = null;
+            if (dropdown.classList.contains('dropdownOpen')) {
+                if (!preventToggle) {
+                    dropdown.classList.remove('dropdownOpen');
+                    menu.classList.remove('dropdownOpen');
+                    const button = dropdown.querySelector('.dropdownToggle');
+                    if (button)
+                        button.setAttribute('aria-expanded', 'false');
+                    notifyCallbacks(containerId, 'close');
+                }
+                else {
+                    _activeTargetId = targetId;
+                }
+            }
+            else if (containerId === targetId && menu.childElementCount > 0) {
+                _activeTargetId = targetId;
+                dropdown.classList.add('dropdownOpen');
+                menu.classList.add('dropdownOpen');
+                const button = dropdown.querySelector('.dropdownToggle');
+                if (button)
+                    button.setAttribute('aria-expanded', 'true');
+                const list = menu.childElementCount > 0 ? menu.children[0] : null;
+                if (list && Core.stringToBool(list.dataset.scrollToActive || '')) {
+                    delete list.dataset.scrollToActive;
+                    let active = null;
+                    for (let i = 0, length = list.childElementCount; i < length; i++) {
+                        if (list.children[i].classList.contains('active')) {
+                            active = list.children[i];
+                            break;
+                        }
+                    }
+                    if (active) {
+                        list.scrollTop = Math.max((active.offsetTop + active.clientHeight) - menu.clientHeight, 0);
+                    }
+                }
+                const itemList = menu.querySelector('.scrollableDropdownMenu');
+                if (itemList !== null) {
+                    itemList.classList[(itemList.scrollHeight > itemList.clientHeight ? 'add' : 'remove')]('forceScrollbar');
+                }
+                notifyCallbacks(containerId, 'open');
+                if (!disableAutoFocus) {
+                    menu.setAttribute('role', 'menu');
+                    menu.tabIndex = -1;
+                    menu.removeEventListener('keydown', dropdownMenuKeyDown);
+                    menu.addEventListener('keydown', dropdownMenuKeyDown);
+                    menu.querySelectorAll('li').forEach(listItem => {
+                        if (!listItem.clientHeight)
+                            return;
+                        if (firstListItem === null)
+                            firstListItem = listItem;
+                        else if (listItem.classList.contains('active'))
+                            firstListItem = listItem;
+                        listItem.setAttribute('role', 'menuitem');
+                        listItem.tabIndex = -1;
+                    });
+                }
+                UiDropdownSimple.setAlignment(dropdown, menu, alternateElement);
+                if (firstListItem !== null) {
+                    firstListItem.focus();
+                }
+            }
+        });
+        window.WCF.Dropdown.Interactive.Handler.closeAll();
+        return (event === null);
+    }
+    function handleKeyDown(event) {
+        // <input> elements are not valid targets for drop-down menus. However, some developers
+        // might still decide to combine them, in which case we try not to break things even more.
+        const target = event.currentTarget;
+        if (target.nodeName === 'INPUT') {
+            return;
+        }
+        if (event.key === 'Enter' || event.key === 'Space') {
+            event.preventDefault();
+            toggle(event);
+        }
+    }
+    function dropdownMenuKeyDown(event) {
+        let button, dropdown;
+        const activeItem = document.activeElement;
+        if (activeItem.nodeName !== 'LI') {
+            return;
+        }
+        if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'End' || event.key === 'Home') {
+            event.preventDefault();
+            const listItems = Array.from(activeItem.closest('.dropdownMenu').querySelectorAll('li'));
+            if (event.key === 'ArrowUp' || event.key === 'End') {
+                listItems.reverse();
+            }
+            let newActiveItem = null;
+            const isValidItem = listItem => {
+                return !listItem.classList.contains('dropdownDivider') && listItem.clientHeight > 0;
+            };
+            let activeIndex = listItems.indexOf(activeItem);
+            if (event.key === 'End' || event.key === 'Home') {
+                activeIndex = -1;
+            }
+            for (let i = activeIndex + 1; i < listItems.length; i++) {
+                if (isValidItem(listItems[i])) {
+                    newActiveItem = listItems[i];
+                    break;
+                }
+            }
+            if (newActiveItem === null) {
+                for (let i = 0; i < listItems.length; i++) {
+                    if (isValidItem(listItems[i])) {
+                        newActiveItem = listItems[i];
+                        break;
+                    }
+                }
+            }
+            if (newActiveItem !== null) {
+                newActiveItem.focus();
+            }
+        }
+        else if (event.key === 'Enter' || event.key === 'Space') {
+            event.preventDefault();
+            let target = activeItem;
+            if (target.childElementCount === 1 && (target.children[0].nodeName === 'SPAN' || target.children[0].nodeName === 'A')) {
+                target = target.children[0];
+            }
+            dropdown = _dropdowns.get(_activeTargetId);
+            button = dropdown.querySelector('.dropdownToggle');
+            const mouseEvent = dropdown.dataset.a11yMouseEvent || 'click';
+            Core.triggerEvent(target, mouseEvent);
+            if (button)
+                button.focus();
+        }
+        else if (event.key === 'Escape' || event.key === 'Tab') {
+            event.preventDefault();
+            dropdown = _dropdowns.get(_activeTargetId);
+            button = dropdown.querySelector('.dropdownToggle');
+            // Remote controlled drop-down menus may not have a dedicated toggle button, instead the
+            // `dropdown` element itself is the button.
+            if (button === null && !dropdown.classList.contains('dropdown')) {
+                button = dropdown;
+            }
+            toggle(null, _activeTargetId);
+            if (button)
+                button.focus();
+        }
+    }
+    const UiDropdownSimple = {
         /**
          * Performs initial setup such as setting up dropdowns and binding listeners.
          */
-        setup: function () {
+        setup() {
             if (_didInit)
                 return;
             _didInit = true;
-            _menuContainer = elCreate('div');
+            _menuContainer = document.createElement('div');
             _menuContainer.className = 'dropdownMenuContainer';
             document.body.appendChild(_menuContainer);
-            _availableDropdowns = elByClass('dropdownToggle');
-            this.initAll();
-            UiCloseOverlay.add('WoltLabSuite/Core/Ui/Dropdown/Simple', this.closeAll.bind(this));
-            DomChangeListener.add('WoltLabSuite/Core/Ui/Dropdown/Simple', this.initAll.bind(this));
-            document.addEventListener('scroll', this._onScroll.bind(this));
+            _availableDropdowns = document.getElementsByClassName('dropdownToggle');
+            UiDropdownSimple.initAll();
+            CloseOverlay_1.default.add('WoltLabSuite/Core/Ui/Dropdown/Simple', UiDropdownSimple.closeAll);
+            Listener_1.default.add('WoltLabSuite/Core/Ui/Dropdown/Simple', UiDropdownSimple.initAll);
+            document.addEventListener('scroll', onScroll);
             // expose on window object for backward compatibility
             window.bc_wcfSimpleDropdown = this;
-            _callbackDropdownMenuKeyDown = this._dropdownMenuKeyDown.bind(this);
         },
         /**
          * Loops through all possible dropdowns and registers new ones.
          */
-        initAll: function () {
-            for (var i = 0, length = _availableDropdowns.length; i < length; i++) {
-                this.init(_availableDropdowns[i], false);
+        initAll() {
+            for (let i = 0, length = _availableDropdowns.length; i < length; i++) {
+                UiDropdownSimple.init(_availableDropdowns[i], false);
             }
         },
         /**
          * Initializes a dropdown.
-         *
-         * @param	{Element}	button
-         * @param	{boolean|Event}	isLazyInitialization
          */
-        init: function (button, isLazyInitialization) {
-            this.setup();
-            elAttr(button, 'role', 'button');
-            elAttr(button, 'tabindex', '0');
-            elAttr(button, 'aria-haspopup', true);
-            elAttr(button, 'aria-expanded', false);
-            if (button.classList.contains('jsDropdownEnabled') || elData(button, 'target')) {
+        init(button, isLazyInitialization) {
+            UiDropdownSimple.setup();
+            button.setAttribute('role', 'button');
+            button.tabIndex = 0;
+            button.setAttribute('aria-haspopup', 'true');
+            button.setAttribute('aria-expanded', 'false');
+            if (button.classList.contains('jsDropdownEnabled') || button.dataset.target) {
                 return false;
             }
-            var dropdown = DomTraverse.parentByClass(button, 'dropdown');
+            const dropdown = DomTraverse.parentByClass(button, 'dropdown');
             if (dropdown === null) {
-                throw new Error("Invalid dropdown passed, button '" + DomUtil.identify(button) + "' does not have a parent with .dropdown.");
+                throw new Error("Invalid dropdown passed, button '" + Util_1.default.identify(button) + "' does not have a parent with .dropdown.");
             }
-            var menu = DomTraverse.nextByClass(button, 'dropdownMenu');
+            const menu = DomTraverse.nextByClass(button, 'dropdownMenu');
             if (menu === null) {
-                throw new Error("Invalid dropdown passed, button '" + DomUtil.identify(button) + "' does not have a menu as next sibling.");
+                throw new Error("Invalid dropdown passed, button '" + Util_1.default.identify(button) + "' does not have a menu as next sibling.");
             }
             // move menu into global container
             _menuContainer.appendChild(menu);
-            var containerId = DomUtil.identify(dropdown);
+            const containerId = Util_1.default.identify(dropdown);
             if (!_dropdowns.has(containerId)) {
                 button.classList.add('jsDropdownEnabled');
-                button.addEventListener(WCF_CLICK_EVENT, this._toggle.bind(this));
-                button.addEventListener('keydown', this._handleKeyDown.bind(this));
+                button.addEventListener('click', toggle);
+                button.addEventListener('keydown', handleKeyDown);
                 _dropdowns.set(containerId, dropdown);
                 _menus.set(containerId, menu);
                 if (!containerId.match(/^wcf\d+$/)) {
-                    elData(menu, 'source', containerId);
+                    menu.dataset.source = containerId;
                 }
                 // prevent page scrolling
                 if (menu.childElementCount && menu.children[0].classList.contains('scrollableDropdownMenu')) {
-                    menu = menu.children[0];
-                    elData(menu, 'scroll-to-active', true);
-                    var menuHeight = null, menuRealHeight = null;
-                    menu.addEventListener('wheel', function (event) {
+                    const child = menu.children[0];
+                    child.dataset.scrollToActive = 'true';
+                    let menuHeight = null;
+                    let menuRealHeight = null;
+                    child.addEventListener('wheel', event => {
                         if (menuHeight === null)
-                            menuHeight = menu.clientHeight;
+                            menuHeight = child.clientHeight;
                         if (menuRealHeight === null)
-                            menuRealHeight = menu.scrollHeight;
+                            menuRealHeight = child.scrollHeight;
                         // negative value: scrolling up
-                        if (event.deltaY < 0 && menu.scrollTop === 0) {
+                        if (event.deltaY < 0 && child.scrollTop === 0) {
                             event.preventDefault();
                         }
-                        else if (event.deltaY > 0 && (menu.scrollTop + menuHeight === menuRealHeight)) {
+                        else if (event.deltaY > 0 && (child.scrollTop + menuHeight === menuRealHeight)) {
                             event.preventDefault();
                         }
                     }, { passive: false });
                 }
             }
-            elData(button, 'target', containerId);
+            button.dataset.target = containerId;
             if (isLazyInitialization) {
-                setTimeout(function () {
-                    elData(button, 'dropdown-lazy-init', (isLazyInitialization instanceof MouseEvent));
-                    Core.triggerEvent(button, WCF_CLICK_EVENT);
-                    setTimeout(function () {
-                        button.removeAttribute('data-dropdown-lazy-init');
+                setTimeout(() => {
+                    button.dataset.dropdownLazyInit = (isLazyInitialization instanceof MouseEvent) ? 'true' : 'false';
+                    Core.triggerEvent(button, 'click');
+                    setTimeout(() => {
+                        delete button.dataset.dropdownLazyInit;
                     }, 10);
                 }, 10);
             }
+            return true;
         },
         /**
          * Initializes a remote-controlled dropdown.
          *
-         * @param	{Element}	dropdown	dropdown wrapper element
-         * @param	{Element}	menu		menu list element
+         * @param  {Element}  dropdown  dropdown wrapper element
+         * @param  {Element}  menu    menu list element
          */
-        initFragment: function (dropdown, menu) {
-            this.setup();
-            var containerId = DomUtil.identify(dropdown);
+        initFragment(dropdown, menu) {
+            UiDropdownSimple.setup();
+            const containerId = Util_1.default.identify(dropdown);
             if (_dropdowns.has(containerId)) {
                 return;
             }
@@ -132,103 +420,80 @@ define(['CallbackList', 'Core', 'Dictionary', 'EventKey', 'Ui/Alignment', 'Dom/C
         },
         /**
          * Registers a callback for open/close events.
-         *
-         * @param	{string}			containerId	dropdown wrapper id
-         * @param	{function(string, string)}	callback
          */
-        registerCallback: function (containerId, callback) {
+        registerCallback(containerId, callback) {
             _callbacks.add(containerId, callback);
         },
         /**
          * Returns the requested dropdown wrapper element.
-         *
-         * @return	{Element}	dropdown wrapper element
          */
-        getDropdown: function (containerId) {
+        getDropdown(containerId) {
             return _dropdowns.get(containerId);
         },
         /**
          * Returns the requested dropdown menu list element.
-         *
-         * @return	{Element}	menu list element
          */
-        getDropdownMenu: function (containerId) {
+        getDropdownMenu(containerId) {
             return _menus.get(containerId);
         },
         /**
          * Toggles the requested dropdown between opened and closed.
-         *
-         * @param	{string}	containerId	        dropdown wrapper id
-         * @param       {Element=}      referenceElement        alternative reference element, used for reusable dropdown menus
-         * @param       {boolean=}      disableAutoFocus
          */
-        toggleDropdown: function (containerId, referenceElement, disableAutoFocus) {
-            this._toggle(null, containerId, referenceElement, disableAutoFocus);
+        toggleDropdown(containerId, referenceElement, disableAutoFocus) {
+            toggle(null, containerId, referenceElement, disableAutoFocus);
         },
         /**
          * Calculates and sets the alignment of given dropdown.
-         *
-         * @param	{Element}	dropdown	        dropdown wrapper element
-         * @param	{Element}	dropdownMenu	        menu list element
-         * @param       {Element=}      alternateElement        alternative reference element for alignment
          */
-        setAlignment: function (dropdown, dropdownMenu, alternateElement) {
+        setAlignment(dropdown, dropdownMenu, alternateElement) {
             // check if button belongs to an i18n textarea
-            var button = elBySel('.dropdownToggle', dropdown), refDimensionsElement;
-            if (button !== null && button.parentNode.classList.contains('inputAddonTextarea')) {
+            const button = dropdown.querySelector('.dropdownToggle');
+            const parent = (button !== null) ? button.parentNode : null;
+            let refDimensionsElement;
+            if (parent && parent.classList.contains('inputAddonTextarea')) {
                 refDimensionsElement = button;
             }
             UiAlignment.set(dropdownMenu, alternateElement || dropdown, {
                 pointerClassNames: ['dropdownArrowBottom', 'dropdownArrowRight'],
                 refDimensionsElement: refDimensionsElement || null,
                 // alignment
-                horizontal: (elData(dropdownMenu, 'dropdown-alignment-horizontal') === 'right') ? 'right' : 'left',
-                vertical: (elData(dropdownMenu, 'dropdown-alignment-vertical') === 'top') ? 'top' : 'bottom',
-                allowFlip: elData(dropdownMenu, 'dropdown-allow-flip') || 'both'
+                horizontal: dropdownMenu.dataset.dropdownAlignmentHorizontal === 'right' ? 'right' : 'left',
+                vertical: dropdownMenu.dataset.dropdownAlignmentVertical === 'top' ? 'top' : 'bottom',
+                allowFlip: dropdownMenu.dataset.dropdownAllowFlip || 'both',
             });
         },
         /**
          * Calculates and sets the alignment of the dropdown identified by given id.
-         *
-         * @param	{string}	containerId	dropdown wrapper id
          */
-        setAlignmentById: function (containerId) {
-            var dropdown = _dropdowns.get(containerId);
+        setAlignmentById(containerId) {
+            const dropdown = _dropdowns.get(containerId);
             if (dropdown === undefined) {
                 throw new Error("Unknown dropdown identifier '" + containerId + "'.");
             }
-            var menu = _menus.get(containerId);
-            this.setAlignment(dropdown, menu);
+            const menu = _menus.get(containerId);
+            UiDropdownSimple.setAlignment(dropdown, menu);
         },
         /**
          * Returns true if target dropdown exists and is open.
-         *
-         * @param	{string}	containerId	dropdown wrapper id
-         * @return	{boolean}	true if dropdown exists and is open
          */
-        isOpen: function (containerId) {
-            var menu = _menus.get(containerId);
+        isOpen(containerId) {
+            const menu = _menus.get(containerId);
             return (menu !== undefined && menu.classList.contains('dropdownOpen'));
         },
         /**
          * Opens the dropdown unless it is already open.
-         *
-         * @param	{string}	containerId	dropdown wrapper id
-         * @param       {boolean=}      disableAutoFocus
          */
-        open: function (containerId, disableAutoFocus) {
-            var menu = _menus.get(containerId);
+        open(containerId, disableAutoFocus) {
+            const menu = _menus.get(containerId);
             if (menu !== undefined && !menu.classList.contains('dropdownOpen')) {
-                this.toggleDropdown(containerId, undefined, disableAutoFocus);
+                UiDropdownSimple.toggleDropdown(containerId, undefined, disableAutoFocus);
             }
         },
         /**
          * Closes the dropdown identified by given id without notifying callbacks.
-         *
-         * @param	{string}	containerId	dropdown wrapper id
          */
-        close: function (containerId) {
-            var dropdown = _dropdowns.get(containerId);
+        close(containerId) {
+            const dropdown = _dropdowns.get(containerId);
             if (dropdown !== undefined) {
                 dropdown.classList.remove('dropdownOpen');
                 _menus.get(containerId).classList.remove('dropdownOpen');
@@ -237,28 +502,26 @@ define(['CallbackList', 'Core', 'Dictionary', 'EventKey', 'Ui/Alignment', 'Dom/C
         /**
          * Closes all dropdowns.
          */
-        closeAll: function () {
+        closeAll() {
             _dropdowns.forEach((function (dropdown, containerId) {
                 if (dropdown.classList.contains('dropdownOpen')) {
                     dropdown.classList.remove('dropdownOpen');
                     _menus.get(containerId).classList.remove('dropdownOpen');
-                    this._notifyCallbacks(containerId, 'close');
+                    notifyCallbacks(containerId, 'close');
                 }
             }).bind(this));
         },
         /**
          * Destroys a dropdown identified by given id.
-         *
-         * @param	{string}	containerId	dropdown wrapper id
-         * @return	{boolean}	false for unknown dropdowns
          */
-        destroy: function (containerId) {
+        destroy(containerId) {
+            var _a;
             if (!_dropdowns.has(containerId)) {
                 return false;
             }
             try {
-                this.close(containerId);
-                elRemove(_menus.get(containerId));
+                UiDropdownSimple.close(containerId);
+                (_a = _menus.get(containerId)) === null || _a === void 0 ? void 0 : _a.remove();
             }
             catch (e) {
                 // the elements might not exist anymore thus ignore all errors while cleaning up
@@ -267,281 +530,6 @@ define(['CallbackList', 'Core', 'Dictionary', 'EventKey', 'Ui/Alignment', 'Dom/C
             _dropdowns.delete(containerId);
             return true;
         },
-        /**
-         * Handles dropdown positions in overlays when scrolling in the overlay.
-         *
-         * @param	{Event}		event	event object
-         */
-        _onDialogScroll: function (event) {
-            var dialogContent = event.currentTarget;
-            //noinspection JSCheckFunctionSignatures
-            var dropdowns = elBySelAll('.dropdown.dropdownOpen', dialogContent);
-            for (var i = 0, length = dropdowns.length; i < length; i++) {
-                var dropdown = dropdowns[i];
-                var containerId = DomUtil.identify(dropdown);
-                var offset = DomUtil.offset(dropdown);
-                var dialogOffset = DomUtil.offset(dialogContent);
-                // check if dropdown toggle is still (partially) visible
-                if (offset.top + dropdown.clientHeight <= dialogOffset.top) {
-                    // top check
-                    this.toggleDropdown(containerId);
-                }
-                else if (offset.top >= dialogOffset.top + dialogContent.offsetHeight) {
-                    // bottom check
-                    this.toggleDropdown(containerId);
-                }
-                else if (offset.left <= dialogOffset.left) {
-                    // left check
-                    this.toggleDropdown(containerId);
-                }
-                else if (offset.left >= dialogOffset.left + dialogContent.offsetWidth) {
-                    // right check
-                    this.toggleDropdown(containerId);
-                }
-                else {
-                    this.setAlignment(_dropdowns.get(containerId), _menus.get(containerId));
-                }
-            }
-        },
-        /**
-         * Recalculates dropdown positions on page scroll.
-         */
-        _onScroll: function () {
-            _dropdowns.forEach((function (dropdown, containerId) {
-                if (dropdown.classList.contains('dropdownOpen')) {
-                    if (elDataBool(dropdown, 'is-overlay-dropdown-button')) {
-                        this.setAlignment(dropdown, _menus.get(containerId));
-                    }
-                    else {
-                        var menu = _menus.get(dropdown.id);
-                        if (!elDataBool(menu, 'dropdown-ignore-page-scroll')) {
-                            this.close(containerId);
-                        }
-                    }
-                }
-            }).bind(this));
-        },
-        /**
-         * Notifies callbacks on status change.
-         *
-         * @param	{string}	containerId	dropdown wrapper id
-         * @param	{string}	action		can be either 'open' or 'close'
-         */
-        _notifyCallbacks: function (containerId, action) {
-            _callbacks.forEach(containerId, function (callback) {
-                callback(containerId, action);
-            });
-        },
-        /**
-         * Toggles the dropdown's state between open and close.
-         *
-         * @param	{?Event}	event		        event object, should be 'null' if targetId is given
-         * @param	{string?}	targetId	        dropdown wrapper id
-         * @param       {Element=}      alternateElement        alternative reference element for alignment
-         * @param       {boolean=}      disableAutoFocus
-         * @return	{boolean}	'false' if event is not null
-         */
-        _toggle: function (event, targetId, alternateElement, disableAutoFocus) {
-            if (event !== null) {
-                event.preventDefault();
-                event.stopPropagation();
-                //noinspection JSCheckFunctionSignatures
-                targetId = elData(event.currentTarget, 'target');
-                if (disableAutoFocus === undefined && event instanceof MouseEvent) {
-                    disableAutoFocus = true;
-                }
-            }
-            var dropdown = _dropdowns.get(targetId), preventToggle = false;
-            if (dropdown !== undefined) {
-                var button, parent;
-                // check if the dropdown is still the same, as some components (e.g. page actions)
-                // re-create the parent of a button
-                if (event) {
-                    button = event.currentTarget;
-                    parent = button.parentNode;
-                    if (parent !== dropdown) {
-                        parent.classList.add('dropdown');
-                        parent.id = dropdown.id;
-                        // remove dropdown class and id from old parent
-                        dropdown.classList.remove('dropdown');
-                        dropdown.id = '';
-                        dropdown = parent;
-                        _dropdowns.set(targetId, parent);
-                    }
-                }
-                if (disableAutoFocus === undefined) {
-                    button = dropdown.closest('.dropdownToggle');
-                    if (!button) {
-                        button = elBySel('.dropdownToggle', dropdown);
-                        if (!button && dropdown.id) {
-                            button = elBySel('[data-target="' + dropdown.id + '"]');
-                        }
-                    }
-                    if (button && elDataBool(button, 'dropdown-lazy-init')) {
-                        disableAutoFocus = true;
-                    }
-                }
-                // Repeated clicks on the dropdown button will not cause it to close, the only way
-                // to close it is by clicking somewhere else in the document or on another dropdown
-                // toggle. This is used with the search bar to prevent the dropdown from closing by
-                // setting the caret position in the search input field.
-                if (elDataBool(dropdown, 'dropdown-prevent-toggle') && dropdown.classList.contains('dropdownOpen')) {
-                    preventToggle = true;
-                }
-                // check if 'isOverlayDropdownButton' is set which indicates that the dropdown toggle is within an overlay
-                if (elData(dropdown, 'is-overlay-dropdown-button') === '') {
-                    var dialogContent = DomTraverse.parentByClass(dropdown, 'dialogContent');
-                    elData(dropdown, 'is-overlay-dropdown-button', (dialogContent !== null));
-                    if (dialogContent !== null) {
-                        dialogContent.addEventListener('scroll', this._onDialogScroll.bind(this));
-                    }
-                }
-            }
-            // close all dropdowns
-            _activeTargetId = '';
-            _dropdowns.forEach((function (dropdown, containerId) {
-                var menu = _menus.get(containerId);
-                if (dropdown.classList.contains('dropdownOpen')) {
-                    if (preventToggle === false) {
-                        dropdown.classList.remove('dropdownOpen');
-                        menu.classList.remove('dropdownOpen');
-                        var button = elBySel('.dropdownToggle', dropdown);
-                        if (button)
-                            elAttr(button, 'aria-expanded', false);
-                        this._notifyCallbacks(containerId, 'close');
-                    }
-                    else {
-                        _activeTargetId = targetId;
-                    }
-                }
-                else if (containerId === targetId && menu.childElementCount > 0) {
-                    _activeTargetId = targetId;
-                    dropdown.classList.add('dropdownOpen');
-                    menu.classList.add('dropdownOpen');
-                    var button = elBySel('.dropdownToggle', dropdown);
-                    if (button)
-                        elAttr(button, 'aria-expanded', true);
-                    if (menu.childElementCount && elDataBool(menu.children[0], 'scroll-to-active')) {
-                        var list = menu.children[0];
-                        list.removeAttribute('data-scroll-to-active');
-                        var active = null;
-                        for (var i = 0, length = list.childElementCount; i < length; i++) {
-                            if (list.children[i].classList.contains('active')) {
-                                active = list.children[i];
-                                break;
-                            }
-                        }
-                        if (active) {
-                            list.scrollTop = Math.max((active.offsetTop + active.clientHeight) - menu.clientHeight, 0);
-                        }
-                    }
-                    var itemList = elBySel('.scrollableDropdownMenu', menu);
-                    if (itemList !== null) {
-                        itemList.classList[(itemList.scrollHeight > itemList.clientHeight ? 'add' : 'remove')]('forceScrollbar');
-                    }
-                    this._notifyCallbacks(containerId, 'open');
-                    var firstListItem = null;
-                    if (!disableAutoFocus) {
-                        elAttr(menu, 'role', 'menu');
-                        elAttr(menu, 'tabindex', -1);
-                        menu.removeEventListener('keydown', _callbackDropdownMenuKeyDown);
-                        menu.addEventListener('keydown', _callbackDropdownMenuKeyDown);
-                        elBySelAll('li', menu, function (listItem) {
-                            if (!listItem.clientHeight)
-                                return;
-                            if (firstListItem === null)
-                                firstListItem = listItem;
-                            else if (listItem.classList.contains('active'))
-                                firstListItem = listItem;
-                            elAttr(listItem, 'role', 'menuitem');
-                            elAttr(listItem, 'tabindex', -1);
-                        });
-                    }
-                    this.setAlignment(dropdown, menu, alternateElement);
-                    if (firstListItem !== null) {
-                        firstListItem.focus();
-                    }
-                }
-            }).bind(this));
-            //noinspection JSDeprecatedSymbols
-            window.WCF.Dropdown.Interactive.Handler.closeAll();
-            return (event === null);
-        },
-        _handleKeyDown: function (event) {
-            // <input> elements are not valid targets for drop-down menus. However, some developers
-            // might still decide to combine them, in which case we try not to break things even more.
-            if (event.currentTarget.nodeName === 'INPUT') {
-                return;
-            }
-            if (EventKey.Enter(event) || EventKey.Space(event)) {
-                event.preventDefault();
-                this._toggle(event);
-            }
-        },
-        _dropdownMenuKeyDown: function (event) {
-            var button, dropdown;
-            var activeItem = document.activeElement;
-            if (activeItem.nodeName !== 'LI') {
-                return;
-            }
-            if (EventKey.ArrowDown(event) || EventKey.ArrowUp(event) || EventKey.End(event) || EventKey.Home(event)) {
-                event.preventDefault();
-                var listItems = Array.prototype.slice.call(elBySelAll('li', activeItem.closest('.dropdownMenu')));
-                if (EventKey.ArrowUp(event) || EventKey.End(event)) {
-                    listItems.reverse();
-                }
-                var newActiveItem = null;
-                var isValidItem = function (listItem) {
-                    return !listItem.classList.contains('dropdownDivider') && listItem.clientHeight > 0;
-                };
-                var activeIndex = listItems.indexOf(activeItem);
-                if (EventKey.End(event) || EventKey.Home(event)) {
-                    activeIndex = -1;
-                }
-                for (var i = activeIndex + 1; i < listItems.length; i++) {
-                    if (isValidItem(listItems[i])) {
-                        newActiveItem = listItems[i];
-                        break;
-                    }
-                }
-                if (newActiveItem === null) {
-                    for (i = 0; i < listItems.length; i++) {
-                        if (isValidItem(listItems[i])) {
-                            newActiveItem = listItems[i];
-                            break;
-                        }
-                    }
-                }
-                newActiveItem.focus();
-            }
-            else if (EventKey.Enter(event) || EventKey.Space(event)) {
-                event.preventDefault();
-                var target = activeItem;
-                if (target.childElementCount === 1 && (target.children[0].nodeName === 'SPAN' || target.children[0].nodeName === 'A')) {
-                    target = target.children[0];
-                }
-                dropdown = _dropdowns.get(_activeTargetId);
-                button = elBySel('.dropdownToggle', dropdown);
-                require(['Core'], function (Core) {
-                    var mouseEvent = elData(dropdown, 'a11y-mouse-event') || 'click';
-                    Core.triggerEvent(target, mouseEvent);
-                    if (button)
-                        button.focus();
-                });
-            }
-            else if (EventKey.Escape(event) || EventKey.Tab(event)) {
-                event.preventDefault();
-                dropdown = _dropdowns.get(_activeTargetId);
-                button = elBySel('.dropdownToggle', dropdown);
-                // Remote controlled drop-down menus may not have a dedicated toggle button, instead the
-                // `dropdown` element itself is the button.
-                if (button === null && !dropdown.classList.contains('dropdown')) {
-                    button = dropdown;
-                }
-                this._toggle(null, _activeTargetId);
-                if (button)
-                    button.focus();
-            }
-        }
     };
+    return UiDropdownSimple;
 });
