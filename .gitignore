@@ -59,4 +59,4 @@ nbactions.xml
 *.tar.gz
 
 # Node.js
-extra/node_modules
+node_modules/
