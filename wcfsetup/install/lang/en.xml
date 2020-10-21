@@ -2671,7 +2671,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.systemCheck.php.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.systemCheck.php.version.description"><![CDATA[PHP {$phpVersions[minimum]} or newer is required, the following PHP series are strongly recommended: {implode from=$phpVersions[recommended] item=$recommended}{$recommended}{/implode}.]]></item>
 		<item name="wcf.acp.systemCheck.mysql.version"><![CDATA[MySQL]]></item>
-		<item name="wcf.acp.systemCheck.mysql.version.description"><![CDATA[MySQL {$mysqlVersions[mysql][5]} or MySQL {$mysqlVersions[mysql][8]} or MariaDB {$mysqlVersions[mariadb][5]} or MariaDB {$mysqlVersions[mariadb][10]} are required at minimum, but it’s strongly recommended to always use the latest available version.]]></item>
+		<item name="wcf.acp.systemCheck.mysql.version.description"><![CDATA[MySQL {$mysqlVersions[mysql][5]} or MySQL {$mysqlVersions[mysql][8]} or MariaDB {$mysqlVersions[mariadb][10]} are required at minimum, but it’s strongly recommended to always use the latest available version.]]></item>
 		<item name="wcf.acp.systemCheck.mysql.foreignKeys"><![CDATA[Foreign Keys]]></item>
 		<item name="wcf.acp.systemCheck.mysql.foreignKeys.description"><![CDATA[Foreign Keys are created with the installation and are required for the software to work.]]></item>
 		<item name="wcf.acp.systemCheck.mysql.searchEngine"><![CDATA[Search]]></item>

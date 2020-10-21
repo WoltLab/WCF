@@ -110,7 +110,7 @@ final class DirectoryUtil {
 	/**
 	 * @see	\wcf\util\DirectoryUtil::getInstance()
 	 */
-	private final function __clone() {
+	private function __clone() {
 		// does nothing
 	}
 	

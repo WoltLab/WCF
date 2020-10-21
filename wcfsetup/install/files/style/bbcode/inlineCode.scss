@@ -25,6 +25,13 @@ kbd {
 	vertical-align: middle;
 	word-break: break-all;
 	word-wrap: break-word;
+	
+	@include screen-sm-down {
+		/* Reduce the padding to prevent pixel rounding errors in the font rendering that
+		   can cause the page to display a horizontal scrollbar when <kbd> appears at the
+		   edge of the content container. */
+		padding: 0 3px;
+	}
 }
 
 @supports (-webkit-overflow-scrolling: touch) {

@@ -1,0 +1,30 @@
+name: PHP Syntax Check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php:
+        - '7.2'
+        - '7.3'
+        - '7.4'
+        - '8.0'
+    steps:
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php }}
+    - uses: actions/checkout@v2
+    - run: echo "::add-matcher::.github/php-syntax.json"
+    - name: Remove files to be ignored
+      run: |
+        rm wcfsetup/install/files/lib/system/api/ezyang/htmlpurifier/library/HTMLPurifier.autoload-legacy.php
+        rm wcfsetup/install/files/lib/system/api/ezyang/htmlpurifier/extras/HTMLPurifierExtras.autoload-legacy.php
+    - run: |
+        ! find . -type f -name '*.php' -exec php -l '{}' \; 2>&1 |grep -v '^No syntax errors detected'

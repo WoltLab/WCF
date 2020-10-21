@@ -355,7 +355,7 @@ class WCFSetup extends WCF {
 		// php version
 		$system['phpVersion']['value'] = phpversion();
 		$comparePhpVersion = preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $system['phpVersion']['value']);
-		$system['phpVersion']['result'] = (version_compare($comparePhpVersion, '7.0.22') >= 0);
+		$system['phpVersion']['result'] = (version_compare($comparePhpVersion, '7.2.24') >= 0);
 		
 		// sql
 		$system['sql']['result'] = MySQLDatabase::isSupported();
@@ -707,7 +707,7 @@ class WCFSetup extends WCF {
 						
 						// work-around for older MySQL versions that don't know utf8mb4
 						case 1115:
-							throw new SystemException("Insufficient MySQL version. Version '5.5.35' or greater is needed.");
+							throw new SystemException("Insufficient MySQL version. Version '5.7.31' or greater is needed.");
 							break;
 							
 						default:
@@ -719,31 +719,20 @@ class WCFSetup extends WCF {
 				$sqlVersion = $db->getVersion();
 				$compareSQLVersion = preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $sqlVersion);
 				if (stripos($sqlVersion, 'MariaDB')) {
-					// MariaDB 5.5.47+ or 10.0.22+ are required
-					// https://jira.mariadb.org/browse/MDEV-8756
-					if ($compareSQLVersion[0] === '5') {
-						// MariaDB 5.5.47+
-						if (!(version_compare($compareSQLVersion, '5.5.47') >= 0)) {
-							throw new SystemException("Insufficient MariaDB version '".$compareSQLVersion."'. Version '5.5.47' or greater, or version '10.0.22' or greater is needed.");
-						}
-					}
-					else if (!(version_compare($compareSQLVersion, '10.0.22') >= 0)) {
-						// MariaDB 10.0.22+
-						throw new SystemException("Insufficient MariaDB version '".$compareSQLVersion."'. Version '5.5.47' or greater, or version '10.0.22' or greater is needed.");
+					if (!(version_compare($compareSQLVersion, '10.1.44') >= 0)) {
+						throw new SystemException("Insufficient MariaDB version '".$compareSQLVersion."'. Version '10.1.44' or greater is needed.");
 					}
 				}
 				else {
-					// MySQL 5.5.35+ or MySQL 8.0.14+ are required
-					// https://bugs.mysql.com/bug.php?id=88718
 					if ($compareSQLVersion[0] === '8') {
-						// MySQL 8.0.14+
-						if (!(version_compare($compareSQLVersion, '8.0.14') >= 0)) {
-							throw new SystemException("Insufficient MySQL version '".$compareSQLVersion."'. Version '5.5.35' or greater, or version '8.0.14' or greater is needed.");
+						// MySQL 8.0.19+
+						if (!(version_compare($compareSQLVersion, '8.0.19') >= 0)) {
+							throw new SystemException("Insufficient MySQL version '".$compareSQLVersion."'. Version '5.7.31' or greater, or version '8.0.19' or greater is needed.");
 						}
 					}
-					else if (!(version_compare($compareSQLVersion, '5.5.35') >= 0)) {
-						// MySQL 5.5.35+
-						throw new SystemException("Insufficient MySQL version '".$compareSQLVersion."'. Version '5.5.35' or greater, or version '8.0.14' or greater is needed.");
+					else if (!(version_compare($compareSQLVersion, '5.7.31') >= 0)) {
+						// MySQL 5.7.31+
+						throw new SystemException("Insufficient MySQL version '".$compareSQLVersion."'. Version '5.7.31' or greater, or version '8.0.19' or greater is needed.");
 					}
 				}
 				

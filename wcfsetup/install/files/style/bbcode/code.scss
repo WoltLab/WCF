@@ -152,6 +152,11 @@
 	top: -30px; /* see wsc31.scss */
 }
 
+.dialogContent .codeBox .codeBoxHeader {
+	/* Prevent the header being sticky inside dialogs, which doesn't really work.  */
+	position: static;
+}
+
 
 /* PrismJS 1.15.0
 https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript&plugins=autoloader */

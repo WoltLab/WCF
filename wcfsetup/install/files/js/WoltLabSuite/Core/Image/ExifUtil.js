@@ -32,6 +32,11 @@ define([], function() {
 	// Known sequence signatures
 	var _signatureEXIF = 'Exif';
 	var _signatureXMP  = 'http://ns.adobe.com/xap/1.0/';
+	var _signatureXMPExtension = 'http://ns.adobe.com/xmp/extension/';
+	
+	function isExifSignature(signature) {
+		return signature === _signatureEXIF || signature === _signatureXMP || signature === _signatureXMPExtension;
+	}
 	
 	return {
 		/**
@@ -76,7 +81,7 @@ define([], function() {
 							}
 							
 							// Only copy Exif and XMP data
-							if (signature === _signatureEXIF || signature === _signatureXMP) {
+							if (isExifSignature(signature)) {
 								// append the found EXIF sequence, usually only a single EXIF (APP1) sequence should be defined
 								var sequence = Array.prototype.slice.call(bytes, i, length + i); // IE11 does not have slice in the Uint8Array prototype
 								var concat = new Uint8Array(exif.length + sequence.length);
@@ -137,13 +142,16 @@ define([], function() {
 								signature += String.fromCharCode(bytes[j]);
 							}
 							
-							// Only remove Exif and XMP data
-							if (signature === _signatureEXIF || signature === _signatureXMP) {
+							// Only remove known signatures
+							if (isExifSignature(signature)) {
 								var start = Array.prototype.slice.call(bytes, 0, i);
 								var end = Array.prototype.slice.call(bytes, i + length);
 								bytes = new Uint8Array(start.length + end.length);
 								bytes.set(start, 0);
 								bytes.set(end, start.length);
+							}
+							else {
+								i += length;
 							}
 						}
 						else {

@@ -3,7 +3,7 @@
         "vendor-dir": "./",
         "prepend-autoloader": false,
         "platform": {
-            "php": "7.0.22",
+            "php": "7.2.24",
             "ext-gd": "0"
         }
     },
@@ -15,13 +15,6 @@
         "true/punycode": "~2.0",
         "pear/net_idna2": "^0.2.0",
         "scssphp/scssphp": "^1.1",
-        "guzzlehttp/guzzle": "dev-6.5-windows"
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/WoltLab/guzzle",
-            "no-api": true
-        }
-    ]
+        "guzzlehttp/guzzle": "^7.2"
+    }
 }
