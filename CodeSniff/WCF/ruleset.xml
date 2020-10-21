@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="WCF">
 	<description>WoltLab Suite Coding Standard</description>
-	<exclude-pattern>*/CodeSniff/*</exclude-pattern>
-	<exclude-pattern>*/api/*</exclude-pattern>
 	
 	<rule ref="Generic.Arrays.DisallowLongArraySyntax" />
 	<rule ref="Generic.Classes.DuplicateClassName" />

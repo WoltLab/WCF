@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ruleset>
+	<file>wcfsetup/</file>
+	<exclude-pattern>lib/system/api/*</exclude-pattern>
+	<arg name="extensions" value="php" />
+	<arg value="p"/>
+	<arg name="basepath" value="."/>
+
+	<rule ref="./CodeSniff/WCF/ruleset.xml"/>
+</ruleset>
