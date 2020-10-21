@@ -22,6 +22,8 @@ use Zend\Console\Exception\RuntimeException as ArgvException;
 use Zend\Console\Getopt as ArgvParser;
 use Zend\Loader\StandardAutoloader as ZendLoader;
 
+// phpcs:disable PSR1.Files.SideEffects
+
 // set exception handler
 set_exception_handler([CLIWCF::class, 'handleCLIException']);
 

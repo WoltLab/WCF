@@ -429,7 +429,7 @@ class GDImageAdapter implements IImageAdapter {
 	 * @param	integer		$pct		opacity percent
 	 * @return	boolean
 	 */
-	private function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct) {
+	private function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct) { // phpcs:ignore
 		if (!isset($pct)) {
 			return false;
 		}

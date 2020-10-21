@@ -10,4 +10,4 @@ namespace wcf\system\option;
  * @package	WoltLabSuite\Core\System\Option
  * @since	5.2
  */
-interface II18nOptionType {};
+interface II18nOptionType {}

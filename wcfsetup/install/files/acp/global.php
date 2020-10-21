@@ -5,6 +5,9 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core
  */
+
+// phpcs:disable PSR1.Files.SideEffects
+
 // Constant to get relative path to the wcf-root-dir.
 // This constant is already set in each package which got an own config.inc.php
 if (!defined('RELATIVE_WCF_DIR')) define('RELATIVE_WCF_DIR', '../');
