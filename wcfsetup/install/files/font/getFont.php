@@ -11,6 +11,8 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
+// phpcs:disable PSR1.Files.SideEffects
+
 // list of known font types
 $types = [
 	'eot' => 'application/vnd.ms-fontobject',

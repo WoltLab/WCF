@@ -2,6 +2,10 @@ name: PHP Syntax Check
 
 on:
   push:
+    branches:
+    - "5.2"
+    - "5.3"
+    - master
   pull_request:
 
 jobs:
