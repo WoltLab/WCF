@@ -11,7 +11,7 @@ use wcf\util\FileUtil;
 
 /**
  * @author      Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright   2001-2020 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\Acp\Page
  * @since       5.2
@@ -52,16 +52,11 @@ class SystemCheckPage extends AbstractPage {
 	
 	public $mysqlVersions = [
 		'mysql' => [
-			// MySQL 8.0 < 8.0.14 contains a nasty bug
-			// https://bugs.mysql.com/bug.php?id=88718
-			'5' => '5.5.35',
-			'8' => '8.0.14',
+			'5' => '5.7.31',
+			'8' => '8.0.19',
 		],
 		'mariadb' => [
-			// MariaDB 5.5.47+ or 10.0.22+ are required
-			// https://jira.mariadb.org/browse/MDEV-8756
-			'5' => '5.5.47',
-			'10' => '10.0.22',
+			'10' => '10.1.44',
 		],
 	];
 	
@@ -83,9 +78,9 @@ class SystemCheckPage extends AbstractPage {
 	public $phpMemoryLimit = 128;
 	
 	public $phpVersions = [
-		'minimum' => '7.0.22',
-		'sufficient' => ['7.0', '7.1'],
-		'recommended' => ['7.2', '7.3', '7.4'],
+		'minimum' => '7.2.24',
+		'sufficient' => ['7.2'],
+		'recommended' => ['7.3', '7.4', '8.0'],
 	];
 	
 	public $foreignKeys = [
@@ -214,17 +209,9 @@ class SystemCheckPage extends AbstractPage {
 		if (stripos($sqlVersion, 'MariaDB') !== false) {
 			$this->results['mysql']['mariadb'] = true;
 			
-			// MariaDB has some legacy version that use the major version '5'.
-			if ($compareSQLVersion[0] === '5') {
-				$this->results['mysql']['result'] = (version_compare($compareSQLVersion, $this->mysqlVersions['mariadb']['5']) >= 0);
-			}
-			else {
-				$this->results['mysql']['result'] = (version_compare($compareSQLVersion, $this->mysqlVersions['mariadb']['10']) >= 0);
-			}
+			$this->results['mysql']['result'] = (version_compare($compareSQLVersion, $this->mysqlVersions['mariadb']['10']) >= 0);
 		}
 		else {
-			// For MySQL 8.0, MySQL 8.0.14+ is required
-			// https://bugs.mysql.com/bug.php?id=88718
 			if ($compareSQLVersion[0] === '5') {
 				$this->results['mysql']['result'] = (version_compare($compareSQLVersion, $this->mysqlVersions['mysql']['5']) >= 0);
 			}
