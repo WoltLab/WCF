@@ -98,28 +98,28 @@ export = {
     window.addEventListener('resize', () => {
       _dialogs.forEach(dialog => {
         if (!Core.stringToBool(dialog.dialog.getAttribute('aria-hidden'))) {
-          this.rebuild(dialog.dialog.getAttribute('data-id')!);
+          this.rebuild(dialog.dialog.dataset.id || '');
         }
       });
     });
   },
 
   _initStaticDialogs(): void {
-    document.querySelectorAll('.jsStaticDialog').forEach(button => {
+    document.querySelectorAll<HTMLElement>('.jsStaticDialog').forEach(button => {
       button.classList.remove('jsStaticDialog');
 
-      const id = button.getAttribute('data-dialog-id');
+      const id = button.dataset.dialogId || '';
       if (id) {
         const container = document.getElementById(id);
         if (container !== null) {
           container.classList.remove('jsStaticDialogContent');
-          container.setAttribute('data-is-static-dialog', 'true');
+          container.dataset.isStaticDialog = 'true';
           DomUtil.hide(container);
 
           button.addEventListener('click', event => {
             event.preventDefault();
 
-            this.openStatic(container.id, null, {title: container.getAttribute('data-title') || ''});
+            this.openStatic(container.id, null, {title: container.dataset.title || ''});
           });
         }
       }
@@ -516,7 +516,7 @@ export = {
         data.onShow(data.content);
       }
 
-      if (Core.stringToBool(data.content.getAttribute('data-is-static-dialog'))) {
+      if (Core.stringToBool(data.content.dataset.isStaticDialog || '')) {
         EventHandler.fire('com.woltlab.wcf.dialog', 'openStatic', {
           content: data.content,
           id: id,
@@ -785,9 +785,9 @@ export = {
     // get next active dialog
     _activeDialog = null;
     for (let i = 0; i < _container.childElementCount; i++) {
-      const child = _container.children[i];
+      const child = _container.children[i] as HTMLElement;
       if (!Core.stringToBool(child.getAttribute('aria-hidden'))) {
-        _activeDialog = child.getAttribute('data-id');
+        _activeDialog = child.dataset.id || '';
         break;
       }
     }
@@ -796,14 +796,14 @@ export = {
 
     if (_activeDialog === null) {
       _container.setAttribute('aria-hidden', 'true');
-      _container.setAttribute('data-close-on-click', 'false');
+      _container.dataset.closeOnClick = 'false';
 
       if (data.closable) {
         window.removeEventListener('keyup', _keyupListener);
       }
     } else {
       data = _dialogs.get(_activeDialog) as DialogData;
-      _container.setAttribute('data-close-on-click', (data.backdropCloseOnClick ? 'true' : 'false'));
+      _container.dataset.closeOnClick = data.backdropCloseOnClick ? 'true' : 'false';
     }
 
     if (Environment.platform() !== 'desktop') {
