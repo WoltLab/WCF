@@ -278,7 +278,7 @@ export interface AlignmentOptions {
   // use static pointer positions, expects two items: class to move it to the bottom and the second to move it to the right
   pointerClassNames?: string[];
   // alternate element used to calculate dimensions
-  refDimensionsElement: HTMLElement | null;
+  refDimensionsElement?: HTMLElement | null;
   // preferred alignment, possible values: left/right/center and top/bottom
   horizontal?: HorizontalAlignment;
   vertical?: VerticalAlignment;
