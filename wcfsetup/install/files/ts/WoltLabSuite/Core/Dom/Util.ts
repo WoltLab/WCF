@@ -292,10 +292,12 @@ const DomUtil = {
    * Retrieves all data attributes from target element, optionally allowing for
    * a custom prefix that serves two purposes: First it will restrict the results
    * for items starting with it and second it will remove that prefix.
+   * 
+   * @deprecated 5.4 Use `element.dataset` instead.
    */
   getDataAttributes(element: Element, prefix?: string, camelCaseName?: boolean, idToUpperCase?: boolean): DataAttributes {
     prefix = prefix || '';
-    if (!/^data-/.test(prefix)) prefix = 'data-' + prefix;
+    if (prefix.indexOf('data-') !== 0) prefix = 'data-' + prefix;
     camelCaseName = (camelCaseName === true);
     idToUpperCase = (idToUpperCase === true);
 
