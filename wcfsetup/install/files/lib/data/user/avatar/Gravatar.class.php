@@ -1,9 +1,10 @@
 <?php
 namespace wcf\data\user\avatar;
-use wcf\system\exception\SystemException;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Psr7\Request;
+use wcf\system\io\HttpFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 
 /**
  * Represents a gravatar.
@@ -98,13 +99,20 @@ class Gravatar extends DefaultAvatar {
 	 */
 	public static function test($email) {
 		$gravatarURL = sprintf(self::GRAVATAR_BASE, md5(mb_strtolower($email)), 80, GRAVATAR_DEFAULT_TYPE);
+		$client = HttpFactory::getDefaultClient();
+		$request = new Request('GET', $gravatarURL);
+		
 		try {
-			$tmpFile = FileUtil::downloadFileFromHttp($gravatarURL, 'gravatar');
-			@unlink($tmpFile);
-			return true;
+			$response = $client->send($request);
+			
+			if ($response->getStatusCode() === 200) {
+				return true;
+			}
 		}
-		catch (SystemException $e) {
-			return false;
+		catch (GuzzleException $e) {
+			// Ignore exception, because we return false anyways.
 		}
+		
+		return false;
 	}
 }
