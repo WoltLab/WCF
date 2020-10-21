@@ -1,0 +1,21 @@
+name: Templates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  sync:
+    name: Check for differing synced templates.
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: sudo apt-get install -y jq diffutils
+    - name: Check for differences
+      run: |
+        for template in $(jq -r '.templates[] + ".tpl"' < syncTemplates.json); do
+          defaultDirectory="$(jq -r '.directories[0]' < syncTemplates.json)"
+          for directory in $(jq -r '.directories[]' < syncTemplates.json); do
+            diff -u $defaultDirectory/$template $directory/$template
+          done
+        done
