@@ -135,7 +135,7 @@ define(["require", "exports", "../Core", "../Dom/Change/Listener", "./Screen", "
             let dialogData = _dialogObjects.get(callbackObject);
             if (dialogData && Core.isPlainObject(dialogData)) {
                 // dialog already exists
-                return this.openStatic(dialogData.id, html);
+                return this.openStatic(dialogData.id, typeof html === 'undefined' ? null : html);
             }
             // initialize a new dialog
             if (typeof callbackObject._dialogSetup !== 'function') {
@@ -234,15 +234,14 @@ define(["require", "exports", "../Core", "../Dom/Change/Listener", "./Screen", "
                 if (!options.closable)
                     options.backdropCloseOnClick = false;
                 if (options.closeConfirmMessage) {
-                    // TODO
-                    /*
                     options.onBeforeClose = id => {
-                      UiConfirmation.show({
-                        confirm: this.close.bind(this, id),
-                        message: options.closeConfirmMessage,
-                      });
+                        new Promise((resolve_2, reject_2) => { require(['./Confirmation'], resolve_2, reject_2); }).then(__importStar).then(UiConfirmation => {
+                            UiConfirmation.show({
+                                confirm: this.close.bind(this, id),
+                                message: options.closeConfirmMessage || '',
+                            });
+                        });
                     };
-                    */
                 }
                 this._createDialog(id, html, options, createOnly || false);
             }
