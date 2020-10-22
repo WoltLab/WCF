@@ -14,7 +14,7 @@ import CallbackList from '../../CallbackList';
 const _callbackList = new CallbackList();
 let _hot = false;
 
-export = {
+const DomChangeListener = {
   /**
    * @see CallbackList.add
    */
@@ -41,4 +41,6 @@ export = {
       _hot = false;
     }
   },
-}
+};
+
+export = DomChangeListener

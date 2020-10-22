@@ -1,3 +1,4 @@
+import DatePicker from './wcfsetup/install/files/ts/WoltLabSuite/Core/Date/Picker';
 import Devtools from './wcfsetup/install/files/ts/WoltLabSuite/Core/Devtools';
 import DomUtil from './wcfsetup/install/files/ts/WoltLabSuite/Core/Dom/Util';
 import * as ColorUtil from './wcfsetup/install/files/ts/WoltLabSuite/Core/ColorUtil';
@@ -14,8 +15,9 @@ declare global {
 
     WCF: any;
     bc_wcfDomUtil: typeof DomUtil;
-    __wcf_bc_colorUtil: typeof ColorUtil;
     bc_wcfSimpleDropdown: typeof UiDropdownSimple;
+    __wcf_bc_colorUtil: typeof ColorUtil;
+    __wcf_bc_datePicker: typeof DatePicker;
   }
 
   interface String {

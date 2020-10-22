@@ -139,7 +139,7 @@ function tryAlignmentVertical(alignment: VerticalAlignment, elDimensions, refDim
  * @param  {Element}    referenceElement    reference element
  * @param  {Object<string, *>}  options    list of options to alter the behavior
  */
-export function set(element: HTMLElement, referenceElement: HTMLElement, options: AlignmentOptions): void {
+export function set(element: HTMLElement, referenceElement: HTMLElement, options?: AlignmentOptions): void {
   options = Core.extend({
     // offset to reference element
     verticalOffset: 0,
@@ -154,7 +154,7 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
     vertical: 'bottom',
     // allow flipping over axis, possible values: both, horizontal, vertical and none
     allowFlip: 'both',
-  }, options) as AlignmentOptions;
+  }, options || {}) as AlignmentOptions;
 
   if (!Array.isArray(options.pointerClassNames) || options.pointerClassNames.length !== (options.pointer ? 1 : 2)) {
     options.pointerClassNames = [];
