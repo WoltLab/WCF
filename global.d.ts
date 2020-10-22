@@ -8,6 +8,7 @@ declare global {
     Devtools?: typeof Devtools;
     ENABLE_DEBUG_MODE: boolean;
     SECURITY_TOKEN: string;
+    TIME_NOW: number;
     WCF_PATH: string;
     WSC_API_URL: string;
 
