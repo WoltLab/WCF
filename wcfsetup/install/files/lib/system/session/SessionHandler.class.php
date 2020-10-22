@@ -197,12 +197,19 @@ final class SessionHandler extends SingletonFactory {
 	private function getSessionIdFromCookie(): ?string {
 		$cookieName = COOKIE_PREFIX.($this->isACP ? 'acp' : 'user')."_session";
 		
-		if (isset($_COOKIE[$cookieName])) {
+		if (!empty($_COOKIE[$cookieName])) {
 			if (!PACKAGE_ID) {
 				return $_COOKIE[$cookieName];
 			}
 			
-			return \bin2hex(CryptoUtil::getValueFromSignedString($_COOKIE[$cookieName]));
+			$compressedSessionId = CryptoUtil::getValueFromSignedString($_COOKIE[$cookieName]);
+			
+			// Check whether the sessionId was correctly signed.
+			if (!$compressedSessionId) {
+				return null;
+			}
+			
+			return \bin2hex($compressedSessionId);
 		}
 		
 		return null;
