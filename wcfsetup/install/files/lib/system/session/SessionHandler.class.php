@@ -349,7 +349,7 @@ final class SessionHandler extends SingletonFactory {
 				$sameSite = '; SameSite=strict';
 			}
 			
-			header('set-cookie: XSRF-TOKEN='.rawurlencode($xsrfToken).'; path=/'.$cookieDomain.(RouteHandler::secureConnection() ? '; secure' : '').$sameSite, false);
+			\header('set-cookie: XSRF-TOKEN='.\rawurlencode($xsrfToken).'; path=/'.$cookieDomain.(RouteHandler::secureConnection() ? '; secure' : '').$sameSite, false);
 		}
 		
 		$this->xsrfToken = $xsrfToken;
@@ -455,9 +455,9 @@ final class SessionHandler extends SingletonFactory {
 			return false;
 		}
 		
-		$variables = @unserialize($row['sessionVariables']);
+		$variables = @\unserialize($row['sessionVariables']);
 		// Check whether the session variables became corrupted.
-		if (!is_array($variables)) {
+		if (!\is_array($variables)) {
 			return false;
 		}
 		
@@ -537,7 +537,7 @@ final class SessionHandler extends SingletonFactory {
 			UserUtil::getIpAddress(),
 			UserUtil::getUserAgent(),
 			TIME_NOW,
-			serialize([]),
+			\serialize([]),
 		]);
 		
 		HeaderUtil::setCookie(
@@ -776,7 +776,7 @@ final class SessionHandler extends SingletonFactory {
 				WHERE	sessionID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([
-				serialize($this->variables),
+				\serialize($this->variables),
 				$this->sessionID,
 			]);
 			
@@ -794,7 +794,7 @@ final class SessionHandler extends SingletonFactory {
 				'userID' => $this->user->userID,
 				'sessionID' => $this->sessionID,
 			];
-			if (!class_exists('wcf\system\CLIWCF', false) && !$this->disableTracking) {
+			if (!\class_exists('wcf\system\CLIWCF', false) && !$this->disableTracking) {
 				$pageLocations = PageLocationManager::getInstance()->getLocations();
 				if (isset($pageLocations[0])) {
 					$data['pageID'] = $pageLocations[0]['pageID'];

@@ -24,7 +24,7 @@ final class PasswordAlgorithmManager extends SingletonFactory {
 	public function getAlgorithmFromName(string $name): IPasswordAlgorithm {
 		// The wcf1e algorithm can be recognized with the following regular expression.
 		// The algorithm is handled by the Wcf1e password algorithm class. 
-		if (preg_match('~^wcf1e[cms][01][ab][01]$~', $name)) {
+		if (\preg_match('~^wcf1e[cms][01][ab][01]$~', $name)) {
 			return new Wcf1e($name);
 		}
 		
