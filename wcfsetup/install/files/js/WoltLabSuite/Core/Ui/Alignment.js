@@ -150,7 +150,7 @@ define(["require", "exports", "../Core", "../Dom/Traverse", "../Dom/Util", "../L
             vertical: 'bottom',
             // allow flipping over axis, possible values: both, horizontal, vertical and none
             allowFlip: 'both',
-        }, options);
+        }, options || {});
         if (!Array.isArray(options.pointerClassNames) || options.pointerClassNames.length !== (options.pointer ? 1 : 2)) {
             options.pointerClassNames = [];
         }
