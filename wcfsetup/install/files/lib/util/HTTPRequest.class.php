@@ -190,10 +190,7 @@ final class HTTPRequest {
 		$request = new Request($this->options['method'], $this->url, $headers, $this->body);
 		
 		try {
-			$this->response = $client->send($request, [
-				// https://github.com/guzzle/guzzle/issues/2735
-				'sink' => \GuzzleHttp\Psr7\stream_for(fopen("php://temp", "w+")),
-			]);
+			$this->response = $client->send($request);
 		}
 		catch (TooManyRedirectsException $e) {
 			throw new HTTPException(
