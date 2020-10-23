@@ -579,6 +579,18 @@ CREATE TABLE wcf1_event_listener (
 	UNIQUE KEY listenerName (listenerName, packageID)
 );
 
+/* As the flood control table can be a high traffic table and as it is periodically emptied,
+there is no foreign key on the `objectTypeID` to speed up insertions. */
+DROP TABLE IF EXISTS wcf1_flood_control;
+CREATE TABLE wcf1_flood_control (
+    logID BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    objectTypeID INT(10) NOT NULL,
+    identifier BINARY(16) NOT NULL,
+    time INT(10) NOT NULL,
+    KEY (identifier),
+    KEY (time)
+);
+
 DROP TABLE IF EXISTS wcf1_import_mapping;
 CREATE TABLE wcf1_import_mapping (
 	importHash CHAR(8) NOT NULL,
