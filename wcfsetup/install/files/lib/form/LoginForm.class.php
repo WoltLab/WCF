@@ -42,7 +42,11 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 		
 		WCF::getTPL()->assign([
 			'loginController' => LinkHandler::getInstance()->getLink('Login'),
-			'forceLoginRedirect' => (FORCE_LOGIN && WCF::getSession()->getVar('__wsc_forceLoginRedirect') !== null)
+			'forceLoginRedirect' => (FORCE_LOGIN && WCF::getSession()->getVar('__wsc_forceLoginRedirect') !== null),
+			
+			/** @deprecated 5.4 - The values below should no longer be used. */
+			'useCookies' => 0,
+			'supportsPersistentLogins' => false,
 		]);
 	}
 	
