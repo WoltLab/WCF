@@ -604,11 +604,6 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			<option name="http_enable_gzip">
-				<categoryname>general.system.http</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
 			<!-- /general.system.http -->
 			<!-- general.system.packageServer -->
 			<option name="package_server_auth_code">
@@ -1711,5 +1706,6 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		</options>
 	</import>
 	<delete>
+		<option name="http_enable_gzip" />
 	</delete>
 </data>
