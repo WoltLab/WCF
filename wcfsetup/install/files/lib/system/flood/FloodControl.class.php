@@ -16,7 +16,7 @@ use wcf\util\UserUtil;
  * @since       5.4
  */
 class FloodControl extends SingletonFactory {
-	const PRUNE_TIME = TIME_NOW - 31 * 86400;
+	private const PRUNE_TIME = TIME_NOW - 31 * 86400;
 	
 	/**
 	 * Returns the number of contents by a certain identifier type within a certain
