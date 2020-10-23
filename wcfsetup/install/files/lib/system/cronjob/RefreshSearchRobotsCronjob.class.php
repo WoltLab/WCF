@@ -1,9 +1,10 @@
 <?php
 namespace wcf\system\cronjob;
+use GuzzleHttp\Psr7\Request;
 use wcf\data\cronjob\Cronjob;
 use wcf\system\cache\builder\SpiderCacheBuilder;
+use wcf\system\io\HttpFactory;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 use wcf\util\XML;
 
 /**
@@ -16,14 +17,22 @@ use wcf\util\XML;
  */
 class RefreshSearchRobotsCronjob extends AbstractCronjob {
 	/**
+	 * URL to the spider list.
+	 */
+	private const SPIDER_LIST_URL = 'http://assets.woltlab.com/spiderlist/typhoon/list.xml';
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function execute(Cronjob $cronjob) {
 		parent::execute($cronjob);
 		
-		$filename = FileUtil::downloadFileFromHttp('http://assets.woltlab.com/spiderlist/typhoon/list.xml', 'spiders');
+		$client = HttpFactory::getDefaultClient();
+		$request = new Request('GET', self::SPIDER_LIST_URL);
+		$response = $client->send($request);
+		
 		$xml = new XML();
-		$xml->load($filename);
+		$xml->loadXML('list.xml', (string) $response->getBody());
 		
 		$xpath = $xml->xpath();
 		
@@ -78,8 +87,5 @@ class RefreshSearchRobotsCronjob extends AbstractCronjob {
 			// clear spider cache
 			SpiderCacheBuilder::getInstance()->reset();
 		}
-		
-		// delete tmp file
-		@unlink($filename);
 	}
 }

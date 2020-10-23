@@ -1,7 +1,10 @@
 <?php
 namespace wcf\system\package;
+use GuzzleHttp\Psr7\Request;
 use wcf\data\package\Package;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\io\File;
+use wcf\system\io\HttpFactory;
 use wcf\system\package\validation\PackageValidationException;
 use wcf\system\io\Tar;
 use wcf\system\WCF;
@@ -426,13 +429,20 @@ class PackageArchive {
 	 * @return	string		path to the dowloaded file
 	 */
 	public function downloadArchive() {
-		$prefix = 'package';
+		$tmpFile = FileUtil::getTemporaryFilename('package_');
 		
-		// file transfer via hypertext transfer protocol.
-		$this->archive = FileUtil::downloadFileFromHttp($this->archive, $prefix);
+		$client = HttpFactory::getDefaultClient();
+		$request = new Request('GET', $this->archive);
+		$response = $client->send($request);
+		
+		$file = new File($tmpFile);
+		while (!$response->getBody()->eof()) {
+			$file->write($response->getBody()->read(4096));
+		}
+		$file->close();
 		
 		// unzip tar
-		$this->archive = self::unzipPackageArchive($this->archive);
+		$this->archive = self::unzipPackageArchive($tmpFile);
 		
 		return $this->archive;
 	}
