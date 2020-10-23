@@ -15,7 +15,7 @@ use wcf\util\UserUtil;
  * @package     WoltLabSuite\Core\System\Flood
  * @since       5.4
  */
-class FloodControl extends SingletonFactory {
+final class FloodControl extends SingletonFactory {
 	private const PRUNE_TIME = TIME_NOW - 31 * 86400;
 	
 	/**
@@ -23,7 +23,7 @@ class FloodControl extends SingletonFactory {
 	 * period of time `[$time-$interval, $time]` and the earliest time within the period content
 	 * was created.
 	 */
-	protected function countContentByIdentifier(string $objectType, string $identifier, \DateInterval $interval, int $time): array {
+	private function countContentByIdentifier(string $objectType, string $identifier, \DateInterval $interval, int $time): array {
 		$sql = "SELECT  COUNT(*) AS count, MIN(time) AS earliestTime
 			FROM    wcf" . WCF_N . "_flood_control
 			WHERE   objectTypeID = ?
@@ -87,7 +87,7 @@ class FloodControl extends SingletonFactory {
 	 * Returns the identifier used for a guest with the given ip address for content of the
 	 * given object type.
 	 */
-	protected function getGuestIdentifier(string $objectType, string $ipAddress): string {
+	private function getGuestIdentifier(string $objectType, string $ipAddress): string {
 		return \hash_hmac(
 			'md5',
 			'guest:' . $ipAddress,
@@ -100,7 +100,7 @@ class FloodControl extends SingletonFactory {
 	 * Returns the last time a guest/user created content of the given type or `null` if they
 	 * have not created such content.
 	 */
-	protected function getLastTimeByIdentifier(string $objectType, string $identifier): ?int {
+	private function getLastTimeByIdentifier(string $objectType, string $identifier): ?int {
 		$sql = "SELECT          time
 			FROM            wcf" . WCF_N . "_flood_control
 			WHERE           objectTypeID = ?
@@ -144,7 +144,7 @@ class FloodControl extends SingletonFactory {
 	 * 
 	 * @throws      \InvalidArgumentException       if the object type is invalid
 	 */
-	protected function getObjectTypeID(string $objectType): int {
+	private function getObjectTypeID(string $objectType): int {
 		$objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName(
 			'com.woltlab.wcf.floodControl',
 			$objectType
@@ -160,7 +160,7 @@ class FloodControl extends SingletonFactory {
 	 * Returns the identifier used for a user with the given id for content of the given object
 	 * type.
 	 */
-	protected function getUserIdentifier(string $objectType, int $userID): string {
+	private function getUserIdentifier(string $objectType, int $userID): string {
 		return \hash_hmac(
 			'md5',
 			'user:' . $userID,
@@ -193,7 +193,7 @@ class FloodControl extends SingletonFactory {
 	/**
 	 * Creates a flood control entry.
 	 */
-	protected function registerContentByIdentifier(string $objectType, string $identifier, int $time): void {
+	private function registerContentByIdentifier(string $objectType, string $identifier, int $time): void {
 		$sql = "INSERT INTO     wcf" . WCF_N . "_flood_control
 			                (objectTypeID, identifier, time)
 			VALUES          (?, ?, ?)";
