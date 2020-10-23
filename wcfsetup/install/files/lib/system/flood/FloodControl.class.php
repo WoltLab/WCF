@@ -43,8 +43,8 @@ final class FloodControl extends SingletonFactory {
 	
 	/**
 	 * Returns the number of contents the active user created of the given type within a certain
-	 * period of time `($time-$interval, $time]` and the earliest time within the period content
-	 * was created.
+	 * period of time `($time-$interval, $time]` and the earliest time within the period at which
+	 * content was created.
 	 */
 	public function countContent(string $objectType, \DateInterval $interval, int $time = TIME_NOW): array {
 		if (WCF::getUser()->userID) {
@@ -57,8 +57,8 @@ final class FloodControl extends SingletonFactory {
 	
 	/**
 	 * Returns the number of contents a guest created of the given type within a certain period
-	 * of time `($time-$interval, $time]` and the earliest time within the period content was
-	 * created.
+	 * of time `($time-$interval, $time]` and the earliest time within the period at which
+	 * content was created.
 	 */
 	public function countGuestContent(string $objectType, string $ipAddress, \DateInterval $interval, int $time = TIME_NOW): array {
 		return $this->countContentByIdentifier(
@@ -71,8 +71,8 @@ final class FloodControl extends SingletonFactory {
 	
 	/**
 	 * Returns the number of contents a user created of the given type within a certain period
-	 * of time `[$time-$interval, $time]` and the earliest time within the period content was
-	 * created.
+	 * of time `[$time-$interval, $time]` and the earliest time within the period at which
+	 * content was created.
 	 */
 	public function countUserContent(string $objectType, int $userID, \DateInterval $interval, int $time = TIME_NOW): array {
 		return $this->countContentByIdentifier(
