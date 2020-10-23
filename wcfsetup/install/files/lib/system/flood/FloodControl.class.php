@@ -20,8 +20,8 @@ final class FloodControl extends SingletonFactory {
 	private const IDENTIFIER_PREFIX = WCF_UUID . ':' . self::class . ':';
 	
 	/**
-	 * Returns the number of contents by a certain identifier type within a certain
-	 * period of time `($time-$interval, $time]` and the earliest time within the period content
+	 * Returns the number of contents by a certain identifier type within a certain period of
+	 * time `($time-$interval, $time]` and the earliest time within the period at which content
 	 * was created.
 	 */
 	private function countContentByIdentifier(string $objectType, string $identifier, \DateInterval $interval, int $time): array {
@@ -97,8 +97,8 @@ final class FloodControl extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the last time a guest/user created content of the given type or `null` if they
-	 * have not created such content.
+	 * Returns the last time a guest/user with the given identifier created content of the given
+	 * type or `null` if they have not created such content within the stored period of time.
 	 */
 	private function getLastTimeByIdentifier(string $objectType, string $identifier): ?int {
 		$sql = "SELECT          time
