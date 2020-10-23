@@ -40,12 +40,8 @@ class FormFieldValidator implements IFormFieldValidator {
 		/** @var \ReflectionType $parameterType */
 		$parameterType = $parameters[0]->getType();
 		if (!(
-			// PHP 7.1+
 			($parameterType instanceof \ReflectionNamedType &&
-				($parameterType->getName() === IFormField::class || is_subclass_of($parameterType->getName(), IFormField::class))) ||
-			// PHP 7.0
-			(get_class($parameterType) === \ReflectionType::class &&
-				($parameterType->__toString() === IFormField::class || is_subclass_of($parameterType->__toString(), IFormField::class)))
+				($parameterType->getName() === IFormField::class || is_subclass_of($parameterType->getName(), IFormField::class)))
 		)) {
 			throw new \InvalidArgumentException(
 				"The validation function's parameter must be an instance of '" . IFormField::class . "', instead " .
