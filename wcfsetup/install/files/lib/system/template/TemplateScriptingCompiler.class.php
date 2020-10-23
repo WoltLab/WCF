@@ -67,6 +67,7 @@ class TemplateScriptingCompiler {
 		'floatval',
 		'floor',
 		'function_exists',
+		'get_class',
 		'gmdate',
 		'hash',
 		'htmlspecialchars',
