@@ -579,6 +579,16 @@ CREATE TABLE wcf1_event_listener (
 	UNIQUE KEY listenerName (listenerName, packageID)
 );
 
+DROP TABLE IF EXISTS wcf1_flood_control;
+CREATE TABLE wcf1_flood_control (
+    logID BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    objectTypeID INT(10) NOT NULL,
+    identifier BINARY(16) NOT NULL,
+    time INT(10) NOT NULL,
+    KEY (identifier),
+    KEY (time)
+);
+
 DROP TABLE IF EXISTS wcf1_import_mapping;
 CREATE TABLE wcf1_import_mapping (
 	importHash CHAR(8) NOT NULL,
@@ -1951,6 +1961,8 @@ ALTER TABLE wcf1_edit_history_entry ADD FOREIGN KEY (userID) REFERENCES wcf1_use
 ALTER TABLE wcf1_edit_history_entry ADD FOREIGN KEY (obsoletedByUserID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_event_listener ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_flood_control ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_language_item ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_language_item ADD FOREIGN KEY (languageCategoryID) REFERENCES wcf1_language_category (languageCategoryID) ON DELETE CASCADE;
