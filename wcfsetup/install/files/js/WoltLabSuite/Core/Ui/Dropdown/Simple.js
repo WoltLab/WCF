@@ -272,12 +272,7 @@ define(["require", "exports", "../../CallbackList", "../../Core", "../../Dom/Cha
                 }
             }
             if (newActiveItem === null) {
-                for (let i = 0; i < listItems.length; i++) {
-                    if (isValidItem(listItems[i])) {
-                        newActiveItem = listItems[i];
-                        break;
-                    }
-                }
+                newActiveItem = listItems.find(isValidItem) || null;
             }
             if (newActiveItem !== null) {
                 newActiveItem.focus();
@@ -306,8 +301,9 @@ define(["require", "exports", "../../CallbackList", "../../Core", "../../Dom/Cha
                 button = dropdown;
             }
             toggle(null, _activeTargetId);
-            if (button)
+            if (button) {
                 button.focus();
+            }
         }
     }
     const UiDropdownSimple = {
@@ -503,13 +499,13 @@ define(["require", "exports", "../../CallbackList", "../../Core", "../../Dom/Cha
          * Closes all dropdowns.
          */
         closeAll() {
-            _dropdowns.forEach((function (dropdown, containerId) {
+            _dropdowns.forEach((dropdown, containerId) => {
                 if (dropdown.classList.contains('dropdownOpen')) {
                     dropdown.classList.remove('dropdownOpen');
                     _menus.get(containerId).classList.remove('dropdownOpen');
                     notifyCallbacks(containerId, 'close');
                 }
-            }).bind(this));
+            });
         },
         /**
          * Destroys a dropdown identified by given id.

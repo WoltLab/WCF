@@ -16,7 +16,7 @@ define(["require", "exports", "../../CallbackList"], function (require, exports,
     CallbackList_1 = __importDefault(CallbackList_1);
     const _callbackList = new CallbackList_1.default();
     let _hot = false;
-    return {
+    const DomChangeListener = {
         /**
          * @see CallbackList.add
          */
@@ -43,4 +43,5 @@ define(["require", "exports", "../../CallbackList"], function (require, exports,
             }
         },
     };
+    return DomChangeListener;
 });

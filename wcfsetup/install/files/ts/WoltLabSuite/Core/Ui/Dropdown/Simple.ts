@@ -263,7 +263,7 @@ function dropdownMenuKeyDown(event: KeyboardEvent): void {
   if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'End' || event.key === 'Home') {
     event.preventDefault();
 
-    const listItems = Array.from<HTMLElement>(activeItem.closest('.dropdownMenu')!.querySelectorAll('li'));
+    const listItems: HTMLElement[] = Array.from(activeItem.closest('.dropdownMenu')!.querySelectorAll('li'));
     if (event.key === 'ArrowUp' || event.key === 'End') {
       listItems.reverse();
     }
@@ -286,12 +286,7 @@ function dropdownMenuKeyDown(event: KeyboardEvent): void {
     }
 
     if (newActiveItem === null) {
-      for (let i = 0; i < listItems.length; i++) {
-        if (isValidItem(listItems[i])) {
-          newActiveItem = listItems[i];
-          break;
-        }
-      }
+      newActiveItem = listItems.find(isValidItem) || null;
     }
 
     if (newActiveItem !== null) {
@@ -324,7 +319,9 @@ function dropdownMenuKeyDown(event: KeyboardEvent): void {
     }
 
     toggle(null, _activeTargetId);
-    if (button) button.focus();
+    if (button) {
+      button.focus();
+    }
   }
 }
 
@@ -424,7 +421,7 @@ const UiDropdownSimple = {
       }
     }
 
-    button.dataset.target= containerId;
+    button.dataset.target = containerId;
 
     if (isLazyInitialization) {
       setTimeout(() => {
@@ -560,14 +557,14 @@ const UiDropdownSimple = {
    * Closes all dropdowns.
    */
   closeAll(): void {
-    _dropdowns.forEach((function (dropdown, containerId) {
+    _dropdowns.forEach((dropdown, containerId) => {
       if (dropdown.classList.contains('dropdownOpen')) {
         dropdown.classList.remove('dropdownOpen');
         _menus.get(containerId)!.classList.remove('dropdownOpen');
 
         notifyCallbacks(containerId, 'close');
       }
-    }).bind(this));
+    });
   },
 
   /**

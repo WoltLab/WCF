@@ -213,12 +213,10 @@ const DomUtil = {
   setInnerHtml(element: Element, innerHtml: string): void {
     element.innerHTML = innerHtml;
 
-    let newScript: HTMLScriptElement;
-    let script: HTMLScriptElement;
     const scripts = element.querySelectorAll<HTMLScriptElement>('script');
     for (let i = 0, length = scripts.length; i < length; i++) {
-      script = scripts[i];
-      newScript = document.createElement('script');
+      const script = scripts[i];
+      const newScript = document.createElement('script');
       if (script.src) {
         newScript.src = script.src;
       } else {
@@ -292,7 +290,7 @@ const DomUtil = {
    * Retrieves all data attributes from target element, optionally allowing for
    * a custom prefix that serves two purposes: First it will restrict the results
    * for items starting with it and second it will remove that prefix.
-   * 
+   *
    * @deprecated 5.4 Use `element.dataset` instead.
    */
   getDataAttributes(element: Element, prefix?: string, camelCaseName?: boolean, idToUpperCase?: boolean): DataAttributes {
@@ -301,14 +299,14 @@ const DomUtil = {
     camelCaseName = (camelCaseName === true);
     idToUpperCase = (idToUpperCase === true);
 
-    let attribute, attributes = {}, name, tmp;
+    const attributes = {};
     for (let i = 0, length = element.attributes.length; i < length; i++) {
-      attribute = element.attributes[i];
+      const attribute = element.attributes[i];
 
       if (attribute.name.indexOf(prefix) === 0) {
-        name = attribute.name.replace(new RegExp('^' + prefix), '');
+        let name = attribute.name.replace(new RegExp('^' + prefix), '');
         if (camelCaseName) {
-          tmp = name.split('-');
+          let tmp = name.split('-');
           name = '';
           for (let j = 0, innerLength = tmp.length; j < innerLength; j++) {
             if (name.length) {
@@ -408,7 +406,7 @@ const DomUtil = {
   },
 
   /**
-   * Shorthand function to show an element previously hidden by using `elHide()`.
+   * Shorthand function to show an element previously hidden by using `hide()`.
    */
   show(element: HTMLElement): void {
     element.style.removeProperty('display');
