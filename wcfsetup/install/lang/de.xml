@@ -2002,7 +2002,6 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.page.lastUpdateTime"><![CDATA[Letzte Aktualisierung]]></item>
 		<item name="wcf.acp.page.list"><![CDATA[Seiten]]></item>
 		<item name="wcf.acp.page.metaDescription"><![CDATA[Meta Description]]></item>
-		<item name="wcf.acp.page.metaKeywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.page.name.error.notUnique"><![CDATA[Dieser Name wird bereits von einer anderen Seite verwendet.]]></item>
 		<item name="wcf.acp.page.page"><![CDATA[Seite]]></item>
 		<item name="wcf.acp.page.parentPage"><![CDATA[Übergeordnete Seite]]></item>

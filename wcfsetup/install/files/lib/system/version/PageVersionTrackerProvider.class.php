@@ -53,14 +53,13 @@ class PageVersionTrackerProvider extends AbstractVersionTrackerProvider {
 		'content' => 'wcf.acp.page.content',
 		'customURL' => 'wcf.acp.page.customURL',
 		'metaDescription' => 'wcf.acp.page.metaDescription',
-		'metaKeywords' => 'wcf.acp.page.metaKeywords',
-		'title' => 'wcf.global.title'
+		'title' => 'wcf.global.title',
 	];
 	
 	/**
 	 * @inheritDoc
 	 */
-	public static $trackedProperties = ['title', 'content', 'metaDescription', 'metaKeywords', 'customURL'];
+	public static $trackedProperties = ['title', 'content', 'metaDescription', 'customURL'];
 	
 	/**
 	 * @inheritDoc

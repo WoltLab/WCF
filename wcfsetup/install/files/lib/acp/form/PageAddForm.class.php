@@ -135,12 +135,6 @@ class PageAddForm extends AbstractForm {
 	public $metaDescription = [];
 	
 	/**
-	 * page meta keywords
-	 * @var	string[]
-	 */
-	public $metaKeywords = [];
-	
-	/**
 	 * list of box ids
 	 * @var integer[]
 	 */
@@ -294,7 +288,6 @@ class PageAddForm extends AbstractForm {
 		if (isset($_POST['title']) && is_array($_POST['title'])) $this->title = ArrayUtil::trim($_POST['title']);
 		if (isset($_POST['content']) && is_array($_POST['content'])) $this->content = ArrayUtil::trim($_POST['content']);
 		if (isset($_POST['metaDescription']) && is_array($_POST['metaDescription'])) $this->metaDescription = ArrayUtil::trim($_POST['metaDescription']);
-		if (isset($_POST['metaKeywords']) && is_array($_POST['metaKeywords'])) $this->metaKeywords = ArrayUtil::trim($_POST['metaKeywords']);
 		if (isset($_POST['boxIDs']) && is_array($_POST['boxIDs'])) $this->boxIDs = ArrayUtil::toIntegerArray($_POST['boxIDs']);
 		$box = Box::getBoxByIdentifier('com.woltlab.wcf.MainMenu');
 		if (!in_array($box->boxID, $this->boxIDs)) $this->boxIDs[] = $box->boxID;
@@ -540,7 +533,6 @@ class PageAddForm extends AbstractForm {
 					'content' => !empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : '',
 					'htmlInputProcessor' => isset($this->htmlInputProcessors[$language->languageID]) ? $this->htmlInputProcessors[$language->languageID] : null,
 					'metaDescription' => !empty($this->metaDescription[$language->languageID]) ? $this->metaDescription[$language->languageID] : '',
-					'metaKeywords' => !empty($this->metaKeywords[$language->languageID]) ? $this->metaKeywords[$language->languageID] : ''
 				];
 			}
 		}
@@ -551,7 +543,6 @@ class PageAddForm extends AbstractForm {
 				'content' => !empty($this->content[0]) ? $this->content[0] : '',
 				'htmlInputProcessor' => isset($this->htmlInputProcessors[0]) ? $this->htmlInputProcessors[0] : null,
 				'metaDescription' => !empty($this->metaDescription[0]) ? $this->metaDescription[0] : '',
-				'metaKeywords' => !empty($this->metaKeywords[0]) ? $this->metaKeywords[0] : ''
 			];
 		}
 		
@@ -646,7 +637,7 @@ class PageAddForm extends AbstractForm {
 		$this->parentMenuItemID = null;
 		$this->applicationPackageID = 1;
 		$this->cssClassName = $this->name = '';
-		$this->customURL = $this->title = $this->content = $this->metaDescription = $this->metaKeywords = $this->aclValues = [];
+		$this->customURL = $this->title = $this->content = $this->metaDescription = $this->aclValues = [];
 		$this->boxIDs = $this->getDefaultBoxIDs();
 	}
 	
@@ -678,7 +669,6 @@ class PageAddForm extends AbstractForm {
 					$this->title[$languageID] = $content->title;
 					$this->content[$languageID] = $content->content;
 					$this->metaDescription[$languageID] = $content->metaDescription;
-					$this->metaKeywords[$languageID] = $content->metaKeywords;
 					$this->customURL[$languageID] = $content->customURL;
 				}
 				
@@ -740,7 +730,8 @@ class PageAddForm extends AbstractForm {
 			'title' => $this->title,
 			'content' => $this->content,
 			'metaDescription' => $this->metaDescription,
-			'metaKeywords' => $this->metaKeywords,
+			// @deprecated 5.4 - Meta keywords have been removed with 5.4.
+			'metaKeywords' => [],
 			'boxIDs' => $this->boxIDs,
 			'availableApplications' => $this->availableApplications,
 			'availableLanguages' => $this->availableLanguages,

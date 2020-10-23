@@ -397,22 +397,6 @@
 							{/if}
 						</dd>
 					</dl>
-					
-					<dl{if $errorField == 'metaKeywords'} class="formError"{/if}>
-						<dt><label for="metaKeywords">{lang}wcf.acp.page.metaKeywords{/lang}</label></dt>
-						<dd>
-							<input type="text" class="long" name="metaKeywords[0]" id="metaKeywords" value="{if !$metaKeywords[0]|empty}{$metaKeywords[0]}{/if}">
-							{if $errorField == 'metaKeywords'}
-								<small class="innerError">
-									{if $errorType == 'empty'}
-										{lang}wcf.global.form.error.empty{/lang}
-									{else}
-										{lang}wcf.acp.page.metaKeywords.error.{@$errorType}{/lang}
-									{/if}
-								</small>
-							{/if}
-						</dd>
-					</dl>
 				</div>
 			{else}
 				<div class="tabMenuContainer">
@@ -483,23 +467,6 @@
 														{lang}wcf.global.form.error.empty{/lang}
 													{else}
 														{lang}wcf.acp.page.metaDescription.error.{@$errorType}{/lang}
-													{/if}
-												</small>
-											{/if}
-										</dd>
-									</dl>
-									
-									{assign var='__errorFieldName' value='metaKeywords_'|concat:$availableLanguage->languageID}
-									<dl{if $errorField == $__errorFieldName} class="formError"{/if}>
-										<dt><label for="metaKeywords{@$availableLanguage->languageID}">{lang}wcf.acp.page.metaKeywords{/lang}</label></dt>
-										<dd>
-											<input type="text" class="long" name="metaKeywords[{@$availableLanguage->languageID}]" id="metaKeywords{@$availableLanguage->languageID}" value="{if !$metaKeywords[$availableLanguage->languageID]|empty}{$metaKeywords[$availableLanguage->languageID]}{/if}">
-											{if $errorField == $__errorFieldName}
-												<small class="innerError">
-													{if $errorType == 'empty'}
-														{lang}wcf.global.form.error.empty{/lang}
-													{else}
-														{lang}wcf.acp.page.metaKeywords.error.{@$errorType}{/lang}
 													{/if}
 												</small>
 											{/if}

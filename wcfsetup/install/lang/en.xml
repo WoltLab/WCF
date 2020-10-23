@@ -4321,7 +4321,6 @@ Attachments:
 		<item name="wcf.acp.page.lastUpdateTime"><![CDATA[Last Change]]></item>
 		<item name="wcf.acp.page.list"><![CDATA[Pages]]></item>
 		<item name="wcf.acp.page.metaDescription"><![CDATA[Meta Description]]></item>
-		<item name="wcf.acp.page.metaKeywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.page.name.error.notUnique"><![CDATA[Name is already in use.]]></item>
 		<item name="wcf.acp.page.page"><![CDATA[Page]]></item>
 		<item name="wcf.acp.page.parentPage"><![CDATA[Parent Page]]></item>

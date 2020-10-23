@@ -87,8 +87,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 					'title' => $content['title'],
 					'content' => $content['content'],
 					'metaDescription' => $content['metaDescription'],
-					'metaKeywords' => $content['metaKeywords'],
-					'customURL' => $content['customURL']
+					'customURL' => $content['customURL'],
 				]);
 				$pageContentEditor = new PageContentEditor($pageContent);
 				
@@ -176,12 +175,11 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 							'title' => $content['title'],
 							'content' => $content['content'],
 							'metaDescription' => $content['metaDescription'],
-							'metaKeywords' => $content['metaKeywords'],
-							'customURL' => $content['customURL']
+							'customURL' => $content['customURL'],
 						]);
 						
 						$versionData[] = $pageContent;
-						foreach (['title', 'content', 'metaDescription', 'metaKeywords', 'customURL'] as $property) {
+						foreach (['title', 'content', 'metaDescription', 'customURL'] as $property) {
 							if ($pageContent->{$property} != $content[$property]) {
 								$hasChanges = true;
 								break;
@@ -198,8 +196,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 							'title' => $content['title'],
 							'content' => $content['content'],
 							'metaDescription' => $content['metaDescription'],
-							'metaKeywords' => $content['metaKeywords'],
-							'customURL' => $content['customURL']
+							'customURL' => $content['customURL'],
 						]);
 						$pageContentEditor = new PageContentEditor($pageContent);
 						
