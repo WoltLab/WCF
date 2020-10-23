@@ -3,6 +3,7 @@ namespace wcf\system\flood;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\DateUtil;
 use wcf\util\UserUtil;
 
 /**
@@ -15,6 +16,71 @@ use wcf\util\UserUtil;
  * @since       5.4
  */
 class FloodControl extends SingletonFactory {
+	/**
+	 * Returns the number of contents by a certain identifier type within a certain
+	 * period of time `[$time-$interval, $time]` and the earliest time within the period content
+	 * was created.
+	 */
+	protected function countContentByIdentifier(string $objectType, string $identifier, \DateInterval $interval, int $time): array {
+		$sql = "SELECT  COUNT(*) AS count, MIN(time) AS earliestTime
+			FROM    wcf" . WCF_N . "_flood_control
+			WHERE   objectTypeID = ?
+			        AND identifier = ?
+			        AND time >= ?
+			        AND time <= ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			$this->getObjectTypeID($objectType),
+			$identifier,
+			DateUtil::getDateTimeByTimestamp($time)->sub($interval)->getTimestamp(),
+			$time,
+		]);
+		
+		return $statement->fetchSingleRow();
+	}
+	
+	/**
+	 * Returns the number of contents the active user created of the given type within a certain
+	 * period of time `[$time-$interval, $time]` and the earliest time within the period content
+	 * was created.
+	 */
+	public function countContent(string $objectType, \DateInterval $interval, int $time = TIME_NOW): array {
+		if (WCF::getUser()->userID) {
+			return $this->countUserContent($objectType, WCF::getUser()->userID, $interval, $time);
+		}
+		else {
+			return $this->countGuestContent($objectType, UserUtil::getIpAddress(), $interval, $time);
+		}
+	}
+	
+	/**
+	 * Returns the number of contents a guest created of the given type within a certain period
+	 * of time `[$time-$interval, $time]` and the earliest time within the period content was
+	 * created.
+	 */
+	public function countGuestContent(string $objectType, string $ipAddress, \DateInterval $interval, int $time = TIME_NOW): array {
+		return $this->countContentByIdentifier(
+			$objectType,
+			$this->getUserIdentifier($objectType, $ipAddress),
+			$interval,
+			$time
+		);
+	}
+	
+	/**
+	 * Returns the number of contents a user created of the given type within a certain period
+	 * of time `[$time-$interval, $time]` and the earliest time within the period content was
+	 * created.
+	 */
+	public function countUserContent(string $objectType, int $userID, \DateInterval $interval, int $time = TIME_NOW): array {
+		return $this->countContentByIdentifier(
+			$objectType,
+			$this->getUserIdentifier($objectType, $userID),
+			$interval,
+			$time
+		);
+	}
+	
 	/**
 	 * Returns the identifier used for a guest with the given ip address for content of the
 	 * given object type.
