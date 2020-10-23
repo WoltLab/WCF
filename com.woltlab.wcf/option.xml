@@ -419,11 +419,6 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			<option name="meta_keywords">
-				<categoryname>general.page</categoryname>
-				<optiontype>textI18n</optiontype>
-				<supporti18n>1</supporti18n>
-			</option>
 			<option name="meta_description">
 				<categoryname>general.page</categoryname>
 				<optiontype>textI18n</optiontype>
@@ -1719,5 +1714,6 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		<option name="register_password_must_contain_upper_case" />
 		<option name="register_password_must_contain_digit" />
 		<option name="register_password_must_contain_special_char" />
+		<option name="meta_keywords" />
 	</delete>
 </data>

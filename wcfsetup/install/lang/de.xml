@@ -1358,7 +1358,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.mail_use_f_param"><![CDATA[„-f“ Parameter verwenden]]></item>
 		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[Der „-f“-Parameter sorgt bei der PHP-Versandmethode dafür, dass der korrekte Absender gesetzt wird. Diese Einstellung wird möglicherweise nicht von jedem Server unterstützt. {if LANGUAGE_USE_INFORMAL_VARIANT}Versuche{else}Versuchen Sie{/if} in diesem Falle die Option zu deaktivieren.]]></item>
 		<item name="wcf.acp.option.meta_description"><![CDATA[Meta Description]]></item>
-		<item name="wcf.acp.option.meta_keywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.option.og_image"><![CDATA[Standardwert „Open Graph“-Bild]]></item>
 		<item name="wcf.acp.option.og_image.description"><![CDATA[Pfad zur Bilddatei, die beim Verlinken von Inhalten auf Facebook, Twitter und anderen „Social Media“-Seiten standardmäßig eingebunden wird.]]></item>
 		<item name="wcf.acp.option.module_master_password"><![CDATA[Hauptkennwort aktivieren]]></item>

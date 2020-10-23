@@ -51,7 +51,6 @@ define('MODULE_POLL', 1);
 define('MODULE_WCF_AD', 0);
 define('PAGE_TITLE', 'WoltLab Suite');
 define('PAGE_DESCRIPTION', '');
-define('META_KEYWORDS', '');
 define('META_DESCRIPTION', '');
 define('SHOW_VERSION_NUMBER', 1);
 define('EXTERNAL_LINK_REL_NOFOLLOW', 1);
