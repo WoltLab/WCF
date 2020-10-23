@@ -1,122 +1,142 @@
 /**
  * Utility class to provide a 'Jump To' overlay.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Ui/Page/JumpTo
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Ui/Page/JumpTo
  */
-define(['Language', 'ObjectMap', 'Ui/Dialog'], function (Language, ObjectMap, UiDialog) {
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+define(["require", "exports", "../../Language", "../Dialog"], function (require, exports, Language, Dialog_1) {
     "use strict";
-    var _activeElement = null;
-    var _buttonSubmit = null;
-    var _description = null;
-    var _elements = new ObjectMap();
-    var _input = null;
-    /**
-     * @exports	WoltLabSuite/Core/Ui/Page/JumpTo
-     */
-    var UiPageJumpTo = {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.init = void 0;
+    Language = __importStar(Language);
+    Dialog_1 = __importDefault(Dialog_1);
+    class UiPageJumpTo {
+        constructor() {
+            this.elements = new Map();
+        }
         /**
          * Initializes a 'Jump To' element.
-         *
-         * @param	{Element}	element		trigger element
-         * @param	{function}	callback	callback function, receives the page number as first argument
          */
-        init: function (element, callback) {
-            callback = callback || null;
-            if (callback === null) {
-                var redirectUrl = elData(element, 'link');
+        init(element, callback) {
+            if (!callback) {
+                const redirectUrl = element.dataset.link;
                 if (redirectUrl) {
                     callback = function (pageNo) {
-                        window.location = redirectUrl.replace(/pageNo=%d/, 'pageNo=' + pageNo);
+                        window.location.href = redirectUrl.replace(/pageNo=%d/, 'pageNo=' + pageNo);
                     };
                 }
                 else {
-                    callback = function () { };
+                    callback = function () {
+                    };
                 }
             }
             else if (typeof callback !== 'function') {
                 throw new TypeError("Expected a valid function for parameter 'callback'.");
             }
-            if (!_elements.has(element)) {
-                elBySelAll('.jumpTo', element, (function (jumpTo) {
-                    jumpTo.addEventListener(WCF_CLICK_EVENT, this._click.bind(this, element));
-                    _elements.set(element, { callback: callback });
-                }).bind(this));
+            if (!this.elements.has(element)) {
+                element.querySelectorAll('.jumpTo').forEach(jumpTo => {
+                    jumpTo.addEventListener('click', this.click.bind(this, element));
+                    this.elements.set(element, callback);
+                });
             }
-        },
+        }
         /**
          * Handles clicks on the trigger element.
-         *
-         * @param	{Element}	element		trigger element
-         * @param	{object}	event		event object
          */
-        _click: function (element, event) {
-            _activeElement = element;
-            if (typeof event === 'object') {
-                event.preventDefault();
-            }
-            UiDialog.open(this);
-            var pages = elData(element, 'pages');
-            _input.value = pages;
-            _input.setAttribute('max', pages);
-            _input.select();
-            _description.textContent = Language.get('wcf.page.jumpTo.description').replace(/#pages#/, pages);
-        },
+        click(element, event) {
+            event.preventDefault();
+            this.activeElement = element;
+            Dialog_1.default.open(this);
+            const pages = element.dataset.pages || '0';
+            this.input.value = pages;
+            this.input.max = pages;
+            this.input.select();
+            this.description.textContent = Language.get('wcf.page.jumpTo.description').replace(/#pages#/, pages);
+        }
         /**
          * Handles changes to the page number input field.
          *
-         * @param	{object}	event		event object
+         * @param  {object}  event    event object
          */
-        _keyUp: function (event) {
-            if (event.which === 13 && _buttonSubmit.disabled === false) {
-                this._submit();
+        _keyUp(event) {
+            if (event.key === 'Enter' && !this.submitButton.disabled) {
+                this.submit();
                 return;
             }
-            var pageNo = ~~_input.value;
-            if (pageNo < 1 || pageNo > ~~elAttr(_input, 'max')) {
-                _buttonSubmit.disabled = true;
-            }
-            else {
-                _buttonSubmit.disabled = false;
-            }
-        },
+            const pageNo = +this.input.value;
+            this.submitButton.disabled = pageNo < 1 || pageNo > +this.input.max;
+        }
         /**
          * Invokes the callback with the chosen page number as first argument.
-         *
-         * @param	{object}	event		event object
          */
-        _submit: function (event) {
-            _elements.get(_activeElement).callback(~~_input.value);
-            UiDialog.close(this);
-        },
-        _dialogSetup: function () {
-            var source = '<dl>'
-                + '<dt><label for="jsPaginationPageNo">' + Language.get('wcf.page.jumpTo') + '</label></dt>'
-                + '<dd>'
-                + '<input type="number" id="jsPaginationPageNo" value="1" min="1" max="1" class="tiny">'
-                + '<small></small>'
-                + '</dd>'
-                + '</dl>'
-                + '<div class="formSubmit">'
-                + '<button class="buttonPrimary">' + Language.get('wcf.global.button.submit') + '</button>'
-                + '</div>';
+        submit() {
+            const callback = this.elements.get(this.activeElement);
+            callback(+this.input.value);
+            Dialog_1.default.close(this);
+        }
+        _dialogSetup() {
+            const source = `<dl>
+        <dt><label for="jsPaginationPageNo">${Language.get('wcf.page.jumpTo')}</label></dt>
+                <dd>
+          <input type="number" id="jsPaginationPageNo" value="1" min="1" max="1" class="tiny">
+          <small></small>
+        </dd>
+      </dl>
+      <div class="formSubmit">
+        <button class="buttonPrimary">${Language.get('wcf.global.button.submit')}</button>
+      </div>`;
             return {
                 id: 'paginationOverlay',
                 options: {
-                    onSetup: (function (content) {
-                        _input = elByTag('input', content)[0];
-                        _input.addEventListener('keyup', this._keyUp.bind(this));
-                        _description = elByTag('small', content)[0];
-                        _buttonSubmit = elByTag('button', content)[0];
-                        _buttonSubmit.addEventListener(WCF_CLICK_EVENT, this._submit.bind(this));
-                    }).bind(this),
-                    title: Language.get('wcf.global.page.pagination')
+                    onSetup: content => {
+                        this.input = content.querySelector('input');
+                        this.input.addEventListener('keyup', this._keyUp.bind(this));
+                        this.description = content.querySelector('small');
+                        this.submitButton = content.querySelector('button');
+                        this.submitButton.addEventListener('click', this.submit.bind(this));
+                    },
+                    title: Language.get('wcf.global.page.pagination'),
                 },
-                source: source
+                source: source,
             };
         }
-    };
-    return UiPageJumpTo;
+    }
+    let jumpTo = null;
+    function getUiPageJumpTo() {
+        if (jumpTo === null) {
+            jumpTo = new UiPageJumpTo();
+        }
+        return jumpTo;
+    }
+    /**
+     * Initializes a 'Jump To' element.
+     */
+    function init(element, callback) {
+        getUiPageJumpTo().init(element, callback);
+    }
+    exports.init = init;
 });

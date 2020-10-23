@@ -6,7 +6,6 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  Dom/Traverse (alias)
  * @module  WoltLabSuite/Core/Dom/Traverse
- * @module DomTraverse
  */
 
 const enum Type {
