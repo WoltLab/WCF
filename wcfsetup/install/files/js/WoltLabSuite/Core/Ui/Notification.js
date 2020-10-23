@@ -33,18 +33,20 @@ define(["require", "exports", "../Language"], function (require, exports, Langua
     Language = __importStar(Language);
     let _busy = false;
     let _callback = null;
+    let _didInit = false;
     let _message;
-    let _notificationElement = null;
+    let _notificationElement;
     let _timeout;
     function init() {
-        if (_notificationElement === null) {
-            _notificationElement = document.createElement('div');
-            _notificationElement.id = 'systemNotification';
-            _message = document.createElement('p');
-            _message.addEventListener('click', hide);
-            _notificationElement.appendChild(_message);
-            document.body.appendChild(_notificationElement);
-        }
+        if (_didInit)
+            return;
+        _didInit = true;
+        _notificationElement = document.createElement('div');
+        _notificationElement.id = 'systemNotification';
+        _message = document.createElement('p');
+        _message.addEventListener('click', hide);
+        _notificationElement.appendChild(_message);
+        document.body.appendChild(_notificationElement);
     }
     /**
      * Hides the notification and invokes the callback if provided.

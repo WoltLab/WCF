@@ -198,12 +198,10 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
          */
         setInnerHtml(element, innerHtml) {
             element.innerHTML = innerHtml;
-            let newScript;
-            let script;
             const scripts = element.querySelectorAll('script');
             for (let i = 0, length = scripts.length; i < length; i++) {
-                script = scripts[i];
-                newScript = document.createElement('script');
+                const script = scripts[i];
+                const newScript = document.createElement('script');
                 if (script.src) {
                     newScript.src = script.src;
                 }
@@ -274,13 +272,13 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
                 prefix = 'data-' + prefix;
             camelCaseName = (camelCaseName === true);
             idToUpperCase = (idToUpperCase === true);
-            let attribute, attributes = {}, name, tmp;
+            const attributes = {};
             for (let i = 0, length = element.attributes.length; i < length; i++) {
-                attribute = element.attributes[i];
+                const attribute = element.attributes[i];
                 if (attribute.name.indexOf(prefix) === 0) {
-                    name = attribute.name.replace(new RegExp('^' + prefix), '');
+                    let name = attribute.name.replace(new RegExp('^' + prefix), '');
                     if (camelCaseName) {
-                        tmp = name.split('-');
+                        let tmp = name.split('-');
                         name = '';
                         for (let j = 0, innerLength = tmp.length; j < innerLength; j++) {
                             if (name.length) {
@@ -365,7 +363,7 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
             element.style.setProperty('display', 'none', '');
         },
         /**
-         * Shorthand function to show an element previously hidden by using `elHide()`.
+         * Shorthand function to show an element previously hidden by using `hide()`.
          */
         show(element) {
             element.style.removeProperty('display');

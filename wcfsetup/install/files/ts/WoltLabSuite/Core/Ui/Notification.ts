@@ -14,21 +14,23 @@ type Callback = () => void;
 
 let _busy = false;
 let _callback: Callback | null = null;
+let _didInit = false;
 let _message: HTMLElement;
-let _notificationElement: HTMLElement | null = null;
+let _notificationElement: HTMLElement;
 let _timeout: number;
 
 function init() {
-  if (_notificationElement === null) {
-    _notificationElement = document.createElement('div');
-    _notificationElement.id = 'systemNotification';
+  if (_didInit) return;
+  _didInit = true;
+  
+  _notificationElement = document.createElement('div');
+  _notificationElement.id = 'systemNotification';
 
-    _message = document.createElement('p');
-    _message.addEventListener('click', hide);
-    _notificationElement.appendChild(_message);
+  _message = document.createElement('p');
+  _message.addEventListener('click', hide);
+  _notificationElement.appendChild(_message);
 
-    document.body.appendChild(_notificationElement);
-  }
+  document.body.appendChild(_notificationElement);
 }
 
 /**
@@ -37,7 +39,7 @@ function init() {
 function hide() {
   clearTimeout(_timeout);
 
-  _notificationElement!.classList.remove('active');
+  _notificationElement.classList.remove('active');
 
   if (_callback !== null) {
     _callback();
@@ -61,6 +63,6 @@ export function show(message: string, callback?: Callback, cssClassName?: string
   _message.className = cssClassName || 'success';
   _message.textContent = Language.get(message || 'wcf.global.success');
 
-  _notificationElement!.classList.add('active');
+  _notificationElement.classList.add('active');
   _timeout = setTimeout(hide, 2000);
 }
