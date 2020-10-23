@@ -10,7 +10,7 @@ use wcf\system\WCF;
 /**
  * Handles the persistent user data storage.
  * 
- * @author	Alexander Ebert
+ * @author	Tim Duesterhus, Alexander Ebert
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Storage
@@ -23,16 +23,9 @@ class UserStorageHandler extends SingletonFactory {
 	protected $cache = [];
 	
 	/**
-	 * list of outdated data records
-	 * @var	mixed[][]
+	 * @var (string|null)[][]
 	 */
-	protected $resetFields = [];
-	
-	/**
-	 * list of updated or new data records
-	 * @var	mixed[][]
-	 */
-	protected $updateFields = [];
+	protected $log = [];
 	
 	/**
 	 * redis instance
@@ -81,18 +74,21 @@ class UserStorageHandler extends SingletonFactory {
 				$this->cache[$row['userID']] = [];
 			}
 			
-			// Skip the field, if the value was reset before the storage had been loaded.
-			if (isset($this->resetFields[$row['userID']]) && in_array($row['field'], $this->resetFields[$row['userID']])) {
-				continue;
+			if (isset($this->log[$row['userID']])) {
+				if (array_key_exists($row['field'], $this->log[$row['userID']])) {
+					$logged = $this->log[$row['userID']][$row['field']];
+					
+					// Use the new value if the field was updated.
+					if ($logged !== null) {
+						$this->cache[$row['userID']][$row['field']] = $logged;
+					}
+					
+					// In any case: Skip this field, because it was updated or resetted before it was loaded.
+					continue;
+				}
 			}
 			
-			// Use the new value, if the field was updated before the storage had been loaded.
-			if (isset($this->updateFields[$row['userID']][$row['field']])) {
-				$this->cache[$row['userID']][$row['field']] = $this->updateFields[$row['userID']][$row['field']];
-			}
-			else {
-				$this->cache[$row['userID']][$row['field']] = $row['fieldValue'];
-			}
+			$this->cache[$row['userID']][$row['field']] = $row['fieldValue'];
 		}
 	}
 	
@@ -184,16 +180,14 @@ class UserStorageHandler extends SingletonFactory {
 			return;
 		}
 		
-		$this->updateFields[$userID][$field] = $fieldValue;
+		if (!isset($this->log[$userID])) {
+			$this->log[$userID] = [];
+		}
+		$this->log[$userID][$field] = $fieldValue;
 		
 		// update data cache for given user
 		if (isset($this->cache[$userID])) {
 			$this->cache[$userID][$field] = $fieldValue;
-		}
-		
-		// The reset is superfluous, because the value is going to be updated.
-		if (isset($this->resetFields[$userID]) && in_array($field, $this->resetFields[$userID])) {
-			unset($this->resetFields[$userID][array_search($field, $this->resetFields[$userID])]);
 		}
 	}
 	
@@ -214,16 +208,12 @@ class UserStorageHandler extends SingletonFactory {
 		}
 		
 		foreach ($userIDs as $userID) {
-			$this->resetFields[$userID][] = $field;
-			
-			if (isset($this->cache[$userID][$field])) {
-				unset($this->cache[$userID][$field]);
+			if (!isset($this->log[$userID])) {
+				$this->log[$userID] = [];
 			}
+			$this->log[$userID][$field] = null;
 			
-			// The update is superfluous, because the value is going to be reset.
-			if (isset($this->updateFields[$userID][$field])) {
-				unset($this->updateFields[$userID][$field]);
-			}
+			unset($this->cache[$userID][$field]);
 		}
 	}
 	
@@ -244,21 +234,11 @@ class UserStorageHandler extends SingletonFactory {
 		$statement->execute([$field]);
 		
 		foreach ($this->cache as $userID => $fields) {
-			if (isset($fields[$field])) {
-				unset($this->cache[$userID][$field]);
-			}
+			unset($this->cache[$userID][$field]);
 		}
 		
-		foreach ($this->updateFields as $userID => $fields) {
-			if (isset($fields[$field])) {
-				unset($this->updateFields[$userID][$field]);
-			}
-		}
-		
-		foreach ($this->resetFields as $userID => $fields) {
-			if (in_array($field, $fields)) {
-				unset($this->resetFields[$userID][array_search($field, $this->resetFields[$userID])]);
-			}
+		foreach ($this->log as $userID => $fields) {
+			unset($this->log[$userID][$field]);
 		}
 	}
 	
@@ -268,78 +248,52 @@ class UserStorageHandler extends SingletonFactory {
 	public function shutdown() {
 		if ($this->redis) return;
 		
-		$toReset = [];
-		
-		// remove outdated entries
-		foreach ($this->resetFields as $userID => $fields) {
-			foreach ($fields as $field) {
-				if (!isset($toReset[$field])) $toReset[$field] = [];
-				$toReset[$field][] = $userID;
-			}
-		}
-		foreach ($this->updateFields as $userID => $fieldValues) {
-			foreach ($fieldValues as $field => $fieldValue) {
-				if (!isset($toReset[$field])) $toReset[$field] = [];
-				$toReset[$field][] = $userID;
-			}
-		}
-		ksort($toReset);
-		
-		// exclude values which should be resetted
-		foreach ($this->updateFields as $userID => $fieldValues) {
-			if (isset($this->resetFields[$userID])) {
-				foreach ($fieldValues as $field => $fieldValue) {
-					if (in_array($field, $this->resetFields[$userID])) {
-						unset($this->updateFields[$userID][$field]);
-					}
-				}
-				
-				if (empty($this->updateFields[$userID])) {
-					unset($this->updateFields[$userID]);
-				}
-			}
-		}
-		ksort($this->updateFields);
-		
 		$i = 0;
 		while (true) {
 			try {
-				WCF::getDB()->beginTransaction();
-				
-				// reset data
-				foreach ($toReset as $field => $userIDs) {
-					sort($userIDs);
+				foreach ($this->log as $userID => $fields) {
+					WCF::getDB()->beginTransaction();
+					
+					ksort($fields);
+					
+					// Lock the user.
+					$sql = "SELECT	*
+						FROM	wcf".WCF_N."_user
+						WHERE	userID = ?
+						FOR UPDATE";
+					$statement = WCF::getDB()->prepareStatement($sql);
+					$statement->execute([$userID]);
+					
+					// Delete existing data.
 					$conditions = new PreparedStatementConditionBuilder();
-					$conditions->add("userID IN (?)", [$userIDs]);
-					$conditions->add("field = ?", [$field]);
+					$conditions->add("userID = ?", [$userID]);
+					$conditions->add("field IN (?)", [array_keys($fields)]);
 					
 					$sql = "DELETE FROM	wcf".WCF_N."_user_storage
 						".$conditions;
 					$statement = WCF::getDB()->prepareStatement($sql);
 					$statement->execute($conditions->getParameters());
-				}
-				
-				// insert data
-				if (!empty($this->updateFields)) {
+					
+					// Insert updated data.
 					$sql = "INSERT INTO	wcf".WCF_N."_user_storage
 								(userID, field, fieldValue)
 						VALUES		(?, ?, ?)";
 					$statement = WCF::getDB()->prepareStatement($sql);
-					
-					foreach ($this->updateFields as $userID => $fieldValues) {
-						ksort($fieldValues);
+					foreach ($fields as $field => $fieldValue) {
+						if ($fieldValue === null) continue;
 						
-						foreach ($fieldValues as $field => $fieldValue) {
-							$statement->execute([
-								$userID,
-								$field,
-								$fieldValue
-							]);
-						}
+						$statement->execute([
+							$userID,
+							$field,
+							$fieldValue
+						]);
 					}
+					
+					WCF::getDB()->commitTransaction();
+					
+					// Delete log entry as the commit succeeded.
+					unset($this->log[$userID]);
 				}
-				
-				WCF::getDB()->commitTransaction();
 				break;
 			}
 			catch (\Exception $e) {
@@ -354,7 +308,6 @@ class UserStorageHandler extends SingletonFactory {
 				usleep(mt_rand(0, .1e6)); // 0 to .1 seconds
 			}
 		}
-		$this->resetFields = $this->updateFields = [];
 	}
 	
 	/**
@@ -367,11 +320,13 @@ class UserStorageHandler extends SingletonFactory {
 			return;
 		}
 		
-		$this->resetFields = $this->updateFields = $this->cache = [];
+		$this->cache = [];
 		
 		$sql = "DELETE FROM	wcf".WCF_N."_user_storage";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
+		
+		$this->log = [];
 	}
 	
 	/**
