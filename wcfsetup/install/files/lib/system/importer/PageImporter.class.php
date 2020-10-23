@@ -40,9 +40,8 @@ class PageImporter extends AbstractImporter {
 				'title' => (!empty($contentData['title']) ? $contentData['title'] : ''),
 				'content' => (!empty($contentData['content']) ? $contentData['content'] : ''),
 				'metaDescription' => (!empty($contentData['metaDescription']) ? $contentData['metaDescription'] : ''),
-				'metaKeywords' => (!empty($contentData['content']) ? $contentData['content'] : ''),
 				'customURL' => (!empty($contentData['customURL']) ? $contentData['customURL'] : ''),
-				'hasEmbeddedObjects' => (!empty($contentData['hasEmbeddedObjects']) ? $contentData['hasEmbeddedObjects'] : 0)
+				'hasEmbeddedObjects' => (!empty($contentData['hasEmbeddedObjects']) ? $contentData['hasEmbeddedObjects'] : 0),
 			];
 		}
 		if (empty($contents)) return 0;
@@ -80,9 +79,8 @@ class PageImporter extends AbstractImporter {
 				'title' => $contentData['title'],
 				'content' => $contentData['content'],
 				'metaDescription' => $contentData['metaDescription'],
-				'metaKeywords' => $contentData['metaKeywords'],
 				'customURL' => $contentData['customURL'],
-				'hasEmbeddedObjects' => $contentData['hasEmbeddedObjects']
+				'hasEmbeddedObjects' => $contentData['hasEmbeddedObjects'],
 			]);
 		}
 		
