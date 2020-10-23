@@ -362,7 +362,7 @@ const UiDropdownSimple = {
   /**
    * Initializes a dropdown.
    */
-  init(button: HTMLElement, isLazyInitialization: boolean | MouseEvent): boolean {
+  init(button: HTMLElement, isLazyInitialization?: boolean | MouseEvent): boolean {
     UiDropdownSimple.setup();
 
     button.setAttribute('role', 'button');
