@@ -16,6 +16,8 @@ use wcf\util\UserUtil;
  * @since       5.4
  */
 class FloodControl extends SingletonFactory {
+	const PRUNE_TIME = TIME_NOW - 31 * 86400;
+	
 	/**
 	 * Returns the number of contents by a certain identifier type within a certain
 	 * period of time `[$time-$interval, $time]` and the earliest time within the period content
@@ -176,6 +178,16 @@ class FloodControl extends SingletonFactory {
 			$objectType,
 			$this->getUserIdentifier($objectType, $userID)
 		);
+	}
+	
+	/**
+	 * Removes old flood control entries.
+	 */
+	public function prune(): void {
+		$sql = "DELETE FROM     wcf" . WCF_N . "_flood_control
+			WHERE           time <= ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([static::PRUNE_TIME]);
 	}
 	
 	/**
