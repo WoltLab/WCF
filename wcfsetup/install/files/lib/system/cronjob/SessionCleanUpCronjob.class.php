@@ -6,7 +6,7 @@ use wcf\system\session\SessionHandler;
 /**
  * Deletes expired sessions.
  * 
- * @author	Tim Duesterhus Marcel Werk
+ * @author	Tim Duesterhus, Marcel Werk
  * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cronjob

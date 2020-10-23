@@ -237,7 +237,7 @@ class PackageInstallationDispatcher {
 					]);
 					\define('SIGNATURE_SECRET', $signatureSecret);
 					HeaderUtil::setCookie(
-						"acp_session",
+						'acp_session',
 						CryptoUtil::createSignedString(\hex2bin(WCF::getSession()->sessionID))
 					);
 					

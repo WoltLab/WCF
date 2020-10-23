@@ -488,7 +488,7 @@ final class SessionHandler extends SingletonFactory {
 		// Refresh cookie.
 		if ($this->user->userID && !$this->isACP) {
 			HeaderUtil::setCookie(
-				($this->isACP ? 'acp' : 'user')."_session",
+				($this->isACP ? 'acp' : 'user') . '_session',
 				$this->getSessionIdForCookie($this->sessionID),
 				TIME_NOW + 86400 * 14
 			);
@@ -534,10 +534,9 @@ final class SessionHandler extends SingletonFactory {
 		$this->sessionID = \bin2hex(\random_bytes(20));
 		
 		// Create new session.
-		$sql = "INSERT INTO wcf".WCF_N."_".($this->isACP ? 'acp' : 'user')."_session
-				(sessionID, ipAddress, userAgent, lastActivityTime, sessionVariables)
-			VALUES
-				(?, ?, ?, ?, ?)";
+		$sql = "INSERT INTO     wcf".WCF_N."_".($this->isACP ? 'acp' : 'user')."_session
+			                (sessionID, ipAddress, userAgent, lastActivityTime, sessionVariables)
+			VALUES          (?, ?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
 			$this->sessionID,
