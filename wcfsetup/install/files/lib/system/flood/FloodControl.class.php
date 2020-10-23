@@ -20,7 +20,7 @@ final class FloodControl extends SingletonFactory {
 	
 	/**
 	 * Returns the number of contents by a certain identifier type within a certain
-	 * period of time `[$time-$interval, $time]` and the earliest time within the period content
+	 * period of time `($time-$interval, $time]` and the earliest time within the period content
 	 * was created.
 	 */
 	private function countContentByIdentifier(string $objectType, string $identifier, \DateInterval $interval, int $time): array {
@@ -28,8 +28,7 @@ final class FloodControl extends SingletonFactory {
 			FROM    wcf" . WCF_N . "_flood_control
 			WHERE   objectTypeID = ?
 			        AND identifier = ?
-			        AND time >= ?
-			        AND time <= ?";
+			        AND (time > ? AND time <= ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
 			$this->getObjectTypeID($objectType),
@@ -43,7 +42,7 @@ final class FloodControl extends SingletonFactory {
 	
 	/**
 	 * Returns the number of contents the active user created of the given type within a certain
-	 * period of time `[$time-$interval, $time]` and the earliest time within the period content
+	 * period of time `($time-$interval, $time]` and the earliest time within the period content
 	 * was created.
 	 */
 	public function countContent(string $objectType, \DateInterval $interval, int $time = TIME_NOW): array {
@@ -57,7 +56,7 @@ final class FloodControl extends SingletonFactory {
 	
 	/**
 	 * Returns the number of contents a guest created of the given type within a certain period
-	 * of time `[$time-$interval, $time]` and the earliest time within the period content was
+	 * of time `($time-$interval, $time]` and the earliest time within the period content was
 	 * created.
 	 */
 	public function countGuestContent(string $objectType, string $ipAddress, \DateInterval $interval, int $time = TIME_NOW): array {
