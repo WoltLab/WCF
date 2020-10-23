@@ -95,6 +95,49 @@ class FloodControl extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns the last time a guest/user created content of the given type or `null` if they
+	 * have not created such content.
+	 */
+	protected function getLastTimeByIdentifier(string $objectType, string $identifier): ?int {
+		$sql = "SELECT          time
+			FROM            wcf" . WCF_N . "_flood_control
+			WHERE           objectTypeID = ?
+			                AND identifier = ?
+			ORDER BY        time DESC";
+		$statement = WCF::getDB()->prepareStatement($sql, 1);
+		$statement->execute([
+			$this->getObjectTypeID($objectType),
+			$identifier,
+		]);
+		
+		return $statement->fetchSingleColumn();
+	}
+	
+	/**
+	 * Returns the last time a guest created content of the given type or `null` if they have not
+	 * created such content.
+	 */
+	public function getGuestLastTime(string $objectType, string $ipAddress): ?int {
+		return $this->getLastTimeByIdentifier(
+			$objectType,
+			$this->getGuestIdentifier($objectType, $ipAddress)
+		);
+	}
+	
+	/**
+	 * Returns the last time the active user created content of the given type or `null` if they
+	 * have not created such content.
+	 */
+	public function getLastTime(string $objectType): ?int {
+		if (WCF::getUser()->userID) {
+			return $this->getUserLastTime($objectType, WCF::getUser()->userID);
+		}
+		else {
+			return $this->getGuestLastTime($objectType, UserUtil::getIpAddress());
+		}
+	}
+	
+	/**
 	 * Returns the id of the given flood control object type.
 	 * 
 	 * @throws      \InvalidArgumentException       if the object type is invalid
@@ -121,6 +164,17 @@ class FloodControl extends SingletonFactory {
 			'user:' . $userID,
 			'wcf' . WCF_N. '_flood_log' . $objectType,
 			true
+		);
+	}
+	
+	/**
+	 * Returns the last time a user created content of the given type or `null` if they have not
+	 * created such content.
+	 */
+	public function getUserLastTime(string $objectType, int $userID): ?int {
+		return $this->getLastTimeByIdentifier(
+			$objectType,
+			$this->getUserIdentifier($objectType, $userID)
 		);
 	}
 	
