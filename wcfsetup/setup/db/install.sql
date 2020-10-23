@@ -99,9 +99,9 @@ CREATE TABLE wcf1_acp_session (
 	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
 	userAgent VARCHAR(255) NOT NULL DEFAULT '',
 	lastActivityTime INT(10) NOT NULL DEFAULT 0,
-	requestURI VARCHAR(255) NOT NULL DEFAULT '',
-	requestMethod VARCHAR(7) NOT NULL DEFAULT '',
-	sessionVariables MEDIUMTEXT
+	sessionVariables MEDIUMBLOB,
+	KEY (userID),
+	KEY (lastActivityTime)
 );
 
 DROP TABLE IF EXISTS wcf1_acp_session_access_log;
@@ -111,7 +111,7 @@ CREATE TABLE wcf1_acp_session_access_log (
 	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
 	time INT(10) NOT NULL DEFAULT 0,
 	requestURI VARCHAR(255) NOT NULL DEFAULT '',
-	requestMethod VARCHAR(7) NOT NULL DEFAULT '',
+	requestMethod VARCHAR(255) NOT NULL DEFAULT '',
 	className VARCHAR(255) NOT NULL DEFAULT '',
 	KEY sessionLogID (sessionLogID)
 );
@@ -127,16 +127,6 @@ CREATE TABLE wcf1_acp_session_log (
 	time INT(10) NOT NULL DEFAULT 0,
 	lastActivityTime INT(10) NOT NULL DEFAULT 0,
 	KEY sessionID (sessionID)
-);
-
-DROP TABLE IF EXISTS wcf1_acp_session_virtual;
-CREATE TABLE wcf1_acp_session_virtual (
-	virtualSessionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	sessionID CHAR(40) NOT NULL,
-	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
-	userAgent VARCHAR(191) NOT NULL DEFAULT '',
-	lastActivityTime INT(10) NOT NULL DEFAULT 0,
-	UNIQUE KEY (sessionID, ipAddress, userAgent)
 );
 
 DROP TABLE IF EXISTS wcf1_acp_template;
@@ -1271,16 +1261,6 @@ CREATE TABLE wcf1_session (
 	UNIQUE KEY uniqueUserID (userID)
 );
 
-DROP TABLE IF EXISTS wcf1_session_virtual;
-CREATE TABLE wcf1_session_virtual (
-	virtualSessionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	sessionID CHAR(40) NOT NULL,
-	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
-	userAgent VARCHAR(191) NOT NULL DEFAULT '',
-	lastActivityTime INT(10) NOT NULL DEFAULT 0,
-	UNIQUE KEY (sessionID, ipAddress, userAgent)
-);
-
 DROP TABLE IF EXISTS wcf1_smiley;
 CREATE TABLE wcf1_smiley (
 	smileyID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1839,6 +1819,18 @@ CREATE TABLE wcf1_user_rank (
 	hideTitle TINYINT(1) NOT NULL DEFAULT 0
 );
 
+DROP TABLE IF EXISTS wcf1_user_session;
+CREATE TABLE wcf1_user_session (
+	sessionID CHAR(40) NOT NULL PRIMARY KEY,
+	userID INT(10),
+	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
+	userAgent VARCHAR(255) NOT NULL DEFAULT '',
+	lastActivityTime INT(10) NOT NULL DEFAULT 0,
+	sessionVariables MEDIUMBLOB,
+	KEY (userID),
+	KEY (lastActivityTime)
+);
+
 DROP TABLE IF EXISTS wcf1_user_storage;
 CREATE TABLE wcf1_user_storage (
 	userID INT(10) NOT NULL,
@@ -1892,8 +1884,6 @@ ALTER TABLE wcf1_acp_session ADD FOREIGN KEY (userID) REFERENCES wcf1_user (user
 ALTER TABLE wcf1_acp_session_access_log ADD FOREIGN KEY (sessionLogID) REFERENCES wcf1_acp_session_log (sessionLogID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_acp_session_log ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
-
-ALTER TABLE wcf1_acp_session_virtual ADD FOREIGN KEY (sessionID) REFERENCES wcf1_acp_session (sessionID) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE wcf1_acp_template ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
@@ -2060,8 +2050,6 @@ ALTER TABLE wcf1_session ADD FOREIGN KEY (spiderID) REFERENCES wcf1_spider (spid
 ALTER TABLE wcf1_session ADD FOREIGN KEY (pageID) REFERENCES wcf1_page (pageID) ON DELETE SET NULL;
 ALTER TABLE wcf1_session ADD FOREIGN KEY (parentPageID) REFERENCES wcf1_page (pageID) ON DELETE SET NULL;
 
-ALTER TABLE wcf1_session_virtual ADD FOREIGN KEY (sessionID) REFERENCES wcf1_session (sessionID) ON DELETE CASCADE ON UPDATE CASCADE;
-
 ALTER TABLE wcf1_smiley ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_smiley ADD FOREIGN KEY (categoryID) REFERENCES wcf1_category (categoryID) ON DELETE SET NULL;
 
@@ -2170,6 +2158,8 @@ ALTER TABLE wcf1_user_profile_visitor ADD FOREIGN KEY (userID) REFERENCES wcf1_u
 
 ALTER TABLE wcf1_user_object_watch ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_object_watch ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user_session ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_user_special_trophy ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_special_trophy ADD FOREIGN KEY (trophyID) REFERENCES wcf1_trophy (trophyID) ON DELETE CASCADE;

@@ -71,7 +71,7 @@
 							{event name='userMenuItemsAfter'}
 						</ul>
 					</div>
-					<a class="interactiveDropdownShowAll" href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="WCF.Dropdown.Interactive.Handler.close('userMenu'); WCF.System.Confirmation.show('{lang}wcf.user.logout.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;">{lang}wcf.user.logout{/lang}</a>
+					<a class="interactiveDropdownShowAll" href="{link controller='Logout'}t={csrfToken type=url}{/link}" onclick="WCF.Dropdown.Interactive.Handler.close('userMenu'); WCF.System.Confirmation.show('{lang}wcf.user.logout.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;">{lang}wcf.user.logout{/lang}</a>
 				</div>
 				<script data-relocate="true">
 					$(function() {
@@ -162,21 +162,12 @@
 									</dd>
 								</dl>
 								
-								{if $__wcf->getUserAuthenticationFactory()->getUserAuthentication()->supportsPersistentLogins()}
-									<dl>
-										<dt></dt>
-										<dd>
-											<label for="useCookies"><input type="checkbox" id="useCookies" name="useCookies" value="1" checked> {lang}wcf.user.useCookies{/lang}</label>
-										</dd>
-									</dl>
-								{/if}
-								
 								{event name='fields'}
 								
 								<div class="userLoginButtons">
 									<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 									<input type="hidden" name="url" value="{$__wcf->session->requestURI}">
-									{@SECURITY_TOKEN_INPUT_TAG}
+									{csrfToken}
 								</div>
 							</section>
 							
@@ -242,7 +233,7 @@
 								'wcf.user.button.register': '{jslang}wcf.user.button.register{/jslang}',
 								'wcf.user.login': '{jslang}wcf.user.login{/jslang}'
 							});
-							new WCF.User.Login(true);
+							WCF.User.QuickLogin.init();
 						});
 					</script>
 				</li>

@@ -1343,13 +1343,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.page_description"><![CDATA[Page Description]]></item>
 		<item name="wcf.acp.option.page_title"><![CDATA[Page Title]]></item>
 		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
-		<item name="wcf.acp.option.session_timeout"><![CDATA[User Session Timeout]]></item>
-		<item name="wcf.acp.option.session_timeout.description"><![CDATA[User sessions expire after the following seconds.]]></item>
-		<item name="wcf.acp.option.session_validate_ip_address"><![CDATA[Validate IP address]]></item>
-		<item name="wcf.acp.option.session_validate_ip_address.description"><![CDATA[Enabling this validation might cause issues for users with a rotating IP address.]]></item>
-		<item name="wcf.acp.option.session_validate_user_agent"><![CDATA[Validate user-agent]]></item>
-		<item name="wcf.acp.option.session_enable_virtualization"><![CDATA[Allow session sharing]]></item>
-		<item name="wcf.acp.option.session_enable_virtualization.description"><![CDATA[Users can login from multiple devices (desktop, tablet, smartphone, etc.) concurrently; all devices will share the same session. Disabling this will restrict users to only one device (session) at a time, causing all the other device sessions to terminate. It is not recommended to disable this option.]]></item>
 		<item name="wcf.acp.option.timezone"><![CDATA[Timezone]]></item>
 		<item name="wcf.acp.option.timezone.description"><![CDATA[The default timezone of your page.]]></item>
 		<item name="wcf.acp.option.ip_address_search_engine"><![CDATA[Search Engine for IP Addresses]]></item>
@@ -4524,7 +4517,6 @@ Attachments:
 		<item name="wcf.user.username.error.3rdParty"><![CDATA[Account is connected with a 3rd party website, password cannot be requested.]]></item>
 		<item name="wcf.user.username.error.3rdParty.redirect"><![CDATA[Account is connected with {$provider}, password cannot be requested. You will now be redirected to the login with {$provider}.]]></item>
 		<item name="wcf.user.loginOrRegister"><![CDATA[Login{if !REGISTER_DISABLED} or register{/if}]]></item>
-		<item name="wcf.user.useCookies"><![CDATA[Remain logged in]]></item>
 		<item name="wcf.user.usernameOrEmail"><![CDATA[Username or Email Address]]></item>
 		<item name="wcf.user.gender.male"><![CDATA[Male]]></item>
 		<item name="wcf.user.gender.female"><![CDATA[Female]]></item>

@@ -58,11 +58,7 @@ class ACPSessionLog extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public function isActive() {
-		if ($this->active && $this->lastActivityTime > TIME_NOW - SESSION_TIMEOUT) {
-			return 1;
-		}
-		
-		return 0;
+		return $this->active ? true : false;
 	}
 	
 	/**

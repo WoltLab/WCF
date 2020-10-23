@@ -13,7 +13,7 @@
 		<div class="formSubmit">
 			<input type="submit" name="accept" value="{lang}wcf.user.register.disclaimer.accept{/lang}" accesskey="s">
 			<a class="button" href="{link}{/link}">{lang}wcf.user.register.disclaimer.decline{/lang}</a>
-			{@SECURITY_TOKEN_INPUT_TAG}
+			{csrfToken}
 		</div>
 	{/if}
 </form>

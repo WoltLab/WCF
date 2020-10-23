@@ -46,15 +46,6 @@
 				</dd>
 			</dl>
 			
-			{if $supportsPersistentLogins}
-				<dl>
-					<dt></dt>
-					<dd>
-						<label for="useCookies"><input type="checkbox" id="useCookies" name="useCookies" value="1"{if $useCookies} checked{/if}> {lang}wcf.user.useCookies{/lang}</label>
-					</dd>
-				</dl>
-			{/if}
-			
 			{event name='fields'}
 			
 			{include file='captcha' supportsAsyncCaptcha=true}
@@ -62,7 +53,7 @@
 			<div class="userLoginButtons">
 				<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 				<input type="hidden" name="url" value="{$url}">
-				{@SECURITY_TOKEN_INPUT_TAG}
+				{csrfToken}
 			</div>
 		</section>
 		
@@ -120,11 +111,5 @@
 		{/hascontent}
 	</form>
 </div>
-
-<script data-relocate="true">
-	$(function() {
-		new WCF.User.Login(false);
-	});
-</script>
 
 {include file='footer' __disableAds=true}

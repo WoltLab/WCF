@@ -2,6 +2,7 @@
 namespace wcf\util;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\SystemException;
 use wcf\system\request\RequestHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\session\SessionHandler;
@@ -42,14 +43,28 @@ final class HeaderUtil {
 	 * @param	integer		$expire
 	 */
 	public static function setCookie($name, $value = '', $expire = 0) {
+		$cookieDomain = self::getCookieDomain();
+		
+		@header('Set-Cookie: '.rawurlencode(COOKIE_PREFIX.$name).'='.rawurlencode((string) $value).($expire ? '; expires='.gmdate('D, d-M-Y H:i:s', $expire).' GMT; max-age='.($expire - TIME_NOW) : '').'; path=/'.($cookieDomain !== null ? '; domain='.$cookieDomain : '').(RouteHandler::secureConnection() ? '; secure' : '').'; HttpOnly', false);
+	}
+	
+	/**
+	 * Returns the cookie domain for the active application or 'null' if no domain should be specified.
+	 */
+	public static function getCookieDomain(): ?string {
 		$application = ApplicationHandler::getInstance()->getActiveApplication();
 		$addDomain = (mb_strpos($application->cookieDomain, '.') === false || StringUtil::endsWith($application->cookieDomain, '.lan') || StringUtil::endsWith($application->cookieDomain, '.local')) ? false : true;
+		
+		if (!$addDomain) {
+			return null;
+		}
+		
 		$cookieDomain = $application->cookieDomain;
 		if ($addDomain && strpos($cookieDomain, ':') !== false) {
 			$cookieDomain = explode(':', $cookieDomain, 2)[0];
 		}
 		
-		@header('Set-Cookie: '.rawurlencode(COOKIE_PREFIX.$name).'='.rawurlencode((string) $value).($expire ? '; expires='.gmdate('D, d-M-Y H:i:s', $expire).' GMT; max-age='.($expire - TIME_NOW) : '').'; path=/'.($addDomain ? '; domain='.$cookieDomain : '').(RouteHandler::secureConnection() ? '; secure' : '').'; HttpOnly', false);
+		return $cookieDomain;
 	}
 	
 	/**

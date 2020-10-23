@@ -5203,37 +5203,6 @@ WCF.System.PageNavigation = {
 };
 
 /**
- * Sends periodical requests to protect the session from expiring. By default
- * it will send a request 1 minute before it would expire.
- * 
- * @param	integer		seconds
- */
-WCF.System.KeepAlive = Class.extend({
-	/**
-	 * Initializes the WCF.System.KeepAlive class.
-	 * 
-	 * @param	integer		seconds
-	 */
-	init: function(seconds) {
-		new WCF.PeriodicalExecuter(function(pe) {
-			new WCF.Action.Proxy({
-				autoSend: true,
-				data: {
-					actionName: 'keepAlive',
-					className: 'wcf\\data\\session\\SessionAction'
-				},
-				failure: function() { pe.stop(); },
-				showLoadingOverlay: false,
-				success: function(data) {
-					WCF.System.PushNotification.executeCallbacks(data);
-				},
-				suppressErrors: true
-			});
-		}, (seconds * 1000));
-	}
-});
-
-/**
  * System-wide handler for push notifications.
  */
 WCF.System.PushNotification = {

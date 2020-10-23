@@ -155,7 +155,7 @@
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		<input type="hidden" name="action" value="{@$action}">
 		<input type="hidden" name="userIDs" value="{implode from=$userIDs item=userID glue=','}{@$userID}{/implode}">
-		{@SECURITY_TOKEN_INPUT_TAG}
+		{csrfToken}
 	</div>
 </form>
 

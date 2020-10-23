@@ -447,7 +447,7 @@ class RegisterForm extends UserAddForm {
 		$registerVia3rdParty = $eventParameters['registerVia3rdParty'];
 		
 		$this->additionalFields['languageID'] = $this->languageID;
-		if (LOG_IP_ADDRESS) $this->additionalFields['registrationIpAddress'] = WCF::getSession()->ipAddress;
+		if (LOG_IP_ADDRESS) $this->additionalFields['registrationIpAddress'] = UserUtil::getIpAddress();
 		
 		// generate activation code
 		$addDefaultGroups = true;
@@ -547,7 +547,6 @@ class RegisterForm extends UserAddForm {
 		}
 		
 		// login user
-		UserAuthenticationFactory::getInstance()->getUserAuthentication()->storeAccessData($user, $this->username, $this->password);
 		WCF::getSession()->unregister('registrationRandomFieldNames');
 		WCF::getSession()->unregister('registrationStartTime');
 		$this->saved();

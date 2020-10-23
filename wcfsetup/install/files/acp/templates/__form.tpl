@@ -62,7 +62,7 @@
 {if $form->isAjax()}
 	</section>
 {else}
-		{@SECURITY_TOKEN_INPUT_TAG}
+		{csrfToken}
 	</form>
 {/if}
 

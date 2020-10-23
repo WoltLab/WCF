@@ -28,10 +28,6 @@ define('BLACKLIST_IP_ADDRESSES', '');
 define('BLACKLIST_USER_AGENTS', '');
 define('BLACKLIST_HOSTNAMES', '');
 
-define('SESSION_TIMEOUT', 3600);
-define('SESSION_VALIDATE_IP_ADDRESS', 0);
-define('SESSION_VALIDATE_USER_AGENT', 0);
-
 define('CACHE_SOURCE_TYPE', 'disk');
 define('IMAGE_ADAPTER_TYPE', 'gd');
 define('MODULE_MASTER_PASSWORD', 0);

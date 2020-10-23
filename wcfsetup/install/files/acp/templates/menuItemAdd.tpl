@@ -185,7 +185,7 @@
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}">
 		{if $action == 'add'}<input type="hidden" name="menuID" value="{@$menuID}">{/if}
-		{@SECURITY_TOKEN_INPUT_TAG}
+		{csrfToken}
 	</div>
 </form>
 

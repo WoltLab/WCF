@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\session;
 use wcf\data\acp\session\ACPSessionEditor;
+use wcf\data\session\Session;
 use wcf\system\event\EventHandler;
-use wcf\util\HeaderUtil;
 
 /**
  * Handles the ACP session of the active user.
@@ -14,14 +14,12 @@ use wcf\util\HeaderUtil;
  */
 class ACPSessionFactory {
 	/**
-	 * suffix used to tell ACP and frontend cookies apart
-	 * @var string
+	 * @deprecated 5.4 - This property is not read any longer.
 	 */
-	protected $cookieSuffix = '_acp';
+	protected $cookieSuffix = 'acp_';
 	
 	/**
-	 * session editor class name
-	 * @var	string
+	 * @deprecated 5.4 - This property is not read any longer.
 	 */
 	protected $sessionEditor = ACPSessionEditor::class;
 	
@@ -29,9 +27,7 @@ class ACPSessionFactory {
 	 * Loads the object of the active session.
 	 */
 	public function load() {
-		// get session
-		$sessionID = $this->readSessionID();
-		SessionHandler::getInstance()->load($this->sessionEditor, $sessionID);
+		SessionHandler::getInstance()->loadFromCookie();
 		
 		// call beforeInit event
 		if (!defined('NO_IMPORTS')) {
@@ -47,45 +43,16 @@ class ACPSessionFactory {
 	}
 	
 	/**
-	 * Returns true if session was based upon a valid cookie.
-	 * 
-	 * @return	boolean
-	 * @since	3.0
+	 * @deprecated 5.4 - Sessions are fully managed by SessionHandler.
 	 */
 	public function hasValidCookie() {
-		if (isset($_COOKIE[COOKIE_PREFIX.'cookieHash'.$this->cookieSuffix])) {
-			if ($_COOKIE[COOKIE_PREFIX.'cookieHash'.$this->cookieSuffix] == SessionHandler::getInstance()->sessionID) {
-				return true;
-			}
-		}
-		
-		return false;
+		return SessionHandler::getInstance()->hasValidCookie();
 	}
 	
 	/**
 	 * Initializes the session system.
 	 */
 	protected function init() {
-		if (!$this->hasValidCookie()) {
-			// cookie support will be enabled upon next request
-			HeaderUtil::setCookie('cookieHash'.$this->cookieSuffix, SessionHandler::getInstance()->sessionID);
-		}
-		
 		SessionHandler::getInstance()->initSession();
-	}
-	
-	/**
-	 * Returns the session id from cookie. Returns an empty string,
-	 * if no session cookie was provided.
-	 * 
-	 * @return	string
-	 */
-	protected function readSessionID() {
-		// get sessionID from cookie
-		if (isset($_COOKIE[COOKIE_PREFIX.'cookieHash'.$this->cookieSuffix])) {
-			return $_COOKIE[COOKIE_PREFIX . 'cookieHash'.$this->cookieSuffix];
-		}
-		
-		return '';
 	}
 }
