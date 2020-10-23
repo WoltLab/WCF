@@ -2552,7 +2552,6 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.pip.page.contentContent"><![CDATA[Inhalt]]></item>
 		<item name="wcf.acp.pip.page.contentCustomURL"><![CDATA[Individuelle URL]]></item>
 		<item name="wcf.acp.pip.page.contentMetaDescription"><![CDATA[Meta Description]]></item>
-		<item name="wcf.acp.pip.page.contentMetaKeywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.pip.page.contentTitle"><![CDATA[Titel]]></item>
 		<item name="wcf.acp.pip.page.controller"><![CDATA[Seiten-Controller]]></item>
 		<item name="wcf.acp.pip.page.cssClassName"><![CDATA[CSS-Klassen]]></item>
