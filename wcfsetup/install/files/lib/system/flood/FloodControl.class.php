@@ -101,11 +101,10 @@ final class FloodControl extends SingletonFactory {
 	 * type or `null` if they have not created such content within the stored period of time.
 	 */
 	private function getLastTimeByIdentifier(string $objectType, string $identifier): ?int {
-		$sql = "SELECT          time
-			FROM            wcf" . WCF_N . "_flood_control
-			WHERE           objectTypeID = ?
-			                AND identifier = ?
-			ORDER BY        time DESC";
+		$sql = "SELECT  MAX(time)
+			FROM    wcf" . WCF_N . "_flood_control
+			WHERE   objectTypeID = ?
+				AND identifier = ?";
 		$statement = WCF::getDB()->prepareStatement($sql, 1);
 		$statement->execute([
 			$this->getObjectTypeID($objectType),
