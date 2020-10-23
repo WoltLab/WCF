@@ -165,9 +165,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 		}
 		
 		$defaultAlgorithm = $manager->getDefaultAlgorithm();
-		if (\get_class($algorithm) !== \get_class($defaultAlgorithm) ||
-			$algorithm->needsRehash($hash)
-		) {
+		if (\get_class($algorithm) !== \get_class($defaultAlgorithm) || $algorithm->needsRehash($hash)) {
 			$userEditor = new UserEditor($this);
 			$userEditor->update([
 				'password' => $password,

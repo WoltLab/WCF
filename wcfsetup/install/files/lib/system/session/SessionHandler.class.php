@@ -317,7 +317,7 @@ final class SessionHandler extends SingletonFactory {
 			// We intentionally do not extract the signed value and instead just verify the correctness.
 			//
 			// The reason is that common JavaScript frameworks can use the contents of the `XSRF-TOKEN` cookie as-is,
-			// without performing any processing on it, improving interoperability. Leveraging that JavaScript framework
+			// without performing any processing on it, improving interoperability. Leveraging this JavaScript framework
 			// feature requires the author of the controller to check the value within the `X-XSRF-TOKEN` request header
 			// instead of the WoltLab Suite specific `t` parameter, though.
 			//
