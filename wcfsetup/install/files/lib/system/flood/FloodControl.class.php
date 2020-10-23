@@ -115,8 +115,8 @@ final class FloodControl extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the last time a guest created content of the given type or `null` if they have not
-	 * created such content.
+	 * Returns the last time a guest with the given ip address created content of the given type
+	 * or `null` if they have not created such content within the stored period of time.
 	 */
 	public function getGuestLastTime(string $objectType, string $ipAddress): ?int {
 		return $this->getLastTimeByIdentifier(
@@ -169,8 +169,8 @@ final class FloodControl extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the last time a user created content of the given type or `null` if they have not
-	 * created such content.
+	 * Returns the last time a user with the given id created content of the given type or
+	 * `null` if they have not created such content within the stored period of time.
 	 */
 	public function getUserLastTime(string $objectType, int $userID): ?int {
 		return $this->getLastTimeByIdentifier(
