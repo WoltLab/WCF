@@ -730,7 +730,7 @@ class PageAddForm extends AbstractForm {
 			'title' => $this->title,
 			'content' => $this->content,
 			'metaDescription' => $this->metaDescription,
-			// @deprecated 5.4 - Meta keywords have been removed with 5.4.
+			/** @deprecated 5.4 - Meta keywords have been removed with 5.4. */
 			'metaKeywords' => [],
 			'boxIDs' => $this->boxIDs,
 			'availableApplications' => $this->availableApplications,
