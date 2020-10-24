@@ -1,90 +1,110 @@
 /**
  * Callback-based pagination.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Ui/Pagination
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Ui/Pagination
  */
-define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLabSuite/Core/Ui/Page/JumpTo'], function (Core, Language, ObjectMap, StringUtil, UiPageJumpTo) {
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+define(["require", "exports", "../Core", "../Language", "../StringUtil", "./Page/JumpTo"], function (require, exports, Core, Language, StringUtil, UiPageJumpTo) {
     "use strict";
-    /**
-     * @constructor
-     */
-    function UiPagination(element, options) { this.init(element, options); }
-    UiPagination.prototype = {
-        /**
-         * maximum number of displayed page links, should match the PHP implementation
-         * @var	{int}
-         */
-        SHOW_LINKS: 11,
+    Core = __importStar(Core);
+    Language = __importStar(Language);
+    StringUtil = __importStar(StringUtil);
+    UiPageJumpTo = __importStar(UiPageJumpTo);
+    class UiPagination {
         /**
          * Initializes the pagination.
          *
-         * @param	{Element}	element		container element
-         * @param	{object}	options		list of initialization options
+         * @param  {Element}  element    container element
+         * @param  {object}  options    list of initialization options
          */
-        init: function (element, options) {
-            this._element = element;
-            this._options = Core.extend({
-                activePage: 1,
-                maxPage: 1,
-                callbackShouldSwitch: null,
-                callbackSwitch: null
-            }, options);
-            if (typeof this._options.callbackShouldSwitch !== 'function')
-                this._options.callbackShouldSwitch = null;
-            if (typeof this._options.callbackSwitch !== 'function')
-                this._options.callbackSwitch = null;
-            this._element.classList.add('pagination');
-            this._rebuild(this._element);
-        },
+        constructor(element, options) {
+            this.callbackSwitch = null;
+            this.callbackShouldSwitch = null;
+            this.element = element;
+            this.activePage = options.activePage;
+            this.maxPage = options.maxPage;
+            if (typeof options.callbackSwitch === 'function') {
+                this.callbackSwitch = options.callbackSwitch;
+            }
+            if (typeof options.callbackShouldSwitch === 'function') {
+                this.callbackShouldSwitch = options.callbackShouldSwitch;
+            }
+            this.element.classList.add('pagination');
+            this.rebuild();
+        }
         /**
          * Rebuilds the entire pagination UI.
          */
-        _rebuild: function () {
-            var hasHiddenPages = false;
+        rebuild() {
+            let hasHiddenPages = false;
             // clear content
-            this._element.innerHTML = '';
-            var list = elCreate('ul'), link;
-            var listItem = elCreate('li');
+            this.element.innerHTML = '';
+            const list = document.createElement('ul');
+            let listItem = document.createElement('li');
             listItem.className = 'skip';
             list.appendChild(listItem);
-            var iconClassNames = 'icon icon24 fa-chevron-left';
-            if (this._options.activePage > 1) {
-                link = elCreate('a');
+            let iconClassNames = 'icon icon24 fa-chevron-left';
+            if (this.activePage > 1) {
+                const link = document.createElement('a');
                 link.className = iconClassNames + ' jsTooltip';
                 link.href = '#';
                 link.title = Language.get('wcf.global.page.previous');
                 link.rel = 'prev';
                 listItem.appendChild(link);
-                link.addEventListener(WCF_CLICK_EVENT, this.switchPage.bind(this, this._options.activePage - 1));
+                link.addEventListener('click', this.switchPage.bind(this, this.activePage - 1));
             }
             else {
                 listItem.innerHTML = '<span class="' + iconClassNames + '"></span>';
                 listItem.classList.add('disabled');
             }
             // add first page
-            list.appendChild(this._createLink(1));
+            list.appendChild(this.createLink(1));
             // calculate page links
-            var maxLinks = this.SHOW_LINKS - 4;
-            var linksBefore = this._options.activePage - 2;
-            if (linksBefore < 0)
+            let maxLinks = UiPagination.showLinks - 4;
+            let linksBefore = this.activePage - 2;
+            if (linksBefore < 0) {
                 linksBefore = 0;
-            var linksAfter = this._options.maxPage - (this._options.activePage + 1);
-            if (linksAfter < 0)
+            }
+            let linksAfter = this.maxPage - (this.activePage + 1);
+            if (linksAfter < 0) {
                 linksAfter = 0;
-            if (this._options.activePage > 1 && this._options.activePage < this._options.maxPage)
+            }
+            if (this.activePage > 1 && this.activePage < this.maxPage) {
                 maxLinks--;
-            var half = maxLinks / 2;
-            var left = this._options.activePage;
-            var right = this._options.activePage;
-            if (left < 1)
+            }
+            const half = maxLinks / 2;
+            let left = this.activePage;
+            let right = this.activePage;
+            if (left < 1) {
                 left = 1;
-            if (right < 1)
+            }
+            if (right < 1) {
                 right = 1;
-            if (right > this._options.maxPage - 1)
-                right = this._options.maxPage - 1;
+            }
+            if (right > this.maxPage - 1) {
+                right = this.maxPage - 1;
+            }
             if (linksBefore >= half) {
                 left -= half;
             }
@@ -101,18 +121,20 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLabSuite/Core/Ui/Pag
             }
             right = Math.ceil(right);
             left = Math.ceil(left);
-            if (left < 1)
+            if (left < 1) {
                 left = 1;
-            if (right > this._options.maxPage)
-                right = this._options.maxPage;
+            }
+            if (right > this.maxPage) {
+                right = this.maxPage;
+            }
             // left ... links
-            var jumpToHtml = '<a class="jsTooltip" title="' + Language.get('wcf.page.jumpTo') + '">&hellip;</a>';
+            const jumpToHtml = '<a class="jsTooltip" title="' + Language.get('wcf.page.jumpTo') + '">&hellip;</a>';
             if (left > 1) {
                 if (left - 1 < 2) {
-                    list.appendChild(this._createLink(2));
+                    list.appendChild(this.createLink(2));
                 }
                 else {
-                    listItem = elCreate('li');
+                    listItem = document.createElement('li');
                     listItem.className = 'jumpTo';
                     listItem.innerHTML = jumpToHtml;
                     list.appendChild(listItem);
@@ -120,16 +142,16 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLabSuite/Core/Ui/Pag
                 }
             }
             // visible links
-            for (var i = left + 1; i < right; i++) {
-                list.appendChild(this._createLink(i));
+            for (let i = left + 1; i < right; i++) {
+                list.appendChild(this.createLink(i));
             }
             // right ... links
-            if (right < this._options.maxPage) {
-                if (this._options.maxPage - right < 2) {
-                    list.appendChild(this._createLink(this._options.maxPage - 1));
+            if (right < this.maxPage) {
+                if (this.maxPage - right < 2) {
+                    list.appendChild(this.createLink(this.maxPage - 1));
                 }
                 else {
-                    listItem = elCreate('li');
+                    listItem = document.createElement('li');
                     listItem.className = 'jumpTo';
                     listItem.innerHTML = jumpToHtml;
                     list.appendChild(listItem);
@@ -137,108 +159,104 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLabSuite/Core/Ui/Pag
                 }
             }
             // add last page
-            list.appendChild(this._createLink(this._options.maxPage));
+            list.appendChild(this.createLink(this.maxPage));
             // add next button
-            listItem = elCreate('li');
+            listItem = document.createElement('li');
             listItem.className = 'skip';
             list.appendChild(listItem);
             iconClassNames = 'icon icon24 fa-chevron-right';
-            if (this._options.activePage < this._options.maxPage) {
-                link = elCreate('a');
+            if (this.activePage < this.maxPage) {
+                const link = document.createElement('a');
                 link.className = iconClassNames + ' jsTooltip';
                 link.href = '#';
                 link.title = Language.get('wcf.global.page.next');
                 link.rel = 'next';
                 listItem.appendChild(link);
-                link.addEventListener(WCF_CLICK_EVENT, this.switchPage.bind(this, this._options.activePage + 1));
+                link.addEventListener('click', this.switchPage.bind(this, this.activePage + 1));
             }
             else {
                 listItem.innerHTML = '<span class="' + iconClassNames + '"></span>';
                 listItem.classList.add('disabled');
             }
             if (hasHiddenPages) {
-                elData(list, 'pages', this._options.maxPage);
+                list.dataset.pages = this.maxPage.toString();
                 UiPageJumpTo.init(list, this.switchPage.bind(this));
             }
-            this._element.appendChild(list);
-        },
+            this.element.appendChild(list);
+        }
         /**
          * Creates a link to a specific page.
-         *
-         * @param	{int}		pageNo		page number
-         * @return	{Element}	link element
          */
-        _createLink: function (pageNo) {
-            var listItem = elCreate('li');
-            if (pageNo !== this._options.activePage) {
-                var link = elCreate('a');
+        createLink(pageNo) {
+            const listItem = document.createElement('li');
+            if (pageNo !== this.activePage) {
+                const link = document.createElement('a');
                 link.textContent = StringUtil.addThousandsSeparator(pageNo);
-                link.addEventListener(WCF_CLICK_EVENT, this.switchPage.bind(this, pageNo));
+                link.addEventListener('click', this.switchPage.bind(this, pageNo));
                 listItem.appendChild(link);
             }
             else {
                 listItem.classList.add('active');
-                listItem.innerHTML = '<span>' + StringUtil.addThousandsSeparator(pageNo) + '</span><span class="invisible">' + Language.get('wcf.page.pagePosition', { pageNo: pageNo, pages: this._options.maxPage }) + '</span>';
+                listItem.innerHTML = '<span>' + StringUtil.addThousandsSeparator(pageNo) + '</span><span class="invisible">' + Language.get('wcf.page.pagePosition', {
+                    pageNo: pageNo,
+                    pages: this.maxPage,
+                }) + '</span>';
             }
             return listItem;
-        },
+        }
         /**
          * Returns the active page.
-         *
-         * @return	{integer}
          */
-        getActivePage: function () {
-            return this._options.activePage;
-        },
+        getActivePage() {
+            return this.activePage;
+        }
         /**
          * Returns the pagination Ui element.
-         *
-         * @return	{HTMLElement}
          */
-        getElement: function () {
-            return this._element;
-        },
+        getElement() {
+            return this.element;
+        }
         /**
          * Returns the maximum page.
-         *
-         * @return	{integer}
          */
-        getMaxPage: function () {
-            return this._options.maxPage;
-        },
+        getMaxPage() {
+            return this.maxPage;
+        }
         /**
          * Switches to given page number.
-         *
-         * @param	{int}		pageNo		page number
-         * @param	{object}	event		event object
          */
-        switchPage: function (pageNo, event) {
-            if (typeof event === 'object') {
+        switchPage(pageNo, event) {
+            if (event instanceof MouseEvent) {
                 event.preventDefault();
+                const target = event.currentTarget;
                 // force tooltip to vanish and strip positioning
-                if (event.currentTarget && elData(event.currentTarget, 'tooltip')) {
-                    var tooltip = elById('balloonTooltip');
+                if (target && target.dataset.tooltip) {
+                    const tooltip = document.getElementById('balloonTooltip');
                     if (tooltip) {
-                        Core.triggerEvent(event.currentTarget, 'mouseleave');
+                        Core.triggerEvent(target, 'mouseleave');
                         tooltip.style.removeProperty('top');
                         tooltip.style.removeProperty('bottom');
                     }
                 }
             }
             pageNo = ~~pageNo;
-            if (pageNo > 0 && this._options.activePage !== pageNo && pageNo <= this._options.maxPage) {
-                if (this._options.callbackShouldSwitch !== null) {
-                    if (this._options.callbackShouldSwitch(pageNo) !== true) {
+            if (pageNo > 0 && this.activePage !== pageNo && pageNo <= this.maxPage) {
+                if (this.callbackShouldSwitch !== null) {
+                    if (!this.callbackShouldSwitch(pageNo)) {
                         return;
                     }
                 }
-                this._options.activePage = pageNo;
-                this._rebuild();
-                if (this._options.callbackSwitch !== null) {
-                    this._options.callbackSwitch(pageNo);
+                this.activePage = pageNo;
+                this.rebuild();
+                if (this.callbackSwitch !== null) {
+                    this.callbackSwitch(pageNo);
                 }
             }
         }
-    };
+    }
+    /**
+     * maximum number of displayed page links, should match the PHP implementation
+     */
+    UiPagination.showLinks = 11;
     return UiPagination;
 });
