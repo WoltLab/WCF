@@ -39,7 +39,7 @@
 					
 					<div class="htmlContent userMessage" itemprop="text">{@$response->getFormattedMessage()}</div>
 
-					{if MODULE_LIKE && $likeData|isset}{include file="reactionSummaryList" isTiny=true reactionData=$likeData[response] objectType="com.woltlab.wcf.comment.response" objectID=$response->responseID}{else}<a href="#" class="reactionSummaryList reactionSummaryListTiny jsOnly" data-object-type="com.woltlab.wcf.comment.response" data-object-id="{$response->responseID}" title="{lang}wcf.reactions.summary.listReactions{/lang}" style="display: none;"></a>{/if}
+					{if MODULE_LIKE && $commentManager->supportsLike() && $likeData|isset}{include file="reactionSummaryList" isTiny=true reactionData=$likeData[response] objectType="com.woltlab.wcf.comment.response" objectID=$response->responseID}{else}<a href="#" class="reactionSummaryList reactionSummaryListTiny jsOnly" data-object-type="com.woltlab.wcf.comment.response" data-object-id="{$response->responseID}" title="{lang}wcf.reactions.summary.listReactions{/lang}" style="display: none;"></a>{/if}
 					
 					<nav class="jsMobileNavigation buttonGroupNavigation">
 						<ul class="buttonList iconList">
@@ -50,7 +50,7 @@
 								<li class="jsReportCommentResponse jsOnly" data-object-id="{@$response->responseID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="jsTooltip"><span class="icon icon16 fa-exclamation-triangle"></span> <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
 							{/if}
 							
-							{if MODULE_LIKE && $__wcf->session->getPermission('user.like.canLike') && $response->userID != $__wcf->user->userID}<li class="jsOnly"><a href="#" class="reactButton jsTooltip {if $likeData[response][$response->responseID]|isset && $likeData[response][$response->responseID]->reactionTypeID} active{/if}" title="{lang}wcf.reactions.react{/lang}" data-reaction-type-id="{if $likeData[response][$response->responseID]|isset && $likeData[response][$response->responseID]->reactionTypeID}{$likeData[response][$response->responseID]->reactionTypeID}{else}0{/if}"><span class="icon icon16 fa-smile-o"></span> <span class="invisible">{lang}wcf.reactions.react{/lang}</span></a></li>{/if}
+							{if MODULE_LIKE && $commentManager->supportsLike() && $__wcf->session->getPermission('user.like.canLike') && $response->userID != $__wcf->user->userID}<li class="jsOnly"><a href="#" class="reactButton jsTooltip {if $likeData[response][$response->responseID]|isset && $likeData[response][$response->responseID]->reactionTypeID} active{/if}" title="{lang}wcf.reactions.react{/lang}" data-reaction-type-id="{if $likeData[response][$response->responseID]|isset && $likeData[response][$response->responseID]->reactionTypeID}{$likeData[response][$response->responseID]->reactionTypeID}{else}0{/if}"><span class="icon icon16 fa-smile-o"></span> <span class="invisible">{lang}wcf.reactions.react{/lang}</span></a></li>{/if}
 							
 							{event name='commentOptions'}
 						</ul>
