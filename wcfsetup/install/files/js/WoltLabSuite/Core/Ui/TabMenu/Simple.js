@@ -1,110 +1,127 @@
 /**
  * Simple tab menu implementation with a straight-forward logic.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Ui/TabMenu/Simple
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Ui/TabMenu/Simple
  */
-define(['Dictionary', 'Environment', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function (Dictionary, Environment, EventHandler, DomTraverse, DomUtil) {
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+define(["require", "exports", "../../Dom/Traverse", "../../Dom/Util", "../../Environment", "../../Event/Handler"], function (require, exports, DomTraverse, Util_1, Environment, EventHandler) {
     "use strict";
-    /**
-     * @param	{Element}	container	container element
-     * @constructor
-     */
-    function TabMenuSimple(container) {
-        this._container = container;
-        this._containers = new Dictionary();
-        this._isLegacy = null;
-        this._store = null;
-        this._tabs = new Dictionary();
-    }
-    TabMenuSimple.prototype = {
+    DomTraverse = __importStar(DomTraverse);
+    Util_1 = __importDefault(Util_1);
+    Environment = __importStar(Environment);
+    EventHandler = __importStar(EventHandler);
+    class TabMenuSimple {
+        constructor(container) {
+            this.containers = new Map();
+            this.isLegacy = false;
+            this.store = null;
+            this.tabs = new Map();
+            this.container = container;
+        }
         /**
          * Validates the properties and DOM structure of this container.
          *
          * Expected DOM:
          * <div class="tabMenuContainer">
-         * 	<nav>
-         * 		<ul>
-         * 			<li data-name="foo"><a>bar</a></li>
-         * 		</ul>
-         * 	</nav>
+         *  <nav>
+         *    <ul>
+         *      <li data-name="foo"><a>bar</a></li>
+         *    </ul>
+         *  </nav>
          *
-         * 	<div id="foo">baz</div>
+         *  <div id="foo">baz</div>
          * </div>
-         *
-         * @return	{boolean}	false if any properties are invalid or the DOM does not match the expectations
          */
-        validate: function () {
-            if (!this._container.classList.contains('tabMenuContainer')) {
+        validate() {
+            if (!this.container.classList.contains('tabMenuContainer')) {
                 return false;
             }
-            var nav = DomTraverse.childByTag(this._container, 'NAV');
+            const nav = DomTraverse.childByTag(this.container, 'NAV');
             if (nav === null) {
                 return false;
             }
             // get children
-            var tabs = elByTag('li', nav);
+            const tabs = nav.querySelectorAll('li');
             if (tabs.length === 0) {
                 return false;
             }
-            var container, containers = DomTraverse.childrenByTag(this._container, 'DIV'), name, i, length;
-            for (i = 0, length = containers.length; i < length; i++) {
-                container = containers[i];
-                name = elData(container, 'name');
+            DomTraverse.childrenByTag(this.container, 'DIV').forEach((container) => {
+                let name = container.dataset.name;
                 if (!name) {
-                    name = DomUtil.identify(container);
+                    name = Util_1.default.identify(container);
+                    container.dataset.name = name;
                 }
-                elData(container, 'name', name);
-                this._containers.set(name, container);
-            }
-            var containerId = this._container.id, tab;
-            for (i = 0, length = tabs.length; i < length; i++) {
-                tab = tabs[i];
-                name = this._getTabName(tab);
+                this.containers.set(name, container);
+            });
+            const containerId = this.container.id;
+            tabs.forEach(tab => {
+                const name = this._getTabName(tab);
                 if (!name) {
-                    continue;
+                    return;
                 }
-                if (this._tabs.has(name)) {
+                if (this.tabs.has(name)) {
                     throw new Error("Tab names must be unique, li[data-name='" + name + "'] (tab menu id: '" + containerId + "') exists more than once.");
                 }
-                container = this._containers.get(name);
+                const container = this.containers.get(name);
                 if (container === undefined) {
                     throw new Error("Expected content element for li[data-name='" + name + "'] (tab menu id: '" + containerId + "').");
                 }
-                else if (container.parentNode !== this._container) {
+                else if (container.parentNode !== this.container) {
                     throw new Error("Expected content element '" + name + "' (tab menu id: '" + containerId + "') to be a direct children.");
                 }
                 // check if tab holds exactly one children which is an anchor element
                 if (tab.childElementCount !== 1 || tab.children[0].nodeName !== 'A') {
                     throw new Error("Expected exactly one <a> as children for li[data-name='" + name + "'] (tab menu id: '" + containerId + "').");
                 }
-                this._tabs.set(name, tab);
-            }
-            if (!this._tabs.size) {
+                this.tabs.set(name, tab);
+            });
+            if (!this.tabs.size) {
                 throw new Error("Expected at least one tab (tab menu id: '" + containerId + "').");
             }
-            if (this._isLegacy) {
-                elData(this._container, 'is-legacy', true);
-                this._tabs.forEach(function (tab, name) {
-                    elAttr(tab, 'aria-controls', name);
+            if (this.isLegacy) {
+                this.container.dataset.isLegacy = 'true';
+                this.tabs.forEach(function (tab, name) {
+                    tab.setAttribute('aria-controls', name);
                 });
             }
             return true;
-        },
+        }
         /**
          * Initializes this tab menu.
          *
-         * @param	{Dictionary=}	oldTabs		previous list of tabs
-         * @return	{?Element}	parent tab for selection or null
+         * @param  {Dictionary=}  oldTabs    previous list of tabs
+         * @return  {?Element}  parent tab for selection or null
          */
-        init: function (oldTabs) {
+        init(oldTabs) {
             oldTabs = oldTabs || null;
             // bind listeners
-            this._tabs.forEach((function (tab) {
-                if (!oldTabs || oldTabs.get(elData(tab, 'name')) !== tab) {
-                    tab.children[0].addEventListener(WCF_CLICK_EVENT, this._onClick.bind(this));
+            this.tabs.forEach(tab => {
+                if (!oldTabs || oldTabs.get(tab.dataset.name || '') !== tab) {
+                    tab.children[0].addEventListener('click', this._onClick.bind(this));
                     // iOS 13 changed the behavior for click events after scrolling the menu. It prevents
                     // the synthetic mouse events like "click" from triggering for a short duration after
                     // a scrolling has occurred. If the user scrolls to the end of the list and immediately
@@ -116,10 +133,14 @@ define(['Dictionary', 'Environment', 'EventHandler', 'Dom/Traverse', 'Dom/Util']
                     // both the menu and the page normally, but still benefit from snappy reactions when
                     // tapping a menu item.
                     if (Environment.platform() === 'ios') {
-                        var isClick = false;
-                        tab.children[0].addEventListener('touchstart', function () { isClick = true; });
-                        tab.children[0].addEventListener('touchmove', function () { isClick = false; });
-                        tab.children[0].addEventListener('touchend', (function (event) {
+                        let isClick = false;
+                        tab.children[0].addEventListener('touchstart', () => {
+                            isClick = true;
+                        });
+                        tab.children[0].addEventListener('touchmove', () => {
+                            isClick = false;
+                        });
+                        tab.children[0].addEventListener('touchend', (event) => {
                             if (isClick) {
                                 isClick = false;
                                 // This will block the regular click event from firing.
@@ -127,69 +148,74 @@ define(['Dictionary', 'Environment', 'EventHandler', 'Dom/Traverse', 'Dom/Util']
                                 // Invoke the click callback manually.
                                 this._onClick(event);
                             }
-                        }).bind(this));
+                        });
                     }
                 }
-            }).bind(this));
-            var returnValue = null;
+            });
+            let returnValue = null;
             if (!oldTabs) {
-                var hash = TabMenuSimple.getIdentifierFromHash();
-                var selectTab = null;
+                const hash = TabMenuSimple.getIdentifierFromHash();
+                let selectTab = undefined;
                 if (hash !== '') {
-                    selectTab = this._tabs.get(hash);
+                    selectTab = this.tabs.get(hash);
                     // check for parent tab menu
-                    if (selectTab && this._container.parentNode.classList.contains('tabMenuContainer')) {
-                        returnValue = this._container;
+                    if (selectTab) {
+                        const item = this.container.parentNode;
+                        if (item.classList.contains('tabMenuContainer')) {
+                            returnValue = item;
+                        }
                     }
                 }
                 if (!selectTab) {
-                    var preselect = elData(this._container, 'preselect') || elData(this._container, 'active');
-                    if (preselect === "true" || !preselect)
+                    let preselect = this.container.dataset.preselect || this.container.dataset.active;
+                    if (preselect === "true" || !preselect) {
                         preselect = true;
+                    }
                     if (preselect === true) {
-                        this._tabs.forEach(function (tab) {
-                            if (!selectTab && !elIsHidden(tab) && (!tab.previousElementSibling || elIsHidden(tab.previousElementSibling))) {
+                        this.tabs.forEach(function (tab) {
+                            if (!selectTab && !Util_1.default.isHidden(tab) && (!tab.previousElementSibling || Util_1.default.isHidden(tab.previousElementSibling))) {
                                 selectTab = tab;
                             }
                         });
                     }
-                    else if (preselect !== "false") {
-                        selectTab = this._tabs.get(preselect);
+                    else if (typeof preselect === 'string' && preselect !== "false") {
+                        selectTab = this.tabs.get(preselect);
                     }
                 }
                 if (selectTab) {
-                    this._containers.forEach(function (container) {
+                    this.containers.forEach(container => {
                         container.classList.add('hidden');
                     });
                     this.select(null, selectTab, true);
                 }
-                var store = elData(this._container, 'store');
+                const store = this.container.dataset.store;
                 if (store) {
-                    var input = elCreate('input');
+                    const input = document.createElement('input');
                     input.type = 'hidden';
                     input.name = store;
-                    input.value = elData(this.getActiveTab(), 'name');
-                    this._container.appendChild(input);
-                    this._store = input;
+                    input.value = this.getActiveTab().dataset.name || '';
+                    this.container.appendChild(input);
+                    this.store = input;
                 }
             }
             return returnValue;
-        },
+        }
         /**
          * Selects a tab.
          *
-         * @param	{?(string|int)}         name		tab name or sequence no
-         * @param	{Element=}		tab		tab element
-         * @param	{boolean=}		disableEvent	suppress event handling
+         * @param  {?(string|int)}         name    tab name or sequence no
+         * @param  {Element=}    tab    tab element
+         * @param  {boolean=}    disableEvent  suppress event handling
          */
-        select: function (name, tab, disableEvent) {
-            tab = tab || this._tabs.get(name);
+        select(name, tab, disableEvent) {
+            name = (name) ? name.toString() : '';
+            tab = tab || this.tabs.get(name);
             if (!tab) {
                 // check if name is an integer
-                if (~~name == name) {
+                if (~~name === +name) {
                     name = ~~name;
-                    var i = 0;
-                    this._tabs.forEach(function (item) {
+                    let i = 0;
+                    this.tabs.forEach(item => {
                         if (i === name) {
                             tab = item;
                         }
@@ -197,63 +223,63 @@ define(['Dictionary', 'Environment', 'EventHandler', 'Dom/Traverse', 'Dom/Util']
                     });
                 }
                 if (!tab) {
-                    throw new Error("Expected a valid tab name, '" + name + "' given (tab menu id: '" + this._container.id + "').");
+                    throw new Error("Expected a valid tab name, '" + name + "' given (tab menu id: '" + this.container.id + "').");
                 }
             }
-            name = name || elData(tab, 'name');
+            name = (name || tab.dataset.name || '');
             // unmark active tab
-            var oldTab = this.getActiveTab();
-            var oldContent = null;
+            const oldTab = this.getActiveTab();
+            let oldContent = null;
             if (oldTab) {
-                var oldTabName = elData(oldTab, 'name');
+                const oldTabName = oldTab.dataset.name;
                 if (oldTabName === name) {
                     // same tab
                     return;
                 }
                 if (!disableEvent) {
-                    EventHandler.fire('com.woltlab.wcf.simpleTabMenu_' + this._container.id, 'beforeSelect', {
+                    EventHandler.fire('com.woltlab.wcf.simpleTabMenu_' + this.container.id, 'beforeSelect', {
                         tab: oldTab,
-                        tabName: oldTabName
+                        tabName: oldTabName,
                     });
                 }
                 oldTab.classList.remove('active');
-                oldContent = this._containers.get(elData(oldTab, 'name'));
+                oldContent = this.containers.get(oldTab.dataset.name || '');
                 oldContent.classList.remove('active');
                 oldContent.classList.add('hidden');
-                if (this._isLegacy) {
+                if (this.isLegacy) {
                     oldTab.classList.remove('ui-state-active');
                     oldContent.classList.remove('ui-state-active');
                 }
             }
             tab.classList.add('active');
-            var newContent = this._containers.get(name);
+            const newContent = this.containers.get(name);
             newContent.classList.add('active');
             newContent.classList.remove('hidden');
-            if (this._isLegacy) {
+            if (this.isLegacy) {
                 tab.classList.add('ui-state-active');
                 newContent.classList.add('ui-state-active');
             }
-            if (this._store) {
-                this._store.value = name;
+            if (this.store) {
+                this.store.value = name;
             }
             if (!disableEvent) {
-                EventHandler.fire('com.woltlab.wcf.simpleTabMenu_' + this._container.id, 'select', {
+                EventHandler.fire('com.woltlab.wcf.simpleTabMenu_' + this.container.id, 'select', {
                     active: tab,
                     activeName: name,
                     previous: oldTab,
-                    previousName: oldTab ? elData(oldTab, 'name') : null
+                    previousName: oldTab ? oldTab.dataset.name : null,
                 });
-                var jQuery = (this._isLegacy && typeof window.jQuery === 'function') ? window.jQuery : null;
+                const jQuery = (this.isLegacy && typeof window.jQuery === 'function') ? window.jQuery : null;
                 if (jQuery) {
                     // simulate jQuery UI Tabs event
-                    jQuery(this._container).trigger('wcftabsbeforeactivate', {
+                    jQuery(this.container).trigger('wcftabsbeforeactivate', {
                         newTab: jQuery(tab),
                         oldTab: jQuery(oldTab),
                         newPanel: jQuery(newContent),
-                        oldPanel: jQuery(oldContent)
+                        oldPanel: jQuery(oldContent),
                     });
                 }
-                var location = window.location.href.replace(/#+[^#]*$/, '');
+                let location = window.location.href.replace(/#+[^#]*$/, '');
                 if (TabMenuSimple.getIdentifierFromHash() === name) {
                     location += window.location.hash;
                 }
@@ -261,120 +287,112 @@ define(['Dictionary', 'Environment', 'EventHandler', 'Dom/Traverse', 'Dom/Util']
                     location += '#' + name;
                 }
                 // update history
-                //noinspection JSCheckFunctionSignatures
-                window.history.replaceState(undefined, undefined, location);
+                window.history.replaceState(undefined, '', location);
             }
+            // TODO
+            /*
             require(['WoltLabSuite/Core/Ui/TabMenu'], function (UiTabMenu) {
-                //noinspection JSUnresolvedFunction
-                UiTabMenu.scrollToTab(tab);
+              //noinspection JSUnresolvedFunction
+              UiTabMenu.scrollToTab(tab);
             });
-        },
+             */
+        }
         /**
          * Selects the first visible tab of the tab menu and return `true`. If there is no
          * visible tab, `false` is returned.
          *
          * The visibility of a tab is determined by calling `elIsHidden` with the tab menu
          * item as the parameter.
-         *
-         * @return	{boolean}
          */
-        selectFirstVisible: function () {
-            var selectTab;
-            this._tabs.forEach(function (tab) {
-                if (!selectTab && !elIsHidden(tab)) {
+        selectFirstVisible() {
+            let selectTab = null;
+            this.tabs.forEach(tab => {
+                if (!selectTab && !Util_1.default.isHidden(tab)) {
                     selectTab = tab;
                 }
-            }.bind(this));
+            });
             if (selectTab) {
-                this.select(undefined, selectTab, false);
+                this.select(null, selectTab, false);
             }
-            return !!selectTab;
-        },
+            return selectTab !== null;
+        }
         /**
          * Rebuilds all tabs, must be invoked after adding or removing of tabs.
          *
          * Warning: Do not remove tabs if you plan to add these later again or at least clone the nodes
          *          to prevent issues with already bound event listeners. Consider hiding them via CSS.
          */
-        rebuild: function () {
-            var oldTabs = new Dictionary();
-            oldTabs.merge(this._tabs);
+        rebuild() {
+            const oldTabs = new Map(this.tabs);
             this.validate();
             this.init(oldTabs);
-        },
+        }
         /**
          * Returns true if this tab menu has a tab with provided name.
-         *
-         * @param       {string}        name    tab name
-         * @return      {boolean}       true if tab name matches
          */
-        hasTab: function (name) {
-            return this._tabs.has(name);
-        },
+        hasTab(name) {
+            return this.tabs.has(name);
+        }
         /**
          * Handles clicks on a tab.
-         *
-         * @param	{object}	event	event object
          */
-        _onClick: function (event) {
+        _onClick(event) {
             event.preventDefault();
-            this.select(null, event.currentTarget.parentNode);
-        },
+            const target = event.currentTarget;
+            this.select(null, target.parentNode);
+        }
         /**
          * Returns the tab name.
-         *
-         * @param	{Element}	tab	tab element
-         * @return	{string}	tab name
          */
-        _getTabName: function (tab) {
-            var name = elData(tab, 'name');
+        _getTabName(tab) {
+            let name = tab.dataset.name || null;
             // handle legacy tab menus
             if (!name) {
                 if (tab.childElementCount === 1 && tab.children[0].nodeName === 'A') {
-                    if (tab.children[0].href.match(/#([^#]+)$/)) {
+                    const link = tab.children[0];
+                    if (link.href.match(/#([^#]+)$/)) {
                         name = RegExp.$1;
-                        if (elById(name) === null) {
+                        if (document.getElementById(name) === null) {
                             name = null;
                         }
                         else {
-                            this._isLegacy = true;
-                            elData(tab, 'name', name);
+                            this.isLegacy = true;
+                            tab.dataset.name = name;
                         }
                     }
                 }
             }
             return name;
-        },
+        }
         /**
          * Returns the currently active tab.
-         *
-         * @return	{Element}	active tab
          */
-        getActiveTab: function () {
-            return elBySel('#' + this._container.id + ' > nav > ul > li.active');
-        },
+        getActiveTab() {
+            return document.querySelector('#' + this.container.id + ' > nav > ul > li.active');
+        }
         /**
          * Returns the list of registered content containers.
          *
-         * @returns	{Dictionary}	content containers
+         * @returns  {Dictionary}  content containers
          */
-        getContainers: function () {
-            return this._containers;
-        },
+        getContainers() {
+            return this.containers;
+        }
         /**
          * Returns the list of registered tabs.
          *
-         * @returns	{Dictionary}	tab items
+         * @returns  {Dictionary}  tab items
          */
-        getTabs: function () {
-            return this._tabs;
+        getTabs() {
+            return this.tabs;
         }
-    };
-    TabMenuSimple.getIdentifierFromHash = function () {
-        if (window.location.hash.match(/^#+([^\/]+)+(?:\/.+)?/)) {
-            return RegExp.$1;
+        static getIdentifierFromHash() {
+            if (window.location.hash.match(/^#+([^\/]+)+(?:\/.+)?/)) {
+                return RegExp.$1;
+            }
+            return '';
         }
-        return '';
-    };
+        ;
+    }
     return TabMenuSimple;
 });

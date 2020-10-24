@@ -13,6 +13,7 @@ declare global {
     WCF_PATH: string;
     WSC_API_URL: string;
 
+    jQuery: any;
     WCF: any;
     bc_wcfDomUtil: typeof DomUtil;
     bc_wcfSimpleDropdown: typeof UiDropdownSimple;
