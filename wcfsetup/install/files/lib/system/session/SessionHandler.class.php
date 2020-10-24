@@ -845,18 +845,11 @@ final class SessionHandler extends SingletonFactory {
 			}
 		}
 		
-		// Delete session.
-		$sql = "DELETE FROM wcf".WCF_N."_".($this->isACP ? 'acp' : 'user')."_session
-			WHERE	sessionID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$this->sessionID]);
-		
-		// Delete legacy session.
-		if (!$this->isACP) {
-			$sql = "DELETE FROM wcf".WCF_N."_session
-				WHERE	sessionID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([$this->sessionID]);
+		if ($this->isACP) {
+			$this->deleteAcpSession($this->sessionID);
+		}
+		else {
+			$this->deleteUserSession($this->sessionID);
 		}
 	}
 	
@@ -990,5 +983,31 @@ final class SessionHandler extends SingletonFactory {
 	 */
 	public function isFirstVisit() {
 		return $this->firstVisit;
+	}
+	
+	/**
+	 * Deletes a user session with the given session id.
+	 */
+	public function deleteUserSession(string $sessionID): void {
+		$sql = "DELETE FROM     wcf".WCF_N."_user_session
+			WHERE	        sessionID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$sessionID]);
+		
+		// Delete legacy session.
+		$sql = "DELETE FROM     wcf".WCF_N."_session
+			WHERE	        sessionID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$sessionID]);
+	}
+	
+	/**
+	 * Deletes a acp session with the given session id.
+	 */
+	public function deleteAcpSession(string $sessionID): void {
+		$sql = "DELETE FROM     wcf".WCF_N."_acp_session
+			WHERE	        sessionID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$sessionID]);
 	}
 }
