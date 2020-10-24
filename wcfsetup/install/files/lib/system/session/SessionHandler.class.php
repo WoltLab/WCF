@@ -987,6 +987,8 @@ final class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * Returns all user sessions for a specific user.
+	 *
+	 * @return      \wcf\system\session\Session[]
 	 */
 	public function getUserSessions(User $user): array {
 		if ($user->userID === 0) {
@@ -999,11 +1001,19 @@ final class SessionHandler extends SingletonFactory {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$user->userID]);
 		
-		return $statement->fetchAll();
+		$sessions = [];
+		
+		while ($row = $statement->fetchArray()) {
+			$sessions[] = new \wcf\system\session\Session($row);
+		} 
+		
+		return $sessions;
 	}
 	
 	/**
 	 * Returns all acp sessions for a specific user.
+	 * 
+	 * @return      \wcf\system\session\Session[]
 	 */
 	public function getAcpSessions(User $user): array {
 		if ($user->userID === 0) {
@@ -1016,7 +1026,13 @@ final class SessionHandler extends SingletonFactory {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$user->userID]);
 		
-		return $statement->fetchAll();
+		$sessions = [];
+		
+		while ($row = $statement->fetchArray()) {
+			$sessions[] = new \wcf\system\session\Session($row, true);
+		}
+		
+		return $sessions;
 	}
 	
 	/**
