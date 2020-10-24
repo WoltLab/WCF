@@ -413,6 +413,14 @@ const DomUtil = {
   },
 
   /**
+   * Shorthand function to check if given element is hidden by setting its 'display'
+   * value to 'none'.
+   */
+  isHidden(element: HTMLElement): boolean {
+    return element.style.getPropertyValue('display') === 'none';
+  },
+
+  /**
    * Displays or removes an error message below the provided element.
    */
   innerError(element: HTMLElement, errorMessage?: string | false | null, isHtml?: boolean): HTMLElement | null {

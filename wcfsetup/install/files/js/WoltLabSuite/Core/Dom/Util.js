@@ -369,6 +369,13 @@ define(["require", "exports", "../StringUtil"], function (require, exports, Stri
             element.style.removeProperty('display');
         },
         /**
+         * Shorthand function to check if given element is hidden by setting its 'display'
+         * value to 'none'.
+         */
+        isHidden(element) {
+            return element.style.getPropertyValue('display') === 'none';
+        },
+        /**
          * Displays or removes an error message below the provided element.
          */
         innerError(element, errorMessage, isHtml) {
