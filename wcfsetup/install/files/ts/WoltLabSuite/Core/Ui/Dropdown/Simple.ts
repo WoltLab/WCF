@@ -16,6 +16,7 @@ import DomUtil from '../../Dom/Util';
 import * as UiAlignment from '../Alignment';
 import UiCloseOverlay from '../CloseOverlay';
 import { AllowFlip } from '../Alignment';
+import { NotificationAction, NotificationCallback } from './Data';
 
 let _availableDropdowns: HTMLCollectionOf<HTMLElement>;
 const _callbacks = new CallbackList();
@@ -74,9 +75,6 @@ function onScroll() {
     }
   });
 }
-
-type NotificationAction = 'close' | 'open';
-type NotificationCallback = (containerId: string, action: NotificationAction) => void;
 
 /**
  * Notifies callbacks on status change.
