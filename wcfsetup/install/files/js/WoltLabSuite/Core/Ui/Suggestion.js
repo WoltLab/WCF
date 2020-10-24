@@ -1,112 +1,112 @@
 /**
  * Flexible UI element featuring both a list of items and an input field with suggestion support.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Ui/Suggestion
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Ui/Suggestion
  */
-define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function (Ajax, Core, UiSimpleDropdown) {
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+define(["require", "exports", "../Ajax", "../Core", "./Dropdown/Simple"], function (require, exports, Ajax, Core, Simple_1) {
     "use strict";
-    /**
-     * @constructor
-     * @param	{string}		elementId	input element id
-     * @param	{Object}		options		option list
-     */
-    function UiSuggestion(elementId, options) { this.init(elementId, options); }
-    UiSuggestion.prototype = {
+    Ajax = __importStar(Ajax);
+    Core = __importStar(Core);
+    Simple_1 = __importDefault(Simple_1);
+    class UiSuggestion {
         /**
          * Initializes a new suggestion input.
-         *
-         * @param	{string}		elementId	input element id
-         * @param	{Object}		options		option list
          */
-        init: function (elementId, options) {
-            this._dropdownMenu = null;
-            this._value = '';
-            this._element = elById(elementId);
-            if (this._element === null) {
+        constructor(elementId, options) {
+            this.dropdownMenu = null;
+            this.value = '';
+            const element = document.getElementById(elementId);
+            if (element === null) {
                 throw new Error("Expected a valid element id.");
             }
-            this._options = Core.extend({
-                ajax: {
-                    actionName: 'getSearchResultList',
-                    className: '',
-                    interfaceName: 'wcf\\data\\ISearchAction',
-                    parameters: {
-                        data: {}
-                    }
+            this.element = element;
+            this.ajaxPayload = Core.extend({
+                actionName: 'getSearchResultList',
+                className: '',
+                interfaceName: 'wcf\\data\\ISearchAction',
+                parameters: {
+                    data: {},
                 },
-                // will be executed once a value from the dropdown has been selected
-                callbackSelect: null,
-                // list of excluded search values
-                excludedSearchValues: [],
-                // minimum number of characters required to trigger a search request
-                threshold: 3
-            }, options);
-            if (typeof this._options.callbackSelect !== 'function') {
+            }, options.ajax);
+            if (typeof options.callbackSelect !== 'function') {
                 throw new Error("Expected a valid callback for option 'callbackSelect'.");
             }
-            this._element.addEventListener(WCF_CLICK_EVENT, function (event) { event.stopPropagation(); });
-            this._element.addEventListener('keydown', this._keyDown.bind(this));
-            this._element.addEventListener('keyup', this._keyUp.bind(this));
-        },
+            this.callbackSelect = options.callbackSelect;
+            this.excludedSearchValues = new Set(Array.isArray(options.excludedSearchValues) ? options.excludedSearchValues : []);
+            this.threshold = options.threshold === undefined ? 3 : options.threshold;
+            this.element.addEventListener('click', event => event.preventDefault());
+            this.element.addEventListener('keydown', this.keyDown.bind(this));
+            this.element.addEventListener('keyup', this.keyUp.bind(this));
+        }
         /**
          * Adds an excluded search value.
-         *
-         * @param	{string}	value		excluded value
          */
-        addExcludedValue: function (value) {
-            if (this._options.excludedSearchValues.indexOf(value) === -1) {
-                this._options.excludedSearchValues.push(value);
-            }
-        },
+        addExcludedValue(value) {
+            this.excludedSearchValues.add(value);
+        }
         /**
          * Removes an excluded search value.
-         *
-         * @param	{string}	value		excluded value
          */
-        removeExcludedValue: function (value) {
-            var index = this._options.excludedSearchValues.indexOf(value);
-            if (index !== -1) {
-                this._options.excludedSearchValues.splice(index, 1);
-            }
-        },
+        removeExcludedValue(value) {
+            this.excludedSearchValues.delete(value);
+        }
         /**
          * Returns true if the suggestions are active.
-         * @return      {boolean}
          */
-        isActive: function () {
-            return (this._dropdownMenu !== null && UiSimpleDropdown.isOpen(this._element.id));
-        },
+        isActive() {
+            return this.dropdownMenu !== null && Simple_1.default.isOpen(this.element.id);
+        }
         /**
          * Handles the keyboard navigation for interaction with the suggestion list.
-         *
-         * @param	{object}	event		event object
          */
-        _keyDown: function (event) {
+        keyDown(event) {
             if (!this.isActive()) {
                 return true;
             }
-            if (event.keyCode !== 13 && event.keyCode !== 27 && event.keyCode !== 38 && event.keyCode !== 40) {
+            if (['ArrowDown', 'ArrowUp', 'Enter', 'Escape'].indexOf(event.key) === -1) {
                 return true;
             }
-            var active, i = 0, length = this._dropdownMenu.childElementCount;
+            let active;
+            let i = 0, length = this.dropdownMenu.childElementCount;
             while (i < length) {
-                active = this._dropdownMenu.children[i];
+                active = this.dropdownMenu.children[i];
                 if (active.classList.contains('active')) {
                     break;
                 }
                 i++;
             }
-            if (event.keyCode === 13) {
-                // Enter
-                UiSimpleDropdown.close(this._element.id);
-                this._select(active);
+            if (event.key === 'Enter') {
+                Simple_1.default.close(this.element.id);
+                this.select(undefined, active);
             }
-            else if (event.keyCode === 27) {
-                if (UiSimpleDropdown.isOpen(this._element.id)) {
-                    UiSimpleDropdown.close(this._element.id);
+            else if (event.key === 'Escape') {
+                if (Simple_1.default.isOpen(this.element.id)) {
+                    Simple_1.default.close(this.element.id);
                 }
                 else {
                     // let the event pass through
@@ -114,92 +114,87 @@ define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function (Ajax, Core, UiSimpleDrop
                 }
             }
             else {
-                var index = 0;
-                if (event.keyCode === 38) {
-                    // ArrowUp
+                let index = 0;
+                if (event.key === 'ArrowUp') {
                     index = ((i === 0) ? length : i) - 1;
                 }
-                else if (event.keyCode === 40) {
-                    // ArrowDown
+                else if (event.key === 'ArrowDown') {
                     index = i + 1;
                     if (index === length)
                         index = 0;
                 }
                 if (index !== i) {
                     active.classList.remove('active');
-                    this._dropdownMenu.children[index].classList.add('active');
+                    this.dropdownMenu.children[index].classList.add('active');
                 }
             }
             event.preventDefault();
             return false;
-        },
+        }
         /**
          * Selects an item from the list.
-         *
-         * @param	{(Element|Event)}	item	list item or event object
          */
-        _select: function (item) {
-            var isEvent = (item instanceof Event);
-            if (isEvent) {
-                item = item.currentTarget.parentNode;
+        select(event, item) {
+            if (event instanceof MouseEvent) {
+                const target = event.currentTarget;
+                item = target.parentNode;
             }
-            var anchor = item.children[0];
-            this._options.callbackSelect(this._element.id, { objectId: elData(anchor, 'object-id'), value: item.textContent, type: elData(anchor, 'type') });
-            if (isEvent) {
-                this._element.focus();
+            const anchor = item.children[0];
+            this.callbackSelect(this.element.id, {
+                objectId: +(anchor.dataset.objectId || 0),
+                value: item.textContent || '',
+                type: anchor.dataset.type || '',
+            });
+            if (event instanceof MouseEvent) {
+                this.element.focus();
             }
-        },
+        }
         /**
          * Performs a search for the input value unless it is below the threshold.
-         *
-         * @param	{object}		event		event object
          */
-        _keyUp: function (event) {
-            var value = event.currentTarget.value.trim();
-            if (this._value === value) {
+        keyUp(event) {
+            const target = event.currentTarget;
+            const value = target.value.trim();
+            if (this.value === value) {
                 return;
             }
-            else if (value.length < this._options.threshold) {
-                if (this._dropdownMenu !== null) {
-                    UiSimpleDropdown.close(this._element.id);
+            else if (value.length < this.threshold) {
+                if (this.dropdownMenu !== null) {
+                    Simple_1.default.close(this.element.id);
                 }
-                this._value = value;
+                this.value = value;
                 return;
             }
-            this._value = value;
+            this.value = value;
             Ajax.api(this, {
                 parameters: {
                     data: {
-                        excludedSearchValues: this._options.excludedSearchValues,
-                        searchString: value
-                    }
-                }
+                        excludedSearchValues: Array.from(this.excludedSearchValues),
+                        searchString: value,
+                    },
+                },
             });
-        },
-        _ajaxSetup: function () {
+        }
+        _ajaxSetup() {
             return {
-                data: this._options.ajax
+                data: this.ajaxPayload,
             };
-        },
+        }
         /**
          * Handles successful Ajax requests.
-         *
-         * @param	{object}	data		response values
          */
-        _ajaxSuccess: function (data) {
-            if (this._dropdownMenu === null) {
-                this._dropdownMenu = elCreate('div');
-                this._dropdownMenu.className = 'dropdownMenu';
-                UiSimpleDropdown.initFragment(this._element, this._dropdownMenu);
+        _ajaxSuccess(data) {
+            if (this.dropdownMenu === null) {
+                this.dropdownMenu = document.createElement('div');
+                this.dropdownMenu.className = 'dropdownMenu';
+                Simple_1.default.initFragment(this.element, this.dropdownMenu);
             }
             else {
-                this._dropdownMenu.innerHTML = '';
+                this.dropdownMenu.innerHTML = '';
             }
-            if (data.returnValues.length) {
-                var anchor, item, listItem;
-                for (var i = 0, length = data.returnValues.length; i < length; i++) {
-                    item = data.returnValues[i];
-                    anchor = elCreate('a');
+            if (Array.isArray(data.returnValues)) {
+                data.returnValues.forEach((item, index) => {
+                    const anchor = document.createElement('a');
                     if (item.icon) {
                         anchor.className = 'box16';
                         anchor.innerHTML = item.icon + ' <span></span>';
@@ -208,22 +203,24 @@ define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function (Ajax, Core, UiSimpleDrop
                     else {
                         anchor.textContent = item.label;
                     }
-                    elData(anchor, 'object-id', item.objectID);
-                    if (item.type)
-                        elData(anchor, 'type', item.type);
-                    anchor.addEventListener(WCF_CLICK_EVENT, this._select.bind(this));
-                    listItem = elCreate('li');
-                    if (i === 0)
+                    anchor.dataset.objectId = item.objectID;
+                    if (item.type) {
+                        anchor.dataset.type = item.type;
+                    }
+                    anchor.addEventListener('click', this.select.bind(this));
+                    const listItem = document.createElement('li');
+                    if (index === 0) {
                         listItem.className = 'active';
+                    }
                     listItem.appendChild(anchor);
-                    this._dropdownMenu.appendChild(listItem);
-                }
-                UiSimpleDropdown.open(this._element.id, true);
+                    this.dropdownMenu.appendChild(listItem);
+                });
+                Simple_1.default.open(this.element.id, true);
             }
             else {
-                UiSimpleDropdown.close(this._element.id);
+                Simple_1.default.close(this.element.id);
             }
         }
-    };
+    }
     return UiSuggestion;
 });
