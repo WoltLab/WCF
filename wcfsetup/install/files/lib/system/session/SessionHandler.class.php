@@ -986,6 +986,23 @@ final class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns all user sessions for a specific user.
+	 */
+	public function getUserSessions(User $user): array {
+		if ($user->userID === 0) {
+			throw new \InvalidArgumentException("The given user is a guest.");
+		}
+		
+		$sql = "SELECT          *
+			FROM            wcf".WCF_N."_user_session
+			WHERE           userID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$user->userID]);
+		
+		return $statement->fetchAll();
+	}
+	
+	/**
 	 * Deletes the user sessions for a specific user, except the session with the given session id.
 	 * If the given session id is null or unknown, all sessions for the user will be deleted.
 	 */
