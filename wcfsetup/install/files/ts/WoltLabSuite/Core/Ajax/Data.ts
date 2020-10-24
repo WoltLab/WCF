@@ -2,16 +2,35 @@ export interface RequestPayload {
   [key: string]: any;
 }
 
-export type RequestData = FormData | RequestPayload;
+export interface DatabaseObjectActionPayload extends RequestPayload {
+  actionName: string;
+  className: string;
+  interfaceName?: string;
+  objectIDs?: number[];
+  parameters?: {
+    [key: string]: any;
+  };
+}
+
+
+export type RequestData = FormData | RequestPayload | DatabaseObjectActionPayload;
 
 export interface ResponseData {
   [key: string]: any;
 }
 
+export interface DatabaseObjectActionResponse extends ResponseData {
+  actionName: string;
+  objectIDs: number[];
+  returnValues: {
+    [key: string]: any;
+  } | any[];
+}
+
 export type CallbackFailure = (data: ResponseData, responseText: string, xhr: XMLHttpRequest, requestData: RequestData) => boolean;
 export type CallbackFinalize = (xhr: XMLHttpRequest) => void;
 export type CallbackProgress = (event: ProgressEvent) => void;
-export type CallbackSuccess = (data: ResponseData, responseText: string, xhr: XMLHttpRequest, requestData: RequestData) => void;
+export type CallbackSuccess = (data: ResponseData | DatabaseObjectActionResponse, responseText: string, xhr: XMLHttpRequest, requestData: RequestData) => void;
 export type CallbackUploadProgress = (event: ProgressEvent) => void;
 export type CallbackSetup = () => RequestOptions;
 
