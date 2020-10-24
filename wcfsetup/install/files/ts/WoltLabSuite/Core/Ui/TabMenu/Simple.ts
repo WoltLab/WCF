@@ -106,13 +106,8 @@ class TabMenuSimple {
 
   /**
    * Initializes this tab menu.
-   *
-   * @param  {Dictionary=}  oldTabs    previous list of tabs
-   * @return  {?Element}  parent tab for selection or null
    */
-  init(oldTabs: Map<string, HTMLLIElement> | null): HTMLElement | null {
-    oldTabs = oldTabs || null;
-
+  init(oldTabs?: Map<string, HTMLLIElement> | null): HTMLElement | null {
     // bind listeners
     this.tabs.forEach(tab => {
       if (!oldTabs || oldTabs.get(tab.dataset.name || '') !== tab) {
@@ -413,19 +408,15 @@ class TabMenuSimple {
 
   /**
    * Returns the list of registered content containers.
-   *
-   * @returns  {Dictionary}  content containers
    */
-  getContainers() {
+  getContainers(): Map<string, HTMLElement> {
     return this.containers;
   }
 
   /**
    * Returns the list of registered tabs.
-   *
-   * @returns  {Dictionary}  tab items
    */
-  getTabs() {
+  getTabs(): Map<string, HTMLLIElement> {
     return this.tabs;
   }
 

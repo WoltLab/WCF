@@ -112,12 +112,8 @@ define(["require", "exports", "../../Dom/Traverse", "../../Dom/Util", "../../Env
         }
         /**
          * Initializes this tab menu.
-         *
-         * @param  {Dictionary=}  oldTabs    previous list of tabs
-         * @return  {?Element}  parent tab for selection or null
          */
         init(oldTabs) {
-            oldTabs = oldTabs || null;
             // bind listeners
             this.tabs.forEach(tab => {
                 if (!oldTabs || oldTabs.get(tab.dataset.name || '') !== tab) {
@@ -372,16 +368,12 @@ define(["require", "exports", "../../Dom/Traverse", "../../Dom/Util", "../../Env
         }
         /**
          * Returns the list of registered content containers.
-         *
-         * @returns  {Dictionary}  content containers
          */
         getContainers() {
             return this.containers;
         }
         /**
          * Returns the list of registered tabs.
-         *
-         * @returns  {Dictionary}  tab items
          */
         getTabs() {
             return this.tabs;
