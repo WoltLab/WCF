@@ -1,67 +1,53 @@
 /**
  * Provides global helper methods to interact with ignored content.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Ui/User/Ignore
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Ui/User/Ignore
  */
-define(['List', 'Dom/ChangeListener'], function (List, DomChangeListener) {
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+define(["require", "exports", "../../Dom/Change/Listener"], function (require, exports, Listener_1) {
     "use strict";
-    if (!COMPILER_TARGET_DEFAULT) {
-        var Fake = function () { };
-        Fake.prototype = {
-            init: function () { },
-            _rebuild: function () { },
-            _removeClass: function () { }
-        };
-        return Fake;
-    }
-    var _availableMessages = elByClass('ignoredUserMessage');
-    var _callback = null;
-    var _knownMessages = new List();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.init = void 0;
+    Listener_1 = __importDefault(Listener_1);
+    const _availableMessages = document.getElementsByClassName('ignoredUserMessage');
+    const _knownMessages = new Set();
     /**
-     * @exports     WoltLabSuite/Core/Ui/User/Ignore
+     * Adds ignored messages to the collection.
+     *
+     * @protected
      */
-    return {
-        /**
-         * Initializes the click handler for each ignored message and listens for
-         * newly inserted messages.
-         */
-        init: function () {
-            _callback = this._removeClass.bind(this);
-            this._rebuild();
-            DomChangeListener.add('WoltLabSuite/Core/Ui/User/Ignore', this._rebuild.bind(this));
-        },
-        /**
-         * Adds ignored messages to the collection.
-         *
-         * @protected
-         */
-        _rebuild: function () {
-            var message;
-            for (var i = 0, length = _availableMessages.length; i < length; i++) {
-                message = _availableMessages[i];
-                if (!_knownMessages.has(message)) {
-                    message.addEventListener(WCF_CLICK_EVENT, _callback);
-                    _knownMessages.add(message);
-                }
+    function rebuild() {
+        for (let i = 0, length = _availableMessages.length; i < length; i++) {
+            const message = _availableMessages[i];
+            if (!_knownMessages.has(message)) {
+                message.addEventListener('click', showMessage, { once: true });
+                _knownMessages.add(message);
             }
-        },
-        /**
-         * Reveals a message on click/tap and disables the listener.
-         *
-         * @param       {Event}         event   event object
-         * @protected
-         */
-        _removeClass: function (event) {
-            event.preventDefault();
-            var message = event.currentTarget;
-            message.classList.remove('ignoredUserMessage');
-            message.removeEventListener(WCF_CLICK_EVENT, _callback);
-            _knownMessages.delete(message);
-            // Firefox selects the entire message on click for no reason
-            window.getSelection().removeAllRanges();
         }
-    };
+    }
+    /**
+     * Reveals a message on click/tap and disables the listener.
+     */
+    function showMessage(event) {
+        event.preventDefault();
+        const message = event.currentTarget;
+        message.classList.remove('ignoredUserMessage');
+        _knownMessages.delete(message);
+        // Firefox selects the entire message on click for no reason
+        window.getSelection().removeAllRanges();
+    }
+    /**
+     * Initializes the click handler for each ignored message and listens for
+     * newly inserted messages.
+     */
+    function init() {
+        rebuild();
+        Listener_1.default.add('WoltLabSuite/Core/Ui/User/Ignore', rebuild);
+    }
+    exports.init = init;
 });
