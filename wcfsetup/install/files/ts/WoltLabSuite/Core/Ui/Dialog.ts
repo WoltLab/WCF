@@ -12,10 +12,18 @@ import * as Core from '../Core';
 import DomChangeListener from '../Dom/Change/Listener';
 import * as UiScreen from './Screen';
 import DomUtil from '../Dom/Util';
-import { DialogCallbackObject, DialogData, DialogId, DialogOptions, DialogHtml, AjaxInitialization } from './Dialog/Data';
+import {
+  DialogCallbackObject,
+  DialogData,
+  DialogId,
+  DialogOptions,
+  DialogHtml,
+  AjaxInitialization,
+} from './Dialog/Data';
 import * as Language from '../Language';
 import * as Environment from '../Environment';
 import * as EventHandler from '../Event/Handler';
+import UiDropdownSimple from './Dropdown/Simple';
 
 let _activeDialog: string | null = null;
 let _callbackFocus: (event: FocusEvent) => void;
@@ -48,7 +56,7 @@ const _focusableElements = [
 /**
  * @exports  WoltLabSuite/Core/Ui/Dialog
  */
-export = {
+const UiDialog = {
   /**
    * Sets up global container and internal variables.
    */
@@ -345,7 +353,7 @@ export = {
 
     const title = document.createElement('span');
     title.classList.add('dialogTitle');
-    title.textContent = options.title;
+    title.textContent = options.title!;
     title.id = titleId;
     header.appendChild(title);
 
@@ -480,8 +488,7 @@ export = {
 
     if (Core.stringToBool(data.dialog.getAttribute('aria-hidden'))) {
       // close existing dropdowns
-      // TODO
-      //UiSimpleDropdown.closeAll();
+      UiDropdownSimple.closeAll();
       window.WCF.Dropdown.Interactive.Handler.closeAll();
 
       if (_callbackFocus === null) {
@@ -874,6 +881,8 @@ export = {
     return {};
   },
 };
+
+export = UiDialog;
 
 interface DialogInternalData {
   id: string;

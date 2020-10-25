@@ -51,7 +51,7 @@ function hide() {
 /**
  * Displays a notification.
  */
-export function show(message: string, callback?: Callback, cssClassName?: string): void {
+export function show(message?: string, callback?: Callback, cssClassName?: string): void {
   if (_busy) {
     return;
   }
