@@ -29,7 +29,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-define(["require", "exports", "../Core", "../Dom/Change/Listener", "./Screen", "../Dom/Util", "../Language", "../Environment", "../Event/Handler"], function (require, exports, Core, Listener_1, UiScreen, Util_1, Language, Environment, EventHandler) {
+define(["require", "exports", "../Core", "../Dom/Change/Listener", "./Screen", "../Dom/Util", "../Language", "../Environment", "../Event/Handler", "./Dropdown/Simple"], function (require, exports, Core, Listener_1, UiScreen, Util_1, Language, Environment, EventHandler, Simple_1) {
     "use strict";
     Core = __importStar(Core);
     Listener_1 = __importDefault(Listener_1);
@@ -38,6 +38,7 @@ define(["require", "exports", "../Core", "../Dom/Change/Listener", "./Screen", "
     Language = __importStar(Language);
     Environment = __importStar(Environment);
     EventHandler = __importStar(EventHandler);
+    Simple_1 = __importDefault(Simple_1);
     let _activeDialog = null;
     let _callbackFocus;
     let _container;
@@ -63,7 +64,10 @@ define(["require", "exports", "../Core", "../Dom/Change/Listener", "./Screen", "
         '[contenteditable]:not([tabindex^="-"]):not([inert])',
         '[tabindex]:not([tabindex^="-"]):not([inert])',
     ];
-    return {
+    /**
+     * @exports  WoltLabSuite/Core/Ui/Dialog
+     */
+    const UiDialog = {
         /**
          * Sets up global container and internal variables.
          */
@@ -439,8 +443,7 @@ define(["require", "exports", "../Core", "../Dom/Change/Listener", "./Screen", "
             }
             if (Core.stringToBool(data.dialog.getAttribute('aria-hidden'))) {
                 // close existing dropdowns
-                // TODO
-                //UiSimpleDropdown.closeAll();
+                Simple_1.default.closeAll();
                 window.WCF.Dropdown.Interactive.Handler.closeAll();
                 if (_callbackFocus === null) {
                     _callbackFocus = this._maintainFocus.bind(this);
@@ -772,4 +775,5 @@ define(["require", "exports", "../Core", "../Dom/Change/Listener", "./Screen", "
             return {};
         },
     };
+    return UiDialog;
 });

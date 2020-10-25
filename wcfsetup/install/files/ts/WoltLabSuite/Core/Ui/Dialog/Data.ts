@@ -32,7 +32,7 @@ export interface DialogOptions {
   closeButtonLabel?: string;
   closeConfirmMessage?: string;
   disableContentPadding?: boolean;
-  title: string;
+  title?: string;
 
   onBeforeClose?: CallbackOnBeforeClose | null;
   onClose?: CallbackOnClose | null;
