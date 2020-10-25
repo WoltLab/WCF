@@ -7,11 +7,11 @@
  * @module  WoltLabSuite/Core/Ui/Page/JumpTo
  */
 
-import { CallbackObject, DialogSettings } from '../Dialog/Data';
+import { DialogCallbackObject, DialogSettings } from '../Dialog/Data';
 import * as Language from '../../Language';
 import UiDialog from '../Dialog';
 
-class UiPageJumpTo implements CallbackObject {
+class UiPageJumpTo implements DialogCallbackObject {
   private activeElement: HTMLElement;
   private description: HTMLElement;
   private elements = new Map<HTMLElement, Callback>();

@@ -34,7 +34,7 @@ export type CallbackSuccess = (data: ResponseData | DatabaseObjectActionResponse
 export type CallbackUploadProgress = (event: ProgressEvent) => void;
 export type CallbackSetup = () => RequestOptions;
 
-export interface CallbackObject {
+export interface AjaxCallbackObject {
   _ajaxFailure?: CallbackFailure;
   _ajaxFinalize?: CallbackFinalize;
   _ajaxProgress?: CallbackProgress;
@@ -66,5 +66,5 @@ export interface RequestOptions {
   progress?: CallbackProgress,
   uploadProgress?: CallbackUploadProgress,
 
-  callbackObject?: CallbackObject | null,
+  callbackObject?: AjaxCallbackObject | null,
 }

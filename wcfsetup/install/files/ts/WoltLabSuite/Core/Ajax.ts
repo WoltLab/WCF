@@ -9,7 +9,7 @@
  */
 
 import AjaxRequest from './Ajax/Request';
-import { CallbackObject, CallbackSuccess, CallbackFailure, RequestData, RequestOptions } from './Ajax/Data';
+import { AjaxCallbackObject, CallbackSuccess, CallbackFailure, RequestData, RequestOptions } from './Ajax/Data';
 
 const _cache = new WeakMap();
 
@@ -17,7 +17,7 @@ const _cache = new WeakMap();
  * Shorthand function to perform a request against the WCF-API with overrides
  * for success and failure callbacks.
  */
-export function api(callbackObject: CallbackObject, data?: RequestData, success?: CallbackSuccess, failure?: CallbackFailure): AjaxRequest {
+export function api(callbackObject: AjaxCallbackObject, data?: RequestData, success?: CallbackSuccess, failure?: CallbackFailure): AjaxRequest {
   if (typeof data !== 'object') data = {};
 
   let request = _cache.get(callbackObject);
@@ -84,7 +84,7 @@ export function apiOnce(options: RequestOptions): void {
 /**
  * Returns the request object used for an earlier call to `api()`.
  */
-export function getRequestObject(callbackObject: CallbackObject): AjaxRequest {
+export function getRequestObject(callbackObject: AjaxCallbackObject): AjaxRequest {
   if (!_cache.has(callbackObject)) {
     throw new Error('Expected a previously used callback object, provided object is unknown.');
   }
