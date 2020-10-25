@@ -12,8 +12,8 @@ import * as Core from '../../Core';
 import DomUtil from '../../Dom/Util';
 import UiDialog from '../Dialog';
 import UiPagination from '../Pagination';
-import { CallbackObject as AjaxCallbackObject, DatabaseObjectActionResponse, RequestOptions } from '../../Ajax/Data';
-import { CallbackObject as DialogCallbackObject, DialogData, DialogSettings } from '../Dialog/Data';
+import { AjaxCallbackObject, DatabaseObjectActionResponse, RequestOptions } from '../../Ajax/Data';
+import { DialogCallbackObject, DialogData, DialogSettings } from '../Dialog/Data';
 
 /**
  * @constructor

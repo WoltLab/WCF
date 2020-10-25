@@ -12,7 +12,7 @@ import * as Core from '../Core';
 import DomChangeListener from '../Dom/Change/Listener';
 import * as UiScreen from './Screen';
 import DomUtil from '../Dom/Util';
-import { CallbackObject, DialogData, DialogId, DialogOptions, DialogHtml, AjaxInitialization } from './Dialog/Data';
+import { DialogCallbackObject, DialogData, DialogId, DialogOptions, DialogHtml, AjaxInitialization } from './Dialog/Data';
 import * as Language from '../Language';
 import * as Environment from '../Environment';
 import * as EventHandler from '../Event/Handler';
@@ -22,8 +22,8 @@ let _callbackFocus: (event: FocusEvent) => void;
 let _container: HTMLElement;
 const _dialogs = new Map<ElementId, DialogData>();
 let _dialogFullHeight = false;
-const _dialogObjects = new WeakMap<CallbackObject, DialogInternalData>();
-const _dialogToObject = new Map<ElementId, CallbackObject>();
+const _dialogObjects = new WeakMap<DialogCallbackObject, DialogInternalData>();
+const _dialogToObject = new Map<ElementId, DialogCallbackObject>();
 let _focusedBeforeDialog: Element | null;
 let _keyupListener: (event: KeyboardEvent) => boolean;
 const _validCallbacks = ['onBeforeClose', 'onClose', 'onShow'];
@@ -129,7 +129,7 @@ export = {
   /**
    * Opens the dialog and implicitly creates it on first usage.
    */
-  open(callbackObject: CallbackObject, html?: DialogHtml): DialogData | object {
+  open(callbackObject: DialogCallbackObject, html?: DialogHtml): DialogData | object {
     let dialogData = _dialogObjects.get(callbackObject);
     if (dialogData && Core.isPlainObject(dialogData)) {
       // dialog already exists
@@ -718,7 +718,7 @@ export = {
     });
 
     if (isValid) {
-      const callbackObject = _dialogToObject.get(id) as CallbackObject;
+      const callbackObject = _dialogToObject.get(id) as DialogCallbackObject;
       if (typeof callbackObject._dialogSubmit === 'function') {
         callbackObject._dialogSubmit();
       }
@@ -830,7 +830,7 @@ export = {
    *
    * @param  {Object}  callbackObject  the same object that was used to invoke `_dialogSetup()` on first call
    */
-  destroy(callbackObject: CallbackObject): void {
+  destroy(callbackObject: DialogCallbackObject): void {
     if (typeof callbackObject !== 'object') {
       throw new TypeError("Expected the callback object as parameter.");
     }
@@ -881,7 +881,7 @@ interface DialogInternalData {
 
 type ElementId = string;
 
-type ElementIdOrCallbackObject = CallbackObject | ElementId;
+type ElementIdOrCallbackObject = DialogCallbackObject | ElementId;
 
 interface InternalDialogOptions extends DialogOptions {
   backdropCloseOnClick: boolean;

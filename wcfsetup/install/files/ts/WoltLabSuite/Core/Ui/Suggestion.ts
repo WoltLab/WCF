@@ -10,14 +10,14 @@
 import * as Ajax from '../Ajax';
 import * as Core from '../Core';
 import {
-  CallbackObject,
+  AjaxCallbackObject,
   DatabaseObjectActionPayload,
   DatabaseObjectActionResponse,
   RequestPayload,
 } from '../Ajax/Data';
 import UiDropdownSimple from './Dropdown/Simple';
 
-class UiSuggestion implements CallbackObject {
+class UiSuggestion implements AjaxCallbackObject {
   private readonly ajaxPayload: DatabaseObjectActionPayload;
   private readonly callbackSelect: CallbackSelect;
   private dropdownMenu: HTMLElement | null = null;

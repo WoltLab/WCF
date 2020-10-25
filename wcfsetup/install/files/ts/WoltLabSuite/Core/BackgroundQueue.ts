@@ -8,9 +8,9 @@
  */
 
 import * as Ajax from './Ajax';
-import { CallbackObject, RequestOptions, ResponseData } from './Ajax/Data';
+import { AjaxCallbackObject, RequestOptions, ResponseData } from './Ajax/Data';
 
-class BackgroundQueue implements CallbackObject {
+class BackgroundQueue implements AjaxCallbackObject {
   private _invocations = 0;
   private _isBusy = false;
   private readonly _url: string;

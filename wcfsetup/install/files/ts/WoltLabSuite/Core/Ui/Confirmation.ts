@@ -11,9 +11,9 @@
 import * as Core from '../Core';
 import * as Language from '../Language';
 import UiDialog from './Dialog';
-import { CallbackObject } from './Dialog/Data';
+import { DialogCallbackObject } from './Dialog/Data';
 
-class UiConfirmation implements CallbackObject {
+class UiConfirmation implements DialogCallbackObject {
   private _active = false;
   private parameters: CallbackParameters;
 
