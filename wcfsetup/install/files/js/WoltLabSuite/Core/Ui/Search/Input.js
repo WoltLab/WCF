@@ -1,339 +1,330 @@
 /**
  * Provides suggestions using an input field, designed to work with `wcf\data\ISearchAction`.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Ui/Search/Input
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Ui/Search/Input
  */
-define(['Ajax', 'Core', 'EventKey', 'Dom/Util', 'Ui/SimpleDropdown'], function (Ajax, Core, EventKey, DomUtil, UiSimpleDropdown) {
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+define(["require", "exports", "../../Ajax", "../../Core", "../../Dom/Util", "../Dropdown/Simple"], function (require, exports, Ajax, Core, Util_1, Simple_1) {
     "use strict";
-    /**
-     * @param       {Element}       element         target input[type="text"]
-     * @param       {Object}        options         search options and settings
-     * @constructor
-     */
-    function UiSearchInput(element, options) { this.init(element, options); }
-    UiSearchInput.prototype = {
+    Ajax = __importStar(Ajax);
+    Core = __importStar(Core);
+    Util_1 = __importDefault(Util_1);
+    Simple_1 = __importDefault(Simple_1);
+    class UiSearchInput {
         /**
          * Initializes the search input field.
          *
          * @param       {Element}       element         target input[type="text"]
          * @param       {Object}        options         search options and settings
          */
-        init: function (element, options) {
-            this._element = element;
-            if (!(this._element instanceof Element)) {
+        constructor(element, options) {
+            this.activeItem = undefined;
+            this.callbackDropdownInit = undefined;
+            this.callbackSelect = undefined;
+            this.dropdownContainerId = '';
+            this.excludedSearchValues = new Set();
+            this.list = undefined;
+            this.lastValue = '';
+            this.request = undefined;
+            this.timerDelay = undefined;
+            this.element = element;
+            if (!(this.element instanceof HTMLInputElement)) {
                 throw new TypeError("Expected a valid DOM element.");
             }
-            else if (this._element.nodeName !== 'INPUT' || (this._element.type !== 'search' && this._element.type !== 'text')) {
+            else if (this.element.nodeName !== 'INPUT' || (this.element.type !== 'search' && this.element.type !== 'text')) {
                 throw new Error('Expected an input[type="text"].');
             }
-            this._activeItem = null;
-            this._dropdownContainerId = '';
-            this._lastValue = '';
-            this._list = null;
-            this._request = null;
-            this._timerDelay = null;
-            this._options = Core.extend({
+            options = Core.extend({
                 ajax: {
                     actionName: 'getSearchResultList',
                     className: '',
-                    interfaceName: 'wcf\\data\\ISearchAction'
+                    interfaceName: 'wcf\\data\\ISearchAction',
                 },
                 autoFocus: true,
-                callbackDropdownInit: null,
-                callbackSelect: null,
+                callbackDropdownInit: undefined,
+                callbackSelect: undefined,
                 delay: 500,
                 excludedSearchValues: [],
                 minLength: 3,
                 noResultPlaceholder: '',
-                preventSubmit: false
+                preventSubmit: false,
             }, options);
-            // disable auto-complete as it collides with the suggestion dropdown
-            elAttr(this._element, 'autocomplete', 'off');
-            this._element.addEventListener('keydown', this._keydown.bind(this));
-            this._element.addEventListener('keyup', this._keyup.bind(this));
-        },
+            this.ajaxPayload = options.ajax;
+            this.autoFocus = options.autoFocus;
+            this.callbackDropdownInit = options.callbackDropdownInit;
+            this.callbackSelect = options.callbackSelect;
+            this.delay = options.delay;
+            options.excludedSearchValues.forEach(value => {
+                this.addExcludedSearchValues(value);
+            });
+            this.minLength = options.minLength;
+            this.noResultPlaceholder = options.noResultPlaceholder;
+            this.preventSubmit = options.preventSubmit;
+            // Disable auto-complete because it collides with the suggestion dropdown.
+            this.element.autocomplete = 'off';
+            this.element.addEventListener('keydown', this.keydown.bind(this));
+            this.element.addEventListener('keyup', this.keyup.bind(this));
+        }
         /**
          * Adds an excluded search value.
-         *
-         * @param       {string}        value   excluded value
          */
-        addExcludedSearchValues: function (value) {
-            if (this._options.excludedSearchValues.indexOf(value) === -1) {
-                this._options.excludedSearchValues.push(value);
-            }
-        },
+        addExcludedSearchValues(value) {
+            this.excludedSearchValues.add(value);
+        }
         /**
          * Removes a value from the excluded search values.
-         *
-         * @param       {string}        value   excluded value
          */
-        removeExcludedSearchValues: function (value) {
-            var index = this._options.excludedSearchValues.indexOf(value);
-            if (index !== -1) {
-                this._options.excludedSearchValues.splice(index, 1);
-            }
-        },
+        removeExcludedSearchValues(value) {
+            this.excludedSearchValues.delete(value);
+        }
         /**
          * Handles the 'keydown' event.
-         *
-         * @param       {Event}         event           event object
-         * @protected
          */
-        _keydown: function (event) {
-            if ((this._activeItem !== null && UiSimpleDropdown.isOpen(this._dropdownContainerId)) || this._options.preventSubmit) {
-                if (EventKey.Enter(event)) {
+        keydown(event) {
+            if ((this.activeItem !== null && Simple_1.default.isOpen(this.dropdownContainerId)) || this.preventSubmit) {
+                if (event.key === 'Enter') {
                     event.preventDefault();
                 }
             }
-            if (EventKey.ArrowUp(event) || EventKey.ArrowDown(event) || EventKey.Escape(event)) {
+            if (['ArrowUp', 'ArrowDown', 'Escape'].includes(event.key)) {
                 event.preventDefault();
             }
-        },
+        }
         /**
          * Handles the 'keyup' event, provides keyboard navigation and executes search queries.
-         *
-         * @param       {Event}         event           event object
-         * @protected
          */
-        _keyup: function (event) {
+        keyup(event) {
             // handle dropdown keyboard navigation
-            if (this._activeItem !== null || !this._options.autoFocus) {
-                if (UiSimpleDropdown.isOpen(this._dropdownContainerId)) {
-                    if (EventKey.ArrowUp(event)) {
+            if (this.activeItem !== null || !this.autoFocus) {
+                if (Simple_1.default.isOpen(this.dropdownContainerId)) {
+                    if (event.key === 'ArrowUp') {
                         event.preventDefault();
-                        return this._keyboardPreviousItem();
+                        return this.keyboardPreviousItem();
                     }
-                    else if (EventKey.ArrowDown(event)) {
+                    else if (event.key === 'ArrowDown') {
                         event.preventDefault();
-                        return this._keyboardNextItem();
+                        return this.keyboardNextItem();
                     }
-                    else if (EventKey.Enter(event)) {
+                    else if (event.key === 'Enter') {
                         event.preventDefault();
-                        return this._keyboardSelectItem();
+                        return this.keyboardSelectItem();
                     }
                 }
                 else {
-                    this._activeItem = null;
+                    this.activeItem = undefined;
                 }
             }
             // close list on escape
-            if (EventKey.Escape(event)) {
-                UiSimpleDropdown.close(this._dropdownContainerId);
+            if (event.key === 'Escape') {
+                Simple_1.default.close(this.dropdownContainerId);
                 return;
             }
-            var value = this._element.value.trim();
-            if (this._lastValue === value) {
+            const value = this.element.value.trim();
+            if (this.lastValue === value) {
                 // value did not change, e.g. previously it was "Test" and now it is "Test ",
                 // but the trailing whitespace has been ignored
                 return;
             }
-            this._lastValue = value;
-            if (value.length < this._options.minLength) {
-                if (this._dropdownContainerId) {
-                    UiSimpleDropdown.close(this._dropdownContainerId);
-                    this._activeItem = null;
+            this.lastValue = value;
+            if (value.length < this.minLength) {
+                if (this.dropdownContainerId) {
+                    Simple_1.default.close(this.dropdownContainerId);
+                    this.activeItem = undefined;
                 }
                 // value below threshold
                 return;
             }
-            if (this._options.delay) {
-                if (this._timerDelay !== null) {
-                    window.clearTimeout(this._timerDelay);
+            if (this.delay) {
+                if (this.timerDelay) {
+                    window.clearTimeout(this.timerDelay);
                 }
-                this._timerDelay = window.setTimeout((function () {
-                    this._search(value);
-                }).bind(this), this._options.delay);
+                this.timerDelay = window.setTimeout(() => {
+                    this.search(value);
+                }, this.delay);
             }
             else {
-                this._search(value);
+                this.search(value);
             }
-        },
+        }
         /**
          * Queries the server with the provided search string.
-         *
-         * @param       {string}        value   search string
-         * @protected
          */
-        _search: function (value) {
-            if (this._request) {
-                this._request.abortPrevious();
+        search(value) {
+            if (this.request) {
+                this.request.abortPrevious();
             }
-            this._request = Ajax.api(this, this._getParameters(value));
-        },
+            this.request = Ajax.api(this, this.getParameters(value));
+        }
         /**
          * Returns additional AJAX parameters.
-         *
-         * @param       {string}        value   search string
-         * @return      {Object}        additional AJAX parameters
-         * @protected
          */
-        _getParameters: function (value) {
+        getParameters(value) {
             return {
                 parameters: {
                     data: {
-                        excludedSearchValues: this._options.excludedSearchValues,
-                        searchString: value
-                    }
-                }
+                        excludedSearchValues: this.excludedSearchValues,
+                        searchString: value,
+                    },
+                },
             };
-        },
+        }
         /**
          * Selects the next dropdown item.
-         *
-         * @protected
          */
-        _keyboardNextItem: function () {
-            var nextItem;
-            if (this._activeItem !== null) {
-                this._activeItem.classList.remove('active');
-                if (this._activeItem.nextElementSibling) {
-                    nextItem = this._activeItem.nextElementSibling;
+        keyboardNextItem() {
+            let nextItem = undefined;
+            if (this.activeItem) {
+                this.activeItem.classList.remove('active');
+                if (this.activeItem.nextElementSibling) {
+                    nextItem = this.activeItem.nextElementSibling;
                 }
             }
-            this._activeItem = nextItem || this._list.children[0];
-            this._activeItem.classList.add('active');
-        },
+            this.activeItem = nextItem || this.list.children[0];
+            this.activeItem.classList.add('active');
+        }
         /**
          * Selects the previous dropdown item.
-         *
-         * @protected
          */
-        _keyboardPreviousItem: function () {
-            var nextItem;
-            if (this._activeItem !== null) {
-                this._activeItem.classList.remove('active');
-                if (this._activeItem.previousElementSibling) {
-                    nextItem = this._activeItem.previousElementSibling;
+        keyboardPreviousItem() {
+            let nextItem = undefined;
+            if (this.activeItem) {
+                this.activeItem.classList.remove('active');
+                if (this.activeItem.previousElementSibling) {
+                    nextItem = this.activeItem.previousElementSibling;
                 }
             }
-            this._activeItem = nextItem || this._list.children[this._list.childElementCount - 1];
-            this._activeItem.classList.add('active');
-        },
+            this.activeItem = nextItem || this.list.children[this.list.childElementCount - 1];
+            this.activeItem.classList.add('active');
+        }
         /**
          * Selects the active item from the dropdown.
-         *
-         * @protected
          */
-        _keyboardSelectItem: function () {
-            this._selectItem(this._activeItem);
-        },
+        keyboardSelectItem() {
+            this.selectItem(this.activeItem);
+        }
         /**
          * Selects an item from the dropdown by clicking it.
-         *
-         * @param       {Event}         event           event object
-         * @protected
          */
-        _clickSelectItem: function (event) {
-            this._selectItem(event.currentTarget);
-        },
+        clickSelectItem(event) {
+            this.selectItem(event.currentTarget);
+        }
         /**
          * Selects an item.
-         *
-         * @param       {Element}       item    selected item
-         * @protected
          */
-        _selectItem: function (item) {
-            if (this._options.callbackSelect && this._options.callbackSelect(item) === false) {
-                this._element.value = '';
+        selectItem(item) {
+            if (this.callbackSelect && !this.callbackSelect(item)) {
+                this.element.value = '';
             }
             else {
-                this._element.value = elData(item, 'label');
+                this.element.value = item.dataset.label || '';
             }
-            this._activeItem = null;
-            UiSimpleDropdown.close(this._dropdownContainerId);
-        },
+            this.activeItem = undefined;
+            Simple_1.default.close(this.dropdownContainerId);
+        }
         /**
          * Handles successful AJAX requests.
-         *
-         * @param       {Object}        data    response data
-         * @protected
          */
-        _ajaxSuccess: function (data) {
-            var createdList = false;
-            if (this._list === null) {
-                this._list = elCreate('ul');
-                this._list.className = 'dropdownMenu';
+        _ajaxSuccess(data) {
+            let createdList = false;
+            if (!this.list) {
+                this.list = document.createElement('ul');
+                this.list.className = 'dropdownMenu';
                 createdList = true;
-                if (typeof this._options.callbackDropdownInit === 'function') {
-                    this._options.callbackDropdownInit(this._list);
+                if (typeof this.callbackDropdownInit === 'function') {
+                    this.callbackDropdownInit(this.list);
                 }
             }
             else {
                 // reset current list
-                this._list.innerHTML = '';
+                this.list.innerHTML = '';
             }
             if (typeof data.returnValues === 'object') {
-                var callbackClick = this._clickSelectItem.bind(this), listItem;
-                for (var key in data.returnValues) {
-                    if (data.returnValues.hasOwnProperty(key)) {
-                        listItem = this._createListItem(data.returnValues[key]);
-                        listItem.addEventListener(WCF_CLICK_EVENT, callbackClick);
-                        this._list.appendChild(listItem);
-                    }
-                }
+                const callbackClick = this.clickSelectItem.bind(this);
+                let listItem;
+                Object.keys(data.returnValues).forEach(key => {
+                    listItem = this.createListItem(data.returnValues[key]);
+                    listItem.addEventListener('click', callbackClick);
+                    this.list.appendChild(listItem);
+                });
             }
             if (createdList) {
-                DomUtil.insertAfter(this._list, this._element);
-                UiSimpleDropdown.initFragment(this._element.parentNode, this._list);
-                this._dropdownContainerId = DomUtil.identify(this._element.parentNode);
+                this.list.parentElement.insertBefore(this.element, this.list.nextSibling);
+                const parent = this.element.parentElement;
+                Simple_1.default.initFragment(parent, this.list);
+                this.dropdownContainerId = Util_1.default.identify(parent);
             }
-            if (this._dropdownContainerId) {
-                this._activeItem = null;
-                if (!this._list.childElementCount && this._handleEmptyResult() === false) {
-                    UiSimpleDropdown.close(this._dropdownContainerId);
+            if (this.dropdownContainerId) {
+                this.activeItem = undefined;
+                if (!this.list.childElementCount && !this.handleEmptyResult()) {
+                    Simple_1.default.close(this.dropdownContainerId);
                 }
                 else {
-                    UiSimpleDropdown.open(this._dropdownContainerId, true);
+                    Simple_1.default.open(this.dropdownContainerId, true);
                     // mark first item as active
-                    if (this._options.autoFocus && this._list.childElementCount && ~~elData(this._list.children[0], 'object-id')) {
-                        this._activeItem = this._list.children[0];
-                        this._activeItem.classList.add('active');
+                    const firstChild = this.list.childElementCount ? this.list.children[0] : undefined;
+                    if (this.autoFocus && firstChild && ~~(firstChild.dataset.objectId || '')) {
+                        this.activeItem = firstChild;
+                        this.activeItem.classList.add('active');
                     }
                 }
             }
-        },
+        }
         /**
          * Handles an empty result set, return a boolean false to hide the dropdown.
-         *
-         * @return      {boolean}      false to close the dropdown
-         * @protected
          */
-        _handleEmptyResult: function () {
-            if (!this._options.noResultPlaceholder) {
+        handleEmptyResult() {
+            if (!this.noResultPlaceholder) {
                 return false;
             }
-            var listItem = elCreate('li');
+            const listItem = document.createElement('li');
             listItem.className = 'dropdownText';
-            var span = elCreate('span');
-            span.textContent = this._options.noResultPlaceholder;
+            const span = document.createElement('span');
+            span.textContent = this.noResultPlaceholder;
             listItem.appendChild(span);
-            this._list.appendChild(listItem);
+            this.list.appendChild(listItem);
             return true;
-        },
+        }
         /**
          * Creates an list item from response data.
-         *
-         * @param       {Object}        item    response data
-         * @return      {Element}       list item
-         * @protected
          */
-        _createListItem: function (item) {
-            var listItem = elCreate('li');
-            elData(listItem, 'object-id', item.objectID);
-            elData(listItem, 'label', item.label);
-            var span = elCreate('span');
+        createListItem(item) {
+            const listItem = document.createElement('li');
+            listItem.dataset.objectId = item.objectID.toString();
+            listItem.dataset.label = item.label;
+            const span = document.createElement('span');
             span.textContent = item.label;
             listItem.appendChild(span);
             return listItem;
-        },
-        _ajaxSetup: function () {
+        }
+        _ajaxSetup() {
             return {
-                data: this._options.ajax
+                data: this.ajaxPayload,
             };
         }
-    };
+    }
     return UiSearchInput;
 });
