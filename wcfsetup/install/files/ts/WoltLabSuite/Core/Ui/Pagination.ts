@@ -277,5 +277,5 @@ interface PaginationOptions {
   activePage: number;
   maxPage: number;
   callbackShouldSwitch?: CallbackShouldSwitch | null,
-  callbackSwitch?: CallbackShouldSwitch | null,
+  callbackSwitch?: CallbackSwitch | null,
 }
