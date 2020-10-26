@@ -34,8 +34,6 @@ use wcf\util\XML;
 
 // define
 define('PACKAGE_ID', 0);
-define('HTTP_ENABLE_GZIP', 0);
-define('HTTP_GZIP_LEVEL', 0);
 define('HTTP_SEND_X_FRAME_OPTIONS', 0);
 define('CACHE_SOURCE_TYPE', 'disk');
 define('MODULE_MASTER_PASSWORD', 1);
