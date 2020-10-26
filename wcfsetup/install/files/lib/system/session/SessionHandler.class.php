@@ -993,7 +993,7 @@ final class SessionHandler extends SingletonFactory {
 	 * @since       5.4
 	 */
 	public function getUserSessions(User $user): array {
-		return $this->getSessions($user);
+		return $this->getSessions($user, false);
 	}
 	
 	/**
@@ -1014,7 +1014,7 @@ final class SessionHandler extends SingletonFactory {
 	 * @throws      \InvalidArgumentException if the given user is a guest.
 	 * @since       5.4
 	 */
-	private function getSessions(User $user, bool $isAcp = false): array {
+	private function getSessions(User $user, bool $isAcp): array {
 		if (!$user->userID) {
 			throw new \InvalidArgumentException("The given user is a guest.");
 		}
@@ -1042,7 +1042,7 @@ final class SessionHandler extends SingletonFactory {
 	 * @since       5.4
 	 */
 	public function deleteUserSessionsExcept(User $user, ?string $sessionID = null): void {
-		$this->deleteSessionsExcept($user, $sessionID);
+		$this->deleteSessionsExcept($user, $sessionID, false);
 	}
 	
 	/**
@@ -1065,7 +1065,7 @@ final class SessionHandler extends SingletonFactory {
 	 * @throws      \InvalidArgumentException if the given user is a guest.
 	 * @since       5.4
 	 */
-	private function deleteSessionsExcept(User $user, ?string $sessionID = null, bool $isAcp = false): void {
+	private function deleteSessionsExcept(User $user, ?string $sessionID, bool $isAcp): void {
 		if (!$user->userID) {
 			throw new \InvalidArgumentException("The given user is a guest.");
 		}
@@ -1097,7 +1097,7 @@ final class SessionHandler extends SingletonFactory {
 	 * @since       5.4
 	 */
 	public function deleteUserSession(string $sessionID): void {
-		$this->deleteSession($sessionID);
+		$this->deleteSession($sessionID, false);
 	}
 	
 	/**
@@ -1114,7 +1114,7 @@ final class SessionHandler extends SingletonFactory {
 	 *
 	 * @since       5.4
 	 */
-	private function deleteSession(string $sessionID, bool $isAcp = false): void {
+	private function deleteSession(string $sessionID, bool $isAcp): void {
 		$sql = "DELETE FROM     wcf".WCF_N."_". ($isAcp ? 'acp' : 'user') ."_session
 			WHERE	        sessionID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
