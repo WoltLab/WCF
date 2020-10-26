@@ -157,7 +157,6 @@ const UiDialog = {
     const id = setupData.id;
     dialogData = {id};
 
-    let createOnly = true;
     let dialogElement: HTMLElement | null;
     if (setupData.source === undefined) {
       dialogElement = document.getElementById(id);
@@ -207,14 +206,12 @@ const UiDialog = {
       if (!setupData.source.nodeType || setupData.source.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) {
         throw new Error("Expected at least a document fragment as 'source' attribute.");
       }
-
-      createOnly = false;
     }
 
     _dialogObjects.set(callbackObject, dialogData);
     _dialogToObject.set(id, callbackObject);
 
-    return this.openStatic(id, setupData.source as DialogHtml, setupData.options, createOnly);
+    return this.openStatic(id, setupData.source as DialogHtml, setupData.options);
   },
 
   /**
@@ -224,7 +221,7 @@ const UiDialog = {
    * If id is an existing element id, html will be ignored and the referenced
    * element will be appended to the content element instead.
    */
-  openStatic(id: string, html: DialogHtml, options?: DialogOptions, createOnly?: boolean): DialogData {
+  openStatic(id: string, html: DialogHtml, options?: DialogOptions): DialogData {
     UiScreen.pageOverlayOpen();
 
     if (Environment.platform() !== 'desktop') {
@@ -261,7 +258,7 @@ const UiDialog = {
         };
       }
 
-      this._createDialog(id, html, options as InternalDialogOptions, createOnly || false);
+      this._createDialog(id, html, options as InternalDialogOptions);
     }
 
     const data = _dialogs.get(id)!;
@@ -324,13 +321,8 @@ const UiDialog = {
 
   /**
    * Creates the DOM for a new dialog and opens it.
-   *
-   * @param  {string}      id    element id, if exists the html parameter is ignored in favor of the existing element
-   * @param  {?(string|DocumentFragment)}  html    content html
-   * @param  {object<string, *>}    options    list of options
-   * @param  {boolean=}      createOnly  create the dialog but do not open it
    */
-  _createDialog(id: string, html: DialogHtml, options: InternalDialogOptions, createOnly: boolean): void {
+  _createDialog(id: string, html: DialogHtml, options: InternalDialogOptions): void {
     let element: HTMLElement | null = null;
     if (html === null) {
       element = document.getElementById(id);
@@ -468,9 +460,7 @@ const UiDialog = {
       options.onSetup(content);
     }
 
-    if (!createOnly) {
-      this._updateDialog(id, null);
-    }
+    this._updateDialog(id, null);
   },
 
   /**
