@@ -151,7 +151,6 @@ define(["require", "exports", "../Core", "../Dom/Change/Listener", "./Screen", "
             }
             const id = setupData.id;
             dialogData = { id };
-            let createOnly = true;
             let dialogElement;
             if (setupData.source === undefined) {
                 dialogElement = document.getElementById(id);
@@ -200,11 +199,10 @@ define(["require", "exports", "../Core", "../Dom/Change/Listener", "./Screen", "
                 if (!setupData.source.nodeType || setupData.source.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) {
                     throw new Error("Expected at least a document fragment as 'source' attribute.");
                 }
-                createOnly = false;
             }
             _dialogObjects.set(callbackObject, dialogData);
             _dialogToObject.set(id, callbackObject);
-            return this.openStatic(id, setupData.source, setupData.options, createOnly);
+            return this.openStatic(id, setupData.source, setupData.options);
         },
         /**
          * Opens an dialog, if the dialog is already open the content container
@@ -213,7 +211,7 @@ define(["require", "exports", "../Core", "../Dom/Change/Listener", "./Screen", "
          * If id is an existing element id, html will be ignored and the referenced
          * element will be appended to the content element instead.
          */
-        openStatic(id, html, options, createOnly) {
+        openStatic(id, html, options) {
             UiScreen.pageOverlayOpen();
             if (Environment.platform() !== 'desktop') {
                 if (!this.isOpen(id)) {
@@ -247,7 +245,7 @@ define(["require", "exports", "../Core", "../Dom/Change/Listener", "./Screen", "
                         });
                     };
                 }
-                this._createDialog(id, html, options, createOnly || false);
+                this._createDialog(id, html, options);
             }
             const data = _dialogs.get(id);
             // iOS breaks `position: fixed` when input elements or `contenteditable`
@@ -299,13 +297,8 @@ define(["require", "exports", "../Core", "../Dom/Change/Listener", "./Screen", "
         },
         /**
          * Creates the DOM for a new dialog and opens it.
-         *
-         * @param  {string}      id    element id, if exists the html parameter is ignored in favor of the existing element
-         * @param  {?(string|DocumentFragment)}  html    content html
-         * @param  {object<string, *>}    options    list of options
-         * @param  {boolean=}      createOnly  create the dialog but do not open it
          */
-        _createDialog(id, html, options, createOnly) {
+        _createDialog(id, html, options) {
             let element = null;
             if (html === null) {
                 element = document.getElementById(id);
@@ -426,9 +419,7 @@ define(["require", "exports", "../Core", "../Dom/Change/Listener", "./Screen", "
             if (typeof options.onSetup === 'function') {
                 options.onSetup(content);
             }
-            if (!createOnly) {
-                this._updateDialog(id, null);
-            }
+            this._updateDialog(id, null);
         },
         /**
          * Updates the dialog's content element.
