@@ -62,7 +62,7 @@ class UiSearchInput {
       preventSubmit: false,
     }, options) as SearchInputOptions;
 
-    this.ajaxPayload = options.ajax;
+    this.ajaxPayload = options.ajax as DatabaseObjectActionPayload;
     this.autoFocus = options.autoFocus!;
     this.callbackDropdownInit = options.callbackDropdownInit;
     this.callbackSelect = options.callbackSelect;
@@ -369,7 +369,7 @@ type CallbackDropdownInit = (list: HTMLUListElement) => void
 type CallbackSelect = (item: HTMLElement) => boolean
 
 interface SearchInputOptions {
-  ajax: DatabaseObjectActionPayload;
+  ajax: Partial<DatabaseObjectActionPayload>;
   autoFocus?: boolean;
   callbackDropdownInit?: CallbackDropdownInit;
   callbackSelect?: CallbackSelect;
