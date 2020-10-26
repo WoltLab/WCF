@@ -989,6 +989,7 @@ final class SessionHandler extends SingletonFactory {
 	 * Returns all user sessions for a specific user.
 	 *
 	 * @return      \wcf\system\session\Session[]
+	 * @since       5.4
 	 */
 	public function getUserSessions(User $user): array {
 		if ($user->userID === 0) {
@@ -1014,6 +1015,7 @@ final class SessionHandler extends SingletonFactory {
 	 * Returns all acp sessions for a specific user.
 	 * 
 	 * @return      \wcf\system\session\Session[]
+	 * @since       5.4
 	 */
 	public function getAcpSessions(User $user): array {
 		if ($user->userID === 0) {
@@ -1038,6 +1040,8 @@ final class SessionHandler extends SingletonFactory {
 	/**
 	 * Deletes the user sessions for a specific user, except the session with the given session id.
 	 * If the given session id is null or unknown, all sessions for the user will be deleted.
+	 * 
+	 * @since       5.4
 	 */
 	public function deleteUserSessionsExcept(User $user, ?string $sessionID = null): void {
 		if ($user->userID === 0) {
@@ -1066,6 +1070,8 @@ final class SessionHandler extends SingletonFactory {
 	/**
 	 * Deletes the acp sessions for a specific user, except the session with the given session id.
 	 * If the given session id is null or unknown, all acp sessions for the user will be deleted.
+	 * 
+	 * @since       5.4
 	 */
 	public function deleteAcpSessionsExcept(User $user, ?string $sessionID = null): void {
 		if ($user->userID === 0) {
@@ -1087,6 +1093,8 @@ final class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * Deletes a user session with the given session id.
+	 * 
+	 * @since       5.4
 	 */
 	public function deleteUserSession(string $sessionID): void {
 		$sql = "DELETE FROM     wcf".WCF_N."_user_session
@@ -1103,6 +1111,8 @@ final class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * Deletes a acp session with the given session id.
+	 * 
+	 * @since       5.4
 	 */
 	public function deleteAcpSession(string $sessionID): void {
 		$sql = "DELETE FROM     wcf".WCF_N."_acp_session
