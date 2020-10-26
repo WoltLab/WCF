@@ -1,15 +1,15 @@
 {
   "problemMatcher": [
-      {
-          "owner": "php -l",
-          "pattern": [
-              {
-                  "regexp": "^\\s*(PHP\\s+)?([a-zA-Z\\s]+):\\s+(.*)\\s+in\\s+(\\S+)\\s+on\\s+line\\s+(\\d+)$",
-                  "file": 4,
-                  "line": 5,
-                  "message": 3
-              }
-          ]
-      }
+    {
+      "owner": "php -l",
+      "pattern": [
+        {
+          "regexp": "^\\s*(PHP\\s+)?([a-zA-Z\\s]+):\\s+(.*)\\s+in\\s+(\\S+)\\s+on\\s+line\\s+(\\d+)$",
+          "file": 4,
+          "line": 5,
+          "message": 3
+        }
+      ]
+    }
   ]
 }
