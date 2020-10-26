@@ -4741,6 +4741,7 @@ not register with us.]]></item>
 		<item name="wcf.user.menu.community.ignoredUsers"><![CDATA[Blocked Users]]></item>
 		<item name="wcf.user.menu.profile"><![CDATA[User Account]]></item>
 		<item name="wcf.user.menu.profile.accountManagement"><![CDATA[Account Management]]></item>
+		<item name="wcf.user.menu.profile.security"><![CDATA[Security]]></item>
 		<item name="wcf.user.menu.profile.avatar"><![CDATA[Avatar]]></item>
 		<item name="wcf.user.menu.profile.signature"><![CDATA[Signature]]></item>
 		<item name="wcf.user.menu.settings"><![CDATA[Settings]]></item>

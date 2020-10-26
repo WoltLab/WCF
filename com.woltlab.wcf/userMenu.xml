@@ -11,17 +11,22 @@
 			<parent>wcf.user.menu.profile</parent>
 			<showorder>1</showorder>
 		</usermenuitem>
+		<usermenuitem name="wcf.user.menu.profile.security">
+			<controller>wcf\page\AccountSecurityPage</controller>
+			<parent>wcf.user.menu.profile</parent>
+			<showorder>2</showorder>
+		</usermenuitem>
 		<usermenuitem name="wcf.user.menu.profile.avatar">
 			<controller>wcf\form\AvatarEditForm</controller>
 			<parent>wcf.user.menu.profile</parent>
-			<showorder>2</showorder>
+			<showorder>3</showorder>
 		</usermenuitem>
 		<usermenuitem name="wcf.user.menu.profile.signature">
 			<controller>wcf\form\SignatureEditForm</controller>
 			<parent>wcf.user.menu.profile</parent>
 			<options>module_user_signature</options>
 			<permissions>user.signature.canEditSignature</permissions>
-			<showorder>3</showorder>
+			<showorder>4</showorder>
 		</usermenuitem>
 		<!-- /profile -->
 		<!-- settings -->
