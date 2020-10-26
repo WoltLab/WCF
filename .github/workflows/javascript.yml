@@ -1,0 +1,31 @@
+name: JavaScript
+
+on:
+  push:
+    branches:
+    - "5.2"
+    - "5.3"
+    - master
+  pull_request:
+
+jobs:
+  syntax:
+    name: "Check Syntax"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+    - name: Set up node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: "12"
+    - uses: actions/checkout@v2
+    - run: echo "::add-matcher::.github/javascript-syntax.json"
+    - name: Remove files to be ignored
+      run: |
+        true
+    - run: |
+        ! find wcfsetup/ -type f -name '*.js' -exec node -c '{}' \; 2>&1 \
+          |awk 'BEGIN {m=0} /(.js):[0-9]+$/ {m=1; printf "%s - ",$0} m==1 && /^SyntaxError/ { m=0; print }' \
+          |sed "s@$(pwd)@.@" \
+          |grep '^'

@@ -1,0 +1,15 @@
+{
+  "problemMatcher": [
+    {
+      "owner": "node -c",
+      "pattern": [
+        {
+          "regexp": "^(./\\S+):(\\d+) - (.*)$",
+          "file": 1,
+          "line": 2,
+          "message": 3
+        }
+      ]
+    }
+  ]
+}
