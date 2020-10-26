@@ -1088,32 +1088,40 @@ final class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Deletes a user session with the given session id.
+	 * Deletes a user session with the given session ID.
 	 * 
 	 * @since       5.4
 	 */
 	public function deleteUserSession(string $sessionID): void {
-		$sql = "DELETE FROM     wcf".WCF_N."_user_session
-			WHERE	        sessionID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$sessionID]);
-		
-		// Delete legacy session.
-		$sql = "DELETE FROM     wcf".WCF_N."_session
-			WHERE	        sessionID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$sessionID]);
+		$this->deleteSession($sessionID);
 	}
 	
 	/**
-	 * Deletes a acp session with the given session id.
+	 * Deletes an acp session with the given session ID.
 	 * 
 	 * @since       5.4
 	 */
 	public function deleteAcpSession(string $sessionID): void {
-		$sql = "DELETE FROM     wcf".WCF_N."_acp_session
+		$this->deleteSession($sessionID, true);
+	}
+	
+	/**
+	 * Deletes a session with the given session ID.
+	 *
+	 * @since       5.4
+	 */
+	private function deleteSession(string $sessionID, bool $isAcp = false): void {
+		$sql = "DELETE FROM     wcf".WCF_N."_". ($isAcp ? 'acp' : 'user') ."_session
 			WHERE	        sessionID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$sessionID]);
+		
+		if (!$isAcp) {
+			// Delete legacy session.
+			$sql = "DELETE FROM     wcf".WCF_N."_session
+				WHERE	        sessionID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([$sessionID]);
+		}   
 	}
 }
