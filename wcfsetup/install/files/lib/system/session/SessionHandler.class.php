@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\session;
-use wcf\data\session\Session;
+use wcf\data\session\Session as LegacySession;
 use wcf\data\session\SessionEditor;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
@@ -87,7 +87,7 @@ final class SessionHandler extends SingletonFactory {
 	protected $session = null;
 	
 	/**
-	 * @var \wcf\data\session\Session
+	 * @var LegacySession
 	 */
 	protected $legacySession = null;
 	
@@ -517,7 +517,7 @@ final class SessionHandler extends SingletonFactory {
 				".$condition;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($condition->getParameters());
-			$this->legacySession = $statement->fetchSingleObject(Session::class);
+			$this->legacySession = $statement->fetchSingleObject(LegacySession::class);
 			
 			if (!$this->legacySession) {
 				$this->createLegacySession();
@@ -988,7 +988,7 @@ final class SessionHandler extends SingletonFactory {
 	/**
 	 * Returns all user sessions for a specific user.
 	 *
-	 * @return      \wcf\system\session\Session[]
+	 * @return      Session[]
 	 * @since       5.4
 	 */
 	public function getUserSessions(User $user): array {
@@ -1005,7 +1005,7 @@ final class SessionHandler extends SingletonFactory {
 		$sessions = [];
 		
 		while ($row = $statement->fetchArray()) {
-			$sessions[] = new \wcf\system\session\Session($row);
+			$sessions[] = new Session($row);
 		} 
 		
 		return $sessions;
@@ -1014,7 +1014,7 @@ final class SessionHandler extends SingletonFactory {
 	/**
 	 * Returns all acp sessions for a specific user.
 	 * 
-	 * @return      \wcf\system\session\Session[]
+	 * @return      Session[]
 	 * @since       5.4
 	 */
 	public function getAcpSessions(User $user): array {
@@ -1031,7 +1031,7 @@ final class SessionHandler extends SingletonFactory {
 		$sessions = [];
 		
 		while ($row = $statement->fetchArray()) {
-			$sessions[] = new \wcf\system\session\Session($row, true);
+			$sessions[] = new Session($row, true);
 		}
 		
 		return $sessions;
