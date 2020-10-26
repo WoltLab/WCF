@@ -1035,42 +1035,38 @@ final class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * Deletes the user sessions for a specific user, except the session with the given session id.
-	 * If the given session id is null or unknown, all sessions for the user will be deleted.
 	 * 
+	 * If the given session id is `null` or unknown, all sessions of the user will be deleted.
+	 * 
+	 * @throws      \InvalidArgumentException if the given user is a guest.
 	 * @since       5.4
 	 */
 	public function deleteUserSessionsExcept(User $user, ?string $sessionID = null): void {
-		if ($user->userID === 0) {
-			throw new \InvalidArgumentException("The given user is a guest.");
-		}
-		
-		$conditionBuilder = new PreparedStatementConditionBuilder();
-		$conditionBuilder->add('userID = ?', [$user->userID]);
-		
-		if ($sessionID !== null) {
-			$conditionBuilder->add('sessionID <> ?', [$sessionID]);
-		}
-		
-		$sql = "DELETE FROM     wcf".WCF_N."_user_session
-			". $conditionBuilder;
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($conditionBuilder->getParameters());
-		
-		// Delete legacy session.
-		$sql = "DELETE FROM     wcf".WCF_N."_session
-			". $conditionBuilder;
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($conditionBuilder->getParameters());
+		$this->deleteSessionsExcept($user, $sessionID);
 	}
 	
 	/**
 	 * Deletes the acp sessions for a specific user, except the session with the given session id.
-	 * If the given session id is null or unknown, all acp sessions for the user will be deleted.
 	 * 
+	 * If the given session id is `null` or unknown, all acp sessions of the user will be deleted.
+	 * 
+	 * @throws      \InvalidArgumentException if the given user is a guest.
 	 * @since       5.4
 	 */
 	public function deleteAcpSessionsExcept(User $user, ?string $sessionID = null): void {
-		if ($user->userID === 0) {
+		$this->deleteSessionsExcept($user, $sessionID, true);
+	}
+	
+	/**
+	 * Deletes the sessions for a specific user, except the session with the given session id.
+	 *
+	 * If the given session id is `null` or unknown, all acp sessions of the user will be deleted.
+	 *
+	 * @throws      \InvalidArgumentException if the given user is a guest.
+	 * @since       5.4
+	 */
+	private function deleteSessionsExcept(User $user, ?string $sessionID = null, bool $isAcp = false): void {
+		if (!$user->userID) {
 			throw new \InvalidArgumentException("The given user is a guest.");
 		}
 		
@@ -1081,10 +1077,18 @@ final class SessionHandler extends SingletonFactory {
 			$conditionBuilder->add('sessionID <> ?', [$sessionID]);
 		}
 		
-		$sql = "DELETE FROM     wcf".WCF_N."_acp_session
+		$sql = "DELETE FROM     wcf".WCF_N."_". ($isAcp ? 'acp' : 'user') ."_session
 			". $conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditionBuilder->getParameters());
+		
+		if (!$isAcp) {
+			// Delete legacy session.
+			$sql = "DELETE FROM     wcf".WCF_N."_session
+			". $conditionBuilder;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
+		}
 	}
 	
 	/**
