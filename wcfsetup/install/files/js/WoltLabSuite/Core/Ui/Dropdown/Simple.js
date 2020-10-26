@@ -400,9 +400,6 @@ define(["require", "exports", "../../CallbackList", "../../Core", "../../Dom/Cha
         },
         /**
          * Initializes a remote-controlled dropdown.
-         *
-         * @param  {Element}  dropdown  dropdown wrapper element
-         * @param  {Element}  menu    menu list element
          */
         initFragment(dropdown, menu) {
             UiDropdownSimple.setup();
@@ -526,6 +523,10 @@ define(["require", "exports", "../../CallbackList", "../../Core", "../../Dom/Cha
             _dropdowns.delete(containerId);
             return true;
         },
+        // Legacy call required for `WCF.Dropdown`
+        _toggle(event, targetId, alternateElement, disableAutoFocus) {
+            return toggle(event, targetId, alternateElement, disableAutoFocus);
+        }
     };
     return UiDropdownSimple;
 });
