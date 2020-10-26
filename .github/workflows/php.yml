@@ -1,4 +1,4 @@
-name: PHP Syntax Check
+name: PHP
 
 on:
   push:
@@ -9,7 +9,8 @@ on:
   pull_request:
 
 jobs:
-  check:
+  syntax:
+    name: "Check Syntax (${{ matrix.php }})"
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
