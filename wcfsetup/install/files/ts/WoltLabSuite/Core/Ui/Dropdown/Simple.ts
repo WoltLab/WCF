@@ -438,9 +438,6 @@ const UiDropdownSimple = {
 
   /**
    * Initializes a remote-controlled dropdown.
-   *
-   * @param  {Element}  dropdown  dropdown wrapper element
-   * @param  {Element}  menu    menu list element
    */
   initFragment(dropdown: HTMLElement, menu: HTMLElement): void {
     UiDropdownSimple.setup();
@@ -586,6 +583,11 @@ const UiDropdownSimple = {
 
     return true;
   },
+
+  // Legacy call required for `WCF.Dropdown`
+  _toggle(event: KeyboardEvent | MouseEvent | null, targetId?: string, alternateElement?: HTMLElement, disableAutoFocus?: boolean): boolean {
+    return toggle(event, targetId, alternateElement, disableAutoFocus);
+  }
 };
 
 export = UiDropdownSimple;
