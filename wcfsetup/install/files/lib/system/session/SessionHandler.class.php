@@ -989,49 +989,45 @@ final class SessionHandler extends SingletonFactory {
 	 * Returns all user sessions for a specific user.
 	 *
 	 * @return      Session[]
+	 * @throws      \InvalidArgumentException if the given user is a guest.
 	 * @since       5.4
 	 */
 	public function getUserSessions(User $user): array {
-		if ($user->userID === 0) {
-			throw new \InvalidArgumentException("The given user is a guest.");
-		}
-		
-		$sql = "SELECT          *
-			FROM            wcf".WCF_N."_user_session
-			WHERE           userID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$user->userID]);
-		
-		$sessions = [];
-		
-		while ($row = $statement->fetchArray()) {
-			$sessions[] = new Session($row);
-		} 
-		
-		return $sessions;
+		return $this->getSessions($user);
 	}
 	
 	/**
 	 * Returns all acp sessions for a specific user.
 	 * 
 	 * @return      Session[]
+	 * @throws      \InvalidArgumentException if the given user is a guest.
 	 * @since       5.4
 	 */
 	public function getAcpSessions(User $user): array {
-		if ($user->userID === 0) {
+		return $this->getSessions($user, true);
+	}
+	
+	/**
+	 * Returns all sessions for a specific user.
+	 * 
+	 * @return      Session[]
+	 * @throws      \InvalidArgumentException if the given user is a guest.
+	 * @since       5.4
+	 */
+	private function getSessions(User $user, bool $isAcp = false): array {
+		if (!$user->userID) {
 			throw new \InvalidArgumentException("The given user is a guest.");
 		}
 		
 		$sql = "SELECT          *
-			FROM            wcf".WCF_N."_acp_session
+			FROM            wcf".WCF_N."_". ($isAcp ? 'acp' : 'user') ."_session
 			WHERE           userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$user->userID]);
 		
 		$sessions = [];
-		
 		while ($row = $statement->fetchArray()) {
-			$sessions[] = new Session($row, true);
+			$sessions[] = new Session($row, $isAcp);
 		}
 		
 		return $sessions;
