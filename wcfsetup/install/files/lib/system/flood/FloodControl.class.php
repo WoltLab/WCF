@@ -63,7 +63,7 @@ final class FloodControl extends SingletonFactory {
 	public function countGuestContent(string $objectType, string $ipAddress, \DateInterval $interval, int $time = TIME_NOW): array {
 		return $this->countContentByIdentifier(
 			$objectType,
-			$this->getUserIdentifier($objectType, $ipAddress),
+			$this->getGuestIdentifier($objectType, $ipAddress),
 			$interval,
 			$time
 		);
