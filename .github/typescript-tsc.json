@@ -1,0 +1,19 @@
+{
+  "problemMatcher": [
+    {
+      "owner": "tsc",
+      "pattern": [
+        {
+          "source": "MIT License - Copyright (c) 2015 - present Microsoft Corporation - https://github.com/microsoft/vscode/blob/8d0ca78841d41bfbae9119879a742ad546491af0/extensions/typescript-language-features/package.json#L1006-L1017",
+          "regexp": "^([^\\s].*)[\\(:](\\d+)[,:](\\d+)(?:\\):\\s+|\\s+-\\s+)(error|warning|info)\\s+TS(\\d+)\\s*:\\s*(.*)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "severity": 4,
+          "code": 5,
+          "message": 6
+        }
+      ]
+    }
+  ]
+}
