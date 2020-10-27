@@ -1725,7 +1725,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.message_public_highlighters"><![CDATA[Auswählbare Syntax-Highlighter]]></item>
 		<item name="wcf.acp.option.message_public_highlighters.description"><![CDATA[Die gewählten Syntax-Highlighter stehen dem Nutzer unmittelbar im Editor zur Verfügung. Die anderen Highlighter sind weiterhin verfügbar, der Nutzer muss jedoch den internen Namen kennen.]]></item>
 		<item name="wcf.acp.option.log_missing_language_items"><![CDATA[Fehlende Sprachvariablen protokollieren]]></item>
-		<item name="wcf.acp.option.log_missing_language_items.description"><![CDATA[Die fehlenden Sprachvariablen werden in der Datei <kbd>{'WCF_DIR'|constant}log/missingLanguageItems.txt</kbd> protokolliert.]]></item>
+		<item name="wcf.acp.option.log_missing_language_items.description"><![CDATA[Die fehlenden Sprachvariablen können unter <a href="{link controller='DevtoolsMissingLanguageItemList'}{/link}">Fehlende Texte</a> eingesehen werden.]]></item>
 		<item name="wcf.acp.option.category.general.system.ipAddress"><![CDATA[IP-Adressen]]></item>
 		<item name="wcf.acp.option.prune_ip_address"><![CDATA[Speicherzeit für IP-Adressen]]></item>
 		<item name="wcf.acp.option.prune_ip_address.description"><![CDATA[Zeitraum, nachdem alte IP-Adressen automatisch gelöscht werden. [0, um die Löschung zu deaktivieren]]]></item>
