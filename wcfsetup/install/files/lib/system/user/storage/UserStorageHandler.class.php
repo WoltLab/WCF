@@ -252,6 +252,14 @@ class UserStorageHandler extends SingletonFactory {
 		while (true) {
 			try {
 				foreach ($this->log as $userID => $fields) {
+					if (empty($fields)) {
+						// Delete log entry as it was handled (by doing nothing).
+						// This can happen if ->resetAll() is called for the only updated
+						// field of a user.
+						unset($this->log[$userID]);
+						continue;
+					}
+					
 					WCF::getDB()->beginTransaction();
 					
 					ksort($fields);
