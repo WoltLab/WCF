@@ -1,0 +1,14 @@
+{
+  "problemMatcher": [
+    {
+      "owner": "tsc not run",
+      "pattern": [
+        {
+          "regexp": "--- a/(wcfsetup/(.*))",
+          "file": 2,
+          "message": 1
+        }
+      ]
+    }
+  ]
+}
