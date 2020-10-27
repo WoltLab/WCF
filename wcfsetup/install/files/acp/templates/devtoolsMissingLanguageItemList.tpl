@@ -29,7 +29,7 @@
 {/hascontent}
 
 {if $items}
-	<div class="section tabularBox">
+	<div id="missingLanguageItemTable" class="section tabularBox">
 		<table class="table">
 			<thead>
 				<tr>
@@ -119,6 +119,17 @@
 					'message': '{lang}wcf.acp.devtools.missingLanguageItem.clearLog.confirmMessage{/lang}',
 				});
 			});
+			
+			var options = { };
+			{if $pages > 1}
+				options.refreshPage = true;
+				{if $pages == $pageNo}
+					options.updatePageNumber = -1;
+				{/if}
+			{else}
+				options.emptyMessage = '{lang}wcf.global.noItems{/lang}';
+			{/if}
+			new WCF.Table.EmptyTableHandler($('#missingLanguageItemTable'), 'jsObjectRow', options);
 		});
 	</script>
 {else}
