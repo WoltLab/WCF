@@ -6,48 +6,60 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Ui/Smiley/Insert
  */
-define(['EventHandler', 'EventKey'], function (EventHandler, EventKey) {
-    'use strict';
-    function UiSmileyInsert(editorId) { this.init(editorId); }
-    UiSmileyInsert.prototype = {
-        _container: null,
-        _editorId: '',
-        /**
-         * @param {string} editorId
-         */
-        init: function (editorId) {
-            this._editorId = editorId;
-            this._container = elById('smilies-' + this._editorId);
-            if (!this._container) {
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+define(["require", "exports", "../../Event/Handler"], function (require, exports, EventHandler) {
+    "use strict";
+    EventHandler = __importStar(EventHandler);
+    class UiSmileyInsert {
+        constructor(editorId) {
+            this.editorId = editorId;
+            let container = document.getElementById('smilies-' + this.editorId);
+            if (!container) {
                 // form builder
-                this._container = elById(this._editorId + 'SmiliesTabContainer');
-                if (!this._container) {
+                container = document.getElementById(this.editorId + 'SmiliesTabContainer');
+                if (!container) {
                     throw new Error('Unable to find the message tab menu container containing the smilies.');
                 }
             }
-            this._container.addEventListener('keydown', this._keydown.bind(this));
-            this._container.addEventListener('mousedown', this._mousedown.bind(this));
-        },
-        /**
-         * @param {KeyboardEvent} event
-         * @protected
-         */
-        _keydown: function (event) {
-            var activeButton = document.activeElement;
+            this.container = container;
+            this.container.addEventListener('keydown', this.keydown.bind(this));
+            this.container.addEventListener('mousedown', this.mousedown.bind(this));
+        }
+        keydown(event) {
+            const activeButton = document.activeElement;
             if (!activeButton.classList.contains('jsSmiley')) {
                 return;
             }
-            if (EventKey.ArrowLeft(event) || EventKey.ArrowRight(event) || EventKey.Home(event) || EventKey.End(event)) {
+            if (['ArrowLeft', 'ArrowRight', 'End', 'Home'].includes(event.key)) {
                 event.preventDefault();
-                var smilies = Array.prototype.slice.call(elBySelAll('.jsSmiley', event.currentTarget));
-                if (EventKey.ArrowLeft(event)) {
+                const target = event.currentTarget;
+                const smilies = Array.from(target.querySelectorAll('.jsSmiley'));
+                if (event.key === 'ArrowLeft') {
                     smilies.reverse();
                 }
-                var index = smilies.indexOf(activeButton);
-                if (EventKey.Home(event)) {
+                let index = smilies.indexOf(activeButton);
+                if (event.key === 'Home') {
                     index = 0;
                 }
-                else if (EventKey.End(event)) {
+                else if (event.key === 'End') {
                     index = smilies.length - 1;
                 }
                 else {
@@ -58,34 +70,28 @@ define(['EventHandler', 'EventKey'], function (EventHandler, EventKey) {
                 }
                 smilies[index].focus();
             }
-            else if (EventKey.Enter(event) || EventKey.Space(event)) {
+            else if (event.key === 'Enter' || event.key === 'Space') {
                 event.preventDefault();
-                this._insert(elBySel('img', activeButton));
+                const image = activeButton.querySelector('img');
+                this.insert(image);
             }
-        },
-        /**
-         * @param {MouseEvent} event
-         * @protected
-         */
-        _mousedown: function (event) {
+        }
+        mousedown(event) {
+            const target = event.target;
             // Clicks may occur on a few different elements, but we are only looking for the image.
-            var listItem = event.target.closest('li');
-            if (this._container.contains(listItem)) {
+            const listItem = target.closest('li');
+            if (listItem && this.container.contains(listItem)) {
                 event.preventDefault();
-                var img = elBySel('img', listItem);
+                const img = listItem.querySelector('img');
                 if (img)
-                    this._insert(img);
+                    this.insert(img);
             }
-        },
-        /**
-         * @param {Element} img
-         * @protected
-         */
-        _insert: function (img) {
-            EventHandler.fire('com.woltlab.wcf.redactor2', 'insertSmiley_' + this._editorId, {
-                img: img
+        }
+        insert(img) {
+            EventHandler.fire('com.woltlab.wcf.redactor2', 'insertSmiley_' + this.editorId, {
+                img,
             });
         }
-    };
+    }
     return UiSmileyInsert;
 });
