@@ -10,7 +10,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.stringToBool = exports.getStoragePrefix = exports.triggerEvent = exports.serialize = exports.getUuid = exports.getType = exports.isPlainObject = exports.inherit = exports.extend = exports.convertLegacyUrl = exports.clone = void 0;
+    exports.debounce = exports.stringToBool = exports.getStoragePrefix = exports.triggerEvent = exports.serialize = exports.getUuid = exports.getType = exports.isPlainObject = exports.inherit = exports.extend = exports.convertLegacyUrl = exports.clone = void 0;
     const _clone = function (variable) {
         if (typeof variable === 'object' && (Array.isArray(variable) || isPlainObject(variable))) {
             return _cloneObject(variable);
@@ -205,4 +205,32 @@ define(["require", "exports"], function (require, exports) {
         return value === '1' || value === 'true';
     }
     exports.stringToBool = stringToBool;
+    /**
+     * A function that emits a side effect and does not return anything.
+     *
+     * @see https://github.com/chodorowicz/ts-debounce/blob/62f30f2c3379b7b5e778fb1793e1fbfa17354894/src/index.ts
+     */
+    function debounce(func, waitMilliseconds = 50, options = {
+        isImmediate: false,
+    }) {
+        let timeoutId;
+        return function (...args) {
+            const context = this;
+            const doLater = function () {
+                timeoutId = undefined;
+                if (!options.isImmediate) {
+                    func.apply(context, args);
+                }
+            };
+            const shouldCallNow = options.isImmediate && timeoutId === undefined;
+            if (timeoutId !== undefined) {
+                clearTimeout(timeoutId);
+            }
+            timeoutId = setTimeout(doLater, waitMilliseconds);
+            if (shouldCallNow) {
+                func.apply(context, args);
+            }
+        };
+    }
+    exports.debounce = debounce;
 });

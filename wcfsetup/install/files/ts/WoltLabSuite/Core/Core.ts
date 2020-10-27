@@ -208,9 +208,54 @@ export function getStoragePrefix() {
 }
 
 /**
- * Interprets a string value as a boolean value similar to the behavior of the 
+ * Interprets a string value as a boolean value similar to the behavior of the
  * legacy functions `elAttrBool()` and `elDataBool()`.
  */
 export function stringToBool(value: string | null): boolean {
   return value === '1' || value === 'true';
+}
+
+
+type DebounceCallback = (...args: any[]) => void;
+
+interface DebounceOptions {
+  isImmediate: boolean;
+}
+
+/**
+ * A function that emits a side effect and does not return anything.
+ *
+ * @see https://github.com/chodorowicz/ts-debounce/blob/62f30f2c3379b7b5e778fb1793e1fbfa17354894/src/index.ts
+ */
+export function debounce<F extends DebounceCallback>(
+  func: F,
+  waitMilliseconds = 50,
+  options: DebounceOptions = {
+    isImmediate: false,
+  },
+): (this: ThisParameterType<F>, ...args: Parameters<F>) => void {
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
+
+  return function (this: ThisParameterType<F>, ...args: Parameters<F>) {
+    const context = this;
+
+    const doLater = function () {
+      timeoutId = undefined;
+      if (!options.isImmediate) {
+        func.apply(context, args);
+      }
+    };
+
+    const shouldCallNow = options.isImmediate && timeoutId === undefined;
+
+    if (timeoutId !== undefined) {
+      clearTimeout(timeoutId);
+    }
+
+    timeoutId = setTimeout(doLater, waitMilliseconds);
+
+    if (shouldCallNow) {
+      func.apply(context, args);
+    }
+  };
 }
