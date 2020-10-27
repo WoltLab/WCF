@@ -8,13 +8,13 @@
         }
     },
     "require": {
-        "ezyang/htmlpurifier": "4.12.*",
+        "ezyang/htmlpurifier": "4.13.*",
         "erusev/parsedown": "1.7.*",
         "pelago/emogrifier": "2.1.*",
         "chrisjean/php-ico": "1.0.*",
         "true/punycode": "~2.0",
         "pear/net_idna2": "^0.2.0",
-        "scssphp/scssphp": "^1.1",
+        "scssphp/scssphp": "^1.2",
         "guzzlehttp/guzzle": "^7.2"
     }
 }
