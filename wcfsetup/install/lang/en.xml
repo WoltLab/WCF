@@ -1700,7 +1700,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.message_public_highlighters"><![CDATA[Selectable Syntax Highlighters]]></item>
 		<item name="wcf.acp.option.message_public_highlighters.description"><![CDATA[The chosen syntax highlighters can easily be selected by the user using the editor. The other highlighters are still available, but their name needs to be known by the user.]]></item>
 		<item name="wcf.acp.option.log_missing_language_items"><![CDATA[Log Missing Language Items]]></item>
-		<item name="wcf.acp.option.log_missing_language_items.description"><![CDATA[The missing language items are logged in the log file <kbd>{'WCF_DIR'|constant}log/missingLanguageItems.txt</kbd>.]]></item>
+		<item name="wcf.acp.option.log_missing_language_items.description"><![CDATA[The missing language items are listed on the <a href="{link controller='DevtoolsMissingLanguageItemList'}{/link}">Missing Phrases</a> page.]]></item>
 		<item name="wcf.acp.option.category.general.system.ipAddress"><![CDATA[IP Addresses]]></item>
 		<item name="wcf.acp.option.prune_ip_address"><![CDATA[Storage Time Period for IP Addresses]]></item>
 		<item name="wcf.acp.option.prune_ip_address.description"><![CDATA[Stored IP addresses will be removed after the following days. Use 0 to disable.]]></item>
