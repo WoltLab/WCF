@@ -343,7 +343,7 @@ class UiSearchInput {
   /**
    * Creates an list item from response data.
    */
-  private createListItem(item: ListItemData): HTMLLIElement {
+  protected createListItem(item: ListItemData): HTMLLIElement {
     const listItem = document.createElement('li');
     listItem.dataset.objectId = item.objectID.toString();
     listItem.dataset.label = item.label;
