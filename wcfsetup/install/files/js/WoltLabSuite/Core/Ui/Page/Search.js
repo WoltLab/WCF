@@ -40,18 +40,24 @@ define(["require", "exports", "../../Ajax", "../../Dom/Util", "../../Language", 
             this.callbackSelect = callbackSelect;
             Dialog_1.default.open(this);
         }
-        _search(event) {
+        search(event) {
             event.preventDefault();
             const inputContainer = this.searchInput.parentNode;
             const value = this.searchInput.value.trim();
-            Util_1.default.innerError(inputContainer, value.length < 3 ? Language.get('wcf.page.search.error.tooShort') : false);
+            if (value.length < 3) {
+                Util_1.default.innerError(inputContainer, Language.get('wcf.page.search.error.tooShort'));
+                return;
+            }
+            else {
+                Util_1.default.innerError(inputContainer, false);
+            }
             Ajax.api(this, {
                 parameters: {
                     searchString: value,
                 },
             });
         }
-        _click(event) {
+        click(event) {
             event.preventDefault();
             const page = event.currentTarget;
             const pageTitle = page.querySelector('h3');
@@ -75,7 +81,7 @@ define(["require", "exports", "../../Ajax", "../../Dom/Util", "../../Language", 
             Util_1.default[html ? 'show' : 'hide'](this.resultContainer);
             if (html) {
                 this.resultList.querySelectorAll('.containerHeadline').forEach(item => {
-                    item.addEventListener('click', this._click.bind(this));
+                    item.addEventListener('click', this.click.bind(this));
                 });
             }
             else {
@@ -98,10 +104,10 @@ define(["require", "exports", "../../Ajax", "../../Dom/Util", "../../Language", 
                         this.searchInput = document.getElementById('wcfUiPageSearchInput');
                         this.searchInput.addEventListener('keydown', event => {
                             if (event.key === 'Enter') {
-                                this._search(event);
+                                this.search(event);
                             }
                         });
-                        this.searchInput.nextElementSibling.addEventListener('click', this._search.bind(this));
+                        this.searchInput.nextElementSibling.addEventListener('click', this.search.bind(this));
                         this.resultContainer = document.getElementById('wcfUiPageSearchResultContainer');
                         this.resultList = document.getElementById('wcfUiPageSearchResultList');
                     },

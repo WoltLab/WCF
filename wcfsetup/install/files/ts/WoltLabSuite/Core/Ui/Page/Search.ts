@@ -30,13 +30,18 @@ class UiPageSearch implements AjaxCallbackObject, DialogCallbackObject {
     UiDialog.open(this);
   }
 
-  _search(event: KeyboardEvent): void {
+  private search(event: KeyboardEvent): void {
     event.preventDefault();
 
     const inputContainer = this.searchInput!.parentNode as HTMLElement;
 
     const value = this.searchInput!.value.trim();
-    DomUtil.innerError(inputContainer, value.length < 3 ? Language.get('wcf.page.search.error.tooShort') : false);
+    if (value.length < 3) {
+      DomUtil.innerError(inputContainer, Language.get('wcf.page.search.error.tooShort'));
+      return;
+    } else {
+      DomUtil.innerError(inputContainer, false);
+    }
 
     Ajax.api(this, {
       parameters: {
@@ -45,7 +50,7 @@ class UiPageSearch implements AjaxCallbackObject, DialogCallbackObject {
     });
   }
 
-  _click(event: MouseEvent): void {
+  private click(event: MouseEvent): void {
     event.preventDefault();
 
     const page = event.currentTarget as HTMLElement;
@@ -77,7 +82,7 @@ class UiPageSearch implements AjaxCallbackObject, DialogCallbackObject {
 
     if (html) {
       this.resultList!.querySelectorAll('.containerHeadline').forEach(item => {
-        item.addEventListener('click', this._click.bind(this));
+        item.addEventListener('click', this.click.bind(this));
       });
     } else {
       DomUtil.innerError(this.searchInput!.parentElement!, Language.get('wcf.page.search.error.noResults'));
@@ -101,11 +106,11 @@ class UiPageSearch implements AjaxCallbackObject, DialogCallbackObject {
           this.searchInput = document.getElementById('wcfUiPageSearchInput') as HTMLInputElement;
           this.searchInput.addEventListener('keydown', event => {
             if (event.key === 'Enter') {
-              this._search(event);
+              this.search(event);
             }
           });
 
-          this.searchInput.nextElementSibling!.addEventListener('click', this._search.bind(this));
+          this.searchInput.nextElementSibling!.addEventListener('click', this.search.bind(this));
 
           this.resultContainer = document.getElementById('wcfUiPageSearchResultContainer') as HTMLElement;
           this.resultList = document.getElementById('wcfUiPageSearchResultList') as HTMLOListElement;
