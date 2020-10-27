@@ -1,120 +1,153 @@
 /**
  * Handles the user trophy dialog.
  *
- * @author	Joshua Ruesweg
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Ui/User/Trophy/List
+ * @author  Joshua Ruesweg
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Ui/User/Trophy/List
  */
-define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'Ui/Dialog', 'WoltLabSuite/Core/Ui/Pagination', 'Dom/ChangeListener', 'List'], function (Ajax, Core, Dictionary, DomUtil, UiDialog, UiPagination, DomChangeListener, List) {
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+define(["require", "exports", "../../../Ajax", "../../../Dom/Change/Listener", "../../Dialog", "../../Pagination"], function (require, exports, Ajax, Listener_1, Dialog_1, Pagination_1) {
     "use strict";
-    /**
-     * @constructor
-     */
-    function UiUserTrophyList() { this.init(); }
-    UiUserTrophyList.prototype = {
+    Ajax = __importStar(Ajax);
+    Listener_1 = __importDefault(Listener_1);
+    Dialog_1 = __importDefault(Dialog_1);
+    Pagination_1 = __importDefault(Pagination_1);
+    class CacheData {
+        constructor(pageCount, title) {
+            this.pageCount = pageCount;
+            this.title = title;
+            this.cache = new Map();
+        }
+        has(pageNo) {
+            return this.cache.has(pageNo);
+        }
+        get(pageNo) {
+            return this.cache.get(pageNo);
+        }
+        set(pageNo, template) {
+            this.cache.set(pageNo, template);
+        }
+    }
+    class UiUserTrophyList {
         /**
          * Initializes the user trophy list.
          */
-        init: function () {
-            this._cache = new Dictionary();
-            this._knownElements = new List();
-            this._options = {
-                className: 'wcf\\data\\user\\trophy\\UserTrophyAction',
-                parameters: {}
-            };
-            this._rebuild();
-            DomChangeListener.add('WoltLabSuite/Core/Ui/User/Trophy/List', this._rebuild.bind(this));
-        },
+        constructor() {
+            this.cache = new Map();
+            this.currentPageNo = 0;
+            this.currentUser = 0;
+            this.knownElements = new WeakSet();
+            Listener_1.default.add('WoltLabSuite/Core/Ui/User/Trophy/List', this.rebuild.bind(this));
+            this.rebuild();
+        }
         /**
          * Adds event userTrophyOverlayList elements.
          */
-        _rebuild: function () {
-            elBySelAll('.userTrophyOverlayList', undefined, (function (element) {
-                if (!this._knownElements.has(element)) {
-                    element.addEventListener(WCF_CLICK_EVENT, this._open.bind(this, elData(element, 'user-id')));
-                    this._knownElements.add(element);
+        rebuild() {
+            document.querySelectorAll('.userTrophyOverlayList').forEach((element) => {
+                if (!this.knownElements.has(element)) {
+                    element.addEventListener('click', this.open.bind(this, element));
+                    this.knownElements.add(element);
                 }
-            }).bind(this));
-        },
+            });
+        }
         /**
          * Opens the user trophy list for a specific user.
-         *
-         * @param	{int}		userId
-         * @param       {Event}         event		event object
          */
-        _open: function (userId, event) {
+        open(element, event) {
             event.preventDefault();
-            this._currentPageNo = 1;
-            this._currentUser = userId;
-            this._showPage();
-        },
+            this.currentPageNo = 1;
+            this.currentUser = +element.dataset.userId;
+            this.showPage();
+        }
         /**
          * Shows the current or given page.
-         *
-         * @param	{int=}		pageNo		page number
          */
-        _showPage: function (pageNo) {
+        showPage(pageNo) {
             if (pageNo !== undefined) {
-                this._currentPageNo = pageNo;
+                this.currentPageNo = pageNo;
             }
-            if (this._cache.has(this._currentUser)) {
+            const data = this.cache.get(this.currentUser);
+            if (data) {
                 // validate pageNo
-                if (this._cache.get(this._currentUser).get('pageCount') !== 0 && (this._currentPageNo < 1 || this._currentPageNo > this._cache.get(this._currentUser).get('pageCount'))) {
-                    throw new RangeError("pageNo must be between 1 and " + this._cache.get(this._currentUser).get('pageCount') + " (" + this._currentPageNo + " given).");
+                if (data.pageCount !== 0 && (this.currentPageNo < 1 || this.currentPageNo > data.pageCount)) {
+                    throw new RangeError("pageNo must be between 1 and " + data.pageCount + " (" + this.currentPageNo + " given).");
                 }
             }
-            else {
-                // init user page cache
-                this._cache.set(this._currentUser, new Dictionary());
-            }
-            if (this._cache.get(this._currentUser).has(this._currentPageNo)) {
-                var dialog = UiDialog.open(this, this._cache.get(this._currentUser).get(this._currentPageNo));
-                UiDialog.setTitle('userTrophyListOverlay', this._cache.get(this._currentUser).get('title'));
-                if (this._cache.get(this._currentUser).get('pageCount') > 1) {
-                    var element = elBySel('.jsPagination', dialog.content);
+            if (data && data.has(this.currentPageNo)) {
+                const dialog = Dialog_1.default.open(this, data.get(this.currentPageNo));
+                Dialog_1.default.setTitle('userTrophyListOverlay', data.title);
+                if (data.pageCount > 1) {
+                    const element = dialog.content.querySelector('.jsPagination');
                     if (element !== null) {
-                        new UiPagination(element, {
-                            activePage: this._currentPageNo,
-                            maxPage: this._cache.get(this._currentUser).get('pageCount'),
-                            callbackSwitch: this._showPage.bind(this)
+                        new Pagination_1.default(element, {
+                            activePage: this.currentPageNo,
+                            maxPage: data.pageCount,
+                            callbackSwitch: this.showPage.bind(this),
                         });
                     }
                 }
             }
             else {
-                this._options.parameters.pageNo = this._currentPageNo;
-                this._options.parameters.userID = this._currentUser;
                 Ajax.api(this, {
-                    parameters: this._options.parameters
+                    parameters: {
+                        pageNo: this.currentPageNo,
+                        userID: this.currentUser,
+                    },
                 });
             }
-        },
-        _ajaxSuccess: function (data) {
+        }
+        _ajaxSuccess(data) {
+            let cache;
             if (data.returnValues.pageCount !== undefined) {
-                this._cache.get(this._currentUser).set('pageCount', ~~data.returnValues.pageCount);
+                cache = new CacheData(+data.returnValues.pageCount, data.returnValues.title);
+                this.cache.set(this.currentUser, cache);
             }
-            this._cache.get(this._currentUser).set(this._currentPageNo, data.returnValues.template);
-            this._cache.get(this._currentUser).set('title', data.returnValues.title);
-            this._showPage();
-        },
-        _ajaxSetup: function () {
+            else {
+                cache = this.cache.get(this.currentUser);
+            }
+            cache.set(this.currentPageNo, data.returnValues.template);
+            this.showPage();
+        }
+        _ajaxSetup() {
             return {
                 data: {
                     actionName: 'getGroupedUserTrophyList',
-                    className: this._options.className
-                }
+                    className: 'wcf\\data\\user\\trophy\\UserTrophyAction',
+                },
             };
-        },
-        _dialogSetup: function () {
+        }
+        _dialogSetup() {
             return {
                 id: 'userTrophyListOverlay',
                 options: {
-                    title: ""
+                    title: "",
                 },
-                source: null
+                source: null,
             };
         }
-    };
+    }
     return UiUserTrophyList;
 });
