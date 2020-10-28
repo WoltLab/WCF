@@ -1297,8 +1297,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.error.controllerReplacementUnknown"><![CDATA[The controller “{$urlControllerReplacementError}” is unknown.]]></item>
 		<item name="wcf.acp.option.error.tooHigh"><![CDATA[Exceeds the maximum value{if $option->maxvalue !== null} of {#$option->maxvalue}{/if}.]]></item>
 		<item name="wcf.acp.option.error.tooLow"><![CDATA[Under the minimum value{if $option->minvalue !== null} of {#$option->minvalue}{/if}.]]></item>
-		<item name="wcf.acp.option.http_enable_gzip"><![CDATA[Enable gzip-compression]]></item>
-		<item name="wcf.acp.option.http_enable_gzip.description"><![CDATA[Compresses content transferred to users, it also reduces traffic and page load times. It does not affect files, e.g. images.]]></item>
 		<item name="wcf.acp.option.http_send_x_frame_options"><![CDATA[Disallow embedding in a frame]]></item>
 		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[Sends the <a href="https://en.wikipedia.org/wiki/Clickjacking" class="externalURL">“X-Frame-Options”</a> header to prevent 3rd party sites from embedding this site in a frame (sends “SAMEORIGIN”).]]></item>
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Graphics Library]]></item>
@@ -1335,7 +1333,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.mail_use_f_param"><![CDATA[Use “-f” parameter]]></item>
 		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[The “-f” parameter sets the proper sender of the email if the PHP send method is used. This parameter may not be supported by every server. Try disabling it, if you have trouble sending emails.]]></item>
 		<item name="wcf.acp.option.meta_description"><![CDATA[Meta Description]]></item>
-		<item name="wcf.acp.option.meta_keywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.option.og_image"><![CDATA[Open Graph Image]]></item>
 		<item name="wcf.acp.option.og_image.description"><![CDATA[Path to the default image that will be displayed when sharing your site on Facebook, Twitter and other social media sites.]]></item>
 		<item name="wcf.acp.option.module_master_password"><![CDATA[Enable master password]]></item>
@@ -1702,7 +1699,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.message_public_highlighters"><![CDATA[Selectable Syntax Highlighters]]></item>
 		<item name="wcf.acp.option.message_public_highlighters.description"><![CDATA[The chosen syntax highlighters can easily be selected by the user using the editor. The other highlighters are still available, but their name needs to be known by the user.]]></item>
 		<item name="wcf.acp.option.log_missing_language_items"><![CDATA[Log Missing Language Items]]></item>
-		<item name="wcf.acp.option.log_missing_language_items.description"><![CDATA[The missing language items are logged in the log file <kbd>{'WCF_DIR'|constant}log/missingLanguageItems.txt</kbd>.]]></item>
+		<item name="wcf.acp.option.log_missing_language_items.description"><![CDATA[The missing language items are listed on the <a href="{link controller='DevtoolsMissingLanguageItemList'}{/link}">Missing Phrases</a> page.]]></item>
 		<item name="wcf.acp.option.category.general.system.ipAddress"><![CDATA[IP Addresses]]></item>
 		<item name="wcf.acp.option.prune_ip_address"><![CDATA[Storage Time Period for IP Addresses]]></item>
 		<item name="wcf.acp.option.prune_ip_address.description"><![CDATA[Stored IP addresses will be removed after the following days. Use 0 to disable.]]></item>
@@ -2325,7 +2322,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.page.contentContent"><![CDATA[Content]]></item>
 		<item name="wcf.acp.pip.page.contentCustomURL"><![CDATA[Custom URL]]></item>
 		<item name="wcf.acp.pip.page.contentMetaDescription"><![CDATA[Meta Description]]></item>
-		<item name="wcf.acp.pip.page.contentMetaKeywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.pip.page.content"><![CDATA[Page Contents]]></item>
 		<item name="wcf.acp.pip.eventListener.listenerName"><![CDATA[Event Listener Identifier]]></item>
 		<item name="wcf.acp.pip.eventListener.listenerName.description"><![CDATA[Unique textual identifier of the event listener that may only contain letters and must start with a lowercase letter.]]></item>
@@ -4323,7 +4319,6 @@ Attachments:
 		<item name="wcf.acp.page.lastUpdateTime"><![CDATA[Last Change]]></item>
 		<item name="wcf.acp.page.list"><![CDATA[Pages]]></item>
 		<item name="wcf.acp.page.metaDescription"><![CDATA[Meta Description]]></item>
-		<item name="wcf.acp.page.metaKeywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.page.name.error.notUnique"><![CDATA[Name is already in use.]]></item>
 		<item name="wcf.acp.page.page"><![CDATA[Page]]></item>
 		<item name="wcf.acp.page.parentPage"><![CDATA[Parent Page]]></item>

@@ -201,7 +201,6 @@ class PageEditForm extends PageAddForm {
 					'title' => !empty($this->title[$language->languageID]) ? $this->title[$language->languageID] : '',
 					'content' => '',
 					'metaDescription' => '',
-					'metaKeywords' => ''
 				];
 			}
 			
@@ -223,7 +222,6 @@ class PageEditForm extends PageAddForm {
 						'content' => !empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : '',
 						'htmlInputProcessor' => isset($this->htmlInputProcessors[$language->languageID]) ? $this->htmlInputProcessors[$language->languageID] : null,
 						'metaDescription' => !empty($this->metaDescription[$language->languageID]) ? $this->metaDescription[$language->languageID] : '',
-						'metaKeywords' => !empty($this->metaKeywords[$language->languageID]) ? $this->metaKeywords[$language->languageID] : ''
 					];
 				}
 			}
@@ -234,7 +232,6 @@ class PageEditForm extends PageAddForm {
 					'content' => !empty($this->content[0]) ? $this->content[0] : '',
 					'htmlInputProcessor' => isset($this->htmlInputProcessors[0]) ? $this->htmlInputProcessors[0] : null,
 					'metaDescription' => !empty($this->metaDescription[0]) ? $this->metaDescription[0] : '',
-					'metaKeywords' => !empty($this->metaKeywords[0]) ? $this->metaKeywords[0] : ''
 				];
 			}
 			
@@ -287,7 +284,6 @@ class PageEditForm extends PageAddForm {
 				$this->title[$languageID] = $content->title;
 				$this->content[$languageID] = $content->content;
 				$this->metaDescription[$languageID] = $content->metaDescription;
-				$this->metaKeywords[$languageID] = $content->metaKeywords;
 				$this->customURL[$languageID] = $content->customURL;
 			}
 			

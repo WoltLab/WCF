@@ -133,12 +133,7 @@ class IndexPage extends AbstractPage {
 		}
 		
 		$missingLanguageItemsMTime = 0;
-		if (
-			ENABLE_DEBUG_MODE
-			&& ENABLE_DEVELOPER_TOOLS
-			&& file_exists(WCF_DIR . 'log/missingLanguageItems.txt')
-			&& filesize(WCF_DIR . 'log/missingLanguageItems.txt') > 0
-		) {
+		if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
 			$logList = new DevtoolsMissingLanguageItemList();
 			$logList->sqlOrderBy = 'lastTime DESC';
 			$logList->sqlLimit = 1;

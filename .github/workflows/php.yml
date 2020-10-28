@@ -1,4 +1,4 @@
-name: PHP Syntax Check
+name: PHP
 
 on:
   push:
@@ -9,7 +9,8 @@ on:
   pull_request:
 
 jobs:
-  check:
+  syntax:
+    name: "Check Syntax (${{ matrix.php }})"
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -29,6 +30,5 @@ jobs:
     - name: Remove files to be ignored
       run: |
         rm wcfsetup/install/files/lib/system/api/ezyang/htmlpurifier/library/HTMLPurifier.autoload-legacy.php
-        rm wcfsetup/install/files/lib/system/api/ezyang/htmlpurifier/extras/HTMLPurifierExtras.autoload-legacy.php
     - run: |
         ! find . -type f -name '*.php' -exec php -l '{}' \; 2>&1 |grep -v '^No syntax errors detected'

@@ -135,7 +135,6 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 					'content' => (!empty($contentData['content'])) ? StringUtil::trim($contentData['content']) : '',
 					'customURL' => (!empty($contentData['customURL'])) ? StringUtil::trim($contentData['customURL']) : '',
 					'metaDescription' => (!empty($contentData['metaDescription'])) ? StringUtil::trim($contentData['metaDescription']) : '',
-					'metaKeywords' => (!empty($contentData['metaKeywords'])) ? StringUtil::trim($contentData['metaKeywords']) : '',
 					'title' => (!empty($contentData['title'])) ? StringUtil::trim($contentData['title']) : ''
 				];
 			}
@@ -348,7 +347,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
 			$sql = "INSERT IGNORE INTO	wcf".WCF_N."_page_content
-							(pageID, languageID, title, content, metaDescription, metaKeywords, customURL)
+							(pageID, languageID, title, content, metaDescription, customURL)
 				VALUES			(?, ?, ?, ?, ?, ?, ?)";
 			$insertStatement = WCF::getDB()->prepareStatement($sql);
 			
@@ -374,8 +373,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 						$content['title'],
 						$content['content'],
 						$content['metaDescription'],
-						$content['metaKeywords'],
-						$content['customURL']
+						$content['customURL'],
 					]);
 					
 					// generate template if page's type is 'tpl'
@@ -598,13 +596,6 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				->i18n()
 				->i18nRequired()
 				->languageItemPattern('__NONE__'),
-			
-			TextFormField::create('contentMetaKeywords')
-				->objectProperty('metaKeywords')
-				->label('wcf.acp.pip.page.contentMetaKeywords')
-				->i18n()
-				->i18nRequired()
-				->languageItemPattern('__NONE__'),
 		]);
 		
 		// dependencies
@@ -619,7 +610,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			);
 		}
 		
-		foreach (['contentContent', 'contentCustomURL', 'contentMetaDescription', 'contentMetaKeywords'] as $nonSystemElement) {
+		foreach (['contentContent', 'contentCustomURL', 'contentMetaDescription'] as $nonSystemElement) {
 			$form->getNodeById($nonSystemElement)->addDependency(
 				ValueFormFieldDependency::create('pageType')
 					->field($pageType)
@@ -644,7 +635,6 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			'content' => [],
 			'customURL' => [],
 			'metaDescription' => [],
-			'metaKeywords' => []
 		];
 		
 		/** @var \DOMElement $name */
@@ -682,7 +672,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		}
 		
 		$readData = function($languageID, \DOMElement $content) use (&$data, $saveData) {
-			foreach (['title', 'content', 'customURL', 'metaDescription', 'metaKeywords'] as $contentElementName) {
+			foreach (['title', 'content', 'customURL', 'metaDescription'] as $contentElementName) {
 				$contentElement = $content->getElementsByTagName($contentElementName)->item(0);
 				if (!isset($data[$contentElementName])) {
 					$data[$contentElementName] = [];
@@ -740,7 +730,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			
 			$content = [];
 			
-			foreach (['title', 'content', 'customURL', 'metaDescription', 'metaKeywords'] as $contentProperty) {
+			foreach (['title', 'content', 'customURL', 'metaDescription'] as $contentProperty) {
 				if (!empty($data[$contentProperty])) {
 					foreach ($data[$contentProperty] as $languageID => $value) {
 						$languageCode = LanguageFactory::getInstance()->getLanguage($languageID)->languageCode;
@@ -757,7 +747,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			}
 			
 			foreach ($content as $languageCode => $values) {
-				foreach (['title', 'content', 'customURL', 'metaDescription', 'metaKeywords'] as $contentProperty) {
+				foreach (['title', 'content', 'customURL', 'metaDescription'] as $contentProperty) {
 					if (!isset($values[$contentProperty])) {
 						$content[$languageCode][$contentProperty] = '';
 					}
@@ -858,7 +848,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		foreach ($languages as $language) {
 			$content = null;
 			
-			foreach (['title', 'content', 'customURL', 'metaDescription', 'metaKeywords'] as $property) {
+			foreach (['title', 'content', 'customURL', 'metaDescription'] as $property) {
 				if (!empty($formData[$property . '_i18n'][$language->languageID])) {
 					if ($content === null) {
 						$content = $document->createElement('content');

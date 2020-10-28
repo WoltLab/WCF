@@ -51,7 +51,7 @@ if (!@ini_get('date.timezone')) {
 }
 
 // define current woltlab suite version
-define('WCF_VERSION', '5.3.0 RC 2');
+define('WCF_VERSION', '5.3.0 RC 3');
 
 // define current API version
 // @deprecated 5.2
@@ -283,34 +283,6 @@ class WCF {
 			// 
 			// ob_get_level() can return values > 1, if the PHP setting `output_buffering` is on
 			while (ob_get_level()) ob_end_clean();
-			
-			// Some webservers are broken and will apply gzip encoding at all cost, but they fail
-			// to set a proper `Content-Encoding` HTTP header and mess things up even more.
-			// Especially the `identity` value appears to be unrecognized by some of them, hence
-			// we'll just gzip the output of the exception to prevent them from tampering.
-			// This part is copied from `HeaderUtil` in order to isolate the exception handler!
-			if (defined('HTTP_ENABLE_GZIP') && HTTP_ENABLE_GZIP && !defined('HTTP_DISABLE_GZIP')) {
-				if (function_exists('gzcompress') && !@ini_get('zlib.output_compression') && !@ini_get('output_handler') && isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false) {
-					if (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip') !== false) {
-						@header('Content-Encoding: x-gzip');
-					}
-					else {
-						@header('Content-Encoding: gzip');
-					}
-					
-					ob_start(function($output) {
-						$size = strlen($output);
-						$crc = crc32($output);
-						
-						$newOutput = "\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\xff";
-						$newOutput .= substr(gzcompress($output, 1), 2, -4);
-						$newOutput .= pack('V', $crc);
-						$newOutput .= pack('V', $size);
-						
-						return $newOutput;
-					});
-				}
-			}
 		}
 		
 		@header('HTTP/1.1 503 Service Unavailable');
@@ -400,6 +372,14 @@ class WCF {
 		
 		// The session timeout is fully managed since 5.4.
 		define('SESSION_TIMEOUT', 3600);
+		
+		// gzip compression is removed in 5.4.
+		// https://github.com/WoltLab/WCF/issues/3634
+		define('HTTP_ENABLE_GZIP', 0);
+		
+		// Meta keywords are no longer used since 5.4.
+		// https://github.com/WoltLab/WCF/issues/3561
+		define('META_KEYWORDS', '');
 		
 		$filename = WCF_DIR.'options.inc.php';
 		
