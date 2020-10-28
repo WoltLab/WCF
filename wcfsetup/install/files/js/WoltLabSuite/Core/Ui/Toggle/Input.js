@@ -1,111 +1,85 @@
 /**
  * Provides a simple toggle to show or hide certain elements when the
  * target element is checked.
- * 
+ *
  * Be aware that the list of elements to show or hide accepts selectors
  * which will be passed to `elBySel()`, causing only the first matched
  * element to be used. If you require a whole list of elements identified
  * by a single selector to be handled, please provide the actual list of
  * elements instead.
- * 
+ *
  * Usage:
- * 
+ *
  * new UiToggleInput('input[name="foo"][value="bar"]', {
  *      show: ['#showThisContainer', '.makeThisVisibleToo'],
- *      hide: ['.notRelevantStuff', elById('fooBar')]
+ *      hide: ['.notRelevantStuff', document.getElementById('fooBar')]
  * });
- * 
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Ui/Toggle/Input
+ *
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Ui/Toggle/Input
  */
-define(['Core'], function(Core) {
-	"use strict";
-	
-	/**
-	 * @param       {string}        elementSelector         element selector used with `elBySel()`
-	 * @param       {Object}        options                 toggle options
-	 * @constructor
-	 */
-	function UiToggleInput(elementSelector, options) { this.init(elementSelector, options); }
-	UiToggleInput.prototype = {
-		/**
-		 * Initializes a new input toggle.
-		 * 
-		 * @param       {string}        elementSelector         element selector used with `elBySel()`
-		 * @param       {Object}        options                 toggle options
-		 */
-		init: function(elementSelector, options) {
-			this._element = elBySel(elementSelector);
-			if (this._element === null) {
-				throw new Error("Unable to find element by selector '" + elementSelector + "'.");
-			}
-			
-			var type = (this._element.nodeName === 'INPUT') ? elAttr(this._element, 'type') : '';
-			if (type !== 'checkbox' && type !== 'radio') {
-				throw new Error("Illegal element, expected input[type='checkbox'] or input[type='radio'].");
-			}
-			
-			this._options = Core.extend({
-				hide: [],
-				show: []
-			}, options);
-			
-			['hide', 'show'].forEach((function(type) {
-				var element, i, length;
-				for (i = 0, length = this._options[type].length; i < length; i++) {
-					element = this._options[type][i];
-					
-					if (typeof element !== 'string' && !(element instanceof Element)) {
-						throw new TypeError("The array '" + type + "' may only contain string selectors or DOM elements.");
-					}
-				}
-			}).bind(this));
-			
-			this._element.addEventListener('change', this._change.bind(this));
-			
-			this._handleElements(this._options.show, this._element.checked);
-			this._handleElements(this._options.hide, !this._element.checked);
-		},
-		
-		/**
-		 * Triggered when element is checked / unchecked.
-		 * 
-		 * @param       {Event}         event   event object
-		 * @protected
-		 */
-		_change: function(event) {
-			var showElements = event.currentTarget.checked;
-			
-			this._handleElements(this._options.show, showElements);
-			this._handleElements(this._options.hide, !showElements);
-		},
-		
-		/**
-		 * Loops through the target elements and shows / hides them.
-		 * 
-		 * @param       {Array}         elements        list of elements or selectors
-		 * @param       {boolean}       showElement     true if elements should be shown
-		 * @protected
-		 */
-		_handleElements: function(elements, showElement) {
-			var element, tmp;
-			for (var i = 0, length = elements.length; i < length; i++) {
-				element = elements[i];
-				if (typeof element === 'string') {
-					tmp = elBySel(element);
-					if (tmp === null) {
-						throw new Error("Unable to find element by selector '" + element + "'.");
-					}
-					
-					elements[i] = element = tmp;
-				}
-				
-				window[(showElement ? 'elShow' : 'elHide')](element);
-			}
-		}
-	};
-	
-	return UiToggleInput;
+define(["require", "exports", "tslib", "../../Dom/Util"], function (require, exports, tslib_1, Util_1) {
+    "use strict";
+    Util_1 = tslib_1.__importDefault(Util_1);
+    class UiToggleInput {
+        /**
+         * Initializes a new input toggle.
+         */
+        constructor(elementSelector, options) {
+            const element = document.querySelector(elementSelector);
+            if (element === null) {
+                throw new Error("Unable to find element by selector '" + elementSelector + "'.");
+            }
+            const type = (element.nodeName === 'INPUT') ? element.type : '';
+            if (type !== 'checkbox' && type !== 'radio') {
+                throw new Error("Illegal element, expected input[type='checkbox'] or input[type='radio'].");
+            }
+            this.element = element;
+            this.hide = this.getElements('hide', Array.isArray(options.hide) ? options.hide : []);
+            this.hide = this.getElements('show', Array.isArray(options.show) ? options.show : []);
+            this.element.addEventListener('change', this.change.bind(this));
+            this.updateVisibility(this.show, this.element.checked);
+            this.updateVisibility(this.hide, !this.element.checked);
+        }
+        getElements(type, items) {
+            const elements = [];
+            items.forEach(item => {
+                let element = null;
+                if (typeof item === 'string') {
+                    element = document.querySelector(item);
+                    if (element === null) {
+                        throw new Error(`Unable to find an element with the selector '${item}'.`);
+                    }
+                }
+                else if (item instanceof HTMLElement) {
+                    element = item;
+                }
+                else {
+                    throw new TypeError(`The array '${type}' may only contain string selectors or DOM elements.`);
+                }
+                elements.push(element);
+            });
+            return elements;
+        }
+        /**
+         * Triggered when element is checked / unchecked.
+         */
+        change(event) {
+            const target = event.currentTarget;
+            const showElements = target.checked;
+            this.updateVisibility(this.show, showElements);
+            this.updateVisibility(this.hide, !showElements);
+        }
+        /**
+         * Loops through the target elements and shows / hides them.
+         */
+        updateVisibility(elements, showElement) {
+            elements.forEach(element => {
+                Util_1.default[showElement ? 'show' : 'hide'](element);
+            });
+        }
+    }
+    return UiToggleInput;
 });

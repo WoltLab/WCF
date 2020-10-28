@@ -1,160 +1,131 @@
 /**
  * Delete files which are uploaded via AJAX.
  *
- * @author	Joshua Ruesweg
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Ui/File/Delete
- * @since	5.2
+ * @author  Joshua Ruesweg
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Ui/File/Delete
+ * @since  5.2
  */
-define(['Ajax', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Dom/Traverse', 'Dictionary'], function(Ajax, Core, DomChangeListener, Language, DomUtil, DomTraverse, Dictionary) {
-	"use strict";
-	
-	/**
-	 * @constructor
-	 */
-	function Delete(buttonContainerId, targetId, isSingleImagePreview, uploadHandler) {
-		this._isSingleImagePreview = isSingleImagePreview;
-		this._uploadHandler = uploadHandler;
-		
-		this._buttonContainer = elById(buttonContainerId);
-		if (this._buttonContainer === null) {
-			throw new Error("Element id '" + buttonContainerId + "' is unknown.");
-		}
-		
-		this._target = elById(targetId);
-		if (targetId === null) {
-			throw new Error("Element id '" + targetId + "' is unknown.");
-		}
-		this._containers = new Dictionary();
-		
-		this._internalId = elData(this._target, 'internal-id');
-		
-		if (!this._internalId) {
-			throw new Error("InternalId is unknown.");
-		}
-		
-		this.rebuild();
-	}
-	
-	Delete.prototype = {
-		/**
-		 * Creates the upload button.
-		 */
-		_createButtons: function() {
-			var element, elements = elBySelAll('li.uploadedFile', this._target), elementData, triggerChange = false, uniqueFileId;
-			for (var i = 0, length = elements.length; i < length; i++) {
-				element = elements[i];
-				uniqueFileId = elData(element, 'unique-file-id');
-				if (this._containers.has(uniqueFileId)) {
-					continue;
-				}
-				
-				elementData = {
-					uniqueFileId: uniqueFileId,
-					element: element
-				};
-				
-				this._containers.set(uniqueFileId, elementData);
-				this._initDeleteButton(element, elementData);
-				
-				triggerChange = true;
-			}
-			
-			if (triggerChange) {
-				DomChangeListener.trigger();
-			}
-		},
-		
-		/**
-		 * Init the delete button for a specific element.
-		 * 
-		 * @param       {HTMLElement}   element
-		 * @param       {string}        elementData
-		 */
-		_initDeleteButton: function(element, elementData) {
-			var buttonGroup = elBySel('.buttonGroup', element);
-			
-			if (buttonGroup === null) {
-				throw new Error("Button group in '" + targetId + "' is unknown.");
-			}
-			
-			var li = elCreate('li');
-			var span = elCreate('span');
-			span.classList = "button jsDeleteButton small";
-			span.textContent = Language.get('wcf.global.button.delete');
-			li.appendChild(span);
-			buttonGroup.appendChild(li);
-			
-			li.addEventListener(WCF_CLICK_EVENT, this._delete.bind(this, elementData.uniqueFileId));
-		},
-		
-		/**
-		 * Delete a specific file with the given uniqueFileId.
-		 * 
-		 * @param       {string}        uniqueFileId
-		 */
-		_delete: function(uniqueFileId) {
-			Ajax.api(this, {
-				uniqueFileId: uniqueFileId,
-				internalId: this._internalId
-			});
-		},
-		
-		/**
-		 * Rebuilds the delete buttons for unknown files. 
-		 */
-		rebuild: function() {
-			if (this._isSingleImagePreview) {
-				var img = elBySel('img', this._target);
-				
-				if (img !== null) {
-					var uniqueFileId = elData(img, 'unique-file-id');
-					
-					if (!this._containers.has(uniqueFileId)) {
-						var elementData = {
-							uniqueFileId: uniqueFileId,
-							element: img
-						};
-						
-						this._containers.set(uniqueFileId, elementData);
-						
-						this._deleteButton = elCreate('p');
-						this._deleteButton.className = 'button deleteButton';
-						
-						var span = elCreate('span');
-						span.textContent = Language.get('wcf.global.button.delete');
-						this._deleteButton.appendChild(span);
-						
-						this._buttonContainer.appendChild(this._deleteButton);
-						
-						this._deleteButton.addEventListener(WCF_CLICK_EVENT, this._delete.bind(this, elementData.uniqueFileId));
-					}
-				}
-			}
-			else {
-				this._createButtons();
-			}
-		},
-		
-		_ajaxSuccess: function(data) {
-			elRemove(this._containers.get(data.uniqueFileId).element);
-			
-			if (this._isSingleImagePreview) {
-				elRemove(this._deleteButton);
-				this._deleteButton = null;
-			}
-			
-			this._uploadHandler.checkMaxFiles();
-			Core.triggerEvent(this._target, 'change');
-		},
-		
-		_ajaxSetup: function () {
-			return {
-				url: 'index.php?ajax-file-delete/&t=' + SECURITY_TOKEN
-			};
-		}
-	};
-	
-	return Delete;
+define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Language"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Language) {
+    "use strict";
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Language = tslib_1.__importStar(Language);
+    class UiFileDelete {
+        // TODO: uploadHandler should not be `any`
+        constructor(buttonContainerId, targetId, isSingleImagePreview, uploadHandler) {
+            this.containers = new Map();
+            this.deleteButton = undefined;
+            this.isSingleImagePreview = isSingleImagePreview;
+            this.uploadHandler = uploadHandler;
+            const buttonContainer = document.getElementById(buttonContainerId);
+            if (buttonContainer === null) {
+                throw new Error(`Element id '${buttonContainerId}' is unknown.`);
+            }
+            this.buttonContainer = buttonContainer;
+            const target = document.getElementById(targetId);
+            if (target === null) {
+                throw new Error(`Element id '${targetId}' is unknown.`);
+            }
+            this.target = target;
+            const internalId = this.target.dataset.internalId;
+            if (!internalId) {
+                throw new Error("InternalId is unknown.");
+            }
+            this.internalId = internalId;
+            this.rebuild();
+        }
+        /**
+         * Creates the upload button.
+         */
+        createButtons() {
+            let triggerChange = false;
+            this.target.querySelectorAll('li.uploadedFile').forEach((element) => {
+                const uniqueFileId = element.dataset.uniqueFileId;
+                if (this.containers.has(uniqueFileId)) {
+                    return;
+                }
+                const elementData = {
+                    uniqueFileId: uniqueFileId,
+                    element: element,
+                };
+                this.containers.set(uniqueFileId, elementData);
+                this.initDeleteButton(element, elementData);
+                triggerChange = true;
+            });
+            if (triggerChange) {
+                Listener_1.default.trigger();
+            }
+        }
+        /**
+         * Init the delete button for a specific element.
+         */
+        initDeleteButton(element, elementData) {
+            const buttonGroup = element.querySelector('.buttonGroup');
+            if (buttonGroup === null) {
+                throw new Error(`Button group in '${this.target.id}' is unknown.`);
+            }
+            const li = document.createElement('li');
+            const span = document.createElement('span');
+            span.className = "button jsDeleteButton small";
+            span.textContent = Language.get('wcf.global.button.delete');
+            li.appendChild(span);
+            buttonGroup.appendChild(li);
+            li.addEventListener('click', this.deleteElement.bind(this, elementData.uniqueFileId));
+        }
+        /**
+         * Delete a specific file with the given uniqueFileId.
+         */
+        deleteElement(uniqueFileId) {
+            Ajax.api(this, {
+                uniqueFileId: uniqueFileId,
+                internalId: this.internalId,
+            });
+        }
+        /**
+         * Rebuilds the delete buttons for unknown files.
+         */
+        rebuild() {
+            if (!this.isSingleImagePreview) {
+                this.createButtons();
+                return;
+            }
+            const img = this.target.querySelector('img');
+            if (img !== null) {
+                const uniqueFileId = img.dataset.uniqueFileId;
+                if (!this.containers.has(uniqueFileId)) {
+                    const elementData = {
+                        uniqueFileId: uniqueFileId,
+                        element: img,
+                    };
+                    this.containers.set(uniqueFileId, elementData);
+                    this.deleteButton = document.createElement('p');
+                    this.deleteButton.className = 'button deleteButton';
+                    const span = document.createElement('span');
+                    span.textContent = Language.get('wcf.global.button.delete');
+                    this.deleteButton.appendChild(span);
+                    this.buttonContainer.appendChild(this.deleteButton);
+                    this.deleteButton.addEventListener('click', this.deleteElement.bind(this, elementData.uniqueFileId));
+                }
+            }
+        }
+        _ajaxSuccess(data) {
+            const elementData = this.containers.get(data.uniqueFileId);
+            elementData.element.remove();
+            if (this.isSingleImagePreview && this.deleteButton) {
+                this.deleteButton.remove();
+                this.deleteButton = undefined;
+            }
+            this.uploadHandler.checkMaxFiles();
+            Core.triggerEvent(this.target, 'change');
+        }
+        _ajaxSetup() {
+            return {
+                url: 'index.php?ajax-file-delete/&t=' + window.SECURITY_TOKEN,
+            };
+        }
+    }
+    return UiFileDelete;
 });

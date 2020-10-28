@@ -1,98 +1,73 @@
-define(['Language', 'StringUtil', 'Dom/ChangeListener', 'WoltLabSuite/Core/Ui/User/Search/Input'], function(Language, StringUtil, DomChangeListener, UiUserSearchInput) {
-	"use strict";
-	
-	if (!COMPILER_TARGET_DEFAULT) {
-		var Fake = function() {};
-		Fake.prototype = {
-			init: function() {},
-			_build: function() {},
-			_select: function() {},
-			_removeItem: function() {}
-		};
-		return Fake;
-	}
-	
-	function UiAclSimple(prefix, inputName) { this.init(prefix, inputName); }
-	UiAclSimple.prototype = {
-		init: function(prefix, inputName) {
-			this._prefix = prefix || '';
-			this._inputName = inputName || 'aclValues';
-			
-			this._build();
-		},
-		
-		_build: function () {
-			var container = elById(this._prefix + 'aclInputContainer');
-			
-			elById(this._prefix + 'aclAllowAll').addEventListener('change', (function() {
-				elHide(container);
-			}));
-			elById(this._prefix + 'aclAllowAll_no').addEventListener('change', (function() {
-				elShow(container);
-			}));
-			
-			this._list = elById(this._prefix + 'aclAccessList');
-			this._list.addEventListener(WCF_CLICK_EVENT, this._removeItem.bind(this));
-			
-			var excludedSearchValues = [];
-			elBySelAll('.aclLabel', this._list, function(label) {
-				excludedSearchValues.push(label.textContent);
-			});
-			
-			this._searchInput = new UiUserSearchInput(elById(this._prefix + 'aclSearchInput'), {
-				callbackSelect: this._select.bind(this),
-				includeUserGroups: true,
-				excludedSearchValues: excludedSearchValues,
-				preventSubmit: true,
-			});
-			
-			this._aclListContainer = elById(this._prefix + 'aclListContainer');
-			
-			DomChangeListener.trigger();
-		},
-		
-		_select: function(listItem) {
-			var type = elData(listItem, 'type');
-			var label = elData(listItem, 'label');
-			
-			var html = '<span class="icon icon16 fa-' + (type === 'group' ? 'users' : 'user') + '"></span>';
-			html += '<span class="aclLabel">' + StringUtil.escapeHTML(label) + '</span>';
-			html += '<span class="icon icon16 fa-times pointer jsTooltip" title="' + Language.get('wcf.global.button.delete') + '"></span>';
-			html += '<input type="hidden" name="' + this._inputName + '[' + type + '][]" value="' + elData(listItem, 'object-id') + '">';
-			
-			var item = elCreate('li');
-			item.innerHTML = html;
-			
-			var firstUser = elBySel('.fa-user', this._list);
-			if (firstUser === null) {
-				this._list.appendChild(item);
-			}
-			else {
-				this._list.insertBefore(item, firstUser.parentNode);
-			}
-			
-			elShow(this._aclListContainer);
-			
-			this._searchInput.addExcludedSearchValues(label);
-			
-			DomChangeListener.trigger();
-			
-			return false;
-		},
-		
-		_removeItem: function (event) {
-			if (event.target.classList.contains('fa-times')) {
-				var label = elBySel('.aclLabel', event.target.parentNode);
-				this._searchInput.removeExcludedSearchValues(label.textContent);
-				
-				elRemove(event.target.parentNode);
-				
-				if (this._list.childElementCount === 0) {
-					elHide(this._aclListContainer);
-				}
-			}
-		}
-	};
-	
-	return UiAclSimple;
+define(["require", "exports", "tslib", "../../Language", "../../StringUtil", "../../Dom/Change/Listener", "../../Dom/Util", "../User/Search/Input"], function (require, exports, tslib_1, Language, StringUtil, Listener_1, Util_1, Input_1) {
+    "use strict";
+    Language = tslib_1.__importStar(Language);
+    StringUtil = tslib_1.__importStar(StringUtil);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Input_1 = tslib_1.__importDefault(Input_1);
+    class UiAclSimple {
+        constructor(prefix, inputName) {
+            this.prefix = prefix || '';
+            this.inputName = inputName || 'aclValues';
+            const container = document.getElementById(this.prefix + 'aclInputContainer');
+            const allowAll = document.getElementById(this.prefix + 'aclAllowAll');
+            allowAll.addEventListener('change', () => {
+                Util_1.default.hide(container);
+            });
+            const denyAll = document.getElementById(this.prefix + 'aclAllowAll_no');
+            denyAll.addEventListener('change', () => {
+                Util_1.default.show(container);
+            });
+            this.list = document.getElementById(this.prefix + 'aclAccessList');
+            this.list.addEventListener('click', this.removeItem.bind(this));
+            const excludedSearchValues = [];
+            this.list.querySelectorAll('.aclLabel').forEach(label => {
+                excludedSearchValues.push(label.textContent);
+            });
+            this.searchInput = new Input_1.default(document.getElementById(this.prefix + 'aclSearchInput'), {
+                callbackSelect: this.select.bind(this),
+                includeUserGroups: true,
+                excludedSearchValues: excludedSearchValues,
+                preventSubmit: true,
+            });
+            this.aclListContainer = document.getElementById(this.prefix + 'aclListContainer');
+            Listener_1.default.trigger();
+        }
+        select(listItem) {
+            const type = listItem.dataset.type;
+            const label = listItem.dataset.label;
+            const objectId = listItem.dataset.objectId;
+            const iconName = type === 'group' ? 'users' : 'user';
+            const html = `<span class="icon icon16 fa-${iconName}"></span>
+      <span class="aclLabel">${StringUtil.escapeHTML(label)}</span>
+      <span class="icon icon16 fa-times pointer jsTooltip" title="${Language.get('wcf.global.button.delete')}"></span>
+      <input type="hidden" name="${this.inputName}[${type}][]" value="${objectId}">`;
+            const item = document.createElement('li');
+            item.innerHTML = html;
+            const firstUser = this.list.querySelector('.fa-user');
+            if (firstUser === null) {
+                this.list.appendChild(item);
+            }
+            else {
+                this.list.insertBefore(item, firstUser.parentNode);
+            }
+            Util_1.default.show(this.aclListContainer);
+            this.searchInput.addExcludedSearchValues(label);
+            Listener_1.default.trigger();
+            return false;
+        }
+        removeItem(event) {
+            const target = event.target;
+            if (target.classList.contains('fa-times')) {
+                const parent = target.parentElement;
+                const label = parent.querySelector('.aclLabel');
+                this.searchInput.removeExcludedSearchValues(label.textContent);
+                parent.remove();
+                if (this.list.childElementCount === 0) {
+                    Util_1.default.hide(this.aclListContainer);
+                }
+            }
+        }
+    }
+    return UiAclSimple;
 });

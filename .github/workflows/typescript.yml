@@ -1,0 +1,40 @@
+name: TypeScript
+
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+
+jobs:
+  tsc:
+    name: "TSC"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+    - name: Set up node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: "12"
+    - uses: actions/checkout@v2
+    - run: npm install
+    - run: echo "::add-matcher::.github/typescript-tsc.json"
+    - run: npx tsc --noEmit
+  javascript_sync:
+    name: "Check for outdated JavaScript"
+    needs: tsc
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+    - name: Set up node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: "12"
+    - uses: actions/checkout@v2
+    - run: npm install
+    - run: npx tsc
+    - run: echo "::add-matcher::.github/typescript-tsc_not_run.json"
+    - run: |
+        git diff --exit-code

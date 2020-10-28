@@ -7,16 +7,15 @@
  * @module	WoltLabSuite/Core/Form/Builder/Field/Checked
  * @since	5.2
  */
-define(['Core', '../Value'], function(Core, FormBuilderFieldValue) {
-	"use strict";
-	
-	/**
-	 * @constructor
-	 */
-	function FormBuilderFieldAttachment(fieldId) {
-		this.init(fieldId + '_tmpHash');
-	};
-	Core.inherit(FormBuilderFieldAttachment, FormBuilderFieldValue, {});
-	
-	return FormBuilderFieldAttachment;
+define(['Core', '../Value'], function (Core, FormBuilderFieldValue) {
+    "use strict";
+    /**
+     * @constructor
+     */
+    function FormBuilderFieldAttachment(fieldId) {
+        this.init(fieldId + '_tmpHash');
+    }
+    ;
+    Core.inherit(FormBuilderFieldAttachment, FormBuilderFieldValue, {});
+    return FormBuilderFieldAttachment;
 });

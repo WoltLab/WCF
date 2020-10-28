@@ -6,24 +6,24 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Image/ImageUtil
  */
-define([], function() {
-	"use strict";
-	
-	return {
-		/**
-		 * Returns whether the given canvas contains transparent pixels.
-		 *
-		 * @param       image   {Canvas}  Canvas to check
-		 * @returns             {bool}
-		 */
-		containsTransparentPixels: function (canvas) {
-			var imageData = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);
-			
-			for (var i = 3, max = imageData.data.length; i < max; i += 4) {
-				if (imageData.data[i] !== 255) return true;
-			}
-			
-			return false;
-		}
-	};
+define(["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.containsTransparentPixels = void 0;
+    /**
+     * Returns whether the given canvas contains transparent pixels.
+     */
+    function containsTransparentPixels(canvas) {
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+            throw new Error("Unable to get canvas context.");
+        }
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        for (let i = 3, max = imageData.data.length; i < max; i += 4) {
+            if (imageData.data[i] !== 255)
+                return true;
+        }
+        return false;
+    }
+    exports.containsTransparentPixels = containsTransparentPixels;
 });

@@ -1,113 +1,52 @@
 /**
  * List implementation relying on an array or if supported on a Set to hold values.
- * 
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	List (alias)
- * @module	WoltLabSuite/Core/List
+ *
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  List (alias)
+ * @module  WoltLabSuite/Core/List
  */
-define([], function() {
-	"use strict";
-	
-	var _hasSet = objOwns(window, 'Set') && typeof window.Set === 'function';
-	
-	/**
-	 * @constructor
-	 */
-	function List() {
-		this._set = (_hasSet) ? new Set() : [];
-	}
-	List.prototype = {
-		/**
-		 * Appends an element to the list, silently rejects adding an already existing value.
-		 * 
-		 * @param       {?}     value   unique element
-		 */
-		add: function(value) {
-			if (_hasSet) {
-				this._set.add(value);
-			}
-			else if (!this.has(value)) {
-				this._set.push(value);
-			}
-		},
-		
-		/**
-		 * Removes all elements from the list.
-		 */
-		clear: function() {
-			if (_hasSet) {
-				this._set.clear();
-			}
-			else {
-				this._set = [];
-			}
-		},
-		
-		/**
-		 * Removes an element from the list, returns true if the element was in the list.
-		 * 
-		 * @param       {?}             value   element
-		 * @return      {boolean}       true if element was in the list
-		 */
-		'delete': function(value) {
-			if (_hasSet) {
-				return this._set['delete'](value);
-			}
-			else {
-				var index = this._set.indexOf(value);
-				if (index === -1) {
-					return false;
-				}
-				
-				this._set.splice(index, 1);
-				return true;
-			}
-		},
-		
-		/**
-		 * Calls `callback` for each element in the list.
-		 */
-		forEach: function(callback) {
-			if (_hasSet) {
-				this._set.forEach(callback);
-			}
-			else {
-				for (var i = 0, length = this._set.length; i < length; i++) {
-					callback(this._set[i]);
-				}
-			}
-		},
-		
-		/**
-		 * Returns true if the list contains the element.
-		 * 
-		 * @param       {?}             value   element
-		 * @return      {boolean}       true if element is in the list
-		 */
-		has: function(value) {
-			if (_hasSet) {
-				return this._set.has(value);
-			}
-			else {
-				return (this._set.indexOf(value) !== -1);
-			}
-		}
-	};
-	
-	Object.defineProperty(List.prototype, 'size', {
-		enumerable: false,
-		configurable: true,
-		get: function() {
-			if (_hasSet) {
-				return this._set.size;
-			}
-			else {
-				return this._set.length;
-			}
-		}
-	});
-	
-	return List;
+define(["require", "exports"], function (require, exports) {
+    "use strict";
+    /** @deprecated 5.4 Use a `Set` instead. */
+    class List {
+        constructor() {
+            this._set = new Set();
+        }
+        /**
+         * Appends an element to the list, silently rejects adding an already existing value.
+         */
+        add(value) {
+            this._set.add(value);
+        }
+        /**
+         * Removes all elements from the list.
+         */
+        clear() {
+            this._set.clear();
+        }
+        /**
+         * Removes an element from the list, returns true if the element was in the list.
+         */
+        delete(value) {
+            return this._set.delete(value);
+        }
+        /**
+         * Invokes the `callback` for each element in the list.
+         */
+        forEach(callback) {
+            this._set.forEach(callback);
+        }
+        /**
+         * Returns true if the list contains the element.
+         */
+        has(value) {
+            return this._set.has(value);
+        }
+        get size() {
+            return this._set.size;
+        }
+    }
+    return List;
 });

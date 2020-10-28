@@ -1,463 +1,401 @@
 /**
  * Provides helper functions to work with DOM nodes.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	Dom/Util (alias)
- * @module	WoltLabSuite/Core/Dom/Util
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  Dom/Util (alias)
+ * @module  WoltLabSuite/Core/Dom/Util
  */
-define(['Environment', 'StringUtil'], function(Environment, StringUtil) {
-	"use strict";
-	
-	function _isBoundaryNode(element, ancestor, position) {
-		if (!ancestor.contains(element)) {
-			throw new Error("Ancestor element does not contain target element.");
-		}
-		
-		var node, whichSibling = position + 'Sibling';
-		while (element !== null && element !== ancestor) {
-			if (element[position + 'ElementSibling'] !== null) {
-				return false;
-			}
-			else if (element[whichSibling]) {
-				node = element[whichSibling];
-				while (node) {
-					if (node.textContent.trim() !== '') {
-						return false;
-					}
-					
-					node = node[whichSibling];
-				}
-			}
-			
-			element = element.parentNode;
-		}
-		
-		return true;
-	}
-	
-	var _idCounter = 0;
-	
-	/**
-	 * @exports	WoltLabSuite/Core/Dom/Util
-	 */
-	var DomUtil = {
-		/**
-		 * Returns a DocumentFragment containing the provided HTML string as DOM nodes.
-		 * 
-		 * @param	{string}	html	HTML string
-		 * @return	{DocumentFragment}	fragment containing DOM nodes
-		 */
-		createFragmentFromHtml: function(html) {
-			var tmp = elCreate('div');
-			this.setInnerHtml(tmp, html);
-			
-			var fragment = document.createDocumentFragment();
-			while (tmp.childNodes.length) {
-				fragment.appendChild(tmp.childNodes[0]);
-			}
-			
-			return fragment;
-		},
-		
-		/**
-		 * Returns a unique element id.
-		 * 
-		 * @return	{string}	unique id
-		 */
-		getUniqueId: function() {
-			var elementId;
-			
-			do {
-				elementId = 'wcf' + _idCounter++;
-			}
-			while (elById(elementId) !== null);
-			
-			return elementId;
-		},
-		
-		/**
-		 * Returns the element's id. If there is no id set, a unique id will be
-		 * created and assigned.
-		 * 
-		 * @param	{Element}	el	element
-		 * @return	{string}	element id
-		 */
-		identify: function(el) {
-			if (!(el instanceof Element)) {
-				throw new TypeError("Expected a valid DOM element as argument.");
-			}
-			
-			var id = elAttr(el, 'id');
-			if (!id) {
-				id = this.getUniqueId();
-				elAttr(el, 'id', id);
-			}
-			
-			return id;
-		},
-		
-		/**
-		 * Returns the outer height of an element including margins.
-		 * 
-		 * @param	{Element}		el		element
-		 * @param	{CSSStyleDeclaration=}	styles		result of window.getComputedStyle()
-		 * @return	{int}	                outer height in px
-		 */
-		outerHeight: function(el, styles) {
-			styles = styles || window.getComputedStyle(el);
-			
-			var height = el.offsetHeight;
-			height += ~~styles.marginTop + ~~styles.marginBottom;
-			
-			return height;
-		},
-		
-		/**
-		 * Returns the outer width of an element including margins.
-		 * 
-		 * @param	{Element}		el		element
-		 * @param	{CSSStyleDeclaration=}	styles		result of window.getComputedStyle()
-		 * @return	{int}	outer width in px
-		 */
-		outerWidth: function(el, styles) {
-			styles = styles || window.getComputedStyle(el);
-			
-			var width = el.offsetWidth;
-			width += ~~styles.marginLeft + ~~styles.marginRight;
-			
-			return width;
-		},
-		
-		/**
-		 * Returns the outer dimensions of an element including margins.
-		 * 
-		 * @param	{Element}       el	        element
-		 * @return	{{height: int, width: int}}     dimensions in px
-		 */
-		outerDimensions: function(el) {
-			var styles = window.getComputedStyle(el);
-			
-			return {
-				height: this.outerHeight(el, styles),
-				width: this.outerWidth(el, styles)
-			};
-		},
-		
-		/**
-		 * Returns the element's offset relative to the document's top left corner.
-		 * 
-		 * @param	{Element}	el	        element
-		 * @return	{{left: int, top: int}}         offset relative to top left corner
-		 */
-		offset: function(el) {
-			var rect = el.getBoundingClientRect();
-			
-			return {
-				top: Math.round(rect.top + (window.scrollY || window.pageYOffset)),
-				left: Math.round(rect.left + (window.scrollX || window.pageXOffset))
-			};
-		},
-		
-		/**
-		 * Prepends an element to a parent element.
-		 * 
-		 * @param	{Element}	el		element to prepend
-		 * @param	{Element}	parentEl	future containing element
-		 * @deprecated 5.3 Use `parentEl.insertBefore(el, parentEl.firstChild)` instead.
-		 */
-		prepend: function(el, parentEl) {
-			if (parentEl.childNodes.length === 0) {
-				parentEl.appendChild(el);
-			}
-			else {
-				parentEl.insertBefore(el, parentEl.childNodes[0]);
-			}
-		},
-		
-		/**
-		 * Inserts an element after an existing element.
-		 * 
-		 * @param	{Element}	newEl		element to insert
-		 * @param	{Element}	el		reference element
-		 * @deprecated 5.3 Use `el.parentNode.insertBefore(newEl, el.nextSibling)` instead.
-		 */
-		insertAfter: function(newEl, el) {
-			if (el.nextSibling !== null) {
-				el.parentNode.insertBefore(newEl, el.nextSibling);
-			}
-			else {
-				el.parentNode.appendChild(newEl);
-			}
-		},
-		
-		/**
-		 * Applies a list of CSS properties to an element.
-		 * 
-		 * @param	{Element}		el	element
-		 * @param	{Object<string, *>}	styles	list of CSS styles
-		 */
-		setStyles: function(el, styles) {
-			var important = false;
-			for (var property in styles) {
-				if (styles.hasOwnProperty(property)) {
-					if (/ !important$/.test(styles[property])) {
-						important = true;
-						
-						styles[property] = styles[property].replace(/ !important$/, '');
-					}
-					else {
-						important = false;
-					}
-					
-					// for a set style property with priority = important, some browsers are
-					// not able to overwrite it with a property != important; removing the
-					// property first solves this issue
-					if (el.style.getPropertyPriority(property) === 'important' && !important) {
-						el.style.removeProperty(property);
-					}
-					
-					el.style.setProperty(property, styles[property], (important ? 'important' : ''));
-				}
-			}
-		},
-		
-		/**
-		 * Returns a style property value as integer.
-		 * 
-		 * The behavior of this method is undefined for properties that are not considered
-		 * to have a "numeric" value, e.g. "background-image".
-		 * 
-		 * @param	{CSSStyleDeclaration}	styles		result of window.getComputedStyle()
-		 * @param	{string}		propertyName	property name
-		 * @return	{int}	                property value as integer
-		 */
-		styleAsInt: function(styles, propertyName) {
-			var value = styles.getPropertyValue(propertyName);
-			if (value === null) {
-				return 0;
-			}
-			
-			return parseInt(value);
-		},
-		
-		/**
-		 * Sets the inner HTML of given element and reinjects <script> elements to be properly executed.
-		 * 
-		 * @see		http://www.w3.org/TR/2008/WD-html5-20080610/dom.html#innerhtml0
-		 * @param	{Element}	element		target element
-		 * @param	{string}	innerHtml	HTML string
-		 */
-		setInnerHtml: function(element, innerHtml) {
-			element.innerHTML = innerHtml;
-			
-			var newScript, script, scripts = elBySelAll('script', element);
-			for (var i = 0, length = scripts.length; i < length; i++) {
-				script = scripts[i];
-				newScript = elCreate('script');
-				if (script.src) {
-					newScript.src = script.src;
-				}
-				else {
-					newScript.textContent = script.textContent;
-				}
-				
-				element.appendChild(newScript);
-				elRemove(script);
-			}
-		},
-		
-		/**
-		 * 
-		 * @param html
-		 * @param {Element} referenceElement
-		 * @param insertMethod
-		 */
-		insertHtml: function(html, referenceElement, insertMethod) {
-			var element = elCreate('div');
-			this.setInnerHtml(element, html);
-			
-			if (!element.childNodes.length) {
-				return;
-			}
-			
-			var node = element.childNodes[0];
-			switch (insertMethod) {
-				case 'append':
-					referenceElement.appendChild(node);
-					break;
-				
-				case 'after':
-					this.insertAfter(node, referenceElement);
-					break;
-				
-				case 'prepend':
-					this.prepend(node, referenceElement);
-					break;
-				
-				case 'before':
-					referenceElement.parentNode.insertBefore(node, referenceElement);
-					break;
-				
-				default:
-					throw new Error("Unknown insert method '" + insertMethod + "'.");
-					break;
-			}
-			
-			var tmp;
-			while (element.childNodes.length) {
-				tmp = element.childNodes[0];
-				
-				this.insertAfter(tmp, node);
-				node = tmp;
-			}
-		},
-		
-		/**
-		 * Returns true if `element` contains the `child` element.
-		 * 
-		 * @param	{Element}	element		container element
-		 * @param	{Element}	child		child element
-		 * @returns	{boolean}	true if `child` is a (in-)direct child of `element`
-		 */
-		contains: function(element, child) {
-			while (child !== null) {
-				child = child.parentNode;
-				
-				if (element === child) {
-					return true;
-				}
-			}
-			
-			return false;
-		},
-		
-		/**
-		 * Retrieves all data attributes from target element, optionally allowing for
-		 * a custom prefix that serves two purposes: First it will restrict the results
-		 * for items starting with it and second it will remove that prefix.
-		 * 
-		 * @param       {Element}       element         target element
-		 * @param       {string=}       prefix          attribute prefix
-		 * @param       {boolean=}      camelCaseName  transform attribute names into camel case using dashes as separators
-		 * @param       {boolean=}      idToUpperCase   transform '-id' into 'ID'
-		 * @returns     {object<string, string>}        list of data attributes
-		 */
-		getDataAttributes: function(element, prefix, camelCaseName, idToUpperCase) {
-			prefix = prefix || '';
-			if (!/^data-/.test(prefix)) prefix = 'data-' + prefix;
-			camelCaseName = (camelCaseName === true);
-			idToUpperCase = (idToUpperCase === true);
-			
-			var attribute, attributes = {}, name, tmp;
-			for (var i = 0, length = element.attributes.length; i < length; i++) {
-				attribute = element.attributes[i];
-				
-				if (attribute.name.indexOf(prefix) === 0) {
-					name = attribute.name.replace(new RegExp('^' + prefix), '');
-					if (camelCaseName) {
-						tmp = name.split('-');
-						name = '';
-						for (var j = 0, innerLength = tmp.length; j < innerLength; j++) {
-							if (name.length) {
-								if (idToUpperCase && tmp[j] === 'id') {
-									tmp[j] = 'ID';
-								}
-								else {
-									tmp[j] = StringUtil.ucfirst(tmp[j]);
-								}
-							}
-							
-							name += tmp[j];
-						}
-					}
-					
-					attributes[name] = attribute.value;
-				}
-			}
-			
-			return attributes;
-		},
-		
-		/**
-		 * Unwraps contained nodes by moving them out of `element` while
-		 * preserving their previous order. Target element will be removed
-		 * at the end of the operation.
-		 * 
-		 * @param       {Element}       element         target element
-		 */
-		unwrapChildNodes: function(element) {
-			var parent = element.parentNode;
-			while (element.childNodes.length) {
-				parent.insertBefore(element.childNodes[0], element);
-			}
-			
-			elRemove(element);
-		},
-		
-		/**
-		 * Replaces an element by moving all child nodes into the new element
-		 * while preserving their previous order. The old element will be removed
-		 * at the end of the operation.
-		 * 
-		 * @param       {Element}       oldElement      old element
-		 * @param       {Element}       newElement      old element
-		 */
-		replaceElement: function(oldElement, newElement) {
-			while (oldElement.childNodes.length) {
-				newElement.appendChild(oldElement.childNodes[0]);
-			}
-			
-			oldElement.parentNode.insertBefore(newElement, oldElement);
-			elRemove(oldElement);
-		},
-		
-		/**
-		 * Returns true if given element is the most left node of the ancestor, that is
-		 * a node without any content nor elements before it or its parent nodes.
-		 * 
-		 * @param       {Element}       element         target element
-		 * @param       {Element}       ancestor        ancestor element, must contain the target element
-		 * @returns     {boolean}       true if target element is the most left node
-		 */
-		isAtNodeStart: function(element, ancestor) {
-			return _isBoundaryNode(element, ancestor, 'previous');
-		},
-		
-		/**
-		 * Returns true if given element is the most right node of the ancestor, that is
-		 * a node without any content nor elements after it or its parent nodes.
-		 * 
-		 * @param       {Element}       element         target element
-		 * @param       {Element}       ancestor        ancestor element, must contain the target element
-		 * @returns     {boolean}       true if target element is the most right node
-		 */
-		isAtNodeEnd: function(element, ancestor) {
-			return _isBoundaryNode(element, ancestor, 'next');
-		},
-		
-		/**
-		 * Returns the first ancestor element with position fixed or null.
-		 * 
-		 * @param       {Element}               element         target element
-		 * @returns     {(Element|null)}        first ancestor with position fixed or null
-		 */
-		getFixedParent: function (element) {
-			while (element && element !== document.body) {
-				if (window.getComputedStyle(element).getPropertyValue('position') === 'fixed') {
-					return element;
-				}
-				
-				element = element.offsetParent;
-			}
-			
-			return null;
-		}
-	};
-	
-	// expose on window object for backward compatibility
-	window.bc_wcfDomUtil = DomUtil;
-	
-	return DomUtil;
+define(["require", "exports", "tslib", "../StringUtil"], function (require, exports, tslib_1, StringUtil) {
+    "use strict";
+    StringUtil = tslib_1.__importStar(StringUtil);
+    function _isBoundaryNode(element, ancestor, position) {
+        if (!ancestor.contains(element)) {
+            throw new Error('Ancestor element does not contain target element.');
+        }
+        let node;
+        let target = element;
+        const whichSibling = position + 'Sibling';
+        while (target !== null && target !== ancestor) {
+            if (target[position + 'ElementSibling'] !== null) {
+                return false;
+            }
+            else if (target[whichSibling]) {
+                node = target[whichSibling];
+                while (node) {
+                    if (node.textContent.trim() !== '') {
+                        return false;
+                    }
+                    node = node[whichSibling];
+                }
+            }
+            target = target.parentNode;
+        }
+        return true;
+    }
+    let _idCounter = 0;
+    const DomUtil = {
+        /**
+         * Returns a DocumentFragment containing the provided HTML string as DOM nodes.
+         */
+        createFragmentFromHtml(html) {
+            const tmp = document.createElement('div');
+            this.setInnerHtml(tmp, html);
+            const fragment = document.createDocumentFragment();
+            while (tmp.childNodes.length) {
+                fragment.appendChild(tmp.childNodes[0]);
+            }
+            return fragment;
+        },
+        /**
+         * Returns a unique element id.
+         */
+        getUniqueId() {
+            let elementId;
+            do {
+                elementId = 'wcf' + _idCounter++;
+            } while (document.getElementById(elementId) !== null);
+            return elementId;
+        },
+        /**
+         * Returns the element's id. If there is no id set, a unique id will be
+         * created and assigned.
+         */
+        identify(element) {
+            if (!(element instanceof Element)) {
+                throw new TypeError('Expected a valid DOM element as argument.');
+            }
+            let id = element.id;
+            if (!id) {
+                id = this.getUniqueId();
+                element.id = id;
+            }
+            return id;
+        },
+        /**
+         * Returns the outer height of an element including margins.
+         */
+        outerHeight(element, styles) {
+            styles = styles || window.getComputedStyle(element);
+            let height = element.offsetHeight;
+            height += ~~styles.marginTop + ~~styles.marginBottom;
+            return height;
+        },
+        /**
+         * Returns the outer width of an element including margins.
+         */
+        outerWidth(element, styles) {
+            styles = styles || window.getComputedStyle(element);
+            let width = element.offsetWidth;
+            width += ~~styles.marginLeft + ~~styles.marginRight;
+            return width;
+        },
+        /**
+         * Returns the outer dimensions of an element including margins.
+         */
+        outerDimensions(element) {
+            const styles = window.getComputedStyle(element);
+            return {
+                height: this.outerHeight(element, styles),
+                width: this.outerWidth(element, styles),
+            };
+        },
+        /**
+         * Returns the element's offset relative to the document's top left corner.
+         *
+         * @param  {Element}  element          element
+         * @return  {{left: int, top: int}}         offset relative to top left corner
+         */
+        offset(element) {
+            const rect = element.getBoundingClientRect();
+            return {
+                top: Math.round(rect.top + (window.scrollY || window.pageYOffset)),
+                left: Math.round(rect.left + (window.scrollX || window.pageXOffset)),
+            };
+        },
+        /**
+         * Prepends an element to a parent element.
+         *
+         * @deprecated 5.3 Use `parent.insertBefore(element, parent.firstChild)` instead.
+         */
+        prepend(element, parent) {
+            parent.insertBefore(element, parent.firstChild);
+        },
+        /**
+         * Inserts an element after an existing element.
+         *
+         * @deprecated 5.3 Use `element.parentNode.insertBefore(newElement, element.nextSibling)` instead.
+         */
+        insertAfter(newElement, element) {
+            if (element.parentNode === null) {
+                throw new Error('The target element has no parent.');
+            }
+            element.parentNode.insertBefore(newElement, element.nextSibling);
+        },
+        /**
+         * Applies a list of CSS properties to an element.
+         */
+        setStyles(element, styles) {
+            let important = false;
+            for (const property in styles) {
+                if (styles.hasOwnProperty(property)) {
+                    if (/ !important$/.test(styles[property])) {
+                        important = true;
+                        styles[property] = styles[property].replace(/ !important$/, '');
+                    }
+                    else {
+                        important = false;
+                    }
+                    // for a set style property with priority = important, some browsers are
+                    // not able to overwrite it with a property != important; removing the
+                    // property first solves this issue
+                    if (element.style.getPropertyPriority(property) === 'important' && !important) {
+                        element.style.removeProperty(property);
+                    }
+                    element.style.setProperty(property, styles[property], (important ? 'important' : ''));
+                }
+            }
+        },
+        /**
+         * Returns a style property value as integer.
+         *
+         * The behavior of this method is undefined for properties that are not considered
+         * to have a "numeric" value, e.g. "background-image".
+         */
+        styleAsInt(styles, propertyName) {
+            const value = styles.getPropertyValue(propertyName);
+            if (value === null) {
+                return 0;
+            }
+            return parseInt(value, 10);
+        },
+        /**
+         * Sets the inner HTML of given element and reinjects <script> elements to be properly executed.
+         *
+         * @see    http://www.w3.org/TR/2008/WD-html5-20080610/dom.html#innerhtml0
+         * @param  {Element}  element    target element
+         * @param  {string}  innerHtml  HTML string
+         */
+        setInnerHtml(element, innerHtml) {
+            element.innerHTML = innerHtml;
+            const scripts = element.querySelectorAll('script');
+            for (let i = 0, length = scripts.length; i < length; i++) {
+                const script = scripts[i];
+                const newScript = document.createElement('script');
+                if (script.src) {
+                    newScript.src = script.src;
+                }
+                else {
+                    newScript.textContent = script.textContent;
+                }
+                element.appendChild(newScript);
+                script.remove();
+            }
+        },
+        /**
+         *
+         * @param html
+         * @param {Element} referenceElement
+         * @param insertMethod
+         */
+        insertHtml(html, referenceElement, insertMethod) {
+            const element = document.createElement('div');
+            this.setInnerHtml(element, html);
+            if (!element.childNodes.length) {
+                return;
+            }
+            let node = element.childNodes[0];
+            switch (insertMethod) {
+                case 'append':
+                    referenceElement.appendChild(node);
+                    break;
+                case 'after':
+                    this.insertAfter(node, referenceElement);
+                    break;
+                case 'prepend':
+                    this.prepend(node, referenceElement);
+                    break;
+                case 'before':
+                    if (referenceElement.parentNode === null) {
+                        throw new Error('The reference element has no parent, but the insert position was set to \'before\'.');
+                    }
+                    referenceElement.parentNode.insertBefore(node, referenceElement);
+                    break;
+                default:
+                    throw new Error('Unknown insert method \'' + insertMethod + '\'.');
+            }
+            let tmp;
+            while (element.childNodes.length) {
+                tmp = element.childNodes[0];
+                this.insertAfter(tmp, node);
+                node = tmp;
+            }
+        },
+        /**
+         * Returns true if `element` contains the `child` element.
+         *
+         * @deprecated 5.4 Use `element.contains(child)` instead.
+         */
+        contains(element, child) {
+            return element.contains(child);
+        },
+        /**
+         * Retrieves all data attributes from target element, optionally allowing for
+         * a custom prefix that serves two purposes: First it will restrict the results
+         * for items starting with it and second it will remove that prefix.
+         *
+         * @deprecated 5.4 Use `element.dataset` instead.
+         */
+        getDataAttributes(element, prefix, camelCaseName, idToUpperCase) {
+            prefix = prefix || '';
+            if (prefix.indexOf('data-') !== 0)
+                prefix = 'data-' + prefix;
+            camelCaseName = (camelCaseName === true);
+            idToUpperCase = (idToUpperCase === true);
+            const attributes = {};
+            for (let i = 0, length = element.attributes.length; i < length; i++) {
+                const attribute = element.attributes[i];
+                if (attribute.name.indexOf(prefix) === 0) {
+                    let name = attribute.name.replace(new RegExp('^' + prefix), '');
+                    if (camelCaseName) {
+                        let tmp = name.split('-');
+                        name = '';
+                        for (let j = 0, innerLength = tmp.length; j < innerLength; j++) {
+                            if (name.length) {
+                                if (idToUpperCase && tmp[j] === 'id') {
+                                    tmp[j] = 'ID';
+                                }
+                                else {
+                                    tmp[j] = StringUtil.ucfirst(tmp[j]);
+                                }
+                            }
+                            name += tmp[j];
+                        }
+                    }
+                    attributes[name] = attribute.value;
+                }
+            }
+            return attributes;
+        },
+        /**
+         * Unwraps contained nodes by moving them out of `element` while
+         * preserving their previous order. Target element will be removed
+         * at the end of the operation.
+         */
+        unwrapChildNodes(element) {
+            if (element.parentNode === null) {
+                throw new Error('The element has no parent.');
+            }
+            let parent = element.parentNode;
+            while (element.childNodes.length) {
+                parent.insertBefore(element.childNodes[0], element);
+            }
+            element.remove();
+        },
+        /**
+         * Replaces an element by moving all child nodes into the new element
+         * while preserving their previous order. The old element will be removed
+         * at the end of the operation.
+         */
+        replaceElement(oldElement, newElement) {
+            if (oldElement.parentNode === null) {
+                throw new Error('The old element has no parent.');
+            }
+            while (oldElement.childNodes.length) {
+                newElement.appendChild(oldElement.childNodes[0]);
+            }
+            oldElement.parentNode.insertBefore(newElement, oldElement);
+            oldElement.remove();
+        },
+        /**
+         * Returns true if given element is the most left node of the ancestor, that is
+         * a node without any content nor elements before it or its parent nodes.
+         */
+        isAtNodeStart(element, ancestor) {
+            return _isBoundaryNode(element, ancestor, 'previous');
+        },
+        /**
+         * Returns true if given element is the most right node of the ancestor, that is
+         * a node without any content nor elements after it or its parent nodes.
+         */
+        isAtNodeEnd(element, ancestor) {
+            return _isBoundaryNode(element, ancestor, 'next');
+        },
+        /**
+         * Returns the first ancestor element with position fixed or null.
+         *
+         * @param       {Element}               element         target element
+         * @returns     {(Element|null)}        first ancestor with position fixed or null
+         */
+        getFixedParent(element) {
+            while (element && element !== document.body) {
+                if (window.getComputedStyle(element).getPropertyValue('position') === 'fixed') {
+                    return element;
+                }
+                element = element.offsetParent;
+            }
+            return null;
+        },
+        /**
+         * Shorthand function to hide an element by setting its 'display' value to 'none'.
+         */
+        hide(element) {
+            element.style.setProperty('display', 'none', '');
+        },
+        /**
+         * Shorthand function to show an element previously hidden by using `hide()`.
+         */
+        show(element) {
+            element.style.removeProperty('display');
+        },
+        /**
+         * Shorthand function to check if given element is hidden by setting its 'display'
+         * value to 'none'.
+         */
+        isHidden(element) {
+            return element.style.getPropertyValue('display') === 'none';
+        },
+        /**
+         * Displays or removes an error message below the provided element.
+         */
+        innerError(element, errorMessage, isHtml) {
+            const parent = element.parentNode;
+            if (parent === null) {
+                throw new Error('Only elements that have a parent element or document are valid.');
+            }
+            if (typeof errorMessage !== 'string') {
+                if (!errorMessage) {
+                    errorMessage = '';
+                }
+                else {
+                    throw new TypeError('The error message must be a string; `false`, `null` or `undefined` can be used as a substitute for an empty string.');
+                }
+            }
+            let innerError = element.nextElementSibling;
+            if (innerError === null || innerError.nodeName !== 'SMALL' || !innerError.classList.contains('innerError')) {
+                if (errorMessage === '') {
+                    innerError = null;
+                }
+                else {
+                    innerError = document.createElement('small');
+                    innerError.className = 'innerError';
+                    parent.insertBefore(innerError, element.nextSibling);
+                }
+            }
+            if (errorMessage === '') {
+                if (innerError !== null) {
+                    innerError.remove();
+                    innerError = null;
+                }
+            }
+            else {
+                innerError[isHtml ? 'innerHTML' : 'textContent'] = errorMessage;
+            }
+            return innerError;
+        },
+    };
+    // expose on window object for backward compatibility
+    window.bc_wcfDomUtil = DomUtil;
+    return DomUtil;
 });

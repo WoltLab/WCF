@@ -5,7 +5,9 @@ requirejs.config({
 		favico: '3rdParty/favico',
 		'perfect-scrollbar': '3rdParty/perfect-scrollbar',
 		'Pica': '3rdParty/pica',
+		'pica': '3rdParty/pica',
 		prism: '3rdParty/prism',
+		tslib: '3rdParty/tslib',
 		zxcvbn: '3rdParty/zxcvbn',
 	},
 	shim: {
