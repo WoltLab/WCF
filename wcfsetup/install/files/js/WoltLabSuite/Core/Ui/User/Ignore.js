@@ -6,14 +6,11 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/User/Ignore
  */
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define(["require", "exports", "../../Dom/Change/Listener"], function (require, exports, Listener_1) {
+define(["require", "exports", "tslib", "../../Dom/Change/Listener"], function (require, exports, tslib_1, Listener_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    Listener_1 = __importDefault(Listener_1);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
     const _availableMessages = document.getElementsByClassName('ignoredUserMessage');
     const _knownMessages = new Set();
     /**

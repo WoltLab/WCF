@@ -9,35 +9,13 @@
  * @module  AjaxRequest (alias)
  * @module  WoltLabSuite/Core/Ajax/Request
  */
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define(["require", "exports", "./Status", "../Core", "../Dom/Change/Listener", "../Dom/Util", "../Language"], function (require, exports, AjaxStatus, Core, Listener_1, Util_1, Language) {
+define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Listener", "../Dom/Util", "../Language"], function (require, exports, tslib_1, AjaxStatus, Core, Listener_1, Util_1, Language) {
     "use strict";
-    AjaxStatus = __importStar(AjaxStatus);
-    Core = __importStar(Core);
-    Listener_1 = __importDefault(Listener_1);
-    Util_1 = __importDefault(Util_1);
-    Language = __importStar(Language);
+    AjaxStatus = tslib_1.__importStar(AjaxStatus);
+    Core = tslib_1.__importStar(Core);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Language = tslib_1.__importStar(Language);
     let _didInit = false;
     let _ignoreAllErrors = false;
     /**
@@ -221,7 +199,7 @@ define(["require", "exports", "./Status", "../Core", "../Dom/Change/Listener", "
                     }
                     // force-invoke the background queue
                     if (data && data.forceBackgroundQueuePerform) {
-                        new Promise((resolve_1, reject_1) => { require(['../BackgroundQueue'], resolve_1, reject_1); }).then(__importStar).then(backgroundQueue => backgroundQueue.invoke());
+                        new Promise((resolve_1, reject_1) => { require(['../BackgroundQueue'], resolve_1, reject_1); }).then(tslib_1.__importStar).then(backgroundQueue => backgroundQueue.invoke());
                     }
                 }
                 options.success(data, xhr.responseText, xhr, options.data);
@@ -252,7 +230,7 @@ define(["require", "exports", "./Status", "../Core", "../Dom/Change/Listener", "
             if (options.ignoreError !== true && showError) {
                 const html = this.getErrorHtml(data, xhr);
                 if (html) {
-                    new Promise((resolve_2, reject_2) => { require(['../Ui/Dialog'], resolve_2, reject_2); }).then(__importStar).then(UiDialog => {
+                    new Promise((resolve_2, reject_2) => { require(['../Ui/Dialog'], resolve_2, reject_2); }).then(tslib_1.__importStar).then(UiDialog => {
                         UiDialog.openStatic(Util_1.default.getUniqueId(), html, {
                             title: Language.get('wcf.global.error.title'),
                         });

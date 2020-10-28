@@ -1,32 +1,10 @@
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define(["require", "exports", "../../Language", "../../StringUtil", "../../Dom/Change/Listener", "../../Dom/Util", "../User/Search/Input"], function (require, exports, Language, StringUtil, Listener_1, Util_1, Input_1) {
+define(["require", "exports", "tslib", "../../Language", "../../StringUtil", "../../Dom/Change/Listener", "../../Dom/Util", "../User/Search/Input"], function (require, exports, tslib_1, Language, StringUtil, Listener_1, Util_1, Input_1) {
     "use strict";
-    Language = __importStar(Language);
-    StringUtil = __importStar(StringUtil);
-    Listener_1 = __importDefault(Listener_1);
-    Util_1 = __importDefault(Util_1);
-    Input_1 = __importDefault(Input_1);
+    Language = tslib_1.__importStar(Language);
+    StringUtil = tslib_1.__importStar(StringUtil);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Input_1 = tslib_1.__importDefault(Input_1);
     class UiAclSimple {
         constructor(prefix, inputName) {
             this.prefix = prefix || '';

@@ -6,38 +6,16 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/ItemList
  */
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define(["require", "exports", "../Core", "../Dom/Traverse", "../Language", "./Suggestion", "./Dropdown/Simple", "../Dom/Util"], function (require, exports, Core, DomTraverse, Language, Suggestion_1, Simple_1, Util_1) {
+define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Language", "./Suggestion", "./Dropdown/Simple", "../Dom/Util"], function (require, exports, tslib_1, Core, DomTraverse, Language, Suggestion_1, Simple_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setValues = exports.getValues = exports.init = void 0;
-    Core = __importStar(Core);
-    DomTraverse = __importStar(DomTraverse);
-    Language = __importStar(Language);
-    Suggestion_1 = __importDefault(Suggestion_1);
-    Simple_1 = __importDefault(Simple_1);
-    Util_1 = __importDefault(Util_1);
+    Core = tslib_1.__importStar(Core);
+    DomTraverse = tslib_1.__importStar(DomTraverse);
+    Language = tslib_1.__importStar(Language);
+    Suggestion_1 = tslib_1.__importDefault(Suggestion_1);
+    Simple_1 = tslib_1.__importDefault(Simple_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
     let _activeId = '';
     const _data = new Map();
     /**

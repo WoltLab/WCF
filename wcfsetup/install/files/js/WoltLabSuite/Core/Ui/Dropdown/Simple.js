@@ -7,37 +7,15 @@
  * @module  Ui/SimpleDropdown (alias)
  * @module  WoltLabSuite/Core/Ui/Dropdown/Simple
  */
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define(["require", "exports", "../../CallbackList", "../../Core", "../../Dom/Change/Listener", "../../Dom/Traverse", "../../Dom/Util", "../Alignment", "../CloseOverlay"], function (require, exports, CallbackList_1, Core, Listener_1, DomTraverse, Util_1, UiAlignment, CloseOverlay_1) {
+define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../../Dom/Change/Listener", "../../Dom/Traverse", "../../Dom/Util", "../Alignment", "../CloseOverlay"], function (require, exports, tslib_1, CallbackList_1, Core, Listener_1, DomTraverse, Util_1, UiAlignment, CloseOverlay_1) {
     "use strict";
-    CallbackList_1 = __importDefault(CallbackList_1);
-    Core = __importStar(Core);
-    Listener_1 = __importDefault(Listener_1);
-    DomTraverse = __importStar(DomTraverse);
-    Util_1 = __importDefault(Util_1);
-    UiAlignment = __importStar(UiAlignment);
-    CloseOverlay_1 = __importDefault(CloseOverlay_1);
+    CallbackList_1 = tslib_1.__importDefault(CallbackList_1);
+    Core = tslib_1.__importStar(Core);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    DomTraverse = tslib_1.__importStar(DomTraverse);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    UiAlignment = tslib_1.__importStar(UiAlignment);
+    CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
     let _availableDropdowns;
     const _callbacks = new CallbackList_1.default();
     let _didInit = false;

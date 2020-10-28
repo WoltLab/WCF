@@ -7,14 +7,11 @@
  * @module  Ajax (alias)
  * @module  WoltLabSuite/Core/Ajax
  */
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define(["require", "exports", "./Ajax/Request"], function (require, exports, Request_1) {
+define(["require", "exports", "tslib", "./Ajax/Request"], function (require, exports, tslib_1, Request_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getRequestObject = exports.apiOnce = exports.api = void 0;
-    Request_1 = __importDefault(Request_1);
+    Request_1 = tslib_1.__importDefault(Request_1);
     const _cache = new WeakMap();
     /**
      * Shorthand function to perform a request against the WCF-API with overrides

@@ -7,38 +7,16 @@
  * @module  Ui/TabMenu (alias)
  * @module  WoltLabSuite/Core/Ui/TabMenu
  */
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define(["require", "exports", "../Dom/Change/Listener", "../Dom/Util", "./TabMenu/Simple", "./CloseOverlay", "./Screen", "./Scroll"], function (require, exports, Listener_1, Util_1, Simple_1, CloseOverlay_1, UiScreen, UiScroll) {
+define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", "./TabMenu/Simple", "./CloseOverlay", "./Screen", "./Scroll"], function (require, exports, tslib_1, Listener_1, Util_1, Simple_1, CloseOverlay_1, UiScreen, UiScroll) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.scrollToTab = exports.getTabMenu = exports.setup = void 0;
-    Listener_1 = __importDefault(Listener_1);
-    Util_1 = __importDefault(Util_1);
-    Simple_1 = __importDefault(Simple_1);
-    CloseOverlay_1 = __importDefault(CloseOverlay_1);
-    UiScreen = __importStar(UiScreen);
-    UiScroll = __importStar(UiScroll);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Simple_1 = tslib_1.__importDefault(Simple_1);
+    CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
+    UiScreen = tslib_1.__importStar(UiScreen);
+    UiScroll = tslib_1.__importStar(UiScroll);
     let _activeList = null;
     let _enableTabScroll = false;
     const _tabMenus = new Map();

@@ -8,12 +8,9 @@
  * @module  Dom/ChangeListener (alias)
  * @module  WoltLabSuite/Core/Dom/Change/Listener
  */
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define(["require", "exports", "../../CallbackList"], function (require, exports, CallbackList_1) {
+define(["require", "exports", "tslib", "../../CallbackList"], function (require, exports, tslib_1, CallbackList_1) {
     "use strict";
-    CallbackList_1 = __importDefault(CallbackList_1);
+    CallbackList_1 = tslib_1.__importDefault(CallbackList_1);
     const _callbackList = new CallbackList_1.default();
     let _hot = false;
     const DomChangeListener = {

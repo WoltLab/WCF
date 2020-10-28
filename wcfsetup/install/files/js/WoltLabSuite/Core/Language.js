@@ -7,14 +7,11 @@
  * @module  Language (alias)
  * @module  WoltLabSuite/Core/Language
  */
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define(["require", "exports", "./Template"], function (require, exports, Template_1) {
+define(["require", "exports", "tslib", "./Template"], function (require, exports, tslib_1, Template_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.get = exports.add = exports.addObject = void 0;
-    Template_1 = __importDefault(Template_1);
+    Template_1 = tslib_1.__importDefault(Template_1);
     const _languageItems = new Map();
     /**
      * Adds all the language items in the given object to the store.

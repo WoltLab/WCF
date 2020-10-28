@@ -6,35 +6,13 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/User/List
  */
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define(["require", "exports", "../../Ajax", "../../Core", "../../Dom/Util", "../Dialog", "../Pagination"], function (require, exports, Ajax, Core, Util_1, Dialog_1, Pagination_1) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Util", "../Dialog", "../Pagination"], function (require, exports, tslib_1, Ajax, Core, Util_1, Dialog_1, Pagination_1) {
     "use strict";
-    Ajax = __importStar(Ajax);
-    Core = __importStar(Core);
-    Util_1 = __importDefault(Util_1);
-    Dialog_1 = __importDefault(Dialog_1);
-    Pagination_1 = __importDefault(Pagination_1);
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    Pagination_1 = tslib_1.__importDefault(Pagination_1);
     /**
      * @constructor
      */

@@ -1,11 +1,8 @@
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define(["require", "exports", "../Dom/Util"], function (require, exports, Util_1) {
+define(["require", "exports", "tslib", "../Dom/Util"], function (require, exports, tslib_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.element = void 0;
-    Util_1 = __importDefault(Util_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
     let _callback = null;
     let _offset = null;
     let _timeoutScroll = null;

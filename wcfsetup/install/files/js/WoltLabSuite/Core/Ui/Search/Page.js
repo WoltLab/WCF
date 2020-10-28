@@ -1,35 +1,13 @@
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define(["require", "exports", "../../Core", "../../Dom/Traverse", "../../Dom/Util", "../Dropdown/Simple", "../Screen", "./Input"], function (require, exports, Core, DomTraverse, Util_1, Simple_1, UiScreen, Input_1) {
+define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../../Dom/Util", "../Dropdown/Simple", "../Screen", "./Input"], function (require, exports, tslib_1, Core, DomTraverse, Util_1, Simple_1, UiScreen, Input_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
-    Core = __importStar(Core);
-    DomTraverse = __importStar(DomTraverse);
-    Util_1 = __importDefault(Util_1);
-    Simple_1 = __importDefault(Simple_1);
-    UiScreen = __importStar(UiScreen);
-    Input_1 = __importDefault(Input_1);
+    Core = tslib_1.__importStar(Core);
+    DomTraverse = tslib_1.__importStar(DomTraverse);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Simple_1 = tslib_1.__importDefault(Simple_1);
+    UiScreen = tslib_1.__importStar(UiScreen);
+    Input_1 = tslib_1.__importDefault(Input_1);
     function click(event) {
         event.preventDefault();
         const pageHeader = document.getElementById('pageHeader');

@@ -7,38 +7,16 @@
  * @module  Ui/Dialog (alias)
  * @module  WoltLabSuite/Core/Ui/Dialog
  */
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define(["require", "exports", "../Core", "../Dom/Change/Listener", "./Screen", "../Dom/Util", "../Language", "../Environment", "../Event/Handler", "./Dropdown/Simple"], function (require, exports, Core, Listener_1, UiScreen, Util_1, Language, Environment, EventHandler, Simple_1) {
+define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./Screen", "../Dom/Util", "../Language", "../Environment", "../Event/Handler", "./Dropdown/Simple"], function (require, exports, tslib_1, Core, Listener_1, UiScreen, Util_1, Language, Environment, EventHandler, Simple_1) {
     "use strict";
-    Core = __importStar(Core);
-    Listener_1 = __importDefault(Listener_1);
-    UiScreen = __importStar(UiScreen);
-    Util_1 = __importDefault(Util_1);
-    Language = __importStar(Language);
-    Environment = __importStar(Environment);
-    EventHandler = __importStar(EventHandler);
-    Simple_1 = __importDefault(Simple_1);
+    Core = tslib_1.__importStar(Core);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    UiScreen = tslib_1.__importStar(UiScreen);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Language = tslib_1.__importStar(Language);
+    Environment = tslib_1.__importStar(Environment);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    Simple_1 = tslib_1.__importDefault(Simple_1);
     let _activeDialog = null;
     let _callbackFocus;
     let _container;
@@ -174,7 +152,7 @@ define(["require", "exports", "../Core", "../Dom/Change/Listener", "./Screen", "
                     setupData.source = html;
                 }
                 else {
-                    new Promise((resolve_1, reject_1) => { require(['../Ajax'], resolve_1, reject_1); }).then(__importStar).then(Ajax => {
+                    new Promise((resolve_1, reject_1) => { require(['../Ajax'], resolve_1, reject_1); }).then(tslib_1.__importStar).then(Ajax => {
                         const source = setupData.source;
                         Ajax.api(this, source.data, data => {
                             if (data.returnValues && typeof data.returnValues.template === 'string') {
@@ -237,7 +215,7 @@ define(["require", "exports", "../Core", "../Dom/Change/Listener", "./Screen", "
                     options.backdropCloseOnClick = false;
                 if (options.closeConfirmMessage) {
                     options.onBeforeClose = id => {
-                        new Promise((resolve_2, reject_2) => { require(['./Confirmation'], resolve_2, reject_2); }).then(__importStar).then(UiConfirmation => {
+                        new Promise((resolve_2, reject_2) => { require(['./Confirmation'], resolve_2, reject_2); }).then(tslib_1.__importStar).then(UiConfirmation => {
                             UiConfirmation.show({
                                 confirm: this.close.bind(this, id),
                                 message: options.closeConfirmMessage || '',

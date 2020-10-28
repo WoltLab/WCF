@@ -9,31 +9,12 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Template
  */
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-define(["require", "exports", "./Template.grammar", "./StringUtil", "./Language", "./I18n/Plural"], function (require, exports, parser, StringUtil, Language, I18nPlural) {
+define(["require", "exports", "tslib", "./Template.grammar", "./StringUtil", "./Language", "./I18n/Plural"], function (require, exports, tslib_1, parser, StringUtil, Language, I18nPlural) {
     "use strict";
-    parser = __importStar(parser);
-    StringUtil = __importStar(StringUtil);
-    Language = __importStar(Language);
-    I18nPlural = __importStar(I18nPlural);
+    parser = tslib_1.__importStar(parser);
+    StringUtil = tslib_1.__importStar(StringUtil);
+    Language = tslib_1.__importStar(Language);
+    I18nPlural = tslib_1.__importStar(I18nPlural);
     // @todo: still required?
     // work around bug in AMD module generation of Jison
     /*function Parser() {
