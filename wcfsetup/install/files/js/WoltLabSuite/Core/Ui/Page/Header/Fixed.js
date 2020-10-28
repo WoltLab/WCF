@@ -25,8 +25,6 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../Alignmen
     let _userPanelSearchButton;
     /**
      * Provides the collapsible search bar.
-     *
-     * @protected
      */
     function initSearchBar() {
         _pageHeaderSearch = document.getElementById('pageHeaderSearch');
@@ -60,8 +58,6 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../Alignmen
     }
     /**
      * Opens the search bar.
-     *
-     * @protected
      */
     function openSearchBar() {
         window.WCF.Dropdown.Interactive.Handler.closeAll();
@@ -81,8 +77,6 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../Alignmen
     }
     /**
      * Closes the search bar.
-     *
-     * @protected
      */
     function closeSearchBar() {
         _pageHeader.classList.remove('searchBarOpen');

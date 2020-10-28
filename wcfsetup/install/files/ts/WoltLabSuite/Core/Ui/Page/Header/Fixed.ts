@@ -25,10 +25,8 @@ let _userPanelSearchButton: HTMLElement;
 
 /**
  * Provides the collapsible search bar.
- *
- * @protected
  */
-function initSearchBar() {
+function initSearchBar(): void {
   _pageHeaderSearch = document.getElementById('pageHeaderSearch')!;
   _pageHeaderSearch.addEventListener('click', ev => ev.stopPropagation());
 
@@ -67,10 +65,8 @@ function initSearchBar() {
 
 /**
  * Opens the search bar.
- *
- * @protected
  */
-function openSearchBar() {
+function openSearchBar(): void {
   window.WCF.Dropdown.Interactive.Handler.closeAll();
 
   _pageHeader.classList.add('searchBarOpen');
@@ -93,10 +89,8 @@ function openSearchBar() {
 
 /**
  * Closes the search bar.
- *
- * @protected
  */
-function closeSearchBar() {
+function closeSearchBar(): void {
   _pageHeader.classList.remove('searchBarOpen');
   _userPanelSearchButton.parentElement!.classList.remove('open');
 
@@ -114,7 +108,7 @@ function closeSearchBar() {
 /**
  * Initializes the sticky page header handler.
  */
-export function init() {
+export function init(): void {
   _pageHeader = document.getElementById('pageHeader')!;
   _pageHeaderContainer = document.getElementById('pageHeaderContainer')!;
 
