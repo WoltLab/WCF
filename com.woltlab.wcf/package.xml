@@ -49,4 +49,15 @@
 		
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
+	
+	<instructions type="update" fromversion="5.3.*">
+		<instruction type="file" />
+		<instruction type="acpTemplate" />
+		<instruction type="template" />
+		
+		<instruction type="script" run="standalone">acp/update_5.4_db.php</instruction>
+		
+		<instruction type="objectTypeDefinition" />
+		<instruction type="option" />
+	</instructions>
 </package>
