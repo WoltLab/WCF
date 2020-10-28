@@ -13,6 +13,7 @@ use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\captcha\CaptchaHandler;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\comment\CommentHandler;
+use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
@@ -314,7 +315,12 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	 * @throws	PermissionDeniedException
 	 */
 	public function validateAddComment() {
-		CommentHandler::enforceFloodControl();
+		try {
+			CommentHandler::enforceFloodControl();
+		}
+		catch (NamedUserException $e) {
+			throw new UserInputException('message', $e->getMessage());
+		}
 		
 		$this->readInteger('objectID', false, 'data');
 		$this->readBoolean('requireGuestDialog', true);
@@ -463,7 +469,12 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	 * @throws	PermissionDeniedException
 	 */
 	public function validateAddResponse() {
-		CommentHandler::enforceFloodControl();
+		try {
+			CommentHandler::enforceFloodControl();
+		}
+		catch (NamedUserException $e) {
+			throw new UserInputException('message', $e->getMessage());
+		}
 		
 		$this->readInteger('objectID', false, 'data');
 		$this->readBoolean('requireGuestDialog', true);
@@ -981,7 +992,12 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			throw new PermissionDeniedException();
 		}
 		
-		CommentHandler::enforceFloodControl();
+		try {
+			CommentHandler::enforceFloodControl();
+		}
+		catch (NamedUserException $e) {
+			throw new UserInputException('message', $e->getMessage());
+		}
 		
 		$this->readInteger('objectID', false, 'data');
 		$objectType = $this->validateObjectType();
