@@ -16,6 +16,7 @@ use wcf\system\comment\CommentHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\flood\FloodControl;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\moderation\queue\ModerationQueueActivationManager;
 use wcf\system\reaction\ReactionHandler;
@@ -35,7 +36,7 @@ use wcf\util\UserUtil;
  * Executes comment-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Comment
  * 
@@ -382,6 +383,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			ModerationQueueActivationManager::getInstance()->addModeratedContent('com.woltlab.wcf.comment.comment', $this->createdComment->commentID);
 		}
 		
+		FloodControl::getInstance()->registerContent('com.woltlab.wcf.comment');
+		
 		if (!$this->createdComment->userID) {
 			// save user name is session
 			WCF::getSession()->register('username', $this->createdComment->username);
@@ -548,6 +551,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			// mark response for moderated content
 			ModerationQueueActivationManager::getInstance()->addModeratedContent('com.woltlab.wcf.comment.response', $this->createdResponse->responseID);
 		}
+		
+		FloodControl::getInstance()->registerContent('com.woltlab.wcf.comment');
 		
 		if (!$this->createdResponse->userID) {
 			// save user name is session

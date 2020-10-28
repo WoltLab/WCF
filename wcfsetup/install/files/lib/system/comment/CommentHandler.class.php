@@ -13,6 +13,7 @@ use wcf\system\comment\manager\ICommentManager;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\flood\FloodControl;
 use wcf\system\message\censorship\Censorship;
 use wcf\system\reaction\ReactionHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
@@ -24,7 +25,7 @@ use wcf\system\WCF;
  * Provides methods for comment object handling.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Comment
  */
@@ -183,54 +184,21 @@ class CommentHandler extends SingletonFactory {
 	
 	/**
 	 * Enforces the flood control.
+	 * 
+	 * @throws      NamedUserException      if flood control is exceeded
 	 */
 	public static function enforceFloodControl() {
-		if (!WCF::getSession()->getPermission('user.comment.floodControlTime')) {
+		$floodControlTime = WCF::getSession()->getPermission('user.comment.floodControlTime');
+		if (!$floodControlTime) {
 			return;
 		}
 		
-		// flood control for guests is session based
-		if (!WCF::getUser()->userID) {
-			$lastCommentTime = WCF::getSession()->getVar('lastCommentTime');
-			
-			if ($lastCommentTime && $lastCommentTime + WCF::getSession()->getPermission('user.comment.floodControlTime') > TIME_NOW) {
-				throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.comment.error.floodControl', [
-					'lastCommentTime' => $lastCommentTime
-				]));
-			}
-			
-			return;
-		}
-		
-		// check for comments
-		$sql = "SELECT		time
-			FROM		wcf".WCF_N."_comment
-			WHERE		userID = ?
-					AND time > ?
-			ORDER BY	time DESC";
-		$statement = WCF::getDB()->prepareStatement($sql, 1);
-		$statement->execute([
-			WCF::getUser()->userID,
-			TIME_NOW - WCF::getSession()->getPermission('user.comment.floodControlTime')
-		]);
-		if (($row = $statement->fetchArray()) !== false) {
-			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.comment.error.floodControl', ['lastCommentTime' => $row['time']]));
-		}
-		else {
-			// check for comment response
-			$sql = "SELECT		time
-				FROM		wcf".WCF_N."_comment_response
-				WHERE		userID = ?
-						AND time > ?
-				ORDER BY	time DESC";
-			$statement = WCF::getDB()->prepareStatement($sql, 1);
-			$statement->execute([
-				WCF::getUser()->userID,
-				TIME_NOW - WCF::getSession()->getPermission('user.comment.floodControlTime')
-			]);
-			if (($row = $statement->fetchArray()) !== false) {
-				throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.comment.error.floodControl', ['lastCommentTime' => $row['time']]));
-			}
+		$lastTime = FloodControl::getInstance()->getLastTime('com.woltlab.wcf.comment');
+		if ($lastTime !== null && $lastTime > TIME_NOW - $floodControlTime) {
+			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable(
+				'wcf.comment.error.floodControl',
+				['lastCommentTime' => $lastTime]
+			));
 		}
 	}
 	
