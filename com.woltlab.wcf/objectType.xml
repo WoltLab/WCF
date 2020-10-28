@@ -1716,6 +1716,10 @@
 			<classname>wcf\system\user\content\provider\ReactionUserContentProvider</classname>
 		</type>
 		<!-- /user content provider -->
+		<type>
+			<name>com.woltlab.wcf.comment</name>
+			<definitionname>com.woltlab.wcf.floodControl</definitionname>
+		</type>
 		<!-- deprecated -->
 		<type>
 			<name>com.woltlab.wcf.page.controller</name>
