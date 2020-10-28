@@ -235,13 +235,25 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm {
 	}
 	
 	/**
+	 * Returns additional parameters passed to the database object action object.
+	 * 
+	 * @since       5.4
+	 */
+	protected function getActionParameters(): array {
+		return [];
+	}
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function save() {
 		parent::save();
 		
 		if ($this->action === 'add') {
-			$this->objectAction = new $this->actionClass([], 'create', ['data' => $this->getDatabaseValues()]);
+			$this->objectAction = new $this->actionClass([], 'create', array_merge(
+				['data' => $this->getDatabaseValues()],
+				$this->getActionParameters()
+			));
 			
 			$this->saveI18n($this->objectAction->executeAction()['returnValues'], $this->editorClass);
 			
@@ -250,7 +262,10 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm {
 		else {
 			$this->beforeSaveI18n($this->option);
 			
-			$this->objectAction = new $this->actionClass([$this->option], 'update', ['data' => $this->getDatabaseValues()]);
+			$this->objectAction = new $this->actionClass([$this->option], 'update', array_merge(
+				['data' => $this->getDatabaseValues()],
+				$this->getActionParameters()
+			));
 			$this->objectAction->executeAction();
 			
 			$this->saved();
