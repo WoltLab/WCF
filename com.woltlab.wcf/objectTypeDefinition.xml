@@ -211,10 +211,12 @@
 			<name>com.woltlab.wcf.article.discussionProvider</name>
 			<interfacename>wcf\system\article\discussion\IArticleDiscussionProvider</interfacename>
 		</definition>
-		
 		<definition>
 			<name>com.woltlab.wcf.content.userContentProvider</name>
 			<interfacename>wcf\system\user\content\provider\IUserContentProvider</interfacename>
+		</definition>
+		<definition>
+			<name>com.woltlab.wcf.floodControl</name>
 		</definition>
 	</import>
 	<delete>

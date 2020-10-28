@@ -67,7 +67,6 @@ define('SEARCH_ENGINE', 'mysql');
 define('EXCEPTION_PRIVACY', 'public');
 define('COOKIE_PREFIX', 'wcf21_');
 define('HTTP_SEND_X_FRAME_OPTIONS', 1);
-define('HTTP_ENABLE_GZIP', 1);
 define('PACKAGE_SERVER_AUTH_CODE', '');
 define('PROXY_SERVER_HTTP', '');
 define('IP_ADDRESS_SEARCH_ENGINE', '');

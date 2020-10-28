@@ -2,6 +2,7 @@
 namespace wcf\system\cronjob;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\flood\FloodControl;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -10,7 +11,7 @@ use wcf\util\FileUtil;
  * Cronjob for a daily system cleanup.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cronjob
  */
@@ -213,5 +214,7 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 				gmdate('Y-m-d', $timeLimit)
 			]);
 		}
+		
+		FloodControl::getInstance()->prune();
 	}
 }

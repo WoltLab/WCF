@@ -2,7 +2,6 @@
 namespace wcf\util;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
-use wcf\system\exception\SystemException;
 use wcf\system\request\RequestHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\session\SessionHandler;
@@ -18,16 +17,9 @@ use wcf\system\WCF;
  */
 final class HeaderUtil {
 	/**
-	 * gzip level to user
-	 * @var	integer
+	 * @deprecated 5.4 - gzip support was removed.
 	 */
 	const GZIP_LEVEL = 1;
-	
-	/**
-	 * gzip compression
-	 * @var	boolean
-	 */
-	protected static $enableGzipCompression = false;
 	
 	/**
 	 * output HTML
@@ -79,19 +71,6 @@ final class HeaderUtil {
 			self::sendNoCacheHeaders();
 		}
 		
-		if (HTTP_ENABLE_GZIP && !defined('HTTP_DISABLE_GZIP')) {
-			if (function_exists('gzcompress') && !@ini_get('zlib.output_compression') && !@ini_get('output_handler') && isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false) {
-				self::$enableGzipCompression = true;
-				
-				if (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip') !== false) {
-					@header('Content-Encoding: x-gzip');
-				}
-				else {
-					@header('Content-Encoding: gzip');
-				}
-			}
-		}
-		
 		// send X-Frame-Options
 		if (HTTP_SEND_X_FRAME_OPTIONS) {
 			@header('X-Frame-Options: SAMEORIGIN');
@@ -109,12 +88,9 @@ final class HeaderUtil {
 	}
 	
 	/**
-	 * Disables gzip compression on runtime in case of an exception. You should not call
-	 * this method at all, it exists for exception handling only.
+	 * @deprecated 5.4 - This method is a no-op, as gzip support was removed.
 	 */
-	public static function exceptionDisableGzip() {
-		self::$enableGzipCompression = false;
-	}
+	public static function exceptionDisableGzip() { }
 	
 	/**
 	 * Parses the rendered output.
@@ -148,19 +124,6 @@ final class HeaderUtil {
 		// please be aware, that $eventObj is not available here due to this being a static
 		// class. Use HeaderUtil::$output to modify it.
 		if (!defined('NO_IMPORTS')) EventHandler::getInstance()->fireAction(self::class, 'parseOutput');
-		
-		// gzip compression
-		if (self::$enableGzipCompression) {
-			$size = strlen(self::$output);
-			$crc = crc32(self::$output);
-			
-			$newOutput = "\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\xff";
-			$newOutput .= substr(gzcompress(self::$output, self::GZIP_LEVEL), 2, -4);
-			$newOutput .= pack('V', $crc);
-			$newOutput .= pack('V', $size);
-			
-			self::$output = $newOutput;
-		}
 		
 		return self::$output;
 	}

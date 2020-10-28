@@ -599,11 +599,6 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			<option name="http_enable_gzip">
-				<categoryname>general.system.http</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
 			<!-- /general.system.http -->
 			<!-- general.system.packageServer -->
 			<option name="package_server_auth_code">
@@ -1706,14 +1701,7 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		</options>
 	</import>
 	<delete>
-		<option name="attachment_enable_thumbnails" />
-		<option name="message_sidebar_enable_user_online_marking" />
-		<option name="register_enable_password_security_check" />
-		<option name="register_password_min_length" />
-		<option name="register_password_must_contain_lower_case" />
-		<option name="register_password_must_contain_upper_case" />
-		<option name="register_password_must_contain_digit" />
-		<option name="register_password_must_contain_special_char" />
+		<option name="http_enable_gzip" />
 		<option name="meta_keywords" />
 	</delete>
 </data>

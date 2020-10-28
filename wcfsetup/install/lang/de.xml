@@ -1320,8 +1320,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.error.controllerReplacementUnknown"><![CDATA[Der Controller „{$urlControllerReplacementError}“ ist unbekannt.]]></item>
 		<item name="wcf.acp.option.error.tooHigh"><![CDATA[Der angegebene Wert ist zu hoch.{if $option->maxvalue !== null} Der maximale Wert ist {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.option.error.tooLow"><![CDATA[Der angegebene Wert ist zu gering.{if $option->minvalue !== null} Der minimale Wert ist {#$option->minvalue}.{/if}]]></item>
-		<item name="wcf.acp.option.http_enable_gzip"><![CDATA[Gzip-Komprimierung aktivieren]]></item>
-		<item name="wcf.acp.option.http_enable_gzip.description"><![CDATA[Aktiviert die Komprimierung der Inhalte bei der Übertragung vom Server an den Client. Dies reduziert den Traffic und kann den Ladevorgang erheblich beschleunigen.]]></item>
 		<item name="wcf.acp.option.http_send_x_frame_options"><![CDATA[Einbindung in einem Frame verhindern]]></item>
 		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[Sendet den <a href="https://de.wikipedia.org/wiki/Clickjacking" class="externalURL">„X-Frame-Options“</a> Header, um die Einbettung dieser Seite in einem Frame zu verhindern (sendet „SAMEORIGIN“).]]></item>
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Grafik-Bibliothek]]></item>
@@ -1717,7 +1715,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.message_public_highlighters"><![CDATA[Auswählbare Syntax-Highlighter]]></item>
 		<item name="wcf.acp.option.message_public_highlighters.description"><![CDATA[Die gewählten Syntax-Highlighter stehen dem Nutzer unmittelbar im Editor zur Verfügung. Die anderen Highlighter sind weiterhin verfügbar, der Nutzer muss jedoch den internen Namen kennen.]]></item>
 		<item name="wcf.acp.option.log_missing_language_items"><![CDATA[Fehlende Sprachvariablen protokollieren]]></item>
-		<item name="wcf.acp.option.log_missing_language_items.description"><![CDATA[Die fehlenden Sprachvariablen werden in der Datei <kbd>{'WCF_DIR'|constant}log/missingLanguageItems.txt</kbd> protokolliert.]]></item>
+		<item name="wcf.acp.option.log_missing_language_items.description"><![CDATA[Die fehlenden Sprachvariablen können unter <a href="{link controller='DevtoolsMissingLanguageItemList'}{/link}">Fehlende Texte</a> eingesehen werden.]]></item>
 		<item name="wcf.acp.option.category.general.system.ipAddress"><![CDATA[IP-Adressen]]></item>
 		<item name="wcf.acp.option.prune_ip_address"><![CDATA[Speicherzeit für IP-Adressen]]></item>
 		<item name="wcf.acp.option.prune_ip_address.description"><![CDATA[Zeitraum, nachdem alte IP-Adressen automatisch gelöscht werden. [0, um die Löschung zu deaktivieren]]]></item>

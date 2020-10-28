@@ -20,8 +20,6 @@ define('COOKIE_PREFIX', $prefix);
 define('COOKIE_PATH', '');
 define('COOKIE_DOMAIN', '');
 
-define('HTTP_ENABLE_GZIP', 0);
-define('HTTP_GZIP_LEVEL', 1);
 define('HTTP_SEND_X_FRAME_OPTIONS', 0);
 
 define('BLACKLIST_IP_ADDRESSES', '');
