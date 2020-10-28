@@ -348,7 +348,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			
 			$sql = "INSERT IGNORE INTO	wcf".WCF_N."_page_content
 							(pageID, languageID, title, content, metaDescription, customURL)
-				VALUES			(?, ?, ?, ?, ?, ?, ?)";
+				VALUES			(?, ?, ?, ?, ?, ?)";
 			$insertStatement = WCF::getDB()->prepareStatement($sql);
 			
 			WCF::getDB()->beginTransaction();
