@@ -1,4 +1,6 @@
 {
+  "name": "@woltlab/wcf",
+  "version": "5.4",
   "devDependencies": {
     "@types/facebook-js-sdk": "^3.3.1",
     "@types/pica": "^5.1.1",
