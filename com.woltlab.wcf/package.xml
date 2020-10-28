@@ -55,6 +55,7 @@
 		<instruction type="acpTemplate" />
 		<instruction type="template" />
 		
+		<instruction type="script" run="standalone">acp/update_5.4_removeFiles.php</instruction>
 		<instruction type="script" run="standalone">acp/update_5.4_db.php</instruction>
 		
 		<instruction type="objectTypeDefinition" />
