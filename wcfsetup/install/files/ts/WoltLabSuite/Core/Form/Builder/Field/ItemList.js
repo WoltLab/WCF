@@ -26,7 +26,6 @@ define(['Core', './Field', 'WoltLabSuite/Core/Ui/ItemList/Static'], function(Cor
 			
 			var values = UiItemListStatic.getValues(this._fieldId);
 			for (var i = 0, length = values.length; i < length; i++) {
-				// TODO: data[this._fieldId] is an array but if code assumes object
 				if (values[i].objectId) {
 					data[this._fieldId][values[i].objectId] = values[i].value;
 				}
