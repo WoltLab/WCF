@@ -354,7 +354,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		$this->readInteger('categoryID', true, 'data');
 		$this->readInteger('languageID', true, 'data');
 		$this->readBoolean('isMultilingual', true, 'data');
-		$this->readBoolean('captionEnableHtml', true, 'data');
+		$this->readInteger('captionEnableHtml', true, 'data');
 		
 		if (count(LanguageFactory::getInstance()->getLanguages()) > 1) {
 			// languageID: convert zero to null
