@@ -61,7 +61,7 @@ class UiConfirmation implements DialogCallbackObject {
     this.parameters = options.parameters || {};
     
     this._content.innerHTML = (typeof options.template === 'string') ? options.template.trim() : '';
-    this.text[options.messageIsHtml ? 'innerHtml' : 'textContent'] = options.message;
+    this.text[options.messageIsHtml ? 'innerHTML' : 'textContent'] = options.message;
 
     if (typeof options.legacyCallback === 'function') {
       this.callbackCancel = parameters => {
