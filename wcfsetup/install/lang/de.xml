@@ -1356,7 +1356,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.mail_use_f_param"><![CDATA[„-f“ Parameter verwenden]]></item>
 		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[Der „-f“-Parameter sorgt bei der PHP-Versandmethode dafür, dass der korrekte Absender gesetzt wird. Diese Einstellung wird möglicherweise nicht von jedem Server unterstützt. {if LANGUAGE_USE_INFORMAL_VARIANT}Versuche{else}Versuchen Sie{/if} in diesem Falle die Option zu deaktivieren.]]></item>
 		<item name="wcf.acp.option.meta_description"><![CDATA[Meta Description]]></item>
-		<item name="wcf.acp.option.meta_keywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.option.og_image"><![CDATA[Standardwert „Open Graph“-Bild]]></item>
 		<item name="wcf.acp.option.og_image.description"><![CDATA[Pfad zur Bilddatei, die beim Verlinken von Inhalten auf Facebook, Twitter und anderen „Social Media“-Seiten standardmäßig eingebunden wird.]]></item>
 		<item name="wcf.acp.option.module_master_password"><![CDATA[Hauptkennwort aktivieren]]></item>
@@ -2001,7 +2000,6 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.page.lastUpdateTime"><![CDATA[Letzte Aktualisierung]]></item>
 		<item name="wcf.acp.page.list"><![CDATA[Seiten]]></item>
 		<item name="wcf.acp.page.metaDescription"><![CDATA[Meta Description]]></item>
-		<item name="wcf.acp.page.metaKeywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.page.name.error.notUnique"><![CDATA[Dieser Name wird bereits von einer anderen Seite verwendet.]]></item>
 		<item name="wcf.acp.page.page"><![CDATA[Seite]]></item>
 		<item name="wcf.acp.page.parentPage"><![CDATA[Übergeordnete Seite]]></item>
@@ -2551,7 +2549,6 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.pip.page.contentContent"><![CDATA[Inhalt]]></item>
 		<item name="wcf.acp.pip.page.contentCustomURL"><![CDATA[Individuelle URL]]></item>
 		<item name="wcf.acp.pip.page.contentMetaDescription"><![CDATA[Meta Description]]></item>
-		<item name="wcf.acp.pip.page.contentMetaKeywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.pip.page.contentTitle"><![CDATA[Titel]]></item>
 		<item name="wcf.acp.pip.page.controller"><![CDATA[Seiten-Controller]]></item>
 		<item name="wcf.acp.pip.page.cssClassName"><![CDATA[CSS-Klassen]]></item>

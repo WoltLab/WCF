@@ -37,9 +37,6 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 		if ($value = WCF::getLanguage()->get(META_DESCRIPTION)) {
 			$this->addTag('description', 'description', $value);
 		}
-		if ($value = WCF::getLanguage()->get(META_KEYWORDS)) {
-			$this->addTag('keywords', 'keywords', $value);
-		}
 		if ($value = WCF::getLanguage()->get(PAGE_TITLE)) {
 			$this->addTag('og:site_name', 'og:site_name', $value, true);
 		}

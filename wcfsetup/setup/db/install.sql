@@ -1128,7 +1128,6 @@ CREATE TABLE wcf1_page_content (
 	title VARCHAR(255) NOT NULL,
 	content MEDIUMTEXT,
 	metaDescription TEXT,
-	metaKeywords TEXT,
 	customURL VARCHAR(255) NOT NULL,
 	hasEmbeddedObjects TINYINT(1) NOT NULL DEFAULT 0,
 	

@@ -1333,7 +1333,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.mail_use_f_param"><![CDATA[Use “-f” parameter]]></item>
 		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[The “-f” parameter sets the proper sender of the email if the PHP send method is used. This parameter may not be supported by every server. Try disabling it, if you have trouble sending emails.]]></item>
 		<item name="wcf.acp.option.meta_description"><![CDATA[Meta Description]]></item>
-		<item name="wcf.acp.option.meta_keywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.option.og_image"><![CDATA[Open Graph Image]]></item>
 		<item name="wcf.acp.option.og_image.description"><![CDATA[Path to the default image that will be displayed when sharing your site on Facebook, Twitter and other social media sites.]]></item>
 		<item name="wcf.acp.option.module_master_password"><![CDATA[Enable master password]]></item>
@@ -2323,7 +2322,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.page.contentContent"><![CDATA[Content]]></item>
 		<item name="wcf.acp.pip.page.contentCustomURL"><![CDATA[Custom URL]]></item>
 		<item name="wcf.acp.pip.page.contentMetaDescription"><![CDATA[Meta Description]]></item>
-		<item name="wcf.acp.pip.page.contentMetaKeywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.pip.page.content"><![CDATA[Page Contents]]></item>
 		<item name="wcf.acp.pip.eventListener.listenerName"><![CDATA[Event Listener Identifier]]></item>
 		<item name="wcf.acp.pip.eventListener.listenerName.description"><![CDATA[Unique textual identifier of the event listener that may only contain letters and must start with a lowercase letter.]]></item>
@@ -4321,7 +4319,6 @@ Attachments:
 		<item name="wcf.acp.page.lastUpdateTime"><![CDATA[Last Change]]></item>
 		<item name="wcf.acp.page.list"><![CDATA[Pages]]></item>
 		<item name="wcf.acp.page.metaDescription"><![CDATA[Meta Description]]></item>
-		<item name="wcf.acp.page.metaKeywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.page.name.error.notUnique"><![CDATA[Name is already in use.]]></item>
 		<item name="wcf.acp.page.page"><![CDATA[Page]]></item>
 		<item name="wcf.acp.page.parentPage"><![CDATA[Parent Page]]></item>

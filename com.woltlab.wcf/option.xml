@@ -419,11 +419,6 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			<option name="meta_keywords">
-				<categoryname>general.page</categoryname>
-				<optiontype>textI18n</optiontype>
-				<supporti18n>1</supporti18n>
-			</option>
 			<option name="meta_description">
 				<categoryname>general.page</categoryname>
 				<optiontype>textI18n</optiontype>
@@ -1707,5 +1702,6 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 	</import>
 	<delete>
 		<option name="http_enable_gzip" />
+		<option name="meta_keywords" />
 	</delete>
 </data>

@@ -44,8 +44,7 @@ trait TTestablePageUserNotificationEvent {
 					'title' => 'Page Title',
 					'content' => 'Page Content',
 					'metaDescription' => '',
-					'metaKeywords' => '',
-					'customURL' => 'test-page'
+					'customURL' => 'test-page',
 				]
 			]
 		]))->executeAction()['returnValues'];

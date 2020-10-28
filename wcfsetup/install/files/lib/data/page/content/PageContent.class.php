@@ -23,7 +23,6 @@ use wcf\system\WCF;
  * @property-read	string		$title			title of the page in the associated language
  * @property-read	string		$content		actual content of the page in the associated language
  * @property-read	string		$metaDescription	meta description of the page in the associated language
- * @property-read	string		$metaKeywords		meta keywords of the page in the associated language
  * @property-read	string		$customURL		custom url of the page in the associated language
  * @property-read	integer		$hasEmbeddedObjects	is `1` if the page content contains embedded objects, otherwise `0`
  */

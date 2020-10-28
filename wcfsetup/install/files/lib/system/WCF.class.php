@@ -377,6 +377,10 @@ class WCF {
 		// https://github.com/WoltLab/WCF/issues/3634
 		define('HTTP_ENABLE_GZIP', 0);
 		
+		// Meta keywords are no longer used since 5.4.
+		// https://github.com/WoltLab/WCF/issues/3561
+		define('META_KEYWORDS', '');
+		
 		$filename = WCF_DIR.'options.inc.php';
 		
 		// create options file if doesn't exist

@@ -103,9 +103,6 @@ class CmsPage extends AbstractPage {
 		if ($this->content->metaDescription) {
 			MetaTagHandler::getInstance()->addTag('og:description', 'og:description', $this->content->metaDescription, true);
 		}
-		if ($this->content->metaKeywords) {
-			MetaTagHandler::getInstance()->addTag('keywords', 'keywords', $this->content->metaKeywords);
-		}
 	}
 	
 	/**

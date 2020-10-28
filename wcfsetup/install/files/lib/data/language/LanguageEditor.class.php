@@ -848,8 +848,8 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		
 		// page content
 		$sql = "INSERT IGNORE INTO      wcf".WCF_N."_page_content
-						(pageID, languageID, title, content, metaDescription, metaKeywords, customURL, hasEmbeddedObjects)
-			SELECT                  pageID, ?, title, content, metaDescription, metaKeywords, CASE WHEN customURL <> '' THEN CONCAT(customURL, '_', ?) ELSE '' END, hasEmbeddedObjects
+						(pageID, languageID, title, content, metaDescription, customURL, hasEmbeddedObjects)
+			SELECT                  pageID, ?, title, content, metaDescription, CASE WHEN customURL <> '' THEN CONCAT(customURL, '_', ?) ELSE '' END, hasEmbeddedObjects
 			FROM                    wcf".WCF_N."_page_content
 			WHERE                   languageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
