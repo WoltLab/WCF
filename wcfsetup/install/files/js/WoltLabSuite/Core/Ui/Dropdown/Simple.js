@@ -224,7 +224,6 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
         }
     }
     function dropdownMenuKeyDown(event) {
-        let button, dropdown;
         const activeItem = document.activeElement;
         if (activeItem.nodeName !== 'LI') {
             return;
@@ -262,17 +261,18 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
             if (target.childElementCount === 1 && (target.children[0].nodeName === 'SPAN' || target.children[0].nodeName === 'A')) {
                 target = target.children[0];
             }
-            dropdown = _dropdowns.get(_activeTargetId);
-            button = dropdown.querySelector('.dropdownToggle');
+            const dropdown = _dropdowns.get(_activeTargetId);
+            const button = dropdown.querySelector('.dropdownToggle');
             const mouseEvent = dropdown.dataset.a11yMouseEvent || 'click';
             Core.triggerEvent(target, mouseEvent);
-            if (button)
+            if (button) {
                 button.focus();
+            }
         }
         else if (event.key === 'Escape' || event.key === 'Tab') {
             event.preventDefault();
-            dropdown = _dropdowns.get(_activeTargetId);
-            button = dropdown.querySelector('.dropdownToggle');
+            const dropdown = _dropdowns.get(_activeTargetId);
+            let button = dropdown.querySelector('.dropdownToggle');
             // Remote controlled drop-down menus may not have a dedicated toggle button, instead the
             // `dropdown` element itself is the button.
             if (button === null && !dropdown.classList.contains('dropdown')) {
@@ -504,7 +504,7 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
         // Legacy call required for `WCF.Dropdown`
         _toggle(event, targetId, alternateElement, disableAutoFocus) {
             return toggle(event, targetId, alternateElement, disableAutoFocus);
-        }
+        },
     };
     return UiDropdownSimple;
 });
