@@ -90,7 +90,7 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Environment
      * Initializes tooltip elements.
      */
     function init() {
-        document.querySelectorAll('.jsTooltip').forEach(element => {
+        document.querySelectorAll('.jsTooltip').forEach((element) => {
             element.classList.remove('jsTooltip');
             const title = element.title.trim();
             if (title.length) {

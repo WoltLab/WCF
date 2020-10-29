@@ -21,8 +21,8 @@ define(["require", "exports", "tslib", "../../Event/Handler"], function (require
                 }
             }
             this.container = container;
-            this.container.addEventListener('keydown', this.keydown.bind(this));
-            this.container.addEventListener('mousedown', this.mousedown.bind(this));
+            this.container.addEventListener('keydown', (ev) => this.keydown(ev));
+            this.container.addEventListener('mousedown', (ev) => this.mousedown(ev));
         }
         keydown(event) {
             const activeButton = document.activeElement;
@@ -64,8 +64,9 @@ define(["require", "exports", "tslib", "../../Event/Handler"], function (require
             if (listItem && this.container.contains(listItem)) {
                 event.preventDefault();
                 const img = listItem.querySelector('img');
-                if (img)
+                if (img) {
                     this.insert(img);
+                }
             }
         }
         insert(img) {

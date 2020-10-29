@@ -67,7 +67,7 @@ function init() {
       }
 
       let timeout: number | null = null;
-      menu.querySelector('ul')!.addEventListener('scroll', function () {
+      menu.querySelector('ul')!.addEventListener('scroll', () => {
         if (timeout !== null) {
           window.clearTimeout(timeout);
         }

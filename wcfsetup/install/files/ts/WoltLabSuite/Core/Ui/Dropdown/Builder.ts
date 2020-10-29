@@ -171,9 +171,6 @@ export function setItems(list: HTMLUListElement, items: DropdownBuilderItemData[
  * Attaches the list to a button, visibility is from then on controlled through clicks
  * on the provided button element. Internally calls `Ui/SimpleDropdown.initFragment()`
  * to delegate the DOM management.
- *
- * @param       {Element}               list
- * @param       {Element}               button
  */
 export function attach(list: HTMLUListElement, button: HTMLElement): void {
   validateList(list);

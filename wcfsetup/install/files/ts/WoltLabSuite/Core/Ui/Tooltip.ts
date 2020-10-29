@@ -101,7 +101,7 @@ export function setup(): void {
  * Initializes tooltip elements.
  */
 export function init(): void {
-  document.querySelectorAll<HTMLElement>('.jsTooltip').forEach(element => {
+  document.querySelectorAll('.jsTooltip').forEach((element: HTMLElement) => {
     element.classList.remove('jsTooltip');
 
     const title = element.title.trim();

@@ -46,7 +46,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Lis
         rebuild() {
             document.querySelectorAll('.userTrophyOverlayList').forEach((element) => {
                 if (!this.knownElements.has(element)) {
-                    element.addEventListener('click', this.open.bind(this, element));
+                    element.addEventListener('click', (ev) => this.open(element, ev));
                     this.knownElements.add(element);
                 }
             });

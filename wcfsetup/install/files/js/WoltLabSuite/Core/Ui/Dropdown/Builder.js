@@ -150,9 +150,6 @@ define(["require", "exports", "tslib", "../../Core", "./Simple"], function (requ
      * Attaches the list to a button, visibility is from then on controlled through clicks
      * on the provided button element. Internally calls `Ui/SimpleDropdown.initFragment()`
      * to delegate the DOM management.
-     *
-     * @param       {Element}               list
-     * @param       {Element}               button
      */
     function attach(list, button) {
         validateList(list);

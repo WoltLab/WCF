@@ -34,13 +34,13 @@ define(["require", "exports", "tslib", "../Core"], function (require, exports, t
                 failure();
             }
             window[callbackName] = undefined;
-            script.parentNode.removeChild(script);
+            script.remove();
         }, (~~options.timeout || 10) * 1000);
         window[callbackName] = (...args) => {
             window.clearTimeout(timeout);
             success.apply(null, args);
             window[callbackName] = undefined;
-            script.parentNode.removeChild(script);
+            script.remove();
         };
         url += (url.indexOf('?') === -1) ? '?' : '&';
         url += options.parameterName + '=' + callbackName;

@@ -221,7 +221,7 @@ export function getTimeElement(date: Date): HTMLElement {
   const formattedTime = formatTime(date);
 
   time.setAttribute('datetime', format(date, 'c'));
-  time.dataset.timestamp = ((date.getTime() - date.getMilliseconds()) / 1000).toString();
+  time.dataset.timestamp = ((date.getTime() - date.getMilliseconds()) / 1_000).toString();
   time.dataset.date = formattedDate;
   time.dataset.time = formattedTime;
   time.dataset.offset = (date.getTimezoneOffset() * 60).toString(); // PHP returns minutes, JavaScript returns seconds
@@ -242,7 +242,7 @@ export function getTimeElement(date: Date): HTMLElement {
  */
 export function getTimezoneDate(timestamp: number, offset: number): Date {
   const date = new Date(timestamp);
-  const localOffset = date.getTimezoneOffset() * 60000;
+  const localOffset = date.getTimezoneOffset() * 60_000;
 
   return new Date((timestamp + localOffset + offset));
 }

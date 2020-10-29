@@ -37,8 +37,8 @@ class UiPageJumpTo implements DialogCallbackObject {
     }
 
     if (!this.elements.has(element)) {
-      element.querySelectorAll('.jumpTo').forEach(jumpTo => {
-        jumpTo.addEventListener('click', this.click.bind(this, element));
+      element.querySelectorAll('.jumpTo').forEach((jumpTo: HTMLElement) => {
+        jumpTo.addEventListener('click', (ev) => this.click(element, ev));
         this.elements.set(element, callback!);
       });
     }
@@ -104,12 +104,12 @@ class UiPageJumpTo implements DialogCallbackObject {
       options: {
         onSetup: content => {
           this.input = content.querySelector('input')!;
-          this.input.addEventListener('keyup', this._keyUp.bind(this));
+          this.input.addEventListener('keyup', (ev) => this._keyUp(ev));
 
           this.description = content.querySelector('small')!;
 
           this.submitButton = content.querySelector('button')!;
-          this.submitButton.addEventListener('click', this.submit.bind(this));
+          this.submitButton.addEventListener('click', () => this.submit());
         },
         title: Language.get('wcf.global.page.pagination'),
       },

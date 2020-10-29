@@ -223,19 +223,19 @@ function _mqlChange(event: MediaQueryListEvent): void {
   const queryObject = _getQueryObject(event.media);
   if (event.matches) {
     if (queryObject.callbacksSetup.size) {
-      queryObject.callbacksSetup.forEach(function (callback) {
+      queryObject.callbacksSetup.forEach((callback) => {
         callback();
       });
 
       // discard all setup callbacks after execution
       queryObject.callbacksSetup = new Map<string, Callback>();
     } else {
-      queryObject.callbacksMatch.forEach(function (callback) {
+      queryObject.callbacksMatch.forEach((callback) => {
         callback();
       });
     }
   } else {
-    queryObject.callbacksUnmatch.forEach(function (callback) {
+    queryObject.callbacksUnmatch.forEach((callback) => {
       callback();
     });
   }

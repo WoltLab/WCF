@@ -27,8 +27,8 @@ class UiSmileyInsert {
 
     this.container = container;
 
-    this.container.addEventListener('keydown', this.keydown.bind(this));
-    this.container.addEventListener('mousedown', this.mousedown.bind(this));
+    this.container.addEventListener('keydown', (ev) => this.keydown(ev));
+    this.container.addEventListener('mousedown', (ev) => this.mousedown(ev));
   }
 
   keydown(event: KeyboardEvent): void {
@@ -76,7 +76,9 @@ class UiSmileyInsert {
       event.preventDefault();
 
       const img = listItem.querySelector('img');
-      if (img) this.insert(img);
+      if (img) {
+        this.insert(img);
+      }
     }
   }
 

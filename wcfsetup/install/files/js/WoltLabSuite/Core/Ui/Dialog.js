@@ -53,7 +53,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             _container = document.createElement('div');
             _container.classList.add('dialogOverlay');
             _container.setAttribute('aria-hidden', 'true');
-            _container.addEventListener('mousedown', this._closeOnBackdrop.bind(this));
+            _container.addEventListener('mousedown', (ev) => this._closeOnBackdrop(ev));
             _container.addEventListener('wheel', event => {
                 if (event.target === _container) {
                     event.preventDefault();
@@ -82,7 +82,9 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                 },
             });
             this._initStaticDialogs();
-            Listener_1.default.add('Ui/Dialog', this._initStaticDialogs.bind(this));
+            Listener_1.default.add('Ui/Dialog', () => {
+                this._initStaticDialogs();
+            });
             UiScreen.setDialogContainer(_container);
             window.addEventListener('resize', () => {
                 _dialogs.forEach(dialog => {
@@ -93,7 +95,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             });
         },
         _initStaticDialogs() {
-            document.querySelectorAll('.jsStaticDialog').forEach(button => {
+            document.querySelectorAll('.jsStaticDialog').forEach((button) => {
                 button.classList.remove('jsStaticDialog');
                 const id = button.dataset.dialogId || '';
                 if (id) {
@@ -306,7 +308,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                 closeButton.tabIndex = 0;
                 closeButton.title = options.closeButtonLabel;
                 closeButton.setAttribute('aria-label', options.closeButtonLabel);
-                closeButton.addEventListener('click', this._close.bind(this));
+                closeButton.addEventListener('click', (ev) => this._close(ev));
                 header.appendChild(closeButton);
                 const span = document.createElement('span');
                 span.className = 'icon icon24 fa-times';

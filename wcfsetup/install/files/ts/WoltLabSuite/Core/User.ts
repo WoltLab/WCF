@@ -9,7 +9,7 @@
  */
 
 class User {
-  constructor(readonly userId, readonly username, readonly link) {
+  constructor(readonly userId: number, readonly username: string, readonly link: string) {
   }
 }
 

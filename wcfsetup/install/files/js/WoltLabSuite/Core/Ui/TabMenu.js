@@ -63,7 +63,7 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
                     rebuildMenuOverflow(menu);
                 }
                 let timeout = null;
-                menu.querySelector('ul').addEventListener('scroll', function () {
+                menu.querySelector('ul').addEventListener('scroll', () => {
                     if (timeout !== null) {
                         window.clearTimeout(timeout);
                     }

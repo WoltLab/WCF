@@ -266,8 +266,9 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
             button = dropdown.querySelector('.dropdownToggle');
             const mouseEvent = dropdown.dataset.a11yMouseEvent || 'click';
             Core.triggerEvent(target, mouseEvent);
-            if (button)
+            if (button) {
                 button.focus();
+            }
         }
         else if (event.key === 'Escape' || event.key === 'Tab') {
             event.preventDefault();

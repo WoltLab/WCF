@@ -111,7 +111,8 @@ class TabMenuSimple {
     // bind listeners
     this.tabs.forEach(tab => {
       if (!oldTabs || oldTabs.get(tab.dataset.name || '') !== tab) {
-        tab.children[0].addEventListener('click', this._onClick.bind(this));
+        const firstChild = tab.children[0] as HTMLElement;
+        firstChild.addEventListener('click', (ev) => this._onClick(ev));
 
         // iOS 13 changed the behavior for click events after scrolling the menu. It prevents
         // the synthetic mouse events like "click" from triggering for a short duration after
@@ -125,13 +126,13 @@ class TabMenuSimple {
         // tapping a menu item.
         if (Environment.platform() === 'ios') {
           let isClick = false;
-          tab.children[0].addEventListener('touchstart', () => {
+          firstChild.addEventListener('touchstart', () => {
             isClick = true;
           });
-          tab.children[0].addEventListener('touchmove', () => {
+          firstChild.addEventListener('touchmove', () => {
             isClick = false;
           });
-          tab.children[0].addEventListener('touchend', (event: MouseEvent) => {
+          firstChild.addEventListener('touchend', (event) => {
             if (isClick) {
               isClick = false;
 
@@ -366,7 +367,7 @@ class TabMenuSimple {
   /**
    * Handles clicks on a tab.
    */
-  _onClick(event: MouseEvent): void {
+  _onClick(event: MouseEvent | TouchEvent): void {
     event.preventDefault();
 
     const target = event.currentTarget as HTMLElement;

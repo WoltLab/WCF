@@ -39,7 +39,7 @@ define(["require", "exports", "tslib", "../../Dom/Util"], function (require, exp
             this.element = element;
             this.hide = this.getElements('hide', Array.isArray(options.hide) ? options.hide : []);
             this.hide = this.getElements('show', Array.isArray(options.show) ? options.show : []);
-            this.element.addEventListener('change', this.change.bind(this));
+            this.element.addEventListener('change', (ev) => this.change(ev));
             this.updateVisibility(this.show, this.element.checked);
             this.updateVisibility(this.hide, !this.element.checked);
         }

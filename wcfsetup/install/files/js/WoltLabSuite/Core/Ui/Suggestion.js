@@ -37,9 +37,9 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "./Dropdown/Simple"
             this.callbackSelect = options.callbackSelect;
             this.excludedSearchValues = new Set(Array.isArray(options.excludedSearchValues) ? options.excludedSearchValues : []);
             this.threshold = options.threshold === undefined ? 3 : options.threshold;
-            this.element.addEventListener('click', event => event.preventDefault());
-            this.element.addEventListener('keydown', this.keyDown.bind(this));
-            this.element.addEventListener('keyup', this.keyUp.bind(this));
+            this.element.addEventListener('click', (ev) => ev.preventDefault());
+            this.element.addEventListener('keydown', (ev) => this.keyDown(ev));
+            this.element.addEventListener('keyup', (ev) => this.keyUp(ev));
         }
         /**
          * Adds an excluded search value.
@@ -109,9 +109,6 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "./Dropdown/Simple"
             event.preventDefault();
             return false;
         }
-        /**
-         * Selects an item from the list.
-         */
         select(event, item) {
             if (event instanceof MouseEvent) {
                 const target = event.currentTarget;
@@ -185,7 +182,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "./Dropdown/Simple"
                     if (item.type) {
                         anchor.dataset.type = item.type;
                     }
-                    anchor.addEventListener('click', this.select.bind(this));
+                    anchor.addEventListener('click', (ev) => this.select(ev));
                     const listItem = document.createElement('li');
                     if (index === 0) {
                         listItem.className = 'active';
