@@ -15,3 +15,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: chekalsky/phpcs-action@e269c2f264f400adcda7c6b24c8550302350d495
+  ts:
+    name: TS Prettier
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: npm install
+    - run: |
+        shopt -s globstar
+        npx pretter -w wcfsetup/install/files/ts/**/*.ts
+    - run: echo "::add-matcher::.github/diff.json"
+    - run: |
+        git diff --exit-code

@@ -37,6 +37,6 @@ jobs:
     - uses: actions/checkout@v2
     - run: npm install
     - run: npx tsc
-    - run: echo "::add-matcher::.github/typescript-tsc_not_run.json"
+    - run: echo "::add-matcher::.github/diff.json"
     - run: |
         git diff --exit-code

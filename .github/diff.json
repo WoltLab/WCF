@@ -1,7 +1,7 @@
 {
   "problemMatcher": [
     {
-      "owner": "tsc not run",
+      "owner": "diff",
       "pattern": [
         {
           "regexp": "--- a/(wcfsetup/(.*))",
