@@ -398,11 +398,21 @@ class WCFSetup extends WCF {
 		
 		$system['cookie']['result'] = !empty($_COOKIE['wcfsetup_cookietest']) && $_COOKIE['wcfsetup_cookietest'] == TMP_FILE_PREFIX;
 		
-		WCF::getTPL()->assign([
-			'system' => $system,
-			'nextStep' => 'configureDirectories'
-		]);
-		WCF::getTPL()->display('stepShowSystemRequirements');
+		foreach ($system as $result) {
+			if (!$result['result']) {
+				WCF::getTPL()->assign([
+					'system' => $system,
+					'nextStep' => 'configureDirectories'
+				]);
+				
+				WCF::getTPL()->display('stepShowSystemRequirements');
+				
+				return;
+			}
+		}
+		
+		// If all system requirements are met, directly go to next step.
+		$this->gotoNextStep('configureDirectories');
 	}
 	
 	/**
