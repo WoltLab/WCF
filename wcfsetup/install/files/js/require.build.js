@@ -36,7 +36,6 @@
 			"wcf.globalHelper"
 		],
 		include: [
-			"closest",
 			"requireLib",
 			"require.linearExecution"
 		],

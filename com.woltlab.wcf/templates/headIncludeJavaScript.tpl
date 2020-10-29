@@ -29,7 +29,6 @@
 {js application='wcf' file='require.config' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
 {js application='wcf' file='require.linearExecution' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
 {js application='wcf' file='wcf.globalHelper' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
-{js application='wcf' file='closest' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
 <script>
 requirejs.config({
 	baseUrl: '{@$__wcf->getPath()}js',
