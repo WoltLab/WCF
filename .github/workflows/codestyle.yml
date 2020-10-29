@@ -23,7 +23,7 @@ jobs:
     - run: npm install
     - run: |
         shopt -s globstar
-        npx pretter -w wcfsetup/install/files/ts/**/*.ts
+        npx prettier -w wcfsetup/install/files/ts/**/*.ts
     - run: echo "::add-matcher::.github/diff.json"
     - run: |
         git diff --exit-code
