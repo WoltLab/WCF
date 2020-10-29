@@ -1,14 +1,16 @@
 <?php
 namespace wcf\action;
+use GuzzleHttp\Exception\TransferException;
+use GuzzleHttp\Psr7\Request;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
+use wcf\system\io\File;
+use wcf\system\io\HttpFactory;
 use wcf\system\WCF;
 use wcf\util\exception\CryptoException;
-use wcf\util\exception\HTTPException;
 use wcf\util\CryptoUtil;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
-use wcf\util\HTTPRequest;
 use wcf\util\StringUtil;
 
 /**
@@ -31,6 +33,11 @@ class ImageProxyAction extends AbstractAction {
 	 * @var	string
 	 */
 	public $key = '';
+	
+	/**
+	 * 10 Mebibyte
+	 */
+	const MAX_SIZE = (10 * (1 << 20));
 	
 	/**
 	 * @inheritDoc
@@ -71,6 +78,8 @@ class ImageProxyAction extends AbstractAction {
 			}
 			
 			if ($fileLocation === null) {
+				$tmp = FileUtil::getTemporaryFilename('image_proxy_');
+				
 				try {
 					// rewrite schemaless URLs to https
 					$scheme = parse_url($url, PHP_URL_SCHEME);
@@ -85,33 +94,32 @@ class ImageProxyAction extends AbstractAction {
 					
 					// download image
 					try {
-						$request = new HTTPRequest($url, [
-							'maxLength' => 10 * (1 << 20) // download at most 10 MiB
+						$client = HttpFactory::getDefaultClient();
+						$request = new Request('GET', $url, [
+							'via' => '1.1 wsc',
+							'accept' => 'image/*',
+							'range' => 'bytes=0-'.(self::MAX_SIZE - 1),
 						]);
-						$request->addHeader('Via', '1.1 wsc');
-						$request->addHeader('Accept', 'image/*');
-						$request->execute();
-					}
-					catch (\Exception $e) {
-						$chain = $e;
-						do {
-							if ($chain instanceof HTTPException) {
-								throw new \DomainException();
-							}
-							// TODO: This is the Exception thrown by RemoteFile.
-							//       Update if RemoteFile switches to a proper subclass in the future.
-							if (strpos($chain->getMessage(), 'Can not connect to') === 0) {
-								throw new \DomainException();
+						$response = $client->send($request);
+						
+						$file = new File($tmp);
+						while (!$response->getBody()->eof()) {
+							$file->write($response->getBody()->read(8192));
+							
+							if ($response->getBody()->tell() >= self::MAX_SIZE) {
+								break;
 							}
 						}
-						while ($chain = $chain->getPrevious());
-						
-						throw $e;
+						$response->getBody()->close();
+						$file->flush();
+						$file->close();
 					}
-					$image = $request->getReply()['body'];
+					catch (TransferException $e) {
+						throw new \DomainException('Failed to request', 0, $e);
+					}
 					
 					// check file type
-					$imageData = @getimagesizefromstring($image);
+					$imageData = @getimagesize($tmp);
 					if (!$imageData) throw new \DomainException();
 					
 					switch ($imageData[2]) {
@@ -131,13 +139,13 @@ class ImageProxyAction extends AbstractAction {
 				catch (\DomainException $e) {
 					// save a dummy image in case the server sent us junk, otherwise we might try to download the file over and over and over again.
 					// taken from the public domain gif at https://commons.wikimedia.org/wiki/File%3aBlank.gif
-					$image = "\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\xFF\xFF\xFF\x00\x00\x00\x21\xF9\x04\x00\x00\x00\x00\x00\x2C\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3B";
+					file_put_contents($tmp, "\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\xFF\xFF\xFF\x00\x00\x00\x21\xF9\x04\x00\x00\x00\x00\x00\x2C\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3B");
 					$extension = 'gif';
 				}
 				
 				$fileLocation = $dir.'/'.$fileName.'.'.$extension;
 				
-				file_put_contents($fileLocation, $image);
+				rename($tmp, $fileLocation);
 				
 				// update mtime for correct expiration calculation
 				@touch($fileLocation);
