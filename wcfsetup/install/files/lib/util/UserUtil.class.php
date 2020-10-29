@@ -141,6 +141,20 @@ final class UserUtil {
 	}
 	
 	/**
+	 * Checks if the User Agent gives an indicator about a tablet device.
+	 * Heads up: This is only a basic test and can easily be falsified by the user.
+	 * 
+	 * @since       5.4
+	 */
+	public static function isTablet(string $userAgent): bool {
+		if (preg_match('/tab(let)|ipad/i', $userAgent)) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Returns the readable browser for a given user agent.
 	 * 
 	 * @since       5.4
