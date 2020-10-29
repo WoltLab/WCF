@@ -8,8 +8,8 @@
  * @module  WoltLabSuite/Core/Ajax
  */
 
-import AjaxRequest from './Ajax/Request';
-import { AjaxCallbackObject, CallbackSuccess, CallbackFailure, RequestData, RequestOptions } from './Ajax/Data';
+import AjaxRequest from "./Ajax/Request";
+import { AjaxCallbackObject, CallbackSuccess, CallbackFailure, RequestData, RequestOptions } from "./Ajax/Data";
 
 const _cache = new WeakMap();
 
@@ -17,12 +17,17 @@ const _cache = new WeakMap();
  * Shorthand function to perform a request against the WCF-API with overrides
  * for success and failure callbacks.
  */
-export function api(callbackObject: AjaxCallbackObject, data?: RequestData, success?: CallbackSuccess, failure?: CallbackFailure): AjaxRequest {
-  if (typeof data !== 'object') data = {};
+export function api(
+  callbackObject: AjaxCallbackObject,
+  data?: RequestData,
+  success?: CallbackSuccess,
+  failure?: CallbackFailure
+): AjaxRequest {
+  if (typeof data !== "object") data = {};
 
   let request = _cache.get(callbackObject);
   if (request === undefined) {
-    if (typeof callbackObject._ajaxSetup !== 'function') {
+    if (typeof callbackObject._ajaxSetup !== "function") {
       throw new TypeError("Callback object must implement at least _ajaxSetup().");
     }
 
@@ -32,7 +37,7 @@ export function api(callbackObject: AjaxCallbackObject, data?: RequestData, succ
     options.callbackObject = callbackObject;
 
     if (!options.url) {
-      options.url = 'index.php?ajax-proxy/&t=' + window.SECURITY_TOKEN;
+      options.url = "index.php?ajax-proxy/&t=" + window.SECURITY_TOKEN;
       options.withCredentials = true;
     }
 
@@ -44,21 +49,21 @@ export function api(callbackObject: AjaxCallbackObject, data?: RequestData, succ
   let oldSuccess = null;
   let oldFailure = null;
 
-  if (typeof success === 'function') {
-    oldSuccess = request.getOption('success');
-    request.setOption('success', success);
+  if (typeof success === "function") {
+    oldSuccess = request.getOption("success");
+    request.setOption("success", success);
   }
-  if (typeof failure === 'function') {
-    oldFailure = request.getOption('failure');
-    request.setOption('failure', failure);
+  if (typeof failure === "function") {
+    oldFailure = request.getOption("failure");
+    request.setOption("failure", failure);
   }
 
   request.setData(data);
   request.sendRequest();
 
   // restore callbacks
-  if (oldSuccess !== null) request.setOption('success', oldSuccess);
-  if (oldFailure !== null) request.setOption('failure', oldFailure);
+  if (oldSuccess !== null) request.setOption("success", oldSuccess);
+  if (oldFailure !== null) request.setOption("failure", oldFailure);
 
   return request;
 }
@@ -73,7 +78,7 @@ export function apiOnce(options: RequestOptions): void {
   options.pinData = false;
   options.callbackObject = null;
   if (!options.url) {
-    options.url = 'index.php?ajax-proxy/&t=' + window.SECURITY_TOKEN;
+    options.url = "index.php?ajax-proxy/&t=" + window.SECURITY_TOKEN;
     options.withCredentials = true;
   }
 
@@ -86,7 +91,7 @@ export function apiOnce(options: RequestOptions): void {
  */
 export function getRequestObject(callbackObject: AjaxCallbackObject): AjaxRequest {
   if (!_cache.has(callbackObject)) {
-    throw new Error('Expected a previously used callback object, provided object is unknown.');
+    throw new Error("Expected a previously used callback object, provided object is unknown.");
   }
 
   return _cache.get(callbackObject);

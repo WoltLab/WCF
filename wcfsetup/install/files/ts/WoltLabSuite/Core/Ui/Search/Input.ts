@@ -7,13 +7,13 @@
  * @module  WoltLabSuite/Core/Ui/Search/Input
  */
 
-import * as Ajax from '../../Ajax';
-import * as Core from '../../Core';
-import DomUtil from '../../Dom/Util';
-import UiDropdownSimple from '../Dropdown/Simple';
-import { DatabaseObjectActionPayload, DatabaseObjectActionResponse } from '../../Ajax/Data';
-import AjaxRequest from '../../Ajax/Request';
-import { CallbackDropdownInit, CallbackSelect, SearchInputOptions } from './Data';
+import * as Ajax from "../../Ajax";
+import * as Core from "../../Core";
+import DomUtil from "../../Dom/Util";
+import UiDropdownSimple from "../Dropdown/Simple";
+import { DatabaseObjectActionPayload, DatabaseObjectActionResponse } from "../../Ajax/Data";
+import AjaxRequest from "../../Ajax/Request";
+import { CallbackDropdownInit, CallbackSelect, SearchInputOptions } from "./Data";
 
 class UiSearchInput {
   private activeItem?: HTMLLIElement = undefined;
@@ -22,11 +22,11 @@ class UiSearchInput {
   private readonly callbackDropdownInit?: CallbackDropdownInit = undefined;
   private readonly callbackSelect?: CallbackSelect = undefined;
   private readonly delay: number;
-  private dropdownContainerId = '';
+  private dropdownContainerId = "";
   private readonly element: HTMLInputElement;
   private readonly excludedSearchValues = new Set<string>();
   private list?: HTMLUListElement = undefined;
-  private lastValue = '';
+  private lastValue = "";
   private readonly minLength: number;
   private readonly noResultPlaceholder: string;
   private readonly preventSubmit: boolean;
@@ -43,32 +43,35 @@ class UiSearchInput {
     this.element = element;
     if (!(this.element instanceof HTMLInputElement)) {
       throw new TypeError("Expected a valid DOM element.");
-    } else if (this.element.nodeName !== 'INPUT' || (this.element.type !== 'search' && this.element.type !== 'text')) {
+    } else if (this.element.nodeName !== "INPUT" || (this.element.type !== "search" && this.element.type !== "text")) {
       throw new Error('Expected an input[type="text"].');
     }
 
-    options = Core.extend({
-      ajax: {
-        actionName: 'getSearchResultList',
-        className: '',
-        interfaceName: 'wcf\\data\\ISearchAction',
+    options = Core.extend(
+      {
+        ajax: {
+          actionName: "getSearchResultList",
+          className: "",
+          interfaceName: "wcf\\data\\ISearchAction",
+        },
+        autoFocus: true,
+        callbackDropdownInit: undefined,
+        callbackSelect: undefined,
+        delay: 500,
+        excludedSearchValues: [],
+        minLength: 3,
+        noResultPlaceholder: "",
+        preventSubmit: false,
       },
-      autoFocus: true,
-      callbackDropdownInit: undefined,
-      callbackSelect: undefined,
-      delay: 500,
-      excludedSearchValues: [],
-      minLength: 3,
-      noResultPlaceholder: '',
-      preventSubmit: false,
-    }, options) as SearchInputOptions;
+      options
+    ) as SearchInputOptions;
 
     this.ajaxPayload = options.ajax as DatabaseObjectActionPayload;
     this.autoFocus = options.autoFocus!;
     this.callbackDropdownInit = options.callbackDropdownInit;
     this.callbackSelect = options.callbackSelect;
     this.delay = options.delay!;
-    options.excludedSearchValues!.forEach(value => {
+    options.excludedSearchValues!.forEach((value) => {
       this.addExcludedSearchValues(value);
     });
     this.minLength = options.minLength!;
@@ -76,10 +79,10 @@ class UiSearchInput {
     this.preventSubmit = options.preventSubmit!;
 
     // Disable auto-complete because it collides with the suggestion dropdown.
-    this.element.autocomplete = 'off';
+    this.element.autocomplete = "off";
 
-    this.element.addEventListener('keydown', (ev) => this.keydown(ev));
-    this.element.addEventListener('keyup', (ev) => this.keyup(ev));
+    this.element.addEventListener("keydown", (ev) => this.keydown(ev));
+    this.element.addEventListener("keyup", (ev) => this.keyup(ev));
   }
 
   /**
@@ -101,12 +104,12 @@ class UiSearchInput {
    */
   private keydown(event: KeyboardEvent): void {
     if ((this.activeItem !== null && UiDropdownSimple.isOpen(this.dropdownContainerId)) || this.preventSubmit) {
-      if (event.key === 'Enter') {
+      if (event.key === "Enter") {
         event.preventDefault();
       }
     }
 
-    if (['ArrowUp', 'ArrowDown', 'Escape'].includes(event.key)) {
+    if (["ArrowUp", "ArrowDown", "Escape"].includes(event.key)) {
       event.preventDefault();
     }
   }
@@ -118,15 +121,15 @@ class UiSearchInput {
     // handle dropdown keyboard navigation
     if (this.activeItem !== null || !this.autoFocus) {
       if (UiDropdownSimple.isOpen(this.dropdownContainerId)) {
-        if (event.key === 'ArrowUp') {
+        if (event.key === "ArrowUp") {
           event.preventDefault();
 
           return this.keyboardPreviousItem();
-        } else if (event.key === 'ArrowDown') {
+        } else if (event.key === "ArrowDown") {
           event.preventDefault();
 
           return this.keyboardNextItem();
-        } else if (event.key === 'Enter') {
+        } else if (event.key === "Enter") {
           event.preventDefault();
 
           return this.keyboardSelectItem();
@@ -137,7 +140,7 @@ class UiSearchInput {
     }
 
     // close list on escape
-    if (event.key === 'Escape') {
+    if (event.key === "Escape") {
       UiDropdownSimple.close(this.dropdownContainerId);
 
       return;
@@ -207,15 +210,15 @@ class UiSearchInput {
     let nextItem: HTMLLIElement | undefined = undefined;
 
     if (this.activeItem) {
-      this.activeItem.classList.remove('active');
+      this.activeItem.classList.remove("active");
 
       if (this.activeItem.nextElementSibling) {
         nextItem = this.activeItem.nextElementSibling as HTMLLIElement;
       }
     }
 
-    this.activeItem = nextItem || this.list!.children[0] as HTMLLIElement;
-    this.activeItem.classList.add('active');
+    this.activeItem = nextItem || (this.list!.children[0] as HTMLLIElement);
+    this.activeItem.classList.add("active");
   }
 
   /**
@@ -225,15 +228,15 @@ class UiSearchInput {
     let nextItem: HTMLLIElement | undefined = undefined;
 
     if (this.activeItem) {
-      this.activeItem.classList.remove('active');
+      this.activeItem.classList.remove("active");
 
       if (this.activeItem.previousElementSibling) {
         nextItem = this.activeItem.previousElementSibling as HTMLLIElement;
       }
     }
 
-    this.activeItem = nextItem || this.list!.children[this.list!.childElementCount - 1] as HTMLLIElement;
-    this.activeItem.classList.add('active');
+    this.activeItem = nextItem || (this.list!.children[this.list!.childElementCount - 1] as HTMLLIElement);
+    this.activeItem.classList.add("active");
   }
 
   /**
@@ -255,9 +258,9 @@ class UiSearchInput {
    */
   private selectItem(item: HTMLLIElement): void {
     if (this.callbackSelect && !this.callbackSelect(item)) {
-      this.element.value = '';
+      this.element.value = "";
     } else {
-      this.element.value = item.dataset.label || '';
+      this.element.value = item.dataset.label || "";
     }
 
     this.activeItem = undefined;
@@ -270,27 +273,27 @@ class UiSearchInput {
   _ajaxSuccess(data: DatabaseObjectActionResponse): void {
     let createdList = false;
     if (!this.list) {
-      this.list = document.createElement('ul');
-      this.list.className = 'dropdownMenu';
+      this.list = document.createElement("ul");
+      this.list.className = "dropdownMenu";
 
       createdList = true;
 
-      if (typeof this.callbackDropdownInit === 'function') {
+      if (typeof this.callbackDropdownInit === "function") {
         this.callbackDropdownInit(this.list);
       }
     } else {
       // reset current list
-      this.list.innerHTML = '';
+      this.list.innerHTML = "";
     }
 
-    if (typeof data.returnValues === 'object') {
+    if (typeof data.returnValues === "object") {
       const callbackClick = this.clickSelectItem.bind(this);
       let listItem;
 
-      Object.keys(data.returnValues).forEach(key => {
+      Object.keys(data.returnValues).forEach((key) => {
         listItem = this.createListItem(data.returnValues[key]);
 
-        listItem.addEventListener('click', callbackClick);
+        listItem.addEventListener("click", callbackClick);
         this.list!.appendChild(listItem);
       });
     }
@@ -312,10 +315,10 @@ class UiSearchInput {
         UiDropdownSimple.open(this.dropdownContainerId, true);
 
         // mark first item as active
-        const firstChild = this.list.childElementCount ? this.list.children[0] as HTMLLIElement : undefined;
-        if (this.autoFocus && firstChild && ~~(firstChild.dataset.objectId || '')) {
+        const firstChild = this.list.childElementCount ? (this.list.children[0] as HTMLLIElement) : undefined;
+        if (this.autoFocus && firstChild && ~~(firstChild.dataset.objectId || "")) {
           this.activeItem = firstChild;
-          this.activeItem.classList.add('active');
+          this.activeItem.classList.add("active");
         }
       }
     }
@@ -329,10 +332,10 @@ class UiSearchInput {
       return false;
     }
 
-    const listItem = document.createElement('li');
-    listItem.className = 'dropdownText';
+    const listItem = document.createElement("li");
+    listItem.className = "dropdownText";
 
-    const span = document.createElement('span');
+    const span = document.createElement("span");
     span.textContent = this.noResultPlaceholder;
     listItem.appendChild(span);
 
@@ -345,11 +348,11 @@ class UiSearchInput {
    * Creates an list item from response data.
    */
   protected createListItem(item: ListItemData): HTMLLIElement {
-    const listItem = document.createElement('li');
+    const listItem = document.createElement("li");
     listItem.dataset.objectId = item.objectID.toString();
     listItem.dataset.label = item.label;
 
-    const span = document.createElement('span');
+    const span = document.createElement("span");
     span.textContent = item.label;
     listItem.appendChild(span);
 
@@ -363,7 +366,7 @@ class UiSearchInput {
   }
 }
 
-export = UiSearchInput
+export = UiSearchInput;
 
 interface ListItemData {
   label: string;

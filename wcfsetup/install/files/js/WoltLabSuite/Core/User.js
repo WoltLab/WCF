@@ -30,7 +30,7 @@ define(["require", "exports"], function (require, exports) {
          */
         init(userId, username, link) {
             if (user) {
-                throw new Error('User has already been initialized.');
+                throw new Error("User has already been initialized.");
             }
             user = new User(userId, username, link);
         },

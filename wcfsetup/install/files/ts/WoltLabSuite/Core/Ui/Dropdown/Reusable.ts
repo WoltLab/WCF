@@ -8,8 +8,8 @@
  * @module  WoltLabSuite/Core/Ui/Dropdown/Reusable
  */
 
-import UiDropdownSimple from './Simple';
-import { NotificationCallback } from './Data';
+import UiDropdownSimple from "./Simple";
+import { NotificationCallback } from "./Data";
 
 const _dropdowns = new Map<string, string>();
 let _ghostElementId = 0;
@@ -33,8 +33,8 @@ export function init(identifier: string, menu: HTMLElement): void {
     return;
   }
 
-  const ghostElement = document.createElement('div');
-  ghostElement.id = 'reusableDropdownGhost' + _ghostElementId++;
+  const ghostElement = document.createElement("div");
+  ghostElement.id = "reusableDropdownGhost" + _ghostElementId++;
 
   UiDropdownSimple.initFragment(ghostElement, menu);
 

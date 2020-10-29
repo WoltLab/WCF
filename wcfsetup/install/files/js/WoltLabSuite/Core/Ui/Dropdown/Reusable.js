@@ -30,8 +30,8 @@ define(["require", "exports", "tslib", "./Simple"], function (require, exports, 
         if (_dropdowns.has(identifier)) {
             return;
         }
-        const ghostElement = document.createElement('div');
-        ghostElement.id = 'reusableDropdownGhost' + _ghostElementId++;
+        const ghostElement = document.createElement("div");
+        ghostElement.id = "reusableDropdownGhost" + _ghostElementId++;
         Simple_1.default.initFragment(ghostElement, menu);
         _dropdowns.set(identifier, ghostElement.id);
     }

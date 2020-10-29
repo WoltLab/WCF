@@ -1,8 +1,8 @@
-import { DatabaseObjectActionPayload } from '../../Ajax/Data';
+import { DatabaseObjectActionPayload } from "../../Ajax/Data";
 
-export type CallbackDropdownInit = (list: HTMLUListElement) => void
+export type CallbackDropdownInit = (list: HTMLUListElement) => void;
 
-export type CallbackSelect = (item: HTMLElement) => boolean
+export type CallbackSelect = (item: HTMLElement) => boolean;
 
 export interface SearchInputOptions {
   ajax?: Partial<DatabaseObjectActionPayload>;

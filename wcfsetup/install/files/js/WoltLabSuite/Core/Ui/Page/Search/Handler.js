@@ -32,7 +32,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../StringUtil
             this.callbackSuccess = callback;
             Dialog_1.default.open(this);
             Dialog_1.default.setTitle(this, title);
-            this.searchInputLabel.textContent = Language.get(labelLanguageItem || 'wcf.page.pageObjectID.search.terms');
+            this.searchInputLabel.textContent = Language.get(labelLanguageItem || "wcf.page.pageObjectID.search.terms");
             this._getSearchInputHandler().setPageId(pageId);
         }
         /**
@@ -41,17 +41,17 @@ define(["require", "exports", "tslib", "../../../Language", "../../../StringUtil
         buildList(data) {
             this.resetList();
             if (!Array.isArray(data.returnValues) || data.returnValues.length === 0) {
-                Util_1.default.innerError(this.searchInput, Language.get('wcf.page.pageObjectID.search.noResults'));
+                Util_1.default.innerError(this.searchInput, Language.get("wcf.page.pageObjectID.search.noResults"));
                 return;
             }
-            data.returnValues.forEach(item => {
+            data.returnValues.forEach((item) => {
                 let image = item.image;
                 if (/^fa-/.test(image)) {
-                    image = `<span class="icon icon48 ${image} pointer jsTooltip" title="${Language.get('wcf.global.select')}"></span>`;
+                    image = `<span class="icon icon48 ${image} pointer jsTooltip" title="${Language.get("wcf.global.select")}"></span>`;
                 }
-                const listItem = document.createElement('li');
+                const listItem = document.createElement("li");
                 listItem.dataset.objectId = item.objectID.toString();
-                const description = item.description ? `<p>${item.description}</p>` : '';
+                const description = item.description ? `<p>${item.description}</p>` : "";
                 listItem.innerHTML = `<div class="box48">
         ${image}
         <div>
@@ -63,7 +63,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../StringUtil
           </div>
         </div>
       </div>`;
-                listItem.addEventListener('click', this.click.bind(this));
+                listItem.addEventListener("click", this.click.bind(this));
                 this.resultList.appendChild(listItem);
             });
             Util_1.default.show(this.resultListContainer);
@@ -73,7 +73,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../StringUtil
          */
         resetList() {
             Util_1.default.innerError(this.searchInput, false);
-            this.resultList.innerHTML = '';
+            this.resultList.innerHTML = "";
             Util_1.default.hide(this.resultListContainer);
         }
         /**
@@ -81,7 +81,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../StringUtil
          */
         _getSearchInputHandler() {
             if (!this.searchInputHandler) {
-                const input = document.getElementById('wcfUiPageSearchInput');
+                const input = document.getElementById("wcfUiPageSearchInput");
                 this.searchInputHandler = new Input_1.default(input, {
                     callbackSuccess: this.buildList.bind(this),
                 });
@@ -93,7 +93,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../StringUtil
          */
         click(event) {
             const clickTarget = event.target;
-            if (clickTarget.nodeName === 'A') {
+            if (clickTarget.nodeName === "A") {
                 return;
             }
             event.stopPropagation();
@@ -103,28 +103,28 @@ define(["require", "exports", "tslib", "../../../Language", "../../../StringUtil
         }
         _dialogSetup() {
             return {
-                id: 'wcfUiPageSearchHandler',
+                id: "wcfUiPageSearchHandler",
                 options: {
                     onShow: (content) => {
                         if (!this.searchInput) {
-                            this.searchInput = document.getElementById('wcfUiPageSearchInput');
+                            this.searchInput = document.getElementById("wcfUiPageSearchInput");
                             this.searchInputLabel = content.querySelector('label[for="wcfUiPageSearchInput"]');
-                            this.resultList = document.getElementById('wcfUiPageSearchResultList');
-                            this.resultListContainer = document.getElementById('wcfUiPageSearchResultListContainer');
+                            this.resultList = document.getElementById("wcfUiPageSearchResultList");
+                            this.resultListContainer = document.getElementById("wcfUiPageSearchResultListContainer");
                         }
                         // clear search input
-                        this.searchInput.value = '';
+                        this.searchInput.value = "";
                         // reset results
                         Util_1.default.hide(this.resultListContainer);
-                        this.resultList.innerHTML = '';
+                        this.resultList.innerHTML = "";
                         this.searchInput.focus();
                     },
-                    title: '',
+                    title: "",
                 },
                 source: `<div class="section">
         <dl>
           <dt>
-            <label for="wcfUiPageSearchInput">${Language.get('wcf.page.pageObjectID.search.terms')}</label>
+            <label for="wcfUiPageSearchInput">${Language.get("wcf.page.pageObjectID.search.terms")}</label>
           </dt>
           <dd>
             <input type="text" id="wcfUiPageSearchInput" class="long">
@@ -133,7 +133,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../StringUtil
       </div>
       <section id="wcfUiPageSearchResultListContainer" class="section sectionContainerList">
         <header class="sectionHeader">
-          <h2 class="sectionTitle">${Language.get('wcf.page.pageObjectID.search.results')}</h2>
+          <h2 class="sectionTitle">${Language.get("wcf.page.pageObjectID.search.results")}</h2>
         </header>
         <ul id="wcfUiPageSearchResultList" class="containerList wcfUiPageSearchResultList"></ul>
       </section>`,

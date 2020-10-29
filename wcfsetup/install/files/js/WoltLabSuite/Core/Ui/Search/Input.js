@@ -23,24 +23,24 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
             this.activeItem = undefined;
             this.callbackDropdownInit = undefined;
             this.callbackSelect = undefined;
-            this.dropdownContainerId = '';
+            this.dropdownContainerId = "";
             this.excludedSearchValues = new Set();
             this.list = undefined;
-            this.lastValue = '';
+            this.lastValue = "";
             this.request = undefined;
             this.timerDelay = undefined;
             this.element = element;
             if (!(this.element instanceof HTMLInputElement)) {
                 throw new TypeError("Expected a valid DOM element.");
             }
-            else if (this.element.nodeName !== 'INPUT' || (this.element.type !== 'search' && this.element.type !== 'text')) {
+            else if (this.element.nodeName !== "INPUT" || (this.element.type !== "search" && this.element.type !== "text")) {
                 throw new Error('Expected an input[type="text"].');
             }
             options = Core.extend({
                 ajax: {
-                    actionName: 'getSearchResultList',
-                    className: '',
-                    interfaceName: 'wcf\\data\\ISearchAction',
+                    actionName: "getSearchResultList",
+                    className: "",
+                    interfaceName: "wcf\\data\\ISearchAction",
                 },
                 autoFocus: true,
                 callbackDropdownInit: undefined,
@@ -48,7 +48,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
                 delay: 500,
                 excludedSearchValues: [],
                 minLength: 3,
-                noResultPlaceholder: '',
+                noResultPlaceholder: "",
                 preventSubmit: false,
             }, options);
             this.ajaxPayload = options.ajax;
@@ -56,16 +56,16 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
             this.callbackDropdownInit = options.callbackDropdownInit;
             this.callbackSelect = options.callbackSelect;
             this.delay = options.delay;
-            options.excludedSearchValues.forEach(value => {
+            options.excludedSearchValues.forEach((value) => {
                 this.addExcludedSearchValues(value);
             });
             this.minLength = options.minLength;
             this.noResultPlaceholder = options.noResultPlaceholder;
             this.preventSubmit = options.preventSubmit;
             // Disable auto-complete because it collides with the suggestion dropdown.
-            this.element.autocomplete = 'off';
-            this.element.addEventListener('keydown', (ev) => this.keydown(ev));
-            this.element.addEventListener('keyup', (ev) => this.keyup(ev));
+            this.element.autocomplete = "off";
+            this.element.addEventListener("keydown", (ev) => this.keydown(ev));
+            this.element.addEventListener("keyup", (ev) => this.keyup(ev));
         }
         /**
          * Adds an excluded search value.
@@ -84,11 +84,11 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
          */
         keydown(event) {
             if ((this.activeItem !== null && Simple_1.default.isOpen(this.dropdownContainerId)) || this.preventSubmit) {
-                if (event.key === 'Enter') {
+                if (event.key === "Enter") {
                     event.preventDefault();
                 }
             }
-            if (['ArrowUp', 'ArrowDown', 'Escape'].includes(event.key)) {
+            if (["ArrowUp", "ArrowDown", "Escape"].includes(event.key)) {
                 event.preventDefault();
             }
         }
@@ -99,15 +99,15 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
             // handle dropdown keyboard navigation
             if (this.activeItem !== null || !this.autoFocus) {
                 if (Simple_1.default.isOpen(this.dropdownContainerId)) {
-                    if (event.key === 'ArrowUp') {
+                    if (event.key === "ArrowUp") {
                         event.preventDefault();
                         return this.keyboardPreviousItem();
                     }
-                    else if (event.key === 'ArrowDown') {
+                    else if (event.key === "ArrowDown") {
                         event.preventDefault();
                         return this.keyboardNextItem();
                     }
-                    else if (event.key === 'Enter') {
+                    else if (event.key === "Enter") {
                         event.preventDefault();
                         return this.keyboardSelectItem();
                     }
@@ -117,7 +117,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
                 }
             }
             // close list on escape
-            if (event.key === 'Escape') {
+            if (event.key === "Escape") {
                 Simple_1.default.close(this.dropdownContainerId);
                 return;
             }
@@ -176,13 +176,13 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
         keyboardNextItem() {
             let nextItem = undefined;
             if (this.activeItem) {
-                this.activeItem.classList.remove('active');
+                this.activeItem.classList.remove("active");
                 if (this.activeItem.nextElementSibling) {
                     nextItem = this.activeItem.nextElementSibling;
                 }
             }
             this.activeItem = nextItem || this.list.children[0];
-            this.activeItem.classList.add('active');
+            this.activeItem.classList.add("active");
         }
         /**
          * Selects the previous dropdown item.
@@ -190,13 +190,13 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
         keyboardPreviousItem() {
             let nextItem = undefined;
             if (this.activeItem) {
-                this.activeItem.classList.remove('active');
+                this.activeItem.classList.remove("active");
                 if (this.activeItem.previousElementSibling) {
                     nextItem = this.activeItem.previousElementSibling;
                 }
             }
             this.activeItem = nextItem || this.list.children[this.list.childElementCount - 1];
-            this.activeItem.classList.add('active');
+            this.activeItem.classList.add("active");
         }
         /**
          * Selects the active item from the dropdown.
@@ -215,10 +215,10 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
          */
         selectItem(item) {
             if (this.callbackSelect && !this.callbackSelect(item)) {
-                this.element.value = '';
+                this.element.value = "";
             }
             else {
-                this.element.value = item.dataset.label || '';
+                this.element.value = item.dataset.label || "";
             }
             this.activeItem = undefined;
             Simple_1.default.close(this.dropdownContainerId);
@@ -229,23 +229,23 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
         _ajaxSuccess(data) {
             let createdList = false;
             if (!this.list) {
-                this.list = document.createElement('ul');
-                this.list.className = 'dropdownMenu';
+                this.list = document.createElement("ul");
+                this.list.className = "dropdownMenu";
                 createdList = true;
-                if (typeof this.callbackDropdownInit === 'function') {
+                if (typeof this.callbackDropdownInit === "function") {
                     this.callbackDropdownInit(this.list);
                 }
             }
             else {
                 // reset current list
-                this.list.innerHTML = '';
+                this.list.innerHTML = "";
             }
-            if (typeof data.returnValues === 'object') {
+            if (typeof data.returnValues === "object") {
                 const callbackClick = this.clickSelectItem.bind(this);
                 let listItem;
-                Object.keys(data.returnValues).forEach(key => {
+                Object.keys(data.returnValues).forEach((key) => {
                     listItem = this.createListItem(data.returnValues[key]);
-                    listItem.addEventListener('click', callbackClick);
+                    listItem.addEventListener("click", callbackClick);
                     this.list.appendChild(listItem);
                 });
             }
@@ -264,9 +264,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
                     Simple_1.default.open(this.dropdownContainerId, true);
                     // mark first item as active
                     const firstChild = this.list.childElementCount ? this.list.children[0] : undefined;
-                    if (this.autoFocus && firstChild && ~~(firstChild.dataset.objectId || '')) {
+                    if (this.autoFocus && firstChild && ~~(firstChild.dataset.objectId || "")) {
                         this.activeItem = firstChild;
-                        this.activeItem.classList.add('active');
+                        this.activeItem.classList.add("active");
                     }
                 }
             }
@@ -278,9 +278,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
             if (!this.noResultPlaceholder) {
                 return false;
             }
-            const listItem = document.createElement('li');
-            listItem.className = 'dropdownText';
-            const span = document.createElement('span');
+            const listItem = document.createElement("li");
+            listItem.className = "dropdownText";
+            const span = document.createElement("span");
             span.textContent = this.noResultPlaceholder;
             listItem.appendChild(span);
             this.list.appendChild(listItem);
@@ -290,10 +290,10 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
          * Creates an list item from response data.
          */
         createListItem(item) {
-            const listItem = document.createElement('li');
+            const listItem = document.createElement("li");
             listItem.dataset.objectId = item.objectID.toString();
             listItem.dataset.label = item.label;
-            const span = document.createElement('span');
+            const span = document.createElement("span");
             span.textContent = item.label;
             listItem.appendChild(span);
             return listItem;

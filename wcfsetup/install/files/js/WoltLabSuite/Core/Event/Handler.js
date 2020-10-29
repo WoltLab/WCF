@@ -18,7 +18,7 @@ define(["require", "exports", "tslib", "../Core", "../Devtools"], function (requ
      * Registers an event listener.
      */
     function add(identifier, action, callback) {
-        if (typeof callback !== 'function') {
+        if (typeof callback !== "function") {
             throw new TypeError(`Expected a valid callback for '${action}'@'${identifier}'.`);
         }
         let actions = _listeners.get(identifier);
@@ -43,7 +43,8 @@ define(["require", "exports", "tslib", "../Core", "../Devtools"], function (requ
         var _a, _b;
         Devtools_1.default._internal_.eventLog(identifier, action);
         data = data || {};
-        (_b = (_a = _listeners.get(identifier)) === null || _a === void 0 ? void 0 : _a.get(action)) === null || _b === void 0 ? void 0 : _b.forEach(callback => callback(data));
+        (_b = (_a = _listeners
+            .get(identifier)) === null || _a === void 0 ? void 0 : _a.get(action)) === null || _b === void 0 ? void 0 : _b.forEach((callback) => callback(data));
     }
     exports.fire = fire;
     /**
@@ -59,7 +60,7 @@ define(["require", "exports", "tslib", "../Core", "../Devtools"], function (requ
      * remove all listeners for this identifier.
      */
     function removeAll(identifier, action) {
-        if (typeof action !== 'string')
+        if (typeof action !== "string")
             action = undefined;
         const actions = _listeners.get(identifier);
         if (actions === undefined) {
@@ -82,7 +83,7 @@ define(["require", "exports", "tslib", "../Core", "../Devtools"], function (requ
         if (actions === undefined) {
             return;
         }
-        suffix = '_' + suffix;
+        suffix = "_" + suffix;
         const length = suffix.length * -1;
         actions.forEach((callbacks, action) => {
             if (action.substr(length) === suffix) {

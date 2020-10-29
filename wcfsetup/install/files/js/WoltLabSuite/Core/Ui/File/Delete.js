@@ -42,7 +42,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
          */
         createButtons() {
             let triggerChange = false;
-            this.target.querySelectorAll('li.uploadedFile').forEach((element) => {
+            this.target.querySelectorAll("li.uploadedFile").forEach((element) => {
                 const uniqueFileId = element.dataset.uniqueFileId;
                 if (this.containers.has(uniqueFileId)) {
                     return;
@@ -63,17 +63,17 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
          * Init the delete button for a specific element.
          */
         initDeleteButton(element, elementData) {
-            const buttonGroup = element.querySelector('.buttonGroup');
+            const buttonGroup = element.querySelector(".buttonGroup");
             if (buttonGroup === null) {
                 throw new Error(`Button group in '${this.target.id}' is unknown.`);
             }
-            const li = document.createElement('li');
-            const span = document.createElement('span');
+            const li = document.createElement("li");
+            const span = document.createElement("span");
             span.className = "button jsDeleteButton small";
-            span.textContent = Language.get('wcf.global.button.delete');
+            span.textContent = Language.get("wcf.global.button.delete");
             li.appendChild(span);
             buttonGroup.appendChild(li);
-            li.addEventListener('click', this.deleteElement.bind(this, elementData.uniqueFileId));
+            li.addEventListener("click", this.deleteElement.bind(this, elementData.uniqueFileId));
         }
         /**
          * Delete a specific file with the given uniqueFileId.
@@ -92,7 +92,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                 this.createButtons();
                 return;
             }
-            const img = this.target.querySelector('img');
+            const img = this.target.querySelector("img");
             if (img !== null) {
                 const uniqueFileId = img.dataset.uniqueFileId;
                 if (!this.containers.has(uniqueFileId)) {
@@ -101,13 +101,13 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                         element: img,
                     };
                     this.containers.set(uniqueFileId, elementData);
-                    this.deleteButton = document.createElement('p');
-                    this.deleteButton.className = 'button deleteButton';
-                    const span = document.createElement('span');
-                    span.textContent = Language.get('wcf.global.button.delete');
+                    this.deleteButton = document.createElement("p");
+                    this.deleteButton.className = "button deleteButton";
+                    const span = document.createElement("span");
+                    span.textContent = Language.get("wcf.global.button.delete");
                     this.deleteButton.appendChild(span);
                     this.buttonContainer.appendChild(this.deleteButton);
-                    this.deleteButton.addEventListener('click', this.deleteElement.bind(this, elementData.uniqueFileId));
+                    this.deleteButton.addEventListener("click", this.deleteElement.bind(this, elementData.uniqueFileId));
                 }
             }
         }
@@ -119,11 +119,11 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                 this.deleteButton = undefined;
             }
             this.uploadHandler.checkMaxFiles();
-            Core.triggerEvent(this.target, 'change');
+            Core.triggerEvent(this.target, "change");
         }
         _ajaxSetup() {
             return {
-                url: 'index.php?ajax-file-delete/&t=' + window.SECURITY_TOKEN,
+                url: "index.php?ajax-file-delete/&t=" + window.SECURITY_TOKEN,
             };
         }
     }

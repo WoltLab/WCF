@@ -33,7 +33,7 @@ define(["require", "exports", "tslib", "../../CallbackList"], function (require,
                 return;
             try {
                 _hot = true;
-                _callbackList.forEach(null, callback => callback());
+                _callbackList.forEach(null, (callback) => callback());
             }
             finally {
                 _hot = false;

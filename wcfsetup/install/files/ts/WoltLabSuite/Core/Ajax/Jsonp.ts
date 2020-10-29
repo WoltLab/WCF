@@ -8,31 +8,39 @@
  * @module  WoltLabSuite/Core/Ajax/Jsonp
  */
 
-import * as Core from '../Core';
+import * as Core from "../Core";
 
 /**
  * Dispatch a JSONP request, the `url` must not contain a callback parameter.
  */
-export function send(url: string, success: (...args: unknown[]) => void, failure: () => void, options?: JsonpOptions): void {
-  url = (typeof (url as any) === 'string') ? url.trim() : '';
+export function send(
+  url: string,
+  success: (...args: unknown[]) => void,
+  failure: () => void,
+  options?: JsonpOptions
+): void {
+  url = typeof (url as any) === "string" ? url.trim() : "";
   if (url.length === 0) {
-    throw new Error('Expected a non-empty string for parameter \'url\'.');
+    throw new Error("Expected a non-empty string for parameter 'url'.");
   }
 
-  if (typeof success !== 'function') {
-    throw new TypeError('Expected a valid callback function for parameter \'success\'.');
+  if (typeof success !== "function") {
+    throw new TypeError("Expected a valid callback function for parameter 'success'.");
   }
 
-  options = Core.extend({
-    parameterName: 'callback',
-    timeout: 10,
-  }, options || {}) as JsonpOptions;
+  options = Core.extend(
+    {
+      parameterName: "callback",
+      timeout: 10,
+    },
+    options || {}
+  ) as JsonpOptions;
 
-  const callbackName = 'wcf_jsonp_' + Core.getUuid().replace(/-/g, '').substr(0, 8);
+  const callbackName = "wcf_jsonp_" + Core.getUuid().replace(/-/g, "").substr(0, 8);
   let script;
 
   const timeout = window.setTimeout(() => {
-    if (typeof failure === 'function') {
+    if (typeof failure === "function") {
       failure();
     }
 
@@ -49,10 +57,10 @@ export function send(url: string, success: (...args: unknown[]) => void, failure
     script.remove();
   };
 
-  url += (url.indexOf('?') === -1) ? '?' : '&';
-  url += options.parameterName + '=' + callbackName;
+  url += url.indexOf("?") === -1 ? "?" : "&";
+  url += options.parameterName + "=" + callbackName;
 
-  script = document.createElement('script');
+  script = document.createElement("script");
   script.async = true;
   script.src = url;
 

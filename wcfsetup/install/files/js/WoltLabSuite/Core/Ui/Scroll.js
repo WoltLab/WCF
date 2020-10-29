@@ -17,7 +17,7 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
             if (_callback !== null) {
                 _callback();
             }
-            window.removeEventListener('scroll', onScroll);
+            window.removeEventListener("scroll", onScroll);
             _callback = null;
             _timeoutScroll = null;
         }, 100);
@@ -32,7 +32,7 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
         if (!(element instanceof HTMLElement)) {
             throw new TypeError("Expected a valid DOM element.");
         }
-        else if (callback !== undefined && typeof callback !== 'function') {
+        else if (callback !== undefined && typeof callback !== "function") {
             throw new TypeError("Expected a valid callback function.");
         }
         else if (!document.body.contains(element)) {
@@ -43,15 +43,15 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
         }
         if (callback) {
             _callback = callback;
-            window.addEventListener('scroll', onScroll);
+            window.addEventListener("scroll", onScroll);
         }
         let y = Util_1.default.offset(element).top;
         if (_offset === null) {
             _offset = 50;
-            const pageHeader = document.getElementById('pageHeaderPanel');
+            const pageHeader = document.getElementById("pageHeaderPanel");
             if (pageHeader !== null) {
                 const position = window.getComputedStyle(pageHeader).position;
-                if (position === 'fixed' || position === 'static') {
+                if (position === "fixed" || position === "static") {
                     _offset = pageHeader.offsetHeight;
                 }
                 else {
@@ -72,7 +72,7 @@ define(["require", "exports", "tslib", "../Dom/Util"], function (require, export
         window.scrollTo({
             left: 0,
             top: y,
-            behavior: 'smooth',
+            behavior: "smooth",
         });
         window.setTimeout(() => {
             // no scrolling took place

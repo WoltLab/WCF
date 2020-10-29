@@ -21,7 +21,7 @@
  * @module  WoltLabSuite/Core/Ui/Toggle/Input
  */
 
-import DomUtil from '../../Dom/Util';
+import DomUtil from "../../Dom/Util";
 
 class UiToggleInput {
   private readonly element: HTMLInputElement;
@@ -37,17 +37,17 @@ class UiToggleInput {
       throw new Error("Unable to find element by selector '" + elementSelector + "'.");
     }
 
-    const type = (element.nodeName === 'INPUT') ? element.type : '';
-    if (type !== 'checkbox' && type !== 'radio') {
+    const type = element.nodeName === "INPUT" ? element.type : "";
+    if (type !== "checkbox" && type !== "radio") {
       throw new Error("Illegal element, expected input[type='checkbox'] or input[type='radio'].");
     }
 
     this.element = element;
 
-    this.hide = this.getElements('hide', Array.isArray(options.hide) ? options.hide : []);
-    this.hide = this.getElements('show', Array.isArray(options.show) ? options.show : []);
+    this.hide = this.getElements("hide", Array.isArray(options.hide) ? options.hide : []);
+    this.hide = this.getElements("show", Array.isArray(options.show) ? options.show : []);
 
-    this.element.addEventListener('change', (ev) => this.change(ev));
+    this.element.addEventListener("change", (ev) => this.change(ev));
 
     this.updateVisibility(this.show, this.element.checked);
     this.updateVisibility(this.hide, !this.element.checked);
@@ -55,9 +55,9 @@ class UiToggleInput {
 
   private getElements(type: string, items: ElementOrSelector[]): HTMLElement[] {
     const elements: HTMLElement[] = [];
-    items.forEach(item => {
+    items.forEach((item) => {
       let element: HTMLElement | null = null;
-      if (typeof item === 'string') {
+      if (typeof item === "string") {
         element = document.querySelector(item);
         if (element === null) {
           throw new Error(`Unable to find an element with the selector '${item}'.`);
@@ -89,8 +89,8 @@ class UiToggleInput {
    * Loops through the target elements and shows / hides them.
    */
   private updateVisibility(elements: HTMLElement[], showElement: boolean) {
-    elements.forEach(element => {
-      DomUtil[showElement ? 'show' : 'hide'](element);
+    elements.forEach((element) => {
+      DomUtil[showElement ? "show" : "hide"](element);
     });
   }
 }

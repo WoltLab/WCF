@@ -122,24 +122,24 @@ define(["require", "exports"], function (require, exports) {
     function hexToRgb(hex) {
         if (/^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(hex)) {
             // only convert #abc and #abcdef
-            const parts = hex.split('');
+            const parts = hex.split("");
             // drop the hashtag
-            if (parts[0] === '#') {
+            if (parts[0] === "#") {
                 parts.shift();
             }
             // parse shorthand #xyz
             if (parts.length === 3) {
                 return {
-                    r: parseInt(parts[0] + '' + parts[0], 16),
-                    g: parseInt(parts[1] + '' + parts[1], 16),
-                    b: parseInt(parts[2] + '' + parts[2], 16),
+                    r: parseInt(parts[0] + "" + parts[0], 16),
+                    g: parseInt(parts[1] + "" + parts[1], 16),
+                    b: parseInt(parts[2] + "" + parts[2], 16),
                 };
             }
             else {
                 return {
-                    r: parseInt(parts[0] + '' + parts[1], 16),
-                    g: parseInt(parts[2] + '' + parts[3], 16),
-                    b: parseInt(parts[4] + '' + parts[5], 16),
+                    r: parseInt(parts[0] + "" + parts[1], 16),
+                    g: parseInt(parts[2] + "" + parts[3], 16),
+                    b: parseInt(parts[4] + "" + parts[5], 16),
                 };
             }
         }
@@ -152,7 +152,7 @@ define(["require", "exports"], function (require, exports) {
      * @see  http://www.linuxtopia.org/online_books/javascript_guides/javascript_faq/rgbtohex.htm
      */
     function rgbToHex(r, g, b) {
-        const charList = '0123456789ABCDEF';
+        const charList = "0123456789ABCDEF";
         if (g === undefined) {
             if (r.toString().match(/^rgba?\((\d+), ?(\d+), ?(\d+)(?:, ?[0-9.]+)?\)$/)) {
                 r = +RegExp.$1;
@@ -160,7 +160,13 @@ define(["require", "exports"], function (require, exports) {
                 b = +RegExp.$3;
             }
         }
-        return (charList.charAt((r - r % 16) / 16) + '' + charList.charAt(r % 16)) + '' + (charList.charAt((g - g % 16) / 16) + '' + charList.charAt(g % 16)) + '' + (charList.charAt((b - b % 16) / 16) + '' + charList.charAt(b % 16));
+        return (charList.charAt((r - (r % 16)) / 16) +
+            "" +
+            charList.charAt(r % 16) +
+            "" +
+            (charList.charAt((g - (g % 16)) / 16) + "" + charList.charAt(g % 16)) +
+            "" +
+            (charList.charAt((b - (b % 16)) / 16) + "" + charList.charAt(b % 16)));
     }
     exports.rgbToHex = rgbToHex;
     // WCF.ColorPicker compatibility (color format conversion)

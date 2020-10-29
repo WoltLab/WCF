@@ -10,10 +10,10 @@
  * @module  WoltLabSuite/Core/Template
  */
 
-import * as parser from './Template.grammar';
-import * as StringUtil from './StringUtil';
-import * as Language from './Language';
-import * as I18nPlural from './I18n/Plural';
+import * as parser from "./Template.grammar";
+import * as StringUtil from "./StringUtil";
+import * as Language from "./Language";
+import * as I18nPlural from "./I18n/Plural";
 
 // @todo: still required?
 // work around bug in AMD module generation of Jison
@@ -28,22 +28,31 @@ parser = new Parser();*/
 class Template {
   constructor(template: string) {
     // Fetch Language/StringUtil, as it cannot be provided because of a circular dependency
-    if (Language === undefined) { //@ts-ignore
-      Language = require('./Language');
+    if (Language === undefined) {
+      //@ts-ignore
+      Language = require("./Language");
     }
-    if (StringUtil === undefined) { //@ts-ignore
-      StringUtil = require('./StringUtil');
+    if (StringUtil === undefined) {
+      //@ts-ignore
+      StringUtil = require("./StringUtil");
     }
 
     try {
       template = parser.parse(template) as string;
-      template = 'var tmp = {};\n'
-        + 'for (var key in v) tmp[key] = v[key];\n'
-        + 'v = tmp;\n'
-        + 'v.__wcf = window.WCF; v.__window = window;\n'
-        + 'return ' + template;
+      template =
+        "var tmp = {};\n" +
+        "for (var key in v) tmp[key] = v[key];\n" +
+        "v = tmp;\n" +
+        "v.__wcf = window.WCF; v.__window = window;\n" +
+        "return " +
+        template;
 
-      this.fetch = new Function('StringUtil', 'Language', 'I18nPlural', 'v', template).bind(undefined, StringUtil, Language, I18nPlural);
+      this.fetch = new Function("StringUtil", "Language", "I18nPlural", "v", template).bind(
+        undefined,
+        StringUtil,
+        Language,
+        I18nPlural
+      );
     } catch (e) {
       console.debug(e.message);
       throw e;
@@ -57,18 +66,18 @@ class Template {
    */
   fetch(v: object): string {
     // this will be replaced in the init function
-    throw new Error('This Template is not initialized.');
+    throw new Error("This Template is not initialized.");
   }
 }
 
-Object.defineProperty(Template, 'callbacks', {
+Object.defineProperty(Template, "callbacks", {
   enumerable: false,
   configurable: false,
   get: function () {
-    throw new Error('WCF.Template.callbacks is no longer supported');
+    throw new Error("WCF.Template.callbacks is no longer supported");
   },
   set: function (value) {
-    throw new Error('WCF.Template.callbacks is no longer supported');
+    throw new Error("WCF.Template.callbacks is no longer supported");
   },
 });
 

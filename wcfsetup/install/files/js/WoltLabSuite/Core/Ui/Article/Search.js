@@ -23,7 +23,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../La
             const inputContainer = this.searchInput.parentElement;
             const value = this.searchInput.value.trim();
             if (value.length < 3) {
-                Util_1.default.innerError(inputContainer, Language.get('wcf.article.search.error.tooShort'));
+                Util_1.default.innerError(inputContainer, Language.get("wcf.article.search.error.tooShort"));
                 return;
             }
             else {
@@ -43,7 +43,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../La
         }
         _ajaxSuccess(data) {
             let html = data.returnValues
-                .map(article => {
+                .map((article) => {
                 return `<li>
           <div class="containerHeadline pointer" data-article-id="${article.articleID}">
             <h3>${StringUtil.escapeHTML(article.name)}</h3>
@@ -51,52 +51,52 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../La
           </div>
         </li>`;
             })
-                .join('');
+                .join("");
             this.resultList.innerHTML = html;
-            Util_1.default[html ? 'show' : 'hide'](this.resultList);
+            Util_1.default[html ? "show" : "hide"](this.resultList);
             if (html) {
-                this.resultList.querySelectorAll('.containerHeadline').forEach(item => {
-                    item.addEventListener('click', this.click.bind(this));
+                this.resultList.querySelectorAll(".containerHeadline").forEach((item) => {
+                    item.addEventListener("click", this.click.bind(this));
                 });
             }
             else {
                 const parent = this.searchInput.parentElement;
-                Util_1.default.innerError(parent, Language.get('wcf.article.search.error.noResults'));
+                Util_1.default.innerError(parent, Language.get("wcf.article.search.error.noResults"));
             }
         }
         _ajaxSetup() {
             return {
                 data: {
-                    actionName: 'search',
-                    className: 'wcf\\data\\article\\ArticleAction',
+                    actionName: "search",
+                    className: "wcf\\data\\article\\ArticleAction",
                 },
             };
         }
         _dialogSetup() {
             return {
-                id: 'wcfUiArticleSearch',
+                id: "wcfUiArticleSearch",
                 options: {
                     onSetup: () => {
-                        this.searchInput = document.getElementById('wcfUiArticleSearchInput');
-                        this.searchInput.addEventListener('keydown', event => {
-                            if (event.key === 'Enter') {
+                        this.searchInput = document.getElementById("wcfUiArticleSearchInput");
+                        this.searchInput.addEventListener("keydown", (event) => {
+                            if (event.key === "Enter") {
                                 this.search(event);
                             }
                         });
                         const button = this.searchInput.nextElementSibling;
-                        button.addEventListener('click', this.search.bind(this));
-                        this.resultContainer = document.getElementById('wcfUiArticleSearchResultContainer');
-                        this.resultList = document.getElementById('wcfUiArticleSearchResultList');
+                        button.addEventListener("click", this.search.bind(this));
+                        this.resultContainer = document.getElementById("wcfUiArticleSearchResultContainer");
+                        this.resultList = document.getElementById("wcfUiArticleSearchResultList");
                     },
                     onShow: () => {
                         this.searchInput.focus();
                     },
-                    title: Language.get('wcf.article.search'),
+                    title: Language.get("wcf.article.search"),
                 },
                 source: `<div class="section">
           <dl>
             <dt>
-              <label for="wcfUiArticleSearchInput">${Language.get('wcf.article.search.name')}</label>
+              <label for="wcfUiArticleSearchInput">${Language.get("wcf.article.search.name")}</label>
             </dt>
             <dd>
               <div class="inputAddon">
@@ -108,7 +108,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../La
         </div>
         <section id="wcfUiArticleSearchResultContainer" class="section" style="display: none;">
           <header class="sectionHeader">
-            <h2 class="sectionTitle">${Language.get('wcf.article.search.results')}</h2>
+            <h2 class="sectionTitle">${Language.get("wcf.article.search.results")}</h2>
           </header>
           <ol id="wcfUiArticleSearchResultList" class="containerList"></ol>
         </section>`,

@@ -7,13 +7,13 @@
  * @module  WoltLabSuite/Core/Ui/User/List
  */
 
-import * as Ajax from '../../Ajax';
-import * as Core from '../../Core';
-import DomUtil from '../../Dom/Util';
-import UiDialog from '../Dialog';
-import UiPagination from '../Pagination';
-import { AjaxCallbackObject, DatabaseObjectActionResponse, RequestOptions } from '../../Ajax/Data';
-import { DialogCallbackObject, DialogData, DialogSettings } from '../Dialog/Data';
+import * as Ajax from "../../Ajax";
+import * as Core from "../../Core";
+import DomUtil from "../../Dom/Util";
+import UiDialog from "../Dialog";
+import UiPagination from "../Pagination";
+import { AjaxCallbackObject, DatabaseObjectActionResponse, RequestOptions } from "../../Ajax/Data";
+import { DialogCallbackObject, DialogData, DialogSettings } from "../Dialog/Data";
 
 /**
  * @constructor
@@ -30,11 +30,14 @@ class UiUserList implements AjaxCallbackObject, DialogCallbackObject {
    * @param  {object}  options    list of initialization options
    */
   constructor(options: AjaxRequestOptions) {
-    this.options = Core.extend({
-      className: '',
-      dialogTitle: '',
-      parameters: {},
-    }, options) as AjaxRequestOptions;
+    this.options = Core.extend(
+      {
+        className: "",
+        dialogTitle: "",
+        parameters: {},
+      },
+      options
+    ) as AjaxRequestOptions;
   }
 
   /**
@@ -49,7 +52,7 @@ class UiUserList implements AjaxCallbackObject, DialogCallbackObject {
    * Shows the current or given page.
    */
   private showPage(pageNo?: number): void {
-    if (typeof pageNo === 'number') {
+    if (typeof pageNo === "number") {
       this.pageNo = +pageNo;
     }
 
@@ -61,7 +64,7 @@ class UiUserList implements AjaxCallbackObject, DialogCallbackObject {
       const dialog = UiDialog.open(this, this.cache.get(this.pageNo)) as DialogData;
 
       if (this.pageCount > 1) {
-        const element = dialog.content.querySelector('.jsPagination') as HTMLElement;
+        const element = dialog.content.querySelector(".jsPagination") as HTMLElement;
         if (element !== null) {
           new UiPagination(element, {
             activePage: this.pageNo,
@@ -98,9 +101,9 @@ class UiUserList implements AjaxCallbackObject, DialogCallbackObject {
   _ajaxSetup(): RequestOptions {
     return {
       data: {
-        actionName: 'getGroupedUserList',
+        actionName: "getGroupedUserList",
         className: this.options.className,
-        interfaceName: 'wcf\\data\\IGroupedUserListAction',
+        interfaceName: "wcf\\data\\IGroupedUserListAction",
       },
     };
   }
@@ -116,7 +119,7 @@ class UiUserList implements AjaxCallbackObject, DialogCallbackObject {
   }
 }
 
-export = UiUserList
+export = UiUserList;
 
 interface AjaxRequestOptions {
   className: string;
@@ -130,5 +133,5 @@ interface AjaxResponse extends DatabaseObjectActionResponse {
   returnValues: {
     pageCount?: number;
     template: string;
-  }
+  };
 }

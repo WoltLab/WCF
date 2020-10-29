@@ -9,7 +9,7 @@
  * @module  WoltLabSuite/Core/Dom/Change/Listener
  */
 
-import CallbackList from '../../CallbackList';
+import CallbackList from "../../CallbackList";
 
 const _callbackList = new CallbackList();
 let _hot = false;
@@ -36,11 +36,11 @@ const DomChangeListener = {
 
     try {
       _hot = true;
-      _callbackList.forEach(null, callback => callback());
+      _callbackList.forEach(null, (callback) => callback());
     } finally {
       _hot = false;
     }
   },
 };
 
-export = DomChangeListener
+export = DomChangeListener;

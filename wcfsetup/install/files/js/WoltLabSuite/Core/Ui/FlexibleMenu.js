@@ -23,15 +23,15 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
      * Register default menus and set up event listeners.
      */
     function setup() {
-        if (document.getElementById('mainMenu') !== null) {
-            register('mainMenu');
+        if (document.getElementById("mainMenu") !== null) {
+            register("mainMenu");
         }
-        const navigationHeader = document.querySelector('.navigationHeader');
+        const navigationHeader = document.querySelector(".navigationHeader");
         if (navigationHeader !== null) {
             register(Util_1.default.identify(navigationHeader));
         }
-        window.addEventListener('resize', rebuildAll);
-        Listener_1.default.add('WoltLabSuite/Core/Ui/FlexibleMenu', registerTabMenus);
+        window.addEventListener("resize", rebuildAll);
+        Listener_1.default.add("WoltLabSuite/Core/Ui/FlexibleMenu", registerTabMenus);
     }
     exports.setup = setup;
     /**
@@ -45,7 +45,7 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
         if (_containers.has(containerId)) {
             return;
         }
-        const list = DomTraverse.childByTag(container, 'UL');
+        const list = DomTraverse.childByTag(container, "UL");
         if (list === null) {
             throw "Expected an <ul> element as child of container '" + containerId + "'.";
         }
@@ -58,10 +58,12 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
      * Registers tab menus.
      */
     function registerTabMenus() {
-        document.querySelectorAll('.tabMenuContainer:not(.jsFlexibleMenuEnabled), .messageTabMenu:not(.jsFlexibleMenuEnabled)').forEach(tabMenu => {
-            const nav = DomTraverse.childByTag(tabMenu, 'NAV');
+        document
+            .querySelectorAll(".tabMenuContainer:not(.jsFlexibleMenuEnabled), .messageTabMenu:not(.jsFlexibleMenuEnabled)")
+            .forEach((tabMenu) => {
+            const nav = DomTraverse.childByTag(tabMenu, "NAV");
             if (nav !== null) {
-                tabMenu.classList.add('jsFlexibleMenuEnabled');
+                tabMenu.classList.add("jsFlexibleMenuEnabled");
                 register(Util_1.default.identify(nav));
             }
         });
@@ -87,17 +89,17 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
         const styles = window.getComputedStyle(container);
         const parent = container.parentNode;
         let availableWidth = parent.clientWidth;
-        availableWidth -= Util_1.default.styleAsInt(styles, 'margin-left');
-        availableWidth -= Util_1.default.styleAsInt(styles, 'margin-right');
+        availableWidth -= Util_1.default.styleAsInt(styles, "margin-left");
+        availableWidth -= Util_1.default.styleAsInt(styles, "margin-right");
         const list = _itemLists.get(containerId);
-        const items = DomTraverse.childrenByTag(list, 'LI');
+        const items = DomTraverse.childrenByTag(list, "LI");
         let dropdown = _dropdowns.get(containerId);
         let dropdownWidth = 0;
         if (dropdown !== undefined) {
             // show all items for calculation
             for (let i = 0, length = items.length; i < length; i++) {
                 const item = items[i];
-                if (item.classList.contains('dropdown')) {
+                if (item.classList.contains("dropdown")) {
                     continue;
                 }
                 Util_1.default.show(item);
@@ -113,7 +115,9 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
             for (let i = items.length - 1; i >= 0; i--) {
                 const item = items[i];
                 // ignore dropdown and active item
-                if (item.classList.contains('dropdown') || item.classList.contains('active') || item.classList.contains('ui-state-active')) {
+                if (item.classList.contains("dropdown") ||
+                    item.classList.contains("active") ||
+                    item.classList.contains("ui-state-active")) {
                     continue;
                 }
                 hiddenItems.push(item);
@@ -126,13 +130,13 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
         if (hiddenItems.length) {
             let dropdownMenu;
             if (dropdown === undefined) {
-                dropdown = document.createElement('li');
-                dropdown.className = 'dropdown jsFlexibleMenuDropdown';
-                const icon = document.createElement('a');
-                icon.className = 'icon icon16 fa-list';
+                dropdown = document.createElement("li");
+                dropdown.className = "dropdown jsFlexibleMenuDropdown";
+                const icon = document.createElement("a");
+                icon.className = "icon icon16 fa-list";
                 dropdown.appendChild(icon);
-                dropdownMenu = document.createElement('ul');
-                dropdownMenu.classList.add('dropdownMenu');
+                dropdownMenu = document.createElement("ul");
+                dropdownMenu.classList.add("dropdownMenu");
                 dropdown.appendChild(dropdownMenu);
                 _dropdowns.set(containerId, dropdown);
                 _dropdownMenus.set(containerId, dropdownMenu);
@@ -146,13 +150,13 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
             }
             // build dropdown menu
             const fragment = document.createDocumentFragment();
-            hiddenItems.forEach(hiddenItem => {
-                const item = document.createElement('li');
+            hiddenItems.forEach((hiddenItem) => {
+                const item = document.createElement("li");
                 item.innerHTML = hiddenItem.innerHTML;
-                item.addEventListener('click', event => {
+                item.addEventListener("click", (event) => {
                     var _a;
                     event.preventDefault();
-                    (_a = hiddenItem.querySelector('a')) === null || _a === void 0 ? void 0 : _a.click();
+                    (_a = hiddenItem.querySelector("a")) === null || _a === void 0 ? void 0 : _a.click();
                     // force a rebuild to guarantee the active item being visible
                     setTimeout(() => {
                         rebuild(containerId);
@@ -160,7 +164,7 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
                 });
                 fragment.appendChild(item);
             });
-            dropdownMenu.innerHTML = '';
+            dropdownMenu.innerHTML = "";
             dropdownMenu.appendChild(fragment);
         }
         else if (dropdown !== undefined && dropdown.parentNode !== null) {

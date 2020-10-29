@@ -18,7 +18,7 @@ class RepeatingTimer {
    * The `callback` will be passed the owning instance of `Repeating`.
    */
   constructor(callback: (timer: RepeatingTimer) => void, delta: number) {
-    if (typeof callback !== 'function') {
+    if (typeof callback !== "function") {
       throw new TypeError("Expected a valid callback as first argument.");
     }
     if (delta < 0 || delta > 86_400 * 1_000) {

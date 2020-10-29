@@ -19,14 +19,14 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
     UiNotification = tslib_1.__importStar(UiNotification);
     class UserEditor {
         constructor() {
-            this.actionName = '';
-            this.header = document.querySelector('.userProfileUser');
-            ['ban', 'disableAvatar', 'disableCoverPhoto', 'disableSignature', 'enable'].forEach(action => {
-                const button = document.querySelector('.userProfileButtonMenu .jsButtonUser' + StringUtil.ucfirst(action));
+            this.actionName = "";
+            this.header = document.querySelector(".userProfileUser");
+            ["ban", "disableAvatar", "disableCoverPhoto", "disableSignature", "enable"].forEach((action) => {
+                const button = document.querySelector(".userProfileButtonMenu .jsButtonUser" + StringUtil.ucfirst(action));
                 // The button is missing if the current user lacks the permission.
                 if (button) {
                     button.dataset.action = action;
-                    button.addEventListener('click', (ev) => this._click(ev));
+                    button.addEventListener("click", (ev) => this._click(ev));
                 }
             });
         }
@@ -36,34 +36,34 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
         _click(event) {
             event.preventDefault();
             const target = event.currentTarget;
-            const action = target.dataset.action || '';
-            let actionName = '';
+            const action = target.dataset.action || "";
+            let actionName = "";
             switch (action) {
-                case 'ban':
-                    if (Core.stringToBool(this.header.dataset.banned || '')) {
-                        actionName = 'unban';
+                case "ban":
+                    if (Core.stringToBool(this.header.dataset.banned || "")) {
+                        actionName = "unban";
                     }
                     break;
-                case 'disableAvatar':
-                    if (Core.stringToBool(this.header.dataset.disableAvatar || '')) {
-                        actionName = 'enableAvatar';
+                case "disableAvatar":
+                    if (Core.stringToBool(this.header.dataset.disableAvatar || "")) {
+                        actionName = "enableAvatar";
                     }
                     break;
-                case 'disableCoverPhoto':
-                    if (Core.stringToBool(this.header.dataset.disableCoverPhoto || '')) {
-                        actionName = 'enableCoverPhoto';
+                case "disableCoverPhoto":
+                    if (Core.stringToBool(this.header.dataset.disableCoverPhoto || "")) {
+                        actionName = "enableCoverPhoto";
                     }
                     break;
-                case 'disableSignature':
-                    if (Core.stringToBool(this.header.dataset.disableSignature || '')) {
-                        actionName = 'enableSignature';
+                case "disableSignature":
+                    if (Core.stringToBool(this.header.dataset.disableSignature || "")) {
+                        actionName = "enableSignature";
                     }
                     break;
-                case 'enable':
-                    actionName = (Core.stringToBool(this.header.dataset.isDisabled || '')) ? 'enable' : 'disable';
+                case "enable":
+                    actionName = Core.stringToBool(this.header.dataset.isDisabled || "") ? "enable" : "disable";
                     break;
             }
-            if (actionName === '') {
+            if (actionName === "") {
                 this.actionName = action;
                 Dialog_1.default.open(this);
             }
@@ -78,22 +78,22 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
          */
         _submit(event) {
             event.preventDefault();
-            const label = document.getElementById('wcfUiUserEditorExpiresLabel');
-            let expires = '';
-            let errorMessage = '';
-            const neverExpires = document.getElementById('wcfUiUserEditorNeverExpires');
+            const label = document.getElementById("wcfUiUserEditorExpiresLabel");
+            let expires = "";
+            let errorMessage = "";
+            const neverExpires = document.getElementById("wcfUiUserEditorNeverExpires");
             if (!neverExpires.checked) {
-                const expireValue = document.getElementById('wcfUiUserEditorExpiresDatePicker');
+                const expireValue = document.getElementById("wcfUiUserEditorExpiresDatePicker");
                 expires = expireValue.value;
-                if (expires === '') {
-                    errorMessage = Language.get('wcf.global.form.error.empty');
+                if (expires === "") {
+                    errorMessage = Language.get("wcf.global.form.error.empty");
                 }
             }
             Util_1.default.innerError(label, errorMessage);
             const parameters = {};
-            parameters[this.actionName + 'Expires'] = expires;
-            const reason = document.getElementById('wcfUiUserEditorReason');
-            parameters[this.actionName + 'Reason'] = reason.value.trim();
+            parameters[this.actionName + "Expires"] = expires;
+            const reason = document.getElementById("wcfUiUserEditorReason");
+            parameters[this.actionName + "Reason"] = reason.value.trim();
             Ajax.api(this, {
                 actionName: this.actionName,
                 parameters: parameters,
@@ -102,16 +102,16 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
         _ajaxSuccess(data) {
             let button;
             switch (data.actionName) {
-                case 'ban':
-                case 'unban':
-                    this.header.dataset.banned = (data.actionName === 'ban') ? 'true' : 'false';
-                    button = document.querySelector('.userProfileButtonMenu .jsButtonUserBan');
-                    button.textContent = Language.get('wcf.user.' + (data.actionName === 'ban' ? 'unban' : 'ban'));
-                    const contentTitle = this.header.querySelector('.contentTitle');
-                    let banIcon = contentTitle.querySelector('.jsUserBanned');
-                    if (data.actionName === 'ban') {
-                        banIcon = document.createElement('span');
-                        banIcon.className = 'icon icon24 fa-lock jsUserBanned jsTooltip';
+                case "ban":
+                case "unban":
+                    this.header.dataset.banned = data.actionName === "ban" ? "true" : "false";
+                    button = document.querySelector(".userProfileButtonMenu .jsButtonUserBan");
+                    button.textContent = Language.get("wcf.user." + (data.actionName === "ban" ? "unban" : "ban"));
+                    const contentTitle = this.header.querySelector(".contentTitle");
+                    let banIcon = contentTitle.querySelector(".jsUserBanned");
+                    if (data.actionName === "ban") {
+                        banIcon = document.createElement("span");
+                        banIcon.className = "icon icon24 fa-lock jsUserBanned jsTooltip";
                         banIcon.title = data.returnValues;
                         contentTitle.appendChild(banIcon);
                     }
@@ -119,32 +119,32 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
                         banIcon.remove();
                     }
                     break;
-                case 'disableAvatar':
-                case 'enableAvatar':
-                    this.header.dataset.disableAvatar = (data.actionName === 'disableAvatar') ? 'true' : 'false';
-                    button = document.querySelector('.userProfileButtonMenu .jsButtonUserDisableAvatar');
-                    button.textContent = Language.get('wcf.user.' + (data.actionName === 'disableAvatar' ? 'enable' : 'disable') + 'Avatar');
+                case "disableAvatar":
+                case "enableAvatar":
+                    this.header.dataset.disableAvatar = data.actionName === "disableAvatar" ? "true" : "false";
+                    button = document.querySelector(".userProfileButtonMenu .jsButtonUserDisableAvatar");
+                    button.textContent = Language.get("wcf.user." + (data.actionName === "disableAvatar" ? "enable" : "disable") + "Avatar");
                     break;
-                case 'disableCoverPhoto':
-                case 'enableCoverPhoto':
-                    this.header.dataset.disableCoverPhoto = (data.actionName === 'disableCoverPhoto') ? 'true' : 'false';
-                    button = document.querySelector('.userProfileButtonMenu .jsButtonUserDisableCoverPhoto');
-                    button.textContent = Language.get('wcf.user.' + (data.actionName === 'disableCoverPhoto' ? 'enable' : 'disable') + 'CoverPhoto');
+                case "disableCoverPhoto":
+                case "enableCoverPhoto":
+                    this.header.dataset.disableCoverPhoto = data.actionName === "disableCoverPhoto" ? "true" : "false";
+                    button = document.querySelector(".userProfileButtonMenu .jsButtonUserDisableCoverPhoto");
+                    button.textContent = Language.get("wcf.user." + (data.actionName === "disableCoverPhoto" ? "enable" : "disable") + "CoverPhoto");
                     break;
-                case 'disableSignature':
-                case 'enableSignature':
-                    this.header.dataset.disableSignature = (data.actionName === 'disableSignature') ? 'true' : 'false';
-                    button = document.querySelector('.userProfileButtonMenu .jsButtonUserDisableSignature');
-                    button.textContent = Language.get('wcf.user.' + (data.actionName === 'disableSignature' ? 'enable' : 'disable') + 'Signature');
+                case "disableSignature":
+                case "enableSignature":
+                    this.header.dataset.disableSignature = data.actionName === "disableSignature" ? "true" : "false";
+                    button = document.querySelector(".userProfileButtonMenu .jsButtonUserDisableSignature");
+                    button.textContent = Language.get("wcf.user." + (data.actionName === "disableSignature" ? "enable" : "disable") + "Signature");
                     break;
-                case 'enable':
-                case 'disable':
-                    this.header.dataset.isDisabled = (data.actionName === 'disable') ? 'true' : 'false';
-                    button = document.querySelector('.userProfileButtonMenu .jsButtonUserEnable');
-                    button.textContent = Language.get('wcf.acp.user.' + (data.actionName === 'enable' ? 'disable' : 'enable'));
+                case "enable":
+                case "disable":
+                    this.header.dataset.isDisabled = data.actionName === "disable" ? "true" : "false";
+                    button = document.querySelector(".userProfileButtonMenu .jsButtonUserEnable");
+                    button.textContent = Language.get("wcf.acp.user." + (data.actionName === "enable" ? "disable" : "enable"));
                     break;
             }
-            if (['ban', 'disableAvatar', 'disableCoverPhoto', 'disableSignature'].indexOf(data.actionName) !== -1) {
+            if (["ban", "disableAvatar", "disableCoverPhoto", "disableSignature"].indexOf(data.actionName) !== -1) {
                 Dialog_1.default.close(this);
             }
             UiNotification.show();
@@ -152,42 +152,42 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
         _ajaxSetup() {
             return {
                 data: {
-                    className: 'wcf\\data\\user\\UserAction',
+                    className: "wcf\\data\\user\\UserAction",
                     objectIDs: [+this.header.dataset.objectId],
                 },
             };
         }
         _dialogSetup() {
             return {
-                id: 'wcfUiUserEditor',
+                id: "wcfUiUserEditor",
                 options: {
-                    onSetup: content => {
-                        const checkbox = document.getElementById('wcfUiUserEditorNeverExpires');
-                        checkbox.addEventListener('change', () => {
-                            const settings = document.getElementById('wcfUiUserEditorExpiresSettings');
-                            Util_1.default[checkbox.checked ? 'hide' : 'show'](settings);
+                    onSetup: (content) => {
+                        const checkbox = document.getElementById("wcfUiUserEditorNeverExpires");
+                        checkbox.addEventListener("change", () => {
+                            const settings = document.getElementById("wcfUiUserEditorExpiresSettings");
+                            Util_1.default[checkbox.checked ? "hide" : "show"](settings);
                         });
-                        const submitButton = content.querySelector('button.buttonPrimary');
-                        submitButton.addEventListener('click', this._submit.bind(this));
+                        const submitButton = content.querySelector("button.buttonPrimary");
+                        submitButton.addEventListener("click", this._submit.bind(this));
                     },
-                    onShow: content => {
-                        Dialog_1.default.setTitle('wcfUiUserEditor', Language.get('wcf.user.' + this.actionName + '.confirmMessage'));
-                        const reason = document.getElementById('wcfUiUserEditorReason');
+                    onShow: (content) => {
+                        Dialog_1.default.setTitle("wcfUiUserEditor", Language.get("wcf.user." + this.actionName + ".confirmMessage"));
+                        const reason = document.getElementById("wcfUiUserEditorReason");
                         let label = reason.nextElementSibling;
-                        const phrase = 'wcf.user.' + this.actionName + '.reason.description';
+                        const phrase = "wcf.user." + this.actionName + ".reason.description";
                         label.textContent = Language.get(phrase);
-                        window[(label.textContent === phrase) ? 'elHide' : 'elShow'](label);
-                        label = document.getElementById('wcfUiUserEditorNeverExpires').nextElementSibling;
-                        label.textContent = Language.get('wcf.user.' + this.actionName + '.neverExpires');
+                        window[label.textContent === phrase ? "elHide" : "elShow"](label);
+                        label = document.getElementById("wcfUiUserEditorNeverExpires").nextElementSibling;
+                        label.textContent = Language.get("wcf.user." + this.actionName + ".neverExpires");
                         label = content.querySelector('label[for="wcfUiUserEditorExpires"]');
-                        label.textContent = Language.get('wcf.user.' + this.actionName + '.expires');
-                        label = document.getElementById('wcfUiUserEditorExpiresLabel');
-                        label.textContent = Language.get('wcf.user.' + this.actionName + '.expires.description');
+                        label.textContent = Language.get("wcf.user." + this.actionName + ".expires");
+                        label = document.getElementById("wcfUiUserEditorExpiresLabel");
+                        label.textContent = Language.get("wcf.user." + this.actionName + ".expires.description");
                     },
                 },
                 source: `<div class="section">
         <dl>
-          <dt><label for="wcfUiUserEditorReason">${Language.get('wcf.global.reason')}</label></dt>
+          <dt><label for="wcfUiUserEditorReason">${Language.get("wcf.global.reason")}</label></dt>
           <dd><textarea id="wcfUiUserEditorReason" cols="40" rows="3"></textarea><small></small></dd>
         </dl>
         <dl>
@@ -203,7 +203,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
         </dl>
       </div>
       <div class="formSubmit">
-        <button class="buttonPrimary">${Language.get('wcf.global.button.submit')}</button>
+        <button class="buttonPrimary">${Language.get("wcf.global.button.submit")}</button>
       </div>`,
             };
         }

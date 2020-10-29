@@ -9,7 +9,7 @@
  */
 
 const _clone = function (variable: any): any {
-  if (typeof variable === 'object' && (Array.isArray(variable) || isPlainObject(variable))) {
+  if (typeof variable === "object" && (Array.isArray(variable) || isPlainObject(variable))) {
     return _cloneObject(variable);
   }
 
@@ -26,12 +26,12 @@ const _cloneObject = function (obj: object | any[]): object | any[] | null {
   }
 
   const newObj = {};
-  Object.keys(obj).forEach(key => newObj[key] = _clone(obj[key]));
+  Object.keys(obj).forEach((key) => (newObj[key] = _clone(obj[key])));
 
   return newObj;
 };
 
-const _prefix = 'wsc' + window.WCF_PATH.hashCode() + '-';
+const _prefix = "wsc" + window.WCF_PATH.hashCode() + "-";
 
 /**
  * Deep clones an object.
@@ -46,11 +46,11 @@ export function clone(obj: object | any[]): object | any[] {
 export function convertLegacyUrl(url: string): string {
   return url.replace(/^index\.php\/(.*?)\/\?/, (match: string, controller: string) => {
     const parts = controller.split(/([A-Z][a-z0-9]+)/);
-    controller = '';
+    controller = "";
     for (let i = 0, length = parts.length; i < length; i++) {
       const part = parts[i].trim();
       if (part.length) {
-        if (controller.length) controller += '-';
+        if (controller.length) controller += "-";
         controller += part.toLowerCase();
       }
     }
@@ -77,7 +77,7 @@ export function extend(out: object, ...args: object[]): object {
 
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
-        if (!Array.isArray(obj[key]) && typeof obj[key] === 'object') {
+        if (!Array.isArray(obj[key]) && typeof obj[key] === "object") {
           if (isPlainObject(obj[key])) {
             // object literals have the prototype of Object which in return has no parent prototype
             newObj[key] = extend(out[key], obj[key]);
@@ -103,10 +103,10 @@ export function extend(out: object, ...args: object[]): object {
  * function MyDerivedClass() {}
  * Core.inherit(MyDerivedClass, TheAwesomeBaseClass, {
  *      // regular prototype for `MyDerivedClass`
- *      
+ *
  *      overwrittenMethodFromBaseClass: function(foo, bar) {
  *              // do stuff
- *              
+ *
  *              // invoke parent
  *              MyDerivedClass._super.prototype.overwrittenMethodFromBaseClass.call(this, foo, bar);
  *      }
@@ -114,44 +114,47 @@ export function extend(out: object, ...args: object[]): object {
  *
  * @see  https://github.com/nodejs/node/blob/7d14dd9b5e78faabb95d454a79faa513d0bbc2a5/lib/util.js#L697-L735
  */
-export function inherit(constructor: new() => any, superConstructor: new() => any, propertiesObject: object): void {
+export function inherit(constructor: new () => any, superConstructor: new () => any, propertiesObject: object): void {
   if (constructor === undefined || constructor === null) {
-    throw new TypeError('The constructor must not be undefined or null.');
+    throw new TypeError("The constructor must not be undefined or null.");
   }
   if (superConstructor === undefined || superConstructor === null) {
-    throw new TypeError('The super constructor must not be undefined or null.');
+    throw new TypeError("The super constructor must not be undefined or null.");
   }
   if (superConstructor.prototype === undefined) {
-    throw new TypeError('The super constructor must have a prototype.');
+    throw new TypeError("The super constructor must have a prototype.");
   }
 
   (constructor as any)._super = superConstructor;
-  constructor.prototype = extend(Object.create(superConstructor.prototype, {
-    constructor: {
-      configurable: true,
-      enumerable: false,
-      value: constructor,
-      writable: true,
-    },
-  }), propertiesObject || {});
+  constructor.prototype = extend(
+    Object.create(superConstructor.prototype, {
+      constructor: {
+        configurable: true,
+        enumerable: false,
+        value: constructor,
+        writable: true,
+      },
+    }),
+    propertiesObject || {}
+  );
 }
 
 /**
  * Returns true if `obj` is an object literal.
  */
 export function isPlainObject(obj: any): boolean {
-  if (typeof obj !== 'object' || obj === null || obj.nodeType) {
+  if (typeof obj !== "object" || obj === null || obj.nodeType) {
     return false;
   }
 
-  return (Object.getPrototypeOf(obj) === Object.prototype);
+  return Object.getPrototypeOf(obj) === Object.prototype;
 }
 
 /**
  * Returns the object's class name.
  */
 export function getType(obj: object): string {
-  return Object.prototype.toString.call(obj).replace(/^\[object (.+)]$/, '$1');
+  return Object.prototype.toString.call(obj).replace(/^\[object (.+)]$/, "$1");
 }
 
 /**
@@ -160,8 +163,9 @@ export function getType(obj: object): string {
  * @see    http://stackoverflow.com/a/2117523
  */
 export function getUuid(): string {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-    const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0,
+      v = c == "x" ? r : (r & 0x3) | 0x8;
     return v.toString(16);
   });
 }
@@ -174,18 +178,18 @@ export function serialize(obj: object, prefix?: string): string {
 
   for (const key in obj) {
     if (obj.hasOwnProperty(key)) {
-      const parameterKey = (prefix) ? prefix + '[' + key + ']' : key;
+      const parameterKey = prefix ? prefix + "[" + key + "]" : key;
       const value = obj[key];
 
-      if (typeof value === 'object') {
+      if (typeof value === "object") {
         parameters.push(serialize(value, parameterKey));
       } else {
-        parameters.push(encodeURIComponent(parameterKey) + '=' + encodeURIComponent(value));
+        parameters.push(encodeURIComponent(parameterKey) + "=" + encodeURIComponent(value));
       }
     }
   }
 
-  return parameters.join('&');
+  return parameters.join("&");
 }
 
 /**
@@ -212,9 +216,8 @@ export function getStoragePrefix() {
  * legacy functions `elAttrBool()` and `elDataBool()`.
  */
 export function stringToBool(value: string | null): boolean {
-  return value === '1' || value === 'true';
+  return value === "1" || value === "true";
 }
-
 
 type DebounceCallback = (...args: any[]) => void;
 
@@ -232,7 +235,7 @@ export function debounce<F extends DebounceCallback>(
   waitMilliseconds = 50,
   options: DebounceOptions = {
     isImmediate: false,
-  },
+  }
 ): (this: ThisParameterType<F>, ...args: Parameters<F>) => void {
   let timeoutId: ReturnType<typeof setTimeout> | undefined;
 

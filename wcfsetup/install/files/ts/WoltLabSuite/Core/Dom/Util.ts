@@ -8,23 +8,23 @@
  * @module  WoltLabSuite/Core/Dom/Util
  */
 
-import * as StringUtil from '../StringUtil';
+import * as StringUtil from "../StringUtil";
 
 function _isBoundaryNode(element: Element, ancestor: Element, position: string): boolean {
   if (!ancestor.contains(element)) {
-    throw new Error('Ancestor element does not contain target element.');
+    throw new Error("Ancestor element does not contain target element.");
   }
 
   let node: Node;
   let target: Node | null = element;
-  const whichSibling = position + 'Sibling';
+  const whichSibling = position + "Sibling";
   while (target !== null && target !== ancestor) {
-    if (target[position + 'ElementSibling'] !== null) {
+    if (target[position + "ElementSibling"] !== null) {
       return false;
     } else if (target[whichSibling]) {
       node = target[whichSibling];
       while (node) {
-        if (node.textContent!.trim() !== '') {
+        if (node.textContent!.trim() !== "") {
           return false;
         }
 
@@ -45,7 +45,7 @@ const DomUtil = {
    * Returns a DocumentFragment containing the provided HTML string as DOM nodes.
    */
   createFragmentFromHtml(html: string): DocumentFragment {
-    const tmp = document.createElement('div');
+    const tmp = document.createElement("div");
     this.setInnerHtml(tmp, html);
 
     const fragment = document.createDocumentFragment();
@@ -63,9 +63,8 @@ const DomUtil = {
     let elementId: string;
 
     do {
-      elementId = 'wcf' + _idCounter++;
-    }
-    while (document.getElementById(elementId) !== null);
+      elementId = "wcf" + _idCounter++;
+    } while (document.getElementById(elementId) !== null);
 
     return elementId;
   },
@@ -76,7 +75,7 @@ const DomUtil = {
    */
   identify(element: Element): string {
     if (!(element instanceof Element)) {
-      throw new TypeError('Expected a valid DOM element as argument.');
+      throw new TypeError("Expected a valid DOM element as argument.");
     }
 
     let id = element.id;
@@ -145,7 +144,7 @@ const DomUtil = {
    * @deprecated 5.3 Use `parent.insertAdjacentElement('afterbegin', element)` instead.
    */
   prepend(element: Element, parent: Element): void {
-    parent.insertAdjacentElement('afterbegin', element);
+    parent.insertAdjacentElement("afterbegin", element);
   },
 
   /**
@@ -154,7 +153,7 @@ const DomUtil = {
    * @deprecated 5.3 Use `element.insertAdjacentElement('afterend', newElement)` instead.
    */
   insertAfter(newElement: Element, element: Element): void {
-    element.insertAdjacentElement('afterend', newElement);
+    element.insertAdjacentElement("afterend", newElement);
   },
 
   /**
@@ -167,7 +166,7 @@ const DomUtil = {
         if (/ !important$/.test(styles[property])) {
           important = true;
 
-          styles[property] = styles[property].replace(/ !important$/, '');
+          styles[property] = styles[property].replace(/ !important$/, "");
         } else {
           important = false;
         }
@@ -175,11 +174,11 @@ const DomUtil = {
         // for a set style property with priority = important, some browsers are
         // not able to overwrite it with a property != important; removing the
         // property first solves this issue
-        if (element.style.getPropertyPriority(property) === 'important' && !important) {
+        if (element.style.getPropertyPriority(property) === "important" && !important) {
           element.style.removeProperty(property);
         }
 
-        element.style.setProperty(property, styles[property], (important ? 'important' : ''));
+        element.style.setProperty(property, styles[property], important ? "important" : "");
       }
     }
   },
@@ -209,10 +208,10 @@ const DomUtil = {
   setInnerHtml(element: Element, innerHtml: string): void {
     element.innerHTML = innerHtml;
 
-    const scripts = element.querySelectorAll<HTMLScriptElement>('script');
+    const scripts = element.querySelectorAll<HTMLScriptElement>("script");
     for (let i = 0, length = scripts.length; i < length; i++) {
       const script = scripts[i];
-      const newScript = document.createElement('script');
+      const newScript = document.createElement("script");
       if (script.src) {
         newScript.src = script.src;
       } else {
@@ -231,7 +230,7 @@ const DomUtil = {
    * @param insertMethod
    */
   insertHtml(html: string, referenceElement: Element, insertMethod: string): void {
-    const element = document.createElement('div');
+    const element = document.createElement("div");
     this.setInnerHtml(element, html);
 
     if (!element.childNodes.length) {
@@ -240,28 +239,28 @@ const DomUtil = {
 
     let node = element.childNodes[0] as Element;
     switch (insertMethod) {
-      case 'append':
+      case "append":
         referenceElement.appendChild(node);
         break;
 
-      case 'after':
+      case "after":
         this.insertAfter(node, referenceElement);
         break;
 
-      case 'prepend':
+      case "prepend":
         this.prepend(node, referenceElement);
         break;
 
-      case 'before':
+      case "before":
         if (referenceElement.parentNode === null) {
-          throw new Error('The reference element has no parent, but the insert position was set to \'before\'.');
+          throw new Error("The reference element has no parent, but the insert position was set to 'before'.");
         }
 
         referenceElement.parentNode.insertBefore(node, referenceElement);
         break;
 
       default:
-        throw new Error('Unknown insert method \'' + insertMethod + '\'.');
+        throw new Error("Unknown insert method '" + insertMethod + "'.");
     }
 
     let tmp;
@@ -289,25 +288,30 @@ const DomUtil = {
    *
    * @deprecated 5.4 Use `element.dataset` instead.
    */
-  getDataAttributes(element: Element, prefix?: string, camelCaseName?: boolean, idToUpperCase?: boolean): DataAttributes {
-    prefix = prefix || '';
-    if (prefix.indexOf('data-') !== 0) prefix = 'data-' + prefix;
-    camelCaseName = (camelCaseName === true);
-    idToUpperCase = (idToUpperCase === true);
+  getDataAttributes(
+    element: Element,
+    prefix?: string,
+    camelCaseName?: boolean,
+    idToUpperCase?: boolean
+  ): DataAttributes {
+    prefix = prefix || "";
+    if (prefix.indexOf("data-") !== 0) prefix = "data-" + prefix;
+    camelCaseName = camelCaseName === true;
+    idToUpperCase = idToUpperCase === true;
 
     const attributes = {};
     for (let i = 0, length = element.attributes.length; i < length; i++) {
       const attribute = element.attributes[i];
 
       if (attribute.name.indexOf(prefix) === 0) {
-        let name = attribute.name.replace(new RegExp('^' + prefix), '');
+        let name = attribute.name.replace(new RegExp("^" + prefix), "");
         if (camelCaseName) {
-          let tmp = name.split('-');
-          name = '';
+          let tmp = name.split("-");
+          name = "";
           for (let j = 0, innerLength = tmp.length; j < innerLength; j++) {
             if (name.length) {
-              if (idToUpperCase && tmp[j] === 'id') {
-                tmp[j] = 'ID';
+              if (idToUpperCase && tmp[j] === "id") {
+                tmp[j] = "ID";
               } else {
                 tmp[j] = StringUtil.ucfirst(tmp[j]);
               }
@@ -331,7 +335,7 @@ const DomUtil = {
    */
   unwrapChildNodes(element: Element): void {
     if (element.parentNode === null) {
-      throw new Error('The element has no parent.');
+      throw new Error("The element has no parent.");
     }
 
     let parent = element.parentNode;
@@ -349,7 +353,7 @@ const DomUtil = {
    */
   replaceElement(oldElement: Element, newElement: Element): void {
     if (oldElement.parentNode === null) {
-      throw new Error('The old element has no parent.');
+      throw new Error("The old element has no parent.");
     }
 
     while (oldElement.childNodes.length) {
@@ -365,7 +369,7 @@ const DomUtil = {
    * a node without any content nor elements before it or its parent nodes.
    */
   isAtNodeStart(element: Element, ancestor: Element): boolean {
-    return _isBoundaryNode(element, ancestor, 'previous');
+    return _isBoundaryNode(element, ancestor, "previous");
   },
 
   /**
@@ -373,7 +377,7 @@ const DomUtil = {
    * a node without any content nor elements after it or its parent nodes.
    */
   isAtNodeEnd(element: Element, ancestor: Element): boolean {
-    return _isBoundaryNode(element, ancestor, 'next');
+    return _isBoundaryNode(element, ancestor, "next");
   },
 
   /**
@@ -384,7 +388,7 @@ const DomUtil = {
    */
   getFixedParent(element: HTMLElement): Element | null {
     while (element && element !== document.body) {
-      if (window.getComputedStyle(element).getPropertyValue('position') === 'fixed') {
+      if (window.getComputedStyle(element).getPropertyValue("position") === "fixed") {
         return element;
       }
 
@@ -398,14 +402,14 @@ const DomUtil = {
    * Shorthand function to hide an element by setting its 'display' value to 'none'.
    */
   hide(element: HTMLElement): void {
-    element.style.setProperty('display', 'none', '');
+    element.style.setProperty("display", "none", "");
   },
 
   /**
    * Shorthand function to show an element previously hidden by using `hide()`.
    */
   show(element: HTMLElement): void {
-    element.style.removeProperty('display');
+    element.style.removeProperty("display");
   },
 
   /**
@@ -413,7 +417,7 @@ const DomUtil = {
    * value to 'none'.
    */
   isHidden(element: HTMLElement): boolean {
-    return element.style.getPropertyValue('display') === 'none';
+    return element.style.getPropertyValue("display") === "none";
   },
 
   /**
@@ -422,35 +426,37 @@ const DomUtil = {
   innerError(element: HTMLElement, errorMessage?: string | false | null, isHtml?: boolean): HTMLElement | null {
     const parent = element.parentNode;
     if (parent === null) {
-      throw new Error('Only elements that have a parent element or document are valid.');
+      throw new Error("Only elements that have a parent element or document are valid.");
     }
 
-    if (typeof errorMessage !== 'string') {
+    if (typeof errorMessage !== "string") {
       if (!errorMessage) {
-        errorMessage = '';
+        errorMessage = "";
       } else {
-        throw new TypeError('The error message must be a string; `false`, `null` or `undefined` can be used as a substitute for an empty string.');
+        throw new TypeError(
+          "The error message must be a string; `false`, `null` or `undefined` can be used as a substitute for an empty string."
+        );
       }
     }
 
     let innerError = element.nextElementSibling;
-    if (innerError === null || innerError.nodeName !== 'SMALL' || !innerError.classList.contains('innerError')) {
-      if (errorMessage === '') {
+    if (innerError === null || innerError.nodeName !== "SMALL" || !innerError.classList.contains("innerError")) {
+      if (errorMessage === "") {
         innerError = null;
       } else {
-        innerError = document.createElement('small');
-        innerError.className = 'innerError';
+        innerError = document.createElement("small");
+        innerError.className = "innerError";
         parent.insertBefore(innerError, element.nextSibling);
       }
     }
 
-    if (errorMessage === '') {
+    if (errorMessage === "") {
       if (innerError !== null) {
         innerError.remove();
         innerError = null;
       }
     } else {
-      innerError![isHtml ? 'innerHTML' : 'textContent'] = errorMessage;
+      innerError![isHtml ? "innerHTML" : "textContent"] = errorMessage;
     }
 
     return innerError as HTMLElement | null;

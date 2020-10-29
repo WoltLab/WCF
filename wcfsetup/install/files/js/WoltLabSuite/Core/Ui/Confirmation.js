@@ -17,25 +17,25 @@ define(["require", "exports", "tslib", "../Core", "../Language", "./Dialog"], fu
     class UiConfirmation {
         constructor() {
             this._active = false;
-            this.dialog = document.createElement('div');
-            this.dialog.id = 'wcfSystemConfirmation';
-            this.dialog.classList.add('systemConfirmation');
-            this.text = document.createElement('p');
+            this.dialog = document.createElement("div");
+            this.dialog.id = "wcfSystemConfirmation";
+            this.dialog.classList.add("systemConfirmation");
+            this.text = document.createElement("p");
             this.dialog.appendChild(this.text);
-            this._content = document.createElement('div');
-            this._content.id = 'wcfSystemConfirmationContent';
+            this._content = document.createElement("div");
+            this._content.id = "wcfSystemConfirmationContent";
             this.dialog.appendChild(this._content);
-            const formSubmit = document.createElement('div');
-            formSubmit.classList.add('formSubmit');
+            const formSubmit = document.createElement("div");
+            formSubmit.classList.add("formSubmit");
             this.dialog.appendChild(formSubmit);
-            this.confirmButton = document.createElement('button');
-            this.confirmButton.classList.add('buttonPrimary');
-            this.confirmButton.textContent = Language.get('wcf.global.confirmation.confirm');
-            this.confirmButton.addEventListener('click', (ev) => this._confirm());
+            this.confirmButton = document.createElement("button");
+            this.confirmButton.classList.add("buttonPrimary");
+            this.confirmButton.textContent = Language.get("wcf.global.confirmation.confirm");
+            this.confirmButton.addEventListener("click", (ev) => this._confirm());
             formSubmit.appendChild(this.confirmButton);
-            const cancelButton = document.createElement('button');
-            cancelButton.textContent = Language.get('wcf.global.confirmation.cancel');
-            cancelButton.addEventListener('click', () => {
+            const cancelButton = document.createElement("button");
+            cancelButton.textContent = Language.get("wcf.global.confirmation.cancel");
+            cancelButton.addEventListener("click", () => {
                 Dialog_1.default.close(this);
             });
             formSubmit.appendChild(cancelButton);
@@ -43,20 +43,19 @@ define(["require", "exports", "tslib", "../Core", "../Language", "./Dialog"], fu
         }
         open(options) {
             this.parameters = options.parameters || {};
-            this._content.innerHTML = (typeof options.template === 'string') ? options.template.trim() : '';
-            this.text[options.messageIsHtml ? 'innerHTML' : 'textContent'] = options.message;
-            if (typeof options.legacyCallback === 'function') {
-                this.callbackCancel = parameters => {
-                    options.legacyCallback('cancel', parameters, this.content);
+            this._content.innerHTML = typeof options.template === "string" ? options.template.trim() : "";
+            this.text[options.messageIsHtml ? "innerHTML" : "textContent"] = options.message;
+            if (typeof options.legacyCallback === "function") {
+                this.callbackCancel = (parameters) => {
+                    options.legacyCallback("cancel", parameters, this.content);
                 };
-                this.callbackConfirm = parameters => {
-                    options.legacyCallback('confirm', parameters, this.content);
+                this.callbackConfirm = (parameters) => {
+                    options.legacyCallback("confirm", parameters, this.content);
                 };
             }
             else {
-                if (typeof options.cancel !== 'function') {
-                    options.cancel = () => {
-                    };
+                if (typeof options.cancel !== "function") {
+                    options.cancel = () => { };
                 }
                 this.callbackCancel = options.cancel;
                 this.callbackConfirm = options.confirm;
@@ -76,7 +75,7 @@ define(["require", "exports", "tslib", "../Core", "../Language", "./Dialog"], fu
         _confirm() {
             this.callbackConfirm(this.parameters, this.content);
             this._active = false;
-            Dialog_1.default.close('wcfSystemConfirmation');
+            Dialog_1.default.close("wcfSystemConfirmation");
         }
         /**
          * Invoked on dialog close or if user cancels the dialog.
@@ -97,11 +96,11 @@ define(["require", "exports", "tslib", "../Core", "../Language", "./Dialog"], fu
         }
         _dialogSetup() {
             return {
-                id: 'wcfSystemConfirmation',
+                id: "wcfSystemConfirmation",
                 options: {
                     onClose: this._onClose.bind(this),
                     onShow: this._onShow.bind(this),
-                    title: Language.get('wcf.global.confirmation.title'),
+                    title: Language.get("wcf.global.confirmation.title"),
                 },
             };
         }
@@ -124,16 +123,16 @@ define(["require", "exports", "tslib", "../Core", "../Language", "./Dialog"], fu
             cancel: null,
             confirm: null,
             legacyCallback: null,
-            message: '',
+            message: "",
             messageIsHtml: false,
             parameters: {},
-            template: '',
+            template: "",
         }, options);
-        options.message = (typeof options.message === 'string') ? options.message.trim() : '';
+        options.message = typeof options.message === "string" ? options.message.trim() : "";
         if (!options.message) {
             throw new Error("Expected a non-empty string for option 'message'.");
         }
-        if (typeof options.confirm !== 'function' && typeof options.legacyCallback !== 'function') {
+        if (typeof options.confirm !== "function" && typeof options.legacyCallback !== "function") {
             throw new TypeError("Expected a valid callback for option 'confirm'.");
         }
         getConfirmation().open(options);

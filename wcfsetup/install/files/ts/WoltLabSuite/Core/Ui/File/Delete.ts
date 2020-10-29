@@ -8,11 +8,11 @@
  * @since  5.2
  */
 
-import * as Ajax from '../../Ajax';
-import { AjaxCallbackObject, DatabaseObjectActionResponse } from '../../Ajax/Data';
-import * as Core from '../../Core';
-import DomChangeListener from '../../Dom/Change/Listener';
-import * as Language from '../../Language';
+import * as Ajax from "../../Ajax";
+import { AjaxCallbackObject, DatabaseObjectActionResponse } from "../../Ajax/Data";
+import * as Core from "../../Core";
+import DomChangeListener from "../../Dom/Change/Listener";
+import * as Language from "../../Language";
 
 interface AjaxResponse extends DatabaseObjectActionResponse {
   uniqueFileId: string;
@@ -64,7 +64,7 @@ class UiFileDelete implements AjaxCallbackObject {
    */
   private createButtons(): void {
     let triggerChange = false;
-    this.target.querySelectorAll('li.uploadedFile').forEach((element: HTMLElement) => {
+    this.target.querySelectorAll("li.uploadedFile").forEach((element: HTMLElement) => {
       const uniqueFileId = element.dataset.uniqueFileId!;
       if (this.containers.has(uniqueFileId)) {
         return;
@@ -90,19 +90,19 @@ class UiFileDelete implements AjaxCallbackObject {
    * Init the delete button for a specific element.
    */
   private initDeleteButton(element: HTMLElement, elementData: ElementData): void {
-    const buttonGroup = element.querySelector('.buttonGroup');
+    const buttonGroup = element.querySelector(".buttonGroup");
     if (buttonGroup === null) {
       throw new Error(`Button group in '${this.target.id}' is unknown.`);
     }
 
-    const li = document.createElement('li');
-    const span = document.createElement('span');
+    const li = document.createElement("li");
+    const span = document.createElement("span");
     span.className = "button jsDeleteButton small";
-    span.textContent = Language.get('wcf.global.button.delete');
+    span.textContent = Language.get("wcf.global.button.delete");
     li.appendChild(span);
     buttonGroup.appendChild(li);
 
-    li.addEventListener('click', this.deleteElement.bind(this, elementData.uniqueFileId));
+    li.addEventListener("click", this.deleteElement.bind(this, elementData.uniqueFileId));
   }
 
   /**
@@ -124,7 +124,7 @@ class UiFileDelete implements AjaxCallbackObject {
       return;
     }
 
-    const img = this.target.querySelector('img');
+    const img = this.target.querySelector("img");
     if (img !== null) {
       const uniqueFileId = img.dataset.uniqueFileId!;
 
@@ -136,16 +136,16 @@ class UiFileDelete implements AjaxCallbackObject {
 
         this.containers.set(uniqueFileId, elementData);
 
-        this.deleteButton = document.createElement('p');
-        this.deleteButton.className = 'button deleteButton';
+        this.deleteButton = document.createElement("p");
+        this.deleteButton.className = "button deleteButton";
 
-        const span = document.createElement('span');
-        span.textContent = Language.get('wcf.global.button.delete');
+        const span = document.createElement("span");
+        span.textContent = Language.get("wcf.global.button.delete");
         this.deleteButton.appendChild(span);
 
         this.buttonContainer.appendChild(this.deleteButton);
 
-        this.deleteButton.addEventListener('click', this.deleteElement.bind(this, elementData.uniqueFileId));
+        this.deleteButton.addEventListener("click", this.deleteElement.bind(this, elementData.uniqueFileId));
       }
     }
   }
@@ -160,14 +160,14 @@ class UiFileDelete implements AjaxCallbackObject {
     }
 
     this.uploadHandler.checkMaxFiles();
-    Core.triggerEvent(this.target, 'change');
+    Core.triggerEvent(this.target, "change");
   }
 
   _ajaxSetup() {
     return {
-      url: 'index.php?ajax-file-delete/&t=' + window.SECURITY_TOKEN,
+      url: "index.php?ajax-file-delete/&t=" + window.SECURITY_TOKEN,
     };
   }
 }
 
-export = UiFileDelete
+export = UiFileDelete;

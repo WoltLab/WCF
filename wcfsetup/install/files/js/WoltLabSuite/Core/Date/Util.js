@@ -16,23 +16,23 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
      * Returns the formatted date.
      */
     function formatDate(date) {
-        return format(date, Language.get('wcf.date.dateFormat'));
+        return format(date, Language.get("wcf.date.dateFormat"));
     }
     exports.formatDate = formatDate;
     /**
      * Returns the formatted time.
      */
     function formatTime(date) {
-        return format(date, Language.get('wcf.date.timeFormat'));
+        return format(date, Language.get("wcf.date.timeFormat"));
     }
     exports.formatTime = formatTime;
     /**
      * Returns the formatted date time.
      */
     function formatDateTime(date) {
-        const dateTimeFormat = Language.get('wcf.date.dateTimeFormat');
-        const dateFormat = Language.get('wcf.date.dateFormat');
-        const timeFormat = Language.get('wcf.date.timeFormat');
+        const dateTimeFormat = Language.get("wcf.date.dateTimeFormat");
+        const dateFormat = Language.get("wcf.date.dateFormat");
+        const timeFormat = Language.get("wcf.date.timeFormat");
         return format(date, dateTimeFormat.replace(/%date%/, dateFormat).replace(/%time%/, timeFormat));
     }
     exports.formatDateTime = formatDateTime;
@@ -41,128 +41,128 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
      */
     function format(date, format) {
         let char;
-        let out = '';
+        let out = "";
         // ISO 8601 date, best recognition by PHP's strtotime()
-        if (format === 'c') {
-            format = 'Y-m-dTH:i:sP';
+        if (format === "c") {
+            format = "Y-m-dTH:i:sP";
         }
         for (let i = 0, length = format.length; i < length; i++) {
             let hours;
             switch (format[i]) {
                 // seconds
-                case 's':
+                case "s":
                     // `00` through `59`
-                    char = ('0' + date.getSeconds().toString()).slice(-2);
+                    char = ("0" + date.getSeconds().toString()).slice(-2);
                     break;
                 // minutes
-                case 'i':
+                case "i":
                     // `00` through `59`
-                    char = date.getMinutes().toString().padStart(2, '0');
+                    char = date.getMinutes().toString().padStart(2, "0");
                     break;
                 // hours
-                case 'a':
+                case "a":
                     // `am` or `pm`
-                    char = (date.getHours() > 11) ? 'pm' : 'am';
+                    char = date.getHours() > 11 ? "pm" : "am";
                     break;
-                case 'g':
+                case "g":
                     // `1` through `12`
                     hours = date.getHours();
                     if (hours === 0)
-                        char = '12';
+                        char = "12";
                     else if (hours > 12)
                         char = (hours - 12).toString();
                     else
                         char = hours.toString();
                     break;
-                case 'h':
+                case "h":
                     // `01` through `12`
                     hours = date.getHours();
                     if (hours === 0)
-                        char = '12';
+                        char = "12";
                     else if (hours > 12)
                         char = (hours - 12).toString();
                     else
                         char = hours.toString();
-                    char = char.padStart(2, '0');
+                    char = char.padStart(2, "0");
                     break;
-                case 'A':
+                case "A":
                     // `AM` or `PM`
-                    char = (date.getHours() > 11) ? 'PM' : 'AM';
+                    char = date.getHours() > 11 ? "PM" : "AM";
                     break;
-                case 'G':
+                case "G":
                     // `0` through `23`
                     char = date.getHours().toString();
                     break;
-                case 'H':
+                case "H":
                     // `00` through `23`
-                    char = date.getHours().toString().padStart(2, '0');
+                    char = date.getHours().toString().padStart(2, "0");
                     break;
                 // day
-                case 'd':
+                case "d":
                     // `01` through `31`
-                    char = date.getDate().toString().padStart(2, '0');
+                    char = date.getDate().toString().padStart(2, "0");
                     break;
-                case 'j':
+                case "j":
                     // `1` through `31`
                     char = date.getDate().toString();
                     break;
-                case 'l':
+                case "l":
                     // `Monday` through `Sunday` (localized)
-                    char = Language.get('__days')[date.getDay()];
+                    char = Language.get("__days")[date.getDay()];
                     break;
-                case 'D':
+                case "D":
                     // `Mon` through `Sun` (localized)
-                    char = Language.get('__daysShort')[date.getDay()];
+                    char = Language.get("__daysShort")[date.getDay()];
                     break;
-                case 'S':
+                case "S":
                     // ignore english ordinal suffix
-                    char = '';
+                    char = "";
                     break;
                 // month
-                case 'm':
+                case "m":
                     // `01` through `12`
-                    char = (date.getMonth() + 1).toString().padStart(2, '0');
+                    char = (date.getMonth() + 1).toString().padStart(2, "0");
                     break;
-                case 'n':
+                case "n":
                     // `1` through `12`
                     char = (date.getMonth() + 1).toString();
                     break;
-                case 'F':
+                case "F":
                     // `January` through `December` (localized)
-                    char = Language.get('__months')[date.getMonth()];
+                    char = Language.get("__months")[date.getMonth()];
                     break;
-                case 'M':
+                case "M":
                     // `Jan` through `Dec` (localized)
-                    char = Language.get('__monthsShort')[date.getMonth()];
+                    char = Language.get("__monthsShort")[date.getMonth()];
                     break;
                 // year
-                case 'y':
+                case "y":
                     // `00` through `99`
                     char = date.getFullYear().toString().substr(2);
                     break;
-                case 'Y':
+                case "Y":
                     // Examples: `1988` or `2015`
                     char = date.getFullYear().toString();
                     break;
                 // timezone
-                case 'P':
+                case "P":
                     let offset = date.getTimezoneOffset();
-                    char = (offset > 0) ? '-' : '+';
+                    char = offset > 0 ? "-" : "+";
                     offset = Math.abs(offset);
-                    char += ('0' + (~~(offset / 60)).toString()).slice(-2);
-                    char += ':';
-                    char += ('0' + (offset % 60).toString()).slice(-2);
+                    char += ("0" + (~~(offset / 60)).toString()).slice(-2);
+                    char += ":";
+                    char += ("0" + (offset % 60).toString()).slice(-2);
                     break;
                 // specials
-                case 'r':
+                case "r":
                     char = date.toString();
                     break;
-                case 'U':
+                case "U":
                     char = Math.round(date.getTime() / 1000).toString();
                     break;
                 // escape sequence
-                case '\\':
-                    char = '';
+                case "\\":
+                    char = "";
                     if (i + 1 < length) {
                         char = format[++i];
                     }
@@ -195,20 +195,20 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
      * (for dates not in the future) after the DOM change listener has been triggered.
      */
     function getTimeElement(date) {
-        const time = document.createElement('time');
-        time.className = 'datetime';
+        const time = document.createElement("time");
+        time.className = "datetime";
         const formattedDate = formatDate(date);
         const formattedTime = formatTime(date);
-        time.setAttribute('datetime', format(date, 'c'));
+        time.setAttribute("datetime", format(date, "c"));
         time.dataset.timestamp = ((date.getTime() - date.getMilliseconds()) / 1000).toString();
         time.dataset.date = formattedDate;
         time.dataset.time = formattedTime;
         time.dataset.offset = (date.getTimezoneOffset() * 60).toString(); // PHP returns minutes, JavaScript returns seconds
         if (date.getTime() > Date.now()) {
-            time.dataset.isFutureDate = 'true';
-            time.textContent = Language.get('wcf.date.dateTimeFormat')
-                .replace('%time%', formattedTime)
-                .replace('%date%', formattedDate);
+            time.dataset.isFutureDate = "true";
+            time.textContent = Language.get("wcf.date.dateTimeFormat")
+                .replace("%time%", formattedTime)
+                .replace("%date%", formattedDate);
         }
         return time;
     }
@@ -219,7 +219,7 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
     function getTimezoneDate(timestamp, offset) {
         const date = new Date(timestamp);
         const localOffset = date.getTimezoneOffset() * 60000;
-        return new Date((timestamp + localOffset + offset));
+        return new Date(timestamp + localOffset + offset);
     }
     exports.getTimezoneDate = getTimezoneDate;
 });

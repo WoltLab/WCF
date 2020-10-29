@@ -1,12 +1,12 @@
-import * as Ajax from '../../Ajax';
-import { AjaxCallbackObject, DatabaseObjectActionResponse } from '../../Ajax/Data';
-import { DialogCallbackObject } from '../Dialog/Data';
-import DomUtil from '../../Dom/Util';
-import * as Language from '../../Language';
-import * as StringUtil from '../../StringUtil';
-import UiDialog from '../Dialog';
+import * as Ajax from "../../Ajax";
+import { AjaxCallbackObject, DatabaseObjectActionResponse } from "../../Ajax/Data";
+import { DialogCallbackObject } from "../Dialog/Data";
+import DomUtil from "../../Dom/Util";
+import * as Language from "../../Language";
+import * as StringUtil from "../../StringUtil";
+import UiDialog from "../Dialog";
 
-type CallbackSelect = (value: string) => void
+type CallbackSelect = (value: string) => void;
 
 interface SearchResult {
   displayLink: string;
@@ -37,7 +37,7 @@ class UiPageSearch implements AjaxCallbackObject, DialogCallbackObject {
 
     const value = this.searchInput!.value.trim();
     if (value.length < 3) {
-      DomUtil.innerError(inputContainer, Language.get('wcf.page.search.error.tooShort'));
+      DomUtil.innerError(inputContainer, Language.get("wcf.page.search.error.tooShort"));
       return;
     } else {
       DomUtil.innerError(inputContainer, false);
@@ -54,16 +54,16 @@ class UiPageSearch implements AjaxCallbackObject, DialogCallbackObject {
     event.preventDefault();
 
     const page = event.currentTarget as HTMLElement;
-    const pageTitle = page.querySelector('h3')!;
+    const pageTitle = page.querySelector("h3")!;
 
-    this.callbackSelect!(page.dataset.pageId! + '#' + pageTitle.textContent!.replace(/['"]/g, ''));
+    this.callbackSelect!(page.dataset.pageId! + "#" + pageTitle.textContent!.replace(/['"]/g, ""));
 
     UiDialog.close(this);
   }
 
   _ajaxSuccess(data: AjaxResponse): void {
     const html = data.returnValues
-      .map(page => {
+      .map((page) => {
         const name = StringUtil.escapeHTML(page.name);
         const displayLink = StringUtil.escapeHTML(page.displayLink);
 
@@ -74,55 +74,55 @@ class UiPageSearch implements AjaxCallbackObject, DialogCallbackObject {
           </div>
         </li>`;
       })
-      .join('');
+      .join("");
 
     this.resultList!.innerHTML = html;
 
-    DomUtil[html ? 'show' : 'hide'](this.resultContainer!);
+    DomUtil[html ? "show" : "hide"](this.resultContainer!);
 
     if (html) {
-      this.resultList!.querySelectorAll('.containerHeadline').forEach((item: HTMLElement) => {
-        item.addEventListener('click', (ev) => this.click(ev));
+      this.resultList!.querySelectorAll(".containerHeadline").forEach((item: HTMLElement) => {
+        item.addEventListener("click", (ev) => this.click(ev));
       });
     } else {
-      DomUtil.innerError(this.searchInput!.parentElement!, Language.get('wcf.page.search.error.noResults'));
+      DomUtil.innerError(this.searchInput!.parentElement!, Language.get("wcf.page.search.error.noResults"));
     }
   }
 
   _ajaxSetup() {
     return {
       data: {
-        actionName: 'search',
-        className: 'wcf\\data\\page\\PageAction',
+        actionName: "search",
+        className: "wcf\\data\\page\\PageAction",
       },
     };
   }
 
   _dialogSetup() {
     return {
-      id: 'wcfUiPageSearch',
+      id: "wcfUiPageSearch",
       options: {
         onSetup: () => {
-          this.searchInput = document.getElementById('wcfUiPageSearchInput') as HTMLInputElement;
-          this.searchInput.addEventListener('keydown', event => {
-            if (event.key === 'Enter') {
+          this.searchInput = document.getElementById("wcfUiPageSearchInput") as HTMLInputElement;
+          this.searchInput.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
               this.search(event);
             }
           });
 
-          this.searchInput.nextElementSibling!.addEventListener('click', (ev) => this.search(ev));
+          this.searchInput.nextElementSibling!.addEventListener("click", (ev) => this.search(ev));
 
-          this.resultContainer = document.getElementById('wcfUiPageSearchResultContainer') as HTMLElement;
-          this.resultList = document.getElementById('wcfUiPageSearchResultList') as HTMLOListElement;
+          this.resultContainer = document.getElementById("wcfUiPageSearchResultContainer") as HTMLElement;
+          this.resultList = document.getElementById("wcfUiPageSearchResultList") as HTMLOListElement;
         },
         onShow: () => {
           this.searchInput!.focus();
         },
-        title: Language.get('wcf.page.search'),
+        title: Language.get("wcf.page.search"),
       },
       source: `<div class="section">
         <dl>
-          <dt><label for="wcfUiPageSearchInput">${Language.get('wcf.page.search.name')}</label></dt>
+          <dt><label for="wcfUiPageSearchInput">${Language.get("wcf.page.search.name")}</label></dt>
           <dd>
             <div class="inputAddon">
               <input type="text" id="wcfUiPageSearchInput" class="long">
@@ -133,7 +133,7 @@ class UiPageSearch implements AjaxCallbackObject, DialogCallbackObject {
       </div>
       <section id="wcfUiPageSearchResultContainer" class="section" style="display: none;">
         <header class="sectionHeader">
-          <h2 class="sectionTitle">${Language.get('wcf.page.search.results')}</h2>
+          <h2 class="sectionTitle">${Language.get("wcf.page.search.results")}</h2>
         </header>
         <ol id="wcfUiPageSearchResultList" class="containerList"></ol>
       </section>`,

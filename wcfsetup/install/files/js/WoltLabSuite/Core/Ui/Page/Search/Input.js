@@ -12,12 +12,12 @@ define(["require", "exports", "tslib", "../../../Core", "../../Search/Input"], f
     Input_1 = tslib_1.__importDefault(Input_1);
     class UiPageSearchInput extends Input_1.default {
         constructor(element, options) {
-            if (typeof options.callbackSuccess !== 'function') {
+            if (typeof options.callbackSuccess !== "function") {
                 throw new Error("Expected a valid callback function for 'callbackSuccess'.");
             }
             options = Core.extend({
                 ajax: {
-                    className: 'wcf\\data\\page\\PageAction',
+                    className: "wcf\\data\\page\\PageAction",
                 },
             }, options);
             super(element, options);

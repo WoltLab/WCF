@@ -7,15 +7,15 @@
  * @module  WoltLabSuite/Core/Ui/Suggestion
  */
 
-import * as Ajax from '../Ajax';
-import * as Core from '../Core';
+import * as Ajax from "../Ajax";
+import * as Core from "../Core";
 import {
   AjaxCallbackObject,
   DatabaseObjectActionPayload,
   DatabaseObjectActionResponse,
   RequestPayload,
-} from '../Ajax/Data';
-import UiDropdownSimple from './Dropdown/Simple';
+} from "../Ajax/Data";
+import UiDropdownSimple from "./Dropdown/Simple";
 
 class UiSuggestion implements AjaxCallbackObject {
   private readonly ajaxPayload: DatabaseObjectActionPayload;
@@ -24,7 +24,7 @@ class UiSuggestion implements AjaxCallbackObject {
   private readonly excludedSearchValues: Set<string>;
   private readonly element: HTMLElement;
   private readonly threshold: number;
-  private value = '';
+  private value = "";
 
   /**
    * Initializes a new suggestion input.
@@ -37,26 +37,31 @@ class UiSuggestion implements AjaxCallbackObject {
 
     this.element = element;
 
-    this.ajaxPayload = Core.extend({
-      actionName: 'getSearchResultList',
-      className: '',
-      interfaceName: 'wcf\\data\\ISearchAction',
-      parameters: {
-        data: {},
+    this.ajaxPayload = Core.extend(
+      {
+        actionName: "getSearchResultList",
+        className: "",
+        interfaceName: "wcf\\data\\ISearchAction",
+        parameters: {
+          data: {},
+        },
       },
-    }, options.ajax) as DatabaseObjectActionPayload;
+      options.ajax
+    ) as DatabaseObjectActionPayload;
 
-    if (typeof options.callbackSelect !== 'function') {
+    if (typeof options.callbackSelect !== "function") {
       throw new Error("Expected a valid callback for option 'callbackSelect'.");
     }
     this.callbackSelect = options.callbackSelect;
 
-    this.excludedSearchValues = new Set(Array.isArray(options.excludedSearchValues) ? options.excludedSearchValues : []);
+    this.excludedSearchValues = new Set(
+      Array.isArray(options.excludedSearchValues) ? options.excludedSearchValues : []
+    );
     this.threshold = options.threshold === undefined ? 3 : options.threshold;
 
-    this.element.addEventListener('click', (ev) => ev.preventDefault());
-    this.element.addEventListener('keydown', (ev) => this.keyDown(ev));
-    this.element.addEventListener('keyup', (ev) => this.keyUp(ev));
+    this.element.addEventListener("click", (ev) => ev.preventDefault());
+    this.element.addEventListener("keydown", (ev) => this.keyDown(ev));
+    this.element.addEventListener("keyup", (ev) => this.keyUp(ev));
   }
 
   /**
@@ -88,24 +93,25 @@ class UiSuggestion implements AjaxCallbackObject {
       return true;
     }
 
-    if (['ArrowDown', 'ArrowUp', 'Enter', 'Escape'].indexOf(event.key) === -1) {
+    if (["ArrowDown", "ArrowUp", "Enter", "Escape"].indexOf(event.key) === -1) {
       return true;
     }
 
     let active!: HTMLElement;
-    let i = 0, length = this.dropdownMenu!.childElementCount;
+    let i = 0,
+      length = this.dropdownMenu!.childElementCount;
     while (i < length) {
       active = this.dropdownMenu!.children[i] as HTMLElement;
-      if (active.classList.contains('active')) {
+      if (active.classList.contains("active")) {
         break;
       }
       i++;
     }
 
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       UiDropdownSimple.close(this.element.id);
       this.select(undefined, active);
-    } else if (event.key === 'Escape') {
+    } else if (event.key === "Escape") {
       if (UiDropdownSimple.isOpen(this.element.id)) {
         UiDropdownSimple.close(this.element.id);
       } else {
@@ -114,16 +120,15 @@ class UiSuggestion implements AjaxCallbackObject {
       }
     } else {
       let index = 0;
-      if (event.key === 'ArrowUp') {
-        index = ((i === 0) ? length : i) - 1;
-      } else if (event.key === 'ArrowDown') {
+      if (event.key === "ArrowUp") {
+        index = (i === 0 ? length : i) - 1;
+      } else if (event.key === "ArrowDown") {
         index = i + 1;
-        if (index === length)
-          index = 0;
+        if (index === length) index = 0;
       }
       if (index !== i) {
-        active.classList.remove('active');
-        this.dropdownMenu!.children[index].classList.add('active');
+        active.classList.remove("active");
+        this.dropdownMenu!.children[index].classList.add("active");
       }
     }
 
@@ -145,8 +150,8 @@ class UiSuggestion implements AjaxCallbackObject {
     const anchor = item!.children[0] as HTMLElement;
     this.callbackSelect(this.element.id, {
       objectId: +(anchor.dataset.objectId || 0),
-      value: item!.textContent || '',
-      type: anchor.dataset.type || '',
+      value: item!.textContent || "",
+      type: anchor.dataset.type || "",
     });
 
     if (event instanceof MouseEvent) {
@@ -193,19 +198,19 @@ class UiSuggestion implements AjaxCallbackObject {
    */
   _ajaxSuccess(data: DatabaseObjectActionResponse): void {
     if (this.dropdownMenu === null) {
-      this.dropdownMenu = document.createElement('div');
-      this.dropdownMenu.className = 'dropdownMenu';
+      this.dropdownMenu = document.createElement("div");
+      this.dropdownMenu.className = "dropdownMenu";
       UiDropdownSimple.initFragment(this.element, this.dropdownMenu);
     } else {
-      this.dropdownMenu.innerHTML = '';
+      this.dropdownMenu.innerHTML = "";
     }
 
     if (Array.isArray(data.returnValues)) {
       data.returnValues.forEach((item, index) => {
-        const anchor = document.createElement('a');
+        const anchor = document.createElement("a");
         if (item.icon) {
-          anchor.className = 'box16';
-          anchor.innerHTML = item.icon + ' <span></span>';
+          anchor.className = "box16";
+          anchor.innerHTML = item.icon + " <span></span>";
           anchor.children[1].textContent = item.label;
         } else {
           anchor.textContent = item.label;
@@ -215,11 +220,11 @@ class UiSuggestion implements AjaxCallbackObject {
         if (item.type) {
           anchor.dataset.type = item.type;
         }
-        anchor.addEventListener('click', (ev) => this.select(ev));
+        anchor.addEventListener("click", (ev) => this.select(ev));
 
-        const listItem = document.createElement('li');
+        const listItem = document.createElement("li");
         if (index === 0) {
-          listItem.className = 'active';
+          listItem.className = "active";
         }
         listItem.appendChild(anchor);
         this.dropdownMenu!.appendChild(listItem);
@@ -232,7 +237,7 @@ class UiSuggestion implements AjaxCallbackObject {
   }
 }
 
-export = UiSuggestion
+export = UiSuggestion;
 
 interface CallbackSelectData {
   objectId: number;

@@ -7,15 +7,15 @@
  * @module  WoltLabSuite/Core/Ui/ItemList
  */
 
-import * as Core from '../Core';
-import * as DomTraverse from '../Dom/Traverse';
-import * as Language from '../Language';
-import UiSuggestion from './Suggestion';
-import UiDropdownSimple from './Dropdown/Simple';
-import { DatabaseObjectActionPayload } from '../Ajax/Data';
-import DomUtil from '../Dom/Util';
+import * as Core from "../Core";
+import * as DomTraverse from "../Dom/Traverse";
+import * as Language from "../Language";
+import UiSuggestion from "./Suggestion";
+import UiDropdownSimple from "./Dropdown/Simple";
+import { DatabaseObjectActionPayload } from "../Ajax/Data";
+import DomUtil from "../Dom/Util";
 
-let _activeId = '';
+let _activeId = "";
 const _data = new Map<string, ElementData>();
 
 /**
@@ -25,28 +25,28 @@ const _data = new Map<string, ElementData>();
 function createUI(element: ItemListInputElement, options: ItemListOptions): UiData {
   const parentElement = element.parentElement!;
 
-  const list = document.createElement('ol');
-  list.className = 'inputItemList' + (element.disabled ? ' disabled' : '');
+  const list = document.createElement("ol");
+  list.className = "inputItemList" + (element.disabled ? " disabled" : "");
   list.dataset.elementId = element.id;
-  list.addEventListener('click', event => {
+  list.addEventListener("click", (event) => {
     if (event.target === list) {
       element.focus();
     }
   });
 
-  const listItem = document.createElement('li');
-  listItem.className = 'input';
+  const listItem = document.createElement("li");
+  listItem.className = "input";
   list.appendChild(listItem);
-  element.addEventListener('keydown', keyDown);
-  element.addEventListener('keypress', keyPress);
-  element.addEventListener('keyup', keyUp);
-  element.addEventListener('paste', paste);
+  element.addEventListener("keydown", keyDown);
+  element.addEventListener("keypress", keyPress);
+  element.addEventListener("keyup", keyUp);
+  element.addEventListener("paste", paste);
 
-  const hasFocus = (element === document.activeElement);
+  const hasFocus = element === document.activeElement;
   if (hasFocus) {
     element.blur();
   }
-  element.addEventListener('blur', blur);
+  element.addEventListener("blur", blur);
   parentElement.insertBefore(list, element);
   listItem.appendChild(element);
 
@@ -60,32 +60,32 @@ function createUI(element: ItemListInputElement, options: ItemListOptions): UiDa
     element.maxLength = options.maxLength;
   }
 
-  const limitReached = document.createElement('span');
-  limitReached.className = 'inputItemListLimitReached';
-  limitReached.textContent = Language.get('wcf.global.form.input.maxItems');
+  const limitReached = document.createElement("span");
+  limitReached.className = "inputItemListLimitReached";
+  limitReached.textContent = Language.get("wcf.global.form.input.maxItems");
   DomUtil.hide(limitReached);
   listItem.appendChild(limitReached);
 
   let shadow: HTMLInputElement | null = null;
   const values: string[] = [];
   if (options.isCSV) {
-    shadow = document.createElement('input');
-    shadow.className = 'itemListInputShadow';
-    shadow.type = 'hidden';
+    shadow = document.createElement("input");
+    shadow.className = "itemListInputShadow";
+    shadow.type = "hidden";
     shadow.name = element.name;
-    element.removeAttribute('name');
+    element.removeAttribute("name");
     list.parentNode!.insertBefore(shadow, list);
 
-    element.value.split(',').forEach(value => {
+    element.value.split(",").forEach((value) => {
       value = value.trim();
       if (value) {
         values.push(value);
       }
     });
 
-    if (element.nodeName === 'TEXTAREA') {
-      const inputElement = document.createElement('input');
-      inputElement.type = 'text';
+    if (element.nodeName === "TEXTAREA") {
+      const inputElement = document.createElement("input");
+      inputElement.type = "text";
       parentElement.insertBefore(inputElement, element);
       inputElement.id = element.id;
 
@@ -112,7 +112,7 @@ function acceptsNewItems(elementId: string): boolean {
     return true;
   }
 
-  return (data.list.childElementCount - 1 < data.options.maxItems);
+  return data.list.childElementCount - 1 < data.options.maxItems;
 }
 
 /**
@@ -137,19 +137,19 @@ function keyDown(event: KeyboardEvent): void {
   _activeId = input.id;
 
   const lastItem = input.parentElement!.previousElementSibling as HTMLElement | null;
-  if (event.key === 'Backspace') {
+  if (event.key === "Backspace") {
     if (input.value.length === 0) {
       if (lastItem !== null) {
-        if (lastItem.classList.contains('active')) {
+        if (lastItem.classList.contains("active")) {
           removeItem(lastItem);
         } else {
-          lastItem.classList.add('active');
+          lastItem.classList.add("active");
         }
       }
     }
-  } else if (event.key === 'Escape') {
-    if (lastItem !== null && lastItem.classList.contains('active')) {
-      lastItem.classList.remove('active');
+  } else if (event.key === "Escape") {
+    if (lastItem !== null && lastItem.classList.contains("active")) {
+      lastItem.classList.remove("active");
     }
   }
 }
@@ -158,7 +158,7 @@ function keyDown(event: KeyboardEvent): void {
  * Handles the `[ENTER]` and `[,]` key to add an item to the list unless it is restricted.
  */
 function keyPress(event: KeyboardEvent): void {
-  if (event.key === 'Enter' || event.key === ',') {
+  if (event.key === "Enter" || event.key === ",") {
     event.preventDefault();
 
     const input = event.currentTarget as HTMLInputElement;
@@ -168,7 +168,7 @@ function keyPress(event: KeyboardEvent): void {
     }
     const value = input.value.trim();
     if (value.length) {
-      addItem(input.id, {objectId: 0, value: value});
+      addItem(input.id, { objectId: 0, value: value });
     }
   }
 }
@@ -179,12 +179,12 @@ function keyPress(event: KeyboardEvent): void {
 function paste(event: ClipboardEvent): void {
   event.preventDefault();
 
-  const text = event.clipboardData!.getData('text/plain');
+  const text = event.clipboardData!.getData("text/plain");
 
   const element = event.currentTarget as HTMLInputElement;
   const elementId = element.id;
   const maxLength = +element.maxLength;
-  text.split(/,/).forEach(item => {
+  text.split(/,/).forEach((item) => {
     item = item.trim();
     if (maxLength && item.length > maxLength) {
       // truncating items provides a better UX than throwing an error or silently discarding it
@@ -192,7 +192,7 @@ function paste(event: ClipboardEvent): void {
     }
 
     if (item.length > 0 && acceptsNewItems(elementId)) {
-      addItem(elementId, {objectId: 0, value: item});
+      addItem(elementId, { objectId: 0, value: item });
     }
   });
 }
@@ -205,7 +205,7 @@ function keyUp(event: KeyboardEvent): void {
   if (input.value.length > 0) {
     const lastItem = input.parentElement!.previousElementSibling;
     if (lastItem !== null) {
-      lastItem.classList.remove('active');
+      lastItem.classList.remove("active");
     }
   }
 }
@@ -215,11 +215,11 @@ function keyUp(event: KeyboardEvent): void {
  */
 function addItem(elementId: string, value: ItemData): void {
   const data = _data.get(elementId)!;
-  const listItem = document.createElement('li');
-  listItem.className = 'item';
+  const listItem = document.createElement("li");
+  listItem.className = "item";
 
-  const content = document.createElement('span');
-  content.className = 'content';
+  const content = document.createElement("span");
+  content.className = "content";
   content.dataset.objectId = value.objectId.toString();
   if (value.type) {
     content.dataset.type = value.type;
@@ -228,21 +228,21 @@ function addItem(elementId: string, value: ItemData): void {
   listItem.appendChild(content);
 
   if (!data.element.disabled) {
-    const button = document.createElement('a');
-    button.className = 'icon icon16 fa-times';
-    button.addEventListener('click', removeItem);
+    const button = document.createElement("a");
+    button.className = "icon icon16 fa-times";
+    button.addEventListener("click", removeItem);
     listItem.appendChild(button);
   }
 
   data.list.insertBefore(listItem, data.listItem);
   data.suggestion.addExcludedValue(value.value);
-  data.element.value = '';
+  data.element.value = "";
   if (!data.element.disabled) {
     handleLimit(elementId);
   }
 
   let values = syncShadow(data);
-  if (typeof data.options.callbackChange === 'function') {
+  if (typeof data.options.callbackChange === "function") {
     if (values === null) {
       values = getValues(elementId);
     }
@@ -261,7 +261,7 @@ function removeItem(item: Event | HTMLElement, noFocus?: boolean): void {
   }
 
   const parent = item.parentElement!;
-  const elementId = parent.dataset.elementId || '';
+  const elementId = parent.dataset.elementId || "";
   const data = _data.get(elementId)!;
   if (item.children[0].textContent) {
     data.suggestion.removeExcludedValue(item.children[0].textContent);
@@ -276,7 +276,7 @@ function removeItem(item: Event | HTMLElement, noFocus?: boolean): void {
   handleLimit(elementId);
 
   let values = syncShadow(data);
-  if (typeof data.options.callbackChange === 'function') {
+  if (typeof data.options.callbackChange === "function") {
     if (values === null) {
       values = getValues(elementId);
     }
@@ -293,15 +293,15 @@ function syncShadow(data: ElementData): ItemData[] | null {
     return null;
   }
 
-  if (typeof data.options.callbackSyncShadow === 'function') {
+  if (typeof data.options.callbackSyncShadow === "function") {
     return data.options.callbackSyncShadow(data);
   }
 
   const values = getValues(data.element.id);
 
   data.shadow!.value = getValues(data.element.id)
-    .map(value => value.value)
-    .join(',');
+    .map((value) => value.value)
+    .join(",");
 
   return values;
 }
@@ -321,11 +321,10 @@ function blur(event: FocusEvent): void {
   const value = input.value.trim();
   if (value.length) {
     if (!data.suggestion || !data.suggestion.isActive()) {
-      addItem(input.id, {objectId: 0, value: value});
+      addItem(input.id, { objectId: 0, value: value });
     }
   }
 }
-
 
 /**
  * Initializes an item list.
@@ -342,7 +341,7 @@ export function init(elementId: string, values: ItemDataOrPlainValue[], options:
   // remove data from previous instance
   if (_data.has(elementId)) {
     const tmp = _data.get(elementId)!;
-    Object.keys(tmp).forEach(key => {
+    Object.keys(tmp).forEach((key) => {
       const el = tmp[key];
       if (el instanceof Element && el.parentNode) {
         el.remove();
@@ -353,56 +352,61 @@ export function init(elementId: string, values: ItemDataOrPlainValue[], options:
     _data.delete(elementId);
   }
 
-  options = Core.extend({
-    // search parameters for suggestions
-    ajax: {
-      actionName: 'getSearchResultList',
-      className: '',
-      data: {},
+  options = Core.extend(
+    {
+      // search parameters for suggestions
+      ajax: {
+        actionName: "getSearchResultList",
+        className: "",
+        data: {},
+      },
+      // list of excluded string values, e.g. `['ignore', 'these strings', 'when', 'searching']`
+      excludedSearchValues: [],
+      // maximum number of items this list may contain, `-1` for infinite
+      maxItems: -1,
+      // maximum length of an item value, `-1` for infinite
+      maxLength: -1,
+      // disallow custom values, only values offered by the suggestion dropdown are accepted
+      restricted: false,
+      // initial value will be interpreted as comma separated value and submitted as such
+      isCSV: false,
+      // will be invoked whenever the items change, receives the element id first and list of values second
+      callbackChange: null,
+      // callback once the form is about to be submitted
+      callbackSubmit: null,
+      // Callback for the custom shadow synchronization.
+      callbackSyncShadow: null,
+      // Callback to set values during the setup.
+      callbackSetupValues: null,
+      // value may contain the placeholder `{$objectId}`
+      submitFieldName: "",
     },
-    // list of excluded string values, e.g. `['ignore', 'these strings', 'when', 'searching']`
-    excludedSearchValues: [],
-    // maximum number of items this list may contain, `-1` for infinite
-    maxItems: -1,
-    // maximum length of an item value, `-1` for infinite
-    maxLength: -1,
-    // disallow custom values, only values offered by the suggestion dropdown are accepted
-    restricted: false,
-    // initial value will be interpreted as comma separated value and submitted as such
-    isCSV: false,
-    // will be invoked whenever the items change, receives the element id first and list of values second
-    callbackChange: null,
-    // callback once the form is about to be submitted
-    callbackSubmit: null,
-    // Callback for the custom shadow synchronization.
-    callbackSyncShadow: null,
-    // Callback to set values during the setup.
-    callbackSetupValues: null,
-    // value may contain the placeholder `{$objectId}`
-    submitFieldName: '',
-  }, options) as ItemListOptions;
+    options
+  ) as ItemListOptions;
 
-  const form = DomTraverse.parentByTag(element, 'FORM') as HTMLFormElement;
+  const form = DomTraverse.parentByTag(element, "FORM") as HTMLFormElement;
   if (form !== null) {
     if (!options.isCSV) {
-      if (!options.submitFieldName.length && typeof options.callbackSubmit !== 'function') {
-        throw new Error("Expected a valid function for option 'callbackSubmit', a non-empty value for option 'submitFieldName' or enabling the option 'submitFieldCSV'.");
+      if (!options.submitFieldName.length && typeof options.callbackSubmit !== "function") {
+        throw new Error(
+          "Expected a valid function for option 'callbackSubmit', a non-empty value for option 'submitFieldName' or enabling the option 'submitFieldCSV'."
+        );
       }
 
-      form.addEventListener('submit', () => {
+      form.addEventListener("submit", () => {
         if (acceptsNewItems(elementId)) {
           const value = _data.get(elementId)!.element.value.trim();
           if (value.length) {
-            addItem(elementId, {objectId: 0, value: value});
+            addItem(elementId, { objectId: 0, value: value });
           }
         }
 
         const values = getValues(elementId);
         if (options.submitFieldName.length) {
-          values.forEach(value => {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = options.submitFieldName.replace('{$objectId}', value.objectId.toString());
+          values.forEach((value) => {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = options.submitFieldName.replace("{$objectId}", value.objectId.toString());
             input.value = value.value;
             form.appendChild(input);
           });
@@ -411,11 +415,11 @@ export function init(elementId: string, values: ItemDataOrPlainValue[], options:
         }
       });
     } else {
-      form.addEventListener('submit', () => {
+      form.addEventListener("submit", () => {
         if (acceptsNewItems(elementId)) {
           const value = _data.get(elementId)!.element.value.trim();
           if (value.length) {
-            addItem(elementId, {objectId: 0, value: value});
+            addItem(elementId, { objectId: 0, value: value });
           }
         }
       });
@@ -444,13 +448,13 @@ export function init(elementId: string, values: ItemDataOrPlainValue[], options:
   if (options.callbackSetupValues) {
     values = options.callbackSetupValues();
   } else {
-    values = (data.values.length) ? data.values : values;
+    values = data.values.length ? data.values : values;
   }
 
   if (Array.isArray(values)) {
-    values.forEach(value => {
-      if (typeof value === 'string') {
-        value = {objectId: 0, value: value};
+    values.forEach((value) => {
+      if (typeof value === "string") {
+        value = { objectId: 0, value: value };
       }
 
       addItem(elementId, value);
@@ -468,9 +472,9 @@ export function getValues(elementId: string): ItemData[] {
   }
 
   const values: ItemData[] = [];
-  data.list.querySelectorAll('.item > span').forEach((span: HTMLSpanElement) => {
+  data.list.querySelectorAll(".item > span").forEach((span: HTMLSpanElement) => {
     values.push({
-      objectId: +(span.dataset.objectId || ''),
+      objectId: +(span.dataset.objectId || ""),
       value: span.textContent!.trim(),
       type: span.dataset.type,
     });
@@ -489,12 +493,12 @@ export function setValues(elementId: string, values: ItemData[]): void {
   }
 
   // remove all existing items first
-  DomTraverse.childrenByClass(data.list, 'item').forEach((item: HTMLElement) => {
+  DomTraverse.childrenByClass(data.list, "item").forEach((item: HTMLElement) => {
     removeItem(item, true);
   });
 
   // add new items
-  values.forEach(value => {
+  values.forEach((value) => {
     addItem(elementId, value);
   });
 }
@@ -552,7 +556,7 @@ interface ElementData {
   limitReached: HTMLSpanElement;
   list: HTMLElement;
   listItem: HTMLElement;
-  options: ItemListOptions,
+  options: ItemListOptions;
   shadow: HTMLInputElement | null;
   suggestion: UiSuggestion;
 }

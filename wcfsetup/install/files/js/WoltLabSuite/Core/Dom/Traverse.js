@@ -19,7 +19,7 @@ define(["require", "exports"], function (require, exports) {
     ]);
     function _getChildren(element, type, value) {
         if (!(element instanceof Element)) {
-            throw new TypeError('Expected a valid element as first argument.');
+            throw new TypeError("Expected a valid element as first argument.");
         }
         const children = [];
         for (let i = 0; i < element.childElementCount; i++) {
@@ -31,7 +31,7 @@ define(["require", "exports"], function (require, exports) {
     }
     function _getParent(element, type, value, untilElement) {
         if (!(element instanceof Element)) {
-            throw new TypeError('Expected a valid element as first argument.');
+            throw new TypeError("Expected a valid element as first argument.");
         }
         let target = element.parentNode;
         while (target instanceof Element) {
@@ -47,7 +47,7 @@ define(["require", "exports"], function (require, exports) {
     }
     function _getSibling(element, siblingType, type, value) {
         if (!(element instanceof Element)) {
-            throw new TypeError('Expected a valid element as first argument.');
+            throw new TypeError("Expected a valid element as first argument.");
         }
         if (element instanceof Element) {
             if (element[siblingType] !== null && _test.get(type)(element[siblingType], value)) {
@@ -125,28 +125,28 @@ define(["require", "exports"], function (require, exports) {
      * @deprecated 5.4 Use `element.nextElementSibling` instead.
      */
     function next(element) {
-        return _getSibling(element, 'nextElementSibling', 0 /* None */, '');
+        return _getSibling(element, "nextElementSibling", 0 /* None */, "");
     }
     exports.next = next;
     /**
      * Returns the next element sibling that matches the given selector.
      */
     function nextBySel(element, selector) {
-        return _getSibling(element, 'nextElementSibling', 1 /* Selector */, selector);
+        return _getSibling(element, "nextElementSibling", 1 /* Selector */, selector);
     }
     exports.nextBySel = nextBySel;
     /**
      * Returns the next element sibling with given CSS class.
      */
     function nextByClass(element, className) {
-        return _getSibling(element, 'nextElementSibling', 2 /* ClassName */, className);
+        return _getSibling(element, "nextElementSibling", 2 /* ClassName */, className);
     }
     exports.nextByClass = nextByClass;
     /**
      * Returns the next element sibling with given CSS class.
      */
     function nextByTag(element, tagName) {
-        return _getSibling(element, 'nextElementSibling', 3 /* TagName */, tagName);
+        return _getSibling(element, "nextElementSibling", 3 /* TagName */, tagName);
     }
     exports.nextByTag = nextByTag;
     /**
@@ -155,28 +155,28 @@ define(["require", "exports"], function (require, exports) {
      * @deprecated 5.4 Use `element.previousElementSibling` instead.
      */
     function prev(element) {
-        return _getSibling(element, 'previousElementSibling', 0 /* None */, '');
+        return _getSibling(element, "previousElementSibling", 0 /* None */, "");
     }
     exports.prev = prev;
     /**
      * Returns the previous element sibling that matches the given selector.
      */
     function prevBySel(element, selector) {
-        return _getSibling(element, 'previousElementSibling', 1 /* Selector */, selector);
+        return _getSibling(element, "previousElementSibling", 1 /* Selector */, selector);
     }
     exports.prevBySel = prevBySel;
     /**
      * Returns the previous element sibling with given CSS class.
      */
     function prevByClass(element, className) {
-        return _getSibling(element, 'previousElementSibling', 2 /* ClassName */, className);
+        return _getSibling(element, "previousElementSibling", 2 /* ClassName */, className);
     }
     exports.prevByClass = prevByClass;
     /**
      * Returns the previous element sibling with given CSS class.
      */
     function prevByTag(element, tagName) {
-        return _getSibling(element, 'previousElementSibling', 3 /* TagName */, tagName);
+        return _getSibling(element, "previousElementSibling", 3 /* TagName */, tagName);
     }
     exports.prevByTag = prevByTag;
 });

@@ -7,18 +7,17 @@
  * @module  WoltLabSuite/Core/Ui/User/Trophy/List
  */
 
-import * as Ajax from '../../../Ajax';
-import { AjaxCallbackObject, DatabaseObjectActionResponse } from '../../../Ajax/Data';
-import { DialogCallbackObject, DialogData } from '../../Dialog/Data';
-import DomChangeListener from '../../../Dom/Change/Listener';
-import UiDialog from '../../Dialog';
-import UiPagination from '../../Pagination';
+import * as Ajax from "../../../Ajax";
+import { AjaxCallbackObject, DatabaseObjectActionResponse } from "../../../Ajax/Data";
+import { DialogCallbackObject, DialogData } from "../../Dialog/Data";
+import DomChangeListener from "../../../Dom/Change/Listener";
+import UiDialog from "../../Dialog";
+import UiPagination from "../../Pagination";
 
 class CacheData {
   private readonly cache = new Map<number, string>();
 
-  constructor(readonly pageCount: number, readonly title: string) {
-  }
+  constructor(readonly pageCount: number, readonly title: string) {}
 
   has(pageNo: number): boolean {
     return this.cache.has(pageNo);
@@ -43,7 +42,7 @@ class UiUserTrophyList implements AjaxCallbackObject, DialogCallbackObject {
    * Initializes the user trophy list.
    */
   constructor() {
-    DomChangeListener.add('WoltLabSuite/Core/Ui/User/Trophy/List', this.rebuild.bind(this));
+    DomChangeListener.add("WoltLabSuite/Core/Ui/User/Trophy/List", this.rebuild.bind(this));
 
     this.rebuild();
   }
@@ -52,9 +51,9 @@ class UiUserTrophyList implements AjaxCallbackObject, DialogCallbackObject {
    * Adds event userTrophyOverlayList elements.
    */
   private rebuild(): void {
-    document.querySelectorAll('.userTrophyOverlayList').forEach((element: HTMLElement) => {
+    document.querySelectorAll(".userTrophyOverlayList").forEach((element: HTMLElement) => {
       if (!this.knownElements.has(element)) {
-        element.addEventListener('click', (ev) => this.open(element, ev));
+        element.addEventListener("click", (ev) => this.open(element, ev));
 
         this.knownElements.add(element);
       }
@@ -90,10 +89,10 @@ class UiUserTrophyList implements AjaxCallbackObject, DialogCallbackObject {
 
     if (data && data.has(this.currentPageNo)) {
       const dialog = UiDialog.open(this, data.get(this.currentPageNo)) as DialogData;
-      UiDialog.setTitle('userTrophyListOverlay', data.title);
+      UiDialog.setTitle("userTrophyListOverlay", data.title);
 
       if (data.pageCount > 1) {
-        const element = dialog.content.querySelector('.jsPagination') as HTMLElement;
+        const element = dialog.content.querySelector(".jsPagination") as HTMLElement;
         if (element !== null) {
           new UiPagination(element, {
             activePage: this.currentPageNo,
@@ -128,15 +127,15 @@ class UiUserTrophyList implements AjaxCallbackObject, DialogCallbackObject {
   _ajaxSetup() {
     return {
       data: {
-        actionName: 'getGroupedUserTrophyList',
-        className: 'wcf\\data\\user\\trophy\\UserTrophyAction',
+        actionName: "getGroupedUserTrophyList",
+        className: "wcf\\data\\user\\trophy\\UserTrophyAction",
       },
     };
   }
 
   _dialogSetup() {
     return {
-      id: 'userTrophyListOverlay',
+      id: "userTrophyListOverlay",
       options: {
         title: "",
       },
@@ -145,12 +144,12 @@ class UiUserTrophyList implements AjaxCallbackObject, DialogCallbackObject {
   }
 }
 
-export = UiUserTrophyList
+export = UiUserTrophyList;
 
 interface AjaxResponse extends DatabaseObjectActionResponse {
   returnValues: {
     pageCount?: number;
     template: string;
     title?: string;
-  }
+  };
 }

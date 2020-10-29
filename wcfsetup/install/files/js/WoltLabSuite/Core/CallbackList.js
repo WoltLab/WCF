@@ -17,8 +17,8 @@ define(["require", "exports"], function (require, exports) {
          * Adds a callback for given identifier.
          */
         add(identifier, callback) {
-            if (typeof callback !== 'function') {
-                throw new TypeError('Expected a valid callback as second argument for identifier \'' + identifier + '\'.');
+            if (typeof callback !== "function") {
+                throw new TypeError("Expected a valid callback as second argument for identifier '" + identifier + "'.");
             }
             if (!this._callbacks.has(identifier)) {
                 this._callbacks.set(identifier, []);

@@ -17,7 +17,7 @@ define(["require", "exports", "tslib", "./Template"], function (require, exports
      * Adds all the language items in the given object to the store.
      */
     function addObject(object) {
-        Object.keys(object).forEach(key => {
+        Object.keys(object).forEach((key) => {
             _languageItems.set(key, object[key]);
         });
     }
@@ -44,16 +44,17 @@ define(["require", "exports", "tslib", "./Template"], function (require, exports
             return key;
         }
         // fetch Template, as it cannot be provided because of a circular dependency
-        if (Template_1.default === undefined) { //@ts-ignore
-            Template_1.default = require('./Template');
+        if (Template_1.default === undefined) {
+            //@ts-ignore
+            Template_1.default = require("./Template");
         }
-        if (typeof value === 'string') {
+        if (typeof value === "string") {
             // lazily convert to WCF.Template
             try {
                 _languageItems.set(key, new Template_1.default(value));
             }
             catch (e) {
-                _languageItems.set(key, new Template_1.default('{literal}' + value.replace(/{\/literal}/g, '{/literal}{ldelim}/literal}{literal}') + '{/literal}'));
+                _languageItems.set(key, new Template_1.default("{literal}" + value.replace(/{\/literal}/g, "{/literal}{ldelim}/literal}{literal}") + "{/literal}"));
             }
             value = _languageItems.get(key);
         }

@@ -15,7 +15,7 @@ let _settings = {
 
 function _updateConfig() {
   if (window.sessionStorage) {
-    window.sessionStorage.setItem('__wsc_devtools_config', JSON.stringify(_settings));
+    window.sessionStorage.setItem("__wsc_devtools_config", JSON.stringify(_settings));
   }
 }
 
@@ -24,20 +24,20 @@ const Devtools = {
    * Prints the list of available commands.
    */
   help(): void {
-    window.console.log('');
-    window.console.log('%cAvailable commands:', 'text-decoration: underline');
+    window.console.log("");
+    window.console.log("%cAvailable commands:", "text-decoration: underline");
 
     const commands: string[] = [];
     for (const cmd in Devtools) {
-      if (cmd !== '_internal_' && Devtools.hasOwnProperty(cmd)) {
+      if (cmd !== "_internal_" && Devtools.hasOwnProperty(cmd)) {
         commands.push(cmd);
       }
     }
     commands.sort().forEach(function (cmd) {
-      window.console.log('\tDevtools.' + cmd + '()');
+      window.console.log("\tDevtools." + cmd + "()");
     });
 
-    window.console.log('');
+    window.console.log("");
   },
 
   /**
@@ -47,7 +47,10 @@ const Devtools = {
     _settings.editorAutosave = forceDisable ? false : !_settings.editorAutosave;
     _updateConfig();
 
-    window.console.log('%c\tEditor autosave ' + (_settings.editorAutosave ? 'enabled' : 'disabled'), 'font-style: italic');
+    window.console.log(
+      "%c\tEditor autosave " + (_settings.editorAutosave ? "enabled" : "disabled"),
+      "font-style: italic"
+    );
   },
 
   /**
@@ -57,7 +60,7 @@ const Devtools = {
     _settings.eventLogging = forceEnable ? true : !_settings.eventLogging;
     _updateConfig();
 
-    window.console.log('%c\tEvent logging ' + (_settings.eventLogging ? 'enabled' : 'disabled'), 'font-style: italic');
+    window.console.log("%c\tEvent logging " + (_settings.eventLogging ? "enabled" : "disabled"), "font-style: italic");
   },
 
   /**
@@ -67,23 +70,22 @@ const Devtools = {
     enable(): void {
       window.Devtools = Devtools;
 
-      window.console.log('%cDevtools for WoltLab Suite loaded', 'font-weight: bold');
+      window.console.log("%cDevtools for WoltLab Suite loaded", "font-weight: bold");
 
       if (window.sessionStorage) {
-        const settings = window.sessionStorage.getItem('__wsc_devtools_config');
+        const settings = window.sessionStorage.getItem("__wsc_devtools_config");
         try {
           if (settings !== null) {
             _settings = JSON.parse(settings);
           }
-        } catch (e) {
-        }
+        } catch (e) {}
 
         if (!_settings.editorAutosave) Devtools.toggleEditorAutosave(true);
         if (_settings.eventLogging) Devtools.toggleEventLogging(true);
       }
 
-      window.console.log('Settings are saved per browser session, enter `Devtools.help()` to learn more.');
-      window.console.log('');
+      window.console.log("Settings are saved per browser session, enter `Devtools.help()` to learn more.");
+      window.console.log("");
     },
 
     editorAutosave(): boolean {
@@ -92,7 +94,7 @@ const Devtools = {
 
     eventLog(identifier: string, action: string): void {
       if (_settings.eventLogging) {
-        window.console.log('[Devtools.EventLogging] Firing event: ' + action + ' @ ' + identifier);
+        window.console.log("[Devtools.EventLogging] Firing event: " + action + " @ " + identifier);
       }
     },
   },

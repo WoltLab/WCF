@@ -20,11 +20,11 @@ define(["require", "exports"], function (require, exports) {
          * Sets a new key with given value, will overwrite an existing key.
          */
         set(key, value) {
-            if (typeof key !== 'object' || key === null) {
-                throw new TypeError('Only objects can be used as key');
+            if (typeof key !== "object" || key === null) {
+                throw new TypeError("Only objects can be used as key");
             }
-            if (typeof value !== 'object' || value === null) {
-                throw new TypeError('Only objects can be used as value');
+            if (typeof value !== "object" || value === null) {
+                throw new TypeError("Only objects can be used as value");
             }
             this._map.set(key, value);
         }

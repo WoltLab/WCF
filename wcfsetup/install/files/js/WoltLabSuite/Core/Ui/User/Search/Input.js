@@ -13,13 +13,13 @@ define(["require", "exports", "tslib", "../../../Core", "../../Search/Input"], f
     Input_1 = tslib_1.__importDefault(Input_1);
     class UiUserSearchInput extends Input_1.default {
         constructor(element, options) {
-            const includeUserGroups = (Core.isPlainObject(options) && options.includeUserGroups === true);
+            const includeUserGroups = Core.isPlainObject(options) && options.includeUserGroups === true;
             options = Core.extend({
                 ajax: {
-                    className: 'wcf\\data\\user\\UserAction',
+                    className: "wcf\\data\\user\\UserAction",
                     parameters: {
                         data: {
-                            includeUserGroups: (includeUserGroups ? 1 : 0),
+                            includeUserGroups: includeUserGroups ? 1 : 0,
                         },
                     },
                 },
@@ -29,9 +29,9 @@ define(["require", "exports", "tslib", "../../../Core", "../../Search/Input"], f
         createListItem(item) {
             const listItem = super.createListItem(item);
             listItem.dataset.type = item.type;
-            const box = document.createElement('div');
-            box.className = 'box16';
-            box.innerHTML = (item.type === 'group') ? '<span class="icon icon16 fa-users"></span>' : item.icon;
+            const box = document.createElement("div");
+            box.className = "box16";
+            box.innerHTML = item.type === "group" ? '<span class="icon icon16 fa-users"></span>' : item.icon;
             box.appendChild(listItem.children[0]);
             listItem.appendChild(box);
             return listItem;

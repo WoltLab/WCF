@@ -7,9 +7,9 @@
  * @module  WoltLabSuite/Core/Ui/User/Ignore
  */
 
-import DomChangeListener from '../../Dom/Change/Listener';
+import DomChangeListener from "../../Dom/Change/Listener";
 
-const _availableMessages = document.getElementsByClassName('ignoredUserMessage');
+const _availableMessages = document.getElementsByClassName("ignoredUserMessage");
 const _knownMessages = new Set<HTMLElement>();
 
 /**
@@ -22,7 +22,7 @@ function rebuild() {
     const message = _availableMessages[i] as HTMLElement;
 
     if (!_knownMessages.has(message)) {
-      message.addEventListener('click', showMessage, {once: true});
+      message.addEventListener("click", showMessage, { once: true });
 
       _knownMessages.add(message);
     }
@@ -36,7 +36,7 @@ function showMessage(event: MouseEvent): void {
   event.preventDefault();
 
   const message = event.currentTarget as HTMLElement;
-  message.classList.remove('ignoredUserMessage');
+  message.classList.remove("ignoredUserMessage");
   _knownMessages.delete(message);
 
   // Firefox selects the entire message on click for no reason
@@ -50,5 +50,5 @@ function showMessage(event: MouseEvent): void {
 export function init() {
   rebuild();
 
-  DomChangeListener.add('WoltLabSuite/Core/Ui/User/Ignore', rebuild);
+  DomChangeListener.add("WoltLabSuite/Core/Ui/User/Ignore", rebuild);
 }

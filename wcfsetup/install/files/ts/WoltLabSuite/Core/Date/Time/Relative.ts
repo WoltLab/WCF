@@ -7,16 +7,15 @@
  * @module  WoltLabSuite/Core/Date/Time/Relative
  */
 
-import * as Core from '../../Core';
-import * as DateUtil from '../Util';
-import DomChangeListener from '../../Dom/Change/Listener';
-import * as Language from '../../Language';
-import RepeatingTimer from '../../Timer/Repeating';
+import * as Core from "../../Core";
+import * as DateUtil from "../Util";
+import DomChangeListener from "../../Dom/Change/Listener";
+import * as Language from "../../Language";
+import RepeatingTimer from "../../Timer/Repeating";
 
 let _isActive = true;
 let _isPending = false;
 let _offset: number;
-
 
 function onVisibilityChange(): void {
   if (document.hidden) {
@@ -45,13 +44,13 @@ function refresh() {
   const timestamp = (date.getTime() - date.getMilliseconds()) / 1_000;
   if (_offset === null) _offset = timestamp - window.TIME_NOW;
 
-  document.querySelectorAll('time').forEach(element => {
+  document.querySelectorAll("time").forEach((element) => {
     rebuild(element, date, timestamp);
   });
 }
 
 function rebuild(element: HTMLTimeElement, date: Date, timestamp: number): void {
-  if (!element.classList.contains('datetime') || Core.stringToBool(element.dataset.isFutureDate || '')) {
+  if (!element.classList.contains("datetime") || Core.stringToBool(element.dataset.isFutureDate || "")) {
     return;
   }
 
@@ -61,38 +60,42 @@ function rebuild(element: HTMLTimeElement, date: Date, timestamp: number): void 
   const elOffset = element.dataset.offset!;
 
   if (!element.title) {
-    element.title = Language.get('wcf.date.dateTimeFormat').replace(/%date%/, elDate).replace(/%time%/, elTime);
+    element.title = Language.get("wcf.date.dateTimeFormat")
+      .replace(/%date%/, elDate)
+      .replace(/%time%/, elTime);
   }
 
   // timestamp is less than 60 seconds ago
-  if (elTimestamp >= timestamp || timestamp < (elTimestamp + 60)) {
-    element.textContent = Language.get('wcf.date.relative.now');
+  if (elTimestamp >= timestamp || timestamp < elTimestamp + 60) {
+    element.textContent = Language.get("wcf.date.relative.now");
   }
   // timestamp is less than 60 minutes ago (display 1 hour ago rather than 60 minutes ago)
-  else if (timestamp < (elTimestamp + 3540)) {
+  else if (timestamp < elTimestamp + 3540) {
     const minutes = Math.max(Math.round((timestamp - elTimestamp) / 60), 1);
-    element.textContent = Language.get('wcf.date.relative.minutes', {minutes: minutes});
+    element.textContent = Language.get("wcf.date.relative.minutes", { minutes: minutes });
   }
   // timestamp is less than 24 hours ago
-  else if (timestamp < (elTimestamp + 86400)) {
+  else if (timestamp < elTimestamp + 86400) {
     const hours = Math.round((timestamp - elTimestamp) / 3600);
-    element.textContent = Language.get('wcf.date.relative.hours', {hours: hours});
+    element.textContent = Language.get("wcf.date.relative.hours", { hours: hours });
   }
   // timestamp is less than 6 days ago
-  else if (timestamp < (elTimestamp + 518400)) {
+  else if (timestamp < elTimestamp + 518400) {
     const midnight = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     const days = Math.ceil((midnight.getTime() / 1000 - elTimestamp) / 86400);
 
     // get day of week
-    const dateObj = DateUtil.getTimezoneDate((elTimestamp * 1000), parseInt(elOffset, 10) * 1000);
+    const dateObj = DateUtil.getTimezoneDate(elTimestamp * 1000, parseInt(elOffset, 10) * 1000);
     const dow = dateObj.getDay();
-    const day = Language.get('__days')[dow];
+    const day = Language.get("__days")[dow];
 
-    element.textContent = Language.get('wcf.date.relative.pastDays', {days: days, day: day, time: elTime});
+    element.textContent = Language.get("wcf.date.relative.pastDays", { days: days, day: day, time: elTime });
   }
   // timestamp is between ~700 million years BC and last week
   else {
-    element.textContent = Language.get('wcf.date.shortDateTimeFormat').replace(/%date%/, elDate).replace(/%time%/, elTime);
+    element.textContent = Language.get("wcf.date.shortDateTimeFormat")
+      .replace(/%date%/, elDate)
+      .replace(/%time%/, elTime);
   }
 }
 
@@ -102,7 +105,7 @@ function rebuild(element: HTMLTimeElement, date: Date, timestamp: number): void 
 export function setup(): void {
   new RepeatingTimer(refresh, 60_000);
 
-  DomChangeListener.add('WoltLabSuite/Core/Date/Time/Relative', refresh);
+  DomChangeListener.add("WoltLabSuite/Core/Date/Time/Relative", refresh);
 
-  document.addEventListener('visibilitychange', onVisibilityChange);
+  document.addEventListener("visibilitychange", onVisibilityChange);
 }

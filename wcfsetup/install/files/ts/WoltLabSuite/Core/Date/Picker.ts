@@ -7,14 +7,14 @@
  * @module  WoltLabSuite/Core/Date/Picker
  */
 
-import * as Core from '../Core';
-import * as DateUtil from './Util';
-import DomChangeListener from '../Dom/Change/Listener';
-import * as EventHandler from '../Event/Handler';
-import * as Language from '../Language';
-import * as UiAlignment from '../Ui/Alignment';
-import UiCloseOverlay from '../Ui/CloseOverlay';
-import DomUtil from '../Dom/Util';
+import * as Core from "../Core";
+import * as DateUtil from "./Util";
+import DomChangeListener from "../Dom/Change/Listener";
+import * as EventHandler from "../Event/Handler";
+import * as Language from "../Language";
+import * as UiAlignment from "../Ui/Alignment";
+import UiCloseOverlay from "../Ui/CloseOverlay";
+import DomUtil from "../Dom/Util";
 
 let _didInit = false;
 let _firstDayOfWeek = 0;
@@ -44,104 +44,104 @@ function createPicker() {
     return;
   }
 
-  _datePicker = document.createElement('div');
-  _datePicker.className = 'datePicker';
-  _datePicker.addEventListener('click', event => {
+  _datePicker = document.createElement("div");
+  _datePicker.className = "datePicker";
+  _datePicker.addEventListener("click", (event) => {
     event.stopPropagation();
   });
 
-  const header = document.createElement('header');
+  const header = document.createElement("header");
   _datePicker.appendChild(header);
 
-  _dateMonthPrevious = document.createElement('a');
-  _dateMonthPrevious.className = 'previous jsTooltip';
-  _dateMonthPrevious.href = '#';
-  _dateMonthPrevious.setAttribute('role', 'button');
+  _dateMonthPrevious = document.createElement("a");
+  _dateMonthPrevious.className = "previous jsTooltip";
+  _dateMonthPrevious.href = "#";
+  _dateMonthPrevious.setAttribute("role", "button");
   _dateMonthPrevious.tabIndex = 0;
-  _dateMonthPrevious.title = Language.get('wcf.date.datePicker.previousMonth');
-  _dateMonthPrevious.setAttribute('aria-label', Language.get('wcf.date.datePicker.previousMonth'));
+  _dateMonthPrevious.title = Language.get("wcf.date.datePicker.previousMonth");
+  _dateMonthPrevious.setAttribute("aria-label", Language.get("wcf.date.datePicker.previousMonth"));
   _dateMonthPrevious.innerHTML = '<span class="icon icon16 fa-arrow-left"></span>';
-  _dateMonthPrevious.addEventListener('click', DatePicker.previousMonth);
+  _dateMonthPrevious.addEventListener("click", DatePicker.previousMonth);
   header.appendChild(_dateMonthPrevious);
 
-  const monthYearContainer = document.createElement('span');
+  const monthYearContainer = document.createElement("span");
   header.appendChild(monthYearContainer);
 
-  _dateMonth = document.createElement('select');
-  _dateMonth.className = 'month jsTooltip';
-  _dateMonth.title = Language.get('wcf.date.datePicker.month');
-  _dateMonth.setAttribute('aria-label', Language.get('wcf.date.datePicker.month'));
-  _dateMonth.addEventListener('change', changeMonth);
+  _dateMonth = document.createElement("select");
+  _dateMonth.className = "month jsTooltip";
+  _dateMonth.title = Language.get("wcf.date.datePicker.month");
+  _dateMonth.setAttribute("aria-label", Language.get("wcf.date.datePicker.month"));
+  _dateMonth.addEventListener("change", changeMonth);
   monthYearContainer.appendChild(_dateMonth);
 
-  let months = '';
-  const monthNames = Language.get('__monthsShort');
+  let months = "";
+  const monthNames = Language.get("__monthsShort");
   for (let i = 0; i < 12; i++) {
-    months += '<option value="' + i + '">' + monthNames[i] + '</option>';
+    months += '<option value="' + i + '">' + monthNames[i] + "</option>";
   }
   _dateMonth.innerHTML = months;
 
-  _dateYear = document.createElement('select');
-  _dateYear.className = 'year jsTooltip';
-  _dateYear.title = Language.get('wcf.date.datePicker.year');
-  _dateYear.setAttribute('aria-label', Language.get('wcf.date.datePicker.year'));
-  _dateYear.addEventListener('change', changeYear);
+  _dateYear = document.createElement("select");
+  _dateYear.className = "year jsTooltip";
+  _dateYear.title = Language.get("wcf.date.datePicker.year");
+  _dateYear.setAttribute("aria-label", Language.get("wcf.date.datePicker.year"));
+  _dateYear.addEventListener("change", changeYear);
   monthYearContainer.appendChild(_dateYear);
 
-  _dateMonthNext = document.createElement('a');
-  _dateMonthNext.className = 'next jsTooltip';
-  _dateMonthNext.href = '#';
-  _dateMonthNext.setAttribute('role', 'button');
+  _dateMonthNext = document.createElement("a");
+  _dateMonthNext.className = "next jsTooltip";
+  _dateMonthNext.href = "#";
+  _dateMonthNext.setAttribute("role", "button");
   _dateMonthNext.tabIndex = 0;
-  _dateMonthNext.title = Language.get('wcf.date.datePicker.nextMonth');
-  _dateMonthNext.setAttribute('aria-label', Language.get('wcf.date.datePicker.nextMonth'));
+  _dateMonthNext.title = Language.get("wcf.date.datePicker.nextMonth");
+  _dateMonthNext.setAttribute("aria-label", Language.get("wcf.date.datePicker.nextMonth"));
   _dateMonthNext.innerHTML = '<span class="icon icon16 fa-arrow-right"></span>';
-  _dateMonthNext.addEventListener('click', DatePicker.nextMonth);
+  _dateMonthNext.addEventListener("click", DatePicker.nextMonth);
   header.appendChild(_dateMonthNext);
 
-  _dateGrid = document.createElement('ul');
+  _dateGrid = document.createElement("ul");
   _datePicker.appendChild(_dateGrid);
 
-  const item = document.createElement('li');
-  item.className = 'weekdays';
+  const item = document.createElement("li");
+  item.className = "weekdays";
   _dateGrid.appendChild(item);
 
-  const weekdays = Language.get('__daysShort');
+  const weekdays = Language.get("__daysShort");
   for (let i = 0; i < 7; i++) {
     let day = i + _firstDayOfWeek;
     if (day > 6) day -= 7;
 
-    const span = document.createElement('span');
+    const span = document.createElement("span");
     span.textContent = weekdays[day];
     item.appendChild(span);
   }
 
   // create date grid
   for (let i = 0; i < 6; i++) {
-    const row = document.createElement('li');
+    const row = document.createElement("li");
     _dateGrid.appendChild(row);
 
     for (let j = 0; j < 7; j++) {
-      const cell = document.createElement('a');
-      cell.addEventListener('click', click);
+      const cell = document.createElement("a");
+      cell.addEventListener("click", click);
       _dateCells.push(cell);
 
       row.appendChild(cell);
     }
   }
 
-  _dateTime = document.createElement('footer');
+  _dateTime = document.createElement("footer");
   _datePicker.appendChild(_dateTime);
 
-  _dateHour = document.createElement('select');
-  _dateHour.className = 'hour';
-  _dateHour.title = Language.get('wcf.date.datePicker.hour');
-  _dateHour.setAttribute('aria-label', Language.get('wcf.date.datePicker.hour'));
-  _dateHour.addEventListener('change', formatValue);
+  _dateHour = document.createElement("select");
+  _dateHour.className = "hour";
+  _dateHour.title = Language.get("wcf.date.datePicker.hour");
+  _dateHour.setAttribute("aria-label", Language.get("wcf.date.datePicker.hour"));
+  _dateHour.addEventListener("change", formatValue);
 
   const date = new Date(2000, 0, 1);
-  const timeFormat = Language.get('wcf.date.timeFormat').replace(/:/, '').replace(/[isu]/g, '');
-  let tmp = '';
+  const timeFormat = Language.get("wcf.date.timeFormat").replace(/:/, "").replace(/[isu]/g, "");
+  let tmp = "";
   for (let i = 0; i < 24; i++) {
     date.setHours(i);
     tmp += '<option value="' + i + '">' + DateUtil.format(date, timeFormat) + "</option>";
@@ -150,17 +150,17 @@ function createPicker() {
 
   _dateTime.appendChild(_dateHour);
 
-  _dateTime.appendChild(document.createTextNode('\u00A0:\u00A0'));
+  _dateTime.appendChild(document.createTextNode("\u00A0:\u00A0"));
 
-  _dateMinute = document.createElement('select');
-  _dateMinute.className = 'minute';
-  _dateMinute.title = Language.get('wcf.date.datePicker.minute');
-  _dateMinute.setAttribute('aria-label', Language.get('wcf.date.datePicker.minute'));
-  _dateMinute.addEventListener('change', formatValue);
+  _dateMinute = document.createElement("select");
+  _dateMinute.className = "minute";
+  _dateMinute.title = Language.get("wcf.date.datePicker.minute");
+  _dateMinute.setAttribute("aria-label", Language.get("wcf.date.datePicker.minute"));
+  _dateMinute.addEventListener("change", formatValue);
 
-  tmp = '';
+  tmp = "";
   for (let i = 0; i < 60; i++) {
-    tmp += '<option value="' + i + '">' + (i < 10 ? '0' + i.toString() : i) + '</option>';
+    tmp += '<option value="' + i + '">' + (i < 10 ? "0" + i.toString() : i) + "</option>";
   }
   _dateMinute.innerHTML = tmp;
 
@@ -168,20 +168,20 @@ function createPicker() {
 
   document.body.appendChild(_datePicker);
 
-  document.body.addEventListener('focus', maintainFocus, {capture: true});
+  document.body.addEventListener("focus", maintainFocus, { capture: true });
 }
 
 /**
  * Initializes the minimum/maximum date range.
  */
 function initDateRange(element: HTMLInputElement, now: Date, isMinDate: boolean): void {
-  const name = isMinDate ? 'minDate' : 'maxDate';
-  let value = (element.dataset[name] || '').trim();
+  const name = isMinDate ? "minDate" : "maxDate";
+  let value = (element.dataset[name] || "").trim();
 
   if (value.match(/^(\d{4})-(\d{2})-(\d{2})$/)) {
     // YYYY-mm-dd
     value = new Date(value).getTime().toString();
-  } else if (value === 'now') {
+  } else if (value === "now") {
     value = now.getTime().toString();
   } else if (value.match(/^\d{1,3}$/)) {
     // relative time span in years
@@ -194,12 +194,14 @@ function initDateRange(element: HTMLInputElement, now: Date, isMinDate: boolean)
     value = RegExp.$1;
 
     if (document.getElementById(value) === null) {
-      throw new Error("Reference date picker identified by '" + value + "' does not exists (element id: '" + element.id + "').");
+      throw new Error(
+        "Reference date picker identified by '" + value + "' does not exists (element id: '" + element.id + "')."
+      );
     }
   } else if (/^\d{4}-\d{2}-\d{2}T/.test(value)) {
     value = new Date(value).getTime().toString();
   } else {
-    value = new Date((isMinDate ? 1902 : 2038), 0, 1).getTime().toString();
+    value = new Date(isMinDate ? 1902 : 2038, 0, 1).getTime().toString();
   }
 
   element.dataset[name] = value;
@@ -212,20 +214,20 @@ function setup() {
   if (_didInit) return;
   _didInit = true;
 
-  _firstDayOfWeek = parseInt(Language.get('wcf.date.firstDayOfTheWeek'), 10);
+  _firstDayOfWeek = parseInt(Language.get("wcf.date.firstDayOfTheWeek"), 10);
 
-  DomChangeListener.add('WoltLabSuite/Core/Date/Picker', DatePicker.init);
-  UiCloseOverlay.add('WoltLabSuite/Core/Date/Picker', close);
+  DomChangeListener.add("WoltLabSuite/Core/Date/Picker", DatePicker.init);
+  UiCloseOverlay.add("WoltLabSuite/Core/Date/Picker", close);
 }
 
 function getDateValue(attributeName: string): Date {
-  let date = _input!.dataset[attributeName] || '';
+  let date = _input!.dataset[attributeName] || "";
   if (date.match(/^datePicker-(.+)$/)) {
     const referenceElement = document.getElementById(RegExp.$1);
     if (referenceElement === null) {
       throw new Error(`Unable to find an element with the id '${RegExp.$1}'.`);
     }
-    date = referenceElement.dataset.value || '';
+    date = referenceElement.dataset.value || "";
   }
 
   return new Date(parseInt(date, 10));
@@ -241,17 +243,17 @@ function open(event: MouseEvent): void {
   createPicker();
 
   const target = event.currentTarget as HTMLInputElement;
-  const input = (target.nodeName === 'INPUT') ? target : target.previousElementSibling as HTMLInputElement;
+  const input = target.nodeName === "INPUT" ? target : (target.previousElementSibling as HTMLInputElement);
   if (input === _input) {
     close();
     return;
   }
 
-  const dialogContent = input.closest('.dialogContent') as HTMLElement;
+  const dialogContent = input.closest(".dialogContent") as HTMLElement;
   if (dialogContent !== null) {
-    if (!Core.stringToBool(dialogContent.dataset.hasDatepickerScrollListener || '')) {
-      dialogContent.addEventListener('scroll', onDialogScroll);
-      dialogContent.dataset.hasDatepickerScrollListener = '1';
+    if (!Core.stringToBool(dialogContent.dataset.hasDatepickerScrollListener || "")) {
+      dialogContent.addEventListener("scroll", onDialogScroll);
+      dialogContent.dataset.hasDatepickerScrollListener = "1";
     }
   }
 
@@ -262,7 +264,7 @@ function open(event: MouseEvent): void {
   if (value) {
     date = new Date(parseInt(value, 10));
 
-    if (date.toString() === 'Invalid Date') {
+    if (date.toString() === "Invalid Date") {
       date = new Date();
     }
   } else {
@@ -270,29 +272,29 @@ function open(event: MouseEvent): void {
   }
 
   // set min/max date
-  _minDate = getDateValue('minDate');
+  _minDate = getDateValue("minDate");
   if (_minDate.getTime() > date.getTime()) {
     date = _minDate;
   }
 
-  _maxDate = getDateValue('maxDate');
+  _maxDate = getDateValue("maxDate");
 
   if (data.isDateTime) {
     _dateHour.value = date.getHours().toString();
     _dateMinute.value = date.getMinutes().toString();
 
-    _datePicker!.classList.add('datePickerTime');
+    _datePicker!.classList.add("datePickerTime");
   } else {
-    _datePicker!.classList.remove('datePickerTime');
+    _datePicker!.classList.remove("datePickerTime");
   }
 
-  _datePicker!.classList[(data.isTimeOnly) ? 'add' : 'remove']('datePickerTimeOnly');
+  _datePicker!.classList[data.isTimeOnly ? "add" : "remove"]("datePickerTimeOnly");
 
   renderPicker(date.getDate(), date.getMonth(), date.getFullYear());
 
   UiAlignment.set(_datePicker!, _input);
 
-  _input.nextElementSibling!.setAttribute('aria-expanded', 'true');
+  _input.nextElementSibling!.setAttribute("aria-expanded", "true");
 
   _wasInsidePicker = false;
 }
@@ -301,21 +303,21 @@ function open(event: MouseEvent): void {
  * Closes the date picker.
  */
 function close() {
-  if (_datePicker === null || !_datePicker.classList.contains('active')) {
+  if (_datePicker === null || !_datePicker.classList.contains("active")) {
     return;
   }
 
-  _datePicker.classList.remove('active');
+  _datePicker.classList.remove("active");
 
   const data = _data.get(_input!) as DatePickerData;
-  if (typeof data.onClose === 'function') {
+  if (typeof data.onClose === "function") {
     data.onClose();
   }
 
-  EventHandler.fire('WoltLabSuite/Core/Date/Picker', 'close', {element: _input});
+  EventHandler.fire("WoltLabSuite/Core/Date/Picker", "close", { element: _input });
 
   const sibling = _input!.nextElementSibling as HTMLElement;
-  sibling.setAttribute('aria-expanded', 'false');
+  sibling.setAttribute("aria-expanded", "false");
   _input = null;
 }
 
@@ -358,38 +360,38 @@ function renderPicker(day: number, month: number, year: number): void {
   renderGrid(day, month, year);
 
   // create options for month and year
-  let years = '';
+  let years = "";
   for (let i = _minDate.getFullYear(), last = _maxDate.getFullYear(); i <= last; i++) {
-    years += '<option value="' + i + '">' + i + '</option>';
+    years += '<option value="' + i + '">' + i + "</option>";
   }
   _dateYear.innerHTML = years;
   _dateYear.value = year.toString();
 
   _dateMonth.value = month.toString();
 
-  _datePicker!.classList.add('active');
+  _datePicker!.classList.add("active");
 }
 
 /**
  * Updates the date grid.
  */
 function renderGrid(day?: number, month?: number, year?: number): void {
-  const hasDay = (day !== undefined);
-  const hasMonth = (month !== undefined);
+  const hasDay = day !== undefined;
+  const hasMonth = month !== undefined;
 
-  if (typeof day !== 'number') {
-    day = parseInt(day || _dateGrid.dataset.day || '0', 10);
+  if (typeof day !== "number") {
+    day = parseInt(day || _dateGrid.dataset.day || "0", 10);
   }
-  if (typeof month !== 'number') {
-    month = parseInt(month || '0', 10);
+  if (typeof month !== "number") {
+    month = parseInt(month || "0", 10);
   }
-  if (typeof year !== 'number') {
-    year = parseInt(year || '0', 10);
+  if (typeof year !== "number") {
+    year = parseInt(year || "0", 10);
   }
 
   // rebuild cells
   if (hasMonth || year) {
-    let rebuildMonths = (year !== 0);
+    let rebuildMonths = year !== 0;
 
     // rebuild grid
     const fragment = document.createDocumentFragment();
@@ -403,7 +405,7 @@ function renderGrid(day?: number, month?: number, year?: number): void {
     }
 
     // check if current selection exceeds min/max date
-    let date = new Date(year + '-' + ('0' + (month + 1).toString()).slice(-2) + '-' + ('0' + day.toString()).slice(-2));
+    let date = new Date(year + "-" + ("0" + (month + 1).toString()).slice(-2) + "-" + ("0" + day.toString()).slice(-2));
     if (date < _minDate) {
       year = _minDate.getFullYear();
       month = _minDate.getMonth();
@@ -424,7 +426,7 @@ function renderGrid(day?: number, month?: number, year?: number): void {
       rebuildMonths = true;
     }
 
-    date = new Date(year + '-' + ('0' + (month + 1).toString()).slice(-2) + '-01');
+    date = new Date(year + "-" + ("0" + (month + 1).toString()).slice(-2) + "-01");
 
     // shift until first displayed day equals first day of week
     while (date.getDay() !== _firstDayOfWeek) {
@@ -447,19 +449,19 @@ function renderGrid(day?: number, month?: number, year?: number): void {
       const cell = _dateCells[i];
 
       cell.textContent = date.getDate().toString();
-      selectable = (date.getMonth() === month);
+      selectable = date.getMonth() === month;
       if (selectable) {
         if (date < comparableMinDate) selectable = false;
         else if (date > _maxDate) selectable = false;
       }
 
-      cell.classList[selectable ? 'remove' : 'add']('otherMonth');
+      cell.classList[selectable ? "remove" : "add"]("otherMonth");
       if (selectable) {
-        cell.href = '#';
-        cell.setAttribute('role', 'button');
+        cell.href = "#";
+        cell.setAttribute("role", "button");
         cell.tabIndex = 0;
         cell.title = DateUtil.formatDate(date);
-        cell.setAttribute('aria-label', DateUtil.formatDate(date));
+        cell.setAttribute("aria-label", DateUtil.formatDate(date));
       }
 
       date.setDate(date.getDate() + 1);
@@ -486,18 +488,20 @@ function renderGrid(day?: number, month?: number, year?: number): void {
       for (let i = 0; i < 12; i++) {
         const currentMonth = _dateMonth.children[i] as HTMLOptionElement;
 
-        currentMonth.disabled = (year === _minDate.getFullYear() && +currentMonth.value < _minDate.getMonth()) || (year === _maxDate.getFullYear() && +currentMonth.value > _maxDate.getMonth());
+        currentMonth.disabled =
+          (year === _minDate.getFullYear() && +currentMonth.value < _minDate.getMonth()) ||
+          (year === _maxDate.getFullYear() && +currentMonth.value > _maxDate.getMonth());
       }
 
-      const nextMonth = new Date(year + '-' + ('0' + (month + 1).toString()).slice(-2) + '-01');
+      const nextMonth = new Date(year + "-" + ("0" + (month + 1).toString()).slice(-2) + "-01");
       nextMonth.setMonth(nextMonth.getMonth() + 1);
 
-      _dateMonthNext.classList[(nextMonth < _maxDate) ? 'add' : 'remove']('active');
+      _dateMonthNext.classList[nextMonth < _maxDate ? "add" : "remove"]("active");
 
-      const previousMonth = new Date(year + '-' + ('0' + (month + 1).toString()).slice(-2) + '-01');
+      const previousMonth = new Date(year + "-" + ("0" + (month + 1).toString()).slice(-2) + "-01");
       previousMonth.setDate(previousMonth.getDate() - 1);
 
-      _dateMonthPrevious.classList[(previousMonth > _minDate) ? 'add' : 'remove']('active');
+      _dateMonthPrevious.classList[previousMonth > _minDate ? "add" : "remove"]("active");
     }
   }
 
@@ -506,7 +510,7 @@ function renderGrid(day?: number, month?: number, year?: number): void {
     for (let i = 0; i < 35; i++) {
       const cell = _dateCells[i];
 
-      cell.classList[(!cell.classList.contains('otherMonth') && +cell.textContent! === day) ? 'add' : 'remove']('active');
+      cell.classList[!cell.classList.contains("otherMonth") && +cell.textContent! === day ? "add" : "remove"]("active");
     }
 
     _dateGrid.dataset.day = day.toString();
@@ -522,7 +526,7 @@ function formatValue(): void {
   const data = _data.get(_input!) as DatePickerData;
   let date: Date;
 
-  if (Core.stringToBool(_input!.dataset.empty || '')) {
+  if (Core.stringToBool(_input!.dataset.empty || "")) {
     return;
   }
 
@@ -532,14 +536,10 @@ function formatValue(): void {
       +_dateGrid.dataset.month!,
       +_dateGrid.dataset.day!,
       +_dateHour.value,
-      +_dateMinute.value,
+      +_dateMinute.value
     );
   } else {
-    date = new Date(
-      +_dateGrid.dataset.year!,
-      +_dateGrid.dataset.month!,
-      +_dateGrid.dataset.day!,
-    );
+    date = new Date(+_dateGrid.dataset.year!, +_dateGrid.dataset.month!, +_dateGrid.dataset.day!);
   }
 
   DatePicker.setDate(_input!, date);
@@ -568,11 +568,11 @@ function click(event: MouseEvent): void {
   event.preventDefault();
 
   const target = event.currentTarget as HTMLAnchorElement;
-  if (target.classList.contains('otherMonth')) {
+  if (target.classList.contains("otherMonth")) {
     return;
   }
 
-  _input!.dataset.empty = 'false';
+  _input!.dataset.empty = "false";
 
   renderGrid(+target.textContent!);
 
@@ -586,11 +586,11 @@ function click(event: MouseEvent): void {
  * Validates given element or id if it represents an active date picker.
  */
 function getElement(element: InputElementOrString): HTMLInputElement {
-  if (typeof element === 'string') {
+  if (typeof element === "string") {
     element = document.getElementById(element) as HTMLInputElement;
   }
 
-  if (!(element instanceof HTMLInputElement) || !element.classList.contains('inputDatePicker') || !_data.has(element)) {
+  if (!(element instanceof HTMLInputElement) || !element.classList.contains("inputDatePicker") || !_data.has(element)) {
     throw new Error("Expected a valid date picker input element or id.");
   }
 
@@ -598,7 +598,7 @@ function getElement(element: InputElementOrString): HTMLInputElement {
 }
 
 function maintainFocus(event: FocusEvent): void {
-  if (_datePicker === null || !_datePicker.classList.contains('active')) {
+  if (_datePicker === null || !_datePicker.classList.contains("active")) {
     return;
   }
 
@@ -608,7 +608,7 @@ function maintainFocus(event: FocusEvent): void {
       sibling.focus();
       _wasInsidePicker = false;
     } else {
-      _datePicker!.querySelector<HTMLElement>('.previous')!.focus();
+      _datePicker!.querySelector<HTMLElement>(".previous")!.focus();
     }
   } else {
     _wasInsidePicker = true;
@@ -623,186 +623,190 @@ const DatePicker = {
     setup();
 
     const now = new Date();
-    document.querySelectorAll<HTMLInputElement>('input[type="date"]:not(.inputDatePicker), input[type="datetime"]:not(.inputDatePicker)').forEach(element => {
-      element.classList.add('inputDatePicker');
-      element.readOnly = true;
+    document
+      .querySelectorAll<HTMLInputElement>(
+        'input[type="date"]:not(.inputDatePicker), input[type="datetime"]:not(.inputDatePicker)'
+      )
+      .forEach((element) => {
+        element.classList.add("inputDatePicker");
+        element.readOnly = true;
 
-      const isDateTime = (element.type === 'datetime');
-      const isTimeOnly = isDateTime && Core.stringToBool(element.dataset.timeOnly || '');
-      const disableClear = Core.stringToBool(element.dataset.disableClear || '');
-      const ignoreTimezone = isDateTime && Core.stringToBool(element.dataset.ignoreTimezone || '');
-      const isBirthday = element.classList.contains('birthday');
+        const isDateTime = element.type === "datetime";
+        const isTimeOnly = isDateTime && Core.stringToBool(element.dataset.timeOnly || "");
+        const disableClear = Core.stringToBool(element.dataset.disableClear || "");
+        const ignoreTimezone = isDateTime && Core.stringToBool(element.dataset.ignoreTimezone || "");
+        const isBirthday = element.classList.contains("birthday");
 
-      element.dataset.isDateTime = isDateTime ? 'true' : 'false';
-      element.dataset.isTimeOnly = isTimeOnly ? 'true' : 'false';
+        element.dataset.isDateTime = isDateTime ? "true" : "false";
+        element.dataset.isTimeOnly = isTimeOnly ? "true" : "false";
 
-      // convert value
-      let date: Date | null = null;
-      let value = element.value;
+        // convert value
+        let date: Date | null = null;
+        let value = element.value;
 
-      // ignore the timezone, if the value is only a date (YYYY-MM-DD)
-      const isDateOnly = /^\d+-\d+-\d+$/.test(value);
+        // ignore the timezone, if the value is only a date (YYYY-MM-DD)
+        const isDateOnly = /^\d+-\d+-\d+$/.test(value);
 
-      if (value) {
-        if (isTimeOnly) {
-          date = new Date();
-          const tmp = value.split(':');
-          date.setHours(+tmp[0], +tmp[1]);
-        } else {
-          if (ignoreTimezone || isBirthday || isDateOnly) {
-            let timezoneOffset = new Date(value).getTimezoneOffset();
-            let timezone = (timezoneOffset > 0) ? '-' : '+'; // -120 equals GMT+0200
-            timezoneOffset = Math.abs(timezoneOffset);
+        if (value) {
+          if (isTimeOnly) {
+            date = new Date();
+            const tmp = value.split(":");
+            date.setHours(+tmp[0], +tmp[1]);
+          } else {
+            if (ignoreTimezone || isBirthday || isDateOnly) {
+              let timezoneOffset = new Date(value).getTimezoneOffset();
+              let timezone = timezoneOffset > 0 ? "-" : "+"; // -120 equals GMT+0200
+              timezoneOffset = Math.abs(timezoneOffset);
 
-            const hours = (Math.floor(timezoneOffset / 60)).toString();
-            const minutes = (timezoneOffset % 60).toString();
-            timezone += (hours.length === 2) ? hours : '0' + hours;
-            timezone += ':';
-            timezone += (minutes.length === 2) ? minutes : '0' + minutes;
+              const hours = Math.floor(timezoneOffset / 60).toString();
+              const minutes = (timezoneOffset % 60).toString();
+              timezone += hours.length === 2 ? hours : "0" + hours;
+              timezone += ":";
+              timezone += minutes.length === 2 ? minutes : "0" + minutes;
 
-            if (isBirthday || isDateOnly) {
-              value += 'T00:00:00' + timezone;
-            } else {
-              value = value.replace(/[+-][0-9]{2}:[0-9]{2}$/, timezone);
+              if (isBirthday || isDateOnly) {
+                value += "T00:00:00" + timezone;
+              } else {
+                value = value.replace(/[+-][0-9]{2}:[0-9]{2}$/, timezone);
+              }
             }
+
+            date = new Date(value);
           }
 
-          date = new Date(value);
+          const time = date.getTime();
+
+          // check for invalid dates
+          if (isNaN(time)) {
+            value = "";
+          } else {
+            element.dataset.value = time.toString();
+            const format = isTimeOnly ? "formatTime" : "formatDate" + (isDateTime ? "Time" : "");
+            value = DateUtil[format](date);
+          }
         }
 
-        const time = date.getTime();
+        const isEmpty = value.length === 0;
 
-        // check for invalid dates
-        if (isNaN(time)) {
-          value = '';
+        // handle birthday input
+        if (isBirthday) {
+          element.dataset.minDate = "120";
+
+          // do not use 'now' here, all though it makes sense, it causes bad UX
+          element.dataset.maxDate = new Date().getFullYear() + "-12-31";
         } else {
-          element.dataset.value = time.toString();
-          const format = (isTimeOnly) ? 'formatTime' : ('formatDate' + (isDateTime ? 'Time' : ''));
-          value = DateUtil[format](date);
+          if (element.min) {
+            element.dataset.minDate = element.min;
+          }
+          if (element.max) {
+            element.dataset.maxDate = element.max;
+          }
         }
-      }
 
-      const isEmpty = (value.length === 0);
+        initDateRange(element, now, true);
+        initDateRange(element, now, false);
 
-      // handle birthday input
-      if (isBirthday) {
-        element.dataset.minDate = '120';
-
-        // do not use 'now' here, all though it makes sense, it causes bad UX 
-        element.dataset.maxDate = new Date().getFullYear() + '-12-31';
-      } else {
-        if (element.min) {
-          element.dataset.minDate = element.min;
+        if ((element.dataset.minDate || "") === (element.dataset.maxDate || "")) {
+          throw new Error("Minimum and maximum date cannot be the same (element id '" + element.id + "').");
         }
-        if (element.max) {
-          element.dataset.maxDate = element.max;
+
+        // change type to prevent browser's datepicker to trigger
+        element.type = "text";
+        element.value = value;
+        element.dataset.empty = isEmpty ? "true" : "false";
+
+        const placeholder = element.dataset.placeholder || "";
+        if (placeholder) {
+          element.placeholder = placeholder;
         }
-      }
 
-      initDateRange(element, now, true);
-      initDateRange(element, now, false);
+        // add a hidden element to hold the actual date
+        const shadowElement = document.createElement("input");
+        shadowElement.id = element.id + "DatePicker";
+        shadowElement.name = element.name;
+        shadowElement.type = "hidden";
 
-      if ((element.dataset.minDate || '') === (element.dataset.maxDate || '')) {
-        throw new Error("Minimum and maximum date cannot be the same (element id '" + element.id + "').");
-      }
-
-      // change type to prevent browser's datepicker to trigger
-      element.type = 'text';
-      element.value = value;
-      element.dataset.empty = isEmpty ? 'true' : 'false';
-
-      const placeholder = element.dataset.placeholder || '';
-      if (placeholder) {
-        element.placeholder = placeholder;
-      }
-
-      // add a hidden element to hold the actual date
-      const shadowElement = document.createElement('input');
-      shadowElement.id = element.id + 'DatePicker';
-      shadowElement.name = element.name;
-      shadowElement.type = 'hidden';
-
-      if (date !== null) {
-        if (isTimeOnly) {
-          shadowElement.value = DateUtil.format(date, 'H:i');
-        } else if (ignoreTimezone) {
-          shadowElement.value = DateUtil.format(date, 'Y-m-dTH:i:s');
-        } else {
-          shadowElement.value = DateUtil.format(date, (isDateTime) ? 'c' : 'Y-m-d');
+        if (date !== null) {
+          if (isTimeOnly) {
+            shadowElement.value = DateUtil.format(date, "H:i");
+          } else if (ignoreTimezone) {
+            shadowElement.value = DateUtil.format(date, "Y-m-dTH:i:s");
+          } else {
+            shadowElement.value = DateUtil.format(date, isDateTime ? "c" : "Y-m-d");
+          }
         }
-      }
 
-      element.parentNode!.insertBefore(shadowElement, element);
-      element.removeAttribute('name');
+        element.parentNode!.insertBefore(shadowElement, element);
+        element.removeAttribute("name");
 
-      element.addEventListener('click', open);
+        element.addEventListener("click", open);
 
-      let clearButton: HTMLAnchorElement | null = null;
-      if (!element.disabled) {
-        // create input addon
-        const container = document.createElement('div');
-        container.className = 'inputAddon';
+        let clearButton: HTMLAnchorElement | null = null;
+        if (!element.disabled) {
+          // create input addon
+          const container = document.createElement("div");
+          container.className = "inputAddon";
 
-        clearButton = document.createElement('a');
+          clearButton = document.createElement("a");
 
-        clearButton.className = 'inputSuffix button jsTooltip';
-        clearButton.href = '#';
-        clearButton.setAttribute('role', 'button');
-        clearButton.tabIndex = 0;
-        clearButton.title = Language.get('wcf.date.datePicker');
-        clearButton.setAttribute('aria-label', Language.get('wcf.date.datePicker'));
-        clearButton.setAttribute('aria-haspopup', 'true');
-        clearButton.setAttribute('aria-expanded', 'false');
-        clearButton.addEventListener('click', open);
-        container.appendChild(clearButton);
+          clearButton.className = "inputSuffix button jsTooltip";
+          clearButton.href = "#";
+          clearButton.setAttribute("role", "button");
+          clearButton.tabIndex = 0;
+          clearButton.title = Language.get("wcf.date.datePicker");
+          clearButton.setAttribute("aria-label", Language.get("wcf.date.datePicker"));
+          clearButton.setAttribute("aria-haspopup", "true");
+          clearButton.setAttribute("aria-expanded", "false");
+          clearButton.addEventListener("click", open);
+          container.appendChild(clearButton);
 
-        let icon = document.createElement('span');
-        icon.className = 'icon icon16 fa-calendar';
-        clearButton.appendChild(icon);
+          let icon = document.createElement("span");
+          icon.className = "icon icon16 fa-calendar";
+          clearButton.appendChild(icon);
 
-        element.parentNode!.insertBefore(container, element);
-        container.insertBefore(element, clearButton);
+          element.parentNode!.insertBefore(container, element);
+          container.insertBefore(element, clearButton);
 
-        if (!disableClear) {
-          const button = document.createElement('a');
-          button.className = 'inputSuffix button';
-          button.addEventListener('click', this.clear.bind(this, element));
-          if (isEmpty) button.style.setProperty('visibility', 'hidden', '');
+          if (!disableClear) {
+            const button = document.createElement("a");
+            button.className = "inputSuffix button";
+            button.addEventListener("click", this.clear.bind(this, element));
+            if (isEmpty) button.style.setProperty("visibility", "hidden", "");
 
-          container.appendChild(button);
+            container.appendChild(button);
 
-          icon = document.createElement('span');
-          icon.className = 'icon icon16 fa-times';
-          button.appendChild(icon);
+            icon = document.createElement("span");
+            icon.className = "icon icon16 fa-times";
+            button.appendChild(icon);
+          }
         }
-      }
 
-      // check if the date input has one of the following classes set otherwise default to 'short'
-      const knownClasses = ['tiny', 'short', 'medium', 'long'];
-      let hasClass = false;
-      for (let j = 0; j < 4; j++) {
-        if (element.classList.contains(knownClasses[j])) {
-          hasClass = true;
+        // check if the date input has one of the following classes set otherwise default to 'short'
+        const knownClasses = ["tiny", "short", "medium", "long"];
+        let hasClass = false;
+        for (let j = 0; j < 4; j++) {
+          if (element.classList.contains(knownClasses[j])) {
+            hasClass = true;
+          }
         }
-      }
 
-      if (!hasClass) {
-        element.classList.add('short');
-      }
+        if (!hasClass) {
+          element.classList.add("short");
+        }
 
-      _data.set(element, {
-        clearButton,
-        shadow: shadowElement,
+        _data.set(element, {
+          clearButton,
+          shadow: shadowElement,
 
-        disableClear,
-        isDateTime,
-        isEmpty,
-        isTimeOnly,
-        ignoreTimezone,
+          disableClear,
+          isDateTime,
+          isEmpty,
+          isTimeOnly,
+          ignoreTimezone,
 
-        onClose: null,
+          onClose: null,
+        });
       });
-    });
   },
 
   /**
@@ -811,8 +815,8 @@ const DatePicker = {
   previousMonth(event: MouseEvent): void {
     event.preventDefault();
 
-    if (_dateMonth.value === '0') {
-      _dateMonth.value = '11';
+    if (_dateMonth.value === "0") {
+      _dateMonth.value = "11";
       _dateYear.value = (+_dateYear.value - 1).toString();
     } else {
       _dateMonth.value = (+_dateMonth.value - 1).toString();
@@ -827,8 +831,8 @@ const DatePicker = {
   nextMonth(event: MouseEvent): void {
     event.preventDefault();
 
-    if (_dateMonth.value === '11') {
-      _dateMonth.value = '0';
+    if (_dateMonth.value === "11") {
+      _dateMonth.value = "0";
       _dateYear.value = (+_dateYear.value + 1).toString();
     } else {
       _dateMonth.value = (+_dateMonth.value + 1).toString();
@@ -843,7 +847,7 @@ const DatePicker = {
   getDate(element: InputElementOrString): Date | null {
     element = getElement(element);
 
-    const value = element.dataset.value || '';
+    const value = element.dataset.value || "";
     if (value) {
       return new Date(+value);
     }
@@ -863,22 +867,22 @@ const DatePicker = {
 
     element.dataset.value = date.getTime().toString();
 
-    let format = '';
+    let format = "";
     let value: string;
     if (data.isDateTime) {
       if (data.isTimeOnly) {
         value = DateUtil.formatTime(date);
-        format = 'H:i';
+        format = "H:i";
       } else if (data.ignoreTimezone) {
         value = DateUtil.formatDateTime(date);
-        format = 'Y-m-dTH:i:s';
+        format = "Y-m-dTH:i:s";
       } else {
         value = DateUtil.formatDateTime(date);
-        format = 'c';
+        format = "c";
       }
     } else {
       value = DateUtil.formatDate(date);
-      format = 'Y-m-d';
+      format = "Y-m-d";
     }
 
     element.value = value;
@@ -886,7 +890,7 @@ const DatePicker = {
 
     // show clear button
     if (!data.disableClear) {
-      data.clearButton!.style.removeProperty('visibility');
+      data.clearButton!.style.removeProperty("visibility");
     }
   },
 
@@ -901,7 +905,7 @@ const DatePicker = {
       return data.shadow.value;
     }
 
-    return '';
+    return "";
   },
 
   /**
@@ -911,15 +915,15 @@ const DatePicker = {
     element = getElement(element);
     const data = _data.get(element) as DatePickerData;
 
-    element.removeAttribute('data-value');
-    element.value = '';
+    element.removeAttribute("data-value");
+    element.value = "";
 
     if (!data.disableClear) {
-      data.clearButton!.style.setProperty('visibility', 'hidden', '');
+      data.clearButton!.style.setProperty("visibility", "hidden", "");
     }
 
     data.isEmpty = true;
-    data.shadow.value = '';
+    data.shadow.value = "";
   },
 
   /**
@@ -933,15 +937,15 @@ const DatePicker = {
     container.parentNode!.insertBefore(element, container);
     container.remove();
 
-    element.type = 'date' + (data.isDateTime ? 'time' : '');
+    element.type = "date" + (data.isDateTime ? "time" : "");
     element.name = data.shadow.name;
     element.value = data.shadow.value;
 
-    element.removeAttribute('data-value');
-    element.removeEventListener('click', open);
+    element.removeAttribute("data-value");
+    element.removeEventListener("click", open);
     data.shadow.remove();
 
-    element.classList.remove('inputDatePicker');
+    element.classList.remove("inputDatePicker");
     element.readOnly = false;
     _data.delete(element);
   },

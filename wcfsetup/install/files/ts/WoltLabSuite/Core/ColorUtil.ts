@@ -14,7 +14,7 @@
  * @see  https://secure.wikimedia.org/wikipedia/de/wiki/HSV-Farbraum#Transformation_von_RGB_und_HSV
  */
 export function hsvToRgb(h: number, s: number, v: number): RGB {
-  const rgb: RGB = {r: 0, g: 0, b: 0};
+  const rgb: RGB = { r: 0, g: 0, b: 0 };
   let h2: number, f: number, p: number, q: number, t: number;
 
   h2 = Math.floor(h / 60);
@@ -136,25 +136,25 @@ export function rgbToHsv(r: number, g: number, b: number): HSV {
 export function hexToRgb(hex: string): RGB | typeof Number.NaN {
   if (/^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(hex)) {
     // only convert #abc and #abcdef
-    const parts = hex.split('');
+    const parts = hex.split("");
 
     // drop the hashtag
-    if (parts[0] === '#') {
+    if (parts[0] === "#") {
       parts.shift();
     }
 
     // parse shorthand #xyz
     if (parts.length === 3) {
       return {
-        r: parseInt(parts[0] + '' + parts[0], 16),
-        g: parseInt(parts[1] + '' + parts[1], 16),
-        b: parseInt(parts[2] + '' + parts[2], 16),
+        r: parseInt(parts[0] + "" + parts[0], 16),
+        g: parseInt(parts[1] + "" + parts[1], 16),
+        b: parseInt(parts[2] + "" + parts[2], 16),
       };
     } else {
       return {
-        r: parseInt(parts[0] + '' + parts[1], 16),
-        g: parseInt(parts[2] + '' + parts[3], 16),
-        b: parseInt(parts[4] + '' + parts[5], 16),
+        r: parseInt(parts[0] + "" + parts[1], 16),
+        g: parseInt(parts[2] + "" + parts[3], 16),
+        b: parseInt(parts[4] + "" + parts[5], 16),
       };
     }
   }
@@ -168,7 +168,7 @@ export function hexToRgb(hex: string): RGB | typeof Number.NaN {
  * @see  http://www.linuxtopia.org/online_books/javascript_guides/javascript_faq/rgbtohex.htm
  */
 export function rgbToHex(r: number, g: number, b: number): string {
-  const charList = '0123456789ABCDEF';
+  const charList = "0123456789ABCDEF";
 
   if (g === undefined) {
     if (r.toString().match(/^rgba?\((\d+), ?(\d+), ?(\d+)(?:, ?[0-9.]+)?\)$/)) {
@@ -178,7 +178,15 @@ export function rgbToHex(r: number, g: number, b: number): string {
     }
   }
 
-  return (charList.charAt((r - r % 16) / 16) + '' + charList.charAt(r % 16)) + '' + (charList.charAt((g - g % 16) / 16) + '' + charList.charAt(g % 16)) + '' + (charList.charAt((b - b % 16) / 16) + '' + charList.charAt(b % 16));
+  return (
+    charList.charAt((r - (r % 16)) / 16) +
+    "" +
+    charList.charAt(r % 16) +
+    "" +
+    (charList.charAt((g - (g % 16)) / 16) + "" + charList.charAt(g % 16)) +
+    "" +
+    (charList.charAt((b - (b % 16)) / 16) + "" + charList.charAt(b % 16))
+  );
 }
 
 interface RGB {

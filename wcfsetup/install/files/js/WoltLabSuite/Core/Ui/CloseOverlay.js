@@ -24,9 +24,9 @@ define(["require", "exports", "tslib", "../CallbackList"], function (require, ex
          * Invokes all registered callbacks.
          */
         execute() {
-            _callbackList.forEach(null, callback => callback());
+            _callbackList.forEach(null, (callback) => callback());
         },
     };
-    document.body.addEventListener('click', UiCloseOverlay.execute);
+    document.body.addEventListener("click", UiCloseOverlay.execute);
     return UiCloseOverlay;
 });

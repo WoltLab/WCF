@@ -25,10 +25,10 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
         constructor(options) {
             this._options = Core.extend({
                 data: {},
-                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                responseType: 'application/json',
-                type: 'POST',
-                url: '',
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                responseType: "application/json",
+                type: "POST",
+                url: "",
                 withCredentials: false,
                 // behavior
                 autoAbort: false,
@@ -44,11 +44,11 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
                 uploadProgress: null,
                 callbackObject: null,
             }, options);
-            if (typeof options.callbackObject === 'object') {
+            if (typeof options.callbackObject === "object") {
                 this._options.callbackObject = options.callbackObject;
             }
             this._options.url = Core.convertLegacyUrl(this._options.url);
-            if (this._options.url.indexOf('index.php') === 0) {
+            if (this._options.url.indexOf("index.php") === 0) {
                 this._options.url = window.WSC_API_URL + this._options.url;
             }
             if (this._options.url.indexOf(window.WSC_API_URL) === 0) {
@@ -60,20 +60,20 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
                 this._data = this._options.data;
             }
             if (this._options.callbackObject) {
-                if (typeof this._options.callbackObject._ajaxFailure === 'function')
+                if (typeof this._options.callbackObject._ajaxFailure === "function")
                     this._options.failure = this._options.callbackObject._ajaxFailure.bind(this._options.callbackObject);
-                if (typeof this._options.callbackObject._ajaxFinalize === 'function')
+                if (typeof this._options.callbackObject._ajaxFinalize === "function")
                     this._options.finalize = this._options.callbackObject._ajaxFinalize.bind(this._options.callbackObject);
-                if (typeof this._options.callbackObject._ajaxSuccess === 'function')
+                if (typeof this._options.callbackObject._ajaxSuccess === "function")
                     this._options.success = this._options.callbackObject._ajaxSuccess.bind(this._options.callbackObject);
-                if (typeof this._options.callbackObject._ajaxProgress === 'function')
+                if (typeof this._options.callbackObject._ajaxProgress === "function")
                     this._options.progress = this._options.callbackObject._ajaxProgress.bind(this._options.callbackObject);
-                if (typeof this._options.callbackObject._ajaxUploadProgress === 'function')
+                if (typeof this._options.callbackObject._ajaxUploadProgress === "function")
                     this._options.uploadProgress = this._options.callbackObject._ajaxUploadProgress.bind(this._options.callbackObject);
             }
             if (!_didInit) {
                 _didInit = true;
-                window.addEventListener('beforeunload', () => _ignoreAllErrors = true);
+                window.addEventListener("beforeunload", () => (_ignoreAllErrors = true));
             }
         }
         /**
@@ -92,10 +92,10 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
             this._xhr = new XMLHttpRequest();
             this._xhr.open(this._options.type, this._options.url, true);
             if (this._options.contentType) {
-                this._xhr.setRequestHeader('Content-Type', this._options.contentType);
+                this._xhr.setRequestHeader("Content-Type", this._options.contentType);
             }
             if (this._options.withCredentials || this._options.includeRequestedWith) {
-                this._xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                this._xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
             }
             if (this._options.withCredentials) {
                 this._xhr.withCredentials = true;
@@ -104,8 +104,8 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
             const options = Core.clone(this._options);
             this._xhr.onload = function () {
                 if (this.readyState === XMLHttpRequest.DONE) {
-                    if (this.status >= 200 && this.status < 300 || this.status === 304) {
-                        if (options.responseType && this.getResponseHeader('Content-Type').indexOf(options.responseType) !== 0) {
+                    if ((this.status >= 200 && this.status < 300) || this.status === 304) {
+                        if (options.responseType && this.getResponseHeader("Content-Type").indexOf(options.responseType) !== 0) {
                             // request succeeded but invalid response type
                             self._failure(this, options);
                         }
@@ -127,9 +127,9 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
             if (this._options.uploadProgress) {
                 this._xhr.upload.onprogress = this._options.uploadProgress;
             }
-            if (this._options.type === 'POST') {
+            if (this._options.type === "POST") {
                 let data = this._options.data;
-                if (typeof data === 'object' && Core.getType(data) !== 'FormData') {
+                if (typeof data === "object" && Core.getType(data) !== "FormData") {
                     data = Core.serialize(data);
                 }
                 this._xhr.send(data);
@@ -170,7 +170,7 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
          * Sets request data while honoring pinned data from setup callback.
          */
         setData(data) {
-            if (this._data !== null && Core.getType(data) !== 'FormData') {
+            if (this._data !== null && Core.getType(data) !== "FormData") {
                 data = Core.extend(this._data, data);
             }
             this._options.data = data;
@@ -182,9 +182,9 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
             if (!options.silent) {
                 AjaxStatus.hide();
             }
-            if (typeof options.success === 'function') {
+            if (typeof options.success === "function") {
                 let data = null;
-                if (xhr.getResponseHeader('Content-Type').split(';', 1)[0].trim() === 'application/json') {
+                if (xhr.getResponseHeader("Content-Type").split(";", 1)[0].trim() === "application/json") {
                     try {
                         data = JSON.parse(xhr.responseText);
                     }
@@ -199,7 +199,7 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
                     }
                     // force-invoke the background queue
                     if (data && data.forceBackgroundQueuePerform) {
-                        new Promise((resolve_1, reject_1) => { require(['../BackgroundQueue'], resolve_1, reject_1); }).then(tslib_1.__importStar).then(backgroundQueue => backgroundQueue.invoke());
+                        new Promise((resolve_1, reject_1) => { require(["../BackgroundQueue"], resolve_1, reject_1); }).then(tslib_1.__importStar).then((backgroundQueue) => backgroundQueue.invoke());
                     }
                 }
                 options.success(data, xhr.responseText, xhr, options.data);
@@ -221,18 +221,17 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
             try {
                 data = JSON.parse(xhr.responseText);
             }
-            catch (e) {
-            }
+            catch (e) { }
             let showError = true;
-            if (typeof options.failure === 'function') {
-                showError = options.failure((data || {}), (xhr.responseText || ''), xhr, options.data);
+            if (typeof options.failure === "function") {
+                showError = options.failure(data || {}, xhr.responseText || "", xhr, options.data);
             }
             if (options.ignoreError !== true && showError) {
                 const html = this.getErrorHtml(data, xhr);
                 if (html) {
-                    new Promise((resolve_2, reject_2) => { require(['../Ui/Dialog'], resolve_2, reject_2); }).then(tslib_1.__importStar).then(UiDialog => {
+                    new Promise((resolve_2, reject_2) => { require(["../Ui/Dialog"], resolve_2, reject_2); }).then(tslib_1.__importStar).then((UiDialog) => {
                         UiDialog.openStatic(Util_1.default.getUniqueId(), html, {
-                            title: Language.get('wcf.global.error.title'),
+                            title: Language.get("wcf.global.error.title"),
                         });
                     });
                 }
@@ -243,34 +242,34 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
          * Returns the inner HTML for an error/exception display.
          */
         getErrorHtml(data, xhr) {
-            let details = '';
+            let details = "";
             let message;
             if (data !== null) {
                 if (data.returnValues && data.returnValues.description) {
-                    details += '<br><p>Description:</p><p>' + data.returnValues.description + '</p>';
+                    details += "<br><p>Description:</p><p>" + data.returnValues.description + "</p>";
                 }
                 if (data.file && data.line) {
-                    details += '<br><p>File:</p><p>' + data.file + ' in line ' + data.line + '</p>';
+                    details += "<br><p>File:</p><p>" + data.file + " in line " + data.line + "</p>";
                 }
                 if (data.stacktrace)
-                    details += '<br><p>Stacktrace:</p><p>' + data.stacktrace + '</p>';
+                    details += "<br><p>Stacktrace:</p><p>" + data.stacktrace + "</p>";
                 else if (data.exceptionID)
-                    details += '<br><p>Exception ID: <code>' + data.exceptionID + '</code></p>';
+                    details += "<br><p>Exception ID: <code>" + data.exceptionID + "</code></p>";
                 message = data.message;
                 data.previous.forEach(function (previous) {
-                    details += '<hr><p>' + previous.message + '</p>';
-                    details += '<br><p>Stacktrace</p><p>' + previous.stacktrace + '</p>';
+                    details += "<hr><p>" + previous.message + "</p>";
+                    details += "<br><p>Stacktrace</p><p>" + previous.stacktrace + "</p>";
                 });
             }
             else {
                 message = xhr.responseText;
             }
-            if (!message || message === 'undefined') {
+            if (!message || message === "undefined") {
                 if (!window.ENABLE_DEBUG_MODE)
                     return null;
-                message = 'XMLHttpRequest failed without a responseText. Check your browser console.';
+                message = "XMLHttpRequest failed without a responseText. Check your browser console.";
             }
-            return '<div class="ajaxDebugMessage"><p>' + message + '</p>' + details + '</div>';
+            return '<div class="ajaxDebugMessage"><p>' + message + "</p>" + details + "</div>";
         }
         /**
          * Finalizes a request.
@@ -278,7 +277,7 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
          * @param  {Object}  options    request options
          */
         _finalize(options) {
-            if (typeof options.finalize === 'function') {
+            if (typeof options.finalize === "function") {
                 options.finalize(this._xhr);
             }
             this._previousXhr = undefined;
@@ -286,9 +285,9 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
             // fix anchor tags generated through WCF::getAnchor()
             document.querySelectorAll('a[href*="#"]').forEach((link) => {
                 let href = link.href;
-                if (href.indexOf('AJAXProxy') !== -1 || href.indexOf('ajax-proxy') !== -1) {
-                    href = href.substr(href.indexOf('#'));
-                    link.href = document.location.toString().replace(/#.*/, '') + href;
+                if (href.indexOf("AJAXProxy") !== -1 || href.indexOf("ajax-proxy") !== -1) {
+                    href = href.substr(href.indexOf("#"));
+                    link.href = document.location.toString().replace(/#.*/, "") + href;
                 }
             });
         }

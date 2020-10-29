@@ -7,11 +7,11 @@
  * @module  WoltLabSuite/Core/Ui/Page/Header/Fixed
  */
 
-import * as EventHandler from '../../../Event/Handler';
-import * as UiAlignment from '../../Alignment';
-import UiCloseOverlay from '../../CloseOverlay';
-import UiDropdownSimple from '../../Dropdown/Simple';
-import * as UiScreen from '../../Screen';
+import * as EventHandler from "../../../Event/Handler";
+import * as UiAlignment from "../../Alignment";
+import UiCloseOverlay from "../../CloseOverlay";
+import UiDropdownSimple from "../../Dropdown/Simple";
+import * as UiScreen from "../../Screen";
 
 let _isMobile = false;
 
@@ -27,35 +27,35 @@ let _userPanelSearchButton: HTMLElement;
  * Provides the collapsible search bar.
  */
 function initSearchBar(): void {
-  _pageHeaderSearch = document.getElementById('pageHeaderSearch')!;
-  _pageHeaderSearch.addEventListener('click', ev => ev.stopPropagation());
+  _pageHeaderSearch = document.getElementById("pageHeaderSearch")!;
+  _pageHeaderSearch.addEventListener("click", (ev) => ev.stopPropagation());
 
-  _pageHeaderPanel = document.getElementById('pageHeaderPanel')!;
-  _searchInput = document.getElementById('pageHeaderSearchInput') as HTMLInputElement;
-  _topMenu = document.getElementById('topMenu')!;
+  _pageHeaderPanel = document.getElementById("pageHeaderPanel")!;
+  _searchInput = document.getElementById("pageHeaderSearchInput") as HTMLInputElement;
+  _topMenu = document.getElementById("topMenu")!;
 
-  _userPanelSearchButton = document.getElementById('userPanelSearchButton')!;
-  _userPanelSearchButton.addEventListener('click', event => {
+  _userPanelSearchButton = document.getElementById("userPanelSearchButton")!;
+  _userPanelSearchButton.addEventListener("click", (event) => {
     event.preventDefault();
     event.stopPropagation();
 
-    if (_pageHeader.classList.contains('searchBarOpen')) {
+    if (_pageHeader.classList.contains("searchBarOpen")) {
       closeSearchBar();
     } else {
       openSearchBar();
     }
   });
 
-  UiCloseOverlay.add('WoltLabSuite/Core/Ui/Page/Header/Fixed', () => {
-    if (_pageHeader.classList.contains('searchBarForceOpen')) {
+  UiCloseOverlay.add("WoltLabSuite/Core/Ui/Page/Header/Fixed", () => {
+    if (_pageHeader.classList.contains("searchBarForceOpen")) {
       return;
     }
 
     closeSearchBar();
   });
 
-  EventHandler.add('com.woltlab.wcf.MainMenuMobile', 'more', data => {
-    if (data.identifier === 'com.woltlab.wcf.search') {
+  EventHandler.add("com.woltlab.wcf.MainMenuMobile", "more", (data) => {
+    if (data.identifier === "com.woltlab.wcf.search") {
       data.handler.close(true);
 
       _userPanelSearchButton.click();
@@ -69,17 +69,17 @@ function initSearchBar(): void {
 function openSearchBar(): void {
   window.WCF.Dropdown.Interactive.Handler.closeAll();
 
-  _pageHeader.classList.add('searchBarOpen');
-  _userPanelSearchButton.parentElement!.classList.add('open');
+  _pageHeader.classList.add("searchBarOpen");
+  _userPanelSearchButton.parentElement!.classList.add("open");
 
   if (!_isMobile) {
     // calculate value for `right` on desktop
     UiAlignment.set(_pageHeaderSearch, _topMenu, {
-      horizontal: 'right',
+      horizontal: "right",
     });
   }
 
-  _pageHeaderSearch.style.setProperty('top', _pageHeaderPanel.clientHeight + 'px', '');
+  _pageHeaderSearch.style.setProperty("top", _pageHeaderPanel.clientHeight + "px", "");
   _searchInput.focus();
 
   window.setTimeout(() => {
@@ -91,17 +91,17 @@ function openSearchBar(): void {
  * Closes the search bar.
  */
 function closeSearchBar(): void {
-  _pageHeader.classList.remove('searchBarOpen');
-  _userPanelSearchButton.parentElement!.classList.remove('open');
+  _pageHeader.classList.remove("searchBarOpen");
+  _userPanelSearchButton.parentElement!.classList.remove("open");
 
-  ['bottom', 'left', 'right', 'top'].forEach(propertyName => {
+  ["bottom", "left", "right", "top"].forEach((propertyName) => {
     _pageHeaderSearch.style.removeProperty(propertyName);
   });
 
   _searchInput.blur();
 
   // close the scope selection
-  const scope = _pageHeaderSearch.querySelector('.pageHeaderSearchType')!;
+  const scope = _pageHeaderSearch.querySelector(".pageHeaderSearchType")!;
   UiDropdownSimple.close(scope.id);
 }
 
@@ -109,12 +109,12 @@ function closeSearchBar(): void {
  * Initializes the sticky page header handler.
  */
 export function init(): void {
-  _pageHeader = document.getElementById('pageHeader')!;
-  _pageHeaderContainer = document.getElementById('pageHeaderContainer')!;
+  _pageHeader = document.getElementById("pageHeader")!;
+  _pageHeaderContainer = document.getElementById("pageHeaderContainer")!;
 
   initSearchBar();
 
-  UiScreen.on('screen-md-down', {
+  UiScreen.on("screen-md-down", {
     match() {
       _isMobile = true;
     },
@@ -126,5 +126,5 @@ export function init(): void {
     },
   });
 
-  EventHandler.add('com.woltlab.wcf.Search', 'close', closeSearchBar);
+  EventHandler.add("com.woltlab.wcf.Search", "close", closeSearchBar);
 }

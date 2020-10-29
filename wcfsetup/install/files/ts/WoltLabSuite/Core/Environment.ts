@@ -8,59 +8,62 @@
  * @module  WoltLabSuite/Core/Environment
  */
 
-let _browser = 'other';
-let _editor = 'none';
-let _platform = 'desktop';
+let _browser = "other";
+let _editor = "none";
+let _platform = "desktop";
 let _touch = false;
 
 /**
  * Determines environment variables.
  */
 export function setup(): void {
-  if (typeof (window as any).chrome === 'object') {
+  if (typeof (window as any).chrome === "object") {
     // this detects Opera as well, we could check for window.opr if we need to
-    _browser = 'chrome';
+    _browser = "chrome";
   } else {
     const styles = window.getComputedStyle(document.documentElement);
     for (let i = 0, length = styles.length; i < length; i++) {
       const property = styles[i];
 
-      if (property.indexOf('-ms-') === 0) {
+      if (property.indexOf("-ms-") === 0) {
         // it is tempting to use 'msie', but it wouldn't really represent 'Edge'
-        _browser = 'microsoft';
-      } else if (property.indexOf('-moz-') === 0) {
-        _browser = 'firefox';
-      } else if (_browser !== 'firefox' && property.indexOf('-webkit-') === 0) {
-        _browser = 'safari';
+        _browser = "microsoft";
+      } else if (property.indexOf("-moz-") === 0) {
+        _browser = "firefox";
+      } else if (_browser !== "firefox" && property.indexOf("-webkit-") === 0) {
+        _browser = "safari";
       }
     }
   }
 
   const ua = window.navigator.userAgent.toLowerCase();
-  if (ua.indexOf('crios') !== -1) {
-    _browser = 'chrome';
-    _platform = 'ios';
+  if (ua.indexOf("crios") !== -1) {
+    _browser = "chrome";
+    _platform = "ios";
   } else if (/(?:iphone|ipad|ipod)/.test(ua)) {
-    _browser = 'safari';
-    _platform = 'ios';
-  } else if (ua.indexOf('android') !== -1) {
-    _platform = 'android';
-  } else if (ua.indexOf('iemobile') !== -1) {
-    _browser = 'microsoft';
-    _platform = 'windows';
+    _browser = "safari";
+    _platform = "ios";
+  } else if (ua.indexOf("android") !== -1) {
+    _platform = "android";
+  } else if (ua.indexOf("iemobile") !== -1) {
+    _browser = "microsoft";
+    _platform = "windows";
   }
 
-  if (_platform === 'desktop' && (ua.indexOf('mobile') !== -1 || ua.indexOf('tablet') !== -1)) {
-    _platform = 'mobile';
+  if (_platform === "desktop" && (ua.indexOf("mobile") !== -1 || ua.indexOf("tablet") !== -1)) {
+    _platform = "mobile";
   }
 
-  _editor = 'redactor';
-  _touch = (('ontouchstart' in window) || (('msMaxTouchPoints' in window.navigator) && window.navigator.msMaxTouchPoints > 0) || (window as any).DocumentTouch && document instanceof (window as any).DocumentTouch);
+  _editor = "redactor";
+  _touch =
+    "ontouchstart" in window ||
+    ("msMaxTouchPoints" in window.navigator && window.navigator.msMaxTouchPoints > 0) ||
+    ((window as any).DocumentTouch && document instanceof (window as any).DocumentTouch);
 
   // The iPad Pro 12.9" masquerades as a desktop browser.
-  if (window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1) {
-    _browser = 'safari';
-    _platform = 'ios';
+  if (window.navigator.platform === "MacIntel" && window.navigator.maxTouchPoints > 1) {
+    _browser = "safari";
+    _platform = "ios";
   }
 }
 

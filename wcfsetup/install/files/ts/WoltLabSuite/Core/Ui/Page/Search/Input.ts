@@ -7,15 +7,15 @@
  * @module  WoltLabSuite/Core/Ui/Page/Search/Input
  */
 
-import * as Core from '../../../Core';
-import UiSearchInput from '../../Search/Input';
-import { SearchInputOptions } from '../../Search/Data';
-import { DatabaseObjectActionPayload, DatabaseObjectActionResponse } from '../../../Ajax/Data';
+import * as Core from "../../../Core";
+import UiSearchInput from "../../Search/Input";
+import { SearchInputOptions } from "../../Search/Data";
+import { DatabaseObjectActionPayload, DatabaseObjectActionResponse } from "../../../Ajax/Data";
 
-type CallbackSuccess = (data: DatabaseObjectActionResponse) => void
+type CallbackSuccess = (data: DatabaseObjectActionResponse) => void;
 
 interface PageSearchOptions extends SearchInputOptions {
-  callbackSuccess: CallbackSuccess
+  callbackSuccess: CallbackSuccess;
 }
 
 class UiPageSearchInput extends UiSearchInput {
@@ -23,15 +23,18 @@ class UiPageSearchInput extends UiSearchInput {
   private pageId: number;
 
   constructor(element: HTMLInputElement, options: PageSearchOptions) {
-    if (typeof options.callbackSuccess !== 'function') {
+    if (typeof options.callbackSuccess !== "function") {
       throw new Error("Expected a valid callback function for 'callbackSuccess'.");
     }
 
-    options = Core.extend({
-      ajax: {
-        className: 'wcf\\data\\page\\PageAction',
+    options = Core.extend(
+      {
+        ajax: {
+          className: "wcf\\data\\page\\PageAction",
+        },
       },
-    }, options) as any;
+      options
+    ) as any;
 
     super(element, options);
 

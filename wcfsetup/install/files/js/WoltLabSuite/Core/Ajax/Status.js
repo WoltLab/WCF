@@ -15,14 +15,14 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
         constructor() {
             this._activeRequests = 0;
             this._timer = null;
-            this._overlay = document.createElement('div');
-            this._overlay.classList.add('spinner');
-            this._overlay.setAttribute('role', 'status');
-            const icon = document.createElement('span');
-            icon.className = 'icon icon48 fa-spinner';
+            this._overlay = document.createElement("div");
+            this._overlay.classList.add("spinner");
+            this._overlay.setAttribute("role", "status");
+            const icon = document.createElement("span");
+            icon.className = "icon icon48 fa-spinner";
             this._overlay.appendChild(icon);
-            const title = document.createElement('span');
-            title.textContent = Language.get('wcf.global.loading');
+            const title = document.createElement("span");
+            title.textContent = Language.get("wcf.global.loading");
             this._overlay.appendChild(title);
             document.body.appendChild(this._overlay);
         }
@@ -31,7 +31,7 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
             if (this._timer === null) {
                 this._timer = window.setTimeout(() => {
                     if (this._activeRequests) {
-                        this._overlay.classList.add('active');
+                        this._overlay.classList.add("active");
                     }
                     this._timer = null;
                 }, 250);
@@ -42,7 +42,7 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
                 if (this._timer !== null) {
                     window.clearTimeout(this._timer);
                 }
-                this._overlay.classList.remove('active');
+                this._overlay.classList.remove("active");
             }
         }
     }

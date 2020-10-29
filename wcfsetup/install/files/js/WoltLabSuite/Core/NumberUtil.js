@@ -17,21 +17,21 @@ define(["require", "exports"], function (require, exports) {
      */
     function round(value, exp) {
         // If the exp is undefined or zero...
-        if (typeof exp === 'undefined' || +exp === 0) {
+        if (typeof exp === "undefined" || +exp === 0) {
             return Math.round(value);
         }
         value = +value;
         exp = +exp;
         // If the value is not a number or the exp is not an integer...
-        if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+        if (isNaN(value) || !(typeof exp === "number" && exp % 1 === 0)) {
             return NaN;
         }
         // Shift
-        let tmp = value.toString().split('e');
-        value = Math.round(+(tmp[0] + 'e' + (tmp[1] ? (+tmp[1] - exp) : -exp)));
+        let tmp = value.toString().split("e");
+        value = Math.round(+(tmp[0] + "e" + (tmp[1] ? +tmp[1] - exp : -exp)));
         // Shift back
-        tmp = value.toString().split('e');
-        return +(tmp[0] + 'e' + (tmp[1] ? (+tmp[1] + exp) : exp));
+        tmp = value.toString().split("e");
+        return +(tmp[0] + "e" + (tmp[1] ? +tmp[1] + exp : exp));
     }
     exports.round = round;
 });

@@ -7,13 +7,13 @@
  * @module  WoltLabSuite/Core/Ui/Article/MarkAllAsRead
  */
 
-import * as Ajax from '../../Ajax';
-import { AjaxCallbackObject } from '../../Ajax/Data';
+import * as Ajax from "../../Ajax";
+import { AjaxCallbackObject } from "../../Ajax/Data";
 
 class UiArticleMarkAllAsRead implements AjaxCallbackObject {
   constructor() {
-    document.querySelectorAll('.markAllAsReadButton').forEach(button => {
-      button.addEventListener('click', this.click.bind(this));
+    document.querySelectorAll(".markAllAsReadButton").forEach((button) => {
+      button.addEventListener("click", this.click.bind(this));
     });
   }
 
@@ -26,18 +26,18 @@ class UiArticleMarkAllAsRead implements AjaxCallbackObject {
   _ajaxSuccess() {
     /* remove obsolete badges */
     // main menu
-    const badge = document.querySelector('.mainMenu .active .badge');
+    const badge = document.querySelector(".mainMenu .active .badge");
     if (badge) badge.remove();
 
     // article list
-    document.querySelectorAll('.articleList .newMessageBadge').forEach(el => el.remove());
+    document.querySelectorAll(".articleList .newMessageBadge").forEach((el) => el.remove());
   }
 
   _ajaxSetup() {
     return {
       data: {
-        actionName: 'markAllAsRead',
-        className: 'wcf\\data\\article\\ArticleAction',
+        actionName: "markAllAsRead",
+        className: "wcf\\data\\article\\ArticleAction",
       },
     };
   }

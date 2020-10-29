@@ -18,12 +18,12 @@ class ObjectMap {
    * Sets a new key with given value, will overwrite an existing key.
    */
   set(key: object, value: object): void {
-    if (typeof key !== 'object' || key === null) {
-      throw new TypeError('Only objects can be used as key');
+    if (typeof key !== "object" || key === null) {
+      throw new TypeError("Only objects can be used as key");
     }
 
-    if (typeof value !== 'object' || value === null) {
-      throw new TypeError('Only objects can be used as value');
+    if (typeof value !== "object" || value === null) {
+      throw new TypeError("Only objects can be used as value");
     }
 
     this._map.set(key, value);
@@ -34,7 +34,6 @@ class ObjectMap {
    */
   delete(key: object): void {
     this._map.delete(key);
-
   }
 
   /**
@@ -44,7 +43,6 @@ class ObjectMap {
     return this._map.has(key);
   }
 
-
   /**
    * Retrieves a value by key, returns undefined if there is no match.
    */
@@ -53,4 +51,4 @@ class ObjectMap {
   }
 }
 
-export = ObjectMap
+export = ObjectMap;

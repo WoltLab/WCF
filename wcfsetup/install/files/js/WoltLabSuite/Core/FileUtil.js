@@ -13,99 +13,99 @@ define(["require", "exports", "tslib", "./StringUtil"], function (require, expor
     StringUtil = tslib_1.__importStar(StringUtil);
     const _fileExtensionIconMapping = new Map(Object.entries({
         // archive
-        zip: 'archive',
-        rar: 'archive',
-        tar: 'archive',
-        gz: 'archive',
+        zip: "archive",
+        rar: "archive",
+        tar: "archive",
+        gz: "archive",
         // audio
-        mp3: 'audio',
-        ogg: 'audio',
-        wav: 'audio',
+        mp3: "audio",
+        ogg: "audio",
+        wav: "audio",
         // code
-        php: 'code',
-        html: 'code',
-        htm: 'code',
-        tpl: 'code',
-        js: 'code',
+        php: "code",
+        html: "code",
+        htm: "code",
+        tpl: "code",
+        js: "code",
         // excel
-        xls: 'excel',
-        ods: 'excel',
-        xlsx: 'excel',
+        xls: "excel",
+        ods: "excel",
+        xlsx: "excel",
         // image
-        gif: 'image',
-        jpg: 'image',
-        jpeg: 'image',
-        png: 'image',
-        bmp: 'image',
-        webp: 'image',
+        gif: "image",
+        jpg: "image",
+        jpeg: "image",
+        png: "image",
+        bmp: "image",
+        webp: "image",
         // video
-        avi: 'video',
-        wmv: 'video',
-        mov: 'video',
-        mp4: 'video',
-        mpg: 'video',
-        mpeg: 'video',
-        flv: 'video',
+        avi: "video",
+        wmv: "video",
+        mov: "video",
+        mp4: "video",
+        mpg: "video",
+        mpeg: "video",
+        flv: "video",
         // pdf
-        pdf: 'pdf',
+        pdf: "pdf",
         // powerpoint
-        ppt: 'powerpoint',
-        pptx: 'powerpoint',
+        ppt: "powerpoint",
+        pptx: "powerpoint",
         // text
-        txt: 'text',
+        txt: "text",
         // word
-        doc: 'word',
-        docx: 'word',
-        odt: 'word',
+        doc: "word",
+        docx: "word",
+        odt: "word",
     }));
     const _mimeTypeExtensionMapping = new Map(Object.entries({
         // archive
-        'application/zip': 'zip',
-        'application/x-zip-compressed': 'zip',
-        'application/rar': 'rar',
-        'application/vnd.rar': 'rar',
-        'application/x-rar-compressed': 'rar',
-        'application/x-tar': 'tar',
-        'application/x-gzip': 'gz',
-        'application/gzip': 'gz',
+        "application/zip": "zip",
+        "application/x-zip-compressed": "zip",
+        "application/rar": "rar",
+        "application/vnd.rar": "rar",
+        "application/x-rar-compressed": "rar",
+        "application/x-tar": "tar",
+        "application/x-gzip": "gz",
+        "application/gzip": "gz",
         // audio
-        'audio/mpeg': 'mp3',
-        'audio/mp3': 'mp3',
-        'audio/ogg': 'ogg',
-        'audio/x-wav': 'wav',
+        "audio/mpeg": "mp3",
+        "audio/mp3": "mp3",
+        "audio/ogg": "ogg",
+        "audio/x-wav": "wav",
         // code
-        'application/x-php': 'php',
-        'text/html': 'html',
-        'application/javascript': 'js',
+        "application/x-php": "php",
+        "text/html": "html",
+        "application/javascript": "js",
         // excel
-        'application/vnd.ms-excel': 'xls',
-        'application/vnd.oasis.opendocument.spreadsheet': 'ods',
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'xlsx',
+        "application/vnd.ms-excel": "xls",
+        "application/vnd.oasis.opendocument.spreadsheet": "ods",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": "xlsx",
         // image
-        'image/gif': 'gif',
-        'image/jpeg': 'jpg',
-        'image/png': 'png',
-        'image/x-ms-bmp': 'bmp',
-        'image/bmp': 'bmp',
-        'image/webp': 'webp',
+        "image/gif": "gif",
+        "image/jpeg": "jpg",
+        "image/png": "png",
+        "image/x-ms-bmp": "bmp",
+        "image/bmp": "bmp",
+        "image/webp": "webp",
         // video
-        'video/x-msvideo': 'avi',
-        'video/x-ms-wmv': 'wmv',
-        'video/quicktime': 'mov',
-        'video/mp4': 'mp4',
-        'video/mpeg': 'mpg',
-        'video/x-flv': 'flv',
+        "video/x-msvideo": "avi",
+        "video/x-ms-wmv": "wmv",
+        "video/quicktime": "mov",
+        "video/mp4": "mp4",
+        "video/mpeg": "mpg",
+        "video/x-flv": "flv",
         // pdf
-        'application/pdf': 'pdf',
+        "application/pdf": "pdf",
         // powerpoint
-        'application/vnd.ms-powerpoint': 'ppt',
-        'application/vnd.openxmlformats-officedocument.presentationml.presentation': 'pptx',
+        "application/vnd.ms-powerpoint": "ppt",
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation": "pptx",
         // text
-        'text/plain': 'txt',
+        "text/plain": "txt",
         // word
-        'application/msword': 'doc',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',
-        'application/vnd.oasis.opendocument.text': 'odt',
+        "application/msword": "doc",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx",
+        "application/vnd.oasis.opendocument.text": "odt",
     }));
     /**
      * Formats the given filesize.
@@ -114,24 +114,24 @@ define(["require", "exports", "tslib", "./StringUtil"], function (require, expor
         if (precision === undefined) {
             precision = 2;
         }
-        let symbol = 'Byte';
+        let symbol = "Byte";
         if (byte >= 1000) {
             byte /= 1000;
-            symbol = 'kB';
+            symbol = "kB";
         }
         if (byte >= 1000) {
             byte /= 1000;
-            symbol = 'MB';
+            symbol = "MB";
         }
         if (byte >= 1000) {
             byte /= 1000;
-            symbol = 'GB';
+            symbol = "GB";
         }
         if (byte >= 1000) {
             byte /= 1000;
-            symbol = 'TB';
+            symbol = "TB";
         }
-        return StringUtil.formatNumeric(byte, -precision) + ' ' + symbol;
+        return StringUtil.formatNumeric(byte, -precision) + " " + symbol;
     }
     exports.formatFilesize = formatFilesize;
     /**
@@ -141,14 +141,14 @@ define(["require", "exports", "tslib", "./StringUtil"], function (require, expor
      * will be returned by this method.
      */
     function getIconNameByFilename(filename) {
-        const lastDotPosition = filename.lastIndexOf('.');
+        const lastDotPosition = filename.lastIndexOf(".");
         if (lastDotPosition !== -1) {
             const extension = filename.substr(lastDotPosition + 1);
             if (_fileExtensionIconMapping.has(extension)) {
                 return _fileExtensionIconMapping.get(extension);
             }
         }
-        return '';
+        return "";
     }
     exports.getIconNameByFilename = getIconNameByFilename;
     /**
@@ -156,9 +156,9 @@ define(["require", "exports", "tslib", "./StringUtil"], function (require, expor
      */
     function getExtensionByMimeType(mimetype) {
         if (_mimeTypeExtensionMapping.has(mimetype)) {
-            return '.' + _mimeTypeExtensionMapping.get(mimetype);
+            return "." + _mimeTypeExtensionMapping.get(mimetype);
         }
-        return '';
+        return "";
     }
     exports.getExtensionByMimeType = getExtensionByMimeType;
     /**

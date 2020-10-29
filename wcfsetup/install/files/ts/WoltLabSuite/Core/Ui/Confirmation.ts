@@ -8,10 +8,10 @@
  * @module  WoltLabSuite/Core/Ui/Confirmation
  */
 
-import * as Core from '../Core';
-import * as Language from '../Language';
-import UiDialog from './Dialog';
-import { DialogCallbackObject } from './Dialog/Data';
+import * as Core from "../Core";
+import * as Language from "../Language";
+import UiDialog from "./Dialog";
+import { DialogCallbackObject } from "./Dialog/Data";
 
 class UiConfirmation implements DialogCallbackObject {
   private _active = false;
@@ -26,30 +26,30 @@ class UiConfirmation implements DialogCallbackObject {
   private callbackConfirm: CallbackConfirm;
 
   constructor() {
-    this.dialog = document.createElement('div');
-    this.dialog.id = 'wcfSystemConfirmation';
-    this.dialog.classList.add('systemConfirmation');
+    this.dialog = document.createElement("div");
+    this.dialog.id = "wcfSystemConfirmation";
+    this.dialog.classList.add("systemConfirmation");
 
-    this.text = document.createElement('p');
+    this.text = document.createElement("p");
     this.dialog.appendChild(this.text);
 
-    this._content = document.createElement('div');
-    this._content.id = 'wcfSystemConfirmationContent';
+    this._content = document.createElement("div");
+    this._content.id = "wcfSystemConfirmationContent";
     this.dialog.appendChild(this._content);
 
-    const formSubmit = document.createElement('div');
-    formSubmit.classList.add('formSubmit');
+    const formSubmit = document.createElement("div");
+    formSubmit.classList.add("formSubmit");
     this.dialog.appendChild(formSubmit);
 
-    this.confirmButton = document.createElement('button');
-    this.confirmButton.classList.add('buttonPrimary');
-    this.confirmButton.textContent = Language.get('wcf.global.confirmation.confirm');
-    this.confirmButton.addEventListener('click', (ev) => this._confirm());
+    this.confirmButton = document.createElement("button");
+    this.confirmButton.classList.add("buttonPrimary");
+    this.confirmButton.textContent = Language.get("wcf.global.confirmation.confirm");
+    this.confirmButton.addEventListener("click", (ev) => this._confirm());
     formSubmit.appendChild(this.confirmButton);
 
-    const cancelButton = document.createElement('button');
-    cancelButton.textContent = Language.get('wcf.global.confirmation.cancel');
-    cancelButton.addEventListener('click', () => {
+    const cancelButton = document.createElement("button");
+    cancelButton.textContent = Language.get("wcf.global.confirmation.cancel");
+    cancelButton.addEventListener("click", () => {
       UiDialog.close(this);
     });
     formSubmit.appendChild(cancelButton);
@@ -59,21 +59,20 @@ class UiConfirmation implements DialogCallbackObject {
 
   public open(options: ConfirmationOptions): void {
     this.parameters = options.parameters || {};
-    
-    this._content.innerHTML = (typeof options.template === 'string') ? options.template.trim() : '';
-    this.text[options.messageIsHtml ? 'innerHTML' : 'textContent'] = options.message;
 
-    if (typeof options.legacyCallback === 'function') {
-      this.callbackCancel = parameters => {
-        options.legacyCallback!('cancel', parameters, this.content);
+    this._content.innerHTML = typeof options.template === "string" ? options.template.trim() : "";
+    this.text[options.messageIsHtml ? "innerHTML" : "textContent"] = options.message;
+
+    if (typeof options.legacyCallback === "function") {
+      this.callbackCancel = (parameters) => {
+        options.legacyCallback!("cancel", parameters, this.content);
       };
-      this.callbackConfirm = parameters => {
-        options.legacyCallback!('confirm', parameters, this.content);
+      this.callbackConfirm = (parameters) => {
+        options.legacyCallback!("confirm", parameters, this.content);
       };
     } else {
-      if (typeof options.cancel !== 'function') {
-        options.cancel = () => {
-        };
+      if (typeof options.cancel !== "function") {
+        options.cancel = () => {};
       }
 
       this.callbackCancel = options.cancel;
@@ -98,10 +97,10 @@ class UiConfirmation implements DialogCallbackObject {
    */
   _confirm(): void {
     this.callbackConfirm(this.parameters, this.content);
-    
+
     this._active = false;
 
-    UiDialog.close('wcfSystemConfirmation');
+    UiDialog.close("wcfSystemConfirmation");
   }
 
   /**
@@ -127,11 +126,11 @@ class UiConfirmation implements DialogCallbackObject {
 
   _dialogSetup() {
     return {
-      id: 'wcfSystemConfirmation',
+      id: "wcfSystemConfirmation",
       options: {
         onClose: this._onClose.bind(this),
         onShow: this._onShow.bind(this),
-        title: Language.get('wcf.global.confirmation.title'),
+        title: Language.get("wcf.global.confirmation.title"),
       },
     };
   }
@@ -146,16 +145,16 @@ function getConfirmation(): UiConfirmation {
   return confirmation;
 }
 
-type LegacyResult = 'cancel' | 'confirm';
+type LegacyResult = "cancel" | "confirm";
 
 type CallbackParameters = {
-  [key: string]: any,
-}
+  [key: string]: any;
+};
 
 interface BasicConfirmationOptions {
   message: string;
   messageIsHtml?: boolean;
-  parameters?: CallbackParameters,
+  parameters?: CallbackParameters;
   template?: string;
 }
 
@@ -184,20 +183,23 @@ export function show(options: ConfirmationOptions): void {
     return;
   }
 
-  options = Core.extend({
-    cancel: null,
-    confirm: null,
-    legacyCallback: null,
-    message: '',
-    messageIsHtml: false,
-    parameters: {},
-    template: '',
-  }, options) as ConfirmationOptions;
-  options.message = (typeof (options.message as any) === 'string') ? options.message.trim() : '';
+  options = Core.extend(
+    {
+      cancel: null,
+      confirm: null,
+      legacyCallback: null,
+      message: "",
+      messageIsHtml: false,
+      parameters: {},
+      template: "",
+    },
+    options
+  ) as ConfirmationOptions;
+  options.message = typeof (options.message as any) === "string" ? options.message.trim() : "";
   if (!options.message) {
     throw new Error("Expected a non-empty string for option 'message'.");
   }
-  if (typeof options.confirm !== 'function' && typeof options.legacyCallback !== 'function') {
+  if (typeof options.confirm !== "function" && typeof options.legacyCallback !== "function") {
     throw new TypeError("Expected a valid callback for option 'confirm'.");
   }
 

@@ -7,7 +7,7 @@
  * @module  Ui/Scroll (alias)
  * @module  WoltLabSuite/Core/Ui/Scroll
  */
-import DomUtil from '../Dom/Util';
+import DomUtil from "../Dom/Util";
 
 type Callback = () => void;
 
@@ -28,7 +28,7 @@ function onScroll(): void {
       _callback();
     }
 
-    window.removeEventListener('scroll', onScroll);
+    window.removeEventListener("scroll", onScroll);
     _callback = null;
     _timeoutScroll = null;
   }, 100);
@@ -43,7 +43,7 @@ function onScroll(): void {
 export function element(element: HTMLElement, callback?: Callback): void {
   if (!(element instanceof HTMLElement)) {
     throw new TypeError("Expected a valid DOM element.");
-  } else if (callback !== undefined && typeof callback !== 'function') {
+  } else if (callback !== undefined && typeof callback !== "function") {
     throw new TypeError("Expected a valid callback function.");
   } else if (!document.body.contains(element)) {
     throw new Error("Element must be part of the visible DOM.");
@@ -53,16 +53,16 @@ export function element(element: HTMLElement, callback?: Callback): void {
 
   if (callback) {
     _callback = callback;
-    window.addEventListener('scroll', onScroll);
+    window.addEventListener("scroll", onScroll);
   }
 
   let y = DomUtil.offset(element).top;
   if (_offset === null) {
     _offset = 50;
-    const pageHeader = document.getElementById('pageHeaderPanel');
+    const pageHeader = document.getElementById("pageHeaderPanel");
     if (pageHeader !== null) {
       const position = window.getComputedStyle(pageHeader).position;
-      if (position === 'fixed' || position === 'static') {
+      if (position === "fixed" || position === "static") {
         _offset = pageHeader.offsetHeight;
       } else {
         _offset = 0;
@@ -83,7 +83,7 @@ export function element(element: HTMLElement, callback?: Callback): void {
   window.scrollTo({
     left: 0,
     top: y,
-    behavior: 'smooth',
+    behavior: "smooth",
   });
 
   window.setTimeout(() => {

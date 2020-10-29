@@ -8,14 +8,14 @@
  * @module  WoltLabSuite/Core/Ui/Page/Search/Handler
  */
 
-import * as Language from '../../../Language';
-import * as StringUtil from '../../../StringUtil';
-import DomUtil from '../../../Dom/Util';
-import UiDialog from '../../Dialog';
-import UiPageSearchInput from './Input';
-import { DatabaseObjectActionResponse } from '../../../Ajax/Data';
+import * as Language from "../../../Language";
+import * as StringUtil from "../../../StringUtil";
+import DomUtil from "../../../Dom/Util";
+import UiDialog from "../../Dialog";
+import UiPageSearchInput from "./Input";
+import { DatabaseObjectActionResponse } from "../../../Ajax/Data";
 
-type CallbackSelect = (objectId: number) => void
+type CallbackSelect = (objectId: number) => void;
 
 interface ItemData {
   description?: string;
@@ -46,7 +46,7 @@ class UiPageSearchHandler {
     UiDialog.open(this);
     UiDialog.setTitle(this, title);
 
-    this.searchInputLabel!.textContent = Language.get(labelLanguageItem || 'wcf.page.pageObjectID.search.terms');
+    this.searchInputLabel!.textContent = Language.get(labelLanguageItem || "wcf.page.pageObjectID.search.terms");
 
     this._getSearchInputHandler().setPageId(pageId);
   }
@@ -58,20 +58,22 @@ class UiPageSearchHandler {
     this.resetList();
 
     if (!Array.isArray(data.returnValues) || data.returnValues.length === 0) {
-      DomUtil.innerError(this.searchInput!, Language.get('wcf.page.pageObjectID.search.noResults'));
+      DomUtil.innerError(this.searchInput!, Language.get("wcf.page.pageObjectID.search.noResults"));
       return;
     }
 
-    data.returnValues.forEach(item => {
+    data.returnValues.forEach((item) => {
       let image = item.image;
       if (/^fa-/.test(image)) {
-        image = `<span class="icon icon48 ${image} pointer jsTooltip" title="${Language.get('wcf.global.select')}"></span>`;
+        image = `<span class="icon icon48 ${image} pointer jsTooltip" title="${Language.get(
+          "wcf.global.select"
+        )}"></span>`;
       }
 
-      const listItem = document.createElement('li');
+      const listItem = document.createElement("li");
       listItem.dataset.objectId = item.objectID.toString();
 
-      const description = item.description ? `<p>${item.description}</p>` : '' 
+      const description = item.description ? `<p>${item.description}</p>` : "";
       listItem.innerHTML = `<div class="box48">
         ${image}
         <div>
@@ -84,7 +86,7 @@ class UiPageSearchHandler {
         </div>
       </div>`;
 
-      listItem.addEventListener('click', this.click.bind(this));
+      listItem.addEventListener("click", this.click.bind(this));
 
       this.resultList!.appendChild(listItem);
     });
@@ -98,7 +100,7 @@ class UiPageSearchHandler {
   private resetList(): void {
     DomUtil.innerError(this.searchInput!, false);
 
-    this.resultList!.innerHTML = '';
+    this.resultList!.innerHTML = "";
 
     DomUtil.hide(this.resultListContainer!);
   }
@@ -108,7 +110,7 @@ class UiPageSearchHandler {
    */
   _getSearchInputHandler(): UiPageSearchInput {
     if (!this.searchInputHandler) {
-      const input = document.getElementById('wcfUiPageSearchInput') as HTMLInputElement;
+      const input = document.getElementById("wcfUiPageSearchInput") as HTMLInputElement;
       this.searchInputHandler = new UiPageSearchInput(input, {
         callbackSuccess: this.buildList.bind(this),
       });
@@ -122,7 +124,7 @@ class UiPageSearchHandler {
    */
   private click(event: MouseEvent): void {
     const clickTarget = event.target as HTMLElement;
-    if (clickTarget.nodeName === 'A') {
+    if (clickTarget.nodeName === "A") {
       return;
     }
 
@@ -136,31 +138,31 @@ class UiPageSearchHandler {
 
   _dialogSetup() {
     return {
-      id: 'wcfUiPageSearchHandler',
+      id: "wcfUiPageSearchHandler",
       options: {
         onShow: (content: HTMLElement): void => {
           if (!this.searchInput) {
-            this.searchInput = document.getElementById('wcfUiPageSearchInput') as HTMLInputElement;
+            this.searchInput = document.getElementById("wcfUiPageSearchInput") as HTMLInputElement;
             this.searchInputLabel = content.querySelector('label[for="wcfUiPageSearchInput"]') as HTMLLabelElement;
-            this.resultList = document.getElementById('wcfUiPageSearchResultList') as HTMLUListElement;
-            this.resultListContainer = document.getElementById('wcfUiPageSearchResultListContainer') as HTMLElement;
+            this.resultList = document.getElementById("wcfUiPageSearchResultList") as HTMLUListElement;
+            this.resultListContainer = document.getElementById("wcfUiPageSearchResultListContainer") as HTMLElement;
           }
 
           // clear search input
-          this.searchInput.value = '';
+          this.searchInput.value = "";
 
           // reset results
           DomUtil.hide(this.resultListContainer!);
-          this.resultList!.innerHTML = '';
+          this.resultList!.innerHTML = "";
 
           this.searchInput.focus();
         },
-        title: '',
+        title: "",
       },
       source: `<div class="section">
         <dl>
           <dt>
-            <label for="wcfUiPageSearchInput">${Language.get('wcf.page.pageObjectID.search.terms')}</label>
+            <label for="wcfUiPageSearchInput">${Language.get("wcf.page.pageObjectID.search.terms")}</label>
           </dt>
           <dd>
             <input type="text" id="wcfUiPageSearchInput" class="long">
@@ -169,7 +171,7 @@ class UiPageSearchHandler {
       </div>
       <section id="wcfUiPageSearchResultListContainer" class="section sectionContainerList">
         <header class="sectionHeader">
-          <h2 class="sectionTitle">${Language.get('wcf.page.pageObjectID.search.results')}</h2>
+          <h2 class="sectionTitle">${Language.get("wcf.page.pageObjectID.search.results")}</h2>
         </header>
         <ul id="wcfUiPageSearchResultList" class="containerList wcfUiPageSearchResultList"></ul>
       </section>`,

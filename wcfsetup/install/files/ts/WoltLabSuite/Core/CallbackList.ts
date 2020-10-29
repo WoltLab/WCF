@@ -15,8 +15,8 @@ class CallbackList {
    * Adds a callback for given identifier.
    */
   add(identifier: string, callback: Callback): void {
-    if (typeof callback !== 'function') {
-      throw new TypeError('Expected a valid callback as second argument for identifier \'' + identifier + '\'.');
+    if (typeof callback !== "function") {
+      throw new TypeError("Expected a valid callback as second argument for identifier '" + identifier + "'.");
     }
 
     if (!this._callbacks.has(identifier)) {

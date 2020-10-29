@@ -8,8 +8,8 @@
  * @module  WoltLabSuite/Core/StringUtil
  */
 
-import * as Language from './Language';
-import * as NumberUtil from './NumberUtil';
+import * as Language from "./Language";
+import * as NumberUtil from "./NumberUtil";
 
 /**
  * Adds thousands separators to a given number.
@@ -18,18 +18,22 @@ import * as NumberUtil from './NumberUtil';
  */
 export function addThousandsSeparator(number: number): string {
   // Fetch Language, as it cannot be provided because of a circular dependency
-  if (Language === undefined) { //@ts-ignore
-    Language = require('./Language');
+  if (Language === undefined) {
+    //@ts-ignore
+    Language = require("./Language");
   }
 
-  return String(number).replace(/(^-?\d{1,3}|\d{3})(?=(?:\d{3})+(?:$|\.))/g, '$1' + Language.get('wcf.global.thousandsSeparator'));
+  return String(number).replace(
+    /(^-?\d{1,3}|\d{3})(?=(?:\d{3})+(?:$|\.))/g,
+    "$1" + Language.get("wcf.global.thousandsSeparator")
+  );
 }
 
 /**
  * Escapes special HTML-characters within a string
  */
 export function escapeHTML(string: string): string {
-  return String(string).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  return String(string).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 /**
@@ -38,7 +42,7 @@ export function escapeHTML(string: string): string {
  * @see    https://github.com/sstephenson/prototype/blob/master/src/prototype/lang/regexp.js#L25
  */
 export function escapeRegExp(string: string): string {
-  return String(string).replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
+  return String(string).replace(/([.*+?^=!:${}()|[\]\/\\])/g, "\\$1");
 }
 
 /**
@@ -46,17 +50,18 @@ export function escapeRegExp(string: string): string {
  */
 export function formatNumeric(number: number, decimalPlaces?: number): string {
   // Fetch Language, as it cannot be provided because of a circular dependency
-  if (Language === undefined) { //@ts-ignore
-    Language = require('./Language');
+  if (Language === undefined) {
+    //@ts-ignore
+    Language = require("./Language");
   }
 
   let tmp = NumberUtil.round(number, decimalPlaces || -2).toString();
-  const numberParts = tmp.split('.');
+  const numberParts = tmp.split(".");
 
   tmp = addThousandsSeparator(+numberParts[0]);
-  if (numberParts.length > 1) tmp += Language.get('wcf.global.decimalPoint') + numberParts[1];
+  if (numberParts.length > 1) tmp += Language.get("wcf.global.decimalPoint") + numberParts[1];
 
-  tmp = tmp.replace('-', '\u2212');
+  tmp = tmp.replace("-", "\u2212");
 
   return tmp;
 }
@@ -79,14 +84,18 @@ export function ucfirst(string: string): string {
  * Unescapes special HTML-characters within a string.
  */
 export function unescapeHTML(string: string): string {
-  return String(string).replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+  return String(string)
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">");
 }
 
 /**
  * Shortens numbers larger than 1000 by using unit suffixes.
  */
 export function shortUnit(number: number): string {
-  let unitSuffix = '';
+  let unitSuffix = "";
 
   if (number >= 1000000) {
     number /= 1000000;
@@ -97,7 +106,7 @@ export function shortUnit(number: number): string {
       number = NumberUtil.round(number, -1);
     }
 
-    unitSuffix = 'M';
+    unitSuffix = "M";
   } else if (number >= 1000) {
     number /= 1000;
 
@@ -107,7 +116,7 @@ export function shortUnit(number: number): string {
       number = NumberUtil.round(number, -1);
     }
 
-    unitSuffix = 'k';
+    unitSuffix = "k";
   }
 
   return formatNumeric(number) + unitSuffix;

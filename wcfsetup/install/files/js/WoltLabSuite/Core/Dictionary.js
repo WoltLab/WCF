@@ -48,8 +48,8 @@ define(["require", "exports"], function (require, exports) {
          * value as first parameter and the key name second.
          */
         forEach(callback) {
-            if (typeof callback !== 'function') {
-                throw new TypeError('forEach() expects a callback as first parameter.');
+            if (typeof callback !== "function") {
+                throw new TypeError("forEach() expects a callback as first parameter.");
             }
             this._dictionary.forEach(callback);
         }
@@ -67,7 +67,7 @@ define(["require", "exports"], function (require, exports) {
          */
         toObject() {
             const object = {};
-            this._dictionary.forEach((value, key) => object[key] = value);
+            this._dictionary.forEach((value, key) => (object[key] = value));
             return object;
         }
         /**

@@ -1,10 +1,10 @@
-import * as Ajax from '../../Ajax';
-import { AjaxCallbackObject, DatabaseObjectActionResponse } from '../../Ajax/Data';
-import { DialogCallbackObject } from '../Dialog/Data';
-import DomUtil from '../../Dom/Util';
-import * as Language from '../../Language';
-import * as StringUtil from '../../StringUtil';
-import UiDialog from '../Dialog';
+import * as Ajax from "../../Ajax";
+import { AjaxCallbackObject, DatabaseObjectActionResponse } from "../../Ajax/Data";
+import { DialogCallbackObject } from "../Dialog/Data";
+import DomUtil from "../../Dom/Util";
+import * as Language from "../../Language";
+import * as StringUtil from "../../StringUtil";
+import UiDialog from "../Dialog";
 
 type CallbackSelect = (articleId: number) => void;
 
@@ -37,7 +37,7 @@ class UiArticleSearch implements AjaxCallbackObject, DialogCallbackObject {
 
     const value = this.searchInput!.value.trim();
     if (value.length < 3) {
-      DomUtil.innerError(inputContainer, Language.get('wcf.article.search.error.tooShort'));
+      DomUtil.innerError(inputContainer, Language.get("wcf.article.search.error.tooShort"));
       return;
     } else {
       DomUtil.innerError(inputContainer, false);
@@ -61,7 +61,7 @@ class UiArticleSearch implements AjaxCallbackObject, DialogCallbackObject {
 
   _ajaxSuccess(data: AjaxResponse): void {
     let html = data.returnValues
-      .map(article => {
+      .map((article) => {
         return `<li>
           <div class="containerHeadline pointer" data-article-id="${article.articleID}">
             <h3>${StringUtil.escapeHTML(article.name)}</h3>
@@ -69,58 +69,58 @@ class UiArticleSearch implements AjaxCallbackObject, DialogCallbackObject {
           </div>
         </li>`;
       })
-      .join('');
+      .join("");
 
     this.resultList!.innerHTML = html;
 
-    DomUtil[html ? 'show' : 'hide'](this.resultList!);
+    DomUtil[html ? "show" : "hide"](this.resultList!);
 
     if (html) {
-      this.resultList!.querySelectorAll('.containerHeadline').forEach(item => {
-        item.addEventListener('click', this.click.bind(this));
+      this.resultList!.querySelectorAll(".containerHeadline").forEach((item) => {
+        item.addEventListener("click", this.click.bind(this));
       });
     } else {
       const parent = this.searchInput!.parentElement!;
-      DomUtil.innerError(parent, Language.get('wcf.article.search.error.noResults'));
+      DomUtil.innerError(parent, Language.get("wcf.article.search.error.noResults"));
     }
   }
 
   _ajaxSetup() {
     return {
       data: {
-        actionName: 'search',
-        className: 'wcf\\data\\article\\ArticleAction',
+        actionName: "search",
+        className: "wcf\\data\\article\\ArticleAction",
       },
     };
   }
 
   _dialogSetup() {
     return {
-      id: 'wcfUiArticleSearch',
+      id: "wcfUiArticleSearch",
       options: {
         onSetup: () => {
-          this.searchInput = document.getElementById('wcfUiArticleSearchInput') as HTMLInputElement;
-          this.searchInput.addEventListener('keydown', event => {
-            if (event.key === 'Enter') {
+          this.searchInput = document.getElementById("wcfUiArticleSearchInput") as HTMLInputElement;
+          this.searchInput.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
               this.search(event);
             }
           });
 
           const button = this.searchInput.nextElementSibling!;
-          button.addEventListener('click', this.search.bind(this));
+          button.addEventListener("click", this.search.bind(this));
 
-          this.resultContainer = document.getElementById('wcfUiArticleSearchResultContainer')!;
-          this.resultList = document.getElementById('wcfUiArticleSearchResultList') as HTMLOListElement;
+          this.resultContainer = document.getElementById("wcfUiArticleSearchResultContainer")!;
+          this.resultList = document.getElementById("wcfUiArticleSearchResultList") as HTMLOListElement;
         },
         onShow: () => {
           this.searchInput!.focus();
         },
-        title: Language.get('wcf.article.search'),
+        title: Language.get("wcf.article.search"),
       },
       source: `<div class="section">
           <dl>
             <dt>
-              <label for="wcfUiArticleSearchInput">${Language.get('wcf.article.search.name')}</label>
+              <label for="wcfUiArticleSearchInput">${Language.get("wcf.article.search.name")}</label>
             </dt>
             <dd>
               <div class="inputAddon">
@@ -132,7 +132,7 @@ class UiArticleSearch implements AjaxCallbackObject, DialogCallbackObject {
         </div>
         <section id="wcfUiArticleSearchResultContainer" class="section" style="display: none;">
           <header class="sectionHeader">
-            <h2 class="sectionTitle">${Language.get('wcf.article.search.results')}</h2>
+            <h2 class="sectionTitle">${Language.get("wcf.article.search.results")}</h2>
           </header>
           <ol id="wcfUiArticleSearchResultList" class="containerList"></ol>
         </section>`,

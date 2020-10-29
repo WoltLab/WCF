@@ -16,21 +16,21 @@ define(["require", "exports", "tslib", "../Core"], function (require, exports, t
      * Dispatch a JSONP request, the `url` must not contain a callback parameter.
      */
     function send(url, success, failure, options) {
-        url = (typeof url === 'string') ? url.trim() : '';
+        url = typeof url === "string" ? url.trim() : "";
         if (url.length === 0) {
-            throw new Error('Expected a non-empty string for parameter \'url\'.');
+            throw new Error("Expected a non-empty string for parameter 'url'.");
         }
-        if (typeof success !== 'function') {
-            throw new TypeError('Expected a valid callback function for parameter \'success\'.');
+        if (typeof success !== "function") {
+            throw new TypeError("Expected a valid callback function for parameter 'success'.");
         }
         options = Core.extend({
-            parameterName: 'callback',
+            parameterName: "callback",
             timeout: 10,
         }, options || {});
-        const callbackName = 'wcf_jsonp_' + Core.getUuid().replace(/-/g, '').substr(0, 8);
+        const callbackName = "wcf_jsonp_" + Core.getUuid().replace(/-/g, "").substr(0, 8);
         let script;
         const timeout = window.setTimeout(() => {
-            if (typeof failure === 'function') {
+            if (typeof failure === "function") {
                 failure();
             }
             window[callbackName] = undefined;
@@ -42,9 +42,9 @@ define(["require", "exports", "tslib", "../Core"], function (require, exports, t
             window[callbackName] = undefined;
             script.remove();
         };
-        url += (url.indexOf('?') === -1) ? '?' : '&';
-        url += options.parameterName + '=' + callbackName;
-        script = document.createElement('script');
+        url += url.indexOf("?") === -1 ? "?" : "&";
+        url += options.parameterName + "=" + callbackName;
+        script = document.createElement("script");
         script.async = true;
         script.src = url;
         document.head.appendChild(script);

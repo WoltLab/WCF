@@ -37,16 +37,16 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Lis
             this.currentPageNo = 0;
             this.currentUser = 0;
             this.knownElements = new WeakSet();
-            Listener_1.default.add('WoltLabSuite/Core/Ui/User/Trophy/List', this.rebuild.bind(this));
+            Listener_1.default.add("WoltLabSuite/Core/Ui/User/Trophy/List", this.rebuild.bind(this));
             this.rebuild();
         }
         /**
          * Adds event userTrophyOverlayList elements.
          */
         rebuild() {
-            document.querySelectorAll('.userTrophyOverlayList').forEach((element) => {
+            document.querySelectorAll(".userTrophyOverlayList").forEach((element) => {
                 if (!this.knownElements.has(element)) {
-                    element.addEventListener('click', (ev) => this.open(element, ev));
+                    element.addEventListener("click", (ev) => this.open(element, ev));
                     this.knownElements.add(element);
                 }
             });
@@ -76,9 +76,9 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Lis
             }
             if (data && data.has(this.currentPageNo)) {
                 const dialog = Dialog_1.default.open(this, data.get(this.currentPageNo));
-                Dialog_1.default.setTitle('userTrophyListOverlay', data.title);
+                Dialog_1.default.setTitle("userTrophyListOverlay", data.title);
                 if (data.pageCount > 1) {
-                    const element = dialog.content.querySelector('.jsPagination');
+                    const element = dialog.content.querySelector(".jsPagination");
                     if (element !== null) {
                         new Pagination_1.default(element, {
                             activePage: this.currentPageNo,
@@ -112,14 +112,14 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Lis
         _ajaxSetup() {
             return {
                 data: {
-                    actionName: 'getGroupedUserTrophyList',
-                    className: 'wcf\\data\\user\\trophy\\UserTrophyAction',
+                    actionName: "getGroupedUserTrophyList",
+                    className: "wcf\\data\\user\\trophy\\UserTrophyAction",
                 },
             };
         }
         _dialogSetup() {
             return {
-                id: 'userTrophyListOverlay',
+                id: "userTrophyListOverlay",
                 options: {
                     title: "",
                 },

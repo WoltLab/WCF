@@ -24,7 +24,7 @@ define(["require", "exports"], function (require, exports) {
      * @deprecated 5.4 Use `event.key === "ArrowDown"` instead.
      */
     function ArrowDown(event) {
-        return _test(event, 'ArrowDown', 40);
+        return _test(event, "ArrowDown", 40);
     }
     exports.ArrowDown = ArrowDown;
     /**
@@ -33,7 +33,7 @@ define(["require", "exports"], function (require, exports) {
      * @deprecated 5.4 Use `event.key === "ArrowLeft"` instead.
      */
     function ArrowLeft(event) {
-        return _test(event, 'ArrowLeft', 37);
+        return _test(event, "ArrowLeft", 37);
     }
     exports.ArrowLeft = ArrowLeft;
     /**
@@ -42,7 +42,7 @@ define(["require", "exports"], function (require, exports) {
      * @deprecated 5.4 Use `event.key === "ArrowRight"` instead.
      */
     function ArrowRight(event) {
-        return _test(event, 'ArrowRight', 39);
+        return _test(event, "ArrowRight", 39);
     }
     exports.ArrowRight = ArrowRight;
     /**
@@ -51,7 +51,7 @@ define(["require", "exports"], function (require, exports) {
      * @deprecated 5.4 Use `event.key === "ArrowUp"` instead.
      */
     function ArrowUp(event) {
-        return _test(event, 'ArrowUp', 38);
+        return _test(event, "ArrowUp", 38);
     }
     exports.ArrowUp = ArrowUp;
     /**
@@ -60,7 +60,7 @@ define(["require", "exports"], function (require, exports) {
      * @deprecated 5.4 Use `event.key === ","` instead.
      */
     function Comma(event) {
-        return _test(event, ',', 44);
+        return _test(event, ",", 44);
     }
     exports.Comma = Comma;
     /**
@@ -69,7 +69,7 @@ define(["require", "exports"], function (require, exports) {
      * @deprecated 5.4 Use `event.key === "End"` instead.
      */
     function End(event) {
-        return _test(event, 'End', 35);
+        return _test(event, "End", 35);
     }
     exports.End = End;
     /**
@@ -78,7 +78,7 @@ define(["require", "exports"], function (require, exports) {
      * @deprecated 5.4 Use `event.key === "Enter"` instead.
      */
     function Enter(event) {
-        return _test(event, 'Enter', 13);
+        return _test(event, "Enter", 13);
     }
     exports.Enter = Enter;
     /**
@@ -87,7 +87,7 @@ define(["require", "exports"], function (require, exports) {
      * @deprecated 5.4 Use `event.key === "Escape"` instead.
      */
     function Escape(event) {
-        return _test(event, 'Escape', 27);
+        return _test(event, "Escape", 27);
     }
     exports.Escape = Escape;
     /**
@@ -96,7 +96,7 @@ define(["require", "exports"], function (require, exports) {
      * @deprecated 5.4 Use `event.key === "Home"` instead.
      */
     function Home(event) {
-        return _test(event, 'Home', 36);
+        return _test(event, "Home", 36);
     }
     exports.Home = Home;
     /**
@@ -105,7 +105,7 @@ define(["require", "exports"], function (require, exports) {
      * @deprecated 5.4 Use `event.key === "Space"` instead.
      */
     function Space(event) {
-        return _test(event, 'Space', 32);
+        return _test(event, "Space", 32);
     }
     exports.Space = Space;
     /**
@@ -114,7 +114,7 @@ define(["require", "exports"], function (require, exports) {
      * @deprecated 5.4 Use `event.key === "Tab"` instead.
      */
     function Tab(event) {
-        return _test(event, 'Tab', 9);
+        return _test(event, "Tab", 9);
     }
     exports.Tab = Tab;
 });

@@ -7,9 +7,9 @@
  * @module  WoltLabSuite/Core/Ui/Page/JumpTo
  */
 
-import { DialogCallbackObject, DialogSettings } from '../Dialog/Data';
-import * as Language from '../../Language';
-import UiDialog from '../Dialog';
+import { DialogCallbackObject, DialogSettings } from "../Dialog/Data";
+import * as Language from "../../Language";
+import UiDialog from "../Dialog";
 
 class UiPageJumpTo implements DialogCallbackObject {
   private activeElement: HTMLElement;
@@ -26,19 +26,18 @@ class UiPageJumpTo implements DialogCallbackObject {
       const redirectUrl = element.dataset.link;
       if (redirectUrl) {
         callback = function (pageNo) {
-          window.location.href = redirectUrl.replace(/pageNo=%d/, 'pageNo=' + pageNo);
+          window.location.href = redirectUrl.replace(/pageNo=%d/, "pageNo=" + pageNo);
         };
       } else {
-        callback = function () {
-        };
+        callback = function () {};
       }
-    } else if (typeof callback !== 'function') {
+    } else if (typeof callback !== "function") {
       throw new TypeError("Expected a valid function for parameter 'callback'.");
     }
 
     if (!this.elements.has(element)) {
-      element.querySelectorAll('.jumpTo').forEach((jumpTo: HTMLElement) => {
-        jumpTo.addEventListener('click', (ev) => this.click(element, ev));
+      element.querySelectorAll(".jumpTo").forEach((jumpTo: HTMLElement) => {
+        jumpTo.addEventListener("click", (ev) => this.click(element, ev));
         this.elements.set(element, callback!);
       });
     }
@@ -54,12 +53,12 @@ class UiPageJumpTo implements DialogCallbackObject {
 
     UiDialog.open(this);
 
-    const pages = element.dataset.pages || '0';
+    const pages = element.dataset.pages || "0";
     this.input.value = pages;
     this.input.max = pages;
     this.input.select();
 
-    this.description.textContent = Language.get('wcf.page.jumpTo.description').replace(/#pages#/, pages);
+    this.description.textContent = Language.get("wcf.page.jumpTo.description").replace(/#pages#/, pages);
   }
 
   /**
@@ -68,7 +67,7 @@ class UiPageJumpTo implements DialogCallbackObject {
    * @param  {object}  event    event object
    */
   _keyUp(event: KeyboardEvent): void {
-    if (event.key === 'Enter' && !this.submitButton.disabled) {
+    if (event.key === "Enter" && !this.submitButton.disabled) {
       this.submit();
       return;
     }
@@ -89,29 +88,29 @@ class UiPageJumpTo implements DialogCallbackObject {
 
   _dialogSetup(): DialogSettings {
     const source = `<dl>
-        <dt><label for="jsPaginationPageNo">${Language.get('wcf.page.jumpTo')}</label></dt>
+        <dt><label for="jsPaginationPageNo">${Language.get("wcf.page.jumpTo")}</label></dt>
                 <dd>
           <input type="number" id="jsPaginationPageNo" value="1" min="1" max="1" class="tiny">
           <small></small>
         </dd>
       </dl>
       <div class="formSubmit">
-        <button class="buttonPrimary">${Language.get('wcf.global.button.submit')}</button>
+        <button class="buttonPrimary">${Language.get("wcf.global.button.submit")}</button>
       </div>`;
 
     return {
-      id: 'paginationOverlay',
+      id: "paginationOverlay",
       options: {
-        onSetup: content => {
-          this.input = content.querySelector('input')!;
-          this.input.addEventListener('keyup', (ev) => this._keyUp(ev));
+        onSetup: (content) => {
+          this.input = content.querySelector("input")!;
+          this.input.addEventListener("keyup", (ev) => this._keyUp(ev));
 
-          this.description = content.querySelector('small')!;
+          this.description = content.querySelector("small")!;
 
-          this.submitButton = content.querySelector('button')!;
-          this.submitButton.addEventListener('click', () => this.submit());
+          this.submitButton = content.querySelector("button")!;
+          this.submitButton.addEventListener("click", () => this.submit());
         },
-        title: Language.get('wcf.global.page.pagination'),
+        title: Language.get("wcf.global.page.pagination"),
       },
       source: source,
     };

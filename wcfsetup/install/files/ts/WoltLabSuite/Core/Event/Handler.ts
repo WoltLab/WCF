@@ -8,8 +8,8 @@
  * @module  WoltLabSuite/Core/Event/Handler
  */
 
-import * as Core from '../Core';
-import Devtools from '../Devtools';
+import * as Core from "../Core";
+import Devtools from "../Devtools";
 
 type Identifier = string;
 type Action = string;
@@ -20,7 +20,7 @@ const _listeners = new Map<Identifier, Map<Action, Map<Uuid, Callback>>>();
  * Registers an event listener.
  */
 export function add(identifier: Identifier, action: Action, callback: Callback): Uuid {
-  if (typeof callback !== 'function') {
+  if (typeof callback !== "function") {
     throw new TypeError(`Expected a valid callback for '${action}'@'${identifier}'.`);
   }
 
@@ -50,18 +50,17 @@ export function fire(identifier: Identifier, action: Action, data?: object): voi
 
   data = data || {};
 
-  _listeners.get(identifier)
+  _listeners
+    .get(identifier)
     ?.get(action)
-    ?.forEach(callback => callback(data));
+    ?.forEach((callback) => callback(data));
 }
 
 /**
  * Removes an event listener, requires the uuid returned by add().
  */
 export function remove(identifier: Identifier, action: Action, uuid: Uuid): void {
-  _listeners.get(identifier)
-    ?.get(action)
-    ?.delete(uuid);
+  _listeners.get(identifier)?.get(action)?.delete(uuid);
 }
 
 /**
@@ -69,7 +68,7 @@ export function remove(identifier: Identifier, action: Action, uuid: Uuid): void
  * remove all listeners for this identifier.
  */
 export function removeAll(identifier: Identifier, action?: Action): void {
-  if (typeof action !== 'string') action = undefined;
+  if (typeof action !== "string") action = undefined;
 
   const actions = _listeners.get(identifier);
   if (actions === undefined) {
@@ -93,7 +92,7 @@ export function removeAllBySuffix(identifier: Identifier, suffix: string): void 
     return;
   }
 
-  suffix = '_' + suffix;
+  suffix = "_" + suffix;
   const length = suffix.length * -1;
   actions.forEach((callbacks, action) => {
     if (action.substr(length) === suffix) {

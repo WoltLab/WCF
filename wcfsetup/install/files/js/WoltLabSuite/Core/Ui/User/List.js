@@ -27,8 +27,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
             this.pageCount = 0;
             this.pageNo = 1;
             this.options = Core.extend({
-                className: '',
-                dialogTitle: '',
+                className: "",
+                dialogTitle: "",
                 parameters: {},
             }, options);
         }
@@ -43,7 +43,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
          * Shows the current or given page.
          */
         showPage(pageNo) {
-            if (typeof pageNo === 'number') {
+            if (typeof pageNo === "number") {
                 this.pageNo = +pageNo;
             }
             if (this.pageCount !== 0 && (this.pageNo < 1 || this.pageNo > this.pageCount)) {
@@ -52,7 +52,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
             if (this.cache.has(this.pageNo)) {
                 const dialog = Dialog_1.default.open(this, this.cache.get(this.pageNo));
                 if (this.pageCount > 1) {
-                    const element = dialog.content.querySelector('.jsPagination');
+                    const element = dialog.content.querySelector(".jsPagination");
                     if (element !== null) {
                         new Pagination_1.default(element, {
                             activePage: this.pageNo,
@@ -84,9 +84,9 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
         _ajaxSetup() {
             return {
                 data: {
-                    actionName: 'getGroupedUserList',
+                    actionName: "getGroupedUserList",
                     className: this.options.className,
-                    interfaceName: 'wcf\\data\\IGroupedUserListAction',
+                    interfaceName: "wcf\\data\\IGroupedUserListAction",
                 },
             };
         }

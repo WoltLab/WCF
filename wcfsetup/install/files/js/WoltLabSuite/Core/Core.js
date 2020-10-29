@@ -12,7 +12,7 @@ define(["require", "exports"], function (require, exports) {
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.debounce = exports.stringToBool = exports.getStoragePrefix = exports.triggerEvent = exports.serialize = exports.getUuid = exports.getType = exports.isPlainObject = exports.inherit = exports.extend = exports.convertLegacyUrl = exports.clone = void 0;
     const _clone = function (variable) {
-        if (typeof variable === 'object' && (Array.isArray(variable) || isPlainObject(variable))) {
+        if (typeof variable === "object" && (Array.isArray(variable) || isPlainObject(variable))) {
             return _cloneObject(variable);
         }
         return variable;
@@ -25,10 +25,10 @@ define(["require", "exports"], function (require, exports) {
             return obj.slice();
         }
         const newObj = {};
-        Object.keys(obj).forEach(key => newObj[key] = _clone(obj[key]));
+        Object.keys(obj).forEach((key) => (newObj[key] = _clone(obj[key])));
         return newObj;
     };
-    const _prefix = 'wsc' + window.WCF_PATH.hashCode() + '-';
+    const _prefix = "wsc" + window.WCF_PATH.hashCode() + "-";
     /**
      * Deep clones an object.
      */
@@ -42,12 +42,12 @@ define(["require", "exports"], function (require, exports) {
     function convertLegacyUrl(url) {
         return url.replace(/^index\.php\/(.*?)\/\?/, (match, controller) => {
             const parts = controller.split(/([A-Z][a-z0-9]+)/);
-            controller = '';
+            controller = "";
             for (let i = 0, length = parts.length; i < length; i++) {
                 const part = parts[i].trim();
                 if (part.length) {
                     if (controller.length)
-                        controller += '-';
+                        controller += "-";
                     controller += part.toLowerCase();
                 }
             }
@@ -71,7 +71,7 @@ define(["require", "exports"], function (require, exports) {
                 continue;
             for (const key in obj) {
                 if (obj.hasOwnProperty(key)) {
-                    if (!Array.isArray(obj[key]) && typeof obj[key] === 'object') {
+                    if (!Array.isArray(obj[key]) && typeof obj[key] === "object") {
                         if (isPlainObject(obj[key])) {
                             // object literals have the prototype of Object which in return has no parent prototype
                             newObj[key] = extend(out[key], obj[key]);
@@ -111,13 +111,13 @@ define(["require", "exports"], function (require, exports) {
      */
     function inherit(constructor, superConstructor, propertiesObject) {
         if (constructor === undefined || constructor === null) {
-            throw new TypeError('The constructor must not be undefined or null.');
+            throw new TypeError("The constructor must not be undefined or null.");
         }
         if (superConstructor === undefined || superConstructor === null) {
-            throw new TypeError('The super constructor must not be undefined or null.');
+            throw new TypeError("The super constructor must not be undefined or null.");
         }
         if (superConstructor.prototype === undefined) {
-            throw new TypeError('The super constructor must have a prototype.');
+            throw new TypeError("The super constructor must have a prototype.");
         }
         constructor._super = superConstructor;
         constructor.prototype = extend(Object.create(superConstructor.prototype, {
@@ -134,17 +134,17 @@ define(["require", "exports"], function (require, exports) {
      * Returns true if `obj` is an object literal.
      */
     function isPlainObject(obj) {
-        if (typeof obj !== 'object' || obj === null || obj.nodeType) {
+        if (typeof obj !== "object" || obj === null || obj.nodeType) {
             return false;
         }
-        return (Object.getPrototypeOf(obj) === Object.prototype);
+        return Object.getPrototypeOf(obj) === Object.prototype;
     }
     exports.isPlainObject = isPlainObject;
     /**
      * Returns the object's class name.
      */
     function getType(obj) {
-        return Object.prototype.toString.call(obj).replace(/^\[object (.+)]$/, '$1');
+        return Object.prototype.toString.call(obj).replace(/^\[object (.+)]$/, "$1");
     }
     exports.getType = getType;
     /**
@@ -153,8 +153,8 @@ define(["require", "exports"], function (require, exports) {
      * @see    http://stackoverflow.com/a/2117523
      */
     function getUuid() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-            const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+            const r = (Math.random() * 16) | 0, v = c == "x" ? r : (r & 0x3) | 0x8;
             return v.toString(16);
         });
     }
@@ -166,17 +166,17 @@ define(["require", "exports"], function (require, exports) {
         let parameters = [];
         for (const key in obj) {
             if (obj.hasOwnProperty(key)) {
-                const parameterKey = (prefix) ? prefix + '[' + key + ']' : key;
+                const parameterKey = prefix ? prefix + "[" + key + "]" : key;
                 const value = obj[key];
-                if (typeof value === 'object') {
+                if (typeof value === "object") {
                     parameters.push(serialize(value, parameterKey));
                 }
                 else {
-                    parameters.push(encodeURIComponent(parameterKey) + '=' + encodeURIComponent(value));
+                    parameters.push(encodeURIComponent(parameterKey) + "=" + encodeURIComponent(value));
                 }
             }
         }
-        return parameters.join('&');
+        return parameters.join("&");
     }
     exports.serialize = serialize;
     /**
@@ -202,7 +202,7 @@ define(["require", "exports"], function (require, exports) {
      * legacy functions `elAttrBool()` and `elDataBool()`.
      */
     function stringToBool(value) {
-        return value === '1' || value === 'true';
+        return value === "1" || value === "true";
     }
     exports.stringToBool = stringToBool;
     /**

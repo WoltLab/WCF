@@ -14,8 +14,8 @@ const _permissions = new Map<string, boolean>();
  * Adds a single permission to the store.
  */
 export function add(permission: string, value: boolean): void {
-  if (typeof (value as any) !== 'boolean') {
-    throw new TypeError('The permission value has to be boolean.');
+  if (typeof (value as any) !== "boolean") {
+    throw new TypeError("The permission value has to be boolean.");
   }
 
   _permissions.set(permission, value);
@@ -31,7 +31,6 @@ export function addObject(object: PermissionObject): void {
     }
   }
 }
-
 
 /**
  * Returns the value of a permission.

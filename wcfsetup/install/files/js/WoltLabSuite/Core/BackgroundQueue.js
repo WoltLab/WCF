@@ -60,7 +60,7 @@ define(["require", "exports", "tslib", "./Ajax"], function (require, exports, ts
      */
     function invoke() {
         if (!queue) {
-            console.error('The background queue has not been initialized yet.');
+            console.error("The background queue has not been initialized yet.");
             return;
         }
         queue.invoke();

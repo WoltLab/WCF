@@ -20,18 +20,18 @@ define(["require", "exports", "tslib", "../Core", "../Environment"], function (r
     let _scrollTop = 0;
     let _pageOverlayCounter = 0;
     const _mqMap = new Map(Object.entries({
-        'screen-xs': '(max-width: 544px)',
-        'screen-sm': '(min-width: 545px) and (max-width: 768px)',
-        'screen-sm-down': '(max-width: 768px)',
-        'screen-sm-up': '(min-width: 545px)',
-        'screen-sm-md': '(min-width: 545px) and (max-width: 1024px)',
-        'screen-md': '(min-width: 769px) and (max-width: 1024px)',
-        'screen-md-down': '(max-width: 1024px)',
-        'screen-md-up': '(min-width: 769px)',
-        'screen-lg': '(min-width: 1025px)',
-        'screen-lg-only': '(min-width: 1025px) and (max-width: 1280px)',
-        'screen-lg-down': '(max-width: 1280px)',
-        'screen-xl': '(min-width: 1281px)',
+        "screen-xs": "(max-width: 544px)" /* smartphone */,
+        "screen-sm": "(min-width: 545px) and (max-width: 768px)" /* tablet (portrait) */,
+        "screen-sm-down": "(max-width: 768px)" /* smartphone + tablet (portrait) */,
+        "screen-sm-up": "(min-width: 545px)" /* tablet (portrait) + tablet (landscape) + desktop */,
+        "screen-sm-md": "(min-width: 545px) and (max-width: 1024px)" /* tablet (portrait) + tablet (landscape) */,
+        "screen-md": "(min-width: 769px) and (max-width: 1024px)" /* tablet (landscape) */,
+        "screen-md-down": "(max-width: 1024px)" /* smartphone + tablet (portrait) + tablet (landscape) */,
+        "screen-md-up": "(min-width: 769px)" /* tablet (landscape) + desktop */,
+        "screen-lg": "(min-width: 1025px)" /* desktop */,
+        "screen-lg-only": "(min-width: 1025px) and (max-width: 1280px)",
+        "screen-lg-down": "(max-width: 1280px)",
+        "screen-xl": "(min-width: 1281px)",
     }));
     // Microsoft Edge rewrites the media queries to whatever it
     // pleases, causing the input and output query to mismatch
@@ -49,13 +49,13 @@ define(["require", "exports", "tslib", "../Core", "../Environment"], function (r
      */
     function on(query, callbacks) {
         const uuid = Core.getUuid(), queryObject = _getQueryObject(query);
-        if (typeof callbacks.match === 'function') {
+        if (typeof callbacks.match === "function") {
             queryObject.callbacksMatch.set(uuid, callbacks.match);
         }
-        if (typeof callbacks.unmatch === 'function') {
+        if (typeof callbacks.unmatch === "function") {
             queryObject.callbacksUnmatch.set(uuid, callbacks.unmatch);
         }
-        if (typeof callbacks.setup === 'function') {
+        if (typeof callbacks.setup === "function") {
             if (queryObject.mql.matches) {
                 callbacks.setup();
             }
@@ -89,21 +89,21 @@ define(["require", "exports", "tslib", "../Core", "../Environment"], function (r
     function scrollDisable() {
         if (_scrollDisableCounter === 0) {
             _scrollTop = document.body.scrollTop;
-            _scrollOffsetFrom = 'body';
+            _scrollOffsetFrom = "body";
             if (!_scrollTop) {
                 _scrollTop = document.documentElement.scrollTop;
-                _scrollOffsetFrom = 'documentElement';
+                _scrollOffsetFrom = "documentElement";
             }
-            const pageContainer = document.getElementById('pageContainer');
+            const pageContainer = document.getElementById("pageContainer");
             // setting translateY causes Mobile Safari to snap
-            if (Environment.platform() === 'ios') {
-                pageContainer.style.setProperty('position', 'relative', '');
-                pageContainer.style.setProperty('top', '-' + _scrollTop + 'px', '');
+            if (Environment.platform() === "ios") {
+                pageContainer.style.setProperty("position", "relative", "");
+                pageContainer.style.setProperty("top", "-" + _scrollTop + "px", "");
             }
             else {
-                pageContainer.style.setProperty('margin-top', '-' + _scrollTop + 'px', '');
+                pageContainer.style.setProperty("margin-top", "-" + _scrollTop + "px", "");
             }
-            document.documentElement.classList.add('disableScrolling');
+            document.documentElement.classList.add("disableScrolling");
         }
         _scrollDisableCounter++;
     }
@@ -115,14 +115,14 @@ define(["require", "exports", "tslib", "../Core", "../Environment"], function (r
         if (_scrollDisableCounter) {
             _scrollDisableCounter--;
             if (_scrollDisableCounter === 0) {
-                document.documentElement.classList.remove('disableScrolling');
-                const pageContainer = document.getElementById('pageContainer');
-                if (Environment.platform() === 'ios') {
-                    pageContainer.style.removeProperty('position');
-                    pageContainer.style.removeProperty('top');
+                document.documentElement.classList.remove("disableScrolling");
+                const pageContainer = document.getElementById("pageContainer");
+                if (Environment.platform() === "ios") {
+                    pageContainer.style.removeProperty("position");
+                    pageContainer.style.removeProperty("top");
                 }
                 else {
-                    pageContainer.style.removeProperty('margin-top');
+                    pageContainer.style.removeProperty("margin-top");
                 }
                 if (_scrollTop) {
                     document[_scrollOffsetFrom].scrollTop = ~~_scrollTop;
@@ -136,7 +136,7 @@ define(["require", "exports", "tslib", "../Core", "../Environment"], function (r
      */
     function pageOverlayOpen() {
         if (_pageOverlayCounter === 0) {
-            document.documentElement.classList.add('pageOverlayActive');
+            document.documentElement.classList.add("pageOverlayActive");
         }
         _pageOverlayCounter++;
     }
@@ -148,7 +148,7 @@ define(["require", "exports", "tslib", "../Core", "../Environment"], function (r
         if (_pageOverlayCounter) {
             _pageOverlayCounter--;
             if (_pageOverlayCounter === 0) {
-                document.documentElement.classList.remove('pageOverlayActive');
+                document.documentElement.classList.remove("pageOverlayActive");
             }
         }
     }
@@ -172,8 +172,8 @@ define(["require", "exports", "tslib", "../Core", "../Environment"], function (r
     }
     exports.setDialogContainer = setDialogContainer;
     function _getQueryObject(query) {
-        if (typeof query !== 'string' || query.trim() === '') {
-            throw new TypeError('Expected a non-empty string for parameter \'query\'.');
+        if (typeof query !== "string" || query.trim() === "") {
+            throw new TypeError("Expected a non-empty string for parameter 'query'.");
         }
         // Microsoft Edge rewrites the media queries to whatever it
         // pleases, causing the input and output query to mismatch

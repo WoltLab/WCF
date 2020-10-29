@@ -8,10 +8,10 @@
  * @module  WoltLabSuite/Core/Ui/FlexibleMenu
  */
 
-import DomChangeListener from '../Dom/Change/Listener';
-import DomUtil from '../Dom/Util';
-import * as DomTraverse from '../Dom/Traverse';
-import UiDropdownSimple from './Dropdown/Simple';
+import DomChangeListener from "../Dom/Change/Listener";
+import DomUtil from "../Dom/Util";
+import * as DomTraverse from "../Dom/Traverse";
+import UiDropdownSimple from "./Dropdown/Simple";
 
 const _containers = new Map<string, HTMLElement>();
 const _dropdowns = new Map<string, HTMLLIElement>();
@@ -22,17 +22,17 @@ const _itemLists = new Map<string, HTMLUListElement>();
  * Register default menus and set up event listeners.
  */
 export function setup(): void {
-  if (document.getElementById('mainMenu') !== null) {
-    register('mainMenu');
+  if (document.getElementById("mainMenu") !== null) {
+    register("mainMenu");
   }
 
-  const navigationHeader = document.querySelector('.navigationHeader');
+  const navigationHeader = document.querySelector(".navigationHeader");
   if (navigationHeader !== null) {
     register(DomUtil.identify(navigationHeader));
   }
 
-  window.addEventListener('resize', rebuildAll);
-  DomChangeListener.add('WoltLabSuite/Core/Ui/FlexibleMenu', registerTabMenus);
+  window.addEventListener("resize", rebuildAll);
+  DomChangeListener.add("WoltLabSuite/Core/Ui/FlexibleMenu", registerTabMenus);
 }
 
 /**
@@ -48,7 +48,7 @@ export function register(containerId: string): void {
     return;
   }
 
-  const list = DomTraverse.childByTag(container, 'UL') as HTMLUListElement;
+  const list = DomTraverse.childByTag(container, "UL") as HTMLUListElement;
   if (list === null) {
     throw "Expected an <ul> element as child of container '" + containerId + "'.";
   }
@@ -63,13 +63,15 @@ export function register(containerId: string): void {
  * Registers tab menus.
  */
 export function registerTabMenus(): void {
-  document.querySelectorAll('.tabMenuContainer:not(.jsFlexibleMenuEnabled), .messageTabMenu:not(.jsFlexibleMenuEnabled)').forEach(tabMenu => {
-    const nav = DomTraverse.childByTag(tabMenu, 'NAV');
-    if (nav !== null) {
-      tabMenu.classList.add('jsFlexibleMenuEnabled');
-      register(DomUtil.identify(nav));
-    }
-  });
+  document
+    .querySelectorAll(".tabMenuContainer:not(.jsFlexibleMenuEnabled), .messageTabMenu:not(.jsFlexibleMenuEnabled)")
+    .forEach((tabMenu) => {
+      const nav = DomTraverse.childByTag(tabMenu, "NAV");
+      if (nav !== null) {
+        tabMenu.classList.add("jsFlexibleMenuEnabled");
+        register(DomUtil.identify(nav));
+      }
+    });
 }
 
 /**
@@ -93,18 +95,18 @@ export function rebuild(containerId: string): void {
   const styles = window.getComputedStyle(container);
   const parent = container.parentNode as HTMLElement;
   let availableWidth = parent.clientWidth;
-  availableWidth -= DomUtil.styleAsInt(styles, 'margin-left');
-  availableWidth -= DomUtil.styleAsInt(styles, 'margin-right');
+  availableWidth -= DomUtil.styleAsInt(styles, "margin-left");
+  availableWidth -= DomUtil.styleAsInt(styles, "margin-right");
 
   const list = _itemLists.get(containerId)!;
-  const items = DomTraverse.childrenByTag(list, 'LI') as HTMLLIElement[];
+  const items = DomTraverse.childrenByTag(list, "LI") as HTMLLIElement[];
   let dropdown = _dropdowns.get(containerId);
   let dropdownWidth = 0;
   if (dropdown !== undefined) {
     // show all items for calculation
     for (let i = 0, length = items.length; i < length; i++) {
       const item = items[i];
-      if (item.classList.contains('dropdown')) {
+      if (item.classList.contains("dropdown")) {
         continue;
       }
 
@@ -123,7 +125,11 @@ export function rebuild(containerId: string): void {
       const item = items[i];
 
       // ignore dropdown and active item
-      if (item.classList.contains('dropdown') || item.classList.contains('active') || item.classList.contains('ui-state-active')) {
+      if (
+        item.classList.contains("dropdown") ||
+        item.classList.contains("active") ||
+        item.classList.contains("ui-state-active")
+      ) {
         continue;
       }
 
@@ -139,15 +145,15 @@ export function rebuild(containerId: string): void {
   if (hiddenItems.length) {
     let dropdownMenu: HTMLUListElement;
     if (dropdown === undefined) {
-      dropdown = document.createElement('li');
-      dropdown.className = 'dropdown jsFlexibleMenuDropdown';
+      dropdown = document.createElement("li");
+      dropdown.className = "dropdown jsFlexibleMenuDropdown";
 
-      const icon = document.createElement('a');
-      icon.className = 'icon icon16 fa-list';
+      const icon = document.createElement("a");
+      icon.className = "icon icon16 fa-list";
       dropdown.appendChild(icon);
 
-      dropdownMenu = document.createElement('ul');
-      dropdownMenu.classList.add('dropdownMenu');
+      dropdownMenu = document.createElement("ul");
+      dropdownMenu.classList.add("dropdownMenu");
       dropdown.appendChild(dropdownMenu);
 
       _dropdowns.set(containerId, dropdown);
@@ -163,14 +169,14 @@ export function rebuild(containerId: string): void {
 
     // build dropdown menu
     const fragment = document.createDocumentFragment();
-    hiddenItems.forEach(hiddenItem => {
-      const item = document.createElement('li');
+    hiddenItems.forEach((hiddenItem) => {
+      const item = document.createElement("li");
       item.innerHTML = hiddenItem.innerHTML;
 
-      item.addEventListener('click', event => {
+      item.addEventListener("click", (event) => {
         event.preventDefault();
 
-        hiddenItem.querySelector('a')?.click();
+        hiddenItem.querySelector("a")?.click();
 
         // force a rebuild to guarantee the active item being visible
         setTimeout(() => {
@@ -181,7 +187,7 @@ export function rebuild(containerId: string): void {
       fragment.appendChild(item);
     });
 
-    dropdownMenu.innerHTML = '';
+    dropdownMenu.innerHTML = "";
     dropdownMenu.appendChild(fragment);
   } else if (dropdown !== undefined && dropdown.parentNode !== null) {
     dropdown.remove();

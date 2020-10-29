@@ -13,8 +13,8 @@ define(["require", "exports", "tslib", "../../Ajax"], function (require, exports
     Ajax = tslib_1.__importStar(Ajax);
     class UiArticleMarkAllAsRead {
         constructor() {
-            document.querySelectorAll('.markAllAsReadButton').forEach(button => {
-                button.addEventListener('click', this.click.bind(this));
+            document.querySelectorAll(".markAllAsReadButton").forEach((button) => {
+                button.addEventListener("click", this.click.bind(this));
             });
         }
         click(event) {
@@ -24,17 +24,17 @@ define(["require", "exports", "tslib", "../../Ajax"], function (require, exports
         _ajaxSuccess() {
             /* remove obsolete badges */
             // main menu
-            const badge = document.querySelector('.mainMenu .active .badge');
+            const badge = document.querySelector(".mainMenu .active .badge");
             if (badge)
                 badge.remove();
             // article list
-            document.querySelectorAll('.articleList .newMessageBadge').forEach(el => el.remove());
+            document.querySelectorAll(".articleList .newMessageBadge").forEach((el) => el.remove());
         }
         _ajaxSetup() {
             return {
                 data: {
-                    actionName: 'markAllAsRead',
-                    className: 'wcf\\data\\article\\ArticleAction',
+                    actionName: "markAllAsRead",
+                    className: "wcf\\data\\article\\ArticleAction",
                 },
             };
         }

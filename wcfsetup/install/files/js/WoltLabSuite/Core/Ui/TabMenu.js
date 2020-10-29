@@ -24,7 +24,7 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
      * Initializes available tab menus.
      */
     function init() {
-        document.querySelectorAll('.tabMenuContainer:not(.staticTabMenuContainer)').forEach(container => {
+        document.querySelectorAll(".tabMenuContainer:not(.staticTabMenuContainer)").forEach((container) => {
             const containerId = Util_1.default.identify(container);
             if (_tabMenus.has(containerId)) {
                 return;
@@ -43,27 +43,27 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
                     tabMenu.select(returnValue.id, undefined, true);
                 }
             }
-            const list = document.querySelector('#' + containerId + ' > nav > ul');
-            list.addEventListener('click', event => {
+            const list = document.querySelector("#" + containerId + " > nav > ul");
+            list.addEventListener("click", (event) => {
                 event.preventDefault();
                 event.stopPropagation();
                 if (event.target === list) {
-                    list.classList.add('active');
+                    list.classList.add("active");
                     _activeList = list;
                 }
                 else {
-                    list.classList.remove('active');
+                    list.classList.remove("active");
                     _activeList = null;
                 }
             });
             // bind scroll listener
-            container.querySelectorAll('.tabMenu, .menu').forEach(menu => {
+            container.querySelectorAll(".tabMenu, .menu").forEach((menu) => {
                 function callback() {
                     timeout = null;
                     rebuildMenuOverflow(menu);
                 }
                 let timeout = null;
-                menu.querySelector('ul').addEventListener('scroll', () => {
+                menu.querySelector("ul").addEventListener("scroll", () => {
                     if (timeout !== null) {
                         window.clearTimeout(timeout);
                     }
@@ -76,21 +76,21 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
             // to not work and a warning is displayed on the console. We can work around this
             // by manually checking if the input fields validate on submit and display the
             // parent tab ourselves.
-            const form = container.closest('form');
+            const form = container.closest("form");
             if (form !== null) {
                 const submitButton = form.querySelector('input[type="submit"]');
                 if (submitButton !== null) {
-                    submitButton.addEventListener('click', event => {
+                    submitButton.addEventListener("click", (event) => {
                         if (event.defaultPrevented) {
                             return;
                         }
-                        container.querySelectorAll('input, select').forEach((element) => {
+                        container.querySelectorAll("input, select").forEach((element) => {
                             if (!element.checkValidity()) {
                                 event.preventDefault();
                                 // Select the tab that contains the erroneous element.
-                                const tabMenu = getTabMenu(element.closest('.tabMenuContainer').id);
-                                const tabMenuContent = element.closest('.tabMenuContent');
-                                tabMenu.select(tabMenuContent.dataset.name || '');
+                                const tabMenu = getTabMenu(element.closest(".tabMenuContainer").id);
+                                const tabMenuContent = element.closest(".tabMenuContent");
+                                tabMenu.select(tabMenuContent.dataset.name || "");
                                 UiScroll.element(element, () => {
                                     element.reportValidity();
                                 });
@@ -106,10 +106,10 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
      * Selects the first tab containing an element with class `formError`.
      */
     function selectErroneousTabs() {
-        _tabMenus.forEach(tabMenu => {
+        _tabMenus.forEach((tabMenu) => {
             let foundError = false;
-            tabMenu.getContainers().forEach(container => {
-                if (!foundError && container.querySelector('.formError') !== null) {
+            tabMenu.getContainers().forEach((container) => {
+                if (!foundError && container.querySelector(".formError") !== null) {
                     foundError = true;
                     tabMenu.select(container.id);
                 }
@@ -118,10 +118,10 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
     }
     function scrollEnable(isSetup) {
         _enableTabScroll = true;
-        _tabMenus.forEach(tabMenu => {
+        _tabMenus.forEach((tabMenu) => {
             const activeTab = tabMenu.getActiveTab();
             if (isSetup) {
-                rebuildMenuOverflow(activeTab.closest('.menu, .tabMenu'));
+                rebuildMenuOverflow(activeTab.closest(".menu, .tabMenu"));
             }
             else {
                 scrollToTab(activeTab);
@@ -149,19 +149,19 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
         if (scrollLeft === left) {
             return;
         }
-        list.classList.add('enableAnimation');
+        list.classList.add("enableAnimation");
         // new value is larger, we're scrolling towards the end
         if (scrollLeft < left) {
-            list.firstElementChild.style.setProperty('margin-left', (scrollLeft - left) + 'px', '');
+            list.firstElementChild.style.setProperty("margin-left", scrollLeft - left + "px", "");
         }
         else {
             // new value is smaller, we're scrolling towards the start
-            list.style.setProperty('padding-left', (scrollLeft - left) + 'px', '');
+            list.style.setProperty("padding-left", scrollLeft - left + "px", "");
         }
         setTimeout(() => {
-            list.classList.remove('enableAnimation');
-            list.firstElementChild.style.removeProperty('margin-left');
-            list.style.removeProperty('padding-left');
+            list.classList.remove("enableAnimation");
+            list.firstElementChild.style.removeProperty("margin-left");
+            list.style.removeProperty("padding-left");
             list.scrollLeft = left;
         }, 300);
     }
@@ -170,42 +170,42 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
             return;
         }
         const width = menu.clientWidth;
-        const list = menu.querySelector('ul');
+        const list = menu.querySelector("ul");
         const scrollLeft = list.scrollLeft;
         const scrollWidth = list.scrollWidth;
-        const overflowLeft = (scrollLeft > 0);
-        let overlayLeft = menu.querySelector('.tabMenuOverlayLeft');
+        const overflowLeft = scrollLeft > 0;
+        let overlayLeft = menu.querySelector(".tabMenuOverlayLeft");
         if (overflowLeft) {
             if (overlayLeft === null) {
-                overlayLeft = document.createElement('span');
-                overlayLeft.className = 'tabMenuOverlayLeft icon icon24 fa-angle-left';
-                overlayLeft.addEventListener('click', () => {
+                overlayLeft = document.createElement("span");
+                overlayLeft.className = "tabMenuOverlayLeft icon icon24 fa-angle-left";
+                overlayLeft.addEventListener("click", () => {
                     const listWidth = list.clientWidth;
                     scrollMenu(list, list.scrollLeft - ~~(listWidth / 2), list.scrollLeft, list.scrollWidth, listWidth, 0);
                 });
                 menu.insertBefore(overlayLeft, menu.firstChild);
             }
-            overlayLeft.classList.add('active');
+            overlayLeft.classList.add("active");
         }
         else if (overlayLeft !== null) {
-            overlayLeft.classList.remove('active');
+            overlayLeft.classList.remove("active");
         }
-        const overflowRight = (width + scrollLeft < scrollWidth);
-        let overlayRight = menu.querySelector('.tabMenuOverlayRight');
+        const overflowRight = width + scrollLeft < scrollWidth;
+        let overlayRight = menu.querySelector(".tabMenuOverlayRight");
         if (overflowRight) {
             if (overlayRight === null) {
-                overlayRight = document.createElement('span');
-                overlayRight.className = 'tabMenuOverlayRight icon icon24 fa-angle-right';
-                overlayRight.addEventListener('click', () => {
+                overlayRight = document.createElement("span");
+                overlayRight.className = "tabMenuOverlayRight icon icon24 fa-angle-right";
+                overlayRight.addEventListener("click", () => {
                     const listWidth = list.clientWidth;
                     scrollMenu(list, list.scrollLeft + ~~(listWidth / 2), list.scrollLeft, list.scrollWidth, listWidth, 0);
                 });
                 menu.appendChild(overlayRight);
             }
-            overlayRight.classList.add('active');
+            overlayRight.classList.add("active");
         }
         else if (overlayRight !== null) {
-            overlayRight.classList.remove('active');
+            overlayRight.classList.remove("active");
         }
     }
     /**
@@ -214,14 +214,14 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
     function setup() {
         init();
         selectErroneousTabs();
-        Listener_1.default.add('WoltLabSuite/Core/Ui/TabMenu', init);
-        CloseOverlay_1.default.add('WoltLabSuite/Core/Ui/TabMenu', () => {
+        Listener_1.default.add("WoltLabSuite/Core/Ui/TabMenu", init);
+        CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/TabMenu", () => {
             if (_activeList) {
-                _activeList.classList.remove('active');
+                _activeList.classList.remove("active");
                 _activeList = null;
             }
         });
-        UiScreen.on('screen-sm-down', {
+        UiScreen.on("screen-sm-down", {
             match() {
                 scrollEnable(false);
             },
@@ -230,11 +230,11 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
                 scrollEnable(true);
             },
         });
-        window.addEventListener('hashchange', () => {
+        window.addEventListener("hashchange", () => {
             const hash = Simple_1.default.getIdentifierFromHash();
             const element = hash ? document.getElementById(hash) : null;
-            if (element !== null && element.classList.contains('tabMenuContent')) {
-                _tabMenus.forEach(tabMenu => {
+            if (element !== null && element.classList.contains("tabMenuContent")) {
+                _tabMenus.forEach((tabMenu) => {
                     if (tabMenu.hasTab(hash)) {
                         tabMenu.select(hash);
                     }
@@ -246,8 +246,8 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
             window.setTimeout(() => {
                 // check if page was initially scrolled using a tab id
                 const tabMenuContent = document.getElementById(hash);
-                if (tabMenuContent && tabMenuContent.classList.contains('tabMenuContent')) {
-                    const scrollY = (window.scrollY || window.pageYOffset);
+                if (tabMenuContent && tabMenuContent.classList.contains("tabMenuContent")) {
+                    const scrollY = window.scrollY || window.pageYOffset;
                     if (scrollY > 0) {
                         const parent = tabMenuContent.parentNode;
                         let offsetTop = parent.offsetTop - 50;
@@ -281,7 +281,7 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
         if (!_enableTabScroll) {
             return;
         }
-        const list = tab.closest('ul');
+        const list = tab.closest("ul");
         const width = list.clientWidth;
         const scrollLeft = list.scrollLeft;
         const scrollWidth = list.scrollWidth;

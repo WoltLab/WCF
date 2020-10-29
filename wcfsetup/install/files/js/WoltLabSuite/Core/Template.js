@@ -27,20 +27,24 @@ define(["require", "exports", "tslib", "./Template.grammar", "./StringUtil", "./
     class Template {
         constructor(template) {
             // Fetch Language/StringUtil, as it cannot be provided because of a circular dependency
-            if (Language === undefined) { //@ts-ignore
-                Language = require('./Language');
+            if (Language === undefined) {
+                //@ts-ignore
+                Language = require("./Language");
             }
-            if (StringUtil === undefined) { //@ts-ignore
-                StringUtil = require('./StringUtil');
+            if (StringUtil === undefined) {
+                //@ts-ignore
+                StringUtil = require("./StringUtil");
             }
             try {
                 template = parser.parse(template);
-                template = 'var tmp = {};\n'
-                    + 'for (var key in v) tmp[key] = v[key];\n'
-                    + 'v = tmp;\n'
-                    + 'v.__wcf = window.WCF; v.__window = window;\n'
-                    + 'return ' + template;
-                this.fetch = new Function('StringUtil', 'Language', 'I18nPlural', 'v', template).bind(undefined, StringUtil, Language, I18nPlural);
+                template =
+                    "var tmp = {};\n" +
+                        "for (var key in v) tmp[key] = v[key];\n" +
+                        "v = tmp;\n" +
+                        "v.__wcf = window.WCF; v.__window = window;\n" +
+                        "return " +
+                        template;
+                this.fetch = new Function("StringUtil", "Language", "I18nPlural", "v", template).bind(undefined, StringUtil, Language, I18nPlural);
             }
             catch (e) {
                 console.debug(e.message);
@@ -54,17 +58,17 @@ define(["require", "exports", "tslib", "./Template.grammar", "./StringUtil", "./
          */
         fetch(v) {
             // this will be replaced in the init function
-            throw new Error('This Template is not initialized.');
+            throw new Error("This Template is not initialized.");
         }
     }
-    Object.defineProperty(Template, 'callbacks', {
+    Object.defineProperty(Template, "callbacks", {
         enumerable: false,
         configurable: false,
         get: function () {
-            throw new Error('WCF.Template.callbacks is no longer supported');
+            throw new Error("WCF.Template.callbacks is no longer supported");
         },
         set: function (value) {
-            throw new Error('WCF.Template.callbacks is no longer supported');
+            throw new Error("WCF.Template.callbacks is no longer supported");
         },
     });
     return Template;

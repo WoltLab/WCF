@@ -8,23 +8,26 @@
  * @see  module:WoltLabSuite/Core/Ui/Search/Input
  */
 
-import * as Core from '../../../Core';
-import UiSearchInput from '../../Search/Input';
+import * as Core from "../../../Core";
+import UiSearchInput from "../../Search/Input";
 
 class UiUserSearchInput extends UiSearchInput {
   constructor(element, options) {
-    const includeUserGroups = (Core.isPlainObject(options) && options.includeUserGroups === true);
+    const includeUserGroups = Core.isPlainObject(options) && options.includeUserGroups === true;
 
-    options = Core.extend({
-      ajax: {
-        className: 'wcf\\data\\user\\UserAction',
-        parameters: {
-          data: {
-            includeUserGroups: (includeUserGroups ? 1 : 0),
+    options = Core.extend(
+      {
+        ajax: {
+          className: "wcf\\data\\user\\UserAction",
+          parameters: {
+            data: {
+              includeUserGroups: includeUserGroups ? 1 : 0,
+            },
           },
         },
       },
-    }, options);
+      options
+    );
 
     super(element, options);
   }
@@ -33,9 +36,9 @@ class UiUserSearchInput extends UiSearchInput {
     const listItem = super.createListItem(item);
     listItem.dataset.type = item.type;
 
-    const box = document.createElement('div');
-    box.className = 'box16';
-    box.innerHTML = (item.type === 'group') ? '<span class="icon icon16 fa-users"></span>' : item.icon;
+    const box = document.createElement("div");
+    box.className = "box16";
+    box.innerHTML = item.type === "group" ? '<span class="icon icon16 fa-users"></span>' : item.icon;
     box.appendChild(listItem.children[0]);
     listItem.appendChild(box);
 
@@ -43,7 +46,7 @@ class UiUserSearchInput extends UiSearchInput {
   }
 }
 
-export = UiUserSearchInput
+export = UiUserSearchInput;
 
 // https://stackoverflow.com/a/50677584/782822
 // This is a dirty hack, because the ListItemData cannot be exported for compatibility reasons.

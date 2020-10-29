@@ -7,14 +7,14 @@
  * @module  WoltLabSuite/Core/I18n/Plural
  */
 
-import * as StringUtil from '../StringUtil';
+import * as StringUtil from "../StringUtil";
 
-const PLURAL_FEW = 'few';
-const PLURAL_MANY = 'many';
-const PLURAL_ONE = 'one';
-const PLURAL_OTHER = 'other';
-const PLURAL_TWO = 'two';
-const PLURAL_ZERO = 'zero';
+const PLURAL_FEW = "few";
+const PLURAL_MANY = "many";
+const PLURAL_ONE = "one";
+const PLURAL_OTHER = "other";
+const PLURAL_TWO = "two";
+const PLURAL_ZERO = "zero";
 
 const Plural = {
   /**
@@ -26,8 +26,8 @@ const Plural = {
     }
 
     // Fallback: handle unknown languages as English
-    if (typeof Plural[languageCode] !== 'function') {
-      languageCode = 'en';
+    if (typeof Plural[languageCode] !== "function") {
+      languageCode = "en";
     }
 
     const category = Plural[languageCode](value);
@@ -44,14 +44,14 @@ const Plural = {
    * @see    wcf\system\template\plugin\PluralFunctionTemplatePlugin::execute()
    */
   getCategoryFromTemplateParameters(parameters: object): string {
-    if (!parameters['value']) {
-      throw new Error('Missing parameter value');
+    if (!parameters["value"]) {
+      throw new Error("Missing parameter value");
     }
-    if (!parameters['other']) {
-      throw new Error('Missing parameter other');
+    if (!parameters["other"]) {
+      throw new Error("Missing parameter other");
     }
 
-    let value = parameters['value'];
+    let value = parameters["value"];
     if (Array.isArray(value)) {
       value = value.length;
     }
@@ -69,8 +69,8 @@ const Plural = {
     }
 
     const string = parameters[category];
-    if (string.indexOf('#') !== -1) {
-      return string.replace('#', StringUtil.formatNumeric(value));
+    if (string.indexOf("#") !== -1) {
+      return string.replace("#", StringUtil.formatNumeric(value));
     }
 
     return string;
@@ -81,7 +81,7 @@ const Plural = {
    */
   getF(n: number): number {
     const tmp = n.toString();
-    const pos = tmp.indexOf('.');
+    const pos = tmp.indexOf(".");
     if (pos === -1) {
       return 0;
     }
@@ -93,7 +93,7 @@ const Plural = {
    * `v` represents the number of digits of the fractional part (1.234 yields 3)
    */
   getV(n: number): number {
-    return n.toString().replace(/^[^.]*\.?/, '').length;
+    return n.toString().replace(/^[^.]*\.?/, "").length;
   },
 
   // Afrikaans
@@ -151,8 +151,7 @@ const Plural = {
   },
 
   // Tibetan
-  bo(n: number) {
-  },
+  bo(n: number) {},
 
   // Bosnian
   bs(n: number): string | undefined {
@@ -164,8 +163,11 @@ const Plural = {
     const fMod100 = f % 100;
 
     if ((v == 0 && mod10 == 1 && mod100 != 11) || (fMod10 == 1 && fMod100 != 11)) return PLURAL_ONE;
-    if ((v == 0 && mod10 >= 2 && mod10 <= 4 && mod100 >= 12 && mod100 <= 14)
-      || (fMod10 >= 2 && fMod10 <= 4 && fMod100 >= 12 && fMod100 <= 14)) return PLURAL_FEW;
+    if (
+      (v == 0 && mod10 >= 2 && mod10 <= 4 && mod100 >= 12 && mod100 <= 14) ||
+      (fMod10 >= 2 && fMod10 <= 4 && fMod100 >= 12 && fMod100 <= 14)
+    )
+      return PLURAL_FEW;
   },
 
   // Czech
@@ -274,23 +276,20 @@ const Plural = {
   },
 
   // Indonesian
-  id(n: number) {
-  },
+  id(n: number) {},
 
   // Icelandic
   is(n: number): string | undefined {
     const f = Plural.getF(n);
 
-    if (f === 0 && n % 10 === 1 && !(n % 100 === 11) || !(f === 0)) return PLURAL_ONE;
+    if ((f === 0 && n % 10 === 1 && !(n % 100 === 11)) || !(f === 0)) return PLURAL_ONE;
   },
 
   // Japanese
-  ja(n: number) {
-  },
+  ja(n: number) {},
 
   // Javanese
-  jv(n: number) {
-  },
+  jv(n: number) {},
 
   // Georgian
   ka(n: number): string | undefined {
@@ -303,8 +302,7 @@ const Plural = {
   },
 
   // Khmer
-  km(n: number) {
-  },
+  km(n: number) {},
 
   // Kannada
   kn(n: number): string | undefined {
@@ -312,8 +310,7 @@ const Plural = {
   },
 
   // Korean
-  ko(n: number) {
-  },
+  ko(n: number) {},
 
   // Kurdish
   ku(n: number): string | undefined {
@@ -331,8 +328,7 @@ const Plural = {
   },
 
   // Lao
-  lo(n: number) {
-  },
+  lo(n: number) {},
 
   // Lithuanian
   lt(n: number): string | undefined {
@@ -354,7 +350,8 @@ const Plural = {
     const fMod100 = f % 100;
 
     if (mod10 == 0 || (mod100 >= 11 && mod100 <= 19) || (v == 2 && fMod100 >= 11 && fMod100 <= 19)) return PLURAL_ZERO;
-    if ((mod10 == 1 && mod100 != 11) || (v == 2 && fMod10 == 1 && fMod100 != 11) || (v != 2 && fMod10 == 1)) return PLURAL_ONE;
+    if ((mod10 == 1 && mod100 != 11) || (v == 2 && fMod10 == 1 && fMod100 != 11) || (v != 2 && fMod10 == 1))
+      return PLURAL_ONE;
   },
 
   // Macedonian
@@ -367,21 +364,20 @@ const Plural = {
     if (n == 1) return PLURAL_ONE;
   },
 
-  // Mongolian 
+  // Mongolian
   mn(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
-  // Marathi 
+  // Marathi
   mr(n: number): string | undefined {
     if (n == 1) return PLURAL_ONE;
   },
 
-  // Malay 
-  ms(n: number) {
-  },
+  // Malay
+  ms(n: number) {},
 
-  // Maltese 
+  // Maltese
   mt(n: number): string | undefined {
     const mod100 = n % 100;
 
@@ -391,8 +387,7 @@ const Plural = {
   },
 
   // Burmese
-  my(n: number) {
-  },
+  my(n: number) {},
 
   // Norwegian
   no(n: number): string | undefined {
@@ -422,7 +417,11 @@ const Plural = {
 
     if (n == 1 && v == 0) return PLURAL_ONE;
     if (v == 0 && mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14)) return PLURAL_FEW;
-    if (v == 0 && ((n != 1 && mod10 >= 0 && mod10 <= 1) || (mod10 >= 5 && mod10 <= 9) || (mod100 >= 12 && mod100 <= 14))) return PLURAL_MANY;
+    if (
+      v == 0 &&
+      ((n != 1 && mod10 >= 0 && mod10 <= 1) || (mod10 >= 5 && mod10 <= 9) || (mod100 >= 12 && mod100 <= 14))
+    )
+      return PLURAL_MANY;
   },
 
   // Pashto
@@ -504,12 +503,10 @@ const Plural = {
   },
 
   // Tajik
-  tg(n: number) {
-  },
+  tg(n: number) {},
 
   // Thai
-  th(n: number) {
-  },
+  th(n: number) {},
 
   // Turkmen
   tk(n: number): string | undefined {
@@ -538,12 +535,10 @@ const Plural = {
   },
 
   // Vietnamese
-  vi(n: number) {
-  },
+  vi(n: number) {},
 
   // Chinese
-  zh(n: number) {
-  },
+  zh(n: number) {},
 };
 
-export = Plural
+export = Plural;

@@ -33,7 +33,7 @@ define(["require", "exports", "tslib", "../../../Environment", "../../../Languag
         // issue results in the next button being shown for a short time. To circumvent this issue,
         // we wait a second before showing the obverflow controls in Safari.
         // see https://webkit.org/blog/6643/improved-font-loading/
-        if (Environment.browser() === 'safari') {
+        if (Environment.browser() === "safari") {
             window.setTimeout(rebuildVisibility, 1000);
         }
         else {
@@ -57,9 +57,9 @@ define(["require", "exports", "tslib", "../../../Environment", "../../../Languag
             const showItem = _invisibleRight.slice(0, 3).pop();
             setMarginLeft(_menu.clientWidth - (showItem.offsetLeft + showItem.clientWidth));
             if (_menu.lastElementChild === showItem) {
-                _buttonShowNext.classList.remove('active');
+                _buttonShowNext.classList.remove("active");
             }
-            _buttonShowPrevious.classList.add('active');
+            _buttonShowPrevious.classList.add("active");
         }
     }
     /**
@@ -71,9 +71,9 @@ define(["require", "exports", "tslib", "../../../Environment", "../../../Languag
             const showItem = _invisibleLeft.slice(-3)[0];
             setMarginLeft(showItem.offsetLeft * -1);
             if (_menu.firstElementChild === showItem) {
-                _buttonShowPrevious.classList.remove('active');
+                _buttonShowPrevious.classList.remove("active");
             }
-            _buttonShowNext.classList.add('active');
+            _buttonShowNext.classList.add("active");
         }
     }
     /**
@@ -82,7 +82,7 @@ define(["require", "exports", "tslib", "../../../Environment", "../../../Languag
      */
     function setMarginLeft(offset) {
         _marginLeft = Math.min(_marginLeft + offset, 0);
-        _firstElement.style.setProperty('margin-left', _marginLeft + 'px', '');
+        _firstElement.style.setProperty("margin-left", _marginLeft + "px", "");
     }
     /**
      * Toggles button overlays and rebuilds the list
@@ -105,8 +105,8 @@ define(["require", "exports", "tslib", "../../../Environment", "../../../Languag
                 }
             });
         }
-        _buttonShowPrevious.classList[(_invisibleLeft.length ? 'add' : 'remove')]('active');
-        _buttonShowNext.classList[(_invisibleRight.length ? 'add' : 'remove')]('active');
+        _buttonShowPrevious.classList[_invisibleLeft.length ? "add" : "remove"]("active");
+        _buttonShowNext.classList[_invisibleRight.length ? "add" : "remove"]("active");
     }
     /**
      * Builds the UI and binds the event listeners.
@@ -120,23 +120,23 @@ define(["require", "exports", "tslib", "../../../Environment", "../../../Languag
      */
     function setupOverflow() {
         const menuParent = _menu.parentElement;
-        _buttonShowNext = document.createElement('a');
-        _buttonShowNext.className = 'mainMenuShowNext';
-        _buttonShowNext.href = '#';
+        _buttonShowNext = document.createElement("a");
+        _buttonShowNext.className = "mainMenuShowNext";
+        _buttonShowNext.href = "#";
         _buttonShowNext.innerHTML = '<span class="icon icon32 fa-angle-right"></span>';
-        _buttonShowNext.setAttribute('aria-hidden', 'true');
-        _buttonShowNext.addEventListener('click', showNext);
+        _buttonShowNext.setAttribute("aria-hidden", "true");
+        _buttonShowNext.addEventListener("click", showNext);
         menuParent.appendChild(_buttonShowNext);
-        _buttonShowPrevious = document.createElement('a');
-        _buttonShowPrevious.className = 'mainMenuShowPrevious';
-        _buttonShowPrevious.href = '#';
+        _buttonShowPrevious = document.createElement("a");
+        _buttonShowPrevious.className = "mainMenuShowPrevious";
+        _buttonShowPrevious.href = "#";
         _buttonShowPrevious.innerHTML = '<span class="icon icon32 fa-angle-left"></span>';
-        _buttonShowPrevious.setAttribute('aria-hidden', 'true');
-        _buttonShowPrevious.addEventListener('click', showPrevious);
+        _buttonShowPrevious.setAttribute("aria-hidden", "true");
+        _buttonShowPrevious.addEventListener("click", showPrevious);
         menuParent.insertBefore(_buttonShowPrevious, menuParent.firstChild);
-        _firstElement.addEventListener('transitionend', rebuildVisibility);
-        window.addEventListener('resize', () => {
-            _firstElement.style.setProperty('margin-left', '0px', '');
+        _firstElement.addEventListener("transitionend", rebuildVisibility);
+        window.addEventListener("resize", () => {
+            _firstElement.style.setProperty("margin-left", "0px", "");
             _marginLeft = 0;
             rebuildVisibility();
         });
@@ -146,21 +146,21 @@ define(["require", "exports", "tslib", "../../../Environment", "../../../Languag
      * Setups a11y improvements.
      */
     function setupA11y() {
-        _menu.querySelectorAll('.boxMenuHasChildren').forEach(element => {
-            const link = element.querySelector('.boxMenuLink');
-            link.setAttribute('aria-haspopup', 'true');
-            link.setAttribute('aria-expanded', 'false');
-            const showMenuButton = document.createElement('button');
-            showMenuButton.className = 'visuallyHidden';
+        _menu.querySelectorAll(".boxMenuHasChildren").forEach((element) => {
+            const link = element.querySelector(".boxMenuLink");
+            link.setAttribute("aria-haspopup", "true");
+            link.setAttribute("aria-expanded", "false");
+            const showMenuButton = document.createElement("button");
+            showMenuButton.className = "visuallyHidden";
             showMenuButton.tabIndex = 0;
-            showMenuButton.setAttribute('role', 'button');
-            showMenuButton.setAttribute('aria-label', Language.get('wcf.global.button.showMenu'));
+            showMenuButton.setAttribute("role", "button");
+            showMenuButton.setAttribute("aria-label", Language.get("wcf.global.button.showMenu"));
             element.insertBefore(showMenuButton, link.nextSibling);
             let showMenu = false;
-            showMenuButton.addEventListener('click', () => {
+            showMenuButton.addEventListener("click", () => {
                 showMenu = !showMenu;
-                link.setAttribute('aria-expanded', showMenu ? 'true' : 'false');
-                showMenuButton.setAttribute('aria-label', Language.get(showMenu ? 'wcf.global.button.hideMenu' : 'wcf.global.button.showMenu'));
+                link.setAttribute("aria-expanded", showMenu ? "true" : "false");
+                showMenuButton.setAttribute("aria-label", Language.get(showMenu ? "wcf.global.button.hideMenu" : "wcf.global.button.showMenu"));
             });
         });
     }
@@ -168,14 +168,14 @@ define(["require", "exports", "tslib", "../../../Environment", "../../../Languag
      * Initializes the main menu overflow handling.
      */
     function init() {
-        const menu = document.querySelector('.mainMenu .boxMenu');
-        const firstElement = (menu && menu.childElementCount) ? menu.children[0] : null;
+        const menu = document.querySelector(".mainMenu .boxMenu");
+        const firstElement = menu && menu.childElementCount ? menu.children[0] : null;
         if (firstElement === null) {
             throw new Error("Unable to find the main menu.");
         }
         _menu = menu;
         _firstElement = firstElement;
-        UiScreen.on('screen-lg', {
+        UiScreen.on("screen-lg", {
             match: enable,
             unmatch: disable,
             setup: setup,

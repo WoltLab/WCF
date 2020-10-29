@@ -8,7 +8,7 @@
  * @module  WoltLabSuite/Core/Language
  */
 
-import Template from './Template';
+import Template from "./Template";
 
 const _languageItems = new Map<string, string | Template>();
 
@@ -16,7 +16,7 @@ const _languageItems = new Map<string, string | Template>();
  * Adds all the language items in the given object to the store.
  */
 export function addObject(object: LanguageItems): void {
-  Object.keys(object).forEach(key => {
+  Object.keys(object).forEach((key) => {
     _languageItems.set(key, object[key]);
   });
 }
@@ -44,16 +44,20 @@ export function get(key: string, parameters?: object): string {
   }
 
   // fetch Template, as it cannot be provided because of a circular dependency
-  if (Template === undefined) { //@ts-ignore
-    Template = require('./Template');
+  if (Template === undefined) {
+    //@ts-ignore
+    Template = require("./Template");
   }
 
-  if (typeof value === 'string') {
+  if (typeof value === "string") {
     // lazily convert to WCF.Template
     try {
       _languageItems.set(key, new Template(value));
     } catch (e) {
-      _languageItems.set(key, new Template('{literal}' + value.replace(/{\/literal}/g, '{/literal}{ldelim}/literal}{literal}') + '{/literal}'));
+      _languageItems.set(
+        key,
+        new Template("{literal}" + value.replace(/{\/literal}/g, "{/literal}{ldelim}/literal}{literal}") + "{/literal}")
+      );
     }
     value = _languageItems.get(key);
   }
@@ -67,4 +71,4 @@ export function get(key: string, parameters?: object): string {
 
 interface LanguageItems {
   [key: string]: string;
-} 
+}

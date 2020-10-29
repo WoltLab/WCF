@@ -9,12 +9,12 @@
 define(["require", "exports", "tslib", "../StringUtil"], function (require, exports, tslib_1, StringUtil) {
     "use strict";
     StringUtil = tslib_1.__importStar(StringUtil);
-    const PLURAL_FEW = 'few';
-    const PLURAL_MANY = 'many';
-    const PLURAL_ONE = 'one';
-    const PLURAL_OTHER = 'other';
-    const PLURAL_TWO = 'two';
-    const PLURAL_ZERO = 'zero';
+    const PLURAL_FEW = "few";
+    const PLURAL_MANY = "many";
+    const PLURAL_ONE = "one";
+    const PLURAL_OTHER = "other";
+    const PLURAL_TWO = "two";
+    const PLURAL_ZERO = "zero";
     const Plural = {
         /**
          * Returns the plural category for the given value.
@@ -24,8 +24,8 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
                 languageCode = document.documentElement.lang;
             }
             // Fallback: handle unknown languages as English
-            if (typeof Plural[languageCode] !== 'function') {
-                languageCode = 'en';
+            if (typeof Plural[languageCode] !== "function") {
+                languageCode = "en";
             }
             const category = Plural[languageCode](value);
             if (category) {
@@ -39,13 +39,13 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
          * @see    wcf\system\template\plugin\PluralFunctionTemplatePlugin::execute()
          */
         getCategoryFromTemplateParameters(parameters) {
-            if (!parameters['value']) {
-                throw new Error('Missing parameter value');
+            if (!parameters["value"]) {
+                throw new Error("Missing parameter value");
             }
-            if (!parameters['other']) {
-                throw new Error('Missing parameter other');
+            if (!parameters["other"]) {
+                throw new Error("Missing parameter other");
             }
-            let value = parameters['value'];
+            let value = parameters["value"];
             if (Array.isArray(value)) {
                 value = value.length;
             }
@@ -60,8 +60,8 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
                 category = PLURAL_OTHER;
             }
             const string = parameters[category];
-            if (string.indexOf('#') !== -1) {
-                return string.replace('#', StringUtil.formatNumeric(value));
+            if (string.indexOf("#") !== -1) {
+                return string.replace("#", StringUtil.formatNumeric(value));
             }
             return string;
         },
@@ -70,7 +70,7 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
          */
         getF(n) {
             const tmp = n.toString();
-            const pos = tmp.indexOf('.');
+            const pos = tmp.indexOf(".");
             if (pos === -1) {
                 return 0;
             }
@@ -80,7 +80,7 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
          * `v` represents the number of digits of the fractional part (1.234 yields 3)
          */
         getV(n) {
-            return n.toString().replace(/^[^.]*\.?/, '').length;
+            return n.toString().replace(/^[^.]*\.?/, "").length;
         },
         // Afrikaans
         af(n) {
@@ -141,8 +141,7 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
                 return PLURAL_ONE;
         },
         // Tibetan
-        bo(n) {
-        },
+        bo(n) { },
         // Bosnian
         bs(n) {
             const v = Plural.getV(n);
@@ -153,8 +152,8 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
             const fMod100 = f % 100;
             if ((v == 0 && mod10 == 1 && mod100 != 11) || (fMod10 == 1 && fMod100 != 11))
                 return PLURAL_ONE;
-            if ((v == 0 && mod10 >= 2 && mod10 <= 4 && mod100 >= 12 && mod100 <= 14)
-                || (fMod10 >= 2 && fMod10 <= 4 && fMod100 >= 12 && fMod100 <= 14))
+            if ((v == 0 && mod10 >= 2 && mod10 <= 4 && mod100 >= 12 && mod100 <= 14) ||
+                (fMod10 >= 2 && fMod10 <= 4 && fMod100 >= 12 && fMod100 <= 14))
                 return PLURAL_FEW;
         },
         // Czech
@@ -271,20 +270,17 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
                 return PLURAL_ONE;
         },
         // Indonesian
-        id(n) {
-        },
+        id(n) { },
         // Icelandic
         is(n) {
             const f = Plural.getF(n);
-            if (f === 0 && n % 10 === 1 && !(n % 100 === 11) || !(f === 0))
+            if ((f === 0 && n % 10 === 1 && !(n % 100 === 11)) || !(f === 0))
                 return PLURAL_ONE;
         },
         // Japanese
-        ja(n) {
-        },
+        ja(n) { },
         // Javanese
-        jv(n) {
-        },
+        jv(n) { },
         // Georgian
         ka(n) {
             if (n == 1)
@@ -296,16 +292,14 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
                 return PLURAL_ONE;
         },
         // Khmer
-        km(n) {
-        },
+        km(n) { },
         // Kannada
         kn(n) {
             if (n >= 0 && n <= 1)
                 return PLURAL_ONE;
         },
         // Korean
-        ko(n) {
-        },
+        ko(n) { },
         // Kurdish
         ku(n) {
             if (n == 1)
@@ -322,8 +316,7 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
                 return PLURAL_ONE;
         },
         // Lao
-        lo(n) {
-        },
+        lo(n) { },
         // Lithuanian
         lt(n) {
             const mod10 = n % 10;
@@ -357,20 +350,19 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
             if (n == 1)
                 return PLURAL_ONE;
         },
-        // Mongolian 
+        // Mongolian
         mn(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
-        // Marathi 
+        // Marathi
         mr(n) {
             if (n == 1)
                 return PLURAL_ONE;
         },
-        // Malay 
-        ms(n) {
-        },
-        // Maltese 
+        // Malay
+        ms(n) { },
+        // Maltese
         mt(n) {
             const mod100 = n % 100;
             if (n == 1)
@@ -381,8 +373,7 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
                 return PLURAL_MANY;
         },
         // Burmese
-        my(n) {
-        },
+        my(n) { },
         // Norwegian
         no(n) {
             if (n == 1)
@@ -412,7 +403,8 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
                 return PLURAL_ONE;
             if (v == 0 && mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14))
                 return PLURAL_FEW;
-            if (v == 0 && ((n != 1 && mod10 >= 0 && mod10 <= 1) || (mod10 >= 5 && mod10 <= 9) || (mod100 >= 12 && mod100 <= 14)))
+            if (v == 0 &&
+                ((n != 1 && mod10 >= 0 && mod10 <= 1) || (mod10 >= 5 && mod10 <= 9) || (mod100 >= 12 && mod100 <= 14)))
                 return PLURAL_MANY;
         },
         // Pashto
@@ -494,11 +486,9 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
                 return PLURAL_ONE;
         },
         // Tajik
-        tg(n) {
-        },
+        tg(n) { },
         // Thai
-        th(n) {
-        },
+        th(n) { },
         // Turkmen
         tk(n) {
             if (n == 1)
@@ -525,11 +515,9 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
                 return PLURAL_ONE;
         },
         // Vietnamese
-        vi(n) {
-        },
+        vi(n) { },
         // Chinese
-        zh(n) {
-        },
+        zh(n) { },
     };
     return Plural;
 });

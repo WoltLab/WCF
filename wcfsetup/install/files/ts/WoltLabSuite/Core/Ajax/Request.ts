@@ -10,12 +10,12 @@
  * @module  WoltLabSuite/Core/Ajax/Request
  */
 
-import * as AjaxStatus from './Status';
-import { ResponseData, RequestOptions, RequestData } from './Data';
-import * as Core from '../Core';
-import DomChangeListener from '../Dom/Change/Listener';
-import DomUtil from '../Dom/Util';
-import * as Language from '../Language';
+import * as AjaxStatus from "./Status";
+import { ResponseData, RequestOptions, RequestData } from "./Data";
+import * as Core from "../Core";
+import DomChangeListener from "../Dom/Change/Listener";
+import DomUtil from "../Dom/Util";
+import * as Language from "../Language";
 
 let _didInit = false;
 let _ignoreAllErrors = false;
@@ -30,37 +30,40 @@ class AjaxRequest {
   private _xhr?: XMLHttpRequest;
 
   constructor(options: RequestOptions) {
-    this._options = Core.extend({
-      data: {},
-      contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-      responseType: 'application/json',
-      type: 'POST',
-      url: '',
-      withCredentials: false,
+    this._options = Core.extend(
+      {
+        data: {},
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        responseType: "application/json",
+        type: "POST",
+        url: "",
+        withCredentials: false,
 
-      // behavior
-      autoAbort: false,
-      ignoreError: false,
-      pinData: false,
-      silent: false,
-      includeRequestedWith: true,
+        // behavior
+        autoAbort: false,
+        ignoreError: false,
+        pinData: false,
+        silent: false,
+        includeRequestedWith: true,
 
-      // callbacks
-      failure: null,
-      finalize: null,
-      success: null,
-      progress: null,
-      uploadProgress: null,
+        // callbacks
+        failure: null,
+        finalize: null,
+        success: null,
+        progress: null,
+        uploadProgress: null,
 
-      callbackObject: null,
-    }, options);
+        callbackObject: null,
+      },
+      options
+    );
 
-    if (typeof options.callbackObject === 'object') {
+    if (typeof options.callbackObject === "object") {
       this._options.callbackObject = options.callbackObject;
     }
 
     this._options.url = Core.convertLegacyUrl(this._options.url!);
-    if (this._options.url.indexOf('index.php') === 0) {
+    if (this._options.url.indexOf("index.php") === 0) {
       this._options.url = window.WSC_API_URL + this._options.url;
     }
 
@@ -75,17 +78,24 @@ class AjaxRequest {
     }
 
     if (this._options.callbackObject) {
-      if (typeof this._options.callbackObject._ajaxFailure === 'function') this._options.failure = this._options.callbackObject._ajaxFailure.bind(this._options.callbackObject);
-      if (typeof this._options.callbackObject._ajaxFinalize === 'function') this._options.finalize = this._options.callbackObject._ajaxFinalize.bind(this._options.callbackObject);
-      if (typeof this._options.callbackObject._ajaxSuccess === 'function') this._options.success = this._options.callbackObject._ajaxSuccess.bind(this._options.callbackObject);
-      if (typeof this._options.callbackObject._ajaxProgress === 'function') this._options.progress = this._options.callbackObject._ajaxProgress.bind(this._options.callbackObject);
-      if (typeof this._options.callbackObject._ajaxUploadProgress === 'function') this._options.uploadProgress = this._options.callbackObject._ajaxUploadProgress.bind(this._options.callbackObject);
+      if (typeof this._options.callbackObject._ajaxFailure === "function")
+        this._options.failure = this._options.callbackObject._ajaxFailure.bind(this._options.callbackObject);
+      if (typeof this._options.callbackObject._ajaxFinalize === "function")
+        this._options.finalize = this._options.callbackObject._ajaxFinalize.bind(this._options.callbackObject);
+      if (typeof this._options.callbackObject._ajaxSuccess === "function")
+        this._options.success = this._options.callbackObject._ajaxSuccess.bind(this._options.callbackObject);
+      if (typeof this._options.callbackObject._ajaxProgress === "function")
+        this._options.progress = this._options.callbackObject._ajaxProgress.bind(this._options.callbackObject);
+      if (typeof this._options.callbackObject._ajaxUploadProgress === "function")
+        this._options.uploadProgress = this._options.callbackObject._ajaxUploadProgress.bind(
+          this._options.callbackObject
+        );
     }
 
     if (!_didInit) {
       _didInit = true;
 
-      window.addEventListener('beforeunload', () => _ignoreAllErrors = true);
+      window.addEventListener("beforeunload", () => (_ignoreAllErrors = true));
     }
   }
 
@@ -108,10 +118,10 @@ class AjaxRequest {
     this._xhr = new XMLHttpRequest();
     this._xhr.open(this._options.type!, this._options.url!, true);
     if (this._options.contentType) {
-      this._xhr.setRequestHeader('Content-Type', this._options.contentType);
+      this._xhr.setRequestHeader("Content-Type", this._options.contentType);
     }
     if (this._options.withCredentials || this._options.includeRequestedWith) {
-      this._xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      this._xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
     }
     if (this._options.withCredentials) {
       this._xhr.withCredentials = true;
@@ -121,8 +131,8 @@ class AjaxRequest {
     const options = Core.clone(this._options) as RequestOptions;
     this._xhr.onload = function () {
       if (this.readyState === XMLHttpRequest.DONE) {
-        if (this.status >= 200 && this.status < 300 || this.status === 304) {
-          if (options.responseType && this.getResponseHeader('Content-Type')!.indexOf(options.responseType) !== 0) {
+        if ((this.status >= 200 && this.status < 300) || this.status === 304) {
+          if (options.responseType && this.getResponseHeader("Content-Type")!.indexOf(options.responseType) !== 0) {
             // request succeeded but invalid response type
             self._failure(this, options);
           } else {
@@ -144,9 +154,9 @@ class AjaxRequest {
       this._xhr.upload.onprogress = this._options.uploadProgress;
     }
 
-    if (this._options.type === 'POST') {
+    if (this._options.type === "POST") {
       let data: string | RequestData = this._options.data!;
-      if (typeof data === 'object' && Core.getType(data) !== 'FormData') {
+      if (typeof data === "object" && Core.getType(data) !== "FormData") {
         data = Core.serialize(data);
       }
 
@@ -194,7 +204,7 @@ class AjaxRequest {
    * Sets request data while honoring pinned data from setup callback.
    */
   setData(data: RequestData): void {
-    if (this._data !== null && Core.getType(data) !== 'FormData') {
+    if (this._data !== null && Core.getType(data) !== "FormData") {
       data = Core.extend(this._data, data);
     }
 
@@ -209,9 +219,9 @@ class AjaxRequest {
       AjaxStatus.hide();
     }
 
-    if (typeof options.success === 'function') {
+    if (typeof options.success === "function") {
       let data: ResponseData | null = null;
-      if (xhr.getResponseHeader('Content-Type')!.split(';', 1)[0].trim() === 'application/json') {
+      if (xhr.getResponseHeader("Content-Type")!.split(";", 1)[0].trim() === "application/json") {
         try {
           data = JSON.parse(xhr.responseText) as ResponseData;
         } catch (e) {
@@ -228,7 +238,7 @@ class AjaxRequest {
 
         // force-invoke the background queue
         if (data && data.forceBackgroundQueuePerform) {
-          import('../BackgroundQueue').then(backgroundQueue => backgroundQueue.invoke());
+          import("../BackgroundQueue").then((backgroundQueue) => backgroundQueue.invoke());
         }
       }
 
@@ -254,21 +264,20 @@ class AjaxRequest {
     let data: ResponseData | null = null;
     try {
       data = JSON.parse(xhr.responseText);
-    } catch (e) {
-    }
+    } catch (e) {}
 
     let showError = true;
-    if (typeof options.failure === 'function') {
-      showError = options.failure((data || {}), (xhr.responseText || ''), xhr, options.data!);
+    if (typeof options.failure === "function") {
+      showError = options.failure(data || {}, xhr.responseText || "", xhr, options.data!);
     }
 
     if (options.ignoreError !== true && showError) {
       const html = this.getErrorHtml(data, xhr);
 
       if (html) {
-        import('../Ui/Dialog').then(UiDialog => {
+        import("../Ui/Dialog").then((UiDialog) => {
           UiDialog.openStatic(DomUtil.getUniqueId(), html, {
-            title: Language.get('wcf.global.error.title'),
+            title: Language.get("wcf.global.error.title"),
           });
         });
       }
@@ -281,38 +290,38 @@ class AjaxRequest {
    * Returns the inner HTML for an error/exception display.
    */
   getErrorHtml(data: ResponseData | null, xhr: XMLHttpRequest): string | null {
-    let details = '';
+    let details = "";
     let message: string;
 
     if (data !== null) {
       if (data.returnValues && data.returnValues.description) {
-        details += '<br><p>Description:</p><p>' + data.returnValues.description + '</p>';
+        details += "<br><p>Description:</p><p>" + data.returnValues.description + "</p>";
       }
 
       if (data.file && data.line) {
-        details += '<br><p>File:</p><p>' + data.file + ' in line ' + data.line + '</p>';
+        details += "<br><p>File:</p><p>" + data.file + " in line " + data.line + "</p>";
       }
 
-      if (data.stacktrace) details += '<br><p>Stacktrace:</p><p>' + data.stacktrace + '</p>';
-      else if (data.exceptionID) details += '<br><p>Exception ID: <code>' + data.exceptionID + '</code></p>';
+      if (data.stacktrace) details += "<br><p>Stacktrace:</p><p>" + data.stacktrace + "</p>";
+      else if (data.exceptionID) details += "<br><p>Exception ID: <code>" + data.exceptionID + "</code></p>";
 
       message = data.message;
 
       data.previous.forEach(function (previous) {
-        details += '<hr><p>' + previous.message + '</p>';
-        details += '<br><p>Stacktrace</p><p>' + previous.stacktrace + '</p>';
+        details += "<hr><p>" + previous.message + "</p>";
+        details += "<br><p>Stacktrace</p><p>" + previous.stacktrace + "</p>";
       });
     } else {
       message = xhr.responseText;
     }
 
-    if (!message || message === 'undefined') {
+    if (!message || message === "undefined") {
       if (!window.ENABLE_DEBUG_MODE) return null;
 
-      message = 'XMLHttpRequest failed without a responseText. Check your browser console.';
+      message = "XMLHttpRequest failed without a responseText. Check your browser console.";
     }
 
-    return '<div class="ajaxDebugMessage"><p>' + message + '</p>' + details + '</div>';
+    return '<div class="ajaxDebugMessage"><p>' + message + "</p>" + details + "</div>";
   }
 
   /**
@@ -321,7 +330,7 @@ class AjaxRequest {
    * @param  {Object}  options    request options
    */
   _finalize(options: RequestOptions): void {
-    if (typeof options.finalize === 'function') {
+    if (typeof options.finalize === "function") {
       options.finalize(this._xhr!);
     }
 
@@ -332,9 +341,9 @@ class AjaxRequest {
     // fix anchor tags generated through WCF::getAnchor()
     document.querySelectorAll('a[href*="#"]').forEach((link: HTMLAnchorElement) => {
       let href = link.href;
-      if (href.indexOf('AJAXProxy') !== -1 || href.indexOf('ajax-proxy') !== -1) {
-        href = href.substr(href.indexOf('#'));
-        link.href = document.location.toString().replace(/#.*/, '') + href;
+      if (href.indexOf("AJAXProxy") !== -1 || href.indexOf("ajax-proxy") !== -1) {
+        href = href.substr(href.indexOf("#"));
+        link.href = document.location.toString().replace(/#.*/, "") + href;
       }
     });
   }

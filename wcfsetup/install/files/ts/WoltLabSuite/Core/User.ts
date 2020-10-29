@@ -9,8 +9,7 @@
  */
 
 class User {
-  constructor(readonly userId: number, readonly username: string, readonly link: string) {
-  }
+  constructor(readonly userId: number, readonly username: string, readonly link: string) {}
 }
 
 let user: User;
@@ -29,7 +28,7 @@ export = {
    */
   init(userId: number, username: string, link: string): void {
     if (user) {
-      throw new Error('User has already been initialized.');
+      throw new Error("User has already been initialized.");
     }
 
     user = new User(userId, username, link);
@@ -42,4 +41,4 @@ export = {
   get username(): string {
     return user.username;
   },
-}
+};

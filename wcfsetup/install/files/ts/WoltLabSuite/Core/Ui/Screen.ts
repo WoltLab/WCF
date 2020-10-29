@@ -8,8 +8,8 @@
  * @module  WoltLabSuite/Core/Ui/Screen
  */
 
-import * as Core from '../Core';
-import * as Environment from '../Environment';
+import * as Core from "../Core";
+import * as Environment from "../Environment";
 
 const _mql = new Map<string, MediaQueryData>();
 
@@ -19,20 +19,22 @@ let _scrollOffsetFrom: string;
 let _scrollTop = 0;
 let _pageOverlayCounter = 0;
 
-const _mqMap = new Map<string, string>(Object.entries({
-  'screen-xs': '(max-width: 544px)',                               /* smartphone */
-  'screen-sm': '(min-width: 545px) and (max-width: 768px)',        /* tablet (portrait) */
-  'screen-sm-down': '(max-width: 768px)',                          /* smartphone + tablet (portrait) */
-  'screen-sm-up': '(min-width: 545px)',                            /* tablet (portrait) + tablet (landscape) + desktop */
-  'screen-sm-md': '(min-width: 545px) and (max-width: 1024px)',    /* tablet (portrait) + tablet (landscape) */
-  'screen-md': '(min-width: 769px) and (max-width: 1024px)',       /* tablet (landscape) */
-  'screen-md-down': '(max-width: 1024px)',                         /* smartphone + tablet (portrait) + tablet (landscape) */
-  'screen-md-up': '(min-width: 769px)',                            /* tablet (landscape) + desktop */
-  'screen-lg': '(min-width: 1025px)',                              /* desktop */
-  'screen-lg-only': '(min-width: 1025px) and (max-width: 1280px)',
-  'screen-lg-down': '(max-width: 1280px)',
-  'screen-xl': '(min-width: 1281px)',
-}));
+const _mqMap = new Map<string, string>(
+  Object.entries({
+    "screen-xs": "(max-width: 544px)" /* smartphone */,
+    "screen-sm": "(min-width: 545px) and (max-width: 768px)" /* tablet (portrait) */,
+    "screen-sm-down": "(max-width: 768px)" /* smartphone + tablet (portrait) */,
+    "screen-sm-up": "(min-width: 545px)" /* tablet (portrait) + tablet (landscape) + desktop */,
+    "screen-sm-md": "(min-width: 545px) and (max-width: 1024px)" /* tablet (portrait) + tablet (landscape) */,
+    "screen-md": "(min-width: 769px) and (max-width: 1024px)" /* tablet (landscape) */,
+    "screen-md-down": "(max-width: 1024px)" /* smartphone + tablet (portrait) + tablet (landscape) */,
+    "screen-md-up": "(min-width: 769px)" /* tablet (landscape) + desktop */,
+    "screen-lg": "(min-width: 1025px)" /* desktop */,
+    "screen-lg-only": "(min-width: 1025px) and (max-width: 1280px)",
+    "screen-lg-down": "(max-width: 1280px)",
+    "screen-xl": "(min-width: 1281px)",
+  })
+);
 
 // Microsoft Edge rewrites the media queries to whatever it
 // pleases, causing the input and output query to mismatch
@@ -50,17 +52,18 @@ const _mqMapEdge = new Map<string, string>();
  * to remove binding by calling the `remove` method.
  */
 export function on(query: string, callbacks: Callbacks): string {
-  const uuid = Core.getUuid(), queryObject = _getQueryObject(query);
+  const uuid = Core.getUuid(),
+    queryObject = _getQueryObject(query);
 
-  if (typeof callbacks.match === 'function') {
+  if (typeof callbacks.match === "function") {
     queryObject.callbacksMatch.set(uuid, callbacks.match);
   }
 
-  if (typeof callbacks.unmatch === 'function') {
+  if (typeof callbacks.unmatch === "function") {
     queryObject.callbacksUnmatch.set(uuid, callbacks.unmatch);
   }
 
-  if (typeof callbacks.setup === 'function') {
+  if (typeof callbacks.setup === "function") {
     if (queryObject.mql.matches) {
       callbacks.setup();
     } else {
@@ -95,23 +98,23 @@ export function is(query: string): boolean {
 export function scrollDisable(): void {
   if (_scrollDisableCounter === 0) {
     _scrollTop = document.body.scrollTop;
-    _scrollOffsetFrom = 'body';
+    _scrollOffsetFrom = "body";
     if (!_scrollTop) {
       _scrollTop = document.documentElement.scrollTop;
-      _scrollOffsetFrom = 'documentElement';
+      _scrollOffsetFrom = "documentElement";
     }
 
-    const pageContainer = document.getElementById('pageContainer')!;
+    const pageContainer = document.getElementById("pageContainer")!;
 
     // setting translateY causes Mobile Safari to snap
-    if (Environment.platform() === 'ios') {
-      pageContainer.style.setProperty('position', 'relative', '');
-      pageContainer.style.setProperty('top', '-' + _scrollTop + 'px', '');
+    if (Environment.platform() === "ios") {
+      pageContainer.style.setProperty("position", "relative", "");
+      pageContainer.style.setProperty("top", "-" + _scrollTop + "px", "");
     } else {
-      pageContainer.style.setProperty('margin-top', '-' + _scrollTop + 'px', '');
+      pageContainer.style.setProperty("margin-top", "-" + _scrollTop + "px", "");
     }
 
-    document.documentElement.classList.add('disableScrolling');
+    document.documentElement.classList.add("disableScrolling");
   }
 
   _scrollDisableCounter++;
@@ -125,14 +128,14 @@ export function scrollEnable(): void {
     _scrollDisableCounter--;
 
     if (_scrollDisableCounter === 0) {
-      document.documentElement.classList.remove('disableScrolling');
+      document.documentElement.classList.remove("disableScrolling");
 
-      const pageContainer = document.getElementById('pageContainer')!;
-      if (Environment.platform() === 'ios') {
-        pageContainer.style.removeProperty('position');
-        pageContainer.style.removeProperty('top');
+      const pageContainer = document.getElementById("pageContainer")!;
+      if (Environment.platform() === "ios") {
+        pageContainer.style.removeProperty("position");
+        pageContainer.style.removeProperty("top");
       } else {
-        pageContainer.style.removeProperty('margin-top');
+        pageContainer.style.removeProperty("margin-top");
       }
 
       if (_scrollTop) {
@@ -147,7 +150,7 @@ export function scrollEnable(): void {
  */
 export function pageOverlayOpen(): void {
   if (_pageOverlayCounter === 0) {
-    document.documentElement.classList.add('pageOverlayActive');
+    document.documentElement.classList.add("pageOverlayActive");
   }
 
   _pageOverlayCounter++;
@@ -161,7 +164,7 @@ export function pageOverlayClose(): void {
     _pageOverlayCounter--;
 
     if (_pageOverlayCounter === 0) {
-      document.documentElement.classList.remove('pageOverlayActive');
+      document.documentElement.classList.remove("pageOverlayActive");
     }
   }
 }
@@ -185,8 +188,8 @@ export function setDialogContainer(container: Element): void {
 }
 
 function _getQueryObject(query: string): MediaQueryData {
-  if (typeof (query as any) !== 'string' || query.trim() === '') {
-    throw new TypeError('Expected a non-empty string for parameter \'query\'.');
+  if (typeof (query as any) !== "string" || query.trim() === "") {
+    throw new TypeError("Expected a non-empty string for parameter 'query'.");
   }
 
   // Microsoft Edge rewrites the media queries to whatever it
@@ -253,5 +256,5 @@ interface MediaQueryData {
   callbacksMatch: Map<string, Callback>;
   callbacksSetup: Map<string, Callback>;
   callbacksUnmatch: Map<string, Callback>;
-  mql: MediaQueryList
+  mql: MediaQueryList;
 }

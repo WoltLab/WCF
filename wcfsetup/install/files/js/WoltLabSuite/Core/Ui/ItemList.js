@@ -16,7 +16,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
     Suggestion_1 = tslib_1.__importDefault(Suggestion_1);
     Simple_1 = tslib_1.__importDefault(Simple_1);
     Util_1 = tslib_1.__importDefault(Util_1);
-    let _activeId = '';
+    let _activeId = "";
     const _data = new Map();
     /**
      * Creates the DOM structure for target element. If `element` is a `<textarea>`
@@ -24,26 +24,26 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
      */
     function createUI(element, options) {
         const parentElement = element.parentElement;
-        const list = document.createElement('ol');
-        list.className = 'inputItemList' + (element.disabled ? ' disabled' : '');
+        const list = document.createElement("ol");
+        list.className = "inputItemList" + (element.disabled ? " disabled" : "");
         list.dataset.elementId = element.id;
-        list.addEventListener('click', event => {
+        list.addEventListener("click", (event) => {
             if (event.target === list) {
                 element.focus();
             }
         });
-        const listItem = document.createElement('li');
-        listItem.className = 'input';
+        const listItem = document.createElement("li");
+        listItem.className = "input";
         list.appendChild(listItem);
-        element.addEventListener('keydown', keyDown);
-        element.addEventListener('keypress', keyPress);
-        element.addEventListener('keyup', keyUp);
-        element.addEventListener('paste', paste);
-        const hasFocus = (element === document.activeElement);
+        element.addEventListener("keydown", keyDown);
+        element.addEventListener("keypress", keyPress);
+        element.addEventListener("keyup", keyUp);
+        element.addEventListener("paste", paste);
+        const hasFocus = element === document.activeElement;
         if (hasFocus) {
             element.blur();
         }
-        element.addEventListener('blur', blur);
+        element.addEventListener("blur", blur);
         parentElement.insertBefore(list, element);
         listItem.appendChild(element);
         if (hasFocus) {
@@ -54,29 +54,29 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
         if (options.maxLength !== -1) {
             element.maxLength = options.maxLength;
         }
-        const limitReached = document.createElement('span');
-        limitReached.className = 'inputItemListLimitReached';
-        limitReached.textContent = Language.get('wcf.global.form.input.maxItems');
+        const limitReached = document.createElement("span");
+        limitReached.className = "inputItemListLimitReached";
+        limitReached.textContent = Language.get("wcf.global.form.input.maxItems");
         Util_1.default.hide(limitReached);
         listItem.appendChild(limitReached);
         let shadow = null;
         const values = [];
         if (options.isCSV) {
-            shadow = document.createElement('input');
-            shadow.className = 'itemListInputShadow';
-            shadow.type = 'hidden';
+            shadow = document.createElement("input");
+            shadow.className = "itemListInputShadow";
+            shadow.type = "hidden";
             shadow.name = element.name;
-            element.removeAttribute('name');
+            element.removeAttribute("name");
             list.parentNode.insertBefore(shadow, list);
-            element.value.split(',').forEach(value => {
+            element.value.split(",").forEach((value) => {
                 value = value.trim();
                 if (value) {
                     values.push(value);
                 }
             });
-            if (element.nodeName === 'TEXTAREA') {
-                const inputElement = document.createElement('input');
-                inputElement.type = 'text';
+            if (element.nodeName === "TEXTAREA") {
+                const inputElement = document.createElement("input");
+                inputElement.type = "text";
                 parentElement.insertBefore(inputElement, element);
                 inputElement.id = element.id;
                 element.remove();
@@ -99,7 +99,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
         if (data.options.maxItems === -1) {
             return true;
         }
-        return (data.list.childElementCount - 1 < data.options.maxItems);
+        return data.list.childElementCount - 1 < data.options.maxItems;
     }
     /**
      * Enforces the maximum number of items.
@@ -122,21 +122,21 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
         const input = event.currentTarget;
         _activeId = input.id;
         const lastItem = input.parentElement.previousElementSibling;
-        if (event.key === 'Backspace') {
+        if (event.key === "Backspace") {
             if (input.value.length === 0) {
                 if (lastItem !== null) {
-                    if (lastItem.classList.contains('active')) {
+                    if (lastItem.classList.contains("active")) {
                         removeItem(lastItem);
                     }
                     else {
-                        lastItem.classList.add('active');
+                        lastItem.classList.add("active");
                     }
                 }
             }
         }
-        else if (event.key === 'Escape') {
-            if (lastItem !== null && lastItem.classList.contains('active')) {
-                lastItem.classList.remove('active');
+        else if (event.key === "Escape") {
+            if (lastItem !== null && lastItem.classList.contains("active")) {
+                lastItem.classList.remove("active");
             }
         }
     }
@@ -144,7 +144,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
      * Handles the `[ENTER]` and `[,]` key to add an item to the list unless it is restricted.
      */
     function keyPress(event) {
-        if (event.key === 'Enter' || event.key === ',') {
+        if (event.key === "Enter" || event.key === ",") {
             event.preventDefault();
             const input = event.currentTarget;
             if (_data.get(input.id).options.restricted) {
@@ -162,11 +162,11 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
      */
     function paste(event) {
         event.preventDefault();
-        const text = event.clipboardData.getData('text/plain');
+        const text = event.clipboardData.getData("text/plain");
         const element = event.currentTarget;
         const elementId = element.id;
         const maxLength = +element.maxLength;
-        text.split(/,/).forEach(item => {
+        text.split(/,/).forEach((item) => {
             item = item.trim();
             if (maxLength && item.length > maxLength) {
                 // truncating items provides a better UX than throwing an error or silently discarding it
@@ -185,7 +185,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
         if (input.value.length > 0) {
             const lastItem = input.parentElement.previousElementSibling;
             if (lastItem !== null) {
-                lastItem.classList.remove('active');
+                lastItem.classList.remove("active");
             }
         }
     }
@@ -194,10 +194,10 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
      */
     function addItem(elementId, value) {
         const data = _data.get(elementId);
-        const listItem = document.createElement('li');
-        listItem.className = 'item';
-        const content = document.createElement('span');
-        content.className = 'content';
+        const listItem = document.createElement("li");
+        listItem.className = "item";
+        const content = document.createElement("span");
+        content.className = "content";
         content.dataset.objectId = value.objectId.toString();
         if (value.type) {
             content.dataset.type = value.type;
@@ -205,19 +205,19 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
         content.textContent = value.value;
         listItem.appendChild(content);
         if (!data.element.disabled) {
-            const button = document.createElement('a');
-            button.className = 'icon icon16 fa-times';
-            button.addEventListener('click', removeItem);
+            const button = document.createElement("a");
+            button.className = "icon icon16 fa-times";
+            button.addEventListener("click", removeItem);
             listItem.appendChild(button);
         }
         data.list.insertBefore(listItem, data.listItem);
         data.suggestion.addExcludedValue(value.value);
-        data.element.value = '';
+        data.element.value = "";
         if (!data.element.disabled) {
             handleLimit(elementId);
         }
         let values = syncShadow(data);
-        if (typeof data.options.callbackChange === 'function') {
+        if (typeof data.options.callbackChange === "function") {
             if (values === null) {
                 values = getValues(elementId);
             }
@@ -233,7 +233,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
             item = target.parentElement;
         }
         const parent = item.parentElement;
-        const elementId = parent.dataset.elementId || '';
+        const elementId = parent.dataset.elementId || "";
         const data = _data.get(elementId);
         if (item.children[0].textContent) {
             data.suggestion.removeExcludedValue(item.children[0].textContent);
@@ -244,7 +244,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
         }
         handleLimit(elementId);
         let values = syncShadow(data);
-        if (typeof data.options.callbackChange === 'function') {
+        if (typeof data.options.callbackChange === "function") {
             if (values === null) {
                 values = getValues(elementId);
             }
@@ -258,13 +258,13 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
         if (!data.options.isCSV) {
             return null;
         }
-        if (typeof data.options.callbackSyncShadow === 'function') {
+        if (typeof data.options.callbackSyncShadow === "function") {
             return data.options.callbackSyncShadow(data);
         }
         const values = getValues(data.element.id);
         data.shadow.value = getValues(data.element.id)
-            .map(value => value.value)
-            .join(',');
+            .map((value) => value.value)
+            .join(",");
         return values;
     }
     /**
@@ -298,7 +298,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
         // remove data from previous instance
         if (_data.has(elementId)) {
             const tmp = _data.get(elementId);
-            Object.keys(tmp).forEach(key => {
+            Object.keys(tmp).forEach((key) => {
                 const el = tmp[key];
                 if (el instanceof Element && el.parentNode) {
                     el.remove();
@@ -310,8 +310,8 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
         options = Core.extend({
             // search parameters for suggestions
             ajax: {
-                actionName: 'getSearchResultList',
-                className: '',
+                actionName: "getSearchResultList",
+                className: "",
                 data: {},
             },
             // list of excluded string values, e.g. `['ignore', 'these strings', 'when', 'searching']`
@@ -333,15 +333,15 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
             // Callback to set values during the setup.
             callbackSetupValues: null,
             // value may contain the placeholder `{$objectId}`
-            submitFieldName: '',
+            submitFieldName: "",
         }, options);
-        const form = DomTraverse.parentByTag(element, 'FORM');
+        const form = DomTraverse.parentByTag(element, "FORM");
         if (form !== null) {
             if (!options.isCSV) {
-                if (!options.submitFieldName.length && typeof options.callbackSubmit !== 'function') {
+                if (!options.submitFieldName.length && typeof options.callbackSubmit !== "function") {
                     throw new Error("Expected a valid function for option 'callbackSubmit', a non-empty value for option 'submitFieldName' or enabling the option 'submitFieldCSV'.");
                 }
-                form.addEventListener('submit', () => {
+                form.addEventListener("submit", () => {
                     if (acceptsNewItems(elementId)) {
                         const value = _data.get(elementId).element.value.trim();
                         if (value.length) {
@@ -350,10 +350,10 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
                     }
                     const values = getValues(elementId);
                     if (options.submitFieldName.length) {
-                        values.forEach(value => {
-                            const input = document.createElement('input');
-                            input.type = 'hidden';
-                            input.name = options.submitFieldName.replace('{$objectId}', value.objectId.toString());
+                        values.forEach((value) => {
+                            const input = document.createElement("input");
+                            input.type = "hidden";
+                            input.name = options.submitFieldName.replace("{$objectId}", value.objectId.toString());
                             input.value = value.value;
                             form.appendChild(input);
                         });
@@ -364,7 +364,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
                 });
             }
             else {
-                form.addEventListener('submit', () => {
+                form.addEventListener("submit", () => {
                     if (acceptsNewItems(elementId)) {
                         const value = _data.get(elementId).element.value.trim();
                         if (value.length) {
@@ -394,11 +394,11 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
             values = options.callbackSetupValues();
         }
         else {
-            values = (data.values.length) ? data.values : values;
+            values = data.values.length ? data.values : values;
         }
         if (Array.isArray(values)) {
-            values.forEach(value => {
-                if (typeof value === 'string') {
+            values.forEach((value) => {
+                if (typeof value === "string") {
                     value = { objectId: 0, value: value };
                 }
                 addItem(elementId, value);
@@ -415,9 +415,9 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
             throw new Error("Element id '" + elementId + "' is unknown.");
         }
         const values = [];
-        data.list.querySelectorAll('.item > span').forEach((span) => {
+        data.list.querySelectorAll(".item > span").forEach((span) => {
             values.push({
-                objectId: +(span.dataset.objectId || ''),
+                objectId: +(span.dataset.objectId || ""),
                 value: span.textContent.trim(),
                 type: span.dataset.type,
             });
@@ -434,11 +434,11 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
             throw new Error("Element id '" + elementId + "' is unknown.");
         }
         // remove all existing items first
-        DomTraverse.childrenByClass(data.list, 'item').forEach((item) => {
+        DomTraverse.childrenByClass(data.list, "item").forEach((item) => {
             removeItem(item, true);
         });
         // add new items
-        values.forEach(value => {
+        values.forEach((value) => {
             addItem(elementId, value);
         });
     }

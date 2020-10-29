@@ -24,7 +24,7 @@ const _test = new Map<Type, (...args: any[]) => boolean>([
 
 function _getChildren(element: Element, type: Type, value: string): Element[] {
   if (!(element instanceof Element)) {
-    throw new TypeError('Expected a valid element as first argument.');
+    throw new TypeError("Expected a valid element as first argument.");
   }
 
   const children: Element[] = [];
@@ -39,7 +39,7 @@ function _getChildren(element: Element, type: Type, value: string): Element[] {
 
 function _getParent(element: Element, type: Type, value: string, untilElement?: Element): Element | null {
   if (!(element instanceof Element)) {
-    throw new TypeError('Expected a valid element as first argument.');
+    throw new TypeError("Expected a valid element as first argument.");
   }
 
   let target = element.parentNode;
@@ -60,7 +60,7 @@ function _getParent(element: Element, type: Type, value: string, untilElement?: 
 
 function _getSibling(element: Element, siblingType: string, type: Type, value: string): Element | null {
   if (!(element instanceof Element)) {
-    throw new TypeError('Expected a valid element as first argument.');
+    throw new TypeError("Expected a valid element as first argument.");
   }
 
   if (element instanceof Element) {
@@ -141,28 +141,28 @@ export function parentByTag(element: Element, tagName: string, untilElement?: El
  * @deprecated 5.4 Use `element.nextElementSibling` instead.
  */
 export function next(element: Element): Element | null {
-  return _getSibling(element, 'nextElementSibling', Type.None, '');
+  return _getSibling(element, "nextElementSibling", Type.None, "");
 }
 
 /**
  * Returns the next element sibling that matches the given selector.
  */
 export function nextBySel(element: Element, selector: string): Element | null {
-  return _getSibling(element, 'nextElementSibling', Type.Selector, selector);
+  return _getSibling(element, "nextElementSibling", Type.Selector, selector);
 }
 
 /**
  * Returns the next element sibling with given CSS class.
  */
 export function nextByClass(element: Element, className: string): Element | null {
-  return _getSibling(element, 'nextElementSibling', Type.ClassName, className);
+  return _getSibling(element, "nextElementSibling", Type.ClassName, className);
 }
 
 /**
  * Returns the next element sibling with given CSS class.
  */
 export function nextByTag(element: Element, tagName: string): Element | null {
-  return _getSibling(element, 'nextElementSibling', Type.TagName, tagName);
+  return _getSibling(element, "nextElementSibling", Type.TagName, tagName);
 }
 
 /**
@@ -171,26 +171,26 @@ export function nextByTag(element: Element, tagName: string): Element | null {
  * @deprecated 5.4 Use `element.previousElementSibling` instead.
  */
 export function prev(element: Element): Element | null {
-  return _getSibling(element, 'previousElementSibling', Type.None, '');
+  return _getSibling(element, "previousElementSibling", Type.None, "");
 }
 
 /**
  * Returns the previous element sibling that matches the given selector.
  */
 export function prevBySel(element: Element, selector: string): Element | null {
-  return _getSibling(element, 'previousElementSibling', Type.Selector, selector);
+  return _getSibling(element, "previousElementSibling", Type.Selector, selector);
 }
 
 /**
  * Returns the previous element sibling with given CSS class.
  */
 export function prevByClass(element: Element, className: string): Element | null {
-  return _getSibling(element, 'previousElementSibling', Type.ClassName, className);
+  return _getSibling(element, "previousElementSibling", Type.ClassName, className);
 }
 
 /**
  * Returns the previous element sibling with given CSS class.
  */
 export function prevByTag(element: Element, tagName: string): Element | null {
-  return _getSibling(element, 'previousElementSibling', Type.TagName, tagName);
+  return _getSibling(element, "previousElementSibling", Type.TagName, tagName);
 }

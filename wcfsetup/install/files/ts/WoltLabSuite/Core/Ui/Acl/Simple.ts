@@ -1,8 +1,8 @@
-import * as Language from '../../Language';
-import * as StringUtil from '../../StringUtil';
-import DomChangeListener from '../../Dom/Change/Listener';
-import DomUtil from '../../Dom/Util';
-import UiUserSearchInput from '../User/Search/Input';
+import * as Language from "../../Language";
+import * as StringUtil from "../../StringUtil";
+import DomChangeListener from "../../Dom/Change/Listener";
+import DomUtil from "../../Dom/Util";
+import UiUserSearchInput from "../User/Search/Input";
 
 class UiAclSimple {
   private readonly aclListContainer: HTMLElement;
@@ -12,37 +12,37 @@ class UiAclSimple {
   private readonly searchInput: UiUserSearchInput;
 
   constructor(prefix?: string, inputName?: string) {
-    this.prefix = prefix || '';
-    this.inputName = inputName || 'aclValues';
+    this.prefix = prefix || "";
+    this.inputName = inputName || "aclValues";
 
-    const container = document.getElementById(this.prefix + 'aclInputContainer')!;
+    const container = document.getElementById(this.prefix + "aclInputContainer")!;
 
-    const allowAll = document.getElementById(this.prefix + 'aclAllowAll') as HTMLInputElement;
-    allowAll.addEventListener('change', () => {
+    const allowAll = document.getElementById(this.prefix + "aclAllowAll") as HTMLInputElement;
+    allowAll.addEventListener("change", () => {
       DomUtil.hide(container);
     });
 
-    const denyAll = document.getElementById(this.prefix + 'aclAllowAll_no')!;
-    denyAll.addEventListener('change', () => {
+    const denyAll = document.getElementById(this.prefix + "aclAllowAll_no")!;
+    denyAll.addEventListener("change", () => {
       DomUtil.show(container);
     });
 
-    this.list = document.getElementById(this.prefix + 'aclAccessList') as HTMLUListElement;
-    this.list.addEventListener('click', this.removeItem.bind(this));
+    this.list = document.getElementById(this.prefix + "aclAccessList") as HTMLUListElement;
+    this.list.addEventListener("click", this.removeItem.bind(this));
 
     const excludedSearchValues: string[] = [];
-    this.list.querySelectorAll('.aclLabel').forEach(label => {
+    this.list.querySelectorAll(".aclLabel").forEach((label) => {
       excludedSearchValues.push(label.textContent!);
     });
 
-    this.searchInput = new UiUserSearchInput(document.getElementById(this.prefix + 'aclSearchInput'), {
+    this.searchInput = new UiUserSearchInput(document.getElementById(this.prefix + "aclSearchInput"), {
       callbackSelect: this.select.bind(this),
       includeUserGroups: true,
       excludedSearchValues: excludedSearchValues,
       preventSubmit: true,
     });
 
-    this.aclListContainer = document.getElementById(this.prefix + 'aclListContainer')!;
+    this.aclListContainer = document.getElementById(this.prefix + "aclListContainer")!;
 
     DomChangeListener.trigger();
   }
@@ -52,16 +52,16 @@ class UiAclSimple {
     const label = listItem.dataset.label!;
     const objectId = listItem.dataset.objectId!;
 
-    const iconName = type === 'group' ? 'users' : 'user';
+    const iconName = type === "group" ? "users" : "user";
     const html = `<span class="icon icon16 fa-${iconName}"></span>
       <span class="aclLabel">${StringUtil.escapeHTML(label)}</span>
-      <span class="icon icon16 fa-times pointer jsTooltip" title="${Language.get('wcf.global.button.delete')}"></span>
+      <span class="icon icon16 fa-times pointer jsTooltip" title="${Language.get("wcf.global.button.delete")}"></span>
       <input type="hidden" name="${this.inputName}[${type}][]" value="${objectId}">`;
 
-    const item = document.createElement('li');
+    const item = document.createElement("li");
     item.innerHTML = html;
 
-    const firstUser = this.list.querySelector('.fa-user');
+    const firstUser = this.list.querySelector(".fa-user");
     if (firstUser === null) {
       this.list.appendChild(item);
     } else {
@@ -79,12 +79,12 @@ class UiAclSimple {
 
   private removeItem(event: MouseEvent): void {
     const target = event.target as HTMLElement;
-    if (target.classList.contains('fa-times')) {
+    if (target.classList.contains("fa-times")) {
       const parent = target.parentElement!;
-      const label = parent.querySelector('.aclLabel')!;
+      const label = parent.querySelector(".aclLabel")!;
       this.searchInput.removeExcludedSearchValues(label.textContent!);
 
-      parent.remove()
+      parent.remove();
 
       if (this.list.childElementCount === 0) {
         DomUtil.hide(this.aclListContainer);
@@ -93,4 +93,4 @@ class UiAclSimple {
   }
 }
 
-export = UiAclSimple
+export = UiAclSimple;

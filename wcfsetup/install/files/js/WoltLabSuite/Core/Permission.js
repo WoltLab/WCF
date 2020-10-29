@@ -16,8 +16,8 @@ define(["require", "exports"], function (require, exports) {
      * Adds a single permission to the store.
      */
     function add(permission, value) {
-        if (typeof value !== 'boolean') {
-            throw new TypeError('The permission value has to be boolean.');
+        if (typeof value !== "boolean") {
+            throw new TypeError("The permission value has to be boolean.");
         }
         _permissions.set(permission, value);
     }

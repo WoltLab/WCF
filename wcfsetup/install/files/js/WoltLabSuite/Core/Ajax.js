@@ -18,18 +18,18 @@ define(["require", "exports", "tslib", "./Ajax/Request"], function (require, exp
      * for success and failure callbacks.
      */
     function api(callbackObject, data, success, failure) {
-        if (typeof data !== 'object')
+        if (typeof data !== "object")
             data = {};
         let request = _cache.get(callbackObject);
         if (request === undefined) {
-            if (typeof callbackObject._ajaxSetup !== 'function') {
+            if (typeof callbackObject._ajaxSetup !== "function") {
                 throw new TypeError("Callback object must implement at least _ajaxSetup().");
             }
             const options = callbackObject._ajaxSetup();
             options.pinData = true;
             options.callbackObject = callbackObject;
             if (!options.url) {
-                options.url = 'index.php?ajax-proxy/&t=' + window.SECURITY_TOKEN;
+                options.url = "index.php?ajax-proxy/&t=" + window.SECURITY_TOKEN;
                 options.withCredentials = true;
             }
             request = new Request_1.default(options);
@@ -37,21 +37,21 @@ define(["require", "exports", "tslib", "./Ajax/Request"], function (require, exp
         }
         let oldSuccess = null;
         let oldFailure = null;
-        if (typeof success === 'function') {
-            oldSuccess = request.getOption('success');
-            request.setOption('success', success);
+        if (typeof success === "function") {
+            oldSuccess = request.getOption("success");
+            request.setOption("success", success);
         }
-        if (typeof failure === 'function') {
-            oldFailure = request.getOption('failure');
-            request.setOption('failure', failure);
+        if (typeof failure === "function") {
+            oldFailure = request.getOption("failure");
+            request.setOption("failure", failure);
         }
         request.setData(data);
         request.sendRequest();
         // restore callbacks
         if (oldSuccess !== null)
-            request.setOption('success', oldSuccess);
+            request.setOption("success", oldSuccess);
         if (oldFailure !== null)
-            request.setOption('failure', oldFailure);
+            request.setOption("failure", oldFailure);
         return request;
     }
     exports.api = api;
@@ -65,7 +65,7 @@ define(["require", "exports", "tslib", "./Ajax/Request"], function (require, exp
         options.pinData = false;
         options.callbackObject = null;
         if (!options.url) {
-            options.url = 'index.php?ajax-proxy/&t=' + window.SECURITY_TOKEN;
+            options.url = "index.php?ajax-proxy/&t=" + window.SECURITY_TOKEN;
             options.withCredentials = true;
         }
         const request = new Request_1.default(options);
@@ -77,7 +77,7 @@ define(["require", "exports", "tslib", "./Ajax/Request"], function (require, exp
      */
     function getRequestObject(callbackObject) {
         if (!_cache.has(callbackObject)) {
-            throw new Error('Expected a previously used callback object, provided object is unknown.');
+            throw new Error("Expected a previously used callback object, provided object is unknown.");
         }
         return _cache.get(callbackObject);
     }

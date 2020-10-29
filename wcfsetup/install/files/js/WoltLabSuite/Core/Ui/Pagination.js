@@ -25,13 +25,13 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../StringUtil"
             this.element = element;
             this.activePage = options.activePage;
             this.maxPage = options.maxPage;
-            if (typeof options.callbackSwitch === 'function') {
+            if (typeof options.callbackSwitch === "function") {
                 this.callbackSwitch = options.callbackSwitch;
             }
-            if (typeof options.callbackShouldSwitch === 'function') {
+            if (typeof options.callbackShouldSwitch === "function") {
                 this.callbackShouldSwitch = options.callbackShouldSwitch;
             }
-            this.element.classList.add('pagination');
+            this.element.classList.add("pagination");
             this.rebuild();
         }
         /**
@@ -40,24 +40,24 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../StringUtil"
         rebuild() {
             let hasHiddenPages = false;
             // clear content
-            this.element.innerHTML = '';
-            const list = document.createElement('ul');
-            let listItem = document.createElement('li');
-            listItem.className = 'skip';
+            this.element.innerHTML = "";
+            const list = document.createElement("ul");
+            let listItem = document.createElement("li");
+            listItem.className = "skip";
             list.appendChild(listItem);
-            let iconClassNames = 'icon icon24 fa-chevron-left';
+            let iconClassNames = "icon icon24 fa-chevron-left";
             if (this.activePage > 1) {
-                const link = document.createElement('a');
-                link.className = iconClassNames + ' jsTooltip';
-                link.href = '#';
-                link.title = Language.get('wcf.global.page.previous');
-                link.rel = 'prev';
+                const link = document.createElement("a");
+                link.className = iconClassNames + " jsTooltip";
+                link.href = "#";
+                link.title = Language.get("wcf.global.page.previous");
+                link.rel = "prev";
                 listItem.appendChild(link);
-                link.addEventListener('click', (ev) => this.switchPage(this.activePage - 1, ev));
+                link.addEventListener("click", (ev) => this.switchPage(this.activePage - 1, ev));
             }
             else {
                 listItem.innerHTML = '<span class="' + iconClassNames + '"></span>';
-                listItem.classList.add('disabled');
+                listItem.classList.add("disabled");
             }
             // add first page
             list.appendChild(this.createLink(1));
@@ -109,14 +109,14 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../StringUtil"
                 right = this.maxPage;
             }
             // left ... links
-            const jumpToHtml = '<a class="jsTooltip" title="' + Language.get('wcf.page.jumpTo') + '">&hellip;</a>';
+            const jumpToHtml = '<a class="jsTooltip" title="' + Language.get("wcf.page.jumpTo") + '">&hellip;</a>';
             if (left > 1) {
                 if (left - 1 < 2) {
                     list.appendChild(this.createLink(2));
                 }
                 else {
-                    listItem = document.createElement('li');
-                    listItem.className = 'jumpTo';
+                    listItem = document.createElement("li");
+                    listItem.className = "jumpTo";
                     listItem.innerHTML = jumpToHtml;
                     list.appendChild(listItem);
                     hasHiddenPages = true;
@@ -132,8 +132,8 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../StringUtil"
                     list.appendChild(this.createLink(this.maxPage - 1));
                 }
                 else {
-                    listItem = document.createElement('li');
-                    listItem.className = 'jumpTo';
+                    listItem = document.createElement("li");
+                    listItem.className = "jumpTo";
                     listItem.innerHTML = jumpToHtml;
                     list.appendChild(listItem);
                     hasHiddenPages = true;
@@ -142,22 +142,22 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../StringUtil"
             // add last page
             list.appendChild(this.createLink(this.maxPage));
             // add next button
-            listItem = document.createElement('li');
-            listItem.className = 'skip';
+            listItem = document.createElement("li");
+            listItem.className = "skip";
             list.appendChild(listItem);
-            iconClassNames = 'icon icon24 fa-chevron-right';
+            iconClassNames = "icon icon24 fa-chevron-right";
             if (this.activePage < this.maxPage) {
-                const link = document.createElement('a');
-                link.className = iconClassNames + ' jsTooltip';
-                link.href = '#';
-                link.title = Language.get('wcf.global.page.next');
-                link.rel = 'next';
+                const link = document.createElement("a");
+                link.className = iconClassNames + " jsTooltip";
+                link.href = "#";
+                link.title = Language.get("wcf.global.page.next");
+                link.rel = "next";
                 listItem.appendChild(link);
-                link.addEventListener('click', (ev) => this.switchPage(this.activePage + 1, ev));
+                link.addEventListener("click", (ev) => this.switchPage(this.activePage + 1, ev));
             }
             else {
                 listItem.innerHTML = '<span class="' + iconClassNames + '"></span>';
-                listItem.classList.add('disabled');
+                listItem.classList.add("disabled");
             }
             if (hasHiddenPages) {
                 list.dataset.pages = this.maxPage.toString();
@@ -169,19 +169,24 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../StringUtil"
          * Creates a link to a specific page.
          */
         createLink(pageNo) {
-            const listItem = document.createElement('li');
+            const listItem = document.createElement("li");
             if (pageNo !== this.activePage) {
-                const link = document.createElement('a');
+                const link = document.createElement("a");
                 link.textContent = StringUtil.addThousandsSeparator(pageNo);
-                link.addEventListener('click', (ev) => this.switchPage(pageNo, ev));
+                link.addEventListener("click", (ev) => this.switchPage(pageNo, ev));
                 listItem.appendChild(link);
             }
             else {
-                listItem.classList.add('active');
-                listItem.innerHTML = '<span>' + StringUtil.addThousandsSeparator(pageNo) + '</span><span class="invisible">' + Language.get('wcf.page.pagePosition', {
-                    pageNo: pageNo,
-                    pages: this.maxPage,
-                }) + '</span>';
+                listItem.classList.add("active");
+                listItem.innerHTML =
+                    "<span>" +
+                        StringUtil.addThousandsSeparator(pageNo) +
+                        '</span><span class="invisible">' +
+                        Language.get("wcf.page.pagePosition", {
+                            pageNo: pageNo,
+                            pages: this.maxPage,
+                        }) +
+                        "</span>";
             }
             return listItem;
         }
@@ -212,11 +217,11 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../StringUtil"
                 const target = event.currentTarget;
                 // force tooltip to vanish and strip positioning
                 if (target && target.dataset.tooltip) {
-                    const tooltip = document.getElementById('balloonTooltip');
+                    const tooltip = document.getElementById("balloonTooltip");
                     if (tooltip) {
-                        Core.triggerEvent(target, 'mouseleave');
-                        tooltip.style.removeProperty('top');
-                        tooltip.style.removeProperty('bottom');
+                        Core.triggerEvent(target, "mouseleave");
+                        tooltip.style.removeProperty("top");
+                        tooltip.style.removeProperty("bottom");
                     }
                 }
             }
