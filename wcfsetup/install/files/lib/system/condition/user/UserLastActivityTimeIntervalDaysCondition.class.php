@@ -8,6 +8,7 @@ use wcf\data\user\UserList;
 use wcf\system\condition\AbstractSingleFieldCondition;
 use wcf\system\condition\IObjectCondition;
 use wcf\system\condition\IObjectListCondition;
+use wcf\system\exception\InvalidObjectArgument;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
@@ -44,7 +45,7 @@ class UserLastActivityTimeIntervalDaysCondition extends AbstractSingleFieldCondi
 	 */
 	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
 		if (!($objectList instanceof UserList)) {
-			throw new \InvalidArgumentException("Object list is no instance of '" . UserList::class . "', instance of '".get_class($objectList)."' given.");
+			throw new InvalidObjectArgument($objectList, UserList::class, 'Object list');
 		}
 		
 		/** @noinspection PhpUndefinedFieldInspection */
@@ -64,7 +65,7 @@ class UserLastActivityTimeIntervalDaysCondition extends AbstractSingleFieldCondi
 	 */
 	public function checkObject(DatabaseObject $object, array $conditionData) {
 		if (!($object instanceof User) && !ClassUtil::isDecoratedInstanceOf($object, User::class)) {
-			throw new \InvalidArgumentException("Object is no instance of '" . User::class . "', instance of '".get_class($object)."' given.");
+			throw new InvalidObjectArgument($objectList, User::class);
 		}
 		
 		if (isset($conditionData['startDays'])) {

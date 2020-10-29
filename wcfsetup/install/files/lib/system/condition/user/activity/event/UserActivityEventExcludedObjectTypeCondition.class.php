@@ -5,6 +5,7 @@ use wcf\data\user\activity\event\UserActivityEventList;
 use wcf\data\DatabaseObjectList;
 use wcf\system\condition\AbstractMultiSelectCondition;
 use wcf\system\condition\IObjectListCondition;
+use wcf\system\exception\InvalidObjectArgument;
 use wcf\system\WCF;
 
 /**
@@ -37,7 +38,7 @@ class UserActivityEventExcludedObjectTypeCondition extends AbstractMultiSelectCo
 	 */
 	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
 		if (!($objectList instanceof UserActivityEventList)) {
-			throw new \InvalidArgumentException("Object list is no instance of '".UserActivityEventList::class."', instance of '".get_class($objectList)."' given.");
+			throw new InvalidObjectArgument($objectList, UserActivityEventList::class, 'Object list');
 		}
 		
 		$objectList->getConditionBuilder()->add('user_activity_event.objectTypeID NOT IN (?)', [$conditionData[$this->fieldName]]);

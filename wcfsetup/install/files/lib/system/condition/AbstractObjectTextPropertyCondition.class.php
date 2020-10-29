@@ -3,6 +3,7 @@ namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
+use wcf\system\exception\InvalidObjectArgument;
 
 /**
  * Abstract condition implementation for check a text-typed property of a database
@@ -40,7 +41,7 @@ abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition
 	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
 		$className = $this->getListClassName();
 		if (!($objectList instanceof $className)) {
-			throw new \InvalidArgumentException("Object list is no instance of '{$className}', instance of '".get_class($objectList)."' given.");
+			throw new InvalidObjectArgument($objectList, $className, 'Object list');
 		}
 		
 		if ($this->supportsMultipleValues) {
@@ -57,7 +58,7 @@ abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition
 	public function checkObject(DatabaseObject $object, array $conditionData) {
 		$className = $this->getClassName();
 		if (!($object instanceof $className)) {
-			throw new \InvalidArgumentException("Object is no instance of '{$className}', instance of '".get_class($object)."' given.");
+			throw new InvalidObjectArgument($object, $className);
 		}
 		
 		return in_array($object->{$this->getPropertyName()}, $conditionData[$this->fieldName]);

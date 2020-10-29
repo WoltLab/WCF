@@ -5,6 +5,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
+use wcf\system\exception\InvalidObjectArgument;
 use wcf\system\option\user\UserOptionHandler;
 use wcf\system\WCF;
 
@@ -41,7 +42,7 @@ class UserOptionsCondition extends AbstractMultipleFieldsCondition implements IC
 	 */
 	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
 		if (!($objectList instanceof UserList)) {
-			throw new \InvalidArgumentException("Object list is no instance of '".UserList::class."', instance of '".get_class($objectList)."' given.");
+			throw new InvalidObjectArgument($objectList, UserList::class, 'Object list');
 		}
 		
 		$optionValues = $conditionData['optionValues'];

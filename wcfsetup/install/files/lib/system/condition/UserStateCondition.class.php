@@ -4,6 +4,7 @@ use wcf\data\condition\Condition;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\data\DatabaseObjectList;
+use wcf\system\exception\InvalidObjectArgument;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
@@ -65,7 +66,7 @@ class UserStateCondition extends AbstractSingleFieldCondition implements IConten
 	 */
 	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
 		if (!($objectList instanceof UserList)) {
-			throw new \InvalidArgumentException("Object list is no instance of '".UserList::class."', instance of '".get_class($objectList)."' given.");
+			throw new InvalidObjectArgument($objectList, UserList::class, 'Object list');
 		}
 		
 		if (isset($conditionData['userIsBanned'])) {

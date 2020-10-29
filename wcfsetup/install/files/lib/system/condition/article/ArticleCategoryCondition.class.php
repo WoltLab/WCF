@@ -4,6 +4,7 @@ use wcf\data\article\ArticleList;
 use wcf\data\DatabaseObjectList;
 use wcf\system\condition\AbstractMultiCategoryCondition;
 use wcf\system\condition\IObjectListCondition;
+use wcf\system\exception\InvalidObjectArgument;
 
 /**
  * Condition implementation for the category an article belongs to.
@@ -35,7 +36,7 @@ class ArticleCategoryCondition extends AbstractMultiCategoryCondition implements
 	 */
 	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
 		if (!($objectList instanceof ArticleList)) {
-			throw new \InvalidArgumentException("Object list is no instance of '".ArticleList::class."', instance of '".get_class($objectList)."' given.");
+			throw new InvalidObjectArgument($objectList, ArticleList::class, 'Object list');
 		}
 		
 		$objectList->getConditionBuilder()->add('article.categoryID IN (?)', [$conditionData[$this->fieldName]]);

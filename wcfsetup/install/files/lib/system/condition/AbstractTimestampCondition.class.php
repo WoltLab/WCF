@@ -3,6 +3,7 @@ namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
+use wcf\system\exception\InvalidObjectArgument;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
@@ -47,7 +48,7 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
 	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
 		$className = $this->getListClassName();
 		if (!($objectList instanceof $className)) {
-			throw new \InvalidArgumentException("Object list is no instance of '{$className}', instance of '".get_class($objectList)."' given.");
+			throw new InvalidObjectArgument($objectList, $className, 'Object list');
 		}
 		
 		/** @noinspection PhpUndefinedFieldInspection */
@@ -68,7 +69,7 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
 	public function checkObject(DatabaseObject $object, array $conditionData) {
 		$className = $this->getClassName();
 		if (!($object instanceof $className)) {
-			throw new \InvalidArgumentException("Object is no instance of '{$className}', instance of '".get_class($object)."' given.");
+			throw new InvalidObjectArgument($object, $className);
 		}
 		
 		if (isset($conditionData['startTime']) && $object->{$this->getPropertyName()} < strtotime($conditionData['startTime'])) {
