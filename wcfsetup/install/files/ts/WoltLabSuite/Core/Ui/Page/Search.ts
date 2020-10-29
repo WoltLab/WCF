@@ -30,7 +30,7 @@ class UiPageSearch implements AjaxCallbackObject, DialogCallbackObject {
     UiDialog.open(this);
   }
 
-  private search(event: KeyboardEvent): void {
+  private search(event: Event): void {
     event.preventDefault();
 
     const inputContainer = this.searchInput!.parentNode as HTMLElement;
@@ -81,8 +81,8 @@ class UiPageSearch implements AjaxCallbackObject, DialogCallbackObject {
     DomUtil[html ? 'show' : 'hide'](this.resultContainer!);
 
     if (html) {
-      this.resultList!.querySelectorAll('.containerHeadline').forEach(item => {
-        item.addEventListener('click', this.click.bind(this));
+      this.resultList!.querySelectorAll('.containerHeadline').forEach((item: HTMLElement) => {
+        item.addEventListener('click', (ev) => this.click(ev));
       });
     } else {
       DomUtil.innerError(this.searchInput!.parentElement!, Language.get('wcf.page.search.error.noResults'));
@@ -110,7 +110,7 @@ class UiPageSearch implements AjaxCallbackObject, DialogCallbackObject {
             }
           });
 
-          this.searchInput.nextElementSibling!.addEventListener('click', this.search.bind(this));
+          this.searchInput.nextElementSibling!.addEventListener('click', (ev) => this.search(ev));
 
           this.resultContainer = document.getElementById('wcfUiPageSearchResultContainer') as HTMLElement;
           this.resultList = document.getElementById('wcfUiPageSearchResultList') as HTMLOListElement;
@@ -154,5 +154,3 @@ function getUiPageSearch(): UiPageSearch {
 export function open(callbackSelect) {
   getUiPageSearch().open(callbackSelect);
 }
-
-  

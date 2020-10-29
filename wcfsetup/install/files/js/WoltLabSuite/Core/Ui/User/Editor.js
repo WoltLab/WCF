@@ -26,7 +26,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
                 // The button is missing if the current user lacks the permission.
                 if (button) {
                     button.dataset.action = action;
-                    button.addEventListener('click', this._click.bind(this));
+                    button.addEventListener('click', (ev) => this._click(ev));
                 }
             });
         }

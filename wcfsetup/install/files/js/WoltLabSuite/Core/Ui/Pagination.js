@@ -53,7 +53,7 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../StringUtil"
                 link.title = Language.get('wcf.global.page.previous');
                 link.rel = 'prev';
                 listItem.appendChild(link);
-                link.addEventListener('click', this.switchPage.bind(this, this.activePage - 1));
+                link.addEventListener('click', (ev) => this.switchPage(this.activePage - 1, ev));
             }
             else {
                 listItem.innerHTML = '<span class="' + iconClassNames + '"></span>';
@@ -153,7 +153,7 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../StringUtil"
                 link.title = Language.get('wcf.global.page.next');
                 link.rel = 'next';
                 listItem.appendChild(link);
-                link.addEventListener('click', this.switchPage.bind(this, this.activePage + 1));
+                link.addEventListener('click', (ev) => this.switchPage(this.activePage + 1, ev));
             }
             else {
                 listItem.innerHTML = '<span class="' + iconClassNames + '"></span>';
@@ -173,7 +173,7 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../StringUtil"
             if (pageNo !== this.activePage) {
                 const link = document.createElement('a');
                 link.textContent = StringUtil.addThousandsSeparator(pageNo);
-                link.addEventListener('click', this.switchPage.bind(this, pageNo));
+                link.addEventListener('click', (ev) => this.switchPage(pageNo, ev));
                 listItem.appendChild(link);
             }
             else {

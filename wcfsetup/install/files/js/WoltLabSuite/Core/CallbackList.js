@@ -37,7 +37,7 @@ define(["require", "exports"], function (require, exports) {
         forEach(identifier, callback) {
             var _a;
             if (identifier === null) {
-                this._callbacks.forEach(function (callbacks, identifier) {
+                this._callbacks.forEach((callbacks, identifier) => {
                     callbacks.forEach(callback);
                 });
             }

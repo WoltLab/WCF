@@ -77,8 +77,8 @@ class UiSearchInput {
     // Disable auto-complete because it collides with the suggestion dropdown.
     this.element.autocomplete = 'off';
 
-    this.element.addEventListener('keydown', this.keydown.bind(this));
-    this.element.addEventListener('keyup', this.keyup.bind(this));
+    this.element.addEventListener('keydown', (ev) => this.keydown(ev));
+    this.element.addEventListener('keyup', (ev) => this.keyup(ev));
   }
 
   /**

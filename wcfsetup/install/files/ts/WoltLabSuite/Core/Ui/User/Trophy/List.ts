@@ -54,7 +54,7 @@ class UiUserTrophyList implements AjaxCallbackObject, DialogCallbackObject {
   private rebuild(): void {
     document.querySelectorAll('.userTrophyOverlayList').forEach((element: HTMLElement) => {
       if (!this.knownElements.has(element)) {
-        element.addEventListener('click', this.open.bind(this, element));
+        element.addEventListener('click', (ev) => this.open(element, ev));
 
         this.knownElements.add(element);
       }

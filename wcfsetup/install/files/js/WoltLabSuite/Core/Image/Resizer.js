@@ -82,18 +82,18 @@ define(["require", "exports", "tslib", "../FileUtil", "./ExifUtil", "pica"], fun
                 // Strip EXIF data
                 fileData = await ExifUtil.removeExifData(fileData);
             }
-            const imageLoader = new Promise(function (resolve, reject) {
+            const imageLoader = new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 const image = new Image();
-                reader.addEventListener("load", function () {
+                reader.addEventListener("load", () => {
                     image.src = reader.result;
                 });
-                reader.addEventListener("error", function () {
+                reader.addEventListener("error", () => {
                     reader.abort();
                     reject(reader.error);
                 });
                 image.addEventListener("error", reject);
-                image.addEventListener("load", function () {
+                image.addEventListener("load", () => {
                     resolve(image);
                 });
                 reader.readAsDataURL(fileData);

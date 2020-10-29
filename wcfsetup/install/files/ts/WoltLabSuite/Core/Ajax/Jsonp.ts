@@ -37,7 +37,7 @@ export function send(url: string, success: (...args: unknown[]) => void, failure
     }
 
     window[callbackName] = undefined;
-    script.parentNode.removeChild(script);
+    script.remove();
   }, (~~options.timeout || 10) * 1_000);
 
   window[callbackName] = (...args: any[]) => {
@@ -46,7 +46,7 @@ export function send(url: string, success: (...args: unknown[]) => void, failure
     success.apply(null, args);
 
     window[callbackName] = undefined;
-    script.parentNode.removeChild(script);
+    script.remove();
   };
 
   url += (url.indexOf('?') === -1) ? '?' : '&';

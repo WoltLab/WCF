@@ -64,7 +64,7 @@ const UiDialog = {
     _container = document.createElement('div');
     _container.classList.add('dialogOverlay');
     _container.setAttribute('aria-hidden', 'true');
-    _container.addEventListener('mousedown', this._closeOnBackdrop.bind(this));
+    _container.addEventListener('mousedown', (ev) => this._closeOnBackdrop(ev));
     _container.addEventListener('wheel', event => {
       if (event.target === _container) {
         event.preventDefault();
@@ -99,7 +99,9 @@ const UiDialog = {
     });
 
     this._initStaticDialogs();
-    DomChangeListener.add('Ui/Dialog', this._initStaticDialogs.bind(this));
+    DomChangeListener.add('Ui/Dialog', () => {
+      this._initStaticDialogs();
+    });
 
     UiScreen.setDialogContainer(_container);
 
@@ -113,7 +115,7 @@ const UiDialog = {
   },
 
   _initStaticDialogs(): void {
-    document.querySelectorAll<HTMLElement>('.jsStaticDialog').forEach(button => {
+    document.querySelectorAll('.jsStaticDialog').forEach((button: HTMLElement) => {
       button.classList.remove('jsStaticDialog');
 
       const id = button.dataset.dialogId || '';
@@ -357,7 +359,7 @@ const UiDialog = {
       closeButton.tabIndex = 0;
       closeButton.title = options.closeButtonLabel;
       closeButton.setAttribute('aria-label', options.closeButtonLabel);
-      closeButton.addEventListener('click', this._close.bind(this));
+      closeButton.addEventListener('click', (ev) => this._close(ev));
       header.appendChild(closeButton);
 
       const span = document.createElement('span');

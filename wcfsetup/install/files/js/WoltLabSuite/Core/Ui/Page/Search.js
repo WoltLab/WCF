@@ -58,8 +58,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../La
             this.resultList.innerHTML = html;
             Util_1.default[html ? 'show' : 'hide'](this.resultContainer);
             if (html) {
-                this.resultList.querySelectorAll('.containerHeadline').forEach(item => {
-                    item.addEventListener('click', this.click.bind(this));
+                this.resultList.querySelectorAll('.containerHeadline').forEach((item) => {
+                    item.addEventListener('click', (ev) => this.click(ev));
                 });
             }
             else {
@@ -85,7 +85,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../La
                                 this.search(event);
                             }
                         });
-                        this.searchInput.nextElementSibling.addEventListener('click', this.search.bind(this));
+                        this.searchInput.nextElementSibling.addEventListener('click', (ev) => this.search(ev));
                         this.resultContainer = document.getElementById('wcfUiPageSearchResultContainer');
                         this.resultList = document.getElementById('wcfUiPageSearchResultList');
                     },

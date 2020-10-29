@@ -95,7 +95,8 @@ define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Dom/Util", "
             // bind listeners
             this.tabs.forEach(tab => {
                 if (!oldTabs || oldTabs.get(tab.dataset.name || '') !== tab) {
-                    tab.children[0].addEventListener('click', this._onClick.bind(this));
+                    const firstChild = tab.children[0];
+                    firstChild.addEventListener('click', (ev) => this._onClick(ev));
                     // iOS 13 changed the behavior for click events after scrolling the menu. It prevents
                     // the synthetic mouse events like "click" from triggering for a short duration after
                     // a scrolling has occurred. If the user scrolls to the end of the list and immediately
@@ -108,13 +109,13 @@ define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Dom/Util", "
                     // tapping a menu item.
                     if (Environment.platform() === 'ios') {
                         let isClick = false;
-                        tab.children[0].addEventListener('touchstart', () => {
+                        firstChild.addEventListener('touchstart', () => {
                             isClick = true;
                         });
-                        tab.children[0].addEventListener('touchmove', () => {
+                        firstChild.addEventListener('touchmove', () => {
                             isClick = false;
                         });
-                        tab.children[0].addEventListener('touchend', (event) => {
+                        firstChild.addEventListener('touchend', (event) => {
                             if (isClick) {
                                 isClick = false;
                                 // This will block the regular click event from firing.

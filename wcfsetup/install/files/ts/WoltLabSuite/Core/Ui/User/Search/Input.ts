@@ -29,7 +29,7 @@ class UiUserSearchInput extends UiSearchInput {
     super(element, options);
   }
 
-  protected createListItem(item): HTMLLIElement {
+  protected createListItem(item: UserListItemData): HTMLLIElement {
     const listItem = super.createListItem(item);
     listItem.dataset.type = item.type;
 
@@ -44,3 +44,12 @@ class UiUserSearchInput extends UiSearchInput {
 }
 
 export = UiUserSearchInput
+
+// https://stackoverflow.com/a/50677584/782822
+// This is a dirty hack, because the ListItemData cannot be exported for compatibility reasons.
+type FirstArgument<T> = T extends (arg1: infer U, ...args: any[]) => any ? U : never;
+
+interface UserListItemData extends FirstArgument<UiSearchInput["createListItem"]> {
+  type: "user" | "group";
+  icon: string;
+}

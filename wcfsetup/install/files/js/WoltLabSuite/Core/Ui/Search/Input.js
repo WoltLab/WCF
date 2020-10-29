@@ -64,8 +64,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
             this.preventSubmit = options.preventSubmit;
             // Disable auto-complete because it collides with the suggestion dropdown.
             this.element.autocomplete = 'off';
-            this.element.addEventListener('keydown', this.keydown.bind(this));
-            this.element.addEventListener('keyup', this.keyup.bind(this));
+            this.element.addEventListener('keydown', (ev) => this.keydown(ev));
+            this.element.addEventListener('keyup', (ev) => this.keyup(ev));
         }
         /**
          * Adds an excluded search value.

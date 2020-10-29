@@ -30,7 +30,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
       // The button is missing if the current user lacks the permission.
       if (button) {
         button.dataset.action = action;
-        button.addEventListener('click', this._click.bind(this));
+        button.addEventListener('click', (ev) => this._click(ev));
       }
     });
   }
@@ -246,5 +246,3 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
 export function init() {
   new UserEditor();
 }
-		
-		

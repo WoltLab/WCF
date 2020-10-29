@@ -304,7 +304,9 @@ function dropdownMenuKeyDown(event: KeyboardEvent): void {
     const mouseEvent = dropdown.dataset.a11yMouseEvent || 'click';
     Core.triggerEvent(target, mouseEvent);
 
-    if (button) button.focus();
+    if (button) {
+      button.focus();
+    }
   } else if (event.key === 'Escape' || event.key === 'Tab') {
     event.preventDefault();
 
