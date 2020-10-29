@@ -2,153 +2,161 @@
  * Provides access to the lookup function of page handlers, allowing the user to search and
  * select page object ids.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Ui/Page/Search/Handler
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Ui/Page/Search/Handler
  */
-define(['Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './Input'], function (Language, StringUtil, DomUtil, UiDialog, UiPageSearchInput) {
+define(["require", "exports", "tslib", "../../../Language", "../../../StringUtil", "../../../Dom/Util", "../../Dialog", "./Input"], function (require, exports, tslib_1, Language, StringUtil, Util_1, Dialog_1, Input_1) {
     "use strict";
-    var _callback = null;
-    var _searchInput = null;
-    var _searchInputLabel = null;
-    var _searchInputHandler = null;
-    var _resultList = null;
-    var _resultListContainer = null;
-    /**
-     * @exports     WoltLabSuite/Core/Ui/Page/Search/Handler
-     */
-    return {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.open = void 0;
+    Language = tslib_1.__importStar(Language);
+    StringUtil = tslib_1.__importStar(StringUtil);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    Input_1 = tslib_1.__importDefault(Input_1);
+    class UiPageSearchHandler {
+        constructor() {
+            this.callbackSuccess = undefined;
+            this.resultList = undefined;
+            this.resultListContainer = undefined;
+            this.searchInput = undefined;
+            this.searchInputHandler = undefined;
+            this.searchInputLabel = undefined;
+        }
         /**
          * Opens the lookup overlay for provided page id.
-         *
-         * @param	{int}		pageId			page id
-         * @param	{string}	title			dialog title
-         * @param	{function}	callback		callback function provided with the user-selected object id
-         * @param	{string?}	labelLanguageItem	optional language item name for the search input label
          */
-        open: function (pageId, title, callback, labelLanguageItem) {
-            _callback = callback;
-            UiDialog.open(this);
-            UiDialog.setTitle(this, title);
-            if (labelLanguageItem) {
-                _searchInputLabel.textContent = Language.get(labelLanguageItem);
-            }
-            else {
-                _searchInputLabel.textContent = Language.get('wcf.page.pageObjectID.search.terms');
-            }
+        open(pageId, title, callback, labelLanguageItem) {
+            this.callbackSuccess = callback;
+            Dialog_1.default.open(this);
+            Dialog_1.default.setTitle(this, title);
+            this.searchInputLabel.textContent = Language.get(labelLanguageItem || 'wcf.page.pageObjectID.search.terms');
             this._getSearchInputHandler().setPageId(pageId);
-        },
+        }
         /**
          * Builds the result list.
-         *
-         * @param       {Object}        data            AJAX response data
-         * @protected
          */
-        _buildList: function (data) {
-            this._resetList();
-            // no matches
+        buildList(data) {
+            this.resetList();
             if (!Array.isArray(data.returnValues) || data.returnValues.length === 0) {
-                elInnerError(_searchInput, Language.get('wcf.page.pageObjectID.search.noResults'));
+                Util_1.default.innerError(this.searchInput, Language.get('wcf.page.pageObjectID.search.noResults'));
                 return;
             }
-            var image, item, listItem;
-            for (var i = 0, length = data.returnValues.length; i < length; i++) {
-                item = data.returnValues[i];
-                image = item.image;
+            data.returnValues.forEach(item => {
+                let image = item.image;
                 if (/^fa-/.test(image)) {
-                    image = '<span class="icon icon48 ' + image + ' pointer jsTooltip" title="' + Language.get('wcf.global.select') + '"></span>';
+                    image = `<span class="icon icon48 ${image} pointer jsTooltip" title="${Language.get('wcf.global.select')}"></span>`;
                 }
-                listItem = elCreate('li');
-                elData(listItem, 'object-id', item.objectID);
-                listItem.innerHTML = '<div class="box48">'
-                    + image
-                    + '<div>'
-                    + '<div class="containerHeadline">'
-                    + '<h3><a href="' + StringUtil.escapeHTML(item.link) + '">' + StringUtil.escapeHTML(item.title) + '</a></h3>'
-                    + (item.description ? '<p>' + item.description + '</p>' : '')
-                    + '</div>'
-                    + '</div>'
-                    + '</div>';
-                listItem.addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
-                _resultList.appendChild(listItem);
-            }
-            elShow(_resultListContainer);
-        },
+                const listItem = document.createElement('li');
+                listItem.dataset.objectId = item.objectID.toString();
+                const description = item.description ? `<p>${item.description}</p>` : '';
+                listItem.innerHTML = `<div class="box48">
+        ${image}
+        <div>
+          <div class="containerHeadline">
+            <h3>
+                <a href="${StringUtil.escapeHTML(item.link)}">${StringUtil.escapeHTML(item.title)}</a>
+            </h3>
+          ${description}
+          </div>
+        </div>
+      </div>`;
+                listItem.addEventListener('click', this.click.bind(this));
+                this.resultList.appendChild(listItem);
+            });
+            Util_1.default.show(this.resultListContainer);
+        }
         /**
          * Resets the list and removes any error elements.
-         *
-         * @protected
          */
-        _resetList: function () {
-            elInnerError(_searchInput, false);
-            _resultList.innerHTML = '';
-            elHide(_resultListContainer);
-        },
+        resetList() {
+            Util_1.default.innerError(this.searchInput, false);
+            this.resultList.innerHTML = '';
+            Util_1.default.hide(this.resultListContainer);
+        }
         /**
          * Initializes the search input handler and returns the instance.
-         *
-         * @returns     {UiPageSearchInput}     search input handler
-         * @protected
          */
-        _getSearchInputHandler: function () {
-            if (_searchInputHandler === null) {
-                var callback = this._buildList.bind(this);
-                _searchInputHandler = new UiPageSearchInput(elById('wcfUiPageSearchInput'), {
-                    callbackSuccess: callback
+        _getSearchInputHandler() {
+            if (!this.searchInputHandler) {
+                const input = document.getElementById('wcfUiPageSearchInput');
+                this.searchInputHandler = new Input_1.default(input, {
+                    callbackSuccess: this.buildList.bind(this),
                 });
             }
-            return _searchInputHandler;
-        },
+            return this.searchInputHandler;
+        }
         /**
          * Handles clicks on the item unless the click occurred directly on a link.
-         *
-         * @param       {Event}         event           event object
-         * @protected
          */
-        _click: function (event) {
-            if (event.target.nodeName === 'A') {
+        click(event) {
+            const clickTarget = event.target;
+            if (clickTarget.nodeName === 'A') {
                 return;
             }
             event.stopPropagation();
-            _callback(elData(event.currentTarget, 'object-id'));
-            UiDialog.close(this);
-        },
-        _dialogSetup: function () {
+            const eventTarget = event.currentTarget;
+            this.callbackSuccess(+eventTarget.dataset.objectId);
+            Dialog_1.default.close(this);
+        }
+        _dialogSetup() {
             return {
                 id: 'wcfUiPageSearchHandler',
                 options: {
-                    onShow: function () {
-                        if (_searchInput === null) {
-                            _searchInput = elById('wcfUiPageSearchInput');
-                            _searchInputLabel = _searchInput.parentNode.previousSibling.childNodes[0];
-                            _resultList = elById('wcfUiPageSearchResultList');
-                            _resultListContainer = elById('wcfUiPageSearchResultListContainer');
+                    onShow: (content) => {
+                        if (!this.searchInput) {
+                            this.searchInput = document.getElementById('wcfUiPageSearchInput');
+                            this.searchInputLabel = content.querySelector('label[for="wcfUiPageSearchInput"]');
+                            this.resultList = document.getElementById('wcfUiPageSearchResultList');
+                            this.resultListContainer = document.getElementById('wcfUiPageSearchResultListContainer');
                         }
                         // clear search input
-                        _searchInput.value = '';
+                        this.searchInput.value = '';
                         // reset results
-                        elHide(_resultListContainer);
-                        _resultList.innerHTML = '';
-                        _searchInput.focus();
+                        Util_1.default.hide(this.resultListContainer);
+                        this.resultList.innerHTML = '';
+                        this.searchInput.focus();
                     },
-                    title: ''
+                    title: '',
                 },
-                source: '<div class="section">'
-                    + '<dl>'
-                    + '<dt><label for="wcfUiPageSearchInput">' + Language.get('wcf.page.pageObjectID.search.terms') + '</label></dt>'
-                    + '<dd>'
-                    + '<input type="text" id="wcfUiPageSearchInput" class="long">'
-                    + '</dd>'
-                    + '</dl>'
-                    + '</div>'
-                    + '<section id="wcfUiPageSearchResultListContainer" class="section sectionContainerList">'
-                    + '<header class="sectionHeader">'
-                    + '<h2 class="sectionTitle">' + Language.get('wcf.page.pageObjectID.search.results') + '</h2>'
-                    + '</header>'
-                    + '<ul id="wcfUiPageSearchResultList" class="containerList wcfUiPageSearchResultList"></ul>'
-                    + '</section>'
+                source: `<div class="section">
+        <dl>
+          <dt>
+            <label for="wcfUiPageSearchInput">${Language.get('wcf.page.pageObjectID.search.terms')}</label>
+          </dt>
+          <dd>
+            <input type="text" id="wcfUiPageSearchInput" class="long">
+          </dd>
+        </dl>
+      </div>
+      <section id="wcfUiPageSearchResultListContainer" class="section sectionContainerList">
+        <header class="sectionHeader">
+          <h2 class="sectionTitle">${Language.get('wcf.page.pageObjectID.search.results')}</h2>
+        </header>
+        <ul id="wcfUiPageSearchResultList" class="containerList wcfUiPageSearchResultList"></ul>
+      </section>`,
             };
         }
-    };
+    }
+    let uiPageSearchHandler = undefined;
+    function getUiPageSearchHandler() {
+        if (!uiPageSearchHandler) {
+            uiPageSearchHandler = new UiPageSearchHandler();
+        }
+        return uiPageSearchHandler;
+    }
+    /**
+     * Opens the lookup overlay for provided page id.
+     *
+     * @param  {int}    pageId      page id
+     * @param  {string}  title      dialog title
+     * @param  {function}  callback    callback function provided with the user-selected object id
+     * @param  {string?}  labelLanguageItem  optional language item name for the search input label
+     */
+    function open(pageId, title, callback, labelLanguageItem) {
+        getUiPageSearchHandler().open(pageId, title, callback, labelLanguageItem);
+    }
+    exports.open = open;
 });

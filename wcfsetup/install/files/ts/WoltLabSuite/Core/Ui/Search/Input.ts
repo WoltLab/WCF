@@ -13,6 +13,7 @@ import DomUtil from '../../Dom/Util';
 import UiDropdownSimple from '../Dropdown/Simple';
 import { DatabaseObjectActionPayload, DatabaseObjectActionResponse } from '../../Ajax/Data';
 import AjaxRequest from '../../Ajax/Request';
+import { CallbackDropdownInit, CallbackSelect, SearchInputOptions } from './Data';
 
 class UiSearchInput {
   private activeItem?: HTMLLIElement = undefined;
@@ -188,7 +189,7 @@ class UiSearchInput {
   /**
    * Returns additional AJAX parameters.
    */
-  private getParameters(value: string): Partial<DatabaseObjectActionPayload> {
+  protected getParameters(value: string): Partial<DatabaseObjectActionPayload> {
     return {
       parameters: {
         data: {
@@ -363,22 +364,6 @@ class UiSearchInput {
 }
 
 export = UiSearchInput
-
-type CallbackDropdownInit = (list: HTMLUListElement) => void
-
-type CallbackSelect = (item: HTMLElement) => boolean
-
-interface SearchInputOptions {
-  ajax: Partial<DatabaseObjectActionPayload>;
-  autoFocus?: boolean;
-  callbackDropdownInit?: CallbackDropdownInit;
-  callbackSelect?: CallbackSelect;
-  delay?: number;
-  excludedSearchValues?: string[];
-  minLength?: number;
-  noResultPlaceholder?: string;
-  preventSubmit?: boolean;
-}
 
 interface ListItemData {
   label: string;

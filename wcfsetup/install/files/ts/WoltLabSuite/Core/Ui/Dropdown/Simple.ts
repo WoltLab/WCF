@@ -251,8 +251,6 @@ function handleKeyDown(event: KeyboardEvent): void {
 }
 
 function dropdownMenuKeyDown(event: KeyboardEvent): void {
-  let button, dropdown;
-
   const activeItem = document.activeElement as HTMLElement;
   if (activeItem.nodeName !== 'LI') {
     return;
@@ -298,8 +296,8 @@ function dropdownMenuKeyDown(event: KeyboardEvent): void {
       target = target.children[0] as HTMLElement;
     }
 
-    dropdown = _dropdowns.get(_activeTargetId);
-    button = dropdown.querySelector('.dropdownToggle');
+    const dropdown = _dropdowns.get(_activeTargetId)!;
+    const button = dropdown.querySelector('.dropdownToggle') as HTMLElement;
 
     const mouseEvent = dropdown.dataset.a11yMouseEvent || 'click';
     Core.triggerEvent(target, mouseEvent);
@@ -310,8 +308,9 @@ function dropdownMenuKeyDown(event: KeyboardEvent): void {
   } else if (event.key === 'Escape' || event.key === 'Tab') {
     event.preventDefault();
 
-    dropdown = _dropdowns.get(_activeTargetId);
-    button = dropdown.querySelector('.dropdownToggle');
+    const dropdown = _dropdowns.get(_activeTargetId)!;
+    let button: HTMLElement | null = dropdown.querySelector('.dropdownToggle');
+
     // Remote controlled drop-down menus may not have a dedicated toggle button, instead the
     // `dropdown` element itself is the button.
     if (button === null && !dropdown.classList.contains('dropdown')) {
@@ -589,7 +588,7 @@ const UiDropdownSimple = {
   // Legacy call required for `WCF.Dropdown`
   _toggle(event: KeyboardEvent | MouseEvent | null, targetId?: string, alternateElement?: HTMLElement, disableAutoFocus?: boolean): boolean {
     return toggle(event, targetId, alternateElement, disableAutoFocus);
-  }
+  },
 };
 
 export = UiDropdownSimple;

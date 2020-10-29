@@ -117,21 +117,18 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
         /**
          * Prepends an element to a parent element.
          *
-         * @deprecated 5.3 Use `parent.insertBefore(element, parent.firstChild)` instead.
+         * @deprecated 5.3 Use `parent.insertAdjacentElement('afterbegin', element)` instead.
          */
         prepend(element, parent) {
-            parent.insertBefore(element, parent.firstChild);
+            parent.insertAdjacentElement('afterbegin', element);
         },
         /**
          * Inserts an element after an existing element.
          *
-         * @deprecated 5.3 Use `element.parentNode.insertBefore(newElement, element.nextSibling)` instead.
+         * @deprecated 5.3 Use `element.insertAdjacentElement('afterend', newElement)` instead.
          */
         insertAfter(newElement, element) {
-            if (element.parentNode === null) {
-                throw new Error('The target element has no parent.');
-            }
-            element.parentNode.insertBefore(newElement, element.nextSibling);
+            element.insertAdjacentElement('afterend', newElement);
         },
         /**
          * Applies a list of CSS properties to an element.
