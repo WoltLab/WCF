@@ -142,23 +142,19 @@ const DomUtil = {
   /**
    * Prepends an element to a parent element.
    *
-   * @deprecated 5.3 Use `parent.insertBefore(element, parent.firstChild)` instead.
+   * @deprecated 5.3 Use `parent.insertAdjacentElement('afterbegin', element)` instead.
    */
   prepend(element: Element, parent: Element): void {
-    parent.insertBefore(element, parent.firstChild);
+    parent.insertAdjacentElement('afterbegin', element);
   },
 
   /**
    * Inserts an element after an existing element.
    *
-   * @deprecated 5.3 Use `element.parentNode.insertBefore(newElement, element.nextSibling)` instead.
+   * @deprecated 5.3 Use `element.insertAdjacentElement('afterend', newElement)` instead.
    */
   insertAfter(newElement: Element, element: Element): void {
-    if (element.parentNode === null) {
-      throw new Error('The target element has no parent.');
-    }
-
-    element.parentNode.insertBefore(newElement, element.nextSibling);
+    element.insertAdjacentElement('afterend', newElement);
   },
 
   /**

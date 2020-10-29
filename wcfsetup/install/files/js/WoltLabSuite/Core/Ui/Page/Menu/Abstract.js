@@ -1,149 +1,130 @@
 /**
  * Provides a touch-friendly fullscreen menu.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Ui/Page/Menu/Abstract
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Ui/Page/Menu/Abstract
  */
-define(['Core', 'Environment', 'EventHandler', 'Language', 'ObjectMap', 'Dom/Traverse', 'Dom/Util', 'Ui/Screen'], function (Core, Environment, EventHandler, Language, ObjectMap, DomTraverse, DomUtil, UiScreen) {
+define(["require", "exports", "tslib", "../../../Core", "../../../Environment", "../../../Event/Handler", "../../../Language", "../../../Dom/Traverse", "../../Screen"], function (require, exports, tslib_1, Core, Environment, EventHandler, Language, DomTraverse, UiScreen) {
     "use strict";
-    var _pageContainer = elById('pageContainer');
+    Core = tslib_1.__importStar(Core);
+    Environment = tslib_1.__importStar(Environment);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    Language = tslib_1.__importStar(Language);
+    DomTraverse = tslib_1.__importStar(DomTraverse);
+    UiScreen = tslib_1.__importStar(UiScreen);
+    const _pageContainer = document.getElementById('pageContainer');
     /**
      * Which edge of the menu is touched? Empty string
      * if no menu is currently touched.
      *
      * One 'left', 'right' or ''.
      */
-    var _androidTouching = '';
-    /**
-     * @param       {string}        eventIdentifier         event namespace
-     * @param       {string}        elementId               menu element id
-     * @param       {string}        buttonSelector          CSS selector for toggle button
-     * @constructor
-     */
-    function UiPageMenuAbstract(eventIdentifier, elementId, buttonSelector) { this.init(eventIdentifier, elementId, buttonSelector); }
-    UiPageMenuAbstract.prototype = {
-        /**
-         * Initializes a touch-friendly fullscreen menu.
-         *
-         * @param       {string}        eventIdentifier         event namespace
-         * @param       {string}        elementId               menu element id
-         * @param       {string}        buttonSelector          CSS selector for toggle button
-         */
-        init: function (eventIdentifier, elementId, buttonSelector) {
-            if (elData(document.body, 'template') === 'packageInstallationSetup') {
+    let _androidTouching = '';
+    class UiPageMenuAbstract {
+        constructor(eventIdentifier, elementId, buttonSelector) {
+            this.activeList = [];
+            this.depth = 0;
+            this.enabled = true;
+            this.items = new Map();
+            this.removeActiveList = false;
+            if (document.body.dataset.template === 'packageInstallationSetup') {
                 // work-around for WCFSetup on mobile
                 return;
             }
-            this._activeList = [];
-            this._depth = 0;
-            this._enabled = true;
-            this._eventIdentifier = eventIdentifier;
-            this._items = new ObjectMap();
-            this._menu = elById(elementId);
-            this._removeActiveList = false;
-            var callbackOpen = this.open.bind(this);
-            this._button = elBySel(buttonSelector);
-            this._button.addEventListener(WCF_CLICK_EVENT, callbackOpen);
-            this._initItems();
-            this._initHeader();
-            EventHandler.add(this._eventIdentifier, 'open', callbackOpen);
-            EventHandler.add(this._eventIdentifier, 'close', this.close.bind(this));
-            EventHandler.add(this._eventIdentifier, 'updateButtonState', this._updateButtonState.bind(this));
-            var itemList, itemLists = elByClass('menuOverlayItemList', this._menu);
-            this._menu.addEventListener('animationend', (function () {
-                if (!this._menu.classList.contains('open')) {
-                    for (var i = 0, length = itemLists.length; i < length; i++) {
-                        itemList = itemLists[i];
+            this.eventIdentifier = eventIdentifier;
+            this.menu = document.getElementById(elementId);
+            const callbackOpen = this.open.bind(this);
+            this.button = document.querySelector(buttonSelector);
+            this.button.addEventListener('click', callbackOpen);
+            this.initItems();
+            this.initHeader();
+            EventHandler.add(this.eventIdentifier, 'open', callbackOpen);
+            EventHandler.add(this.eventIdentifier, 'close', this.close.bind(this));
+            EventHandler.add(this.eventIdentifier, 'updateButtonState', this.updateButtonState.bind(this));
+            this.menu.addEventListener('animationend', () => {
+                if (!this.menu.classList.contains('open')) {
+                    this.menu.querySelectorAll('.menuOverlayItemList').forEach(itemList => {
                         // force the main list to be displayed
-                        itemList.classList.remove('active');
-                        itemList.classList.remove('hidden');
-                    }
+                        itemList.classList.remove('active', 'hidden');
+                    });
                 }
-            }).bind(this));
-            this._menu.children[0].addEventListener('transitionend', (function () {
-                this._menu.classList.add('allowScroll');
-                if (this._removeActiveList) {
-                    this._removeActiveList = false;
-                    var list = this._activeList.pop();
+            });
+            this.menu.children[0].addEventListener('transitionend', () => {
+                this.menu.classList.add('allowScroll');
+                if (this.removeActiveList) {
+                    this.removeActiveList = false;
+                    const list = this.activeList.pop();
                     if (list) {
                         list.classList.remove('activeList');
                     }
                 }
-            }).bind(this));
-            var backdrop = elCreate('div');
+            });
+            const backdrop = document.createElement('div');
             backdrop.className = 'menuOverlayMobileBackdrop';
-            backdrop.addEventListener(WCF_CLICK_EVENT, this.close.bind(this));
-            DomUtil.insertAfter(backdrop, this._menu);
-            this._updateButtonState();
+            backdrop.addEventListener('click', this.close.bind(this));
+            this.menu.insertAdjacentElement('afterend', backdrop);
+            this.menu.parentElement.insertBefore(backdrop, this.menu.nextSibling);
+            this.updateButtonState();
             if (Environment.platform() === 'android') {
-                this._initializeAndroid();
+                this.initializeAndroid();
             }
-        },
+        }
         /**
          * Opens the menu.
-         *
-         * @param       {Event}         event   event object
-         * @return      {boolean}       true if menu has been opened
          */
-        open: function (event) {
-            if (!this._enabled) {
+        open(event) {
+            if (!this.enabled) {
                 return false;
             }
             if (event instanceof Event) {
                 event.preventDefault();
             }
-            this._menu.classList.add('open');
-            this._menu.classList.add('allowScroll');
-            this._menu.children[0].classList.add('activeList');
+            this.menu.classList.add('open');
+            this.menu.classList.add('allowScroll');
+            this.menu.children[0].classList.add('activeList');
             UiScreen.scrollDisable();
-            _pageContainer.classList.add('menuOverlay-' + this._menu.id);
+            _pageContainer.classList.add('menuOverlay-' + this.menu.id);
             UiScreen.pageOverlayOpen();
             return true;
-        },
+        }
         /**
          * Closes the menu.
-         *
-         * @param       {(Event|boolean)}       event   event object or boolean true to force close the menu
-         * @return      {boolean}               true if menu was open
          */
-        close: function (event) {
+        close(event) {
             if (event instanceof Event) {
                 event.preventDefault();
             }
-            if (this._menu.classList.contains('open')) {
-                this._menu.classList.remove('open');
+            if (this.menu.classList.contains('open')) {
+                this.menu.classList.remove('open');
                 UiScreen.scrollEnable();
                 UiScreen.pageOverlayClose();
-                _pageContainer.classList.remove('menuOverlay-' + this._menu.id);
+                _pageContainer.classList.remove('menuOverlay-' + this.menu.id);
                 return true;
             }
             return false;
-        },
+        }
         /**
          * Enables the touch menu.
          */
-        enable: function () {
-            this._enabled = true;
-        },
+        enable() {
+            this.enabled = true;
+        }
         /**
          * Disables the touch menu.
          */
-        disable: function () {
-            this._enabled = false;
-            this.close(true);
-        },
+        disable() {
+            this.enabled = false;
+            this.close();
+        }
         /**
          * Initializes the Android Touch Menu.
          */
-        _initializeAndroid: function () {
-            var appearsAt, backdrop, touchStart;
-            /** @const */ var AT_EDGE = 20;
-            /** @const */ var MOVED_HORIZONTALLY = 5;
-            /** @const */ var MOVED_VERTICALLY = 20;
+        initializeAndroid() {
             // specify on which side of the page the menu appears
-            switch (this._menu.id) {
+            let appearsAt;
+            switch (this.menu.id) {
                 case 'pageUserMenuMobile':
                     appearsAt = 'right';
                     break;
@@ -153,21 +134,22 @@ define(['Core', 'Environment', 'EventHandler', 'Language', 'ObjectMap', 'Dom/Tra
                 default:
                     return;
             }
-            backdrop = this._menu.nextElementSibling;
+            const backdrop = this.menu.nextElementSibling;
             // horizontal position of the touch start
-            touchStart = null;
-            document.addEventListener('touchstart', (function (event) {
-                var touches, isOpen, isLeftEdge, isRightEdge;
-                touches = event.touches;
-                isOpen = this._menu.classList.contains('open');
+            let touchStart = undefined;
+            document.addEventListener('touchstart', event => {
+                const touches = event.touches;
+                let isLeftEdge;
+                let isRightEdge;
+                const isOpen = this.menu.classList.contains('open');
                 // check whether we touch the edges of the menu
                 if (appearsAt === 'left') {
-                    isLeftEdge = !isOpen && (touches[0].clientX < AT_EDGE);
-                    isRightEdge = isOpen && (Math.abs(this._menu.offsetWidth - touches[0].clientX) < AT_EDGE);
+                    isLeftEdge = !isOpen && (touches[0].clientX < 20 /* AtEdge */);
+                    isRightEdge = isOpen && (Math.abs(this.menu.offsetWidth - touches[0].clientX) < 20 /* AtEdge */);
                 }
-                else if (appearsAt === 'right') {
-                    isLeftEdge = isOpen && (Math.abs(document.body.clientWidth - this._menu.offsetWidth - touches[0].clientX) < AT_EDGE);
-                    isRightEdge = !isOpen && ((document.body.clientWidth - touches[0].clientX) < AT_EDGE);
+                else {
+                    isLeftEdge = isOpen && (Math.abs(document.body.clientWidth - this.menu.offsetWidth - touches[0].clientX) < 20 /* AtEdge */);
+                    isRightEdge = !isOpen && ((document.body.clientWidth - touches[0].clientX) < 20 /* AtEdge */);
                 }
                 // abort if more than one touch
                 if (touches.length > 1) {
@@ -177,47 +159,47 @@ define(['Core', 'Environment', 'EventHandler', 'Language', 'ObjectMap', 'Dom/Tra
                     return;
                 }
                 // break if a touch is in progress
-                if (_androidTouching)
+                if (_androidTouching) {
                     return;
+                }
                 // break if no edge has been touched
-                if (!isLeftEdge && !isRightEdge)
+                if (!isLeftEdge && !isRightEdge) {
                     return;
+                }
                 // break if a different menu is open
                 if (UiScreen.pageOverlayIsActive()) {
-                    var found = false;
-                    for (var i = 0; i < _pageContainer.classList.length; i++) {
-                        if (_pageContainer.classList[i] === 'menuOverlay-' + this._menu.id) {
-                            found = true;
-                        }
-                    }
-                    if (!found)
+                    const found = _pageContainer.classList.contains(`menuOverlay-${this.menu.id}`);
+                    if (!found) {
                         return;
+                    }
                 }
                 // break if redactor is in use
-                if (document.documentElement.classList.contains('redactorActive'))
+                if (document.documentElement.classList.contains('redactorActive')) {
                     return;
+                }
                 touchStart = {
                     x: touches[0].clientX,
-                    y: touches[0].clientY
+                    y: touches[0].clientY,
                 };
                 if (isLeftEdge)
                     _androidTouching = 'left';
                 if (isRightEdge)
                     _androidTouching = 'right';
-            }).bind(this));
-            document.addEventListener('touchend', (function (event) {
+            });
+            document.addEventListener('touchend', event => {
                 // break if we did not start a touch
-                if (!_androidTouching || touchStart === null)
+                if (!_androidTouching || !touchStart) {
                     return;
+                }
                 // break if the menu did not even start opening
-                if (!this._menu.classList.contains('open')) {
+                if (!this.menu.classList.contains('open')) {
                     // reset
-                    touchStart = null;
+                    touchStart = undefined;
                     _androidTouching = '';
                     return;
                 }
                 // last known position of the finger
-                var position;
+                let position;
                 if (event) {
                     position = event.changedTouches[0].clientX;
                 }
@@ -225,12 +207,12 @@ define(['Core', 'Environment', 'EventHandler', 'Language', 'ObjectMap', 'Dom/Tra
                     position = touchStart.x;
                 }
                 // clean up touch styles
-                this._menu.classList.add('androidMenuTouchEnd');
-                this._menu.style.removeProperty('transform');
+                this.menu.classList.add('androidMenuTouchEnd');
+                this.menu.style.removeProperty('transform');
                 backdrop.style.removeProperty(appearsAt);
-                this._menu.addEventListener('transitionend', (function () {
-                    this._menu.classList.remove('androidMenuTouchEnd');
-                }).bind(this), { once: true });
+                this.menu.addEventListener('transitionend', () => {
+                    this.menu.classList.remove('androidMenuTouchEnd');
+                }, { once: true });
                 // check whether the user moved the finger far enough
                 if (appearsAt === 'left') {
                     if (_androidTouching === 'left' && position < (touchStart.x + 100))
@@ -238,30 +220,31 @@ define(['Core', 'Environment', 'EventHandler', 'Language', 'ObjectMap', 'Dom/Tra
                     if (_androidTouching === 'right' && position < (touchStart.x - 100))
                         this.close();
                 }
-                else if (appearsAt === 'right') {
+                else {
                     if (_androidTouching === 'left' && position > (touchStart.x + 100))
                         this.close();
                     if (_androidTouching === 'right' && position > (touchStart.x - 100))
                         this.close();
                 }
                 // reset
-                touchStart = null;
+                touchStart = undefined;
                 _androidTouching = '';
-            }).bind(this));
-            document.addEventListener('touchmove', (function (event) {
+            });
+            document.addEventListener('touchmove', event => {
                 // break if we did not start a touch
-                if (!_androidTouching || touchStart === null)
+                if (!_androidTouching || !touchStart) {
                     return;
-                var touches = event.touches;
+                }
+                const touches = event.touches;
                 // check whether the user started moving in the correct direction
                 // this avoids false positives, in case the user just wanted to tap
-                var movedFromEdge = false, movedVertically = false;
+                let movedFromEdge = false;
                 if (_androidTouching === 'left')
-                    movedFromEdge = touches[0].clientX > (touchStart.x + MOVED_HORIZONTALLY);
+                    movedFromEdge = touches[0].clientX > (touchStart.x + 5 /* MovedHorizontally */);
                 if (_androidTouching === 'right')
-                    movedFromEdge = touches[0].clientX < (touchStart.x - MOVED_HORIZONTALLY);
-                movedVertically = Math.abs(touches[0].clientY - touchStart.y) > MOVED_VERTICALLY;
-                var isOpen = this._menu.classList.contains('open');
+                    movedFromEdge = touches[0].clientX < (touchStart.x - 5 /* MovedHorizontally */);
+                const movedVertically = Math.abs(touches[0].clientY - touchStart.y) > 20 /* MovedVertically */;
+                let isOpen = this.menu.classList.contains('open');
                 if (!isOpen && movedFromEdge && !movedVertically) {
                     // the menu is not yet open, but the user moved into the right direction
                     this.open();
@@ -269,57 +252,54 @@ define(['Core', 'Environment', 'EventHandler', 'Language', 'ObjectMap', 'Dom/Tra
                 }
                 if (isOpen) {
                     // update CSS to the new finger position
-                    var position = touches[0].clientX;
+                    let position = touches[0].clientX;
                     if (appearsAt === 'right')
                         position = document.body.clientWidth - position;
-                    if (position > this._menu.offsetWidth)
-                        position = this._menu.offsetWidth;
+                    if (position > this.menu.offsetWidth)
+                        position = this.menu.offsetWidth;
                     if (position < 0)
                         position = 0;
-                    this._menu.style.setProperty('transform', 'translateX(' + (appearsAt === 'left' ? 1 : -1) * (position - this._menu.offsetWidth) + 'px)');
-                    backdrop.style.setProperty(appearsAt, Math.min(this._menu.offsetWidth, position) + 'px');
+                    this.menu.style.setProperty('transform', 'translateX(' + (appearsAt === 'left' ? 1 : -1) * (position - this.menu.offsetWidth) + 'px)');
+                    backdrop.style.setProperty(appearsAt, Math.min(this.menu.offsetWidth, position) + 'px');
                 }
-            }).bind(this));
-        },
+            });
+        }
         /**
          * Initializes all menu items.
-         *
-         * @protected
          */
-        _initItems: function () {
-            elBySelAll('.menuOverlayItemLink', this._menu, this._initItem.bind(this));
-        },
+        initItems() {
+            this.menu.querySelectorAll('.menuOverlayItemLink').forEach((element) => {
+                this.initItem(element);
+            });
+        }
         /**
          * Initializes a single menu item.
-         *
-         * @param       {Element}       item    menu item
-         * @protected
          */
-        _initItem: function (item) {
+        initItem(item) {
             // check if it should contain a 'more' link w/ an external callback
-            var parent = item.parentNode;
-            var more = elData(parent, 'more');
+            const parent = item.parentElement;
+            const more = parent.dataset.more;
             if (more) {
-                item.addEventListener(WCF_CLICK_EVENT, (function (event) {
+                item.addEventListener('click', event => {
                     event.preventDefault();
                     event.stopPropagation();
-                    EventHandler.fire(this._eventIdentifier, 'more', {
+                    EventHandler.fire(this.eventIdentifier, 'more', {
                         handler: this,
                         identifier: more,
                         item: item,
-                        parent: parent
+                        parent: parent,
                     });
-                }).bind(this));
+                });
                 return;
             }
-            var itemList = item.nextElementSibling, wrapper;
+            const itemList = item.nextElementSibling;
             if (itemList === null) {
                 return;
             }
             // handle static items with an icon-type button next to it (acp menu)
             if (itemList.nodeName !== 'OL' && itemList.classList.contains('menuOverlayItemLinkIcon')) {
                 // add wrapper
-                wrapper = elCreate('span');
+                const wrapper = document.createElement('span');
                 wrapper.className = 'menuOverlayItemWrapper';
                 parent.insertBefore(wrapper, item);
                 wrapper.appendChild(item);
@@ -328,154 +308,146 @@ define(['Core', 'Environment', 'EventHandler', 'Language', 'ObjectMap', 'Dom/Tra
                 }
                 return;
             }
-            var isLink = (elAttr(item, 'href') !== '#');
-            var parentItemList = parent.parentNode;
-            var itemTitle = elData(itemList, 'title');
-            this._items.set(item, {
+            const isLink = item.href !== '#';
+            const parentItemList = parent.parentElement;
+            let itemTitle = itemList.dataset.title;
+            this.items.set(item, {
                 itemList: itemList,
-                parentItemList: parentItemList
+                parentItemList: parentItemList,
             });
-            if (itemTitle === '') {
+            if (!itemTitle) {
                 itemTitle = DomTraverse.childByClass(item, 'menuOverlayItemTitle').textContent;
-                elData(itemList, 'title', itemTitle);
+                itemList.dataset.title = itemTitle;
             }
-            var callbackLink = this._showItemList.bind(this, item);
+            const callbackLink = this.showItemList.bind(this, item);
             if (isLink) {
-                wrapper = elCreate('span');
+                const wrapper = document.createElement('span');
                 wrapper.className = 'menuOverlayItemWrapper';
                 parent.insertBefore(wrapper, item);
                 wrapper.appendChild(item);
-                var moreLink = elCreate('a');
-                elAttr(moreLink, 'href', '#');
+                const moreLink = document.createElement('a');
+                moreLink.href = '#';
                 moreLink.className = 'menuOverlayItemLinkIcon' + (item.classList.contains('active') ? ' active' : '');
                 moreLink.innerHTML = '<span class="icon icon24 fa-angle-right"></span>';
-                moreLink.addEventListener(WCF_CLICK_EVENT, callbackLink);
+                moreLink.addEventListener('click', callbackLink);
                 wrapper.appendChild(moreLink);
             }
             else {
                 item.classList.add('menuOverlayItemLinkMore');
-                item.addEventListener(WCF_CLICK_EVENT, callbackLink);
+                item.addEventListener('click', callbackLink);
             }
-            var backLinkItem = elCreate('li');
+            const backLinkItem = document.createElement('li');
             backLinkItem.className = 'menuOverlayHeader';
-            wrapper = elCreate('span');
+            const wrapper = document.createElement('span');
             wrapper.className = 'menuOverlayItemWrapper';
-            var backLink = elCreate('a');
-            elAttr(backLink, 'href', '#');
+            const backLink = document.createElement('a');
+            backLink.href = '#';
             backLink.className = 'menuOverlayItemLink menuOverlayBackLink';
-            backLink.textContent = elData(parentItemList, 'title');
-            backLink.addEventListener(WCF_CLICK_EVENT, this._hideItemList.bind(this, item));
-            var closeLink = elCreate('a');
-            elAttr(closeLink, 'href', '#');
+            backLink.textContent = parentItemList.dataset.title || '';
+            backLink.addEventListener('click', this.hideItemList.bind(this, item));
+            const closeLink = document.createElement('a');
+            closeLink.href = '#';
             closeLink.className = 'menuOverlayItemLinkIcon';
             closeLink.innerHTML = '<span class="icon icon24 fa-times"></span>';
-            closeLink.addEventListener(WCF_CLICK_EVENT, this.close.bind(this));
+            closeLink.addEventListener('click', this.close.bind(this));
             wrapper.appendChild(backLink);
             wrapper.appendChild(closeLink);
             backLinkItem.appendChild(wrapper);
             itemList.insertBefore(backLinkItem, itemList.firstElementChild);
             if (!backLinkItem.nextElementSibling.classList.contains('menuOverlayTitle')) {
-                var titleItem = elCreate('li');
+                const titleItem = document.createElement('li');
                 titleItem.className = 'menuOverlayTitle';
-                var title = elCreate('span');
+                const title = document.createElement('span');
                 title.textContent = itemTitle;
                 titleItem.appendChild(title);
                 itemList.insertBefore(titleItem, backLinkItem.nextElementSibling);
             }
-        },
+        }
         /**
          * Renders the menu item list header.
-         *
-         * @protected
          */
-        _initHeader: function () {
-            var listItem = elCreate('li');
+        initHeader() {
+            const listItem = document.createElement('li');
             listItem.className = 'menuOverlayHeader';
-            var wrapper = elCreate('span');
+            const wrapper = document.createElement('span');
             wrapper.className = 'menuOverlayItemWrapper';
             listItem.appendChild(wrapper);
-            var logoWrapper = elCreate('span');
+            const logoWrapper = document.createElement('span');
             logoWrapper.className = 'menuOverlayLogoWrapper';
             wrapper.appendChild(logoWrapper);
-            var logo = elCreate('span');
+            const logo = document.createElement('span');
             logo.className = 'menuOverlayLogo';
-            logo.style.setProperty('background-image', 'url("' + elData(this._menu, 'page-logo') + '")', '');
+            const pageLogo = this.menu.dataset.pageLogo;
+            logo.style.setProperty('background-image', `url("${pageLogo}")`, '');
             logoWrapper.appendChild(logo);
-            var closeLink = elCreate('a');
-            elAttr(closeLink, 'href', '#');
+            const closeLink = document.createElement('a');
+            closeLink.href = '#';
             closeLink.className = 'menuOverlayItemLinkIcon';
             closeLink.innerHTML = '<span class="icon icon24 fa-times"></span>';
-            closeLink.addEventListener(WCF_CLICK_EVENT, this.close.bind(this));
+            closeLink.addEventListener('click', this.close.bind(this));
             wrapper.appendChild(closeLink);
-            var list = DomTraverse.childByClass(this._menu, 'menuOverlayItemList');
+            const list = DomTraverse.childByClass(this.menu, 'menuOverlayItemList');
             list.insertBefore(listItem, list.firstElementChild);
-        },
+        }
         /**
          * Hides an item list, return to the parent item list.
-         *
-         * @param       {Element}       item    menu item
-         * @param       {Event}         event   event object
-         * @protected
          */
-        _hideItemList: function (item, event) {
+        hideItemList(item, event) {
             if (event instanceof Event) {
                 event.preventDefault();
             }
-            this._menu.classList.remove('allowScroll');
-            this._removeActiveList = true;
-            var data = this._items.get(item);
+            this.menu.classList.remove('allowScroll');
+            this.removeActiveList = true;
+            const data = this.items.get(item);
             data.parentItemList.classList.remove('hidden');
-            this._updateDepth(false);
-        },
+            this.updateDepth(false);
+        }
         /**
          * Shows the child item list.
-         *
-         * @param       {Element}       item    menu item
-         * @param event
-         * @private
          */
-        _showItemList: function (item, event) {
-            if (event instanceof Event) {
-                event.preventDefault();
-            }
-            var data = this._items.get(item);
-            var load = elData(data.itemList, 'load');
+        showItemList(item, event) {
+            event.preventDefault();
+            const data = this.items.get(item);
+            const load = data.itemList.dataset.load;
             if (load) {
-                if (!elDataBool(item, 'loaded')) {
-                    var icon = event.currentTarget.firstElementChild;
+                if (!Core.stringToBool(item.dataset.loaded || '')) {
+                    const target = event.currentTarget;
+                    const icon = target.firstElementChild;
                     if (icon.classList.contains('fa-angle-right')) {
                         icon.classList.remove('fa-angle-right');
                         icon.classList.add('fa-spinner');
                     }
-                    EventHandler.fire(this._eventIdentifier, 'load_' + load);
+                    EventHandler.fire(this.eventIdentifier, 'load_' + load);
                     return;
                 }
             }
-            this._menu.classList.remove('allowScroll');
+            this.menu.classList.remove('allowScroll');
             data.itemList.classList.add('activeList');
             data.parentItemList.classList.add('hidden');
-            this._activeList.push(data.itemList);
-            this._updateDepth(true);
-        },
-        _updateDepth: function (increase) {
-            this._depth += (increase) ? 1 : -1;
-            var offset = this._depth * -100;
+            this.activeList.push(data.itemList);
+            this.updateDepth(true);
+        }
+        updateDepth(increase) {
+            this.depth += (increase) ? 1 : -1;
+            let offset = this.depth * -100;
             if (Language.get('wcf.global.pageDirection') === 'rtl') {
                 // reverse logic for RTL
                 offset *= -1;
             }
-            this._menu.children[0].style.setProperty('transform', 'translateX(' + offset + '%)', '');
-        },
-        _updateButtonState: function () {
-            var hasNewContent = false;
-            var itemList = elBySel('.menuOverlayItemList', this._menu);
-            elBySelAll('.badgeUpdate', this._menu, function (badge) {
-                if (~~badge.textContent > 0 && badge.closest('.menuOverlayItemList') === itemList) {
+            const child = this.menu.children[0];
+            child.style.setProperty('transform', `translateX(${offset}%)`, '');
+        }
+        updateButtonState() {
+            let hasNewContent = false;
+            const itemList = this.menu.querySelector('.menuOverlayItemList');
+            this.menu.querySelectorAll('.badgeUpdate').forEach(badge => {
+                const value = badge.textContent;
+                if (~~value > 0 && badge.closest('.menuOverlayItemList') === itemList) {
                     hasNewContent = true;
                 }
             });
-            this._button.classList[(hasNewContent ? 'add' : 'remove')]('pageMenuMobileButtonHasContent');
+            this.button.classList[hasNewContent ? 'add' : 'remove']('pageMenuMobileButtonHasContent');
         }
-    };
+    }
     return UiPageMenuAbstract;
 });

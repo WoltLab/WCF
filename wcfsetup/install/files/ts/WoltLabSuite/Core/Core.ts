@@ -191,7 +191,7 @@ export function serialize(obj: object, prefix?: string): string {
 /**
  * Triggers a custom or built-in event.
  */
-export function triggerEvent(element: Element, eventName: string): void {
+export function triggerEvent(element: EventTarget, eventName: string): void {
   const event = new Event(eventName, {
     bubbles: true,
     cancelable: true,
