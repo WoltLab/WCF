@@ -36,7 +36,7 @@ class CallbackList {
   /**
    * Invokes callback function on each registered callback.
    */
-  forEach(identifier: string | null, callback: Callback): void {
+  forEach(identifier: string | null, callback: (cb: Callback) => unknown): void {
     if (identifier === null) {
       this._callbacks.forEach((callbacks, identifier) => {
         callbacks.forEach(callback);
