@@ -23,6 +23,19 @@ jobs:
     - run: npx tsc --noEmit
     - name: Check that tslib is in sync.
       run: diff -wu wcfsetup/install/files/js/3rdParty/tslib.js node_modules/tslib/tslib.js
+  tslint:
+    name: "tslint"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+    - name: Set up node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: "12"
+    - uses: actions/checkout@v2
+    - run: npm install
+    - run: npx tslint .
   javascript_sync:
     name: "Check for outdated JavaScript"
     needs: tsc
