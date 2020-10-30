@@ -1,6 +1,9 @@
 <?php
 namespace wcf\page;
 use wcf\system\menu\user\UserMenu;
+use wcf\system\session\Session;
+use wcf\system\session\SessionHandler;
+use wcf\system\WCF;
 
 /**
  * Shows the account security page.
@@ -16,6 +19,31 @@ class AccountSecurityPage extends AbstractPage {
 	 * @inheritDoc
 	 */
 	public $loginRequired = true;
+	
+	/**
+	 * @var Session[]
+	 */
+	private $activeSessions;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function readData() {
+		parent::readData();
+	
+		$this->activeSessions = SessionHandler::getInstance()->getUserSessions(WCF::getUser());
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function assignVariables() {
+		parent::assignVariables();
+		
+		WCF::getTPL()->assign([
+			'activeSessions' => $this->activeSessions
+		]);
+	}
 	
 	/**
 	 * @inheritDoc

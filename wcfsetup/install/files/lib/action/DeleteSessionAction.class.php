@@ -23,7 +23,7 @@ class DeleteSessionAction extends AbstractAction {
 	/**
 	 * @var string
 	 */
-	public $sessionID;
+	private $sessionID;
 	
 	/**
 	 * @inheritDoc
