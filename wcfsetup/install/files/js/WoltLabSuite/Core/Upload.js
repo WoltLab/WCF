@@ -1,278 +1,244 @@
 /**
  * Uploads file via AJAX.
  *
- * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	Upload (alias)
- * @module	WoltLabSuite/Core/Upload
+ * @author  Matthias Schmidt
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  Upload (alias)
+ * @module  WoltLabSuite/Core/Upload
  */
-define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Dom/Traverse'], function (AjaxRequest, Core, DomChangeListener, Language, DomUtil, DomTraverse) {
+define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Dom/Change/Listener", "./Language"], function (require, exports, tslib_1, Request_1, Core, Listener_1, Language) {
     "use strict";
-    if (!COMPILER_TARGET_DEFAULT) {
-        var Fake = function () { };
-        Fake.prototype = {
-            _createButton: function () { },
-            _createFileElement: function () { },
-            _createFileElements: function () { },
-            _failure: function () { },
-            _getParameters: function () { },
-            _insertButton: function () { },
-            _progress: function () { },
-            _removeButton: function () { },
-            _success: function () { },
-            _upload: function () { },
-            _uploadFiles: function () { }
-        };
-        return Fake;
-    }
-    /**
-     * @constructor
-     */
-    function Upload(buttonContainerId, targetId, options) {
-        options = options || {};
-        if (options.className === undefined) {
-            throw new Error("Missing class name.");
+    Request_1 = tslib_1.__importDefault(Request_1);
+    Core = tslib_1.__importStar(Core);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Language = tslib_1.__importStar(Language);
+    class Upload {
+        constructor(buttonContainerId, targetId, options) {
+            this._button = document.createElement("p");
+            this._fileElements = [];
+            this._fileUpload = document.createElement("input");
+            this._internalFileId = 0;
+            this._multiFileUploadIds = [];
+            options = options || {};
+            if (!options.className) {
+                throw new Error("Missing class name.");
+            }
+            // set default options
+            this._options = Core.extend({
+                // name of the PHP action
+                action: "upload",
+                // is true if multiple files can be uploaded at once
+                multiple: false,
+                // array of acceptable file types, null if any file type is acceptable
+                acceptableFiles: null,
+                // name of the upload field
+                name: "__files[]",
+                // is true if every file from a multi-file selection is uploaded in its own request
+                singleFileRequests: false,
+                // url for uploading file
+                url: `index.php?ajax-upload/&t=${window.SECURITY_TOKEN}`,
+            }, options);
+            this._options.url = Core.convertLegacyUrl(this._options.url);
+            if (this._options.url.indexOf("index.php") === 0) {
+                this._options.url = window.WSC_API_URL + this._options.url;
+            }
+            const buttonContainer = document.getElementById(buttonContainerId);
+            if (buttonContainer === null) {
+                throw new Error(`Element id '${buttonContainerId}' is unknown.`);
+            }
+            this._buttonContainer = buttonContainer;
+            const target = document.getElementById(targetId);
+            if (target === null) {
+                throw new Error(`Element id '${targetId}' is unknown.`);
+            }
+            this._target = target;
+            if (options.multiple &&
+                this._target.nodeName !== "UL" &&
+                this._target.nodeName !== "OL" &&
+                this._target.nodeName !== "TBODY") {
+                throw new Error("Target element has to be list or table body if uploading multiple files is supported.");
+            }
+            this._createButton();
         }
-        // set default options
-        this._options = Core.extend({
-            // name of the PHP action
-            action: 'upload',
-            // is true if multiple files can be uploaded at once
-            multiple: false,
-            // array of acceptable file types, null if any file type is acceptable
-            acceptableFiles: null,
-            // name if the upload field
-            name: '__files[]',
-            // is true if every file from a multi-file selection is uploaded in its own request
-            singleFileRequests: false,
-            // url for uploading file
-            url: 'index.php?ajax-upload/&t=' + SECURITY_TOKEN
-        }, options);
-        this._options.url = Core.convertLegacyUrl(this._options.url);
-        if (this._options.url.indexOf('index.php') === 0) {
-            this._options.url = WSC_API_URL + this._options.url;
-        }
-        this._buttonContainer = elById(buttonContainerId);
-        if (this._buttonContainer === null) {
-            throw new Error("Element id '" + buttonContainerId + "' is unknown.");
-        }
-        this._target = elById(targetId);
-        if (targetId === null) {
-            throw new Error("Element id '" + targetId + "' is unknown.");
-        }
-        if (options.multiple && this._target.nodeName !== 'UL' && this._target.nodeName !== 'OL' && this._target.nodeName !== 'TBODY') {
-            throw new Error("Target element has to be list or table body if uploading multiple files is supported.");
-        }
-        this._fileElements = [];
-        this._internalFileId = 0;
-        // upload ids that belong to an upload of multiple files at once
-        this._multiFileUploadIds = [];
-        this._createButton();
-    }
-    Upload.prototype = {
         /**
          * Creates the upload button.
          */
-        _createButton: function () {
-            this._fileUpload = elCreate('input');
-            elAttr(this._fileUpload, 'type', 'file');
-            elAttr(this._fileUpload, 'name', this._options.name);
+        _createButton() {
+            this._fileUpload.type = "file";
+            this._fileUpload.name = this._options.name;
             if (this._options.multiple) {
-                elAttr(this._fileUpload, 'multiple', 'true');
+                this._fileUpload.multiple = true;
             }
             if (this._options.acceptableFiles !== null) {
-                elAttr(this._fileUpload, 'accept', this._options.acceptableFiles.join(','));
+                this._fileUpload.accept = this._options.acceptableFiles.join(",");
             }
-            this._fileUpload.addEventListener('change', this._upload.bind(this));
-            this._button = elCreate('p');
-            this._button.className = 'button uploadButton';
-            elAttr(this._button, 'role', 'button');
-            this._fileUpload.addEventListener('focus', (function () {
-                if (this._fileUpload.classList.contains('focus-visible')) {
-                    this._button.classList.add('active');
+            this._fileUpload.addEventListener("change", (ev) => this._upload(ev));
+            this._button.className = "button uploadButton";
+            this._button.setAttribute("role", "button");
+            this._fileUpload.addEventListener("focus", () => {
+                if (this._fileUpload.classList.contains("focus-visible")) {
+                    this._button.classList.add("active");
                 }
-            }).bind(this));
-            this._fileUpload.addEventListener('blur', (function () { this._button.classList.remove('active'); }).bind(this));
-            var span = elCreate('span');
-            span.textContent = Language.get('wcf.global.button.upload');
+            });
+            this._fileUpload.addEventListener("blur", () => {
+                this._button.classList.remove("active");
+            });
+            const span = document.createElement("span");
+            span.textContent = Language.get("wcf.global.button.upload");
             this._button.appendChild(span);
-            DomUtil.prepend(this._fileUpload, this._button);
+            this._buttonContainer.insertAdjacentElement("afterbegin", this._fileUpload);
             this._insertButton();
-            DomChangeListener.trigger();
-        },
+            Listener_1.default.trigger();
+        }
         /**
          * Creates the document element for an uploaded file.
-         *
-         * @param	{File}		file		uploaded file
-         * @return	{HTMLElement}
          */
-        _createFileElement: function (file) {
-            var progress = elCreate('progress');
-            elAttr(progress, 'max', 100);
-            if (this._target.nodeName === 'OL' || this._target.nodeName === 'UL') {
-                var li = elCreate('li');
-                li.innerText = file.name;
-                li.appendChild(progress);
-                this._target.appendChild(li);
-                return li;
+        _createFileElement(file) {
+            const progress = document.createElement("progress");
+            progress.max = 100;
+            let element;
+            switch (this._target.nodeName) {
+                case "OL":
+                case "UL":
+                    element = document.createElement("li");
+                    element.innerText = file.name;
+                    element.appendChild(progress);
+                    this._target.appendChild(element);
+                    return element;
+                case "TBODY":
+                    return this._createFileTableRow(file);
+                default:
+                    element = document.createElement("p");
+                    element.appendChild(progress);
+                    this._target.appendChild(element);
+                    return element;
             }
-            else if (this._target.nodeName === 'TBODY') {
-                return this._createFileTableRow(file);
-            }
-            else {
-                var p = elCreate('p');
-                p.appendChild(progress);
-                this._target.appendChild(p);
-                return p;
-            }
-        },
+        }
         /**
          * Creates the document elements for uploaded files.
-         *
-         * @param	{(FileList|Array.<File>)}	files		uploaded files
          */
-        _createFileElements: function (files) {
-            if (files.length) {
-                var uploadId = this._fileElements.length;
-                this._fileElements[uploadId] = [];
-                for (var i = 0, length = files.length; i < length; i++) {
-                    var file = files[i];
-                    var fileElement = this._createFileElement(file);
-                    if (!fileElement.classList.contains('uploadFailed')) {
-                        elData(fileElement, 'filename', file.name);
-                        elData(fileElement, 'internal-file-id', this._internalFileId++);
-                        this._fileElements[uploadId][i] = fileElement;
-                    }
-                }
-                DomChangeListener.trigger();
-                return uploadId;
+        _createFileElements(files) {
+            if (!files.length) {
+                return null;
             }
-            return null;
-        },
-        _createFileTableRow: function (file) {
+            const elements = [];
+            Array.from(files).forEach((file) => {
+                const fileElement = this._createFileElement(file);
+                if (!fileElement.classList.contains("uploadFailed")) {
+                    fileElement.dataset.filename = file.name;
+                    fileElement.dataset.internalFileId = (this._internalFileId++).toString();
+                    elements.push(fileElement);
+                }
+            });
+            const uploadId = this._fileElements.length;
+            this._fileElements.push(elements);
+            Listener_1.default.trigger();
+            return uploadId;
+        }
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        _createFileTableRow(file) {
+            // This should be an abstract method, but cannot be marked as such for backwards compatibility.
             throw new Error("Has to be implemented in subclass.");
-        },
+        }
         /**
          * Handles a failed file upload.
-         *
-         * @param	{int}			uploadId	identifier of a file upload
-         * @param	{object<string, *>}	data		response data
-         * @param	{string}		responseText	response
-         * @param	{XMLHttpRequest}	xhr		request object
-         * @param	{object<string, *>}	requestOptions	options used to send AJAX request
-         * @return	{boolean}	true if the error message should be shown
          */
-        _failure: function (uploadId, data, responseText, xhr, requestOptions) {
-            // does nothing
+        _failure(
+        /* eslint-disable @typescript-eslint/no-unused-vars */
+        uploadId, data, responseText, xhr, requestOptions
+        /* eslint-enable @typescript-eslint/no-unused-vars */
+        ) {
+            // This should be an abstract method, but cannot be marked as such for backwards compatibility.
             return true;
-        },
+        }
         /**
          * Return additional parameters for upload requests.
-         *
-         * @return	{object<string, *>}	additional parameters
          */
-        _getParameters: function () {
+        _getParameters() {
             return {};
-        },
+        }
         /**
          * Return additional form data for upload requests.
          *
-         * @return	{object<string, *>}	additional form data
          * @since       5.2
          */
-        _getFormData: function () {
+        _getFormData() {
             return {};
-        },
+        }
         /**
          * Inserts the created button to upload files into the button container.
          */
-        _insertButton: function () {
-            DomUtil.prepend(this._button, this._buttonContainer);
-        },
+        _insertButton() {
+            this._buttonContainer.insertAdjacentElement("afterbegin", this._button);
+        }
         /**
          * Updates the progress of an upload.
-         *
-         * @param	{int}				uploadId	internal upload identifier
-         * @param	{XMLHttpRequestProgressEvent}	event		progress event object
          */
-        _progress: function (uploadId, event) {
-            var percentComplete = Math.round(event.loaded / event.total * 100);
-            for (var i in this._fileElements[uploadId]) {
-                var progress = elByTag('PROGRESS', this._fileElements[uploadId][i]);
-                if (progress.length === 1) {
-                    elAttr(progress[0], 'value', percentComplete);
+        _progress(uploadId, event) {
+            const percentComplete = Math.round((event.loaded / event.total) * 100);
+            this._fileElements[uploadId].forEach((element) => {
+                const progress = element.querySelector("progress");
+                if (progress) {
+                    progress.value = percentComplete;
                 }
-            }
-        },
+            });
+        }
         /**
          * Removes the button to upload files.
          */
-        _removeButton: function () {
-            elRemove(this._button);
-            DomChangeListener.trigger();
-        },
+        _removeButton() {
+            this._button.remove();
+            Listener_1.default.trigger();
+        }
         /**
          * Handles a successful file upload.
-         *
-         * @param	{int}			uploadId	identifier of a file upload
-         * @param	{object<string, *>}	data		response data
-         * @param	{string}		responseText	response
-         * @param	{XMLHttpRequest}	xhr		request object
-         * @param	{object<string, *>}	requestOptions	options used to send AJAX request
          */
-        _success: function (uploadId, data, responseText, xhr, requestOptions) {
-            // does nothing
-        },
-        /**
-         * File input change callback to upload files.
-         *
-         * @param	{Event}		event		input change event object
-         * @param	{File}		file		uploaded file
-         * @param	{Blob}		blob		file blob
-         * @return	{(int|Array.<int>|null)}	identifier(s) for the uploaded files
-         */
-        _upload: function (event, file, blob) {
+        _success(
+        /* eslint-disable @typescript-eslint/no-unused-vars */
+        uploadId, data, responseText, xhr, requestOptions
+        /* eslint-enable @typescript-eslint/no-unused-vars */
+        ) {
+            // This should be an abstract method, but cannot be marked as such for backwards compatibility.
+        }
+        _upload(event, file, blob) {
             // remove failed upload elements first
-            var failedUploads = DomTraverse.childrenByClass(this._target, 'uploadFailed');
-            for (var i = 0, length = failedUploads.length; i < length; i++) {
-                elRemove(failedUploads[i]);
-            }
-            var uploadId = null;
-            var files = [];
+            this._target.querySelectorAll(".uploadFailed").forEach((el) => el.remove());
+            let uploadId = null;
+            let files = [];
             if (file) {
                 files.push(file);
             }
             else if (blob) {
-                var fileExtension = '';
+                let fileExtension = "";
                 switch (blob.type) {
-                    case 'image/jpeg':
-                        fileExtension = '.jpg';
+                    case "image/jpeg":
+                        fileExtension = "jpg";
                         break;
-                    case 'image/gif':
-                        fileExtension = '.gif';
+                    case "image/gif":
+                        fileExtension = "gif";
                         break;
-                    case 'image/png':
-                        fileExtension = '.png';
+                    case "image/png":
+                        fileExtension = "png";
                         break;
                 }
                 files.push({
-                    name: 'pasted-from-clipboard' + fileExtension
+                    name: `pasted-from-clipboard.${fileExtension}`,
                 });
             }
             else {
-                files = this._fileUpload.files;
+                files = Array.from(this._fileUpload.files);
             }
             if (files.length && this.validateUpload(files)) {
                 if (this._options.singleFileRequests) {
                     uploadId = [];
-                    for (var i = 0, length = files.length; i < length; i++) {
-                        var localUploadId = this._uploadFiles([files[i]], blob);
+                    files.forEach((file) => {
+                        const localUploadId = this._uploadFiles([file], blob);
                         if (files.length !== 1) {
                             this._multiFileUploadIds.push(localUploadId);
                         }
                         uploadId.push(localUploadId);
-                    }
+                    });
                 }
                 else {
                     uploadId = this._uploadFiles(files, blob);
@@ -283,64 +249,60 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
             this._removeButton();
             this._createButton();
             return uploadId;
-        },
+        }
         /**
          * Validates the upload before uploading them.
          *
-         * @param       {(FileList|Array.<File>)}	files		uploaded files
-         * @return	{boolean}
          * @since       5.2
          */
-        validateUpload: function (files) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        validateUpload(files) {
+            // This should be an abstract method, but cannot be marked as such for backwards compatibility.
             return true;
-        },
+        }
         /**
          * Sends the request to upload files.
-         *
-         * @param	{(FileList|Array.<File>)}	files		uploaded files
-         * @param	{Blob}				blob		file blob
-         * @return	{(int|null)}	identifier for the uploaded files
          */
-        _uploadFiles: function (files, blob) {
-            var uploadId = this._createFileElements(files);
+        _uploadFiles(files, blob) {
+            const uploadId = this._createFileElements(files);
             // no more files left, abort
             if (!this._fileElements[uploadId].length) {
                 return null;
             }
-            var formData = new FormData();
-            for (var i = 0, length = files.length; i < length; i++) {
+            const formData = new FormData();
+            for (let i = 0, length = files.length; i < length; i++) {
                 if (this._fileElements[uploadId][i]) {
-                    var internalFileId = elData(this._fileElements[uploadId][i], 'internal-file-id');
+                    const internalFileId = this._fileElements[uploadId][i].dataset.internalFileId;
                     if (blob) {
-                        formData.append('__files[' + internalFileId + ']', blob, files[i].name);
+                        formData.append(`__files[${internalFileId}]`, blob, files[i].name);
                     }
                     else {
-                        formData.append('__files[' + internalFileId + ']', files[i]);
+                        formData.append(`__files[${internalFileId}]`, files[i]);
                     }
                 }
             }
-            formData.append('actionName', this._options.action);
-            formData.append('className', this._options.className);
-            if (this._options.action === 'upload') {
-                formData.append('interfaceName', 'wcf\\data\\IUploadAction');
+            formData.append("actionName", this._options.action);
+            formData.append("className", this._options.className);
+            if (this._options.action === "upload") {
+                formData.append("interfaceName", "wcf\\data\\IUploadAction");
             }
             // recursively append additional parameters to form data
-            var appendFormData = function (parameters, prefix) {
-                prefix = prefix || '';
-                for (var name in parameters) {
-                    if (typeof parameters[name] === 'object') {
-                        var newPrefix = prefix.length === 0 ? name : prefix + '[' + name + ']';
-                        appendFormData(parameters[name], newPrefix);
+            function appendFormData(parameters, prefix) {
+                prefix = prefix || "";
+                Object.entries(parameters).forEach(([key, value]) => {
+                    if (typeof value === "object") {
+                        const newPrefix = prefix.length === 0 ? key : `${prefix}[${key}]`;
+                        appendFormData(value, newPrefix);
                     }
                     else {
-                        var dataName = prefix.length === 0 ? name : prefix + '[' + name + ']';
-                        formData.append(dataName, parameters[name]);
+                        const dataName = prefix.length === 0 ? key : `${prefix}[${key}]`;
+                        formData.append(dataName, value);
                     }
-                }
-            };
-            appendFormData(this._getParameters(), 'parameters');
+                });
+            }
+            appendFormData(this._getParameters(), "parameters");
             appendFormData(this._getFormData());
-            var request = new AjaxRequest({
+            const request = new Request_1.default({
                 data: formData,
                 contentType: false,
                 failure: this._failure.bind(this, uploadId),
@@ -348,47 +310,34 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
                 success: this._success.bind(this, uploadId),
                 uploadProgress: this._progress.bind(this, uploadId),
                 url: this._options.url,
-                withCredentials: true
+                withCredentials: true,
             });
             request.sendRequest();
             return uploadId;
-        },
+        }
         /**
          * Returns true if there are any pending uploads handled by this
          * upload manager.
          *
-         * @return	{boolean}
-         * @since	5.2
+         * @since  5.2
          */
-        hasPendingUploads: function () {
-            for (var uploadId in this._fileElements) {
-                for (var i in this._fileElements[uploadId]) {
-                    var progress = elByTag('PROGRESS', this._fileElements[uploadId][i]);
-                    if (progress.length === 1) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        },
+        hasPendingUploads() {
+            return (this._fileElements.find((elements) => {
+                return elements.find((el) => el.querySelector("progress") !== null);
+            }) !== undefined);
+        }
         /**
          * Uploads the given file blob.
-         *
-         * @param	{Blob}		blob		file blob
-         * @return	{int}		identifier for the uploaded file
          */
-        uploadBlob: function (blob) {
+        uploadBlob(blob) {
             return this._upload(null, null, blob);
-        },
+        }
         /**
          * Uploads the given file.
-         *
-         * @param	{File}		file		uploaded file
-         * @return	{int}		identifier(s) for the uploaded file
          */
-        uploadFile: function (file) {
+        uploadFile(file) {
             return this._upload(null, file);
         }
-    };
+    }
     return Upload;
 });

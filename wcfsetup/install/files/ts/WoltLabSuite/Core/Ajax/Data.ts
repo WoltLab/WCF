@@ -57,7 +57,7 @@ export interface AjaxCallbackObject {
 export interface RequestOptions {
   // request data
   data?: RequestData;
-  contentType?: string;
+  contentType?: string | false;
   responseType?: string;
   type?: string;
   url?: string;
