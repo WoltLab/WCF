@@ -37,7 +37,7 @@ interface ItemData {
 
 abstract class UiPageMenuAbstract {
   private readonly activeList: HTMLOListElement[] = [];
-  private readonly button: HTMLElement;
+  protected readonly button: HTMLElement;
   private depth = 0;
   private enabled: boolean = true;
   private readonly eventIdentifier: string;
