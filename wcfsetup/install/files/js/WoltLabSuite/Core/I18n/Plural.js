@@ -141,7 +141,9 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
                 return PLURAL_ONE;
         },
         // Tibetan
-        bo(_n) { },
+        bo(_n) {
+            return undefined;
+        },
         // Bosnian
         bs(n) {
             const v = Plural.getV(n);
@@ -270,7 +272,9 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
                 return PLURAL_ONE;
         },
         // Indonesian
-        id(_n) { },
+        id(_n) {
+            return undefined;
+        },
         // Icelandic
         is(n) {
             const f = Plural.getF(n);
@@ -278,9 +282,13 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
                 return PLURAL_ONE;
         },
         // Japanese
-        ja(_n) { },
+        ja(_n) {
+            return undefined;
+        },
         // Javanese
-        jv(_n) { },
+        jv(_n) {
+            return undefined;
+        },
         // Georgian
         ka(n) {
             if (n == 1)
@@ -292,14 +300,18 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
                 return PLURAL_ONE;
         },
         // Khmer
-        km(_n) { },
+        km(_n) {
+            return undefined;
+        },
         // Kannada
         kn(n) {
             if (n >= 0 && n <= 1)
                 return PLURAL_ONE;
         },
         // Korean
-        ko(_n) { },
+        ko(_n) {
+            return undefined;
+        },
         // Kurdish
         ku(n) {
             if (n == 1)
@@ -316,7 +328,9 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
                 return PLURAL_ONE;
         },
         // Lao
-        lo(_n) { },
+        lo(_n) {
+            return undefined;
+        },
         // Lithuanian
         lt(n) {
             const mod10 = n % 10;
@@ -361,7 +375,9 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
                 return PLURAL_ONE;
         },
         // Malay
-        ms(_n) { },
+        ms(_n) {
+            return undefined;
+        },
         // Maltese
         mt(n) {
             const mod100 = n % 100;
@@ -373,7 +389,9 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
                 return PLURAL_MANY;
         },
         // Burmese
-        my(_n) { },
+        my(_n) {
+            return undefined;
+        },
         // Norwegian
         no(n) {
             if (n == 1)
@@ -486,9 +504,13 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
                 return PLURAL_ONE;
         },
         // Tajik
-        tg(_n) { },
+        tg(_n) {
+            return undefined;
+        },
         // Thai
-        th(_n) { },
+        th(_n) {
+            return undefined;
+        },
         // Turkmen
         tk(n) {
             if (n == 1)
@@ -515,9 +537,13 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
                 return PLURAL_ONE;
         },
         // Vietnamese
-        vi(_n) { },
+        vi(_n) {
+            return undefined;
+        },
         // Chinese
-        zh(_n) { },
+        zh(_n) {
+            return undefined;
+        },
     };
     return Plural;
 });

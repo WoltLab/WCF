@@ -207,7 +207,7 @@ export function triggerEvent(element: EventTarget, eventName: string): void {
 /**
  * Returns the unique prefix for the localStorage.
  */
-export function getStoragePrefix() {
+export function getStoragePrefix(): string {
   return _prefix;
 }
 

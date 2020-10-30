@@ -11,7 +11,7 @@
 import * as Core from "../Core";
 import * as Language from "../Language";
 import UiDialog from "./Dialog";
-import { DialogCallbackObject } from "./Dialog/Data";
+import { DialogCallbackObject, CallbackSetup as DialogSetup } from "./Dialog/Data";
 
 class UiConfirmation implements DialogCallbackObject {
   private _active = false;
@@ -124,7 +124,7 @@ class UiConfirmation implements DialogCallbackObject {
     this.confirmButton.focus();
   }
 
-  _dialogSetup() {
+  _dialogSetup(): ReturnType<DialogSetup> {
     return {
       id: "wcfSystemConfirmation",
       options: {

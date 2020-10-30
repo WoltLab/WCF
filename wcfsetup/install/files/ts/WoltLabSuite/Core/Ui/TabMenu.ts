@@ -234,7 +234,7 @@ function rebuildMenuOverflow(menu) {
 /**
  * Sets up tab menus and binds listeners.
  */
-export function setup() {
+export function setup(): void {
   init();
   selectErroneousTabs();
 
@@ -306,7 +306,7 @@ export function getTabMenu(containerId: string): TabMenuSimple | undefined {
   return _tabMenus.get(containerId);
 }
 
-export function scrollToTab(tab) {
+export function scrollToTab(tab): void {
   if (!_enableTabScroll) {
     return;
   }

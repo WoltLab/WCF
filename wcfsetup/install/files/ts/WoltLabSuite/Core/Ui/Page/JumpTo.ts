@@ -7,7 +7,7 @@
  * @module  WoltLabSuite/Core/Ui/Page/JumpTo
  */
 
-import { DialogCallbackObject, DialogSettings } from "../Dialog/Data";
+import { DialogCallbackObject, CallbackSetup as DialogSetup } from "../Dialog/Data";
 import * as Language from "../../Language";
 import UiDialog from "../Dialog";
 
@@ -86,7 +86,7 @@ class UiPageJumpTo implements DialogCallbackObject {
     UiDialog.close(this);
   }
 
-  _dialogSetup(): DialogSettings {
+  _dialogSetup(): ReturnType<DialogSetup> {
     const source = `<dl>
         <dt><label for="jsPaginationPageNo">${Language.get("wcf.page.jumpTo")}</label></dt>
                 <dd>

@@ -10,7 +10,7 @@
 import * as Ajax from "../../Ajax";
 import { AjaxCallbackObject, CallbackSetup } from "../../Ajax/Data";
 import * as Core from "../../Core";
-import { DialogCallbackObject, DialogSettings } from "../Dialog/Data";
+import { DialogCallbackObject, CallbackSetup as DialogSetup } from "../Dialog/Data";
 import DomUtil from "../../Dom/Util";
 import * as Language from "../../Language";
 import * as StringUtil from "../../StringUtil";
@@ -192,7 +192,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
     };
   }
 
-  _dialogSetup(): DialogSettings {
+  _dialogSetup(): ReturnType<DialogSetup> {
     return {
       id: "wcfUiUserEditor",
       options: {
@@ -254,6 +254,6 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
 /**
  * Initializes the user editor.
  */
-export function init() {
+export function init(): void {
   new UserEditor();
 }

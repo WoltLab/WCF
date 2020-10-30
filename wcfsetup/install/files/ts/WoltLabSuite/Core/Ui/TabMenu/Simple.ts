@@ -433,7 +433,7 @@ class TabMenuSimple {
     return this.tabs;
   }
 
-  static getIdentifierFromHash() {
+  static getIdentifierFromHash(): string {
     if (window.location.hash.match(/^#+([^\/]+)+(?:\/.+)?/)) {
       return RegExp.$1;
     }

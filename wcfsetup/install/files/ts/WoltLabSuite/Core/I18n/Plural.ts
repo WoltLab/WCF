@@ -151,7 +151,9 @@ const Plural = {
   },
 
   // Tibetan
-  bo(_n: number) {},
+  bo(_n: number): string | undefined {
+    return undefined;
+  },
 
   // Bosnian
   bs(n: number): string | undefined {
@@ -276,7 +278,9 @@ const Plural = {
   },
 
   // Indonesian
-  id(_n: number) {},
+  id(_n: number): string | undefined {
+    return undefined;
+  },
 
   // Icelandic
   is(n: number): string | undefined {
@@ -286,10 +290,14 @@ const Plural = {
   },
 
   // Japanese
-  ja(_n: number) {},
+  ja(_n: number): string | undefined {
+    return undefined;
+  },
 
   // Javanese
-  jv(_n: number) {},
+  jv(_n: number): string | undefined {
+    return undefined;
+  },
 
   // Georgian
   ka(n: number): string | undefined {
@@ -302,7 +310,9 @@ const Plural = {
   },
 
   // Khmer
-  km(_n: number) {},
+  km(_n: number): string | undefined {
+    return undefined;
+  },
 
   // Kannada
   kn(n: number): string | undefined {
@@ -310,7 +320,9 @@ const Plural = {
   },
 
   // Korean
-  ko(_n: number) {},
+  ko(_n: number): string | undefined {
+    return undefined;
+  },
 
   // Kurdish
   ku(n: number): string | undefined {
@@ -328,7 +340,9 @@ const Plural = {
   },
 
   // Lao
-  lo(_n: number) {},
+  lo(_n: number): string | undefined {
+    return undefined;
+  },
 
   // Lithuanian
   lt(n: number): string | undefined {
@@ -375,7 +389,9 @@ const Plural = {
   },
 
   // Malay
-  ms(_n: number) {},
+  ms(_n: number): string | undefined {
+    return undefined;
+  },
 
   // Maltese
   mt(n: number): string | undefined {
@@ -387,7 +403,9 @@ const Plural = {
   },
 
   // Burmese
-  my(_n: number) {},
+  my(_n: number): string | undefined {
+    return undefined;
+  },
 
   // Norwegian
   no(n: number): string | undefined {
@@ -503,10 +521,14 @@ const Plural = {
   },
 
   // Tajik
-  tg(_n: number) {},
+  tg(_n: number): string | undefined {
+    return undefined;
+  },
 
   // Thai
-  th(_n: number) {},
+  th(_n: number): string | undefined {
+    return undefined;
+  },
 
   // Turkmen
   tk(n: number): string | undefined {
@@ -535,10 +557,14 @@ const Plural = {
   },
 
   // Vietnamese
-  vi(_n: number) {},
+  vi(_n: number): string | undefined {
+    return undefined;
+  },
 
   // Chinese
-  zh(_n: number) {},
+  zh(_n: number): string | undefined {
+    return undefined;
+  },
 };
 
 export = Plural;

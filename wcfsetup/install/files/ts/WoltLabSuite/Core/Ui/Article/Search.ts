@@ -1,6 +1,6 @@
 import * as Ajax from "../../Ajax";
 import { AjaxCallbackObject, CallbackSetup, DatabaseObjectActionResponse } from "../../Ajax/Data";
-import { DialogCallbackObject } from "../Dialog/Data";
+import { DialogCallbackObject, CallbackSetup as DialogSetup } from "../Dialog/Data";
 import DomUtil from "../../Dom/Util";
 import * as Language from "../../Language";
 import * as StringUtil from "../../StringUtil";
@@ -98,7 +98,7 @@ class UiArticleSearch implements AjaxCallbackObject, DialogCallbackObject {
     };
   }
 
-  _dialogSetup() {
+  _dialogSetup(): ReturnType<DialogSetup> {
     return {
       id: "wcfUiArticleSearch",
       options: {
@@ -154,6 +154,6 @@ function getUiArticleSearch() {
   return uiArticleSearch;
 }
 
-export function open(callbackSelect) {
+export function open(callbackSelect: CallbackSelect): void {
   getUiArticleSearch().open(callbackSelect);
 }

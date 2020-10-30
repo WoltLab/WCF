@@ -9,7 +9,7 @@
 
 import * as Ajax from "../../../Ajax";
 import { AjaxCallbackObject, CallbackSetup, DatabaseObjectActionResponse } from "../../../Ajax/Data";
-import { DialogCallbackObject, DialogData } from "../../Dialog/Data";
+import { DialogCallbackObject, DialogData, CallbackSetup as DialogSetup } from "../../Dialog/Data";
 import DomChangeListener from "../../../Dom/Change/Listener";
 import UiDialog from "../../Dialog";
 import UiPagination from "../../Pagination";
@@ -133,7 +133,7 @@ class UiUserTrophyList implements AjaxCallbackObject, DialogCallbackObject {
     };
   }
 
-  _dialogSetup() {
+  _dialogSetup(): ReturnType<DialogSetup> {
     return {
       id: "userTrophyListOverlay",
       options: {

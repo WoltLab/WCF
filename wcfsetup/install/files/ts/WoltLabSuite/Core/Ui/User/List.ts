@@ -13,7 +13,7 @@ import DomUtil from "../../Dom/Util";
 import UiDialog from "../Dialog";
 import UiPagination from "../Pagination";
 import { AjaxCallbackObject, CallbackSetup, DatabaseObjectActionResponse } from "../../Ajax/Data";
-import { DialogCallbackObject, DialogData, DialogSettings } from "../Dialog/Data";
+import { DialogCallbackObject, DialogData, CallbackSetup as DialogSetup } from "../Dialog/Data";
 
 /**
  * @constructor
@@ -108,7 +108,7 @@ class UiUserList implements AjaxCallbackObject, DialogCallbackObject {
     };
   }
 
-  _dialogSetup(): DialogSettings {
+  _dialogSetup(): ReturnType<DialogSetup> {
     return {
       id: DomUtil.getUniqueId(),
       options: {

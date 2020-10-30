@@ -26,11 +26,11 @@ const UiCloseOverlay = {
   /**
    * Invokes all registered callbacks.
    */
-  execute() {
+  execute(): void {
     _callbackList.forEach(null, (callback) => callback());
   },
 };
 
-document.body.addEventListener("click", UiCloseOverlay.execute);
+document.body.addEventListener("click", () => UiCloseOverlay.execute());
 
 export = UiCloseOverlay;

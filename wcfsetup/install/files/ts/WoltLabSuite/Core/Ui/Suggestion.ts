@@ -74,7 +74,7 @@ class UiSuggestion implements AjaxCallbackObject {
   /**
    * Removes an excluded search value.
    */
-  removeExcludedValue(value: string) {
+  removeExcludedValue(value: string): void {
     this.excludedSearchValues.delete(value);
   }
 
