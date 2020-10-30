@@ -11,9 +11,9 @@ import * as Ajax from "../Ajax";
 import * as Core from "../Core";
 import {
   AjaxCallbackObject,
+  CallbackSetup,
   DatabaseObjectActionPayload,
   DatabaseObjectActionResponse,
-  RequestPayload,
 } from "../Ajax/Data";
 import UiDropdownSimple from "./Dropdown/Simple";
 
@@ -187,7 +187,7 @@ class UiSuggestion implements AjaxCallbackObject {
     });
   }
 
-  _ajaxSetup(): RequestPayload {
+  _ajaxSetup(): ReturnType<CallbackSetup> {
     return {
       data: this.ajaxPayload,
     };

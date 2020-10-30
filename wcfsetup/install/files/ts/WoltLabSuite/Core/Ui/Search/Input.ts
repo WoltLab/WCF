@@ -11,7 +11,7 @@ import * as Ajax from "../../Ajax";
 import * as Core from "../../Core";
 import DomUtil from "../../Dom/Util";
 import UiDropdownSimple from "../Dropdown/Simple";
-import { DatabaseObjectActionPayload, DatabaseObjectActionResponse } from "../../Ajax/Data";
+import { CallbackSetup, DatabaseObjectActionPayload, DatabaseObjectActionResponse } from "../../Ajax/Data";
 import AjaxRequest from "../../Ajax/Request";
 import { CallbackDropdownInit, CallbackSelect, SearchInputOptions } from "./Data";
 
@@ -359,7 +359,7 @@ class UiSearchInput {
     return listItem;
   }
 
-  _ajaxSetup() {
+  _ajaxSetup(): ReturnType<CallbackSetup> {
     return {
       data: this.ajaxPayload,
     };

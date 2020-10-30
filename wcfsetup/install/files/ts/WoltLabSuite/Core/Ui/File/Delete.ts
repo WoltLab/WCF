@@ -9,7 +9,7 @@
  */
 
 import * as Ajax from "../../Ajax";
-import { AjaxCallbackObject, DatabaseObjectActionResponse } from "../../Ajax/Data";
+import { AjaxCallbackObject, CallbackSetup, DatabaseObjectActionResponse } from "../../Ajax/Data";
 import * as Core from "../../Core";
 import DomChangeListener from "../../Dom/Change/Listener";
 import * as Language from "../../Language";
@@ -163,7 +163,7 @@ class UiFileDelete implements AjaxCallbackObject {
     Core.triggerEvent(this.target, "change");
   }
 
-  _ajaxSetup() {
+  _ajaxSetup(): ReturnType<CallbackSetup> {
     return {
       url: "index.php?ajax-file-delete/&t=" + window.SECURITY_TOKEN,
     };

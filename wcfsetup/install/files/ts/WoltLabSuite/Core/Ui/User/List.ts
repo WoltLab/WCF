@@ -12,7 +12,7 @@ import * as Core from "../../Core";
 import DomUtil from "../../Dom/Util";
 import UiDialog from "../Dialog";
 import UiPagination from "../Pagination";
-import { AjaxCallbackObject, DatabaseObjectActionResponse, RequestOptions } from "../../Ajax/Data";
+import { AjaxCallbackObject, CallbackSetup, DatabaseObjectActionResponse } from "../../Ajax/Data";
 import { DialogCallbackObject, DialogData, DialogSettings } from "../Dialog/Data";
 
 /**
@@ -98,7 +98,7 @@ class UiUserList implements AjaxCallbackObject, DialogCallbackObject {
     this.showPage();
   }
 
-  _ajaxSetup(): RequestOptions {
+  _ajaxSetup(): ReturnType<CallbackSetup> {
     return {
       data: {
         actionName: "getGroupedUserList",

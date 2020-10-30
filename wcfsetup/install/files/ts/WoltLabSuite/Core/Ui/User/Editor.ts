@@ -8,7 +8,7 @@
  */
 
 import * as Ajax from "../../Ajax";
-import { AjaxCallbackObject } from "../../Ajax/Data";
+import { AjaxCallbackObject, CallbackSetup } from "../../Ajax/Data";
 import * as Core from "../../Core";
 import { DialogCallbackObject, DialogSettings } from "../Dialog/Data";
 import DomUtil from "../../Dom/Util";
@@ -119,7 +119,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
     });
   }
 
-  _ajaxSuccess(data) {
+  _ajaxSuccess(data): void {
     let button: HTMLElement;
     switch (data.actionName) {
       case "ban":
@@ -183,7 +183,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
     UiNotification.show();
   }
 
-  _ajaxSetup() {
+  _ajaxSetup(): ReturnType<CallbackSetup> {
     return {
       data: {
         className: "wcf\\data\\user\\UserAction",

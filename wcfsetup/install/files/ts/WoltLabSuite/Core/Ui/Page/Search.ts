@@ -1,5 +1,5 @@
 import * as Ajax from "../../Ajax";
-import { AjaxCallbackObject, DatabaseObjectActionResponse } from "../../Ajax/Data";
+import { AjaxCallbackObject, CallbackSetup, DatabaseObjectActionResponse } from "../../Ajax/Data";
 import { DialogCallbackObject } from "../Dialog/Data";
 import DomUtil from "../../Dom/Util";
 import * as Language from "../../Language";
@@ -89,7 +89,7 @@ class UiPageSearch implements AjaxCallbackObject, DialogCallbackObject {
     }
   }
 
-  _ajaxSetup() {
+  _ajaxSetup(): ReturnType<CallbackSetup> {
     return {
       data: {
         actionName: "search",

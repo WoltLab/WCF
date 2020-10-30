@@ -8,7 +8,7 @@
  */
 
 import * as Ajax from "../../../Ajax";
-import { AjaxCallbackObject, DatabaseObjectActionResponse } from "../../../Ajax/Data";
+import { AjaxCallbackObject, CallbackSetup, DatabaseObjectActionResponse } from "../../../Ajax/Data";
 import { DialogCallbackObject, DialogData } from "../../Dialog/Data";
 import DomChangeListener from "../../../Dom/Change/Listener";
 import UiDialog from "../../Dialog";
@@ -124,7 +124,7 @@ class UiUserTrophyList implements AjaxCallbackObject, DialogCallbackObject {
     this.showPage();
   }
 
-  _ajaxSetup() {
+  _ajaxSetup(): ReturnType<CallbackSetup> {
     return {
       data: {
         actionName: "getGroupedUserTrophyList",

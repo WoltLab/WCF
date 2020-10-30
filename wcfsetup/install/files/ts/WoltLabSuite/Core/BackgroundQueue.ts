@@ -8,7 +8,7 @@
  */
 
 import * as Ajax from "./Ajax";
-import { AjaxCallbackObject, RequestOptions, ResponseData } from "./Ajax/Data";
+import { AjaxCallbackObject, CallbackSetup, ResponseData } from "./Ajax/Data";
 
 class BackgroundQueue implements AjaxCallbackObject {
   private _invocations = 0;
@@ -42,7 +42,7 @@ class BackgroundQueue implements AjaxCallbackObject {
     }
   }
 
-  _ajaxSetup(): RequestOptions {
+  _ajaxSetup(): ReturnType<CallbackSetup> {
     return {
       url: this._url,
       ignoreError: true,
