@@ -61,7 +61,7 @@ function createPicker() {
   _dateMonthPrevious.title = Language.get("wcf.date.datePicker.previousMonth");
   _dateMonthPrevious.setAttribute("aria-label", Language.get("wcf.date.datePicker.previousMonth"));
   _dateMonthPrevious.innerHTML = '<span class="icon icon16 fa-arrow-left"></span>';
-  _dateMonthPrevious.addEventListener("click", DatePicker.previousMonth);
+  _dateMonthPrevious.addEventListener("click", (ev) => DatePicker.previousMonth(ev));
   header.appendChild(_dateMonthPrevious);
 
   const monthYearContainer = document.createElement("span");
@@ -96,7 +96,7 @@ function createPicker() {
   _dateMonthNext.title = Language.get("wcf.date.datePicker.nextMonth");
   _dateMonthNext.setAttribute("aria-label", Language.get("wcf.date.datePicker.nextMonth"));
   _dateMonthNext.innerHTML = '<span class="icon icon16 fa-arrow-right"></span>';
-  _dateMonthNext.addEventListener("click", DatePicker.nextMonth);
+  _dateMonthNext.addEventListener("click", (ev) => DatePicker.nextMonth(ev));
   header.appendChild(_dateMonthNext);
 
   _dateGrid = document.createElement("ul");
@@ -216,8 +216,8 @@ function setup() {
 
   _firstDayOfWeek = parseInt(Language.get("wcf.date.firstDayOfTheWeek"), 10);
 
-  DomChangeListener.add("WoltLabSuite/Core/Date/Picker", DatePicker.init);
-  UiCloseOverlay.add("WoltLabSuite/Core/Date/Picker", close);
+  DomChangeListener.add("WoltLabSuite/Core/Date/Picker", () => DatePicker.init());
+  UiCloseOverlay.add("WoltLabSuite/Core/Date/Picker", () => close());
 }
 
 function getDateValue(attributeName: string): Date {

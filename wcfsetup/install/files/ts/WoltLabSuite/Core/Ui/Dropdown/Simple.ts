@@ -351,8 +351,8 @@ const UiDropdownSimple = {
 
     UiDropdownSimple.initAll();
 
-    UiCloseOverlay.add("WoltLabSuite/Core/Ui/Dropdown/Simple", UiDropdownSimple.closeAll);
-    DomChangeListener.add("WoltLabSuite/Core/Ui/Dropdown/Simple", UiDropdownSimple.initAll);
+    UiCloseOverlay.add("WoltLabSuite/Core/Ui/Dropdown/Simple", () => UiDropdownSimple.closeAll());
+    DomChangeListener.add("WoltLabSuite/Core/Ui/Dropdown/Simple", () => UiDropdownSimple.initAll());
 
     document.addEventListener("scroll", onScroll);
 
