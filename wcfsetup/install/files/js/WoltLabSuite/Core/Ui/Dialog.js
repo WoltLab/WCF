@@ -325,7 +325,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                 let allowScroll = false;
                 let element = event.target;
                 let clientHeight, scrollHeight, scrollTop;
-                while (true) {
+                for (;;) {
                     clientHeight = element.clientHeight;
                     scrollHeight = element.scrollHeight;
                     if (clientHeight < scrollHeight) {

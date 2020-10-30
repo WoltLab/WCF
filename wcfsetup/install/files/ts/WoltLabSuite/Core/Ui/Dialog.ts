@@ -391,7 +391,7 @@ const UiDialog = {
         let allowScroll = false;
         let element: HTMLElement | null = event.target as HTMLElement;
         let clientHeight, scrollHeight, scrollTop;
-        while (true) {
+        for (;;) {
           clientHeight = element.clientHeight;
           scrollHeight = element.scrollHeight;
 
