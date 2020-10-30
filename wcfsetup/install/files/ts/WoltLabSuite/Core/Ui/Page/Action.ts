@@ -85,7 +85,7 @@ function renderContainer() {
 /**
  * Initializes the page action container.
  */
-export function setup() {
+export function setup(): void {
   if (_didInit) {
     return;
   }
@@ -114,7 +114,7 @@ export function setup() {
  * insert the button right before it. Unmatched button names or empty value will cause
  * the button to be prepended to the list.
  */
-export function add(buttonName: string, button: HTMLElement, insertBeforeButton?: string) {
+export function add(buttonName: string, button: HTMLElement, insertBeforeButton?: string): void {
   setup();
 
   // The wrapper is required for backwards compatibility, because some implementations rely on a
