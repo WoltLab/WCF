@@ -21,7 +21,7 @@ define(["require", "exports", "tslib", "./Language", "./NumberUtil"], function (
     function addThousandsSeparator(number) {
         // Fetch Language, as it cannot be provided because of a circular dependency
         if (Language === undefined) {
-            //@ts-ignore
+            // @ts-expect-error: This is required due to a circular dependency.
             Language = require("./Language");
         }
         return String(number).replace(/(^-?\d{1,3}|\d{3})(?=(?:\d{3})+(?:$|\.))/g, "$1" + Language.get("wcf.global.thousandsSeparator"));
@@ -49,7 +49,7 @@ define(["require", "exports", "tslib", "./Language", "./NumberUtil"], function (
     function formatNumeric(number, decimalPlaces) {
         // Fetch Language, as it cannot be provided because of a circular dependency
         if (Language === undefined) {
-            //@ts-ignore
+            // @ts-expect-error: This is required due to a circular dependency.
             Language = require("./Language");
         }
         let tmp = NumberUtil.round(number, decimalPlaces || -2).toString();

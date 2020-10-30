@@ -26,13 +26,12 @@ define(["require", "exports", "tslib", "./Template.grammar", "./StringUtil", "./
     parser = new Parser();*/
     class Template {
         constructor(template) {
-            // Fetch Language/StringUtil, as it cannot be provided because of a circular dependency
             if (Language === undefined) {
-                //@ts-ignore
+                // @ts-expect-error: This is required due to a circular dependency.
                 Language = require("./Language");
             }
             if (StringUtil === undefined) {
-                //@ts-ignore
+                // @ts-expect-error: This is required due to a circular dependency.
                 StringUtil = require("./StringUtil");
             }
             try {

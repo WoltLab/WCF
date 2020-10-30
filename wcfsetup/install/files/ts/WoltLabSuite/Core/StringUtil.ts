@@ -19,7 +19,7 @@ import * as NumberUtil from "./NumberUtil";
 export function addThousandsSeparator(number: number): string {
   // Fetch Language, as it cannot be provided because of a circular dependency
   if (Language === undefined) {
-    //@ts-ignore
+    // @ts-expect-error: This is required due to a circular dependency.
     Language = require("./Language");
   }
 
@@ -51,7 +51,7 @@ export function escapeRegExp(string: string): string {
 export function formatNumeric(number: number, decimalPlaces?: number): string {
   // Fetch Language, as it cannot be provided because of a circular dependency
   if (Language === undefined) {
-    //@ts-ignore
+    // @ts-expect-error: This is required due to a circular dependency.
     Language = require("./Language");
   }
 
