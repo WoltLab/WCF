@@ -43,6 +43,6 @@ class UiArticleMarkAllAsRead implements AjaxCallbackObject {
   }
 }
 
-export function init() {
+export function init(): void {
   new UiArticleMarkAllAsRead();
 }
