@@ -42,7 +42,7 @@ abstract class UiPageMenuAbstract {
   private enabled: boolean = true;
   private readonly eventIdentifier: string;
   private readonly items = new Map<HTMLAnchorElement, ItemData>();
-  private readonly menu: HTMLElement;
+  protected readonly menu: HTMLElement;
   private removeActiveList = false;
 
   protected constructor(eventIdentifier: string, elementId: string, buttonSelector: string) {
@@ -548,7 +548,7 @@ abstract class UiPageMenuAbstract {
     child.style.setProperty("transform", `translateX(${offset}%)`, "");
   }
 
-  private updateButtonState(): void {
+  protected updateButtonState(): void {
     let hasNewContent = false;
     const itemList = this.menu.querySelector(".menuOverlayItemList");
     this.menu.querySelectorAll(".badgeUpdate").forEach((badge) => {
