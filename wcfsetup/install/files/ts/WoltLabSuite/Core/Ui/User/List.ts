@@ -43,7 +43,7 @@ class UiUserList implements AjaxCallbackObject, DialogCallbackObject {
   /**
    * Opens the user list.
    */
-  open() {
+  open(): void {
     this.pageNo = 1;
     this.showPage();
   }
@@ -57,7 +57,7 @@ class UiUserList implements AjaxCallbackObject, DialogCallbackObject {
     }
 
     if (this.pageCount !== 0 && (this.pageNo < 1 || this.pageNo > this.pageCount)) {
-      throw new RangeError("pageNo must be between 1 and " + this.pageCount + " (" + this.pageNo + " given).");
+      throw new RangeError(`pageNo must be between 1 and ${this.pageCount} (${this.pageNo} given).`);
     }
 
     if (this.cache.has(this.pageNo)) {

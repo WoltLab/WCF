@@ -47,7 +47,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
                 this.pageNo = +pageNo;
             }
             if (this.pageCount !== 0 && (this.pageNo < 1 || this.pageNo > this.pageCount)) {
-                throw new RangeError("pageNo must be between 1 and " + this.pageCount + " (" + this.pageNo + " given).");
+                throw new RangeError(`pageNo must be between 1 and ${this.pageCount} (${this.pageNo} given).`);
             }
             if (this.cache.has(this.pageNo)) {
                 const dialog = Dialog_1.default.open(this, this.cache.get(this.pageNo));
