@@ -14,6 +14,14 @@ module.exports = {
     "prettier/@typescript-eslint"
   ],
   rules: {
+    "@typescript-eslint/ban-types": [
+      "error", {
+        types: {
+          "object": false
+        },
+        extendDefaults: true
+      }
+    ],
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-non-null-assertion": 0,
     "@typescript-eslint/no-unsafe-assignment": 0,
@@ -21,8 +29,7 @@ module.exports = {
     "@typescript-eslint/no-unsafe-member-access": 0,
     "@typescript-eslint/no-unsafe-return": 0,
     "@typescript-eslint/no-unused-vars": [
-      "error",
-      {
+      "error", {
         "argsIgnorePattern": "^_"
       }
     ]
