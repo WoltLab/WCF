@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\session;
+use wcf\util\UserUtil;
 
 /**
  * Represents a session.
@@ -56,5 +57,41 @@ final class Session {
 	 */
 	public function isAcpSession(): bool {
 		return $this->isAcpSession;
+	}
+	
+	/**
+	 * Returns true, if the current object is the active session of the user.
+	 */
+	public function isCurrentSession(): bool {
+		return $this->getSessionID() === SessionHandler::getInstance()->sessionID;
+	}
+	
+	/**
+	 * Returns a font awesome device icon.
+	 */
+	public function getDeviceIcon(): string {
+		if (UserUtil::isTablet($this->data['userAgent'])) {
+			return 'tablet';
+		}
+		
+		if (UserUtil::isMobileBrowser($this->data['userAgent'])) {
+			return 'mobile';
+		}
+		
+		return 'laptop';
+	}
+	
+	/**
+	 * Returns the converted ip address of the session.
+	 */
+	public function getIpAddress(): string {
+		return UserUtil::convertIPv6To4($this->data['ipAddress']);
+	}
+	
+	/**
+	 * Returns the used browser.
+	 */
+	public function getBrowser(): string {
+		return UserUtil::getBrowser($this->data['userAgent']);
 	}
 }
