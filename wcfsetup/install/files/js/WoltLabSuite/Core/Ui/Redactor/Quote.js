@@ -115,7 +115,7 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
             var quote = this._editor.selection.block();
             if (quote && quote.nodeName === 'WOLTLAB-QUOTE') {
                 this._setTitle(quote);
-                quote.addEventListener(WCF_CLICK_EVENT, this._callbackEdit);
+                quote.addEventListener('click', this._callbackEdit);
                 // work-around for Safari
                 this._editor.caret.end(quote);
             }
@@ -220,7 +220,7 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
                         UiDialog.destroy(this);
                     }).bind(this),
                     onSetup: (function () {
-                        elById(idButtonDelete).addEventListener(WCF_CLICK_EVENT, this._delete.bind(this));
+                        elById(idButtonDelete).addEventListener('click', this._delete.bind(this));
                     }).bind(this),
                     onShow: (function () {
                         elById(idAuthor).value = elData(this._quote, 'author');

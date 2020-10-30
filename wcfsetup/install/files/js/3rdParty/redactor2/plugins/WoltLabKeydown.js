@@ -661,7 +661,7 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 									submitButton.click();
 								}
 								else {
-									Core.triggerEvent(submitButton, WCF_CLICK_EVENT);
+									Core.triggerEvent(submitButton, 'click');
 								}
 							}
 						}

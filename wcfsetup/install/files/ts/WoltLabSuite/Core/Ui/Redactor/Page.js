@@ -24,7 +24,7 @@ define(['WoltLabSuite/Core/Ui/Page/Search'], function(UiPageSearch) {
 		init: function (editor, button) {
 			this._editor = editor;
 			
-			button.addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
+			button.addEventListener('click', this._click.bind(this));
 		},
 		
 		_click: function (event) {

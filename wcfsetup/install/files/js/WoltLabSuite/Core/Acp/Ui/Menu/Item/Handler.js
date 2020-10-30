@@ -39,7 +39,7 @@ define(['Dictionary', 'Language', 'WoltLabSuite/Core/Ui/Page/Search/Handler'], f
                 if (_activePageId && _handlers.has(_activePageId)) {
                     _cache.set(_activePageId, ~~_pageObjectId.value);
                 }
-                elById('searchPageObjectID').addEventListener(WCF_CLICK_EVENT, this._openSearch.bind(this));
+                elById('searchPageObjectID').addEventListener('click', this._openSearch.bind(this));
                 // toggle page object id container on init
                 if (_handlers.has(~~_pageId.value)) {
                     elShow(_containerPageObjectId);

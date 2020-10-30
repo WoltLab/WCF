@@ -19,7 +19,7 @@ define(['Ajax', 'EventHandler', 'Language', 'Ui/Confirmation', 'Ui/Notification'
          */
         init: function (userId) {
             _button = elBySel('.jsButtonDeleteCoverPhoto');
-            _button.addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
+            _button.addEventListener('click', this._click.bind(this));
             _userId = userId;
             EventHandler.add('com.woltlab.wcf.user', 'coverPhoto', function (data) {
                 if (typeof data.url === 'string' && data.url.length > 0) {

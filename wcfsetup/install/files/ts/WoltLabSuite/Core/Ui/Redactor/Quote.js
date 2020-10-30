@@ -140,7 +140,7 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 			if (quote && quote.nodeName === 'WOLTLAB-QUOTE') {
 				this._setTitle(quote);
 				
-				quote.addEventListener(WCF_CLICK_EVENT, this._callbackEdit);
+				quote.addEventListener('click', this._callbackEdit);
 				
 				// work-around for Safari
 				this._editor.caret.end(quote);
@@ -273,7 +273,7 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 					}).bind(this),
 					
 					onSetup: (function() {
-						elById(idButtonDelete).addEventListener(WCF_CLICK_EVENT, this._delete.bind(this));
+						elById(idButtonDelete).addEventListener('click', this._delete.bind(this));
 					}).bind(this),
 					
 					onShow: (function() {

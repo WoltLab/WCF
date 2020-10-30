@@ -72,7 +72,7 @@ define(['Language', 'Ui/Dialog', 'WoltLabSuite/Core/Ui/ItemList/Filter'], functi
                             html += '<li><span class="icon icon48 fa-' + icon + '"></span><small>' + icon + '</small></li>';
                         }
                         _iconList.innerHTML = html;
-                        _iconList.addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
+                        _iconList.addEventListener('click', this._click.bind(this));
                         _itemListFilter = new UiItemListFilter('fontAwesomeIcons', {
                             callbackPrepareItem: function (item) {
                                 var small = elBySel('small', item);

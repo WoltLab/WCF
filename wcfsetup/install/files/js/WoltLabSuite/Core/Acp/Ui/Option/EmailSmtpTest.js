@@ -36,7 +36,7 @@ define(['Ajax', 'Core', 'Language'], function (Ajax, Core, Language) {
             _container = elCreate('dl');
             _container.innerHTML = html;
             _buttonRunTest = elBySel('a', _container);
-            _buttonRunTest.addEventListener(WCF_CLICK_EVENT, this._onClick.bind(this));
+            _buttonRunTest.addEventListener('click', this._onClick.bind(this));
             var insertAfter = checkbox.closest('dl');
             insertAfter.parentNode.insertBefore(_container, insertAfter.nextSibling);
         },

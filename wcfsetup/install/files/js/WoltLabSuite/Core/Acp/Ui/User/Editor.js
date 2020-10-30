@@ -48,7 +48,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Ui/Notification', 'Ui/Simpl
             }
             var sendNewPassword = elBySel('.jsSendNewPassword', dropdownMenu);
             if (sendNewPassword !== null) {
-                sendNewPassword.addEventListener(WCF_CLICK_EVENT, function (event) {
+                sendNewPassword.addEventListener('click', function (event) {
                     event.preventDefault();
                     // emulate clipboard selection
                     EventHandler.fire('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.user', {
@@ -72,7 +72,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Ui/Notification', 'Ui/Simpl
             }
             var toggleConfirmEmail = elBySel('.jsConfirmEmailToggle', dropdownMenu);
             if (toggleConfirmEmail !== null) {
-                toggleConfirmEmail.addEventListener(WCF_CLICK_EVENT, function (event) {
+                toggleConfirmEmail.addEventListener('click', function (event) {
                     event.preventDefault();
                     Ajax.api({
                         _ajaxSetup: function () {
@@ -135,13 +135,13 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Ui/Notification', 'Ui/Simpl
                 link = item.children[0];
                 link.textContent = elData(button, 'tooltip') || button.title;
                 (function (button) {
-                    link.addEventListener(WCF_CLICK_EVENT, function (event) {
+                    link.addEventListener('click', function (event) {
                         event.preventDefault();
                         // forward click onto original button
                         if (button.nodeName === 'A')
                             button.click();
                         else
-                            Core.triggerEvent(button, WCF_CLICK_EVENT);
+                            Core.triggerEvent(button, 'click');
                     });
                 })(button);
                 items.push(item);
@@ -150,9 +150,9 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Ui/Notification', 'Ui/Simpl
                 dropdownMenu.insertBefore(items.pop(), dropdownMenu.firstElementChild);
             }
             if (deleteButton !== null) {
-                elBySel('.jsDispatchDelete', dropdownMenu).addEventListener(WCF_CLICK_EVENT, function (event) {
+                elBySel('.jsDispatchDelete', dropdownMenu).addEventListener('click', function (event) {
                     event.preventDefault();
-                    Core.triggerEvent(deleteButton, WCF_CLICK_EVENT);
+                    Core.triggerEvent(deleteButton, 'click');
                 });
             }
             // check if there are visible items before each divider

@@ -206,7 +206,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'Ui/Simple
 			var list = elCreate('ol');
 			list.className = 'inputItemList' + (element.disabled ? ' disabled' : '');
 			elData(list, 'element-id', element.id);
-			list.addEventListener(WCF_CLICK_EVENT, function(event) {
+			list.addEventListener('click', function(event) {
 				if (event.target === list) {
 					//noinspection JSUnresolvedFunction
 					element.focus();
@@ -404,7 +404,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'Ui/Simple
 			if (forceRemoveIcon || !data.element.disabled) {
 				var button = elCreate('a');
 				button.className = 'icon icon16 fa-times';
-				button.addEventListener(WCF_CLICK_EVENT, _callbackRemoveItem);
+				button.addEventListener('click', _callbackRemoveItem);
 				listItem.appendChild(button);
 			}
 			

@@ -145,7 +145,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
                 element.addEventListener('mouseenter', _callbackMouseEnter);
                 element.addEventListener('mouseleave', _callbackMouseLeave);
                 if (element.nodeName === 'A' && elAttr(element, 'href')) {
-                    element.addEventListener(WCF_CLICK_EVENT, _callbackClick);
+                    element.addEventListener('click', _callbackClick);
                 }
                 var cacheId = identifier + "-" + objectId;
                 elData(element, 'cache-id', cacheId);

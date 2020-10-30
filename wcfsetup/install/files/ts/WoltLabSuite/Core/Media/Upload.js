@@ -286,7 +286,7 @@ define(
 						fileIcon.classList.add('pointer');
 						fileIcon.classList.add('jsTooltip');
 						elAttr(fileIcon, 'title', Language.get('wcf.global.button.delete'));
-						fileIcon.addEventListener(WCF_CLICK_EVENT, function (event) {
+						fileIcon.addEventListener('click', function (event) {
 							elRemove(event.currentTarget.parentNode.parentNode.parentNode);
 							
 							EventHandler.fire('com.woltlab.wcf.media.upload', 'removedErroneousUploadRow');
@@ -335,7 +335,7 @@ define(
 						file.classList.add('uploadFailed');
 						file.classList.add('jsTooltip');
 						elAttr(file, 'title', Language.get('wcf.global.button.delete'));
-						file.addEventListener(WCF_CLICK_EVENT, function () {
+						file.addEventListener('click', function () {
 							elRemove(this);
 						});
 						

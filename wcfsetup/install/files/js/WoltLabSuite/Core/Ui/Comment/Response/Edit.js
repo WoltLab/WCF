@@ -70,7 +70,7 @@ define([
                         if (this._callbackClick === null) {
                             this._callbackClick = this._click.bind(this);
                         }
-                        button.addEventListener(WCF_CLICK_EVENT, this._callbackClick);
+                        button.addEventListener('click', this._callbackClick);
                     }
                 }
                 this._responses.add(response);

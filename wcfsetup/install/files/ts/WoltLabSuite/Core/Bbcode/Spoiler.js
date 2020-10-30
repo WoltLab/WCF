@@ -25,7 +25,7 @@ define(['Language'], function (Language) {
 				container = toggleButton.parentNode.nextElementSibling;
 				
 				toggleButton.addEventListener(
-					WCF_CLICK_EVENT,
+					'click',
 					this._onClick.bind(this, container, toggleButton)
 				);
 			}

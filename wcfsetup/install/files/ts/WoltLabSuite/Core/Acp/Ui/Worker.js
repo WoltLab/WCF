@@ -84,7 +84,7 @@ define(['Ajax', 'Core', 'Language', 'Ui/Dialog'], function(Ajax, Core, Language,
 				UiDialog.rebuild(this);
 				
 				var button = formSubmit.children[0];
-				button.addEventListener(WCF_CLICK_EVENT, (function(event) {
+				button.addEventListener('click', (function(event) {
 					event.preventDefault();
 					
 					if (typeof this._options.callbackSuccess === 'function') {

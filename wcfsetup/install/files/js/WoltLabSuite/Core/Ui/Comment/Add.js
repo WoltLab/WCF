@@ -52,7 +52,7 @@ define([
             this._textarea = elBySel('.wysiwygTextarea', this._container);
             this._editor = null;
             this._loadingOverlay = null;
-            this._content.addEventListener(WCF_CLICK_EVENT, (function (event) {
+            this._content.addEventListener('click', (function (event) {
                 if (this._content.classList.contains('collapsed')) {
                     event.preventDefault();
                     this._content.classList.remove('collapsed');
@@ -61,7 +61,7 @@ define([
             }).bind(this));
             // handle submit button
             var submitButton = elBySel('button[data-type="save"]', this._container);
-            submitButton.addEventListener(WCF_CLICK_EVENT, this._submit.bind(this));
+            submitButton.addEventListener('click', this._submit.bind(this));
         },
         /**
          * Scrolls the editor into view and sets the caret to the end of the editor.
@@ -285,8 +285,8 @@ define([
                     title: Language.get('wcf.global.confirmation.title')
                 });
                 var dialog = UiDialog.getDialog('jsDialogGuestComment');
-                elBySel('input[type=submit]', dialog.content).addEventListener(WCF_CLICK_EVENT, this._submitGuestDialog.bind(this));
-                elBySel('button[data-type="cancel"]', dialog.content).addEventListener(WCF_CLICK_EVENT, this._cancelGuestDialog.bind(this));
+                elBySel('input[type=submit]', dialog.content).addEventListener('click', this._submitGuestDialog.bind(this));
+                elBySel('button[data-type="cancel"]', dialog.content).addEventListener('click', this._cancelGuestDialog.bind(this));
                 elBySel('input[type=text]', dialog.content).addEventListener('keypress', this._submitGuestDialog.bind(this));
             }
             else {

@@ -60,7 +60,7 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'EventHandler', 'Language', 'Permi
 		var context = (this._options.editor) ? this._options.editor.core.toolbar()[0] : undefined;
 		this._buttons = elByClass(this._options.buttonClass || 'jsMediaEditorButton', context);
 		for (var i = 0, length = this._buttons.length; i < length; i++) {
-			this._buttons[i].addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
+			this._buttons[i].addEventListener('click', this._click.bind(this));
 		}
 		this._mediaToInsert = new Dictionary();
 		this._mediaToInsertByClipboard = false;
@@ -97,7 +97,7 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'EventHandler', 'Language', 'Permi
 				var insertIcon = elByClass('jsMediaInsertButton', listItem)[0];
 				if (insertIcon) {
 					insertIcon.classList.remove('jsMediaInsertButton');
-					insertIcon.addEventListener(WCF_CLICK_EVENT, this._openInsertDialog.bind(this));
+					insertIcon.addEventListener('click', this._openInsertDialog.bind(this));
 				}
 			}
 		},
@@ -144,7 +144,7 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'EventHandler', 'Language', 'Permi
 						options: {
 							onClose: this._editorClose.bind(this),
 							onSetup: function(content) {
-								elByClass('buttonPrimary', content)[0].addEventListener(WCF_CLICK_EVENT, this._insertMedia.bind(this));
+								elByClass('buttonPrimary', content)[0].addEventListener('click', this._insertMedia.bind(this));
 								
 								// toggle thumbnail size selection based on selected insert type
 								/*var insertType = elBySel('select[name=insertType]', content);

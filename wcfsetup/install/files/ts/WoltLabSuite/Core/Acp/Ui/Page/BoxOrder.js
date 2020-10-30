@@ -51,10 +51,10 @@ define(['Ajax', 'Language', 'Dom/ChangeListener', 'Ui/Confirmation', 'Ui/Notific
 				elBySel('[data-placeholder="' + position + '"]', _pbo).appendChild(container);
 			});
 			
-			elBySel('button[data-type="submit"]').addEventListener(WCF_CLICK_EVENT, this._save.bind(this));
+			elBySel('button[data-type="submit"]').addEventListener('click', this._save.bind(this));
 			
 			var buttonDiscard = elBySel('.jsButtonCustomShowOrder');
-			if (buttonDiscard) buttonDiscard.addEventListener(WCF_CLICK_EVENT, this._discard.bind(this));
+			if (buttonDiscard) buttonDiscard.addEventListener('click', this._discard.bind(this));
 			
 			DomChangeListener.trigger();
 		},

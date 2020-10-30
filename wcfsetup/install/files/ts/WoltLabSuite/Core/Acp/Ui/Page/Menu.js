@@ -31,7 +31,7 @@ define(['Dictionary', 'EventHandler', 'perfect-scrollbar', 'Ui/Screen'], functio
 					_activeMenuItem = menuItem;
 				}
 				
-				link.addEventListener(WCF_CLICK_EVENT, this._toggle.bind(this));
+				link.addEventListener('click', this._toggle.bind(this));
 				
 				_menuItems.set(menuItem, link);
 			}).bind(this));

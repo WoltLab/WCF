@@ -20,7 +20,7 @@ $.Redactor.prototype.WoltLabReply = function() {
 			
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'showEditor', this.WoltLabReply.showEditor.bind(this));
 			
-			_messageContent.addEventListener(WCF_CLICK_EVENT, _callbackClick);
+			_messageContent.addEventListener('click', _callbackClick);
 		},
 		
 		showEditor: function () {
@@ -34,7 +34,7 @@ $.Redactor.prototype.WoltLabReply = function() {
 			}
 			
 			_messageQuickReply.classList.remove('messageQuickReplyCollapsed');
-			_messageContent.removeEventListener(WCF_CLICK_EVENT, _callbackClick);
+			_messageContent.removeEventListener('click', _callbackClick);
 			
 			this.WoltLabCaret.endOfEditor();
 		},

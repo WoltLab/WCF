@@ -28,7 +28,7 @@ define(['Core', 'EventKey', 'Language', 'Ui/Dialog'], function(Core, EventKey, L
 			if (!_boundListener) {
 				_boundListener = true;
 				
-				submitButton.addEventListener(WCF_CLICK_EVENT, this._submit.bind(this));
+				submitButton.addEventListener('click', this._submit.bind(this));
 			}
 		},
 		

@@ -59,7 +59,7 @@ $.Redactor.prototype.WoltLabCaret = function() {
 					}).bind(this));
 				}
 				else {
-					editor.addEventListener(WCF_CLICK_EVENT, (function(event) {
+					editor.addEventListener('click', (function(event) {
 						this.WoltLabCaret._detectTripleClick(event);
 						
 						handleEditorClick(event);

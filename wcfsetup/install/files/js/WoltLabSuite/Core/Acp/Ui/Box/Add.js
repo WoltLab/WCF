@@ -24,7 +24,7 @@ define(['Core', 'Language', 'Ui/Dialog'], function (Core, Language, UiDialog) {
             _link = link;
             var buttons = elBySelAll('.jsButtonBoxAdd');
             for (var i = 0, length = buttons.length; i < length; i++) {
-                buttons[i].addEventListener(WCF_CLICK_EVENT, this.openDialog.bind(this));
+                buttons[i].addEventListener('click', this.openDialog.bind(this));
             }
         },
         /**
@@ -43,7 +43,7 @@ define(['Core', 'Language', 'Ui/Dialog'], function (Core, Language, UiDialog) {
                 id: 'boxAddDialog',
                 options: {
                     onSetup: function (content) {
-                        elBySel('button', content).addEventListener(WCF_CLICK_EVENT, function (event) {
+                        elBySel('button', content).addEventListener('click', function (event) {
                             event.preventDefault();
                             var boxType = elBySel('input[name="boxType"]:checked', content).value;
                             var isMultilingual = 0;

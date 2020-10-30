@@ -74,7 +74,7 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 				if (spoiler.nodeName === 'WOLTLAB-SPOILER') {
 					this._setTitle(spoiler);
 
-					spoiler.addEventListener(WCF_CLICK_EVENT, this._callbackEdit);
+					spoiler.addEventListener('click', this._callbackEdit);
 
 					// work-around for Safari
 					this._editor.caret.end(spoiler);
@@ -184,7 +184,7 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 					}).bind(this),
 					
 					onSetup: (function() {
-						elById(idButtonDelete).addEventListener(WCF_CLICK_EVENT, this._delete.bind(this));
+						elById(idButtonDelete).addEventListener('click', this._delete.bind(this));
 					}).bind(this),
 					
 					onShow: (function() {

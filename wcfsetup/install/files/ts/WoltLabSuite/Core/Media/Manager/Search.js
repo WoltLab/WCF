@@ -36,7 +36,7 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/
 		this._input.addEventListener('keypress', this._keyPress.bind(this));
 		
 		this._cancelButton = elByClass('mediaManagerSearchCancelButton', mediaManager.getDialog())[0];
-		this._cancelButton.addEventListener(WCF_CLICK_EVENT, this._cancelSearch.bind(this));
+		this._cancelButton.addEventListener('click', this._cancelSearch.bind(this));
 	}
 	MediaManagerSearch.prototype = {
 		/**

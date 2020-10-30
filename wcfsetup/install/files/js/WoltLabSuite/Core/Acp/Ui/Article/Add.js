@@ -22,7 +22,7 @@ define(['Core', 'Language', 'Ui/Dialog'], function (Core, Language, UiDialog) {
             _link = link;
             var buttons = elBySelAll('.jsButtonArticleAdd');
             for (var i = 0, length = buttons.length; i < length; i++) {
-                buttons[i].addEventListener(WCF_CLICK_EVENT, this.openDialog.bind(this));
+                buttons[i].addEventListener('click', this.openDialog.bind(this));
             }
         },
         /**
@@ -41,7 +41,7 @@ define(['Core', 'Language', 'Ui/Dialog'], function (Core, Language, UiDialog) {
                 id: 'articleAddDialog',
                 options: {
                     onSetup: function (content) {
-                        elBySel('button', content).addEventListener(WCF_CLICK_EVENT, function (event) {
+                        elBySel('button', content).addEventListener('click', function (event) {
                             event.preventDefault();
                             var isMultilingual = elBySel('input[name="isMultilingual"]:checked', content).value;
                             window.location = _link.replace(/{\$isMultilingual}/, isMultilingual);

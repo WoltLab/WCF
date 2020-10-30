@@ -127,15 +127,15 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Language', 'U
                 objectId = ~~elData(article, 'object-id');
             }
             var buttonDelete = elBySel('.jsButtonDelete', article);
-            buttonDelete.addEventListener(WCF_CLICK_EVENT, this._prompt.bind(this, objectId, 'delete'));
+            buttonDelete.addEventListener('click', this._prompt.bind(this, objectId, 'delete'));
             var buttonRestore = elBySel('.jsButtonRestore', article);
-            buttonRestore.addEventListener(WCF_CLICK_EVENT, this._prompt.bind(this, objectId, 'restore'));
+            buttonRestore.addEventListener('click', this._prompt.bind(this, objectId, 'restore'));
             var buttonTrash = elBySel('.jsButtonTrash', article);
-            buttonTrash.addEventListener(WCF_CLICK_EVENT, this._prompt.bind(this, objectId, 'trash'));
+            buttonTrash.addEventListener('click', this._prompt.bind(this, objectId, 'trash'));
             if (isArticleEdit) {
                 var buttonToggleI18n = elBySel('.jsButtonToggleI18n', article);
                 if (buttonToggleI18n !== null)
-                    buttonToggleI18n.addEventListener(WCF_CLICK_EVENT, this._toggleI18n.bind(this, objectId));
+                    buttonToggleI18n.addEventListener('click', this._toggleI18n.bind(this, objectId));
             }
             _articles.set(objectId, {
                 buttons: {

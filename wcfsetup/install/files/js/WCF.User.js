@@ -673,7 +673,7 @@ WCF.User.QuickLogin = {
 			
 			var links = document.getElementsByClassName('loginLink');
 			for (var i = 0, length = links.length; i < length; i++) {
-				links[i].addEventListener(WCF_CLICK_EVENT, callbackOpen);
+				links[i].addEventListener('click', callbackOpen);
 			}
 			
 			var input = loginForm.querySelector('#loginForm input[name=url]');

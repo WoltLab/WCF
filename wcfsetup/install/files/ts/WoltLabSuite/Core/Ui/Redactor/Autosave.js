@@ -222,7 +222,7 @@ define(['Core', 'Devtools', 'EventHandler', 'Language', 'Dom/Traverse', './Metac
 			button.href = '#';
 			button.title = Language.get('wcf.editor.autosave.keep');
 			button.innerHTML = '<span class="icon icon16 fa-check green"></span>';
-			button.addEventListener(WCF_CLICK_EVENT, (function (event) {
+			button.addEventListener('click', (function (event) {
 				event.preventDefault();
 				
 				this.hideOverlay();
@@ -234,7 +234,7 @@ define(['Core', 'Devtools', 'EventHandler', 'Language', 'Dom/Traverse', './Metac
 			button.href = '#';
 			button.title = Language.get('wcf.editor.autosave.discard');
 			button.innerHTML = '<span class="icon icon16 fa-times red"></span>';
-			button.addEventListener(WCF_CLICK_EVENT, (function (event) {
+			button.addEventListener('click', (function (event) {
 				event.preventDefault();
 				
 				// remove from storage
@@ -254,11 +254,11 @@ define(['Core', 'Devtools', 'EventHandler', 'Language', 'Dom/Traverse', './Metac
 			this._editor.core.box()[0].appendChild(container);
 			
 			var callback = (function () {
-				this._editor.core.editor()[0].removeEventListener(WCF_CLICK_EVENT, callback);
+				this._editor.core.editor()[0].removeEventListener('click', callback);
 				
 				this.hideOverlay();
 			}).bind(this);
-			this._editor.core.editor()[0].addEventListener(WCF_CLICK_EVENT, callback);
+			this._editor.core.editor()[0].addEventListener('click', callback);
 			
 			this._container = container;
 		},

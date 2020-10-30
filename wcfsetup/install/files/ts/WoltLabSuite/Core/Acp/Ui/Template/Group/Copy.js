@@ -25,7 +25,7 @@ define(['Ajax', 'Language', 'Ui/Dialog', 'Ui/Notification'], function(Ajax, Lang
 		init: function (templateGroupId) {
 			_templateGroupId = templateGroupId;
 			
-			elBySel('.jsButtonCopy').addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
+			elBySel('.jsButtonCopy').addEventListener('click', this._click.bind(this));
 		},
 		
 		/**

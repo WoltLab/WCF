@@ -39,7 +39,7 @@ define(['Ajax', 'Core', 'Language'], function (Ajax, Core, Language) {
             this._loadButton = elCreate('button');
             this._loadButton.className = 'small';
             this._loadButton.innerHTML = Language.get('wcf.like.reaction.more');
-            this._loadButton.addEventListener(WCF_CLICK_EVENT, this._loadReactions.bind(this));
+            this._loadButton.addEventListener('click', this._loadReactions.bind(this));
             this._loadButton.style.display = 'none';
             loadButtonList.appendChild(this._loadButton);
             this._container.appendChild(loadButtonList);
@@ -59,7 +59,7 @@ define(['Ajax', 'Core', 'Language'], function (Ajax, Core, Language) {
             var element, elements = elBySelAll('#reactionType .button');
             for (var i = 0, length = elements.length; i < length; i++) {
                 element = elements[i];
-                element.addEventListener(WCF_CLICK_EVENT, this._changeReactionTypeValue.bind(this, ~~elData(element, 'reaction-type-id')));
+                element.addEventListener('click', this._changeReactionTypeValue.bind(this, ~~elData(element, 'reaction-type-id')));
             }
         },
         /**
@@ -69,7 +69,7 @@ define(['Ajax', 'Core', 'Language'], function (Ajax, Core, Language) {
             var element, elements = elBySelAll('#likeType .button');
             for (var i = 0, length = elements.length; i < length; i++) {
                 element = elements[i];
-                element.addEventListener(WCF_CLICK_EVENT, this._changeTargetType.bind(this, elData(element, 'like-type')));
+                element.addEventListener('click', this._changeTargetType.bind(this, elData(element, 'like-type')));
             }
         },
         /**

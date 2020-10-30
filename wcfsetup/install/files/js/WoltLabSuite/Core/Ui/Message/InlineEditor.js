@@ -88,14 +88,14 @@ define([
                 if (button !== null) {
                     canEdit = elDataBool(element, 'can-edit');
                     if (this._options.canEditInline || elDataBool(element, 'can-edit-inline')) {
-                        button.addEventListener(WCF_CLICK_EVENT, this._clickDropdown.bind(this, element));
+                        button.addEventListener('click', this._clickDropdown.bind(this, element));
                         button.classList.add('jsDropdownEnabled');
                         if (canEdit) {
                             button.addEventListener('dblclick', this._click.bind(this, element));
                         }
                     }
                     else if (canEdit) {
-                        button.addEventListener(WCF_CLICK_EVENT, this._click.bind(this, element));
+                        button.addEventListener('click', this._click.bind(this, element));
                     }
                 }
                 var messageBody = elBySel('.messageBody', element);
@@ -155,7 +155,7 @@ define([
             button.classList.add('dropdownToggle');
             button.parentNode.classList.add('dropdown');
             (function (button, element) {
-                button.addEventListener(WCF_CLICK_EVENT, (function (event) {
+                button.addEventListener('click', (function (event) {
                     event.preventDefault();
                     event.stopPropagation();
                     this._activeDropdownElement = element;
@@ -175,7 +175,7 @@ define([
                 UiReusableDropdown.registerCallback(this._options.dropdownIdentifier, this._dropdownToggle.bind(this));
             }
             setTimeout(function () {
-                Core.triggerEvent(button, WCF_CLICK_EVENT);
+                Core.triggerEvent(button, 'click');
             }, 10);
         },
         /**
@@ -199,10 +199,10 @@ define([
                     label.textContent = Language.get(item.label);
                     listItem.appendChild(label);
                     if (item.item === 'editItem') {
-                        listItem.addEventListener(WCF_CLICK_EVENT, this._click.bind(this, null));
+                        listItem.addEventListener('click', this._click.bind(this, null));
                     }
                     else {
-                        listItem.addEventListener(WCF_CLICK_EVENT, callbackClick);
+                        listItem.addEventListener('click', callbackClick);
                     }
                 }
                 this._dropdownMenu.appendChild(listItem);
@@ -339,9 +339,9 @@ define([
             // bind buttons
             var formSubmit = elBySel('.formSubmit', editor);
             var buttonSave = elBySel('button[data-type="save"]', formSubmit);
-            buttonSave.addEventListener(WCF_CLICK_EVENT, this._save.bind(this));
+            buttonSave.addEventListener('click', this._save.bind(this));
             var buttonCancel = elBySel('button[data-type="cancel"]', formSubmit);
-            buttonCancel.addEventListener(WCF_CLICK_EVENT, this._restoreMessage.bind(this));
+            buttonCancel.addEventListener('click', this._restoreMessage.bind(this));
             EventHandler.add('com.woltlab.wcf.redactor', 'submitEditor_' + id, (function (data) {
                 data.cancel = true;
                 this._save();

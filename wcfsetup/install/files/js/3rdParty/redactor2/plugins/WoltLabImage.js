@@ -120,7 +120,7 @@ $.Redactor.prototype.WoltLabImage = function() {
 			
 			this.modal.getDeleteButton().hide();
 			var button = this.modal.getActionButton()[0];
-			button.addEventListener(WCF_CLICK_EVENT, this.WoltLabImage.insert);
+			button.addEventListener('click', this.WoltLabImage.insert);
 			button.textContent = WCF.Language.get('wcf.global.button.insert');
 			
 			this.WoltLabModal.rebuild();

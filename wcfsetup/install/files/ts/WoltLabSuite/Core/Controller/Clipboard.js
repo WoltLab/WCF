@@ -145,7 +145,7 @@ define(
 						}
 						
 						elData(markAll, 'container-id', containerId);
-						markAll.addEventListener(WCF_CLICK_EVENT, this._markAll.bind(this));
+						markAll.addEventListener('click', this._markAll.bind(this));
 					}
 					
 					containerData = {
@@ -180,12 +180,12 @@ define(
 							
 							var link = checkbox.closest('a');
 							if (link === null) {
-								checkbox.addEventListener(WCF_CLICK_EVENT, _callbackCheckbox);
+								checkbox.addEventListener('click', _callbackCheckbox);
 							}
 							else {
 								// Firefox will always trigger the link if the checkbox is
 								// inside of one. Since 2000. Thanks Firefox. 
-								checkbox.addEventListener(WCF_CLICK_EVENT, function (event) {
+								checkbox.addEventListener('click', function (event) {
 									event.preventDefault();
 									
 									window.setTimeout(function () {
@@ -617,7 +617,7 @@ define(
 					dropdown.appendChild(item);
 					
 					elData(item, 'type', typeName);
-					item.addEventListener(WCF_CLICK_EVENT, _callbackItem);
+					item.addEventListener('click', _callbackItem);
 					
 					_itemData.set(item, itemData);
 				}
@@ -632,7 +632,7 @@ define(
 				label = elCreate('span');
 				label.textContent = Language.get('wcf.clipboard.item.unmarkAll');
 				unmarkAll.appendChild(label);
-				unmarkAll.addEventListener(WCF_CLICK_EVENT, _callbackUnmarkAll);
+				unmarkAll.addEventListener('click', _callbackUnmarkAll);
 				dropdown.appendChild(unmarkAll);
 				
 				if (keepEditors.indexOf(typeName) !== -1) {

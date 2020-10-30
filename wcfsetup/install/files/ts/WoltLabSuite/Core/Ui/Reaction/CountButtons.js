@@ -163,7 +163,7 @@ define(
 			_initReactionCountButtons: function(element, elementData) {
 				var summaryList = elBySel(this._options.summaryListSelector, this._options.isSingleItem ? undefined : element);
 				if (summaryList !== null) {
-					summaryList.addEventListener(WCF_CLICK_EVENT, this._showReactionOverlay.bind(this, elementData.objectId));
+					summaryList.addEventListener('click', this._showReactionOverlay.bind(this, elementData.objectId));
 				}
 			},
 			

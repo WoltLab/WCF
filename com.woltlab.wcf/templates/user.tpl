@@ -73,7 +73,7 @@
 				{if $__wcf->getUser()->userID == $user->userID}
 					var editLink = elBySel('.interactiveDropdownItemsUserMenu .jsUserPanelEditProfile');
 					if (editLink) {
-						editLink.addEventListener(WCF_CLICK_EVENT, function (event) {
+						editLink.addEventListener('click', function (event) {
 							userProfileEditor._beginEdit(event);
 							
 							WCF.CloseOverlayHandler.forceExecution();

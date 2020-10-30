@@ -80,7 +80,7 @@ define(['Language', 'Ui/ReusableDropdown'], function (Language, UiReusableDropdo
 					link.textContent = Language.get('wcf.user.notification.mailNotificationType.' + value);
 					listItem.appendChild(link);
 					elData(listItem, 'value', value);
-					listItem.addEventListener(WCF_CLICK_EVENT, this._setEmailType.bind(this));
+					listItem.addEventListener('click', this._setEmailType.bind(this));
 				}
 				
 				_dropDownMenu.appendChild(listItem);

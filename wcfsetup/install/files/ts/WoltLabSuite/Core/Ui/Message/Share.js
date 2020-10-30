@@ -99,7 +99,7 @@ define(['EventHandler', 'StringUtil'], function(EventHandler, StringUtil) {
 				for (var provider in providers) {
 					if (providers.hasOwnProperty(provider)) {
 						if (providers[provider].link !== null) {
-							providers[provider].link.addEventListener(WCF_CLICK_EVENT, providers[provider].share);
+							providers[provider].link.addEventListener('click', providers[provider].share);
 						}
 					}
 				}
