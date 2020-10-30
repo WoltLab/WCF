@@ -55,7 +55,9 @@ define(["require", "exports", "tslib", "../Core", "../Language", "./Dialog"], fu
             }
             else {
                 if (typeof options.cancel !== "function") {
-                    options.cancel = () => { };
+                    options.cancel = () => {
+                        // Do nothing
+                    };
                 }
                 this.callbackCancel = options.cancel;
                 this.callbackConfirm = options.confirm;

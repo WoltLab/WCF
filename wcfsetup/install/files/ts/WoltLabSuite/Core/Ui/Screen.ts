@@ -180,7 +180,9 @@ export function pageOverlayIsActive(): boolean {
 /**
  * @deprecated 5.4 - This method is a noop.
  */
-export function setDialogContainer(_container: Element): void {}
+export function setDialogContainer(_container: Element): void {
+  // Do nothing.
+}
 
 function _getQueryObject(query: string): MediaQueryData {
   if (typeof (query as any) !== "string" || query.trim() === "") {

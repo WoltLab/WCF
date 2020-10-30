@@ -72,7 +72,9 @@ class UiConfirmation implements DialogCallbackObject {
       };
     } else {
       if (typeof options.cancel !== "function") {
-        options.cancel = () => {};
+        options.cancel = () => {
+          // Do nothing
+        };
       }
 
       this.callbackCancel = options.cancel;

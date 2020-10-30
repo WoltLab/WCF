@@ -25,11 +25,13 @@ class UiPageJumpTo implements DialogCallbackObject {
     if (!callback) {
       const redirectUrl = element.dataset.link;
       if (redirectUrl) {
-        callback = function (pageNo) {
-          window.location.href = redirectUrl.replace(/pageNo=%d/, "pageNo=" + pageNo);
+        callback = (pageNo) => {
+          window.location.href = redirectUrl.replace(/pageNo=%d/, `pageNo=${pageNo}`);
         };
       } else {
-        callback = function () {};
+        callback = () => {
+          // Do nothing.
+        };
       }
     } else if (typeof callback !== "function") {
       throw new TypeError("Expected a valid function for parameter 'callback'.");

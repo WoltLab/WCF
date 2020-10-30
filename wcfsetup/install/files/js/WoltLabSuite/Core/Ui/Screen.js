@@ -164,7 +164,9 @@ define(["require", "exports", "tslib", "../Core", "../Environment"], function (r
     /**
      * @deprecated 5.4 - This method is a noop.
      */
-    function setDialogContainer(_container) { }
+    function setDialogContainer(_container) {
+        // Do nothing.
+    }
     exports.setDialogContainer = setDialogContainer;
     function _getQueryObject(query) {
         if (typeof query !== "string" || query.trim() === "") {
