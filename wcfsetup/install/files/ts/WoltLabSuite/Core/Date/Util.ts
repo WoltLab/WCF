@@ -71,16 +71,24 @@ export function format(date: Date, format: string): string {
       case "g":
         // `1` through `12`
         hours = date.getHours();
-        if (hours === 0) char = "12";
-        else if (hours > 12) char = (hours - 12).toString();
-        else char = hours.toString();
+        if (hours === 0) {
+          char = "12";
+        } else if (hours > 12) {
+          char = (hours - 12).toString();
+        } else {
+          char = hours.toString();
+        }
         break;
       case "h":
         // `01` through `12`
         hours = date.getHours();
-        if (hours === 0) char = "12";
-        else if (hours > 12) char = (hours - 12).toString();
-        else char = hours.toString();
+        if (hours === 0) {
+          char = "12";
+        } else if (hours > 12) {
+          char = (hours - 12).toString();
+        } else {
+          char = hours.toString();
+        }
 
         char = char.padStart(2, "0");
         break;
@@ -148,7 +156,7 @@ export function format(date: Date, format: string): string {
         break;
 
       // timezone
-      case "P":
+      case "P": {
         let offset = date.getTimezoneOffset();
         char = offset > 0 ? "-" : "+";
 
@@ -159,6 +167,7 @@ export function format(date: Date, format: string): string {
         char += ("0" + (offset % 60).toString()).slice(-2);
 
         break;
+      }
 
       // specials
       case "r":

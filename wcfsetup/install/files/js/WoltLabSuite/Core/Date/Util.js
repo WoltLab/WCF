@@ -67,22 +67,28 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
                 case "g":
                     // `1` through `12`
                     hours = date.getHours();
-                    if (hours === 0)
+                    if (hours === 0) {
                         char = "12";
-                    else if (hours > 12)
+                    }
+                    else if (hours > 12) {
                         char = (hours - 12).toString();
-                    else
+                    }
+                    else {
                         char = hours.toString();
+                    }
                     break;
                 case "h":
                     // `01` through `12`
                     hours = date.getHours();
-                    if (hours === 0)
+                    if (hours === 0) {
                         char = "12";
-                    else if (hours > 12)
+                    }
+                    else if (hours > 12) {
                         char = (hours - 12).toString();
-                    else
+                    }
+                    else {
                         char = hours.toString();
+                    }
                     char = char.padStart(2, "0");
                     break;
                 case "A":
@@ -145,7 +151,7 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
                     char = date.getFullYear().toString();
                     break;
                 // timezone
-                case "P":
+                case "P": {
                     let offset = date.getTimezoneOffset();
                     char = offset > 0 ? "-" : "+";
                     offset = Math.abs(offset);
@@ -153,6 +159,7 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
                     char += ":";
                     char += ("0" + (offset % 60).toString()).slice(-2);
                     break;
+                }
                 // specials
                 case "r":
                     char = date.toString();
