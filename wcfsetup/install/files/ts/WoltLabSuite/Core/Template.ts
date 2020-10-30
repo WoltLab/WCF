@@ -27,13 +27,12 @@ parser = new Parser();*/
 
 class Template {
   constructor(template: string) {
-    // Fetch Language/StringUtil, as it cannot be provided because of a circular dependency
     if (Language === undefined) {
-      //@ts-ignore
+      // @ts-expect-error: This is required due to a circular dependency.
       Language = require("./Language");
     }
     if (StringUtil === undefined) {
-      //@ts-ignore
+      // @ts-expect-error: This is required due to a circular dependency.
       StringUtil = require("./StringUtil");
     }
 
@@ -47,6 +46,7 @@ class Template {
         "return " +
         template;
 
+      // eslint-disable-next-line @typescript-eslint/no-implied-eval
       this.fetch = new Function("StringUtil", "Language", "I18nPlural", "v", template).bind(
         undefined,
         StringUtil,
@@ -61,10 +61,8 @@ class Template {
 
   /**
    * Evaluates the Template using the given parameters.
-   *
-   * @param  {object}  v  Parameters to pass to the template.
    */
-  fetch(v: object): string {
+  fetch(_v: object): string {
     // this will be replaced in the init function
     throw new Error("This Template is not initialized.");
   }
@@ -76,7 +74,7 @@ Object.defineProperty(Template, "callbacks", {
   get: function () {
     throw new Error("WCF.Template.callbacks is no longer supported");
   },
-  set: function (value) {
+  set: function (_value) {
     throw new Error("WCF.Template.callbacks is no longer supported");
   },
 });

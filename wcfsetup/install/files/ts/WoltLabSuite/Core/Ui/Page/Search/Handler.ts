@@ -12,6 +12,7 @@ import * as Language from "../../../Language";
 import * as StringUtil from "../../../StringUtil";
 import DomUtil from "../../../Dom/Util";
 import UiDialog from "../../Dialog";
+import { DialogCallbackObject, CallbackSetup as DialogSetup } from "../../Dialog/Data";
 import UiPageSearchInput from "./Input";
 import { DatabaseObjectActionResponse } from "../../../Ajax/Data";
 
@@ -29,7 +30,7 @@ interface AjaxResponse extends DatabaseObjectActionResponse {
   returnValues: ItemData[];
 }
 
-class UiPageSearchHandler {
+class UiPageSearchHandler implements DialogCallbackObject {
   private callbackSuccess?: CallbackSelect = undefined;
   private resultList?: HTMLUListElement = undefined;
   private resultListContainer?: HTMLElement = undefined;
@@ -136,7 +137,7 @@ class UiPageSearchHandler {
     UiDialog.close(this);
   }
 
-  _dialogSetup() {
+  _dialogSetup(): ReturnType<DialogSetup> {
     return {
       id: "wcfUiPageSearchHandler",
       options: {
@@ -191,12 +192,7 @@ function getUiPageSearchHandler(): UiPageSearchHandler {
 
 /**
  * Opens the lookup overlay for provided page id.
- *
- * @param  {int}    pageId      page id
- * @param  {string}  title      dialog title
- * @param  {function}  callback    callback function provided with the user-selected object id
- * @param  {string?}  labelLanguageItem  optional language item name for the search input label
  */
-export function open(pageId, title, callback, labelLanguageItem) {
+export function open(pageId: number, title: string, callback: CallbackSelect, labelLanguageItem?: string): void {
   getUiPageSearchHandler().open(pageId, title, callback, labelLanguageItem);
 }

@@ -77,11 +77,9 @@ define(["require", "exports"], function (require, exports) {
          */
         static fromObject(object) {
             const result = new Dictionary();
-            for (const key in object) {
-                if (object.hasOwnProperty(key)) {
-                    result.set(key, object[key]);
-                }
-            }
+            Object.keys(object).forEach((key) => {
+                result.set(key, object[key]);
+            });
             return result;
         }
         get size() {

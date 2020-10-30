@@ -11,11 +11,22 @@ import * as Ajax from "../Ajax";
 import * as Core from "../Core";
 import {
   AjaxCallbackObject,
+  CallbackSetup,
   DatabaseObjectActionPayload,
   DatabaseObjectActionResponse,
-  RequestPayload,
 } from "../Ajax/Data";
 import UiDropdownSimple from "./Dropdown/Simple";
+
+interface ItemData {
+  icon?: string;
+  label: string;
+  objectID: number;
+  type?: string;
+}
+
+interface AjaxResponse extends DatabaseObjectActionResponse {
+  returnValues: ItemData[];
+}
 
 class UiSuggestion implements AjaxCallbackObject {
   private readonly ajaxPayload: DatabaseObjectActionPayload;
@@ -74,7 +85,7 @@ class UiSuggestion implements AjaxCallbackObject {
   /**
    * Removes an excluded search value.
    */
-  removeExcludedValue(value: string) {
+  removeExcludedValue(value: string): void {
     this.excludedSearchValues.delete(value);
   }
 
@@ -98,8 +109,8 @@ class UiSuggestion implements AjaxCallbackObject {
     }
 
     let active!: HTMLElement;
-    let i = 0,
-      length = this.dropdownMenu!.childElementCount;
+    let i = 0;
+    const length = this.dropdownMenu!.childElementCount;
     while (i < length) {
       active = this.dropdownMenu!.children[i] as HTMLElement;
       if (active.classList.contains("active")) {
@@ -187,7 +198,7 @@ class UiSuggestion implements AjaxCallbackObject {
     });
   }
 
-  _ajaxSetup(): RequestPayload {
+  _ajaxSetup(): ReturnType<CallbackSetup> {
     return {
       data: this.ajaxPayload,
     };
@@ -196,7 +207,7 @@ class UiSuggestion implements AjaxCallbackObject {
   /**
    * Handles successful Ajax requests.
    */
-  _ajaxSuccess(data: DatabaseObjectActionResponse): void {
+  _ajaxSuccess(data: AjaxResponse): void {
     if (this.dropdownMenu === null) {
       this.dropdownMenu = document.createElement("div");
       this.dropdownMenu.className = "dropdownMenu";
@@ -210,13 +221,13 @@ class UiSuggestion implements AjaxCallbackObject {
         const anchor = document.createElement("a");
         if (item.icon) {
           anchor.className = "box16";
-          anchor.innerHTML = item.icon + " <span></span>";
+          anchor.innerHTML = `${item.icon} <span></span>`;
           anchor.children[1].textContent = item.label;
         } else {
           anchor.textContent = item.label;
         }
 
-        anchor.dataset.objectId = item.objectID;
+        anchor.dataset.objectId = item.objectID.toString();
         if (item.type) {
           anchor.dataset.type = item.type;
         }

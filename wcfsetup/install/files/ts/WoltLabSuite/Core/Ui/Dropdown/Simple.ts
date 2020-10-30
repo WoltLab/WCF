@@ -351,8 +351,8 @@ const UiDropdownSimple = {
 
     UiDropdownSimple.initAll();
 
-    UiCloseOverlay.add("WoltLabSuite/Core/Ui/Dropdown/Simple", UiDropdownSimple.closeAll);
-    DomChangeListener.add("WoltLabSuite/Core/Ui/Dropdown/Simple", UiDropdownSimple.initAll);
+    UiCloseOverlay.add("WoltLabSuite/Core/Ui/Dropdown/Simple", () => UiDropdownSimple.closeAll());
+    DomChangeListener.add("WoltLabSuite/Core/Ui/Dropdown/Simple", () => UiDropdownSimple.initAll());
 
     document.addEventListener("scroll", onScroll);
 
@@ -410,7 +410,7 @@ const UiDropdownSimple = {
       _dropdowns.set(containerId, dropdown);
       _menus.set(containerId, menu);
 
-      if (!containerId.match(/^wcf\d+$/)) {
+      if (!/^wcf\d+$/.test(containerId)) {
         menu.dataset.source = containerId;
       }
 

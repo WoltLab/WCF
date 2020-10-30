@@ -43,9 +43,8 @@ export function get(key: string, parameters?: object): string {
     return key;
   }
 
-  // fetch Template, as it cannot be provided because of a circular dependency
   if (Template === undefined) {
-    //@ts-ignore
+    // @ts-expect-error: This is required due to a circular dependency.
     Template = require("./Template");
   }
 

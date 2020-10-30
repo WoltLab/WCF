@@ -1,6 +1,6 @@
 import * as Ajax from "../../Ajax";
-import { AjaxCallbackObject, DatabaseObjectActionResponse } from "../../Ajax/Data";
-import { DialogCallbackObject } from "../Dialog/Data";
+import { AjaxCallbackObject, CallbackSetup, DatabaseObjectActionResponse } from "../../Ajax/Data";
+import { DialogCallbackObject, CallbackSetup as DialogSetup } from "../Dialog/Data";
 import DomUtil from "../../Dom/Util";
 import * as Language from "../../Language";
 import * as StringUtil from "../../StringUtil";
@@ -89,7 +89,7 @@ class UiPageSearch implements AjaxCallbackObject, DialogCallbackObject {
     }
   }
 
-  _ajaxSetup() {
+  _ajaxSetup(): ReturnType<CallbackSetup> {
     return {
       data: {
         actionName: "search",
@@ -98,7 +98,7 @@ class UiPageSearch implements AjaxCallbackObject, DialogCallbackObject {
     };
   }
 
-  _dialogSetup() {
+  _dialogSetup(): ReturnType<DialogSetup> {
     return {
       id: "wcfUiPageSearch",
       options: {

@@ -1,0 +1,3 @@
+**/*.js
+extra
+node_modules/**

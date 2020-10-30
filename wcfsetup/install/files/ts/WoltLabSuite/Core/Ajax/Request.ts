@@ -17,6 +17,23 @@ import DomChangeListener from "../Dom/Change/Listener";
 import DomUtil from "../Dom/Util";
 import * as Language from "../Language";
 
+interface PreviousException {
+  message: string;
+  stacktrace: string;
+}
+
+interface AjaxResponseException extends ResponseData {
+  exceptionID?: string;
+  previous: PreviousException[];
+  file?: string;
+  line?: number;
+  message: string;
+  returnValues?: {
+    description?: string;
+  };
+  stacktrace?: string;
+}
+
 let _didInit = false;
 let _ignoreAllErrors = false;
 
@@ -78,18 +95,23 @@ class AjaxRequest {
     }
 
     if (this._options.callbackObject) {
-      if (typeof this._options.callbackObject._ajaxFailure === "function")
+      if (typeof this._options.callbackObject._ajaxFailure === "function") {
         this._options.failure = this._options.callbackObject._ajaxFailure.bind(this._options.callbackObject);
-      if (typeof this._options.callbackObject._ajaxFinalize === "function")
+      }
+      if (typeof this._options.callbackObject._ajaxFinalize === "function") {
         this._options.finalize = this._options.callbackObject._ajaxFinalize.bind(this._options.callbackObject);
-      if (typeof this._options.callbackObject._ajaxSuccess === "function")
+      }
+      if (typeof this._options.callbackObject._ajaxSuccess === "function") {
         this._options.success = this._options.callbackObject._ajaxSuccess.bind(this._options.callbackObject);
-      if (typeof this._options.callbackObject._ajaxProgress === "function")
+      }
+      if (typeof this._options.callbackObject._ajaxProgress === "function") {
         this._options.progress = this._options.callbackObject._ajaxProgress.bind(this._options.callbackObject);
-      if (typeof this._options.callbackObject._ajaxUploadProgress === "function")
+      }
+      if (typeof this._options.callbackObject._ajaxUploadProgress === "function") {
         this._options.uploadProgress = this._options.callbackObject._ajaxUploadProgress.bind(
           this._options.callbackObject
         );
+      }
     }
 
     if (!_didInit) {
@@ -127,24 +149,24 @@ class AjaxRequest {
       this._xhr.withCredentials = true;
     }
 
-    const self = this;
     const options = Core.clone(this._options) as RequestOptions;
-    this._xhr.onload = function () {
-      if (this.readyState === XMLHttpRequest.DONE) {
-        if ((this.status >= 200 && this.status < 300) || this.status === 304) {
-          if (options.responseType && this.getResponseHeader("Content-Type")!.indexOf(options.responseType) !== 0) {
+    this._xhr.onload = () => {
+      const xhr = this._xhr!;
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
+          if (options.responseType && xhr.getResponseHeader("Content-Type")!.indexOf(options.responseType) !== 0) {
             // request succeeded but invalid response type
-            self._failure(this, options);
+            this._failure(xhr, options);
           } else {
-            self._success(this, options);
+            this._success(xhr, options);
           }
         } else {
-          self._failure(this, options);
+          this._failure(xhr, options);
         }
       }
     };
-    this._xhr.onerror = function () {
-      self._failure(this, options);
+    this._xhr.onerror = () => {
+      this._failure(this._xhr!, options);
     };
 
     if (this._options.progress) {
@@ -185,7 +207,7 @@ class AjaxRequest {
   /**
    * Sets a specific option.
    */
-  setOption(key: string, value: any): void {
+  setOption(key: string, value: unknown): void {
     this._options[key] = value;
   }
 
@@ -193,7 +215,7 @@ class AjaxRequest {
    * Returns an option by key or undefined.
    */
   getOption(key: string): unknown | null {
-    if (this._options.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(this._options, key)) {
       return this._options[key];
     }
 
@@ -238,7 +260,7 @@ class AjaxRequest {
 
         // force-invoke the background queue
         if (data && data.forceBackgroundQueuePerform) {
-          import("../BackgroundQueue").then((backgroundQueue) => backgroundQueue.invoke());
+          void import("../BackgroundQueue").then((backgroundQueue) => backgroundQueue.invoke());
         }
       }
 
@@ -264,7 +286,9 @@ class AjaxRequest {
     let data: ResponseData | null = null;
     try {
       data = JSON.parse(xhr.responseText);
-    } catch (e) {}
+    } catch (e) {
+      // Ignore JSON parsing failure.
+    }
 
     let showError = true;
     if (typeof options.failure === "function") {
@@ -272,10 +296,10 @@ class AjaxRequest {
     }
 
     if (options.ignoreError !== true && showError) {
-      const html = this.getErrorHtml(data, xhr);
+      const html = this.getErrorHtml(data as AjaxResponseException, xhr);
 
       if (html) {
-        import("../Ui/Dialog").then((UiDialog) => {
+        void import("../Ui/Dialog").then((UiDialog) => {
           UiDialog.openStatic(DomUtil.getUniqueId(), html, {
             title: Language.get("wcf.global.error.title"),
           });
@@ -289,39 +313,44 @@ class AjaxRequest {
   /**
    * Returns the inner HTML for an error/exception display.
    */
-  getErrorHtml(data: ResponseData | null, xhr: XMLHttpRequest): string | null {
+  getErrorHtml(data: AjaxResponseException | null, xhr: XMLHttpRequest): string | null {
     let details = "";
     let message: string;
 
     if (data !== null) {
       if (data.returnValues && data.returnValues.description) {
-        details += "<br><p>Description:</p><p>" + data.returnValues.description + "</p>";
+        details += `<br><p>Description:</p><p>${data.returnValues.description}</p>`;
       }
 
       if (data.file && data.line) {
-        details += "<br><p>File:</p><p>" + data.file + " in line " + data.line + "</p>";
+        details += `<br><p>File:</p><p>${data.file} in line ${data.line}</p>`;
       }
 
-      if (data.stacktrace) details += "<br><p>Stacktrace:</p><p>" + data.stacktrace + "</p>";
-      else if (data.exceptionID) details += "<br><p>Exception ID: <code>" + data.exceptionID + "</code></p>";
+      if (data.stacktrace) {
+        details += `<br><p>Stacktrace:</p><p>${data.stacktrace}</p>`;
+      } else if (data.exceptionID) {
+        details += `<br><p>Exception ID: <code>${data.exceptionID}</code></p>`;
+      }
 
       message = data.message;
 
-      data.previous.forEach(function (previous) {
-        details += "<hr><p>" + previous.message + "</p>";
-        details += "<br><p>Stacktrace</p><p>" + previous.stacktrace + "</p>";
+      data.previous.forEach((previous) => {
+        details += `<hr><p>${previous.message}</p>`;
+        details += `<br><p>Stacktrace</p><p>${previous.stacktrace}</p>`;
       });
     } else {
       message = xhr.responseText;
     }
 
     if (!message || message === "undefined") {
-      if (!window.ENABLE_DEBUG_MODE) return null;
+      if (!window.ENABLE_DEBUG_MODE) {
+        return null;
+      }
 
       message = "XMLHttpRequest failed without a responseText. Check your browser console.";
     }
 
-    return '<div class="ajaxDebugMessage"><p>' + message + "</p>" + details + "</div>";
+    return `<div class="ajaxDebugMessage"><p>${message}</p>${details}</div>`;
   }
 
   /**

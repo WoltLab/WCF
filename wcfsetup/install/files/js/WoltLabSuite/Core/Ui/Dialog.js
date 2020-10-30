@@ -24,7 +24,6 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
     let _dialogFullHeight = false;
     const _dialogObjects = new WeakMap();
     const _dialogToObject = new Map();
-    let _focusedBeforeDialog;
     let _keyupListener;
     const _validCallbacks = ["onBeforeClose", "onClose", "onShow"];
     // list of supported `input[type]` values for dialog submit
@@ -85,7 +84,6 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             Listener_1.default.add("Ui/Dialog", () => {
                 this._initStaticDialogs();
             });
-            UiScreen.setDialogContainer(_container);
             window.addEventListener("resize", () => {
                 _dialogs.forEach((dialog) => {
                     if (!Core.stringToBool(dialog.dialog.getAttribute("aria-hidden"))) {
@@ -156,7 +154,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                     setupData.source = html;
                 }
                 else {
-                    new Promise((resolve_1, reject_1) => { require(["../Ajax"], resolve_1, reject_1); }).then(tslib_1.__importStar).then((Ajax) => {
+                    void new Promise((resolve_1, reject_1) => { require(["../Ajax"], resolve_1, reject_1); }).then(tslib_1.__importStar).then((Ajax) => {
                         const source = setupData.source;
                         Ajax.api(this, source.data, (data) => {
                             if (data.returnValues && typeof data.returnValues.template === "string") {
@@ -219,7 +217,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                     options.backdropCloseOnClick = false;
                 if (options.closeConfirmMessage) {
                     options.onBeforeClose = (id) => {
-                        new Promise((resolve_2, reject_2) => { require(["./Confirmation"], resolve_2, reject_2); }).then(tslib_1.__importStar).then((UiConfirmation) => {
+                        void new Promise((resolve_2, reject_2) => { require(["./Confirmation"], resolve_2, reject_2); }).then(tslib_1.__importStar).then((UiConfirmation) => {
                             UiConfirmation.show({
                                 confirm: this.close.bind(this, id),
                                 message: options.closeConfirmMessage || "",
@@ -267,7 +265,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             }
             const data = _dialogs.get(id);
             if (data === undefined) {
-                throw new Error("Expected a valid dialog id, '" + id + "' does not match any active dialog.");
+                throw new Error(`Expected a valid dialog id, '${id}' does not match any active dialog.`);
             }
             if (_validCallbacks.indexOf(key) === -1) {
                 throw new Error("Invalid callback identifier, '" + key + "' is not recognized.");
@@ -324,8 +322,10 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             contentContainer.addEventListener("wheel", (event) => {
                 let allowScroll = false;
                 let element = event.target;
-                let clientHeight, scrollHeight, scrollTop;
-                while (true) {
+                let clientHeight;
+                let scrollHeight;
+                let scrollTop;
+                for (;;) {
                     clientHeight = element.clientHeight;
                     scrollHeight = element.scrollHeight;
                     if (clientHeight < scrollHeight) {
@@ -432,8 +432,6 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                 _container.setAttribute("aria-hidden", "false");
                 _container.setAttribute("close-on-click", data.backdropCloseOnClick ? "true" : "false");
                 _activeDialog = id;
-                // Keep a reference to the currently focused element to be able to restore it later.
-                _focusedBeforeDialog = document.activeElement;
                 // Set the focus to the first focusable child of the dialog element.
                 const closeButton = data.header.querySelector(".dialogCloseButton");
                 if (closeButton)
@@ -528,7 +526,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                 // browser the results can vary. By subtracting a single pixel we're
                 // working around fractional values, without visually changing anything.
                 unavailableHeight -= 1;
-                contentContainer.style.setProperty("margin-bottom", unavailableHeight + "px", "");
+                contentContainer.style.setProperty("margin-bottom", `${unavailableHeight}px`, "");
             }
             else {
                 contentContainer.classList.remove("dialogForm");
@@ -536,7 +534,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             }
             unavailableHeight += Util_1.default.outerHeight(data.header);
             const maximumHeight = window.innerHeight * (_dialogFullHeight ? 1 : 0.8) - unavailableHeight;
-            contentContainer.style.setProperty("max-height", ~~maximumHeight + "px", "");
+            contentContainer.style.setProperty("max-height", `${~~maximumHeight}px`, "");
             // fix for a calculation bug in Chrome causing the scrollbar to overlap the border
             if (Environment.browser() === "chrome") {
                 if (data.content.scrollHeight > maximumHeight) {

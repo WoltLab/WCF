@@ -38,7 +38,7 @@ class CallbackList {
    */
   forEach(identifier: string | null, callback: (cb: Callback) => unknown): void {
     if (identifier === null) {
-      this._callbacks.forEach((callbacks, identifier) => {
+      this._callbacks.forEach((callbacks, _identifier) => {
         callbacks.forEach(callback);
       });
     } else {

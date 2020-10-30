@@ -34,7 +34,9 @@ function click(event: MouseEvent): void {
         parameters.set(key, data[key]);
       });
     }
-  } catch (e) {}
+  } catch (e) {
+    // Ignore JSON parsing failure.
+  }
 
   if (objectType) {
     parameters.set("types[]", objectType);
@@ -71,7 +73,7 @@ export function init(objectType: string): void {
         dropdownMenu.dataset.dropdownAlignmentHorizontal = "right";
 
         const minWidth = searchInput.clientWidth;
-        dropdownMenu.style.setProperty("min-width", minWidth + "px", "");
+        dropdownMenu.style.setProperty("min-width", `${minWidth}px`, "");
 
         // calculate offset to ignore the width caused by the submit button
         const parent = searchInput.parentElement!;
@@ -80,7 +82,7 @@ export function init(objectType: string): void {
         const offsetTop = DomUtil.styleAsInt(window.getComputedStyle(parent), "padding-bottom");
         dropdownMenu.style.setProperty(
           "transform",
-          "translateX(-" + Math.ceil(offsetRight) + "px) translateY(-" + offsetTop + "px)",
+          `translateX(-${Math.ceil(offsetRight)}px) translateY(-${offsetTop}px)`,
           ""
         );
       }

@@ -16,7 +16,6 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
     Suggestion_1 = tslib_1.__importDefault(Suggestion_1);
     Simple_1 = tslib_1.__importDefault(Simple_1);
     Util_1 = tslib_1.__importDefault(Util_1);
-    let _activeId = "";
     const _data = new Map();
     /**
      * Creates the DOM structure for target element. If `element` is a `<textarea>`
@@ -120,7 +119,6 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
      */
     function keyDown(event) {
         const input = event.currentTarget;
-        _activeId = input.id;
         const lastItem = input.parentElement.previousElementSibling;
         if (event.key === "Backspace") {
             if (input.value.length === 0) {

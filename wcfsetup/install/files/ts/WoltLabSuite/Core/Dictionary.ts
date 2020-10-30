@@ -14,13 +14,13 @@
  */
 
 /** @deprecated 5.4 Use a `Map` instead. */
-class Dictionary {
-  private readonly _dictionary = new Map<number | string, any>();
+class Dictionary<T> {
+  private readonly _dictionary = new Map<number | string, T>();
 
   /**
    * Sets a new key with given value, will overwrite an existing key.
    */
-  set(key: number | string, value: any): void {
+  set(key: number | string, value: T): void {
     this._dictionary.set(key.toString(), value);
   }
 
@@ -49,7 +49,7 @@ class Dictionary {
    * Iterates over the dictionary keys and values, callback function should expect the
    * value as first parameter and the key name second.
    */
-  forEach(callback: (value: any, key: string) => void): void {
+  forEach(callback: (value: T, key: number | string) => void): void {
     if (typeof callback !== "function") {
       throw new TypeError("forEach() expects a callback as first parameter.");
     }
@@ -60,7 +60,7 @@ class Dictionary {
   /**
    * Merges one or more Dictionary instances into this one.
    */
-  merge(...dictionaries: Dictionary[]): void {
+  merge(...dictionaries: Dictionary<T>[]): void {
     for (let i = 0, length = dictionaries.length; i < length; i++) {
       const dictionary = dictionaries[i];
 
@@ -83,14 +83,12 @@ class Dictionary {
    * All properties that are owned by the object will be added
    * as keys to the resulting Dictionary.
    */
-  static fromObject(object: object): Dictionary {
+  static fromObject(object: object): Dictionary<any> {
     const result = new Dictionary();
 
-    for (const key in object) {
-      if (object.hasOwnProperty(key)) {
-        result.set(key, object[key]);
-      }
-    }
+    Object.keys(object).forEach((key) => {
+      result.set(key, object[key]);
+    });
 
     return result;
   }

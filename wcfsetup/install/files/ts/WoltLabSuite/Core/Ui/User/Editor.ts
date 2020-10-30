@@ -8,9 +8,9 @@
  */
 
 import * as Ajax from "../../Ajax";
-import { AjaxCallbackObject } from "../../Ajax/Data";
+import { AjaxCallbackObject, CallbackSetup } from "../../Ajax/Data";
 import * as Core from "../../Core";
-import { DialogCallbackObject, DialogSettings } from "../Dialog/Data";
+import { DialogCallbackObject, CallbackSetup as DialogSetup } from "../Dialog/Data";
 import DomUtil from "../../Dom/Util";
 import * as Language from "../../Language";
 import * as StringUtil from "../../StringUtil";
@@ -119,11 +119,11 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
     });
   }
 
-  _ajaxSuccess(data) {
+  _ajaxSuccess(data): void {
     let button: HTMLElement;
     switch (data.actionName) {
       case "ban":
-      case "unban":
+      case "unban": {
         this.header.dataset.banned = data.actionName === "ban" ? "true" : "false";
         button = document.querySelector(".userProfileButtonMenu .jsButtonUserBan") as HTMLElement;
         button.textContent = Language.get("wcf.user." + (data.actionName === "ban" ? "unban" : "ban"));
@@ -139,6 +139,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
           banIcon.remove();
         }
         break;
+      }
 
       case "disableAvatar":
       case "enableAvatar":
@@ -182,7 +183,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
     UiNotification.show();
   }
 
-  _ajaxSetup() {
+  _ajaxSetup(): ReturnType<CallbackSetup> {
     return {
       data: {
         className: "wcf\\data\\user\\UserAction",
@@ -191,7 +192,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
     };
   }
 
-  _dialogSetup(): DialogSettings {
+  _dialogSetup(): ReturnType<DialogSetup> {
     return {
       id: "wcfUiUserEditor",
       options: {
@@ -253,6 +254,6 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
 /**
  * Initializes the user editor.
  */
-export function init() {
+export function init(): void {
   new UserEditor();
 }

@@ -39,7 +39,7 @@ abstract class UiPageMenuAbstract {
   private readonly activeList: HTMLOListElement[] = [];
   protected readonly button: HTMLElement;
   private depth = 0;
-  private enabled: boolean = true;
+  private enabled = true;
   private readonly eventIdentifier: string;
   private readonly items = new Map<HTMLAnchorElement, ItemData>();
   protected readonly menu: HTMLElement;
@@ -324,11 +324,10 @@ abstract class UiPageMenuAbstract {
         if (appearsAt === "right") position = document.body.clientWidth - position;
         if (position > this.menu.offsetWidth) position = this.menu.offsetWidth;
         if (position < 0) position = 0;
-        this.menu.style.setProperty(
-          "transform",
-          "translateX(" + (appearsAt === "left" ? 1 : -1) * (position - this.menu.offsetWidth) + "px)"
-        );
-        backdrop.style.setProperty(appearsAt, Math.min(this.menu.offsetWidth, position) + "px");
+
+        const offset = (appearsAt === "left" ? 1 : -1) * (position - this.menu.offsetWidth);
+        this.menu.style.setProperty("transform", `translateX(${offset}px)`);
+        backdrop.style.setProperty(appearsAt, Math.min(this.menu.offsetWidth, position).toString() + "px");
       }
     });
   }

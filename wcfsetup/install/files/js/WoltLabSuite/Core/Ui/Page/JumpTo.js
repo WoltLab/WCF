@@ -23,12 +23,14 @@ define(["require", "exports", "tslib", "../../Language", "../Dialog"], function 
             if (!callback) {
                 const redirectUrl = element.dataset.link;
                 if (redirectUrl) {
-                    callback = function (pageNo) {
-                        window.location.href = redirectUrl.replace(/pageNo=%d/, "pageNo=" + pageNo);
+                    callback = (pageNo) => {
+                        window.location.href = redirectUrl.replace(/pageNo=%d/, `pageNo=${pageNo}`);
                     };
                 }
                 else {
-                    callback = function () { };
+                    callback = () => {
+                        // Do nothing.
+                    };
                 }
             }
             else if (typeof callback !== "function") {

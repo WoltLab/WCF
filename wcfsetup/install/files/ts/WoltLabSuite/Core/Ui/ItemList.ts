@@ -15,7 +15,6 @@ import UiDropdownSimple from "./Dropdown/Simple";
 import { DatabaseObjectActionPayload } from "../Ajax/Data";
 import DomUtil from "../Dom/Util";
 
-let _activeId = "";
 const _data = new Map<string, ElementData>();
 
 /**
@@ -134,7 +133,6 @@ function handleLimit(elementId: string): void {
  */
 function keyDown(event: KeyboardEvent): void {
   const input = event.currentTarget as HTMLInputElement;
-  _activeId = input.id;
 
   const lastItem = input.parentElement!.previousElementSibling as HTMLElement | null;
   if (event.key === "Backspace") {

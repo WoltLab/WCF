@@ -46,8 +46,9 @@ define(["require", "exports"], function (require, exports) {
             for (let i = 0, length = parts.length; i < length; i++) {
                 const part = parts[i].trim();
                 if (part.length) {
-                    if (controller.length)
+                    if (controller.length) {
                         controller += "-";
+                    }
                     controller += part.toLowerCase();
                 }
             }
@@ -67,24 +68,23 @@ define(["require", "exports"], function (require, exports) {
         const newObj = clone(out);
         for (let i = 0, length = args.length; i < length; i++) {
             const obj = args[i];
-            if (!obj)
+            if (!obj) {
                 continue;
-            for (const key in obj) {
-                if (obj.hasOwnProperty(key)) {
-                    if (!Array.isArray(obj[key]) && typeof obj[key] === "object") {
-                        if (isPlainObject(obj[key])) {
-                            // object literals have the prototype of Object which in return has no parent prototype
-                            newObj[key] = extend(out[key], obj[key]);
-                        }
-                        else {
-                            newObj[key] = obj[key];
-                        }
+            }
+            Object.keys(obj).forEach((key) => {
+                if (!Array.isArray(obj[key]) && typeof obj[key] === "object") {
+                    if (isPlainObject(obj[key])) {
+                        // object literals have the prototype of Object which in return has no parent prototype
+                        newObj[key] = extend(out[key], obj[key]);
                     }
                     else {
                         newObj[key] = obj[key];
                     }
                 }
-            }
+                else {
+                    newObj[key] = obj[key];
+                }
+            });
         }
         return newObj;
     }
@@ -134,7 +134,7 @@ define(["require", "exports"], function (require, exports) {
      * Returns true if `obj` is an object literal.
      */
     function isPlainObject(obj) {
-        if (typeof obj !== "object" || obj === null || obj.nodeType) {
+        if (typeof obj !== "object" || obj === null) {
             return false;
         }
         return Object.getPrototypeOf(obj) === Object.prototype;
@@ -163,19 +163,17 @@ define(["require", "exports"], function (require, exports) {
      * Recursively serializes an object into an encoded URI parameter string.
      */
     function serialize(obj, prefix) {
-        let parameters = [];
-        for (const key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                const parameterKey = prefix ? prefix + "[" + key + "]" : key;
-                const value = obj[key];
-                if (typeof value === "object") {
-                    parameters.push(serialize(value, parameterKey));
-                }
-                else {
-                    parameters.push(encodeURIComponent(parameterKey) + "=" + encodeURIComponent(value));
-                }
+        const parameters = [];
+        Object.keys(obj).forEach((key) => {
+            const parameterKey = prefix ? prefix + "[" + key + "]" : key;
+            const value = obj[key];
+            if (typeof value === "object") {
+                parameters.push(serialize(value, parameterKey));
             }
-        }
+            else {
+                parameters.push(encodeURIComponent(parameterKey) + "=" + encodeURIComponent(value));
+            }
+        });
         return parameters.join("&");
     }
     exports.serialize = serialize;
@@ -215,11 +213,10 @@ define(["require", "exports"], function (require, exports) {
     }) {
         let timeoutId;
         return function (...args) {
-            const context = this;
-            const doLater = function () {
+            const doLater = () => {
                 timeoutId = undefined;
                 if (!options.isImmediate) {
-                    func.apply(context, args);
+                    func.apply(this, args);
                 }
             };
             const shouldCallNow = options.isImmediate && timeoutId === undefined;
@@ -228,7 +225,7 @@ define(["require", "exports"], function (require, exports) {
             }
             timeoutId = setTimeout(doLater, waitMilliseconds);
             if (shouldCallNow) {
-                func.apply(context, args);
+                func.apply(this, args);
             }
         };
     }

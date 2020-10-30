@@ -50,7 +50,9 @@ export function convertLegacyUrl(url: string): string {
     for (let i = 0, length = parts.length; i < length; i++) {
       const part = parts[i].trim();
       if (part.length) {
-        if (controller.length) controller += "-";
+        if (controller.length) {
+          controller += "-";
+        }
         controller += part.toLowerCase();
       }
     }
@@ -73,22 +75,22 @@ export function extend(out: object, ...args: object[]): object {
   for (let i = 0, length = args.length; i < length; i++) {
     const obj = args[i];
 
-    if (!obj) continue;
+    if (!obj) {
+      continue;
+    }
 
-    for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        if (!Array.isArray(obj[key]) && typeof obj[key] === "object") {
-          if (isPlainObject(obj[key])) {
-            // object literals have the prototype of Object which in return has no parent prototype
-            newObj[key] = extend(out[key], obj[key]);
-          } else {
-            newObj[key] = obj[key];
-          }
+    Object.keys(obj).forEach((key) => {
+      if (!Array.isArray(obj[key]) && typeof obj[key] === "object") {
+        if (isPlainObject(obj[key])) {
+          // object literals have the prototype of Object which in return has no parent prototype
+          newObj[key] = extend(out[key], obj[key]);
         } else {
           newObj[key] = obj[key];
         }
+      } else {
+        newObj[key] = obj[key];
       }
-    }
+    });
   }
 
   return newObj;
@@ -142,8 +144,8 @@ export function inherit(constructor: new () => any, superConstructor: new () => 
 /**
  * Returns true if `obj` is an object literal.
  */
-export function isPlainObject(obj: any): boolean {
-  if (typeof obj !== "object" || obj === null || obj.nodeType) {
+export function isPlainObject(obj: unknown): boolean {
+  if (typeof obj !== "object" || obj === null) {
     return false;
   }
 
@@ -174,20 +176,18 @@ export function getUuid(): string {
  * Recursively serializes an object into an encoded URI parameter string.
  */
 export function serialize(obj: object, prefix?: string): string {
-  let parameters: string[] = [];
+  const parameters: string[] = [];
 
-  for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      const parameterKey = prefix ? prefix + "[" + key + "]" : key;
-      const value = obj[key];
+  Object.keys(obj).forEach((key) => {
+    const parameterKey = prefix ? prefix + "[" + key + "]" : key;
+    const value = obj[key];
 
-      if (typeof value === "object") {
-        parameters.push(serialize(value, parameterKey));
-      } else {
-        parameters.push(encodeURIComponent(parameterKey) + "=" + encodeURIComponent(value));
-      }
+    if (typeof value === "object") {
+      parameters.push(serialize(value, parameterKey));
+    } else {
+      parameters.push(encodeURIComponent(parameterKey) + "=" + encodeURIComponent(value));
     }
-  }
+  });
 
   return parameters.join("&");
 }
@@ -207,7 +207,7 @@ export function triggerEvent(element: EventTarget, eventName: string): void {
 /**
  * Returns the unique prefix for the localStorage.
  */
-export function getStoragePrefix() {
+export function getStoragePrefix(): string {
   return _prefix;
 }
 
@@ -240,12 +240,10 @@ export function debounce<F extends DebounceCallback>(
   let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
   return function (this: ThisParameterType<F>, ...args: Parameters<F>) {
-    const context = this;
-
-    const doLater = function () {
+    const doLater = () => {
       timeoutId = undefined;
       if (!options.isImmediate) {
-        func.apply(context, args);
+        func.apply(this, args);
       }
     };
 
@@ -258,7 +256,7 @@ export function debounce<F extends DebounceCallback>(
     timeoutId = setTimeout(doLater, waitMilliseconds);
 
     if (shouldCallNow) {
-      func.apply(context, args);
+      func.apply(this, args);
     }
   };
 }

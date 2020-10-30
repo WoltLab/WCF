@@ -28,7 +28,7 @@ define(["require", "exports", "tslib", "../Core"], function (require, exports, t
             timeout: 10,
         }, options || {});
         const callbackName = "wcf_jsonp_" + Core.getUuid().replace(/-/g, "").substr(0, 8);
-        let script;
+        const script = document.createElement("script");
         const timeout = window.setTimeout(() => {
             if (typeof failure === "function") {
                 failure();
@@ -38,13 +38,12 @@ define(["require", "exports", "tslib", "../Core"], function (require, exports, t
         }, (~~options.timeout || 10) * 1000);
         window[callbackName] = (...args) => {
             window.clearTimeout(timeout);
-            success.apply(null, args);
+            success(...args);
             window[callbackName] = undefined;
             script.remove();
         };
         url += url.indexOf("?") === -1 ? "?" : "&";
         url += options.parameterName + "=" + callbackName;
-        script = document.createElement("script");
         script.async = true;
         script.src = url;
         document.head.appendChild(script);

@@ -33,7 +33,9 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
                 });
             }
         }
-        catch (e) { }
+        catch (e) {
+            // Ignore JSON parsing failure.
+        }
         if (objectType) {
             parameters.set("types[]", objectType);
         }
@@ -61,12 +63,12 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
                 if (UiScreen.is("screen-lg")) {
                     dropdownMenu.dataset.dropdownAlignmentHorizontal = "right";
                     const minWidth = searchInput.clientWidth;
-                    dropdownMenu.style.setProperty("min-width", minWidth + "px", "");
+                    dropdownMenu.style.setProperty("min-width", `${minWidth}px`, "");
                     // calculate offset to ignore the width caused by the submit button
                     const parent = searchInput.parentElement;
                     const offsetRight = Util_1.default.offset(parent).left + parent.clientWidth - (Util_1.default.offset(searchInput).left + minWidth);
                     const offsetTop = Util_1.default.styleAsInt(window.getComputedStyle(parent), "padding-bottom");
-                    dropdownMenu.style.setProperty("transform", "translateX(-" + Math.ceil(offsetRight) + "px) translateY(-" + offsetTop + "px)", "");
+                    dropdownMenu.style.setProperty("transform", `translateX(-${Math.ceil(offsetRight)}px) translateY(-${offsetTop}px)`, "");
                 }
             },
             callbackSelect() {

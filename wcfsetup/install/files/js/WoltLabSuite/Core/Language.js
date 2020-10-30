@@ -43,9 +43,8 @@ define(["require", "exports", "tslib", "./Template"], function (require, exports
         if (value === undefined) {
             return key;
         }
-        // fetch Template, as it cannot be provided because of a circular dependency
         if (Template_1.default === undefined) {
-            //@ts-ignore
+            // @ts-expect-error: This is required due to a circular dependency.
             Template_1.default = require("./Template");
         }
         if (typeof value === "string") {

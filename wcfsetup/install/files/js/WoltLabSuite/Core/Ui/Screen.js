@@ -14,7 +14,6 @@ define(["require", "exports", "tslib", "../Core", "../Environment"], function (r
     Core = tslib_1.__importStar(Core);
     Environment = tslib_1.__importStar(Environment);
     const _mql = new Map();
-    let _dialogContainer;
     let _scrollDisableCounter = 0;
     let _scrollOffsetFrom;
     let _scrollTop = 0;
@@ -98,10 +97,10 @@ define(["require", "exports", "tslib", "../Core", "../Environment"], function (r
             // setting translateY causes Mobile Safari to snap
             if (Environment.platform() === "ios") {
                 pageContainer.style.setProperty("position", "relative", "");
-                pageContainer.style.setProperty("top", "-" + _scrollTop + "px", "");
+                pageContainer.style.setProperty("top", `-${_scrollTop}px`, "");
             }
             else {
-                pageContainer.style.setProperty("margin-top", "-" + _scrollTop + "px", "");
+                pageContainer.style.setProperty("margin-top", `-${_scrollTop}px`, "");
             }
             document.documentElement.classList.add("disableScrolling");
         }
@@ -163,12 +162,10 @@ define(["require", "exports", "tslib", "../Core", "../Environment"], function (r
     }
     exports.pageOverlayIsActive = pageOverlayIsActive;
     /**
-     * Sets the dialog container element. This method is used to
-     * circumvent a possible circular dependency, due to `Ui/Dialog`
-     * requiring the `Ui/Screen` module itself.
+     * @deprecated 5.4 - This method is a noop.
      */
-    function setDialogContainer(container) {
-        _dialogContainer = container;
+    function setDialogContainer(_container) {
+        // Do nothing.
     }
     exports.setDialogContainer = setDialogContainer;
     function _getQueryObject(query) {

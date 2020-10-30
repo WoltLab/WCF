@@ -9,10 +9,11 @@
  */
 
 import * as Core from "../../../Core";
+import { SearchInputOptions } from "../../Search/Data";
 import UiSearchInput from "../../Search/Input";
 
 class UiUserSearchInput extends UiSearchInput {
-  constructor(element, options) {
+  constructor(element: HTMLInputElement, options: UserSearchInputOptions) {
     const includeUserGroups = Core.isPlainObject(options) && options.includeUserGroups === true;
 
     options = Core.extend(
@@ -55,4 +56,8 @@ type FirstArgument<T> = T extends (arg1: infer U, ...args: any[]) => any ? U : n
 interface UserListItemData extends FirstArgument<UiSearchInput["createListItem"]> {
   type: "user" | "group";
   icon: string;
+}
+
+interface UserSearchInputOptions extends SearchInputOptions {
+  includeUserGroups?: boolean;
 }

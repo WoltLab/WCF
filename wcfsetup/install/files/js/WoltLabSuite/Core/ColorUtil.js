@@ -18,14 +18,13 @@ define(["require", "exports"], function (require, exports) {
      */
     function hsvToRgb(h, s, v) {
         const rgb = { r: 0, g: 0, b: 0 };
-        let h2, f, p, q, t;
-        h2 = Math.floor(h / 60);
-        f = h / 60 - h2;
+        const h2 = Math.floor(h / 60);
+        const f = h / 60 - h2;
         s /= 100;
         v /= 100;
-        p = v * (1 - s);
-        q = v * (1 - s * f);
-        t = v * (1 - s * (1 - f));
+        const p = v * (1 - s);
+        const q = v * (1 - s * f);
+        const t = v * (1 - s * (1 - f));
         if (s == 0) {
             rgb.r = rgb.g = rgb.b = v;
         }
@@ -77,14 +76,13 @@ define(["require", "exports"], function (require, exports) {
      * @see  https://secure.wikimedia.org/wikipedia/de/wiki/HSV-Farbraum#Transformation_von_RGB_und_HSV
      */
     function rgbToHsv(r, g, b) {
-        let h, s, v;
-        let max, min, diff;
+        let h, s;
         r /= 255;
         g /= 255;
         b /= 255;
-        max = Math.max(Math.max(r, g), b);
-        min = Math.min(Math.min(r, g), b);
-        diff = max - min;
+        const max = Math.max(Math.max(r, g), b);
+        const min = Math.min(Math.min(r, g), b);
+        const diff = max - min;
         h = 0;
         if (max !== min) {
             switch (max) {
@@ -108,11 +106,10 @@ define(["require", "exports"], function (require, exports) {
         else {
             s = diff / max;
         }
-        v = max;
         return {
             h: Math.round(h),
             s: Math.round(s * 100),
-            v: Math.round(v * 100),
+            v: Math.round(max * 100),
         };
     }
     exports.rgbToHsv = rgbToHsv;
@@ -154,7 +151,7 @@ define(["require", "exports"], function (require, exports) {
     function rgbToHex(r, g, b) {
         const charList = "0123456789ABCDEF";
         if (g === undefined) {
-            if (r.toString().match(/^rgba?\((\d+), ?(\d+), ?(\d+)(?:, ?[0-9.]+)?\)$/)) {
+            if (/^rgba?\((\d+), ?(\d+), ?(\d+)(?:, ?[0-9.]+)?\)$/.exec(r.toString())) {
                 r = +RegExp.$1;
                 g = +RegExp.$2;
                 b = +RegExp.$3;

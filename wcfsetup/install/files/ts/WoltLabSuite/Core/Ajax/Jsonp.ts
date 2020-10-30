@@ -37,7 +37,7 @@ export function send(
   ) as JsonpOptions;
 
   const callbackName = "wcf_jsonp_" + Core.getUuid().replace(/-/g, "").substr(0, 8);
-  let script;
+  const script = document.createElement("script");
 
   const timeout = window.setTimeout(() => {
     if (typeof failure === "function") {
@@ -51,7 +51,7 @@ export function send(
   window[callbackName] = (...args: any[]) => {
     window.clearTimeout(timeout);
 
-    success.apply(null, args);
+    success(...args);
 
     window[callbackName] = undefined;
     script.remove();
@@ -60,7 +60,6 @@ export function send(
   url += url.indexOf("?") === -1 ? "?" : "&";
   url += options.parameterName + "=" + callbackName;
 
-  script = document.createElement("script");
   script.async = true;
   script.src = url;
 

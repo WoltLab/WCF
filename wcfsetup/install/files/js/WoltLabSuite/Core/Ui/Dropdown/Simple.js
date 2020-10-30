@@ -299,8 +299,8 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
             document.body.appendChild(_menuContainer);
             _availableDropdowns = document.getElementsByClassName("dropdownToggle");
             UiDropdownSimple.initAll();
-            CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/Dropdown/Simple", UiDropdownSimple.closeAll);
-            Listener_1.default.add("WoltLabSuite/Core/Ui/Dropdown/Simple", UiDropdownSimple.initAll);
+            CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/Dropdown/Simple", () => UiDropdownSimple.closeAll());
+            Listener_1.default.add("WoltLabSuite/Core/Ui/Dropdown/Simple", () => UiDropdownSimple.initAll());
             document.addEventListener("scroll", onScroll);
             // expose on window object for backward compatibility
             window.bc_wcfSimpleDropdown = this;
@@ -342,7 +342,7 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
                 button.addEventListener("keydown", handleKeyDown);
                 _dropdowns.set(containerId, dropdown);
                 _menus.set(containerId, menu);
-                if (!containerId.match(/^wcf\d+$/)) {
+                if (!/^wcf\d+$/.test(containerId)) {
                     menu.dataset.source = containerId;
                 }
                 // prevent page scrolling

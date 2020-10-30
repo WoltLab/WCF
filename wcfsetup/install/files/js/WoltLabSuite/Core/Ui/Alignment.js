@@ -16,60 +16,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Uti
     Util_1 = tslib_1.__importDefault(Util_1);
     Language = tslib_1.__importStar(Language);
     /**
-     * Calculates left/right position and verifies if the element would be still within the page's boundaries.
-     *
-     * @param  {string}    alignment    align to this side of the reference element
-     * @param  {Object<string, int>}  elDimensions  element dimensions
-     * @param  {Object<string, int>}  refDimensions  reference element dimensions
-     * @param  {Object<string, int>}  refOffsets  position of reference element relative to the document
-     * @param  {int}      windowWidth  window width
-     * @returns  {Object<string, *>}  calculation results
-     */
-    function tryAlignmentHorizontal(alignment, elDimensions, refDimensions, refOffsets, windowWidth) {
-        let left = "auto";
-        let right = "auto";
-        let result = true;
-        if (alignment === "left") {
-            left = refOffsets.left;
-            if (left + elDimensions.width > windowWidth) {
-                result = false;
-            }
-        }
-        else if (alignment === "right") {
-            if (refOffsets.left + refDimensions.width < elDimensions.width) {
-                result = false;
-            }
-            else {
-                right = windowWidth - (refOffsets.left + refDimensions.width);
-                if (right < 0) {
-                    result = false;
-                }
-            }
-        }
-        else {
-            left = refOffsets.left + refDimensions.width / 2 - elDimensions.width / 2;
-            left = ~~left;
-            if (left < 0 || left + elDimensions.width > windowWidth) {
-                result = false;
-            }
-        }
-        return {
-            align: alignment,
-            left: left,
-            right: right,
-            result: result,
-        };
-    }
-    /**
      * Calculates top/bottom position and verifies if the element would be still within the page's boundaries.
-     *
-     * @param  {string}    alignment    align to this side of the reference element
-     * @param  {Object<string, int>}  elDimensions  element dimensions
-     * @param  {Object<string, int>}  refDimensions  reference element dimensions
-     * @param  {Object<string, int>}  refOffsets  position of reference element relative to the document
-     * @param  {int}      windowHeight  window height
-     * @param  {int}      verticalOffset  desired gap between element and reference element
-     * @returns  {object<string, *>}  calculation results
      */
     function tryAlignmentVertical(alignment, elDimensions, refDimensions, refOffsets, windowHeight, verticalOffset) {
         let bottom = "auto";
@@ -107,11 +54,45 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Uti
         };
     }
     /**
+     * Calculates left/right position and verifies if the element would be still within the page's boundaries.
+     */
+    function tryAlignmentHorizontal(alignment, elDimensions, refDimensions, refOffsets, windowWidth) {
+        let left = "auto";
+        let right = "auto";
+        let result = true;
+        if (alignment === "left") {
+            left = refOffsets.left;
+            if (left + elDimensions.width > windowWidth) {
+                result = false;
+            }
+        }
+        else if (alignment === "right") {
+            if (refOffsets.left + refDimensions.width < elDimensions.width) {
+                result = false;
+            }
+            else {
+                right = windowWidth - (refOffsets.left + refDimensions.width);
+                if (right < 0) {
+                    result = false;
+                }
+            }
+        }
+        else {
+            left = refOffsets.left + refDimensions.width / 2 - elDimensions.width / 2;
+            left = ~~left;
+            if (left < 0 || left + elDimensions.width > windowWidth) {
+                result = false;
+            }
+        }
+        return {
+            align: alignment,
+            left: left,
+            right: right,
+            result: result,
+        };
+    }
+    /**
      * Sets the alignment for target element relatively to the reference element.
-     *
-     * @param  {Element}    element    target element
-     * @param  {Element}    referenceElement    reference element
-     * @param  {Object<string, *>}  options    list of options to alter the behavior
      */
     function set(element, referenceElement, options) {
         options = Core.extend({
@@ -226,10 +207,10 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Dom/Uti
             element.classList[left === "auto" ? "add" : "remove"](options.pointerClassNames[1 /* Right */]);
         }
         Util_1.default.setStyles(element, {
-            bottom: bottom === "auto" ? bottom : Math.round(bottom) + "px",
-            left: left === "auto" ? left : Math.ceil(left) + "px",
-            right: right === "auto" ? right : Math.floor(right) + "px",
-            top: top === "auto" ? top : Math.round(top) + "px",
+            bottom: bottom === "auto" ? bottom : Math.round(bottom).toString() + "px",
+            left: left === "auto" ? left : Math.ceil(left).toString() + "px",
+            right: right === "auto" ? right : Math.floor(right).toString() + "px",
+            top: top === "auto" ? top : Math.round(top).toString() + "px",
         });
         Util_1.default.show(element);
         element.style.removeProperty("visibility");

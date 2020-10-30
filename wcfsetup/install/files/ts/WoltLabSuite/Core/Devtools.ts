@@ -27,15 +27,12 @@ const Devtools = {
     window.console.log("");
     window.console.log("%cAvailable commands:", "text-decoration: underline");
 
-    const commands: string[] = [];
-    for (const cmd in Devtools) {
-      if (cmd !== "_internal_" && Devtools.hasOwnProperty(cmd)) {
-        commands.push(cmd);
-      }
-    }
-    commands.sort().forEach(function (cmd) {
-      window.console.log("\tDevtools." + cmd + "()");
-    });
+    Object.keys(Devtools)
+      .filter((cmd) => cmd !== "_internal_")
+      .sort()
+      .forEach((cmd) => {
+        window.console.log(`\tDevtools.${cmd}()`);
+      });
 
     window.console.log("");
   },
@@ -78,10 +75,16 @@ const Devtools = {
           if (settings !== null) {
             _settings = JSON.parse(settings);
           }
-        } catch (e) {}
+        } catch (e) {
+          // Ignore JSON parsing failure.
+        }
 
-        if (!_settings.editorAutosave) Devtools.toggleEditorAutosave(true);
-        if (_settings.eventLogging) Devtools.toggleEventLogging(true);
+        if (!_settings.editorAutosave) {
+          Devtools.toggleEditorAutosave(true);
+        }
+        if (_settings.eventLogging) {
+          Devtools.toggleEventLogging(true);
+        }
       }
 
       window.console.log("Settings are saved per browser session, enter `Devtools.help()` to learn more.");

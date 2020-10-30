@@ -27,6 +27,6 @@ define(["require", "exports", "tslib", "../CallbackList"], function (require, ex
             _callbackList.forEach(null, (callback) => callback());
         },
     };
-    document.body.addEventListener("click", UiCloseOverlay.execute);
+    document.body.addEventListener("click", () => UiCloseOverlay.execute());
     return UiCloseOverlay;
 });

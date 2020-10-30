@@ -1,10 +1,10 @@
 /**
  * This module allows resizing and conversion of HTMLImageElements to Blob and File objects
  *
- * @author	Tim Duesterhus, Maximilian Mader
- * @copyright	2001-2020 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Image/Resizer
+ * @author  Tim Duesterhus, Maximilian Mader
+ * @copyright  2001-2020 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Image/Resizer
  */
 define(["require", "exports", "tslib", "../FileUtil", "./ExifUtil", "pica"], function (require, exports, tslib_1, FileUtil, ExifUtil, pica_1) {
     "use strict";
@@ -27,8 +27,9 @@ define(["require", "exports", "tslib", "../FileUtil", "./ExifUtil", "pica"], fun
          * Sets the default maximum width for this instance
          */
         setMaxWidth(value) {
-            if (value == null)
+            if (value == null) {
                 value = DEFAULT_WIDTH;
+            }
             this.maxWidth = value;
             return this;
         }
@@ -36,8 +37,9 @@ define(["require", "exports", "tslib", "../FileUtil", "./ExifUtil", "pica"], fun
          * Sets the default maximum height for this instance
          */
         setMaxHeight(value) {
-            if (value == null)
+            if (value == null) {
                 value = DEFAULT_HEIGHT;
+            }
             this.maxHeight = value;
             return this;
         }
@@ -45,8 +47,9 @@ define(["require", "exports", "tslib", "../FileUtil", "./ExifUtil", "pica"], fun
          * Sets the default quality for this instance
          */
         setQuality(value) {
-            if (value == null)
+            if (value == null) {
                 value = DEFAULT_QUALITY;
+            }
             this.quality = value;
             return this;
         }
@@ -54,8 +57,9 @@ define(["require", "exports", "tslib", "../FileUtil", "./ExifUtil", "pica"], fun
          * Sets the default file type for this instance
          */
         setFileType(value) {
-            if (value == null)
+            if (value == null) {
                 value = DEFAULT_FILETYPE;
+            }
             this.fileType = value;
             return this;
         }
@@ -63,7 +67,7 @@ define(["require", "exports", "tslib", "../FileUtil", "./ExifUtil", "pica"], fun
          * Converts the given object of exif data and image data into a File.
          */
         async saveFile(data, fileName, fileType = this.fileType, quality = this.quality) {
-            const basename = fileName.match(/(.+)(\..+?)$/);
+            const basename = /(.+)(\..+?)$/.exec(fileName);
             let blob = await pica.toBlob(data.image, fileType, quality);
             if (fileType === "image/jpeg" && typeof data.exif !== "undefined") {
                 blob = await ExifUtil.setExifData(blob, data.exif);
@@ -108,8 +112,9 @@ define(["require", "exports", "tslib", "../FileUtil", "./ExifUtil", "pica"], fun
             const canvas = document.createElement("canvas");
             if (window.createImageBitmap) {
                 const bitmap = await createImageBitmap(image);
-                if (bitmap.height != image.height)
+                if (bitmap.height != image.height) {
                     throw new Error("Chrome Bug #1069965");
+                }
             }
             // Prevent upscaling
             const newWidth = Math.min(maxWidth, image.width);

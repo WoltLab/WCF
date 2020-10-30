@@ -35,12 +35,15 @@ class UiAclSimple {
       excludedSearchValues.push(label.textContent!);
     });
 
-    this.searchInput = new UiUserSearchInput(document.getElementById(this.prefix + "aclSearchInput"), {
-      callbackSelect: this.select.bind(this),
-      includeUserGroups: true,
-      excludedSearchValues: excludedSearchValues,
-      preventSubmit: true,
-    });
+    this.searchInput = new UiUserSearchInput(
+      document.getElementById(this.prefix + "aclSearchInput") as HTMLInputElement,
+      {
+        callbackSelect: this.select.bind(this),
+        includeUserGroups: true,
+        excludedSearchValues: excludedSearchValues,
+        preventSubmit: true,
+      }
+    );
 
     this.aclListContainer = document.getElementById(this.prefix + "aclListContainer")!;
 

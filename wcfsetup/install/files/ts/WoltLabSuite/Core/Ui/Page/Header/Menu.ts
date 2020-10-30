@@ -95,7 +95,7 @@ function showPrevious(event: MouseEvent): void {
 function setMarginLeft(offset: number): void {
   _marginLeft = Math.min(_marginLeft + offset, 0);
 
-  _firstElement.style.setProperty("margin-left", _marginLeft + "px", "");
+  _firstElement.style.setProperty("margin-left", `${_marginLeft}px`, "");
 }
 
 /**
