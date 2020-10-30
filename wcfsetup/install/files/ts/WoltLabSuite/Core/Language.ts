@@ -63,7 +63,7 @@ export function get(key: string, parameters?: object): string {
   }
 
   if (value instanceof Template) {
-    value = (value as Template).fetch(parameters || {});
+    value = value.fetch(parameters || {});
   }
 
   return value as string;
