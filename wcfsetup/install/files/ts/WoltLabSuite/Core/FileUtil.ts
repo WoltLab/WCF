@@ -182,7 +182,7 @@ export function getIconNameByFilename(filename: string): string {
  */
 export function getExtensionByMimeType(mimetype: string): string {
   if (_mimeTypeExtensionMapping.has(mimetype)) {
-    return "." + _mimeTypeExtensionMapping.get(mimetype);
+    return "." + _mimeTypeExtensionMapping.get(mimetype)!;
   }
 
   return "";
