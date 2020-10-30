@@ -123,7 +123,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
     let button: HTMLElement;
     switch (data.actionName) {
       case "ban":
-      case "unban":
+      case "unban": {
         this.header.dataset.banned = data.actionName === "ban" ? "true" : "false";
         button = document.querySelector(".userProfileButtonMenu .jsButtonUserBan") as HTMLElement;
         button.textContent = Language.get("wcf.user." + (data.actionName === "ban" ? "unban" : "ban"));
@@ -139,6 +139,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
           banIcon.remove();
         }
         break;
+      }
 
       case "disableAvatar":
       case "enableAvatar":

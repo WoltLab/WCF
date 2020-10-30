@@ -103,7 +103,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
             let button;
             switch (data.actionName) {
                 case "ban":
-                case "unban":
+                case "unban": {
                     this.header.dataset.banned = data.actionName === "ban" ? "true" : "false";
                     button = document.querySelector(".userProfileButtonMenu .jsButtonUserBan");
                     button.textContent = Language.get("wcf.user." + (data.actionName === "ban" ? "unban" : "ban"));
@@ -119,6 +119,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
                         banIcon.remove();
                     }
                     break;
+                }
                 case "disableAvatar":
                 case "enableAvatar":
                     this.header.dataset.disableAvatar = data.actionName === "disableAvatar" ? "true" : "false";
