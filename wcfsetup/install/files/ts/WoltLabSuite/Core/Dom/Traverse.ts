@@ -96,7 +96,7 @@ export function childByTag(element: Element, tagName: string): Element | null {
 /**
  * Examines child elements and returns all children matching the given selector.
  */
-export function childrenBySel(element, selector: string): Element[] {
+export function childrenBySel(element: Element, selector: string): Element[] {
   return _getChildren(element, Type.Selector, selector);
 }
 

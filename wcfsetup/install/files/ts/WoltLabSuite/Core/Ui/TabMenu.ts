@@ -23,7 +23,7 @@ const _tabMenus = new Map<string, TabMenuSimple>();
  * Initializes available tab menus.
  */
 function init() {
-  document.querySelectorAll(".tabMenuContainer:not(.staticTabMenuContainer)").forEach((container) => {
+  document.querySelectorAll(".tabMenuContainer:not(.staticTabMenuContainer)").forEach((container: HTMLElement) => {
     const containerId = DomUtil.identify(container);
     if (_tabMenus.has(containerId)) {
       return;

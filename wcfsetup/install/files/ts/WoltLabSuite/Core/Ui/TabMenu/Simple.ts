@@ -19,7 +19,7 @@ class TabMenuSimple {
   private store: HTMLInputElement | null = null;
   private readonly tabs = new Map<string, HTMLLIElement>();
 
-  constructor(container) {
+  constructor(container: HTMLElement) {
     this.container = container;
   }
 

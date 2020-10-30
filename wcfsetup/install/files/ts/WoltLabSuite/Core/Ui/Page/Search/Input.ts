@@ -58,7 +58,7 @@ class UiPageSearchInput extends UiSearchInput {
     return data;
   }
 
-  _ajaxSuccess(data): void {
+  _ajaxSuccess(data: DatabaseObjectActionResponse): void {
     this.callbackSuccess(data);
   }
 }
