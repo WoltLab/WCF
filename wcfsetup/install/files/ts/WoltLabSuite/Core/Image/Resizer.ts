@@ -1,10 +1,10 @@
 /**
  * This module allows resizing and conversion of HTMLImageElements to Blob and File objects
  *
- * @author	Tim Duesterhus, Maximilian Mader
- * @copyright	2001-2020 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Image/Resizer
+ * @author  Tim Duesterhus, Maximilian Mader
+ * @copyright  2001-2020 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Image/Resizer
  */
 
 import * as FileUtil from "../FileUtil";
@@ -28,7 +28,9 @@ class ImageResizer {
    * Sets the default maximum width for this instance
    */
   setMaxWidth(value: number): ImageResizer {
-    if (value == null) value = DEFAULT_WIDTH;
+    if (value == null) {
+      value = DEFAULT_WIDTH;
+    }
 
     this.maxWidth = value;
     return this;
@@ -38,7 +40,9 @@ class ImageResizer {
    * Sets the default maximum height for this instance
    */
   setMaxHeight(value: number): ImageResizer {
-    if (value == null) value = DEFAULT_HEIGHT;
+    if (value == null) {
+      value = DEFAULT_HEIGHT;
+    }
 
     this.maxHeight = value;
     return this;
@@ -48,7 +52,9 @@ class ImageResizer {
    * Sets the default quality for this instance
    */
   setQuality(value: number): ImageResizer {
-    if (value == null) value = DEFAULT_QUALITY;
+    if (value == null) {
+      value = DEFAULT_QUALITY;
+    }
 
     this.quality = value;
     return this;
@@ -57,8 +63,10 @@ class ImageResizer {
   /**
    * Sets the default file type for this instance
    */
-  setFileType(value): ImageResizer {
-    if (value == null) value = DEFAULT_FILETYPE;
+  setFileType(value: string): ImageResizer {
+    if (value == null) {
+      value = DEFAULT_FILETYPE;
+    }
 
     this.fileType = value;
     return this;
@@ -73,7 +81,7 @@ class ImageResizer {
     fileType: string = this.fileType,
     quality: number = this.quality
   ): Promise<File> {
-    const basename = fileName.match(/(.+)(\..+?)$/);
+    const basename = /(.+)(\..+?)$/.exec(fileName);
 
     let blob = await pica.toBlob(data.image, fileType, quality);
 
@@ -134,7 +142,7 @@ class ImageResizer {
     maxWidth: number = this.maxWidth,
     maxHeight: number = this.maxHeight,
     quality: number = this.quality,
-    force: boolean = false,
+    force = false,
     cancelPromise
   ): Promise<HTMLCanvasElement | undefined> {
     const canvas = document.createElement("canvas");
@@ -142,7 +150,9 @@ class ImageResizer {
     if (window.createImageBitmap as any) {
       const bitmap = await createImageBitmap(image);
 
-      if (bitmap.height != image.height) throw new Error("Chrome Bug #1069965");
+      if (bitmap.height != image.height) {
+        throw new Error("Chrome Bug #1069965");
+      }
     }
 
     // Prevent upscaling

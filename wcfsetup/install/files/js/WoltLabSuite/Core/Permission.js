@@ -26,11 +26,7 @@ define(["require", "exports"], function (require, exports) {
      * Adds all the permissions in the given object to the store.
      */
     function addObject(object) {
-        for (const key in object) {
-            if (object.hasOwnProperty(key)) {
-                add(key, object[key]);
-            }
-        }
+        Object.keys(object).forEach((key) => add(key, object[key]));
     }
     exports.addObject = addObject;
     /**

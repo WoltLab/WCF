@@ -152,11 +152,11 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
         list.classList.add("enableAnimation");
         // new value is larger, we're scrolling towards the end
         if (scrollLeft < left) {
-            list.firstElementChild.style.setProperty("margin-left", scrollLeft - left + "px", "");
+            list.firstElementChild.style.setProperty("margin-left", `${scrollLeft - left}px`, "");
         }
         else {
             // new value is smaller, we're scrolling towards the start
-            list.style.setProperty("padding-left", scrollLeft - left + "px", "");
+            list.style.setProperty("padding-left", `${scrollLeft - left}px`, "");
         }
         setTimeout(() => {
             list.classList.remove("enableAnimation");

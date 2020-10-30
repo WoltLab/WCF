@@ -8,7 +8,7 @@
  */
 
 import * as Ajax from "../../Ajax";
-import { AjaxCallbackObject } from "../../Ajax/Data";
+import { AjaxCallbackObject, CallbackSetup } from "../../Ajax/Data";
 
 class UiArticleMarkAllAsRead implements AjaxCallbackObject {
   constructor() {
@@ -23,7 +23,7 @@ class UiArticleMarkAllAsRead implements AjaxCallbackObject {
     Ajax.api(this);
   }
 
-  _ajaxSuccess() {
+  _ajaxSuccess(): void {
     /* remove obsolete badges */
     // main menu
     const badge = document.querySelector(".mainMenu .active .badge");
@@ -33,7 +33,7 @@ class UiArticleMarkAllAsRead implements AjaxCallbackObject {
     document.querySelectorAll(".articleList .newMessageBadge").forEach((el) => el.remove());
   }
 
-  _ajaxSetup() {
+  _ajaxSetup(): ReturnType<CallbackSetup> {
     return {
       data: {
         actionName: "markAllAsRead",

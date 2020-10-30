@@ -7,7 +7,7 @@
  * @module  WoltLabSuite/Core/Ui/Page/JumpTo
  */
 
-import { DialogCallbackObject, DialogSettings } from "../Dialog/Data";
+import { DialogCallbackObject, CallbackSetup as DialogSetup } from "../Dialog/Data";
 import * as Language from "../../Language";
 import UiDialog from "../Dialog";
 
@@ -25,11 +25,13 @@ class UiPageJumpTo implements DialogCallbackObject {
     if (!callback) {
       const redirectUrl = element.dataset.link;
       if (redirectUrl) {
-        callback = function (pageNo) {
-          window.location.href = redirectUrl.replace(/pageNo=%d/, "pageNo=" + pageNo);
+        callback = (pageNo) => {
+          window.location.href = redirectUrl.replace(/pageNo=%d/, `pageNo=${pageNo}`);
         };
       } else {
-        callback = function () {};
+        callback = () => {
+          // Do nothing.
+        };
       }
     } else if (typeof callback !== "function") {
       throw new TypeError("Expected a valid function for parameter 'callback'.");
@@ -86,7 +88,7 @@ class UiPageJumpTo implements DialogCallbackObject {
     UiDialog.close(this);
   }
 
-  _dialogSetup(): DialogSettings {
+  _dialogSetup(): ReturnType<DialogSetup> {
     const source = `<dl>
         <dt><label for="jsPaginationPageNo">${Language.get("wcf.page.jumpTo")}</label></dt>
                 <dd>

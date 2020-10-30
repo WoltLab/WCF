@@ -34,7 +34,7 @@ export function init(identifier: string, menu: HTMLElement): void {
   }
 
   const ghostElement = document.createElement("div");
-  ghostElement.id = "reusableDropdownGhost" + _ghostElementId++;
+  ghostElement.id = `reusableDropdownGhost${_ghostElementId++}`;
 
   UiDropdownSimple.initFragment(ghostElement, menu);
 

@@ -60,16 +60,21 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
                 this._data = this._options.data;
             }
             if (this._options.callbackObject) {
-                if (typeof this._options.callbackObject._ajaxFailure === "function")
+                if (typeof this._options.callbackObject._ajaxFailure === "function") {
                     this._options.failure = this._options.callbackObject._ajaxFailure.bind(this._options.callbackObject);
-                if (typeof this._options.callbackObject._ajaxFinalize === "function")
+                }
+                if (typeof this._options.callbackObject._ajaxFinalize === "function") {
                     this._options.finalize = this._options.callbackObject._ajaxFinalize.bind(this._options.callbackObject);
-                if (typeof this._options.callbackObject._ajaxSuccess === "function")
+                }
+                if (typeof this._options.callbackObject._ajaxSuccess === "function") {
                     this._options.success = this._options.callbackObject._ajaxSuccess.bind(this._options.callbackObject);
-                if (typeof this._options.callbackObject._ajaxProgress === "function")
+                }
+                if (typeof this._options.callbackObject._ajaxProgress === "function") {
                     this._options.progress = this._options.callbackObject._ajaxProgress.bind(this._options.callbackObject);
-                if (typeof this._options.callbackObject._ajaxUploadProgress === "function")
+                }
+                if (typeof this._options.callbackObject._ajaxUploadProgress === "function") {
                     this._options.uploadProgress = this._options.callbackObject._ajaxUploadProgress.bind(this._options.callbackObject);
+                }
             }
             if (!_didInit) {
                 _didInit = true;
@@ -100,26 +105,26 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
             if (this._options.withCredentials) {
                 this._xhr.withCredentials = true;
             }
-            const self = this;
             const options = Core.clone(this._options);
-            this._xhr.onload = function () {
-                if (this.readyState === XMLHttpRequest.DONE) {
-                    if ((this.status >= 200 && this.status < 300) || this.status === 304) {
-                        if (options.responseType && this.getResponseHeader("Content-Type").indexOf(options.responseType) !== 0) {
+            this._xhr.onload = () => {
+                const xhr = this._xhr;
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
+                        if (options.responseType && xhr.getResponseHeader("Content-Type").indexOf(options.responseType) !== 0) {
                             // request succeeded but invalid response type
-                            self._failure(this, options);
+                            this._failure(xhr, options);
                         }
                         else {
-                            self._success(this, options);
+                            this._success(xhr, options);
                         }
                     }
                     else {
-                        self._failure(this, options);
+                        this._failure(xhr, options);
                     }
                 }
             };
-            this._xhr.onerror = function () {
-                self._failure(this, options);
+            this._xhr.onerror = () => {
+                this._failure(this._xhr, options);
             };
             if (this._options.progress) {
                 this._xhr.onprogress = this._options.progress;
@@ -161,7 +166,7 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
          * Returns an option by key or undefined.
          */
         getOption(key) {
-            if (this._options.hasOwnProperty(key)) {
+            if (Object.prototype.hasOwnProperty.call(this._options, key)) {
                 return this._options[key];
             }
             return null;
@@ -199,7 +204,7 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
                     }
                     // force-invoke the background queue
                     if (data && data.forceBackgroundQueuePerform) {
-                        new Promise((resolve_1, reject_1) => { require(["../BackgroundQueue"], resolve_1, reject_1); }).then(tslib_1.__importStar).then((backgroundQueue) => backgroundQueue.invoke());
+                        void new Promise((resolve_1, reject_1) => { require(["../BackgroundQueue"], resolve_1, reject_1); }).then(tslib_1.__importStar).then((backgroundQueue) => backgroundQueue.invoke());
                     }
                 }
                 options.success(data, xhr.responseText, xhr, options.data);
@@ -221,7 +226,9 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
             try {
                 data = JSON.parse(xhr.responseText);
             }
-            catch (e) { }
+            catch (e) {
+                // Ignore JSON parsing failure.
+            }
             let showError = true;
             if (typeof options.failure === "function") {
                 showError = options.failure(data || {}, xhr.responseText || "", xhr, options.data);
@@ -229,7 +236,7 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
             if (options.ignoreError !== true && showError) {
                 const html = this.getErrorHtml(data, xhr);
                 if (html) {
-                    new Promise((resolve_2, reject_2) => { require(["../Ui/Dialog"], resolve_2, reject_2); }).then(tslib_1.__importStar).then((UiDialog) => {
+                    void new Promise((resolve_2, reject_2) => { require(["../Ui/Dialog"], resolve_2, reject_2); }).then(tslib_1.__importStar).then((UiDialog) => {
                         UiDialog.openStatic(Util_1.default.getUniqueId(), html, {
                             title: Language.get("wcf.global.error.title"),
                         });
@@ -246,30 +253,33 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
             let message;
             if (data !== null) {
                 if (data.returnValues && data.returnValues.description) {
-                    details += "<br><p>Description:</p><p>" + data.returnValues.description + "</p>";
+                    details += `<br><p>Description:</p><p>${data.returnValues.description}</p>`;
                 }
                 if (data.file && data.line) {
-                    details += "<br><p>File:</p><p>" + data.file + " in line " + data.line + "</p>";
+                    details += `<br><p>File:</p><p>${data.file} in line ${data.line}</p>`;
                 }
-                if (data.stacktrace)
-                    details += "<br><p>Stacktrace:</p><p>" + data.stacktrace + "</p>";
-                else if (data.exceptionID)
-                    details += "<br><p>Exception ID: <code>" + data.exceptionID + "</code></p>";
+                if (data.stacktrace) {
+                    details += `<br><p>Stacktrace:</p><p>${data.stacktrace}</p>`;
+                }
+                else if (data.exceptionID) {
+                    details += `<br><p>Exception ID: <code>${data.exceptionID}</code></p>`;
+                }
                 message = data.message;
-                data.previous.forEach(function (previous) {
-                    details += "<hr><p>" + previous.message + "</p>";
-                    details += "<br><p>Stacktrace</p><p>" + previous.stacktrace + "</p>";
+                data.previous.forEach((previous) => {
+                    details += `<hr><p>${previous.message}</p>`;
+                    details += `<br><p>Stacktrace</p><p>${previous.stacktrace}</p>`;
                 });
             }
             else {
                 message = xhr.responseText;
             }
             if (!message || message === "undefined") {
-                if (!window.ENABLE_DEBUG_MODE)
+                if (!window.ENABLE_DEBUG_MODE) {
                     return null;
+                }
                 message = "XMLHttpRequest failed without a responseText. Check your browser console.";
             }
-            return '<div class="ajaxDebugMessage"><p>' + message + "</p>" + details + "</div>";
+            return `<div class="ajaxDebugMessage"><p>${message}</p>${details}</div>`;
         }
         /**
          * Finalizes a request.

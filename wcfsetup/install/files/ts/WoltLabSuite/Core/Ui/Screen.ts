@@ -13,7 +13,6 @@ import * as Environment from "../Environment";
 
 const _mql = new Map<string, MediaQueryData>();
 
-let _dialogContainer: Element;
 let _scrollDisableCounter = 0;
 let _scrollOffsetFrom: string;
 let _scrollTop = 0;
@@ -109,9 +108,9 @@ export function scrollDisable(): void {
     // setting translateY causes Mobile Safari to snap
     if (Environment.platform() === "ios") {
       pageContainer.style.setProperty("position", "relative", "");
-      pageContainer.style.setProperty("top", "-" + _scrollTop + "px", "");
+      pageContainer.style.setProperty("top", `-${_scrollTop}px`, "");
     } else {
-      pageContainer.style.setProperty("margin-top", "-" + _scrollTop + "px", "");
+      pageContainer.style.setProperty("margin-top", `-${_scrollTop}px`, "");
     }
 
     document.documentElement.classList.add("disableScrolling");
@@ -179,12 +178,10 @@ export function pageOverlayIsActive(): boolean {
 }
 
 /**
- * Sets the dialog container element. This method is used to
- * circumvent a possible circular dependency, due to `Ui/Dialog`
- * requiring the `Ui/Screen` module itself.
+ * @deprecated 5.4 - This method is a noop.
  */
-export function setDialogContainer(container: Element): void {
-  _dialogContainer = container;
+export function setDialogContainer(_container: Element): void {
+  // Do nothing.
 }
 
 function _getQueryObject(query: string): MediaQueryData {

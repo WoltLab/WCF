@@ -25,11 +25,7 @@ export function add(permission: string, value: boolean): void {
  * Adds all the permissions in the given object to the store.
  */
 export function addObject(object: PermissionObject): void {
-  for (const key in object) {
-    if (object.hasOwnProperty(key)) {
-      add(key, object[key]);
-    }
-  }
+  Object.keys(object).forEach((key) => add(key, object[key]));
 }
 
 /**

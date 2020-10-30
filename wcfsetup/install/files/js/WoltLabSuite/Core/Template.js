@@ -43,6 +43,7 @@ define(["require", "exports", "tslib", "./Template.grammar", "./StringUtil", "./
                         "v.__wcf = window.WCF; v.__window = window;\n" +
                         "return " +
                         template;
+                // eslint-disable-next-line @typescript-eslint/no-implied-eval
                 this.fetch = new Function("StringUtil", "Language", "I18nPlural", "v", template).bind(undefined, StringUtil, Language, I18nPlural);
             }
             catch (e) {
@@ -52,10 +53,8 @@ define(["require", "exports", "tslib", "./Template.grammar", "./StringUtil", "./
         }
         /**
          * Evaluates the Template using the given parameters.
-         *
-         * @param  {object}  v  Parameters to pass to the template.
          */
-        fetch(v) {
+        fetch(_v) {
             // this will be replaced in the init function
             throw new Error("This Template is not initialized.");
         }
@@ -66,7 +65,7 @@ define(["require", "exports", "tslib", "./Template.grammar", "./StringUtil", "./
         get: function () {
             throw new Error("WCF.Template.callbacks is no longer supported");
         },
-        set: function (value) {
+        set: function (_value) {
             throw new Error("WCF.Template.callbacks is no longer supported");
         },
     });

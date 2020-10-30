@@ -61,7 +61,7 @@ function createPicker() {
   _dateMonthPrevious.title = Language.get("wcf.date.datePicker.previousMonth");
   _dateMonthPrevious.setAttribute("aria-label", Language.get("wcf.date.datePicker.previousMonth"));
   _dateMonthPrevious.innerHTML = '<span class="icon icon16 fa-arrow-left"></span>';
-  _dateMonthPrevious.addEventListener("click", DatePicker.previousMonth);
+  _dateMonthPrevious.addEventListener("click", (ev) => DatePicker.previousMonth(ev));
   header.appendChild(_dateMonthPrevious);
 
   const monthYearContainer = document.createElement("span");
@@ -77,7 +77,7 @@ function createPicker() {
   let months = "";
   const monthNames = Language.get("__monthsShort");
   for (let i = 0; i < 12; i++) {
-    months += '<option value="' + i + '">' + monthNames[i] + "</option>";
+    months += `<option value="${i}">${monthNames[i]}</option>`;
   }
   _dateMonth.innerHTML = months;
 
@@ -96,7 +96,7 @@ function createPicker() {
   _dateMonthNext.title = Language.get("wcf.date.datePicker.nextMonth");
   _dateMonthNext.setAttribute("aria-label", Language.get("wcf.date.datePicker.nextMonth"));
   _dateMonthNext.innerHTML = '<span class="icon icon16 fa-arrow-right"></span>';
-  _dateMonthNext.addEventListener("click", DatePicker.nextMonth);
+  _dateMonthNext.addEventListener("click", (ev) => DatePicker.nextMonth(ev));
   header.appendChild(_dateMonthNext);
 
   _dateGrid = document.createElement("ul");
@@ -109,7 +109,9 @@ function createPicker() {
   const weekdays = Language.get("__daysShort");
   for (let i = 0; i < 7; i++) {
     let day = i + _firstDayOfWeek;
-    if (day > 6) day -= 7;
+    if (day > 6) {
+      day -= 7;
+    }
 
     const span = document.createElement("span");
     span.textContent = weekdays[day];
@@ -144,7 +146,9 @@ function createPicker() {
   let tmp = "";
   for (let i = 0; i < 24; i++) {
     date.setHours(i);
-    tmp += '<option value="' + i + '">' + DateUtil.format(date, timeFormat) + "</option>";
+
+    const value = DateUtil.format(date, timeFormat);
+    tmp += `<option value="${i}">${value}</option>`;
   }
   _dateHour.innerHTML = tmp;
 
@@ -160,7 +164,8 @@ function createPicker() {
 
   tmp = "";
   for (let i = 0; i < 60; i++) {
-    tmp += '<option value="' + i + '">' + (i < 10 ? "0" + i.toString() : i) + "</option>";
+    const value = i < 10 ? "0" + i.toString() : i;
+    tmp += `<option value="${i}">${value}</option>`;
   }
   _dateMinute.innerHTML = tmp;
 
@@ -178,18 +183,18 @@ function initDateRange(element: HTMLInputElement, now: Date, isMinDate: boolean)
   const name = isMinDate ? "minDate" : "maxDate";
   let value = (element.dataset[name] || "").trim();
 
-  if (value.match(/^(\d{4})-(\d{2})-(\d{2})$/)) {
+  if (/^(\d{4})-(\d{2})-(\d{2})$/.exec(value)) {
     // YYYY-mm-dd
     value = new Date(value).getTime().toString();
   } else if (value === "now") {
     value = now.getTime().toString();
-  } else if (value.match(/^\d{1,3}$/)) {
+  } else if (/^\d{1,3}$/.exec(value)) {
     // relative time span in years
     const date = new Date(now.getTime());
     date.setFullYear(date.getFullYear() + ~~value * (isMinDate ? -1 : 1));
 
     value = date.getTime().toString();
-  } else if (value.match(/^datePicker-(.+)$/)) {
+  } else if (/^datePicker-(.+)$/.exec(value)) {
     // element id, e.g. `datePicker-someOtherElement`
     value = RegExp.$1;
 
@@ -211,18 +216,20 @@ function initDateRange(element: HTMLInputElement, now: Date, isMinDate: boolean)
  * Sets up callbacks and event listeners.
  */
 function setup() {
-  if (_didInit) return;
+  if (_didInit) {
+    return;
+  }
   _didInit = true;
 
   _firstDayOfWeek = parseInt(Language.get("wcf.date.firstDayOfTheWeek"), 10);
 
-  DomChangeListener.add("WoltLabSuite/Core/Date/Picker", DatePicker.init);
-  UiCloseOverlay.add("WoltLabSuite/Core/Date/Picker", close);
+  DomChangeListener.add("WoltLabSuite/Core/Date/Picker", () => DatePicker.init());
+  UiCloseOverlay.add("WoltLabSuite/Core/Date/Picker", () => close());
 }
 
 function getDateValue(attributeName: string): Date {
   let date = _input!.dataset[attributeName] || "";
-  if (date.match(/^datePicker-(.+)$/)) {
+  if (/^datePicker-(.+)$/.exec(date)) {
     const referenceElement = document.getElementById(RegExp.$1);
     if (referenceElement === null) {
       throw new Error(`Unable to find an element with the id '${RegExp.$1}'.`);
@@ -362,7 +369,7 @@ function renderPicker(day: number, month: number, year: number): void {
   // create options for month and year
   let years = "";
   for (let i = _minDate.getFullYear(), last = _maxDate.getFullYear(); i <= last; i++) {
-    years += '<option value="' + i + '">' + i + "</option>";
+    years += `<option value="${i}">${i}</option>`;
   }
   _dateYear.innerHTML = years;
   _dateYear.value = year.toString();
@@ -405,7 +412,9 @@ function renderGrid(day?: number, month?: number, year?: number): void {
     }
 
     // check if current selection exceeds min/max date
-    let date = new Date(year + "-" + ("0" + (month + 1).toString()).slice(-2) + "-" + ("0" + day.toString()).slice(-2));
+    let date = new Date(
+      year.toString() + "-" + ("0" + (month + 1).toString()).slice(-2) + "-" + ("0" + day.toString()).slice(-2)
+    );
     if (date < _minDate) {
       year = _minDate.getFullYear();
       month = _minDate.getMonth();
@@ -426,7 +435,7 @@ function renderGrid(day?: number, month?: number, year?: number): void {
       rebuildMonths = true;
     }
 
-    date = new Date(year + "-" + ("0" + (month + 1).toString()).slice(-2) + "-01");
+    date = new Date(year.toString() + "-" + ("0" + (month + 1).toString()).slice(-2) + "-01");
 
     // shift until first displayed day equals first day of week
     while (date.getDay() !== _firstDayOfWeek) {
@@ -451,8 +460,11 @@ function renderGrid(day?: number, month?: number, year?: number): void {
       cell.textContent = date.getDate().toString();
       selectable = date.getMonth() === month;
       if (selectable) {
-        if (date < comparableMinDate) selectable = false;
-        else if (date > _maxDate) selectable = false;
+        if (date < comparableMinDate) {
+          selectable = false;
+        } else if (date > _maxDate) {
+          selectable = false;
+        }
       }
 
       cell.classList[selectable ? "remove" : "add"]("otherMonth");
@@ -493,12 +505,12 @@ function renderGrid(day?: number, month?: number, year?: number): void {
           (year === _maxDate.getFullYear() && +currentMonth.value > _maxDate.getMonth());
       }
 
-      const nextMonth = new Date(year + "-" + ("0" + (month + 1).toString()).slice(-2) + "-01");
+      const nextMonth = new Date(year.toString() + "-" + ("0" + (month + 1).toString()).slice(-2) + "-01");
       nextMonth.setMonth(nextMonth.getMonth() + 1);
 
       _dateMonthNext.classList[nextMonth < _maxDate ? "add" : "remove"]("active");
 
-      const previousMonth = new Date(year + "-" + ("0" + (month + 1).toString()).slice(-2) + "-01");
+      const previousMonth = new Date(year.toString() + "-" + ("0" + (month + 1).toString()).slice(-2) + "-01");
       previousMonth.setDate(previousMonth.getDate() - 1);
 
       _dateMonthPrevious.classList[previousMonth > _minDate ? "add" : "remove"]("active");
@@ -693,7 +705,7 @@ const DatePicker = {
           element.dataset.minDate = "120";
 
           // do not use 'now' here, all though it makes sense, it causes bad UX
-          element.dataset.maxDate = new Date().getFullYear() + "-12-31";
+          element.dataset.maxDate = new Date().getFullYear().toString() + "-12-31";
         } else {
           if (element.min) {
             element.dataset.minDate = element.min;
@@ -771,7 +783,9 @@ const DatePicker = {
             const button = document.createElement("a");
             button.className = "inputSuffix button";
             button.addEventListener("click", this.clear.bind(this, element));
-            if (isEmpty) button.style.setProperty("visibility", "hidden", "");
+            if (isEmpty) {
+              button.style.setProperty("visibility", "hidden", "");
+            }
 
             container.appendChild(button);
 

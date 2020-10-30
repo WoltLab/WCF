@@ -36,22 +36,72 @@ const enum PointerClass {
   Right = 1,
 }
 
+interface ElementDimensions {
+  height: number;
+  width: number;
+}
+
+interface ElementOffset {
+  left: number;
+  top: number;
+}
+
+/**
+ * Calculates top/bottom position and verifies if the element would be still within the page's boundaries.
+ */
+function tryAlignmentVertical(
+  alignment: VerticalAlignment,
+  elDimensions: ElementDimensions,
+  refDimensions: ElementDimensions,
+  refOffsets: ElementOffset,
+  windowHeight: number,
+  verticalOffset: number
+): VerticalResult {
+  let bottom: Offset = "auto";
+  let top: Offset = "auto";
+  let result = true;
+  let pageHeaderOffset = 50;
+
+  const pageHeaderPanel = document.getElementById("pageHeaderPanel");
+  if (pageHeaderPanel !== null) {
+    const position = window.getComputedStyle(pageHeaderPanel).position;
+    if (position === "fixed" || position === "static") {
+      pageHeaderOffset = pageHeaderPanel.offsetHeight;
+    } else {
+      pageHeaderOffset = 0;
+    }
+  }
+
+  if (alignment === "top") {
+    const bodyHeight = document.body.clientHeight;
+    bottom = bodyHeight - refOffsets.top + verticalOffset;
+    if (bodyHeight - (bottom + elDimensions.height) < (window.scrollY || window.pageYOffset) + pageHeaderOffset) {
+      result = false;
+    }
+  } else {
+    top = refOffsets.top + refDimensions.height + verticalOffset;
+    if (top + elDimensions.height - (window.scrollY || window.pageYOffset) > windowHeight) {
+      result = false;
+    }
+  }
+
+  return {
+    align: alignment,
+    bottom: bottom,
+    top: top,
+    result: result,
+  };
+}
+
 /**
  * Calculates left/right position and verifies if the element would be still within the page's boundaries.
- *
- * @param  {string}    alignment    align to this side of the reference element
- * @param  {Object<string, int>}  elDimensions  element dimensions
- * @param  {Object<string, int>}  refDimensions  reference element dimensions
- * @param  {Object<string, int>}  refOffsets  position of reference element relative to the document
- * @param  {int}      windowWidth  window width
- * @returns  {Object<string, *>}  calculation results
  */
 function tryAlignmentHorizontal(
   alignment: HorizontalAlignment,
-  elDimensions,
-  refDimensions,
-  refOffsets,
-  windowWidth
+  elDimensions: ElementDimensions,
+  refDimensions: ElementDimensions,
+  refOffsets: ElementOffset,
+  windowWidth: number
 ): HorizontalResult {
   let left: Offset = "auto";
   let right: Offset = "auto";
@@ -91,66 +141,7 @@ function tryAlignmentHorizontal(
 }
 
 /**
- * Calculates top/bottom position and verifies if the element would be still within the page's boundaries.
- *
- * @param  {string}    alignment    align to this side of the reference element
- * @param  {Object<string, int>}  elDimensions  element dimensions
- * @param  {Object<string, int>}  refDimensions  reference element dimensions
- * @param  {Object<string, int>}  refOffsets  position of reference element relative to the document
- * @param  {int}      windowHeight  window height
- * @param  {int}      verticalOffset  desired gap between element and reference element
- * @returns  {object<string, *>}  calculation results
- */
-function tryAlignmentVertical(
-  alignment: VerticalAlignment,
-  elDimensions,
-  refDimensions,
-  refOffsets,
-  windowHeight,
-  verticalOffset
-): VerticalResult {
-  let bottom: Offset = "auto";
-  let top: Offset = "auto";
-  let result = true;
-  let pageHeaderOffset = 50;
-
-  const pageHeaderPanel = document.getElementById("pageHeaderPanel");
-  if (pageHeaderPanel !== null) {
-    const position = window.getComputedStyle(pageHeaderPanel).position;
-    if (position === "fixed" || position === "static") {
-      pageHeaderOffset = pageHeaderPanel.offsetHeight;
-    } else {
-      pageHeaderOffset = 0;
-    }
-  }
-
-  if (alignment === "top") {
-    const bodyHeight = document.body.clientHeight;
-    bottom = bodyHeight - refOffsets.top + verticalOffset;
-    if (bodyHeight - (bottom + elDimensions.height) < (window.scrollY || window.pageYOffset) + pageHeaderOffset) {
-      result = false;
-    }
-  } else {
-    top = refOffsets.top + refDimensions.height + verticalOffset;
-    if (top + elDimensions.height - (window.scrollY || window.pageYOffset) > windowHeight) {
-      result = false;
-    }
-  }
-
-  return {
-    align: alignment,
-    bottom: bottom,
-    top: top,
-    result: result,
-  };
-}
-
-/**
  * Sets the alignment for target element relatively to the reference element.
- *
- * @param  {Element}    element    target element
- * @param  {Element}    referenceElement    reference element
- * @param  {Object<string, *>}  options    list of options to alter the behavior
  */
 export function set(element: HTMLElement, referenceElement: HTMLElement, options?: AlignmentOptions): void {
   options = Core.extend(
@@ -249,7 +240,7 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
     refDimensions,
     refOffsets,
     windowHeight,
-    options.verticalOffset
+    options.verticalOffset!
   );
   if (!vertical.result && (options.allowFlip === "both" || options.allowFlip === "vertical")) {
     const verticalFlipped = tryAlignmentVertical(
@@ -258,7 +249,7 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
       refDimensions,
       refOffsets,
       windowHeight,
-      options.verticalOffset
+      options.verticalOffset!
     );
     // only use these results if it fits into the boundaries, otherwise both directions exceed and we honor the demanded direction
     if (verticalFlipped.result) {
@@ -296,10 +287,10 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
   }
 
   DomUtil.setStyles(element, {
-    bottom: bottom === "auto" ? bottom : Math.round(bottom) + "px",
-    left: left === "auto" ? left : Math.ceil(left) + "px",
-    right: right === "auto" ? right : Math.floor(right) + "px",
-    top: top === "auto" ? top : Math.round(top) + "px",
+    bottom: bottom === "auto" ? bottom : Math.round(bottom).toString() + "px",
+    left: left === "auto" ? left : Math.ceil(left).toString() + "px",
+    right: right === "auto" ? right : Math.floor(right).toString() + "px",
+    top: top === "auto" ? top : Math.round(top).toString() + "px",
   });
 
   DomUtil.show(element);

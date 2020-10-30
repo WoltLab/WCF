@@ -149,11 +149,6 @@ define(["require", "exports", "tslib", "../../../Language", "../../../StringUtil
     }
     /**
      * Opens the lookup overlay for provided page id.
-     *
-     * @param  {int}    pageId      page id
-     * @param  {string}  title      dialog title
-     * @param  {function}  callback    callback function provided with the user-selected object id
-     * @param  {string?}  labelLanguageItem  optional language item name for the search input label
      */
     function open(pageId, title, callback, labelLanguageItem) {
         getUiPageSearchHandler().open(pageId, title, callback, labelLanguageItem);

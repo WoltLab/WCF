@@ -40,7 +40,7 @@ define(["require", "exports", "tslib", "./Language", "./NumberUtil"], function (
      * @see    https://github.com/sstephenson/prototype/blob/master/src/prototype/lang/regexp.js#L25
      */
     function escapeRegExp(string) {
-        return String(string).replace(/([.*+?^=!:${}()|[\]\/\\])/g, "\\$1");
+        return String(string).replace(/([.*+?^=!:${}()|[\]/\\])/g, "\\$1");
     }
     exports.escapeRegExp = escapeRegExp;
     /**

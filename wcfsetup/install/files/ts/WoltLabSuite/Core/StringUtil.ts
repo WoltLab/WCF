@@ -42,7 +42,7 @@ export function escapeHTML(string: string): string {
  * @see    https://github.com/sstephenson/prototype/blob/master/src/prototype/lang/regexp.js#L25
  */
 export function escapeRegExp(string: string): string {
-  return String(string).replace(/([.*+?^=!:${}()|[\]\/\\])/g, "\\$1");
+  return String(string).replace(/([.*+?^=!:${}()|[\]/\\])/g, "\\$1");
 }
 
 /**

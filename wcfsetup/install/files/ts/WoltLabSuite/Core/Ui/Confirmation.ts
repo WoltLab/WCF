@@ -11,7 +11,7 @@
 import * as Core from "../Core";
 import * as Language from "../Language";
 import UiDialog from "./Dialog";
-import { DialogCallbackObject } from "./Dialog/Data";
+import { DialogCallbackObject, CallbackSetup as DialogSetup } from "./Dialog/Data";
 
 class UiConfirmation implements DialogCallbackObject {
   private _active = false;
@@ -44,7 +44,7 @@ class UiConfirmation implements DialogCallbackObject {
     this.confirmButton = document.createElement("button");
     this.confirmButton.classList.add("buttonPrimary");
     this.confirmButton.textContent = Language.get("wcf.global.confirmation.confirm");
-    this.confirmButton.addEventListener("click", (ev) => this._confirm());
+    this.confirmButton.addEventListener("click", (_ev) => this._confirm());
     formSubmit.appendChild(this.confirmButton);
 
     const cancelButton = document.createElement("button");
@@ -72,7 +72,9 @@ class UiConfirmation implements DialogCallbackObject {
       };
     } else {
       if (typeof options.cancel !== "function") {
-        options.cancel = () => {};
+        options.cancel = () => {
+          // Do nothing
+        };
       }
 
       this.callbackCancel = options.cancel;
@@ -124,7 +126,7 @@ class UiConfirmation implements DialogCallbackObject {
     this.confirmButton.focus();
   }
 
-  _dialogSetup() {
+  _dialogSetup(): ReturnType<DialogSetup> {
     return {
       id: "wcfSystemConfirmation",
       options: {

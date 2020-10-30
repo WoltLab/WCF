@@ -204,7 +204,7 @@ define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Dom/Util", "
                     });
                 }
                 if (!tab) {
-                    throw new Error("Expected a valid tab name, '" + name + "' given (tab menu id: '" + this.container.id + "').");
+                    throw new Error(`Expected a valid tab name, '${name}' given (tab menu id: '${this.container.id}').`);
                 }
             }
             name = (name || tab.dataset.name || "");
@@ -270,13 +270,9 @@ define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Dom/Util", "
                 // update history
                 window.history.replaceState(undefined, "", location);
             }
-            // TODO
-            /*
-            require(['WoltLabSuite/Core/Ui/TabMenu'], function (UiTabMenu) {
-              //noinspection JSUnresolvedFunction
-              UiTabMenu.scrollToTab(tab);
+            void new Promise((resolve_1, reject_1) => { require(["../TabMenu"], resolve_1, reject_1); }).then(tslib_1.__importStar).then((UiTabMenu) => {
+                UiTabMenu.scrollToTab(tab);
             });
-             */
         }
         /**
          * Selects the first visible tab of the tab menu and return `true`. If there is no
@@ -331,7 +327,7 @@ define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Dom/Util", "
             if (!name) {
                 if (tab.childElementCount === 1 && tab.children[0].nodeName === "A") {
                     const link = tab.children[0];
-                    if (link.href.match(/#([^#]+)$/)) {
+                    if (/#([^#]+)$/.exec(link.href)) {
                         name = RegExp.$1;
                         if (document.getElementById(name) === null) {
                             name = null;
@@ -364,7 +360,7 @@ define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Dom/Util", "
             return this.tabs;
         }
         static getIdentifierFromHash() {
-            if (window.location.hash.match(/^#+([^\/]+)+(?:\/.+)?/)) {
+            if (/^#+([^/]+)+(?:\/.+)?/.exec(window.location.hash)) {
                 return RegExp.$1;
             }
             return "";

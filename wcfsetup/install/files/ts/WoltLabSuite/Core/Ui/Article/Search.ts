@@ -1,6 +1,6 @@
 import * as Ajax from "../../Ajax";
-import { AjaxCallbackObject, DatabaseObjectActionResponse } from "../../Ajax/Data";
-import { DialogCallbackObject } from "../Dialog/Data";
+import { AjaxCallbackObject, CallbackSetup, DatabaseObjectActionResponse } from "../../Ajax/Data";
+import { DialogCallbackObject, CallbackSetup as DialogSetup } from "../Dialog/Data";
 import DomUtil from "../../Dom/Util";
 import * as Language from "../../Language";
 import * as StringUtil from "../../StringUtil";
@@ -60,7 +60,7 @@ class UiArticleSearch implements AjaxCallbackObject, DialogCallbackObject {
   }
 
   _ajaxSuccess(data: AjaxResponse): void {
-    let html = data.returnValues
+    const html = data.returnValues
       .map((article) => {
         return `<li>
           <div class="containerHeadline pointer" data-article-id="${article.articleID}">
@@ -73,7 +73,11 @@ class UiArticleSearch implements AjaxCallbackObject, DialogCallbackObject {
 
     this.resultList!.innerHTML = html;
 
-    DomUtil[html ? "show" : "hide"](this.resultList!);
+    if (html) {
+      DomUtil.show(this.resultList!);
+    } else {
+      DomUtil.hide(this.resultList!);
+    }
 
     if (html) {
       this.resultList!.querySelectorAll(".containerHeadline").forEach((item) => {
@@ -85,7 +89,7 @@ class UiArticleSearch implements AjaxCallbackObject, DialogCallbackObject {
     }
   }
 
-  _ajaxSetup() {
+  _ajaxSetup(): ReturnType<CallbackSetup> {
     return {
       data: {
         actionName: "search",
@@ -94,7 +98,7 @@ class UiArticleSearch implements AjaxCallbackObject, DialogCallbackObject {
     };
   }
 
-  _dialogSetup() {
+  _dialogSetup(): ReturnType<DialogSetup> {
     return {
       id: "wcfUiArticleSearch",
       options: {
@@ -150,6 +154,6 @@ function getUiArticleSearch() {
   return uiArticleSearch;
 }
 
-export function open(callbackSelect) {
+export function open(callbackSelect: CallbackSelect): void {
   getUiArticleSearch().open(callbackSelect);
 }
