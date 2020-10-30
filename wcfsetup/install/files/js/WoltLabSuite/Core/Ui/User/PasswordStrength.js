@@ -7,14 +7,18 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/User/PasswordStrength
  */
-define(['Core', 'Language'], function (Core, Language) {
-    'use strict';
-    var STATIC_DICTIONARY = [];
-    if (elBySel('meta[property="og:site_name"]')) {
-        STATIC_DICTIONARY.push(elBySel('meta[property="og:site_name"]').getAttribute('content'));
+define(["require", "exports", "tslib", "../../Language", "../../Dom/Util"], function (require, exports, tslib_1, Language, Util_1) {
+    "use strict";
+    var _a;
+    Language = tslib_1.__importStar(Language);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    const STATIC_DICTIONARY = [];
+    const siteName = (_a = document.querySelector('meta[property="og:site_name"]')) === null || _a === void 0 ? void 0 : _a.getAttribute("content");
+    if (siteName) {
+        STATIC_DICTIONARY.push(siteName);
     }
     function flatMap(array, callback) {
-        return array.map(callback).reduce(function (carry, item) {
+        return array.map(callback).reduce((carry, item) => {
             return carry.concat(item);
         }, []);
     }
@@ -22,98 +26,68 @@ define(['Core', 'Language'], function (Core, Language) {
         return [].concat(value, value.split(/\W+/));
     }
     function initializeFeedbacker(Feedback) {
-        var phrases = Core.extend({}, Feedback.default_phrases);
-        for (var type in phrases) {
-            if (phrases.hasOwnProperty(type)) {
-                for (var phrase in phrases[type]) {
-                    if (phrases[type].hasOwnProperty(phrase)) {
-                        var languageItem = 'wcf.user.password.zxcvbn.' + type + '.' + phrase;
-                        var value = Language.get(languageItem);
-                        if (value !== languageItem) {
-                            phrases[type][phrase] = value;
-                        }
-                    }
+        const localizedPhrases = {};
+        Object.entries(Feedback.default_phrases).forEach(([type, phrases]) => {
+            localizedPhrases[type] = {};
+            Object.entries(phrases).forEach(([identifier, phrase]) => {
+                const languageItem = `wcf.user.password.zxcvbn.${type}.${identifier}`;
+                const localizedValue = Language.get(languageItem);
+                localizedPhrases[type][identifier] = localizedValue !== languageItem ? localizedValue : phrase;
+            });
+        });
+        return new Feedback(localizedPhrases);
+    }
+    class PasswordStrength {
+        constructor(input, options) {
+            this.input = input;
+            this.wrapper = document.createElement("div");
+            this.score = document.createElement("span");
+            this.verdictResult = document.createElement("input");
+            void new Promise((resolve_1, reject_1) => { require(["zxcvbn"], resolve_1, reject_1); }).then(tslib_1.__importStar).then(({ default: zxcvbn }) => {
+                this.zxcvbn = zxcvbn;
+                if (options.relatedInputs) {
+                    this.relatedInputs = options.relatedInputs;
                 }
-            }
+                if (options.staticDictionary) {
+                    this.staticDictionary = options.staticDictionary;
+                }
+                this.feedbacker = initializeFeedbacker(zxcvbn.Feedback);
+                this.wrapper.className = "inputAddon inputAddonPasswordStrength";
+                this.input.parentNode.insertBefore(this.wrapper, this.input);
+                this.wrapper.appendChild(this.input);
+                const rating = document.createElement("div");
+                rating.className = "passwordStrengthRating";
+                const ratingLabel = document.createElement("small");
+                ratingLabel.textContent = Language.get("wcf.user.password.strength");
+                rating.appendChild(ratingLabel);
+                this.score.className = "passwordStrengthScore";
+                this.score.dataset.score = "-1";
+                rating.appendChild(this.score);
+                this.wrapper.appendChild(rating);
+                this.verdictResult.type = "hidden";
+                this.verdictResult.name = `${this.input.name}_passwordStrengthVerdict`;
+                this.wrapper.parentNode.insertBefore(this.verdictResult, this.wrapper);
+                this.input.addEventListener("input", (ev) => this.evaluate(ev));
+                this.relatedInputs.forEach((input) => input.addEventListener("input", (ev) => this.evaluate(ev)));
+                if (this.input.value.trim() !== "") {
+                    this.evaluate();
+                }
+            });
         }
-        return new Feedback(phrases);
-    }
-    /**
-     * @constructor
-     */
-    function PasswordStrength(input, options) {
-        require(['zxcvbn']).then(function (modules) {
-            var zxcvbn = modules[0];
-            this.init(zxcvbn, input, options);
-        }.bind(this));
-    }
-    PasswordStrength.prototype = {
-        /**
-         * @param	{*}		zxcvbn
-         * @param	{Element}	input
-         * @param	{object}	options
-         */
-        init: function (zxcvbn, input, options) {
-            this._zxcvbn = zxcvbn;
-            this._input = input;
-            this._options = Core.extend({
-                relatedInputs: [],
-                staticDictionary: []
-            }, options);
-            if (!this._options.feedbacker) {
-                this._options.feedbacker = initializeFeedbacker(zxcvbn.Feedback);
-            }
-            this._wrapper = elCreate('div');
-            this._wrapper.className = 'inputAddon inputAddonPasswordStrength';
-            this._input.parentNode.insertBefore(this._wrapper, this._input);
-            this._wrapper.appendChild(this._input);
-            var rating = elCreate('div');
-            rating.className = 'passwordStrengthRating';
-            var ratingLabel = elCreate('small');
-            ratingLabel.textContent = Language.get('wcf.user.password.strength');
-            rating.appendChild(ratingLabel);
-            this._score = elCreate('span');
-            this._score.className = 'passwordStrengthScore';
-            elData(this._score, 'score', '-1');
-            rating.appendChild(this._score);
-            this._wrapper.appendChild(rating);
-            this._feedback = elCreate('div');
-            this._feedback.className = 'passwordStrengthFeedback';
-            this._wrapper.appendChild(this._feedback);
-            this._verdictResult = elCreate('input');
-            this._verdictResult.type = 'hidden';
-            this._verdictResult.name = this._input.name + '_passwordStrengthVerdict';
-            this._wrapper.parentNode.insertBefore(this._verdictResult, this._wrapper);
-            var callback = this._evaluate.bind(this);
-            this._input.addEventListener('input', callback);
-            this._options.relatedInputs.forEach(function (input) {
-                input.addEventListener('input', callback);
-            });
-            if (this._input.value.trim() !== '') {
-                this._evaluate();
-            }
-        },
-        /**
-         * @param {Event=} event
-         */
-        _evaluate: function (event) {
-            var dictionary = flatMap(STATIC_DICTIONARY.concat(this._options.staticDictionary, this._options.relatedInputs.map(function (input) {
-                return input.value.trim();
-            })), splitIntoWords).filter(function (value) {
-                return value.length > 0;
-            });
-            var value = this._input.value.trim();
+        evaluate(event) {
+            const dictionary = flatMap(STATIC_DICTIONARY.concat(this.staticDictionary, this.relatedInputs.map((input) => input.value.trim())), splitIntoWords).filter((value) => value.length > 0);
+            const value = this.input.value.trim();
             // To bound runtime latency for really long passwords, consider sending zxcvbn() only
             // the first 100 characters or so of user input.
-            var verdict = this._zxcvbn(value.substr(0, 100), dictionary);
-            verdict.feedback = this._options.feedbacker.from_result(verdict);
-            elData(this._score, 'score', value.length === 0 ? '-1' : verdict.score);
+            const verdict = this.zxcvbn(value.substr(0, 100), dictionary);
+            verdict.feedback = this.feedbacker.from_result(verdict);
+            this.score.dataset.score = value.length === 0 ? "-1" : verdict.score.toString();
             if (event !== undefined) {
                 // Do not overwrite the value on page load.
-                elInnerError(this._wrapper, verdict.feedback.warning);
+                Util_1.default.innerError(this.wrapper, verdict.feedback.warning);
             }
-            this._verdictResult.value = JSON.stringify(verdict);
+            this.verdictResult.value = JSON.stringify(verdict);
         }
-    };
+    }
     return PasswordStrength;
 });
