@@ -66,7 +66,9 @@ define(["require", "exports"], function (require, exports) {
                             _settings = JSON.parse(settings);
                         }
                     }
-                    catch (e) { }
+                    catch (e) {
+                        // Ignore JSON parsing failure.
+                    }
                     if (!_settings.editorAutosave)
                         Devtools.toggleEditorAutosave(true);
                     if (_settings.eventLogging)

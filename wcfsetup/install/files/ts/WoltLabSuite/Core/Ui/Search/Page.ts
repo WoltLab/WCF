@@ -34,7 +34,9 @@ function click(event: MouseEvent): void {
         parameters.set(key, data[key]);
       });
     }
-  } catch (e) {}
+  } catch (e) {
+    // Ignore JSON parsing failure.
+  }
 
   if (objectType) {
     parameters.set("types[]", objectType);

@@ -33,7 +33,9 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../.
                 });
             }
         }
-        catch (e) { }
+        catch (e) {
+            // Ignore JSON parsing failure.
+        }
         if (objectType) {
             parameters.set("types[]", objectType);
         }

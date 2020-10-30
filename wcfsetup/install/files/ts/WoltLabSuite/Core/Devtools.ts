@@ -78,7 +78,9 @@ const Devtools = {
           if (settings !== null) {
             _settings = JSON.parse(settings);
           }
-        } catch (e) {}
+        } catch (e) {
+          // Ignore JSON parsing failure.
+        }
 
         if (!_settings.editorAutosave) Devtools.toggleEditorAutosave(true);
         if (_settings.eventLogging) Devtools.toggleEventLogging(true);

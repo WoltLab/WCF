@@ -264,7 +264,9 @@ class AjaxRequest {
     let data: ResponseData | null = null;
     try {
       data = JSON.parse(xhr.responseText);
-    } catch (e) {}
+    } catch (e) {
+      // Ignore JSON parsing failure.
+    }
 
     let showError = true;
     if (typeof options.failure === "function") {
