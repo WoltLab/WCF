@@ -67,13 +67,13 @@ function getStatus(): AjaxStatus {
 /**
  * Shows the loading overlay.
  */
-export function show() {
+export function show(): void {
   getStatus().show();
 }
 
 /**
  * Hides the loading overlay.
  */
-export function hide() {
+export function hide(): void {
   getStatus().hide();
 }
