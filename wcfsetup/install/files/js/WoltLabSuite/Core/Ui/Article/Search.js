@@ -42,7 +42,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../La
             Dialog_1.default.close(this);
         }
         _ajaxSuccess(data) {
-            let html = data.returnValues
+            const html = data.returnValues
                 .map((article) => {
                 return `<li>
           <div class="containerHeadline pointer" data-article-id="${article.articleID}">
@@ -53,7 +53,12 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Dom/Util", "../../La
             })
                 .join("");
             this.resultList.innerHTML = html;
-            Util_1.default[html ? "show" : "hide"](this.resultList);
+            if (html) {
+                Util_1.default.show(this.resultList);
+            }
+            else {
+                Util_1.default.hide(this.resultList);
+            }
             if (html) {
                 this.resultList.querySelectorAll(".containerHeadline").forEach((item) => {
                     item.addEventListener("click", this.click.bind(this));

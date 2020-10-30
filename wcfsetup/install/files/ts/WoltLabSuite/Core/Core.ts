@@ -174,7 +174,7 @@ export function getUuid(): string {
  * Recursively serializes an object into an encoded URI parameter string.
  */
 export function serialize(obj: object, prefix?: string): string {
-  let parameters: string[] = [];
+  const parameters: string[] = [];
 
   for (const key in obj) {
     if (obj.hasOwnProperty(key)) {

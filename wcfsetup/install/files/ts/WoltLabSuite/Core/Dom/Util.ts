@@ -306,7 +306,7 @@ const DomUtil = {
       if (attribute.name.indexOf(prefix) === 0) {
         let name = attribute.name.replace(new RegExp("^" + prefix), "");
         if (camelCaseName) {
-          let tmp = name.split("-");
+          const tmp = name.split("-");
           name = "";
           for (let j = 0, innerLength = tmp.length; j < innerLength; j++) {
             if (name.length) {
@@ -338,7 +338,7 @@ const DomUtil = {
       throw new Error("The element has no parent.");
     }
 
-    let parent = element.parentNode;
+    const parent = element.parentNode;
     while (element.childNodes.length) {
       parent.insertBefore(element.childNodes[0], element);
     }

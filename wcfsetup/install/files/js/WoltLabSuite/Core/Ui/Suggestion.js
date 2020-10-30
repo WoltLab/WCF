@@ -70,7 +70,8 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "./Dropdown/Simple"
                 return true;
             }
             let active;
-            let i = 0, length = this.dropdownMenu.childElementCount;
+            let i = 0;
+            const length = this.dropdownMenu.childElementCount;
             while (i < length) {
                 active = this.dropdownMenu.children[i];
                 if (active.classList.contains("active")) {

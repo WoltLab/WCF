@@ -60,7 +60,7 @@ class UiArticleSearch implements AjaxCallbackObject, DialogCallbackObject {
   }
 
   _ajaxSuccess(data: AjaxResponse): void {
-    let html = data.returnValues
+    const html = data.returnValues
       .map((article) => {
         return `<li>
           <div class="containerHeadline pointer" data-article-id="${article.articleID}">
@@ -73,7 +73,11 @@ class UiArticleSearch implements AjaxCallbackObject, DialogCallbackObject {
 
     this.resultList!.innerHTML = html;
 
-    DomUtil[html ? "show" : "hide"](this.resultList!);
+    if (html) {
+      DomUtil.show(this.resultList!);
+    } else {
+      DomUtil.hide(this.resultList!);
+    }
 
     if (html) {
       this.resultList!.querySelectorAll(".containerHeadline").forEach((item) => {

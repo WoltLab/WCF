@@ -98,8 +98,8 @@ class UiSuggestion implements AjaxCallbackObject {
     }
 
     let active!: HTMLElement;
-    let i = 0,
-      length = this.dropdownMenu!.childElementCount;
+    let i = 0;
+    const length = this.dropdownMenu!.childElementCount;
     while (i < length) {
       active = this.dropdownMenu!.children[i] as HTMLElement;
       if (active.classList.contains("active")) {
