@@ -16,7 +16,6 @@ import * as UiScreen from "../../Screen";
 let _isMobile = false;
 
 let _pageHeader: HTMLElement;
-let _pageHeaderContainer: HTMLElement;
 let _pageHeaderPanel: HTMLElement;
 let _pageHeaderSearch: HTMLElement;
 let _searchInput: HTMLInputElement;
@@ -110,7 +109,6 @@ function closeSearchBar(): void {
  */
 export function init(): void {
   _pageHeader = document.getElementById("pageHeader")!;
-  _pageHeaderContainer = document.getElementById("pageHeaderContainer")!;
 
   initSearchBar();
 

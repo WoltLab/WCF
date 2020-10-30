@@ -24,7 +24,6 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
     let _dialogFullHeight = false;
     const _dialogObjects = new WeakMap();
     const _dialogToObject = new Map();
-    let _focusedBeforeDialog;
     let _keyupListener;
     const _validCallbacks = ["onBeforeClose", "onClose", "onShow"];
     // list of supported `input[type]` values for dialog submit
@@ -85,7 +84,6 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             Listener_1.default.add("Ui/Dialog", () => {
                 this._initStaticDialogs();
             });
-            UiScreen.setDialogContainer(_container);
             window.addEventListener("resize", () => {
                 _dialogs.forEach((dialog) => {
                     if (!Core.stringToBool(dialog.dialog.getAttribute("aria-hidden"))) {
@@ -432,8 +430,6 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                 _container.setAttribute("aria-hidden", "false");
                 _container.setAttribute("close-on-click", data.backdropCloseOnClick ? "true" : "false");
                 _activeDialog = id;
-                // Keep a reference to the currently focused element to be able to restore it later.
-                _focusedBeforeDialog = document.activeElement;
                 // Set the focus to the first focusable child of the dialog element.
                 const closeButton = data.header.querySelector(".dialogCloseButton");
                 if (closeButton)

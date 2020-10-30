@@ -151,7 +151,7 @@ const Plural = {
   },
 
   // Tibetan
-  bo(n: number) {},
+  bo(_n: number) {},
 
   // Bosnian
   bs(n: number): string | undefined {
@@ -276,7 +276,7 @@ const Plural = {
   },
 
   // Indonesian
-  id(n: number) {},
+  id(_n: number) {},
 
   // Icelandic
   is(n: number): string | undefined {
@@ -286,10 +286,10 @@ const Plural = {
   },
 
   // Japanese
-  ja(n: number) {},
+  ja(_n: number) {},
 
   // Javanese
-  jv(n: number) {},
+  jv(_n: number) {},
 
   // Georgian
   ka(n: number): string | undefined {
@@ -302,7 +302,7 @@ const Plural = {
   },
 
   // Khmer
-  km(n: number) {},
+  km(_n: number) {},
 
   // Kannada
   kn(n: number): string | undefined {
@@ -310,7 +310,7 @@ const Plural = {
   },
 
   // Korean
-  ko(n: number) {},
+  ko(_n: number) {},
 
   // Kurdish
   ku(n: number): string | undefined {
@@ -328,7 +328,7 @@ const Plural = {
   },
 
   // Lao
-  lo(n: number) {},
+  lo(_n: number) {},
 
   // Lithuanian
   lt(n: number): string | undefined {
@@ -375,7 +375,7 @@ const Plural = {
   },
 
   // Malay
-  ms(n: number) {},
+  ms(_n: number) {},
 
   // Maltese
   mt(n: number): string | undefined {
@@ -387,7 +387,7 @@ const Plural = {
   },
 
   // Burmese
-  my(n: number) {},
+  my(_n: number) {},
 
   // Norwegian
   no(n: number): string | undefined {
@@ -503,10 +503,10 @@ const Plural = {
   },
 
   // Tajik
-  tg(n: number) {},
+  tg(_n: number) {},
 
   // Thai
-  th(n: number) {},
+  th(_n: number) {},
 
   // Turkmen
   tk(n: number): string | undefined {
@@ -535,10 +535,10 @@ const Plural = {
   },
 
   // Vietnamese
-  vi(n: number) {},
+  vi(_n: number) {},
 
   // Chinese
-  zh(n: number) {},
+  zh(_n: number) {},
 };
 
 export = Plural;

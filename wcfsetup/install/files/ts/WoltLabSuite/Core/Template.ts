@@ -63,7 +63,7 @@ class Template {
    *
    * @param  {object}  v  Parameters to pass to the template.
    */
-  fetch(v: object): string {
+  fetch(_v: object): string {
     // this will be replaced in the init function
     throw new Error("This Template is not initialized.");
   }
@@ -75,7 +75,7 @@ Object.defineProperty(Template, "callbacks", {
   get: function () {
     throw new Error("WCF.Template.callbacks is no longer supported");
   },
-  set: function (value) {
+  set: function (_value) {
     throw new Error("WCF.Template.callbacks is no longer supported");
   },
 });

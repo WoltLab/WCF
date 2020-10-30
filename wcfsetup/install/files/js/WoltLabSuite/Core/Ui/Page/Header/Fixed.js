@@ -17,7 +17,6 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../Alignmen
     UiScreen = tslib_1.__importStar(UiScreen);
     let _isMobile = false;
     let _pageHeader;
-    let _pageHeaderContainer;
     let _pageHeaderPanel;
     let _pageHeaderSearch;
     let _searchInput;
@@ -94,7 +93,6 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../Alignmen
      */
     function init() {
         _pageHeader = document.getElementById("pageHeader");
-        _pageHeaderContainer = document.getElementById("pageHeaderContainer");
         initSearchBar();
         UiScreen.on("screen-md-down", {
             match() {

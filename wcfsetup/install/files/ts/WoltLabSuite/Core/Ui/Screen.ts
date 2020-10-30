@@ -13,7 +13,6 @@ import * as Environment from "../Environment";
 
 const _mql = new Map<string, MediaQueryData>();
 
-let _dialogContainer: Element;
 let _scrollDisableCounter = 0;
 let _scrollOffsetFrom: string;
 let _scrollTop = 0;
@@ -179,13 +178,9 @@ export function pageOverlayIsActive(): boolean {
 }
 
 /**
- * Sets the dialog container element. This method is used to
- * circumvent a possible circular dependency, due to `Ui/Dialog`
- * requiring the `Ui/Screen` module itself.
+ * @deprecated 5.4 - This method is a noop.
  */
-export function setDialogContainer(container: Element): void {
-  _dialogContainer = container;
-}
+export function setDialogContainer(_container: Element): void {}
 
 function _getQueryObject(query: string): MediaQueryData {
   if (typeof (query as any) !== "string" || query.trim() === "") {

@@ -55,7 +55,7 @@ define(["require", "exports", "tslib", "./Template.grammar", "./StringUtil", "./
          *
          * @param  {object}  v  Parameters to pass to the template.
          */
-        fetch(v) {
+        fetch(_v) {
             // this will be replaced in the init function
             throw new Error("This Template is not initialized.");
         }
@@ -66,7 +66,7 @@ define(["require", "exports", "tslib", "./Template.grammar", "./StringUtil", "./
         get: function () {
             throw new Error("WCF.Template.callbacks is no longer supported");
         },
-        set: function (value) {
+        set: function (_value) {
             throw new Error("WCF.Template.callbacks is no longer supported");
         },
     });

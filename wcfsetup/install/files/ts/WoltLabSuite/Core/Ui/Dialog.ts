@@ -32,7 +32,6 @@ const _dialogs = new Map<ElementId, DialogData>();
 let _dialogFullHeight = false;
 const _dialogObjects = new WeakMap<DialogCallbackObject, DialogInternalData>();
 const _dialogToObject = new Map<ElementId, DialogCallbackObject>();
-let _focusedBeforeDialog: Element | null;
 let _keyupListener: (event: KeyboardEvent) => boolean;
 const _validCallbacks = ["onBeforeClose", "onClose", "onShow"];
 
@@ -106,8 +105,6 @@ const UiDialog = {
     DomChangeListener.add("Ui/Dialog", () => {
       this._initStaticDialogs();
     });
-
-    UiScreen.setDialogContainer(_container);
 
     window.addEventListener("resize", () => {
       _dialogs.forEach((dialog) => {
@@ -517,9 +514,6 @@ const UiDialog = {
       _container.setAttribute("aria-hidden", "false");
       _container.setAttribute("close-on-click", data.backdropCloseOnClick ? "true" : "false");
       _activeDialog = id;
-
-      // Keep a reference to the currently focused element to be able to restore it later.
-      _focusedBeforeDialog = document.activeElement;
 
       // Set the focus to the first focusable child of the dialog element.
       const closeButton = data.header.querySelector(".dialogCloseButton");
