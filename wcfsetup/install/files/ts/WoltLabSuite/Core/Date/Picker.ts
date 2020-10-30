@@ -608,7 +608,7 @@ function maintainFocus(event: FocusEvent): void {
       sibling.focus();
       _wasInsidePicker = false;
     } else {
-      _datePicker!.querySelector<HTMLElement>(".previous")!.focus();
+      _datePicker.querySelector<HTMLElement>(".previous")!.focus();
     }
   } else {
     _wasInsidePicker = true;
