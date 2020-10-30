@@ -151,6 +151,6 @@ function getUiPageSearch(): UiPageSearch {
   return uiPageSearch;
 }
 
-export function open(callbackSelect) {
+export function open(callbackSelect: CallbackSelect): void {
   getUiPageSearch().open(callbackSelect);
 }
