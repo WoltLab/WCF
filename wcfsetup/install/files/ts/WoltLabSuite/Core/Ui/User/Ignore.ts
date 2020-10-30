@@ -47,7 +47,7 @@ function showMessage(event: MouseEvent): void {
  * Initializes the click handler for each ignored message and listens for
  * newly inserted messages.
  */
-export function init() {
+export function init(): void {
   rebuild();
 
   DomChangeListener.add("WoltLabSuite/Core/Ui/User/Ignore", rebuild);
