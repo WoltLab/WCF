@@ -20,7 +20,7 @@ define(['Ajax', 'Language', 'Ui/Dialog', 'WoltLabSuite/Core/Acp/Ui/Worker'], fun
 		 * Initializes the content remove handler.
 		 */
 		init: function (element, userId) {
-			element.addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
+			element.addEventListener('click', this._click.bind(this));
 			this._userId = userId;
 		},
 		
@@ -80,7 +80,7 @@ define(['Ajax', 'Language', 'Ui/Dialog', 'WoltLabSuite/Core/Acp/Ui/Worker'], fun
 		_ajaxSuccess: function (data) {
 			UiDialog.open(this, data.returnValues.template);
 			
-			elBySel('input[type="submit"]', UiDialog.getDialog('userRemoveContentHandler-' + this._userId).content).addEventListener(WCF_CLICK_EVENT, this._submit.bind(this));
+			elBySel('input[type="submit"]', UiDialog.getDialog('userRemoveContentHandler-' + this._userId).content).addEventListener('click', this._submit.bind(this));
 		},
 		
 		_ajaxSetup: function () {

@@ -86,7 +86,7 @@ define(['Language', 'Ui/Dialog', 'WoltLabSuite/Core/Ui/ItemList/Filter'], functi
 						}
 						
 						_iconList.innerHTML = html;
-						_iconList.addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
+						_iconList.addEventListener('click', this._click.bind(this));
 						
 						_itemListFilter = new UiItemListFilter('fontAwesomeIcons', {
 							callbackPrepareItem: function (item) {

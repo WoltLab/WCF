@@ -143,7 +143,7 @@ define(
 					textSpan.innerText = reaction.title;
 				}
 				
-				elementData.reactButton.addEventListener(WCF_CLICK_EVENT, this._toggleReactPopover.bind(this, elementData.objectId, elementData.reactButton));
+				elementData.reactButton.addEventListener('click', this._toggleReactPopover.bind(this, elementData.objectId, elementData.reactButton));
 			},
 			
 			_updateReactButton: function(objectID, reactionTypeID) {
@@ -329,7 +329,7 @@ define(
 						
 						reactionTypeItem.appendChild(reactionTypeItemSpan);
 						
-						reactionTypeItem.addEventListener(WCF_CLICK_EVENT, this._react.bind(this, reactionType.reactionTypeID));
+						reactionTypeItem.addEventListener('click', this._react.bind(this, reactionType.reactionTypeID));
 						
 						if (!reactionType.isAssignable) {
 							elHide(reactionTypeItem);

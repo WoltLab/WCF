@@ -7,7 +7,7 @@
 		elBySelAll('.jsRebuildDataWorker', undefined, function (button) {
 			if (button.classList.contains('disabled')) return;
 			
-			button.addEventListener(WCF_CLICK_EVENT, function (event) {
+			button.addEventListener('click', function (event) {
 				event.preventDefault();
 				
 				new AcpUiWorker({

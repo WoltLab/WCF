@@ -45,7 +45,7 @@ define(['Core', 'Language', 'Dom/Traverse', './Abstract'], function (Core, Langu
                     item = _navigationList.children[0];
                     item.classList.add('menuOverlayItem');
                     item.classList.add('menuOverlayItemOption');
-                    item.addEventListener(WCF_CLICK_EVENT, _callbackClose);
+                    item.addEventListener('click', _callbackClose);
                     link = item.children[0];
                     link.classList.add('menuOverlayItemLink');
                     link.classList.add('box24');
@@ -71,7 +71,7 @@ define(['Core', 'Language', 'Dom/Traverse', './Abstract'], function (Core, Langu
                 while (item && item.classList.contains('menuOverlayItemOption')) {
                     item.classList.remove('menuOverlayItem');
                     item.classList.remove('menuOverlayItemOption');
-                    item.removeEventListener(WCF_CLICK_EVENT, _callbackClose);
+                    item.removeEventListener('click', _callbackClose);
                     link = item.children[0];
                     link.classList.remove('menuOverlayItemLink');
                     link.classList.remove('box24');

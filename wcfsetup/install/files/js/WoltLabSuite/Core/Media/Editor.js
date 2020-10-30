@@ -140,7 +140,7 @@ define([
                 if (altText)
                     altText.addEventListener('keypress', keyPress);
                 title.addEventListener('keypress', keyPress);
-                elBySel('button[data-type=submit]', content).addEventListener(WCF_CLICK_EVENT, this._saveData.bind(this));
+                elBySel('button[data-type=submit]', content).addEventListener('click', this._saveData.bind(this));
                 // remove focus from input elements and scroll dialog to top
                 document.activeElement.blur();
                 elById('mediaEditor_' + this._media.mediaID).parentNode.scrollTop = 0;

@@ -101,7 +101,7 @@ define(['Core', 'EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util', 'Ui/Si
 				visibilityButton.className = 'button inputSuffix jsTooltip';
 				visibilityButton.title = Language.get('wcf.global.filter.button.visibility');
 				visibilityButton.innerHTML = '<span class="icon icon16 fa-eye"></span>';
-				visibilityButton.addEventListener(WCF_CLICK_EVENT, this._toggleVisibility.bind(this));
+				visibilityButton.addEventListener('click', this._toggleVisibility.bind(this));
 				inputAddon.appendChild(visibilityButton);
 			}
 			
@@ -250,7 +250,7 @@ define(['Core', 'EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util', 'Ui/Si
 					elData(link, 'type', type);
 					link.href = '#';
 					link.textContent = Language.get('wcf.global.filter.visibility.' + type);
-					link.addEventListener(WCF_CLICK_EVENT, this._setVisibility.bind(this));
+					link.addEventListener('click', this._setVisibility.bind(this));
 					
 					var li = elCreate('li');
 					li.appendChild(link);

@@ -20,7 +20,7 @@ define(['Ajax', 'Dictionary', 'Language', 'Ui/Dialog', 'Ui/Notification'], funct
                 elBySelAll('.jsHasPipTargets[data-plugin-name="' + pluginName + '"] .jsInvokePip', _container, (function (button) {
                     var target = elData(button, 'target');
                     targets.push(target);
-                    button.addEventListener(WCF_CLICK_EVENT, (function (event) {
+                    button.addEventListener('click', (function (event) {
                         event.preventDefault();
                         if (_queue.length > 0)
                             return;
@@ -80,7 +80,7 @@ define(['Ajax', 'Dictionary', 'Language', 'Ui/Dialog', 'Ui/Notification'], funct
             var syncAll = elCreate('li');
             syncAll.innerHTML = '<a href="#" class="button"><span class="icon icon16 fa-refresh"></span> ' + Language.get('wcf.acp.devtools.sync.syncAll') + '</a>';
             _buttonSyncAll = syncAll.children[0];
-            _buttonSyncAll.addEventListener(WCF_CLICK_EVENT, this._syncAll.bind(this));
+            _buttonSyncAll.addEventListener('click', this._syncAll.bind(this));
             var list = elBySel('.contentHeaderNavigation > ul');
             list.insertBefore(syncAll, list.firstElementChild);
         },
@@ -126,7 +126,7 @@ define(['Ajax', 'Dictionary', 'Language', 'Ui/Dialog', 'Ui/Notification'], funct
             _buttons.get(requestData.parameters.pluginName + '-' + requestData.parameters.target).disabled = false;
             var buttonStatus = _buttonStatus.get(requestData.parameters.pluginName + '-' + requestData.parameters.target);
             buttonStatus.innerHTML = '<a href="#">' + Language.get('wcf.acp.devtools.sync.status.failure') + '</a>';
-            buttonStatus.children[0].addEventListener(WCF_CLICK_EVENT, (function (event) {
+            buttonStatus.children[0].addEventListener('click', (function (event) {
                 event.preventDefault();
                 UiDialog.open(this, Ajax.getRequestObject(this).getErrorHtml(data, xhr));
             }).bind(this));

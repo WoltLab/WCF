@@ -90,7 +90,7 @@ define([
 			while (buttons.length) {
 				button = buttons[0];
 				button.classList.remove('jsMediaEditButton');
-				button.addEventListener(WCF_CLICK_EVENT, this._edit.bind(this));
+				button.addEventListener('click', this._edit.bind(this));
 			}
 		},
 		

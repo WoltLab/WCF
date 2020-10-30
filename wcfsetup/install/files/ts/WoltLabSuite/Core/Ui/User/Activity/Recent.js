@@ -12,7 +12,7 @@ define(['Ajax', 'Language', 'Dom/Util'], function(Ajax, Language, DomUtil) {
 			showMoreItem.className = 'showMore';
 			if (this._list.childElementCount) {
 				showMoreItem.innerHTML = '<button class="small">' + Language.get('wcf.user.recentActivity.more') + '</button>';
-				showMoreItem.children[0].addEventListener(WCF_CLICK_EVENT, this._showMore.bind(this));
+				showMoreItem.children[0].addEventListener('click', this._showMore.bind(this));
 			}
 			else {
 				showMoreItem.innerHTML = '<small>' + Language.get('wcf.user.recentActivity.noMoreEntries') + '</small>';
@@ -22,7 +22,7 @@ define(['Ajax', 'Language', 'Dom/Util'], function(Ajax, Language, DomUtil) {
 			this._showMoreItem = showMoreItem;
 			
 			elBySelAll('.jsRecentActivitySwitchContext .button', container, (function (button) {
-				button.addEventListener(WCF_CLICK_EVENT, (function (event) {
+				button.addEventListener('click', (function (event) {
 					event.preventDefault();
 					
 					if (!button.classList.contains('active')) {

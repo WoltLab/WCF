@@ -57,7 +57,7 @@ define(['Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'ObjectMap', 'Ui/Dialog'
 			if (store) {
 				var storeElement = elById(store);
 				if (storeElement && storeElement.tagName === 'INPUT') {
-					this._buttons[i].addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
+					this._buttons[i].addEventListener('click', this._click.bind(this));
 					
 					this._storeElements.set(button, storeElement);
 					
@@ -71,7 +71,7 @@ define(['Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'ObjectMap', 'Ui/Dialog'
 					removeButton.appendChild(icon);
 					
 					if (!storeElement.value) elHide(removeButton);
-					removeButton.addEventListener(WCF_CLICK_EVENT, this._removeMedia.bind(this));
+					removeButton.addEventListener('click', this._removeMedia.bind(this));
 				}
 			}
 		}
@@ -92,7 +92,7 @@ define(['Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'ObjectMap', 'Ui/Dialog'
 				var chooseIcon = elByClass('jsMediaSelectButton', listItem)[0];
 				if (chooseIcon) {
 					chooseIcon.classList.remove('jsMediaSelectButton');
-					chooseIcon.addEventListener(WCF_CLICK_EVENT, this._chooseMedia.bind(this));
+					chooseIcon.addEventListener('click', this._chooseMedia.bind(this));
 				}
 			}
 		},

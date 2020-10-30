@@ -24,7 +24,7 @@ define(['Core', 'Language', 'Ui/Dialog'], function (Core, Language, UiDialog) {
             _link = link;
             var buttons = elBySelAll('.jsButtonPageAdd');
             for (var i = 0, length = buttons.length; i < length; i++) {
-                buttons[i].addEventListener(WCF_CLICK_EVENT, this.openDialog.bind(this));
+                buttons[i].addEventListener('click', this.openDialog.bind(this));
             }
         },
         /**
@@ -43,7 +43,7 @@ define(['Core', 'Language', 'Ui/Dialog'], function (Core, Language, UiDialog) {
                 id: 'pageAddDialog',
                 options: {
                     onSetup: function (content) {
-                        elBySel('button', content).addEventListener(WCF_CLICK_EVENT, function (event) {
+                        elBySel('button', content).addEventListener('click', function (event) {
                             event.preventDefault();
                             var pageType = elBySel('input[name="pageType"]:checked', content).value;
                             var isMultilingual = (_languages > 1) ? elBySel('input[name="isMultilingual"]:checked', content).value : 0;

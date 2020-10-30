@@ -71,7 +71,7 @@ define([], function() {
 						
 						toggleButtons.forEach(function (toggleButton) {
 							toggleButton.classList.add('jsToggleButtonEnabled');
-							toggleButton.addEventListener(WCF_CLICK_EVENT, toggle);
+							toggleButton.addEventListener('click', toggle);
 						});
 						
 						// expand boxes that are initially scrolled

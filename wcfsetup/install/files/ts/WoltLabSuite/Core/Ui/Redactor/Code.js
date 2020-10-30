@@ -80,7 +80,7 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 				
 				this._setTitle(pre);
 				
-				pre.addEventListener(WCF_CLICK_EVENT, this._callbackEdit);
+				pre.addEventListener('click', this._callbackEdit);
 				
 				// work-around for Safari
 				this._editor.caret.end(pre);
@@ -204,7 +204,7 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 					}).bind(this),
 					
 					onSetup: (function() {
-						elById(idButtonDelete).addEventListener(WCF_CLICK_EVENT, this._delete.bind(this));
+						elById(idButtonDelete).addEventListener('click', this._delete.bind(this));
 						
 						// set highlighters
 						var highlighters = '<option value="">' + Language.get('wcf.editor.code.highlighter.detect') + '</option>';

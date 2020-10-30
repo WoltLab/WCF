@@ -63,12 +63,12 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			// handle submit button
 			var submitCallback = this._submit.bind(this);
 			var submitButton = elBySel('button[data-type="save"]', this._container);
-			submitButton.addEventListener(WCF_CLICK_EVENT, submitCallback);
+			submitButton.addEventListener('click', submitCallback);
 			
 			// bind reply button
 			var replyButtons = elBySelAll('.jsQuickReply');
 			for (var i = 0, length = replyButtons.length; i < length; i++) {
-				replyButtons[i].addEventListener(WCF_CLICK_EVENT, (function(event) {
+				replyButtons[i].addEventListener('click', (function(event) {
 					event.preventDefault();
 					
 					this._getEditor().WoltLabReply.showEditor();
@@ -387,7 +387,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 				});
 				
 				var dialog = UiDialog.getDialog(data.returnValues.guestDialogID);
-				elBySel('input[type=submit]', dialog.content).addEventListener(WCF_CLICK_EVENT, this._submitGuestDialog.bind(this));
+				elBySel('input[type=submit]', dialog.content).addEventListener('click', this._submitGuestDialog.bind(this));
 				elBySel('input[type=text]', dialog.content).addEventListener('keypress', this._submitGuestDialog.bind(this));
 				
 				this._guestDialogId = data.returnValues.guestDialogID;

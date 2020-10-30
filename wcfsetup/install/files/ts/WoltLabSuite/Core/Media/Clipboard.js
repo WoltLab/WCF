@@ -108,7 +108,7 @@ define([
 				id: 'mediaSetCategoryDialog',
 				options: {
 					onSetup: function(content) {
-						elBySel('button', content).addEventListener(WCF_CLICK_EVENT, function(event) {
+						elBySel('button', content).addEventListener('click', function(event) {
 							event.preventDefault();
 							
 							this._setCategory(~~elBySel('select[name="categoryID"]', content).value);

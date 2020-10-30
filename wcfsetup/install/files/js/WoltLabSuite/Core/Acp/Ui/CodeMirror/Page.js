@@ -4,7 +4,7 @@ define(['WoltLabSuite/Core/Ui/Page/Search'], function (UiPageSearch) {
     AcpUiCodeMirrorPage.prototype = {
         init: function (elementId) {
             this._element = elById(elementId);
-            elById('codemirror-' + elementId + '-page').addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
+            elById('codemirror-' + elementId + '-page').addEventListener('click', this._click.bind(this));
         },
         _click: function (event) {
             event.preventDefault();

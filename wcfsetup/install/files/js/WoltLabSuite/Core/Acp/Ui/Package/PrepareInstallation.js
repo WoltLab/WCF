@@ -88,7 +88,7 @@ define(['Ajax', 'Core', 'Language', 'Ui/Dialog'], function (Ajax, Core, Language
                 options: {
                     onSetup: (function (content) {
                         var button = elBySel('.formSubmit > button', content);
-                        button.addEventListener(WCF_CLICK_EVENT, this._submit.bind(this, elData(button, 'package-update-server-id')));
+                        button.addEventListener('click', this._submit.bind(this, elData(button, 'package-update-server-id')));
                     }).bind(this),
                     title: Language.get('wcf.acp.package.update.unauthorized')
                 },

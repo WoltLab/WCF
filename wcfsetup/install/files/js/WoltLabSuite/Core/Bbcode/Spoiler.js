@@ -20,7 +20,7 @@ define(['Language'], function (Language) {
                 container.classList.remove('jsSpoilerBox');
                 toggleButton = elBySel('.jsSpoilerToggle', container);
                 container = toggleButton.parentNode.nextElementSibling;
-                toggleButton.addEventListener(WCF_CLICK_EVENT, this._onClick.bind(this, container, toggleButton));
+                toggleButton.addEventListener('click', this._onClick.bind(this, container, toggleButton));
             }
         },
         _onClick: function (container, toggleButton, event) {

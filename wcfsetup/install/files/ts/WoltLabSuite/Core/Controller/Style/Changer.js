@@ -18,7 +18,7 @@ define(['Ajax', 'Language', 'Ui/Dialog'], function(Ajax, Language, UiDialog) {
 		 */
 		setup: function() {
 			elBySelAll('.jsButtonStyleChanger', undefined, (function (link) {
-				link.addEventListener(WCF_CLICK_EVENT, this.showDialog.bind(this));
+				link.addEventListener('click', this.showDialog.bind(this));
 			}).bind(this));
 		},
 		
@@ -51,7 +51,7 @@ define(['Ajax', 'Language', 'Ui/Dialog'], function(Ajax, Language, UiDialog) {
 							var style = styles[i];
 							
 							style.classList.add('pointer');
-							style.addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
+							style.addEventListener('click', this._click.bind(this));
 						}
 					}).bind(this)
 				}

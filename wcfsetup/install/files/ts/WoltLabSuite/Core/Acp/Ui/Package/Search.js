@@ -100,7 +100,7 @@ define(['Ajax', 'WoltLabSuite/Core/Acp/Ui/Package/PrepareInstallation'], functio
 						this._setStatus('showResults');
 						
 						elBySelAll('.jsInstallPackage', this._resultList, (function(button) {
-							button.addEventListener(WCF_CLICK_EVENT, (function (event) {
+							button.addEventListener('click', (function (event) {
 								event.preventDefault();
 								button.blur();
 								
