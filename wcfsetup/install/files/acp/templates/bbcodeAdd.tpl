@@ -263,7 +263,7 @@
 {include file='fontAwesomeJavaScript'}
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Ui/Style/FontAwesome'], function (UiStyleFontAwesome) {
-		elBySel('.jsButtonSearchWysiwygIcon').addEventListener(WCF_CLICK_EVENT, function(event) {
+		elBySel('.jsButtonSearchWysiwygIcon').addEventListener('click', function(event) {
 			event.preventDefault();
 			
 			UiStyleFontAwesome.open(function(iconName) {

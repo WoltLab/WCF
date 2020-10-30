@@ -109,7 +109,7 @@ define([
                 var textSpan = elBySel('.invisible', elementData.reactButton);
                 textSpan.innerText = reaction.title;
             }
-            elementData.reactButton.addEventListener(WCF_CLICK_EVENT, this._toggleReactPopover.bind(this, elementData.objectId, elementData.reactButton));
+            elementData.reactButton.addEventListener('click', this._toggleReactPopover.bind(this, elementData.objectId, elementData.reactButton));
         },
         _updateReactButton: function (objectID, reactionTypeID) {
             this._objects.get(objectID).forEach(function (elementData) {
@@ -264,7 +264,7 @@ define([
                     //noinspection JSUnresolvedVariable
                     reactionTypeItem.innerHTML = reactionType.renderedIcon;
                     reactionTypeItem.appendChild(reactionTypeItemSpan);
-                    reactionTypeItem.addEventListener(WCF_CLICK_EVENT, this._react.bind(this, reactionType.reactionTypeID));
+                    reactionTypeItem.addEventListener('click', this._react.bind(this, reactionType.reactionTypeID));
                     if (!reactionType.isAssignable) {
                         elHide(reactionTypeItem);
                     }

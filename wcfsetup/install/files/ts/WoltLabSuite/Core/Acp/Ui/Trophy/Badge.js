@@ -20,7 +20,7 @@ define(['Core', 'Dictionary', 'Language', 'Ui/Dialog', 'WoltLabSuite/Core/Ui/Col
 		 */
 		init: function () {
 			var iconContainer = elById('badgeContainer');
-			elBySel('.button', iconContainer).addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
+			elBySel('.button', iconContainer).addEventListener('click', this._click.bind(this));
 			
 			_iconNameInput = elBySel('input[name="iconName"]', iconContainer);
 			_iconColorInput = elBySel('input[name="iconColor"]', iconContainer);
@@ -145,28 +145,28 @@ define(['Core', 'Dictionary', 'Language', 'Ui/Dialog', 'WoltLabSuite/Core/Ui/Col
 						_badgeColor = elBySel('#jsBadgeColorContainer .colorBoxValue', context);
 						_icon = elBySel('.jsTrophyIconName', context);
 						
-						elBySel('.jsTrophyIconName + .button', context).addEventListener(WCF_CLICK_EVENT, (function (event) {
+						elBySel('.jsTrophyIconName + .button', context).addEventListener('click', (function (event) {
 							event.preventDefault();
 							
 							UiStyleFontAwesome.open(this._setIcon.bind(this));
 						}).bind(this));
 						
-						elBySel('.jsButtonIconColorPicker', elById('jsIconColorContainer')).addEventListener(WCF_CLICK_EVENT, function (event) {
+						elBySel('.jsButtonIconColorPicker', elById('jsIconColorContainer')).addEventListener('click', function (event) {
 							event.preventDefault();
 							
-							Core.triggerEvent(elBySel('.jsColorPicker', elById('jsIconColorContainer')), WCF_CLICK_EVENT);
+							Core.triggerEvent(elBySel('.jsColorPicker', elById('jsIconColorContainer')), 'click');
 						});
 						
-						elBySel('.jsButtonBadgeColorPicker', elById('jsBadgeColorContainer')).addEventListener(WCF_CLICK_EVENT, function (event) {
+						elBySel('.jsButtonBadgeColorPicker', elById('jsBadgeColorContainer')).addEventListener('click', function (event) {
 							event.preventDefault();
 							
-							Core.triggerEvent(elBySel('.jsColorPicker', elById('jsBadgeColorContainer')), WCF_CLICK_EVENT);
+							Core.triggerEvent(elBySel('.jsColorPicker', elById('jsBadgeColorContainer')), 'click');
 						});
 						
 						var colorPicker = new WCF.ColorPicker('.jsColorPicker');
 						colorPicker.setCallbackSubmit(this._renderIcon.bind(this));
 						
-						elBySel('.formSubmit > .buttonPrimary', context).addEventListener(WCF_CLICK_EVENT, this._save.bind(this));
+						elBySel('.formSubmit > .buttonPrimary', context).addEventListener('click', this._save.bind(this));
 						return;
 					}).bind(this),
 					onShow: (function () {

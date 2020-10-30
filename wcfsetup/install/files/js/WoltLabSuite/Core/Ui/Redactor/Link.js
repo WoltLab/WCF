@@ -20,7 +20,7 @@ define(['Core', 'EventKey', 'Language', 'Ui/Dialog'], function (Core, EventKey, 
             _callback = options.submitCallback;
             if (!_boundListener) {
                 _boundListener = true;
-                submitButton.addEventListener(WCF_CLICK_EVENT, this._submit.bind(this));
+                submitButton.addEventListener('click', this._submit.bind(this));
             }
         },
         _submit: function () {

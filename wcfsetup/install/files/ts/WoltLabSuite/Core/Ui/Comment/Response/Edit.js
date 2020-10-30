@@ -84,7 +84,7 @@ define(
 							this._callbackClick = this._click.bind(this);
 						}
 						
-						button.addEventListener(WCF_CLICK_EVENT, this._callbackClick);
+						button.addEventListener('click', this._callbackClick);
 					}
 				}
 				

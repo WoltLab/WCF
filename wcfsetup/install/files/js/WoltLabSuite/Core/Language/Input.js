@@ -133,7 +133,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
                     span = elCreate('span');
                     span.textContent = availableLanguages[languageId];
                     listItem.appendChild(span);
-                    listItem.addEventListener(WCF_CLICK_EVENT, callbackClick);
+                    listItem.addEventListener('click', callbackClick);
                     dropdownMenu.appendChild(listItem);
                 }
             }
@@ -146,7 +146,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
                 span = elCreate('span');
                 span.textContent = Language.get('wcf.global.button.disabledI18n');
                 listItem.appendChild(span);
-                listItem.addEventListener(WCF_CLICK_EVENT, callbackClick);
+                listItem.addEventListener('click', callbackClick);
                 dropdownMenu.appendChild(listItem);
             }
             var activeItem = null;

@@ -68,7 +68,7 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
                     pre.removeChild(pre.children[0]);
                 }
                 this._setTitle(pre);
-                pre.addEventListener(WCF_CLICK_EVENT, this._callbackEdit);
+                pre.addEventListener('click', this._callbackEdit);
                 // work-around for Safari
                 this._editor.caret.end(pre);
             }

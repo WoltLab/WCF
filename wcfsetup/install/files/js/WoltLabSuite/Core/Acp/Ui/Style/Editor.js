@@ -94,7 +94,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
             checkbox.addEventListener('change', function () {
                 button.disabled = !checkbox.checked;
             });
-            button.addEventListener(WCF_CLICK_EVENT, function () {
+            button.addEventListener('click', function () {
                 Ajax.apiOnce({
                     data: {
                         actionName: 'markAsTainted',
@@ -227,12 +227,12 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
                 _stylePreviewRegionMarker.classList.toggle('forceHide');
                 select.disabled = !select.disabled;
             };
-            buttonSelectCategoryByClick.addEventListener(WCF_CLICK_EVENT, function (event) {
+            buttonSelectCategoryByClick.addEventListener('click', function (event) {
                 event.preventDefault();
                 toggleSelectionMode();
             });
             elBySelAll('[data-region]', _stylePreviewWindow, function (region) {
-                region.addEventListener(WCF_CLICK_EVENT, function (event) {
+                region.addEventListener('click', function (event) {
                     if (!_stylePreviewWindow.classList.contains('spShowRegions')) {
                         return;
                     }
@@ -248,7 +248,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
             });
             // toggle view
             var spSelectCategory = elById('spSelectCategory');
-            buttonToggleColorPalette.addEventListener(WCF_CLICK_EVENT, function (event) {
+            buttonToggleColorPalette.addEventListener('click', function (event) {
                 event.preventDefault();
                 buttonSelectCategoryByClick.classList.toggle('disabled');
                 elToggle(spSelectCategory);

@@ -143,7 +143,7 @@ define(['Core', 'Environment', 'EventHandler', 'Language', 'List', 'Dom/ChangeLi
                     }
                 }
             });
-            _main.addEventListener(WCF_CLICK_EVENT, function () {
+            _main.addEventListener('click', function () {
                 if (_searchBar)
                     _searchBar.classList.remove('open');
                 if (Environment.platform() === 'ios' && scrollTop !== null) {
@@ -172,12 +172,12 @@ define(['Core', 'Environment', 'EventHandler', 'Language', 'List', 'Dom/ChangeLi
                 span.className = 'icon icon24 fa-ellipsis-v';
                 button.appendChild(span);
                 (function (navigation, button, list) {
-                    button.addEventListener(WCF_CLICK_EVENT, function (event) {
+                    button.addEventListener('click', function (event) {
                         event.preventDefault();
                         event.stopPropagation();
                         navigation.classList.toggle('open');
                     });
-                    list.addEventListener(WCF_CLICK_EVENT, function (event) {
+                    list.addEventListener('click', function (event) {
                         event.stopPropagation();
                         navigation.classList.remove('open');
                     });
@@ -192,7 +192,7 @@ define(['Core', 'Environment', 'EventHandler', 'Language', 'List', 'Dom/ChangeLi
                 }
                 var navigation = elBySel('.jsMobileNavigation', message);
                 if (navigation) {
-                    navigation.addEventListener(WCF_CLICK_EVENT, function (event) {
+                    navigation.addEventListener('click', function (event) {
                         event.stopPropagation();
                         // mimic dropdown behavior
                         window.setTimeout(function () {
@@ -202,7 +202,7 @@ define(['Core', 'Environment', 'EventHandler', 'Language', 'List', 'Dom/ChangeLi
                     var quickOptions = elBySel('.messageQuickOptions', message);
                     if (quickOptions && navigation.childElementCount) {
                         quickOptions.classList.add('active');
-                        quickOptions.addEventListener(WCF_CLICK_EVENT, (function (event) {
+                        quickOptions.addEventListener('click', (function (event) {
                             if (_enabled && UiScreen.is('screen-sm-down') && event.target.nodeName !== 'LABEL' && event.target.nodeName !== 'INPUT') {
                                 event.preventDefault();
                                 event.stopPropagation();
@@ -361,13 +361,13 @@ define(['Core', 'Environment', 'EventHandler', 'Language', 'List', 'Dom/ChangeLi
                 if (button.classList.contains('active'))
                     item.className = 'active';
                 item.innerHTML = '<a href="#">' + elBySel('span:not(.icon)', button).textContent + '</a>';
-                item.children[0].addEventListener(WCF_CLICK_EVENT, function (event) {
+                item.children[0].addEventListener('click', function (event) {
                     event.preventDefault();
                     event.stopPropagation();
                     if (button.nodeName === 'A')
                         button.click();
                     else
-                        Core.triggerEvent(button, WCF_CLICK_EVENT);
+                        Core.triggerEvent(button, 'click');
                     _callbackCloseDropdown();
                 });
                 _dropdownMenu.appendChild(item);

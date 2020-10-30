@@ -74,7 +74,7 @@
 	require(['Language'], function(Language) {
 		Language.add('wcf.acp.worker.abort.confirmMessage', '{lang}wcf.acp.worker.abort.confirmMessage{/lang}');
 		
-		elById('sitemapRebuildButton').addEventListener(WCF_CLICK_EVENT, function () {
+		elById('sitemapRebuildButton').addEventListener('click', function () {
 			new WCF.ACP.Worker('sitemapRebuild', 'wcf\\system\\worker\\SitemapRebuildWorker', '{lang}wcf.acp.rebuildData.com.woltlab.wcf.sitemap{/lang}', {
 				forceRebuild: true
 			});

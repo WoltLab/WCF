@@ -40,7 +40,7 @@ define(['Ajax', 'Dom/Util'], function(Ajax, DomUtil) {
 		_initButton: function() {
 			var button = elCreate('a');
 			button.href = '#';
-			button.addEventListener(WCF_CLICK_EVENT, this._toggle.bind(this));
+			button.addEventListener('click', this._toggle.bind(this));
 			
 			var listItem = elCreate('li');
 			listItem.appendChild(button);

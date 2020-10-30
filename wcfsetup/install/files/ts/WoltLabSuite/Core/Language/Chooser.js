@@ -118,7 +118,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap
 					
 					listItem = elCreate('li');
 					listItem.className = 'boxFlag';
-					listItem.addEventListener(WCF_CLICK_EVENT, callbackClick);
+					listItem.addEventListener('click', callbackClick);
 					elData(listItem, 'language-id', availableLanguageId);
 					if (language.languageCode !== undefined) elData(listItem, 'language-code', language.languageCode);
 					dropdownMenu.appendChild(listItem);
@@ -151,7 +151,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap
 				
 				listItem = elCreate('li');
 				elData(listItem, 'language-id', 0);
-				listItem.addEventListener(WCF_CLICK_EVENT, callbackClick);
+				listItem.addEventListener('click', callbackClick);
 				dropdownMenu.appendChild(listItem);
 				
 				link = elCreate('a');
@@ -162,7 +162,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap
 					dropdownToggle.innerHTML = listItem.firstChild.innerHTML;
 				}
 				
-				listItem.addEventListener(WCF_CLICK_EVENT, callbackClick);
+				listItem.addEventListener('click', callbackClick);
 			}
 			else if (languageId === 0) {
 				dropdownToggle.innerHTML = null;

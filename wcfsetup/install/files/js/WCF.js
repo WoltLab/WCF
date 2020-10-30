@@ -5572,7 +5572,7 @@ if (COMPILER_TARGET_DEFAULT) {
 						return;
 					}
 					
-					$trigger.on(WCF_CLICK_EVENT, $.proxy(self._show, self)).data(
+					$trigger.on('click', $.proxy(self._show, self)).data(
 						'elementID',
 						$elementID
 					);

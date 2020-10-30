@@ -324,13 +324,9 @@
 		};
 	};
 	
-	/* assigns a global constant defining the proper 'click' event depending on the browser,
-	   enforcing 'touchstart' on mobile devices for a better UX. We're using defineProperty()
-	   here because at the time of writing Safari does not support 'const'. Thanks Safari.
-	 */
-	var clickEvent = ('touchstart' in document.documentElement || 'ontouchstart' in window || navigator.MaxTouchPoints > 0 || navigator.msMaxTouchPoints > 0) ? 'touchstart' : 'click';
+	/** @deprecated 5.4 Use `click` directly. */
 	Object.defineProperty(window, 'WCF_CLICK_EVENT', {
-		value: 'click' //clickEvent
+		value: 'click'
 	});
 	
 	/* Overwrites any history states after 'initial' with 'skip' on initial page load.

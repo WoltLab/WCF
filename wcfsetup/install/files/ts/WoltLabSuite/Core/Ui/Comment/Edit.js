@@ -84,7 +84,7 @@ define(
 							this._callbackClick = this._click.bind(this);
 						}
 						
-						button.addEventListener(WCF_CLICK_EVENT, this._callbackClick);
+						button.addEventListener('click', this._callbackClick);
 					}
 				}
 				
@@ -152,10 +152,10 @@ define(
 			var formSubmit = elBySel('.formSubmit', editor);
 			
 			var buttonSave = elBySel('button[data-type="save"]', formSubmit);
-			buttonSave.addEventListener(WCF_CLICK_EVENT, this._save.bind(this));
+			buttonSave.addEventListener('click', this._save.bind(this));
 			
 			var buttonCancel = elBySel('button[data-type="cancel"]', formSubmit);
-			buttonCancel.addEventListener(WCF_CLICK_EVENT, this._restoreMessage.bind(this));
+			buttonCancel.addEventListener('click', this._restoreMessage.bind(this));
 			
 			EventHandler.add('com.woltlab.wcf.redactor', 'submitEditor_' + id, (function(data) {
 				data.cancel = true;

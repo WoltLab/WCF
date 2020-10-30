@@ -80,7 +80,7 @@ define([
                     var editIcon = elByClass('jsMediaEditButton', listItem)[0];
                     if (editIcon) {
                         editIcon.classList.remove('jsMediaEditButton');
-                        editIcon.addEventListener(WCF_CLICK_EVENT, this._editMedia.bind(this));
+                        editIcon.addEventListener('click', this._editMedia.bind(this));
                     }
                 }
             }

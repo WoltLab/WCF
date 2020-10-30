@@ -167,7 +167,7 @@ define(['AjaxRequest', 'Language', 'Ui/Dialog'], function (AjaxRequest, Language
 						if (!_testPassed) elById('url_omit_index_php_no').checked = true;
 					},
 					onSetup: (function () {
-						_buttonStartTest.addEventListener(WCF_CLICK_EVENT, this._runTest.bind(this));
+						_buttonStartTest.addEventListener('click', this._runTest.bind(this));
 					}).bind(this),
 					onShow: this._runTest.bind(this),
 					silent: true,

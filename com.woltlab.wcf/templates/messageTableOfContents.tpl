@@ -22,7 +22,7 @@
 	require(['Ui/Screen'], function(UiScreen) {
 		var container = elById('tocContainer-{$idPrefix}');
 		elBySelAll('.jsTableOfContentsHide, .jsTableOfContentsShow', container, function(button) {
-			button.addEventListener(WCF_CLICK_EVENT, function(event) {
+			button.addEventListener('click', function(event) {
 				event.preventDefault();
 				
 				container.classList.toggle('open');

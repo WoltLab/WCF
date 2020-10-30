@@ -81,7 +81,7 @@ define(['Ajax', 'WoltLabSuite/Core/Acp/Ui/Package/PrepareInstallation'], functio
                         this._resultCounter.textContent = data.returnValues.count;
                         this._setStatus('showResults');
                         elBySelAll('.jsInstallPackage', this._resultList, (function (button) {
-                            button.addEventListener(WCF_CLICK_EVENT, (function (event) {
+                            button.addEventListener('click', (function (event) {
                                 event.preventDefault();
                                 button.blur();
                                 this._installation.start(elData(button, 'package'), elData(button, 'package-version'));

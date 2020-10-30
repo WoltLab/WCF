@@ -426,7 +426,7 @@ WCF.Comment.Handler = Class.extend({
 		
 		var enableComment = elBySel('.jsEnableComment', comment[0]);
 		if (enableComment) {
-			enableComment.addEventListener(WCF_CLICK_EVENT, this._enableComment.bind(this));
+			enableComment.addEventListener('click', this._enableComment.bind(this));
 		}
 	},
 	
@@ -487,7 +487,7 @@ WCF.Comment.Handler = Class.extend({
 					
 					var enableResponse = elBySel('.jsEnableResponse', response);
 					if (enableResponse) {
-						enableResponse.addEventListener(WCF_CLICK_EVENT, this._enableCommentResponse.bind(this));
+						enableResponse.addEventListener('click', this._enableCommentResponse.bind(this));
 					}
 				}).bind(this));
 			}
