@@ -67,7 +67,7 @@ define(["require", "exports", "tslib", "../../Core", "./Simple"], function (requ
                 size = ~~data.icon.size;
             }
             const icon = document.createElement("span");
-            icon.className = "icon icon" + size + " fa-" + data.icon.name;
+            icon.className = `icon icon${size} fa-${data.icon.name}`;
             link.appendChild(icon);
         }
         const label = typeof data.label === "string" ? data.label.trim() : "";

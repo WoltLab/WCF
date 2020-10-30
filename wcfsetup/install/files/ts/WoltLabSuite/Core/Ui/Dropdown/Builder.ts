@@ -76,7 +76,7 @@ function buildItemFromData(data: DropdownBuilderItemData): HTMLLIElement {
     }
 
     const icon = document.createElement("span");
-    icon.className = "icon icon" + size + " fa-" + data.icon.name;
+    icon.className = `icon icon${size} fa-${data.icon.name}`;
 
     link.appendChild(icon);
   }
