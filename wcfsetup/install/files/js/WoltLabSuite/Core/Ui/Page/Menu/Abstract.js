@@ -261,8 +261,9 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Environment", 
                         position = this.menu.offsetWidth;
                     if (position < 0)
                         position = 0;
-                    this.menu.style.setProperty("transform", "translateX(" + (appearsAt === "left" ? 1 : -1) * (position - this.menu.offsetWidth) + "px)");
-                    backdrop.style.setProperty(appearsAt, Math.min(this.menu.offsetWidth, position) + "px");
+                    const offset = (appearsAt === "left" ? 1 : -1) * (position - this.menu.offsetWidth);
+                    this.menu.style.setProperty("transform", `translateX(${offset}px)`);
+                    backdrop.style.setProperty(appearsAt, Math.min(this.menu.offsetWidth, position).toString() + "px");
                 }
             });
         }

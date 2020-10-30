@@ -57,10 +57,12 @@ const Plural = {
     }
 
     // handle numeric attributes
-    for (const key in parameters) {
-      if (parameters.hasOwnProperty(key) && key.toString() === (~~key).toString() && key == value) {
-        return parameters[key];
-      }
+    const numericAttribute = Object.keys(parameters).find((key) => {
+      return key.toString() === (~~key).toString() && key == value;
+    });
+
+    if (numericAttribute) {
+      return numericAttribute;
     }
 
     let category = Plural.getCategory(value);
@@ -98,35 +100,53 @@ const Plural = {
 
   // Afrikaans
   af(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Amharic
   am(n: number): string | undefined {
     const i = Math.floor(Math.abs(n));
-    if (n == 1 || i === 0) return PLURAL_ONE;
+    if (n == 1 || i === 0) {
+      return PLURAL_ONE;
+    }
   },
 
   // Arabic
   ar(n: number): string | undefined {
-    if (n == 0) return PLURAL_ZERO;
-    if (n == 1) return PLURAL_ONE;
-    if (n == 2) return PLURAL_TWO;
+    if (n == 0) {
+      return PLURAL_ZERO;
+    }
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
+    if (n == 2) {
+      return PLURAL_TWO;
+    }
 
     const mod100 = n % 100;
-    if (mod100 >= 3 && mod100 <= 10) return PLURAL_FEW;
-    if (mod100 >= 11 && mod100 <= 99) return PLURAL_MANY;
+    if (mod100 >= 3 && mod100 <= 10) {
+      return PLURAL_FEW;
+    }
+    if (mod100 >= 11 && mod100 <= 99) {
+      return PLURAL_MANY;
+    }
   },
 
   // Assamese
   as(n: number): string | undefined {
     const i = Math.floor(Math.abs(n));
-    if (n == 1 || i === 0) return PLURAL_ONE;
+    if (n == 1 || i === 0) {
+      return PLURAL_ONE;
+    }
   },
 
   // Azerbaijani
   az(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Belarusian
@@ -134,20 +154,30 @@ const Plural = {
     const mod10 = n % 10;
     const mod100 = n % 100;
 
-    if (mod10 == 1 && mod100 != 11) return PLURAL_ONE;
-    if (mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14)) return PLURAL_FEW;
-    if (mod10 == 0 || (mod10 >= 5 && mod10 <= 9) || (mod100 >= 11 && mod100 <= 14)) return PLURAL_MANY;
+    if (mod10 == 1 && mod100 != 11) {
+      return PLURAL_ONE;
+    }
+    if (mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14)) {
+      return PLURAL_FEW;
+    }
+    if (mod10 == 0 || (mod10 >= 5 && mod10 <= 9) || (mod100 >= 11 && mod100 <= 14)) {
+      return PLURAL_MANY;
+    }
   },
 
   // Bulgarian
   bg(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Bengali
   bn(n: number): string | undefined {
     const i = Math.floor(Math.abs(n));
-    if (n == 1 || i === 0) return PLURAL_ONE;
+    if (n == 1 || i === 0) {
+      return PLURAL_ONE;
+    }
   },
 
   // Tibetan
@@ -164,40 +194,63 @@ const Plural = {
     const fMod10 = f % 10;
     const fMod100 = f % 100;
 
-    if ((v == 0 && mod10 == 1 && mod100 != 11) || (fMod10 == 1 && fMod100 != 11)) return PLURAL_ONE;
+    if ((v == 0 && mod10 == 1 && mod100 != 11) || (fMod10 == 1 && fMod100 != 11)) {
+      return PLURAL_ONE;
+    }
     if (
       (v == 0 && mod10 >= 2 && mod10 <= 4 && mod100 >= 12 && mod100 <= 14) ||
       (fMod10 >= 2 && fMod10 <= 4 && fMod100 >= 12 && fMod100 <= 14)
-    )
+    ) {
       return PLURAL_FEW;
+    }
   },
 
   // Czech
   cs(n: number): string | undefined {
     const v = Plural.getV(n);
 
-    if (n == 1 && v === 0) return PLURAL_ONE;
-    if (n >= 2 && n <= 4 && v === 0) return PLURAL_FEW;
-    if (v === 0) return PLURAL_MANY;
+    if (n == 1 && v === 0) {
+      return PLURAL_ONE;
+    }
+    if (n >= 2 && n <= 4 && v === 0) {
+      return PLURAL_FEW;
+    }
+    if (v === 0) {
+      return PLURAL_MANY;
+    }
   },
 
   // Welsh
   cy(n: number): string | undefined {
-    if (n == 0) return PLURAL_ZERO;
-    if (n == 1) return PLURAL_ONE;
-    if (n == 2) return PLURAL_TWO;
-    if (n == 3) return PLURAL_FEW;
-    if (n == 6) return PLURAL_MANY;
+    if (n == 0) {
+      return PLURAL_ZERO;
+    }
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
+    if (n == 2) {
+      return PLURAL_TWO;
+    }
+    if (n == 3) {
+      return PLURAL_FEW;
+    }
+    if (n == 6) {
+      return PLURAL_MANY;
+    }
   },
 
   // Danish
   da(n: number): string | undefined {
-    if (n > 0 && n < 2) return PLURAL_ONE;
+    if (n > 0 && n < 2) {
+      return PLURAL_ONE;
+    }
   },
 
   // Greek
   el(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Catalan (ca)
@@ -211,54 +264,82 @@ const Plural = {
   // Swahili (sw)
   // Urdu (ur)
   en(n: number): string | undefined {
-    if (n == 1 && Plural.getV(n) === 0) return PLURAL_ONE;
+    if (n == 1 && Plural.getV(n) === 0) {
+      return PLURAL_ONE;
+    }
   },
 
   // Spanish
   es(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Basque
   eu(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Persian
   fa(n: number): string | undefined {
-    if (n >= 0 && n <= 1) return PLURAL_ONE;
+    if (n >= 0 && n <= 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // French
   fr(n: number): string | undefined {
-    if (n >= 0 && n < 2) return PLURAL_ONE;
+    if (n >= 0 && n < 2) {
+      return PLURAL_ONE;
+    }
   },
 
   // Irish
   ga(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
-    if (n == 2) return PLURAL_TWO;
-    if (n == 3 || n == 4 || n == 5 || n == 6) return PLURAL_FEW;
-    if (n == 7 || n == 8 || n == 9 || n == 10) return PLURAL_MANY;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
+    if (n == 2) {
+      return PLURAL_TWO;
+    }
+    if (n == 3 || n == 4 || n == 5 || n == 6) {
+      return PLURAL_FEW;
+    }
+    if (n == 7 || n == 8 || n == 9 || n == 10) {
+      return PLURAL_MANY;
+    }
   },
 
   // Gujarati
   gu(n: number): string | undefined {
-    if (n >= 0 && n <= 1) return PLURAL_ONE;
+    if (n >= 0 && n <= 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Hebrew
   he(n: number): string | undefined {
     const v = Plural.getV(n);
 
-    if (n == 1 && v === 0) return PLURAL_ONE;
-    if (n == 2 && v === 0) return PLURAL_TWO;
-    if (n > 10 && v === 0 && n % 10 == 0) return PLURAL_MANY;
+    if (n == 1 && v === 0) {
+      return PLURAL_ONE;
+    }
+    if (n == 2 && v === 0) {
+      return PLURAL_TWO;
+    }
+    if (n > 10 && v === 0 && n % 10 == 0) {
+      return PLURAL_MANY;
+    }
   },
 
   // Hindi
   hi(n: number): string | undefined {
-    if (n >= 0 && n <= 1) return PLURAL_ONE;
+    if (n >= 0 && n <= 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Croatian
@@ -269,12 +350,16 @@ const Plural = {
 
   // Hungarian
   hu(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Armenian
   hy(n: number): string | undefined {
-    if (n >= 0 && n < 2) return PLURAL_ONE;
+    if (n >= 0 && n < 2) {
+      return PLURAL_ONE;
+    }
   },
 
   // Indonesian
@@ -286,7 +371,9 @@ const Plural = {
   is(n: number): string | undefined {
     const f = Plural.getF(n);
 
-    if ((f === 0 && n % 10 === 1 && !(n % 100 === 11)) || !(f === 0)) return PLURAL_ONE;
+    if ((f === 0 && n % 10 === 1 && !(n % 100 === 11)) || !(f === 0)) {
+      return PLURAL_ONE;
+    }
   },
 
   // Japanese
@@ -301,12 +388,16 @@ const Plural = {
 
   // Georgian
   ka(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Kazakh
   kk(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Khmer
@@ -316,7 +407,9 @@ const Plural = {
 
   // Kannada
   kn(n: number): string | undefined {
-    if (n >= 0 && n <= 1) return PLURAL_ONE;
+    if (n >= 0 && n <= 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Korean
@@ -326,17 +419,23 @@ const Plural = {
 
   // Kurdish
   ku(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Kyrgyz
   ky(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Luxembourgish
   lb(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Lao
@@ -349,9 +448,15 @@ const Plural = {
     const mod10 = n % 10;
     const mod100 = n % 100;
 
-    if (mod10 == 1 && !(mod100 >= 11 && mod100 <= 19)) return PLURAL_ONE;
-    if (mod10 >= 2 && mod10 <= 9 && !(mod100 >= 11 && mod100 <= 19)) return PLURAL_FEW;
-    if (Plural.getF(n) != 0) return PLURAL_MANY;
+    if (mod10 == 1 && !(mod100 >= 11 && mod100 <= 19)) {
+      return PLURAL_ONE;
+    }
+    if (mod10 >= 2 && mod10 <= 9 && !(mod100 >= 11 && mod100 <= 19)) {
+      return PLURAL_FEW;
+    }
+    if (Plural.getF(n) != 0) {
+      return PLURAL_MANY;
+    }
   },
 
   // Latvian
@@ -363,9 +468,12 @@ const Plural = {
     const fMod10 = f % 10;
     const fMod100 = f % 100;
 
-    if (mod10 == 0 || (mod100 >= 11 && mod100 <= 19) || (v == 2 && fMod100 >= 11 && fMod100 <= 19)) return PLURAL_ZERO;
-    if ((mod10 == 1 && mod100 != 11) || (v == 2 && fMod10 == 1 && fMod100 != 11) || (v != 2 && fMod10 == 1))
+    if (mod10 == 0 || (mod100 >= 11 && mod100 <= 19) || (v == 2 && fMod100 >= 11 && fMod100 <= 19)) {
+      return PLURAL_ZERO;
+    }
+    if ((mod10 == 1 && mod100 != 11) || (v == 2 && fMod10 == 1 && fMod100 != 11) || (v != 2 && fMod10 == 1)) {
       return PLURAL_ONE;
+    }
   },
 
   // Macedonian
@@ -375,17 +483,23 @@ const Plural = {
 
   // Malayalam
   ml(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Mongolian
   mn(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Marathi
   mr(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Malay
@@ -397,9 +511,15 @@ const Plural = {
   mt(n: number): string | undefined {
     const mod100 = n % 100;
 
-    if (n == 1) return PLURAL_ONE;
-    if (n == 0 || (mod100 >= 2 && mod100 <= 10)) return PLURAL_FEW;
-    if (mod100 >= 11 && mod100 <= 19) return PLURAL_MANY;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
+    if (n == 0 || (mod100 >= 2 && mod100 <= 10)) {
+      return PLURAL_FEW;
+    }
+    if (mod100 >= 11 && mod100 <= 19) {
+      return PLURAL_MANY;
+    }
   },
 
   // Burmese
@@ -409,22 +529,30 @@ const Plural = {
 
   // Norwegian
   no(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Nepali
   ne(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Odia
   or(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Punjabi
   pa(n: number): string | undefined {
-    if (n == 1 || n == 0) return PLURAL_ONE;
+    if (n == 1 || n == 0) {
+      return PLURAL_ONE;
+    }
   },
 
   // Polish
@@ -433,23 +561,32 @@ const Plural = {
     const mod10 = n % 10;
     const mod100 = n % 100;
 
-    if (n == 1 && v == 0) return PLURAL_ONE;
-    if (v == 0 && mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14)) return PLURAL_FEW;
+    if (n == 1 && v == 0) {
+      return PLURAL_ONE;
+    }
+    if (v == 0 && mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14)) {
+      return PLURAL_FEW;
+    }
     if (
       v == 0 &&
       ((n != 1 && mod10 >= 0 && mod10 <= 1) || (mod10 >= 5 && mod10 <= 9) || (mod100 >= 12 && mod100 <= 14))
-    )
+    ) {
       return PLURAL_MANY;
+    }
   },
 
   // Pashto
   ps(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Portuguese
   pt(n: number): string | undefined {
-    if (n >= 0 && n < 2) return PLURAL_ONE;
+    if (n >= 0 && n < 2) {
+      return PLURAL_ONE;
+    }
   },
 
   // Romanian
@@ -457,8 +594,12 @@ const Plural = {
     const v = Plural.getV(n);
     const mod100 = n % 100;
 
-    if (n == 1 && v === 0) return PLURAL_ONE;
-    if (v != 0 || n == 0 || (mod100 >= 2 && mod100 <= 19)) return PLURAL_FEW;
+    if (n == 1 && v === 0) {
+      return PLURAL_ONE;
+    }
+    if (v != 0 || n == 0 || (mod100 >= 2 && mod100 <= 19)) {
+      return PLURAL_FEW;
+    }
   },
 
   // Russian
@@ -467,20 +608,30 @@ const Plural = {
     const mod100 = n % 100;
 
     if (Plural.getV(n) == 0) {
-      if (mod10 == 1 && mod100 != 11) return PLURAL_ONE;
-      if (mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14)) return PLURAL_FEW;
-      if (mod10 == 0 || (mod10 >= 5 && mod10 <= 9) || (mod100 >= 11 && mod100 <= 14)) return PLURAL_MANY;
+      if (mod10 == 1 && mod100 != 11) {
+        return PLURAL_ONE;
+      }
+      if (mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14)) {
+        return PLURAL_FEW;
+      }
+      if (mod10 == 0 || (mod10 >= 5 && mod10 <= 9) || (mod100 >= 11 && mod100 <= 14)) {
+        return PLURAL_MANY;
+      }
     }
   },
 
   // Sindhi
   sd(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Sinhala
   si(n: number): string | undefined {
-    if (n == 0 || n == 1 || (Math.floor(n) == 0 && Plural.getF(n) == 1)) return PLURAL_ONE;
+    if (n == 0 || n == 1 || (Math.floor(n) == 0 && Plural.getF(n) == 1)) {
+      return PLURAL_ONE;
+    }
   },
 
   // Slovak
@@ -494,14 +645,22 @@ const Plural = {
     const v = Plural.getV(n);
     const mod100 = n % 100;
 
-    if (v == 0 && mod100 == 1) return PLURAL_ONE;
-    if (v == 0 && mod100 == 2) return PLURAL_TWO;
-    if ((v == 0 && (mod100 == 3 || mod100 == 4)) || v != 0) return PLURAL_FEW;
+    if (v == 0 && mod100 == 1) {
+      return PLURAL_ONE;
+    }
+    if (v == 0 && mod100 == 2) {
+      return PLURAL_TWO;
+    }
+    if ((v == 0 && (mod100 == 3 || mod100 == 4)) || v != 0) {
+      return PLURAL_FEW;
+    }
   },
 
   // Albanian
   sq(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Serbian
@@ -512,12 +671,16 @@ const Plural = {
 
   // Tamil
   ta(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Telugu
   te(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Tajik
@@ -532,17 +695,23 @@ const Plural = {
 
   // Turkmen
   tk(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Turkish
   tr(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Uyghur
   ug(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Ukrainian
@@ -553,7 +722,9 @@ const Plural = {
 
   // Uzbek
   uz(n: number): string | undefined {
-    if (n == 1) return PLURAL_ONE;
+    if (n == 1) {
+      return PLURAL_ONE;
+    }
   },
 
   // Vietnamese

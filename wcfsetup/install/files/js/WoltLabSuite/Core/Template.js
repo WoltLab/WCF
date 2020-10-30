@@ -43,6 +43,7 @@ define(["require", "exports", "tslib", "./Template.grammar", "./StringUtil", "./
                         "v.__wcf = window.WCF; v.__window = window;\n" +
                         "return " +
                         template;
+                // eslint-disable-next-line @typescript-eslint/no-implied-eval
                 this.fetch = new Function("StringUtil", "Language", "I18nPlural", "v", template).bind(undefined, StringUtil, Language, I18nPlural);
             }
             catch (e) {
@@ -52,8 +53,6 @@ define(["require", "exports", "tslib", "./Template.grammar", "./StringUtil", "./
         }
         /**
          * Evaluates the Template using the given parameters.
-         *
-         * @param  {object}  v  Parameters to pass to the template.
          */
         fetch(_v) {
             // this will be replaced in the init function

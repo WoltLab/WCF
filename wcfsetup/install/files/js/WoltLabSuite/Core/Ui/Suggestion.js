@@ -173,13 +173,13 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "./Dropdown/Simple"
                     const anchor = document.createElement("a");
                     if (item.icon) {
                         anchor.className = "box16";
-                        anchor.innerHTML = item.icon + " <span></span>";
+                        anchor.innerHTML = `${item.icon} <span></span>`;
                         anchor.children[1].textContent = item.label;
                     }
                     else {
                         anchor.textContent = item.label;
                     }
-                    anchor.dataset.objectId = item.objectID;
+                    anchor.dataset.objectId = item.objectID.toString();
                     if (item.type) {
                         anchor.dataset.type = item.type;
                     }

@@ -82,7 +82,7 @@ define(["require", "exports", "tslib", "../../../Environment", "../../../Languag
      */
     function setMarginLeft(offset) {
         _marginLeft = Math.min(_marginLeft + offset, 0);
-        _firstElement.style.setProperty("margin-left", _marginLeft + "px", "");
+        _firstElement.style.setProperty("margin-left", `${_marginLeft}px`, "");
     }
     /**
      * Toggles button overlays and rebuilds the list

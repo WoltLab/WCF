@@ -63,7 +63,7 @@ const DomUtil = {
     let elementId: string;
 
     do {
-      elementId = "wcf" + _idCounter++;
+      elementId = `wcf${_idCounter++}`;
     } while (document.getElementById(elementId) !== null);
 
     return elementId;
@@ -161,26 +161,24 @@ const DomUtil = {
    */
   setStyles(element: HTMLElement, styles: CssDeclarations): void {
     let important = false;
-    for (const property in styles) {
-      if (styles.hasOwnProperty(property)) {
-        if (/ !important$/.test(styles[property])) {
-          important = true;
+    Object.keys(styles).forEach((property) => {
+      if (/ !important$/.test(styles[property])) {
+        important = true;
 
-          styles[property] = styles[property].replace(/ !important$/, "");
-        } else {
-          important = false;
-        }
-
-        // for a set style property with priority = important, some browsers are
-        // not able to overwrite it with a property != important; removing the
-        // property first solves this issue
-        if (element.style.getPropertyPriority(property) === "important" && !important) {
-          element.style.removeProperty(property);
-        }
-
-        element.style.setProperty(property, styles[property], important ? "important" : "");
+        styles[property] = styles[property].replace(/ !important$/, "");
+      } else {
+        important = false;
       }
-    }
+
+      // for a set style property with priority = important, some browsers are
+      // not able to overwrite it with a property != important; removing the
+      // property first solves this issue
+      if (element.style.getPropertyPriority(property) === "important" && !important) {
+        element.style.removeProperty(property);
+      }
+
+      element.style.setProperty(property, styles[property], important ? "important" : "");
+    });
   },
 
   /**
@@ -295,7 +293,9 @@ const DomUtil = {
     idToUpperCase?: boolean
   ): DataAttributes {
     prefix = prefix || "";
-    if (prefix.indexOf("data-") !== 0) prefix = "data-" + prefix;
+    if (prefix.indexOf("data-") !== 0) {
+      prefix = "data-" + prefix;
+    }
     camelCaseName = camelCaseName === true;
     idToUpperCase = idToUpperCase === true;
 

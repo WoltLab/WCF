@@ -247,7 +247,7 @@ class TabMenuSimple {
       }
 
       if (!tab) {
-        throw new Error("Expected a valid tab name, '" + name + "' given (tab menu id: '" + this.container.id + "').");
+        throw new Error(`Expected a valid tab name, '${name}' given (tab menu id: '${this.container.id}').`);
       }
     }
 
@@ -325,13 +325,9 @@ class TabMenuSimple {
       window.history.replaceState(undefined, "", location);
     }
 
-    // TODO
-    /*
-    require(['WoltLabSuite/Core/Ui/TabMenu'], function (UiTabMenu) {
-      //noinspection JSUnresolvedFunction
-      UiTabMenu.scrollToTab(tab);
+    void import("../TabMenu").then((UiTabMenu) => {
+      UiTabMenu.scrollToTab(tab!);
     });
-     */
   }
 
   /**
@@ -396,7 +392,7 @@ class TabMenuSimple {
     if (!name) {
       if (tab.childElementCount === 1 && tab.children[0].nodeName === "A") {
         const link = tab.children[0] as HTMLAnchorElement;
-        if (link.href.match(/#([^#]+)$/)) {
+        if (/#([^#]+)$/.exec(link.href)) {
           name = RegExp.$1;
 
           if (document.getElementById(name) === null) {
@@ -434,7 +430,7 @@ class TabMenuSimple {
   }
 
   static getIdentifierFromHash(): string {
-    if (window.location.hash.match(/^#+([^\/]+)+(?:\/.+)?/)) {
+    if (/^#+([^/]+)+(?:\/.+)?/.exec(window.location.hash)) {
       return RegExp.$1;
     }
 

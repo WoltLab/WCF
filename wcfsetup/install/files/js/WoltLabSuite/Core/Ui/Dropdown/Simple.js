@@ -342,7 +342,7 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
                 button.addEventListener("keydown", handleKeyDown);
                 _dropdowns.set(containerId, dropdown);
                 _menus.set(containerId, menu);
-                if (!containerId.match(/^wcf\d+$/)) {
+                if (!/^wcf\d+$/.test(containerId)) {
                     menu.dataset.source = containerId;
                 }
                 // prevent page scrolling

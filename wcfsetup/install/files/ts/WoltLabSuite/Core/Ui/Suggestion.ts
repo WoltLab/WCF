@@ -17,6 +17,17 @@ import {
 } from "../Ajax/Data";
 import UiDropdownSimple from "./Dropdown/Simple";
 
+interface ItemData {
+  icon?: string;
+  label: string;
+  objectID: number;
+  type?: string;
+}
+
+interface AjaxResponse extends DatabaseObjectActionResponse {
+  returnValues: ItemData[];
+}
+
 class UiSuggestion implements AjaxCallbackObject {
   private readonly ajaxPayload: DatabaseObjectActionPayload;
   private readonly callbackSelect: CallbackSelect;
@@ -196,7 +207,7 @@ class UiSuggestion implements AjaxCallbackObject {
   /**
    * Handles successful Ajax requests.
    */
-  _ajaxSuccess(data: DatabaseObjectActionResponse): void {
+  _ajaxSuccess(data: AjaxResponse): void {
     if (this.dropdownMenu === null) {
       this.dropdownMenu = document.createElement("div");
       this.dropdownMenu.className = "dropdownMenu";
@@ -210,13 +221,13 @@ class UiSuggestion implements AjaxCallbackObject {
         const anchor = document.createElement("a");
         if (item.icon) {
           anchor.className = "box16";
-          anchor.innerHTML = item.icon + " <span></span>";
+          anchor.innerHTML = `${item.icon} <span></span>`;
           anchor.children[1].textContent = item.label;
         } else {
           anchor.textContent = item.label;
         }
 
-        anchor.dataset.objectId = item.objectID;
+        anchor.dataset.objectId = item.objectID.toString();
         if (item.type) {
           anchor.dataset.type = item.type;
         }

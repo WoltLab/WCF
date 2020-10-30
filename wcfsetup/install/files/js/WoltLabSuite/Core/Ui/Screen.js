@@ -97,10 +97,10 @@ define(["require", "exports", "tslib", "../Core", "../Environment"], function (r
             // setting translateY causes Mobile Safari to snap
             if (Environment.platform() === "ios") {
                 pageContainer.style.setProperty("position", "relative", "");
-                pageContainer.style.setProperty("top", "-" + _scrollTop + "px", "");
+                pageContainer.style.setProperty("top", `-${_scrollTop}px`, "");
             }
             else {
-                pageContainer.style.setProperty("margin-top", "-" + _scrollTop + "px", "");
+                pageContainer.style.setProperty("margin-top", `-${_scrollTop}px`, "");
             }
             document.documentElement.classList.add("disableScrolling");
         }

@@ -78,7 +78,7 @@ function openSearchBar(): void {
     });
   }
 
-  _pageHeaderSearch.style.setProperty("top", _pageHeaderPanel.clientHeight + "px", "");
+  _pageHeaderSearch.style.setProperty("top", `${_pageHeaderPanel.clientHeight}px`, "");
   _searchInput.focus();
 
   window.setTimeout(() => {

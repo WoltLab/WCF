@@ -59,7 +59,7 @@ function init() {
     });
 
     // bind scroll listener
-    container.querySelectorAll(".tabMenu, .menu").forEach((menu) => {
+    container.querySelectorAll(".tabMenu, .menu").forEach((menu: HTMLElement) => {
       function callback() {
         timeout = null;
 
@@ -136,7 +136,7 @@ function scrollEnable(isSetup) {
   _tabMenus.forEach((tabMenu) => {
     const activeTab = tabMenu.getActiveTab();
     if (isSetup) {
-      rebuildMenuOverflow(activeTab.closest(".menu, .tabMenu"));
+      rebuildMenuOverflow(activeTab.closest(".menu, .tabMenu") as HTMLElement);
     } else {
       scrollToTab(activeTab);
     }
@@ -170,10 +170,10 @@ function scrollMenu(list, left, scrollLeft, scrollWidth, width, paddingRight) {
 
   // new value is larger, we're scrolling towards the end
   if (scrollLeft < left) {
-    list.firstElementChild.style.setProperty("margin-left", scrollLeft - left + "px", "");
+    list.firstElementChild.style.setProperty("margin-left", `${scrollLeft - left}px`, "");
   } else {
     // new value is smaller, we're scrolling towards the start
-    list.style.setProperty("padding-left", scrollLeft - left + "px", "");
+    list.style.setProperty("padding-left", `${scrollLeft - left}px`, "");
   }
 
   setTimeout(() => {
@@ -184,7 +184,7 @@ function scrollMenu(list, left, scrollLeft, scrollWidth, width, paddingRight) {
   }, 300);
 }
 
-function rebuildMenuOverflow(menu) {
+function rebuildMenuOverflow(menu: HTMLElement): void {
   if (!_enableTabScroll) {
     return;
   }
@@ -306,12 +306,12 @@ export function getTabMenu(containerId: string): TabMenuSimple | undefined {
   return _tabMenus.get(containerId);
 }
 
-export function scrollToTab(tab): void {
+export function scrollToTab(tab: HTMLElement): void {
   if (!_enableTabScroll) {
     return;
   }
 
-  const list = tab.closest("ul");
+  const list = tab.closest("ul")!;
   const width = list.clientWidth;
   const scrollLeft = list.scrollLeft;
   const scrollWidth = list.scrollWidth;

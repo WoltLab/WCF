@@ -186,7 +186,7 @@ const UiDialog = {
       if (typeof html === "string" && html.trim() !== "") {
         setupData.source = html;
       } else {
-        import("../Ajax").then((Ajax) => {
+        void import("../Ajax").then((Ajax) => {
           const source = setupData.source as AjaxInitialization;
           Ajax.api(this as any, source.data, (data) => {
             if (data.returnValues && typeof data.returnValues.template === "string") {
@@ -260,7 +260,7 @@ const UiDialog = {
       if (!options.closable) options.backdropCloseOnClick = false;
       if (options.closeConfirmMessage) {
         options.onBeforeClose = (id) => {
-          import("./Confirmation").then((UiConfirmation) => {
+          void import("./Confirmation").then((UiConfirmation) => {
             UiConfirmation.show({
               confirm: this.close.bind(this, id),
               message: options!.closeConfirmMessage || "",
@@ -316,7 +316,7 @@ const UiDialog = {
 
     const data = _dialogs.get(id as string);
     if (data === undefined) {
-      throw new Error("Expected a valid dialog id, '" + id + "' does not match any active dialog.");
+      throw new Error(`Expected a valid dialog id, '${id as string}' does not match any active dialog.`);
     }
 
     if (_validCallbacks.indexOf(key) === -1) {
@@ -388,7 +388,9 @@ const UiDialog = {
       (event) => {
         let allowScroll = false;
         let element: HTMLElement | null = event.target as HTMLElement;
-        let clientHeight, scrollHeight, scrollTop;
+        let clientHeight: number;
+        let scrollHeight: number;
+        let scrollTop: number;
         for (;;) {
           clientHeight = element.clientHeight;
           scrollHeight = element.scrollHeight;
@@ -627,7 +629,7 @@ const UiDialog = {
       // working around fractional values, without visually changing anything.
       unavailableHeight -= 1;
 
-      contentContainer.style.setProperty("margin-bottom", unavailableHeight + "px", "");
+      contentContainer.style.setProperty("margin-bottom", `${unavailableHeight}px`, "");
     } else {
       contentContainer.classList.remove("dialogForm");
       contentContainer.style.removeProperty("margin-bottom");
@@ -636,7 +638,7 @@ const UiDialog = {
     unavailableHeight += DomUtil.outerHeight(data.header);
 
     const maximumHeight = window.innerHeight * (_dialogFullHeight ? 1 : 0.8) - unavailableHeight;
-    contentContainer.style.setProperty("max-height", ~~maximumHeight + "px", "");
+    contentContainer.style.setProperty("max-height", `${~~maximumHeight}px`, "");
 
     // fix for a calculation bug in Chrome causing the scrollbar to overlap the border
     if (Environment.browser() === "chrome") {

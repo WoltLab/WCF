@@ -27,9 +27,11 @@ export function round(value: number, exp: number): number {
 
   // Shift
   let tmp = value.toString().split("e");
-  value = Math.round(+(tmp[0] + "e" + (tmp[1] ? +tmp[1] - exp : -exp)));
+  let exponent = tmp[1] ? +tmp[1] - exp : -exp;
+  value = Math.round(+`${tmp[0]}e${exponent}`);
 
   // Shift back
   tmp = value.toString().split("e");
-  return +(tmp[0] + "e" + (tmp[1] ? +tmp[1] + exp : exp));
+  exponent = tmp[1] ? +tmp[1] + exp : exp;
+  return +`${tmp[0]}e${exponent}`;
 }

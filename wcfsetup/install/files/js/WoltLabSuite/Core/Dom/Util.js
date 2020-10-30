@@ -54,7 +54,7 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
         getUniqueId() {
             let elementId;
             do {
-                elementId = "wcf" + _idCounter++;
+                elementId = `wcf${_idCounter++}`;
             } while (document.getElementById(elementId) !== null);
             return elementId;
         },
@@ -135,24 +135,22 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
          */
         setStyles(element, styles) {
             let important = false;
-            for (const property in styles) {
-                if (styles.hasOwnProperty(property)) {
-                    if (/ !important$/.test(styles[property])) {
-                        important = true;
-                        styles[property] = styles[property].replace(/ !important$/, "");
-                    }
-                    else {
-                        important = false;
-                    }
-                    // for a set style property with priority = important, some browsers are
-                    // not able to overwrite it with a property != important; removing the
-                    // property first solves this issue
-                    if (element.style.getPropertyPriority(property) === "important" && !important) {
-                        element.style.removeProperty(property);
-                    }
-                    element.style.setProperty(property, styles[property], important ? "important" : "");
+            Object.keys(styles).forEach((property) => {
+                if (/ !important$/.test(styles[property])) {
+                    important = true;
+                    styles[property] = styles[property].replace(/ !important$/, "");
                 }
-            }
+                else {
+                    important = false;
+                }
+                // for a set style property with priority = important, some browsers are
+                // not able to overwrite it with a property != important; removing the
+                // property first solves this issue
+                if (element.style.getPropertyPriority(property) === "important" && !important) {
+                    element.style.removeProperty(property);
+                }
+                element.style.setProperty(property, styles[property], important ? "important" : "");
+            });
         },
         /**
          * Returns a style property value as integer.
@@ -246,8 +244,9 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
          */
         getDataAttributes(element, prefix, camelCaseName, idToUpperCase) {
             prefix = prefix || "";
-            if (prefix.indexOf("data-") !== 0)
+            if (prefix.indexOf("data-") !== 0) {
                 prefix = "data-" + prefix;
+            }
             camelCaseName = camelCaseName === true;
             idToUpperCase = idToUpperCase === true;
             const attributes = {};

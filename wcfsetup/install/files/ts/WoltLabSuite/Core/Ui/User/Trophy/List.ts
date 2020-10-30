@@ -42,7 +42,7 @@ class UiUserTrophyList implements AjaxCallbackObject, DialogCallbackObject {
    * Initializes the user trophy list.
    */
   constructor() {
-    DomChangeListener.add("WoltLabSuite/Core/Ui/User/Trophy/List", this.rebuild.bind(this));
+    DomChangeListener.add("WoltLabSuite/Core/Ui/User/Trophy/List", () => this.rebuild());
 
     this.rebuild();
   }
@@ -83,7 +83,7 @@ class UiUserTrophyList implements AjaxCallbackObject, DialogCallbackObject {
     if (data) {
       // validate pageNo
       if (data.pageCount !== 0 && (this.currentPageNo < 1 || this.currentPageNo > data.pageCount)) {
-        throw new RangeError("pageNo must be between 1 and " + data.pageCount + " (" + this.currentPageNo + " given).");
+        throw new RangeError(`pageNo must be between 1 and ${data.pageCount} (${this.currentPageNo} given).`);
       }
     }
 

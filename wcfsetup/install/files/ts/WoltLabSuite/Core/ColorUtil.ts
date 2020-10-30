@@ -119,12 +119,10 @@ export function rgbToHsv(r: number, g: number, b: number): HSV {
     s = diff / max;
   }
 
-  const v = max;
-
   return {
     h: Math.round(h),
     s: Math.round(s * 100),
-    v: Math.round(v * 100),
+    v: Math.round(max * 100),
   };
 }
 
@@ -169,7 +167,7 @@ export function rgbToHex(r: number, g: number, b: number): string {
   const charList = "0123456789ABCDEF";
 
   if (g === undefined) {
-    if (r.toString().match(/^rgba?\((\d+), ?(\d+), ?(\d+)(?:, ?[0-9.]+)?\)$/)) {
+    if (/^rgba?\((\d+), ?(\d+), ?(\d+)(?:, ?[0-9.]+)?\)$/.exec(r.toString())) {
       r = +RegExp.$1;
       g = +RegExp.$2;
       b = +RegExp.$3;

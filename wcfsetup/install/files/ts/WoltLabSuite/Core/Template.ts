@@ -46,6 +46,7 @@ class Template {
         "return " +
         template;
 
+      // eslint-disable-next-line @typescript-eslint/no-implied-eval
       this.fetch = new Function("StringUtil", "Language", "I18nPlural", "v", template).bind(
         undefined,
         StringUtil,
@@ -60,8 +61,6 @@ class Template {
 
   /**
    * Evaluates the Template using the given parameters.
-   *
-   * @param  {object}  v  Parameters to pass to the template.
    */
   fetch(_v: object): string {
     // this will be replaced in the init function
