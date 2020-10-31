@@ -8,13 +8,13 @@
  */
 
 import * as Ajax from "../../../../../Ajax";
-import { AjaxCallbackObject, RequestOptions } from "../../../../../Ajax/Data";
+import { AjaxCallbackObject, RequestOptions, ResponseData } from "../../../../../Ajax/Data";
 
 abstract class UiUserProfileMenuItemAbstract implements AjaxCallbackObject {
-  readonly _button = document.createElement("a");
-  readonly _isActive: boolean;
-  readonly _listItem = document.createElement("li");
-  readonly _userId: number;
+  protected readonly _button = document.createElement("a");
+  protected _isActive: boolean;
+  protected readonly _listItem = document.createElement("li");
+  protected readonly _userId: number;
 
   /**
    * Creates a new user profile menu item.
@@ -90,7 +90,8 @@ abstract class UiUserProfileMenuItemAbstract implements AjaxCallbackObject {
   /**
    * Handles successful Ajax requests.
    */
-  _ajaxSuccess(): void {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _ajaxSuccess(data: ResponseData): void {
     // This should be an abstract method, but cannot be marked as such for backwards compatibility.
 
     throw new Error("Implement me!");

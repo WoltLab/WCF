@@ -76,7 +76,8 @@ define(["require", "exports", "tslib", "../../../../../Ajax"], function (require
         /**
          * Handles successful Ajax requests.
          */
-        _ajaxSuccess() {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        _ajaxSuccess(data) {
             // This should be an abstract method, but cannot be marked as such for backwards compatibility.
             throw new Error("Implement me!");
         }
