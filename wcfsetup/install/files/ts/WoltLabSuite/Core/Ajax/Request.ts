@@ -72,7 +72,7 @@ class AjaxRequest {
 
         callbackObject: null,
       },
-      options
+      options,
     );
 
     if (typeof options.callbackObject === "object") {
@@ -109,7 +109,7 @@ class AjaxRequest {
       }
       if (typeof this._options.callbackObject._ajaxUploadProgress === "function") {
         this._options.uploadProgress = this._options.callbackObject._ajaxUploadProgress.bind(
-          this._options.callbackObject
+          this._options.callbackObject,
         );
       }
     }
@@ -368,7 +368,7 @@ class AjaxRequest {
     DomChangeListener.trigger();
 
     // fix anchor tags generated through WCF::getAnchor()
-    document.querySelectorAll('a[href*="#"]').forEach((link: HTMLAnchorElement) => {
+    document.querySelectorAll("a[href*=\"#\"]").forEach((link: HTMLAnchorElement) => {
       let href = link.href;
       if (href.indexOf("AJAXProxy") !== -1 || href.indexOf("ajax-proxy") !== -1) {
         href = href.substr(href.indexOf("#"));
@@ -377,5 +377,7 @@ class AjaxRequest {
     });
   }
 }
+
+Core.enableLegacyInheritance(AjaxRequest);
 
 export = AjaxRequest;

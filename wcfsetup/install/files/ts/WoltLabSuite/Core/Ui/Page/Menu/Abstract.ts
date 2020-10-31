@@ -241,8 +241,12 @@ abstract class UiPageMenuAbstract {
         y: touches[0].clientY,
       };
 
-      if (isLeftEdge) _androidTouching = "left";
-      if (isRightEdge) _androidTouching = "right";
+      if (isLeftEdge) {
+        _androidTouching = "left";
+      }
+      if (isRightEdge) {
+        _androidTouching = "right";
+      }
     });
 
     document.addEventListener("touchend", (event) => {
@@ -281,11 +285,19 @@ abstract class UiPageMenuAbstract {
 
       // check whether the user moved the finger far enough
       if (appearsAt === "left") {
-        if (_androidTouching === "left" && position < touchStart.x + 100) this.close();
-        if (_androidTouching === "right" && position < touchStart.x - 100) this.close();
+        if (_androidTouching === "left" && position < touchStart.x + 100) {
+          this.close();
+        }
+        if (_androidTouching === "right" && position < touchStart.x - 100) {
+          this.close();
+        }
       } else {
-        if (_androidTouching === "left" && position > touchStart.x + 100) this.close();
-        if (_androidTouching === "right" && position > touchStart.x - 100) this.close();
+        if (_androidTouching === "left" && position > touchStart.x + 100) {
+          this.close();
+        }
+        if (_androidTouching === "right" && position > touchStart.x - 100) {
+          this.close();
+        }
       }
 
       // reset
@@ -304,10 +316,12 @@ abstract class UiPageMenuAbstract {
       // check whether the user started moving in the correct direction
       // this avoids false positives, in case the user just wanted to tap
       let movedFromEdge = false;
-      if (_androidTouching === "left")
+      if (_androidTouching === "left") {
         movedFromEdge = touches[0].clientX > touchStart.x + TouchPosition.MovedHorizontally;
-      if (_androidTouching === "right")
+      }
+      if (_androidTouching === "right") {
         movedFromEdge = touches[0].clientX < touchStart.x - TouchPosition.MovedHorizontally;
+      }
 
       const movedVertically = Math.abs(touches[0].clientY - touchStart.y) > TouchPosition.MovedVertically;
 
@@ -321,9 +335,15 @@ abstract class UiPageMenuAbstract {
       if (isOpen) {
         // update CSS to the new finger position
         let position = touches[0].clientX;
-        if (appearsAt === "right") position = document.body.clientWidth - position;
-        if (position > this.menu.offsetWidth) position = this.menu.offsetWidth;
-        if (position < 0) position = 0;
+        if (appearsAt === "right") {
+          position = document.body.clientWidth - position;
+        }
+        if (position > this.menu.offsetWidth) {
+          position = this.menu.offsetWidth;
+        }
+        if (position < 0) {
+          position = 0;
+        }
 
         const offset = (appearsAt === "left" ? 1 : -1) * (position - this.menu.offsetWidth);
         this.menu.style.setProperty("transform", `translateX(${offset}px)`);
@@ -560,5 +580,7 @@ abstract class UiPageMenuAbstract {
     this.button.classList[hasNewContent ? "add" : "remove"]("pageMenuMobileButtonHasContent");
   }
 }
+
+Core.enableLegacyInheritance(UiPageMenuAbstract);
 
 export = UiPageMenuAbstract;

@@ -7,6 +7,7 @@
  * @module  WoltLabSuite/Core/Ui/TabMenu/Simple
  */
 
+import * as Core from "../../Core";
 import * as DomTraverse from "../../Dom/Traverse";
 import DomUtil from "../../Dom/Util";
 import * as Environment from "../../Environment";
@@ -73,28 +74,28 @@ class TabMenuSimple {
       if (this.tabs.has(name)) {
         throw new Error(
           "Tab names must be unique, li[data-name='" +
-            name +
-            "'] (tab menu id: '" +
-            containerId +
-            "') exists more than once."
+          name +
+          "'] (tab menu id: '" +
+          containerId +
+          "') exists more than once.",
         );
       }
 
       const container = this.containers.get(name);
       if (container === undefined) {
         throw new Error(
-          "Expected content element for li[data-name='" + name + "'] (tab menu id: '" + containerId + "')."
+          "Expected content element for li[data-name='" + name + "'] (tab menu id: '" + containerId + "').",
         );
       } else if (container.parentNode !== this.container) {
         throw new Error(
-          "Expected content element '" + name + "' (tab menu id: '" + containerId + "') to be a direct children."
+          "Expected content element '" + name + "' (tab menu id: '" + containerId + "') to be a direct children.",
         );
       }
 
       // check if tab holds exactly one children which is an anchor element
       if (tab.childElementCount !== 1 || tab.children[0].nodeName !== "A") {
         throw new Error(
-          "Expected exactly one <a> as children for li[data-name='" + name + "'] (tab menu id: '" + containerId + "')."
+          "Expected exactly one <a> as children for li[data-name='" + name + "'] (tab menu id: '" + containerId + "').",
         );
       }
 
@@ -108,7 +109,7 @@ class TabMenuSimple {
     if (this.isLegacy) {
       this.container.dataset.isLegacy = "true";
 
-      this.tabs.forEach(function (tab, name) {
+      this.tabs.forEach(function(tab, name) {
         tab.setAttribute("aria-controls", name);
       });
     }
@@ -182,7 +183,7 @@ class TabMenuSimple {
         }
 
         if (preselect === true) {
-          this.tabs.forEach(function (tab) {
+          this.tabs.forEach(function(tab) {
             if (
               !selectTab &&
               !DomUtil.isHidden(tab) &&
@@ -437,5 +438,7 @@ class TabMenuSimple {
     return "";
   }
 }
+
+Core.enableLegacyInheritance(TabMenuSimple);
 
 export = TabMenuSimple;

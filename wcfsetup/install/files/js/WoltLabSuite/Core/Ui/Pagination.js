@@ -244,5 +244,6 @@ define(["require", "exports", "tslib", "../Core", "../Language", "../StringUtil"
      * maximum number of displayed page links, should match the PHP implementation
      */
     UiPagination.showLinks = 11;
+    Core.enableLegacyInheritance(UiPagination);
     return UiPagination;
 });

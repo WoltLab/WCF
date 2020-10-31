@@ -20,8 +20,9 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Toggle/Input
  */
-define(["require", "exports", "tslib", "../../Dom/Util"], function (require, exports, tslib_1, Util_1) {
+define(["require", "exports", "tslib", "../../Core", "../../Dom/Util"], function (require, exports, tslib_1, Core, Util_1) {
     "use strict";
+    Core = tslib_1.__importStar(Core);
     Util_1 = tslib_1.__importDefault(Util_1);
     class UiToggleInput {
         /**
@@ -81,5 +82,6 @@ define(["require", "exports", "tslib", "../../Dom/Util"], function (require, exp
             });
         }
     }
+    Core.enableLegacyInheritance(UiToggleInput);
     return UiToggleInput;
 });

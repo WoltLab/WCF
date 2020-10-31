@@ -7,6 +7,7 @@
  * @module  WoltLabSuite/Core/Ui/Page/Menu/User
  */
 
+import * as Core from "../../../Core";
 import * as EventHandler from "../../../Event/Handler";
 import * as Language from "../../../Language";
 import UiPageMenuAbstract from "./Abstract";
@@ -79,5 +80,7 @@ class UiPageMenuUser extends UiPageMenuAbstract {
     });
   }
 }
+
+Core.enableLegacyInheritance(UiPageMenuUser);
 
 export = UiPageMenuUser;

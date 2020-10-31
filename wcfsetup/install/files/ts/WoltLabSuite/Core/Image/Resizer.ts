@@ -7,6 +7,7 @@
  * @module  WoltLabSuite/Core/Image/Resizer
  */
 
+import * as Core from "../Core";
 import * as FileUtil from "../FileUtil";
 import * as ExifUtil from "./ExifUtil";
 import Pica from "pica";
@@ -196,5 +197,7 @@ interface CanvasPlusExif {
   image: HTMLCanvasElement;
   exif?: ExifUtil.Exif;
 }
+
+Core.enableLegacyInheritance(ImageResizer);
 
 export = ImageResizer;

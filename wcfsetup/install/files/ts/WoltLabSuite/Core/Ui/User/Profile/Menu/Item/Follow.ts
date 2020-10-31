@@ -1,3 +1,4 @@
+import * as Core from "../../../../../Core";
 import * as Language from "../../../../../Language";
 import { AjaxCallbackSetup, ResponseData } from "../../../../../Ajax/Data";
 import * as UiNotification from "../../../../Notification";
@@ -37,5 +38,7 @@ class UiUserProfileMenuItemFollow extends UiUserProfileMenuItemAbstract {
     };
   }
 }
+
+Core.enableLegacyInheritance(UiUserProfileMenuItemFollow);
 
 export = UiUserProfileMenuItemFollow;

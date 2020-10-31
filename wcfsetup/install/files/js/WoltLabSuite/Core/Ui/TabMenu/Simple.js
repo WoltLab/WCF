@@ -6,8 +6,9 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/TabMenu/Simple
  */
-define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Dom/Util", "../../Environment", "../../Event/Handler"], function (require, exports, tslib_1, DomTraverse, Util_1, Environment, EventHandler) {
+define(["require", "exports", "tslib", "../../Core", "../../Dom/Traverse", "../../Dom/Util", "../../Environment", "../../Event/Handler"], function (require, exports, tslib_1, Core, DomTraverse, Util_1, Environment, EventHandler) {
     "use strict";
+    Core = tslib_1.__importStar(Core);
     DomTraverse = tslib_1.__importStar(DomTraverse);
     Util_1 = tslib_1.__importDefault(Util_1);
     Environment = tslib_1.__importStar(Environment);
@@ -366,5 +367,6 @@ define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Dom/Util", "
             return "";
         }
     }
+    Core.enableLegacyInheritance(TabMenuSimple);
     return TabMenuSimple;
 });

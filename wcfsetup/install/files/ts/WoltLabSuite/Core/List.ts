@@ -8,6 +8,8 @@
  * @module  WoltLabSuite/Core/List
  */
 
+import * as Core from "./Core";
+
 /** @deprecated 5.4 Use a `Set` instead. */
 class List {
   private _set = new Set<any>();
@@ -51,5 +53,7 @@ class List {
     return this._set.size;
   }
 }
+
+Core.enableLegacyInheritance(List);
 
 export = List;

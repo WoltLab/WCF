@@ -39,13 +39,15 @@ class UiUserSearchInput extends UiSearchInput {
 
     const box = document.createElement("div");
     box.className = "box16";
-    box.innerHTML = item.type === "group" ? '<span class="icon icon16 fa-users"></span>' : item.icon;
+    box.innerHTML = item.type === "group" ? `<span class="icon icon16 fa-users"></span>` : item.icon;
     box.appendChild(listItem.children[0]);
     listItem.appendChild(box);
 
     return listItem;
   }
 }
+
+Core.enableLegacyInheritance(UiUserSearchInput);
 
 export = UiUserSearchInput;
 

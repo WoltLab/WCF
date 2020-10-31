@@ -6,8 +6,9 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Page/Menu/User
  */
-define(["require", "exports", "tslib", "../../../Event/Handler", "../../../Language", "./Abstract"], function (require, exports, tslib_1, EventHandler, Language, Abstract_1) {
+define(["require", "exports", "tslib", "../../../Core", "../../../Event/Handler", "../../../Language", "./Abstract"], function (require, exports, tslib_1, Core, EventHandler, Language, Abstract_1) {
     "use strict";
+    Core = tslib_1.__importStar(Core);
     EventHandler = tslib_1.__importStar(EventHandler);
     Language = tslib_1.__importStar(Language);
     Abstract_1 = tslib_1.__importDefault(Abstract_1);
@@ -64,5 +65,6 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../../Langu
             });
         }
     }
+    Core.enableLegacyInheritance(UiPageMenuUser);
     return UiPageMenuUser;
 });

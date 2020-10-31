@@ -7,6 +7,7 @@
  * @module  WoltLabSuite/Core/Ui/Page/Menu/Main
  */
 
+import * as Core from "../../../Core";
 import DomUtil from "../../../Dom/Util";
 import * as Language from "../../../Language";
 import UiPageMenuAbstract from "./Abstract";
@@ -104,5 +105,7 @@ class UiPageMenuMain extends UiPageMenuAbstract {
     return true;
   }
 }
+
+Core.enableLegacyInheritance(UiPageMenuMain);
 
 export = UiPageMenuMain;

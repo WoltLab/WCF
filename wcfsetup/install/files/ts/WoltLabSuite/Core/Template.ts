@@ -10,6 +10,7 @@
  * @module  WoltLabSuite/Core/Template
  */
 
+import * as Core from "./Core";
 import * as parser from "./Template.grammar";
 import * as StringUtil from "./StringUtil";
 import * as Language from "./Language";
@@ -51,7 +52,7 @@ class Template {
         undefined,
         StringUtil,
         Language,
-        I18nPlural
+        I18nPlural,
       );
     } catch (e) {
       console.debug(e.message);
@@ -71,12 +72,14 @@ class Template {
 Object.defineProperty(Template, "callbacks", {
   enumerable: false,
   configurable: false,
-  get: function () {
+  get: function() {
     throw new Error("WCF.Template.callbacks is no longer supported");
   },
-  set: function (_value) {
+  set: function(_value) {
     throw new Error("WCF.Template.callbacks is no longer supported");
   },
 });
+
+Core.enableLegacyInheritance(Template);
 
 export = Template;

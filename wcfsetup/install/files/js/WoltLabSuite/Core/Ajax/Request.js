@@ -293,7 +293,7 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
             this._previousXhr = undefined;
             Listener_1.default.trigger();
             // fix anchor tags generated through WCF::getAnchor()
-            document.querySelectorAll('a[href*="#"]').forEach((link) => {
+            document.querySelectorAll("a[href*=\"#\"]").forEach((link) => {
                 let href = link.href;
                 if (href.indexOf("AJAXProxy") !== -1 || href.indexOf("ajax-proxy") !== -1) {
                     href = href.substr(href.indexOf("#"));
@@ -302,5 +302,6 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
             });
         }
     }
+    Core.enableLegacyInheritance(AjaxRequest);
     return AjaxRequest;
 });

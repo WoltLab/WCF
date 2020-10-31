@@ -39,5 +39,6 @@ define(["require", "exports", "tslib", "../../../Core", "../../Search/Input"], f
             this.callbackSuccess(data);
         }
     }
+    Core.enableLegacyInheritance(UiPageSearchInput);
     return UiPageSearchInput;
 });

@@ -9,6 +9,7 @@
 
 import * as Ajax from "../../../../../Ajax";
 import { AjaxCallbackObject, AjaxCallbackSetup, ResponseData } from "../../../../../Ajax/Data";
+import * as Core from "../../../../../Core";
 
 abstract class UiUserProfileMenuItemAbstract implements AjaxCallbackObject {
   protected readonly _button = document.createElement("a");
@@ -105,5 +106,7 @@ abstract class UiUserProfileMenuItemAbstract implements AjaxCallbackObject {
     throw new Error("Implement me!");
   }
 }
+
+Core.enableLegacyInheritance(UiUserProfileMenuItemAbstract);
 
 export = UiUserProfileMenuItemAbstract;

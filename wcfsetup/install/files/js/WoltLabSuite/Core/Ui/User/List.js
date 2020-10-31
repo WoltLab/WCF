@@ -100,5 +100,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
             };
         }
     }
+    Core.enableLegacyInheritance(UiUserList);
     return UiUserList;
 });

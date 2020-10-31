@@ -21,6 +21,7 @@
  * @module  WoltLabSuite/Core/Ui/Toggle/Input
  */
 
+import * as Core from "../../Core";
 import DomUtil from "../../Dom/Util";
 
 class UiToggleInput {
@@ -94,6 +95,8 @@ class UiToggleInput {
     });
   }
 }
+
+Core.enableLegacyInheritance(UiToggleInput);
 
 export = UiToggleInput;
 

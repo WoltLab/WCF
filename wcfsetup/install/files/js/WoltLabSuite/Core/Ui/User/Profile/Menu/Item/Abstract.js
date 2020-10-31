@@ -6,9 +6,10 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/User/Profile/Menu/Item/Abstract
  */
-define(["require", "exports", "tslib", "../../../../../Ajax"], function (require, exports, tslib_1, Ajax) {
+define(["require", "exports", "tslib", "../../../../../Ajax", "../../../../../Core"], function (require, exports, tslib_1, Ajax, Core) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
     class UiUserProfileMenuItemAbstract {
         /**
          * Creates a new user profile menu item.
@@ -88,5 +89,6 @@ define(["require", "exports", "tslib", "../../../../../Ajax"], function (require
             throw new Error("Implement me!");
         }
     }
+    Core.enableLegacyInheritance(UiUserProfileMenuItemAbstract);
     return UiUserProfileMenuItemAbstract;
 });

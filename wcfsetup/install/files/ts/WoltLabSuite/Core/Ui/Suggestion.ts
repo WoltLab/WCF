@@ -135,7 +135,9 @@ class UiSuggestion implements AjaxCallbackObject {
         index = (i === 0 ? length : i) - 1;
       } else if (event.key === "ArrowDown") {
         index = i + 1;
-        if (index === length) index = 0;
+        if (index === length) {
+          index = 0;
+        }
       }
       if (index !== i) {
         active.classList.remove("active");
@@ -247,6 +249,8 @@ class UiSuggestion implements AjaxCallbackObject {
     }
   }
 }
+
+Core.enableLegacyInheritance(UiSuggestion);
 
 export = UiSuggestion;
 

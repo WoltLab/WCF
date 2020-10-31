@@ -6,8 +6,9 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Page/Menu/Main
  */
-define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language", "./Abstract"], function (require, exports, tslib_1, Util_1, Language, Abstract_1) {
+define(["require", "exports", "tslib", "../../../Core", "../../../Dom/Util", "../../../Language", "./Abstract"], function (require, exports, tslib_1, Core, Util_1, Language, Abstract_1) {
     "use strict";
+    Core = tslib_1.__importStar(Core);
     Util_1 = tslib_1.__importDefault(Util_1);
     Language = tslib_1.__importStar(Language);
     Abstract_1 = tslib_1.__importDefault(Abstract_1);
@@ -80,5 +81,6 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
             return true;
         }
     }
+    Core.enableLegacyInheritance(UiPageMenuMain);
     return UiPageMenuMain;
 });

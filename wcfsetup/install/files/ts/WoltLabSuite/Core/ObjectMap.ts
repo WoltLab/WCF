@@ -10,6 +10,8 @@
  * @module  WoltLabSuite/Core/ObjectMap
  */
 
+import * as Core from "./Core";
+
 /** @deprecated 5.4 Use a `WeakMap` instead. */
 class ObjectMap {
   private _map = new WeakMap<object, object>();
@@ -50,5 +52,7 @@ class ObjectMap {
     return this._map.get(key);
   }
 }
+
+Core.enableLegacyInheritance(ObjectMap);
 
 export = ObjectMap;

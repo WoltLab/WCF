@@ -6,9 +6,10 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/User/Trophy/List
  */
-define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Listener", "../../Dialog", "../../Pagination"], function (require, exports, tslib_1, Ajax, Listener_1, Dialog_1, Pagination_1) {
+define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../../Dom/Change/Listener", "../../Dialog", "../../Pagination"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Dialog_1, Pagination_1) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     Pagination_1 = tslib_1.__importDefault(Pagination_1);
@@ -127,5 +128,6 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Lis
             };
         }
     }
+    Core.enableLegacyInheritance(UiUserTrophyList);
     return UiUserTrophyList;
 });

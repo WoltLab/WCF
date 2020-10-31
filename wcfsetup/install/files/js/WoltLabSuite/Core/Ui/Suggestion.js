@@ -99,8 +99,9 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "./Dropdown/Simple"
                 }
                 else if (event.key === "ArrowDown") {
                     index = i + 1;
-                    if (index === length)
+                    if (index === length) {
                         index = 0;
+                    }
                 }
                 if (index !== i) {
                     active.classList.remove("active");
@@ -198,5 +199,6 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "./Dropdown/Simple"
             }
         }
     }
+    Core.enableLegacyInheritance(UiSuggestion);
     return UiSuggestion;
 });

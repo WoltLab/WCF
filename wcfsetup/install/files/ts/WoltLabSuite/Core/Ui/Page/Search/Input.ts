@@ -33,7 +33,7 @@ class UiPageSearchInput extends UiSearchInput {
           className: "wcf\\data\\page\\PageAction",
         },
       },
-      options
+      options,
     ) as any;
 
     super(element, options);
@@ -62,5 +62,7 @@ class UiPageSearchInput extends UiSearchInput {
     this.callbackSuccess(data);
   }
 }
+
+Core.enableLegacyInheritance(UiPageSearchInput);
 
 export = UiPageSearchInput;

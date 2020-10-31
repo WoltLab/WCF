@@ -9,6 +9,7 @@
 
 import * as Ajax from "../../../Ajax";
 import { AjaxCallbackObject, AjaxCallbackSetup, DatabaseObjectActionResponse } from "../../../Ajax/Data";
+import * as Core from "../../../Core";
 import { DialogCallbackObject, DialogData, DialogCallbackSetup } from "../../Dialog/Data";
 import DomChangeListener from "../../../Dom/Change/Listener";
 import UiDialog from "../../Dialog";
@@ -17,7 +18,8 @@ import UiPagination from "../../Pagination";
 class CacheData {
   private readonly cache = new Map<number, string>();
 
-  constructor(readonly pageCount: number, readonly title: string) {}
+  constructor(readonly pageCount: number, readonly title: string) {
+  }
 
   has(pageNo: number): boolean {
     return this.cache.has(pageNo);
@@ -143,6 +145,8 @@ class UiUserTrophyList implements AjaxCallbackObject, DialogCallbackObject {
     };
   }
 }
+
+Core.enableLegacyInheritance(UiUserTrophyList);
 
 export = UiUserTrophyList;
 
