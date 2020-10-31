@@ -90,8 +90,7 @@ abstract class UiUserProfileMenuItemAbstract implements AjaxCallbackObject {
   /**
    * Handles successful Ajax requests.
    */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _ajaxSuccess(data: ResponseData): void {
+  _ajaxSuccess(_data: ResponseData): void {
     // This should be an abstract method, but cannot be marked as such for backwards compatibility.
 
     throw new Error("Implement me!");

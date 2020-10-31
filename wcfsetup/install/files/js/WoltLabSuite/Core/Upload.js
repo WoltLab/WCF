@@ -136,19 +136,14 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Dom/Change
             Listener_1.default.trigger();
             return uploadId;
         }
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        _createFileTableRow(file) {
+        _createFileTableRow(_file) {
             // This should be an abstract method, but cannot be marked as such for backwards compatibility.
             throw new Error("Has to be implemented in subclass.");
         }
         /**
          * Handles a failed file upload.
          */
-        _failure(
-        /* eslint-disable @typescript-eslint/no-unused-vars */
-        uploadId, data, responseText, xhr, requestOptions
-        /* eslint-enable @typescript-eslint/no-unused-vars */
-        ) {
+        _failure(_uploadId, _data, _responseText, _xhr, _requestOptions) {
             // This should be an abstract method, but cannot be marked as such for backwards compatibility.
             return true;
         }
@@ -194,11 +189,7 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Dom/Change
         /**
          * Handles a successful file upload.
          */
-        _success(
-        /* eslint-disable @typescript-eslint/no-unused-vars */
-        uploadId, data, responseText, xhr, requestOptions
-        /* eslint-enable @typescript-eslint/no-unused-vars */
-        ) {
+        _success(_uploadId, _data, _responseText, _xhr, _requestOptions) {
             // This should be an abstract method, but cannot be marked as such for backwards compatibility.
         }
         _upload(event, file, blob) {
@@ -255,8 +246,7 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Dom/Change
          *
          * @since       5.2
          */
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        validateUpload(files) {
+        validateUpload(_files) {
             // This should be an abstract method, but cannot be marked as such for backwards compatibility.
             return true;
         }

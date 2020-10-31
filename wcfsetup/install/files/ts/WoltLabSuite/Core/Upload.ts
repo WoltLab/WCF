@@ -193,8 +193,7 @@ abstract class Upload {
     return uploadId;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected _createFileTableRow(file: File | FileLikeObject): HTMLTableRowElement {
+  protected _createFileTableRow(_file: File | FileLikeObject): HTMLTableRowElement {
     // This should be an abstract method, but cannot be marked as such for backwards compatibility.
 
     throw new Error("Has to be implemented in subclass.");
@@ -204,15 +203,11 @@ abstract class Upload {
    * Handles a failed file upload.
    */
   protected _failure(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
-
-    uploadId: number,
-    data: ResponseData,
-    responseText: string,
-    xhr: XMLHttpRequest,
-    requestOptions: RequestOptions
-
-    /* eslint-enable @typescript-eslint/no-unused-vars */
+    _uploadId: number,
+    _data: ResponseData,
+    _responseText: string,
+    _xhr: XMLHttpRequest,
+    _requestOptions: RequestOptions
   ): boolean {
     // This should be an abstract method, but cannot be marked as such for backwards compatibility.
 
@@ -267,15 +262,11 @@ abstract class Upload {
    * Handles a successful file upload.
    */
   protected _success(
-    /* eslint-disable @typescript-eslint/no-unused-vars */
-
-    uploadId: number,
-    data: ResponseData,
-    responseText: string,
-    xhr: XMLHttpRequestEventTarget,
-    requestOptions: RequestOptions
-
-    /* eslint-enable @typescript-eslint/no-unused-vars */
+    _uploadId: number,
+    _data: ResponseData,
+    _responseText: string,
+    _xhr: XMLHttpRequestEventTarget,
+    _requestOptions: RequestOptions
   ): void {
     // This should be an abstract method, but cannot be marked as such for backwards compatibility.
   }
@@ -342,8 +333,7 @@ abstract class Upload {
    *
    * @since       5.2
    */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected validateUpload(files: FileCollection): boolean {
+  protected validateUpload(_files: FileCollection): boolean {
     // This should be an abstract method, but cannot be marked as such for backwards compatibility.
 
     return true;
