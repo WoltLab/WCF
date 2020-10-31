@@ -87,7 +87,7 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Dom/Change
             const span = document.createElement("span");
             span.textContent = Language.get("wcf.global.button.upload");
             this._button.appendChild(span);
-            this._buttonContainer.insertAdjacentElement("afterbegin", this._fileUpload);
+            this._button.insertAdjacentElement("afterbegin", this._fileUpload);
             this._insertButton();
             Listener_1.default.trigger();
         }

@@ -131,7 +131,7 @@ abstract class Upload {
     span.textContent = Language.get("wcf.global.button.upload");
     this._button.appendChild(span);
 
-    this._buttonContainer.insertAdjacentElement("afterbegin", this._fileUpload);
+    this._button.insertAdjacentElement("afterbegin", this._fileUpload);
 
     this._insertButton();
 
