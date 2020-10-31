@@ -12,7 +12,7 @@ import * as Language from "../../../Language";
 import * as StringUtil from "../../../StringUtil";
 import DomUtil from "../../../Dom/Util";
 import UiDialog from "../../Dialog";
-import { DialogCallbackObject, CallbackSetup as DialogSetup } from "../../Dialog/Data";
+import { DialogCallbackObject, DialogCallbackSetup } from "../../Dialog/Data";
 import UiPageSearchInput from "./Input";
 import { DatabaseObjectActionResponse } from "../../../Ajax/Data";
 
@@ -137,7 +137,7 @@ class UiPageSearchHandler implements DialogCallbackObject {
     UiDialog.close(this);
   }
 
-  _dialogSetup(): ReturnType<DialogSetup> {
+  _dialogSetup(): ReturnType<DialogCallbackSetup> {
     return {
       id: "wcfUiPageSearchHandler",
       options: {

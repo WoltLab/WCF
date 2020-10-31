@@ -8,7 +8,7 @@
  */
 
 import * as Ajax from "../../../Ajax";
-import { AjaxCallbackObject, ResponseData } from "../../../Ajax/Data";
+import { AjaxCallbackObject, AjaxCallbackSetup, ResponseData } from "../../../Ajax/Data";
 import DomUtil from "../../../Dom/Util";
 import * as EventHandler from "../../../Event/Handler";
 import * as Language from "../../../Language";
@@ -61,7 +61,7 @@ class UiUserCoverPhotoDelete implements AjaxCallbackObject {
     UiNotification.show();
   }
 
-  _ajaxSetup() {
+  _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
     return {
       data: {
         actionName: "deleteCoverPhoto",

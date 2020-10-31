@@ -24,7 +24,7 @@ import * as Language from "../Language";
 import * as Environment from "../Environment";
 import * as EventHandler from "../Event/Handler";
 import UiDropdownSimple from "./Dropdown/Simple";
-import { CallbackSetup } from "../Ajax/Data";
+import { AjaxCallbackSetup } from "../Ajax/Data";
 
 let _activeDialog: string | null = null;
 let _callbackFocus: (event: FocusEvent) => void;
@@ -889,7 +889,7 @@ const UiDialog = {
     return id.toString();
   },
 
-  _ajaxSetup(): ReturnType<CallbackSetup> {
+  _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
     return {};
   },
 };

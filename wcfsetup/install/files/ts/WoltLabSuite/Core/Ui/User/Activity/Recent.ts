@@ -1,5 +1,5 @@
 import * as Ajax from "../../../Ajax";
-import { AjaxCallbackObject, RequestOptions } from "../../../Ajax/Data";
+import { AjaxCallbackObject, AjaxCallbackSetup } from "../../../Ajax/Data";
 import * as Core from "../../../Core";
 import * as Language from "../../../Language";
 import DomUtil from "../../../Dom/Util";
@@ -92,7 +92,7 @@ class UiUserActivityRecent implements AjaxCallbackObject {
     }
   }
 
-  _ajaxSetup(): RequestOptions {
+  _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
     return {
       data: {
         className: "wcf\\data\\user\\activity\\event\\UserActivityEventAction",

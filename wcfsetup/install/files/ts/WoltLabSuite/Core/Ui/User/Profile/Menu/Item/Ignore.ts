@@ -1,5 +1,5 @@
 import * as Language from "../../../../../Language";
-import { RequestOptions, ResponseData } from "../../../../../Ajax/Data";
+import { AjaxCallbackSetup, ResponseData } from "../../../../../Ajax/Data";
 import * as UiNotification from "../../../../Notification";
 import UiUserProfileMenuItemAbstract from "./Abstract";
 
@@ -29,7 +29,7 @@ class UiUserProfileMenuItemIgnore extends UiUserProfileMenuItemAbstract {
     UiNotification.show();
   }
 
-  _ajaxSetup(): RequestOptions {
+  _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
     return {
       data: {
         className: "wcf\\data\\user\\ignore\\UserIgnoreAction",

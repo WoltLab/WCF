@@ -8,7 +8,7 @@
  */
 
 import * as Ajax from "../../../../../Ajax";
-import { AjaxCallbackObject, RequestOptions, ResponseData } from "../../../../../Ajax/Data";
+import { AjaxCallbackObject, AjaxCallbackSetup, ResponseData } from "../../../../../Ajax/Data";
 
 abstract class UiUserProfileMenuItemAbstract implements AjaxCallbackObject {
   protected readonly _button = document.createElement("a");
@@ -99,7 +99,7 @@ abstract class UiUserProfileMenuItemAbstract implements AjaxCallbackObject {
   /**
    * Returns the default Ajax request data
    */
-  _ajaxSetup(): RequestOptions {
+  _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
     // This should be an abstract method, but cannot be marked as such for backwards compatibility.
 
     throw new Error("Implement me!");
