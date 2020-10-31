@@ -429,4 +429,6 @@ abstract class Upload {
   }
 }
 
+Core.enableLegacyInheritance(Upload);
+
 export = Upload;

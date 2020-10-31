@@ -329,5 +329,6 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Dom/Change
             return this._upload(null, file);
         }
     }
+    Core.enableLegacyInheritance(Upload);
     return Upload;
 });

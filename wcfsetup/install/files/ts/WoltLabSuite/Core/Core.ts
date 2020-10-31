@@ -260,3 +260,12 @@ export function debounce<F extends DebounceCallback>(
     }
   };
 }
+
+export function enableLegacyInheritance<T>(legacyClass: T): void {
+  (legacyClass as any).call = function (thisValue, ...args) {
+    const constructed = Reflect.construct(legacyClass as any, args, thisValue.constructor);
+    Object.entries(constructed).forEach(([key, value]) => {
+      thisValue[key] = value;
+    });
+  };
+}

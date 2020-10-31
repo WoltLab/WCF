@@ -10,7 +10,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.debounce = exports.stringToBool = exports.getStoragePrefix = exports.triggerEvent = exports.serialize = exports.getUuid = exports.getType = exports.isPlainObject = exports.inherit = exports.extend = exports.convertLegacyUrl = exports.clone = void 0;
+    exports.enableLegacyInheritance = exports.debounce = exports.stringToBool = exports.getStoragePrefix = exports.triggerEvent = exports.serialize = exports.getUuid = exports.getType = exports.isPlainObject = exports.inherit = exports.extend = exports.convertLegacyUrl = exports.clone = void 0;
     const _clone = function (variable) {
         if (typeof variable === "object" && (Array.isArray(variable) || isPlainObject(variable))) {
             return _cloneObject(variable);
@@ -230,4 +230,13 @@ define(["require", "exports"], function (require, exports) {
         };
     }
     exports.debounce = debounce;
+    function enableLegacyInheritance(legacyClass) {
+        legacyClass.call = function (thisValue, ...args) {
+            const constructed = Reflect.construct(legacyClass, args, thisValue.constructor);
+            Object.entries(constructed).forEach(([key, value]) => {
+                thisValue[key] = value;
+            });
+        };
+    }
+    exports.enableLegacyInheritance = enableLegacyInheritance;
 });
