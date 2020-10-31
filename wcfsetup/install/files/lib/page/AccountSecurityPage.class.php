@@ -32,6 +32,10 @@ class AccountSecurityPage extends AbstractPage {
 		parent::readData();
 	
 		$this->activeSessions = SessionHandler::getInstance()->getUserSessions(WCF::getUser());
+		
+		usort($this->activeSessions, function ($a, $b) {
+			return $b->getLastActivityTime() <=> $a->getLastActivityTime();
+		});
 	}
 	
 	/**
