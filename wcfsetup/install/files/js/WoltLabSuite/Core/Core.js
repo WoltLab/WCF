@@ -108,6 +108,7 @@ define(["require", "exports"], function (require, exports) {
      * });
      *
      * @see  https://github.com/nodejs/node/blob/7d14dd9b5e78faabb95d454a79faa513d0bbc2a5/lib/util.js#L697-L735
+     * @deprecated 5.4 Use the native `class` and `extends` keywords instead.
      */
     function inherit(constructor, superConstructor, propertiesObject) {
         if (constructor === undefined || constructor === null) {
