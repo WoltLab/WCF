@@ -220,7 +220,7 @@
 		</definition>
 		<definition>
 			<name>com.woltlab.wcf.multifactor</name>
-			<!-- TODO: interfacename -->
+			<interfacename>wcf\system\user\multifactor\IMultifactorMethod</interfacename>
 		</definition>
 	</import>
 	<delete>

@@ -16,7 +16,7 @@
 					<div class="containerHeadline">
 						<h3>{lang}wcf.user.security.multifactor.{$method->objectType}{/lang}</h3>
 						
-						{$method|var_dump}
+						{$method->getProcessor()->getStatusText($__wcf->user)}
 					</div>
 				</div>
 			</li>
