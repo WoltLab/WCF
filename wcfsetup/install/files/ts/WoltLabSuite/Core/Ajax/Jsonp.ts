@@ -17,7 +17,7 @@ export function send(
   url: string,
   success: (...args: unknown[]) => void,
   failure: () => void,
-  options?: JsonpOptions
+  options?: JsonpOptions,
 ): void {
   url = typeof (url as any) === "string" ? url.trim() : "";
   if (url.length === 0) {
@@ -33,7 +33,7 @@ export function send(
       parameterName: "callback",
       timeout: 10,
     },
-    options || {}
+    options || {},
   ) as JsonpOptions;
 
   const callbackName = "wcf_jsonp_" + Core.getUuid().replace(/-/g, "").substr(0, 8);

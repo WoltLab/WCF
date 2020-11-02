@@ -137,7 +137,7 @@ export function inherit(constructor: new () => any, superConstructor: new () => 
         writable: true,
       },
     }),
-    propertiesObject || {}
+    propertiesObject || {},
   );
 }
 
@@ -235,7 +235,7 @@ export function debounce<F extends DebounceCallback>(
   waitMilliseconds = 50,
   options: DebounceOptions = {
     isImmediate: false,
-  }
+  },
 ): (this: ThisParameterType<F>, ...args: Parameters<F>) => void {
   let timeoutId: ReturnType<typeof setTimeout> | undefined;
 

@@ -379,7 +379,7 @@ export function init(elementId: string, values: ItemDataOrPlainValue[], options:
       // value may contain the placeholder `{$objectId}`
       submitFieldName: "",
     },
-    options
+    options,
   ) as ItemListOptions;
 
   const form = DomTraverse.parentByTag(element, "FORM") as HTMLFormElement;
@@ -387,7 +387,7 @@ export function init(elementId: string, values: ItemDataOrPlainValue[], options:
     if (!options.isCSV) {
       if (!options.submitFieldName.length && typeof options.callbackSubmit !== "function") {
         throw new Error(
-          "Expected a valid function for option 'callbackSubmit', a non-empty value for option 'submitFieldName' or enabling the option 'submitFieldCSV'."
+          "Expected a valid function for option 'callbackSubmit', a non-empty value for option 'submitFieldName' or enabling the option 'submitFieldCSV'.",
         );
       }
 

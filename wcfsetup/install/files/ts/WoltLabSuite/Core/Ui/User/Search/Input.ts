@@ -27,7 +27,7 @@ class UiUserSearchInput extends UiSearchInput {
           },
         },
       },
-      options
+      options,
     );
 
     super(element, options);

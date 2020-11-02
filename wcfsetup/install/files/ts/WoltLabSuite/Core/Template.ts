@@ -51,7 +51,7 @@ class Template {
         undefined,
         StringUtil,
         Language,
-        I18nPlural
+        I18nPlural,
       );
     } catch (e) {
       console.debug(e.message);

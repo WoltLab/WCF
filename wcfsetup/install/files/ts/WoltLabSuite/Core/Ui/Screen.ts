@@ -32,7 +32,7 @@ const _mqMap = new Map<string, string>(
     "screen-lg-only": "(min-width: 1025px) and (max-width: 1280px)",
     "screen-lg-down": "(max-width: 1280px)",
     "screen-xl": "(min-width: 1281px)",
-  })
+  }),
 );
 
 // Microsoft Edge rewrites the media queries to whatever it

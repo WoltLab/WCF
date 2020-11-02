@@ -276,7 +276,7 @@ abstract class UiPageMenuAbstract {
         () => {
           this.menu.classList.remove("androidMenuTouchEnd");
         },
-        { once: true }
+        { once: true },
       );
 
       // check whether the user moved the finger far enough

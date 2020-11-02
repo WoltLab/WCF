@@ -55,7 +55,9 @@ export function get(key: string, parameters?: object): string {
     } catch (e) {
       _languageItems.set(
         key,
-        new Template("{literal}" + value.replace(/{\/literal}/g, "{/literal}{ldelim}/literal}{literal}") + "{/literal}")
+        new Template(
+          "{literal}" + value.replace(/{\/literal}/g, "{/literal}{ldelim}/literal}{literal}") + "{/literal}",
+        ),
       );
     }
     value = _languageItems.get(key);

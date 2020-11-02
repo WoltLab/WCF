@@ -72,7 +72,7 @@ class AjaxRequest {
 
         callbackObject: null,
       },
-      options
+      options,
     );
 
     if (typeof options.callbackObject === "object") {
@@ -109,7 +109,7 @@ class AjaxRequest {
       }
       if (typeof this._options.callbackObject._ajaxUploadProgress === "function") {
         this._options.uploadProgress = this._options.callbackObject._ajaxUploadProgress.bind(
-          this._options.callbackObject
+          this._options.callbackObject,
         );
       }
     }

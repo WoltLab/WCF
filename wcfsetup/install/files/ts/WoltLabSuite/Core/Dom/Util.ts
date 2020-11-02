@@ -290,7 +290,7 @@ const DomUtil = {
     element: Element,
     prefix?: string,
     camelCaseName?: boolean,
-    idToUpperCase?: boolean
+    idToUpperCase?: boolean,
   ): DataAttributes {
     prefix = prefix || "";
     if (prefix.indexOf("data-") !== 0) {
@@ -434,7 +434,7 @@ const DomUtil = {
         errorMessage = "";
       } else {
         throw new TypeError(
-          "The error message must be a string; `false`, `null` or `undefined` can be used as a substitute for an empty string."
+          "The error message must be a string; `false`, `null` or `undefined` can be used as a substitute for an empty string.",
         );
       }
     }

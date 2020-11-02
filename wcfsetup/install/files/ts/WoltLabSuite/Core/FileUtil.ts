@@ -65,7 +65,7 @@ const _fileExtensionIconMapping = new Map<string, string>(
     doc: "word",
     docx: "word",
     odt: "word",
-  })
+  }),
 );
 
 const _mimeTypeExtensionMapping = new Map<string, string>(
@@ -126,7 +126,7 @@ const _mimeTypeExtensionMapping = new Map<string, string>(
     "application/msword": "doc",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx",
     "application/vnd.oasis.opendocument.text": "odt",
-  })
+  }),
 );
 
 /**

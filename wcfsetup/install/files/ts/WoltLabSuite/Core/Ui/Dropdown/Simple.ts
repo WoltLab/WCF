@@ -92,7 +92,7 @@ function toggle(
   event: KeyboardEvent | MouseEvent | null,
   targetId?: string,
   alternateElement?: HTMLElement,
-  disableAutoFocus?: boolean
+  disableAutoFocus?: boolean,
 ): boolean {
   if (event !== null) {
     event.preventDefault();
@@ -387,14 +387,14 @@ const UiDropdownSimple = {
     const dropdown = DomTraverse.parentByClass(button, "dropdown") as HTMLElement;
     if (dropdown === null) {
       throw new Error(
-        "Invalid dropdown passed, button '" + DomUtil.identify(button) + "' does not have a parent with .dropdown."
+        "Invalid dropdown passed, button '" + DomUtil.identify(button) + "' does not have a parent with .dropdown.",
       );
     }
 
     const menu = DomTraverse.nextByClass(button, "dropdownMenu") as HTMLElement;
     if (menu === null) {
       throw new Error(
-        "Invalid dropdown passed, button '" + DomUtil.identify(button) + "' does not have a menu as next sibling."
+        "Invalid dropdown passed, button '" + DomUtil.identify(button) + "' does not have a menu as next sibling.",
       );
     }
 
@@ -434,7 +434,7 @@ const UiDropdownSimple = {
               event.preventDefault();
             }
           },
-          { passive: false }
+          { passive: false },
         );
       }
     }
@@ -609,7 +609,7 @@ const UiDropdownSimple = {
     event: KeyboardEvent | MouseEvent | null,
     targetId?: string,
     alternateElement?: HTMLElement,
-    disableAutoFocus?: boolean
+    disableAutoFocus?: boolean,
   ): boolean {
     return toggle(event, targetId, alternateElement, disableAutoFocus);
   },

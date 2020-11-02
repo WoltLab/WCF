@@ -32,7 +32,7 @@ export type CallbackFailure = (
   data: ResponseData,
   responseText: string,
   xhr: XMLHttpRequest,
-  requestData: RequestData
+  requestData: RequestData,
 ) => boolean;
 export type CallbackFinalize = (xhr: XMLHttpRequest) => void;
 export type CallbackProgress = (event: ProgressEvent) => void;
@@ -40,7 +40,7 @@ export type CallbackSuccess = (
   data: ResponseData | DatabaseObjectActionResponse,
   responseText: string,
   xhr: XMLHttpRequest,
-  requestData: RequestData
+  requestData: RequestData,
 ) => void;
 export type CallbackUploadProgress = (event: ProgressEvent) => void;
 export type CallbackSetup = () => RequestOptions;

@@ -77,7 +77,7 @@ function init() {
           // slight delay to avoid calling this function too often
           timeout = window.setTimeout(callback, 10);
         },
-        { passive: true }
+        { passive: true },
       );
     });
 

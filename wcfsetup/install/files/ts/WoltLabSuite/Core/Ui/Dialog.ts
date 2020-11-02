@@ -72,7 +72,7 @@ const UiDialog = {
           event.preventDefault();
         }
       },
-      { passive: false }
+      { passive: false },
     );
 
     document.getElementById("content")!.appendChild(_container);
@@ -168,7 +168,7 @@ const UiDialog = {
         throw new Error(
           "Element id '" +
             id +
-            "' is invalid and no source attribute was given. If you want to use the `html` argument instead, please add `source: null` to your dialog configuration."
+            "' is invalid and no source attribute was given. If you want to use the `html` argument instead, please add `source: null` to your dialog configuration.",
         );
       }
 
@@ -254,7 +254,7 @@ const UiDialog = {
           onClose: null,
           onShow: null,
         },
-        options || {}
+        options || {},
       ) as InternalDialogOptions;
 
       if (!options.closable) options.backdropCloseOnClick = false;
@@ -325,7 +325,7 @@ const UiDialog = {
 
     if (typeof value !== "function" && value !== null) {
       throw new Error(
-        "Only functions or the 'null' value are acceptable callback values ('" + typeof value + "' given)."
+        "Only functions or the 'null' value are acceptable callback values ('" + typeof value + "' given).",
       );
     }
 
@@ -419,7 +419,7 @@ const UiDialog = {
           event.preventDefault();
         }
       },
-      { passive: false }
+      { passive: false },
     );
 
     let content: HTMLElement;
@@ -668,7 +668,7 @@ const UiDialog = {
       const inputFields = data.content.querySelectorAll<HTMLInputElement>('input[data-dialog-submit-on-enter="true"]');
 
       const submitButton = data.content.querySelector(
-        '.formSubmit > input[type="submit"], .formSubmit > button[data-type="submit"]'
+        '.formSubmit > input[type="submit"], .formSubmit > button[data-type="submit"]',
       );
       if (submitButton === null) {
         // check if there is at least one input field with submit handling,

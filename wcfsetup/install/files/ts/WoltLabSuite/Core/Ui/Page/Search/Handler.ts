@@ -67,7 +67,7 @@ class UiPageSearchHandler implements DialogCallbackObject {
       let image = item.image;
       if (/^fa-/.test(image)) {
         image = `<span class="icon icon48 ${image} pointer jsTooltip" title="${Language.get(
-          "wcf.global.select"
+          "wcf.global.select",
         )}"></span>`;
       }
 

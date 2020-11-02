@@ -76,25 +76,25 @@ class TabMenuSimple {
             name +
             "'] (tab menu id: '" +
             containerId +
-            "') exists more than once."
+            "') exists more than once.",
         );
       }
 
       const container = this.containers.get(name);
       if (container === undefined) {
         throw new Error(
-          "Expected content element for li[data-name='" + name + "'] (tab menu id: '" + containerId + "')."
+          "Expected content element for li[data-name='" + name + "'] (tab menu id: '" + containerId + "').",
         );
       } else if (container.parentNode !== this.container) {
         throw new Error(
-          "Expected content element '" + name + "' (tab menu id: '" + containerId + "') to be a direct children."
+          "Expected content element '" + name + "' (tab menu id: '" + containerId + "') to be a direct children.",
         );
       }
 
       // check if tab holds exactly one children which is an anchor element
       if (tab.childElementCount !== 1 || tab.children[0].nodeName !== "A") {
         throw new Error(
-          "Expected exactly one <a> as children for li[data-name='" + name + "'] (tab menu id: '" + containerId + "')."
+          "Expected exactly one <a> as children for li[data-name='" + name + "'] (tab menu id: '" + containerId + "').",
         );
       }
 

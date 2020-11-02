@@ -36,7 +36,7 @@ class UiUserList implements AjaxCallbackObject, DialogCallbackObject {
         dialogTitle: "",
         parameters: {},
       },
-      options
+      options,
     ) as AjaxRequestOptions;
   }
 

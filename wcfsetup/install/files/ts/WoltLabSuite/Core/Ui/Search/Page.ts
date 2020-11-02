@@ -53,7 +53,7 @@ function click(event: MouseEvent): void {
   // update label
   const inputContainer = document.getElementById("pageHeaderSearchInputContainer") as HTMLElement;
   const button = inputContainer.querySelector(
-    ".pageHeaderSearchType > .button > .pageHeaderSearchTypeLabel"
+    ".pageHeaderSearchType > .button > .pageHeaderSearchTypeLabel",
   ) as HTMLElement;
   button.textContent = target.textContent;
 }
@@ -83,7 +83,7 @@ export function init(objectType: string): void {
         dropdownMenu.style.setProperty(
           "transform",
           `translateX(-${Math.ceil(offsetRight)}px) translateY(-${offsetTop}px)`,
-          ""
+          "",
         );
       }
     },
