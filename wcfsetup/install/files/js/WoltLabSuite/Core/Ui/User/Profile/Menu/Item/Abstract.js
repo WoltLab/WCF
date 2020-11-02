@@ -1,115 +1,94 @@
 /**
  * Default implementation for user interaction menu items used in the user profile.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Ui/User/Profile/Menu/Item/Abstract
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Ui/User/Profile/Menu/Item/Abstract
  */
-define(['Ajax', 'Dom/Util'], function (Ajax, DomUtil) {
+define(["require", "exports", "tslib", "../../../../../Ajax", "../../../../../Core"], function (require, exports, tslib_1, Ajax, Core) {
     "use strict";
-    /**
-     * Creates a new user profile menu item.
-     *
-     * @param       {int}           userId          user id
-     * @param       {boolean}       isActive        true if item is initially active
-     * @constructor
-     */
-    function UiUserProfileMenuItemAbstract(userId, isActive) { }
-    UiUserProfileMenuItemAbstract.prototype = {
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    class UiUserProfileMenuItemAbstract {
         /**
          * Creates a new user profile menu item.
-         *
-         * @param       {int}           userId          user id
-         * @param       {boolean}       isActive        true if item is initially active
          */
-        init: function (userId, isActive) {
+        constructor(userId, isActive) {
+            this._button = document.createElement("a");
+            this._listItem = document.createElement("li");
             this._userId = userId;
-            this._isActive = (isActive !== false);
+            this._isActive = isActive;
             this._initButton();
             this._updateButton();
-        },
+        }
         /**
          * Initializes the menu item.
-         *
-         * @protected
          */
-        _initButton: function () {
-            var button = elCreate('a');
-            button.href = '#';
-            button.addEventListener('click', this._toggle.bind(this));
-            var listItem = elCreate('li');
-            listItem.appendChild(button);
-            var menu = elBySel('.userProfileButtonMenu[data-menu="interaction"]');
-            DomUtil.prepend(listItem, menu);
-            this._button = button;
-            this._listItem = listItem;
-        },
+        _initButton() {
+            this._button.href = "#";
+            this._button.addEventListener("click", (ev) => this._toggle(ev));
+            this._listItem.appendChild(this._button);
+            const menu = document.querySelector(`.userProfileButtonMenu[data-menu="interaction"]`);
+            menu.insertAdjacentElement("afterbegin", this._listItem);
+        }
         /**
          * Handles clicks on the menu item button.
-         *
-         * @param       {Event}         event   event object
-         * @protected
          */
-        _toggle: function (event) {
+        _toggle(event) {
             event.preventDefault();
             Ajax.api(this, {
                 actionName: this._getAjaxActionName(),
                 parameters: {
                     data: {
-                        userID: this._userId
-                    }
-                }
+                        userID: this._userId,
+                    },
+                },
             });
-        },
+        }
         /**
          * Updates the button state and label.
          *
          * @protected
          */
-        _updateButton: function () {
+        _updateButton() {
             this._button.textContent = this._getLabel();
-            this._listItem.classList[(this._isActive ? 'add' : 'remove')]('active');
-        },
+            if (this._isActive) {
+                this._listItem.classList.add("active");
+            }
+            else {
+                this._listItem.classList.remove("active");
+            }
+        }
         /**
          * Returns the button label.
-         *
-         * @return      {string}        button label
-         * @protected
-         * @abstract
          */
-        _getLabel: function () {
-            throw new Error("Implement me!");
-        },
-        /**
-         * Returns the Ajax action name.
-         *
-         * @return      {string}        ajax action name
-         * @protected
-         * @abstract
-         */
-        _getAjaxActionName: function () {
-            throw new Error("Implement me!");
-        },
-        /**
-         * Handles successful Ajax requests.
-         *
-         * @protected
-         * @abstract
-         */
-        _ajaxSuccess: function () {
-            throw new Error("Implement me!");
-        },
-        /**
-         * Returns the default Ajax request data
-         *
-         * @return      {Object}        ajax request data
-         * @protected
-         * @abstract
-         */
-        _ajaxSetup: function () {
+        _getLabel() {
+            // This should be an abstract method, but cannot be marked as such for backwards compatibility.
             throw new Error("Implement me!");
         }
-    };
+        /**
+         * Returns the Ajax action name.
+         */
+        _getAjaxActionName() {
+            // This should be an abstract method, but cannot be marked as such for backwards compatibility.
+            throw new Error("Implement me!");
+        }
+        /**
+         * Handles successful Ajax requests.
+         */
+        _ajaxSuccess(_data) {
+            // This should be an abstract method, but cannot be marked as such for backwards compatibility.
+            throw new Error("Implement me!");
+        }
+        /**
+         * Returns the default Ajax request data
+         */
+        _ajaxSetup() {
+            // This should be an abstract method, but cannot be marked as such for backwards compatibility.
+            throw new Error("Implement me!");
+        }
+    }
+    Core.enableLegacyInheritance(UiUserProfileMenuItemAbstract);
     return UiUserProfileMenuItemAbstract;
 });

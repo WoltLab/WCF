@@ -10,7 +10,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.debounce = exports.stringToBool = exports.getStoragePrefix = exports.triggerEvent = exports.serialize = exports.getUuid = exports.getType = exports.isPlainObject = exports.inherit = exports.extend = exports.convertLegacyUrl = exports.clone = void 0;
+    exports.enableLegacyInheritance = exports.debounce = exports.stringToBool = exports.getStoragePrefix = exports.triggerEvent = exports.serialize = exports.getUuid = exports.getType = exports.isPlainObject = exports.inherit = exports.extend = exports.convertLegacyUrl = exports.clone = void 0;
     const _clone = function (variable) {
         if (typeof variable === "object" && (Array.isArray(variable) || isPlainObject(variable))) {
             return _cloneObject(variable);
@@ -108,6 +108,7 @@ define(["require", "exports"], function (require, exports) {
      * });
      *
      * @see  https://github.com/nodejs/node/blob/7d14dd9b5e78faabb95d454a79faa513d0bbc2a5/lib/util.js#L697-L735
+     * @deprecated 5.4 Use the native `class` and `extends` keywords instead.
      */
     function inherit(constructor, superConstructor, propertiesObject) {
         if (constructor === undefined || constructor === null) {
@@ -230,4 +231,13 @@ define(["require", "exports"], function (require, exports) {
         };
     }
     exports.debounce = debounce;
+    function enableLegacyInheritance(legacyClass) {
+        legacyClass.call = function (thisValue, ...args) {
+            const constructed = Reflect.construct(legacyClass, args, thisValue.constructor);
+            Object.entries(constructed).forEach(([key, value]) => {
+                thisValue[key] = value;
+            });
+        };
+    }
+    exports.enableLegacyInheritance = enableLegacyInheritance;
 });

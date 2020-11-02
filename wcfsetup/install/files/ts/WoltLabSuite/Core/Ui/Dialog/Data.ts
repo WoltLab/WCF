@@ -2,11 +2,11 @@ import { RequestPayload, ResponseData } from "../../Ajax/Data";
 
 export type DialogHtml = DocumentFragment | string | null;
 
-export type CallbackSetup = () => DialogSettings;
+export type DialogCallbackSetup = () => DialogSettings;
 export type CallbackSubmit = () => void;
 
 export interface DialogCallbackObject {
-  _dialogSetup: CallbackSetup;
+  _dialogSetup: DialogCallbackSetup;
   _dialogSubmit?: CallbackSubmit;
 }
 

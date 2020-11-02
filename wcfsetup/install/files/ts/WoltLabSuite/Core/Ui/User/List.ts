@@ -12,8 +12,8 @@ import * as Core from "../../Core";
 import DomUtil from "../../Dom/Util";
 import UiDialog from "../Dialog";
 import UiPagination from "../Pagination";
-import { AjaxCallbackObject, CallbackSetup, DatabaseObjectActionResponse } from "../../Ajax/Data";
-import { DialogCallbackObject, DialogData, CallbackSetup as DialogSetup } from "../Dialog/Data";
+import { AjaxCallbackObject, AjaxCallbackSetup, DatabaseObjectActionResponse } from "../../Ajax/Data";
+import { DialogCallbackObject, DialogData, DialogCallbackSetup } from "../Dialog/Data";
 
 /**
  * @constructor
@@ -98,7 +98,7 @@ class UiUserList implements AjaxCallbackObject, DialogCallbackObject {
     this.showPage();
   }
 
-  _ajaxSetup(): ReturnType<CallbackSetup> {
+  _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
     return {
       data: {
         actionName: "getGroupedUserList",
@@ -108,7 +108,7 @@ class UiUserList implements AjaxCallbackObject, DialogCallbackObject {
     };
   }
 
-  _dialogSetup(): ReturnType<DialogSetup> {
+  _dialogSetup(): ReturnType<DialogCallbackSetup> {
     return {
       id: DomUtil.getUniqueId(),
       options: {
@@ -118,6 +118,8 @@ class UiUserList implements AjaxCallbackObject, DialogCallbackObject {
     };
   }
 }
+
+Core.enableLegacyInheritance(UiUserList);
 
 export = UiUserList;
 

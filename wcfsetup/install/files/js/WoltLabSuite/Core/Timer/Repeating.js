@@ -6,8 +6,9 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Timer/Repeating
  */
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "tslib", "../Core"], function (require, exports, tslib_1, Core) {
     "use strict";
+    Core = tslib_1.__importStar(Core);
     class RepeatingTimer {
         /**
          * Creates a new timer that executes the given `callback` every `delta` milliseconds.
@@ -50,5 +51,6 @@ define(["require", "exports"], function (require, exports) {
             this.restart();
         }
     }
+    Core.enableLegacyInheritance(RepeatingTimer);
     return RepeatingTimer;
 });

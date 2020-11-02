@@ -8,9 +8,9 @@
  */
 
 import * as Ajax from "../../Ajax";
-import { AjaxCallbackObject, CallbackSetup } from "../../Ajax/Data";
+import { AjaxCallbackObject, AjaxCallbackSetup } from "../../Ajax/Data";
 import * as Core from "../../Core";
-import { DialogCallbackObject, CallbackSetup as DialogSetup } from "../Dialog/Data";
+import { DialogCallbackObject, DialogCallbackSetup } from "../Dialog/Data";
 import DomUtil from "../../Dom/Util";
 import * as Language from "../../Language";
 import * as StringUtil from "../../StringUtil";
@@ -183,7 +183,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
     UiNotification.show();
   }
 
-  _ajaxSetup(): ReturnType<CallbackSetup> {
+  _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
     return {
       data: {
         className: "wcf\\data\\user\\UserAction",
@@ -192,7 +192,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
     };
   }
 
-  _dialogSetup(): ReturnType<DialogSetup> {
+  _dialogSetup(): ReturnType<DialogCallbackSetup> {
     return {
       id: "wcfUiUserEditor",
       options: {

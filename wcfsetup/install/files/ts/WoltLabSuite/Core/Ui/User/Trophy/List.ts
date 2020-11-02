@@ -8,8 +8,9 @@
  */
 
 import * as Ajax from "../../../Ajax";
-import { AjaxCallbackObject, CallbackSetup, DatabaseObjectActionResponse } from "../../../Ajax/Data";
-import { DialogCallbackObject, DialogData, CallbackSetup as DialogSetup } from "../../Dialog/Data";
+import { AjaxCallbackObject, AjaxCallbackSetup, DatabaseObjectActionResponse } from "../../../Ajax/Data";
+import * as Core from "../../../Core";
+import { DialogCallbackObject, DialogData, DialogCallbackSetup } from "../../Dialog/Data";
 import DomChangeListener from "../../../Dom/Change/Listener";
 import UiDialog from "../../Dialog";
 import UiPagination from "../../Pagination";
@@ -124,7 +125,7 @@ class UiUserTrophyList implements AjaxCallbackObject, DialogCallbackObject {
     this.showPage();
   }
 
-  _ajaxSetup(): ReturnType<CallbackSetup> {
+  _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
     return {
       data: {
         actionName: "getGroupedUserTrophyList",
@@ -133,7 +134,7 @@ class UiUserTrophyList implements AjaxCallbackObject, DialogCallbackObject {
     };
   }
 
-  _dialogSetup(): ReturnType<DialogSetup> {
+  _dialogSetup(): ReturnType<DialogCallbackSetup> {
     return {
       id: "userTrophyListOverlay",
       options: {
@@ -143,6 +144,8 @@ class UiUserTrophyList implements AjaxCallbackObject, DialogCallbackObject {
     };
   }
 }
+
+Core.enableLegacyInheritance(UiUserTrophyList);
 
 export = UiUserTrophyList;
 

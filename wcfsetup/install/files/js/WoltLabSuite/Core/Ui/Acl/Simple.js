@@ -1,5 +1,6 @@
-define(["require", "exports", "tslib", "../../Language", "../../StringUtil", "../../Dom/Change/Listener", "../../Dom/Util", "../User/Search/Input"], function (require, exports, tslib_1, Language, StringUtil, Listener_1, Util_1, Input_1) {
+define(["require", "exports", "tslib", "../../Core", "../../Language", "../../StringUtil", "../../Dom/Change/Listener", "../../Dom/Util", "../User/Search/Input"], function (require, exports, tslib_1, Core, Language, StringUtil, Listener_1, Util_1, Input_1) {
     "use strict";
+    Core = tslib_1.__importStar(Core);
     Language = tslib_1.__importStar(Language);
     StringUtil = tslib_1.__importStar(StringUtil);
     Listener_1 = tslib_1.__importDefault(Listener_1);
@@ -69,5 +70,6 @@ define(["require", "exports", "tslib", "../../Language", "../../StringUtil", "..
             }
         }
     }
+    Core.enableLegacyInheritance(UiAclSimple);
     return UiAclSimple;
 });

@@ -8,7 +8,7 @@
  */
 
 import * as Ajax from "../../Ajax";
-import { AjaxCallbackObject, CallbackSetup } from "../../Ajax/Data";
+import { AjaxCallbackObject, AjaxCallbackSetup } from "../../Ajax/Data";
 
 class UiArticleMarkAllAsRead implements AjaxCallbackObject {
   constructor() {
@@ -33,7 +33,7 @@ class UiArticleMarkAllAsRead implements AjaxCallbackObject {
     document.querySelectorAll(".articleList .newMessageBadge").forEach((el) => el.remove());
   }
 
-  _ajaxSetup(): ReturnType<CallbackSetup> {
+  _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
     return {
       data: {
         actionName: "markAllAsRead",

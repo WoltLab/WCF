@@ -11,7 +11,7 @@ import * as Ajax from "../Ajax";
 import * as Core from "../Core";
 import {
   AjaxCallbackObject,
-  CallbackSetup,
+  AjaxCallbackSetup,
   DatabaseObjectActionPayload,
   DatabaseObjectActionResponse,
 } from "../Ajax/Data";
@@ -135,7 +135,9 @@ class UiSuggestion implements AjaxCallbackObject {
         index = (i === 0 ? length : i) - 1;
       } else if (event.key === "ArrowDown") {
         index = i + 1;
-        if (index === length) index = 0;
+        if (index === length) {
+          index = 0;
+        }
       }
       if (index !== i) {
         active.classList.remove("active");
@@ -198,7 +200,7 @@ class UiSuggestion implements AjaxCallbackObject {
     });
   }
 
-  _ajaxSetup(): ReturnType<CallbackSetup> {
+  _ajaxSetup(): ReturnType<AjaxCallbackSetup> {
     return {
       data: this.ajaxPayload,
     };
@@ -247,6 +249,8 @@ class UiSuggestion implements AjaxCallbackObject {
     }
   }
 }
+
+Core.enableLegacyInheritance(UiSuggestion);
 
 export = UiSuggestion;
 

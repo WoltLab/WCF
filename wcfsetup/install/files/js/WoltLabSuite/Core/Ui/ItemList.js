@@ -288,7 +288,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
      * The `values` argument must be empty or contain a list of strings or object, e.g.
      * `['foo', 'bar']` or `[{ objectId: 1337, value: 'baz'}, {...}]`
      */
-    function init(elementId, values, options) {
+    function init(elementId, values, opts) {
         const element = document.getElementById(elementId);
         if (element === null) {
             throw new Error("Expected a valid element id, '" + elementId + "' is invalid.");
@@ -305,7 +305,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
             Simple_1.default.destroy(elementId);
             _data.delete(elementId);
         }
-        options = Core.extend({
+        const options = Core.extend({
             // search parameters for suggestions
             ajax: {
                 actionName: "getSearchResultList",
@@ -332,7 +332,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
             callbackSetupValues: null,
             // value may contain the placeholder `{$objectId}`
             submitFieldName: "",
-        }, options);
+        }, opts);
         const form = DomTraverse.parentByTag(element, "FORM");
         if (form !== null) {
             if (!options.isCSV) {

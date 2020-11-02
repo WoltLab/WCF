@@ -115,6 +115,7 @@ export function extend(out: object, ...args: object[]): object {
  * });
  *
  * @see  https://github.com/nodejs/node/blob/7d14dd9b5e78faabb95d454a79faa513d0bbc2a5/lib/util.js#L697-L735
+ * @deprecated 5.4 Use the native `class` and `extends` keywords instead.
  */
 export function inherit(constructor: new () => any, superConstructor: new () => any, propertiesObject: object): void {
   if (constructor === undefined || constructor === null) {
@@ -258,5 +259,14 @@ export function debounce<F extends DebounceCallback>(
     if (shouldCallNow) {
       func.apply(this, args);
     }
+  };
+}
+
+export function enableLegacyInheritance<T>(legacyClass: T): void {
+  (legacyClass as any).call = function (thisValue, ...args) {
+    const constructed = Reflect.construct(legacyClass as any, args, thisValue.constructor);
+    Object.entries(constructed).forEach(([key, value]) => {
+      thisValue[key] = value;
+    });
   };
 }

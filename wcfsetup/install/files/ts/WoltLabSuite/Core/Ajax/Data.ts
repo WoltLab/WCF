@@ -43,7 +43,7 @@ export type CallbackSuccess = (
   requestData: RequestData,
 ) => void;
 export type CallbackUploadProgress = (event: ProgressEvent) => void;
-export type CallbackSetup = () => RequestOptions;
+export type AjaxCallbackSetup = () => RequestOptions;
 
 export interface AjaxCallbackObject {
   _ajaxFailure?: CallbackFailure;
@@ -51,13 +51,13 @@ export interface AjaxCallbackObject {
   _ajaxProgress?: CallbackProgress;
   _ajaxSuccess: CallbackSuccess;
   _ajaxUploadProgress?: CallbackUploadProgress;
-  _ajaxSetup: CallbackSetup;
+  _ajaxSetup: AjaxCallbackSetup;
 }
 
 export interface RequestOptions {
   // request data
   data?: RequestData;
-  contentType?: string;
+  contentType?: string | false;
   responseType?: string;
   type?: string;
   url?: string;

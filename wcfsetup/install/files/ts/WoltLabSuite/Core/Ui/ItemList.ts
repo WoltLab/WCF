@@ -330,7 +330,7 @@ function blur(event: FocusEvent): void {
  * The `values` argument must be empty or contain a list of strings or object, e.g.
  * `['foo', 'bar']` or `[{ objectId: 1337, value: 'baz'}, {...}]`
  */
-export function init(elementId: string, values: ItemDataOrPlainValue[], options: ItemListOptions): void {
+export function init(elementId: string, values: ItemDataOrPlainValue[], opts: Partial<ItemListOptions>): void {
   const element = document.getElementById(elementId) as ItemListInputElement;
   if (element === null) {
     throw new Error("Expected a valid element id, '" + elementId + "' is invalid.");
@@ -350,7 +350,7 @@ export function init(elementId: string, values: ItemDataOrPlainValue[], options:
     _data.delete(elementId);
   }
 
-  options = Core.extend(
+  const options = Core.extend(
     {
       // search parameters for suggestions
       ajax: {
@@ -379,7 +379,7 @@ export function init(elementId: string, values: ItemDataOrPlainValue[], options:
       // value may contain the placeholder `{$objectId}`
       submitFieldName: "",
     },
-    options,
+    opts,
   ) as ItemListOptions;
 
   const form = DomTraverse.parentByTag(element, "FORM") as HTMLFormElement;
@@ -427,7 +427,7 @@ export function init(elementId: string, values: ItemDataOrPlainValue[], options:
   const data = createUI(element, options);
 
   const suggestion = new UiSuggestion(elementId, {
-    ajax: options.ajax,
+    ajax: options.ajax as DatabaseObjectActionPayload,
     callbackSelect: addItem,
     excludedSearchValues: options.excludedSearchValues,
   });
@@ -503,7 +503,7 @@ export function setValues(elementId: string, values: ItemData[]): void {
 
 type ItemListInputElement = HTMLInputElement | HTMLTextAreaElement;
 
-interface ItemData {
+export interface ItemData {
   objectId: number;
   value: string;
   type?: string;
@@ -513,9 +513,21 @@ type PlainValue = string;
 
 type ItemDataOrPlainValue = ItemData | PlainValue;
 
-interface ItemListOptions {
+export type CallbackChange = (elementId: string, values: ItemData[]) => void;
+
+export type CallbackSetupValues = () => ItemDataOrPlainValue[];
+
+export type CallbackSubmit = (form: HTMLFormElement, values: ItemData[]) => void;
+
+export type CallbackSyncShadow = (data: ElementData) => ItemData[];
+
+export interface ItemListOptions {
   // search parameters for suggestions
-  ajax: DatabaseObjectActionPayload;
+  ajax: {
+    actionName?: string;
+    className: string;
+    parameters?: object;
+  };
 
   // list of excluded string values, e.g. `['ignore', 'these strings', 'when', 'searching']`
   excludedSearchValues: string[];
@@ -533,22 +545,22 @@ interface ItemListOptions {
   isCSV: boolean;
 
   // will be invoked whenever the items change, receives the element id first and list of values second
-  callbackChange?: (elementId: string, values: ItemData[]) => void;
+  callbackChange: CallbackChange | null;
 
   // callback once the form is about to be submitted
-  callbackSubmit?: (form: HTMLFormElement, values: ItemData[]) => void;
+  callbackSubmit: CallbackSubmit | null;
 
   // Callback for the custom shadow synchronization.
-  callbackSyncShadow?: (data: ElementData) => ItemData[];
+  callbackSyncShadow: CallbackSyncShadow | null;
 
   // Callback to set values during the setup.
-  callbackSetupValues?: () => ItemDataOrPlainValue[];
+  callbackSetupValues: CallbackSetupValues | null;
 
   // value may contain the placeholder `{$objectId}`
   submitFieldName: string;
 }
 
-interface ElementData {
+export interface ElementData {
   dropdownMenu: HTMLElement | null;
   element: ItemListInputElement;
   limitReached: HTMLSpanElement;

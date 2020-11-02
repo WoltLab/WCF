@@ -1,39 +1,32 @@
-define(['Core', 'Language', 'Ui/Notification', './Abstract'], function (Core, Language, UiNotification, UiUserProfileMenuItemAbstract) {
+define(["require", "exports", "tslib", "../../../../../Core", "../../../../../Language", "../../../../Notification", "./Abstract"], function (require, exports, tslib_1, Core, Language, UiNotification, Abstract_1) {
     "use strict";
-    if (!COMPILER_TARGET_DEFAULT) {
-        var Fake = function () { };
-        Fake.prototype = {
-            _getLabel: function () { },
-            _getAjaxActionName: function () { },
-            _ajaxSuccess: function () { },
-            _ajaxSetup: function () { },
-            init: function () { },
-            _initButton: function () { },
-            _toggle: function () { },
-            _updateButton: function () { }
-        };
-        return Fake;
-    }
-    function UiUserProfileMenuItemFollow(userId, isActive) { this.init(userId, isActive); }
-    Core.inherit(UiUserProfileMenuItemFollow, UiUserProfileMenuItemAbstract, {
-        _getLabel: function () {
-            return Language.get('wcf.user.button.' + (this._isActive ? 'un' : '') + 'follow');
-        },
-        _getAjaxActionName: function () {
-            return this._isActive ? 'unfollow' : 'follow';
-        },
-        _ajaxSuccess: function (data) {
-            this._isActive = (data.returnValues.following ? true : false);
+    Core = tslib_1.__importStar(Core);
+    Language = tslib_1.__importStar(Language);
+    UiNotification = tslib_1.__importStar(UiNotification);
+    Abstract_1 = tslib_1.__importDefault(Abstract_1);
+    class UiUserProfileMenuItemFollow extends Abstract_1.default {
+        constructor(userId, isActive) {
+            super(userId, isActive);
+        }
+        _getLabel() {
+            return Language.get("wcf.user.button." + (this._isActive ? "un" : "") + "follow");
+        }
+        _getAjaxActionName() {
+            return this._isActive ? "unfollow" : "follow";
+        }
+        _ajaxSuccess(data) {
+            this._isActive = !!data.returnValues.following;
             this._updateButton();
             UiNotification.show();
-        },
-        _ajaxSetup: function () {
+        }
+        _ajaxSetup() {
             return {
                 data: {
-                    className: 'wcf\\data\\user\\follow\\UserFollowAction'
-                }
+                    className: "wcf\\data\\user\\follow\\UserFollowAction",
+                },
             };
         }
-    });
+    }
+    Core.enableLegacyInheritance(UiUserProfileMenuItemFollow);
     return UiUserProfileMenuItemFollow;
 });

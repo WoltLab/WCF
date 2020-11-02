@@ -183,10 +183,12 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Environment", 
                     x: touches[0].clientX,
                     y: touches[0].clientY,
                 };
-                if (isLeftEdge)
+                if (isLeftEdge) {
                     _androidTouching = "left";
-                if (isRightEdge)
+                }
+                if (isRightEdge) {
                     _androidTouching = "right";
+                }
             });
             document.addEventListener("touchend", (event) => {
                 // break if we did not start a touch
@@ -217,16 +219,20 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Environment", 
                 }, { once: true });
                 // check whether the user moved the finger far enough
                 if (appearsAt === "left") {
-                    if (_androidTouching === "left" && position < touchStart.x + 100)
+                    if (_androidTouching === "left" && position < touchStart.x + 100) {
                         this.close();
-                    if (_androidTouching === "right" && position < touchStart.x - 100)
+                    }
+                    if (_androidTouching === "right" && position < touchStart.x - 100) {
                         this.close();
+                    }
                 }
                 else {
-                    if (_androidTouching === "left" && position > touchStart.x + 100)
+                    if (_androidTouching === "left" && position > touchStart.x + 100) {
                         this.close();
-                    if (_androidTouching === "right" && position > touchStart.x - 100)
+                    }
+                    if (_androidTouching === "right" && position > touchStart.x - 100) {
                         this.close();
+                    }
                 }
                 // reset
                 touchStart = undefined;
@@ -241,10 +247,12 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Environment", 
                 // check whether the user started moving in the correct direction
                 // this avoids false positives, in case the user just wanted to tap
                 let movedFromEdge = false;
-                if (_androidTouching === "left")
+                if (_androidTouching === "left") {
                     movedFromEdge = touches[0].clientX > touchStart.x + 5 /* MovedHorizontally */;
-                if (_androidTouching === "right")
+                }
+                if (_androidTouching === "right") {
                     movedFromEdge = touches[0].clientX < touchStart.x - 5 /* MovedHorizontally */;
+                }
                 const movedVertically = Math.abs(touches[0].clientY - touchStart.y) > 20 /* MovedVertically */;
                 let isOpen = this.menu.classList.contains("open");
                 if (!isOpen && movedFromEdge && !movedVertically) {
@@ -255,12 +263,15 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Environment", 
                 if (isOpen) {
                     // update CSS to the new finger position
                     let position = touches[0].clientX;
-                    if (appearsAt === "right")
+                    if (appearsAt === "right") {
                         position = document.body.clientWidth - position;
-                    if (position > this.menu.offsetWidth)
+                    }
+                    if (position > this.menu.offsetWidth) {
                         position = this.menu.offsetWidth;
-                    if (position < 0)
+                    }
+                    if (position < 0) {
                         position = 0;
+                    }
                     const offset = (appearsAt === "left" ? 1 : -1) * (position - this.menu.offsetWidth);
                     this.menu.style.setProperty("transform", `translateX(${offset}px)`);
                     backdrop.style.setProperty(appearsAt, Math.min(this.menu.offsetWidth, position).toString() + "px");
@@ -452,5 +463,6 @@ define(["require", "exports", "tslib", "../../../Core", "../../../Environment", 
             this.button.classList[hasNewContent ? "add" : "remove"]("pageMenuMobileButtonHasContent");
         }
     }
+    Core.enableLegacyInheritance(UiPageMenuAbstract);
     return UiPageMenuAbstract;
 });

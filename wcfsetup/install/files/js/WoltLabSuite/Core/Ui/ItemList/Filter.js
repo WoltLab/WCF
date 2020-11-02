@@ -1,237 +1,215 @@
 /**
  * Provides a filter input for checkbox lists.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Ui/ItemList/Filter
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Ui/ItemList/Filter
  */
-define(['Core', 'EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util', 'Ui/SimpleDropdown'], function (Core, EventKey, Language, List, StringUtil, DomUtil, UiSimpleDropdown) {
+define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Language", "../../StringUtil", "../Dropdown/Simple"], function (require, exports, tslib_1, Core, Util_1, Language, StringUtil, Simple_1) {
     "use strict";
-    if (!COMPILER_TARGET_DEFAULT) {
-        var Fake = function () { };
-        Fake.prototype = {
-            init: function () { },
-            _buildItems: function () { },
-            _prepareItem: function () { },
-            _keyup: function () { },
-            _toggleVisibility: function () { },
-            _setupVisibilityFilter: function () { },
-            _setVisibility: function () { }
-        };
-        return Fake;
-    }
-    /**
-     * Creates a new filter input.
-     *
-     * @param       {string}        elementId       list element id
-     * @param       {Object=}       options         options
-     * @constructor
-     */
-    function UiItemListFilter(elementId, options) { this.init(elementId, options); }
-    UiItemListFilter.prototype = {
+    Core = tslib_1.__importStar(Core);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Language = tslib_1.__importStar(Language);
+    StringUtil = tslib_1.__importStar(StringUtil);
+    Simple_1 = tslib_1.__importDefault(Simple_1);
+    class UiItemListFilter {
         /**
          * Creates a new filter input.
          *
          * @param       {string}        elementId       list element id
          * @param       {Object=}       options         options
          */
-        init: function (elementId, options) {
-            this._value = '';
+        constructor(elementId, options) {
+            this._dropdownId = "";
+            this._dropdown = undefined;
+            this._fragment = undefined;
+            this._items = new Set();
+            this._value = "";
             this._options = Core.extend({
                 callbackPrepareItem: undefined,
                 enableVisibilityFilter: true,
-                filterPosition: 'bottom'
+                filterPosition: "bottom",
             }, options);
-            if (this._options.filterPosition !== 'top') {
-                this._options.filterPosition = 'bottom';
+            if (this._options.filterPosition !== "top") {
+                this._options.filterPosition = "bottom";
             }
-            var element = elById(elementId);
+            const element = document.getElementById(elementId);
             if (element === null) {
                 throw new Error("Expected a valid element id, '" + elementId + "' does not match anything.");
             }
-            else if (!element.classList.contains('scrollableCheckboxList') && typeof this._options.callbackPrepareItem !== 'function') {
+            else if (!element.classList.contains("scrollableCheckboxList") &&
+                typeof this._options.callbackPrepareItem !== "function") {
                 throw new Error("Filter only works with elements with the CSS class 'scrollableCheckboxList'.");
             }
-            elData(element, 'filter', 'showAll');
-            var container = elCreate('div');
-            container.className = 'itemListFilter';
-            element.parentNode.insertBefore(container, element);
+            if (typeof this._options.callbackPrepareItem !== "function") {
+                this._options.callbackPrepareItem = (item) => this._prepareItem(item);
+            }
+            element.dataset.filter = "showAll";
+            const container = document.createElement("div");
+            container.className = "itemListFilter";
+            element.insertAdjacentElement("beforebegin", container);
             container.appendChild(element);
-            var inputAddon = elCreate('div');
-            inputAddon.className = 'inputAddon';
-            var input = elCreate('input');
-            input.className = 'long';
-            input.type = 'text';
-            input.placeholder = Language.get('wcf.global.filter.placeholder');
-            input.addEventListener('keydown', function (event) {
-                if (EventKey.Enter(event)) {
+            const inputAddon = document.createElement("div");
+            inputAddon.className = "inputAddon";
+            const input = document.createElement("input");
+            input.className = "long";
+            input.type = "text";
+            input.placeholder = Language.get("wcf.global.filter.placeholder");
+            input.addEventListener("keydown", (event) => {
+                if (event.key === "Enter") {
                     event.preventDefault();
                 }
             });
-            input.addEventListener('keyup', this._keyup.bind(this));
-            var clearButton = elCreate('a');
-            clearButton.href = '#';
-            clearButton.className = 'button inputSuffix jsTooltip';
-            clearButton.title = Language.get('wcf.global.filter.button.clear');
+            input.addEventListener("keyup", () => this._keyup());
+            const clearButton = document.createElement("a");
+            clearButton.href = "#";
+            clearButton.className = "button inputSuffix jsTooltip";
+            clearButton.title = Language.get("wcf.global.filter.button.clear");
             clearButton.innerHTML = '<span class="icon icon16 fa-times"></span>';
-            clearButton.addEventListener('click', (function (event) {
+            clearButton.addEventListener("click", (event) => {
                 event.preventDefault();
                 this.reset();
-            }).bind(this));
+            });
             inputAddon.appendChild(input);
             inputAddon.appendChild(clearButton);
             if (this._options.enableVisibilityFilter) {
-                var visibilityButton = elCreate('a');
-                visibilityButton.href = '#';
-                visibilityButton.className = 'button inputSuffix jsTooltip';
-                visibilityButton.title = Language.get('wcf.global.filter.button.visibility');
+                const visibilityButton = document.createElement("a");
+                visibilityButton.href = "#";
+                visibilityButton.className = "button inputSuffix jsTooltip";
+                visibilityButton.title = Language.get("wcf.global.filter.button.visibility");
                 visibilityButton.innerHTML = '<span class="icon icon16 fa-eye"></span>';
-                visibilityButton.addEventListener('click', this._toggleVisibility.bind(this));
+                visibilityButton.addEventListener("click", (ev) => this._toggleVisibility(ev));
                 inputAddon.appendChild(visibilityButton);
             }
-            if (this._options.filterPosition === 'bottom') {
+            if (this._options.filterPosition === "bottom") {
                 container.appendChild(inputAddon);
             }
             else {
                 container.insertBefore(inputAddon, element);
             }
             this._container = container;
-            this._dropdown = null;
-            this._dropdownId = '';
             this._element = element;
             this._input = input;
-            this._items = null;
-            this._fragment = null;
-        },
+        }
         /**
          * Resets the filter.
          */
-        reset: function () {
-            this._input.value = '';
+        reset() {
+            this._input.value = "";
             this._keyup();
-        },
+        }
         /**
          * Builds the item list and rebuilds the items' DOM for easier manipulation.
          *
          * @protected
          */
-        _buildItems: function () {
-            this._items = new List();
-            var callback = (typeof this._options.callbackPrepareItem === 'function') ? this._options.callbackPrepareItem : this._prepareItem.bind(this);
-            for (var i = 0, length = this._element.childElementCount; i < length; i++) {
-                this._items.add(callback(this._element.children[i]));
-            }
-        },
+        _buildItems() {
+            this._items.clear();
+            Array.from(this._element.children).forEach((item) => {
+                this._items.add(this._options.callbackPrepareItem(item));
+            });
+        }
         /**
          * Processes an item and returns the meta data.
-         *
-         * @param       {Element}       item    current item
-         * @return      {{item: *, span: Element, text: string}}
-         * @protected
          */
-        _prepareItem: function (item) {
-            var label = item.children[0];
-            var text = label.textContent.trim();
-            var checkbox = label.children[0];
+        _prepareItem(item) {
+            const label = item.children[0];
+            const text = label.textContent.trim();
+            const checkbox = label.children[0];
             while (checkbox.nextSibling) {
                 label.removeChild(checkbox.nextSibling);
             }
-            label.appendChild(document.createTextNode(' '));
-            var span = elCreate('span');
+            label.appendChild(document.createTextNode(" "));
+            const span = document.createElement("span");
             span.textContent = text;
             label.appendChild(span);
             return {
-                item: item,
-                span: span,
-                text: text
+                item,
+                span,
+                text,
             };
-        },
+        }
         /**
          * Rebuilds the list on keyup, uses case-insensitive matching.
-         *
-         * @protected
          */
-        _keyup: function () {
-            var value = this._input.value.trim();
+        _keyup() {
+            const value = this._input.value.trim();
             if (this._value === value) {
                 return;
             }
-            if (this._fragment === null) {
+            if (!this._fragment) {
                 this._fragment = document.createDocumentFragment();
                 // set fixed height to avoid layout jumps
-                this._element.style.setProperty('height', this._element.offsetHeight + 'px', '');
+                this._element.style.setProperty("height", `${this._element.offsetHeight}px`, "");
             }
             // move list into fragment before editing items, increases performance
             // by avoiding the browser to perform repaint/layout over and over again
             this._fragment.appendChild(this._element);
-            if (this._items === null) {
+            if (!this._items.size) {
                 this._buildItems();
             }
-            var regexp = new RegExp('(' + StringUtil.escapeRegExp(value) + ')', 'i');
-            var hasVisibleItems = (value === '');
-            this._items.forEach(function (item) {
-                if (value === '') {
+            const regexp = new RegExp("(" + StringUtil.escapeRegExp(value) + ")", "i");
+            let hasVisibleItems = value === "";
+            this._items.forEach((item) => {
+                if (value === "") {
                     item.span.textContent = item.text;
-                    elShow(item.item);
+                    Util_1.default.show(item.item);
                 }
                 else {
                     if (regexp.test(item.text)) {
-                        item.span.innerHTML = item.text.replace(regexp, '<u>$1</u>');
-                        elShow(item.item);
+                        item.span.innerHTML = item.text.replace(regexp, "<u>$1</u>");
+                        Util_1.default.show(item.item);
                         hasVisibleItems = true;
                     }
                     else {
-                        elHide(item.item);
+                        Util_1.default.hide(item.item);
                     }
                 }
             });
-            if (this._options.filterPosition === 'bottom') {
-                this._container.insertBefore(this._fragment.firstChild, this._container.firstChild);
+            if (this._options.filterPosition === "bottom") {
+                this._container.insertAdjacentElement("afterbegin", this._element);
             }
             else {
-                this._container.appendChild(this._fragment.firstChild);
+                this._container.insertAdjacentElement("beforeend", this._element);
             }
             this._value = value;
-            elInnerError(this._container, (hasVisibleItems) ? false : Language.get('wcf.global.filter.error.noMatches'));
-        },
+            Util_1.default.innerError(this._container, hasVisibleItems ? false : Language.get("wcf.global.filter.error.noMatches"));
+        }
         /**
          * Toggles the visibility mode for marked items.
-         *
-         * @param       {Event}         event
-         * @protected
          */
-        _toggleVisibility: function (event) {
+        _toggleVisibility(event) {
             event.preventDefault();
             event.stopPropagation();
-            var button = event.currentTarget;
-            if (this._dropdown === null) {
-                var dropdown = elCreate('ul');
-                dropdown.className = 'dropdownMenu';
-                ['activeOnly', 'highlightActive', 'showAll'].forEach((function (type) {
-                    var link = elCreate('a');
-                    elData(link, 'type', type);
-                    link.href = '#';
-                    link.textContent = Language.get('wcf.global.filter.visibility.' + type);
-                    link.addEventListener('click', this._setVisibility.bind(this));
-                    var li = elCreate('li');
+            const button = event.currentTarget;
+            if (!this._dropdown) {
+                const dropdown = document.createElement("ul");
+                dropdown.className = "dropdownMenu";
+                ["activeOnly", "highlightActive", "showAll"].forEach((type) => {
+                    const link = document.createElement("a");
+                    link.dataset.type = type;
+                    link.href = "#";
+                    link.textContent = Language.get(`wcf.global.filter.visibility.${type}`);
+                    link.addEventListener("click", (ev) => this._setVisibility(ev));
+                    const li = document.createElement("li");
                     li.appendChild(link);
-                    if (type === 'showAll') {
-                        li.className = 'active';
-                        var divider = elCreate('li');
-                        divider.className = 'dropdownDivider';
+                    if (type === "showAll") {
+                        li.className = "active";
+                        const divider = document.createElement("li");
+                        divider.className = "dropdownDivider";
                         dropdown.appendChild(divider);
                     }
                     dropdown.appendChild(li);
-                }).bind(this));
-                UiSimpleDropdown.initFragment(button, dropdown);
+                });
+                Simple_1.default.initFragment(button, dropdown);
                 // add `active` classes required for the visibility filter
                 this._setupVisibilityFilter();
                 this._dropdown = dropdown;
                 this._dropdownId = button.id;
             }
-            UiSimpleDropdown.toggleDropdown(button.id, button);
-        },
+            Simple_1.default.toggleDropdown(button.id, button);
+        }
         /**
          * Set-ups the visibility filter by assigning an active class to the
          * list items that hold the checkboxes and observing the checkboxes
@@ -240,67 +218,85 @@ define(['Core', 'EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util', 'Ui/Si
          * This process involves quite a few DOM changes and new event listeners,
          * therefore we'll delay this until the filter has been accessed for
          * the first time, because none of these changes matter before that.
-         *
-         * @protected
          */
-        _setupVisibilityFilter: function () {
-            var nextSibling = this._element.nextSibling;
-            var parent = this._element.parentNode;
-            var scrollTop = this._element.scrollTop;
-            // mass-editing of DOM elements is slow while they're part of the document 
-            var fragment = document.createDocumentFragment();
+        _setupVisibilityFilter() {
+            const nextSibling = this._element.nextSibling;
+            const parent = this._element.parentElement;
+            const scrollTop = this._element.scrollTop;
+            // mass-editing of DOM elements is slow while they're part of the document
+            const fragment = document.createDocumentFragment();
             fragment.appendChild(this._element);
-            elBySelAll('li', this._element, function (li) {
-                var checkbox = elBySel('input[type="checkbox"]', li);
+            this._element.querySelectorAll("li").forEach((li) => {
+                const checkbox = li.querySelector('input[type="checkbox"]');
                 if (checkbox) {
-                    if (checkbox.checked)
-                        li.classList.add('active');
-                    checkbox.addEventListener('change', function () {
-                        li.classList[(checkbox.checked ? 'add' : 'remove')]('active');
+                    if (checkbox.checked) {
+                        li.classList.add("active");
+                    }
+                    checkbox.addEventListener("change", () => {
+                        if (checkbox.checked) {
+                            li.classList.add("active");
+                        }
+                        else {
+                            li.classList.remove("active");
+                        }
                     });
                 }
                 else {
-                    var radioButton = elBySel('input[type="radio"]', li);
+                    const radioButton = li.querySelector('input[type="radio"]');
                     if (radioButton) {
-                        if (radioButton.checked)
-                            li.classList.add('active');
-                        radioButton.addEventListener('change', function () {
-                            elBySelAll('li', this._element, function (everyLi) {
-                                everyLi.classList.remove('active');
-                            });
-                            li.classList[(radioButton.checked ? 'add' : 'remove')]('active');
-                        }.bind(this));
+                        if (radioButton.checked) {
+                            li.classList.add("active");
+                        }
+                        radioButton.addEventListener("change", () => {
+                            this._element.querySelectorAll("li").forEach((el) => el.classList.remove("active"));
+                            if (radioButton.checked) {
+                                li.classList.add("active");
+                            }
+                            else {
+                                li.classList.remove("active");
+                            }
+                        });
                     }
                 }
-            }.bind(this));
+            });
             // re-insert the modified DOM
             parent.insertBefore(this._element, nextSibling);
             this._element.scrollTop = scrollTop;
-        },
+        }
         /**
          * Sets the visibility of marked items.
-         *
-         * @param       {Event}         event
-         * @protected
          */
-        _setVisibility: function (event) {
+        _setVisibility(event) {
             event.preventDefault();
-            var link = event.currentTarget;
-            var type = elData(link, 'type');
-            UiSimpleDropdown.close(this._dropdownId);
-            if (elData(this._element, 'filter') === type) {
+            const link = event.currentTarget;
+            const type = link.dataset.type;
+            Simple_1.default.close(this._dropdownId);
+            if (this._element.dataset.filter === type) {
                 // filter did not change
                 return;
             }
-            elData(this._element, 'filter', type);
-            elBySel('.active', this._dropdown).classList.remove('active');
-            link.parentNode.classList.add('active');
-            var button = elById(this._dropdownId);
-            button.classList[(type === 'showAll' ? 'remove' : 'add')]('active');
-            var icon = elBySel('.icon', button);
-            icon.classList[(type === 'showAll' ? 'add' : 'remove')]('fa-eye');
-            icon.classList[(type === 'showAll' ? 'remove' : 'add')]('fa-eye-slash');
+            this._element.dataset.filter = type;
+            const activeElement = this._dropdown.querySelector(".active");
+            activeElement.classList.remove("active");
+            link.parentElement.classList.add("active");
+            const button = document.getElementById(this._dropdownId);
+            if (type === "showAll") {
+                button.classList.remove("active");
+            }
+            else {
+                button.classList.add("active");
+            }
+            const icon = button.querySelector(".icon");
+            if (type === "showAll") {
+                icon.classList.add("fa-eye");
+                icon.classList.remove("fa-eye-slash");
+            }
+            else {
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            }
         }
-    };
+    }
+    Core.enableLegacyInheritance(UiItemListFilter);
     return UiItemListFilter;
 });

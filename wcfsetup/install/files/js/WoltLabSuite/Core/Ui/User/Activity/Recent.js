@@ -1,71 +1,78 @@
-define(['Ajax', 'Language', 'Dom/Util'], function (Ajax, Language, DomUtil) {
+define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../../Language", "../../../Dom/Util"], function (require, exports, tslib_1, Ajax, Core, Language, Util_1) {
     "use strict";
-    function UiUserActivityRecent(containerId) { this.init(containerId); }
-    UiUserActivityRecent.prototype = {
-        init: function (containerId) {
-            this._containerId = containerId;
-            var container = elById(this._containerId);
-            this._list = elBySel('.recentActivityList', container);
-            var showMoreItem = elCreate('li');
-            showMoreItem.className = 'showMore';
-            if (this._list.childElementCount) {
-                showMoreItem.innerHTML = '<button class="small">' + Language.get('wcf.user.recentActivity.more') + '</button>';
-                showMoreItem.children[0].addEventListener('click', this._showMore.bind(this));
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    Language = tslib_1.__importStar(Language);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    class UiUserActivityRecent {
+        constructor(containerId) {
+            this.containerId = containerId;
+            const container = document.getElementById(this.containerId);
+            this.list = container.querySelector(".recentActivityList");
+            const showMoreItem = document.createElement("li");
+            showMoreItem.className = "showMore";
+            if (this.list.childElementCount) {
+                showMoreItem.innerHTML = '<button class="small">' + Language.get("wcf.user.recentActivity.more") + "</button>";
+                const button = showMoreItem.children[0];
+                button.addEventListener("click", (ev) => this.showMore(ev));
             }
             else {
-                showMoreItem.innerHTML = '<small>' + Language.get('wcf.user.recentActivity.noMoreEntries') + '</small>';
+                showMoreItem.innerHTML = "<small>" + Language.get("wcf.user.recentActivity.noMoreEntries") + "</small>";
             }
-            this._list.appendChild(showMoreItem);
-            this._showMoreItem = showMoreItem;
-            elBySelAll('.jsRecentActivitySwitchContext .button', container, (function (button) {
-                button.addEventListener('click', (function (event) {
+            this.list.appendChild(showMoreItem);
+            this.showMoreItem = showMoreItem;
+            container.querySelectorAll(".jsRecentActivitySwitchContext .button").forEach((button) => {
+                button.addEventListener("click", (event) => {
                     event.preventDefault();
-                    if (!button.classList.contains('active')) {
-                        this._switchContext();
+                    if (!button.classList.contains("active")) {
+                        this.switchContext();
                     }
-                }).bind(this));
-            }).bind(this));
-        },
-        _showMore: function (event) {
-            event.preventDefault();
-            this._showMoreItem.children[0].disabled = true;
-            Ajax.api(this, {
-                actionName: 'load',
-                parameters: {
-                    boxID: ~~elData(this._list, 'box-id'),
-                    filteredByFollowedUsers: elDataBool(this._list, 'filtered-by-followed-users'),
-                    lastEventId: elData(this._list, 'last-event-id'),
-                    lastEventTime: elData(this._list, 'last-event-time'),
-                    userID: ~~elData(this._list, 'user-id')
-                }
+                });
             });
-        },
-        _switchContext: function () {
+        }
+        showMore(event) {
+            event.preventDefault();
+            const button = this.showMoreItem.children[0];
+            button.disabled = true;
             Ajax.api(this, {
-                actionName: 'switchContext'
-            }, (function () {
-                window.location.hash = '#' + this._containerId;
+                actionName: "load",
+                parameters: {
+                    boxID: ~~this.list.dataset.boxId,
+                    filteredByFollowedUsers: Core.stringToBool(this.list.dataset.filteredByFollowedUsers || ""),
+                    lastEventId: this.list.dataset.lastEventId,
+                    lastEventTime: this.list.dataset.lastEventTime,
+                    userID: ~~this.list.dataset.userId,
+                },
+            });
+        }
+        switchContext() {
+            Ajax.api(this, {
+                actionName: "switchContext",
+            }, () => {
+                window.location.hash = `#${this.containerId}`;
                 window.location.reload();
-            }).bind(this));
-        },
-        _ajaxSuccess: function (data) {
+            });
+        }
+        _ajaxSuccess(data) {
             if (data.returnValues.template) {
-                DomUtil.insertHtml(data.returnValues.template, this._showMoreItem, 'before');
-                elData(this._list, 'last-event-time', data.returnValues.lastEventTime);
-                elData(this._list, 'last-event-id', data.returnValues.lastEventID);
-                this._showMoreItem.children[0].disabled = false;
+                Util_1.default.insertHtml(data.returnValues.template, this.showMoreItem, "before");
+                this.list.dataset.lastEventTime = data.returnValues.lastEventTime.toString();
+                this.list.dataset.lastEventId = data.returnValues.lastEventID.toString();
+                const button = this.showMoreItem.children[0];
+                button.disabled = false;
             }
             else {
-                this._showMoreItem.innerHTML = '<small>' + Language.get('wcf.user.recentActivity.noMoreEntries') + '</small>';
+                this.showMoreItem.innerHTML = "<small>" + Language.get("wcf.user.recentActivity.noMoreEntries") + "</small>";
             }
-        },
-        _ajaxSetup: function () {
+        }
+        _ajaxSetup() {
             return {
                 data: {
-                    className: 'wcf\\data\\user\\activity\\event\\UserActivityEventAction'
-                }
+                    className: "wcf\\data\\user\\activity\\event\\UserActivityEventAction",
+                },
             };
         }
-    };
+    }
+    Core.enableLegacyInheritance(UiUserActivityRecent);
     return UiUserActivityRecent;
 });

@@ -7,6 +7,7 @@
  * @module  WoltLabSuite/Core/Ui/TabMenu/Simple
  */
 
+import * as Core from "../../Core";
 import * as DomTraverse from "../../Dom/Traverse";
 import DomUtil from "../../Dom/Util";
 import * as Environment from "../../Environment";
@@ -437,5 +438,7 @@ class TabMenuSimple {
     return "";
   }
 }
+
+Core.enableLegacyInheritance(TabMenuSimple);
 
 export = TabMenuSimple;

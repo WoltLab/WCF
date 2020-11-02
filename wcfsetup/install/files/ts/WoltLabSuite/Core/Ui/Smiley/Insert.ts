@@ -7,6 +7,7 @@
  * @module      WoltLabSuite/Core/Ui/Smiley/Insert
  */
 
+import * as Core from "../../Core";
 import * as EventHandler from "../../Event/Handler";
 
 class UiSmileyInsert {
@@ -88,5 +89,7 @@ class UiSmileyInsert {
     });
   }
 }
+
+Core.enableLegacyInheritance(UiSmileyInsert);
 
 export = UiSmileyInsert;

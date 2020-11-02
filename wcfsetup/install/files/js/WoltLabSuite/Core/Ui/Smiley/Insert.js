@@ -6,8 +6,9 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Ui/Smiley/Insert
  */
-define(["require", "exports", "tslib", "../../Event/Handler"], function (require, exports, tslib_1, EventHandler) {
+define(["require", "exports", "tslib", "../../Core", "../../Event/Handler"], function (require, exports, tslib_1, Core, EventHandler) {
     "use strict";
+    Core = tslib_1.__importStar(Core);
     EventHandler = tslib_1.__importStar(EventHandler);
     class UiSmileyInsert {
         constructor(editorId) {
@@ -75,5 +76,6 @@ define(["require", "exports", "tslib", "../../Event/Handler"], function (require
             });
         }
     }
+    Core.enableLegacyInheritance(UiSmileyInsert);
     return UiSmileyInsert;
 });

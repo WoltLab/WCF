@@ -1,3 +1,4 @@
+import * as Core from "../../Core";
 import * as Language from "../../Language";
 import * as StringUtil from "../../StringUtil";
 import DomChangeListener from "../../Dom/Change/Listener";
@@ -95,5 +96,7 @@ class UiAclSimple {
     }
   }
 }
+
+Core.enableLegacyInheritance(UiAclSimple);
 
 export = UiAclSimple;
