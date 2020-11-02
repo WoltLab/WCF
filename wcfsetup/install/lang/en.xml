@@ -1145,6 +1145,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.menu.edit"><![CDATA[Edit Menu]]></item>
 		<item name="wcf.acp.menu.list"><![CDATA[Menus]]></item>
 		<item name="wcf.acp.menu.item.add"><![CDATA[Add Menu Item]]></item>
+		<item name="wcf.acp.menu.item.action.description"><![CDATA[Menu: {$menu->getTitle()}]]></item>
 		<item name="wcf.acp.menu.item.delete.confirmMessage"><![CDATA[Do you really want to delete the menu item <span class="confirmationObject">{$menuItemNode->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.menu.item.edit"><![CDATA[Edit Menu Item]]></item>
 		<item name="wcf.acp.menu.item.externalURL"><![CDATA[External URL]]></item>
