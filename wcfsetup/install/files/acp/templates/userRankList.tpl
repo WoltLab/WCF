@@ -4,6 +4,21 @@
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\user\\rank\\UserRankAction', '.jsUserRankRow');
 	});
+	
+	require(['Language', 'Ui/Notification', 'WoltLabSuite/Core/Acp/Ui/Worker'], function (Language, UiNotification, AcpUiWorker) {
+		Language.add('wcf.acp.worker.abort.confirmMessage', '{lang}wcf.acp.worker.abort.confirmMessage{/lang}');
+		
+		document.getElementById('updateEvents').addEventListener('click', function (event) {
+			event.preventDefault();
+			
+			new AcpUiWorker({
+				dialogId: 'updateEvents',
+				dialogTitle: '{jslang}wcf.acp.user.activityPoint.updateEvents{/jslang}',
+				className: 'wcf\\system\\worker\\UserActivityPointUpdateEventsWorker',
+				callbackSuccess: () => UiNotification.show()
+			});
+		});
+	});
 </script>
 
 <header class="contentHeader">
@@ -13,6 +28,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
+			<li><a id="updateEvents" class="button"><span class="icon icon16 fa-repeat"></span> <span>{lang}wcf.acp.user.activityPoint.updateEvents{/lang}</span></a></li>
 			<li><a href="{link controller='UserRankAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.user.rank.add{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
