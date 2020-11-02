@@ -42,7 +42,6 @@ function refresh() {
 
   const date = new Date();
   const timestamp = (date.getTime() - date.getMilliseconds()) / 1_000;
-  if (_offset === null) _offset = timestamp - window.TIME_NOW;
 
   document.querySelectorAll("time").forEach((element) => {
     rebuild(element, date, timestamp);
@@ -103,6 +102,8 @@ function rebuild(element: HTMLTimeElement, date: Date, timestamp: number): void 
  * Transforms <time> elements on init and binds event listeners.
  */
 export function setup(): void {
+  _offset = Math.trunc(Date.now() / 1_000 - window.TIME_NOW);
+
   new RepeatingTimer(refresh, 60_000);
 
   DomChangeListener.add("WoltLabSuite/Core/Date/Time/Relative", refresh);

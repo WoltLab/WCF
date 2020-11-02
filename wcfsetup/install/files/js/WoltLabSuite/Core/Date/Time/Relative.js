@@ -42,8 +42,6 @@ define(["require", "exports", "tslib", "../../Core", "../Util", "../../Dom/Chang
         }
         const date = new Date();
         const timestamp = (date.getTime() - date.getMilliseconds()) / 1000;
-        if (_offset === null)
-            _offset = timestamp - window.TIME_NOW;
         document.querySelectorAll("time").forEach((element) => {
             rebuild(element, date, timestamp);
         });
@@ -96,6 +94,7 @@ define(["require", "exports", "tslib", "../../Core", "../Util", "../../Dom/Chang
      * Transforms <time> elements on init and binds event listeners.
      */
     function setup() {
+        _offset = Math.trunc(Date.now() / 1000 - window.TIME_NOW);
         new Repeating_1.default(refresh, 60000);
         Listener_1.default.add("WoltLabSuite/Core/Date/Time/Relative", refresh);
         document.addEventListener("visibilitychange", onVisibilityChange);
