@@ -528,7 +528,8 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
                 .forEach((element) => {
                 element.classList.add("inputDatePicker");
                 element.readOnly = true;
-                const isDateTime = element.type === "datetime";
+                // Use `getAttribute()`, because `.type` is normalized to "text" for unknown values.
+                const isDateTime = element.getAttribute("type") === "datetime";
                 const isTimeOnly = isDateTime && Core.stringToBool(element.dataset.timeOnly || "");
                 const disableClear = Core.stringToBool(element.dataset.disableClear || "");
                 const ignoreTimezone = isDateTime && Core.stringToBool(element.dataset.ignoreTimezone || "");
@@ -538,6 +539,10 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
                 // convert value
                 let date = null;
                 let value = element.value;
+                if (!value) {
+                    // Some legacy code may incorrectly use `setAttribute("value", value)`.
+                    value = element.getAttribute("value") || "";
+                }
                 // ignore the timezone, if the value is only a date (YYYY-MM-DD)
                 const isDateOnly = /^\d+-\d+-\d+$/.test(value);
                 if (value) {
@@ -790,7 +795,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
             const container = element.parentNode;
             container.parentNode.insertBefore(element, container);
             container.remove();
-            element.type = "date" + (data.isDateTime ? "time" : "");
+            element.setAttribute("type", "date" + (data.isDateTime ? "time" : ""));
             element.name = data.shadow.name;
             element.value = data.shadow.value;
             element.removeAttribute("data-value");
