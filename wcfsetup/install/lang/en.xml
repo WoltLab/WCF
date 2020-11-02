@@ -4822,10 +4822,11 @@ Open the link below to access the user profile:
 	<category name="wcf.user.security">
 		<item name="wcf.user.security.activeSessions"><![CDATA[Active Sessions]]></item>
 		<item name="wcf.user.security.currentSession"><![CDATA[Current Session]]></item>
-		<item name="wcf.user.security.sessionLastActive"><![CDATA[Last active: {@$session->getLastActivityTime()|time}]]></item>
 		<item name="wcf.user.security.deleteSession"><![CDATA[Revoke Session]]></item>
 		<item name="wcf.user.security.deleteSession.confirmMessage"><![CDATA[Do you really want to revoke the session?]]></item>
 		<item name="wcf.user.security.sessionName"><![CDATA[{if $session->getUserAgent()->getBrowser()}{$session->getUserAgent()->getBrowser()}{if $session->getUserAgent()->getOS()} on {$session->getUserAgent()->getOS()}{/if}{else}Unknown Device{/if}]]></item>
+		<item name="wcf.user.security.ipAddress"><![CDATA[IP Address]]></item>
+		<item name="wcf.user.security.lastActivity"><![CDATA[Last active]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophies]]></item>

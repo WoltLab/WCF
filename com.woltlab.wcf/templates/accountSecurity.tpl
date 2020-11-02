@@ -14,15 +14,15 @@
 				
 				<div class="accountSecurityContainer">
 					<div class="containerHeadline accountSecurityInformation">
-						<h3>{$session->getUserAgent()->getBrowser()}</h3>
-						<small>
-							{$session->getIpAddress()}<br />
-							{if $session->isCurrentSession()}
-								{lang}wcf.user.security.currentSession{/lang}
-							{else}
-								{lang}wcf.user.security.sessionLastActive{/lang}
-							{/if}
-						</small>
+						<h3>{lang}wcf.user.security.sessionName{/lang}</h3>
+						
+						<dl class="plain inlineDataList small">
+							<dt>{lang}wcf.user.security.lastActivity{/lang}</dt>
+							<dd>{if $session->isCurrentSession()}{lang}wcf.user.security.currentSession{/lang}{else}{@$session->getLastActivityTime()|time}{/if}</dd>
+							
+							<dt>{lang}wcf.user.security.ipAddress{/lang}</dt>
+							<dd>{$session->getIpAddress()}</dd>
+						</dl>
 					</div>
 					
 					{if !$session->isCurrentSession()}
