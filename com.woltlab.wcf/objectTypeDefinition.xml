@@ -218,6 +218,10 @@
 		<definition>
 			<name>com.woltlab.wcf.floodControl</name>
 		</definition>
+		<definition>
+			<name>com.woltlab.wcf.multifactor</name>
+			<!-- TODO: interfacename -->
+		</definition>
 	</import>
 	<delete>
 		<definition name="com.woltlab.wcf.notification.notificationType"/>
