@@ -4,6 +4,7 @@ use wcf\data\condition\Condition;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\data\DatabaseObjectList;
+use wcf\system\exception\InvalidObjectArgument;
 use wcf\system\WCF;
 
 /**
@@ -32,7 +33,7 @@ class UserUserIDCondition extends AbstractSingleFieldCondition implements IConte
 	 */
 	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
 		if (!($objectList instanceof UserList)) {
-			throw new \InvalidArgumentException("Object list is not an instance of '".UserList::class."', an instance of '".get_class($objectList)."' was given.");
+			throw new InvalidObjectArgument($objectList, UserList::class, 'Object list');
 		}
 		
 		$objectList->getConditionBuilder()->add('user_table.userID = ?', [$conditionData['userID']]);
