@@ -4191,7 +4191,7 @@ Attachments:
 		<item name="wcf.moderation.markAsRead.doubleClick"><![CDATA[Double-Click to Mark This Item Read]]></item>
 		<item name="wcf.moderation.comments"><![CDATA[Comments]]></item>
 		<item name="wcf.moderation.username"><![CDATA[Author]]></item>
-		<item name="wcf.moderation.noEntries"><![CDATA[There are no items at the moment.{if $hasActiveFilter} <a href="#" class="jsStaticDialog" data-dialog-id="moderationListSortFilter" role="button">Change the applied filters.</a>{/if}]]></item>
+		<item name="wcf.moderation.noEntries"><![CDATA[There are no items at the moment. <a href="#" class="jsStaticDialog" data-dialog-id="moderationListSortFilter" role="button">Change the filters.</a>{if $hasActiveFilter} <a href="{link controller='ModerationList'}{/link}">Reset the active filters.</a>{/if}]]></item>
 	</category>
 	<category name="wcf.moderation.activation">
 		<item name="wcf.moderation.activation"><![CDATA[Approval]]></item>
