@@ -63,7 +63,7 @@ class UiSearchInput {
         noResultPlaceholder: "",
         preventSubmit: false,
       },
-      options
+      options,
     ) as SearchInputOptions;
 
     this.ajaxPayload = options.ajax as DatabaseObjectActionPayload;

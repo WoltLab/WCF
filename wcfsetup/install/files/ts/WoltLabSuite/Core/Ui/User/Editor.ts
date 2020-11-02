@@ -26,7 +26,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
 
     ["ban", "disableAvatar", "disableCoverPhoto", "disableSignature", "enable"].forEach((action) => {
       const button = document.querySelector(
-        ".userProfileButtonMenu .jsButtonUser" + StringUtil.ucfirst(action)
+        ".userProfileButtonMenu .jsButtonUser" + StringUtil.ucfirst(action),
       ) as HTMLElement;
 
       // The button is missing if the current user lacks the permission.
@@ -146,7 +146,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
         this.header.dataset.disableAvatar = data.actionName === "disableAvatar" ? "true" : "false";
         button = document.querySelector(".userProfileButtonMenu .jsButtonUserDisableAvatar") as HTMLElement;
         button.textContent = Language.get(
-          "wcf.user." + (data.actionName === "disableAvatar" ? "enable" : "disable") + "Avatar"
+          "wcf.user." + (data.actionName === "disableAvatar" ? "enable" : "disable") + "Avatar",
         );
         break;
 
@@ -155,7 +155,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
         this.header.dataset.disableCoverPhoto = data.actionName === "disableCoverPhoto" ? "true" : "false";
         button = document.querySelector(".userProfileButtonMenu .jsButtonUserDisableCoverPhoto") as HTMLElement;
         button.textContent = Language.get(
-          "wcf.user." + (data.actionName === "disableCoverPhoto" ? "enable" : "disable") + "CoverPhoto"
+          "wcf.user." + (data.actionName === "disableCoverPhoto" ? "enable" : "disable") + "CoverPhoto",
         );
         break;
 
@@ -164,7 +164,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
         this.header.dataset.disableSignature = data.actionName === "disableSignature" ? "true" : "false";
         button = document.querySelector(".userProfileButtonMenu .jsButtonUserDisableSignature") as HTMLElement;
         button.textContent = Language.get(
-          "wcf.user." + (data.actionName === "disableSignature" ? "enable" : "disable") + "Signature"
+          "wcf.user." + (data.actionName === "disableSignature" ? "enable" : "disable") + "Signature",
         );
         break;
 
@@ -238,7 +238,7 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
           <dt><label for="wcfUiUserEditorExpires"></label></dt>
           <dd>
             <input type="date" name="wcfUiUserEditorExpires" id="wcfUiUserEditorExpires" class="medium" min="${new Date(
-              window.TIME_NOW * 1000
+              window.TIME_NOW * 1000,
             ).toISOString()}" data-ignore-timezone="true">
             <small id="wcfUiUserEditorExpiresLabel"></small>
           </dd>

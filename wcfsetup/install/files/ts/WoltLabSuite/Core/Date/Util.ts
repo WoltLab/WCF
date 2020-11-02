@@ -211,8 +211,8 @@ export function gmdate(date: Date): number {
       date.getUTCDay(),
       date.getUTCHours(),
       date.getUTCMinutes(),
-      date.getUTCSeconds()
-    ) / 1000
+      date.getUTCSeconds(),
+    ) / 1000,
   );
 }
 

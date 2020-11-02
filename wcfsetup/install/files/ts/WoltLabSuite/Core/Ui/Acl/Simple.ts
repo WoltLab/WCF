@@ -43,7 +43,7 @@ class UiAclSimple {
         includeUserGroups: true,
         excludedSearchValues: excludedSearchValues,
         preventSubmit: true,
-      }
+      },
     );
 
     this.aclListContainer = document.getElementById(this.prefix + "aclListContainer")!;

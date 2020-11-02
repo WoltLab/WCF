@@ -200,7 +200,7 @@ function initDateRange(element: HTMLInputElement, now: Date, isMinDate: boolean)
 
     if (document.getElementById(value) === null) {
       throw new Error(
-        "Reference date picker identified by '" + value + "' does not exists (element id: '" + element.id + "')."
+        "Reference date picker identified by '" + value + "' does not exists (element id: '" + element.id + "').",
       );
     }
   } else if (/^\d{4}-\d{2}-\d{2}T/.test(value)) {
@@ -413,7 +413,7 @@ function renderGrid(day?: number, month?: number, year?: number): void {
 
     // check if current selection exceeds min/max date
     let date = new Date(
-      year.toString() + "-" + ("0" + (month + 1).toString()).slice(-2) + "-" + ("0" + day.toString()).slice(-2)
+      year.toString() + "-" + ("0" + (month + 1).toString()).slice(-2) + "-" + ("0" + day.toString()).slice(-2),
     );
     if (date < _minDate) {
       year = _minDate.getFullYear();
@@ -548,7 +548,7 @@ function formatValue(): void {
       +_dateGrid.dataset.month!,
       +_dateGrid.dataset.day!,
       +_dateHour.value,
-      +_dateMinute.value
+      +_dateMinute.value,
     );
   } else {
     date = new Date(+_dateGrid.dataset.year!, +_dateGrid.dataset.month!, +_dateGrid.dataset.day!);
@@ -637,7 +637,7 @@ const DatePicker = {
     const now = new Date();
     document
       .querySelectorAll<HTMLInputElement>(
-        'input[type="date"]:not(.inputDatePicker), input[type="datetime"]:not(.inputDatePicker)'
+        'input[type="date"]:not(.inputDatePicker), input[type="datetime"]:not(.inputDatePicker)',
       )
       .forEach((element) => {
         element.classList.add("inputDatePicker");

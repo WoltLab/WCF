@@ -55,7 +55,7 @@ function tryAlignmentVertical(
   refDimensions: ElementDimensions,
   refOffsets: ElementOffset,
   windowHeight: number,
-  verticalOffset: number
+  verticalOffset: number,
 ): VerticalResult {
   let bottom: Offset = "auto";
   let top: Offset = "auto";
@@ -101,7 +101,7 @@ function tryAlignmentHorizontal(
   elDimensions: ElementDimensions,
   refDimensions: ElementDimensions,
   refOffsets: ElementOffset,
-  windowWidth: number
+  windowWidth: number,
 ): HorizontalResult {
   let left: Offset = "auto";
   let right: Offset = "auto";
@@ -160,7 +160,7 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
       // allow flipping over axis, possible values: both, horizontal, vertical and none
       allowFlip: "both",
     },
-    options || {}
+    options || {},
   ) as AlignmentOptions;
 
   if (!Array.isArray(options.pointerClassNames) || options.pointerClassNames.length !== (options.pointer ? 1 : 2)) {
@@ -187,7 +187,7 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
 
   const elDimensions = DomUtil.outerDimensions(element);
   const refDimensions = DomUtil.outerDimensions(
-    options.refDimensionsElement instanceof HTMLElement ? options.refDimensionsElement : referenceElement
+    options.refDimensionsElement instanceof HTMLElement ? options.refDimensionsElement : referenceElement,
   );
   const refOffsets = DomUtil.offset(referenceElement);
   const windowHeight = window.innerHeight;
@@ -221,7 +221,7 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
         elDimensions,
         refDimensions,
         refOffsets,
-        windowWidth
+        windowWidth,
       );
       // only use these results if it fits into the boundaries, otherwise both directions exceed and we honor the demanded direction
       if (horizontalFlipped.result) {
@@ -240,7 +240,7 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
     refDimensions,
     refOffsets,
     windowHeight,
-    options.verticalOffset!
+    options.verticalOffset!,
   );
   if (!vertical.result && (options.allowFlip === "both" || options.allowFlip === "vertical")) {
     const verticalFlipped = tryAlignmentVertical(
@@ -249,7 +249,7 @@ export function set(element: HTMLElement, referenceElement: HTMLElement, options
       refDimensions,
       refOffsets,
       windowHeight,
-      options.verticalOffset!
+      options.verticalOffset!,
     );
     // only use these results if it fits into the boundaries, otherwise both directions exceed and we honor the demanded direction
     if (verticalFlipped.result) {

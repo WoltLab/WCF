@@ -80,7 +80,7 @@ class ImageResizer {
     data: CanvasPlusExif,
     fileName: string,
     fileType: string = this.fileType,
-    quality: number = this.quality
+    quality: number = this.quality,
   ): Promise<File> {
     const basename = /(.+)(\..+?)$/.exec(fileName);
 
@@ -144,7 +144,7 @@ class ImageResizer {
     maxHeight: number = this.maxHeight,
     quality: number = this.quality,
     force = false,
-    cancelPromise?: Promise<unknown>
+    cancelPromise?: Promise<unknown>,
   ): Promise<HTMLCanvasElement | undefined> {
     const canvas = document.createElement("canvas");
 

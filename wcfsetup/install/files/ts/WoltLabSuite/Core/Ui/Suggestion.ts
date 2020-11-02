@@ -57,7 +57,7 @@ class UiSuggestion implements AjaxCallbackObject {
           data: {},
         },
       },
-      options.ajax
+      options.ajax,
     ) as DatabaseObjectActionPayload;
 
     if (typeof options.callbackSelect !== "function") {
@@ -66,7 +66,7 @@ class UiSuggestion implements AjaxCallbackObject {
     this.callbackSelect = options.callbackSelect;
 
     this.excludedSearchValues = new Set(
-      Array.isArray(options.excludedSearchValues) ? options.excludedSearchValues : []
+      Array.isArray(options.excludedSearchValues) ? options.excludedSearchValues : [],
     );
     this.threshold = options.threshold === undefined ? 3 : options.threshold;
 

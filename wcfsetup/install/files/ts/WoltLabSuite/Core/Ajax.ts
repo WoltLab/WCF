@@ -21,7 +21,7 @@ export function api(
   callbackObject: AjaxCallbackObject,
   data?: RequestData,
   success?: CallbackSuccess,
-  failure?: CallbackFailure
+  failure?: CallbackFailure,
 ): AjaxRequest {
   if (typeof data !== "object") data = {};
 

@@ -46,7 +46,7 @@ const Devtools = {
 
     window.console.log(
       "%c\tEditor autosave " + (_settings.editorAutosave ? "enabled" : "disabled"),
-      "font-style: italic"
+      "font-style: italic",
     );
   },
 

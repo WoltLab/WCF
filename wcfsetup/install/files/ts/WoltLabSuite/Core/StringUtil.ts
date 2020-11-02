@@ -25,7 +25,7 @@ export function addThousandsSeparator(number: number): string {
 
   return String(number).replace(
     /(^-?\d{1,3}|\d{3})(?=(?:\d{3})+(?:$|\.))/g,
-    "$1" + Language.get("wcf.global.thousandsSeparator")
+    "$1" + Language.get("wcf.global.thousandsSeparator"),
   );
 }
 

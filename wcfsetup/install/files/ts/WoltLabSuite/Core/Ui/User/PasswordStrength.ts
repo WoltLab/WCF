@@ -104,9 +104,9 @@ class PasswordStrength {
     const dictionary = flatMap(
       STATIC_DICTIONARY.concat(
         this.staticDictionary,
-        this.relatedInputs.map((input) => input.value.trim())
+        this.relatedInputs.map((input) => input.value.trim()),
       ),
-      splitIntoWords
+      splitIntoWords,
     ).filter((value) => value.length > 0);
 
     const value = this.input.value.trim();

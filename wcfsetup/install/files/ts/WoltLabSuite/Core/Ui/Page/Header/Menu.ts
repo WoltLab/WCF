@@ -190,7 +190,7 @@ function setupA11y(): void {
       link.setAttribute("aria-expanded", showMenu ? "true" : "false");
       showMenuButton.setAttribute(
         "aria-label",
-        Language.get(showMenu ? "wcf.global.button.hideMenu" : "wcf.global.button.showMenu")
+        Language.get(showMenu ? "wcf.global.button.hideMenu" : "wcf.global.button.showMenu"),
       );
     });
   });

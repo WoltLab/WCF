@@ -195,7 +195,7 @@ export function show(options: ConfirmationOptions): void {
       parameters: {},
       template: "",
     },
-    options
+    options,
   ) as ConfirmationOptions;
   options.message = typeof (options.message as any) === "string" ? options.message.trim() : "";
   if (!options.message) {
