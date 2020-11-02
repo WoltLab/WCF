@@ -14,7 +14,15 @@
 				
 				<div>
 					<div class="containerHeadline">
-						<h3>{lang}wcf.user.security.multifactor.{$method->objectType}{/lang}</h3>
+						<h3>
+							{lang}wcf.user.security.multifactor.{$method->objectType}{/lang}
+							
+							{if $enabledMultifactorMethods[$method->objectTypeID]|isset}
+								<span class="badge green">
+									{lang}wcf.user.security.multifactor.active{/lang}
+								</span>
+							{/if}
+						</h3>
 						
 						{$method->getProcessor()->getStatusText($__wcf->user)}
 					</div>

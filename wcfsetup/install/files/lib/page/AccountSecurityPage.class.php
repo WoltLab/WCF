@@ -33,6 +33,11 @@ class AccountSecurityPage extends AbstractPage {
 	private $multifactorMethods;
 	
 	/**
+	 * @var int[]
+	 */
+	private $enabledMultifactorMethods;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readData() {
@@ -45,6 +50,9 @@ class AccountSecurityPage extends AbstractPage {
 		});
 		
 		$this->multifactorMethods = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.multifactor');
+		$this->enabledMultifactorMethods = array_flip(array_map(function (ObjectType $o) {
+			return $o->objectTypeID;
+		}, WCF::getUser()->getEnabledMultifactorMethods()));
 	}
 	
 	/**
@@ -56,6 +64,7 @@ class AccountSecurityPage extends AbstractPage {
 		WCF::getTPL()->assign([
 			'activeSessions' => $this->activeSessions,
 			'multifactorMethods' => $this->multifactorMethods,
+			'enabledMultifactorMethods' => $this->enabledMultifactorMethods,
 		]);
 	}
 	
