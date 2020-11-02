@@ -3,6 +3,7 @@ import Devtools from './wcfsetup/install/files/ts/WoltLabSuite/Core/Devtools';
 import DomUtil from './wcfsetup/install/files/ts/WoltLabSuite/Core/Dom/Util';
 import * as ColorUtil from './wcfsetup/install/files/ts/WoltLabSuite/Core/ColorUtil';
 import UiDropdownSimple from './wcfsetup/install/files/ts/WoltLabSuite/Core/Ui/Dropdown/Simple';
+import "@woltlab/zxcvbn";
 
 declare global {
   interface Window {

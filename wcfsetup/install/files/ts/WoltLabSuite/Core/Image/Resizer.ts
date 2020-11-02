@@ -144,7 +144,7 @@ class ImageResizer {
     maxHeight: number = this.maxHeight,
     quality: number = this.quality,
     force = false,
-    cancelPromise
+    cancelPromise?: Promise<unknown>
   ): Promise<HTMLCanvasElement | undefined> {
     const canvas = document.createElement("canvas");
 
