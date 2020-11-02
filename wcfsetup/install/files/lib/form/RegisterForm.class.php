@@ -524,18 +524,6 @@ class RegisterForm extends UserAddForm {
 			$this->message = 'wcf.user.register.success.awaitActivation';
 		}
 		
-		// notify admin
-		if (REGISTER_ADMIN_NOTIFICATION) {
-			// get default language
-			$language = LanguageFactory::getInstance()->getDefaultLanguage();
-			
-			$email = new Email();
-			$email->addRecipient(new Mailbox(MAIL_ADMIN_ADDRESS, null, $language));
-			$email->setSubject($language->getDynamicVariable('wcf.user.register.notification.mail.subject'));
-			$email->setBody(new PlainTextMimePart($language->getDynamicVariable('wcf.user.register.notification.mail', ['user' => $user])));
-			$email->send();
-		}
-		
 		$this->fireNotificationEvent($user);
 		
 		if ($this->captchaObjectType) {

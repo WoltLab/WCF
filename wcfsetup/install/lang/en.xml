@@ -1457,7 +1457,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.register_disabled.description"><![CDATA[Disables registration for all users, new users can be created through an administrator.]]></item>
 		<item name="wcf.acp.option.register_enable_disclaimer"><![CDATA[Enable disclaimer]]></item>
 		<item name="wcf.acp.option.register_enable_disclaimer.description"><![CDATA[Disclaimer must be accepted during registration.]]></item>
-		<item name="wcf.acp.option.register_admin_notification"><![CDATA[Notify administrator of new registrations]]></item>
 		<item name="wcf.acp.option.register_activation_method"><![CDATA[Registration Approval Method]]></item>
 		<item name="wcf.acp.option.register_activation_method.byAdmin"><![CDATA[Only administrators can approve registrations]]></item>
 		<item name="wcf.acp.option.register_activation_method.byUser"><![CDATA[Registrations are approved through an email confirmation]]></item>

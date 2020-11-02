@@ -1478,7 +1478,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.register_disabled.description"><![CDATA[Schaltet die Registrierung für neue Benutzer gänzlich ab. Neue Benutzer können nur noch manuell durch den Administrator angelegt werden.]]></item>
 		<item name="wcf.acp.option.register_enable_disclaimer"><![CDATA[Nutzungsbedingungen aktivieren]]></item>
 		<item name="wcf.acp.option.register_enable_disclaimer.description"><![CDATA[Die Nutzungsbedingungen müssen durch den Benutzer vor der Registrierung akzeptiert werden.]]></item>
-		<item name="wcf.acp.option.register_admin_notification"><![CDATA[Administrator über neue Registrierungen per E-Mail benachrichtigen]]></item>
 		<item name="wcf.acp.option.register_activation_method"><![CDATA[Aktivierungsmethode]]></item>
 		<item name="wcf.acp.option.register_activation_method.byAdmin"><![CDATA[Aktivierung erfolgt durch Administrator]]></item>
 		<item name="wcf.acp.option.register_activation_method.byUser"><![CDATA[Benutzer aktiviert sich durch E-Mail-Bestätigung]]></item>
