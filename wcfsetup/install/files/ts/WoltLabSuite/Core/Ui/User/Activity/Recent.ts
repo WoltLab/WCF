@@ -74,7 +74,7 @@ class UiUserActivityRecent implements AjaxCallbackObject {
       () => {
         window.location.hash = `#${this.containerId}`;
         window.location.reload();
-      }
+      },
     );
   }
 

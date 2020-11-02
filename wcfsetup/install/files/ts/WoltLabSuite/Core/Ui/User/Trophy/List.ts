@@ -18,8 +18,7 @@ import UiPagination from "../../Pagination";
 class CacheData {
   private readonly cache = new Map<number, string>();
 
-  constructor(readonly pageCount: number, readonly title: string) {
-  }
+  constructor(readonly pageCount: number, readonly title: string) {}
 
   has(pageNo: number): boolean {
     return this.cache.has(pageNo);

@@ -368,7 +368,7 @@ class AjaxRequest {
     DomChangeListener.trigger();
 
     // fix anchor tags generated through WCF::getAnchor()
-    document.querySelectorAll("a[href*=\"#\"]").forEach((link: HTMLAnchorElement) => {
+    document.querySelectorAll('a[href*="#"]').forEach((link: HTMLAnchorElement) => {
       let href = link.href;
       if (href.indexOf("AJAXProxy") !== -1 || href.indexOf("ajax-proxy") !== -1) {
         href = href.substr(href.indexOf("#"));

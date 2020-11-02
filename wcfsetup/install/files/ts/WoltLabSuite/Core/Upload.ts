@@ -70,7 +70,7 @@ abstract class Upload {
         // url for uploading file
         url: `index.php?ajax-upload/&t=${window.SECURITY_TOKEN}`,
       },
-      options
+      options,
     ) as UploadOptions;
 
     this._options.url = Core.convertLegacyUrl(this._options.url);
@@ -207,7 +207,7 @@ abstract class Upload {
     _data: ResponseData,
     _responseText: string,
     _xhr: XMLHttpRequest,
-    _requestOptions: RequestOptions
+    _requestOptions: RequestOptions,
   ): boolean {
     // This should be an abstract method, but cannot be marked as such for backwards compatibility.
 
@@ -266,7 +266,7 @@ abstract class Upload {
     _data: ResponseData,
     _responseText: string,
     _xhr: XMLHttpRequestEventTarget,
-    _requestOptions: RequestOptions
+    _requestOptions: RequestOptions,
   ): void {
     // This should be an abstract method, but cannot be marked as such for backwards compatibility.
   }

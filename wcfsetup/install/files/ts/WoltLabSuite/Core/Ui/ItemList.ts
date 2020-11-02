@@ -379,7 +379,7 @@ export function init(elementId: string, values: ItemDataOrPlainValue[], opts: Pa
       // value may contain the placeholder `{$objectId}`
       submitFieldName: "",
     },
-    opts
+    opts,
   ) as ItemListOptions;
 
   const form = DomTraverse.parentByTag(element, "FORM") as HTMLFormElement;

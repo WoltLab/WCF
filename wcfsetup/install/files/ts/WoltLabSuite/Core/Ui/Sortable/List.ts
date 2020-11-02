@@ -39,7 +39,7 @@ class UiSortableList {
         isSimpleSorting: false,
         additionalParameters: {},
       },
-      opts
+      opts,
     ) as SortableListOptions;
 
     UiScreen.on("screen-sm-md", {
@@ -70,7 +70,7 @@ class UiSortableList {
       this._options.offset,
       options,
       this._options.isSimpleSorting,
-      this._options.additionalParameters
+      this._options.additionalParameters,
     );
   }
 

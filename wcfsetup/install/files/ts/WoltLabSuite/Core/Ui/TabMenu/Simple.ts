@@ -74,10 +74,10 @@ class TabMenuSimple {
       if (this.tabs.has(name)) {
         throw new Error(
           "Tab names must be unique, li[data-name='" +
-          name +
-          "'] (tab menu id: '" +
-          containerId +
-          "') exists more than once.",
+            name +
+            "'] (tab menu id: '" +
+            containerId +
+            "') exists more than once.",
         );
       }
 
@@ -109,7 +109,7 @@ class TabMenuSimple {
     if (this.isLegacy) {
       this.container.dataset.isLegacy = "true";
 
-      this.tabs.forEach(function(tab, name) {
+      this.tabs.forEach(function (tab, name) {
         tab.setAttribute("aria-controls", name);
       });
     }
@@ -183,7 +183,7 @@ class TabMenuSimple {
         }
 
         if (preselect === true) {
-          this.tabs.forEach(function(tab) {
+          this.tabs.forEach(function (tab) {
             if (
               !selectTab &&
               !DomUtil.isHidden(tab) &&

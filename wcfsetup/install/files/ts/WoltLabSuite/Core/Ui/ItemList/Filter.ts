@@ -49,7 +49,7 @@ class UiItemListFilter {
         enableVisibilityFilter: true,
         filterPosition: "bottom",
       },
-      options
+      options,
     ) as FilterOptions;
 
     if (this._options.filterPosition !== "top") {
