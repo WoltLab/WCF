@@ -5,6 +5,7 @@ use wcf\data\package\PackageCache;
 use wcf\data\user\cover\photo\DefaultUserCoverPhoto;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserProfile;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
@@ -128,8 +129,8 @@ class UserExportGdprAction extends AbstractAction {
 		
 		if (isset($_GET['id'])) $this->userID = intval($_GET['id']);
 		
-		$this->user = UserProfile::getUserProfile($this->userID);
-		if (!$this->user->userID) {
+		$this->user = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
+		if ($this->user === null) {
 			throw new IllegalLinkException();
 		}
 		
