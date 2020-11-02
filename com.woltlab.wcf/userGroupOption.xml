@@ -663,6 +663,38 @@ pdf</defaultvalue>
 				<options>module_user_signature</options>
 				<usersonly>1</usersonly>
 			</option>
+			<option name="user.signature.attachment.canUpload">
+				<categoryname>user.signature</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<usersonly>1</usersonly>
+				<options>module_user_signature</options>
+			</option>
+			<option name="user.signature.attachment.maxSize">
+				<categoryname>user.signature</categoryname>
+				<optiontype>fileSize</optiontype>
+				<defaultvalue>2000000</defaultvalue>
+				<minvalue>10000</minvalue>
+				<options>module_user_signature</options>
+			</option>
+			<option name="user.signature.attachment.allowedExtensions">
+				<categoryname>user.signature</categoryname>
+				<optiontype>textarea</optiontype>
+				<defaultvalue>gif
+jpg
+jpeg
+png
+bmp</defaultvalue>
+				<wildcard>*</wildcard>
+				<options>module_user_signature</options>
+			</option>
+			<option name="user.signature.attachment.maxCount">
+				<categoryname>user.signature</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>10</defaultvalue>
+				<minvalue>1</minvalue>
+				<maxvalue>100</maxvalue>
+			</option>
 			<!-- /user.signature -->
 			<!-- user.profile -->
 			<option name="user.profile.canChangeEmail">

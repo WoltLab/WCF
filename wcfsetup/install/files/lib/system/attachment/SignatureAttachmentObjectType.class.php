@@ -3,6 +3,7 @@ namespace wcf\system\attachment;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 
 /**
  * Attachment object type implementation for posts.
@@ -49,13 +50,15 @@ class SignatureAttachmentObjectType extends AbstractAttachmentObjectType {
 			return false;
 		}
 		
-		$userProfile = UserProfileRuntimeCache::getInstance()->getObject($objectID);
-		
 		if (!MODULE_USER_SIGNATURE) {
 			return false;
 		}
 		
+		$userProfile = UserProfileRuntimeCache::getInstance()->getObject($objectID);
 		if ($userProfile->disableSignature) {
+			return false;
+		}
+		if (!$userProfile->getPermission('user.signature.attachment.canUpload')) {
 			return false;
 		}
 		
@@ -74,6 +77,27 @@ class SignatureAttachmentObjectType extends AbstractAttachmentObjectType {
 	 */
 	public function cacheObjects(array $objectIDs) {
 		$this->setCachedObjects(UserProfileRuntimeCache::getInstance()->getObjects($objectIDs));
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getMaxSize() {
+		return WCF::getSession()->getPermission('user.signature.attachment.maxSize');
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getAllowedExtensions() {
+		return ArrayUtil::trim(explode("\n", WCF::getSession()->getPermission('user.signature.attachment.allowedExtensions')));
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getMaxCount() {
+		return WCF::getSession()->getPermission('user.signature.attachment.maxCount');
 	}
 	
 	/** @noinspection PhpMissingParentCallCommonInspection */

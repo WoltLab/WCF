@@ -881,6 +881,11 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.group.promoteOwner"><![CDATA[Set Up the Owner Group]]></item>
 		<item name="wcf.acp.group.promoteOwner.group"><![CDATA[Select the owner group]]></item>
 		<item name="wcf.acp.group.promoteOwner.warning"><![CDATA[The owner group cannot be modified once it has been set up. This group has special privileges and is protected from modifications by any other group, its members cannot be banned.]]></item>
+		<item name="wcf.acp.group.option.user.signature.attachment.canUpload"><![CDATA[Can Upload Attachments]]></item>
+		<item name="wcf.acp.group.option.user.signature.attachment.maxSize"><![CDATA[Maximum Attachment File Size]]></item>
+		<item name="wcf.acp.group.option.user.signature.attachment.allowedExtensions"><![CDATA[Allowed Attachment File Extensions]]></item>
+		<item name="wcf.acp.group.option.user.signature.attachment.allowedExtensions.description"><![CDATA[Enter one extension per line.]]></item>
+		<item name="wcf.acp.group.option.user.signature.attachment.maxCount"><![CDATA[Maximum Attachments]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.credits"><![CDATA[About WoltLab Suite&trade;]]></item>
