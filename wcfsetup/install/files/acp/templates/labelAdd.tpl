@@ -9,7 +9,7 @@
 		
 		var input = elById('label');
 		function updatePreview() {
-			var value = input.value.trim() || '{lang}wcf.acp.label.defaultValue{/lang}';
+			var value = input.value.trim() || '{jslang}wcf.acp.label.defaultValue{/jslang}';
 			previews.forEach(function(preview) {
 				preview.textContent = value;
 			});

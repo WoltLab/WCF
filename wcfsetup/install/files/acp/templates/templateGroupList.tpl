@@ -6,12 +6,12 @@
 		
 		var options = { };
 		{if $pages > 1}
-		options.refreshPage = true;
-		{if $pages == $pageNo}
-		options.updatePageNumber = -1;
-		{/if}
+			options.refreshPage = true;
+			{if $pages == $pageNo}
+				options.updatePageNumber = -1;
+			{/if}
 		{else}
-		options.emptyMessage = '{lang}wcf.global.noItems{/lang}';
+			options.emptyMessage = '{jslang}wcf.global.noItems{/jslang}';
 		{/if}
 		
 		new WCF.Table.EmptyTableHandler($('#templateGroupTableContainer'), 'jsTemplateGroupRow', options);

@@ -6,7 +6,7 @@
 	});
 	
 	require(['WoltLabSuite/Core/Acp/Ui/Devtools/Project/QuickSetup', 'Language'], function(AcpUiDevtoolsProjectQuickSetup, Language) {
-		Language.add('wcf.acp.devtools.project.quickSetup', '{lang}wcf.acp.devtools.project.quickSetup{/lang}');
+		Language.add('wcf.acp.devtools.project.quickSetup', '{jslang}wcf.acp.devtools.project.quickSetup{/jslang}');
 		
 		AcpUiDevtoolsProjectQuickSetup.init();
 	});

@@ -5,7 +5,7 @@
 		WCF.Language.add('wcf.acp.worker.abort.confirmMessage', '{jslang}wcf.acp.worker.abort.confirmMessage{/jslang}');
 		
 		$('#updateEvents').click(function () {
-			new WCF.ACP.Worker('events', 'wcf\\system\\worker\\UserActivityPointUpdateEventsWorker', '{lang}wcf.acp.user.activityPoint.updateEvents{/lang}');
+			new WCF.ACP.Worker('events', 'wcf\\system\\worker\\UserActivityPointUpdateEventsWorker', '{jslang}wcf.acp.user.activityPoint.updateEvents{/jslang}');
 		});
 	});
 </script>

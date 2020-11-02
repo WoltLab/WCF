@@ -72,10 +72,10 @@
 
 <script data-relocate="true">
 	require(['Language'], function(Language) {
-		Language.add('wcf.acp.worker.abort.confirmMessage', '{lang}wcf.acp.worker.abort.confirmMessage{/lang}');
+		Language.add('wcf.acp.worker.abort.confirmMessage', '{jslang}wcf.acp.worker.abort.confirmMessage{/jslang}');
 		
 		elById('sitemapRebuildButton').addEventListener(WCF_CLICK_EVENT, function () {
-			new WCF.ACP.Worker('sitemapRebuild', 'wcf\\system\\worker\\SitemapRebuildWorker', '{lang}wcf.acp.rebuildData.com.woltlab.wcf.sitemap{/lang}', {
+			new WCF.ACP.Worker('sitemapRebuild', 'wcf\\system\\worker\\SitemapRebuildWorker', '{jslang}wcf.acp.rebuildData.com.woltlab.wcf.sitemap{/jslang}', {
 				forceRebuild: true
 			});
 		});

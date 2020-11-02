@@ -87,7 +87,7 @@
 						'logEntryStackTrace',
 						elData(event.currentTarget, 'stack-trace'),
 						{
-							title: '{lang}wcf.acp.devtools.missingLanguageItem.stackTrace{/lang}',
+							title: '{jslang}wcf.acp.devtools.missingLanguageItem.stackTrace{/jslang}',
 						}
 					);
 					
@@ -116,7 +116,7 @@
 							}
 						});
 					},
-					'message': '{lang}wcf.acp.devtools.missingLanguageItem.clearLog.confirmMessage{/lang}',
+					'message': '{jslang}wcf.acp.devtools.missingLanguageItem.clearLog.confirmMessage{/jslang}',
 				});
 			});
 			
@@ -127,7 +127,7 @@
 					options.updatePageNumber = -1;
 				{/if}
 			{else}
-				options.emptyMessage = '{lang}wcf.global.noItems{/lang}';
+				options.emptyMessage = '{jslang}wcf.global.noItems{/jslang}';
 			{/if}
 			new WCF.Table.EmptyTableHandler($('#missingLanguageItemTable'), 'jsObjectRow', options);
 		});

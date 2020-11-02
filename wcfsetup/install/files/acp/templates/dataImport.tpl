@@ -61,7 +61,7 @@
 			<script data-relocate="true">
 				$(function() {
 					$('#deleteMapping').click(function() {
-						WCF.System.Confirmation.show('{lang}wcf.acp.dataImport.existingMapping.confirmMessage{/lang}', function(action) {
+						WCF.System.Confirmation.show('{jslang}wcf.acp.dataImport.existingMapping.confirmMessage{/jslang}', function(action) {
 							if (action === 'confirm') {
 								new WCF.Action.Proxy({
 									autoSend: true,

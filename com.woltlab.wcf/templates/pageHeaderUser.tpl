@@ -71,7 +71,7 @@
 							{event name='userMenuItemsAfter'}
 						</ul>
 					</div>
-					<a class="interactiveDropdownShowAll" href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="WCF.Dropdown.Interactive.Handler.close('userMenu'); WCF.System.Confirmation.show('{lang}wcf.user.logout.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;">{lang}wcf.user.logout{/lang}</a>
+					<a class="interactiveDropdownShowAll" href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="WCF.Dropdown.Interactive.Handler.close('userMenu'); WCF.System.Confirmation.show('{jslang}wcf.user.logout.sure{/jslang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;">{lang}wcf.user.logout{/lang}</a>
 				</div>
 				<script data-relocate="true">
 					$(function() {
@@ -88,10 +88,10 @@
 						<script data-relocate="true">
 							$(function() {
 								new WCF.User.Panel.Notification({
-									noItems: '{lang}wcf.user.notification.noMoreNotifications{/lang}',
+									noItems: '{jslang}wcf.user.notification.noMoreNotifications{/jslang}',
 									settingsLink: '{link controller='NotificationSettings' encode=false}{/link}',
 									showAllLink: '{link controller='NotificationList' encode=false}{/link}',
-									title: '{lang}wcf.user.notification.notifications{/lang}'
+									title: '{jslang}wcf.user.notification.notifications{/jslang}'
 								});
 							});
 						</script>
@@ -261,11 +261,11 @@
 						<script data-relocate="true">
 							$(function() {
 								new WCF.User.Panel.Moderation({
-									deletedContent: '{lang}wcf.moderation.showDeletedContent{/lang}',
+									deletedContent: '{jslang}wcf.moderation.showDeletedContent{/jslang}',
 									deletedContentLink: '{link controller='DeletedContentList' encode=false}{/link}',
-									noItems: '{lang}wcf.moderation.noMoreItems{/lang}',
+									noItems: '{jslang}wcf.moderation.noMoreItems{/jslang}',
 									showAllLink: '{link controller='ModerationList' encode=false}{/link}',
-									title: '{lang}wcf.moderation.moderation{/lang}'
+									title: '{jslang}wcf.moderation.moderation{/jslang}'
 								});
 							});
 						</script>

@@ -2,7 +2,7 @@
 
 <script data-relocate="true">
 	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Worker'], function (Language, AcpUiWorker) {
-		Language.add('wcf.acp.worker.abort.confirmMessage', '{lang}wcf.acp.worker.abort.confirmMessage{/lang}');
+		Language.add('wcf.acp.worker.abort.confirmMessage', '{jslang}wcf.acp.worker.abort.confirmMessage{/jslang}');
 		
 		elBySelAll('.jsRebuildDataWorker', undefined, function (button) {
 			if (button.classList.contains('disabled')) return;

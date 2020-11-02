@@ -84,7 +84,7 @@
 		
 		require(['WoltLabSuite/Core/Media/Manager/Select'], function(MediaManagerSelect) {
 			new MediaManagerSelect({
-				dialogTitle: '{lang}wcf.media.chooseImage{/lang}',
+				dialogTitle: '{jslang}wcf.media.chooseImage{/jslang}',
 				imagesOnly: 1
 			});
 		});
