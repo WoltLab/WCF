@@ -123,6 +123,7 @@ class TemplateScriptingCompiler {
 		'ucfirst',
 		'uniqid',
 		'urlencode',
+		'version_compare',
 		'wcfDebug',
 		'wordwrap'
 	];

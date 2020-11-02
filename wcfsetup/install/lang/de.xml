@@ -4239,7 +4239,7 @@ Dateianhänge:
 		<item name="wcf.moderation.markAsRead.doubleClick"><![CDATA[Eintrag durch Doppelklick als gelesen markieren]]></item>
 		<item name="wcf.moderation.comments"><![CDATA[Kommentare]]></item>
 		<item name="wcf.moderation.username"><![CDATA[Autor]]></item>
-		<item name="wcf.moderation.noEntries"><![CDATA[Es wurden keine Einträge gefunden.{if $hasActiveFilter} <a href="#" class="jsStaticDialog" data-dialog-id="moderationListSortFilter" role="button">Die aktiven Filter anpassen.</a>{/if}]]></item>
+		<item name="wcf.moderation.noEntries"><![CDATA[Es wurden keine Einträge gefunden. <a href="#" class="jsStaticDialog" data-dialog-id="moderationListSortFilter" role="button">Die Filter anpassen.</a>{if $hasActiveFilter} <a href="{link controller='ModerationList'}{/link}">Die aktiven Filter zurücksetzen.</a>{/if}]]></item>
 	</category>
 	<category name="wcf.moderation.activation">
 		<item name="wcf.moderation.activation"><![CDATA[Freischaltung]]></item>
