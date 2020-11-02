@@ -668,6 +668,7 @@ pdf</defaultvalue>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 				<usersonly>1</usersonly>
+				<enableoptions>user.signature.attachment.maxSize,user.signature.attachment.allowedExtensions,user.signature.attachment.maxCount</enableoptions>
 				<options>module_user_signature</options>
 			</option>
 			<option name="user.signature.attachment.maxSize">
