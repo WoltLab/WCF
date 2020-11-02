@@ -1722,6 +1722,12 @@
 		</type>
 		<!-- multi factor -->
 		<type>
+			<name>com.woltlab.wcf.multifactor.backup</name>
+			<definitionname>com.woltlab.wcf.multifactor</definitionname>
+			<icon>sticky-note</icon>
+			<classname>wcf\system\user\multifactor\BackupMultifactorMethod</classname>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.multifactor.totp</name>
 			<definitionname>com.woltlab.wcf.multifactor</definitionname>
 			<icon>mobile</icon>
