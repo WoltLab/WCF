@@ -1724,6 +1724,7 @@
 		<type>
 			<name>com.woltlab.wcf.multifactor.totp</name>
 			<definitionname>com.woltlab.wcf.multifactor</definitionname>
+			<icon>mobile</icon>
 			<!-- TODO: classname -->
 		</type>
 		<!-- /multi factor -->

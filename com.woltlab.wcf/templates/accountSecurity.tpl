@@ -3,6 +3,28 @@
 {include file='header' __disableAds=true __sidebarLeftHasMenu=true}
 
 <section class="section">
+	<h2 class="sectionTitle">{lang}wcf.user.security.multifactor{/lang}</h2>
+	
+	<ul class="containerList">
+		{foreach from=$multifactorMethods item=method}
+			<li class="box64">
+				<div>
+					<span class="icon icon64 fa-{if $method->icon}{$method->icon}{else}lock{/if}"></span>
+				</div>
+				
+				<div>
+					<div class="containerHeadline">
+						<h3>{lang}wcf.user.security.multifactor.{$method->objectType}{/lang}</h3>
+						
+						{$method|var_dump}
+					</div>
+				</div>
+			</li>
+		{/foreach}
+	</ul>
+</section>
+
+<section class="section">
 	<h2 class="sectionTitle">{lang}wcf.user.security.activeSessions{/lang}</h2>
 	
 	<ul class="containerList">
