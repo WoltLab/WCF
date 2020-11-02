@@ -694,6 +694,7 @@ bmp</defaultvalue>
 				<defaultvalue>10</defaultvalue>
 				<minvalue>1</minvalue>
 				<maxvalue>100</maxvalue>
+				<options>module_user_signature</options>
 			</option>
 			<!-- /user.signature -->
 			<!-- user.profile -->
