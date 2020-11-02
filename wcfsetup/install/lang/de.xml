@@ -1168,6 +1168,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.menu.edit"><![CDATA[Menü bearbeiten]]></item>
 		<item name="wcf.acp.menu.list"><![CDATA[Menüs]]></item>
 		<item name="wcf.acp.menu.item.add"><![CDATA[Menüpunkt hinzufügen]]></item>
+		<item name="wcf.acp.menu.item.action.description"><![CDATA[Menü: {$menu->getTitle()}]]></item>
 		<item name="wcf.acp.menu.item.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Menüpunkt <span class="confirmationObject">{$menuItemNode->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.menu.item.edit"><![CDATA[Menüpunkt bearbeiten]]></item>
 		<item name="wcf.acp.menu.item.externalURL"><![CDATA[Externe URL]]></item>
