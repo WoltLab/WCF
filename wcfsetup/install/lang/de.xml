@@ -4828,6 +4828,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.security.sessionLastActive"><![CDATA[Sitzung zuletzt aktiv: {@$session->getLastActivityTime()|time}]]></item>
 		<item name="wcf.user.security.deleteSession"><![CDATA[Sitzung beenden]]></item>
 		<item name="wcf.user.security.deleteSession.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Sitzung wirklich beenden?]]></item>
+		<item name="wcf.user.security.sessionName"><![CDATA[{if $session->getUserAgent()->getBrowser()}{$session->getUserAgent()->getBrowser()}{if $session->getUserAgent()->getOS()} auf {$session->getUserAgent()->getOS()}{/if}{else}Unbekanntes Gerät{/if}]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophäen]]></item>

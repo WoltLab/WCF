@@ -4825,6 +4825,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.security.sessionLastActive"><![CDATA[Last active: {@$session->getLastActivityTime()|time}]]></item>
 		<item name="wcf.user.security.deleteSession"><![CDATA[Revoke Session]]></item>
 		<item name="wcf.user.security.deleteSession.confirmMessage"><![CDATA[Do you really want to revoke the session?]]></item>
+		<item name="wcf.user.security.sessionName"><![CDATA[{if $session->getUserAgent()->getBrowser()}{$session->getUserAgent()->getBrowser()}{if $session->getUserAgent()->getOS()} on {$session->getUserAgent()->getOS()}{/if}{else}Unknown Device{/if}]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophies]]></item>

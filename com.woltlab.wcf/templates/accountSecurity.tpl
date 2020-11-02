@@ -14,7 +14,7 @@
 				
 				<div class="accountSecurityContainer">
 					<div class="containerHeadline accountSecurityInformation">
-						<h3>{$session->getBrowser()}</h3>
+						<h3>{$session->getUserAgent()->getBrowser()}</h3>
 						<small>
 							{$session->getIpAddress()}<br />
 							{if $session->isCurrentSession()}

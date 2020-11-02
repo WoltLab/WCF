@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\session;
+use wcf\util\UserAgent;
 use wcf\util\UserUtil;
 
 /**
@@ -21,6 +22,11 @@ final class Session {
 	 * @var bool 
 	 */
 	private $isAcpSession;
+	
+	/**
+	 * @var UserAgent
+	 */
+	private $userAgent;
 	
 	/**
 	 * Session constructor.
@@ -70,11 +76,11 @@ final class Session {
 	 * Returns a font awesome device icon.
 	 */
 	public function getDeviceIcon(): string {
-		if (UserUtil::isTablet($this->data['userAgent'])) {
+		if ($this->getUserAgent()->isTablet()) {
 			return 'tablet';
 		}
 		
-		if (UserUtil::isMobileBrowser($this->data['userAgent'])) {
+		if ($this->getUserAgent()->isMobileBrowser()) {
 			return 'mobile';
 		}
 		
@@ -89,9 +95,13 @@ final class Session {
 	}
 	
 	/**
-	 * Returns the used browser.
+	 * Returns the user agent helper util class.
 	 */
-	public function getBrowser(): string {
-		return UserUtil::getBrowser($this->data['userAgent']);
+	public function getUserAgent(): UserAgent {
+		if ($this->userAgent === null) {
+			$this->userAgent = new UserAgent($this->data['userAgent']);
+		}
+		
+		return $this->userAgent;
 	}
 }

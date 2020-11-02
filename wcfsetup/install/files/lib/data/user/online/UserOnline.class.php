@@ -8,6 +8,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\page\handler\IOnlineLocationPageHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
+use wcf\util\UserAgent;
 use wcf\util\UserUtil;
 
 /**
@@ -134,7 +135,13 @@ class UserOnline extends UserProfile {
 			return $parameters['browser'];
 		}
 		
-		return UserUtil::getBrowser($this->userAgent);
+		$userAgent = new UserAgent($this->userAgent);
+		if ($userAgent->getBrowser() === null) {
+			return $this->userAgent;
+		}
+		
+		$browserVersion = $userAgent->getBrowserVersion();
+		return $userAgent->getBrowser() . ($browserVersion ? ' ' . $browserVersion : '');
 	}
 	
 	/**
