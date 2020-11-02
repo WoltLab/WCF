@@ -1720,6 +1720,13 @@
 			<name>com.woltlab.wcf.comment</name>
 			<definitionname>com.woltlab.wcf.floodControl</definitionname>
 		</type>
+		<!-- multi factor -->
+		<type>
+			<name>com.woltlab.wcf.multifactor.totp</name>
+			<definitionname>com.woltlab.wcf.multifactor</definitionname>
+			<!-- TODO: classname -->
+		</type>
+		<!-- /multi factor -->
 		<!-- deprecated -->
 		<type>
 			<name>com.woltlab.wcf.page.controller</name>
