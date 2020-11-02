@@ -90,6 +90,18 @@
 				<title>Benutzerkonto-Verwaltung</title>
 			</content>
 		</page>
+		<page identifier="com.woltlab.wcf.AccountSecurity">
+			<pageType>system</pageType>
+			<controller>wcf\page\AccountSecurityPage</controller>
+			<name language="de">Benutzerkonto-Sicherheit</name>
+			<name language="en">Account Security</name>
+			<content language="en">
+				<title>Account Security</title>
+			</content>
+			<content language="de">
+				<title>Benutzerkonto-Sicherheit</title>
+			</content>
+		</page>
 		<page identifier="com.woltlab.wcf.AvatarEdit">
 			<pageType>system</pageType>
 			<controller>wcf\form\AvatarEditForm</controller>

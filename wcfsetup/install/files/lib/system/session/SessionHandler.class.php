@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\session;
-use wcf\data\session\Session;
+use wcf\data\session\Session as LegacySession;
 use wcf\data\session\SessionEditor;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
@@ -87,7 +87,7 @@ final class SessionHandler extends SingletonFactory {
 	protected $session = null;
 	
 	/**
-	 * @var \wcf\data\session\Session
+	 * @var LegacySession
 	 */
 	protected $legacySession = null;
 	
@@ -517,7 +517,7 @@ final class SessionHandler extends SingletonFactory {
 				".$condition;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($condition->getParameters());
-			$this->legacySession = $statement->fetchSingleObject(Session::class);
+			$this->legacySession = $statement->fetchSingleObject(LegacySession::class);
 			
 			if (!$this->legacySession) {
 				$this->createLegacySession();
@@ -845,18 +845,11 @@ final class SessionHandler extends SingletonFactory {
 			}
 		}
 		
-		// Delete session.
-		$sql = "DELETE FROM wcf".WCF_N."_".($this->isACP ? 'acp' : 'user')."_session
-			WHERE	sessionID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$this->sessionID]);
-		
-		// Delete legacy session.
-		if (!$this->isACP) {
-			$sql = "DELETE FROM wcf".WCF_N."_session
-				WHERE	sessionID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([$this->sessionID]);
+		if ($this->isACP) {
+			$this->deleteAcpSession($this->sessionID);
+		}
+		else {
+			$this->deleteUserSession($this->sessionID);
 		}
 	}
 	
@@ -990,5 +983,149 @@ final class SessionHandler extends SingletonFactory {
 	 */
 	public function isFirstVisit() {
 		return $this->firstVisit;
+	}
+	
+	/**
+	 * Returns all user sessions for a specific user.
+	 *
+	 * @return      Session[]
+	 * @throws      \InvalidArgumentException if the given user is a guest.
+	 * @since       5.4
+	 */
+	public function getUserSessions(User $user): array {
+		return $this->getSessions($user, false);
+	}
+	
+	/**
+	 * Returns all acp sessions for a specific user.
+	 * 
+	 * @return      Session[]
+	 * @throws      \InvalidArgumentException if the given user is a guest.
+	 * @since       5.4
+	 */
+	public function getAcpSessions(User $user): array {
+		return $this->getSessions($user, true);
+	}
+	
+	/**
+	 * Returns all sessions for a specific user.
+	 * 
+	 * @return      Session[]
+	 * @throws      \InvalidArgumentException if the given user is a guest.
+	 * @since       5.4
+	 */
+	private function getSessions(User $user, bool $isAcp): array {
+		if (!$user->userID) {
+			throw new \InvalidArgumentException("The given user is a guest.");
+		}
+		
+		$sql = "SELECT          *
+			FROM            wcf".WCF_N."_". ($isAcp ? 'acp' : 'user') ."_session
+			WHERE           userID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$user->userID]);
+		
+		$sessions = [];
+		while ($row = $statement->fetchArray()) {
+			$sessions[] = new Session($row, $isAcp);
+		}
+		
+		return $sessions;
+	}
+	
+	/**
+	 * Deletes the user sessions for a specific user, except the session with the given session id.
+	 * 
+	 * If the given session id is `null` or unknown, all sessions of the user will be deleted.
+	 * 
+	 * @throws      \InvalidArgumentException if the given user is a guest.
+	 * @since       5.4
+	 */
+	public function deleteUserSessionsExcept(User $user, ?string $sessionID = null): void {
+		$this->deleteSessionsExcept($user, $sessionID, false);
+	}
+	
+	/**
+	 * Deletes the acp sessions for a specific user, except the session with the given session id.
+	 * 
+	 * If the given session id is `null` or unknown, all acp sessions of the user will be deleted.
+	 * 
+	 * @throws      \InvalidArgumentException if the given user is a guest.
+	 * @since       5.4
+	 */
+	public function deleteAcpSessionsExcept(User $user, ?string $sessionID = null): void {
+		$this->deleteSessionsExcept($user, $sessionID, true);
+	}
+	
+	/**
+	 * Deletes the sessions for a specific user, except the session with the given session id.
+	 *
+	 * If the given session id is `null` or unknown, all acp sessions of the user will be deleted.
+	 *
+	 * @throws      \InvalidArgumentException if the given user is a guest.
+	 * @since       5.4
+	 */
+	private function deleteSessionsExcept(User $user, ?string $sessionID, bool $isAcp): void {
+		if (!$user->userID) {
+			throw new \InvalidArgumentException("The given user is a guest.");
+		}
+		
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		$conditionBuilder->add('userID = ?', [$user->userID]);
+		
+		if ($sessionID !== null) {
+			$conditionBuilder->add('sessionID <> ?', [$sessionID]);
+		}
+		
+		$sql = "DELETE FROM     wcf".WCF_N."_". ($isAcp ? 'acp' : 'user') ."_session
+			". $conditionBuilder;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditionBuilder->getParameters());
+		
+		if (!$isAcp) {
+			// Delete legacy session.
+			$sql = "DELETE FROM     wcf".WCF_N."_session
+			". $conditionBuilder;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
+		}
+	}
+	
+	/**
+	 * Deletes a user session with the given session ID.
+	 * 
+	 * @since       5.4
+	 */
+	public function deleteUserSession(string $sessionID): void {
+		$this->deleteSession($sessionID, false);
+	}
+	
+	/**
+	 * Deletes an acp session with the given session ID.
+	 * 
+	 * @since       5.4
+	 */
+	public function deleteAcpSession(string $sessionID): void {
+		$this->deleteSession($sessionID, true);
+	}
+	
+	/**
+	 * Deletes a session with the given session ID.
+	 *
+	 * @since       5.4
+	 */
+	private function deleteSession(string $sessionID, bool $isAcp): void {
+		$sql = "DELETE FROM     wcf".WCF_N."_". ($isAcp ? 'acp' : 'user') ."_session
+			WHERE	        sessionID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$sessionID]);
+		
+		if (!$isAcp) {
+			// Delete legacy session.
+			$sql = "DELETE FROM     wcf".WCF_N."_session
+				WHERE	        sessionID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([$sessionID]);
+		}   
 	}
 }

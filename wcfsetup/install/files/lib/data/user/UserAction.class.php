@@ -20,6 +20,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\RequestHandler;
+use wcf\system\session\SessionHandler;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\WCF;
 use wcf\util\UserRegistrationUtil;
@@ -323,6 +324,13 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 						
 						break;
 					}
+				}
+			}
+			
+			if (array_key_exists('password', $this->parameters['data'])) {
+				foreach ($this->getObjects() as $object) {
+					SessionHandler::getInstance()->deleteUserSessionsExcept($object->getDecoratedObject(), SessionHandler::getInstance()->sessionID);
+					SessionHandler::getInstance()->deleteAcpSessionsExcept($object->getDecoratedObject(), SessionHandler::getInstance()->sessionID);
 				}
 			}
 		}

@@ -4740,6 +4740,7 @@ not register with us.]]></item>
 		<item name="wcf.user.menu.community.ignoredUsers"><![CDATA[Blocked Users]]></item>
 		<item name="wcf.user.menu.profile"><![CDATA[User Account]]></item>
 		<item name="wcf.user.menu.profile.accountManagement"><![CDATA[Account Management]]></item>
+		<item name="wcf.user.menu.profile.security"><![CDATA[Security]]></item>
 		<item name="wcf.user.menu.profile.avatar"><![CDATA[Avatar]]></item>
 		<item name="wcf.user.menu.profile.signature"><![CDATA[Signature]]></item>
 		<item name="wcf.user.menu.settings"><![CDATA[Settings]]></item>
@@ -4816,6 +4817,15 @@ Open the link below to access the user profile:
 <p><br></p>
 <p><small><em>Source: <a href="http://www.mustervorlage.net/disclaimer-muster" class="externalURL">Mustervorlage.net</a></em></small></p>]]></item>
 		<item name="wcf.user.register.error.blacklistMatches"><![CDATA[The registration could not be completed due to active restrictions, please contact the site administrator.]]></item>
+	</category>
+	<category name="wcf.user.security">
+		<item name="wcf.user.security.activeSessions"><![CDATA[Active Sessions]]></item>
+		<item name="wcf.user.security.currentSession"><![CDATA[Current Session]]></item>
+		<item name="wcf.user.security.deleteSession"><![CDATA[Revoke Session]]></item>
+		<item name="wcf.user.security.deleteSession.confirmMessage"><![CDATA[Do you really want to revoke the session?]]></item>
+		<item name="wcf.user.security.sessionName"><![CDATA[{if $session->getUserAgent()->getBrowser()}{$session->getUserAgent()->getBrowser()}{if $session->getUserAgent()->getOS()} on {$session->getUserAgent()->getOS()}{/if}{else}Unknown Device{/if}]]></item>
+		<item name="wcf.user.security.ipAddress"><![CDATA[IP Address]]></item>
+		<item name="wcf.user.security.lastActivity"><![CDATA[Last active]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophies]]></item>
