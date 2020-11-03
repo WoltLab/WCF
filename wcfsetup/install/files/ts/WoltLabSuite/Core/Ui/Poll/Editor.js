@@ -2,7 +2,7 @@
  * Handles the data to create and edit a poll in a form created via form builder.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Poll/Editor
  * @since	5.2
@@ -318,27 +318,8 @@ define([
 		 * @param	{Event?}	event	form submit event
 		 */
 		_submit: function(event) {
-			var options = [];
-			for (var i = 0, length = this.optionList.children.length; i < length; i++) {
-				var listItem = this.optionList.children[i];
-				var optionValue = elBySel('input[type=text]', listItem).value.trim();
-				
-				if (optionValue !== '') {
-					options.push(elData(listItem, 'option-id') + '_' + optionValue);
-				}
-			}
-			
 			if (this._options.isAjax) {
-				event.poll = {};
-				
-				event.poll[this.questionField.id] = this.questionField.value;
-				event.poll[this._wysiwygId + 'Poll_options'] = options;
-				event.poll[this.endTimeField.id] = this.endTimeField.value;
-				event.poll[this.maxVotesField.id] = this.maxVotesField.value;
-				event.poll[this.isChangeableYesField.id] = !!this.isChangeableYesField.checked;
-				event.poll[this.isPublicYesField.id] = !!this.isPublicYesField.checked;
-				event.poll[this.resultsRequireVoteYesField.id] = !!this.resultsRequireVoteYesField.checked;
-				event.poll[this.sortByVotesYesField.id] = !!this.sortByVotesYesField.checked;
+				event.poll = this.getData();
 				
 				EventHandler.fire(
 					'com.woltlab.wcf.poll.editor',
@@ -352,6 +333,7 @@ define([
 			else {
 				var form = this._container.closest('form');
 				
+				var options = this.getOptions();
 				for (var i = 0, length = options.length; i < length; i++) {
 					var input = elCreate('input');
 					elAttr(input, 'type', 'hidden');
@@ -402,6 +384,45 @@ define([
 					);
 				}
 			}
+		},
+		
+		/**
+		 * Returns all poll data.
+		 *
+		 * @return      {object}
+		 */
+		getData: function() {
+			var data = {};
+			
+			data[this.questionField.id] = this.questionField.value;
+			data[this._wysiwygId + 'Poll_options'] = this.getOptions();
+			data[this.endTimeField.id] = this.endTimeField.value;
+			data[this.maxVotesField.id] = this.maxVotesField.value;
+			data[this.isChangeableYesField.id] = !!this.isChangeableYesField.checked;
+			data[this.isPublicYesField.id] = !!this.isPublicYesField.checked;
+			data[this.resultsRequireVoteYesField.id] = !!this.resultsRequireVoteYesField.checked;
+			data[this.sortByVotesYesField.id] = !!this.sortByVotesYesField.checked;
+			
+			return data;
+		},
+		
+		/**
+		 * Returns all entered poll options.
+		 *
+		 * @return      {string[]}
+		 */
+		getOptions: function() {
+			var options = [];
+			for (var i = 0, length = this.optionList.children.length; i < length; i++) {
+				var listItem = this.optionList.children[i];
+				var optionValue = elBySel('input[type=text]', listItem).value.trim();
+				
+				if (optionValue !== '') {
+					options.push(elData(listItem, 'option-id') + '_' + optionValue);
+				}
+			}
+			
+			return options;
 		}
 	};
 	
