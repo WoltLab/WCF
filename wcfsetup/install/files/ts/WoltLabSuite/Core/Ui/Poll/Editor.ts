@@ -112,7 +112,7 @@ class UiPollEditor {
         EventHandler.add(
           'com.woltlab.wcf.redactor2',
           event + '_' + this.wysiwygId,
-          this[event].bind(this)
+          (...args: unknown[]) => this[event](...args)
         );
       });
     } else {
@@ -334,12 +334,12 @@ class UiPollEditor {
     }
 
     let nonEmptyOptionCount = 0;
-    for (let i = 0, length = this.optionList.children.length; i < length; i++) {
-      const optionInput = this.optionList.children[i].querySelector('input[type=text]') as HTMLInputElement;
+    Array.from(this.optionList.children).forEach((listItem: HTMLLIElement) => {
+      const optionInput = listItem.querySelector('input[type=text]') as HTMLInputElement;
       if (optionInput.value.trim() !== '') {
         nonEmptyOptionCount++;
       }
-    }
+    });
 
     if (nonEmptyOptionCount === 0) {
       data.api.throwError(this.container, Language.get('wcf.global.form.error.empty'));
@@ -367,18 +367,16 @@ class UiPollEditor {
    * Returns the data of the poll.
    */
   public getData(): object {
-    const data = {};
-
-    data[this.questionField.id] = this.questionField.value;
-    data[this.wysiwygId + 'Poll_options'] = this.getOptions();
-    data[this.endTimeField.id] = this.endTimeField.value;
-    data[this.maxVotesField.id] = this.maxVotesField.value;
-    data[this.isChangeableYesField.id] = !!this.isChangeableYesField.checked;
-    data[this.isPublicYesField.id] = !!this.isPublicYesField.checked;
-    data[this.resultsRequireVoteYesField.id] = !!this.resultsRequireVoteYesField.checked;
-    data[this.sortByVotesYesField.id] = !!this.sortByVotesYesField.checked;
-
-    return data;
+    return {
+      [this.questionField.id]: this.questionField.value,
+      [this.wysiwygId + 'Poll_options']: this.getOptions(),
+      [this.endTimeField.id]: this.endTimeField.value,
+      [this.maxVotesField.id]: this.maxVotesField.value,
+      [this.isChangeableYesField.id]: !!this.isChangeableYesField.checked,
+      [this.isPublicYesField.id]: !!this.isPublicYesField.checked,
+      [this.resultsRequireVoteYesField.id]: !!this.resultsRequireVoteYesField.checked,
+      [this.sortByVotesYesField.id]: !!this.sortByVotesYesField.checked,
+    };
   }
 
   /**
@@ -387,15 +385,14 @@ class UiPollEditor {
    * Format: `{optionID}_{option}` with `optionID = 0` if it is a new option.
    */
   public getOptions(): string[] {
-    const options = [] as string[];
-    for (let i = 0, length = this.optionList.children.length; i < length; i++) {
-      const listItem = this.optionList.children[i] as HTMLLIElement;
+    const options: string[] = [];
+    Array.from(this.optionList.children).forEach((listItem: HTMLLIElement) => {
       const optionValue = (listItem.querySelector('input[type=text]')! as HTMLInputElement).value.trim();
 
       if (optionValue !== '') {
         options.push(`${listItem.dataset.optionId!}_${optionValue}`);
       }
-    }
+    });
 
     return options;
   }

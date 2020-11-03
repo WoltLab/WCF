@@ -54,7 +54,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
             });
             if (this.options.isAjax) {
                 ['handleError', 'reset', 'submit', 'validate'].forEach((event) => {
-                    EventHandler.add('com.woltlab.wcf.redactor2', event + '_' + this.wysiwygId, this[event].bind(this));
+                    EventHandler.add('com.woltlab.wcf.redactor2', event + '_' + this.wysiwygId, (...args) => this[event](...args));
                 });
             }
             else {
@@ -237,12 +237,12 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
                 return;
             }
             let nonEmptyOptionCount = 0;
-            for (let i = 0, length = this.optionList.children.length; i < length; i++) {
-                const optionInput = this.optionList.children[i].querySelector('input[type=text]');
+            Array.from(this.optionList.children).forEach((listItem) => {
+                const optionInput = listItem.querySelector('input[type=text]');
                 if (optionInput.value.trim() !== '') {
                     nonEmptyOptionCount++;
                 }
-            }
+            });
             if (nonEmptyOptionCount === 0) {
                 data.api.throwError(this.container, Language.get('wcf.global.form.error.empty'));
                 data.valid = false;
@@ -265,16 +265,16 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
          * Returns the data of the poll.
          */
         getData() {
-            const data = {};
-            data[this.questionField.id] = this.questionField.value;
-            data[this.wysiwygId + 'Poll_options'] = this.getOptions();
-            data[this.endTimeField.id] = this.endTimeField.value;
-            data[this.maxVotesField.id] = this.maxVotesField.value;
-            data[this.isChangeableYesField.id] = !!this.isChangeableYesField.checked;
-            data[this.isPublicYesField.id] = !!this.isPublicYesField.checked;
-            data[this.resultsRequireVoteYesField.id] = !!this.resultsRequireVoteYesField.checked;
-            data[this.sortByVotesYesField.id] = !!this.sortByVotesYesField.checked;
-            return data;
+            return {
+                [this.questionField.id]: this.questionField.value,
+                [this.wysiwygId + 'Poll_options']: this.getOptions(),
+                [this.endTimeField.id]: this.endTimeField.value,
+                [this.maxVotesField.id]: this.maxVotesField.value,
+                [this.isChangeableYesField.id]: !!this.isChangeableYesField.checked,
+                [this.isPublicYesField.id]: !!this.isPublicYesField.checked,
+                [this.resultsRequireVoteYesField.id]: !!this.resultsRequireVoteYesField.checked,
+                [this.sortByVotesYesField.id]: !!this.sortByVotesYesField.checked,
+            };
         }
         /**
          * Returns the selectable options in the poll.
@@ -283,13 +283,12 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
          */
         getOptions() {
             const options = [];
-            for (let i = 0, length = this.optionList.children.length; i < length; i++) {
-                const listItem = this.optionList.children[i];
+            Array.from(this.optionList.children).forEach((listItem) => {
                 const optionValue = listItem.querySelector('input[type=text]').value.trim();
                 if (optionValue !== '') {
                     options.push(`${listItem.dataset.optionId}_${optionValue}`);
                 }
-            }
+            });
             return options;
         }
     }
