@@ -237,12 +237,12 @@ define([
             this.maxVotesField.value = 1;
             this.isChangeableYesField.checked = false;
             this.isChangeableNoField.checked = true;
-            this.isPublicYesField = false;
-            this.isPublicNoField = true;
-            this.resultsRequireVoteYesField = false;
-            this.resultsRequireVoteNoField = true;
-            this.sortByVotesYesField = false;
-            this.sortByVotesNoField = true;
+            this.isPublicYesField.checked = false;
+            this.isPublicNoField.checked = true;
+            this.resultsRequireVoteYesField.checked = false;
+            this.resultsRequireVoteNoField.checked = true;
+            this.sortByVotesYesField.checked = false;
+            this.sortByVotesNoField.checked = true;
             EventHandler.fire('com.woltlab.wcf.poll.editor', 'reset', {
                 pollEditor: this
             });
