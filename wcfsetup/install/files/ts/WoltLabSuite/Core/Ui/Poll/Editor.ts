@@ -142,16 +142,16 @@ class UiPollEditor {
       this.optionList.appendChild(listItem);
     }
 
-    const pollOptionInput = document.createElement('div') as HTMLDivElement;
+    const pollOptionInput = document.createElement('div');
     pollOptionInput.classList.add('pollOptionInput');
     listItem.appendChild(pollOptionInput);
 
-    const sortHandle = document.createElement('span') as HTMLSpanElement;
+    const sortHandle = document.createElement('span');
     sortHandle.classList.add('icon', 'icon16', 'fa-arrows', 'sortableNodeHandle');
     pollOptionInput.appendChild(sortHandle);
 
     // buttons
-    const addButton = document.createElement('a') as HTMLAnchorElement;
+    const addButton = document.createElement('a');
     listItem.setAttribute('role', 'button');
     listItem.setAttribute('href', '#');
     addButton.classList.add('icon', 'icon16', 'fa-plus', 'jsTooltip', 'jsAddOption', 'pointer');
@@ -159,7 +159,7 @@ class UiPollEditor {
     addButton.addEventListener('click', () => this.createOption());
     pollOptionInput.appendChild(addButton);
 
-    const deleteButton = document.createElement('a') as HTMLAnchorElement;
+    const deleteButton = document.createElement('a');
     deleteButton.setAttribute('role', 'button');
     deleteButton.setAttribute('href', '#');
     deleteButton.classList.add('icon', 'icon16', 'fa-times', 'jsTooltip', 'jsDeleteOption', 'pointer');
@@ -168,7 +168,7 @@ class UiPollEditor {
     pollOptionInput.appendChild(deleteButton);
 
     // input field
-    const optionInput = document.createElement('input') as HTMLInputElement;
+    const optionInput = document.createElement('input');
     optionInput.type = 'text';
     optionInput.value = optionValue;
     optionInput.maxLength = 255;
@@ -211,18 +211,21 @@ class UiPollEditor {
    * Handles validation errors returned by Ajax request.
    */
   private handleError(data: AjaxResponse): void {
+    let fieldName = '';
+    let field;
+    let small;
+    
     switch (data.returnValues.fieldName) {
       case this.wysiwygId + 'Poll_endTime':
       case this.wysiwygId + 'Poll_maxVotes':
-        const fieldName = data.returnValues.fieldName.replace(this.wysiwygId + 'Poll_', '');
+        fieldName = data.returnValues.fieldName.replace(this.wysiwygId + 'Poll_', '');
 
-        const small = document.createElement('small');
+        small = document.createElement('small');
         small.classList.add('innerError');
         small.innerHTML = Language.get('wcf.poll.' + fieldName + '.error.' + data.returnValues.errorType);
 
-        const element = document.createElement(data.returnValues.fieldName);
-
-        (element.nextSibling! as HTMLElement).insertAdjacentElement("afterbegin", small);
+        field = document.getElementById(data.returnValues.fieldName)!;
+        field.nextSibling.insertAdjacentElement("afterbegin", small);
 
         data.cancel = true;
         break;
@@ -312,11 +315,10 @@ class UiPollEditor {
     } else {
       const form = this.container.closest('form')!;
 
-      const options = this.getOptions();
       this.getOptions().forEach((option, i) => {
-        const input = document.createElement('input') as HTMLInputElement;
+        const input = document.createElement('input');
         input.type = 'hidden';
-        input.name = this.wysiwygId + 'Poll_options[' + i + ']';
+        input.name = `${this.wysiwygId} + 'Poll_options[${i}}]`;
         input.value = option;
         form.appendChild(input);
       });
@@ -365,7 +367,7 @@ class UiPollEditor {
    * Returns the data of the poll.
    */
   public getData(): object {
-    let data = {};
+    const data = {};
 
     data[this.questionField.id] = this.questionField.value;
     data[this.wysiwygId + 'Poll_options'] = this.getOptions();
@@ -385,13 +387,13 @@ class UiPollEditor {
    * Format: `{optionID}_{option}` with `optionID = 0` if it is a new option.
    */
   public getOptions(): string[] {
-    let options = [] as string[];
+    const options = [] as string[];
     for (let i = 0, length = this.optionList.children.length; i < length; i++) {
       const listItem = this.optionList.children[i] as HTMLLIElement;
-      const optionValue = (listItem.querySelector('input[type=text]')! as HTMLInputElement).value.trim() as string;
+      const optionValue = (listItem.querySelector('input[type=text]')! as HTMLInputElement).value.trim();
 
       if (optionValue !== '') {
-        options.push(listItem.dataset.optionId + '_' + optionValue);
+        options.push(`${listItem.dataset.optionId!}_${optionValue}`);
       }
     }
 

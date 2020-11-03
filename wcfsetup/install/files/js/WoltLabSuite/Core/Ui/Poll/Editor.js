@@ -140,15 +140,18 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
          * Handles validation errors returned by Ajax request.
          */
         handleError(data) {
+            let fieldName = '';
+            let field;
+            let small;
             switch (data.returnValues.fieldName) {
                 case this.wysiwygId + 'Poll_endTime':
                 case this.wysiwygId + 'Poll_maxVotes':
-                    const fieldName = data.returnValues.fieldName.replace(this.wysiwygId + 'Poll_', '');
-                    const small = document.createElement('small');
+                    fieldName = data.returnValues.fieldName.replace(this.wysiwygId + 'Poll_', '');
+                    small = document.createElement('small');
                     small.classList.add('innerError');
                     small.innerHTML = Language.get('wcf.poll.' + fieldName + '.error.' + data.returnValues.errorType);
-                    const element = document.createElement(data.returnValues.fieldName);
-                    element.nextSibling.insertAdjacentElement("afterbegin", small);
+                    field = document.getElementById(data.returnValues.fieldName);
+                    field.nextSibling.insertAdjacentElement("afterbegin", small);
                     data.cancel = true;
                     break;
             }
@@ -217,11 +220,10 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
             }
             else {
                 const form = this.container.closest('form');
-                const options = this.getOptions();
                 this.getOptions().forEach((option, i) => {
                     const input = document.createElement('input');
                     input.type = 'hidden';
-                    input.name = this.wysiwygId + 'Poll_options[' + i + ']';
+                    input.name = `${this.wysiwygId} + 'Poll_options[${i}}]`;
                     input.value = option;
                     form.appendChild(input);
                 });
@@ -263,7 +265,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
          * Returns the data of the poll.
          */
         getData() {
-            let data = {};
+            const data = {};
             data[this.questionField.id] = this.questionField.value;
             data[this.wysiwygId + 'Poll_options'] = this.getOptions();
             data[this.endTimeField.id] = this.endTimeField.value;
@@ -280,12 +282,12 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
          * Format: `{optionID}_{option}` with `optionID = 0` if it is a new option.
          */
         getOptions() {
-            let options = [];
+            const options = [];
             for (let i = 0, length = this.optionList.children.length; i < length; i++) {
                 const listItem = this.optionList.children[i];
                 const optionValue = listItem.querySelector('input[type=text]').value.trim();
                 if (optionValue !== '') {
-                    options.push(listItem.dataset.optionId + '_' + optionValue);
+                    options.push(`${listItem.dataset.optionId}_${optionValue}`);
                 }
             }
             return options;
