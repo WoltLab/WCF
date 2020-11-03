@@ -139,6 +139,11 @@ define([
 			}
 			
 			_fields.get(formId).set(fieldId, field);
+			
+			EventHandler.fire('WoltLabSuite/Core/Form/Builder/Manager', 'registerField', {
+				field: field,
+				formId: formId,
+			});
 		},
 		
 		/**

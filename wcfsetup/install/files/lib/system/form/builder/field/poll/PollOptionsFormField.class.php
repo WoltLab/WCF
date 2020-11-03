@@ -23,6 +23,11 @@ class PollOptionsFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Wysiwyg/Poll';
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected $templateName = '__pollOptionsFormField';
 	
 	/**
