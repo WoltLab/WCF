@@ -2,6 +2,7 @@
 namespace wcf\data\search\keyword;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISearchAction;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
@@ -31,6 +32,10 @@ class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearc
 	 * @inheritDoc
 	 */
 	public function validateGetSearchResultList() {
+		if (FORCE_LOGIN && !WCF::getUser()->userID) {
+			throw new PermissionDeniedException();
+		}
+		
 		$this->readString('searchString', false, 'data');
 	}
 	
