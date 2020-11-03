@@ -4719,7 +4719,7 @@ E-Mail-Adresse {if LANGUAGE_USE_INFORMAL_VARIANT}bestätigst{else}bestätigen{/i
 
 {if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Aktivierungscode lautet: {@$mailbox->getUser()->activationCode} {* this line ends with a space *}
 
-Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} Probleme mit der Aktivierung Ihres Benutzerkontos {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}wende
+Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} Probleme mit der Aktivierung {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Benutzerkontos {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}wende
 dich{else}wenden
 Sie sich{/if} bitte an den Administrator unter: {@MAIL_ADMIN_ADDRESS}. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du
 dich{else}Sie
