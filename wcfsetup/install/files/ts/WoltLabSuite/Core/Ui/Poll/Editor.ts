@@ -216,24 +216,21 @@ class UiPollEditor {
    * Handles validation errors returned by Ajax request.
    */
   private handleError(data: AjaxResponse): void {
-    let fieldName = "";
-    let field;
-    let small;
-
     switch (data.returnValues.fieldName) {
       case this.wysiwygId + "Poll_endTime":
-      case this.wysiwygId + "Poll_maxVotes":
-        fieldName = data.returnValues.fieldName.replace(this.wysiwygId + "Poll_", "");
+      case this.wysiwygId + "Poll_maxVotes": {
+        const fieldName = data.returnValues.fieldName.replace(this.wysiwygId + "Poll_", "");
 
-        small = document.createElement("small");
+        const small = document.createElement("small");
         small.classList.add("innerError");
         small.innerHTML = Language.get("wcf.poll." + fieldName + ".error." + data.returnValues.errorType);
 
-        field = document.getElementById(data.returnValues.fieldName)!;
+        const field = document.getElementById(data.returnValues.fieldName)!;
         field.nextSibling.insertAdjacentElement("afterbegin", small);
 
         data.cancel = true;
         break;
+      }
     }
   }
 
