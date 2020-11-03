@@ -40,19 +40,18 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
      * Formats a date using PHP's `date()` modifiers.
      */
     function format(date, format) {
-        let char;
-        let out = "";
         // ISO 8601 date, best recognition by PHP's strtotime()
         if (format === "c") {
             format = "Y-m-dTH:i:sP";
         }
+        let out = "";
         for (let i = 0, length = format.length; i < length; i++) {
-            let hours;
+            let char;
             switch (format[i]) {
                 // seconds
                 case "s":
                     // `00` through `59`
-                    char = ("0" + date.getSeconds().toString()).slice(-2);
+                    char = date.getSeconds().toString().padStart(2, "0");
                     break;
                 // minutes
                 case "i":
@@ -64,9 +63,9 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
                     // `am` or `pm`
                     char = date.getHours() > 11 ? "pm" : "am";
                     break;
-                case "g":
+                case "g": {
                     // `1` through `12`
-                    hours = date.getHours();
+                    const hours = date.getHours();
                     if (hours === 0) {
                         char = "12";
                     }
@@ -77,9 +76,10 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
                         char = hours.toString();
                     }
                     break;
-                case "h":
+                }
+                case "h": {
                     // `01` through `12`
-                    hours = date.getHours();
+                    const hours = date.getHours();
                     if (hours === 0) {
                         char = "12";
                     }
@@ -91,6 +91,7 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
                     }
                     char = char.padStart(2, "0");
                     break;
+                }
                 case "A":
                     // `AM` or `PM`
                     char = date.getHours() > 11 ? "PM" : "AM";
@@ -144,7 +145,7 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
                 // year
                 case "y":
                     // `00` through `99`
-                    char = date.getFullYear().toString().substr(2);
+                    char = date.getFullYear().toString().slice(-2);
                     break;
                 case "Y":
                     // Examples: `1988` or `2015`
@@ -155,9 +156,9 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
                     let offset = date.getTimezoneOffset();
                     char = offset > 0 ? "-" : "+";
                     offset = Math.abs(offset);
-                    char += ("0" + (~~(offset / 60)).toString()).slice(-2);
+                    char += (~~(offset / 60)).toString().padStart(2, "0");
                     char += ":";
-                    char += ("0" + (offset % 60).toString()).slice(-2);
+                    char += (offset % 60).toString().padStart(2, "0");
                     break;
                 }
                 // specials
