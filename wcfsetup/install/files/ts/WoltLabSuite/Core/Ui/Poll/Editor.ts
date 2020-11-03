@@ -226,7 +226,7 @@ class UiPollEditor {
         small.innerHTML = Language.get("wcf.poll." + fieldName + ".error." + data.returnValues.errorType);
 
         const field = document.getElementById(data.returnValues.fieldName)!;
-        field.nextSibling.insertAdjacentElement("afterbegin", small);
+        (field.nextSibling! as HTMLElement).insertAdjacentElement("afterbegin", small);
 
         data.cancel = true;
         break;
