@@ -2022,7 +2022,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pluginStore.purchasedItems.status.install.confirmMessage"><![CDATA[Do you really want to install the product <span class="confirmationObject">{$product[packageName]}</span>?]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.disabled"><![CDATA[The package server for “{$wcfMajorRelease}” (“http://store.woltlab.com/{$wcfMajorRelease}/”) is disabled and cannot be used for new installs or updates.]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.missing"><![CDATA[The package server for “{$wcfMajorRelease}” does not exist in your installation. If you wish to install the packages below, you must <a href="{link controller='PackageUpdateServerAdd'}{/link}">add it</a>.<br>The server address is: “http://store.woltlab.com/{$wcfMajorRelease}/”]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate"><![CDATA[The package server for “{$wcfMajorRelease}” has not been queried yet, please search for updates to fetch the package list.]]></item>
+		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate"><![CDATA[The package servers have not been fetched yet, please search for available updates first.]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.wcfMajorRelease"><![CDATA[Package server for “{$wcfMajorRelease}”]]></item>
 	</category>
 	<category name="wcf.acp.pip">
