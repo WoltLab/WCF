@@ -1,150 +1,138 @@
 /**
  * Provides interface elements to use reactions.
  *
- * @author	Joshua Ruesweg
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Ui/Reaction/Handler
+ * @author  Joshua Ruesweg
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Ui/Reaction/Handler
  * @since       5.2
  */
-define([
-    'Ajax',
-    'Core',
-    'Dictionary',
-    'Dom/ChangeListener',
-    'Dom/Util',
-    'Ui/Alignment',
-    'Ui/CloseOverlay',
-    'Ui/Screen',
-    'WoltLabSuite/Core/Ui/Reaction/CountButtons',
-], function (Ajax, Core, Dictionary, DomChangeListener, DomUtil, UiAlignment, UiCloseOverlay, UiScreen, CountButtons) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../Alignment", "../CloseOverlay", "../Screen", "./CountButtons"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, UiAlignment, CloseOverlay_1, UiScreen, CountButtons_1) {
     "use strict";
-    /**
-     * @constructor
-     */
-    function UiReactionHandler(objectType, options) { this.init(objectType, options); }
-    UiReactionHandler.prototype = {
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    UiAlignment = tslib_1.__importStar(UiAlignment);
+    CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
+    UiScreen = tslib_1.__importStar(UiScreen);
+    CountButtons_1 = tslib_1.__importDefault(CountButtons_1);
+    const availableReactions = Object.values(window.REACTION_TYPES);
+    class UiReactionHandler {
         /**
          * Initializes the reaction handler.
-         *
-         * @param	{string}	objectType	object type
-         * @param	{object}	options		initialization options
          */
-        init: function (objectType, options) {
-            if (options.containerSelector === '') {
+        constructor(objectType, opts) {
+            this._cache = new Map();
+            this._containers = new Map();
+            this._objects = new Map();
+            this._popoverCurrentObjectId = 0;
+            if (!opts.containerSelector) {
                 throw new Error("[WoltLabSuite/Core/Ui/Reaction/Handler] Expected a non-empty string for option 'containerSelector'.");
             }
-            this._containers = new Dictionary();
             this._objectType = objectType;
-            this._cache = new Dictionary();
-            this._objects = new Dictionary();
-            this._popoverCurrentObjectId = 0;
             this._popover = null;
             this._popoverContent = null;
             this._options = Core.extend({
                 // selectors
-                buttonSelector: '.reactButton',
-                containerSelector: '',
+                buttonSelector: ".reactButton",
+                containerSelector: "",
                 isButtonGroupNavigation: false,
                 isSingleItem: false,
                 // other stuff
                 parameters: {
-                    data: {}
-                }
-            }, options);
-            this.initReactButtons(options, objectType);
-            this.countButtons = new CountButtons(this._objectType, this._options);
-            DomChangeListener.add('WoltLabSuite/Core/Ui/Reaction/Handler-' + objectType, this.initReactButtons.bind(this));
-            UiCloseOverlay.add('WoltLabSuite/Core/Ui/Reaction/Handler', this._closePopover.bind(this));
-        },
+                    data: {},
+                },
+            }, opts);
+            this.initReactButtons();
+            this.countButtons = new CountButtons_1.default(this._objectType, this._options);
+            Listener_1.default.add(`WoltLabSuite/Core/Ui/Reaction/Handler-${objectType}`, () => this.initReactButtons());
+            CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/Reaction/Handler", () => this._closePopover());
+        }
         /**
          * Initializes all applicable react buttons with the given selector.
          */
-        initReactButtons: function () {
-            var element, elements = elBySelAll(this._options.containerSelector), elementData, triggerChange = false, objectId;
-            for (var i = 0, length = elements.length; i < length; i++) {
-                element = elements[i];
-                if (this._containers.has(DomUtil.identify(element))) {
-                    continue;
+        initReactButtons() {
+            let triggerChange = false;
+            document.querySelectorAll(this._options.containerSelector).forEach((element) => {
+                const elementId = Util_1.default.identify(element);
+                if (this._containers.has(elementId)) {
+                    return;
                 }
-                objectId = ~~elData(element, 'object-id');
-                elementData = {
+                const objectId = ~~element.dataset.objectId;
+                const elementData = {
                     reactButton: null,
                     objectId: objectId,
-                    element: element
+                    element: element,
                 };
-                this._containers.set(DomUtil.identify(element), elementData);
+                this._containers.set(elementId, elementData);
                 this._initReactButton(element, elementData);
-                var objects = [];
-                if (this._objects.has(objectId)) {
-                    objects = this._objects.get(objectId);
-                }
+                const objects = this._objects.get(objectId) || [];
                 objects.push(elementData);
                 this._objects.set(objectId, objects);
                 triggerChange = true;
-            }
+            });
             if (triggerChange) {
-                DomChangeListener.trigger();
+                Listener_1.default.trigger();
             }
-        },
+        }
         /**
          * Initializes a specific react button.
          */
-        _initReactButton: function (element, elementData) {
+        _initReactButton(element, elementData) {
             if (this._options.isSingleItem) {
-                elementData.reactButton = elBySel(this._options.buttonSelector);
+                elementData.reactButton = document.querySelector(this._options.buttonSelector);
             }
             else {
-                elementData.reactButton = elBySel(this._options.buttonSelector, element);
+                elementData.reactButton = element.querySelector(this._options.buttonSelector);
             }
-            if (elementData.reactButton === null || elementData.reactButton.length === 0) {
-                // The element may have no react button. 
+            if (elementData.reactButton === null) {
+                // The element may have no react button.
                 return;
             }
-            //noinspection JSUnresolvedVariable
-            if (Object.keys(REACTION_TYPES).length === 1) {
-                //noinspection JSUnresolvedVariable
-                var reaction = REACTION_TYPES[Object.keys(REACTION_TYPES)[0]];
+            if (availableReactions.length === 1) {
+                const reaction = availableReactions[0];
                 elementData.reactButton.title = reaction.title;
-                var textSpan = elBySel('.invisible', elementData.reactButton);
-                textSpan.innerText = reaction.title;
+                const textSpan = elementData.reactButton.querySelector(".invisible");
+                textSpan.textContent = reaction.title;
             }
-            elementData.reactButton.addEventListener('click', this._toggleReactPopover.bind(this, elementData.objectId, elementData.reactButton));
-        },
-        _updateReactButton: function (objectID, reactionTypeID) {
-            this._objects.get(objectID).forEach(function (elementData) {
+            elementData.reactButton.addEventListener("click", (ev) => {
+                this._toggleReactPopover(elementData.objectId, elementData.reactButton, ev);
+            });
+        }
+        _updateReactButton(objectID, reactionTypeID) {
+            this._objects.get(objectID).forEach((elementData) => {
                 if (elementData.reactButton !== null) {
                     if (reactionTypeID) {
-                        elementData.reactButton.classList.add('active');
-                        elData(elementData.reactButton, 'reaction-type-id', reactionTypeID);
+                        elementData.reactButton.classList.add("active");
+                        elementData.reactButton.dataset.reactionTypeId = reactionTypeID.toString();
                     }
                     else {
-                        elData(elementData.reactButton, 'reaction-type-id', 0);
-                        elementData.reactButton.classList.remove('active');
+                        elementData.reactButton.dataset.reactionTypeId = "0";
+                        elementData.reactButton.classList.remove("active");
                     }
                 }
             });
-        },
-        _markReactionAsActive: function () {
-            var reactionTypeID = null;
-            this._objects.get(this._popoverCurrentObjectId).forEach(function (element) {
+        }
+        _markReactionAsActive() {
+            let reactionTypeID = 0;
+            this._objects.get(this._popoverCurrentObjectId).forEach((element) => {
                 if (element.reactButton !== null) {
-                    reactionTypeID = ~~elData(element.reactButton, 'reaction-type-id');
+                    reactionTypeID = ~~element.reactButton.dataset.reactionTypeId;
                 }
             });
-            if (reactionTypeID === null) {
+            if (!reactionTypeID) {
                 throw new Error("Unable to find react button for current popover.");
             }
             //  Clear the old active state.
-            elBySelAll('.reactionTypeButton.active', this._getPopover(), function (element) {
-                element.classList.remove('active');
-            });
-            var scrollableContainer = elBySel('.reactionPopoverContent', this._getPopover());
+            const popover = this._getPopover();
+            popover.querySelectorAll(".reactionTypeButton.active").forEach((el) => el.classList.remove("active"));
+            const scrollableContainer = popover.querySelector(".reactionPopoverContent");
             if (reactionTypeID) {
-                var reactionTypeButton = elBySel('.reactionTypeButton[data-reaction-type-id="' + reactionTypeID + '"]', this._getPopover());
-                reactionTypeButton.classList.add('active');
-                if (~~elData(reactionTypeButton, 'is-assignable') === 0) {
-                    elShow(reactionTypeButton);
+                const reactionTypeButton = popover.querySelector(`.reactionTypeButton[data-reaction-type-id="${reactionTypeID}"]`);
+                reactionTypeButton.classList.add("active");
+                if (~~reactionTypeButton.dataset.isAssignable === 0) {
+                    Util_1.default.show(reactionTypeButton);
                 }
                 this._scrollReactionIntoView(scrollableContainer, reactionTypeButton);
             }
@@ -152,8 +140,8 @@ define([
                 // The "first" reaction is positioned as close as possible to the toggle button,
                 // which means that we need to scroll the list to the bottom if the popover is
                 // displayed above the toggle button.
-                if (UiScreen.is('screen-xs')) {
-                    if (this._getPopover().classList.contains('inverseOrder')) {
+                if (UiScreen.is("screen-xs")) {
+                    if (popover.classList.contains("inverseOrder")) {
                         scrollableContainer.scrollTop = 0;
                     }
                     else {
@@ -161,8 +149,8 @@ define([
                     }
                 }
             }
-        },
-        _scrollReactionIntoView: function (scrollableContainer, reactionTypeButton) {
+        }
+        _scrollReactionIntoView(scrollableContainer, reactionTypeButton) {
             // Do not scroll if the button is located in the upper 75%.
             if (reactionTypeButton.offsetTop < scrollableContainer.clientHeight * 0.75) {
                 scrollableContainer.scrollTop = 0;
@@ -172,25 +160,20 @@ define([
                 // the maximum possible offset value. We can abuse this behavior by calculating
                 // the values to place the selected reaction in the center of the popover,
                 // regardless of the offset being out of range.
-                scrollableContainer.scrollTop = reactionTypeButton.offsetTop + reactionTypeButton.clientHeight / 2 - scrollableContainer.clientHeight / 2;
+                scrollableContainer.scrollTop =
+                    reactionTypeButton.offsetTop + reactionTypeButton.clientHeight / 2 - scrollableContainer.clientHeight / 2;
             }
-        },
+        }
         /**
          * Toggle the visibility of the react popover.
-         *
-         * @param       {int}           objectId
-         * @param       {Element}       element
-         * @param       {?Event}        event
          */
-        _toggleReactPopover: function (objectId, element, event) {
+        _toggleReactPopover(objectId, element, event) {
             if (event !== null) {
                 event.preventDefault();
                 event.stopPropagation();
             }
-            //noinspection JSUnresolvedVariable
-            if (Object.keys(REACTION_TYPES).length === 1) {
-                //noinspection JSUnresolvedVariable
-                var reaction = REACTION_TYPES[Object.keys(REACTION_TYPES)[0]];
+            if (availableReactions.length === 1) {
+                const reaction = availableReactions[0];
                 this._popoverCurrentObjectId = objectId;
                 this._react(reaction.reactionTypeID);
             }
@@ -199,139 +182,129 @@ define([
                     this._openReactPopover(objectId, element);
                 }
                 else {
-                    this._closePopover(objectId, element);
+                    this._closePopover();
                 }
             }
-        },
+        }
         /**
          * Opens the react popover for a specific react button.
-         *
-         * @param       {int}	        objectId		objectId of the element
-         * @param       {Element}	element 		container element
          */
-        _openReactPopover: function (objectId, element) {
+        _openReactPopover(objectId, element) {
             if (this._popoverCurrentObjectId !== 0) {
                 this._closePopover();
             }
             this._popoverCurrentObjectId = objectId;
             UiAlignment.set(this._getPopover(), element, {
                 pointer: true,
-                horizontal: (this._options.isButtonGroupNavigation) ? 'left' : 'center',
-                vertical: UiScreen.is('screen-xs') ? 'bottom' : 'top'
+                horizontal: this._options.isButtonGroupNavigation ? "left" : "center",
+                vertical: UiScreen.is("screen-xs") ? "bottom" : "top",
             });
             if (this._options.isButtonGroupNavigation) {
-                element.closest('nav').style.setProperty('opacity', '1', '');
+                element.closest("nav").style.setProperty("opacity", "1", "");
             }
-            var popover = this._getPopover();
+            const popover = this._getPopover();
             // The popover could be rendered below the input field on mobile, in which case
             // the "first" button is displayed at the bottom and thus farthest away. Reversing
             // the display order will restore the logic by placing the "first" button as close
             // to the react button as possible.
-            var inverseOrder = popover.style.getPropertyValue('bottom') === 'auto';
-            popover.classList[inverseOrder ? 'add' : 'remove']('inverseOrder');
+            const inverseOrder = popover.style.getPropertyValue("bottom") === "auto";
+            if (inverseOrder) {
+                popover.classList.add("inverseOrder");
+            }
+            else {
+                popover.classList.remove("inverseOrder");
+            }
             this._markReactionAsActive();
             this._rebuildOverflowIndicator();
-            popover.classList.remove('forceHide');
-            popover.classList.add('active');
-        },
+            popover.classList.remove("forceHide");
+            popover.classList.add("active");
+        }
         /**
          * Returns the react popover element.
-         *
-         * @returns {Element}
          */
-        _getPopover: function () {
+        _getPopover() {
             if (this._popover == null) {
-                this._popover = elCreate('div');
-                this._popover.className = 'reactionPopover forceHide';
-                this._popoverContent = elCreate('div');
-                this._popoverContent.className = 'reactionPopoverContent';
-                var popoverContentHTML = elCreate('ul');
-                popoverContentHTML.className = 'reactionTypeButtonList';
-                var sortedReactionTypes = this._getSortedReactionTypes();
-                for (var key in sortedReactionTypes) {
-                    if (!sortedReactionTypes.hasOwnProperty(key))
-                        continue;
-                    var reactionType = sortedReactionTypes[key];
-                    var reactionTypeItem = elCreate('li');
-                    reactionTypeItem.className = 'reactionTypeButton jsTooltip';
-                    elData(reactionTypeItem, 'reaction-type-id', reactionType.reactionTypeID);
-                    elData(reactionTypeItem, 'title', reactionType.title);
-                    elData(reactionTypeItem, 'is-assignable', ~~reactionType.isAssignable);
+                this._popover = document.createElement("div");
+                this._popover.className = "reactionPopover forceHide";
+                this._popoverContent = document.createElement("div");
+                this._popoverContent.className = "reactionPopoverContent";
+                const popoverContentHTML = document.createElement("ul");
+                popoverContentHTML.className = "reactionTypeButtonList";
+                this._getSortedReactionTypes().forEach((reactionType) => {
+                    const reactionTypeItem = document.createElement("li");
+                    reactionTypeItem.className = "reactionTypeButton jsTooltip";
+                    reactionTypeItem.dataset.reactionTypeId = reactionType.reactionTypeID.toString();
+                    reactionTypeItem.dataset.title = reactionType.title;
+                    reactionTypeItem.dataset.isAssignable = reactionType.isAssignable.toString();
                     reactionTypeItem.title = reactionType.title;
-                    var reactionTypeItemSpan = elCreate('span');
-                    reactionTypeItemSpan.className = 'reactionTypeButtonTitle';
+                    const reactionTypeItemSpan = document.createElement("span");
+                    reactionTypeItemSpan.className = "reactionTypeButtonTitle";
                     reactionTypeItemSpan.innerHTML = reactionType.title;
-                    //noinspection JSUnresolvedVariable
                     reactionTypeItem.innerHTML = reactionType.renderedIcon;
                     reactionTypeItem.appendChild(reactionTypeItemSpan);
-                    reactionTypeItem.addEventListener('click', this._react.bind(this, reactionType.reactionTypeID));
+                    reactionTypeItem.addEventListener("click", () => this._react(reactionType.reactionTypeID));
                     if (!reactionType.isAssignable) {
-                        elHide(reactionTypeItem);
+                        Util_1.default.hide(reactionTypeItem);
                     }
                     popoverContentHTML.appendChild(reactionTypeItem);
-                }
+                });
                 this._popoverContent.appendChild(popoverContentHTML);
-                this._popoverContent.addEventListener('scroll', this._rebuildOverflowIndicator.bind(this), { passive: true });
+                this._popoverContent.addEventListener("scroll", () => this._rebuildOverflowIndicator(), { passive: true });
                 this._popover.appendChild(this._popoverContent);
-                var pointer = elCreate('span');
-                pointer.className = 'elementPointer';
-                pointer.appendChild(elCreate('span'));
+                const pointer = document.createElement("span");
+                pointer.className = "elementPointer";
+                pointer.appendChild(document.createElement("span"));
                 this._popover.appendChild(pointer);
                 document.body.appendChild(this._popover);
-                DomChangeListener.trigger();
+                Listener_1.default.trigger();
             }
             return this._popover;
-        },
-        _rebuildOverflowIndicator: function () {
-            var hasTopOverflow = this._popoverContent.scrollTop > 0;
-            this._popoverContent.classList[hasTopOverflow ? 'add' : 'remove']('overflowTop');
-            var hasBottomOverflow = this._popoverContent.scrollTop + this._popoverContent.clientHeight < this._popoverContent.scrollHeight;
-            this._popoverContent.classList[hasBottomOverflow ? 'add' : 'remove']('overflowBottom');
-        },
+        }
+        _rebuildOverflowIndicator() {
+            const popoverContent = this._popoverContent;
+            const hasTopOverflow = popoverContent.scrollTop > 0;
+            if (hasTopOverflow) {
+                popoverContent.classList.add("overflowTop");
+            }
+            else {
+                popoverContent.classList.remove("overflowTop");
+            }
+            const hasBottomOverflow = popoverContent.scrollTop + popoverContent.clientHeight < popoverContent.scrollHeight;
+            if (hasBottomOverflow) {
+                popoverContent.classList.add("overflowBottom");
+            }
+            else {
+                popoverContent.classList.remove("overflowBottom");
+            }
+        }
         /**
          * Sort the reaction types by the showOrder field.
-         *
-         * @returns     {Array}         the reaction types sorted by showOrder
          */
-        _getSortedReactionTypes: function () {
-            var sortedReactionTypes = [];
-            // convert our reaction type object to an array
-            //noinspection JSUnresolvedVariable
-            for (var key in REACTION_TYPES) {
-                //noinspection JSUnresolvedVariable
-                if (REACTION_TYPES.hasOwnProperty(key)) {
-                    //noinspection JSUnresolvedVariable
-                    sortedReactionTypes.push(REACTION_TYPES[key]);
-                }
-            }
-            // sort the array
-            sortedReactionTypes.sort(function (a, b) {
-                //noinspection JSUnresolvedVariable
-                return a.showOrder - b.showOrder;
-            });
-            return sortedReactionTypes;
-        },
+        _getSortedReactionTypes() {
+            return availableReactions.sort((a, b) => a.showOrder - b.showOrder);
+        }
         /**
          * Closes the react popover.
          */
-        _closePopover: function () {
+        _closePopover() {
             if (this._popoverCurrentObjectId !== 0) {
-                this._getPopover().classList.remove('active');
-                elBySelAll('.reactionTypeButton[data-is-assignable="0"]', this._getPopover(), elHide);
+                const popover = this._getPopover();
+                popover.classList.remove("active");
+                popover
+                    .querySelectorAll('.reactionTypeButton[data-is-assignable="0"]')
+                    .forEach((el) => Util_1.default.hide(el));
                 if (this._options.isButtonGroupNavigation) {
-                    this._objects.get(this._popoverCurrentObjectId).forEach(function (elementData) {
-                        elementData.reactButton.closest('nav').style.cssText = "";
+                    this._objects.get(this._popoverCurrentObjectId).forEach((elementData) => {
+                        elementData.reactButton.closest("nav").style.cssText = "";
                     });
                 }
                 this._popoverCurrentObjectId = 0;
             }
-        },
+        }
         /**
          * React with the given reactionTypeId on an object.
-         *
-         * @param       {init}          reactionTypeId
          */
-        _react: function (reactionTypeId) {
+        _react(reactionTypeId) {
             if (~~this._popoverCurrentObjectId === 0) {
                 // Double clicking the reaction will cause the first click to go through, but
                 // causes the second to fail because the overlay is already closing.
@@ -341,23 +314,23 @@ define([
             this._options.parameters.data.objectID = this._popoverCurrentObjectId;
             this._options.parameters.data.objectType = this._objectType;
             Ajax.api(this, {
-                parameters: this._options.parameters
+                parameters: this._options.parameters,
             });
             this._closePopover();
-        },
-        _ajaxSuccess: function (data) {
-            //noinspection JSUnresolvedVariable
+        }
+        _ajaxSuccess(data) {
             this.countButtons.updateCountButtons(data.returnValues.objectID, data.returnValues.reactions);
             this._updateReactButton(data.returnValues.objectID, data.returnValues.reactionTypeID);
-        },
-        _ajaxSetup: function () {
+        }
+        _ajaxSetup() {
             return {
                 data: {
-                    actionName: 'react',
-                    className: '\\wcf\\data\\reaction\\ReactionAction'
-                }
+                    actionName: "react",
+                    className: "\\wcf\\data\\reaction\\ReactionAction",
+                },
             };
         }
-    };
+    }
+    Core.enableLegacyInheritance(UiReactionHandler);
     return UiReactionHandler;
 });
