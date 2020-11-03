@@ -14,7 +14,7 @@
         "chrisjean/php-ico": "1.0.*",
         "true/punycode": "~2.0",
         "pear/net_idna2": "^0.2.0",
-        "scssphp/scssphp": "^1.1",
+        "scssphp/scssphp": "^1.3",
         "guzzlehttp/guzzle": "dev-6.5-windows"
     },
     "repositories": [
