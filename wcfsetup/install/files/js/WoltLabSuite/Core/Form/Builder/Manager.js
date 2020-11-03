@@ -112,6 +112,10 @@ define([
                 throw new Error("Form field with id '" + fieldId + "' has already been registered for form with id '" + formId + "'.");
             }
             _fields.get(formId).set(fieldId, field);
+            EventHandler.fire('WoltLabSuite/Core/Form/Builder/Manager', 'registerField', {
+                field: field,
+                formId: formId,
+            });
         },
         /**
          * Registers the form with the given id.
