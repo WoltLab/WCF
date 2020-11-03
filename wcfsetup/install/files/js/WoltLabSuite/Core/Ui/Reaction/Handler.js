@@ -17,6 +17,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
     CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
     UiScreen = tslib_1.__importStar(UiScreen);
     CountButtons_1 = tslib_1.__importDefault(CountButtons_1);
+    const availableReactions = Object.values(window.REACTION_TYPES);
     class UiReactionHandler {
         /**
          * Initializes the reaction handler.
@@ -89,7 +90,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                 // The element may have no react button.
                 return;
             }
-            const availableReactions = Object.values(window.REACTION_TYPES);
             if (availableReactions.length === 1) {
                 const reaction = availableReactions[0];
                 elementData.reactButton.title = reaction.title;
@@ -172,7 +172,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                 event.preventDefault();
                 event.stopPropagation();
             }
-            const availableReactions = Object.values(window.REACTION_TYPES);
             if (availableReactions.length === 1) {
                 const reaction = availableReactions[0];
                 this._popoverCurrentObjectId = objectId;
@@ -282,7 +281,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
          * Sort the reaction types by the showOrder field.
          */
         _getSortedReactionTypes() {
-            return Object.values(window.REACTION_TYPES).sort((a, b) => a.showOrder - b.showOrder);
+            return availableReactions.sort((a, b) => a.showOrder - b.showOrder);
         }
         /**
          * Closes the react popover.

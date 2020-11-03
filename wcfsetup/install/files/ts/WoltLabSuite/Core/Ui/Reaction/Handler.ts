@@ -51,6 +51,8 @@ interface AjaxResponse {
   };
 }
 
+const availableReactions = Object.values(window.REACTION_TYPES);
+
 class UiReactionHandler {
   readonly countButtons: CountButtons;
   protected readonly _cache = new Map<string, unknown>();
@@ -152,7 +154,6 @@ class UiReactionHandler {
       return;
     }
 
-    const availableReactions = Object.values(window.REACTION_TYPES);
     if (availableReactions.length === 1) {
       const reaction = availableReactions[0];
       elementData.reactButton.title = reaction.title;
@@ -244,7 +245,6 @@ class UiReactionHandler {
       event.stopPropagation();
     }
 
-    const availableReactions = Object.values(window.REACTION_TYPES);
     if (availableReactions.length === 1) {
       const reaction = availableReactions[0];
       this._popoverCurrentObjectId = objectId;
@@ -379,7 +379,7 @@ class UiReactionHandler {
    * Sort the reaction types by the showOrder field.
    */
   protected _getSortedReactionTypes(): Reaction[] {
-    return Object.values(window.REACTION_TYPES).sort((a, b) => a.showOrder - b.showOrder);
+    return availableReactions.sort((a, b) => a.showOrder - b.showOrder);
   }
 
   /**

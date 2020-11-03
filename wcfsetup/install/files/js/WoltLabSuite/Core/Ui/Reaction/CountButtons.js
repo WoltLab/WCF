@@ -16,6 +16,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
     EventHandler = tslib_1.__importStar(EventHandler);
     StringUtil = tslib_1.__importStar(StringUtil);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    const availableReactions = new Map(Object.entries(window.REACTION_TYPES));
     class CountButtons {
         /**
          * Initializes the like handler.
@@ -98,7 +99,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                         reaction.remove();
                     }
                 });
-                const availableReactions = new Map(Object.entries(window.REACTION_TYPES));
                 existingReactions.forEach((count, reactionTypeId) => {
                     if (sortedElements.has(reactionTypeId)) {
                         const reaction = sortedElements.get(reactionTypeId);

@@ -15,12 +15,13 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Change/Listener"
     StringUtil = tslib_1.__importStar(StringUtil);
     Handler_1 = tslib_1.__importDefault(Handler_1);
     User_1 = tslib_1.__importDefault(User_1);
+    const availableReactions = new Map(Object.entries(window.REACTION_TYPES));
     class UiLikeHandler {
         /**
          * Initializes the like handler.
          */
         constructor(objectType, opts) {
-            this._containers = new Map();
+            this._containers = new WeakMap();
             if (!opts.containerSelector) {
                 throw new Error("[WoltLabSuite/Core/Ui/Like/Handler] Expected a non-empty string for option 'containerSelector'.");
             }
@@ -109,7 +110,6 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Change/Listener"
                 else {
                     summaryList.classList.add("reactionSummaryListTiny");
                 }
-                const availableReactions = new Map(Object.entries(window.REACTION_TYPES));
                 Object.entries(elementData.users).forEach(([reactionTypeId, count]) => {
                     const reaction = availableReactions.get(reactionTypeId);
                     if (reactionTypeId === "reactionTypeID" || !reaction) {

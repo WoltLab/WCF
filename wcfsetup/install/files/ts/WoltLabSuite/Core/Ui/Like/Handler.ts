@@ -55,8 +55,10 @@ interface ElementData {
   users: LikeUsers;
 }
 
+const availableReactions = new Map(Object.entries(window.REACTION_TYPES));
+
 class UiLikeHandler {
-  protected readonly _containers = new Map<HTMLElement, ElementData>();
+  protected readonly _containers = new WeakMap<HTMLElement, ElementData>();
   protected readonly _objectType: string;
   protected readonly _options: LikeHandlerOptions;
 
@@ -173,7 +175,6 @@ class UiLikeHandler {
         summaryList.classList.add("reactionSummaryListTiny");
       }
 
-      const availableReactions = new Map(Object.entries(window.REACTION_TYPES));
       Object.entries(elementData.users).forEach(([reactionTypeId, count]) => {
         const reaction = availableReactions.get(reactionTypeId);
         if (reactionTypeId === "reactionTypeID" || !reaction) {

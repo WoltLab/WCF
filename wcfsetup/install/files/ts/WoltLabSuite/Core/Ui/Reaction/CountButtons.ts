@@ -47,6 +47,8 @@ interface AjaxResponse extends ResponseData {
   };
 }
 
+const availableReactions = new Map<string, Reaction>(Object.entries(window.REACTION_TYPES));
+
 class CountButtons {
   protected readonly _containers = new Map<string, ElementData>();
   protected _currentObjectId = 0;
@@ -153,8 +155,6 @@ class CountButtons {
           reaction.remove();
         }
       });
-
-      const availableReactions = new Map<string, Reaction>(Object.entries(window.REACTION_TYPES));
 
       existingReactions.forEach((count, reactionTypeId) => {
         if (sortedElements.has(reactionTypeId)) {
