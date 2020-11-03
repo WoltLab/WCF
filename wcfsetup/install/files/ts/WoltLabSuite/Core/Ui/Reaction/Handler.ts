@@ -65,7 +65,7 @@ class UiReactionHandler {
   /**
    * Initializes the reaction handler.
    */
-  constructor(objectType: string, opts: ReactionHandlerOptions) {
+  constructor(objectType: string, opts: Partial<ReactionHandlerOptions>) {
     if (!opts.containerSelector) {
       throw new Error(
         "[WoltLabSuite/Core/Ui/Reaction/Handler] Expected a non-empty string for option 'containerSelector'.",
