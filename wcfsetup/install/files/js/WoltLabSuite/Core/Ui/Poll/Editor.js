@@ -21,25 +21,25 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
             }
             this.container = container;
             this.wysiwygId = wysiwygId;
-            if (wysiwygId !== '' && document.getElementById(wysiwygId) === null) {
+            if (wysiwygId !== "" && document.getElementById(wysiwygId) === null) {
                 throw new Error("Unknown wysiwyg field with id '" + wysiwygId + "'.");
             }
-            this.questionField = document.getElementById(this.wysiwygId + 'Poll_question');
-            const optionList = this.container.querySelector('.sortableList');
+            this.questionField = document.getElementById(this.wysiwygId + "Poll_question");
+            const optionList = this.container.querySelector(".sortableList");
             if (optionList === null) {
                 throw new Error("Cannot find poll options list for container with id '" + containerId + "'.");
             }
             this.optionList = optionList;
-            this.endTimeField = document.getElementById(this.wysiwygId + 'Poll_endTime');
-            this.maxVotesField = document.getElementById(this.wysiwygId + 'Poll_maxVotes');
-            this.isChangeableYesField = document.getElementById(this.wysiwygId + 'Poll_isChangeable');
-            this.isChangeableNoField = document.getElementById(this.wysiwygId + 'Poll_isChangeable_no');
-            this.isPublicYesField = document.getElementById(this.wysiwygId + 'Poll_isPublic');
-            this.isPublicNoField = document.getElementById(this.wysiwygId + 'Poll_isPublic_no');
-            this.resultsRequireVoteYesField = document.getElementById(this.wysiwygId + 'Poll_resultsRequireVote');
-            this.resultsRequireVoteNoField = document.getElementById(this.wysiwygId + 'Poll_resultsRequireVote_no');
-            this.sortByVotesYesField = document.getElementById(this.wysiwygId + 'Poll_sortByVotes');
-            this.sortByVotesNoField = document.getElementById(this.wysiwygId + 'Poll_sortByVotes_no');
+            this.endTimeField = document.getElementById(this.wysiwygId + "Poll_endTime");
+            this.maxVotesField = document.getElementById(this.wysiwygId + "Poll_maxVotes");
+            this.isChangeableYesField = document.getElementById(this.wysiwygId + "Poll_isChangeable");
+            this.isChangeableNoField = document.getElementById(this.wysiwygId + "Poll_isChangeable_no");
+            this.isPublicYesField = document.getElementById(this.wysiwygId + "Poll_isPublic");
+            this.isPublicNoField = document.getElementById(this.wysiwygId + "Poll_isPublic_no");
+            this.resultsRequireVoteYesField = document.getElementById(this.wysiwygId + "Poll_resultsRequireVote");
+            this.resultsRequireVoteNoField = document.getElementById(this.wysiwygId + "Poll_resultsRequireVote_no");
+            this.sortByVotesYesField = document.getElementById(this.wysiwygId + "Poll_sortByVotes");
+            this.sortByVotesNoField = document.getElementById(this.wysiwygId + "Poll_sortByVotes_no");
             this.optionCount = 0;
             this.options = Core.extend({
                 isAjax: false,
@@ -49,65 +49,65 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
             new List_1.default({
                 containerId: containerId,
                 options: {
-                    toleranceElement: '> div',
+                    toleranceElement: "> div",
                 },
             });
             if (this.options.isAjax) {
-                ['handleError', 'reset', 'submit', 'validate'].forEach((event) => {
-                    EventHandler.add('com.woltlab.wcf.redactor2', event + '_' + this.wysiwygId, (...args) => this[event](...args));
+                ["handleError", "reset", "submit", "validate"].forEach((event) => {
+                    EventHandler.add("com.woltlab.wcf.redactor2", event + "_" + this.wysiwygId, (...args) => this[event](...args));
                 });
             }
             else {
-                const form = this.container.closest('form');
+                const form = this.container.closest("form");
                 if (form === null) {
                     throw new Error("Cannot find form for container with id '" + containerId + "'.");
                 }
-                form.addEventListener('submit', (ev) => this.submit(ev));
+                form.addEventListener("submit", (ev) => this.submit(ev));
             }
         }
         /**
          * Creates a poll option with the given data or an empty poll option of no data is given.
          */
         createOption(optionValue, optionId, insertAfter) {
-            optionValue = optionValue || '';
-            optionId = optionId || '0';
-            const listItem = document.createElement('LI');
-            listItem.classList.add('sortableNode');
+            optionValue = optionValue || "";
+            optionId = optionId || "0";
+            const listItem = document.createElement("LI");
+            listItem.classList.add("sortableNode");
             listItem.dataset.optionId = optionId;
             if (insertAfter) {
-                insertAfter.insertAdjacentElement('afterend', listItem);
+                insertAfter.insertAdjacentElement("afterend", listItem);
             }
             else {
                 this.optionList.appendChild(listItem);
             }
-            const pollOptionInput = document.createElement('div');
-            pollOptionInput.classList.add('pollOptionInput');
+            const pollOptionInput = document.createElement("div");
+            pollOptionInput.classList.add("pollOptionInput");
             listItem.appendChild(pollOptionInput);
-            const sortHandle = document.createElement('span');
-            sortHandle.classList.add('icon', 'icon16', 'fa-arrows', 'sortableNodeHandle');
+            const sortHandle = document.createElement("span");
+            sortHandle.classList.add("icon", "icon16", "fa-arrows", "sortableNodeHandle");
             pollOptionInput.appendChild(sortHandle);
             // buttons
-            const addButton = document.createElement('a');
-            listItem.setAttribute('role', 'button');
-            listItem.setAttribute('href', '#');
-            addButton.classList.add('icon', 'icon16', 'fa-plus', 'jsTooltip', 'jsAddOption', 'pointer');
-            addButton.setAttribute('title', Language.get('wcf.poll.button.addOption'));
-            addButton.addEventListener('click', () => this.createOption());
+            const addButton = document.createElement("a");
+            listItem.setAttribute("role", "button");
+            listItem.setAttribute("href", "#");
+            addButton.classList.add("icon", "icon16", "fa-plus", "jsTooltip", "jsAddOption", "pointer");
+            addButton.setAttribute("title", Language.get("wcf.poll.button.addOption"));
+            addButton.addEventListener("click", () => this.createOption());
             pollOptionInput.appendChild(addButton);
-            const deleteButton = document.createElement('a');
-            deleteButton.setAttribute('role', 'button');
-            deleteButton.setAttribute('href', '#');
-            deleteButton.classList.add('icon', 'icon16', 'fa-times', 'jsTooltip', 'jsDeleteOption', 'pointer');
-            deleteButton.setAttribute('title', Language.get('wcf.poll.button.removeOption'));
-            deleteButton.addEventListener('click', (ev) => this.removeOption(ev));
+            const deleteButton = document.createElement("a");
+            deleteButton.setAttribute("role", "button");
+            deleteButton.setAttribute("href", "#");
+            deleteButton.classList.add("icon", "icon16", "fa-times", "jsTooltip", "jsDeleteOption", "pointer");
+            deleteButton.setAttribute("title", Language.get("wcf.poll.button.removeOption"));
+            deleteButton.addEventListener("click", (ev) => this.removeOption(ev));
             pollOptionInput.appendChild(deleteButton);
             // input field
-            const optionInput = document.createElement('input');
-            optionInput.type = 'text';
+            const optionInput = document.createElement("input");
+            optionInput.type = "text";
             optionInput.value = optionValue;
             optionInput.maxLength = 255;
-            optionInput.addEventListener('keydown', (ev) => this.optionInputKeyDown(ev));
-            optionInput.addEventListener('click', () => {
+            optionInput.addEventListener("keydown", (ev) => this.optionInputKeyDown(ev));
+            optionInput.addEventListener("click", () => {
                 // work-around for some weird focus issue on iOS/Android
                 if (document.activeElement !== optionInput) {
                     optionInput.focus();
@@ -119,9 +119,9 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
             }
             this.optionCount++;
             if (this.optionCount === this.options.maxOptions) {
-                this.optionList.querySelectorAll('.jsAddOption').forEach((icon) => {
-                    icon.classList.remove('pointer');
-                    icon.classList.add('disabled');
+                this.optionList.querySelectorAll(".jsAddOption").forEach((icon) => {
+                    icon.classList.remove("pointer");
+                    icon.classList.add("disabled");
                 });
             }
         }
@@ -140,16 +140,16 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
          * Handles validation errors returned by Ajax request.
          */
         handleError(data) {
-            let fieldName = '';
+            let fieldName = "";
             let field;
             let small;
             switch (data.returnValues.fieldName) {
-                case this.wysiwygId + 'Poll_endTime':
-                case this.wysiwygId + 'Poll_maxVotes':
-                    fieldName = data.returnValues.fieldName.replace(this.wysiwygId + 'Poll_', '');
-                    small = document.createElement('small');
-                    small.classList.add('innerError');
-                    small.innerHTML = Language.get('wcf.poll.' + fieldName + '.error.' + data.returnValues.errorType);
+                case this.wysiwygId + "Poll_endTime":
+                case this.wysiwygId + "Poll_maxVotes":
+                    fieldName = data.returnValues.fieldName.replace(this.wysiwygId + "Poll_", "");
+                    small = document.createElement("small");
+                    small.classList.add("innerError");
+                    small.innerHTML = Language.get("wcf.poll." + fieldName + ".error." + data.returnValues.errorType);
                     field = document.getElementById(data.returnValues.fieldName);
                     field.nextSibling.insertAdjacentElement("afterbegin", small);
                     data.cancel = true;
@@ -160,12 +160,12 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
          * Adds another option field below the current option field after pressing Enter.
          */
         optionInputKeyDown(event) {
-            if (event.key !== 'Enter') {
+            if (event.key !== "Enter") {
                 return;
             }
             const target = event.currentTarget;
-            const addOption = target.parentElement.querySelector('.jsAddOption');
-            Core.triggerEvent(addOption, 'click');
+            const addOption = target.parentElement.querySelector(".jsAddOption");
+            Core.triggerEvent(addOption, "click");
             event.preventDefault();
         }
         /**
@@ -174,15 +174,15 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
         removeOption(event) {
             event.preventDefault();
             const button = event.currentTarget;
-            button.closest('li').remove();
+            button.closest("li").remove();
             this.optionCount--;
             if (this.optionList.childElementCount === 0) {
                 this.createOption();
             }
             else {
-                this.optionList.querySelectorAll('.jsAddOption').forEach((icon) => {
-                    icon.classList.add('pointer');
-                    icon.classList.remove('disabled');
+                this.optionList.querySelectorAll(".jsAddOption").forEach((icon) => {
+                    icon.classList.add("pointer");
+                    icon.classList.remove("disabled");
                 });
             }
         }
@@ -190,12 +190,12 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
          * Resets all poll fields.
          */
         reset() {
-            this.questionField.value = '';
+            this.questionField.value = "";
             this.optionCount = 0;
-            this.optionList.innerHTML = '';
+            this.optionList.innerHTML = "";
             this.createOption();
             DatePicker.clear(this.endTimeField);
-            this.maxVotesField.value = '1';
+            this.maxVotesField.value = "1";
             this.isChangeableYesField.checked = false;
             this.isChangeableNoField.checked = true;
             this.isPublicYesField.checked = false;
@@ -204,7 +204,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
             this.resultsRequireVoteNoField.checked = true;
             this.sortByVotesYesField.checked = false;
             this.sortByVotesNoField.checked = true;
-            EventHandler.fire('com.woltlab.wcf.poll.editor', 'reset', {
+            EventHandler.fire("com.woltlab.wcf.poll.editor", "reset", {
                 pollEditor: this,
             });
         }
@@ -213,16 +213,16 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
          */
         submit(event) {
             if (this.options.isAjax) {
-                EventHandler.fire('com.woltlab.wcf.poll.editor', 'submit', {
+                EventHandler.fire("com.woltlab.wcf.poll.editor", "submit", {
                     event: event,
                     pollEditor: this,
                 });
             }
             else {
-                const form = this.container.closest('form');
+                const form = this.container.closest("form");
                 this.getOptions().forEach((option, i) => {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
+                    const input = document.createElement("input");
+                    input.type = "hidden";
                     input.name = `${this.wysiwygId} + 'Poll_options[${i}}]`;
                     input.value = option;
                     form.appendChild(input);
@@ -233,30 +233,30 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
          * Validates the poll data.
          */
         validate(data) {
-            if (this.questionField.value.trim() === '') {
+            if (this.questionField.value.trim() === "") {
                 return;
             }
             let nonEmptyOptionCount = 0;
             Array.from(this.optionList.children).forEach((listItem) => {
-                const optionInput = listItem.querySelector('input[type=text]');
-                if (optionInput.value.trim() !== '') {
+                const optionInput = listItem.querySelector("input[type=text]");
+                if (optionInput.value.trim() !== "") {
                     nonEmptyOptionCount++;
                 }
             });
             if (nonEmptyOptionCount === 0) {
-                data.api.throwError(this.container, Language.get('wcf.global.form.error.empty'));
+                data.api.throwError(this.container, Language.get("wcf.global.form.error.empty"));
                 data.valid = false;
             }
             else {
                 const maxVotes = ~~this.maxVotesField.value;
                 if (maxVotes && maxVotes > nonEmptyOptionCount) {
-                    data.api.throwError(this.maxVotesField.parentElement, Language.get('wcf.poll.maxVotes.error.invalid'));
+                    data.api.throwError(this.maxVotesField.parentElement, Language.get("wcf.poll.maxVotes.error.invalid"));
                     data.valid = false;
                 }
                 else {
-                    EventHandler.fire('com.woltlab.wcf.poll.editor', 'validate', {
+                    EventHandler.fire("com.woltlab.wcf.poll.editor", "validate", {
                         data: data,
-                        pollEditor: this
+                        pollEditor: this,
                     });
                 }
             }
@@ -267,7 +267,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
         getData() {
             return {
                 [this.questionField.id]: this.questionField.value,
-                [this.wysiwygId + 'Poll_options']: this.getOptions(),
+                [this.wysiwygId + "Poll_options"]: this.getOptions(),
                 [this.endTimeField.id]: this.endTimeField.value,
                 [this.maxVotesField.id]: this.maxVotesField.value,
                 [this.isChangeableYesField.id]: !!this.isChangeableYesField.checked,
@@ -284,8 +284,8 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../Sorta
         getOptions() {
             const options = [];
             Array.from(this.optionList.children).forEach((listItem) => {
-                const optionValue = listItem.querySelector('input[type=text]').value.trim();
-                if (optionValue !== '') {
+                const optionValue = listItem.querySelector("input[type=text]").value.trim();
+                if (optionValue !== "") {
                     options.push(`${listItem.dataset.optionId}_${optionValue}`);
                 }
             });
