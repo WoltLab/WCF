@@ -39,22 +39,19 @@ export function formatDateTime(date: Date): string {
  * Formats a date using PHP's `date()` modifiers.
  */
 export function format(date: Date, format: string): string {
-  let char: string;
-  let out = "";
-
   // ISO 8601 date, best recognition by PHP's strtotime()
   if (format === "c") {
     format = "Y-m-dTH:i:sP";
   }
 
+  let out = "";
   for (let i = 0, length = format.length; i < length; i++) {
-    let hours: number;
-
+    let char: string;
     switch (format[i]) {
       // seconds
       case "s":
         // `00` through `59`
-        char = ("0" + date.getSeconds().toString()).slice(-2);
+        char = date.getSeconds().toString().padStart(2, "0");
         break;
 
       // minutes
@@ -68,9 +65,9 @@ export function format(date: Date, format: string): string {
         // `am` or `pm`
         char = date.getHours() > 11 ? "pm" : "am";
         break;
-      case "g":
+      case "g": {
         // `1` through `12`
-        hours = date.getHours();
+        const hours = date.getHours();
         if (hours === 0) {
           char = "12";
         } else if (hours > 12) {
@@ -78,10 +75,12 @@ export function format(date: Date, format: string): string {
         } else {
           char = hours.toString();
         }
+
         break;
-      case "h":
+      }
+      case "h": {
         // `01` through `12`
-        hours = date.getHours();
+        const hours = date.getHours();
         if (hours === 0) {
           char = "12";
         } else if (hours > 12) {
@@ -91,7 +90,9 @@ export function format(date: Date, format: string): string {
         }
 
         char = char.padStart(2, "0");
+
         break;
+      }
       case "A":
         // `AM` or `PM`
         char = date.getHours() > 11 ? "PM" : "AM";
@@ -148,7 +149,7 @@ export function format(date: Date, format: string): string {
       // year
       case "y":
         // `00` through `99`
-        char = date.getFullYear().toString().substr(2);
+        char = date.getFullYear().toString().slice(-2);
         break;
       case "Y":
         // Examples: `1988` or `2015`
@@ -162,9 +163,9 @@ export function format(date: Date, format: string): string {
 
         offset = Math.abs(offset);
 
-        char += ("0" + (~~(offset / 60)).toString()).slice(-2);
+        char += (~~(offset / 60)).toString().padStart(2, "0");
         char += ":";
-        char += ("0" + (offset % 60).toString()).slice(-2);
+        char += (offset % 60).toString().padStart(2, "0");
 
         break;
       }
