@@ -170,12 +170,12 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Ev
                     onShow: () => {
                         const pre = this._pre;
                         const highlighter = document.getElementById(idHighlighter);
-                        highlighter.value = pre.dataset.highlighter;
+                        highlighter.value = pre.dataset.highlighter || "";
                         const line = ~~(pre.dataset.line || 1);
                         const lineInput = document.getElementById(idLine);
                         lineInput.value = line.toString();
                         const filename = document.getElementById(idFile);
-                        filename.value = pre.dataset.file;
+                        filename.value = pre.dataset.file || "";
                     },
                     title: Language.get("wcf.editor.code.edit"),
                 },

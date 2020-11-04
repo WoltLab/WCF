@@ -218,14 +218,14 @@ class UiRedactorCode implements DialogCallbackObject {
           const pre = this._pre!;
 
           const highlighter = document.getElementById(idHighlighter) as HTMLSelectElement;
-          highlighter.value = pre.dataset.highlighter!;
+          highlighter.value = pre.dataset.highlighter || "";
           const line = ~~(pre.dataset.line || 1);
 
           const lineInput = document.getElementById(idLine) as HTMLInputElement;
           lineInput.value = line.toString();
 
           const filename = document.getElementById(idFile) as HTMLInputElement;
-          filename.value = pre.dataset.file!;
+          filename.value = pre.dataset.file || "";
         },
 
         title: Language.get("wcf.editor.code.edit"),
