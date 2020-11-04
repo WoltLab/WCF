@@ -12,7 +12,7 @@ import * as Language from "../../Language";
 import DomUtil from "../../Dom/Util";
 
 // zxcvbn is imported for the types only. It is loaded on demand, due to its size.
-import zxcvbn from "zxcvbn";
+import type zxcvbn from "zxcvbn";
 
 type StaticDictionary = string[];
 
