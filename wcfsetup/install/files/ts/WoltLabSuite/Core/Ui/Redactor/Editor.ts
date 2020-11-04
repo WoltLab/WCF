@@ -45,4 +45,14 @@ export interface RedactorEditor {
   utils: {
     isEmpty(html: string): boolean;
   };
+
+  WoltLabEvent: {
+    register(event: string, callback: (data: WoltLabEventData) => void): void;
+  };
+}
+
+export interface WoltLabEventData {
+  cancel: boolean;
+  event: Event;
+  redactor: RedactorEditor;
 }

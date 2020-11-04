@@ -1,56 +1,37 @@
-define(['Ajax', 'Environment', 'StringUtil', 'Ui/CloseOverlay'], function (Ajax, Environment, StringUtil, UiCloseOverlay) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../StringUtil", "../CloseOverlay"], function (require, exports, tslib_1, Ajax, Core, StringUtil, CloseOverlay_1) {
     "use strict";
-    if (!COMPILER_TARGET_DEFAULT) {
-        var Fake = function () { };
-        Fake.prototype = {
-            init: function () { },
-            _keyDown: function () { },
-            _keyUp: function () { },
-            _getTextLineInFrontOfCaret: function () { },
-            _getDropdownMenuPosition: function () { },
-            _setUsername: function () { },
-            _selectMention: function () { },
-            _updateDropdownPosition: function () { },
-            _selectItem: function () { },
-            _hideDropdown: function () { },
-            _ajaxSetup: function () { },
-            _ajaxSuccess: function () { }
-        };
-        return Fake;
-    }
-    var _dropdownContainer = null;
-    function UiRedactorMention(redactor) { this.init(redactor); }
-    UiRedactorMention.prototype = {
-        init: function (redactor) {
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    StringUtil = tslib_1.__importStar(StringUtil);
+    CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
+    let _dropdownContainer = null;
+    class UiRedactorMention {
+        constructor(redactor) {
             this._active = false;
             this._dropdownActive = false;
             this._dropdownMenu = null;
             this._itemIndex = 0;
             this._lineHeight = null;
-            this._mentionStart = '';
-            this._redactor = redactor;
+            this._mentionStart = "";
             this._timer = null;
-            redactor.WoltLabEvent.register('keydown', this._keyDown.bind(this));
-            redactor.WoltLabEvent.register('keyup', this._keyUp.bind(this));
-            UiCloseOverlay.add('UiRedactorMention-' + redactor.core.element()[0].id, this._hideDropdown.bind(this));
-        },
-        _keyDown: function (data) {
+            this._redactor = redactor;
+            redactor.WoltLabEvent.register("keydown", (data) => this._keyDown(data));
+            redactor.WoltLabEvent.register("keyup", (data) => this._keyUp(data));
+            CloseOverlay_1.default.add(`UiRedactorMention-${redactor.core.element()[0].id}`, () => this._hideDropdown());
+        }
+        _keyDown(data) {
             if (!this._dropdownActive) {
                 return;
             }
-            /** @var Event event */
-            var event = data.event;
-            switch (event.which) {
-                // enter
-                case 13:
+            const event = data.event;
+            switch (event.key) {
+                case "Enter":
                     this._setUsername(null, this._dropdownMenu.children[this._itemIndex].children[0]);
                     break;
-                // arrow up
-                case 38:
+                case "ArrowUp":
                     this._selectItem(-1);
                     break;
-                // arrow down
-                case 40:
+                case "ArrowDown":
                     this._selectItem(1);
                     break;
                 default:
@@ -59,44 +40,43 @@ define(['Ajax', 'Environment', 'StringUtil', 'Ui/CloseOverlay'], function (Ajax,
             }
             event.preventDefault();
             data.cancel = true;
-        },
-        _keyUp: function (data) {
-            /** @var Event event */
-            var event = data.event;
+        }
+        _keyUp(data) {
+            const event = data.event;
             // ignore return key
-            if (event.which === 13) {
+            if (event.key === "Enter") {
                 this._active = false;
                 return;
             }
             if (this._dropdownActive) {
                 data.cancel = true;
                 // ignore arrow up/down
-                if (event.which === 38 || event.which === 40) {
+                if (event.key === "ArrowDown" || event.key === "ArrowUp") {
                     return;
                 }
             }
-            var text = this._getTextLineInFrontOfCaret();
+            const text = this._getTextLineInFrontOfCaret();
             if (text.length > 0 && text.length < 25) {
-                var match = text.match(/@([^,]{3,})$/);
+                const match = /@([^,]{3,})$/.exec(text);
                 if (match) {
                     // if mentioning is at text begin or there's a whitespace character
                     // before the '@', everything is fine
-                    if (!match.index || text[match.index - 1].match(/\s/)) {
+                    if (!match.index || /\s/.test(text[match.index - 1])) {
                         this._mentionStart = match[1];
                         if (this._timer !== null) {
                             window.clearTimeout(this._timer);
                             this._timer = null;
                         }
-                        this._timer = window.setTimeout((function () {
+                        this._timer = window.setTimeout(() => {
                             Ajax.api(this, {
                                 parameters: {
                                     data: {
-                                        searchString: this._mentionStart
-                                    }
-                                }
+                                        searchString: this._mentionStart,
+                                    },
+                                },
                             });
                             this._timer = null;
-                        }).bind(this), 500);
+                        }, 500);
                     }
                 }
                 else {
@@ -106,16 +86,20 @@ define(['Ajax', 'Environment', 'StringUtil', 'Ui/CloseOverlay'], function (Ajax,
             else {
                 this._hideDropdown();
             }
-        },
-        _getTextLineInFrontOfCaret: function () {
-            var data = this._selectMention(false);
+        }
+        _getTextLineInFrontOfCaret() {
+            const data = this._selectMention(false);
             if (data !== null) {
-                return data.range.cloneContents().textContent.replace(/\u200B/g, '').replace(/\u00A0/g, ' ').trim();
+                return data.range
+                    .cloneContents()
+                    .textContent.replace(/\u200B/g, "")
+                    .replace(/\u00A0/g, " ")
+                    .trim();
             }
-            return '';
-        },
-        _getDropdownMenuPosition: function () {
-            var data = this._selectMention();
+            return "";
+        }
+        _getDropdownMenuPosition() {
+            const data = this._selectMention();
             if (data === null) {
                 return null;
             }
@@ -123,10 +107,10 @@ define(['Ajax', 'Environment', 'StringUtil', 'Ui/CloseOverlay'], function (Ajax,
             data.selection.removeAllRanges();
             data.selection.addRange(data.range);
             // get the offsets of the bounding box of current text selection
-            var rect = data.selection.getRangeAt(0).getBoundingClientRect();
-            var offsets = {
+            const rect = data.selection.getRangeAt(0).getBoundingClientRect();
+            const offsets = {
                 top: Math.round(rect.bottom) + (window.scrollY || window.pageYOffset),
-                left: Math.round(rect.left) + document.body.scrollLeft
+                left: Math.round(rect.left) + document.body.scrollLeft,
             };
             if (this._lineHeight === null) {
                 this._lineHeight = Math.round(rect.bottom - rect.top);
@@ -134,13 +118,13 @@ define(['Ajax', 'Environment', 'StringUtil', 'Ui/CloseOverlay'], function (Ajax,
             // restore caret position
             this._redactor.selection.restore();
             return offsets;
-        },
-        _setUsername: function (event, item) {
+        }
+        _setUsername(event, item) {
             if (event) {
                 event.preventDefault();
                 item = event.currentTarget;
             }
-            var data = this._selectMention();
+            const data = this._selectMention();
             if (data === null) {
                 this._hideDropdown();
                 return;
@@ -149,16 +133,16 @@ define(['Ajax', 'Environment', 'StringUtil', 'Ui/CloseOverlay'], function (Ajax,
             this._redactor.buffer.set();
             data.selection.removeAllRanges();
             data.selection.addRange(data.range);
-            var range = getSelection().getRangeAt(0);
+            let range = window.getSelection().getRangeAt(0);
             range.deleteContents();
             range.collapse(true);
             // Mentions only allow for one whitespace per match, putting the username in apostrophes
             // will allow an arbitrary number of spaces.
-            var username = elData(item, 'username').trim();
+            let username = item.dataset.username.trim();
             if (username.split(/\s/g).length > 2) {
                 username = "'" + username.replace(/'/g, "''") + "'";
             }
-            var text = document.createTextNode('@' + username + '\u00A0');
+            const text = document.createTextNode("@" + username + "\u00A0");
             range.insertNode(text);
             range = document.createRange();
             range.selectNode(text);
@@ -166,32 +150,32 @@ define(['Ajax', 'Environment', 'StringUtil', 'Ui/CloseOverlay'], function (Ajax,
             data.selection.removeAllRanges();
             data.selection.addRange(range);
             this._hideDropdown();
-        },
-        _selectMention: function (skipCheck) {
-            var selection = window.getSelection();
+        }
+        _selectMention(skipCheck) {
+            const selection = window.getSelection();
             if (!selection.rangeCount || !selection.isCollapsed) {
                 return null;
             }
-            var container = selection.anchorNode;
+            let container = selection.anchorNode;
             if (container.nodeType === Node.TEXT_NODE) {
                 // work-around for Firefox after suggestions have been presented
-                container = container.parentNode;
+                container = container.parentElement;
             }
             // check if there is an '@' within the current range
-            if (container.textContent.indexOf('@') === -1) {
+            if (container.textContent.indexOf("@") === -1) {
                 return null;
             }
             // check if we're inside code or quote blocks
-            var editor = this._redactor.core.editor()[0];
+            const editor = this._redactor.core.editor()[0];
             while (container && container !== editor) {
-                if (['PRE', 'WOLTLAB-QUOTE'].indexOf(container.nodeName) !== -1) {
+                if (["PRE", "WOLTLAB-QUOTE"].indexOf(container.nodeName) !== -1) {
                     return null;
                 }
-                container = container.parentNode;
+                container = container.parentElement;
             }
-            var range = selection.getRangeAt(0);
-            var endContainer = range.startContainer;
-            var endOffset = range.startOffset;
+            let range = selection.getRangeAt(0);
+            let endContainer = range.startContainer;
+            let endOffset = range.startOffset;
             // find the appropriate end location
             while (endContainer.nodeType === Node.ELEMENT_NODE) {
                 if (endOffset === 0 && endContainer.childNodes.length === 0) {
@@ -201,7 +185,7 @@ define(['Ajax', 'Environment', 'StringUtil', 'Ui/CloseOverlay'], function (Ajax,
                 // startOffset for elements will always be after a node index
                 // or at the very start, which means if there is only text node
                 // and the caret is after it, startOffset will equal `1`
-                endContainer = endContainer.childNodes[(endOffset ? endOffset - 1 : 0)];
+                endContainer = endContainer.childNodes[endOffset ? endOffset - 1 : 0];
                 if (endOffset > 0) {
                     if (endContainer.nodeType === Node.TEXT_NODE) {
                         endOffset = endContainer.textContent.length;
@@ -211,14 +195,14 @@ define(['Ajax', 'Environment', 'StringUtil', 'Ui/CloseOverlay'], function (Ajax,
                     }
                 }
             }
-            var startContainer = endContainer;
-            var startOffset = -1;
+            let startContainer = endContainer;
+            let startOffset = -1;
             while (startContainer !== null) {
                 if (startContainer.nodeType !== Node.TEXT_NODE) {
                     return null;
                 }
-                if (startContainer.textContent.indexOf('@') !== -1) {
-                    startOffset = startContainer.textContent.lastIndexOf('@');
+                if (startContainer.textContent.indexOf("@") !== -1) {
+                    startOffset = startContainer.textContent.lastIndexOf("@");
                     break;
                 }
                 startContainer = startContainer.previousSibling;
@@ -240,11 +224,11 @@ define(['Ajax', 'Environment', 'StringUtil', 'Ui/CloseOverlay'], function (Ajax,
             if (skipCheck === false) {
                 // check if the `@` occurs at the very start of the container
                 // or at least has a whitespace in front of it
-                var text = '';
+                let text = "";
                 if (startOffset) {
                     text = startContainer.textContent.substr(0, startOffset);
                 }
-                while (startContainer = startContainer.previousSibling) {
+                while ((startContainer = startContainer.previousSibling)) {
                     if (startContainer.nodeType === Node.TEXT_NODE) {
                         text = startContainer.textContent + text;
                     }
@@ -252,106 +236,114 @@ define(['Ajax', 'Environment', 'StringUtil', 'Ui/CloseOverlay'], function (Ajax,
                         break;
                     }
                 }
-                if (text.replace(/\u200B/g, '').match(/\S$/)) {
+                if (/\S$/.test(text.replace(/\u200B/g, ""))) {
                     return null;
                 }
             }
             else {
                 // check if new range includes the mention text
-                if (range.cloneContents().textContent.replace(/\u200B/g, '').replace(/\u00A0/g, '').trim().replace(/^@/, '') !== this._mentionStart) {
+                if (range
+                    .cloneContents()
+                    .textContent.replace(/\u200B/g, "")
+                    .replace(/\u00A0/g, "")
+                    .trim()
+                    .replace(/^@/, "") !== this._mentionStart) {
                     // string mismatch
                     return null;
                 }
             }
             return {
                 range: range,
-                selection: selection
+                selection: selection,
             };
-        },
-        _updateDropdownPosition: function () {
-            var offset = this._getDropdownMenuPosition();
+        }
+        _updateDropdownPosition() {
+            const offset = this._getDropdownMenuPosition();
             if (offset === null) {
                 this._hideDropdown();
                 return;
             }
             offset.top += 7; // add a little vertical gap
-            this._dropdownMenu.style.setProperty('left', offset.left + 'px', '');
-            this._dropdownMenu.style.setProperty('top', offset.top + 'px', '');
+            const dropdownMenu = this._dropdownMenu;
+            dropdownMenu.style.setProperty("left", `${offset.left}px`, "");
+            dropdownMenu.style.setProperty("top", `${offset.top}px`, "");
             this._selectItem(0);
-            if (offset.top + this._dropdownMenu.offsetHeight + 10 > window.innerHeight + (window.scrollY || window.pageYOffset)) {
-                this._dropdownMenu.style.setProperty('top', offset.top - this._dropdownMenu.offsetHeight - 2 * this._lineHeight + 7 + 'px', '');
+            if (offset.top + dropdownMenu.offsetHeight + 10 > window.innerHeight + (window.scrollY || window.pageYOffset)) {
+                const top = offset.top - dropdownMenu.offsetHeight - 2 * this._lineHeight + 7;
+                dropdownMenu.style.setProperty("top", `${top}px`, "");
             }
-        },
-        _selectItem: function (step) {
+        }
+        _selectItem(step) {
+            const dropdownMenu = this._dropdownMenu;
             // find currently active item
-            var item = elBySel('.active', this._dropdownMenu);
+            const item = dropdownMenu.querySelector(".active");
             if (item !== null) {
-                item.classList.remove('active');
+                item.classList.remove("active");
             }
             this._itemIndex += step;
             if (this._itemIndex < 0) {
-                this._itemIndex = this._dropdownMenu.childElementCount - 1;
+                this._itemIndex = dropdownMenu.childElementCount - 1;
             }
-            else if (this._itemIndex >= this._dropdownMenu.childElementCount) {
+            else if (this._itemIndex >= dropdownMenu.childElementCount) {
                 this._itemIndex = 0;
             }
-            this._dropdownMenu.children[this._itemIndex].classList.add('active');
-        },
-        _hideDropdown: function () {
-            if (this._dropdownMenu !== null)
-                this._dropdownMenu.classList.remove('dropdownOpen');
+            dropdownMenu.children[this._itemIndex].classList.add("active");
+        }
+        _hideDropdown() {
+            if (this._dropdownMenu !== null) {
+                this._dropdownMenu.classList.remove("dropdownOpen");
+            }
             this._dropdownActive = false;
             this._itemIndex = 0;
-        },
-        _ajaxSetup: function () {
+        }
+        _ajaxSetup() {
             return {
                 data: {
-                    actionName: 'getSearchResultList',
-                    className: 'wcf\\data\\user\\UserAction',
-                    interfaceName: 'wcf\\data\\ISearchAction',
+                    actionName: "getSearchResultList",
+                    className: "wcf\\data\\user\\UserAction",
+                    interfaceName: "wcf\\data\\ISearchAction",
                     parameters: {
                         data: {
                             includeUserGroups: true,
-                            scope: 'mention'
-                        }
-                    }
+                            scope: "mention",
+                        },
+                    },
                 },
-                silent: true
+                silent: true,
             };
-        },
-        _ajaxSuccess: function (data) {
+        }
+        _ajaxSuccess(data) {
             if (!Array.isArray(data.returnValues) || !data.returnValues.length) {
                 this._hideDropdown();
                 return;
             }
             if (this._dropdownMenu === null) {
-                this._dropdownMenu = elCreate('ol');
-                this._dropdownMenu.className = 'dropdownMenu';
+                this._dropdownMenu = document.createElement("ol");
+                this._dropdownMenu.className = "dropdownMenu";
                 if (_dropdownContainer === null) {
-                    _dropdownContainer = elCreate('div');
-                    _dropdownContainer.className = 'dropdownMenuContainer';
+                    _dropdownContainer = document.createElement("div");
+                    _dropdownContainer.className = "dropdownMenuContainer";
                     document.body.appendChild(_dropdownContainer);
                 }
                 _dropdownContainer.appendChild(this._dropdownMenu);
             }
-            this._dropdownMenu.innerHTML = '';
-            var callbackClick = this._setUsername.bind(this), link, listItem, user;
-            for (var i = 0, length = data.returnValues.length; i < length; i++) {
-                user = data.returnValues[i];
-                listItem = elCreate('li');
-                link = elCreate('a');
-                link.addEventListener('mousedown', callbackClick);
-                link.className = 'box16';
-                link.innerHTML = '<span>' + user.icon + '</span> <span>' + StringUtil.escapeHTML(user.label) + '</span>';
-                elData(link, 'user-id', user.objectID);
-                elData(link, 'username', user.label);
+            this._dropdownMenu.innerHTML = "";
+            data.returnValues.forEach((item) => {
+                const listItem = document.createElement("li");
+                const link = document.createElement("a");
+                link.addEventListener("mousedown", (ev) => this._setUsername(ev));
+                link.className = "box16";
+                link.innerHTML = `<span>${item.icon}</span> <span>${StringUtil.escapeHTML(item.label)}</span>`;
+                link.dataset.userId = item.objectID.toString();
+                link.dataset.username = item.label;
                 listItem.appendChild(link);
                 this._dropdownMenu.appendChild(listItem);
-            }
-            this._dropdownMenu.classList.add('dropdownOpen');
+            });
+            this._dropdownMenu.classList.add("dropdownOpen");
             this._dropdownActive = true;
             this._updateDropdownPosition();
         }
-    };
+    }
+    Core.enableLegacyInheritance(UiRedactorMention);
     return UiRedactorMention;
 });
