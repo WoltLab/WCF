@@ -8,8 +8,10 @@
  * @module  WoltLabSuite/Core/StringUtil
  */
 
-import * as Language from "./Language";
 import * as NumberUtil from "./NumberUtil";
+
+let _decimalPoint = ".";
+let _thousandsSeparator = ",";
 
 /**
  * Adds thousands separators to a given number.
@@ -17,16 +19,7 @@ import * as NumberUtil from "./NumberUtil";
  * @see    http://stackoverflow.com/a/6502556/782822
  */
 export function addThousandsSeparator(number: number): string {
-  // Fetch Language, as it cannot be provided because of a circular dependency
-  if (Language === undefined) {
-    // @ts-expect-error: This is required due to a circular dependency.
-    Language = require("./Language");
-  }
-
-  return String(number).replace(
-    /(^-?\d{1,3}|\d{3})(?=(?:\d{3})+(?:$|\.))/g,
-    "$1" + Language.get("wcf.global.thousandsSeparator"),
-  );
+  return String(number).replace(/(^-?\d{1,3}|\d{3})(?=(?:\d{3})+(?:$|\.))/g, "$1" + _thousandsSeparator);
 }
 
 /**
@@ -49,17 +42,13 @@ export function escapeRegExp(string: string): string {
  * Rounds number to given count of floating point digits, localizes decimal-point and inserts thousands separators.
  */
 export function formatNumeric(number: number, decimalPlaces?: number): string {
-  // Fetch Language, as it cannot be provided because of a circular dependency
-  if (Language === undefined) {
-    // @ts-expect-error: This is required due to a circular dependency.
-    Language = require("./Language");
-  }
-
   let tmp = NumberUtil.round(number, decimalPlaces || -2).toString();
   const numberParts = tmp.split(".");
 
   tmp = addThousandsSeparator(+numberParts[0]);
-  if (numberParts.length > 1) tmp += Language.get("wcf.global.decimalPoint") + numberParts[1];
+  if (numberParts.length > 1) {
+    tmp += _decimalPoint + numberParts[1];
+  }
 
   tmp = tmp.replace("-", "\u2212");
 
@@ -120,4 +109,14 @@ export function shortUnit(number: number): string {
   }
 
   return formatNumeric(number) + unitSuffix;
+}
+
+interface I18nValues {
+  decimalPoint: string;
+  thousandsSeparator: string;
+}
+
+export function setupI18n(values: I18nValues): void {
+  _decimalPoint = values.decimalPoint;
+  _thousandsSeparator = values.thousandsSeparator;
 }
