@@ -11,6 +11,7 @@ export interface RedactorEditor {
     set(): void;
   };
   button: {
+    addCallback(button: JQuery, callback: () => void): void;
     toggle(event: MouseEvent | object, btnName: string, type: string, callback: string, args?: object): void;
   };
   caret: {
@@ -46,8 +47,14 @@ export interface RedactorEditor {
     isEmpty(html: string): boolean;
   };
 
+  WoltLabCaret: {
+    paragraphAfterBlock(quote: HTMLElement): void;
+  };
   WoltLabEvent: {
     register(event: string, callback: (data: WoltLabEventData) => void): void;
+  };
+  WoltLabSource: {
+    isActive(): boolean;
   };
 }
 
