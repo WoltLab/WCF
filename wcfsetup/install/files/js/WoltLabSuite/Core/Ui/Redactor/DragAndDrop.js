@@ -2,200 +2,172 @@
  * Drag and Drop file uploads.
  *
  * @author      Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright  2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Ui/Redactor/DragAndDrop
  */
-define(['Dictionary', 'EventHandler', 'Language'], function (Dictionary, EventHandler, Language) {
+define(["require", "exports", "tslib", "../../Event/Handler", "../../Language"], function (require, exports, tslib_1, EventHandler, Language) {
     "use strict";
-    if (!COMPILER_TARGET_DEFAULT) {
-        var Fake = function () { };
-        Fake.prototype = {
-            init: function () { },
-            _dragOver: function () { },
-            _drop: function () { },
-            _dragLeave: function () { },
-            _setup: function () { }
-        };
-        return Fake;
-    }
-    var _didInit = false;
-    var _dragArea = new Dictionary();
-    var _isDragging = false;
-    var _isFile = false;
-    var _timerLeave = null;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.init = void 0;
+    EventHandler = tslib_1.__importStar(EventHandler);
+    Language = tslib_1.__importStar(Language);
+    let _didInit = false;
+    const _dragArea = new Map();
+    let _isDragging = false;
+    let _isFile = false;
+    let _timerLeave = null;
     /**
-     * @exports     WoltLabSuite/Core/Ui/Redactor/DragAndDrop
+     * Handles items dragged into the browser window.
      */
-    return {
-        /**
-         * Initializes drag and drop support for provided editor instance.
-         *
-         * @param       {$.Redactor}    editor          editor instance
-         */
-        init: function (editor) {
-            if (!_didInit) {
-                this._setup();
+    function _dragOver(event) {
+        event.preventDefault();
+        if (!event.dataTransfer || !event.dataTransfer.types) {
+            return;
+        }
+        let isFirefox = false;
+        Object.keys(event.dataTransfer).forEach((property) => {
+            if (property.startsWith("moz")) {
+                isFirefox = true;
             }
-            _dragArea.set(editor.uuid, {
-                editor: editor,
-                element: null
-            });
-        },
-        /**
-         * Handles items dragged into the browser window.
-         *
-         * @param       {Event}         event           drag event
-         */
-        _dragOver: function (event) {
-            event.preventDefault();
-            //noinspection JSUnresolvedVariable
-            if (!event.dataTransfer || !event.dataTransfer.types) {
-                return;
+        });
+        // IE and WebKit set 'Files', Firefox sets 'application/x-moz-file' for files being dragged
+        // and Safari just provides 'Files' along with a huge list of garbage
+        _isFile = false;
+        if (isFirefox) {
+            // Firefox sets the 'Files' type even if the user is just dragging an on-page element
+            if (event.dataTransfer.types[0] === "application/x-moz-file") {
+                _isFile = true;
             }
-            var isFirefox = false;
-            //noinspection JSUnresolvedVariable
-            for (var property in event.dataTransfer) {
-                //noinspection JSUnresolvedVariable
-                if (event.dataTransfer.hasOwnProperty(property) && property.match(/^moz/)) {
-                    isFirefox = true;
-                    break;
-                }
-            }
-            // IE and WebKit set 'Files', Firefox sets 'application/x-moz-file' for files being dragged
-            // and Safari just provides 'Files' along with a huge list of garbage
-            _isFile = false;
-            if (isFirefox) {
-                // Firefox sets the 'Files' type even if the user is just dragging an on-page element
-                //noinspection JSUnresolvedVariable
-                if (event.dataTransfer.types[0] === 'application/x-moz-file') {
+        }
+        else {
+            event.dataTransfer.types.forEach((type) => {
+                if (type === "Files") {
                     _isFile = true;
                 }
-            }
-            else {
-                //noinspection JSUnresolvedVariable
-                for (var i = 0; i < event.dataTransfer.types.length; i++) {
-                    //noinspection JSUnresolvedVariable
-                    if (event.dataTransfer.types[i] === 'Files') {
-                        _isFile = true;
-                        break;
-                    }
-                }
-            }
-            if (!_isFile) {
-                // user is just dragging around some garbage, ignore it
-                return;
-            }
-            if (_isDragging) {
-                // user is still dragging the file around
-                return;
-            }
-            _isDragging = true;
-            _dragArea.forEach((function (data, uuid) {
-                var editor = data.editor.$editor[0];
-                if (!editor.parentNode) {
-                    _dragArea.delete(uuid);
-                    return;
-                }
-                var element = data.element;
-                if (element === null) {
-                    element = elCreate('div');
-                    element.className = 'redactorDropArea';
-                    elData(element, 'element-id', data.editor.$element[0].id);
-                    elData(element, 'drop-here', Language.get('wcf.attachment.dragAndDrop.dropHere'));
-                    elData(element, 'drop-now', Language.get('wcf.attachment.dragAndDrop.dropNow'));
-                    element.addEventListener('dragover', function () { element.classList.add('active'); });
-                    element.addEventListener('dragleave', function () { element.classList.remove('active'); });
-                    element.addEventListener('drop', this._drop.bind(this));
-                    data.element = element;
-                }
-                editor.parentNode.insertBefore(element, editor);
-                element.style.setProperty('top', editor.offsetTop + 'px', '');
-            }).bind(this));
-        },
-        /**
-         * Handles items dropped onto an editor's drop area
-         *
-         * @param       {Event}         event           drop event
-         * @protected
-         */
-        _drop: function (event) {
-            if (!_isFile) {
-                return;
-            }
-            //noinspection JSUnresolvedVariable
-            if (!event.dataTransfer || !event.dataTransfer.files.length) {
-                return;
-            }
-            event.preventDefault();
-            //noinspection JSCheckFunctionSignatures
-            var elementId = elData(event.currentTarget, 'element-id');
-            //noinspection JSUnresolvedVariable
-            for (var i = 0, length = event.dataTransfer.files.length; i < length; i++) {
-                //noinspection JSUnresolvedVariable
-                EventHandler.fire('com.woltlab.wcf.redactor2', 'dragAndDrop_' + elementId, {
-                    file: event.dataTransfer.files[i]
-                });
-            }
-            // this will reset all drop areas
-            this._dragLeave();
-        },
-        /**
-         * Invoked whenever the item is no longer dragged or was dropped.
-         *
-         * @protected
-         */
-        _dragLeave: function () {
-            if (!_isDragging || !_isFile) {
-                return;
-            }
-            if (_timerLeave !== null) {
-                window.clearTimeout(_timerLeave);
-            }
-            _timerLeave = window.setTimeout(function () {
-                if (!_isDragging) {
-                    _dragArea.forEach(function (data) {
-                        if (data.element && data.element.parentNode) {
-                            data.element.classList.remove('active');
-                            elRemove(data.element);
-                        }
-                    });
-                }
-                _timerLeave = null;
-            }, 100);
-            _isDragging = false;
-        },
-        /**
-         * Handles the global drop event.
-         *
-         * @param       {Event}         event
-         * @protected
-         */
-        _globalDrop: function (event) {
-            if (event.target.closest('.redactor-layer') === null) {
-                var eventData = { cancelDrop: true, event: event };
-                _dragArea.forEach(function (data) {
-                    //noinspection JSUnresolvedVariable
-                    EventHandler.fire('com.woltlab.wcf.redactor2', 'dragAndDrop_globalDrop_' + data.editor.$element[0].id, eventData);
-                });
-                if (eventData.cancelDrop) {
-                    event.preventDefault();
-                }
-            }
-            this._dragLeave(event);
-        },
-        /**
-         * Binds listeners to global events.
-         *
-         * @protected
-         */
-        _setup: function () {
-            // discard garbage event
-            window.addEventListener('dragend', function (event) { event.preventDefault(); });
-            window.addEventListener('dragover', this._dragOver.bind(this));
-            window.addEventListener('dragleave', this._dragLeave.bind(this));
-            window.addEventListener('drop', this._globalDrop.bind(this));
-            _didInit = true;
+            });
         }
-    };
+        if (!_isFile) {
+            // user is just dragging around some garbage, ignore it
+            return;
+        }
+        if (_isDragging) {
+            // user is still dragging the file around
+            return;
+        }
+        _isDragging = true;
+        _dragArea.forEach((data, uuid) => {
+            const editor = data.editor.$editor[0];
+            if (!editor.parentElement) {
+                _dragArea.delete(uuid);
+                return;
+            }
+            let element = data.element;
+            if (element === null) {
+                element = document.createElement("div");
+                element.className = "redactorDropArea";
+                element.dataset.elementId = data.editor.$element[0].id;
+                element.dataset.dropHere = Language.get("wcf.attachment.dragAndDrop.dropHere");
+                element.dataset.dropNow = Language.get("wcf.attachment.dragAndDrop.dropNow");
+                element.addEventListener("dragover", () => {
+                    element.classList.add("active");
+                });
+                element.addEventListener("dragleave", () => {
+                    element.classList.remove("active");
+                });
+                element.addEventListener("drop", (ev) => drop(ev));
+                data.element = element;
+            }
+            editor.parentElement.insertBefore(element, editor);
+            element.style.setProperty("top", `${editor.offsetTop}px`, "");
+        });
+    }
+    /**
+     * Handles items dropped onto an editor's drop area
+     */
+    function drop(event) {
+        if (!_isFile) {
+            return;
+        }
+        if (!event.dataTransfer || !event.dataTransfer.files.length) {
+            return;
+        }
+        event.preventDefault();
+        const target = event.currentTarget;
+        const elementId = target.dataset.elementId;
+        Array.from(event.dataTransfer.files).forEach((file) => {
+            EventHandler.fire("com.woltlab.wcf.redactor2", `dragAndDrop_${elementId}`, {
+                file,
+            });
+        });
+        // this will reset all drop areas
+        dragLeave();
+    }
+    /**
+     * Invoked whenever the item is no longer dragged or was dropped.
+     *
+     * @protected
+     */
+    function dragLeave() {
+        if (!_isDragging || !_isFile) {
+            return;
+        }
+        if (_timerLeave !== null) {
+            window.clearTimeout(_timerLeave);
+        }
+        _timerLeave = window.setTimeout(() => {
+            if (!_isDragging) {
+                _dragArea.forEach((data) => {
+                    if (data.element && data.element.parentElement) {
+                        data.element.classList.remove("active");
+                        data.element.remove();
+                    }
+                });
+            }
+            _timerLeave = null;
+        }, 100);
+        _isDragging = false;
+    }
+    /**
+     * Handles the global drop event.
+     */
+    function globalDrop(event) {
+        const target = event.target;
+        if (target.closest(".redactor-layer") === null) {
+            const eventData = { cancelDrop: true, event: event };
+            _dragArea.forEach((data) => {
+                EventHandler.fire("com.woltlab.wcf.redactor2", `dragAndDrop_globalDrop_${data.editor.$element[0].id}`, eventData);
+            });
+            if (eventData.cancelDrop) {
+                event.preventDefault();
+            }
+        }
+        dragLeave();
+    }
+    /**
+     * Binds listeners to global events.
+     *
+     * @protected
+     */
+    function setup() {
+        // discard garbage event
+        window.addEventListener("dragend", (ev) => ev.preventDefault());
+        window.addEventListener("dragover", (ev) => _dragOver(ev));
+        window.addEventListener("dragleave", () => dragLeave());
+        window.addEventListener("drop", (ev) => globalDrop(ev));
+        _didInit = true;
+    }
+    /**
+     * Initializes drag and drop support for provided editor instance.
+     */
+    function init(editor) {
+        if (!_didInit) {
+            setup();
+        }
+        _dragArea.set(editor.uuid, {
+            editor: editor,
+            element: null,
+        });
+    }
+    exports.init = init;
 });

@@ -1,4 +1,5 @@
 export interface RedactorEditor {
+  uuid: string;
   $editor: JQuery;
   $element: JQuery;
 
