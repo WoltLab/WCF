@@ -16,21 +16,7 @@ import UiDialog from "../Dialog";
 import { DialogCallbackObject, DialogCallbackSetup } from "../Dialog/Data";
 import { RedactorEditor } from "./Editor";
 import * as UiRedactorPseudoHeader from "./PseudoHeader";
-
-// TODO: "prism/prism-meta" is missing -- START
-
-interface PrismLang {
-  title: string;
-  file: string;
-}
-
-type Identifier = string;
-
-type PrismMetaData = Record<Identifier, PrismLang>;
-
-declare const PrismMeta: PrismMetaData;
-
-// TODO: "prism/prism-meta" is missing -- END
+import PrismMeta from "../../prism-meta";
 
 type Highlighter = [string, string];
 

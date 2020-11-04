@@ -126,7 +126,7 @@ class BBCodeHandler extends SingletonFactory {
 	 */
 	public function getHighlighterMeta() {
 		if ($this->highlighterMeta === null) {
-			$this->highlighterMeta = JSON::decode(preg_replace('!.*/\*START\*/(.*)/\*END\*/.*!', '\\1', file_get_contents(WCF_DIR.'/js/3rdParty/prism/prism-meta.js')));
+			$this->highlighterMeta = JSON::decode(preg_replace('/.*\/\*!START\*\/\s*const\s*metadata\s*=\s*(.*)\s*;\s*\/\*!END\*\/.*/', '\\1', file_get_contents(WCF_DIR.'/js/WoltLabSuite/Core/prism-meta.js')));
 		}
 		
 		return $this->highlighterMeta;

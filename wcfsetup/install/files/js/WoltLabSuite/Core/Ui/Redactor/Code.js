@@ -6,7 +6,7 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Ui/Redactor/Code
  */
-define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Event/Handler", "../../Language", "../../StringUtil", "../Dialog", "./PseudoHeader"], function (require, exports, tslib_1, Core, Util_1, EventHandler, Language, StringUtil, Dialog_1, UiRedactorPseudoHeader) {
+define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Event/Handler", "../../Language", "../../StringUtil", "../Dialog", "./PseudoHeader", "../../prism-meta"], function (require, exports, tslib_1, Core, Util_1, EventHandler, Language, StringUtil, Dialog_1, UiRedactorPseudoHeader, prism_meta_1) {
     "use strict";
     Core = tslib_1.__importStar(Core);
     Util_1 = tslib_1.__importDefault(Util_1);
@@ -15,6 +15,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Ev
     StringUtil = tslib_1.__importStar(StringUtil);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     UiRedactorPseudoHeader = tslib_1.__importStar(UiRedactorPseudoHeader);
+    prism_meta_1 = tslib_1.__importDefault(prism_meta_1);
     let _headerHeight = 0;
     class UiRedactorCode {
         /**
@@ -103,7 +104,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Ev
             const file = pre.dataset.file;
             let highlighter = pre.dataset.highlighter;
             highlighter =
-                this._editor.opts.woltlab.highlighters.indexOf(highlighter) !== -1 ? PrismMeta[highlighter].title : "";
+                this._editor.opts.woltlab.highlighters.indexOf(highlighter) !== -1 ? prism_meta_1.default[highlighter].title : "";
             const title = Language.get("wcf.editor.code.title", {
                 file,
                 highlighter,
@@ -149,7 +150,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Dom/Util", "../../Ev
                         let highlighters = `<option value="">${Language.get("wcf.editor.code.highlighter.detect")}</option>
             <option value="plain">${Language.get("wcf.editor.code.highlighter.plain")}</option>`;
                         const values = this._editor.opts.woltlab.highlighters.map((highlighter) => {
-                            return [highlighter, PrismMeta[highlighter].title];
+                            return [highlighter, prism_meta_1.default[highlighter].title];
                         });
                         // sort by label
                         values.sort((a, b) => {
