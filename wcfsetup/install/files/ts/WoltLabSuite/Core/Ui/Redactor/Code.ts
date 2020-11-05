@@ -14,7 +14,7 @@ import * as Language from "../../Language";
 import * as StringUtil from "../../StringUtil";
 import UiDialog from "../Dialog";
 import { DialogCallbackObject, DialogCallbackSetup } from "../Dialog/Data";
-import { RedactorEditor } from "./Editor";
+import { RedactorEditor, WoltLabEventData } from "./Editor";
 import * as UiRedactorPseudoHeader from "./PseudoHeader";
 import PrismMeta from "../../prism-meta";
 
@@ -51,7 +51,7 @@ class UiRedactorCode implements DialogCallbackObject {
   /**
    * Intercepts the insertion of `[code]` tags and uses a native `<pre>` instead.
    */
-  protected _bbcodeCode(data: { cancel: boolean }): void {
+  protected _bbcodeCode(data: WoltLabEventData): void {
     data.cancel = true;
 
     let pre = this._editor.selection.block();
