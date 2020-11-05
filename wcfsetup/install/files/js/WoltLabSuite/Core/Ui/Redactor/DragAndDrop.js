@@ -25,12 +25,7 @@ define(["require", "exports", "tslib", "../../Event/Handler", "../../Language"],
         if (!event.dataTransfer || !event.dataTransfer.types) {
             return;
         }
-        let isFirefox = false;
-        Object.keys(event.dataTransfer).forEach((property) => {
-            if (property.startsWith("moz")) {
-                isFirefox = true;
-            }
-        });
+        const isFirefox = Object.keys(event.dataTransfer).some((property) => property.startsWith("moz"));
         // IE and WebKit set 'Files', Firefox sets 'application/x-moz-file' for files being dragged
         // and Safari just provides 'Files' along with a huge list of garbage
         _isFile = false;
@@ -41,11 +36,7 @@ define(["require", "exports", "tslib", "../../Event/Handler", "../../Language"],
             }
         }
         else {
-            event.dataTransfer.types.forEach((type) => {
-                if (type === "Files") {
-                    _isFile = true;
-                }
-            });
+            _isFile = event.dataTransfer.types.some((type) => type === "Files");
         }
         if (!_isFile) {
             // user is just dragging around some garbage, ignore it

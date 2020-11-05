@@ -28,7 +28,7 @@ class UiRedactorLink implements DialogCallbackObject {
     if (!this.boundListener) {
       this.boundListener = true;
 
-      submitButton.addEventListener("click", this.submit.bind(this));
+      submitButton.addEventListener("click", () => this.submit());
     }
   }
 

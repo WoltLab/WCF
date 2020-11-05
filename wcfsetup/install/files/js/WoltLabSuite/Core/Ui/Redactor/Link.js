@@ -18,7 +18,7 @@ define(["require", "exports", "tslib", "../../Dom/Util", "../../Language", "../D
             // Redactor might modify the button, thus we cannot bind it in the dialog's `onSetup()` callback.
             if (!this.boundListener) {
                 this.boundListener = true;
-                submitButton.addEventListener("click", this.submit.bind(this));
+                submitButton.addEventListener("click", () => this.submit());
             }
         }
         submit() {
