@@ -172,6 +172,24 @@ define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function(Ajax, Core, FormBuil
 				cancelButton.addEventListener('click', this._closeDialog.bind(this));
 				elData(cancelButton, 'has-event-listener', 1);
 			}
+			
+			this._additionalSubmitButtons = document.querySelectorAll(':not(.formSubmit) button[type="submit"]', dialogData.content);
+			this._additionalSubmitButtons.forEach((submit) => {
+				submit.addEventListener('click', (ev) => {
+					// Mark the button that was clicked so that the button data handlers know
+					// which data needs to be submitted.
+					this._additionalSubmitButtons.forEach((button) => {
+						if (button === submit) {
+							button.dataset.isClicked = 1;
+						}
+						else {
+							button.dataset.isClicked = 0;
+						}
+					});
+					
+					UiDialog.submit(this._dialogId);
+				});
+			});
 		},
 		
 		/**
@@ -187,6 +205,7 @@ define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function(Ajax, Core, FormBuil
 			}
 			else if (typeof this._options.submitActionName === 'string') {
 				submitButton.disabled = true;
+				this._additionalSubmitButtons.forEach((submit) => submit.disabled = true);
 				
 				Ajax.api(this, {
 					actionName: this._options.submitActionName,
