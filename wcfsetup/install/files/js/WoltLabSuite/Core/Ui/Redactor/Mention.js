@@ -5,6 +5,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../String
     StringUtil = tslib_1.__importStar(StringUtil);
     CloseOverlay_1 = tslib_1.__importDefault(CloseOverlay_1);
     let _dropdownContainer = null;
+    const DropDownPixelOffset = 7;
     class UiRedactorMention {
         constructor(redactor) {
             this._active = false;
@@ -263,13 +264,13 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../String
                 this._hideDropdown();
                 return;
             }
-            offset.top += 7; // add a little vertical gap
+            offset.top += DropDownPixelOffset;
             const dropdownMenu = this._dropdownMenu;
             dropdownMenu.style.setProperty("left", `${offset.left}px`, "");
             dropdownMenu.style.setProperty("top", `${offset.top}px`, "");
             this._selectItem(0);
             if (offset.top + dropdownMenu.offsetHeight + 10 > window.innerHeight + (window.scrollY || window.pageYOffset)) {
-                const top = offset.top - dropdownMenu.offsetHeight - 2 * this._lineHeight + 7;
+                const top = offset.top - dropdownMenu.offsetHeight - 2 * this._lineHeight + DropDownPixelOffset;
                 dropdownMenu.style.setProperty("top", `${top}px`, "");
             }
         }

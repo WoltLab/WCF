@@ -49,7 +49,6 @@ class UiRedactorAutosave {
   constructor(element: HTMLTextAreaElement) {
     this._element = element;
     this._key = Core.getStoragePrefix() + this._element.dataset.autosave!;
-    //this._overlay = null;
 
     this._cleanup();
 
@@ -75,13 +74,8 @@ class UiRedactorAutosave {
   }
 
   protected _onVisibilityChange(): void {
-    if (document.hidden) {
-      this._isActive = false;
-      this._isPending = true;
-    } else {
-      this._isActive = true;
-      this._isPending = false;
-    }
+    this._isActive = !document.hidden;
+    this._isPending = document.hidden;
   }
 
   /**

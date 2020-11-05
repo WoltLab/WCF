@@ -34,7 +34,6 @@ define(["require", "exports", "tslib", "../../Core", "../../Devtools", "../../Ev
             this._timer = null;
             this._element = element;
             this._key = Core.getStoragePrefix() + this._element.dataset.autosave;
-            //this._overlay = null;
             this._cleanup();
             // remove attribute to prevent Redactor's built-in autosave to kick in
             delete this._element.dataset.autosave;
@@ -53,14 +52,8 @@ define(["require", "exports", "tslib", "../../Core", "../../Devtools", "../../Ev
             document.addEventListener("visibilitychange", () => this._onVisibilityChange());
         }
         _onVisibilityChange() {
-            if (document.hidden) {
-                this._isActive = false;
-                this._isPending = true;
-            }
-            else {
-                this._isActive = true;
-                this._isPending = false;
-            }
+            this._isActive = !document.hidden;
+            this._isPending = document.hidden;
         }
         /**
          * Returns the initial value for the textarea, used to inject message

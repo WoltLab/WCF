@@ -27,6 +27,8 @@ interface AjaxResponse extends ResponseData {
 
 let _dropdownContainer: HTMLElement | null = null;
 
+const DropDownPixelOffset = 7;
+
 class UiRedactorMention {
   protected _active = false;
   protected _dropdownActive = false;
@@ -341,7 +343,7 @@ class UiRedactorMention {
 
       return;
     }
-    offset.top += 7; // add a little vertical gap
+    offset.top += DropDownPixelOffset;
 
     const dropdownMenu = this._dropdownMenu!;
     dropdownMenu.style.setProperty("left", `${offset.left}px`, "");
@@ -350,7 +352,7 @@ class UiRedactorMention {
     this._selectItem(0);
 
     if (offset.top + dropdownMenu.offsetHeight + 10 > window.innerHeight + (window.scrollY || window.pageYOffset)) {
-      const top = offset.top - dropdownMenu.offsetHeight - 2 * this._lineHeight! + 7;
+      const top = offset.top - dropdownMenu.offsetHeight - 2 * this._lineHeight! + DropDownPixelOffset;
       dropdownMenu.style.setProperty("top", `${top}px`, "");
     }
   }
