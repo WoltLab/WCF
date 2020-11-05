@@ -24,7 +24,9 @@
 							{/if}
 						</h3>
 						
-						{$method->getProcessor()->getStatusText($__wcf->user)}
+						{if $enabledMultifactorMethods[$method->objectTypeID]|isset}
+							{$method->getProcessor()->getStatusText($enabledMultifactorMethods[$method->objectTypeID])}
+						{/if}
 					</div>
 					
 					<div class="accountSecurityButtons">

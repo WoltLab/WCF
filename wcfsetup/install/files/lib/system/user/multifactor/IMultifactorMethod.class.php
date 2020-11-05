@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\user\multifactor;
-use wcf\data\user\User;
 use wcf\system\form\builder\IFormDocument;
 
 /**
@@ -14,11 +13,11 @@ use wcf\system\form\builder\IFormDocument;
  */
 interface IMultifactorMethod {
 	/**
-	 * Returns a human readable status text regarding the set-up status for the given user.
+	 * Returns a human readable status text regarding the set-up status for the given setup.
 	 * 
 	 * An example text could be: "5 backup codes remaining".
 	 */
-	public function getStatusText(User $user): string;
+	public function getStatusText(int $setupId): string;
 	
 	/**
 	 * Populates the form to set-up and manage this method.

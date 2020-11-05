@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\user\multifactor;
-use wcf\data\user\User;
 use wcf\system\exception\NotImplementedException;
 use wcf\system\form\builder\IFormDocument;
 
@@ -17,7 +16,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 	/**
 	 * Returns the number of devices the user set up.
 	 */
-	public function getStatusText(User $user): string {
+	public function getStatusText(int $setupId): string {
 		// TODO: Return a proper text.
 		return random_int(10000, 99999)." devices configured";
 	}

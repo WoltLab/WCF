@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\user\multifactor;
-use wcf\data\user\User;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\ButtonFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -37,9 +36,16 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 	/**
 	 * Returns the number of remaining codes.
 	 */
-	public function getStatusText(User $user): string {
-		// TODO: Return a proper text.
-		return random_int(10000, 99999)." codes remaining";
+	public function getStatusText(int $setupId): string {
+		$sql = "SELECT	COUNT(*)
+			FROM	wcf".WCF_N."_user_multifactor_backup
+			WHERE	setupID = ?
+				AND useTime IS NULL";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$setupId]);
+		
+		// TODO: Language item
+		return $statement->fetchSingleColumn()." codes remaining";
 	}
 	
 	/**
