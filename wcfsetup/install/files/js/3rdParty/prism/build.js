@@ -30,7 +30,7 @@ fs.readdirSync("components").forEach(function (component) {
 export type LanguageIdentifier = string;
 export type PrismMeta = Record<LanguageIdentifier, LanguageData>;
 // prettier-ignore
-/*!START*/const metadata: PrismMeta = ${JSON.stringify(
+/*!START*/ const metadata: PrismMeta = ${JSON.stringify(
 		Object.entries(meta.languages).reduce(function (acc, [key, value]) {
 			if (key === "meta") return acc;
 
