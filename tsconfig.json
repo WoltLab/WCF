@@ -1,6 +1,7 @@
 {
   "include": [
     "global.d.ts",
+    "twitter-widget.d.ts",
     "wcfsetup/install/files/ts/**/*"
   ],
   "compilerOptions": {
