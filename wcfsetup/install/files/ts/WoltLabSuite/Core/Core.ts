@@ -197,6 +197,11 @@ export function serialize(obj: object, prefix?: string): string {
  * Triggers a custom or built-in event.
  */
 export function triggerEvent(element: EventTarget, eventName: string): void {
+  if (eventName === "click" && element instanceof HTMLElement) {
+    element.click();
+    return;
+  }
+
   const event = new Event(eventName, {
     bubbles: true,
     cancelable: true,

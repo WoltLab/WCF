@@ -182,6 +182,10 @@ define(["require", "exports"], function (require, exports) {
      * Triggers a custom or built-in event.
      */
     function triggerEvent(element, eventName) {
+        if (eventName === "click" && element instanceof HTMLElement) {
+            element.click();
+            return;
+        }
         const event = new Event(eventName, {
             bubbles: true,
             cancelable: true,
