@@ -29,4 +29,6 @@ declare global {
   interface String {
     hashCode: () => string;
   }
+
+  type ArbitraryObject = Record<string, unknown>;
 }
