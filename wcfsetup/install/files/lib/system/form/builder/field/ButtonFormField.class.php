@@ -23,7 +23,7 @@ class ButtonFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Value';
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Button';
 	
 	/**
 	 * @inheritDoc
