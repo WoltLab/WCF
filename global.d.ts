@@ -10,6 +10,7 @@ declare global {
   interface Window {
     Devtools?: typeof Devtools;
     ENABLE_DEBUG_MODE: boolean;
+    ENABLE_DEVELOPER_TOOLS: boolean;
     REACTION_TYPES: {
       [key: string]: Reaction;
     };
@@ -18,7 +19,7 @@ declare global {
     WCF_PATH: string;
     WSC_API_URL: string;
 
-    jQuery: any;
+    jQuery: JQueryStatic;
     WCF: any;
     bc_wcfDomUtil: typeof DomUtil;
     bc_wcfSimpleDropdown: typeof UiDropdownSimple;
