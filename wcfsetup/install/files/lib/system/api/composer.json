@@ -15,6 +15,7 @@
         "true/punycode": "~2.0",
         "pear/net_idna2": "^0.2.0",
         "scssphp/scssphp": "^1.2",
-        "guzzlehttp/guzzle": "^7.2"
+        "guzzlehttp/guzzle": "^7.2",
+        "paragonie/constant_time_encoding": "^2.3"
     }
 }
