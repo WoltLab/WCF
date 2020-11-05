@@ -1450,6 +1450,7 @@ CREATE TABLE wcf1_user (
 	email VARCHAR(191) NOT NULL DEFAULT '',
 	password VARCHAR(255) NOT NULL DEFAULT 'invalid:',
 	accessToken CHAR(40) NOT NULL DEFAULT '',
+	multifactorActive TINYINT(1) NOT NULL DEFAULT 0,
 	languageID INT(10) NOT NULL DEFAULT 0,
 	registrationDate INT(10) NOT NULL DEFAULT 0,
 	styleID INT(10) NOT NULL DEFAULT 0,

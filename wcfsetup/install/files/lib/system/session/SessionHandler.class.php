@@ -692,6 +692,29 @@ final class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * If multifactor authentication is enabled for the given user then
+	 * - the userID will be stored in the session variables, and
+	 * - `true` is returned.
+	 * Otherwise,
+	 * - `changeUser()` will be called, and
+	 * - `false` is returned.
+	 * 
+	 * If `true` is returned you should perform a redirect to `MultifactorAuthenticationForm`.
+	 */
+	public function changeUserAfterMultifactor(User $user): bool {
+		if ($user->multifactorActive) {
+			$this->register('__changeUserAfterMultifactor__', $user->userID);
+			
+			return true;
+		}
+		else {
+			$this->changeUser($user);
+			
+			return false;
+		}
+	}
+	
+	/**
 	 * Stores a new user object in this session, e.g. a user was guest because not
 	 * logged in, after the login his old session is used to store his full data.
 	 * 
