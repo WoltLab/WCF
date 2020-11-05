@@ -3,18 +3,32 @@
  * It defines globals needed for backwards compatibility
  * and runs modules that are needed on page load.
  *
- * @author	Tim Duesterhus
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Bootstrap
+ * @author  Tim Duesterhus
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Bootstrap
  */
 define([
-    'favico', 'enquire', 'perfect-scrollbar', 'WoltLabSuite/Core/Date/Time/Relative',
-    'Ui/SimpleDropdown', 'WoltLabSuite/Core/Ui/Mobile', 'WoltLabSuite/Core/Ui/TabMenu', 'WoltLabSuite/Core/Ui/FlexibleMenu',
-    'Ui/Dialog', 'WoltLabSuite/Core/Ui/Tooltip', 'WoltLabSuite/Core/Language', 'WoltLabSuite/Core/Environment',
-    'WoltLabSuite/Core/Date/Picker', 'EventHandler', 'Core', 'WoltLabSuite/Core/Ui/Page/Action',
-    'Devtools', 'Dom/ChangeListener'
-], function (favico, enquire, perfectScrollbar, DateTimeRelative, UiSimpleDropdown, UiMobile, UiTabMenu, UiFlexibleMenu, UiDialog, UiTooltip, Language, Environment, DatePicker, EventHandler, Core, UiPageAction, Devtools, DomChangeListener) {
+    "favico",
+    "enquire",
+    "perfect-scrollbar",
+    "WoltLabSuite/Core/Date/Time/Relative",
+    "Ui/SimpleDropdown",
+    "WoltLabSuite/Core/Ui/Mobile",
+    "WoltLabSuite/Core/Ui/TabMenu",
+    "WoltLabSuite/Core/Ui/FlexibleMenu",
+    "Ui/Dialog",
+    "WoltLabSuite/Core/Ui/Tooltip",
+    "WoltLabSuite/Core/Language",
+    "WoltLabSuite/Core/Environment",
+    "WoltLabSuite/Core/Date/Picker",
+    "EventHandler",
+    "Core",
+    "WoltLabSuite/Core/Ui/Page/Action",
+    "Devtools",
+    "Dom/ChangeListener",
+    "StringUtil"
+], function (favico, enquire, perfectScrollbar, DateTimeRelative, UiSimpleDropdown, UiMobile, UiTabMenu, UiFlexibleMenu, UiDialog, UiTooltip, Language, Environment, DatePicker, EventHandler, Core, UiPageAction, Devtools, DomChangeListener, StringUtil) {
     "use strict";
     // perfectScrollbar does not need to be bound anywhere, it just has to be loaded for WCF.js
     window.Favico = favico;
@@ -30,7 +44,7 @@ define([
     // WCF.System.Event compatibility
     window.__wcf_bc_eventHandler = EventHandler;
     /**
-     * @exports	WoltLabSuite/Core/Bootstrap
+     * @exports  WoltLabSuite/Core/Bootstrap
      */
     return {
         /**
@@ -42,6 +56,10 @@ define([
             options = Core.extend({
                 enableMobileMenu: true
             }, options);
+            StringUtil.setupI18n({
+                decimalPoint: Language.get("wcf.global.decimalPoint"),
+                thousandsSeparator: Language.get("wcf.global.thousandsSeparator")
+            });
             //noinspection JSUnresolvedVariable
             if (window.ENABLE_DEVELOPER_TOOLS)
                 Devtools._internal_.enable();
@@ -57,18 +75,18 @@ define([
             UiDialog.setup();
             UiTooltip.setup();
             // convert method=get into method=post
-            var forms = elBySelAll('form[method=get]');
+            var forms = elBySelAll("form[method=get]");
             for (var i = 0, length = forms.length; i < length; i++) {
-                forms[i].setAttribute('method', 'post');
+                forms[i].setAttribute("method", "post");
             }
-            if (Environment.browser() === 'microsoft') {
+            if (Environment.browser() === "microsoft") {
                 window.onbeforeunload = function () {
                     /* Prevent "Back navigation caching" (http://msdn.microsoft.com/en-us/library/ie/dn265017%28v=vs.85%29.aspx) */
                 };
             }
             var interval = 0;
             interval = window.setInterval(function () {
-                if (typeof window.jQuery === 'function') {
+                if (typeof window.jQuery === "function") {
                     window.clearInterval(interval);
                     // the 'jump to top' button triggers style recalculation/layout,
                     // putting it at the end of the jQuery queue avoids trashing the
@@ -80,14 +98,14 @@ define([
                 }
             }, 20);
             this._initA11y();
-            DomChangeListener.add('WoltLabSuite/Core/Bootstrap', this._initA11y.bind(this));
+            DomChangeListener.add("WoltLabSuite/Core/Bootstrap", this._initA11y.bind(this));
         },
         _initA11y: function () {
-            elBySelAll('nav:not([aria-label]):not([aria-labelledby]):not([role])', undefined, function (element) {
-                elAttr(element, 'role', 'presentation');
+            elBySelAll("nav:not([aria-label]):not([aria-labelledby]):not([role])", undefined, function (element) {
+                elAttr(element, "role", "presentation");
             });
-            elBySelAll('article:not([aria-label]):not([aria-labelledby]):not([role])', undefined, function (element) {
-                elAttr(element, 'role', 'presentation');
+            elBySelAll("article:not([aria-label]):not([aria-labelledby]):not([role])", undefined, function (element) {
+                elAttr(element, "role", "presentation");
             });
         }
     };

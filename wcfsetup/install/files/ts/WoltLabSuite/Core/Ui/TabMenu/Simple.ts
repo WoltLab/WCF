@@ -311,7 +311,7 @@ class TabMenuSimple {
           newTab: jQuery(tab),
           oldTab: jQuery(oldTab),
           newPanel: jQuery(newContent),
-          oldPanel: jQuery(oldContent),
+          oldPanel: jQuery(oldContent!),
         });
       }
 

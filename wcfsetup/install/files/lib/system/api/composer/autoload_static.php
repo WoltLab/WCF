@@ -31,6 +31,7 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Http\\Client\\' => 16,
             'Pelago\\' => 7,
+            'ParagonIE\\ConstantTime\\' => 23,
         ),
         'G' => 
         array (
@@ -68,6 +69,10 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         'Pelago\\' => 
         array (
             0 => __DIR__ . '/..' . '/pelago/emogrifier/src',
+        ),
+        'ParagonIE\\ConstantTime\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (

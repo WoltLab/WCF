@@ -2,35 +2,28 @@
  * Converts `<woltlab-metacode>` into the bbcode representation.
  *
  * @author      Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright  2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Ui/Redactor/Article
  */
-define(['WoltLabSuite/Core/Ui/Article/Search'], function (UiArticleSearch) {
+define(["require", "exports", "tslib", "../../Core", "../Article/Search"], function (require, exports, tslib_1, Core, UiArticleSearch) {
     "use strict";
-    if (!COMPILER_TARGET_DEFAULT) {
-        var Fake = function () { };
-        Fake.prototype = {
-            init: function () { },
-            _click: function () { },
-            _insert: function () { }
-        };
-        return Fake;
-    }
-    function UiRedactorArticle(editor, button) { this.init(editor, button); }
-    UiRedactorArticle.prototype = {
-        init: function (editor, button) {
+    Core = tslib_1.__importStar(Core);
+    UiArticleSearch = tslib_1.__importStar(UiArticleSearch);
+    class UiRedactorArticle {
+        constructor(editor, button) {
             this._editor = editor;
-            button.addEventListener('click', this._click.bind(this));
-        },
-        _click: function (event) {
-            event.preventDefault();
-            UiArticleSearch.open(this._insert.bind(this));
-        },
-        _insert: function (articleId) {
-            this._editor.buffer.set();
-            this._editor.insert.text("[wsa='" + articleId + "'][/wsa]");
+            button.addEventListener("click", (ev) => this._click(ev));
         }
-    };
+        _click(event) {
+            event.preventDefault();
+            UiArticleSearch.open((articleId) => this._insert(articleId));
+        }
+        _insert(articleId) {
+            this._editor.buffer.set();
+            this._editor.insert.text(`[wsa='${articleId}'][/wsa]`);
+        }
+    }
+    Core.enableLegacyInheritance(UiRedactorArticle);
     return UiRedactorArticle;
 });
