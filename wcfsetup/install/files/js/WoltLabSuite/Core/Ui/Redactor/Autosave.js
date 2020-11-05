@@ -249,11 +249,9 @@ define(["require", "exports", "tslib", "../../Core", "../../Devtools", "../../Ev
          */
         _cleanup() {
             const oneWeekAgo = Date.now() - 7 * 24 * 3600 * 1000;
-            Object.keys(window.localStorage).forEach((key) => {
-                // check if key matches our prefix
-                if (!key.startsWith(Core.getStoragePrefix())) {
-                    return;
-                }
+            Object.keys(window.localStorage)
+                .filter((key) => key.startsWith(Core.getStoragePrefix()))
+                .forEach((key) => {
                 let value = "";
                 try {
                     value = window.localStorage.getItem(key) || "";

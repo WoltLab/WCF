@@ -318,37 +318,34 @@ class UiRedactorAutosave {
   protected _cleanup(): void {
     const oneWeekAgo = Date.now() - 7 * 24 * 3_600 * 1_000;
 
-    Object.keys(window.localStorage).forEach((key) => {
-      // check if key matches our prefix
-      if (!key.startsWith(Core.getStoragePrefix())) {
-        return;
-      }
-
-      let value = "";
-      try {
-        value = window.localStorage.getItem(key) || "";
-      } catch (e) {
-        const errorMessage = (e as Error).message;
-        window.console.warn(`Unable to access local storage: ${errorMessage}`);
-      }
-
-      let timestamp = 0;
-      try {
-        const content: AutosaveContent = JSON.parse(value);
-        timestamp = content.timestamp;
-      } catch (e) {
-        // We do not care for JSON errors.
-      }
-
-      if (!value || timestamp < oneWeekAgo) {
+    Object.keys(window.localStorage)
+      .filter((key) => key.startsWith(Core.getStoragePrefix()))
+      .forEach((key) => {
+        let value = "";
         try {
-          window.localStorage.removeItem(key);
+          value = window.localStorage.getItem(key) || "";
         } catch (e) {
           const errorMessage = (e as Error).message;
-          window.console.warn(`Unable to remove from local storage: ${errorMessage}`);
+          window.console.warn(`Unable to access local storage: ${errorMessage}`);
         }
-      }
-    });
+
+        let timestamp = 0;
+        try {
+          const content: AutosaveContent = JSON.parse(value);
+          timestamp = content.timestamp;
+        } catch (e) {
+          // We do not care for JSON errors.
+        }
+
+        if (!value || timestamp < oneWeekAgo) {
+          try {
+            window.localStorage.removeItem(key);
+          } catch (e) {
+            const errorMessage = (e as Error).message;
+            window.console.warn(`Unable to remove from local storage: ${errorMessage}`);
+          }
+        }
+      });
   }
 }
 
