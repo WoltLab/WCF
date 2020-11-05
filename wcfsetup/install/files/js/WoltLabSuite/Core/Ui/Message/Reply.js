@@ -1,132 +1,109 @@
 /**
  * Handles user interaction with the quick reply feature.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Ui/Message/Reply
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Ui/Message/Reply
  */
-define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Dom/Traverse', 'Ui/Dialog', 'Ui/Notification', 'WoltLabSuite/Core/Ui/Scroll', 'EventKey', 'User', 'WoltLabSuite/Core/Controller/Captcha'], function (Ajax, Core, EventHandler, Language, DomChangeListener, DomUtil, DomTraverse, UiDialog, UiNotification, UiScroll, EventKey, User, ControllerCaptcha) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/Handler", "../../Language", "../../Dom/Change/Listener", "../../Dom/Util", "../Dialog", "../Notification", "../../User", "../../Controller/Captcha", "../Scroll"], function (require, exports, tslib_1, Ajax, Core, EventHandler, Language, Listener_1, Util_1, Dialog_1, UiNotification, User_1, Captcha_1, UiScroll) {
     "use strict";
-    if (!COMPILER_TARGET_DEFAULT) {
-        var Fake = function () { };
-        Fake.prototype = {
-            init: function () { },
-            _submitGuestDialog: function () { },
-            _submit: function () { },
-            _validate: function () { },
-            throwError: function () { },
-            _showLoadingOverlay: function () { },
-            _hideLoadingOverlay: function () { },
-            _reset: function () { },
-            _handleError: function () { },
-            _getEditor: function () { },
-            _insertMessage: function () { },
-            _ajaxSuccess: function () { },
-            _ajaxFailure: function () { },
-            _ajaxSetup: function () { }
-        };
-        return Fake;
-    }
-    /**
-     * @constructor
-     */
-    function UiMessageReply(options) { this.init(options); }
-    UiMessageReply.prototype = {
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    Language = tslib_1.__importStar(Language);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    UiNotification = tslib_1.__importStar(UiNotification);
+    User_1 = tslib_1.__importDefault(User_1);
+    Captcha_1 = tslib_1.__importDefault(Captcha_1);
+    UiScroll = tslib_1.__importStar(UiScroll);
+    class UiMessageReply {
         /**
          * Initializes a new quick reply field.
-         *
-         * @param       {Object}        options         configuration options
          */
-        init: function (options) {
+        constructor(opts) {
+            this._editor = null;
+            this._guestDialogId = "";
+            this._loadingOverlay = null;
             this._options = Core.extend({
                 ajax: {
-                    className: ''
+                    className: "",
                 },
                 quoteManager: null,
-                successMessage: 'wcf.global.success.add'
-            }, options);
-            this._container = elById('messageQuickReply');
-            this._content = elBySel('.messageContent', this._container);
-            this._textarea = elById('text');
-            this._editor = null;
-            this._guestDialogId = '';
-            this._loadingOverlay = null;
+                successMessage: "wcf.global.success.add",
+            }, opts);
+            this._container = document.getElementById("messageQuickReply");
+            this._content = this._container.querySelector(".messageContent");
+            this._textarea = document.getElementById("text");
             // prevent marking of text for quoting
-            elBySel('.message', this._container).classList.add('jsInvalidQuoteTarget');
+            this._container.querySelector(".message").classList.add("jsInvalidQuoteTarget");
             // handle submit button
-            var submitCallback = this._submit.bind(this);
-            var submitButton = elBySel('button[data-type="save"]', this._container);
-            submitButton.addEventListener('click', submitCallback);
+            const submitButton = this._container.querySelector('button[data-type="save"]');
+            submitButton.addEventListener("click", (ev) => this._submit(ev));
             // bind reply button
-            var replyButtons = elBySelAll('.jsQuickReply');
-            for (var i = 0, length = replyButtons.length; i < length; i++) {
-                replyButtons[i].addEventListener('click', (function (event) {
+            document.querySelectorAll(".jsQuickReply").forEach((replyButton) => {
+                replyButton.addEventListener("click", (event) => {
                     event.preventDefault();
                     this._getEditor().WoltLabReply.showEditor();
-                    UiScroll.element(this._container, (function () {
+                    UiScroll.element(this._container, () => {
                         this._getEditor().WoltLabCaret.endOfEditor();
-                    }).bind(this));
-                }).bind(this));
-            }
-        },
+                    });
+                });
+            });
+        }
         /**
          * Submits the guest dialog.
-         *
-         * @param	{Event}		event
-         * @protected
          */
-        _submitGuestDialog: function (event) {
+        _submitGuestDialog(event) {
             // only submit when enter key is pressed
-            if (event.type === 'keypress' && !EventKey.Enter(event)) {
+            if (event instanceof KeyboardEvent && event.key !== "Enter") {
                 return;
             }
-            var usernameInput = elBySel('input[name=username]', event.currentTarget.closest('.dialogContent'));
-            if (usernameInput.value === '') {
-                elInnerError(usernameInput, Language.get('wcf.global.form.error.empty'));
-                usernameInput.closest('dl').classList.add('formError');
+            const target = event.currentTarget;
+            const dialogContent = target.closest(".dialogContent");
+            const usernameInput = dialogContent.querySelector("input[name=username]");
+            if (usernameInput.value === "") {
+                Util_1.default.innerError(usernameInput, Language.get("wcf.global.form.error.empty"));
+                usernameInput.closest("dl").classList.add("formError");
                 return;
             }
-            var parameters = {
+            let parameters = {
                 parameters: {
                     data: {
-                        username: usernameInput.value
-                    }
-                }
+                        username: usernameInput.value,
+                    },
+                },
             };
-            //noinspection JSCheckFunctionSignatures
-            var captchaId = elData(event.currentTarget, 'captcha-id');
-            if (ControllerCaptcha.has(captchaId)) {
-                var data = ControllerCaptcha.getData(captchaId);
+            const captchaId = target.dataset.captchaId;
+            if (Captcha_1.default.has(captchaId)) {
+                const data = Captcha_1.default.getData(captchaId);
                 if (data instanceof Promise) {
-                    data.then((function (data) {
+                    void data.then((data) => {
                         parameters = Core.extend(parameters, data);
                         this._submit(undefined, parameters);
-                    }).bind(this));
+                    });
                 }
                 else {
-                    parameters = Core.extend(parameters, ControllerCaptcha.getData(captchaId));
+                    parameters = Core.extend(parameters, Captcha_1.default.getData(captchaId));
                     this._submit(undefined, parameters);
                 }
             }
             else {
                 this._submit(undefined, parameters);
             }
-        },
+        }
         /**
          * Validates the message and submits it to the server.
-         *
-         * @param	{Event?}	event			event object
-         * @param	{Object?}	additionalParameters	additional parameters sent to the server
-         * @protected
          */
-        _submit: function (event, additionalParameters) {
+        _submit(event, additionalParameters) {
             if (event) {
                 event.preventDefault();
             }
             // Ignore requests to submit the message while a previous request is still pending.
-            if (this._content.classList.contains('loading')) {
-                if (!this._guestDialogId || !UiDialog.isOpen(this._guestDialogId)) {
+            if (this._content.classList.contains("loading")) {
+                if (!this._guestDialogId || !Dialog_1.default.isOpen(this._guestDialogId)) {
                     return;
                 }
             }
@@ -136,236 +113,222 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
             }
             this._showLoadingOverlay();
             // build parameters
-            var parameters = DomUtil.getDataAttributes(this._container, 'data-', true, true);
+            const parameters = {};
+            Object.entries(this._container.dataset).forEach(([key, value]) => {
+                parameters[key.replace(/Id$/, "ID")] = value;
+            });
             parameters.data = { message: this._getEditor().code.get() };
-            parameters.removeQuoteIDs = (this._options.quoteManager) ? this._options.quoteManager.getQuotesMarkedForRemoval() : [];
+            parameters.removeQuoteIDs = this._options.quoteManager
+                ? this._options.quoteManager.getQuotesMarkedForRemoval()
+                : [];
             // add any available settings
-            var settingsContainer = elById('settings_text');
+            const settingsContainer = document.getElementById("settings_text");
             if (settingsContainer) {
-                elBySelAll('input, select, textarea', settingsContainer, function (element) {
-                    if (element.nodeName === 'INPUT' && (element.type === 'checkbox' || element.type === 'radio')) {
+                settingsContainer
+                    .querySelectorAll("input, select, textarea")
+                    .forEach((element) => {
+                    if (element.nodeName === "INPUT" && (element.type === "checkbox" || element.type === "radio")) {
                         if (!element.checked) {
                             return;
                         }
                     }
-                    var name = element.name;
-                    if (parameters.hasOwnProperty(name)) {
-                        throw new Error("Variable overshadowing, key '" + name + "' is already present.");
+                    const name = element.name;
+                    if (Object.prototype.hasOwnProperty.call(parameters, name)) {
+                        throw new Error(`Variable overshadowing, key '${name}' is already present.`);
                     }
                     parameters[name] = element.value.trim();
                 });
             }
-            EventHandler.fire('com.woltlab.wcf.redactor2', 'submit_text', parameters.data);
-            if (!User.userId && !additionalParameters) {
+            EventHandler.fire("com.woltlab.wcf.redactor2", "submit_text", parameters.data);
+            if (!User_1.default.userId && !additionalParameters) {
                 parameters.requireGuestDialog = true;
             }
             Ajax.api(this, Core.extend({
-                parameters: parameters
+                parameters: parameters,
             }, additionalParameters));
-        },
+        }
         /**
          * Validates the message and invokes listeners to perform additional validation.
-         *
-         * @return      {boolean}       validation result
-         * @protected
          */
-        _validate: function () {
+        _validate() {
             // remove all existing error elements
-            elBySelAll('.innerError', this._container, elRemove);
+            this._container.querySelectorAll(".innerError").forEach((el) => el.remove());
             // check if editor contains actual content
             if (this._getEditor().utils.isEmpty()) {
-                this.throwError(this._textarea, Language.get('wcf.global.form.error.empty'));
+                this.throwError(this._textarea, Language.get("wcf.global.form.error.empty"));
                 return false;
             }
-            var data = {
+            const data = {
                 api: this,
                 editor: this._getEditor(),
                 message: this._getEditor().code.get(),
-                valid: true
+                valid: true,
             };
-            EventHandler.fire('com.woltlab.wcf.redactor2', 'validate_text', data);
-            return (data.valid !== false);
-        },
+            EventHandler.fire("com.woltlab.wcf.redactor2", "validate_text", data);
+            return data.valid;
+        }
         /**
          * Throws an error by adding an inline error to target element.
          *
          * @param       {Element}       element         erroneous element
          * @param       {string}        message         error message
          */
-        throwError: function (element, message) {
-            elInnerError(element, (message === 'empty' ? Language.get('wcf.global.form.error.empty') : message));
-        },
+        throwError(element, message) {
+            Util_1.default.innerError(element, message === "empty" ? Language.get("wcf.global.form.error.empty") : message);
+        }
         /**
          * Displays a loading spinner while the request is processed by the server.
-         *
-         * @protected
          */
-        _showLoadingOverlay: function () {
+        _showLoadingOverlay() {
             if (this._loadingOverlay === null) {
-                this._loadingOverlay = elCreate('div');
-                this._loadingOverlay.className = 'messageContentLoadingOverlay';
+                this._loadingOverlay = document.createElement("div");
+                this._loadingOverlay.className = "messageContentLoadingOverlay";
                 this._loadingOverlay.innerHTML = '<span class="icon icon96 fa-spinner"></span>';
             }
-            this._content.classList.add('loading');
+            this._content.classList.add("loading");
             this._content.appendChild(this._loadingOverlay);
-        },
+        }
         /**
          * Hides the loading spinner.
-         *
-         * @protected
          */
-        _hideLoadingOverlay: function () {
-            this._content.classList.remove('loading');
-            var loadingOverlay = elBySel('.messageContentLoadingOverlay', this._content);
+        _hideLoadingOverlay() {
+            this._content.classList.remove("loading");
+            const loadingOverlay = this._content.querySelector(".messageContentLoadingOverlay");
             if (loadingOverlay !== null) {
-                loadingOverlay.parentNode.removeChild(loadingOverlay);
+                loadingOverlay.remove();
             }
-        },
+        }
         /**
          * Resets the editor contents and notifies event listeners.
-         *
-         * @protected
          */
-        _reset: function () {
-            this._getEditor().code.set('<p>\u200b</p>');
-            EventHandler.fire('com.woltlab.wcf.redactor2', 'reset_text');
-        },
+        _reset() {
+            this._getEditor().code.set("<p>\u200b</p>");
+            EventHandler.fire("com.woltlab.wcf.redactor2", "reset_text");
+        }
         /**
          * Handles errors occurred during server processing.
-         *
-         * @param       {Object}        data    response data
-         * @protected
          */
-        _handleError: function (data) {
-            var parameters = {
+        _handleError(data) {
+            const parameters = {
                 api: this,
                 cancel: false,
-                returnValues: data.returnValues
+                returnValues: data.returnValues,
             };
-            EventHandler.fire('com.woltlab.wcf.redactor2', 'handleError_text', parameters);
-            if (parameters.cancel !== true) {
-                //noinspection JSUnresolvedVariable
+            EventHandler.fire("com.woltlab.wcf.redactor2", "handleError_text", parameters);
+            if (!parameters.cancel) {
                 this.throwError(this._textarea, data.returnValues.realErrorMessage);
             }
-        },
+        }
         /**
          * Returns the current editor instance.
-         *
-         * @return      {Object}       editor instance
-         * @protected
          */
-        _getEditor: function () {
+        _getEditor() {
             if (this._editor === null) {
-                if (typeof window.jQuery === 'function') {
-                    this._editor = window.jQuery(this._textarea).data('redactor');
+                if (typeof window.jQuery === "function") {
+                    this._editor = window.jQuery(this._textarea).data("redactor");
                 }
                 else {
                     throw new Error("Unable to access editor, jQuery has not been loaded yet.");
                 }
             }
             return this._editor;
-        },
+        }
         /**
          * Inserts the rendered message into the post list, unless the post is on the next
          * page in which case a redirect will be performed instead.
-         *
-         * @param       {Object}        data    response data
-         * @protected
          */
-        _insertMessage: function (data) {
+        _insertMessage(data) {
             this._getEditor().WoltLabAutosave.reset();
             // redirect to new page
-            //noinspection JSUnresolvedVariable
             if (data.returnValues.url) {
-                //noinspection JSUnresolvedVariable
-                if (window.location == data.returnValues.url) {
+                if (window.location.href == data.returnValues.url) {
                     window.location.reload();
                 }
-                window.location = data.returnValues.url;
+                window.location.href = data.returnValues.url;
             }
             else {
-                //noinspection JSUnresolvedVariable
                 if (data.returnValues.template) {
-                    var elementId;
+                    let elementId;
                     // insert HTML
-                    if (elData(this._container, 'sort-order') === 'DESC') {
-                        //noinspection JSUnresolvedVariable
-                        DomUtil.insertHtml(data.returnValues.template, this._container, 'after');
-                        elementId = DomUtil.identify(this._container.nextElementSibling);
+                    if (this._container.dataset.sortOrder === "DESC") {
+                        Util_1.default.insertHtml(data.returnValues.template, this._container, "after");
+                        elementId = Util_1.default.identify(this._container.nextElementSibling);
                     }
                     else {
-                        var insertBefore = this._container;
-                        if (insertBefore.previousElementSibling && insertBefore.previousElementSibling.classList.contains('messageListPagination')) {
+                        let insertBefore = this._container;
+                        if (insertBefore.previousElementSibling &&
+                            insertBefore.previousElementSibling.classList.contains("messageListPagination")) {
                             insertBefore = insertBefore.previousElementSibling;
                         }
-                        //noinspection JSUnresolvedVariable
-                        DomUtil.insertHtml(data.returnValues.template, insertBefore, 'before');
-                        elementId = DomUtil.identify(insertBefore.previousElementSibling);
+                        Util_1.default.insertHtml(data.returnValues.template, insertBefore, "before");
+                        elementId = Util_1.default.identify(insertBefore.previousElementSibling);
                     }
                     // update last post time
-                    //noinspection JSUnresolvedVariable
-                    elData(this._container, 'last-post-time', data.returnValues.lastPostTime);
-                    window.history.replaceState(undefined, '', '#' + elementId);
-                    UiScroll.element(elById(elementId));
+                    this._container.dataset.lastPostTime = data.returnValues.lastPostTime.toString();
+                    window.history.replaceState(undefined, "", `#${elementId}`);
+                    UiScroll.element(document.getElementById(elementId));
                 }
                 UiNotification.show(Language.get(this._options.successMessage));
                 if (this._options.quoteManager) {
                     this._options.quoteManager.countQuotes();
                 }
-                DomChangeListener.trigger();
+                Listener_1.default.trigger();
             }
-        },
+        }
         /**
          * @param {{returnValues:{guestDialog:string,guestDialogID:string}}} data
          * @protected
          */
-        _ajaxSuccess: function (data) {
-            if (!User.userId && !data.returnValues.guestDialogID) {
+        _ajaxSuccess(data) {
+            if (!User_1.default.userId && !data.returnValues.guestDialogID) {
                 throw new Error("Missing 'guestDialogID' return value for guest.");
             }
-            if (!User.userId && data.returnValues.guestDialog) {
-                UiDialog.openStatic(data.returnValues.guestDialogID, data.returnValues.guestDialog, {
+            if (!User_1.default.userId && data.returnValues.guestDialog) {
+                const guestDialogId = data.returnValues.guestDialogID;
+                Dialog_1.default.openStatic(guestDialogId, data.returnValues.guestDialog, {
                     closable: false,
                     onClose: function () {
-                        if (ControllerCaptcha.has(data.returnValues.guestDialogID)) {
-                            ControllerCaptcha.delete(data.returnValues.guestDialogID);
+                        if (Captcha_1.default.has(guestDialogId)) {
+                            Captcha_1.default.delete(guestDialogId);
                         }
                     },
-                    title: Language.get('wcf.global.confirmation.title')
+                    title: Language.get("wcf.global.confirmation.title"),
                 });
-                var dialog = UiDialog.getDialog(data.returnValues.guestDialogID);
-                elBySel('input[type=submit]', dialog.content).addEventListener('click', this._submitGuestDialog.bind(this));
-                elBySel('input[type=text]', dialog.content).addEventListener('keypress', this._submitGuestDialog.bind(this));
-                this._guestDialogId = data.returnValues.guestDialogID;
+                const dialog = Dialog_1.default.getDialog(guestDialogId);
+                const submit = dialog.content.querySelector("input[type=submit]");
+                submit.addEventListener("click", (ev) => this._submitGuestDialog(ev));
+                const input = dialog.content.querySelector("input[type=text]");
+                input.addEventListener("keypress", (ev) => this._submitGuestDialog(ev));
+                this._guestDialogId = guestDialogId;
             }
             else {
                 this._insertMessage(data);
-                if (!User.userId) {
-                    UiDialog.close(data.returnValues.guestDialogID);
+                if (!User_1.default.userId) {
+                    Dialog_1.default.close(data.returnValues.guestDialogID);
                 }
                 this._reset();
                 this._hideLoadingOverlay();
             }
-        },
-        _ajaxFailure: function (data) {
+        }
+        _ajaxFailure(data) {
             this._hideLoadingOverlay();
-            //noinspection JSUnresolvedVariable
             if (data === null || data.returnValues === undefined || data.returnValues.realErrorMessage === undefined) {
                 return true;
             }
             this._handleError(data);
             return false;
-        },
-        _ajaxSetup: function () {
+        }
+        _ajaxSetup() {
             return {
                 data: {
-                    actionName: 'quickReply',
+                    actionName: "quickReply",
                     className: this._options.ajax.className,
-                    interfaceName: 'wcf\\data\\IMessageQuickReplyAction'
+                    interfaceName: "wcf\\data\\IMessageQuickReplyAction",
                 },
-                silent: true
+                silent: true,
             };
         }
-    };
+    }
+    Core.enableLegacyInheritance(UiMessageReply);
     return UiMessageReply;
 });

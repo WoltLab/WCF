@@ -44,14 +44,21 @@ export interface RedactorEditor {
     save(): void;
   };
   utils: {
-    isEmpty(html: string): boolean;
+    isEmpty(html?: string): boolean;
   };
 
+  WoltLabAutosave: {
+    reset(): void;
+  };
   WoltLabCaret: {
+    endOfEditor(): void;
     paragraphAfterBlock(quote: HTMLElement): void;
   };
   WoltLabEvent: {
     register(event: string, callback: (data: WoltLabEventData) => void): void;
+  };
+  WoltLabReply: {
+    showEditor(): void;
   };
   WoltLabSource: {
     isActive(): boolean;
