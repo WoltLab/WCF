@@ -6,3 +6,17 @@
 .accountSecurityInformation {
 	flex: 1 1 auto;
 }
+
+.multifactorBackupCode {
+	font-family: monospace;
+	&.used {
+		text-decoration: line-through;
+	}
+	.chunk {
+		margin-left: 5px;
+		&:first-child {
+			margin-left: 0;
+			font-weight: 600;
+		}
+	}
+}

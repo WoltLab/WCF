@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\user\multifactor;
 use wcf\data\user\User;
+use wcf\system\exception\NotImplementedException;
+use wcf\system\form\builder\IFormDocument;
 
 /**
  * Implementation of the Time-based One-time Password Algorithm (RFC 6238).
@@ -18,5 +20,16 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 	public function getStatusText(User $user): string {
 		// TODO: Return a proper text.
 		return random_int(10000, 99999)." devices configured";
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function createManagementForm(IFormDocument $form, ?int $setupId, $returnData = null): void {
+		throw new NotImplementedException("TODO");
+	}
+	
+	public function processManagementForm(IFormDocument $form, int $setupId): void {
+		throw new NotImplementedException("TODO");
 	}
 }

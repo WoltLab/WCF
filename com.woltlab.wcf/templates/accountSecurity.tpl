@@ -12,8 +12,8 @@
 					<span class="icon icon64 fa-{if $method->icon}{$method->icon}{else}lock{/if}"></span>
 				</div>
 				
-				<div>
-					<div class="containerHeadline">
+				<div class="accountSecurityContainer">
+					<div class="containerHeadline accountSecurityInformation">
 						<h3>
 							{lang}wcf.user.security.multifactor.{$method->objectType}{/lang}
 							
@@ -25,6 +25,12 @@
 						</h3>
 						
 						{$method->getProcessor()->getStatusText($__wcf->user)}
+					</div>
+					
+					<div class="accountSecurityButtons">
+						<a class="small button" href="{link controller='MultifactorManage' id=$method->objectTypeID}{/link}">
+							{lang}wcf.user.security.multifactor.{if $enabledMultifactorMethods[$method->objectTypeID]|isset}manage{else}setup{/if}{/lang}
+						</a>
 					</div>
 				</div>
 			</li>

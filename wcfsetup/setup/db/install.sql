@@ -1683,6 +1683,17 @@ CREATE TABLE wcf1_user_multifactor (
 	UNIQUE KEY (userID, objectTypeID)
 );
 
+DROP TABLE IF EXISTS wcf1_user_multifactor_backup;
+CREATE TABLE wcf1_user_multifactor_backup (
+	setupID INT(10) NOT NULL,
+	identifier VARCHAR(255) NOT NULL,
+	code VARCHAR(255) NOT NULL,
+	createTime INT(10) NOT NULL,
+	useTime INT(10) DEFAULT NULL,
+	
+	UNIQUE KEY (setupID, identifier)
+);
+
 -- notifications
 DROP TABLE IF EXISTS wcf1_user_notification;
 CREATE TABLE wcf1_user_notification (
@@ -2174,6 +2185,8 @@ ALTER TABLE wcf1_user_authentication_failure ADD FOREIGN KEY (userID) REFERENCES
 
 ALTER TABLE wcf1_user_multifactor ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_multifactor ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user_multifactor_backup ADD FOREIGN KEY (setupID) REFERENCES wcf1_user_multifactor (setupID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_user_object_watch ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_object_watch ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
