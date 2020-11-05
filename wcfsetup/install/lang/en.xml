@@ -1381,7 +1381,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[You can request your own API-Key for using reCAPTCHA on the <a href="https://www.google.com/recaptcha/admin" class="externalURL">reCAPTCHA website</a>.]]></item>
 		<item name="wcf.acp.option.recaptcha_privatekey"><![CDATA[Private API Key (reCAPTCHA v2)]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey_invisible"><![CDATA[Public API Key (Invisible reCAPTCHA)]]></item>
-		<item name="wcf.acp.option.recaptcha_publickey_invisible.description"><![CDATA[Enter the keys <b>in addition</b> to the keys above if you want to use the invisible variant of reCAPTCHA.]]></item>
+		<item name="wcf.acp.option.recaptcha_publickey_invisible.description"><![CDATA[Enter the keys <strong>in addition</strong> to the keys above if you want to use the invisible variant of reCAPTCHA.]]></item>
 		<item name="wcf.acp.option.recaptcha_privatekey_invisible"><![CDATA[Private API Key (Invisible reCAPTCHA)]]></item>
 		<item name="wcf.acp.option.category.message.attachment"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.option.attachment_retain_dimensions"><![CDATA[Retain Thumbnail Aspect Ratio]]></item>
@@ -3206,7 +3206,7 @@ Your account on the website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/li
 		<item name="wcf.article.like.notification.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} reacted to article <strong>{$article->getTitle()}</strong> ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
 	</category>
 	<category name="wcf.attachment">
-		<item name="wcf.attachment.file.info"><![CDATA[({@$attachment->filesize|filesize}, downloaded <b>{#$attachment->downloads}</b> times{if $attachment->downloads > 0}, last: {@$attachment->lastDownloadTime|time}{/if})]]></item>
+		<item name="wcf.attachment.file.info"><![CDATA[({@$attachment->filesize|filesize}, downloaded <strong>{#$attachment->downloads}</strong> times{if $attachment->downloads > 0}, last: {@$attachment->lastDownloadTime|time}{/if})]]></item>
 		<item name="wcf.attachment.image.info"><![CDATA[{@$attachment->filesize|filesize}, {#$attachment->width}×{#$attachment->height}, viewed {#$attachment->downloads} times]]></item>
 		<item name="wcf.attachment.files"><![CDATA[Files]]></item>
 		<item name="wcf.attachment.images"><![CDATA[Images]]></item>
@@ -3862,7 +3862,7 @@ Attachments:
 		<item name="wcf.global.button.showAll"><![CDATA[Display All]]></item>
 		<item name="wcf.global.reason"><![CDATA[Reason]]></item>
 		<item name="wcf.global.settings"><![CDATA[Settings]]></item>
-		<item name="wcf.global.bulkProcessing.warning"><![CDATA[Warning! The bulk processing will be processed <b>without further confirmation</b> for all items matching your criteria.]]></item>
+		<item name="wcf.global.bulkProcessing.warning"><![CDATA[Warning! The bulk processing will be processed <strong>without further confirmation</strong> for all items matching your criteria.]]></item>
 		<item name="wcf.global.search"><![CDATA[Search]]></item>
 		<item name="wcf.global.select"><![CDATA[Select]]></item>
 		<item name="wcf.global.sorting"><![CDATA[Sorting]]></item>

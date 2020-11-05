@@ -1404,7 +1404,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[Einen eigenen Websiteschlüssel für die Nutzung der reCAPTCHA-Funktion {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} auf der Website von <a href="https://www.google.com/recaptcha/admin" class="externalURL">reCAPTCHA</a> beantragen.]]></item>
 		<item name="wcf.acp.option.recaptcha_privatekey"><![CDATA[Geheimer Schlüssel (reCAPTCHA, Version 2)]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey_invisible"><![CDATA[Websiteschlüssel (Unsichtbares reCAPTCHA)]]></item>
-		<item name="wcf.acp.option.recaptcha_publickey_invisible.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Trage{else}Tragen Sie{/if} hier, <b>zusätzlich</b> zu den obigen Schlüsseln, Schlüssel für das unsichtbare reCAPTCHA ein, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} diese Variante nutzen {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}.]]></item>
+		<item name="wcf.acp.option.recaptcha_publickey_invisible.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Trage{else}Tragen Sie{/if} hier, <strong>zusätzlich</strong> zu den obigen Schlüsseln, Schlüssel für das unsichtbare reCAPTCHA ein, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} diese Variante nutzen {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}.]]></item>
 		<item name="wcf.acp.option.recaptcha_privatekey_invisible"><![CDATA[Geheimer Schlüssel (Unsichtbares reCAPTCHA)]]></item>
 		<item name="wcf.acp.option.category.message.attachment"><![CDATA[Dateianhänge]]></item>
 		<item name="wcf.acp.option.attachment_retain_dimensions"><![CDATA[Seitenverhältnis beim Erzeugen von Vorschaugrafiken beibehalten]]></item>
@@ -3224,7 +3224,7 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.acp.user.bulkProcessing.removeFromUserGroups"><![CDATA[Aus Benutzergruppen entfernen]]></item>
 		<item name="wcf.acp.user.bulkProcessing.sendMail"><![CDATA[E-Mail an Benutzer senden]]></item>
 		<item name="wcf.acp.user.bulkProcessing.success"><![CDATA[Die gewählte Aktion wurde auf {#$affectedObjectCount} Benutzer ausgeführt.]]></item>
-		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Die Massenbearbeitung von Benutzern führt die unten ausgewählte Aktion <b>ohne zusätzliche Sicherheitsabfrage</b> bei allen Benutzern aus, die unter die eingestellten Bedingungen fallen.]]></item>
+		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Die Massenbearbeitung von Benutzern führt die unten ausgewählte Aktion <strong>ohne zusätzliche Sicherheitsabfrage</strong> bei allen Benutzern aus, die unter die eingestellten Bedingungen fallen.]]></item>
 		<item name="wcf.acp.user.profileMenu.sort"><![CDATA[Benutzerprofil-Menü Sortierung]]></item>
 		<item name="wcf.acp.user.action.sendMail"><![CDATA[E-Mail senden]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword"><![CDATA[Neues Passwort zusenden]]></item>
@@ -3283,7 +3283,7 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.article.like.notification.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Artikel <strong>{$article->getTitle()}</strong> reagiert ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
 	</category>
 	<category name="wcf.attachment">
-		<item name="wcf.attachment.file.info"><![CDATA[({@$attachment->filesize|filesize}, <b>{#$attachment->downloads}</b> Mal heruntergeladen{if $attachment->downloads > 0}, zuletzt: {@$attachment->lastDownloadTime|time}{/if})]]></item>
+		<item name="wcf.attachment.file.info"><![CDATA[({@$attachment->filesize|filesize}, <strong>{#$attachment->downloads}</strong> Mal heruntergeladen{if $attachment->downloads > 0}, zuletzt: {@$attachment->lastDownloadTime|time}{/if})]]></item>
 		<item name="wcf.attachment.image.info"><![CDATA[{@$attachment->filesize|filesize}, {#$attachment->width}×{#$attachment->height}, {#$attachment->downloads} Mal angesehen]]></item>
 		<item name="wcf.attachment.files"><![CDATA[Dateien]]></item>
 		<item name="wcf.attachment.images"><![CDATA[Bilder]]></item>
@@ -3917,7 +3917,7 @@ Dateianhänge:
 		<item name="wcf.global.button.showAll"><![CDATA[Alle anzeigen]]></item>
 		<item name="wcf.global.reason"><![CDATA[Begründung]]></item>
 		<item name="wcf.global.settings"><![CDATA[Einstellungen]]></item>
-		<item name="wcf.global.bulkProcessing.warning"><![CDATA[Die Massenbearbeitung führt die unten ausgewählte Aktion <b>ohne zusätzliche Sicherheitsabfrage</b> aus!]]></item>
+		<item name="wcf.global.bulkProcessing.warning"><![CDATA[Die Massenbearbeitung führt die unten ausgewählte Aktion <strong>ohne zusätzliche Sicherheitsabfrage</strong> aus!]]></item>
 		<item name="wcf.global.search"><![CDATA[Suche]]></item>
 		<item name="wcf.global.select"><![CDATA[Auswählen]]></item>
 		<item name="wcf.global.sorting"><![CDATA[Sortierung]]></item>
