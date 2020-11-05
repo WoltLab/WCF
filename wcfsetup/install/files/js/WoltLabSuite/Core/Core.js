@@ -229,6 +229,11 @@ define([], function() {
 		 * @param	{string}	eventName	event name
 		 */
 		triggerEvent: function(element, eventName) {
+			if (eventName === 'click' && element instanceof HTMLElement) {
+				element.click();
+				return;
+			}
+			
 			var event;
 			
 			try {
