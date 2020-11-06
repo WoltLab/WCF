@@ -4855,6 +4855,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.security.multifactor.setup"><![CDATA[Einrichten]]></item>
 		<item name="wcf.user.security.multifactor.active"><![CDATA[Aktiv]]></item>
 		<item name="wcf.user.security.multifactor.backup.generateCodes"><![CDATA[Codes generieren]]></item>
+		<item name="wcf.user.security.multifactor.totp.devices"><![CDATA[Eingerichtete Geräte]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophäen]]></item>

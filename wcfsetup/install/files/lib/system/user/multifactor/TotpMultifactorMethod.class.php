@@ -3,6 +3,8 @@ namespace wcf\system\user\multifactor;
 use ParagonIE\ConstantTime\Hex;
 use wcf\system\form\builder\button\FormButton;
 use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\ButtonFormField;
+use wcf\system\form\builder\field\dependency\IsNotClickedFormFieldDependency;
 use wcf\system\form\builder\field\HiddenFormField;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
@@ -75,6 +77,34 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 					->addClass('buttonPrimary'),
 			]);
 		$form->appendChild($newDeviceContainer);
+		
+		// Note: The order of the two parts of the form is important. Pressing submit within an input
+		// will implicitly press the first submit button. If this container comes first the submit
+		// button will be a delete button.
+		if ($setupId) {
+			$sql = "SELECT	deviceID, deviceName, createTime, useTime
+				FROM	wcf".WCF_N."_user_multifactor_totp
+				WHERE	setupID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([$setupId]);
+			$devicesContainer = FormContainer::create('devices')
+				->label('wcf.user.security.multifactor.totp.devices');
+			while ($row = $statement->fetchArray()) {
+				$devicesContainer->appendChildren([
+					$button = ButtonFormField::create('delete_'.$row['deviceID'])
+						->buttonLabel($row['deviceName'])
+						->objectProperty('delete')
+						->value($row['deviceID']),
+				]);
+				
+				$newDeviceContainer->addDependency(
+					IsNotClickedFormFieldDependency::create('delete_'.$row['deviceID'])
+						->field($button)
+				);
+			}
+			
+			$form->appendChild($devicesContainer);
+		}
 	}
 	
 	/**
@@ -82,17 +112,48 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 	 */
 	public function processManagementForm(IFormDocument $form, int $setupId): void {
 		$formData = $form->getData();
-
-		$sql = "INSERT INTO wcf".WCF_N."_user_multifactor_totp (setupID, deviceID, deviceName, secret, minCounter, createTime) VALUES (?, ?, ?, ?, ?, ?)";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([
-			$setupId,
-			Hex::encode(\random_bytes(16)),
-			$formData['data']['deviceName'],
-			$formData['data']['secret'],
-			$formData['data']['code']['minCounter'],
-			TIME_NOW,
-		]);
+		
+		assert(
+			(!empty($formData['data']) && empty($formData['delete'])) ||
+			(empty($formData['data']) && !empty($formData['delete']))
+		);
+		
+		if (!empty($formData['delete'])) {
+			$sql = "DELETE FROM	wcf".WCF_N."_user_multifactor_totp
+				WHERE		setupID = ?
+					AND	deviceID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				$setupId,
+				$formData['delete'],
+			]);
+			
+			$sql = "SELECT	COUNT(*)
+				FROM	wcf".WCF_N."_user_multifactor_totp
+				WHERE	setupID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				$setupId,
+			]);
+			
+			if (!$statement->fetchSingleColumn()) {
+				throw new \LogicException('Unreachable');
+			}
+		}
+		else {
+			$sql = "INSERT INTO	wcf".WCF_N."_user_multifactor_totp
+						(setupID, deviceID, deviceName, secret, minCounter, createTime)
+				VALUES		(?, ?, ?, ?, ?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				$setupId,
+				Hex::encode(\random_bytes(16)),
+				$formData['data']['deviceName'],
+				$formData['data']['secret'],
+				$formData['data']['code']['minCounter'],
+				TIME_NOW,
+			]);
+		}
 	}
 	
 	/**
