@@ -1,113 +1,86 @@
 /**
  * Handles the comment response add feature.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Ui/Comment/Add
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Ui/Comment/Add
  */
-define([
-    'Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Dom/Traverse', 'Ui/Notification', 'WoltLabSuite/Core/Ui/Comment/Add'
-], function (Core, Language, DomChangeListener, DomUtil, DomTraverse, UiNotification, UiCommentAdd) {
+define(["require", "exports", "tslib", "../../../Core", "../../../Dom/Change/Listener", "../../../Dom/Util", "../../../Language", "../Add", "../../Notification"], function (require, exports, tslib_1, Core, Listener_1, Util_1, Language, Add_1, UiNotification) {
     "use strict";
-    if (!COMPILER_TARGET_DEFAULT) {
-        var Fake = function () { };
-        Fake.prototype = {
-            init: function () { },
-            getContainer: function () { },
-            getContent: function () { },
-            setContent: function () { },
-            _submitGuestDialog: function () { },
-            _submit: function () { },
-            _getParameters: function () { },
-            _validate: function () { },
-            throwError: function () { },
-            _showLoadingOverlay: function () { },
-            _hideLoadingOverlay: function () { },
-            _reset: function () { },
-            _handleError: function () { },
-            _getEditor: function () { },
-            _insertMessage: function () { },
-            _ajaxSuccess: function () { },
-            _ajaxFailure: function () { },
-            _ajaxSetup: function () { }
-        };
-        return Fake;
-    }
-    /**
-     * @constructor
-     */
-    function UiCommentResponseAdd(container, options) { this.init(container, options); }
-    Core.inherit(UiCommentResponseAdd, UiCommentAdd, {
-        init: function (container, options) {
-            UiCommentResponseAdd._super.prototype.init.call(this, container);
+    Core = tslib_1.__importStar(Core);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Language = tslib_1.__importStar(Language);
+    Add_1 = tslib_1.__importDefault(Add_1);
+    UiNotification = tslib_1.__importStar(UiNotification);
+    class UiCommentResponseAdd extends Add_1.default {
+        constructor(container, options) {
+            super(container);
             this._options = Core.extend({
-                callbackInsert: null
+                callbackInsert: null,
             }, options);
-        },
+        }
         /**
-         * Returns the editor container for placement or `null` if the editor is busy.
-         *
-         * @return      {(Element|null)}
+         * Returns the editor container for placement.
          */
-        getContainer: function () {
-            return (this._isBusy) ? null : this._container;
-        },
+        getContainer() {
+            return this._container;
+        }
         /**
          * Retrieves the current content from the editor.
-         *
-         * @return      {string}
          */
-        getContent: function () {
-            return window.jQuery(this._textarea).redactor('code.get');
-        },
+        getContent() {
+            return window.jQuery(this._textarea).redactor("code.get");
+        }
         /**
          * Sets the content and places the caret at the end of the editor.
-         *
-         * @param       {string}        html
          */
-        setContent: function (html) {
-            window.jQuery(this._textarea).redactor('code.set', html);
-            window.jQuery(this._textarea).redactor('WoltLabCaret.endOfEditor');
+        setContent(html) {
+            window.jQuery(this._textarea).redactor("code.set", html);
+            window.jQuery(this._textarea).redactor("WoltLabCaret.endOfEditor");
             // the error message can appear anywhere in the container, not exclusively after the textarea
-            var innerError = elBySel('.innerError', this._textarea.parentNode);
-            if (innerError !== null)
-                elRemove(innerError);
-            this._content.classList.remove('collapsed');
+            const innerError = this._textarea.parentElement.querySelector(".innerError");
+            if (innerError !== null) {
+                innerError.remove();
+            }
+            this._content.classList.remove("collapsed");
             this._focusEditor();
-        },
-        _getParameters: function () {
-            var parameters = UiCommentResponseAdd._super.prototype._getParameters.call(this);
-            parameters.data.commentID = ~~elData(this._container.closest('.comment'), 'object-id');
+        }
+        _getParameters() {
+            const parameters = super._getParameters();
+            const comment = this._container.closest(".comment");
+            parameters.data.commentID = ~~comment.dataset.objectId;
             return parameters;
-        },
-        _insertMessage: function (data) {
-            var commentContent = DomTraverse.childByClass(this._container.parentNode, 'commentContent');
-            var responseList = commentContent.nextElementSibling;
-            if (responseList === null || !responseList.classList.contains('commentResponseList')) {
-                responseList = elCreate('ul');
-                responseList.className = 'containerList commentResponseList';
-                elData(responseList, 'responses', 0);
-                commentContent.parentNode.insertBefore(responseList, commentContent.nextSibling);
+        }
+        _insertMessage(data) {
+            const commentContent = this._container.parentElement.querySelector(".commentContent");
+            let responseList = commentContent.nextElementSibling;
+            if (responseList === null || !responseList.classList.contains("commentResponseList")) {
+                responseList = document.createElement("ul");
+                responseList.className = "containerList commentResponseList";
+                responseList.dataset.responses = "0";
+                commentContent.insertAdjacentElement("afterend", responseList);
             }
             // insert HTML
-            //noinspection JSCheckFunctionSignatures
-            DomUtil.insertHtml(data.returnValues.template, responseList, 'append');
-            UiNotification.show(Language.get('wcf.global.success.add'));
-            DomChangeListener.trigger();
+            Util_1.default.insertHtml(data.returnValues.template, responseList, "append");
+            UiNotification.show(Language.get("wcf.global.success.add"));
+            Listener_1.default.trigger();
             // reset editor
-            window.jQuery(this._textarea).redactor('code.set', '');
-            if (this._options.callbackInsert !== null)
+            window.jQuery(this._textarea).redactor("code.set", "");
+            if (this._options.callbackInsert !== null) {
                 this._options.callbackInsert();
+            }
             // update counter
-            elData(responseList, 'responses', responseList.children.length);
+            responseList.dataset.responses = responseList.children.length.toString();
             return responseList.lastElementChild;
-        },
-        _ajaxSetup: function () {
-            var data = UiCommentResponseAdd._super.prototype._ajaxSetup.call(this);
-            data.data.actionName = 'addResponse';
+        }
+        _ajaxSetup() {
+            const data = super._ajaxSetup();
+            data.data.actionName = "addResponse";
             return data;
         }
-    });
+    }
+    Core.enableLegacyInheritance(UiCommentResponseAdd);
     return UiCommentResponseAdd;
 });

@@ -19,8 +19,9 @@ define(["require", "exports", "tslib", "../Language"], function (require, export
     let _notificationElement;
     let _timeout;
     function init() {
-        if (_didInit)
+        if (_didInit) {
             return;
+        }
         _didInit = true;
         _notificationElement = document.createElement("div");
         _notificationElement.id = "systemNotification";
