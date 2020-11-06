@@ -14,9 +14,11 @@ define(["require", "exports", "tslib", "qr-creator"], function (require, exports
         }
         const issuer = secret.dataset.issuer;
         const label = (issuer ? `${issuer}:` : "") + accountName;
+        const canvas = container.querySelector("canvas");
         qr_creator_1.default.render({
             text: `otpauth://totp/${encodeURIComponent(label)}?secret=${encodeURIComponent(secret.textContent)}${issuer ? `&issuer=${encodeURIComponent(issuer)}` : ""}`,
-        }, container);
+            size: canvas && canvas.clientWidth ? canvas.clientWidth : 200,
+        }, canvas || container);
     }
     exports.render = render;
     exports.default = render;

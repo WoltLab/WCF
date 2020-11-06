@@ -1,5 +1,7 @@
 <div class="totpSecretContainer">
 	<input type="hidden" name="{@$field->getPrefixedId()}" value="{$field->getSignedValue()}">
+	<canvas></canvas>
+
 	<kbd {*
 	*}class="totpSecret" {*
 	*}data-issuer="{PAGE_TITLE}" {*

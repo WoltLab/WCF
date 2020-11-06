@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\user\multifactor;
 use ParagonIE\ConstantTime\Hex;
+use wcf\system\form\builder\button\FormButton;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\HiddenFormField;
 use wcf\system\form\builder\field\IFormField;
@@ -10,6 +11,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\user\multifactor\totp\CodeFormField;
+use wcf\system\user\multifactor\totp\NewDeviceContainer;
 use wcf\system\user\multifactor\totp\SecretFormField;
 use wcf\system\user\multifactor\totp\Totp;
 use wcf\system\WCF;
@@ -44,11 +46,8 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 	 * @inheritDoc
 	 */
 	public function createManagementForm(IFormDocument $form, ?int $setupId, $returnData = null): void {
-		if ($setupId) {
-			
-		}
-		
-		$newDeviceContainer = FormContainer::create('newDevice')
+		$form->addDefaultButton(false);
+		$newDeviceContainer = NewDeviceContainer::create()
 			->label('wcf.user.security.multifactor.totp.newDevice')
 			->appendChildren([
 				SecretFormField::create(),
@@ -69,6 +68,11 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 				TextFormField::create('deviceName')
 					->label('wcf.user.security.multifactor.totp.deviceName')
 					->placeholder('wcf.user.security.multifactor.totp.deviceName.placeholder'),
+				FormButton::create('submitButton')
+					->label('wcf.global.button.submit')
+					->accessKey('s')
+					->submit(true)
+					->addClass('buttonPrimary'),
 			]);
 		$form->appendChild($newDeviceContainer);
 	}

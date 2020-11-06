@@ -14,13 +14,15 @@ export function render(container: HTMLElement): void {
   const issuer = secret.dataset.issuer;
   const label = (issuer ? `${issuer}:` : "") + accountName;
 
+  const canvas = container.querySelector("canvas");
   QrCreator.render(
     {
       text: `otpauth://totp/${encodeURIComponent(label)}?secret=${encodeURIComponent(secret.textContent!)}${
         issuer ? `&issuer=${encodeURIComponent(issuer)}` : ""
       }`,
+      size: canvas && canvas.clientWidth ? canvas.clientWidth : 200,
     },
-    container,
+    canvas || container,
   );
 }
 
