@@ -32,7 +32,7 @@ declare global {
   }
 
   interface JQuery {
-    redactor(...args: any[]): JQuery;
+    redactor(...args: any[]): unknown;
   }
 
   type ArbitraryObject = Record<string, unknown>;
