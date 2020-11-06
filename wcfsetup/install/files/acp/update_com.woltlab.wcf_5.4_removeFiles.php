@@ -3,6 +3,7 @@ use wcf\data\package\PackageCache;
 use wcf\system\WCF;
 
 $files = [
+	'lib/acp/form/UserGroupPromoteOwnerForm.class.php',
 	'lib/system/database/table/DatabaseTableUtil.class.php',
 ];
 
