@@ -1,149 +1,113 @@
 /**
  * Provides editing support for comment responses.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Ui/Comment/Response/Edit
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Ui/Comment/Response/Edit
  */
-define([
-    'Ajax', 'Core', 'Dictionary', 'Environment',
-    'EventHandler', 'Language', 'List', 'Dom/ChangeListener', 'Dom/Traverse',
-    'Dom/Util', 'Ui/Notification', 'Ui/ReusableDropdown', 'WoltLabSuite/Core/Ui/Scroll', 'WoltLabSuite/Core/Ui/Comment/Edit'
-], function (Ajax, Core, Dictionary, Environment, EventHandler, Language, List, DomChangeListener, DomTraverse, DomUtil, UiNotification, UiReusableDropdown, UiScroll, UiCommentEdit) {
+define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../../Dom/Change/Listener", "../../../Dom/Util", "../Edit", "../../Notification"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, Edit_1, UiNotification) {
     "use strict";
-    if (!COMPILER_TARGET_DEFAULT) {
-        var Fake = function () { };
-        Fake.prototype = {
-            init: function () { },
-            rebuild: function () { },
-            _click: function () { },
-            _prepare: function () { },
-            _showEditor: function () { },
-            _restoreMessage: function () { },
-            _save: function () { },
-            _validate: function () { },
-            throwError: function () { },
-            _showMessage: function () { },
-            _hideEditor: function () { },
-            _restoreEditor: function () { },
-            _destroyEditor: function () { },
-            _getEditorId: function () { },
-            _getObjectId: function () { },
-            _ajaxFailure: function () { },
-            _ajaxSuccess: function () { },
-            _ajaxSetup: function () { }
-        };
-        return Fake;
-    }
-    /**
-     * @constructor
-     */
-    function UiCommentResponseEdit(container) { this.init(container); }
-    Core.inherit(UiCommentResponseEdit, UiCommentEdit, {
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Edit_1 = tslib_1.__importDefault(Edit_1);
+    UiNotification = tslib_1.__importStar(UiNotification);
+    class UiCommentResponseEdit extends Edit_1.default {
         /**
          * Initializes the comment edit manager.
          *
-         * @param	{Element}       container       container element
+         * @param  {Element}       container       container element
          */
-        init: function (container) {
-            this._activeElement = null;
-            this._callbackClick = null;
-            this._container = container;
-            this._editorContainer = null;
-            this._responses = new List();
-            this.rebuild();
-            DomChangeListener.add('Ui/Comment/Response/Edit_' + DomUtil.identify(this._container), this.rebuild.bind(this));
-        },
+        constructor(container) {
+            super(container);
+            this._responses = new Set();
+            this.rebuildResponses();
+            Listener_1.default.add("Ui/Comment/Response/Edit_" + Util_1.default.identify(this._container), () => this.rebuildResponses());
+        }
+        rebuild() {
+            // Do nothing, we want to avoid implicitly invoking `UiCommentEdit.rebuild()`.
+        }
         /**
          * Initializes each applicable message, should be called whenever new
          * messages are being displayed.
          */
-        rebuild: function () {
-            elBySelAll('.commentResponse', this._container, (function (response) {
+        rebuildResponses() {
+            this._container.querySelectorAll(".commentResponse").forEach((response) => {
                 if (this._responses.has(response)) {
                     return;
                 }
-                if (elDataBool(response, 'can-edit')) {
-                    var button = elBySel('.jsCommentResponseEditButton', response);
+                if (Core.stringToBool(response.dataset.canEdit || "")) {
+                    const button = response.querySelector(".jsCommentResponseEditButton");
                     if (button !== null) {
-                        if (this._callbackClick === null) {
-                            this._callbackClick = this._click.bind(this);
-                        }
-                        button.addEventListener('click', this._callbackClick);
+                        button.addEventListener("click", (ev) => this._click(ev));
                     }
                 }
                 this._responses.add(response);
-            }).bind(this));
-        },
+            });
+        }
         /**
          * Handles clicks on the edit button.
-         *
-         * @param	{?Event}	event		event object
-         * @protected
          */
-        _click: function (event) {
+        _click(event) {
             event.preventDefault();
             if (this._activeElement === null) {
-                this._activeElement = event.currentTarget.closest('.commentResponse');
+                const target = event.currentTarget;
+                this._activeElement = target.closest(".commentResponse");
                 this._prepare();
                 Ajax.api(this, {
-                    actionName: 'beginEdit',
-                    objectIDs: [this._getObjectId(this._activeElement)]
+                    actionName: "beginEdit",
+                    objectIDs: [this._getObjectId(this._activeElement)],
                 });
             }
             else {
-                UiNotification.show('wcf.message.error.editorAlreadyInUse', null, 'warning');
+                UiNotification.show("wcf.message.error.editorAlreadyInUse", null, "warning");
             }
-        },
+        }
         /**
          * Prepares the message for editor display.
          *
          * @protected
          */
-        _prepare: function () {
-            this._editorContainer = elCreate('div');
-            this._editorContainer.className = 'commentEditorContainer';
+        _prepare() {
+            this._editorContainer = document.createElement("div");
+            this._editorContainer.className = "commentEditorContainer";
             this._editorContainer.innerHTML = '<span class="icon icon48 fa-spinner"></span>';
-            var content = elBySel('.commentResponseContent', this._activeElement);
+            const content = this._activeElement.querySelector(".commentResponseContent");
             content.insertBefore(this._editorContainer, content.firstChild);
-        },
+        }
         /**
          * Shows the update message.
-         *
-         * @param	{Object}	data		ajax response data
-         * @protected
          */
-        _showMessage: function (data) {
+        _showMessage(data) {
             // set new content
-            //noinspection JSCheckFunctionSignatures
-            DomUtil.setInnerHtml(elBySel('.commentResponseContent .userMessage', this._editorContainer.parentNode), data.returnValues.message);
+            const parent = this._editorContainer.parentElement;
+            Util_1.default.setInnerHtml(parent.querySelector(".commentResponseContent .userMessage"), data.returnValues.message);
             this._restoreMessage();
             UiNotification.show();
-        },
+        }
         /**
          * Returns the unique editor id.
-         *
-         * @return	{string}	editor id
-         * @protected
          */
-        _getEditorId: function () {
-            return 'commentResponseEditor' + this._getObjectId(this._activeElement);
-        },
-        _ajaxSetup: function () {
-            var objectTypeId = ~~elData(this._container, 'object-type-id');
+        _getEditorId() {
+            return `commentResponseEditor${this._getObjectId(this._activeElement)}`;
+        }
+        _ajaxSetup() {
+            const objectTypeId = ~~this._container.dataset.objectTypeId;
             return {
                 data: {
-                    className: 'wcf\\data\\comment\\response\\CommentResponseAction',
+                    className: "wcf\\data\\comment\\response\\CommentResponseAction",
                     parameters: {
                         data: {
-                            objectTypeID: objectTypeId
-                        }
-                    }
+                            objectTypeID: objectTypeId,
+                        },
+                    },
                 },
-                silent: true
+                silent: true,
             };
         }
-    });
+    }
+    Core.enableLegacyInheritance(UiCommentResponseEdit);
     return UiCommentResponseEdit;
 });
