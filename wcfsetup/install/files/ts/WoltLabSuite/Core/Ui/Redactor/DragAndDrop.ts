@@ -14,7 +14,7 @@ import { RedactorEditor } from "./Editor";
 type Uuid = string;
 
 interface EditorData {
-  editor: RedactorEditor;
+  editor: RedactorEditor | RedactorEditorLike;
   element: HTMLElement | null;
 }
 
@@ -186,7 +186,7 @@ function setup() {
 /**
  * Initializes drag and drop support for provided editor instance.
  */
-export function init(editor: RedactorEditor): void {
+export function init(editor: RedactorEditor | RedactorEditorLike): void {
   if (!_didInit) {
     setup();
   }
@@ -195,4 +195,10 @@ export function init(editor: RedactorEditor): void {
     editor: editor,
     element: null,
   });
+}
+
+export interface RedactorEditorLike {
+  uuid: string;
+  $editor: HTMLElement[];
+  $element: HTMLElement[];
 }
