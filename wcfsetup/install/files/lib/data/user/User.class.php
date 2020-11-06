@@ -15,7 +15,6 @@ use wcf\system\user\authentication\password\PasswordAlgorithmManager;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\JSON;
-use wcf\util\PasswordUtil;
 use wcf\util\UserUtil;
 
 /**
