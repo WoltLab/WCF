@@ -95,7 +95,7 @@ final class UserRegistrationUtil {
 	 * @return	integer
 	 */
 	public static function getActivationCode($length = 9) {
-		return MathUtil::getRandomValue(pow(10, $length - 1), pow(10, $length) - 1);
+		return random_int(pow(10, $length - 1), pow(10, $length) - 1);
 	}
 	
 	/**

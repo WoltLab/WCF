@@ -16,7 +16,6 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\user\notification\event\ITestableUserNotificationEvent;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\MathUtil;
 use wcf\util\PasswordUtil;
 use wcf\util\StringUtil;
 
@@ -78,7 +77,7 @@ class TestableUserNotificationEventHandler extends SingletonFactory {
 						'email' => $username . '@example.com',
 						'languageID' => $languages[array_rand($languages)]->languageID,
 						'password' => PasswordUtil::getRandomPassword(),
-						'registrationDate' => TIME_NOW - 24 * 3600 * MathUtil::getRandomValue(10, 1000),
+						'registrationDate' => TIME_NOW - 24 * 3600 * random_int(10, 1000),
 						'username' => $username
 					]
 				]))->executeAction()['returnValues'];
