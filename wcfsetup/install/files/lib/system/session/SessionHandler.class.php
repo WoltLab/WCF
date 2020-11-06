@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\session;
+use ParagonIE\ConstantTime\Hex;
 use wcf\data\session\Session as LegacySession;
 use wcf\data\session\SessionEditor;
 use wcf\data\user\User;
@@ -223,7 +224,7 @@ final class SessionHandler extends SingletonFactory {
 			return $sessionID;
 		}
 		
-		return CryptoUtil::createSignedString(\hex2bin($sessionID));
+		return CryptoUtil::createSignedString(Hex::decode($sessionID));
 	}
 	
 	/**

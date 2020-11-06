@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\blacklist\entry;
+use ParagonIE\ConstantTime\Hex;
 use wcf\data\blacklist\status\BlacklistStatus;
 use wcf\data\blacklist\status\BlacklistStatusEditor;
 use wcf\data\AbstractDatabaseObjectAction;
@@ -75,7 +76,7 @@ class BlacklistEntryAction extends AbstractDatabaseObjectAction {
 					foreach ($data[$type] as $hash => $occurrences) {
 						$statement->execute([
 							$type,
-							hex2bin($hash),
+							Hex::decode($hash),
 							$lastSeen,
 							min($occurrences, 32767),
 						]);

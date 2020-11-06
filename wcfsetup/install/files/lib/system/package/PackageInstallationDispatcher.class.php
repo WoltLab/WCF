@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package;
+use ParagonIE\ConstantTime\Hex;
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationEditor;
 use wcf\data\devtools\project\DevtoolsProjectAction;
@@ -238,7 +239,7 @@ class PackageInstallationDispatcher {
 					\define('SIGNATURE_SECRET', $signatureSecret);
 					HeaderUtil::setCookie(
 						'acp_session',
-						CryptoUtil::createSignedString(\hex2bin(WCF::getSession()->sessionID))
+						CryptoUtil::createSignedString(Hex::decode(WCF::getSession()->sessionID))
 					);
 					
 					if (WCF::getSession()->getVar('__wcfSetup_developerMode')) {
