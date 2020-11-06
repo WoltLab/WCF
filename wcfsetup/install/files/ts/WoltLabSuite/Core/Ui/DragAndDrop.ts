@@ -9,16 +9,7 @@
 
 import * as Core from "../Core";
 import * as EventHandler from "../Event/Handler";
-import { init, RedactorEditorLike } from "./Redactor/DragAndDrop";
-
-interface OnDropPayload {
-  file: File;
-}
-
-interface OnGlobalDropPayload {
-  cancelDrop: boolean;
-  event: DragEvent;
-}
+import { init, OnDropPayload, OnGlobalDropPayload, RedactorEditorLike } from "./Redactor/DragAndDrop";
 
 interface DragAndDropOptions {
   element: HTMLElement;
