@@ -20,7 +20,9 @@ let _notificationElement: HTMLElement;
 let _timeout: number;
 
 function init() {
-  if (_didInit) return;
+  if (_didInit) {
+    return;
+  }
   _didInit = true;
 
   _notificationElement = document.createElement("div");
@@ -51,7 +53,7 @@ function hide() {
 /**
  * Displays a notification.
  */
-export function show(message?: string, callback?: Callback, cssClassName?: string): void {
+export function show(message?: string, callback?: Callback | null, cssClassName?: string): void {
   if (_busy) {
     return;
   }
