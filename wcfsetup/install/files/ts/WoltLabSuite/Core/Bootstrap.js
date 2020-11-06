@@ -69,9 +69,7 @@ define(
         DateTimeRelative.setup();
         DatePicker.init();
         UiSimpleDropdown.setup();
-        UiMobile.setup({
-          enableMobileMenu: options.enableMobileMenu
-        });
+        UiMobile.setup(options.enableMobileMenu);
         UiTabMenu.setup();
         //UiFlexibleMenu.setup();
         UiDialog.setup();
