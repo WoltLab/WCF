@@ -6,60 +6,69 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Ui/Message/UserConsent
  */
-define(['Ajax', 'Core', 'User', 'Dom/ChangeListener', 'Dom/Util'], function (Ajax, Core, User, DomChangeListener, DomUtil) {
-    var _enableAll = false;
-    var _knownButtons = (typeof window.WeakSet === 'function') ? new window.WeakSet() : new window.Set();
-    return {
-        init: function () {
-            if (window.sessionStorage.getItem(Core.getStoragePrefix() + 'user-consent') === 'all') {
-                _enableAll = true;
+define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Dom/Util", "../../User"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Util_1, User_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.init = void 0;
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    User_1 = tslib_1.__importDefault(User_1);
+    class UserConsent {
+        constructor() {
+            this.enableAll = false;
+            this.knownButtons = new WeakSet();
+            if (window.sessionStorage.getItem(`${Core.getStoragePrefix()}user-consent`) === "all") {
+                this.enableAll = true;
             }
-            this._registerEventListeners();
-            DomChangeListener.add('WoltLabSuite/Core/Ui/Message/UserConsent', this._registerEventListeners.bind(this));
-        },
-        _registerEventListeners: function () {
-            if (_enableAll) {
-                this._enableAll();
+            this.registerEventListeners();
+            Listener_1.default.add("WoltLabSuite/Core/Ui/Message/UserConsent", () => this.registerEventListeners());
+        }
+        registerEventListeners() {
+            if (this.enableAll) {
+                this.enableAllExternalMedia();
             }
             else {
-                elBySelAll('.jsButtonMessageUserConsentEnable', undefined, (function (button) {
-                    if (!_knownButtons.has(button)) {
-                        button.addEventListener('click', this._click.bind(this));
-                        _knownButtons.add(button);
+                document.querySelectorAll(".jsButtonMessageUserConsentEnable").forEach((button) => {
+                    if (!this.knownButtons.has(button)) {
+                        this.knownButtons.add(button);
+                        button.addEventListener("click", (ev) => this.click(ev));
                     }
-                }).bind(this));
+                });
             }
-        },
-        /**
-         * @param {Event} event
-         */
-        _click: function (event) {
+        }
+        click(event) {
             event.preventDefault();
-            _enableAll = true;
-            this._enableAll();
-            if (User.userId) {
+            this.enableAll = true;
+            this.enableAllExternalMedia();
+            if (User_1.default.userId) {
                 Ajax.apiOnce({
                     data: {
-                        actionName: 'saveUserConsent',
-                        className: 'wcf\\data\\user\\UserAction'
+                        actionName: "saveUserConsent",
+                        className: "wcf\\data\\user\\UserAction",
                     },
-                    silent: true
+                    silent: true,
                 });
             }
             else {
-                window.sessionStorage.setItem(Core.getStoragePrefix() + 'user-consent', 'all');
+                window.sessionStorage.setItem(`${Core.getStoragePrefix()}user-consent`, "all");
             }
-        },
-        /**
-         * @param {Element} container
-         */
-        _enableExternalMedia: function (container) {
-            var payload = atob(elData(container, 'payload'));
-            DomUtil.insertHtml(payload, container, 'before');
-            elRemove(container);
-        },
-        _enableAll: function () {
-            elBySelAll('.messageUserConsent', undefined, this._enableExternalMedia.bind(this));
         }
-    };
+        enableExternalMedia(container) {
+            const payload = atob(container.dataset.payload);
+            Util_1.default.insertHtml(payload, container, "before");
+            container.remove();
+        }
+        enableAllExternalMedia() {
+            document.querySelectorAll(".messageUserConsent").forEach((el) => this.enableExternalMedia(el));
+        }
+    }
+    let userConsent;
+    function init() {
+        if (!userConsent) {
+            userConsent = new UserConsent();
+        }
+    }
+    exports.init = init;
 });

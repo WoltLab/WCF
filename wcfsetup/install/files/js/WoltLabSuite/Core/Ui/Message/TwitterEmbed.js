@@ -1,58 +1,53 @@
 /**
  * Wrapper around Twitter's createTweet API.
  *
- * @author	Tim Duesterhus
- * @copyright	2001-2020 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Ui/Message/TwitterEmbed
+ * @author  Tim Duesterhus
+ * @copyright  2001-2020 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Ui/Message/TwitterEmbed
  */
-define(['https://platform.twitter.com/widgets.js'], function (Widgets) {
+define(["require", "exports", "https://platform.twitter.com/widgets.js"], function (require, exports) {
     "use strict";
-    var twitterReady = new Promise(function (resolve, reject) {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.embedAll = exports.embedTweet = void 0;
+    const twitterReady = new Promise((resolve) => {
         twttr.ready(resolve);
     });
     /**
-     * @exports	WoltLabSuite/Core/Ui/Message/TwitterEmbed
+     * Embed the tweet identified by the given tweetId into the given container.
+     *
+     * @param {HTMLElement} container
+     * @param {string} tweetId
+     * @param {boolean} removeChildren Whether to remove existing children of the given container after embedding the tweet.
+     * @return {HTMLElement} The Tweet element created by Twitter.
      */
-    return {
-        /**
-         * Embed the tweet identified by the given tweetId into the given container.
-         *
-         * @param {HTMLElement} container
-         * @param {string} tweetId
-         * @param {boolean} removeChildren Whether to remove existing children of the given container after embedding the tweet.
-         * @return {HTMLElement} The Tweet element created by Twitter.
-         */
-        embedTweet: function (container, tweetId, removeChildren) {
-            if (removeChildren === undefined)
-                removeChildren = false;
-            return twitterReady.then(function () {
-                return twttr.widgets.createTweet(tweetId, container, {
-                    dnt: true,
-                    lang: document.documentElement.lang,
-                });
-            }).then(function (tweet) {
-                if (tweet && removeChildren) {
-                    while (container.lastChild) {
-                        container.removeChild(container.lastChild);
-                    }
-                    container.appendChild(tweet);
-                }
-                return tweet;
-            });
-        },
-        /**
-         * Embeds tweets into all elements with a data-wsc-twitter-tweet attribute, removing
-         * existing children.
-         */
-        embedAll: function () {
-            elBySelAll("[data-wsc-twitter-tweet]", undefined, function (container) {
-                var tweetId = elData(container, "wsc-twitter-tweet");
-                if (tweetId) {
-                    this.embedTweet(container, tweetId, true);
-                    elData(container, "wsc-twitter-tweet", "");
-                }
-            }.bind(this));
+    async function embedTweet(container, tweetId, removeChildren = false) {
+        const twitter = await twitterReady;
+        const tweet = await twitter.widgets.createTweet(tweetId, container, {
+            dnt: true,
+            lang: document.documentElement.lang,
+        });
+        if (tweet && removeChildren) {
+            while (container.lastChild) {
+                container.removeChild(container.lastChild);
+            }
+            container.appendChild(tweet);
         }
-    };
+        return tweet;
+    }
+    exports.embedTweet = embedTweet;
+    /**
+     * Embeds tweets into all elements with a data-wsc-twitter-tweet attribute, removing
+     * existing children.
+     */
+    function embedAll() {
+        document.querySelectorAll("[data-wsc-twitter-tweet]").forEach((container) => {
+            const tweetId = container.dataset.wscTwitterTweet;
+            if (tweetId) {
+                delete container.dataset.wscTwitterTweet;
+                void embedTweet(container, tweetId, true);
+            }
+        });
+    }
+    exports.embedAll = embedAll;
 });
