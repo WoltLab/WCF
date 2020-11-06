@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\user\authentication\password\algorithm;
+use ParagonIE\ConstantTime\Hex;
 use wcf\system\user\authentication\password\IPasswordAlgorithm;
 
 /**
@@ -25,7 +26,7 @@ final class Smf2 implements IPasswordAlgorithm {
 	 * @inheritDoc
 	 */
 	public function hash(string $password): string {
-		$salt = \bin2hex(\random_bytes(20));
+		$salt = Hex::encode(\random_bytes(20));
 		
 		return $this->hashWithSalt($password, $salt).':'.$salt;
 	}

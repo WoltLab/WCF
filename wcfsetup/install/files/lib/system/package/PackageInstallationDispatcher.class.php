@@ -232,12 +232,16 @@ class PackageInstallationDispatcher {
 					]);
 					
 					$statement->execute([
+						// We do not use the cache-timing safe class Hex, because we run the 
+						// function during the setup.
 						$signatureSecret = \bin2hex(\random_bytes(20)),
 						'signature_secret'
 					]);
 					\define('SIGNATURE_SECRET', $signatureSecret);
 					HeaderUtil::setCookie(
 						'acp_session',
+						// We do not use the cache-timing safe class Hex, because we run the 
+						// function during the setup.
 						CryptoUtil::createSignedString(\hex2bin(WCF::getSession()->sessionID))
 					);
 					

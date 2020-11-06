@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\session;
+use ParagonIE\ConstantTime\Hex;
 use wcf\data\session\Session as LegacySession;
 use wcf\data\session\SessionEditor;
 use wcf\data\user\User;
@@ -209,7 +210,7 @@ final class SessionHandler extends SingletonFactory {
 				return null;
 			}
 			
-			return \bin2hex($compressedSessionId);
+			return Hex::encode($compressedSessionId);
 		}
 		
 		return null;
@@ -223,7 +224,7 @@ final class SessionHandler extends SingletonFactory {
 			return $sessionID;
 		}
 		
-		return CryptoUtil::createSignedString(\hex2bin($sessionID));
+		return CryptoUtil::createSignedString(Hex::decode($sessionID));
 	}
 	
 	/**
@@ -334,7 +335,7 @@ final class SessionHandler extends SingletonFactory {
 				$xsrfToken = CryptoUtil::createSignedString(\random_bytes(16));
 			}
 			else {
-				$xsrfToken = \bin2hex(\random_bytes(16));
+				$xsrfToken = Hex::encode(\random_bytes(16));
 			}
 			
 			// We construct the cookie manually instead of using HeaderUtil::setCookie(), because:
@@ -531,7 +532,7 @@ final class SessionHandler extends SingletonFactory {
 	 * Creates a new session.
 	 */
 	protected function create() {
-		$this->sessionID = \bin2hex(\random_bytes(20));
+		$this->sessionID = Hex::encode(\random_bytes(20));
 		
 		// Create new session.
 		$sql = "INSERT INTO     wcf".WCF_N."_".($this->isACP ? 'acp' : 'user')."_session

@@ -4,6 +4,7 @@ use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\TooManyRedirectsException;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7\Request;
+use ParagonIE\ConstantTime\Hex;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
@@ -111,7 +112,7 @@ final class HTTPRequest {
 				$this->addHeader('content-type', 'application/x-www-form-urlencoded');
 			}
 			else {
-				$boundary = bin2hex(\random_bytes(20));
+				$boundary = Hex::encode(\random_bytes(20));
 				$this->addHeader('content-type', 'multipart/form-data; boundary='.$boundary);
 				
 				// source of the iterators: http://stackoverflow.com/a/7623716/782822

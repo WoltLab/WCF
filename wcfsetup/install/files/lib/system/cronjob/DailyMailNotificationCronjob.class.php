@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cronjob;
+use ParagonIE\ConstantTime\Hex;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\user\notification\event\UserNotificationEventList;
 use wcf\data\user\notification\UserNotification;
@@ -203,7 +204,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 			
 			// generate token if not present
 			if (!$user->notificationMailToken) {
-				$token = bin2hex(\random_bytes(10));
+				$token = Hex::encode(\random_bytes(10));
 				$editor = new UserEditor($user);
 				$editor->update(['notificationMailToken' => $token]);
 				

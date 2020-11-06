@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\user\notification;
+use ParagonIE\ConstantTime\Hex;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\notification\event\recipient\UserNotificationEventRecipientList;
@@ -683,7 +684,7 @@ class UserNotificationHandler extends SingletonFactory {
 		
 		// generate token if not present
 		if (!$user->notificationMailToken) {
-			$token = bin2hex(\random_bytes(10));
+			$token = Hex::encode(\random_bytes(10));
 			$editor = new UserEditor($user);
 			$editor->update(['notificationMailToken' => $token]);
 			

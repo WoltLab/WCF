@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\user;
+use ParagonIE\ConstantTime\Hex;
 use wcf\data\user\group\UserGroup;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
@@ -63,7 +64,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 		}
 		
 		// create accessToken for AbstractAuthedPage
-		$parameters['accessToken'] = bin2hex(\random_bytes(20));
+		$parameters['accessToken'] = Hex::encode(\random_bytes(20));
 		
 		// handle registration date
 		if (!isset($parameters['registrationDate'])) $parameters['registrationDate'] = TIME_NOW;
@@ -93,7 +94,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	public function update(array $parameters = []) {
 		if (array_key_exists('password', $parameters) && $parameters['password'] !== '') {
 			$parameters['password'] = self::getPasswordHash($parameters['password']);
-			$parameters['accessToken'] = bin2hex(\random_bytes(20));
+			$parameters['accessToken'] = Hex::encode(\random_bytes(20));
 			
 			// update accessToken
 			$this->accessToken = $parameters['accessToken'];

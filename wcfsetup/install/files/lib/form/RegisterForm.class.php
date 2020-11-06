@@ -1,5 +1,6 @@
 <?php
 namespace wcf\form;
+use ParagonIE\ConstantTime\Hex;
 use wcf\acp\form\UserAddForm;
 use wcf\data\blacklist\entry\BlacklistEntry;
 use wcf\data\object\type\ObjectType;
@@ -392,7 +393,7 @@ class RegisterForm extends UserAddForm {
 						if (isset($facebookData['gender']) && User::getUserOptionID('gender') !== null) $saveOptions[User::getUserOptionID('gender')] = ($facebookData['gender'] == 'male' ? UserProfile::GENDER_MALE : UserProfile::GENDER_FEMALE);
 						
 						if (isset($facebookData['birthday']) && User::getUserOptionID('birthday') !== null) {
-							list($month, $day, $year) = explode('/', $facebookData['birthday']);
+							[$month, $day, $year] = explode('/', $facebookData['birthday']);
 							$saveOptions[User::getUserOptionID('birthday')] = $year.'-'.$month.'-'.$day;
 						}
 						if (isset($facebookData['location']) && User::getUserOptionID('location') !== null) $saveOptions[User::getUserOptionID('location')] = $facebookData['location']['name'];
@@ -435,7 +436,7 @@ class RegisterForm extends UserAddForm {
 			}
 			
 			// create fake password
-			$this->password = bin2hex(\random_bytes(20));
+			$this->password = Hex::encode(\random_bytes(20));
 		}
 
 		$eventParameters = [
@@ -453,7 +454,7 @@ class RegisterForm extends UserAddForm {
 		$addDefaultGroups = true;
 		if (!empty($this->blacklistMatches) || (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER && !$registerVia3rdParty) || (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN)) {
 			$activationCode = UserRegistrationUtil::getActivationCode();
-			$emailConfirmCode = bin2hex(\random_bytes(20));
+			$emailConfirmCode = Hex::encode(\random_bytes(20));
 			$this->additionalFields['activationCode'] = $activationCode;
 			$this->additionalFields['emailConfirmed'] = $emailConfirmCode;
 			$addDefaultGroups = false;

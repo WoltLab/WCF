@@ -1,5 +1,6 @@
 <?php
 namespace wcf\action;
+use ParagonIE\ConstantTime\Hex;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\system\exception\IllegalLinkException;
@@ -160,7 +161,7 @@ class GithubAuthAction extends AbstractAction {
 		}
 		
 		// start auth by redirecting to github
-		$token = bin2hex(\random_bytes(20));
+		$token = Hex::encode(\random_bytes(20));
 		WCF::getSession()->register('__githubInit', $token);
 		HeaderUtil::redirect("https://github.com/login/oauth/authorize?client_id=".rawurlencode(StringUtil::trim(GITHUB_PUBLIC_KEY))."&scope=".rawurlencode('user:email')."&state=".$token);
 		$this->executed();

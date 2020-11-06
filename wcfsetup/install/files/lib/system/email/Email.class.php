@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\email;
+use ParagonIE\ConstantTime\Hex;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\background\job\AbstractBackgroundJob;
 use wcf\system\background\job\EmailDeliveryBackgroundJob;
@@ -199,7 +200,7 @@ class Email {
 	 */
 	public function getMessageID() {
 		if ($this->messageID === null) {
-			$this->messageID = bin2hex(\random_bytes(20));
+			$this->messageID = Hex::encode(\random_bytes(20));
 		}
 		
 		return '<'.$this->messageID.'@'.self::getHost().'>';
@@ -533,7 +534,7 @@ class Email {
 	 */
 	public function getHeaderString() {
 		return implode("\r\n", array_map(function ($item) {
-			list($name, $value) = $item;
+			[$name, $value] = $item;
 			
 			switch ($name) {
 				case 'message-id':

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\form;
+use ParagonIE\ConstantTime\Hex;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\email\mime\MimePartFacade;
@@ -101,7 +102,7 @@ class LostPasswordForm extends AbstractCaptchaForm {
 		parent::save();
 		
 		// generate a new lost password key
-		$lostPasswordKey = bin2hex(\random_bytes(20));
+		$lostPasswordKey = Hex::encode(\random_bytes(20));
 		
 		// save key and request time in database
 		$this->objectAction = new UserAction([$this->user], 'update', [

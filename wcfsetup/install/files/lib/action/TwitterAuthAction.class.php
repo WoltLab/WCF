@@ -1,5 +1,6 @@
 <?php
 namespace wcf\action;
+use ParagonIE\ConstantTime\Hex;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\system\exception\IllegalLinkException;
@@ -57,7 +58,7 @@ class TwitterAuthAction extends AbstractAction {
 				// fetch access_token
 				$oauthHeader = [
 					'oauth_consumer_key' => StringUtil::trim(TWITTER_PUBLIC_KEY),
-					'oauth_nonce' => bin2hex(\random_bytes(20)),
+					'oauth_nonce' => Hex::encode(\random_bytes(20)),
 					'oauth_signature_method' => 'HMAC-SHA1',
 					'oauth_timestamp' => TIME_NOW,
 					'oauth_version' => '1.0',
@@ -114,7 +115,7 @@ class TwitterAuthAction extends AbstractAction {
 					try {
 						$oauthHeader = [
 							'oauth_consumer_key' => StringUtil::trim(TWITTER_PUBLIC_KEY),
-							'oauth_nonce' => bin2hex(\random_bytes(20)),
+							'oauth_nonce' => Hex::encode(\random_bytes(20)),
 							'oauth_signature_method' => 'HMAC-SHA1',
 							'oauth_timestamp' => TIME_NOW,
 							'oauth_version' => '1.0',
@@ -167,7 +168,7 @@ class TwitterAuthAction extends AbstractAction {
 			$oauthHeader = [
 				'oauth_callback' => $callbackURL,
 				'oauth_consumer_key' => StringUtil::trim(TWITTER_PUBLIC_KEY),
-				'oauth_nonce' => bin2hex(\random_bytes(20)),
+				'oauth_nonce' => Hex::encode(\random_bytes(20)),
 				'oauth_signature_method' => 'HMAC-SHA1',
 				'oauth_timestamp' => TIME_NOW,
 				'oauth_version' => '1.0'

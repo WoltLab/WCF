@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\user\notification;
+use ParagonIE\ConstantTime\Hex;
 use wcf\data\language\Language;
 use wcf\data\user\notification\event\UserNotificationEvent;
 use wcf\data\user\notification\UserNotification;
@@ -75,7 +76,7 @@ class TestableUserNotificationEventHandler extends SingletonFactory {
 					'data' => [
 						'email' => $username . '@example.com',
 						'languageID' => $languages[array_rand($languages)]->languageID,
-						'password' => \bin2hex(\random_bytes(16)),
+						'password' => Hex::encode(\random_bytes(16)),
 						'registrationDate' => TIME_NOW - 24 * 3600 * random_int(10, 1000),
 						'username' => $username
 					]

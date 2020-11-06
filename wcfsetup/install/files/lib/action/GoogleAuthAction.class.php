@@ -1,5 +1,6 @@
 <?php
 namespace wcf\action;
+use ParagonIE\ConstantTime\Hex;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\system\exception\IllegalLinkException;
@@ -148,7 +149,7 @@ class GoogleAuthAction extends AbstractAction {
 		}
 		
 		// start auth by redirecting to google
-		$token = bin2hex(\random_bytes(20));
+		$token = Hex::encode(\random_bytes(20));
 		WCF::getSession()->register('__googleInit', $token);
 		HeaderUtil::redirect("https://accounts.google.com/o/oauth2/auth?client_id=".rawurlencode(StringUtil::trim(GOOGLE_PUBLIC_KEY)). "&redirect_uri=".rawurlencode($callbackURL)."&state=".$token."&scope=profile+openid+email&response_type=code");
 		$this->executed();

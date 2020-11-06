@@ -1,5 +1,6 @@
 <?php
 namespace wcf\util;
+use ParagonIE\ConstantTime\Hex;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
 use wcf\system\io\GZipFile;
@@ -119,7 +120,7 @@ final class FileUtil {
 	public static function getTemporaryFilename($prefix = 'tmpFile_', $extension = '', $dir = TMP_DIR) {
 		$dir = self::addTrailingSlash($dir);
 		do {
-			$tmpFile = $dir.$prefix.bin2hex(\random_bytes(20)).$extension;
+			$tmpFile = $dir.$prefix.Hex::encode(\random_bytes(20)).$extension;
 		}
 		while (file_exists($tmpFile));
 		
