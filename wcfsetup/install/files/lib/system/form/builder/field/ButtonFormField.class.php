@@ -75,7 +75,7 @@ class ButtonFormField extends AbstractFormField {
 		parent::populate();
 		
 		$this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor('button', function(IFormDocument $document, array $parameters) {
-			if (!isset($parameters[$this->getObjectProperty()])) {
+			if (!isset($parameters[$this->getObjectProperty()]) && $this->getValue() !== null) {
 				$parameters[$this->getObjectProperty()] = $this->getValue();
 			}
 			
