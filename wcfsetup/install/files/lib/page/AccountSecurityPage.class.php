@@ -50,6 +50,11 @@ class AccountSecurityPage extends AbstractPage {
 		});
 		
 		$this->multifactorMethods = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.multifactor');
+		
+		usort($this->multifactorMethods, function (ObjectType $a, ObjectType $b) {
+			return $b->priority <=> $a->priority;
+		});
+		
 		$this->enabledMultifactorMethods = array_flip(array_map(function (ObjectType $o) {
 			return $o->objectTypeID;
 		}, WCF::getUser()->getEnabledMultifactorMethods()));

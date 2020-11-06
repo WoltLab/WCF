@@ -38,15 +38,17 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 	 * Returns the number of remaining codes.
 	 */
 	public function getStatusText(int $setupId): string {
-		$sql = "SELECT	COUNT(*)
+		$sql = "SELECT	COUNT(*) - COUNT(useTime) AS count, MAX(useTime) AS lastUsed
 			FROM	wcf".WCF_N."_user_multifactor_backup
-			WHERE	setupID = ?
-				AND useTime IS NULL";
+			WHERE	setupID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$setupId]);
 		
-		// TODO: Language item
-		return $statement->fetchSingleColumn()." codes remaining";
+		return WCF::getLanguage()->getDynamicVariable(
+			'wcf.user.security.multifactor.backup.status',
+			$statement->fetchArray()
+		);
+
 	}
 	
 	/**

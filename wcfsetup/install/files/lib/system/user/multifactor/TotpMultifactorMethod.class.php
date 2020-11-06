@@ -28,14 +28,16 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 	 * Returns the number of devices the user set up.
 	 */
 	public function getStatusText(int $setupId): string {
-		$sql = "SELECT	COUNT(*)
+		$sql = "SELECT	COUNT(*) AS count, MAX(useTime) AS lastUsed
 			FROM	wcf".WCF_N."_user_multifactor_totp
 			WHERE	setupID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$setupId]);
 		
-		// TODO: Language item
-		return $statement->fetchSingleColumn()." devices configured";
+		return WCF::getLanguage()->getDynamicVariable(
+			'wcf.user.security.multifactor.totp.status',
+			$statement->fetchArray()
+		);
 	}
 	
 	/**

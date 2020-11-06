@@ -25,7 +25,7 @@
 						</h3>
 						
 						{if $enabledMultifactorMethods[$method->objectTypeID]|isset}
-							{$method->getProcessor()->getStatusText($enabledMultifactorMethods[$method->objectTypeID])}
+							{@$method->getProcessor()->getStatusText($enabledMultifactorMethods[$method->objectTypeID])}
 						{/if}
 					</div>
 					

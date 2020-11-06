@@ -4831,6 +4831,30 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.security.sessionName"><![CDATA[{if $session->getUserAgent()->getBrowser()}{$session->getUserAgent()->getBrowser()}{if $session->getUserAgent()->getOS()} auf {$session->getUserAgent()->getOS()}{/if}{else}Unbekanntes Gerät{/if}]]></item>
 		<item name="wcf.user.security.ipAddress"><![CDATA[IP-Adresse]]></item>
 		<item name="wcf.user.security.lastActivity"><![CDATA[Sitzung zuletzt aktiv]]></item>
+		<item name="wcf.user.security.multifactor"><![CDATA[Mehrfaktor-Authentifizierung]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp"><![CDATA[Smartphone-App]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup"><![CDATA[Notfall-Codes]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup.manage"><![CDATA[Notfallcodes verwalten]]></item>
+		<item name="wcf.user.security.multifactor.backup.regenerateCodes"><![CDATA[Neue Codes generieren]]></item>
+		<item name="wcf.user.security.multifactor.backup.existingCodes"><![CDATA[Aktive Codes]]></item>
+		<item name="wcf.user.security.multifactor.backup.success"><![CDATA[Es wurden erfolgreich neue Codes generiert. Bestehende Codes sind nicht mehr gültig. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}schreibe dir{else}schreiben Sie sich{/if} die Codes gut auf!]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.manage"><![CDATA[Smartphone-App verwalten]]></item>
+		<item name="wcf.user.security.multifactor.totp.newDevice"><![CDATA[Smartphone hinzufügen]]></item>
+		<item name="wcf.user.security.multifactor.totp.deviceName"><![CDATA[Name des Geräts]]></item>
+		<item name="wcf.user.security.multifactor.totp.deviceName.placeholder"><![CDATA[Smartphone von {$__wcf->user->username}]]></item>
+		<item name="wcf.user.security.multifactor.totp.code"><![CDATA[Einmalcode]]></item>
+		<item name="wcf.user.security.multifactor.totp.status"><![CDATA[<ul class="inlineList small commaSeparated">
+<li>{plural value=$count 0="Nicht eingerichtet" 1="Ein Gerät eingerichtet" other="# Geräte eingerichtet"}</li>
+{if $lastUsed}<li>Am {@$lastUsed|plainTime} zuletzt verwendet</li>{/if}
+</ul>]]></item>
+		<item name="wcf.user.security.multifactor.backup.status"><![CDATA[<ul class="inlineList small commaSeparated">
+<li>{plural value=$count 0="Keine Codes verbleibend" 1="Ein Code verbleibend" other="# Codes verbleibend"}</li>
+{if $lastUsed}<li>Am {@$lastUsed|plainTime} zuletzt verwendet</li>{/if}
+</ul>]]></item>
+		<item name="wcf.user.security.multifactor.manage"><![CDATA[Verwalten]]></item>
+		<item name="wcf.user.security.multifactor.setup"><![CDATA[Einrichten]]></item>
+		<item name="wcf.user.security.multifactor.active"><![CDATA[Aktiv]]></item>
+		<item name="wcf.user.security.multifactor.backup.generateCodes"><![CDATA[Codes generieren]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophäen]]></item>
