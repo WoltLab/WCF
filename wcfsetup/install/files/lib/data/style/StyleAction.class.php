@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\style;
+use ParagonIE\ConstantTime\Hex;
 use wcf\data\TDatabaseObjectToggle;
 use wcf\data\user\UserAction;
 use wcf\data\AbstractDatabaseObjectAction;
@@ -193,7 +194,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 				if ($file !== null) {
 					$fileLocation = $file->getLocation();
 					$extension = pathinfo($file->getFilename(), PATHINFO_EXTENSION);
-					$newName = $type.'-'.\bin2hex(\random_bytes(4)).'.'.$extension;
+					$newName = $type.'-'.Hex::encode(\random_bytes(4)).'.'.$extension;
 					$newLocation = $style->getAssetPath().$newName;
 					rename($fileLocation, $newLocation);
 					$this->parameters['variables'][$type] = $newName;

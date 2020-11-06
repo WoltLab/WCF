@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\user\authentication\password\algorithm;
 
+use ParagonIE\ConstantTime\Hex;
+
 /**
  * Implementation of the PHPASS password algorithm.
  *
@@ -104,7 +106,7 @@ trait TPhpass {
 	 */
 	public function hash(string $password): string {
 		$settings = '$H$8';
-		$settings .= \bin2hex(\random_bytes(4));
+		$settings .= Hex::encode(\random_bytes(4));
 		
 		return $this->hashPhpass($password, $settings).':';
 	}

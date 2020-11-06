@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\user\authentication\password\algorithm;
+use ParagonIE\ConstantTime\Hex;
 use wcf\system\user\authentication\password\IPasswordAlgorithm;
 
 /**
@@ -27,7 +28,7 @@ final class CryptMD5 implements IPasswordAlgorithm {
 	 * @inheritDoc
 	 */
 	public function hash(string $password): string {
-		$salt = '$1$'.\bin2hex(\random_bytes(6)).'$';
+		$salt = '$1$'.Hex::encode(\random_bytes(6)).'$';
 		
 		return $this->hashWithSalt($password, $salt);
 	}

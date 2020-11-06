@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\worker;
+use ParagonIE\ConstantTime\Hex;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
@@ -93,7 +94,7 @@ class SendNewPasswordWorker extends AbstractWorker {
 	 * @param	UserEditor	$userEditor
 	 */
 	protected function resetPassword(UserEditor $userEditor) {
-		$lostPasswordKey = bin2hex(\random_bytes(20));
+		$lostPasswordKey = Hex::encode(\random_bytes(20));
 		$lastLostPasswordRequestTime = TIME_NOW;
 		$userAction = new UserAction([$userEditor], 'update', [
 			'data' => [

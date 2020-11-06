@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\email\mime;
+use ParagonIE\ConstantTime\Hex;
 use wcf\system\email\Mailbox;
 use wcf\util\StringUtil;
 
@@ -29,7 +30,7 @@ abstract class AbstractMultipartMimePart extends AbstractMimePart implements IRe
 	 * Sets the multipart boundary.
 	 */
 	public function __construct() {
-		$this->boundary = "WoltLab_Suite=_".bin2hex(\random_bytes(20));
+		$this->boundary = "WoltLab_Suite=_".Hex::encode(\random_bytes(20));
 		$this->parts = new \SplObjectStorage();
 	}
 	

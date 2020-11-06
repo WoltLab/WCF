@@ -233,7 +233,7 @@ class PackageInstallationDispatcher {
 					]);
 					
 					$statement->execute([
-						$signatureSecret = \bin2hex(\random_bytes(20)),
+						$signatureSecret = Hex::encode(\random_bytes(20)),
 						'signature_secret'
 					]);
 					\define('SIGNATURE_SECRET', $signatureSecret);

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\action;
+use ParagonIE\ConstantTime\Hex;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\system\exception\IllegalLinkException;
@@ -145,7 +146,7 @@ class FacebookAuthAction extends AbstractAction {
 		}
 		
 		// start auth by redirecting to facebook
-		$token = bin2hex(\random_bytes(20));
+		$token = Hex::encode(\random_bytes(20));
 		WCF::getSession()->register('__facebookInit', $token);
 		HeaderUtil::redirect("https://www.facebook.com/dialog/oauth?client_id=".StringUtil::trim(FACEBOOK_PUBLIC_KEY). "&redirect_uri=".rawurlencode($callbackURL)."&state=".$token."&scope=email");
 		$this->executed();

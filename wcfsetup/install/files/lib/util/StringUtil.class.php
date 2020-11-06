@@ -1,5 +1,6 @@
 <?php
 namespace wcf\util;
+use ParagonIE\ConstantTime\Hex;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
@@ -47,7 +48,7 @@ final class StringUtil {
 	 * @return	string
 	 */
 	public static function getRandomID() {
-		return \bin2hex(\random_bytes(20));
+		return Hex::encode(\random_bytes(20));
 	}
 	
 	/**

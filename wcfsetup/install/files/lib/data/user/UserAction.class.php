@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\user;
+use ParagonIE\ConstantTime\Hex;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\avatar\UserAvatarAction;
 use wcf\data\user\group\UserGroup;
@@ -672,7 +673,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		foreach ($this->objects as $object) {
 			(new UserAction([$object], 'update', [
 				'data' => [
-					'emailConfirmed' => bin2hex(\random_bytes(20))
+					'emailConfirmed' => Hex::encode(\random_bytes(20))
 				]
 			]))->executeAction();
 		}
@@ -743,7 +744,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		$action = new UserAction($this->objects, 'update', [
 			'data' => [
 				'activationCode' => UserRegistrationUtil::getActivationCode(),
-				'emailConfirmed' => bin2hex(\random_bytes(20)),
+				'emailConfirmed' => Hex::encode(\random_bytes(20)),
 			],
 			'removeGroups' => UserGroup::getGroupIDsByType([UserGroup::USERS])
 		]);
@@ -1113,7 +1114,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		foreach ($this->objects as $object) {
 			$action = new UserAction([$object], 'update', [
 				'data' => [
-					'emailConfirmed' => bin2hex(\random_bytes(20))
+					'emailConfirmed' => Hex::encode(\random_bytes(20))
 				]
 			]);
 			$action->executeAction();
