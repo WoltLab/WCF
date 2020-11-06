@@ -1725,7 +1725,7 @@
 			<name>com.woltlab.wcf.multifactor.backup</name>
 			<definitionname>com.woltlab.wcf.multifactor</definitionname>
 			<icon>sticky-note</icon>
-			<priority>15</priority> <!-- TODO: Testing purposes only -->
+			<priority>1</priority>
 			<classname>wcf\system\user\multifactor\BackupMultifactorMethod</classname>
 		</type>
 		<type>
