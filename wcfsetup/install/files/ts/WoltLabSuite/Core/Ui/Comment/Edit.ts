@@ -29,7 +29,7 @@ interface AjaxResponse {
 
 class UiCommentEdit {
   protected _activeElement: HTMLElement | null = null;
-  protected readonly _comments = new Set<HTMLElement>();
+  protected readonly _comments = new WeakSet<HTMLElement>();
   protected readonly _container: HTMLElement;
   protected _editorContainer: HTMLElement | null = null;
 

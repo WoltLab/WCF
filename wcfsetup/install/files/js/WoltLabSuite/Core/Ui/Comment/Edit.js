@@ -23,7 +23,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
          */
         constructor(container) {
             this._activeElement = null;
-            this._comments = new Set();
+            this._comments = new WeakSet();
             this._editorContainer = null;
             this._container = container;
             this.rebuild();

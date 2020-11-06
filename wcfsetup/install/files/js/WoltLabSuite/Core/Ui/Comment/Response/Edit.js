@@ -22,7 +22,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../
          */
         constructor(container) {
             super(container);
-            this._responses = new Set();
+            this._responses = new WeakSet();
             this.rebuildResponses();
             Listener_1.default.add("Ui/Comment/Response/Edit_" + Util_1.default.identify(this._container), () => this.rebuildResponses());
         }

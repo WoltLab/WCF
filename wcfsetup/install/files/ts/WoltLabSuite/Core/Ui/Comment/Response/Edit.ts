@@ -24,7 +24,7 @@ interface AjaxResponse {
 }
 
 class UiCommentResponseEdit extends UiCommentEdit {
-  protected readonly _responses = new Set<HTMLElement>();
+  protected readonly _responses = new WeakSet<HTMLElement>();
 
   /**
    * Initializes the comment edit manager.
