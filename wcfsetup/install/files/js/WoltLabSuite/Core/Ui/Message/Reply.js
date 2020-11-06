@@ -86,7 +86,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
                     });
                 }
                 else {
-                    parameters = Core.extend(parameters, Captcha_1.default.getData(captchaId));
+                    parameters = Core.extend(parameters, data);
                     this._submit(undefined, parameters);
                 }
             }

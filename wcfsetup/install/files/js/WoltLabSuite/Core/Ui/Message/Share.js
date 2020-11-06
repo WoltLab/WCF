@@ -44,13 +44,6 @@ define(["require", "exports", "tslib", "../../Event/Handler", "../../StringUtil"
                         share("facebook", "https://www.facebook.com/sharer.php?u={pageURL}&t={text}", true, pageUrl);
                     },
                 },
-                google: {
-                    link: container.querySelector(".jsShareGoogle"),
-                    share(event) {
-                        event.preventDefault();
-                        share("google", "https://plus.google.com/share?url={pageURL}", false, pageUrl);
-                    },
-                },
                 reddit: {
                     link: container.querySelector(".jsShareReddit"),
                     share(event) {

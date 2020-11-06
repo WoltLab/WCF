@@ -21,12 +21,9 @@ define(["require", "exports", "https://platform.twitter.com/widgets.js"], functi
      * @param {boolean} removeChildren Whether to remove existing children of the given container after embedding the tweet.
      * @return {HTMLElement} The Tweet element created by Twitter.
      */
-    async function embedTweet(container, tweetId, removeChildren) {
-        if (removeChildren === undefined) {
-            removeChildren = false;
-        }
-        await twitterReady;
-        const tweet = await twttr.widgets.createTweet(tweetId, container, {
+    async function embedTweet(container, tweetId, removeChildren = false) {
+        const twitter = await twitterReady;
+        const tweet = await twitter.widgets.createTweet(tweetId, container, {
             dnt: true,
             lang: document.documentElement.lang,
         });
