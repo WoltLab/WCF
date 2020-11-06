@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\user\authentication\password\algorithm;
-
 use ParagonIE\ConstantTime\Hex;
 
 /**

@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\package;
-use ParagonIE\ConstantTime\Hex;
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationEditor;
 use wcf\data\devtools\project\DevtoolsProjectAction;
@@ -233,13 +232,17 @@ class PackageInstallationDispatcher {
 					]);
 					
 					$statement->execute([
-						$signatureSecret = Hex::encode(\random_bytes(20)),
+						// We do not use the cache-timing safe class Hex, because we run the 
+						// function during the setup.
+						$signatureSecret = \bin2hex(\random_bytes(20)),
 						'signature_secret'
 					]);
 					\define('SIGNATURE_SECRET', $signatureSecret);
 					HeaderUtil::setCookie(
 						'acp_session',
-						CryptoUtil::createSignedString(Hex::decode(WCF::getSession()->sessionID))
+						// We do not use the cache-timing safe class Hex, because we run the 
+						// function during the setup.
+						CryptoUtil::createSignedString(\hex2bin(WCF::getSession()->sessionID))
 					);
 					
 					if (WCF::getSession()->getVar('__wcfSetup_developerMode')) {
