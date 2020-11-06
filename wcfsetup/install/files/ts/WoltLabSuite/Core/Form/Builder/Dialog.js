@@ -187,7 +187,9 @@ define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function(Ajax, Core, FormBuil
 						}
 					});
 					
-					UiDialog.submit(this._dialogId);
+					// Enable other `click` event listeners to be executed first before the form
+					// is submitted.
+					setTimeout(() => UiDialog.submit(this._dialogId), 0);
 				});
 			});
 		},
