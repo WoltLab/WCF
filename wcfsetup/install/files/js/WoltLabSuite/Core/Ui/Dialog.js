@@ -290,7 +290,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             dialog.classList.add("dialogContainer");
             dialog.setAttribute("aria-hidden", "true");
             dialog.setAttribute("role", "dialog");
-            dialog.id = id;
+            dialog.dataset.id = id;
             const header = document.createElement("header");
             dialog.appendChild(header);
             const titleId = Util_1.default.getUniqueId();

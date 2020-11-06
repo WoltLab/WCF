@@ -348,7 +348,7 @@ const UiDialog = {
     dialog.classList.add("dialogContainer");
     dialog.setAttribute("aria-hidden", "true");
     dialog.setAttribute("role", "dialog");
-    dialog.id = id;
+    dialog.dataset.id = id;
 
     const header = document.createElement("header");
     dialog.appendChild(header);
