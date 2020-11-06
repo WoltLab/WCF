@@ -9,7 +9,9 @@
 
 import "https://platform.twitter.com/widgets.js";
 
-const twitterReady = new Promise((resolve) => {
+type CallbackReady = (twttr: Twitter) => void;
+
+const twitterReady = new Promise((resolve: CallbackReady) => {
   twttr.ready(resolve);
 });
 
@@ -24,15 +26,11 @@ const twitterReady = new Promise((resolve) => {
 export async function embedTweet(
   container: HTMLElement,
   tweetId: string,
-  removeChildren?: boolean,
+  removeChildren = false,
 ): Promise<HTMLElement> {
-  if (removeChildren === undefined) {
-    removeChildren = false;
-  }
+  const twitter = await twitterReady;
 
-  await twitterReady;
-
-  const tweet = await twttr.widgets.createTweet(tweetId, container, {
+  const tweet = await twitter.widgets.createTweet(tweetId, container, {
     dnt: true,
     lang: document.documentElement.lang,
   });

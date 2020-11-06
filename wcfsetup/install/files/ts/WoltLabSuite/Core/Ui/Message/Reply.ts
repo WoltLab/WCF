@@ -124,10 +124,7 @@ class UiMessageReply {
           this._submit(undefined, parameters);
         });
       } else {
-        parameters = Core.extend(
-          parameters,
-          ControllerCaptcha.getData(captchaId) as ArbitraryObject,
-        ) as ArbitraryObject;
+        parameters = Core.extend(parameters, data as ArbitraryObject) as ArbitraryObject;
         this._submit(undefined, parameters);
       }
     } else {
@@ -201,7 +198,7 @@ class UiMessageReply {
         {
           parameters: parameters,
         },
-        additionalParameters as any,
+        additionalParameters as ArbitraryObject,
       ),
     );
   }

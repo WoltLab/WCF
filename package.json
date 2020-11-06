@@ -6,6 +6,7 @@
     "@types/jquery": "^3.5.4",
     "@types/pica": "^5.1.2",
     "@types/prismjs": "^1.16.2",
+    "@types/twitter-for-web": "0.0.1",
     "@typescript-eslint/eslint-plugin": "^4.6.0",
     "@typescript-eslint/parser": "^4.6.0",
     "@woltlab/zxcvbn": "git+https://github.com/WoltLab/zxcvbn.git#master",
