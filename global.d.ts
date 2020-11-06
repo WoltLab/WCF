@@ -31,5 +31,9 @@ declare global {
     hashCode: () => string;
   }
 
+  interface JQuery {
+    redactor(...args: any[]): JQuery;
+  }
+
   type ArbitraryObject = Record<string, unknown>;
 }
