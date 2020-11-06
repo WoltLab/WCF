@@ -444,14 +444,6 @@ class AccountManagementForm extends AbstractForm {
 		$this->objectAction = new UserAction([WCF::getUser()], 'update', $data);
 		$this->objectAction->executeAction();
 		
-		// update cookie
-		if (isset($_COOKIE[COOKIE_PREFIX.'password']) && isset($updateParameters['password'])) {
-			// reload user
-			$user = new User(WCF::getUser()->userID);
-			
-			HeaderUtil::setCookie('password', PasswordUtil::getSaltedHash($updateParameters['password'], $user->password), TIME_NOW + 365 * 24 * 3600);
-		}
-		
 		if (isset($updateParameters['newEmail']) && isset($updateParameters['reactivationCode'])) {
 			// Use user list to allow overriding of the fields without duplicating logic
 			$userList = new UserList();
