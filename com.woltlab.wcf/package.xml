@@ -51,6 +51,8 @@
 	</instructions>
 	
 	<instructions type="update" fromversion="5.3.*">
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_checkOwnerGroup.php</instruction>
+		
 		<instruction type="file" />
 		<instruction type="acpTemplate" />
 		<instruction type="template" />
