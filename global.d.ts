@@ -23,6 +23,7 @@ declare global {
     WCF: any;
     bc_wcfDomUtil: typeof DomUtil;
     bc_wcfSimpleDropdown: typeof UiDropdownSimple;
+    __wcf_bc_colorPickerInit?: () => void;
     __wcf_bc_colorUtil: typeof ColorUtil;
     __wcf_bc_datePicker: typeof DatePicker;
   }
