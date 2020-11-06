@@ -838,6 +838,17 @@ E-Mail: [E-Mail-Adresse der verantwortlichen Stelle]</p><p><br></p><p>Verantwort
 			<excludeFromLandingPage>1</excludeFromLandingPage>
 			<requireObjectID>1</requireObjectID>
 		</page>
+		<page identifier="com.woltlab.wcf.MultifactorAuthentication">
+			<pageType>system</pageType>
+			<controller>wcf\form\MultifactorAuthenticationForm</controller>
+			<name language="en">Multifactor Authentication</name>
+			<name language="de">Mehrfaktor-Authentifizierung</name>
+			<hasFixedParent>1</hasFixedParent>
+			<parent>com.woltlab.wcf.Login</parent>
+			<excludeFromLandingPage>1</excludeFromLandingPage>
+			<availableDuringOfflineMode>1</availableDuringOfflineMode>
+			<requireObjectID>1</requireObjectID>
+		</page>
 	</import>
 	<delete>
 		<page identifier="com.woltlab.wcf.Mail"/>

@@ -1725,12 +1725,14 @@
 			<name>com.woltlab.wcf.multifactor.backup</name>
 			<definitionname>com.woltlab.wcf.multifactor</definitionname>
 			<icon>sticky-note</icon>
+			<priority>15</priority> <!-- TODO: Testing purposes only -->
 			<classname>wcf\system\user\multifactor\BackupMultifactorMethod</classname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.multifactor.totp</name>
 			<definitionname>com.woltlab.wcf.multifactor</definitionname>
 			<icon>mobile</icon>
+			<priority>10</priority>
 			<classname>wcf\system\user\multifactor\TotpMultifactorMethod</classname>
 		</type>
 		<!-- /multi factor -->
@@ -1748,7 +1750,7 @@
 			<conditionobject>com.woltlab.wcf.page</conditionobject>
 		</type>
 		<!-- /deprecated -->
-</import>
+	</import>
 	<delete>
 		<type name="com.woltlab.wcf.like.user">
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>

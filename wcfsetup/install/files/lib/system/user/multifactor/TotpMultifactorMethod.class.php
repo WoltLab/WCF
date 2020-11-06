@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\user\multifactor;
 use ParagonIE\ConstantTime\Hex;
+use wcf\system\exception\NotImplementedException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -67,6 +68,9 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 		$form->appendChild($newDeviceContainer);
 	}
 	
+	/**
+	 * @inheritDoc
+	 */
 	public function processManagementForm(IFormDocument $form, int $setupId): void {
 		$formData = $form->getData();
 
@@ -80,5 +84,19 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 			$formData['data']['code']['minCounter'],
 			TIME_NOW,
 		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function createAuthenticationForm(IFormDocument $form, int $setupId): void {
+		throw new NotImplementedException('TODO');
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function processAuthenticationForm(IFormDocument $form, int $setupId): void {
+		throw new NotImplementedException('TODO');
 	}
 }

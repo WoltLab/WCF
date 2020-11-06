@@ -2,6 +2,7 @@
 namespace wcf\system\user\multifactor;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\ButtonFormField;
+use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\IFormDocument;
@@ -170,5 +171,89 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 		}
 		
 		return $codes;
+	}
+	
+	/**
+	 * Returns a code from $codes matching the $userCode. `null` is returned if
+	 * no matching code could be found.
+	 */
+	private function findValidCode(string $userCode, array $codes): ?array {
+		$manager = PasswordAlgorithmManager::getInstance();
+		
+		$result = null;
+		foreach ($codes as $code) {
+			[$algorithmName, $hash] = explode(':', $code['code']);
+			$algorithm = $manager->getAlgorithmFromName($algorithmName);
+			
+			// The use of `&` is intentional to disable the shortcutting logic.
+			if ($algorithm->verify($userCode, $hash) & $code['useTime'] === null) {
+				$result = $code;
+			}
+		}
+		
+		return $result;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function createAuthenticationForm(IFormDocument $form, int $setupId): void {
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_user_multifactor_backup
+			WHERE	setupID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$setupId]);
+		$codes = $statement->fetchAll(\PDO::FETCH_ASSOC);
+		
+		$form->appendChildren([
+			TextFormField::create('code')
+				->label('wcf.user.security.multifactor.backup.code')
+				->autoFocus()
+				->required()
+				->addValidator(new FormFieldValidator('code', function (TextFormField $field) use ($codes) {
+					$userCode = preg_replace('/\s+/', '', $field->getValue());
+					
+					if ($this->findValidCode($userCode, $codes) === null) {
+						$field->addValidationError(new FormFieldValidationError('invalid'));
+					}
+				})),
+		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function processAuthenticationForm(IFormDocument $form, int $setupId): void {
+		$userCode = \preg_replace('/\s+/', '', $form->getData()['data']['code']);
+		
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_user_multifactor_backup
+			WHERE	setupID = ?
+			FOR UPDATE";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$setupId]);
+		$codes = $statement->fetchAll(\PDO::FETCH_ASSOC);
+		
+		$usedCode = $this->findValidCode($userCode, $codes);
+		
+		if ($usedCode === null) {
+			throw new \RuntimeException('Unable to find a valid code.');
+		}
+		
+		$sql = "UPDATE	wcf".WCF_N."_user_multifactor_backup
+			SET	useTime = ?
+			WHERE		setupID = ?
+				AND	identifier = ?
+				AND	useTime IS NULL";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			TIME_NOW,
+			$setupId,
+			$usedCode['identifier'],
+		]);
+		
+		if ($statement->getAffectedRows() !== 1) {
+			throw new \RuntimeException('Unable to invalidate the code.');
+		}
 	}
 }
