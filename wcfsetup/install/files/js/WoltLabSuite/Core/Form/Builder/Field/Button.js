@@ -22,7 +22,7 @@ define(['Core', './Field'], function (Core, FormBuilderField) {
          */
         _getData: function () {
             var data = {};
-            if (~~this._field.dataset.isClicked) {
+            if (this._field.dataset.isClicked === "1") {
                 data[this._fieldId] = this._field.value;
             }
             return data;
