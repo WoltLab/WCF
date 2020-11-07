@@ -1,263 +1,224 @@
 /**
  * Dropdown language chooser.
  *
- * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Language/Chooser
+ * @author  Alexander Ebert, Matthias Schmidt
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Language/Chooser
  */
-define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/SimpleDropdown'], function (Core, Dictionary, Language, DomTraverse, DomUtil, ObjectMap, UiSimpleDropdown) {
+define(["require", "exports", "tslib", "../Core", "../Language", "../Dom/Util", "../Ui/Dropdown/Simple"], function (require, exports, tslib_1, Core, Language, Util_1, Simple_1) {
     "use strict";
-    var _choosers = new Dictionary();
-    var _didInit = false;
-    var _forms = new ObjectMap();
-    var _callbackSubmit = null;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.setLanguageId = exports.removeChooser = exports.getLanguageId = exports.getChooser = exports.init = void 0;
+    Core = tslib_1.__importStar(Core);
+    Language = tslib_1.__importStar(Language);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Simple_1 = tslib_1.__importDefault(Simple_1);
+    const _choosers = new Map();
+    const _forms = new WeakMap();
     /**
-     * @exports	WoltLabSuite/Core/Language/Chooser
+     * Sets up DOM and event listeners for a language chooser.
      */
-    return {
-        /**
-         * Initializes a language chooser.
-         *
-         * @param       {string}                                containerId             input element container id
-         * @param       {string}                                chooserId               input element id
-         * @param       {int}                                   languageId              selected language id
-         * @param       {object<int, object<string, string>>}   languages               data of available languages
-         * @param       {function}                              callback                function called after a language is selected
-         * @param       {boolean}                               allowEmptyValue         true if no language may be selected
-         */
-        init: function (containerId, chooserId, languageId, languages, callback, allowEmptyValue) {
-            if (_choosers.has(chooserId)) {
-                return;
-            }
-            var container = elById(containerId);
-            if (container === null) {
-                throw new Error("Expected a valid container id, cannot find '" + chooserId + "'.");
-            }
-            var element = elById(chooserId);
-            if (element === null) {
-                element = elCreate('input');
-                elAttr(element, 'type', 'hidden');
-                elAttr(element, 'id', chooserId);
-                elAttr(element, 'name', chooserId);
-                elAttr(element, 'value', languageId);
-                container.appendChild(element);
-            }
-            this._initElement(chooserId, element, languageId, languages, callback, allowEmptyValue);
-        },
-        /**
-         * Caches common event listener callbacks.
-         */
-        _setup: function () {
-            if (_didInit)
-                return;
-            _didInit = true;
-            _callbackSubmit = this._submit.bind(this);
-        },
-        /**
-         * Sets up DOM and event listeners for a language chooser.
-         *
-         * @param       {string}                                chooserId               chooser id
-         * @param       {Element}                               element                 chooser element
-         * @param       {int}                                   languageId              selected language id
-         * @param       {object<int, object<string, string>>}   languages               data of available languages
-         * @param       {function}                              callback                callback function invoked on selection change
-         * @param       {boolean}                               allowEmptyValue         true if no language may be selected
-         */
-        _initElement: function (chooserId, element, languageId, languages, callback, allowEmptyValue) {
-            var container;
-            if (element.parentNode.nodeName === 'DD') {
-                container = elCreate('div');
-                container.className = 'dropdown';
-                // language chooser is the first child so that descriptions and error messages
-                // are always shown below the language chooser
-                DomUtil.prepend(container, element.parentNode);
-            }
-            else {
-                container = element.parentNode;
-                container.classList.add('dropdown');
-            }
-            elHide(element);
-            var dropdownToggle = elCreate('a');
-            dropdownToggle.className = 'dropdownToggle dropdownIndicator boxFlag box24 inputPrefix' + (element.parentNode.nodeName === 'DD' ? ' button' : '');
-            container.appendChild(dropdownToggle);
-            var dropdownMenu = elCreate('ul');
-            dropdownMenu.className = 'dropdownMenu';
-            container.appendChild(dropdownMenu);
-            var callbackClick = (function (event) {
-                var languageId = ~~elData(event.currentTarget, 'language-id');
-                var activeItem = DomTraverse.childByClass(dropdownMenu, 'active');
-                if (activeItem !== null)
-                    activeItem.classList.remove('active');
-                if (languageId)
-                    event.currentTarget.classList.add('active');
-                this._select(chooserId, languageId, event.currentTarget);
-            }).bind(this);
-            // add language dropdown items
-            var link, img, listItem, span;
-            for (var availableLanguageId in languages) {
-                if (languages.hasOwnProperty(availableLanguageId)) {
-                    var language = languages[availableLanguageId];
-                    listItem = elCreate('li');
-                    listItem.className = 'boxFlag';
-                    listItem.addEventListener('click', callbackClick);
-                    elData(listItem, 'language-id', availableLanguageId);
-                    if (language.languageCode !== undefined)
-                        elData(listItem, 'language-code', language.languageCode);
-                    dropdownMenu.appendChild(listItem);
-                    link = elCreate('a');
-                    link.className = 'box24';
-                    listItem.appendChild(link);
-                    img = elCreate('img');
-                    elAttr(img, 'src', language.iconPath);
-                    elAttr(img, 'alt', '');
-                    img.className = 'iconFlag';
-                    link.appendChild(img);
-                    span = elCreate('span');
-                    span.textContent = language.languageName;
-                    link.appendChild(span);
-                    if (availableLanguageId == languageId) {
-                        dropdownToggle.innerHTML = listItem.firstChild.innerHTML;
-                    }
-                }
-            }
-            // add dropdown item for "no selection"
-            if (allowEmptyValue) {
-                listItem = elCreate('li');
-                listItem.className = 'dropdownDivider';
-                dropdownMenu.appendChild(listItem);
-                listItem = elCreate('li');
-                elData(listItem, 'language-id', 0);
-                listItem.addEventListener('click', callbackClick);
-                dropdownMenu.appendChild(listItem);
-                link = elCreate('a');
-                link.textContent = Language.get('wcf.global.language.noSelection');
-                listItem.appendChild(link);
-                if (languageId === 0) {
-                    dropdownToggle.innerHTML = listItem.firstChild.innerHTML;
-                }
-                listItem.addEventListener('click', callbackClick);
-            }
-            else if (languageId === 0) {
-                dropdownToggle.innerHTML = null;
-                var div = elCreate('div');
-                dropdownToggle.appendChild(div);
-                span = elCreate('span');
-                span.className = 'icon icon24 fa-question pointer';
-                div.appendChild(span);
-                span = elCreate('span');
-                span.textContent = Language.get('wcf.global.language.noSelection');
-                div.appendChild(span);
-            }
-            UiSimpleDropdown.init(dropdownToggle);
-            _choosers.set(chooserId, {
-                callback: callback,
-                dropdownMenu: dropdownMenu,
-                dropdownToggle: dropdownToggle,
-                element: element
-            });
-            // bind to submit event
-            var form = DomTraverse.parentByTag(element, 'FORM');
-            if (form !== null) {
-                form.addEventListener('submit', _callbackSubmit);
-                var chooserIds = _forms.get(form);
-                if (chooserIds === undefined) {
-                    chooserIds = [];
-                    _forms.set(form, chooserIds);
-                }
-                chooserIds.push(chooserId);
-            }
-        },
-        /**
-         * Selects a language from the dropdown list.
-         *
-         * @param	{string}	chooserId	input element id
-         * @param	{int}	        languageId	language id or `0` to disable i18n
-         * @param	{Element=}	listItem	selected list item
-         */
-        _select: function (chooserId, languageId, listItem) {
-            var chooser = _choosers.get(chooserId);
-            if (listItem === undefined) {
-                var listItems = chooser.dropdownMenu.childNodes;
-                for (var i = 0, length = listItems.length; i < length; i++) {
-                    var _listItem = listItems[i];
-                    if (~~elData(_listItem, 'language-id') === languageId) {
-                        listItem = _listItem;
-                        break;
-                    }
-                }
-                if (listItem === undefined) {
-                    throw new Error("Cannot select unknown language id '" + languageId + "'");
-                }
-            }
-            chooser.element.value = languageId;
-            Core.triggerEvent(chooser.element, 'change');
-            chooser.dropdownToggle.innerHTML = listItem.firstChild.innerHTML;
-            _choosers.set(chooserId, chooser);
-            // execute callback
-            if (typeof chooser.callback === 'function') {
-                chooser.callback(listItem);
-            }
-        },
-        /**
-         * Inserts hidden fields for the language chooser value on submit.
-         *
-         * @param	{object}	event		event object
-         */
-        _submit: function (event) {
-            var elementIds = _forms.get(event.currentTarget);
-            var input;
-            for (var i = 0, length = elementIds.length; i < length; i++) {
-                input = elCreate('input');
-                input.type = 'hidden';
-                input.name = elementIds[i];
-                input.value = this.getLanguageId(elementIds[i]);
-                event.currentTarget.appendChild(input);
-            }
-        },
-        /**
-         * Returns the chooser for an input field.
-         *
-         * @param	{string}	chooserId	input element id
-         * @return	{Dictionary}	data of the chooser
-         */
-        getChooser: function (chooserId) {
-            var chooser = _choosers.get(chooserId);
-            if (chooser === undefined) {
-                throw new Error("Expected a valid language chooser input element, '" + chooserId + "' is not i18n input field.");
-            }
-            return chooser;
-        },
-        /**
-         * Returns the selected language for a certain chooser.
-         *
-         * @param	{string}	chooserId	input element id
-         * @return	{int}	        chosen language id
-         */
-        getLanguageId: function (chooserId) {
-            return ~~this.getChooser(chooserId).element.value;
-        },
-        /**
-         * Removes the chooser with given id.
-         *
-         * @param	{string}	chooserId	input element id
-         */
-        removeChooser: function (chooserId) {
-            if (_choosers.has(chooserId)) {
-                _choosers.delete(chooserId);
-            }
-        },
-        /**
-         * Sets the language for a certain chooser.
-         *
-         * @param	{string}	chooserId	input element id
-         * @param	{int}	        languageId	language id to be set
-         */
-        setLanguageId: function (chooserId, languageId) {
-            if (_choosers.get(chooserId) === undefined) {
-                throw new Error("Expected a valid  input element, '" + chooserId + "' is not i18n input field.");
-            }
-            this._select(chooserId, languageId);
+    function initElement(chooserId, element, languageId, languages, callback, allowEmptyValue) {
+        let container;
+        const parent = element.parentElement;
+        if (parent.nodeName === "DD") {
+            container = document.createElement("div");
+            container.className = "dropdown";
+            // language chooser is the first child so that descriptions and error messages
+            // are always shown below the language chooser
+            parent.insertAdjacentElement("afterbegin", container);
         }
-    };
+        else {
+            container = parent;
+            container.classList.add("dropdown");
+        }
+        Util_1.default.hide(element);
+        const dropdownToggle = document.createElement("a");
+        dropdownToggle.className = "dropdownToggle dropdownIndicator boxFlag box24 inputPrefix";
+        if (parent.nodeName === "DD") {
+            dropdownToggle.classList.add("button");
+        }
+        container.appendChild(dropdownToggle);
+        const dropdownMenu = document.createElement("ul");
+        dropdownMenu.className = "dropdownMenu";
+        container.appendChild(dropdownMenu);
+        function callbackClick(event) {
+            const target = event.currentTarget;
+            const languageId = ~~target.dataset.languageId;
+            const activeItem = dropdownMenu.querySelector(".active");
+            if (activeItem !== null) {
+                activeItem.classList.remove("active");
+            }
+            if (languageId) {
+                target.classList.add("active");
+            }
+            select(chooserId, languageId, target);
+        }
+        // add language dropdown items
+        Object.entries(languages).forEach(([langId, language]) => {
+            const listItem = document.createElement("li");
+            listItem.className = "boxFlag";
+            listItem.addEventListener("click", callbackClick);
+            listItem.dataset.languageId = langId;
+            if (language.languageCode !== undefined) {
+                listItem.dataset.languageCode = language.languageCode;
+            }
+            dropdownMenu.appendChild(listItem);
+            const link = document.createElement("a");
+            link.className = "box24";
+            listItem.appendChild(link);
+            const img = document.createElement("img");
+            img.src = language.iconPath;
+            img.alt = "";
+            img.className = "iconFlag";
+            link.appendChild(img);
+            const span = document.createElement("span");
+            span.textContent = language.languageName;
+            link.appendChild(span);
+            if (+langId === languageId) {
+                dropdownToggle.innerHTML = link.innerHTML;
+            }
+        });
+        // add dropdown item for "no selection"
+        if (allowEmptyValue) {
+            const divider = document.createElement("li");
+            divider.className = "dropdownDivider";
+            dropdownMenu.appendChild(divider);
+            const listItem = document.createElement("li");
+            listItem.dataset.languageId = "0";
+            listItem.addEventListener("click", callbackClick);
+            dropdownMenu.appendChild(listItem);
+            const link = document.createElement("a");
+            link.textContent = Language.get("wcf.global.language.noSelection");
+            listItem.appendChild(link);
+            if (languageId === 0) {
+                dropdownToggle.innerHTML = link.innerHTML;
+            }
+            listItem.addEventListener("click", callbackClick);
+        }
+        else if (languageId === 0) {
+            dropdownToggle.innerHTML = "";
+            const div = document.createElement("div");
+            dropdownToggle.appendChild(div);
+            const icon = document.createElement("span");
+            icon.className = "icon icon24 fa-question pointer";
+            div.appendChild(icon);
+            const span = document.createElement("span");
+            span.textContent = Language.get("wcf.global.language.noSelection");
+            div.appendChild(span);
+        }
+        Simple_1.default.init(dropdownToggle);
+        _choosers.set(chooserId, {
+            callback: callback,
+            dropdownMenu: dropdownMenu,
+            dropdownToggle: dropdownToggle,
+            element: element,
+        });
+        // bind to submit event
+        const form = element.closest("form");
+        if (form !== null) {
+            form.addEventListener("submit", onSubmit);
+            let chooserIds = _forms.get(form);
+            if (chooserIds === undefined) {
+                chooserIds = [];
+                _forms.set(form, chooserIds);
+            }
+            chooserIds.push(chooserId);
+        }
+    }
+    /**
+     * Selects a language from the dropdown list.
+     */
+    function select(chooserId, languageId, listItem) {
+        const chooser = _choosers.get(chooserId);
+        if (listItem === undefined) {
+            listItem = Array.from(chooser.dropdownMenu.children).find((element) => {
+                return ~~element.dataset.languageId === languageId;
+            });
+            if (listItem === undefined) {
+                throw new Error(`The language id '${languageId}' is unknown`);
+            }
+        }
+        chooser.element.value = languageId.toString();
+        Core.triggerEvent(chooser.element, "change");
+        chooser.dropdownToggle.innerHTML = listItem.children[0].innerHTML;
+        _choosers.set(chooserId, chooser);
+        // execute callback
+        if (typeof chooser.callback === "function") {
+            chooser.callback(listItem);
+        }
+    }
+    /**
+     * Inserts hidden fields for the language chooser value on submit.
+     */
+    function onSubmit(event) {
+        const form = event.currentTarget;
+        const elementIds = _forms.get(form);
+        elementIds.forEach((elementId) => {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = elementId;
+            input.value = getLanguageId(elementId).toString();
+            form.appendChild(input);
+        });
+    }
+    /**
+     * Initializes a language chooser.
+     */
+    function init(containerId, chooserId, languageId, languages, callback, allowEmptyValue) {
+        if (_choosers.has(chooserId)) {
+            return;
+        }
+        const container = document.getElementById(containerId);
+        if (container === null) {
+            throw new Error(`Expected a valid container id, cannot find '${chooserId}'.`);
+        }
+        let element = document.getElementById(chooserId);
+        if (element === null) {
+            element = document.createElement("input");
+            element.type = "hidden";
+            element.id = chooserId;
+            element.name = chooserId;
+            element.value = languageId.toString();
+            container.appendChild(element);
+        }
+        initElement(chooserId, element, languageId, languages, callback, allowEmptyValue);
+    }
+    exports.init = init;
+    /**
+     * Returns the chooser for an input field.
+     */
+    function getChooser(chooserId) {
+        const chooser = _choosers.get(chooserId);
+        if (chooser === undefined) {
+            throw new Error(`Expected a valid language chooser input element, '${chooserId}' is not i18n input field.`);
+        }
+        return chooser;
+    }
+    exports.getChooser = getChooser;
+    /**
+     * Returns the selected language for a certain chooser.
+     */
+    function getLanguageId(chooserId) {
+        return ~~getChooser(chooserId).element.value;
+    }
+    exports.getLanguageId = getLanguageId;
+    /**
+     * Removes the chooser with given id.
+     */
+    function removeChooser(chooserId) {
+        _choosers.delete(chooserId);
+    }
+    exports.removeChooser = removeChooser;
+    /**
+     * Sets the language for a certain chooser.
+     */
+    function setLanguageId(chooserId, languageId) {
+        if (_choosers.get(chooserId) === undefined) {
+            throw new Error(`Expected a valid  input element, '${chooserId}' is not i18n input field.`);
+        }
+        select(chooserId, languageId);
+    }
+    exports.setLanguageId = setLanguageId;
 });
