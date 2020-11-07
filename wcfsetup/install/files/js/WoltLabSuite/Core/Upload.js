@@ -192,6 +192,7 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Dom/Change
         _success(_uploadId, _data, _responseText, _xhr, _requestOptions) {
             // This should be an abstract method, but cannot be marked as such for backwards compatibility.
         }
+        // This duplication is on purpose, the signature below is implementation private.
         _upload(event, file, blob) {
             // remove failed upload elements first
             this._target.querySelectorAll(".uploadFailed").forEach((el) => el.remove());
