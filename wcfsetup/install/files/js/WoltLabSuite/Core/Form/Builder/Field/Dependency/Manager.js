@@ -188,7 +188,7 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
             }.bind(this));
             // delete dependencies for removed elements
             for (var i = 0, length = obsoleteNodes.length; i < length; i++) {
-                _nodeDependencies.delete(obsoleteNodes.id);
+                _nodeDependencies.delete(obsoleteNodes[i].id);
             }
             this.checkContainers();
         },
