@@ -157,12 +157,7 @@ define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function (Ajax, Core, FormBui
                     // Mark the button that was clicked so that the button data handlers know
                     // which data needs to be submitted.
                     this._additionalSubmitButtons.forEach((button) => {
-                        if (button === submit) {
-                            button.dataset.isClicked = 1;
-                        }
-                        else {
-                            button.dataset.isClicked = 0;
-                        }
+                        button.dataset.isClicked = (button === submit) ? "1" : "0"
                     });
                     // Enable other `click` event listeners to be executed first before the form
                     // is submitted.
