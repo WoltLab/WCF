@@ -718,7 +718,7 @@ const UiDialog = {
   },
 
   /**
-   * Submits the dialog.
+   * Submits the dialog with the given id.
    */
   _submit(id: string): void {
     const data = _dialogs.get(id);
@@ -742,6 +742,13 @@ const UiDialog = {
         callbackObject._dialogSubmit();
       }
     }
+  },
+
+  /**
+   * Submits the dialog with the given id.
+   */
+  submit(id: string): void {
+    this._submit(id);
   },
 
   /**

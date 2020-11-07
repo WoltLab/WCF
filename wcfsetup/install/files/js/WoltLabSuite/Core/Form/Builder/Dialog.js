@@ -151,6 +151,19 @@ define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function (Ajax, Core, FormBui
                 cancelButton.addEventListener('click', this._closeDialog.bind(this));
                 elData(cancelButton, 'has-event-listener', 1);
             }
+            this._additionalSubmitButtons = document.querySelectorAll(':not(.formSubmit) button[type="submit"]', dialogData.content);
+            this._additionalSubmitButtons.forEach((submit) => {
+                submit.addEventListener('click', (ev) => {
+                    // Mark the button that was clicked so that the button data handlers know
+                    // which data needs to be submitted.
+                    this._additionalSubmitButtons.forEach((button) => {
+                        button.dataset.isClicked = (button === submit) ? "1" : "0";
+                    });
+                    // Enable other `click` event listeners to be executed first before the form
+                    // is submitted.
+                    setTimeout(() => UiDialog.submit(this._dialogId), 0);
+                });
+            });
         },
         /**
          * Submits the form with the given form data.
@@ -164,6 +177,7 @@ define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function (Ajax, Core, FormBui
             }
             else if (typeof this._options.submitActionName === 'string') {
                 submitButton.disabled = true;
+                this._additionalSubmitButtons.forEach((submit) => submit.disabled = true);
                 Ajax.api(this, {
                     actionName: this._options.submitActionName,
                     parameters: {

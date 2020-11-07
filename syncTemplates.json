@@ -6,6 +6,7 @@
   "templates": [
     "__aclFormField",
     "__booleanFormField",
+    "__buttonFormField",
     "__contentLanguageFormField",
     "__dateFormField",
     "__emailFormField",
@@ -20,6 +21,7 @@
     "__formFieldError",
     "__formFieldErrors",
     "__iconFormField",
+    "__isNotClickedFormFieldDependency",
     "__itemListFormField",
     "__labelFormField",
     "__mediaSetCategoryDialog",

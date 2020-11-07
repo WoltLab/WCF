@@ -598,7 +598,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             }
         },
         /**
-         * Submits the dialog.
+         * Submits the dialog with the given id.
          */
         _submit(id) {
             const data = _dialogs.get(id);
@@ -620,6 +620,12 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
                     callbackObject._dialogSubmit();
                 }
             }
+        },
+        /**
+         * Submits the dialog with the given id.
+         */
+        submit(id) {
+            this._submit(id);
         },
         /**
          * Handles clicks on the close button or the backdrop if enabled.
