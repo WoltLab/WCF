@@ -15,19 +15,19 @@ import * as StringUtil from "../StringUtil";
 
 type LanguageId = number;
 
-interface I18nValues {
+export interface I18nValues {
   // languageID => value
   [key: string]: string;
 }
 
-interface Languages {
+export interface Languages {
   // languageID => languageName
   [key: string]: string;
 }
 
 type Values = Map<LanguageId, string>;
 
-type InputOrTextarea = HTMLInputElement | HTMLTextAreaElement;
+export type InputOrTextarea = HTMLInputElement | HTMLTextAreaElement;
 
 type CallbackEvent = "select" | "submit";
 type Callback = (element: InputOrTextarea) => void;
