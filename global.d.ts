@@ -11,6 +11,7 @@ declare global {
     Devtools?: typeof Devtools;
     ENABLE_DEBUG_MODE: boolean;
     ENABLE_DEVELOPER_TOOLS: boolean;
+    LANGUAGE_ID: number;
     REACTION_TYPES: {
       [key: string]: Reaction;
     };
