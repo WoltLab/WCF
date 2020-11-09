@@ -1,7 +1,6 @@
 //noinspection JSUnresolvedVariable
 requirejs.config({
 	paths: {
-		enquire: '3rdParty/enquire',
 		favico: '3rdParty/favico',
 		'perfect-scrollbar': '3rdParty/perfect-scrollbar',
 		'Pica': '3rdParty/pica',
@@ -11,7 +10,6 @@ requirejs.config({
 		zxcvbn: '3rdParty/zxcvbn',
 	},
 	shim: {
-		enquire: { exports: 'enquire' },
 		favico: { exports: 'Favico' },
 		'perfect-scrollbar': { exports: 'PerfectScrollbar' }
 	},

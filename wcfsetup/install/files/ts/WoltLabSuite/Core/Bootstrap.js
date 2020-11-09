@@ -11,7 +11,6 @@
 define(
   [
     "favico",
-    "enquire",
     "perfect-scrollbar",
     "WoltLabSuite/Core/Date/Time/Relative",
     "Ui/SimpleDropdown",
@@ -30,11 +29,10 @@ define(
     "Dom/ChangeListener",
     "StringUtil"
   ],
-  function(favico, enquire, perfectScrollbar, DateTimeRelative, UiSimpleDropdown, UiMobile, UiTabMenu, UiFlexibleMenu, UiDialog, UiTooltip, Language, Environment, DatePicker, EventHandler, Core, UiPageAction, Devtools, DomChangeListener, StringUtil) {
+  function(favico, perfectScrollbar, DateTimeRelative, UiSimpleDropdown, UiMobile, UiTabMenu, UiFlexibleMenu, UiDialog, UiTooltip, Language, Environment, DatePicker, EventHandler, Core, UiPageAction, Devtools, DomChangeListener, StringUtil) {
     "use strict";
     // perfectScrollbar does not need to be bound anywhere, it just has to be loaded for WCF.js
     window.Favico = favico;
-    window.enquire = enquire;
     // non strict equals by intent
     if (window.WCF == null) window.WCF = {};
     if (window.WCF.Language == null) window.WCF.Language = {};
