@@ -8,6 +8,9 @@ use wcf\data\user\option\UserOptionEditor;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
+use wcf\system\option\user\DateUserOptionOutput;
+use wcf\system\option\user\SelectOptionsUserOptionOutput;
+use wcf\system\option\user\URLUserOptionOutput;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -225,15 +228,15 @@ class UserOptionAddForm extends AbstractForm {
 	protected function setDefaultOutputClass() {
 		if (empty($this->outputClass)) {
 			if (in_array($this->optionType, self::$optionTypesUsingSelectOptions)) {
-				$this->outputClass = 'wcf\system\option\user\SelectOptionsUserOptionOutput';
+				$this->outputClass = SelectOptionsUserOptionOutput::class;
 			}
 			
 			if ($this->optionType == 'date') {
-				$this->outputClass = 'wcf\system\option\user\DateUserOptionOutput';
+				$this->outputClass = DateUserOptionOutput::class;
 			}
 			
 			if ($this->optionType == 'URL') {
-				$this->outputClass = 'wcf\system\option\user\URLUserOptionOutput';
+				$this->outputClass = URLUserOptionOutput::class;
 			}
 		}
 	}
