@@ -168,12 +168,12 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
          * Checks if all dependencies are met.
          */
         checkDependencies: function () {
-            var obsoleteNodes = [];
+            var obsoleteNodeIds = [];
             _nodeDependencies.forEach(function (nodeDependencies, nodeId) {
                 var dependentNode = elById(nodeId);
                 // check if dependent node still exists
                 if (dependentNode === null) {
-                    obsoleteNodes.push(dependentNode);
+                    obsoleteNodeIds.push(nodeId);
                     return;
                 }
                 for (var i = 0, length = nodeDependencies.length; i < length; i++) {
@@ -187,8 +187,8 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
                 this._show(dependentNode);
             }.bind(this));
             // delete dependencies for removed elements
-            for (var i = 0, length = obsoleteNodes.length; i < length; i++) {
-                _nodeDependencies.delete(obsoleteNodes[i].id);
+            for (var i = 0, length = obsoleteNodeIds.length; i < length; i++) {
+                _nodeDependencies.delete(obsoleteNodeIds[i]);
             }
             this.checkContainers();
         },
