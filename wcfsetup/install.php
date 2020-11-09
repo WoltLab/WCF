@@ -1366,5 +1366,10 @@ if (!class_exists('wcf\system\WCFSetup')) {
 	throw new SystemException("Cannot find class 'WCFSetup'");
 }
 
+// Composer autoloader
+if (file_exists(TMP_DIR.'install/files/lib/system/api/autoload.php')) {
+	require_once(TMP_DIR.'install/files/lib/system/api/autoload.php');
+}
+
 // start setup
 new \wcf\system\WCFSetup();
