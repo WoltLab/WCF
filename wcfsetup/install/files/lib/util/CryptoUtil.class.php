@@ -1,5 +1,6 @@
 <?php
 namespace wcf\util;
+use ParagonIE\ConstantTime\Base64;
 use wcf\util\exception\CryptoException;
 
 /**
@@ -34,7 +35,7 @@ final class CryptoUtil {
 	 * @return	string
 	 */
 	public static function createSignedString($value) {
-		return self::getSignature($value).'-'.base64_encode($value);
+		return self::getSignature($value).'-'.Base64::encode($value);
 	}
 
 	/**
@@ -48,7 +49,13 @@ final class CryptoUtil {
 		$parts = explode('-', $string, 2);
 		if (count($parts) !== 2) return false;
 		list($signature, $value) = $parts;
-		$value = base64_decode($value);
+		
+		try {
+			$value = Base64::decode($value);
+		}
+		catch (\RangeException $e) {
+			return false;
+		}
 		
 		return \hash_equals($signature, self::getSignature($value));
 	}
@@ -67,7 +74,12 @@ final class CryptoUtil {
 		if (!self::validateSignedString($string)) return null;
 		
 		$parts = explode('-', $string, 2);
-		return base64_decode($parts[1]);
+		try {
+			return Base64::decode($parts[1]);
+		}
+		catch (\RangeException $e) {
+			throw new \LogicException('Unreachable', 0, $e);
+		}
 	}
 
 	/**
