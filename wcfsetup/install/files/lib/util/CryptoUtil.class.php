@@ -19,10 +19,9 @@ final class CryptoUtil {
 	 * Signs the given value with the signature secret.
 	 * 
 	 * @param	string		$value
-	 * @return	string
 	 * @throws	CryptoException
 	 */
-	public static function getSignature($value) {
+	public static function getSignature($value): string {
 		if (mb_strlen(SIGNATURE_SECRET, '8bit') < 15) throw new CryptoException('SIGNATURE_SECRET is too short, aborting.');
 		
 		return hash_hmac('sha256', $value, SIGNATURE_SECRET);
@@ -32,9 +31,8 @@ final class CryptoUtil {
 	 * Creates a signed (signature + encoded value) string.
 	 * 
 	 * @param	string	$value
-	 * @return	string
 	 */
-	public static function createSignedString($value) {
+	public static function createSignedString($value): string {
 		return self::getSignature($value).'-'.Base64::encode($value);
 	}
 
@@ -43,9 +41,8 @@ final class CryptoUtil {
 	 * (i.e. consists of a valid signature + encoded value)
 	 * 
 	 * @param	string	$string
-	 * @return	boolean
 	 */
-	public static function validateSignedString($string) {
+	public static function validateSignedString($string): bool {
 		$parts = explode('-', $string, 2);
 		if (count($parts) !== 2) return false;
 		list($signature, $value) = $parts;
@@ -67,10 +64,9 @@ final class CryptoUtil {
 	 * - Returns null if the string is not properly signed.
 	 * 
 	 * @param	string		$string
-	 * @return	null|string
 	 * @see		\wcf\util\CryptoUtil::validateSignedString()
 	 */
-	public static function getValueFromSignedString($string) {
+	public static function getValueFromSignedString($string): ?string {
 		if (!self::validateSignedString($string)) return null;
 		
 		$parts = explode('-', $string, 2);
