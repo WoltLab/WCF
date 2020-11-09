@@ -37,7 +37,7 @@ class UiUserCoverPhotoUpload extends Upload {
     this.userId = userId;
   }
 
-  protected _getParameters(): object {
+  protected _getParameters(): ArbitraryObject {
     return {
       userID: this.userId,
     };

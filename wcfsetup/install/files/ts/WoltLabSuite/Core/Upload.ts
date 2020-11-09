@@ -13,42 +13,19 @@ import AjaxRequest from "./Ajax/Request";
 import * as Core from "./Core";
 import DomChangeListener from "./Dom/Change/Listener";
 import * as Language from "./Language";
+import { FileCollection, FileElements, FileLikeObject, UploadId, UploadOptions } from "./Upload/Data";
 
-interface UploadOptions {
-  // name of the PHP action
-  action: string;
-  className: string;
-  // is true if multiple files can be uploaded at once
-  multiple: boolean;
-  // array of acceptable file types, null if any file type is acceptable
-  acceptableFiles: string[] | null;
-  // name of the upload field
-  name: string;
-  // is true if every file from a multi-file selection is uploaded in its own request
-  singleFileRequests: boolean;
-  // url for uploading file
-  url: string;
-}
-
-type FileElements = HTMLElement[];
-
-type FileLikeObject = { name: string };
-
-type FileCollection = File[] | FileLikeObject[] | FileList;
-
-type UploadId = number | number[] | null;
-
-abstract class Upload {
+abstract class Upload<TOptions extends UploadOptions = UploadOptions> {
   protected readonly _button = document.createElement("p");
   protected readonly _buttonContainer: HTMLElement;
   protected readonly _fileElements: FileElements[] = [];
   protected readonly _fileUpload = document.createElement("input");
   protected _internalFileId = 0;
   protected readonly _multiFileUploadIds: unknown[] = [];
-  protected readonly _options: UploadOptions;
+  protected readonly _options: TOptions;
   protected readonly _target: HTMLElement;
 
-  protected constructor(buttonContainerId: string, targetId: string, options: Partial<UploadOptions>) {
+  protected constructor(buttonContainerId: string, targetId: string, options: Partial<TOptions>) {
     options = options || {};
     if (!options.className) {
       throw new Error("Missing class name.");
@@ -71,7 +48,7 @@ abstract class Upload {
         url: `index.php?ajax-upload/&t=${window.SECURITY_TOKEN}`,
       },
       options,
-    ) as UploadOptions;
+    ) as TOptions;
 
     this._options.url = Core.convertLegacyUrl(this._options.url);
     if (this._options.url.indexOf("index.php") === 0) {
@@ -217,7 +194,7 @@ abstract class Upload {
   /**
    * Return additional parameters for upload requests.
    */
-  protected _getParameters(): object {
+  protected _getParameters(): ArbitraryObject {
     return {};
   }
 
@@ -226,7 +203,7 @@ abstract class Upload {
    *
    * @since       5.2
    */
-  protected _getFormData(): object {
+  protected _getFormData(): ArbitraryObject {
     return {};
   }
 
@@ -277,6 +254,8 @@ abstract class Upload {
   protected _upload(event: Event): UploadId;
   protected _upload(event: null, file: File): UploadId;
   protected _upload(event: null, file: null, blob: Blob): UploadId;
+  protected _upload(event: Event | null, file?: File | null, blob?: Blob | null): UploadId;
+  // This duplication is on purpose, the signature below is implementation private.
   protected _upload(event: Event | null, file?: File | null, blob?: Blob | null): UploadId {
     // remove failed upload elements first
     this._target.querySelectorAll(".uploadFailed").forEach((el) => el.remove());
@@ -333,7 +312,7 @@ abstract class Upload {
    *
    * @since       5.2
    */
-  protected validateUpload(_files: FileCollection): boolean {
+  validateUpload(_files: FileCollection): boolean {
     // This should be an abstract method, but cannot be marked as such for backwards compatibility.
 
     return true;
