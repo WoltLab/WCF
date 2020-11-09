@@ -4,8 +4,8 @@
       "owner": "diff",
       "pattern": [
         {
-          "regexp": "--- a/(wcfsetup/(.*))",
-          "file": 2,
+          "regexp": "--- a/(.*)",
+          "file": 1,
           "message": 1
         }
       ]
