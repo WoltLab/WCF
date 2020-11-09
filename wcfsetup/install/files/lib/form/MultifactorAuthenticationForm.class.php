@@ -72,11 +72,11 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 			throw new \LogicException('Unreachable');
 		}
 		
-		uasort($this->methods, function (ObjectType $a, ObjectType $b) {
+		\uasort($this->methods, function (ObjectType $a, ObjectType $b) {
 			return $b->priority <=> $a->priority;
 		});
 		
-		$this->setupId = array_keys($this->methods)[0];
+		$this->setupId = \array_keys($this->methods)[0];
 		if (isset($_GET['id'])) {
 			$this->setupId = $_GET['id'];
 		}
@@ -86,7 +86,7 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 		}
 		
 		$this->method = $this->methods[$this->setupId];
-		assert($this->method->getDefinition()->definitionName === 'com.woltlab.wcf.multifactor');
+		\assert($this->method->getDefinition()->definitionName === 'com.woltlab.wcf.multifactor');
 		
 		$this->processor = $this->method->getProcessor();
 	}

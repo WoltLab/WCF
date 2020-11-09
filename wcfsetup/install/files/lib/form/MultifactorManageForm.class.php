@@ -109,7 +109,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 				$this->setupId,
 			]);
 			
-			$setupId = intval($statement->fetchSingleColumn());
+			$setupId = \intval($statement->fetchSingleColumn());
 		}
 		else {
 			$sql = "INSERT INTO	wcf".WCF_N."_user_multifactor
@@ -121,7 +121,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 				$this->method->objectTypeID,
 			]);
 			
-			$setupId = intval(WCF::getDB()->getInsertID("wcf".WCF_N."_user_multifactor", 'setupID'));
+			$setupId = \intval(WCF::getDB()->getInsertID("wcf".WCF_N."_user_multifactor", 'setupID'));
 		}
 		
 		if (!$setupId) {
