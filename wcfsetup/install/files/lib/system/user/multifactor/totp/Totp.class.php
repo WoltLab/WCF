@@ -49,14 +49,10 @@ final class Totp {
 	 */
 	private function generateHotpCode(int $counter): string {
 		$hash = \hash_hmac('sha1', \pack('J', $counter), $this->secret, true);
-		$offset = \ord($hash[\mb_strlen($hash, '8bit') - 1]) & 0xf;
-		$binary =
-			((\ord($hash[$offset + 0]) & 0x7f) << 24) |
-			((\ord($hash[$offset + 1]) & 0xff) << 16) |
-			((\ord($hash[$offset + 2]) & 0xff) << 8) |
-			((\ord($hash[$offset + 3]) & 0xff) << 0);
+		$offset = \unpack('Coffset', $hash, \mb_strlen($hash, '8bit') - 1)['offset'] & 0xf;
+		$binary = \unpack('Nnum', $hash, $offset)['num'] & 0x7fffffff;
 		
-		$otp = \str_pad($binary % (10 ** self::CODE_LENGTH), self::CODE_LENGTH, "0", \STR_PAD_LEFT);
+		$otp = \str_pad((string) ($binary % (10 ** self::CODE_LENGTH)), self::CODE_LENGTH, "0", \STR_PAD_LEFT);
 		
 		return $otp;
 	}
