@@ -69,7 +69,7 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 			
 			$codes = array_map(function ($code) use ($returnData) {
 				if (isset($returnData[$code['identifier']])) {
-					$code['chunks'] = str_split($returnData[$code['identifier']], self::CHUNK_LENGTH);
+					$code['chunks'] = \str_split($returnData[$code['identifier']], self::CHUNK_LENGTH);
 				}
 				else {
 					$code['chunks'] = [
@@ -133,7 +133,7 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 	 */
 	public function processManagementForm(IFormDocument $form, int $setupId): array {
 		$formData = $form->getData();
-		assert($formData['action'] === 'generateCodes' || $formData['action'] === 'regenerateCodes');
+		\assert($formData['action'] === 'generateCodes' || $formData['action'] === 'regenerateCodes');
 		
 		$sql = "DELETE FROM	wcf".WCF_N."_user_multifactor_backup
 			WHERE		setupID = ?";
@@ -145,8 +145,8 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 			$chunks = [];
 			for ($part = 0; $part < self::CHUNKS; $part++) {
 				$chunks[] = \random_int(
-					pow(10, self::CHUNK_LENGTH - 1),
-					pow(10, self::CHUNK_LENGTH) - 1
+					10 ** (self::CHUNK_LENGTH - 1),
+					(10 ** self::CHUNK_LENGTH) - 1
 				);
 			}
 			
@@ -155,7 +155,7 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 				continue;
 			}
 			
-			$codes[$identifier] = implode('', $chunks);
+			$codes[$identifier] = \implode('', $chunks);
 		}
 		
 		$sql = "INSERT INTO	wcf".WCF_N."_user_multifactor_backup
@@ -168,7 +168,7 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 				$setupId,
 				$identifier,
 				$algorithName.':'.$this->algorithm->hash($code),
-				TIME_NOW,
+				\TIME_NOW,
 			]);
 		}
 		
@@ -184,7 +184,7 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 		
 		$result = null;
 		foreach ($codes as $code) {
-			[$algorithmName, $hash] = explode(':', $code['code']);
+			[$algorithmName, $hash] = \explode(':', $code['code']);
 			$algorithm = $manager->getAlgorithmFromName($algorithmName);
 			
 			// The use of `&` is intentional to disable the shortcutting logic.
@@ -213,7 +213,7 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 				->autoFocus()
 				->required()
 				->addValidator(new FormFieldValidator('code', function (TextFormField $field) use ($codes) {
-					$userCode = preg_replace('/\s+/', '', $field->getValue());
+					$userCode = \preg_replace('/\s+/', '', $field->getValue());
 					
 					if ($this->findValidCode($userCode, $codes) === null) {
 						$field->addValidationError(new FormFieldValidationError('invalid'));
@@ -249,7 +249,7 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 				AND	useTime IS NULL";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
-			TIME_NOW,
+			\TIME_NOW,
 			$setupId,
 			$usedCode['identifier'],
 		]);
