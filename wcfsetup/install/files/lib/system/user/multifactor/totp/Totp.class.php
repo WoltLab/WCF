@@ -56,7 +56,7 @@ final class Totp {
 			((\ord($hash[$offset + 2]) & 0xff) << 8) |
 			((\ord($hash[$offset + 3]) & 0xff) << 0);
 		
-		$otp = \str_pad($binary % \pow(10, self::CODE_LENGTH), self::CODE_LENGTH, "0", \STR_PAD_LEFT);
+		$otp = \str_pad($binary % (10 ** self::CODE_LENGTH), self::CODE_LENGTH, "0", \STR_PAD_LEFT);
 		
 		return $otp;
 	}
@@ -77,7 +77,7 @@ final class Totp {
 	 * was used for verification. You MUST store the updated $minCounter to prevent code re-use.
 	 */
 	public function validateTotpCode(string $userCode, int &$minCounter, \DateTime $time): bool {
-		$counter = intval($time->getTimestamp() / self::TIME_STEP);
+		$counter = \intval($time->getTimestamp() / self::TIME_STEP);
 		
 		for ($offset = -self::LEEWAY; $offset < self::LEEWAY; $offset++) {
 			$possibleCode = $this->generateHotpCode($counter + $offset);

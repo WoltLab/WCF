@@ -113,7 +113,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 	public function processManagementForm(IFormDocument $form, int $setupId): void {
 		$formData = $form->getData();
 		
-		assert(
+		\assert(
 			(!empty($formData['data']) && empty($formData['delete'])) ||
 			(empty($formData['data']) && !empty($formData['delete']))
 		);
@@ -152,7 +152,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 				$formData['data']['deviceName'] ?: $defaultName,
 				$formData['data']['secret'],
 				$formData['data']['code']['minCounter'],
-				TIME_NOW,
+				\TIME_NOW,
 			]);
 		}
 	}
@@ -255,7 +255,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 				AND	minCounter < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
-			TIME_NOW,
+			\TIME_NOW,
 			$formData['data']['code']['minCounter'],
 			$setupId,
 			$formData['data']['deviceID'],
