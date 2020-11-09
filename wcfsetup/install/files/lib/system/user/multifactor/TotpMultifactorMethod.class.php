@@ -141,6 +141,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 			}
 		}
 		else {
+			$defaultName = WCF::getLanguage()->getDynamicVariable('wcf.user.security.multifactor.totp.deviceName.default');
 			$sql = "INSERT INTO	wcf".WCF_N."_user_multifactor_totp
 						(setupID, deviceID, deviceName, secret, minCounter, createTime)
 				VALUES		(?, ?, ?, ?, ?, ?)";
@@ -148,7 +149,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 			$statement->execute([
 				$setupId,
 				Hex::encode(\random_bytes(16)),
-				$formData['data']['deviceName'],
+				$formData['data']['deviceName'] ?: $defaultName,
 				$formData['data']['secret'],
 				$formData['data']['code']['minCounter'],
 				TIME_NOW,
