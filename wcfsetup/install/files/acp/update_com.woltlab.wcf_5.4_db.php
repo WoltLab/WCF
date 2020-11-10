@@ -9,6 +9,7 @@ use wcf\system\database\table\index\DatabaseTableIndex;
 use wcf\system\database\table\index\DatabaseTablePrimaryIndex;
 use wcf\system\database\table\PartialDatabaseTable;
 use wcf\system\package\plugin\ScriptPackageInstallationPlugin;
+use wcf\system\WCF;
 
 $tables = [
 	DatabaseTable::create('wcf1_flood_control')
