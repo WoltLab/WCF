@@ -219,6 +219,7 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 					FloodControl::getInstance()->registerUserContent('com.woltlab.wcf.multifactor.backup', $setupId);
 					$attempts = FloodControl::getInstance()->countUserContent('com.woltlab.wcf.multifactor.backup', $setupId, new \DateInterval('PT1H'));
 					if ($attempts['count'] > self::USER_ATTEMPTS_PER_HOUR) {
+						$field->value('');
 						$field->addValidationError(new FormFieldValidationError(
 							'flood',
 							'wcf.user.security.multifactor.backup.error.flood',
@@ -230,6 +231,7 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 					$userCode = \preg_replace('/\s+/', '', $field->getValue());
 					
 					if ($this->findValidCode($userCode, $codes) === null) {
+						$field->value('');
 						$field->addValidationError(new FormFieldValidationError('invalid'));
 					}
 				})),

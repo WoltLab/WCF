@@ -67,6 +67,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 						
 						$minCounter = 0;
 						if (!$totp->validateTotpCode($field->getValue(), $minCounter, new \DateTime())) {
+							$field->value('');
 							$field->addValidationError(new FormFieldValidationError('invalid'));
 						}
 						$field->minCounter($minCounter);
@@ -211,6 +212,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 					FloodControl::getInstance()->registerUserContent('com.woltlab.wcf.multifactor.backup', $setupId);
 					$attempts = FloodControl::getInstance()->countUserContent('com.woltlab.wcf.multifactor.backup', $setupId, new \DateInterval('PT10M'));
 					if ($attempts['count'] > self::USER_ATTEMPTS_PER_TEN_MINUTES) {
+						$field->value('');
 						$field->addValidationError(new FormFieldValidationError(
 							'flood',
 							'wcf.user.security.multifactor.totp.error.flood',
@@ -235,6 +237,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 					$totp = new Totp($selectedDevice['secret']);
 					$minCounter = $selectedDevice['minCounter'];
 					if (!$totp->validateTotpCode($field->getValue(), $minCounter, new \DateTime())) {
+						$field->value('');
 						$field->addValidationError(new FormFieldValidationError('invalid'));
 					}
 					$field->minCounter($minCounter);
