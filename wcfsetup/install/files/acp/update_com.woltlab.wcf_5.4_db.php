@@ -1,8 +1,13 @@
 <?php
 use wcf\system\database\table\column\BigintDatabaseTableColumn;
 use wcf\system\database\table\column\BinaryDatabaseTableColumn;
+use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
+use wcf\system\database\table\column\IntDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullInt10DatabaseTableColumn;
+use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
+use wcf\system\database\table\column\ObjectIdDatabaseTableColumn;
 use wcf\system\database\table\column\TextDatabaseTableColumn;
+use wcf\system\database\table\column\VarbinaryDatabaseTableColumn;
 use wcf\system\database\table\DatabaseTable;
 use wcf\system\database\table\DatabaseTableChangeProcessor;
 use wcf\system\database\table\index\DatabaseTableIndex;
@@ -37,6 +42,61 @@ $tables = [
 		->columns([
 			TextDatabaseTableColumn::create('metaKeywords')
 				->drop()
+		]),
+	
+	PartialDatabaseTable::create('wcf1_user')
+		->columns([
+			DefaultFalseBooleanDatabaseTableColumn::create('multifactorActive'),
+		]),
+	
+	DatabaseTable::create('wcf1_user_multifactor')
+		->columns([
+			ObjectIdDatabaseTableColumn::create('setupID'),
+			NotNullInt10DatabaseTableColumn::create('userID'),
+			NotNullInt10DatabaseTableColumn::create('objectTypeID'),
+		])
+		->indices([
+			DatabaseTablePrimaryIndex::create()
+				->columns(['logID']),
+			DatabaseTableIndex::create()
+				->type(DatabaseTableIndex::UNIQUE_TYPE)
+				->columns(['userID', 'objectTypeID']),
+		]),
+	
+	DatabaseTable::create('wcf1_user_multifactor_backup')
+		->columns([
+			NotNullInt10DatabaseTableColumn::create('setupID'),
+			NotNullVarchar255DatabaseTableColumn::create('identifier'),
+			NotNullVarchar255DatabaseTableColumn::create('code'),
+			NotNullInt10DatabaseTableColumn::create('createTime'),
+			IntDatabaseTableColumn::create('useTime')
+				->length(10)
+				->defaultValue(null),
+		])
+		->indices([
+			DatabaseTableIndex::create()
+				->type(DatabaseTableIndex::UNIQUE_TYPE)
+				->columns(['setupID', 'identifier']),
+		]),
+	
+	DatabaseTable::create('wcf1_user_multifactor_totp')
+		->columns([
+			NotNullInt10DatabaseTableColumn::create('setupID'),
+			NotNullVarchar255DatabaseTableColumn::create('deviceID'),
+			NotNullVarchar255DatabaseTableColumn::create('deviceName'),
+			VarbinaryDatabaseTableColumn::create('secret')
+				->notNull()
+				->length(255),
+			NotNullInt10DatabaseTableColumn::create('minCounter'),
+			NotNullInt10DatabaseTableColumn::create('createTime'),
+			IntDatabaseTableColumn::create('createTime')
+				->length(10)
+				->defaultValue(null),
+		])
+		->indices([
+			DatabaseTableIndex::create()
+				->type(DatabaseTableIndex::UNIQUE_TYPE)
+				->columns(['setupID', 'deviceID']),
 		]),
 ];
 
