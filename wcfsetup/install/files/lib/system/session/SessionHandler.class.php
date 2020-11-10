@@ -692,7 +692,7 @@ final class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * If multifactor authentication is enabled for the given user then
+	 * If multi-factor authentication is enabled for the given user then
 	 * - the userID will be stored in the session variables, and
 	 * - `true` is returned.
 	 * Otherwise,

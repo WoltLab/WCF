@@ -832,7 +832,7 @@ E-Mail: [E-Mail-Adresse der verantwortlichen Stelle]</p><p><br></p><p>Verantwort
 			<pageType>system</pageType>
 			<controller>wcf\form\MultifactorManageForm</controller>
 			<name language="de">Mehrfaktor-Authentifizierung einrichten</name>
-			<name language="en">Manage Multifactor Authentication</name>
+			<name language="en">Manage Multi-Factor Authentication</name>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountSecurity</parent>
 			<excludeFromLandingPage>1</excludeFromLandingPage>
@@ -841,7 +841,7 @@ E-Mail: [E-Mail-Adresse der verantwortlichen Stelle]</p><p><br></p><p>Verantwort
 		<page identifier="com.woltlab.wcf.MultifactorAuthentication">
 			<pageType>system</pageType>
 			<controller>wcf\form\MultifactorAuthenticationForm</controller>
-			<name language="en">Multifactor Authentication</name>
+			<name language="en">Multi-Factor Authentication</name>
 			<name language="de">Mehrfaktor-Authentifizierung</name>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.Login</parent>

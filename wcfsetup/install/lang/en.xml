@@ -4828,7 +4828,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.security.sessionName"><![CDATA[{if $session->getUserAgent()->getBrowser()}{$session->getUserAgent()->getBrowser()}{if $session->getUserAgent()->getOS()} on {$session->getUserAgent()->getOS()}{/if}{else}Unknown Device{/if}]]></item>
 		<item name="wcf.user.security.ipAddress"><![CDATA[IP Address]]></item>
 		<item name="wcf.user.security.lastActivity"><![CDATA[Last active]]></item>
-		<item name="wcf.user.security.multifactor"><![CDATA[Multifactor Authentication]]></item>
+		<item name="wcf.user.security.multifactor"><![CDATA[Multi-Factor Authentication]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp"><![CDATA[Smartphone App]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup"><![CDATA[Emergency Codes]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup.manage"><![CDATA[Manage Emergency Codes]]></item>

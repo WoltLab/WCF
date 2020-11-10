@@ -693,7 +693,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 	}
 	
 	/**
-	 * Returns the multi factor methods the user set up.
+	 * Returns the multi-factor methods the user set up.
 	 * 
 	 * @return      ObjectType[]
 	 * @since       5.4

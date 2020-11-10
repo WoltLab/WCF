@@ -10,7 +10,7 @@ use wcf\system\user\multifactor\IMultifactorMethod;
 use wcf\system\WCF;
 
 /**
- * Represents the multifactor authentication form.
+ * Represents the multi-factor authentication form.
  *
  * @author	Tim Duesterhus
  * @copyright	2001-2020 WoltLab GmbH

@@ -3,7 +3,7 @@ namespace wcf\system\user\multifactor;
 use wcf\system\form\builder\IFormDocument;
 
 /**
- * Handles multifactor authentication for a specific authentication method.
+ * Handles multi-factor authentication for a specific authentication method.
  *
  * @author	Tim Duesterhus
  * @copyright	2001-2020 WoltLab GmbH
