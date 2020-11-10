@@ -16,6 +16,11 @@ class CodeFormField extends TextFormField {
 	use TDefaultIdFormField;
 	
 	/**
+	 * @inheritDoc
+	 */
+	protected $templateName = '__totpCodeField';
+	
+	/**
 	 * @var ?int
 	 */
 	protected $minCounter;
@@ -23,6 +28,7 @@ class CodeFormField extends TextFormField {
 	public function __construct() {
 		$this->minimumLength(Totp::CODE_LENGTH);
 		$this->maximumLength(Totp::CODE_LENGTH);
+		$this->placeholder("123456");
 	}
 	
 	/**

@@ -21,13 +21,19 @@
 	}
 }
 
+// Just .multifactorTotpCode is not specific enough.
+input.multifactorTotpCode {
+	font-family: monospace;
+	font-weight: 600;
+	font-size: 28px;
+}
+
 .multifactorTotpNewDevice {
 	display: flex;
+	flex-direction: column;
 	
 	.totpSecretContainer {
 		text-align: center;
-		width: 250px;
-		margin: 0 5px;
 		
 		canvas {
 			width: 200px;
@@ -37,5 +43,14 @@
 	
 	.multifactorTotpNewDeviceFields {
 		flex: 1 1 auto;
+	}
+	
+	@include screen-md-up {
+		flex-direction: row;
+		
+		.totpSecretContainer {
+			width: 250px;
+			margin: 0 5px;
+		}
 	}
 }

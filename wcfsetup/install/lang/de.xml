@@ -4859,6 +4859,14 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.security.multifactor.totp.deviceName.default"><![CDATA[{TIME_NOW|plainTime}]]></item>
 		<item name="wcf.user.security.multifactor.totp.error.flood"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche es{else}versuchen Sie es{/if} später erneut.]]></item>
 		<item name="wcf.user.security.multifactor.backup.error.flood"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche es{else}versuchen Sie es{/if} später erneut.]]></item>
+		<item name="wcf.user.security.multifactor.totp.deviceName.description"><![CDATA[Ein beliebiger Name, der dieses Gerät identifiziert.]]></item>
+		<item name="wcf.user.security.multifactor.totp.code.description"><![CDATA[Der durch die Smartphone-App generierte 6-stellige Einmalcode.]]></item>
+		<item name="wcf.user.security.multifactor.totp.newDevice.description"><![CDATA[<p>Authentifizieren Sie sich mit Hilfe einer App auf Ihrem Smartphone.</p>
+<ol class="nativeList">
+<li>{if LANGUAGE_USE_INFORMAL_VARIANT}Installiere{else}Installieren Sie{/if} eine Authentifizierungs-App wie beispielsweise Google Authenticator (<a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" class="externalURL">Android</a>, <a href="https://apps.apple.com/app/google-authenticator/id388497605" class="externalURL">iOS</a>) oder Authy (<a href="https://play.google.com/store/apps/details?id=com.authy.authy" class="externalURL">Android</a>, <a href="https://apps.apple.com/app/authy/id494168017" class="externalURL">iOS</a>).</li>
+<li>{if LANGUAGE_USE_INFORMAL_VARIANT}Scanne{else}Scannen Sie{/if} den QR-Code in der App.</li>
+<li>{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} den durch die App generierten 6-stelligen Einmalcode ein.</li>
+</ol>]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophäen]]></item>

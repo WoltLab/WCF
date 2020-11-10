@@ -58,6 +58,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 				SecretFormField::create(),
 				CodeFormField::create()
 					->label('wcf.user.security.multifactor.totp.code')
+					->description('wcf.user.security.multifactor.totp.code.description')
 					->required()
 					->addValidator(new FormFieldValidator('totpSecretValid', function (CodeFormField $field) {
 						/** @var SecretFormField $secret */
@@ -72,7 +73,9 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 					})),
 				TextFormField::create('deviceName')
 					->label('wcf.user.security.multifactor.totp.deviceName')
-					->placeholder('wcf.user.security.multifactor.totp.deviceName.placeholder'),
+					->description('wcf.user.security.multifactor.totp.deviceName.description')
+					->placeholder('wcf.user.security.multifactor.totp.deviceName.placeholder')
+					->maximumLength(200),
 				FormButton::create('submitButton')
 					->label('wcf.global.button.submit')
 					->accessKey('s')

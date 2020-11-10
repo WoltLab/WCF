@@ -14,9 +14,11 @@
 		{/if}
 	{/if}
 	
+	{lang}wcf.user.security.multifactor.totp.newDevice.description{/lang}
+	
 	<div class="multifactorTotpNewDevice">
 		{if $container->getNodeById('secret')->isAvailable()}
-			{@$container->getNodeById('secret')->getHtml()}
+			{@$container->getNodeById('secret')->getFieldHtml()}
 		{/if}
 		
 		<div class="multifactorTotpNewDeviceFields">
