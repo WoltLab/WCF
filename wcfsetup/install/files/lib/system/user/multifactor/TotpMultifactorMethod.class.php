@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\user\multifactor;
 use ParagonIE\ConstantTime\Hex;
+use wcf\system\flood\FloodControl;
 use wcf\system\form\builder\button\FormButton;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\ButtonFormField;
@@ -28,6 +29,8 @@ use wcf\system\WCF;
  * @since	5.4
  */
 class TotpMultifactorMethod implements IMultifactorMethod {
+	private const USER_ATTEMPTS_PER_TEN_MINUTES = 5;
+	
 	/**
 	 * Returns the number of devices the user set up.
 	 */
@@ -201,7 +204,18 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 				->label('wcf.user.security.multifactor.totp.code')
 				->autoFocus()
 				->required()
-				->addValidator(new FormFieldValidator('code', function (CodeFormField $field) use ($devices) {
+				->addValidator(new FormFieldValidator('code', function (CodeFormField $field) use ($devices, $setupId) {
+					FloodControl::getInstance()->registerUserContent('com.woltlab.wcf.multifactor.backup', $setupId);
+					$attempts = FloodControl::getInstance()->countUserContent('com.woltlab.wcf.multifactor.backup', $setupId, new \DateInterval('PT10M'));
+					if ($attempts['count'] > self::USER_ATTEMPTS_PER_TEN_MINUTES) {
+						$field->addValidationError(new FormFieldValidationError(
+							'flood',
+							'wcf.user.security.multifactor.totp.error.flood',
+							$attempts
+						));
+						return;
+					}
+					
 					/** @var IFormField $deviceField */
 					$deviceField = $field->getDocument()->getNodeById('device');
 					

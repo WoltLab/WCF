@@ -4857,6 +4857,8 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.security.multifactor.backup.generateCodes"><![CDATA[Codes generieren]]></item>
 		<item name="wcf.user.security.multifactor.totp.devices"><![CDATA[Eingerichtete Geräte]]></item>
 		<item name="wcf.user.security.multifactor.totp.deviceName.default"><![CDATA[{TIME_NOW|plainTime}]]></item>
+		<item name="wcf.user.security.multifactor.totp.error.flood"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche es{else}versuchen Sie es{/if} später erneut.]]></item>
+		<item name="wcf.user.security.multifactor.backup.error.flood"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche es{else}versuchen Sie es{/if} später erneut.]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophäen]]></item>

@@ -1729,11 +1729,19 @@
 			<classname>wcf\system\user\multifactor\BackupMultifactorMethod</classname>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.multifactor.backup</name>
+			<definitionname>com.woltlab.wcf.floodControl</definitionname>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.multifactor.totp</name>
 			<definitionname>com.woltlab.wcf.multifactor</definitionname>
 			<icon>mobile</icon>
 			<priority>10</priority>
 			<classname>wcf\system\user\multifactor\TotpMultifactorMethod</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.multifactor.totp</name>
+			<definitionname>com.woltlab.wcf.floodControl</definitionname>
 		</type>
 		<!-- /multi factor -->
 		<!-- deprecated -->

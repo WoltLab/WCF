@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\user\multifactor;
+use wcf\system\flood\FloodControl;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\ButtonFormField;
 use wcf\system\form\builder\field\TextFormField;
@@ -29,6 +30,8 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 	
 	private const CHUNKS = 4;
 	private const CHUNK_LENGTH = 5;
+	
+	private const USER_ATTEMPTS_PER_HOUR = 5;
 	
 	public function __construct() {
 		$this->algorithm = new Bcrypt();
@@ -212,7 +215,18 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 				->label('wcf.user.security.multifactor.backup.code')
 				->autoFocus()
 				->required()
-				->addValidator(new FormFieldValidator('code', function (TextFormField $field) use ($codes) {
+				->addValidator(new FormFieldValidator('code', function (TextFormField $field) use ($codes, $setupId) {
+					FloodControl::getInstance()->registerUserContent('com.woltlab.wcf.multifactor.backup', $setupId);
+					$attempts = FloodControl::getInstance()->countUserContent('com.woltlab.wcf.multifactor.backup', $setupId, new \DateInterval('PT1H'));
+					if ($attempts['count'] > self::USER_ATTEMPTS_PER_HOUR) {
+						$field->addValidationError(new FormFieldValidationError(
+							'flood',
+							'wcf.user.security.multifactor.backup.error.flood',
+							$attempts
+						));
+						return;
+					}
+					
 					$userCode = \preg_replace('/\s+/', '', $field->getValue());
 					
 					if ($this->findValidCode($userCode, $codes) === null) {

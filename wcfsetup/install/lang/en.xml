@@ -4854,6 +4854,8 @@ Open the link below to access the user profile:
 		<item name="wcf.user.security.multifactor.backup.generateCodes"><![CDATA[Generate Codes]]></item>
 		<item name="wcf.user.security.multifactor.totp.devices"><![CDATA[Set Up Devices]]></item>
 		<item name="wcf.user.security.multifactor.totp.deviceName.default"><![CDATA[{TIME_NOW|plainTime}]]></item>
+		<item name="wcf.user.security.multifactor.totp.error.flood"><![CDATA[Please try again later.]]></item>
+		<item name="wcf.user.security.multifactor.backup.error.flood"><![CDATA[Please try again later.]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophies]]></item>
