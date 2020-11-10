@@ -36,7 +36,7 @@
 									LanguageChooser.init('languageIDContainer', 'languageID', {@$languageID}, $languages);
 									
 									var small = elCreate('small');
-									small.innerHTML = '{lang}wcf.user.language.description{/lang}';
+									small.innerHTML = '{jslang}wcf.user.language.description{/jslang}';
 									elById('languageIDContainer').appendChild(small);
 								});
 							});

@@ -684,7 +684,7 @@
 			if (input) {
 				var icon = elCreate('span');
 				icon.className = 'icon icon16 fa-shield jsTooltip';
-				icon.title = '{lang}wcf.acp.group.type.owner{/lang}';
+				icon.title = '{jslang}wcf.acp.group.type.owner{/jslang}';
 				input.parentNode.appendChild(icon);
 				
 				{if $user->userID == $__wcf->user->userID}

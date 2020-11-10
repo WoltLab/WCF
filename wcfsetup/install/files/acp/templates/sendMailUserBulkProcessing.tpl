@@ -57,7 +57,7 @@
 {if !$mailID|empty}
 	<script data-relocate="true">
 		require(['Language'], function(Language) {
-			Language.add('wcf.acp.worker.abort.confirmMessage', '{lang}wcf.acp.worker.abort.confirmMessage{/lang}');
+			Language.add('wcf.acp.worker.abort.confirmMessage', '{jslang}wcf.acp.worker.abort.confirmMessage{/jslang}');
 			
 			new WCF.ACP.Worker('mail', 'wcf\\system\\worker\\MailWorker', '', {
 				mailID: {@$mailID}

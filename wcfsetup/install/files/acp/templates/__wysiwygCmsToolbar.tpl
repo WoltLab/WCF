@@ -20,8 +20,8 @@
 	, '{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabPage.js?v={@LAST_UPDATE_TIME}'
 {/capture}
 {capture append='__redactorConfig'}
-	buttonOptions.woltlabArticle = { icon: 'fa-file-word-o', title: '{lang}wcf.editor.button.article{/lang}' };
-	buttonOptions.woltlabPage = { icon: 'fa-file-text-o', title: '{lang}wcf.editor.button.page{/lang}' };
+	buttonOptions.woltlabArticle = { icon: 'fa-file-word-o', title: '{jslang}wcf.editor.button.article{/jslang}' };
+	buttonOptions.woltlabPage = { icon: 'fa-file-text-o', title: '{jslang}wcf.editor.button.page{/jslang}' };
 	
 	buttons.push('woltlabPage');
 	buttons.push('woltlabArticle');

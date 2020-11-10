@@ -9,7 +9,7 @@
 		
 		var input = elById('rankTitle');
 		function updatePreview() {
-			var value = input.value.trim() || '{lang}wcf.acp.user.rank.title{/lang}';
+			var value = input.value.trim() || '{jslang}wcf.acp.user.rank.title{/jslang}';
 			previews.forEach(function(preview) {
 				preview.textContent = value;
 			});

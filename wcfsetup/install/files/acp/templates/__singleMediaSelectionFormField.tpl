@@ -28,7 +28,7 @@
 			new MediaManagerSelect({
 				buttonClass: 'jsMediaSelectButton_{@$field->getPrefixedId()}',
 				{if $field->isImageOnly()}
-					dialogTitle: '{lang}wcf.media.chooseImage{/lang}',
+					dialogTitle: '{jslang}wcf.media.chooseImage{/jslang}',
 					imagesOnly: 1
 				{/if}
 			});
