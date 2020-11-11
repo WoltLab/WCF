@@ -100,28 +100,10 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 		/** @var int|null $setupId */
 		$setupId = null;
 		if ($this->setupId) {
-			$sql = "SELECT	setupId
-				FROM	wcf".WCF_N."_user_multifactor
-				WHERE	setupId = ?
-				FOR UPDATE";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([
-				$this->setupId,
-			]);
-			
-			$setupId = \intval($statement->fetchSingleColumn());
+			$setupId = $this->lockSetup($this->setupId);
 		}
 		else {
-			$sql = "INSERT INTO	wcf".WCF_N."_user_multifactor
-						(userID, objectTypeID)
-				VALUES		(?, ?)";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([
-				WCF::getUser()->userID,
-				$this->method->objectTypeID,
-			]);
-			
-			$setupId = \intval(WCF::getDB()->getInsertID("wcf".WCF_N."_user_multifactor", 'setupID'));
+			$setupId = $this->allocateSetUpId($this->method->objectTypeID);
 		}
 		
 		if (!$setupId) {
@@ -134,6 +116,41 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 		WCF::getDB()->commitTransaction();
 		
 		$this->saved();
+	}
+	
+	/**
+	 * Locks the set up, preventing any concurrent changes.
+	 */
+	protected function lockSetup(int $setupId): int {
+		$sql = "SELECT	setupId
+			FROM	wcf".WCF_N."_user_multifactor
+			WHERE	setupId = ?
+			FOR UPDATE";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			$setupId,
+		]);
+		
+		$dbSetupId = \intval($statement->fetchSingleColumn());
+		assert($setupId === $dbSetupId);
+		
+		return $dbSetupId;
+	}
+	
+	/**
+	 * Allocates a fresh setup ID for the given objectTypeID.
+	 */
+	protected function allocateSetUpId(int $objectTypeID): int {
+		$sql = "INSERT INTO	wcf".WCF_N."_user_multifactor
+					(userID, objectTypeID)
+			VALUES		(?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			WCF::getUser()->userID,
+			$objectTypeID,
+		]);
+		
+		return \intval(WCF::getDB()->getInsertID("wcf".WCF_N."_user_multifactor", 'setupID'));
 	}
 	
 	/**
