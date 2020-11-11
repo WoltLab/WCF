@@ -92,7 +92,7 @@ class BBCodeHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Sets the allowed BBCodes.
+	 * Sets the disallowed BBCodes.
 	 * 
 	 * @param	string[]	$bbCodes
 	 */
