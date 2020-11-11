@@ -25,7 +25,7 @@
 		{/if}
 		{if $thirdPartySources|count}
 			<tr>
-				<td colspan="5"><small>{lang count=$thirdPartySources|count}wcf.acp.package.search.result.trusted{/lang}</small></td>
+				<td colspan="5"><small>{lang count=$thirdPartySources|count}wcf.acp.package.search.result.thirdParty{/lang}</small></td>
 			</tr>
 			{include file='packageSearchResultListItems' packages=$thirdPartySources}
 		{/if}
