@@ -7,6 +7,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\multifactor\IMultifactorMethod;
+use wcf\system\user\multifactor\Setup;
 use wcf\system\WCF;
 
 /**
@@ -40,9 +41,9 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 	private $processor;
 	
 	/**
-	 * @var int
+	 * @var ?Setup
 	 */
-	private $setupId;
+	private $setup;
 	
 	/**
 	 * @var mixed
@@ -70,17 +71,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 		
 		$this->method = $objectType;
 		$this->processor = $this->method->getProcessor();
-		
-		$sql = "SELECT	setupID
-			FROM	wcf".WCF_N."_user_multifactor
-			WHERE	userID = ?
-				AND objectTypeID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([
-			WCF::getUser()->userID,
-			$this->method->objectTypeID,
-		]);
-		$this->setupId = $statement->fetchSingleColumn();
+		$this->setup = Setup::find($this->method, WCF::getUser());
 	}
 	
 	/**
@@ -89,7 +80,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 	protected function createForm() {
 		parent::createForm();
 		
-		$this->processor->createManagementForm($this->form, $this->setupId, $this->returnData);
+		$this->processor->createManagementForm($this->form, $this->setup, $this->returnData);
 	}
 	
 	public function save() {
@@ -97,60 +88,25 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 
 		WCF::getDB()->beginTransaction();
 		
-		/** @var int|null $setupId */
-		$setupId = null;
-		if ($this->setupId) {
-			$setupId = $this->lockSetup($this->setupId);
+		/** @var Setup|null $setup */
+		$setup = null;
+		if ($this->setup) {
+			$setup = $this->setup->lock();
 		}
 		else {
-			$setupId = $this->allocateSetUpId($this->method->objectTypeID);
+			$setup = Setup::allocateSetUpId($this->method, WCF::getUser());
 		}
 		
-		if (!$setupId) {
+		if (!$setup) {
 			throw new \RuntimeException("Multifactor setup disappeared");
 		}
 		
-		$this->returnData = $this->processor->processManagementForm($this->form, $setupId);
+		$this->returnData = $this->processor->processManagementForm($this->form, $setup);
 		
-		$this->setupId = $setupId;
+		$this->setup = $setup;
 		WCF::getDB()->commitTransaction();
 		
 		$this->saved();
-	}
-	
-	/**
-	 * Locks the set up, preventing any concurrent changes.
-	 */
-	protected function lockSetup(int $setupId): int {
-		$sql = "SELECT	setupId
-			FROM	wcf".WCF_N."_user_multifactor
-			WHERE	setupId = ?
-			FOR UPDATE";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([
-			$setupId,
-		]);
-		
-		$dbSetupId = \intval($statement->fetchSingleColumn());
-		assert($setupId === $dbSetupId);
-		
-		return $dbSetupId;
-	}
-	
-	/**
-	 * Allocates a fresh setup ID for the given objectTypeID.
-	 */
-	protected function allocateSetUpId(int $objectTypeID): int {
-		$sql = "INSERT INTO	wcf".WCF_N."_user_multifactor
-					(userID, objectTypeID)
-			VALUES		(?, ?)";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([
-			WCF::getUser()->userID,
-			$objectTypeID,
-		]);
-		
-		return \intval(WCF::getDB()->getInsertID("wcf".WCF_N."_user_multifactor", 'setupID'));
 	}
 	
 	/**

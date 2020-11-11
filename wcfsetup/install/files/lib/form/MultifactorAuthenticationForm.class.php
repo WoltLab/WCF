@@ -7,6 +7,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\multifactor\IMultifactorMethod;
+use wcf\system\user\multifactor\Setup;
 use wcf\system\WCF;
 
 /**
@@ -32,9 +33,9 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 	private $user;
 	
 	/**
-	 * @var ObjectType[]
+	 * @var Setup[]
 	 */
-	private $methods;
+	private $setups;
 	
 	/**
 	 * @var ObjectType
@@ -47,9 +48,9 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 	private $processor;
 	
 	/**
-	 * @var int
+	 * @var Setup
 	 */
-	private $setupId;
+	private $setup;
 	
 	/**
 	 * @inheritDoc
@@ -66,26 +67,27 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 			throw new PermissionDeniedException();
 		}
 		
-		$this->methods = $this->user->getEnabledMultifactorMethods();
+		$this->setups = Setup::getAllForUser($this->user);
 		
-		if (empty($this->methods)) {
+		if (empty($this->setups)) {
 			throw new \LogicException('Unreachable');
 		}
 		
-		\uasort($this->methods, function (ObjectType $a, ObjectType $b) {
-			return $b->priority <=> $a->priority;
+		\uasort($this->setups, function (Setup $a, Setup $b) {
+			return $b->getObjectType()->priority <=> $a->getObjectType()->priority;
 		});
 		
-		$this->setupId = \array_keys($this->methods)[0];
+		$setupId = \array_keys($this->setups)[0];
 		if (isset($_GET['id'])) {
-			$this->setupId = $_GET['id'];
+			$setupId = $_GET['id'];
 		}
 		
-		if (!isset($this->methods[$this->setupId])) {
+		if (!isset($this->setups[$setupId])) {
 			throw new IllegalLinkException();
 		}
 		
-		$this->method = $this->methods[$this->setupId];
+		$this->setup = $this->setups[$setupId];
+		$this->method = $this->setup->getObjectType();
 		\assert($this->method->getDefinition()->definitionName === 'com.woltlab.wcf.multifactor');
 		
 		$this->processor = $this->method->getProcessor();
@@ -97,7 +99,7 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 	protected function createForm() {
 		parent::createForm();
 		
-		$this->processor->createAuthenticationForm($this->form, $this->setupId);
+		$this->processor->createAuthenticationForm($this->form, $this->setup);
 	}
 	
 	public function save() {
@@ -105,7 +107,9 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 		
 		WCF::getDB()->beginTransaction();
 		
-		$this->returnData = $this->processor->processAuthenticationForm($this->form, $this->setupId);
+		$setup = $this->setup->lock();
+		
+		$this->returnData = $this->processor->processAuthenticationForm($this->form, $setup);
 		
 		WCF::getDB()->commitTransaction();
 		
@@ -132,7 +136,7 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 	 */
 	protected function setFormAction() {
 		$this->form->action(LinkHandler::getInstance()->getControllerLink(static::class, [
-			'id' => $this->setupId,
+			'object' => $this->setup,
 		]));
 	}
 	
@@ -143,10 +147,9 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign([
-			'method' => $this->method,
-			'methods' => $this->methods,
+			'setups' => $this->setups,
 			'user' => $this->user,
-			'setupId' => $this->setupId,
+			'setup' => $this->setup,
 		]);
 	}
 }

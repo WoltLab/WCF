@@ -5,8 +5,6 @@ use wcf\data\language\Language;
 use wcf\data\user\group\UserGroup;
 use wcf\data\DatabaseObject;
 use wcf\data\IUserContent;
-use wcf\data\object\type\ObjectType;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\option\UserOption;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\language\LanguageFactory;
@@ -690,27 +688,6 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 	 */
 	public function mustSelfEmailConfirm() {
 		return REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER;
-	}
-	
-	/**
-	 * Returns the multi-factor methods the user set up.
-	 * 
-	 * @return      ObjectType[]
-	 * @since       5.4
-	 */
-	public function getEnabledMultifactorMethods(): array {
-		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_user_multifactor
-			WHERE	userID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$this->userID]);
-		
-		$methods = [];
-		while ($row = $statement->fetchArray()) {
-			$methods[$row['setupID']] = ObjectTypeCache::getInstance()->getObjectType($row['objectTypeID']);
-		}
-		
-		return $methods;
 	}
 	
 	/**

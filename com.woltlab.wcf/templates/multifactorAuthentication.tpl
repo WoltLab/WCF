@@ -5,9 +5,9 @@
 		<div class="boxContent">
 			<nav>
 				<ol class="boxMenu">
-					{foreach from=$methods key='_setupId' item='method'}
-						<li{if $setupId == $_setupId} class="active"{/if}>
-							<a class="boxMenuLink" href="{link controller='MultifactorAuthentication' id=$_setupId}{/link}"><span class="boxMenuLinkTitle">{lang}wcf.user.security.multifactor.{$method->objectType}{/lang}</span></a>
+					{foreach from=$setups item='_setup'}
+						<li{if $setup->getId() == $_setup->getId()} class="active"{/if}>
+							<a class="boxMenuLink" href="{link controller='MultifactorAuthentication' object=$_setup}{/link}"><span class="boxMenuLinkTitle">{lang}wcf.user.security.multifactor.{$_setup->getObjectType()->objectType}{/lang}</span></a>
 						</li>
 					{/foreach}
 				</ol>

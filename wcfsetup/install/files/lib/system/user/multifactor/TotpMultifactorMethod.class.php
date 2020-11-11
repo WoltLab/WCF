@@ -34,12 +34,12 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 	/**
 	 * Returns the number of devices the user set up.
 	 */
-	public function getStatusText(int $setupId): string {
+	public function getStatusText(Setup $setup): string {
 		$sql = "SELECT	COUNT(*) AS count, MAX(useTime) AS lastUsed
 			FROM	wcf".WCF_N."_user_multifactor_totp
 			WHERE	setupID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$setupId]);
+		$statement->execute([$setup->getId()]);
 		
 		return WCF::getLanguage()->getDynamicVariable(
 			'wcf.user.security.multifactor.totp.status',
@@ -50,7 +50,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 	/**
 	 * @inheritDoc
 	 */
-	public function createManagementForm(IFormDocument $form, ?int $setupId, $returnData = null): void {
+	public function createManagementForm(IFormDocument $form, ?Setup $setup, $returnData = null): void {
 		$form->addDefaultButton(false);
 		$newDeviceContainer = NewDeviceContainer::create()
 			->label('wcf.user.security.multifactor.totp.newDevice')
@@ -88,12 +88,12 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 		// Note: The order of the two parts of the form is important. Pressing submit within an input
 		// will implicitly press the first submit button. If this container comes first the submit
 		// button will be a delete button.
-		if ($setupId) {
+		if ($setup) {
 			$sql = "SELECT	deviceID, deviceName, createTime, useTime
 				FROM	wcf".WCF_N."_user_multifactor_totp
 				WHERE	setupID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([$setupId]);
+			$statement->execute([$setup->getId()]);
 			$devicesContainer = FormContainer::create('devices')
 				->label('wcf.user.security.multifactor.totp.devices');
 			while ($row = $statement->fetchArray()) {
@@ -117,7 +117,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 	/**
 	 * @inheritDoc
 	 */
-	public function processManagementForm(IFormDocument $form, int $setupId): void {
+	public function processManagementForm(IFormDocument $form, Setup $setup): void {
 		$formData = $form->getData();
 		
 		\assert(
@@ -131,7 +131,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 					AND	deviceID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([
-				$setupId,
+				$setup->getId(),
 				$formData['delete'],
 			]);
 			
@@ -140,7 +140,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 				WHERE	setupID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([
-				$setupId,
+				$setup->getId(),
 			]);
 			
 			if (!$statement->fetchSingleColumn()) {
@@ -154,7 +154,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 				VALUES		(?, ?, ?, ?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([
-				$setupId,
+				$setup->getId(),
 				Hex::encode(\random_bytes(16)),
 				$formData['data']['deviceName'] ?: $defaultName,
 				$formData['data']['secret'],
@@ -167,13 +167,13 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 	/**
 	 * @inheritDoc
 	 */
-	public function createAuthenticationForm(IFormDocument $form, int $setupId): void {
+	public function createAuthenticationForm(IFormDocument $form, Setup $setup): void {
 		$sql = "SELECT		*
 			FROM		wcf".WCF_N."_user_multifactor_totp
 			WHERE		setupID = ?
 			ORDER BY	deviceName";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$setupId]);
+		$statement->execute([$setup->getId()]);
 		$devices = $statement->fetchAll(\PDO::FETCH_ASSOC);
 		
 		if (count($devices) > 1) {
@@ -208,9 +208,9 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 				->label('wcf.user.security.multifactor.totp.code')
 				->autoFocus()
 				->required()
-				->addValidator(new FormFieldValidator('code', function (CodeFormField $field) use ($devices, $setupId) {
-					FloodControl::getInstance()->registerUserContent('com.woltlab.wcf.multifactor.backup', $setupId);
-					$attempts = FloodControl::getInstance()->countUserContent('com.woltlab.wcf.multifactor.backup', $setupId, new \DateInterval('PT10M'));
+				->addValidator(new FormFieldValidator('code', function (CodeFormField $field) use ($devices, $setup) {
+					FloodControl::getInstance()->registerUserContent('com.woltlab.wcf.multifactor.backup', $setup->getId());
+					$attempts = FloodControl::getInstance()->countUserContent('com.woltlab.wcf.multifactor.backup', $setup->getId(), new \DateInterval('PT10M'));
 					if ($attempts['count'] > self::USER_ATTEMPTS_PER_TEN_MINUTES) {
 						$field->value('');
 						$field->addValidationError(new FormFieldValidationError(
@@ -248,7 +248,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 	/**
 	 * @inheritDoc
 	 */
-	public function processAuthenticationForm(IFormDocument $form, int $setupId): void {
+	public function processAuthenticationForm(IFormDocument $form, Setup $setup): void {
 		$formData = $form->getData();
 		
 		$sql = "SELECT	*
@@ -258,7 +258,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 			FOR UPDATE";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
-			$setupId,
+			$setup->getId(),
 			$formData['data']['deviceID'],
 		]);
 		$device = $statement->fetchArray();
@@ -277,7 +277,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 		$statement->execute([
 			\TIME_NOW,
 			$formData['data']['code']['minCounter'],
-			$setupId,
+			$setup->getId(),
 			$formData['data']['deviceID'],
 			$formData['data']['code']['minCounter'],
 		]);

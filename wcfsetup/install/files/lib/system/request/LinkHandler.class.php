@@ -2,6 +2,7 @@
 namespace wcf\system\request;
 use wcf\data\page\PageCache;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\data\IIDObject;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\Regex;
@@ -192,6 +193,9 @@ class LinkHandler extends SingletonFactory {
 			if ($parameters['object'] instanceof IRouteController) {
 				$parameters['id'] = $parameters['object']->getObjectID();
 				$parameters['title'] = $parameters['object']->getTitle();
+			}
+			else if ($parameters['object'] instanceof IIDObject) {
+				$parameters['id'] = $parameters['object']->getObjectID();
 			}
 		}
 		unset($parameters['object']);

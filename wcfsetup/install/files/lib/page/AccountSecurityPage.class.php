@@ -5,6 +5,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\session\Session;
 use wcf\system\session\SessionHandler;
+use wcf\system\user\multifactor\Setup;
 use wcf\system\WCF;
 
 /**
@@ -33,7 +34,7 @@ class AccountSecurityPage extends AbstractPage {
 	private $multifactorMethods;
 	
 	/**
-	 * @var int[]
+	 * @var Setup[]
 	 */
 	private $enabledMultifactorMethods;
 	
@@ -55,9 +56,10 @@ class AccountSecurityPage extends AbstractPage {
 			return $b->priority <=> $a->priority;
 		});
 		
-		$this->enabledMultifactorMethods = array_flip(array_map(function (ObjectType $o) {
-			return $o->objectTypeID;
-		}, WCF::getUser()->getEnabledMultifactorMethods()));
+		$setups = Setup::getAllForUser(WCF::getUser());
+		foreach ($setups as $setup) {
+			$this->enabledMultifactorMethods[$setup->getObjectType()->objectTypeID] = $setup;
+		}
 	}
 	
 	/**

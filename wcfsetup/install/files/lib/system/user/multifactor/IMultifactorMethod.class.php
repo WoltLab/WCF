@@ -17,12 +17,12 @@ interface IMultifactorMethod {
 	 * 
 	 * An example text could be: "5 backup codes remaining".
 	 */
-	public function getStatusText(int $setupId): string;
+	public function getStatusText(Setup $setup): string;
 	
 	/**
 	 * Populates the form to set-up and manage this method.
 	 */
-	public function createManagementForm(IFormDocument $form, ?int $setupId, $returnData = null): void;
+	public function createManagementForm(IFormDocument $form, ?Setup $setup, $returnData = null): void;
 	
 	/**
 	 * Updates the database information based on the data received in the management form.
@@ -38,12 +38,12 @@ interface IMultifactorMethod {
 	 * 
 	 * @return	mixed	Opaque data that will be passed as `$returnData` in createManagementForm().
 	 */
-	public function processManagementForm(IFormDocument $form, int $setupId);
+	public function processManagementForm(IFormDocument $form, Setup $setup);
 	
 	/**
 	 * Populates the form to authenticate a user with this method.
 	 */
-	public function createAuthenticationForm(IFormDocument $form, int $setupId): void;
+	public function createAuthenticationForm(IFormDocument $form, Setup $setup): void;
 	
 	/**
 	 * Updates the database information based on the data received in the authentication form.
@@ -60,5 +60,5 @@ interface IMultifactorMethod {
 	 * 
 	 * @throws \RuntimeException
 	 */
-	public function processAuthenticationForm(IFormDocument $form, int $setupId): void;
+	public function processAuthenticationForm(IFormDocument $form, Setup $setup): void;
 }

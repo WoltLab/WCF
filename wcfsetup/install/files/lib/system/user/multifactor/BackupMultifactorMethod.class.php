@@ -40,12 +40,12 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 	/**
 	 * Returns the number of remaining codes.
 	 */
-	public function getStatusText(int $setupId): string {
+	public function getStatusText(Setup $setup): string {
 		$sql = "SELECT	COUNT(*) - COUNT(useTime) AS count, MAX(useTime) AS lastUsed
 			FROM	wcf".WCF_N."_user_multifactor_backup
 			WHERE	setupID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$setupId]);
+		$statement->execute([$setup->getId()]);
 		
 		return WCF::getLanguage()->getDynamicVariable(
 			'wcf.user.security.multifactor.backup.status',
@@ -57,16 +57,16 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 	/**
 	 * @inheritDoc
 	 */
-	public function createManagementForm(IFormDocument $form, ?int $setupId, $returnData = null): void {
+	public function createManagementForm(IFormDocument $form, ?Setup $setup, $returnData = null): void {
 		$form->addDefaultButton(false);
 		$form->successMessage('wcf.user.security.multifactor.backup.success');
 		
-		if ($setupId) {
+		if ($setup) {
 			$sql = "SELECT	*
 				FROM	wcf".WCF_N."_user_multifactor_backup
 				WHERE	setupID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([$setupId]);
+			$statement->execute([$setup->getId()]);
 			
 			$codes = $statement->fetchAll(\PDO::FETCH_ASSOC);
 			
@@ -134,14 +134,14 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 	/**
 	 * @inheritDoc
 	 */
-	public function processManagementForm(IFormDocument $form, int $setupId): array {
+	public function processManagementForm(IFormDocument $form, Setup $setup): array {
 		$formData = $form->getData();
 		\assert($formData['action'] === 'generateCodes' || $formData['action'] === 'regenerateCodes');
 		
 		$sql = "DELETE FROM	wcf".WCF_N."_user_multifactor_backup
 			WHERE		setupID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$setupId]);
+		$statement->execute([$setup->getId()]);
 		
 		$codes = [];
 		for ($i = 0; $i < 10; $i++) {
@@ -168,7 +168,7 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 		$algorithName = PasswordAlgorithmManager::getInstance()->getNameFromAlgorithm($this->algorithm);
 		foreach ($codes as $identifier => $code) {
 			$statement->execute([
-				$setupId,
+				$setup->getId(),
 				$identifier,
 				$algorithName.':'.$this->algorithm->hash($code),
 				\TIME_NOW,
@@ -202,12 +202,12 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 	/**
 	 * @inheritDoc
 	 */
-	public function createAuthenticationForm(IFormDocument $form, int $setupId): void {
+	public function createAuthenticationForm(IFormDocument $form, Setup $setup): void {
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_user_multifactor_backup
 			WHERE	setupID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$setupId]);
+		$statement->execute([$setup->getId()]);
 		$codes = $statement->fetchAll(\PDO::FETCH_ASSOC);
 		
 		$form->appendChildren([
@@ -215,9 +215,9 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 				->label('wcf.user.security.multifactor.backup.code')
 				->autoFocus()
 				->required()
-				->addValidator(new FormFieldValidator('code', function (TextFormField $field) use ($codes, $setupId) {
-					FloodControl::getInstance()->registerUserContent('com.woltlab.wcf.multifactor.backup', $setupId);
-					$attempts = FloodControl::getInstance()->countUserContent('com.woltlab.wcf.multifactor.backup', $setupId, new \DateInterval('PT1H'));
+				->addValidator(new FormFieldValidator('code', function (TextFormField $field) use ($codes, $setup) {
+					FloodControl::getInstance()->registerUserContent('com.woltlab.wcf.multifactor.backup', $setup->getId());
+					$attempts = FloodControl::getInstance()->countUserContent('com.woltlab.wcf.multifactor.backup', $setup->getId(), new \DateInterval('PT1H'));
 					if ($attempts['count'] > self::USER_ATTEMPTS_PER_HOUR) {
 						$field->value('');
 						$field->addValidationError(new FormFieldValidationError(
@@ -241,7 +241,7 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 	/**
 	 * @inheritDoc
 	 */
-	public function processAuthenticationForm(IFormDocument $form, int $setupId): void {
+	public function processAuthenticationForm(IFormDocument $form, Setup $setup): void {
 		$userCode = \preg_replace('/\s+/', '', $form->getData()['data']['code']);
 		
 		$sql = "SELECT	*
@@ -249,7 +249,7 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 			WHERE	setupID = ?
 			FOR UPDATE";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$setupId]);
+		$statement->execute([$setup->getId()]);
 		$codes = $statement->fetchAll(\PDO::FETCH_ASSOC);
 		
 		$usedCode = $this->findValidCode($userCode, $codes);
@@ -266,7 +266,7 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
 			\TIME_NOW,
-			$setupId,
+			$setup->getId(),
 			$usedCode['identifier'],
 		]);
 		
