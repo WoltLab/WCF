@@ -5,6 +5,22 @@ $.Redactor.prototype.WoltLabInsert = function() {
 		init: function () {
 			var callback = this.opts.woltlab.placeholderCallback;
 			
+			function firefoxFixNestedParagraphs(editor) {
+				var child = editor.querySelector('p > p');
+				if (child === null) {
+					return;
+				}
+				
+				var paragraph = child.parentElement;
+				var parent = paragraph.parentElement;
+				while (paragraph.childNodes.length) {
+					parent.insertBefore(paragraph.childNodes[0], paragraph);
+				}
+				paragraph.remove();
+				
+				firefoxFixNestedParagraphs(editor);
+			}
+			
 			var mpHtml = this.insert.html;
 			this.insert.html = (function (html, data) {
 				if (callback) callback = callback();
@@ -56,6 +72,14 @@ $.Redactor.prototype.WoltLabInsert = function() {
 						// rather than using the current, empty one
 						elRemove(block);
 					}
+				}
+				
+				// Firefox tends to nest <p> into each other, which causes issue when trying to modify those paragraphs,
+				// for example, converting them into quotes or similar.
+				if (this.detect.isFirefox()) {
+					this.selection.save();
+					firefoxFixNestedParagraphs(this.$editor[0]);
+					this.selection.restore();
 				}
 				
 				if (selection.rangeCount && selection.anchorNode.nodeName === 'IMG') {
