@@ -2,7 +2,7 @@
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Controller/Clipboard', 'Language'], function(ControllerClipboard, Language) {
-		Language.add('wcf.acp.tag.setAsSynonyms', '{lang}wcf.acp.tag.setAsSynonyms{/lang}');
+		Language.add('wcf.acp.tag.setAsSynonyms', '{jslang}wcf.acp.tag.setAsSynonyms{/jslang}');
 		
 		var deleteAction = new WCF.Action.Delete('wcf\\data\\tag\\TagAction', '.jsTagRow');
 		deleteAction.setCallback(ControllerClipboard.reload.bind(ControllerClipboard));

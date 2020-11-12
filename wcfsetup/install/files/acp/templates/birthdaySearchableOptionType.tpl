@@ -3,6 +3,6 @@
 
 <script data-relocate="true">
 $(function() {
-	$('#{$option->optionName}_age_from').parents('dl:eq(0)').find('> dt > label').text('{lang}wcf.user.birthday.age{/lang}').attr('for', '{$option->optionName}_age_from');
+	$('#{$option->optionName}_age_from').parents('dl:eq(0)').find('> dt > label').text('{jslang}wcf.user.birthday.age{/jslang}').attr('for', '{$option->optionName}_age_from');
 });
 </script>
