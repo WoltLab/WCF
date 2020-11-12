@@ -286,6 +286,10 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 	 * @return	static		this field
 	 */
 	public function supportTime($supportsTime = true) {
+		if ($this->value !== null) {
+			throw new \BadFunctionCallException("After a value has been set, time support cannot be changed.");
+		}
+		
 		$this->supportsTime = $supportsTime;
 		
 		return $this;
