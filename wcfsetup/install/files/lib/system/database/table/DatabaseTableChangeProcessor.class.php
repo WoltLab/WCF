@@ -329,7 +329,7 @@ class DatabaseTableChangeProcessor {
 			
 			foreach ($this->getExistingTable($tableName)->getForeignKeys() as $foreignKey) {
 				if (in_array($droppedColumn->getName(), $foreignKey->getColumns())) {
-					$dropForeignKeys[] = $foreignKey->getName();
+					$dropForeignKeys[] = $foreignKey;
 				}
 			}
 		}
@@ -349,7 +349,8 @@ class DatabaseTableChangeProcessor {
 		
 		if (!empty($columnData)) {
 			foreach ($dropForeignKeys as $foreignKey) {
-				$this->dbEditor->dropForeignKey($tableName, $foreignKey);
+				$this->dropForeignKey($tableName, $foreignKey);
+				$this->deleteForeignKeyLog($tableName, $foreignKey);
 			}
 			
 			$this->dbEditor->alterColumns($tableName, $columnData);
