@@ -100,11 +100,5 @@
 		<instruction type="sql">update_5.3.sql</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="5.3.0 RC 3">
-		<instruction type="acpTemplate"/>
-		<instruction type="file"/>
-		<instruction type="template"/>
-		
-		<instruction type="language" />
-	</instructions>
+	<!-- Run the option.xml update for 5.3.0 -> 5.3.1, due to the missing removal of external_link_rel_nofollow. -->
 </package>
