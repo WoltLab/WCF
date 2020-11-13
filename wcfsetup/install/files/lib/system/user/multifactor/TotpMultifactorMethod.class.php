@@ -3,7 +3,6 @@ namespace wcf\system\user\multifactor;
 use ParagonIE\ConstantTime\Hex;
 use wcf\system\flood\FloodControl;
 use wcf\system\form\builder\button\FormButton;
-use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\ButtonFormField;
 use wcf\system\form\builder\field\dependency\IsNotClickedFormFieldDependency;
 use wcf\system\form\builder\field\HiddenFormField;
@@ -14,6 +13,8 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\user\multifactor\totp\CodeFormField;
+use wcf\system\user\multifactor\totp\DeviceNode;
+use wcf\system\user\multifactor\totp\DevicesContainer;
 use wcf\system\user\multifactor\totp\NewDeviceContainer;
 use wcf\system\user\multifactor\totp\SecretFormField;
 use wcf\system\user\multifactor\totp\Totp;
@@ -89,25 +90,43 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 		// will implicitly press the first submit button. If this container comes first the submit
 		// button will be a delete button.
 		if ($setup) {
-			$sql = "SELECT	deviceID, deviceName, createTime, useTime
-				FROM	wcf".WCF_N."_user_multifactor_totp
-				WHERE	setupID = ?";
+			$sql = "SELECT		deviceID, deviceName, createTime, useTime
+				FROM		wcf".WCF_N."_user_multifactor_totp
+				WHERE		setupID = ?
+				ORDER BY	createTime";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([$setup->getId()]);
-			$devicesContainer = FormContainer::create('devices')
+			$devicesContainer = DevicesContainer::create('devices')
 				->label('wcf.user.security.multifactor.totp.devices');
 			while ($row = $statement->fetchArray()) {
-				$devicesContainer->appendChildren([
-					$button = ButtonFormField::create('delete_'.$row['deviceID'])
-						->buttonLabel($row['deviceName'])
-						->objectProperty('delete')
-						->value($row['deviceID']),
-				]);
+				$devices[] = $row;
+			}
+			
+			$canBeDeleted = \count($devices) > 1;
+			foreach ($devices as $row) {
+				$device = DeviceNode::create('device-'.$row['deviceID'])
+					->setData($row);
 				
-				$newDeviceContainer->addDependency(
-					IsNotClickedFormFieldDependency::create('delete_'.$row['deviceID'])
-						->field($button)
-				);
+				if ($canBeDeleted) {
+					$button = ButtonFormField::create('device-delete-'.$row['deviceID'])
+						->buttonLabel('wcf.global.button.delete')
+						->objectProperty('delete')
+						->value($row['deviceID']);
+					$device->appendChild($button);
+					$newDeviceContainer->addDependency(
+						IsNotClickedFormFieldDependency::create('device-delete-'.$row['deviceID'])
+							->field($button)
+					);
+				}
+				else {
+					$button = new class extends FormButton {
+						protected $templateName = '__totpDeviceNoDeleteButton';
+					};
+					$button->id('no-delete-'.$row['deviceID'])
+						->label('wcf.global.button.delete');
+					$device->appendChild($button);
+				}
+				$devicesContainer->appendChild($device);
 			}
 			
 			$form->appendChild($devicesContainer);

@@ -4840,7 +4840,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.security.multifactor.backup.success"><![CDATA[Es wurden erfolgreich neue Codes generiert. Bestehende Codes sind nicht mehr gültig. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}schreibe dir{else}schreiben Sie sich{/if} die Codes gut auf!]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.manage"><![CDATA[Smartphone-App verwalten]]></item>
 		<item name="wcf.user.security.multifactor.totp.newDevice"><![CDATA[Smartphone hinzufügen]]></item>
-		<item name="wcf.user.security.multifactor.totp.deviceName"><![CDATA[Name des Geräts]]></item>
+		<item name="wcf.user.security.multifactor.totp.deviceName"><![CDATA[Gerätename]]></item>
 		<item name="wcf.user.security.multifactor.totp.deviceName.placeholder"><![CDATA[Smartphone von {$__wcf->user->username}]]></item>
 		<item name="wcf.user.security.multifactor.totp.code"><![CDATA[Einmalcode]]></item>
 		<item name="wcf.user.security.multifactor.totp.status"><![CDATA[<ul class="inlineList small commaSeparated">
@@ -4855,7 +4855,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.security.multifactor.setup"><![CDATA[Einrichten]]></item>
 		<item name="wcf.user.security.multifactor.active"><![CDATA[Aktiv]]></item>
 		<item name="wcf.user.security.multifactor.backup.generateCodes"><![CDATA[Codes generieren]]></item>
-		<item name="wcf.user.security.multifactor.totp.devices"><![CDATA[Eingerichtete Geräte]]></item>
+		<item name="wcf.user.security.multifactor.totp.devices"><![CDATA[Aktive Smartphones]]></item>
 		<item name="wcf.user.security.multifactor.totp.deviceName.default"><![CDATA[{TIME_NOW|plainTime}]]></item>
 		<item name="wcf.user.security.multifactor.totp.error.flood"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche es{else}versuchen Sie es{/if} später erneut.]]></item>
 		<item name="wcf.user.security.multifactor.backup.error.flood"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche es{else}versuchen Sie es{/if} später erneut.]]></item>
@@ -4867,6 +4867,10 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 <li>{if LANGUAGE_USE_INFORMAL_VARIANT}Scanne{else}Scannen Sie{/if} den QR-Code in der App.</li>
 <li>{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} den durch die App generierten 6-stelligen Einmalcode ein.</li>
 </ol>]]></item>
+		<item name="wcf.user.security.multifactor.totp.createTime"><![CDATA[Eingerichtet]]></item>
+		<item name="wcf.user.security.multifactor.totp.useTime"><![CDATA[Zuletzt Benutzt]]></item>
+		<item name="wcf.user.security.multifactor.totp.lastDevice"><![CDATA[Wenn Sie ihr Smartphone wechseln möchten, fügen Sie bitte zunächst Ihr neues Smartphone hinzu, bevor Sie Ihr letztes Gerät <strong>{$deviceName}</strong> entfernen. Verwenden Sie bitte die <a href="{link controller='AccountSecurity'}{/link}">Übersicht in der Benutzerkonto-Sicherheit</a>, wenn Sie die Mehrfaktor-Authentifizierung deaktivieren möchten.]]></item>
+		<item name="wcf.user.security.multifactor.totp.lastDevice.title"><![CDATA[Letztes Gerät]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophäen]]></item>
