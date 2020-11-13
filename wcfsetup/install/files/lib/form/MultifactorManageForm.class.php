@@ -4,6 +4,7 @@ use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\multifactor\IMultifactorMethod;
@@ -72,6 +73,11 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 		$this->method = $objectType;
 		$this->processor = $this->method->getProcessor();
 		$this->setup = Setup::find($this->method, WCF::getUser());
+		
+		// Backup codes may not be managed if they are not yet set up.
+		if ($this->method->objectType === 'com.woltlab.wcf.multifactor.backup' && !$this->setup) {
+			throw new PermissionDeniedException();
+		}
 	}
 	
 	/**
