@@ -4867,10 +4867,12 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 <li>{if LANGUAGE_USE_INFORMAL_VARIANT}Scanne{else}Scannen Sie{/if} den QR-Code in der App.</li>
 <li>{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} den durch die App generierten 6-stelligen Einmalcode ein.</li>
 </ol>]]></item>
+		<item name="wcf.user.security.multifactor.totp.success.add"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Smartphone <strong>{$deviceName}</strong> wurde erfolgreich hinterlegt.]]></item>
 		<item name="wcf.user.security.multifactor.totp.createTime"><![CDATA[Eingerichtet]]></item>
 		<item name="wcf.user.security.multifactor.totp.useTime"><![CDATA[Zuletzt Benutzt]]></item>
 		<item name="wcf.user.security.multifactor.totp.lastDevice"><![CDATA[Wenn Sie ihr Smartphone wechseln möchten, fügen Sie bitte zunächst Ihr neues Smartphone hinzu, bevor Sie Ihr letztes Gerät <strong>{$deviceName}</strong> entfernen. Verwenden Sie bitte die <a href="{link controller='AccountSecurity'}{/link}">Übersicht in der Benutzerkonto-Sicherheit</a>, wenn Sie die Mehrfaktor-Authentifizierung deaktivieren möchten.]]></item>
 		<item name="wcf.user.security.multifactor.totp.lastDevice.title"><![CDATA[Letztes Gerät]]></item>
+		<item name="wcf.user.security.multifactor.totp.success.delete"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Smartphone <strong>{$deviceName}</strong> wurde erfolgreich entfernt.]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophäen]]></item>

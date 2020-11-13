@@ -52,6 +52,18 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 	 * @inheritDoc
 	 */
 	public function createManagementForm(IFormDocument $form, ?Setup $setup, $returnData = null): void {
+		if ($returnData !== null) {
+			\assert(\is_array($returnData));
+			\assert(
+				isset($returnData['action']) &&
+				($returnData['action'] === 'add' || $returnData['action'] === 'delete')
+			);
+			\assert(isset($returnData['deviceName']));
+			$form->successMessage('wcf.user.security.multifactor.totp.success.'.$returnData['action'], [
+				'deviceName' => $returnData['deviceName'],
+			]);
+		}
+
 		$form->addDefaultButton(false);
 		$newDeviceContainer = NewDeviceContainer::create()
 			->label('wcf.user.security.multifactor.totp.newDevice')
@@ -136,7 +148,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 	/**
 	 * @inheritDoc
 	 */
-	public function processManagementForm(IFormDocument $form, Setup $setup): void {
+	public function processManagementForm(IFormDocument $form, Setup $setup): array {
 		$formData = $form->getData();
 		
 		\assert(
@@ -145,6 +157,19 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 		);
 		
 		if (!empty($formData['delete'])) {
+			// Fetch deviceName for success message.
+			$sql = "SELECT	deviceName
+				FROM	wcf".WCF_N."_user_multifactor_totp
+				WHERE		setupID = ?
+					AND	deviceID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				$setup->getId(),
+				$formData['delete'],
+			]);
+			$deviceName = $statement->fetchSingleColumn();
+			
+			// Remove the device.
 			$sql = "DELETE FROM	wcf".WCF_N."_user_multifactor_totp
 				WHERE		setupID = ?
 					AND	deviceID = ?";
@@ -154,6 +179,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 				$formData['delete'],
 			]);
 			
+			// Check the contract that the last device may not be removed.
 			$sql = "SELECT	COUNT(*)
 				FROM	wcf".WCF_N."_user_multifactor_totp
 				WHERE	setupID = ?";
@@ -165,9 +191,16 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 			if (!$statement->fetchSingleColumn()) {
 				throw new \LogicException('Unreachable');
 			}
+			
+			return [
+				'action' => 'delete',
+				'deviceName' => $deviceName,
+			];
 		}
 		else {
 			$defaultName = WCF::getLanguage()->getDynamicVariable('wcf.user.security.multifactor.totp.deviceName.default');
+			$deviceName = $formData['data']['deviceName'] ?: $defaultName;
+			
 			$sql = "INSERT INTO	wcf".WCF_N."_user_multifactor_totp
 						(setupID, deviceID, deviceName, secret, minCounter, createTime)
 				VALUES		(?, ?, ?, ?, ?, ?)";
@@ -175,11 +208,16 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 			$statement->execute([
 				$setup->getId(),
 				Hex::encode(\random_bytes(16)),
-				$formData['data']['deviceName'] ?: $defaultName,
+				$deviceName,
 				$formData['data']['secret'],
 				$formData['data']['code']['minCounter'],
 				\TIME_NOW,
 			]);
+			
+			return [
+				'action' => 'add',
+				'deviceName' => $deviceName,
+			];
 		}
 	}
 	
