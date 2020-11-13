@@ -4833,7 +4833,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup"><![CDATA[Emergency Codes]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup.manage"><![CDATA[Manage Emergency Codes]]></item>
 		<item name="wcf.user.security.multifactor.backup.regenerateCodes"><![CDATA[Generate New Codes]]></item>
-		<item name="wcf.user.security.multifactor.backup.existingCodes"><![CDATA[Active Codes]]></item>
+		<item name="wcf.user.security.multifactor.backup.existingCodes"><![CDATA[Active Emergency Codes]]></item>
 		<item name="wcf.user.security.multifactor.backup.success"><![CDATA[New Codes were generated successfully. Any existing codes are no longer valid. Please carefully note down the codes.]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.manage"><![CDATA[Manage Smartphone App]]></item>
 		<item name="wcf.user.security.multifactor.totp.newDevice"><![CDATA[Add Smartphone]]></item>
@@ -4870,6 +4870,9 @@ Open the link below to access the user profile:
 		<item name="wcf.user.security.multifactor.totp.lastDevice"><![CDATA[Please add your new device before removing your last device <strong>{$deviceName}</strong> if you want to switch phones. Use the <a href="{link controller='AccountSecurity'}{/link}">Overview in Account Security</a> if you want to disable multi-factor authentication.]]></item>
 		<item name="wcf.user.security.multifactor.totp.lastDevice.title"><![CDATA[Last Device]]></item>
 		<item name="wcf.user.security.multifactor.totp.success.delete"><![CDATA[Your smartphone <strong>{$deviceName}</strong> has successfully been removed.]]></item>
+		<item name="wcf.user.security.multifactor.initialBackup"><![CDATA[<p>The multi-factor authentication is enabled for your account starting now. Going forward you will need to have your second factor handy for every login.</p>
+<p>In addition we generated emergency codes for you. They will allow you to gain access to your account in case your second factor becomes unavailable.</p>
+<p>Please carefully note or save the emergency codes shown below. An example of a secure storage could be a piece of paper within a filing cabinet.</p>]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophies]]></item>

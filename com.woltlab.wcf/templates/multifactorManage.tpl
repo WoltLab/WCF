@@ -5,6 +5,17 @@
 
 {include file='header' __disableAds=true __sidebarLeftHasMenu=true}
 
-{@$form->getHtml()}
+
+{if $backupForm}
+	{if $form->showsSuccessMessage()}
+		<p class="success">
+			<span>{@$form->getSuccessMessage()}</span>
+		</p>
+	{/if}
+	
+	{@$backupForm->getNodeById('existingCodesContainer')->getHtml()}
+{else}
+	{@$form->getHtml()}
+{/if}
 
 {include file='footer' __disableAds=true}

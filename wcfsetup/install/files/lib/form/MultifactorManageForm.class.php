@@ -5,6 +5,9 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\form\builder\FormDocument;
+use wcf\system\form\builder\IFormParentNode;
+use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\multifactor\IMultifactorMethod;
@@ -49,7 +52,12 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 	/**
 	 * @var mixed
 	 */
-	private $returnData;
+	private $returnData = null;
+	
+	/**
+	 * @var IFormDocument
+	 */
+	private $backupForm;
 	
 	/**
 	 * @inheritDoc
@@ -112,7 +120,57 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 		$this->setup = $setup;
 		WCF::getDB()->commitTransaction();
 		
+		WCF::getDB()->beginTransaction();
+		if (!$this->hasBackupCodes()) {
+			$backupMethod = $this->getBackupCodesObjectType();
+			$backupProcessor = $backupMethod->getProcessor();
+
+			// Create Form
+			$form = FormDocument::create('backupCodes');
+			$backupProcessor->createManagementForm($form, null, []);
+			$form->build();
+			
+			// Process Form
+			$form->requestData([
+				'generateCodes' => 'generateCodes',
+			]);
+			$form->readValues();
+			$backupSetupId = Setup::allocateSetUpId($backupMethod, WCF::getUser());
+			$returnData = $backupProcessor->processManagementForm($form, $backupSetupId);
+			$form->cleanup();
+			
+			// Re-create form
+			$form = FormDocument::create('backupCodes');
+			$backupProcessor->createManagementForm($form, $backupSetupId, $returnData);
+			/** @var IFormParentNode $container */
+			$container = $form->getNodeById('existingCodesContainer');
+			$container->insertBefore(
+				TemplateFormNode::create('initialBackup')
+					->templateName('__multifactorManageInitialBackup'),
+				'existingCodes'
+			);
+			$form->build();
+			$this->backupForm = $form;
+		}
+		WCF::getDB()->commitTransaction();
+		
 		$this->saved();
+	}
+	
+	/**
+	 * Returns the Object type representing backup codes.
+	 */
+	protected function getBackupCodesObjectType(): ObjectType {
+		return ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.multifactor', 'com.woltlab.wcf.multifactor.backup');
+	}
+	
+	/**
+	 * Returns whether backup codes are set up yet.
+	 */
+	protected function hasBackupCodes(): bool {
+		$setup = Setup::find($this->getBackupCodesObjectType(), WCF::getUser());
+		
+		return $setup !== null;
 	}
 	
 	/**
@@ -144,6 +202,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 		
 		WCF::getTPL()->assign([
 			'method' => $this->method,
+			'backupForm' => $this->backupForm,
 		]);
 	}
 	
