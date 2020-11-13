@@ -91,6 +91,8 @@
 		
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.3_invalidateMailForm.php</instruction>
 		
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.3_fixActivationMethod.php</instruction>
+		
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.3_style.php</instruction>
 		
 		<instruction type="style" run="standalone">defaultStyle.tar</instruction>
