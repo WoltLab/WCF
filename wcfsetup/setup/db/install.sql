@@ -1762,6 +1762,7 @@ CREATE TABLE wcf1_user_option (
 	validationPattern TEXT,
 	selectOptions MEDIUMTEXT,
 	enableOptions MEDIUMTEXT,
+	labeledUrl MEDIUMTEXT,
 	required TINYINT(1) NOT NULL DEFAULT 0,
 	askDuringRegistration TINYINT(1) NOT NULL DEFAULT 0,
 	editable TINYINT(1) NOT NULL DEFAULT 0, 

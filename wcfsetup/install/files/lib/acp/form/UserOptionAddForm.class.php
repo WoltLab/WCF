@@ -8,6 +8,10 @@ use wcf\data\user\option\UserOptionEditor;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
+use wcf\system\option\user\DateUserOptionOutput;
+use wcf\system\option\user\LabeledUrlUserOptionOutput;
+use wcf\system\option\user\SelectOptionsUserOptionOutput;
+use wcf\system\option\user\URLUserOptionOutput;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -72,6 +76,12 @@ class UserOptionAddForm extends AbstractForm {
 	 * @var	string
 	 */
 	public $selectOptions = '';
+	
+	/**
+	 * @var	string
+	 * @since 5.4
+	 */
+	public $labeledUrl = '';
 	
 	/**
 	 * field is required
@@ -151,7 +161,8 @@ class UserOptionAddForm extends AbstractForm {
 		'text',
 		'textarea',
 		'message',
-		'URL'
+		'URL',
+		'labeledUrl',
 	];
 	
 	/**
@@ -203,6 +214,7 @@ class UserOptionAddForm extends AbstractForm {
 		if (isset($_POST['searchable'])) $this->searchable = intval($_POST['searchable']);
 		if (isset($_POST['showOrder'])) $this->showOrder = intval($_POST['showOrder']);
 		if (isset($_POST['outputClass'])) $this->outputClass = StringUtil::trim($_POST['outputClass']);
+		if (isset($_POST['labeledUrl'])) $this->labeledUrl = StringUtil::trim($_POST['labeledUrl']);
 		
 		if ($this->optionType == 'boolean' || $this->optionType == 'integer') {
 			$this->defaultValue = intval($this->defaultValue);
@@ -225,15 +237,19 @@ class UserOptionAddForm extends AbstractForm {
 	protected function setDefaultOutputClass() {
 		if (empty($this->outputClass)) {
 			if (in_array($this->optionType, self::$optionTypesUsingSelectOptions)) {
-				$this->outputClass = 'wcf\system\option\user\SelectOptionsUserOptionOutput';
+				$this->outputClass = SelectOptionsUserOptionOutput::class;
 			}
 			
 			if ($this->optionType == 'date') {
-				$this->outputClass = 'wcf\system\option\user\DateUserOptionOutput';
+				$this->outputClass = DateUserOptionOutput::class;
 			}
 			
 			if ($this->optionType == 'URL') {
-				$this->outputClass = 'wcf\system\option\user\URLUserOptionOutput';
+				$this->outputClass = URLUserOptionOutput::class;
+			}
+			
+			if ($this->optionType == 'labeledUrl') {
+				$this->outputClass = LabeledUrlUserOptionOutput::class;
 			}
 		}
 	}
@@ -279,6 +295,10 @@ class UserOptionAddForm extends AbstractForm {
 		if (!in_array($this->editable, $this->validEditableBits)) {
 			$this->editable = UserOption::EDITABILITY_ALL;
 		}
+		
+		if ($this->optionType == 'labeledUrl' && strpos($this->labeledUrl, '%s') === false) {
+			throw new UserInputException('labeledUrl', 'invalid');
+		}
 	}
 	
 	/**
@@ -306,7 +326,8 @@ class UserOptionAddForm extends AbstractForm {
 			'editable' => $this->editable,
 			'visible' => $this->visible,
 			'packageID' => 1,
-			'additionalData' => !empty($additionalData) ? serialize($additionalData) : ''
+			'additionalData' => !empty($additionalData) ? serialize($additionalData) : '',
+			'labeledUrl' => $this->labeledUrl,
 		])]);
 		$this->objectAction->executeAction();
 		
@@ -363,7 +384,8 @@ class UserOptionAddForm extends AbstractForm {
 			'outputClass' => $this->outputClass,
 			'action' => 'add',
 			'availableCategories' => $this->availableCategories,
-			'availableOptionTypes' => self::$availableOptionTypes
+			'availableOptionTypes' => self::$availableOptionTypes,
+			'labeledUrl' => $this->labeledUrl,
 		]);
 	}
 }

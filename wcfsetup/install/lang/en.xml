@@ -3012,6 +3012,9 @@ You can define the default sender in “Configuration » Options » General » E
 		<item name="wcf.acp.user.option.editable.2"><![CDATA[Administrator]]></item>
 		<item name="wcf.acp.user.option.editable.3"><![CDATA[Owner and Administrator]]></item>
 		<item name="wcf.acp.user.option.editable.6"><![CDATA[Owner during registration and Administrator]]></item>
+		<item name="wcf.acp.user.option.labeledUrl"><![CDATA[URL]]></item>
+		<item name="wcf.acp.user.option.labeledUrl.description"><![CDATA[If the field type is “labeledUrl”, the URL to be linked to must be entered here. Use <span class="inlineCode">%s</span> as placeholder for the user input.]]></item>
+		<item name="wcf.acp.user.option.labeledUrl.error.invalid"><![CDATA[The URL does not contain the placeholder <span class="inlineCode">%s</span>.]]></item>
 		<item name="wcf.acp.user.option.optionType"><![CDATA[Option Type]]></item>
 		<item name="wcf.acp.user.option.optionType.description"><![CDATA[The option names usually equal the HTML-tag used as input element.]]></item>
 		<item name="wcf.acp.user.option.askDuringRegistration"><![CDATA[Field will be visible during registration]]></item>

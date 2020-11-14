@@ -139,6 +139,23 @@
 				</dd>
 			</dl>
 			
+			<dl{if $errorField == 'labeledUrl'} class="formError"{/if}>
+				<dt><label for="labeledUrl">{lang}wcf.acp.user.option.labeledUrl{/lang}</label></dt>
+				<dd>
+					<input type="text" id="labeledUrl" name="labeledUrl" value="{$labeledUrl}" class="long">
+					{if $errorField == 'labeledUrl'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.user.option.labeledUrl.error.{@$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
+					<small>{lang}wcf.acp.user.option.labeledUrl.description{/lang}</small>
+				</dd>
+			</dl>
+			
 			<dl{if $errorField == 'outputClass'} class="formError"{/if}>
 				<dt><label for="outputClass">{lang}wcf.acp.user.option.outputClass{/lang}</label></dt>
 				<dd>
