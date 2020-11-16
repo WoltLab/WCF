@@ -4853,7 +4853,6 @@ Open the link below to access the user profile:
 		<item name="wcf.user.security.multifactor.active"><![CDATA[Active]]></item>
 		<item name="wcf.user.security.multifactor.backup.generateCodes"><![CDATA[Generate Codes]]></item>
 		<item name="wcf.user.security.multifactor.totp.devices"><![CDATA[Active Smartphones]]></item>
-		<item name="wcf.user.security.multifactor.totp.deviceName.default"><![CDATA[{TIME_NOW|plainTime}]]></item>
 		<item name="wcf.user.security.multifactor.totp.error.flood"><![CDATA[Please try again later.]]></item>
 		<item name="wcf.user.security.multifactor.backup.error.flood"><![CDATA[Please try again later.]]></item>
 		<item name="wcf.user.security.multifactor.totp.deviceName.description"><![CDATA[An arbitrary name identifying this device.]]></item>

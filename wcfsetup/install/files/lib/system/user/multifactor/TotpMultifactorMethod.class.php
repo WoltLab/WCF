@@ -198,8 +198,26 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 			];
 		}
 		else {
-			$defaultName = WCF::getLanguage()->getDynamicVariable('wcf.user.security.multifactor.totp.deviceName.default');
-			$deviceName = $formData['data']['deviceName'] ?: $defaultName;
+			$deviceName = $formData['data']['deviceName'];
+			if (!$deviceName) {
+				$defaultName = WCF::getLanguage()->getDynamicVariable('wcf.user.security.multifactor.totp.deviceName.placeholder');
+				
+				$sql = "SELECT	deviceName
+					FROM	wcf".WCF_N."_user_multifactor_totp
+					WHERE	setupID = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute([
+					$setup->getId(),
+				]);
+				$deviceNames = $statement->fetchAll(\PDO::FETCH_COLUMN);
+				
+				for ($i = 1;; $i++) {
+					$deviceName = $defaultName.($i > 1 ? " ($i)" : '');
+					if (!in_array($deviceName, $deviceNames)) {
+						break;
+					}
+				}
+			}
 			
 			$sql = "INSERT INTO	wcf".WCF_N."_user_multifactor_totp
 						(setupID, deviceID, deviceName, secret, minCounter, createTime)
