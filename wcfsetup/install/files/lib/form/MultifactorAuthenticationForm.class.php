@@ -58,12 +58,8 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 	public function readParameters() {
 		parent::readParameters();
 		
-		$userId = WCF::getSession()->getVar('__changeUserAfterMultifactor__');
-		if (!$userId) {
-			throw new PermissionDeniedException();
-		}
-		$this->user = new User($userId);
-		if (!$this->user->userID) {
+		$this->user = WCF::getSession()->getPendingUserChange();
+		if (!$this->user) {
 			throw new PermissionDeniedException();
 		}
 		
