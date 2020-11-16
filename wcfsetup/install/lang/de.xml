@@ -4831,6 +4831,50 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.security.sessionName"><![CDATA[{if $session->getUserAgent()->getBrowser()}{$session->getUserAgent()->getBrowser()}{if $session->getUserAgent()->getOS()} auf {$session->getUserAgent()->getOS()}{/if}{else}Unbekanntes Gerät{/if}]]></item>
 		<item name="wcf.user.security.ipAddress"><![CDATA[IP-Adresse]]></item>
 		<item name="wcf.user.security.lastActivity"><![CDATA[Sitzung zuletzt aktiv]]></item>
+		<item name="wcf.user.security.multifactor"><![CDATA[Mehrfaktor-Authentifizierung]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp"><![CDATA[Smartphone-App]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup"><![CDATA[Notfall-Codes]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup.manage"><![CDATA[Notfallcodes verwalten]]></item>
+		<item name="wcf.user.security.multifactor.backup.regenerateCodes"><![CDATA[Neue Codes generieren]]></item>
+		<item name="wcf.user.security.multifactor.backup.existingCodes"><![CDATA[Aktive Notfallcodes]]></item>
+		<item name="wcf.user.security.multifactor.backup.success"><![CDATA[Es wurden erfolgreich neue Codes generiert. Bestehende Codes sind nicht mehr gültig. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}schreibe dir{else}schreiben Sie sich{/if} die Codes gut auf!]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.manage"><![CDATA[Smartphone-App verwalten]]></item>
+		<item name="wcf.user.security.multifactor.totp.newDevice"><![CDATA[Smartphone hinzufügen]]></item>
+		<item name="wcf.user.security.multifactor.totp.deviceName"><![CDATA[Gerätename]]></item>
+		<item name="wcf.user.security.multifactor.totp.deviceName.placeholder"><![CDATA[Smartphone von {$__wcf->user->username}]]></item>
+		<item name="wcf.user.security.multifactor.totp.code"><![CDATA[Einmalcode]]></item>
+		<item name="wcf.user.security.multifactor.totp.status"><![CDATA[<ul class="inlineList small commaSeparated">
+<li>{plural value=$count 0="Nicht eingerichtet" 1="Ein Gerät eingerichtet" other="# Geräte eingerichtet"}</li>
+{if $lastUsed}<li>Am {@$lastUsed|plainTime} zuletzt verwendet</li>{/if}
+</ul>]]></item>
+		<item name="wcf.user.security.multifactor.backup.status"><![CDATA[<ul class="inlineList small commaSeparated">
+<li>{plural value=$count 0="Keine Codes verbleibend" 1="Ein Code verbleibend" other="# Codes verbleibend"}</li>
+{if $lastUsed}<li>Am {@$lastUsed|plainTime} zuletzt verwendet</li>{/if}
+</ul>]]></item>
+		<item name="wcf.user.security.multifactor.manage"><![CDATA[Verwalten]]></item>
+		<item name="wcf.user.security.multifactor.setup"><![CDATA[Einrichten]]></item>
+		<item name="wcf.user.security.multifactor.active"><![CDATA[Aktiv]]></item>
+		<item name="wcf.user.security.multifactor.backup.generateCodes"><![CDATA[Codes generieren]]></item>
+		<item name="wcf.user.security.multifactor.totp.devices"><![CDATA[Aktive Smartphones]]></item>
+		<item name="wcf.user.security.multifactor.totp.error.flood"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche es{else}versuchen Sie es{/if} später erneut.]]></item>
+		<item name="wcf.user.security.multifactor.backup.error.flood"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche es{else}versuchen Sie es{/if} später erneut.]]></item>
+		<item name="wcf.user.security.multifactor.totp.deviceName.description"><![CDATA[Ein beliebiger Name, der dieses Gerät identifiziert.]]></item>
+		<item name="wcf.user.security.multifactor.totp.code.description"><![CDATA[Der durch die Smartphone-App generierte 6-stellige Einmalcode.]]></item>
+		<item name="wcf.user.security.multifactor.totp.newDevice.description"><![CDATA[<p>Authentifizieren Sie sich mit Hilfe einer App auf Ihrem Smartphone.</p>
+<ol class="nativeList">
+<li>{if LANGUAGE_USE_INFORMAL_VARIANT}Installiere{else}Installieren Sie{/if} eine Authentifizierungs-App wie beispielsweise Google Authenticator (<a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" class="externalURL">Android</a>, <a href="https://apps.apple.com/app/google-authenticator/id388497605" class="externalURL">iOS</a>) oder Authy (<a href="https://play.google.com/store/apps/details?id=com.authy.authy" class="externalURL">Android</a>, <a href="https://apps.apple.com/app/authy/id494168017" class="externalURL">iOS</a>).</li>
+<li>{if LANGUAGE_USE_INFORMAL_VARIANT}Scanne{else}Scannen Sie{/if} den QR-Code in der App.</li>
+<li>{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} den durch die App generierten 6-stelligen Einmalcode ein.</li>
+</ol>]]></item>
+		<item name="wcf.user.security.multifactor.totp.success.add"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Smartphone <strong>{$deviceName}</strong> wurde erfolgreich hinterlegt.]]></item>
+		<item name="wcf.user.security.multifactor.totp.createTime"><![CDATA[Eingerichtet]]></item>
+		<item name="wcf.user.security.multifactor.totp.useTime"><![CDATA[Zuletzt Benutzt]]></item>
+		<item name="wcf.user.security.multifactor.totp.lastDevice"><![CDATA[Wenn Sie ihr Smartphone wechseln möchten, fügen Sie bitte zunächst Ihr neues Smartphone hinzu, bevor Sie Ihr letztes Gerät <strong>{$deviceName}</strong> entfernen. Verwenden Sie bitte die <a href="{link controller='AccountSecurity'}{/link}">Übersicht in der Benutzerkonto-Sicherheit</a>, wenn Sie die Mehrfaktor-Authentifizierung deaktivieren möchten.]]></item>
+		<item name="wcf.user.security.multifactor.totp.lastDevice.title"><![CDATA[Letztes Gerät]]></item>
+		<item name="wcf.user.security.multifactor.totp.success.delete"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Smartphone <strong>{$deviceName}</strong> wurde erfolgreich entfernt.]]></item>
+		<item name="wcf.user.security.multifactor.initialBackup"><![CDATA[<p>Die Mehrfaktor-Authentifizierung ist ab sofort für {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto aktiv. {if LANGUAGE_USE_INFORMAL_VARIANT}Du wirst{else}Sie werden{/if} von nun an bei jedem Login den zusätzlichen Faktor benötigen.</p>
+<p>Zusätzlich wurden Backup-Codes generiert, mit denen der Zugriff wiederhergestellt werden kann, falls der zusätzliche Faktor unbrauchbar wird.</p>
+<p>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}Notiere oder speichere dir{else}Notieren oder speichern Sie{/if} sich die unterhalb angezeigten Notfall-Codes. Ein möglicher Aufbewahrungsort könnte ein Blatt Papier in einem Aktenordner sein.</p>]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophäen]]></item>

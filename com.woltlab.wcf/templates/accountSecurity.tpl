@@ -3,6 +3,46 @@
 {include file='header' __disableAds=true __sidebarLeftHasMenu=true}
 
 <section class="section">
+	<h2 class="sectionTitle">{lang}wcf.user.security.multifactor{/lang}</h2>
+	
+	<ul class="containerList">
+		{foreach from=$multifactorMethods item=method}
+			{if $method->objectType !== 'com.woltlab.wcf.multifactor.backup' || $enabledMultifactorMethods[$method->objectTypeID]|isset}
+				<li class="box64">
+					<div>
+						<span class="icon icon64 fa-{if $method->icon}{$method->icon}{else}lock{/if}"></span>
+					</div>
+					
+					<div class="accountSecurityContainer">
+						<div class="containerHeadline accountSecurityInformation">
+							<h3>
+								{lang}wcf.user.security.multifactor.{$method->objectType}{/lang}
+								
+								{if $enabledMultifactorMethods[$method->objectTypeID]|isset}
+									<span class="badge green">
+										{lang}wcf.user.security.multifactor.active{/lang}
+									</span>
+								{/if}
+							</h3>
+							
+							{if $enabledMultifactorMethods[$method->objectTypeID]|isset}
+								{@$method->getProcessor()->getStatusText($enabledMultifactorMethods[$method->objectTypeID])}
+							{/if}
+						</div>
+						
+						<div class="accountSecurityButtons">
+							<a class="small button" href="{link controller='MultifactorManage' id=$method->objectTypeID}{/link}">
+								{lang}wcf.user.security.multifactor.{if $enabledMultifactorMethods[$method->objectTypeID]|isset}manage{else}setup{/if}{/lang}
+							</a>
+						</div>
+					</div>
+				</li>
+			{/if}
+		{/foreach}
+	</ul>
+</section>
+
+<section class="section">
 	<h2 class="sectionTitle">{lang}wcf.user.security.activeSessions{/lang}</h2>
 	
 	<ul class="containerList">

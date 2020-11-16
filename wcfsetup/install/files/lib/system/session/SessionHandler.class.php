@@ -137,6 +137,8 @@ final class SessionHandler extends SingletonFactory {
 	private const GUEST_SESSION_LIFETIME = 7200;
 	private const USER_SESSION_LIFETIME = 86400 * 14;
 	
+	private const CHANGE_USER_AFTER_MULTIFACTOR_KEY = '__changeUserAfterMultifactor__';
+	
 	/**
 	 * Provides access to session data.
 	 * 
@@ -689,6 +691,47 @@ final class SessionHandler extends SingletonFactory {
 		else {
 			$this->languageIDs = $this->user->getLanguageIDs();
 		}
+	}
+	
+	/**
+	 * If multi-factor authentication is enabled for the given user then
+	 * - the userID will be stored in the session variables, and
+	 * - `true` is returned.
+	 * Otherwise,
+	 * - `changeUser()` will be called, and
+	 * - `false` is returned.
+	 * 
+	 * If `true` is returned you should perform a redirect to `MultifactorAuthenticationForm`.
+	 */
+	public function changeUserAfterMultifactor(User $user): bool {
+		if ($user->multifactorActive) {
+			$this->register(self::CHANGE_USER_AFTER_MULTIFACTOR_KEY, $user->userID);
+			
+			return true;
+		}
+		else {
+			$this->changeUser($user);
+			
+			return false;
+		}
+	}
+	
+	/**
+	 * Returns the pending user change initiated by changeUserAfterMultifactor().
+	 */
+	public function getPendingUserChange(): ?User {
+		$userId = WCF::getSession()->getVar(self::CHANGE_USER_AFTER_MULTIFACTOR_KEY);
+		if (!$userId) {
+			return null;
+		}
+		
+		$user = new User($userId);
+		
+		if (!$user->userID) {
+			return null;
+		}
+		
+		return $user;
 	}
 	
 	/**

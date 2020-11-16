@@ -1450,6 +1450,7 @@ CREATE TABLE wcf1_user (
 	email VARCHAR(191) NOT NULL DEFAULT '',
 	password VARCHAR(255) NOT NULL DEFAULT 'invalid:',
 	accessToken CHAR(40) NOT NULL DEFAULT '',
+	multifactorActive TINYINT(1) NOT NULL DEFAULT 0,
 	languageID INT(10) NOT NULL DEFAULT 0,
 	registrationDate INT(10) NOT NULL DEFAULT 0,
 	styleID INT(10) NOT NULL DEFAULT 0,
@@ -1673,6 +1674,38 @@ CREATE TABLE wcf1_user_menu_item (
 	className VARCHAR(255) NOT NULL DEFAULT '',
 	iconClassName VARCHAR(255) NOT NULL DEFAULT '',
 	UNIQUE KEY menuItem (menuItem, packageID)
+);
+
+DROP TABLE IF EXISTS wcf1_user_multifactor;
+CREATE TABLE wcf1_user_multifactor (
+	setupID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	userID INT(10) NOT NULL,
+	objectTypeID INT(10) NOT NULL,
+	UNIQUE KEY (userID, objectTypeID)
+);
+
+DROP TABLE IF EXISTS wcf1_user_multifactor_backup;
+CREATE TABLE wcf1_user_multifactor_backup (
+	setupID INT(10) NOT NULL,
+	identifier VARCHAR(255) NOT NULL,
+	code VARCHAR(255) NOT NULL,
+	createTime INT(10) NOT NULL,
+	useTime INT(10) DEFAULT NULL,
+	
+	UNIQUE KEY (setupID, identifier)
+);
+
+DROP TABLE IF EXISTS wcf1_user_multifactor_totp;
+CREATE TABLE wcf1_user_multifactor_totp (
+	setupID INT(10) NOT NULL,
+	deviceID VARCHAR(255) NOT NULL,
+	deviceName VARCHAR(255) NOT NULL,
+	secret VARBINARY(255) NOT NULL,
+	minCounter INT(10) NOT NULL,
+	createTime INT(10) NOT NULL,
+	useTime INT(10) DEFAULT NULL,
+	
+	UNIQUE KEY (setupID, deviceID)
 );
 
 -- notifications
@@ -2164,11 +2197,17 @@ ALTER TABLE wcf1_user_activity_point ADD FOREIGN KEY (objectTypeID) REFERENCES w
 
 ALTER TABLE wcf1_user_authentication_failure ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 
-ALTER TABLE wcf1_user_profile_visitor ADD FOREIGN KEY (ownerID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
-ALTER TABLE wcf1_user_profile_visitor ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_multifactor ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_multifactor ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user_multifactor_backup ADD FOREIGN KEY (setupID) REFERENCES wcf1_user_multifactor (setupID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_multifactor_totp ADD FOREIGN KEY (setupID) REFERENCES wcf1_user_multifactor (setupID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_user_object_watch ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_object_watch ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user_profile_visitor ADD FOREIGN KEY (ownerID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_profile_visitor ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_user_session ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 

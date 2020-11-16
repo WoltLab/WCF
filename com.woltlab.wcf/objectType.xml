@@ -1720,6 +1720,30 @@
 			<name>com.woltlab.wcf.comment</name>
 			<definitionname>com.woltlab.wcf.floodControl</definitionname>
 		</type>
+		<!-- multi factor -->
+		<type>
+			<name>com.woltlab.wcf.multifactor.backup</name>
+			<definitionname>com.woltlab.wcf.multifactor</definitionname>
+			<icon>sticky-note</icon>
+			<priority>1</priority>
+			<classname>wcf\system\user\multifactor\BackupMultifactorMethod</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.multifactor.backup</name>
+			<definitionname>com.woltlab.wcf.floodControl</definitionname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.multifactor.totp</name>
+			<definitionname>com.woltlab.wcf.multifactor</definitionname>
+			<icon>mobile</icon>
+			<priority>10</priority>
+			<classname>wcf\system\user\multifactor\TotpMultifactorMethod</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.multifactor.totp</name>
+			<definitionname>com.woltlab.wcf.floodControl</definitionname>
+		</type>
+		<!-- /multi factor -->
 		<!-- deprecated -->
 		<type>
 			<name>com.woltlab.wcf.page.controller</name>
@@ -1734,7 +1758,7 @@
 			<conditionobject>com.woltlab.wcf.page</conditionobject>
 		</type>
 		<!-- /deprecated -->
-</import>
+	</import>
 	<delete>
 		<type name="com.woltlab.wcf.like.user">
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>

@@ -6,12 +6,14 @@ requirejs.config({
 		'Pica': '3rdParty/pica',
 		'pica': '3rdParty/pica',
 		prism: '3rdParty/prism',
+		'qr-creator': '3rdParty/qr-creator.min',
 		tslib: '3rdParty/tslib',
 		zxcvbn: '3rdParty/zxcvbn',
 	},
 	shim: {
 		favico: { exports: 'Favico' },
-		'perfect-scrollbar': { exports: 'PerfectScrollbar' }
+		'perfect-scrollbar': { exports: 'PerfectScrollbar' },
+		'qr-creator': { exports: 'QrCreator' },
 	},
 	map: {
 		'*': {

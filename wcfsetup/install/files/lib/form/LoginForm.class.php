@@ -24,14 +24,14 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 		if (FORCE_LOGIN) WCF::getSession()->unregister('__wsc_forceLoginRedirect');
 		
 		// change user
-		WCF::getSession()->changeUser($this->user);
+		$needsMultifactor = WCF::getSession()->changeUserAfterMultifactor($this->user);
 		
 		$this->saved();
 		
 		// redirect to url
 		WCF::getTPL()->assign('__hideUserMenu', true);
 		
-		$this->performRedirect();
+		$this->performRedirect($needsMultifactor);
 	}
 	
 	/**
@@ -53,11 +53,11 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 	/**
 	 * @inheritDoc
 	 */
-	protected function performRedirect() {
+	protected function performRedirect(bool $needsMultifactor = false) {
 		if (empty($this->url) || mb_stripos($this->url, '?login/') !== false || mb_stripos($this->url, '/login/') !== false) {
 			$this->url = LinkHandler::getInstance()->getLink();
 		}
 		
-		parent::performRedirect();
+		parent::performRedirect($needsMultifactor);
 	}
 }

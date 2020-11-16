@@ -218,6 +218,10 @@
 		<definition>
 			<name>com.woltlab.wcf.floodControl</name>
 		</definition>
+		<definition>
+			<name>com.woltlab.wcf.multifactor</name>
+			<interfacename>wcf\system\user\multifactor\IMultifactorMethod</interfacename>
+		</definition>
 	</import>
 	<delete>
 		<definition name="com.woltlab.wcf.notification.notificationType"/>
