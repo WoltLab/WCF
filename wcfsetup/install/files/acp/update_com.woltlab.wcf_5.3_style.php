@@ -55,20 +55,22 @@ foreach ($styleList as $style) {
 			$srcPath = $assetBackupPath;
 		}
 		
-		$iterator = new \RecursiveIteratorIterator(
-			new \RecursiveDirectoryIterator(
-				$srcPath,
-				\FilesystemIterator::SKIP_DOTS
-			), 
-			\RecursiveIteratorIterator::SELF_FIRST
-		);
-		foreach ($iterator as $file) {
-			/** @var \SplFileInfo $file */
-			if (!$file->isFile()) continue;
-			
-			$relative = FileUtil::getRelativePath($srcPath, $file->getPath());
-			FileUtil::makePath($style->getAssetPath() . $relative);
-			copy($file->getPathname(), $style->getAssetPath() . $relative . $file->getBasename());
+		if (file_exists($srcPath)) {
+			$iterator = new \RecursiveIteratorIterator(
+				new \RecursiveDirectoryIterator(
+					$srcPath,
+					\FilesystemIterator::SKIP_DOTS
+				),
+				\RecursiveIteratorIterator::SELF_FIRST
+			);
+			foreach ($iterator as $file) {
+				/** @var \SplFileInfo $file */
+				if (!$file->isFile()) continue;
+				
+				$relative = FileUtil::getRelativePath($srcPath, $file->getPath());
+				FileUtil::makePath($style->getAssetPath() . $relative);
+				copy($file->getPathname(), $style->getAssetPath() . $relative . $file->getBasename());
+			}
 		}
 	}
 	$styleEditor->update([
