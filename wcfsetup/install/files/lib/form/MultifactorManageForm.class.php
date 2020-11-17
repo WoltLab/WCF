@@ -118,12 +118,11 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 		$this->returnData = $this->processor->processManagementForm($this->form, $setup);
 		
 		$this->setup = $setup;
-		WCF::getDB()->commitTransaction();
 		
-		WCF::getDB()->beginTransaction();
 		if (!$this->hasBackupCodes()) {
 			$this->generateBackupCodes();
 		}
+		
 		WCF::getDB()->commitTransaction();
 		
 		$this->saved();
