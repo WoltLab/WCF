@@ -34,7 +34,7 @@
 	*}>
 {else}
 	<form method="{@$form->getMethod()}" {*
-		*}action="{@$form->getAction()}" {*
+		*}action="{$form->getAction()}" {*
 		*}id="{@$form->getId()}"{*
 		*}{if !$form->getClasses()|empty} class="{implode from=$form->getClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
 		*}{foreach from=$form->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
