@@ -1743,6 +1743,17 @@
 			<name>com.woltlab.wcf.multifactor.totp</name>
 			<definitionname>com.woltlab.wcf.floodControl</definitionname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.multifactor.email</name>
+			<definitionname>com.woltlab.wcf.multifactor</definitionname>
+			<icon>envelope</icon>
+			<priority>5</priority>
+			<classname>wcf\system\user\multifactor\EmailMultifactorMethod</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.multifactor.email</name>
+			<definitionname>com.woltlab.wcf.floodControl</definitionname>
+		</type>
 		<!-- /multi factor -->
 		<!-- deprecated -->
 		<type>

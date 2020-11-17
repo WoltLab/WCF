@@ -4872,6 +4872,18 @@ Open the link below to access the user profile:
 		<item name="wcf.user.security.multifactor.initialBackup"><![CDATA[<p>The multi-factor authentication is enabled for your account starting now. Going forward you will need to have your second factor handy for every login.</p>
 <p>In addition we generated emergency codes for you. They will allow you to gain access to your account in case your second factor becomes unavailable.</p>
 <p>Please carefully note or save the emergency codes shown below. An example of a secure storage could be a piece of paper within a filing cabinet.</p>]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email"><![CDATA[Code via Email]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.manage"><![CDATA[Code via Email]]></item>
+		<item name="wcf.user.security.multifactor.email.enabled"><![CDATA[Emails Enabled]]></item>
+		<item name="wcf.user.security.multifactor.email.enabled.description"><![CDATA[<p>Multi-factor authentication via email is enabled for your account. You will receive a one time code via email whenever you login.</p>
+<p>Use the <a href="{link controller='AccountSecurity'}{/link}">Overview in Account Security</a> if you want to disable multi-factor authentication.</p>]]></item>
+		<item name="wcf.user.security.multifactor.email.enable"><![CDATA[Enable confirmation via email]]></item>
+		<item name="wcf.user.security.multifactor.email.success"><![CDATA[The confirmation via email has successfully been enabled.]]></item>
+		<item name="wcf.user.security.multifactor.email.code"><![CDATA[One Time Code]]></item>
+		<item name="wcf.user.security.multifactor.email.code.description"><![CDATA[The one time code was sent at <strong>{$lastCode|date:'g:i:s a'}</strong> to your email address at <strong>{$emailDomain}</strong>.]]></item>
+		<item name="wcf.user.security.multifactor.email.subject"><![CDATA[Your One Time Code for {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.user.security.multifactor.email.body.html"><![CDATA[Your one time code is: <pre>{$code}</pre>]]></item>
+		<item name="wcf.user.security.multifactor.email.body.plain"><![CDATA[Your one time code is: {$code}]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophies]]></item>

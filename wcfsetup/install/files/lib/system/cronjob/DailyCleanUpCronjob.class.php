@@ -3,6 +3,7 @@ namespace wcf\system\cronjob;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\flood\FloodControl;
+use wcf\system\user\multifactor\EmailMultifactorMethod;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -216,5 +217,6 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 		}
 		
 		FloodControl::getInstance()->prune();
+		EmailMultifactorMethod::prune();
 	}
 }
