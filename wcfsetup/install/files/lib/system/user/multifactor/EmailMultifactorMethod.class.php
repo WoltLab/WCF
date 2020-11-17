@@ -10,6 +10,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\TemplateFormNode;
+use wcf\system\user\multifactor\email\CodeFormField;
 use wcf\system\WCF;
 
 /**
@@ -25,7 +26,7 @@ class EmailMultifactorMethod implements IMultifactorMethod {
 	private const LIFETIME = 10 * 60;
 	private const REFRESH_AFTER = 2 * 60;
 	
-	private const LENGTH = 8;
+	public const LENGTH = 8;
 	
 	private const USER_ATTEMPTS_PER_TEN_MINUTES = 5;
 	
@@ -168,7 +169,7 @@ class EmailMultifactorMethod implements IMultifactorMethod {
 		$emailDomain = substr($address, $atSign + 1);
 		
 		$form->appendChildren([
-			TextFormField::create('code')
+			CodeFormField::create()
 				->label('wcf.user.security.multifactor.email.code')
 				->description('wcf.user.security.multifactor.email.code.description', [
 					'emailDomain' => $emailDomain,

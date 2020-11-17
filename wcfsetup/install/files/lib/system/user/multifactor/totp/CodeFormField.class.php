@@ -2,6 +2,7 @@
 namespace wcf\system\user\multifactor\totp;
 use wcf\system\form\builder\field\TDefaultIdFormField;
 use wcf\system\form\builder\field\TextFormField;
+use wcf\system\user\multifactor\Helper;
 
 /**
  * Handles the input of a TOTP code.
@@ -28,7 +29,14 @@ class CodeFormField extends TextFormField {
 	public function __construct() {
 		$this->minimumLength(Totp::CODE_LENGTH);
 		$this->maximumLength(Totp::CODE_LENGTH);
-		$this->placeholder("123456");
+		
+		$placeholder = '';
+		$gen = Helper::digitStream();
+		for ($i = 0; $i < $this->getMinimumLength(); $i++) {
+			$placeholder .= $gen->current();
+			$gen->next();
+		}
+		$this->placeholder($placeholder);
 	}
 	
 	/**

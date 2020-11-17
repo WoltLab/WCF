@@ -22,10 +22,16 @@
 }
 
 // Just .multifactorTotpCode is not specific enough.
-input.multifactorTotpCode {
+input.multifactorTotpCode,
+input.multifactorEmailCode {
 	font-family: monospace;
 	font-weight: 600;
 	font-size: 28px;
+}
+input.multifactorBackupCode {
+	font-family: monospace;
+	font-weight: 600;
+	font-size: 18px;
 }
 
 .multifactorTotpNewDevice {

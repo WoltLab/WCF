@@ -1,3 +1,6 @@
+{capture assign='pageTitle'}{lang}wcf.user.security.multifactor.authentication{/lang}{/capture}
+{capture assign='contentTitle'}{lang}wcf.user.security.multifactor.authentication{/lang}{/capture}
+
 {capture assign='sidebarLeft'}
 <section class="box">
 		<h2 class="boxTitle">{lang}wcf.user.security.multifactor.methods{/lang}</h2>
