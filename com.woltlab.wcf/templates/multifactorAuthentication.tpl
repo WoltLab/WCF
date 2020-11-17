@@ -16,7 +16,7 @@
 	</section>
 {/capture}
 
-{include file='header' __disableAds=true __sidebarLeftHasMenu=true}
+{include file='header' __disableAds=true __disableLoginLink=true __sidebarLeftHasMenu=true}
 
 {$user->username}
 
