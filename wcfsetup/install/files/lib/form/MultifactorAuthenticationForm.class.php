@@ -65,6 +65,14 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 	public function readParameters() {
 		parent::readParameters();
 		
+		if (!empty($_GET['url']) && ApplicationHandler::getInstance()->isInternalURL($_GET['url'])) {
+			$this->redirectUrl = $_GET['url'];
+		}
+		
+		if (WCF::getUser()->userID) {
+			$this->performRedirect();
+		}
+		
 		$this->user = WCF::getSession()->getPendingUserChange();
 		if (!$this->user) {
 			throw new PermissionDeniedException();
@@ -94,10 +102,6 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 		\assert($this->method->getDefinition()->definitionName === 'com.woltlab.wcf.multifactor');
 		
 		$this->processor = $this->method->getProcessor();
-		
-		if (!empty($_GET['url']) && ApplicationHandler::getInstance()->isInternalURL($_GET['url'])) {
-			$this->redirectUrl = $_GET['url'];
-		}
 	}
 	
 	/**
@@ -131,6 +135,13 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 	public function saved() {
 		AbstractForm::saved();
 		
+		$this->performRedirect();
+	}
+	
+	/**
+	 * Returns to the redirectUrl if given and to the landing page otherwise.
+	 */
+	protected function performRedirect() {
 		if ($this->redirectUrl) {
 			HeaderUtil::redirect($this->redirectUrl);
 		}
