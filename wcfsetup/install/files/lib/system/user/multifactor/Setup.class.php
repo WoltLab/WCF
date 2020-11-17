@@ -90,6 +90,8 @@ final class Setup implements IIDObject {
 	
 	/**
 	 * Returns all setups for a single user.
+	 * 
+	 * @return self[]
 	 */
 	public static function getAllForUser(User $user): array {
 		$sql = "SELECT	*
