@@ -7,7 +7,7 @@
 				<ol class="boxMenu">
 					{foreach from=$setups item='_setup'}
 						<li{if $setup->getId() == $_setup->getId()} class="active"{/if}>
-							<a class="boxMenuLink" href="{link controller='MultifactorAuthentication' object=$_setup}{/link}"><span class="boxMenuLinkTitle">{lang}wcf.user.security.multifactor.{$_setup->getObjectType()->objectType}{/lang}</span></a>
+							<a class="boxMenuLink" href="{link controller='MultifactorAuthentication' object=$_setup url=$redirectUrl}{/link}"><span class="boxMenuLinkTitle">{lang}wcf.user.security.multifactor.{$_setup->getObjectType()->objectType}{/lang}</span></a>
 						</li>
 					{/foreach}
 				</ol>
