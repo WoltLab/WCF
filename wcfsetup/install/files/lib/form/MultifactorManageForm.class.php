@@ -122,35 +122,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 		
 		WCF::getDB()->beginTransaction();
 		if (!$this->hasBackupCodes()) {
-			$backupMethod = $this->getBackupCodesObjectType();
-			$backupProcessor = $backupMethod->getProcessor();
-
-			// Create Form
-			$form = FormDocument::create('backupCodes');
-			$backupProcessor->createManagementForm($form, null, []);
-			$form->build();
-			
-			// Process Form
-			$form->requestData([
-				'generateCodes' => 'generateCodes',
-			]);
-			$form->readValues();
-			$backupSetupId = Setup::allocateSetUpId($backupMethod, WCF::getUser());
-			$returnData = $backupProcessor->processManagementForm($form, $backupSetupId);
-			$form->cleanup();
-			
-			// Re-create form
-			$form = FormDocument::create('backupCodes');
-			$backupProcessor->createManagementForm($form, $backupSetupId, $returnData);
-			/** @var IFormParentNode $container */
-			$container = $form->getNodeById('existingCodesContainer');
-			$container->insertBefore(
-				TemplateFormNode::create('initialBackup')
-					->templateName('__multifactorManageInitialBackup'),
-				'existingCodes'
-			);
-			$form->build();
-			$this->backupForm = $form;
+			$this->generateBackupCodes();
 		}
 		WCF::getDB()->commitTransaction();
 		
@@ -171,6 +143,41 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 		$setup = Setup::find($this->getBackupCodesObjectType(), WCF::getUser());
 		
 		return $setup !== null;
+	}
+	
+	/**
+	 * Generates the backup codes after initial setup.
+	 */
+	protected function generateBackupCodes(): void {
+		$backupMethod = $this->getBackupCodesObjectType();
+		$backupProcessor = $backupMethod->getProcessor();
+
+		// Create Form
+		$form = FormDocument::create('backupCodes');
+		$backupProcessor->createManagementForm($form, null, []);
+		$form->build();
+		
+		// Process Form
+		$form->requestData([
+			'generateCodes' => 'generateCodes',
+		]);
+		$form->readValues();
+		$backupSetupId = Setup::allocateSetUpId($backupMethod, WCF::getUser());
+		$returnData = $backupProcessor->processManagementForm($form, $backupSetupId);
+		$form->cleanup();
+		
+		// Re-create form
+		$form = FormDocument::create('backupCodes');
+		$backupProcessor->createManagementForm($form, $backupSetupId, $returnData);
+		/** @var IFormParentNode $container */
+		$container = $form->getNodeById('existingCodesContainer');
+		$container->insertBefore(
+			TemplateFormNode::create('initialBackup')
+				->templateName('__multifactorManageInitialBackup'),
+			'existingCodes'
+		);
+		$form->build();
+		$this->backupForm = $form;
 	}
 	
 	/**
