@@ -4889,6 +4889,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.security.multifactor.backup.code"><![CDATA[Emergency Code]]></item>
 		<item name="wcf.user.security.multifactor.backup.code.description"><![CDATA[An emergency code consists of 20 digits and may only be used once.]]></item>
 		<item name="wcf.user.security.multifactor.totp.deviceName.description.auth"><![CDATA[The device that generated the used one time code.]]></item>
+		<item name="wcf.user.security.multifactor.authentication.logout.success"><![CDATA[The multi-factor authentication has successfully been aborted.]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophies]]></item>

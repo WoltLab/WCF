@@ -735,6 +735,13 @@ final class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Clears a pending user change, reverses the effects of changeUserAfterMultifactor().
+	 */
+	public function clearPendingUserChange(): void {
+		$this->unregister(self::CHANGE_USER_AFTER_MULTIFACTOR_KEY);
+	}
+	
+	/**
 	 * Stores a new user object in this session, e.g. a user was guest because not
 	 * logged in, after the login his old session is used to store his full data.
 	 * 
