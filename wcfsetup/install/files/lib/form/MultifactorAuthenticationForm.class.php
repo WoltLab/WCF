@@ -125,7 +125,7 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 		
 		WCF::getDB()->commitTransaction();
 		
-		WCF::getSession()->changeUser($this->user);
+		WCF::getSession()->applyPendingUserChange($this->user);
 		
 		$this->saved();
 	}

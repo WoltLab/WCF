@@ -718,10 +718,35 @@ final class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Applies the pending user change, calling `changeUser()` for the user returned
+	 * by `getPendingUserChange()`.
+	 * 
+	 * As a safety check you must provide the `$expectedUser` as a parameter, it must match the
+	 * data stored within the session.
+	 *
+	 * @throws \RuntimeException If the `$expectedUser` does not match.
+	 * @throws \BadMethodCallException If `getPendingUserChange()` returns `null`.
+	 */
+	public function applyPendingUserChange(User $expectedUser): void {
+		$user = $this->getPendingUserChange();
+		$this->clearPendingUserChange();
+		
+		if ($user->userID !== $expectedUser->userID) {
+			throw new \RuntimeException('Mismatching expectedUser.');
+		}
+		
+		if (!$user) {
+			throw new \BadMethodCallException('No pending user change.');
+		}
+		
+		$this->changeUser($user);
+	}
+	
+	/**
 	 * Returns the pending user change initiated by changeUserAfterMultifactor().
 	 */
 	public function getPendingUserChange(): ?User {
-		$userId = WCF::getSession()->getVar(self::CHANGE_USER_AFTER_MULTIFACTOR_KEY);
+		$userId = $this->getVar(self::CHANGE_USER_AFTER_MULTIFACTOR_KEY);
 		if (!$userId) {
 			return null;
 		}
