@@ -4889,6 +4889,9 @@ Open the link below to access the user profile:
 		<item name="wcf.user.security.multifactor.backup.code"><![CDATA[Emergency Code]]></item>
 		<item name="wcf.user.security.multifactor.backup.code.description"><![CDATA[An emergency code consists of 20 digits and may only be used once.]]></item>
 		<item name="wcf.user.security.multifactor.totp.deviceName.description.auth"><![CDATA[The device that generated the used one time code.]]></item>
+		<item name="wcf.user.security.multifactor.authentication.user.headline"><![CDATA[Hello {$user->username}!]]></item>
+		<item name="wcf.user.security.multifactor.authentication.user.content"><![CDATA[The provided credentials are correct, but your account is protected with multi-factor authentication. Please use your second factor to complete the login process.]]></item>
+		<item name="wcf.user.security.multifactor.authentication.logout"><![CDATA[Abort and Logout]]></item>
 		<item name="wcf.user.security.multifactor.authentication.logout.success"><![CDATA[The multi-factor authentication has successfully been aborted.]]></item>
 	</category>
 	<category name="wcf.user.trophy">

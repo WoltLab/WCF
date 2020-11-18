@@ -4892,6 +4892,9 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.security.multifactor.backup.code"><![CDATA[Notfall-Code]]></item>
 		<item name="wcf.user.security.multifactor.backup.code.description"><![CDATA[Ein Notfall-Code besteht aus 20 Ziffern und ist nur einmal gültig.]]></item>
 		<item name="wcf.user.security.multifactor.totp.deviceName.description.auth"><![CDATA[Das Gerät, das den genutzten Éinmalcode generiert hat.]]></item>
+		<item name="wcf.user.security.multifactor.authentication.user.headline"><![CDATA[Hallo {$user->username}!]]></item>
+		<item name="wcf.user.security.multifactor.authentication.user.content"><![CDATA[Die eingegebenen Zugangsdaten sind korrekt, aber {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto ist mit der Mehrfaktor-Authentifizierung geschützt. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}verwende deinen{else}verwenden Sie Ihren{/if} zweiten Faktor, um den Login abzuschließen.]]></item>
+		<item name="wcf.user.security.multifactor.authentication.logout"><![CDATA[Abbrechen und Abmelden]]></item>
 		<item name="wcf.user.security.multifactor.authentication.logout.success"><![CDATA[Die Mehrfaktor-Authentifizierung wurde erfolgreich abgebrochen.]]></item>
 	</category>
 	<category name="wcf.user.trophy">

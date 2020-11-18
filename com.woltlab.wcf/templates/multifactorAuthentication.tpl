@@ -21,7 +21,25 @@
 
 {include file='header' __disableAds=true __disableLoginLink=true __sidebarLeftHasMenu=true}
 
-{$user->username}
+<div class="section box48">
+	{@$userProfile->getAvatar()->getImageTag(48)}
+	
+	<div>
+		<div class="containerHeadline">
+			<h3>
+				{lang}wcf.user.security.multifactor.authentication.user.headline{/lang}
+			</h3>
+		</div>
+		<div class="containerContent">
+			{lang}wcf.user.security.multifactor.authentication.user.content{/lang}
+		</div>
+		
+		<form action="{link controller='MultifactorAuthenticationAbort'}{/link}" method="post">
+			<button type="submit">{lang}wcf.user.security.multifactor.authentication.logout{/lang}</button>
+			{csrfToken}
+		</form>
+	</div>
+</div>
 
 {@$form->getHtml()}
 
