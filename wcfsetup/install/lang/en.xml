@@ -4878,7 +4878,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.security.multifactor.email.enabled.description"><![CDATA[<p>Multi-factor authentication via email is enabled for your account. You will receive a one time code via email whenever you login.</p>
 <p>Use the <a href="{link controller='AccountSecurity'}{/link}">Overview in Account Security</a> if you want to disable multi-factor authentication.</p>]]></item>
 		<item name="wcf.user.security.multifactor.email.enable"><![CDATA[Enable confirmation via email]]></item>
-		<item name="wcf.user.security.multifactor.email.success"><![CDATA[The confirmation via email has successfully been enabled.]]></item>
+		<item name="wcf.user.security.multifactor.email.success"><![CDATA[The additional authentication via email has successfully been enabled.]]></item>
 		<item name="wcf.user.security.multifactor.email.code"><![CDATA[One Time Code]]></item>
 		<item name="wcf.user.security.multifactor.email.code.description"><![CDATA[The one time code was sent at <strong>{$lastCode|date:'g:i:s a'}</strong> to your email address at <strong>{$emailDomain}</strong>.]]></item>
 		<item name="wcf.user.security.multifactor.email.subject"><![CDATA[{$code} is your one time code for {@PAGE_TITLE|language}]]></item>

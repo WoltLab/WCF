@@ -4881,7 +4881,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.security.multifactor.email.enabled.description"><![CDATA[<p>Die Mehrfaktor-Authentifizierung über E-Mail ist aktiv. {if LANGUAGE_USE_INFORMAL_VARIANT}Du erhältst{else}Sie erhalten{/if} bei jedem Login eine E-Mail mit einem einmal gültigen Code.</p>
 <p>{if LANGUAGE_USE_INFORMAL_VARIANT}Verwende{else}Verwenden Sie{/if} bitte die <a href="{link controller='AccountSecurity'}{/link}">Übersicht in der Benutzerkonto-Sicherheit</a>, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Mehrfaktor-Authentifizierung deaktivieren {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}.</p>]]></item>
 		<item name="wcf.user.security.multifactor.email.enable"><![CDATA[Bestätigung über E-Mail aktivieren]]></item>
-		<item name="wcf.user.security.multifactor.email.success"><![CDATA[Die Bestätigung via E-Mail wurde erfolgreich aktiviert.]]></item>
+		<item name="wcf.user.security.multifactor.email.success"><![CDATA[Die zusätzliche Authentifizierung via E-Mail wurde erfolgreich aktiviert.]]></item>
 		<item name="wcf.user.security.multifactor.email.code"><![CDATA[Einmalcode]]></item>
 		<item name="wcf.user.security.multifactor.email.code.description"><![CDATA[Der Einmalcode wurde um <strong>{$lastCode|date:'H:i:s'}</strong> an {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse bei <strong>{$emailDomain}</strong> gesendet.]]></item>
 		<item name="wcf.user.security.multifactor.email.subject"><![CDATA[{$code} ist {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}ihr{/if} Einmalcode for {@PAGE_TITLE|language}]]></item>
