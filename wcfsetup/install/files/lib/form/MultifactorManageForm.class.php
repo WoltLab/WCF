@@ -2,6 +2,7 @@
 namespace wcf\form;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\UserEditor;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -99,7 +100,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 	
 	public function save() {
 		AbstractForm::save();
-
+		
 		WCF::getDB()->beginTransaction();
 		
 		/** @var Setup|null $setup */
@@ -118,40 +119,13 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 		$this->returnData = $this->processor->processManagementForm($this->form, $setup);
 		
 		$this->setup = $setup;
-		WCF::getDB()->commitTransaction();
 		
-		WCF::getDB()->beginTransaction();
 		if (!$this->hasBackupCodes()) {
-			$backupMethod = $this->getBackupCodesObjectType();
-			$backupProcessor = $backupMethod->getProcessor();
-
-			// Create Form
-			$form = FormDocument::create('backupCodes');
-			$backupProcessor->createManagementForm($form, null, []);
-			$form->build();
-			
-			// Process Form
-			$form->requestData([
-				'generateCodes' => 'generateCodes',
-			]);
-			$form->readValues();
-			$backupSetupId = Setup::allocateSetUpId($backupMethod, WCF::getUser());
-			$returnData = $backupProcessor->processManagementForm($form, $backupSetupId);
-			$form->cleanup();
-			
-			// Re-create form
-			$form = FormDocument::create('backupCodes');
-			$backupProcessor->createManagementForm($form, $backupSetupId, $returnData);
-			/** @var IFormParentNode $container */
-			$container = $form->getNodeById('existingCodesContainer');
-			$container->insertBefore(
-				TemplateFormNode::create('initialBackup')
-					->templateName('__multifactorManageInitialBackup'),
-				'existingCodes'
-			);
-			$form->build();
-			$this->backupForm = $form;
+			$this->generateBackupCodes();
 		}
+		
+		$this->enableMultifactorAuth();
+		
 		WCF::getDB()->commitTransaction();
 		
 		$this->saved();
@@ -171,6 +145,63 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 		$setup = Setup::find($this->getBackupCodesObjectType(), WCF::getUser());
 		
 		return $setup !== null;
+	}
+	
+	/**
+	 * Generates the backup codes after initial setup.
+	 */
+	protected function generateBackupCodes(): void {
+		$backupMethod = $this->getBackupCodesObjectType();
+		$backupProcessor = $backupMethod->getProcessor();
+
+		// Create Form
+		$form = FormDocument::create('backupCodes');
+		$backupProcessor->createManagementForm($form, null, []);
+		$form->build();
+		
+		// Process Form
+		$form->requestData([
+			'generateCodes' => 'generateCodes',
+		]);
+		$form->readValues();
+		$backupSetupId = Setup::allocateSetUpId($backupMethod, WCF::getUser());
+		$returnData = $backupProcessor->processManagementForm($form, $backupSetupId);
+		$form->cleanup();
+		
+		// Re-create form
+		$form = FormDocument::create('backupCodes');
+		$backupProcessor->createManagementForm($form, $backupSetupId, $returnData);
+		/** @var IFormParentNode $container */
+		$container = $form->getNodeById('existingCodesContainer');
+		$container->insertBefore(
+			TemplateFormNode::create('initialBackup')
+				->templateName('__multifactorManageInitialBackup'),
+			'existingCodes'
+		);
+		$form->build();
+		$this->backupForm = $form;
+	}
+	
+	/**
+	 * Enables multifactor authentication for the user.
+	 */
+	protected function enableMultifactorAuth(): void {
+		// This method intentionally does not use UserAction to prevent
+		// events from firing.
+		//
+		// This method is being run from within a transaction to ensure
+		// a consistent database state in case any part of the MFA setup
+		// fails. Event listeners could run complex logic, including
+		// queries that modify the database state, possibly leading to
+		// a very large transaction and much more surface area for
+		// unexpected failures.
+		//
+		// Use the saved@MultifactorManageForm event if you need to run
+		// logic in response to a user enabling MFA.
+		$editor = new UserEditor(WCF::getUser());
+		$editor->update([
+			'multifactorActive' => 1,
+		]);
 	}
 	
 	/**

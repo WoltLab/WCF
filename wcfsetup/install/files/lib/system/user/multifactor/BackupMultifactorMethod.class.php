@@ -11,6 +11,7 @@ use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\user\authentication\password\algorithm\Bcrypt;
 use wcf\system\user\authentication\password\IPasswordAlgorithm;
 use wcf\system\user\authentication\password\PasswordAlgorithmManager;
+use wcf\system\user\multifactor\backup\CodeFormField;
 use wcf\system\WCF;
 
 /**
@@ -28,8 +29,8 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 	 */
 	private $algorithm;
 	
-	private const CHUNKS = 4;
-	private const CHUNK_LENGTH = 5;
+	public const CHUNKS = 4;
+	public const CHUNK_LENGTH = 5;
 	
 	private const USER_ATTEMPTS_PER_HOUR = 5;
 	
@@ -211,8 +212,9 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 		$codes = $statement->fetchAll(\PDO::FETCH_ASSOC);
 		
 		$form->appendChildren([
-			TextFormField::create('code')
+			CodeFormField::create()
 				->label('wcf.user.security.multifactor.backup.code')
+				->description('wcf.user.security.multifactor.backup.code.description')
 				->autoFocus()
 				->required()
 				->addValidator(new FormFieldValidator('code', function (TextFormField $field) use ($codes, $setup) {

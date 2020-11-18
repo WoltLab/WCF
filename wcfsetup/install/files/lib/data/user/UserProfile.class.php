@@ -352,7 +352,11 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * @return	boolean
 	 */
 	public function canSeeAvatar() {
-		return (WCF::getUser()->userID == $this->userID || WCF::getSession()->getPermission('user.profile.avatar.canSeeAvatars'));
+		return (
+			WCF::getUser()->userID == $this->userID ||
+			WCF::getSession()->getPermission('user.profile.avatar.canSeeAvatars') ||
+			(($pending = WCF::getSession()->getPendingUserChange()) && $pending->userID == $this->userID)
+		);
 	}
 	
 	/**

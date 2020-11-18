@@ -4858,7 +4858,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.security.multifactor.totp.devices"><![CDATA[Aktive Smartphones]]></item>
 		<item name="wcf.user.security.multifactor.totp.error.flood"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche es{else}versuchen Sie es{/if} später erneut.]]></item>
 		<item name="wcf.user.security.multifactor.backup.error.flood"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche es{else}versuchen Sie es{/if} später erneut.]]></item>
-		<item name="wcf.user.security.multifactor.totp.deviceName.description"><![CDATA[Ein beliebiger Name, der dieses Gerät identifiziert.]]></item>
+		<item name="wcf.user.security.multifactor.totp.deviceName.description.setup"><![CDATA[Ein beliebiger Name, der dieses Gerät identifiziert.]]></item>
 		<item name="wcf.user.security.multifactor.totp.code.description"><![CDATA[Der durch die Smartphone-App generierte 6-stellige Einmalcode.]]></item>
 		<item name="wcf.user.security.multifactor.totp.newDevice.description"><![CDATA[<p>Authentifizieren Sie sich mit Hilfe einer App auf Ihrem Smartphone.</p>
 <ol class="nativeList">
@@ -4887,6 +4887,15 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.security.multifactor.email.subject"><![CDATA[{$code} ist {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}ihr{/if} Einmalcode for {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.security.multifactor.email.body.html"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Einmalcode lautet: <pre>{$code}</pre>]]></item>
 		<item name="wcf.user.security.multifactor.email.body.plain"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Einmalcode lautet: {$code}]]></item>
+		<item name="wcf.user.security.multifactor.methods"><![CDATA[Verfahren]]></item>
+		<item name="wcf.user.security.multifactor.authentication"><![CDATA[Mehrfaktor-Authentifizierung]]></item>
+		<item name="wcf.user.security.multifactor.backup.code"><![CDATA[Notfall-Code]]></item>
+		<item name="wcf.user.security.multifactor.backup.code.description"><![CDATA[Ein Notfall-Code besteht aus 20 Ziffern und ist nur einmal gültig.]]></item>
+		<item name="wcf.user.security.multifactor.totp.deviceName.description.auth"><![CDATA[Das Gerät, das den genutzten Éinmalcode generiert hat.]]></item>
+		<item name="wcf.user.security.multifactor.authentication.user.headline"><![CDATA[Hallo {$user->username}!]]></item>
+		<item name="wcf.user.security.multifactor.authentication.user.content"><![CDATA[Die eingegebenen Zugangsdaten sind korrekt, aber {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto ist mit der Mehrfaktor-Authentifizierung geschützt. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}verwende deinen{else}verwenden Sie Ihren{/if} zweiten Faktor, um den Login abzuschließen.]]></item>
+		<item name="wcf.user.security.multifactor.authentication.logout"><![CDATA[Abbrechen und Abmelden]]></item>
+		<item name="wcf.user.security.multifactor.authentication.logout.success"><![CDATA[Die Mehrfaktor-Authentifizierung wurde erfolgreich abgebrochen.]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophäen]]></item>

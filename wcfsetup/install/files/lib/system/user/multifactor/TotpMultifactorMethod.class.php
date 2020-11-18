@@ -87,7 +87,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 					})),
 				TextFormField::create('deviceName')
 					->label('wcf.user.security.multifactor.totp.deviceName')
-					->description('wcf.user.security.multifactor.totp.deviceName.description')
+					->description('wcf.user.security.multifactor.totp.deviceName.description.setup')
 					->placeholder('wcf.user.security.multifactor.totp.deviceName.placeholder')
 					->maximumLength(200),
 				FormButton::create('submitButton')
@@ -265,6 +265,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 			$form->appendChildren([
 				RadioButtonFormField::create('device')
 					->label('wcf.user.security.multifactor.totp.deviceName')
+					->description('wcf.user.security.multifactor.totp.deviceName.description.auth')
 					->objectProperty('deviceID')
 					->options($deviceOptions)
 					->value($mostRecentlyUsed['deviceID']),
@@ -281,6 +282,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 		$form->appendChildren([
 			CodeFormField::create()
 				->label('wcf.user.security.multifactor.totp.code')
+				->description('wcf.user.security.multifactor.totp.code.description')
 				->autoFocus()
 				->required()
 				->addValidator(new FormFieldValidator('code', function (CodeFormField $field) use ($devices, $setup) {

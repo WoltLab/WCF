@@ -3,12 +3,15 @@ namespace wcf\form;
 use wcf\data\object\type\ObjectType;
 use wcf\data\user\User;
 use wcf\form\AbstractFormBuilderForm;
+use wcf\system\application\ApplicationHandler;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\multifactor\IMultifactorMethod;
 use wcf\system\user\multifactor\Setup;
 use wcf\system\WCF;
+use wcf\util\HeaderUtil;
 
 /**
  * Represents the multi-factor authentication form.
@@ -53,10 +56,23 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 	private $setup;
 	
 	/**
+	 * @var string
+	 */
+	public $redirectUrl;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
+		
+		if (!empty($_GET['url']) && ApplicationHandler::getInstance()->isInternalURL($_GET['url'])) {
+			$this->redirectUrl = $_GET['url'];
+		}
+		
+		if (WCF::getUser()->userID) {
+			$this->performRedirect();
+		}
 		
 		$this->user = WCF::getSession()->getPendingUserChange();
 		if (!$this->user) {
@@ -109,7 +125,7 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 		
 		WCF::getDB()->commitTransaction();
 		
-		WCF::getSession()->changeUser($this->user);
+		WCF::getSession()->applyPendingUserChange($this->user);
 		
 		$this->saved();
 	}
@@ -120,11 +136,20 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 	public function saved() {
 		AbstractForm::saved();
 		
-		$this->form->cleanup();
-		$this->buildForm();
-		
-		// TODO: Proper success message and hiding of the form.
-		$this->form->showSuccessMessage(true);
+		$this->performRedirect();
+	}
+	
+	/**
+	 * Returns to the redirectUrl if given and to the landing page otherwise.
+	 */
+	protected function performRedirect() {
+		if ($this->redirectUrl) {
+			HeaderUtil::redirect($this->redirectUrl);
+		}
+		else {
+			HeaderUtil::redirect(LinkHandler::getInstance()->getLink());
+		}
+		exit;
 	}
 	
 	/**
@@ -133,6 +158,7 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 	protected function setFormAction() {
 		$this->form->action(LinkHandler::getInstance()->getControllerLink(static::class, [
 			'object' => $this->setup,
+			'url' => $this->redirectUrl,
 		]));
 	}
 	
@@ -145,7 +171,9 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 		WCF::getTPL()->assign([
 			'setups' => $this->setups,
 			'user' => $this->user,
+			'userProfile' => UserProfileRuntimeCache::getInstance()->getObject($this->user->userID),
 			'setup' => $this->setup,
+			'redirectUrl' => $this->redirectUrl,
 		]);
 	}
 }
