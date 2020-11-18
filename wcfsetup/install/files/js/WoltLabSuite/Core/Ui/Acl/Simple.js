@@ -12,10 +12,11 @@ define(['Language', 'StringUtil', 'Dom/ChangeListener', 'WoltLabSuite/Core/Ui/Us
 		return Fake;
 	}
 	
-	function UiAclSimple(prefix) { this.init(prefix); }
+	function UiAclSimple(prefix, namePrefix) { this.init(prefix, namePrefix); }
 	UiAclSimple.prototype = {
-		init: function(prefix) {
+		init: function(prefix, namePrefix) {
 			this._prefix = prefix || '';
+			this._namePrefix = namePrefix || '';
 			
 			this._build();
 		},
@@ -57,7 +58,7 @@ define(['Language', 'StringUtil', 'Dom/ChangeListener', 'WoltLabSuite/Core/Ui/Us
 			var html = '<span class="icon icon16 fa-' + (type === 'group' ? 'users' : 'user') + '"></span>';
 			html += '<span class="aclLabel">' + StringUtil.escapeHTML(label) + '</span>';
 			html += '<span class="icon icon16 fa-times pointer jsTooltip" title="' + Language.get('wcf.global.button.delete') + '"></span>';
-			html += '<input type="hidden" name="aclValues[' + type + '][]" value="' + elData(listItem, 'object-id') + '">';
+			html += '<input type="hidden" name="' + this._namePrefix + 'aclValues[' + type + '][]" value="' + elData(listItem, 'object-id') + '">';
 			
 			var item = elCreate('li');
 			item.innerHTML = html;
