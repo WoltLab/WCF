@@ -1873,8 +1873,8 @@ WCF.Action.Delete = Class.extend({
 	 * @param        array                objectIDs
 	 */
 	triggerEffect: function (objectIDs) {
-		for (var $index in this._containers) {
-			var $container = $('#' + this._containers[$index]);
+		this._containers.forEach((function (id) {
+			var $container = $('#' + id);
 			var $button = $container.find(this._buttonSelector);
 			if (WCF.inArray($button.data('objectID'), objectIDs)) {
 				var self = this;
@@ -1884,14 +1884,18 @@ WCF.Action.Delete = Class.extend({
 					self._didTriggerEffect($container);
 					
 					if ($button.data('eventName')) {
-						WCF.System.Event.fireEvent('com.woltlab.wcf.action.delete', $button.data('eventName'), {
-							button: $button,
-							container: $container
-						});
+						WCF.System.Event.fireEvent(
+							'com.woltlab.wcf.action.delete',
+							$button.data('eventName'),
+							{
+								button: $button,
+								container: $container
+							}
+						);
 					}
 				});
 			}
-		}
+		}).bind(this));
 	}
 });
 
