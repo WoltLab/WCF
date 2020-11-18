@@ -25,7 +25,7 @@ class DevicesContainer extends FormContainer {
 	/**
 	 * @inheritDoc
 	 */
-	protected $templateName = '__totpDevicesContainer';
+	protected $templateName = '__multifacatorTotpDevicesContainer';
 	
 	/**
 	 * @inheritDoc

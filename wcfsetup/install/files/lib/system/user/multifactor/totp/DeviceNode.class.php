@@ -31,7 +31,7 @@ class DeviceNode implements IFormChildNode, IFormParentNode {
 	/**
 	 * @inheritDoc
 	 */
-	protected $templateName = '__totpDeviceNode';
+	protected $templateName = '__multifactorTotpDeviceNode';
 	
 	/**
 	 * @inheritDoc

@@ -132,7 +132,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 				}
 				else {
 					$button = new class extends FormButton {
-						protected $templateName = '__totpDeviceNoDeleteButton';
+						protected $templateName = '__multifactorTotpDeviceNoDeleteButton';
 					};
 					$button->id('no-delete-'.$row['deviceID'])
 						->label('wcf.global.button.delete');

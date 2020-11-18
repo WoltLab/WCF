@@ -20,7 +20,7 @@ class CodeFormField extends TextFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected $templateName = '__emailCodeField';
+	protected $templateName = '__multifactorEmailCodeField';
 	
 	public function __construct() {
 		$this->minimumLength(EmailMultifactorMethod::LENGTH);

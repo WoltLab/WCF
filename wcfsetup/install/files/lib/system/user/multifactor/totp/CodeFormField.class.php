@@ -19,7 +19,7 @@ class CodeFormField extends TextFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected $templateName = '__totpCodeField';
+	protected $templateName = '__multifactorTotpCodeField';
 	
 	/**
 	 * @var ?int

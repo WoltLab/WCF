@@ -30,7 +30,7 @@ class CodeFormField extends TextFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected $templateName = '__backupCodeField';
+	protected $templateName = '__multifactorBackupCodeField';
 	
 	public function __construct() {
 		$this->chunks(BackupMultifactorMethod::CHUNKS);

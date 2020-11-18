@@ -20,7 +20,7 @@ class SecretFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected $templateName = '__totpSecretField';
+	protected $templateName = '__multifactorTotpSecretField';
 	
 	public function __construct() {
 		$this->value(Totp::generateSecret());
