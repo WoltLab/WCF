@@ -85,7 +85,7 @@ class EmailMultifactorMethod implements IMultifactorMethod {
 	private function findValidCode(string $userCode, array $codes): ?array {
 		$result = null;
 		foreach ($codes as $code) {
-			if (hash_equals($code['code'], $userCode)) {
+			if (\hash_equals($code['code'], $userCode)) {
 				$result = $code;
 			}
 		}
