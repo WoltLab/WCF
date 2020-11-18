@@ -318,6 +318,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 			'mediaData' => $this->getI18nMediaData($mediaList)[$this->getSingleObject()->mediaID],
 			'template' => WCF::getTPL()->fetch('mediaEditor', 'wcf', [
 				'__aclSimplePrefix' => 'mediaEditor_' . $media->mediaID . '_',
+				'__aclInputName' => 'mediaEditor_' . $media->mediaID . '_aclValues',
 				'__languageChooserPrefix' => 'mediaEditor_' . $media->mediaID . '_',
 				'aclValues' => SimpleAclHandler::getInstance()->getValues('com.woltlab.wcf.media', $media->mediaID),
 				'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
