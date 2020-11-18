@@ -4,6 +4,7 @@ use wcf\data\object\type\ObjectType;
 use wcf\data\user\User;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\LinkHandler;
@@ -170,6 +171,7 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 		WCF::getTPL()->assign([
 			'setups' => $this->setups,
 			'user' => $this->user,
+			'userProfile' => UserProfileRuntimeCache::getInstance()->getObject($this->user->userID),
 			'setup' => $this->setup,
 			'redirectUrl' => $this->redirectUrl,
 		]);
