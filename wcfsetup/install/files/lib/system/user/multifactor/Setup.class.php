@@ -4,6 +4,7 @@ use wcf\data\IIDObject;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
+use wcf\system\cache\runtime\UserRuntimeCache;
 use wcf\system\WCF;
 
 /**
@@ -44,6 +45,13 @@ final class Setup implements IIDObject {
 	 */
 	public function getObjectType(): ObjectType {
 		return ObjectTypeCache::getInstance()->getObjectType($this->row['objectTypeID']);
+	}
+	
+	/**
+	 * Returns the user.
+	 */
+	public function getUser(): User {
+		return UserRuntimeCache::getInstance()->getObject($this->row['userID']);
 	}
 	
 	/**

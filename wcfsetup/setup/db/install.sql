@@ -1695,6 +1695,15 @@ CREATE TABLE wcf1_user_multifactor_backup (
 	UNIQUE KEY (setupID, identifier)
 );
 
+DROP TABLE IF EXISTS wcf1_user_multifactor_email;
+CREATE TABLE wcf1_user_multifactor_email (
+	setupID INT(10) NOT NULL,
+	code VARCHAR(255) NOT NULL,
+	createTime INT(10) NOT NULL,
+	
+	UNIQUE KEY (setupID, code)
+);
+
 DROP TABLE IF EXISTS wcf1_user_multifactor_totp;
 CREATE TABLE wcf1_user_multifactor_totp (
 	setupID INT(10) NOT NULL,
@@ -2201,6 +2210,9 @@ ALTER TABLE wcf1_user_multifactor ADD FOREIGN KEY (userID) REFERENCES wcf1_user 
 ALTER TABLE wcf1_user_multifactor ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_user_multifactor_backup ADD FOREIGN KEY (setupID) REFERENCES wcf1_user_multifactor (setupID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user_multifactor_email ADD FOREIGN KEY (setupID) REFERENCES wcf1_user_multifactor (setupID) ON DELETE CASCADE;
+
 ALTER TABLE wcf1_user_multifactor_totp ADD FOREIGN KEY (setupID) REFERENCES wcf1_user_multifactor (setupID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_user_object_watch ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;

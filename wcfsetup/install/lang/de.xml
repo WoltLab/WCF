@@ -4875,6 +4875,18 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.security.multifactor.initialBackup"><![CDATA[<p>Die Mehrfaktor-Authentifizierung ist ab sofort für {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto aktiv. {if LANGUAGE_USE_INFORMAL_VARIANT}Du wirst{else}Sie werden{/if} von nun an bei jedem Login den zusätzlichen Faktor benötigen.</p>
 <p>Zusätzlich wurden Backup-Codes generiert, mit denen der Zugriff wiederhergestellt werden kann, falls der zusätzliche Faktor unbrauchbar wird.</p>
 <p>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}Notiere oder speichere dir{else}Notieren oder speichern Sie{/if} sich die unterhalb angezeigten Notfall-Codes. Ein möglicher Aufbewahrungsort könnte ein Blatt Papier in einem Aktenordner sein.</p>]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email"><![CDATA[Einmalcode über E-Mail]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.manage"><![CDATA[Einmalcode über E-Mail]]></item>
+		<item name="wcf.user.security.multifactor.email.enabled"><![CDATA[E-Mails aktiviert]]></item>
+		<item name="wcf.user.security.multifactor.email.enabled.description"><![CDATA[<p>Die Mehrfaktor-Authentifizierung über E-Mail ist aktiv. {if LANGUAGE_USE_INFORMAL_VARIANT}Du erhältst{else}Sie erhalten{/if} bei jedem Login eine E-Mail mit einem einmal gültigen Code.</p>
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Verwende{else}Verwenden Sie{/if} bitte die <a href="{link controller='AccountSecurity'}{/link}">Übersicht in der Benutzerkonto-Sicherheit</a>, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Mehrfaktor-Authentifizierung deaktivieren {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}.</p>]]></item>
+		<item name="wcf.user.security.multifactor.email.enable"><![CDATA[Bestätigung über E-Mail aktivieren]]></item>
+		<item name="wcf.user.security.multifactor.email.success"><![CDATA[Die zusätzliche Authentifizierung via E-Mail wurde erfolgreich aktiviert.]]></item>
+		<item name="wcf.user.security.multifactor.email.code"><![CDATA[Einmalcode]]></item>
+		<item name="wcf.user.security.multifactor.email.code.description"><![CDATA[Der Einmalcode wurde um <strong>{$lastCode|date:'H:i:s'}</strong> an {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse bei <strong>{$emailDomain}</strong> gesendet.]]></item>
+		<item name="wcf.user.security.multifactor.email.subject"><![CDATA[{$code} ist {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}ihr{/if} Einmalcode for {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.user.security.multifactor.email.body.html"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Einmalcode lautet: <pre>{$code}</pre>]]></item>
+		<item name="wcf.user.security.multifactor.email.body.plain"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Einmalcode lautet: {$code}]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophäen]]></item>
