@@ -706,6 +706,7 @@ final class SessionHandler extends SingletonFactory {
 	public function changeUserAfterMultifactor(User $user): bool {
 		if ($user->multifactorActive) {
 			$this->register(self::CHANGE_USER_AFTER_MULTIFACTOR_KEY, $user->userID);
+			$this->setLanguageID($user->languageID);
 			
 			return true;
 		}
