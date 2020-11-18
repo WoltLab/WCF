@@ -1869,8 +1869,8 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * @param        array                objectIDs
 		 */
 		triggerEffect: function (objectIDs) {
-			for (var $index in this._containers) {
-				var $container = $('#' + this._containers[$index]);
+			this._containers.forEach((function (id) {
+				var $container = $('#' + id);
 				var $button = $container.find(this._buttonSelector);
 				if (WCF.inArray($button.data('objectID'), objectIDs)) {
 					var self = this;
@@ -1887,7 +1887,7 @@ if (COMPILER_TARGET_DEFAULT) {
 						}
 					});
 				}
-			}
+			}).bind(this));
 		}
 	});
 	
