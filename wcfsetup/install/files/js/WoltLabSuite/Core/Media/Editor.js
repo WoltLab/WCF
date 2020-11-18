@@ -196,12 +196,12 @@ define(
 				user: []
 			};
 			
-			var aclGroups = elBySelAll('input[name="mediaEditor_' + this._media.mediaID + 'aclValues[group][]"]', content);
+			var aclGroups = elBySelAll('input[name="aclValues[group][]"]', content);
 			for (var i = 0, length = aclGroups.length; i < length; i++) {
 				aclValues.group.push(~~aclGroups[i].value);
 			}
 			
-			var aclUsers = elBySelAll('input[name="mediaEditor_' + this._media.mediaID + 'aclValues[user][]"]', content);
+			var aclUsers = elBySelAll('input[name="aclValues[user][]"]', content);
 			for (var i = 0, length = aclUsers.length; i < length; i++) {
 				aclValues.user.push(~~aclUsers[i].value);
 			}
