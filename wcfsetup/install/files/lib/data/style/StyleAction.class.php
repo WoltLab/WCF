@@ -325,7 +325,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 					throw new \InvalidArgumentException('The given favicon is not an image');
 				}
 				$extension = ImageUtil::getExtensionByMimeType($imageData['mime']);
-				$newName = "favicon.template.".$extension;
+				$newName = "favicon-template.".$extension;
 				$newLocation = $style->getAssetPath().$newName;
 				rename($fileLocation, $newLocation);
 				
@@ -359,8 +359,8 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 				}
 				unlink($style->getAssetPath()."favicon.ico");
 				foreach (['png', 'jpg', 'gif'] as $extension) {
-					if (file_exists($style->getAssetPath()."favicon.template.".$extension)) {
-						unlink($style->getAssetPath()."favicon.template.".$extension);
+					if (file_exists($style->getAssetPath()."favicon-template.".$extension)) {
+						unlink($style->getAssetPath()."favicon-template.".$extension);
 					}
 				}
 				(new StyleEditor($style))->update([
