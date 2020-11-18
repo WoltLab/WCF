@@ -103,4 +103,5 @@
 	</instructions>
 	
 	<!-- Run the option.xml update for 5.3.0 -> 5.3.1, due to the missing removal of external_link_rel_nofollow. -->
+	<!-- Run update_com.woltlab.wcf_5.3.1_faviconTemplate.php for 5.3.0 -> 5.3.1 -->
 </package>
