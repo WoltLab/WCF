@@ -4884,7 +4884,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.security.multifactor.email.success"><![CDATA[Die Bestätigung via E-Mail wurde erfolgreich aktiviert.]]></item>
 		<item name="wcf.user.security.multifactor.email.code"><![CDATA[Einmalcode]]></item>
 		<item name="wcf.user.security.multifactor.email.code.description"><![CDATA[Der Einmalcode wurde um <strong>{$lastCode|date:'H:i:s'}</strong> an {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse bei <strong>{$emailDomain}</strong> gesendet.]]></item>
-		<item name="wcf.user.security.multifactor.email.subject"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Einmalcode for {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.user.security.multifactor.email.subject"><![CDATA[{$code} ist {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}ihr{/if} Einmalcode for {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.security.multifactor.email.body.html"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Einmalcode lautet: <pre>{$code}</pre>]]></item>
 		<item name="wcf.user.security.multifactor.email.body.plain"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Einmalcode lautet: {$code}]]></item>
 	</category>

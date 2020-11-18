@@ -4881,7 +4881,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.security.multifactor.email.success"><![CDATA[The confirmation via email has successfully been enabled.]]></item>
 		<item name="wcf.user.security.multifactor.email.code"><![CDATA[One Time Code]]></item>
 		<item name="wcf.user.security.multifactor.email.code.description"><![CDATA[The one time code was sent at <strong>{$lastCode|date:'g:i:s a'}</strong> to your email address at <strong>{$emailDomain}</strong>.]]></item>
-		<item name="wcf.user.security.multifactor.email.subject"><![CDATA[Your One Time Code for {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.user.security.multifactor.email.subject"><![CDATA[{$code} is your one time code for {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.security.multifactor.email.body.html"><![CDATA[Your one time code is: <pre>{$code}</pre>]]></item>
 		<item name="wcf.user.security.multifactor.email.body.plain"><![CDATA[Your one time code is: {$code}]]></item>
 	</category>

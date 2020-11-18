@@ -101,7 +101,9 @@ class EmailMultifactorMethod implements IMultifactorMethod {
 		$email->setRecipient($setup->getUser());
 		
 		$email->setSubject(
-			WCF::getLanguage()->getDynamicVariable('wcf.user.security.multifactor.email.subject')
+			WCF::getLanguage()->getDynamicVariable('wcf.user.security.multifactor.email.subject', [
+				'code' => $code,
+			])
 		);
 		$email->setHtmlMessage(
 			WCF::getLanguage()->getDynamicVariable('wcf.user.security.multifactor.email.body.html', [
