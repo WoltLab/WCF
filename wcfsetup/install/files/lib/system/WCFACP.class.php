@@ -139,7 +139,7 @@ class WCFACP extends WCF {
 				exit;
 			}
 		}
-		else if (empty($pathInfo) || !preg_match('~^/?(login|logout)/~i', $pathInfo)) {
+		else if (empty($pathInfo) || !preg_match('~^/?(login|logout|multifactor-authentication|multifactor-authentication-abort)/~i', $pathInfo)) {
 			if (WCF::getUser()->userID == 0) {
 				// work-around for AJAX-requests within ACP
 				if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
