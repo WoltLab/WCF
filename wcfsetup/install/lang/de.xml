@@ -4896,6 +4896,8 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.security.multifactor.authentication.user.content"><![CDATA[Die eingegebenen Zugangsdaten sind korrekt, aber {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto ist mit der Mehrfaktor-Authentifizierung geschützt. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}verwende deinen{else}verwenden Sie Ihren{/if} zweiten Faktor, um den Login abzuschließen.]]></item>
 		<item name="wcf.user.security.multifactor.authentication.logout"><![CDATA[Abbrechen und Abmelden]]></item>
 		<item name="wcf.user.security.multifactor.authentication.logout.success"><![CDATA[Die Mehrfaktor-Authentifizierung wurde erfolgreich abgebrochen.]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.description"><![CDATA[<p class="small">{if LANGUAGE_USE_INFORMAL_VARIANT}Generiere Einmalcodes mit einer kostenlosen App auf deinem Smartphone.{else}Generieren Sie Einmalcodes mit einer kostenlosen App auf Ihrem Smartphone.{/if}</p>]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.description"><![CDATA[<p class="small">{if LANGUAGE_USE_INFORMAL_VARIANT}Du erhältst bei jedem Login einen Einmalcode an deine E-Mail-Adresse.{else}Sie erhalten bei jedem Login einen Einmalcode an Ihre E-Mail-Adresse.{/if}</p>]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophäen]]></item>
