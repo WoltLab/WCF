@@ -2,6 +2,7 @@
 namespace wcf\system\cronjob;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\moderation\queue\ModerationQueue;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\WCF;
@@ -45,6 +46,20 @@ class ModerationQueueCronjob extends AbstractCronjob {
 			
 			// reset moderation count for all users
 			ModerationQueueManager::getInstance()->resetModerationCount();
+			
+			// Clean up comments associated with these queues.
+			$commentObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName(
+				"com.woltlab.wcf.comment.commentableContent",
+				"com.woltlab.wcf.moderation.queue"
+			);
+			
+			$conditions = new PreparedStatementConditionBuilder();
+			$conditions->add("objectTypeID = ?", [$commentObjectTypeID]);
+			$conditions->add("objectID IN (?)", [$queueIDs]);
+			
+			$sql = "DELETE FROM wcf".WCF_N."_comment " . $conditions;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditions->getParameters());
 		}
 	}
 }
