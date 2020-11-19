@@ -1,11 +1,6 @@
 <html>
 	<head>
 		<style type="text/css">
-		*:not(html):not(head):not(meta):not(br) {
-			font-family: {@$style->getVariable('wcfFontFamilyFallback', true)};
-			font-size: {$style->getVariable('wcfFontSizeDefault')};
-		}
-		
 		html, body, h1, h2, h3 {
 			padding: 0;
 			margin: 0;
@@ -14,6 +9,11 @@
 		body {
 			background-color: {$style->getVariable('wcfContentBackground', true)};
 			color: {$style->getVariable('wcfContentText', true)};
+		}
+		
+		body, body * {
+			font-family: {@$style->getVariable('wcfFontFamilyFallback', true)};
+			font-size: {$style->getVariable('wcfFontSizeDefault')};
 		}
 		
 		a {
