@@ -81,23 +81,25 @@ foreach ($styleList as $style) {
 	// Moving *should* be safe here, unless the admin manually edited the style, but better play safe.
 	if ($style->image && file_exists(WCF_DIR . 'images/' . $style->image)) {
 		$extension = pathinfo($style->image, PATHINFO_EXTENSION);
+		$newName =  'stylePreview.' . $extension;
 		copy(
 			WCF_DIR . 'images/' . $style->image,
-			$style->getAssetPath() . 'stylePreview.' . $extension
+			$style->getAssetPath() . $newName
 		);
 		$styleEditor->update([
-			'image' => 'stylePreview.' . $extension,
+			'image' => FileUtil::getRelativePath(WCF_DIR.'images/', $style->getAssetPath()) . $newName,
 		]);
 	}
 
 	if ($style->image2x && file_exists(WCF_DIR . 'images/' . $style->image2x)) {
 		$extension = pathinfo($style->image2x, PATHINFO_EXTENSION);
+		$newName = 'stylePreview@2x.' . $extension;
 		copy(
 			WCF_DIR . 'images/' . $style->image2x,
-			$style->getAssetPath() . 'stylePreview@2x.' . $extension
+			$style->getAssetPath() . $newName
 		);
 		$styleEditor->update([
-			'image2x' => 'stylePreview@2x.' . $extension,
+			'image2x' => FileUtil::getRelativePath(WCF_DIR.'images/', $style->getAssetPath()) . $newName,
 		]);
 	}
 	
