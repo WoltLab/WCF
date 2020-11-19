@@ -12,7 +12,7 @@ $commentObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName(
 	"com.woltlab.wcf.moderation.queue"
 );
 
-$sql = "SELECT  objectID
+$sql = "SELECT  DISTINCT objectID
         FROM    wcf" . WCF_N . "_comment
         WHERE   objectTypeID = ?
         AND     objectID NOT IN (
@@ -21,7 +21,7 @@ $sql = "SELECT  objectID
                 )";
 $statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute([$commentObjectTypeID]);
-$objectIDs = $statement->fetchList('objectID');
+$objectIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
 CommentHandler::getInstance()->deleteObjects(
 	"com.woltlab.wcf.moderation.queue",
