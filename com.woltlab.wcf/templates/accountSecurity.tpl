@@ -48,7 +48,10 @@
 </section>
 
 <section class="section">
-	<h2 class="sectionTitle">{lang}wcf.user.security.activeSessions{/lang}</h2>
+	<header class="sectionHeader">
+		<h2 class="sectionTitle">{lang}wcf.user.security.activeSessions{/lang}</h2>
+		<p class="sectionDescription">{lang}wcf.user.security.activeSessions.description{/lang}</p>
+	</header>
 	
 	<ul class="containerList">
 		{foreach from=$activeSessions item=session}
