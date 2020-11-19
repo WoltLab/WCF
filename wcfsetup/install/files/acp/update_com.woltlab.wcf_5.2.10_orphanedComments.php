@@ -2,6 +2,7 @@
 namespace wcf\acp;
 
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\comment\CommentHandler;
 use wcf\system\WCF;
 
 // Earlier versions did remove moderation queues without taking care of
@@ -11,11 +12,18 @@ $commentObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName(
 	"com.woltlab.wcf.moderation.queue"
 );
 
-$sql = "DELETE FROM     wcf" . WCF_N . "_comment
-	WHERE           objectTypeID = ?
-		AND     objectID NOT IN (
-				SELECT  queueID
-				FROM    wcf" . WCF_N . "_moderation_queue
-			)";
+$sql = "SELECT  objectID
+        FROM    wcf" . WCF_N . "_comment
+        WHERE   objectTypeID = ?
+        AND     objectID NOT IN (
+                        SELECT  queueID
+                        FROM    wcf" . WCF_N . "_moderation_queue
+                )";
 $statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute([$commentObjectTypeID]);
+$objectIDs = $statement->fetchList('objectID');
+
+CommentHandler::getInstance()->deleteObjects(
+	"com.woltlab.wcf.moderation.queue",
+	$objectIDs
+);
