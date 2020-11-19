@@ -3,7 +3,10 @@
 {include file='header' __disableAds=true __sidebarLeftHasMenu=true}
 
 <section class="section">
-	<h2 class="sectionTitle">{lang}wcf.user.security.multifactor{/lang}</h2>
+	<header class="sectionHeader">
+		<h2 class="sectionTitle">{lang}wcf.user.security.multifactor{/lang}</h2>
+		<p class="sectionDescription">{lang}wcf.user.security.multifactor.description{/lang}</p>
+	</header>
 	
 	<ul class="containerList">
 		{foreach from=$multifactorMethods item=method}
@@ -27,6 +30,8 @@
 							
 							{if $enabledMultifactorMethods[$method->objectTypeID]|isset}
 								{@$method->getProcessor()->getStatusText($enabledMultifactorMethods[$method->objectTypeID])}
+							{else}
+								{lang}wcf.user.security.multifactor.{$method->objectType}.description{/lang}
 							{/if}
 						</div>
 						
@@ -43,7 +48,10 @@
 </section>
 
 <section class="section">
-	<h2 class="sectionTitle">{lang}wcf.user.security.activeSessions{/lang}</h2>
+	<header class="sectionHeader">
+		<h2 class="sectionTitle">{lang}wcf.user.security.activeSessions{/lang}</h2>
+		<p class="sectionDescription">{lang}wcf.user.security.activeSessions.description{/lang}</p>
+	</header>
 	
 	<ul class="containerList">
 		{foreach from=$activeSessions item=session}
