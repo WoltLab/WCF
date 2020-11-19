@@ -4895,6 +4895,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.security.multifactor.authentication.logout.success"><![CDATA[The multi-factor authentication has successfully been aborted.]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.description"><![CDATA[<p class="small">Generate one time codes with a free app on your smartphone.</p>]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.description"><![CDATA[<p class="small">You will receive a one time code via email after logging in.</p>]]></item>
+		<item name="wcf.user.security.multifactor.description"><![CDATA[Protect your account by requiring authentication with a second factor for every login.]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophies]]></item>
