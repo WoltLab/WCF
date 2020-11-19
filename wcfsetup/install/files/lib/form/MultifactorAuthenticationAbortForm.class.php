@@ -79,7 +79,7 @@ class MultifactorAuthenticationAbortForm extends AbstractForm {
 		// never be accessed via a direct link.
 		// If we reach it nonetheless we simply redirect back to the authentication
 		// form which contains the proper button to perform the submission.
-		HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(MultifactorAuthenticationForm::class));
+		HeaderUtil::redirect(LinkHandler::getInstance()->getLink('MultifactorAuthentication'));
 		exit;
 	}
 }
