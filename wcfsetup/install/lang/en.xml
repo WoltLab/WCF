@@ -4893,7 +4893,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.security.multifactor.authentication.user.content"><![CDATA[The provided credentials are correct, but your account is protected with multi-factor authentication. Please use your second factor to complete the login process.]]></item>
 		<item name="wcf.user.security.multifactor.authentication.logout"><![CDATA[Abort and Logout]]></item>
 		<item name="wcf.user.security.multifactor.authentication.logout.success"><![CDATA[The multi-factor authentication has successfully been aborted.]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.description"><![CDATA[<p class="small">Generate one time codes with a free app on your smartphone.</p>]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.description"><![CDATA[<p class="small">Generate one time codes with an app on your smartphone.</p>]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.description"><![CDATA[<p class="small">You will receive a one time code via email after logging in.</p>]]></item>
 		<item name="wcf.user.security.multifactor.description"><![CDATA[Protect your account by requiring authentication with a second factor for every login.]]></item>
 		<item name="wcf.user.security.activeSessions.description"><![CDATA[You are currently logged into your account in the listed web browsers. Revoke sessions you no longer need or that you do not recognize. You can change your password within the <a href="{link controller='AccountManagement'}{/link}">Account Management Form</a>.]]></item>
