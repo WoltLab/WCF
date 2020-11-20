@@ -213,7 +213,7 @@ class LoginForm extends AbstractCaptchaForm {
 	 */
 	protected function performRedirect(bool $needsMultifactor = false) {
 		if ($needsMultifactor) {
-			$this->url = LinkHandler::getInstance()->getControllerLink(MultifactorAuthenticationForm::class, [
+			$this->url = LinkHandler::getInstance()->getLink('MultifactorAuthentication', [
 				'url' => $this->url,
 			]);
 		}
