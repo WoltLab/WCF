@@ -224,6 +224,15 @@ define(['Core', 'Dictionary', 'Environment'], function(Core, Dictionary, Environ
 				}
 			}
 			else {
+				// Chromium based browsers running on Windows suffer from a bug when
+				// used with the responsive mode of the DevTools. Enabling and
+				// disabling it will trigger some media queries to report a change
+				// even when there isn't really one. This cause errors when invoking
+				// "unmatch" handlers that rely on the setup being executed before.
+				if (queryObject.callbacksSetup.size) {
+					return;
+				}
+				
 				queryObject.callbacksUnmatch.forEach(function(callback) {
 					callback();
 				});
