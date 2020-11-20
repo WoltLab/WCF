@@ -36,6 +36,16 @@ class WoltLabSuiteMediaBBCode extends AbstractBBCode {
 		if ($parser instanceof HtmlBBCodeParser && $parser->getRemoveLinks()) {
 			$removeLinks = true;
 		}
+		else {
+			/** @var \DOMElement $element */
+			$element = $closingTag['__parents'][0] ?? null;
+			if ($element && $element->nodeName === 'a') {
+				// We do permit media elements to be nested inside a link, but we must suppress
+				// the thumbnail link to be generated. Removing the link technically is meant
+				// to be something else, but we use it here for backward compatibility.
+				$removeLinks = true;
+			}
+		}
 		
 		/** @var ViewableMedia $media */
 		$media = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.media', $mediaID);
