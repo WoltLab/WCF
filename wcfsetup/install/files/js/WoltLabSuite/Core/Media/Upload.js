@@ -177,7 +177,7 @@ define([
          */
         _replaceFileIcon: function (fileIcon, media, size) {
             if (media.elementTag) {
-                fileIcon.parentElement.innerHTML = media.elementTag;
+                fileIcon.outerHTML = media.elementTag;
             }
             else if (media.tinyThumbnailType) {
                 var img = elCreate('img');

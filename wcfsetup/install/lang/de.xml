@@ -1755,8 +1755,9 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.option.blacklist_sfs_action.block"><![CDATA[Blockieren]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_action.description"><![CDATA[Es besteht immer das Risiko eines fehlerhaften Eintrages, daher wird die Einstellung <strong>Deaktivierung, erfordert manuelle Freischaltung</strong> ausdrücklich empfohlen.]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_action.disable"><![CDATA[Deaktivierung, erfordert manuelle Freischaltung]]></item>
-		<item name="wcf.acp.option.module_amp"><![CDATA[<abbr title="Accelerated Mobile Pages">AMP</abbr>]]></item>
-		<item name="wcf.acp.option.message_enable_user_consent"><![CDATA[Inhalte von externen Anbietern erst nach Zustimmung anzuzeigen]]></item>
+		<item name="wcf.acp.option.module_amp"><![CDATA[AMP]]></item>
+		<item name="wcf.acp.option.module_amp.description"><![CDATA[Aktiviert <abbr title="Accelerated Mobile Pages">AMP</abbr>-Versionen von bestimmten Seiten (z. B. Artikeln).]]></item>
+		<item name="wcf.acp.option.message_enable_user_consent"><![CDATA[Inhalte von externen Anbietern erst nach Zustimmung anzeigen]]></item>
 		<item name="wcf.acp.option.modification_log_expiration"><![CDATA[Speicherzeit für Änderungen]]></item>
 		<item name="wcf.acp.option.modification_log_expiration.description"><![CDATA[Zeitraum, nachdem alte Änderungen aus dem Änderungsprotokoll entfernt werden [0, um die Entfernung gänzlich zu deaktivieren]]]></item>
 	</category>
@@ -3084,6 +3085,9 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter „Konfiguration �
 		<item name="wcf.acp.user.option.editable.2"><![CDATA[Administrator]]></item>
 		<item name="wcf.acp.user.option.editable.3"><![CDATA[Eigentümer und Administrator]]></item>
 		<item name="wcf.acp.user.option.editable.6"><![CDATA[Eigentümer bei Erstanmeldung und Administrator]]></item>
+		<item name="wcf.acp.user.option.labeledUrl"><![CDATA[URL]]></item>
+		<item name="wcf.acp.user.option.labeledUrl.description"><![CDATA[Wenn der Feldtyp „labeledUrl“ ist, muss hier die URL hinterlegt werden, auf die verlinkt werden soll. {if LANGUAGE_USE_INFORMAL_VARIANT}Nutze{else}Nutzen Sie{/if} <span class="inlineCode">%s</span> als Platzhalter für die Eingabe des Benutzers.]]></item>
+		<item name="wcf.acp.user.option.labeledUrl.error.invalid"><![CDATA[Der Platzhalter <span class="inlineCode">%s</span> fehlt in der URL.]]></item>
 		<item name="wcf.acp.user.option.optionType"><![CDATA[Feldtyp]]></item>
 		<item name="wcf.acp.user.option.optionType.description"><![CDATA[Die Namen entsprechen in der Regel den HTML-Elementen, die benötigt werden, um so ein Feld beim Benutzer abzufragen.]]></item>
 		<item name="wcf.acp.user.option.askDuringRegistration"><![CDATA[Das Feld wird im Registrierungs-Formular angezeigt.]]></item>

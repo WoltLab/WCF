@@ -222,6 +222,10 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Language', 'U
          */
         _triggerDelete: function (articleId) {
             var article = _articles.get(articleId);
+            if (!article) {
+                // The affected article might be hidden by the filter settings.
+                return;
+            }
             if (article.isArticleEdit) {
                 window.location = this._options.redirectUrl;
             }
@@ -240,6 +244,10 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Language', 'U
          */
         _triggerPublish: function (articleId) {
             var article = _articles.get(articleId);
+            if (!article) {
+                // The affected article might be hidden by the filter settings.
+                return;
+            }
             if (article.isArticleEdit) {
                 // unsupported
             }
@@ -254,6 +262,10 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Language', 'U
          */
         _triggerRestore: function (articleId) {
             var article = _articles.get(articleId);
+            if (!article) {
+                // The affected article might be hidden by the filter settings.
+                return;
+            }
             elHide(article.buttons.delete);
             elHide(article.buttons.restore);
             elShow(article.buttons.trash);
@@ -271,6 +283,10 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Language', 'U
          */
         _triggerTrash: function (articleId) {
             var article = _articles.get(articleId);
+            if (!article) {
+                // The affected article might be hidden by the filter settings.
+                return;
+            }
             elShow(article.buttons.delete);
             elShow(article.buttons.restore);
             elHide(article.buttons.trash);
@@ -292,6 +308,10 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Language', 'U
          */
         _triggerUnpublish: function (articleId) {
             var article = _articles.get(articleId);
+            if (!article) {
+                // The affected article might be hidden by the filter settings.
+                return;
+            }
             if (article.isArticleEdit) {
                 // unsupported
             }

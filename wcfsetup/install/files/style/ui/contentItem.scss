@@ -220,7 +220,9 @@
 
 @include screen-lg {
 	/* There are no sidebars, use a three column layout. */
-	.content:first-child:last-child {
+	.content:first-child:last-child,
+	.boxesTop,
+	.boxesBottom {
 		.contentItemMultiColumn {
 			/* The `flex` shorthand fails in IE11 if `calc()` is used. */
 			flex-grow: 0;

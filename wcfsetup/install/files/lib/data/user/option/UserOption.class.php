@@ -22,6 +22,7 @@ use wcf\system\WCF;
  * @property-read	integer		$searchable		is `1` if the user option can be searched, otherwise `0`
  * @property-read	integer		$isDisabled		is `1` if the user option is disabled and thus neither shown nor editable, otherwise `0`
  * @property-read	integer		$originIsSystem		is `1` if the user option was created by the system and not manually by an administrator, otherwise `0`
+ * @property-read	string		$labeledUrl		the url, if the option type is `labeledUrl`
  */
 class UserOption extends Option implements ITitledObject {
 	/**

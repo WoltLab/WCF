@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
+	<!-- include types -->
+	<xs:include schemaLocation="types.xsd" />
+	
+	<!-- data element -->
+	<xs:element name="style">
+		<xs:complexType>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="general" type="general" minOccurs="1" maxOccurs="1" />
+				<xs:element name="author" type="author" minOccurs="0" maxOccurs="1" />
+				<xs:element name="files" type="files" minOccurs="1" maxOccurs="1" />
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- general information element -->
+	<xs:complexType name="general">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="stylename" type="woltlab_varchar" minOccurs="1" maxOccurs="1" />
+			<xs:element name="packageName" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
+			<xs:element name="date" type="xs:date" minOccurs="0" maxOccurs="1" />
+			<xs:element name="version" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
+			<xs:element name="apiVersion" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
+			<xs:element name="image" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
+			<xs:element name="image2x" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
+			<xs:element name="copyright" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
+			<xs:element name="license" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
+			<xs:element name="default" type="woltlab_boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="description" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
+			<xs:element name="coverPhoto" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
+		</xs:choice>
+	</xs:complexType>
+	
+	<!-- author information element -->
+	<xs:complexType name="author">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="authorname" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
+			<xs:element name="authorurl" type="xs:anyURI" minOccurs="0" maxOccurs="1" />
+		</xs:choice>
+	</xs:complexType>
+	
+	<!-- files information element -->
+	<xs:complexType name="files">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="variables" type="woltlab_varchar" minOccurs="1" maxOccurs="1" />
+			<xs:element name="images" minOccurs="0" maxOccurs="1">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="woltlab_varchar">
+							<xs:attribute name="path" type="xs:string" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="templates" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
+		</xs:choice>
+	</xs:complexType>
+</xs:schema>

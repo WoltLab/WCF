@@ -153,7 +153,8 @@ class StyleCompiler extends SingletonFactory {
 				$variables,
 				$individualScss . (!empty($parameters['scss']) ? "\n" . $parameters['scss'] : ''),
 				function($content) use ($styleName) {
-					return "/* stylesheet for '". $styleName ."', generated on ".gmdate('r')." -- DO NOT EDIT */\n\n" . $content;
+					$header = "/* stylesheet for '".$styleName."', generated on ".gmdate('r')." -- DO NOT EDIT */";
+					return '@charset "UTF-8";' . "\n\n{$header}\n\n" . preg_replace('~^@charset "UTF-8";\r?\n~', '', $content);
 				}
 			);
 		}
@@ -250,7 +251,8 @@ class StyleCompiler extends SingletonFactory {
 			$variables,
 			$individualScss . (!empty($parameters['scss']) ? "\n" . $parameters['scss'] : ''),
 			function($content) use ($style) {
-				return "/* stylesheet for '".$style->styleName."', generated on ".gmdate('r')." -- DO NOT EDIT */\n\n" . $content;
+				$header = "/* stylesheet for '".$style->styleName."', generated on ".gmdate('r')." -- DO NOT EDIT */";
+				return '@charset "UTF-8";' . "\n\n{$header}\n\n" . preg_replace('~^@charset "UTF-8";\r?\n~', '', $content);
 			}
 		);
 	}
@@ -305,7 +307,8 @@ class StyleCompiler extends SingletonFactory {
 				$content = str_replace('../icon/', '../../icon/', $content);
 				$content = preg_replace('~\.\./images/~', '../../images/', $content);
 				
-				return "/* stylesheet for ACP, generated on ".gmdate('r')." -- DO NOT EDIT */\n\n" . $content;
+				$header = "/* stylesheet for the admin panel, generated on ".gmdate('r')." -- DO NOT EDIT */";
+				return '@charset "UTF-8";' . "\n\n{$header}\n\n" . preg_replace('~^@charset "UTF-8";\r?\n~', '', $content);
 			}
 		);
 	}

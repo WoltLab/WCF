@@ -177,10 +177,6 @@ class WCFACP extends WCF {
 				self::$overrideDebugMode = true;
 			}
 		}
-		
-		if (PACKAGE_ID && WCF::getUser()->userID && WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage') && UserGroup::getOwnerGroupID() === null) {
-			self::getTPL()->assign(['__wscMissingOwnerGroup' => true]);
-		}
 	}
 	
 	/**

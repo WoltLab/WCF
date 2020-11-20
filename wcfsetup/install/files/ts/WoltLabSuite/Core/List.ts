@@ -11,13 +11,13 @@
 import * as Core from "./Core";
 
 /** @deprecated 5.4 Use a `Set` instead. */
-class List {
-  private _set = new Set<any>();
+class List<T = any> {
+  private _set = new Set<T>();
 
   /**
    * Appends an element to the list, silently rejects adding an already existing value.
    */
-  add(value: any): void {
+  add(value: T): void {
     this._set.add(value);
   }
 
@@ -31,21 +31,21 @@ class List {
   /**
    * Removes an element from the list, returns true if the element was in the list.
    */
-  delete(value: any): boolean {
+  delete(value: T): boolean {
     return this._set.delete(value);
   }
 
   /**
    * Invokes the `callback` for each element in the list.
    */
-  forEach(callback: (value: any) => void): void {
+  forEach(callback: (value: T) => void): void {
     this._set.forEach(callback);
   }
 
   /**
    * Returns true if the list contains the element.
    */
-  has(value: any): boolean {
+  has(value: T): boolean {
     return this._set.has(value);
   }
 

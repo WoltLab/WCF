@@ -89,7 +89,8 @@ class UserOptionEditForm extends UserOptionAddForm {
 			'searchable' => $this->searchable,
 			'editable' => $this->editable,
 			'visible' => $this->visible,
-			'additionalData' => !empty($additionalData) ? serialize($additionalData) : ''
+			'additionalData' => !empty($additionalData) ? serialize($additionalData) : '',
+			'labeledUrl' => $this->labeledUrl,
 		])]);
 		$this->objectAction->executeAction();
 		$this->saved();
@@ -119,6 +120,7 @@ class UserOptionEditForm extends UserOptionAddForm {
 			$this->searchable = $this->userOption->searchable;
 			$this->showOrder = $this->userOption->showOrder;
 			$this->outputClass = $this->userOption->outputClass;
+			$this->labeledUrl = $this->userOption->labeledUrl;
 		}
 	}
 	
