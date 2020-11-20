@@ -831,8 +831,8 @@ E-Mail: [E-Mail-Adresse der verantwortlichen Stelle]</p><p><br></p><p>Verantwort
 		<page identifier="com.woltlab.wcf.MultifactorManage">
 			<pageType>system</pageType>
 			<controller>wcf\form\MultifactorManageForm</controller>
-			<name language="de">Mehrfaktor-Authentifizierung einrichten</name>
 			<name language="en">Manage Multi-Factor Authentication</name>
+			<name language="de">Mehrfaktor-Authentifizierung einrichten</name>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountSecurity</parent>
 			<excludeFromLandingPage>1</excludeFromLandingPage>
@@ -848,6 +848,23 @@ E-Mail: [E-Mail-Adresse der verantwortlichen Stelle]</p><p><br></p><p>Verantwort
 			<excludeFromLandingPage>1</excludeFromLandingPage>
 			<availableDuringOfflineMode>1</availableDuringOfflineMode>
 			<requireObjectID>1</requireObjectID>
+		</page>
+		<page identifier="com.woltlab.wcf.MultifactorDisable">
+			<pageType>system</pageType>
+			<controller>wcf\form\MultifactorDisableForm</controller>
+			<name language="en">Disable Multi-Factor Authentication</name>
+			<name language="de">Mehrfaktor-Authentifizierung deaktivieren</name>
+			<hasFixedParent>1</hasFixedParent>
+			<parent>com.woltlab.wcf.AccountSecurity</parent>
+			<excludeFromLandingPage>1</excludeFromLandingPage>
+			<availableDuringOfflineMode>1</availableDuringOfflineMode>
+			<requireObjectID>1</requireObjectID>
+			<content language="en">
+				<title>Disable Multi-Factor Authentication</title>
+			</content>
+			<content language="de">
+				<title>Mehrfaktor-Authentifizierung deaktivieren</title>
+			</content>
 		</page>
 	</import>
 	<delete>

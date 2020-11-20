@@ -22,6 +22,8 @@ final class Setup implements IIDObject {
 	 */
 	private $row;
 	
+	private $isDeleted = false;
+	
 	private function __construct(array $row) {
 		$this->row = $row;
 	}
@@ -30,6 +32,10 @@ final class Setup implements IIDObject {
 	 * Returns the setup ID.
 	 */
 	public function getId(): int {
+		if ($this->isDeleted) {
+			throw new \BadMethodCallException('The Setup is deleted.');
+		}
+		
 		return $this->row['setupID'];
 	}
 	
@@ -37,6 +43,10 @@ final class Setup implements IIDObject {
 	 * @see Setup::getId()
 	 */
 	public function getObjectID(): int {
+		if ($this->isDeleted) {
+			throw new \BadMethodCallException('The Setup is deleted.');
+		}
+		
 		return $this->getId();
 	}
 	
@@ -44,6 +54,10 @@ final class Setup implements IIDObject {
 	 * Returns the object type.
 	 */
 	public function getObjectType(): ObjectType {
+		if ($this->isDeleted) {
+			throw new \BadMethodCallException('The Setup is deleted.');
+		}
+		
 		return ObjectTypeCache::getInstance()->getObjectType($this->row['objectTypeID']);
 	}
 	
@@ -51,6 +65,10 @@ final class Setup implements IIDObject {
 	 * Returns the user.
 	 */
 	public function getUser(): User {
+		if ($this->isDeleted) {
+			throw new \BadMethodCallException('The Setup is deleted.');
+		}
+		
 		return UserRuntimeCache::getInstance()->getObject($this->row['userID']);
 	}
 	
@@ -58,6 +76,10 @@ final class Setup implements IIDObject {
 	 * Locks the database record for this setup, preventing concurrent changes, and returns itself.
 	 */
 	public function lock(): self {
+		if ($this->isDeleted) {
+			throw new \BadMethodCallException('The Setup is deleted.');
+		}
+		
 		$sql = "SELECT	setupId
 			FROM	wcf".WCF_N."_user_multifactor
 			WHERE	setupId = ?
@@ -71,6 +93,19 @@ final class Setup implements IIDObject {
 		\assert($setupId === $this->getId());
 		
 		return $this;
+	}
+	
+	/**
+	 * Deletes the setup.
+	 */
+	public function delete(): void {
+		$sql = "DELETE FROM	wcf".WCF_N."_user_multifactor
+			WHERE		setupId = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			$this->getId(),
+		]);
+		$this->isDeleted = true;
 	}
 	
 	/**

@@ -4901,6 +4901,22 @@ Open the link below to access the user profile:
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.description"><![CDATA[<p class="small">You will receive a one time code via email after logging in.</p>]]></item>
 		<item name="wcf.user.security.multifactor.description"><![CDATA[Protect your account by requiring authentication with a second factor for every login.]]></item>
 		<item name="wcf.user.security.activeSessions.description"><![CDATA[You are currently logged into your account in the listed web browsers. Revoke sessions you no longer need or that you do not recognize. You can change your password within the <a href="{link controller='AccountManagement'}{/link}">Account Management Form</a>.]]></item>
+		<item name="wcf.user.security.multifactor.disable"><![CDATA[Disable]]></item>
+		<item name="wcf.user.security.multifactor.disable.explanation"><![CDATA[<p>By submitting this form the <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> method for multi-factor authentication will be disabled. You will no longer be able to use this method to authenticate yourself.</p>
+{if !$remaining|empty}
+<p>After disabling <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> the following methods will still be available for multi-factor authentication.</p>
+<ul class="nativeList">
+{foreach from=$remaining item='method'}
+<li><a href="{link controller='MultifactorManage' object=$method->getObjectType()}{/link}">{lang}wcf.user.security.multifactor.{$method->getObjectType()->objectType}{/lang}</a></li>
+{/foreach}
+</ul>
+{else}
+<p>Disabling <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> will fully disable the use of multi-factor authentication for your account as it is the only active method.</p>
+{/if}]]></item>
+		<item name="wcf.user.security.multifactor.disable.confirm"><![CDATA[{if $remaining|empty}Completely Disable Multi-Factor Authentication{else}Disable <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong>{/if}]]></item>
+		<item name="wcf.user.security.multifactor.disable.confirm.required"><![CDATA[Please confirm that you read the explanation and that you would like to proceed.]]></item>
+		<item name="wcf.user.security.multifactor.disable.success"><![CDATA[The <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> method has successfully been disabled.]]></item>
+		<item name="wcf.user.security.multifactor.disable.success.full"><![CDATA[The multi-factor authentication has successfully been disabled.]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophies]]></item>

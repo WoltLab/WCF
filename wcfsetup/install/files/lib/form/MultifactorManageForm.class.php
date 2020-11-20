@@ -98,6 +98,9 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 		$this->processor->createManagementForm($this->form, $this->setup, $this->returnData);
 	}
 	
+	/**
+	 * @inheritDoc
+	 */
 	public function save() {
 		AbstractForm::save();
 		
@@ -221,7 +224,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 	 */
 	protected function setFormAction() {
 		$this->form->action(LinkHandler::getInstance()->getControllerLink(static::class, [
-			'id' => $this->method->objectTypeID,
+			'object' => $this->method,
 		]));
 	}
 	

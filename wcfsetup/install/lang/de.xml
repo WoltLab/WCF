@@ -4904,6 +4904,22 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.description"><![CDATA[<p class="small">{if LANGUAGE_USE_INFORMAL_VARIANT}Du erhältst bei jedem Login einen Einmalcode an deine E-Mail-Adresse.{else}Sie erhalten bei jedem Login einen Einmalcode an Ihre E-Mail-Adresse.{/if}</p>]]></item>
 		<item name="wcf.user.security.multifactor.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Schütze dein Benutzerkonto{else}Schützen Sie Ihr Benutzerkonto{/if}, indem bei jedem Login eine zusätzliche Authentifizierung mit Hilfe eines zweiten Faktors erforderlich ist.]]></item>
 		<item name="wcf.user.security.activeSessions.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du bist{else}Sie sind{/if} derzeit in den aufgelisteten Webbrowsern eingeloggt. {if LANGUAGE_USE_INFORMAL_VARIANT}Beende Sitzungen, die du nicht mehr benötigst oder nicht erkennst.{else}Beenden Sie Sitzungen, die Sie nicht mehr benötigen oder nicht erkennen.{/if} {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst dein Kennwort{else}Sie können Ihr Kennwort{/if} in der <a href="{link controller='AccountManagement'}{/link}">Account-Verwaltung</a> ändern.]]></item>
+		<item name="wcf.user.security.multifactor.disable"><![CDATA[Deaktivieren]]></item>
+		<item name="wcf.user.security.multifactor.disable.explanation"><![CDATA[<p>Mit dem Absenden dieses Formulars {if LANGUAGE_USE_INFORMAL_VARIANT}deaktivierst du{else}deaktivieren Sie{/if} das Verfahren <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> zur Nutzung mit der Mehrfaktor-Authentifizierung. {if LANGUAGE_USE_INFORMAL_VARIANT}Du wirst{else}Sie werden{/if} dieses Verfahren anschließend nicht mehr nutzen können, um {if LANGUAGE_USE_INFORMAL_VARIANT}dich{else}sich{/if} zu authentifizieren.</p>
+{if !$remaining|empty}
+<p>Nach Deaktivierung von <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> {plural value=$remaining|count 1='steht folgendes' other='stehen folgende'} Verfahren weiterhin zur Mehrfaktor-Authentifizierung zur Verfügung.</p>
+<ul class="nativeList">
+{foreach from=$remaining item='method'}
+<li><a href="{link controller='MultifactorManage' object=$method->getObjectType()}{/link}">{lang}wcf.user.security.multifactor.{$method->getObjectType()->objectType}{/lang}</a></li>
+{/foreach}
+</ul>
+{else}
+<p>Die Deaktivierung des Verfahrens wird die Mehrfaktor-Authentifizierung für {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto vollständig deaktivieren, da es das einzige aktive Verfahren ist.</p>
+{/if}]]></item>
+		<item name="wcf.user.security.multifactor.disable.confirm"><![CDATA[{if $remaining|empty}Mehrfaktor-Authentifizierung vollständig deaktivieren{else}<strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> deaktivieren{/if}]]></item>
+		<item name="wcf.user.security.multifactor.disable.confirm.required"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Bitte bestätige, dass du die Hinweise gelesen hast und mit der Deaktivierung fortfahren möchtest.{else}Bitte bestätigen Sie, dass Sie die Hinweise gelesen haben und mit der Deaktivierung fortfahren möchten.{/if}]]></item>
+		<item name="wcf.user.security.multifactor.disable.success"><![CDATA[Das Verfahren <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> wurde erfolgreich deaktiviert.]]></item>
+		<item name="wcf.user.security.multifactor.disable.success.full"><![CDATA[Die Mehrfaktor-Authentifizierung wurde erfolgreich deaktiviert.]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophäen]]></item>
