@@ -36,9 +36,21 @@
 						</div>
 						
 						<div class="accountSecurityButtons">
-							<a class="small button" href="{link controller='MultifactorManage' id=$method->objectTypeID}{/link}">
-								{lang}wcf.user.security.multifactor.{if $enabledMultifactorMethods[$method->objectTypeID]|isset}manage{else}setup{/if}{/lang}
-							</a>
+							{if $enabledMultifactorMethods[$method->objectTypeID]|isset}
+								{if $method->objectType !== 'com.woltlab.wcf.multifactor.backup'}
+									<a class="small button" href="{link controller='MultifactorDisable' object=$enabledMultifactorMethods[$method->objectTypeID]}{/link}">
+										{lang}wcf.user.security.multifactor.disable{/lang}
+									</a>
+								{/if}
+								
+								<a class="small button buttonPrimary" href="{link controller='MultifactorManage' object=$method}{/link}">
+									{lang}wcf.user.security.multifactor.manage{/lang}
+								</a>
+							{else}
+								<a class="small button buttonPrimary" href="{link controller='MultifactorManage' object=$method}{/link}">
+									{lang}wcf.user.security.multifactor.setup{/lang}
+								</a>
+							{/if}
 						</div>
 					</div>
 				</li>

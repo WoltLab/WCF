@@ -5,7 +5,6 @@
 
 {include file='header' __disableAds=true __sidebarLeftHasMenu=true}
 
-
 {if $backupForm}
 	{if $form->showsSuccessMessage()}
 		<p class="success">
