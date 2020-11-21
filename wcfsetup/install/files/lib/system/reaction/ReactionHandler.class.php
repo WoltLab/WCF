@@ -656,8 +656,8 @@ class ReactionHandler extends SingletonFactory {
 			foreach ($likeList as $like) {
 				$likeData[$like->likeID] = $like->userID;
 				
-				if (!isset($activityPoints[$like->userID])) $activityPoints[$like->userID] = 0;
-				$activityPoints[$like->userID]++;
+				if (!isset($activityPoints[$like->objectUserID])) $activityPoints[$like->objectUserID] = 0;
+				$activityPoints[$like->objectUserID]++;
 			}
 			
 			// delete like notifications
