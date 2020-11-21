@@ -4,7 +4,7 @@
  * @author	Florian Gail
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Acp/Ui/Option/RewriteTest
+ * @module	WoltLabSuite/Core/Acp/Ui/Option/RewriteGenerator
  */
 define(['Ajax', 'Language', 'Ui/Dialog'], function (Ajax, Language, UiDialog) {
 	"use strict";
