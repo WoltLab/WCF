@@ -1,6 +1,10 @@
 <?php
 namespace wcf\system\condition;
 use wcf\data\condition\Condition;
+use wcf\data\DatabaseObjectList;
+use wcf\data\user\User;
+use wcf\data\user\UserList;
+use wcf\system\exception\InvalidObjectArgument;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
@@ -13,7 +17,9 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\System\Condition
  * @since       5.4
  */
-class UserMultifactorCondition extends AbstractSingleFieldCondition implements IContentCondition {
+class UserMultifactorCondition extends AbstractSingleFieldCondition implements IContentCondition, IObjectListCondition, IUserCondition {
+	use TObjectListUserCondition;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -107,5 +113,29 @@ HTML;
 	 */
 	public function showContent(Condition $condition) {
 		return (($condition->usesMultifactor && WCF::getUser()->multifactorActive) || (!$condition->usesMultifactor && !WCF::getUser()->multifactorActive));
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
+		if (!($objectList instanceof UserList)) {
+			throw new InvalidObjectArgument($objectList, UserList::class, 'Object list');
+		}
+		
+		if (isset($conditionData['usesMultifactor'])) {
+			$objectList->getConditionBuilder()->add('user_table.multifactorActive = ?', [$conditionData['usesMultifactor']]);
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function checkUser(Condition $condition, User $user) {
+		if ($condition->usesMultifactor !== null && $user->multifactorActive != $condition->usesMultifactor) {
+			return false;
+		}
+		
+		return true;
 	}
 }

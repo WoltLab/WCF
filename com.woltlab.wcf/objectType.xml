@@ -1457,6 +1457,12 @@
 			<classname>wcf\system\condition\UserOptionsCondition</classname>
 			<conditiongroup>userOptions</conditiongroup>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.user.multifactor</name>
+			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
+			<classname>wcf\system\condition\UserMultifactorCondition</classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
 		<!-- /user search conditions -->
 		<!-- box controllers -->
 		<type>
