@@ -943,6 +943,13 @@
 			<propertyname>trophyPoints</propertyname>
 			<minvalue>0</minvalue>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.user.multifactor</name>
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+			<classname>wcf\system\condition\UserMultifactorCondition</classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
+			<conditiongroup>general</conditiongroup>
+		</type>
 		<!-- /notice conditions -->
 		<!-- ad locations -->
 		<type>
