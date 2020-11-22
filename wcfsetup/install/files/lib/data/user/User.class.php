@@ -73,6 +73,7 @@ use wcf\util\UserUtil;
  * @property-read	integer		$disableCoverPhotoExpires	timestamp at which the user's cover photo will automatically be enabled again
  * @property-read	integer		$articles			number of articles written by the user
  * @property-read       string          $blacklistMatches               JSON string of an array with all matches in the blacklist, otherwise an empty string 
+ * @property-read       integer         $multifactorActive              is `1` if the use has enabled a second factor, otherwise `0` 
  */
 final class User extends DatabaseObject implements IPopoverObject, IRouteController, IUserContent {
 	/**
