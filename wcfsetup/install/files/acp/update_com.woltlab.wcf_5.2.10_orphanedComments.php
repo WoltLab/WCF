@@ -23,7 +23,6 @@ $statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute([$commentObjectTypeID]);
 $objectIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
-CommentHandler::getInstance()->deleteObjects(
-	"com.woltlab.wcf.moderation.queue",
-	$objectIDs
-);
+if (!empty($objectIDs)) {
+	CommentHandler::getInstance()->deleteObjects("com.woltlab.wcf.moderation.queue", $objectIDs);
+}
