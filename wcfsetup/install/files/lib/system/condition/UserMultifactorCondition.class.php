@@ -9,7 +9,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
 /**
- * Condition implementation if it is the user has an active second factor.
+ * Condition implementation for the multi-factor status of users.
  * 
  * @author	Joshua Ruesweg
  * @copyright	2001-2020 WoltLab GmbH
@@ -26,26 +26,26 @@ class UserMultifactorCondition extends AbstractSingleFieldCondition implements I
 	protected $label = 'wcf.user.condition.multifactor';
 	
 	/**
-	 * 1 if uses multifactor checkbox is checked
+	 * 1 if multifactor active checkbox is checked
 	 * @var	integer
 	 */
-	protected $usesMultifactor = 0;
+	protected $multifactorActive = 0;
 	
 	/**
-	 * 1 if uses no multifactor checkbox is checked
+	 * 1 if multifactor not active checkbox is checked
 	 * @var	integer
 	 */
-	protected $usesNoMultifactor = 0;
+	protected $multifactorNotActive = 0;
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function getData() {
-		if ($this->usesMultifactor || $this->usesNoMultifactor) {
+		if ($this->multifactorActive || $this->multifactorNotActive) {
 			return [
-				// if usesNoMultifactor is selected usesMultifactor is 0
-				// otherwise usesNoMultifactor is 1
-				'usesMultifactor' => $this->usesMultifactor
+				// if multifactorNotActive is selected multifactorActive is 0
+				// otherwise multifactorNotActive is 1
+				'multifactorActive' => $this->multifactorActive
 			];
 		}
 		
@@ -56,21 +56,21 @@ class UserMultifactorCondition extends AbstractSingleFieldCondition implements I
 	 * @inheritDoc
 	 */
 	public function getFieldElement() {
-		$usesMultifactorLabel = WCF::getLanguage()->get('wcf.user.condition.multifactor.usesMultifactor');
-		$usesNoMultifactorLabel = WCF::getLanguage()->get('wcf.user.condition.multifactor.usesNoMultifactor');
-		$usesMultifactorChecked = '';
-		if ($this->usesMultifactor) {
-			$usesMultifactorChecked = ' checked';
+		$multifactorActiveLabel = WCF::getLanguage()->get('wcf.user.condition.multifactor.multifactorActive');
+		$multifactorNotActiveLabel = WCF::getLanguage()->get('wcf.user.condition.multifactor.multifactorNotActive');
+		$multifactorActiveChecked = '';
+		if ($this->multifactorActive) {
+			$multifactorActiveChecked = ' checked';
 		}
 		
-		$usesNoMultifactorChecked = '';
-		if ($this->usesNoMultifactor) {
-			$usesNoMultifactorChecked = ' checked';
+		$multifactorNotActiveChecked = '';
+		if ($this->multifactorNotActive) {
+			$multifactorNotActiveChecked = ' checked';
 		}
 		
 		return <<<HTML
-<label><input type="checkbox" name="usesMultifactor" id="usesMultifactor"{$usesMultifactorChecked}> {$usesMultifactorLabel}</label>
-<label><input type="checkbox" name="usesNoMultifactor" id="usesNoMultifactor"{$usesNoMultifactorChecked}> {$usesNoMultifactorLabel}</label>
+<label><input type="checkbox" name="multifactorActive" id="multifactorActive"{$multifactorActiveChecked}> {$multifactorActiveLabel}</label>
+<label><input type="checkbox" name="multifactorNotActive" id="multifactorNotActive"{$multifactorNotActiveChecked}> {$multifactorNotActiveLabel}</label>
 HTML;
 	}
 	
@@ -78,33 +78,33 @@ HTML;
 	 * @inheritDoc
 	 */
 	public function readFormParameters() {
-		if (isset($_POST['usesMultifactor'])) $this->usesMultifactor = 1;
-		if (isset($_POST['usesNoMultifactor'])) $this->usesNoMultifactor = 1;
+		if (isset($_POST['multifactorActive'])) $this->multifactorActive = 1;
+		if (isset($_POST['multifactorNotActive'])) $this->multifactorNotActive = 1;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function reset() {
-		$this->usesMultifactor = $this->usesNoMultifactor = 0;
+		$this->multifactorActive = $this->multifactorNotActive = 0;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function setData(Condition $condition) {
-		$this->usesMultifactor = $condition->usesMultifactor;
-		$this->usesNoMultifactor = !$condition->usesMultifactor;
+		$this->multifactorActive = $condition->multifactorActive;
+		$this->multifactorNotActive = !$condition->multifactorActive;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function validate() {
-		if ($this->usesMultifactor && $this->usesNoMultifactor) {
-			$this->errorMessage = 'wcf.user.condition.multifactor.usesMultifactor.error.conflict';
+		if ($this->multifactorActive && $this->multifactorNotActive) {
+			$this->errorMessage = 'wcf.user.condition.multifactor.multifactorActive.error.conflict';
 			
-			throw new UserInputException('usesMultifactor', 'conflict');
+			throw new UserInputException('multifactorActive', 'conflict');
 		}
 	}
 	
@@ -112,7 +112,9 @@ HTML;
 	 * @inheritDoc
 	 */
 	public function showContent(Condition $condition) {
-		return (($condition->usesMultifactor && WCF::getUser()->multifactorActive) || (!$condition->usesMultifactor && !WCF::getUser()->multifactorActive));
+		if (!WCF::getUser()->userID) return false;
+		
+		return $this->checkUser($condition, WCF::getUser());
 	}
 	
 	/**
@@ -123,8 +125,8 @@ HTML;
 			throw new InvalidObjectArgument($objectList, UserList::class, 'Object list');
 		}
 		
-		if (isset($conditionData['usesMultifactor'])) {
-			$objectList->getConditionBuilder()->add('user_table.multifactorActive = ?', [$conditionData['usesMultifactor']]);
+		if (isset($conditionData['multifactorActive'])) {
+			$objectList->getConditionBuilder()->add('user_table.multifactorActive = ?', [$conditionData['multifactorActive']]);
 		}
 	}
 	
@@ -132,7 +134,7 @@ HTML;
 	 * @inheritDoc
 	 */
 	public function checkUser(Condition $condition, User $user) {
-		if ($condition->usesMultifactor !== null && $user->multifactorActive != $condition->usesMultifactor) {
+		if ($condition->multifactorActive !== null && $user->multifactorActive != $condition->multifactorActive) {
 			return false;
 		}
 		
