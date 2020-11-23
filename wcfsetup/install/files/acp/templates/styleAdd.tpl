@@ -146,7 +146,7 @@
 					<dd>
 						<select name="apiVersion" id="apiVersion"{if !$isTainted} disabled{/if}>
 							{foreach from=$supportedApiVersions item=supportedApiVersion}
-								<option value="{$supportedApiVersion}"{if $supportedApiVersion === $apiVersion} selected{/if}>{$supportedApiVersion} ({lang}wcf.acp.style.apiVersion.{if $supportedApiVersion === $recommendedApiVersion}recommended{else}deprecated{/if}{/lang})</option>
+								<option value="{$supportedApiVersion}"{if $supportedApiVersion === $apiVersion} selected{/if}>{$supportedApiVersionsCompatibility[$supportedApiVersion]} ({lang}wcf.acp.style.apiVersion.{if $supportedApiVersion === $recommendedApiVersion}recommended{else}deprecated{/if}{/lang})</option>
 							{/foreach}
 						</select>
 						<small>{lang}wcf.acp.style.apiVersion.description{/lang}</small>
