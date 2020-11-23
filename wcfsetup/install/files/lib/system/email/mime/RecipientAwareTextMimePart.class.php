@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\email\mime;
-use Pelago\Emogrifier;
+use Pelago\Emogrifier\CssInliner;
 use wcf\data\style\ActiveStyle;
 use wcf\system\cache\builder\StyleCacheBuilder;
 use wcf\system\email\Mailbox;
@@ -73,12 +73,9 @@ class RecipientAwareTextMimePart extends TextMimePart implements IRecipientAware
 			$result = EmailTemplateEngine::getInstance()->fetch($this->template, $this->application, $this->getTemplateVariables(), true);
 			
 			if ($this->mimeType === 'text/html') {
-				$emogrifier = new Emogrifier();
-				$emogrifier->disableInvisibleNodeRemoval();
-				
-				$emogrifier->setHtml($result);
-				
-				$result = $emogrifier->emogrify();
+				$result = CssInliner::fromHtml($result)
+					->inlineCss()
+					->render();
 			}
 			else if ($this->mimeType === 'text/plain') {
 				$result = preg_replace('~\[URL:(https?://[^\]\s]*)\]~', '<\\1>', $result);
