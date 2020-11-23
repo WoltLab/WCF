@@ -78,6 +78,7 @@ class TemplateScriptingCompiler {
 		'is_array',
 		'is_numeric',
 		'is_object',
+		'iterator_count',
 		'intval',
 		'is_subclass_of',
 		'isset',
