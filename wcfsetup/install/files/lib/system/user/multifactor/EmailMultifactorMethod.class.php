@@ -140,11 +140,11 @@ class EmailMultifactorMethod implements IMultifactorMethod {
 		
 		$lastCode = 0;
 		foreach ($codes as $code) {
-			$lastCode = max($lastCode, $code['createTime']);
+			$lastCode = \max($lastCode, $code['createTime']);
 		}
 		
 		if ($lastCode < (\TIME_NOW - self::REFRESH_AFTER)) {
-			assert(self::LENGTH <= 9, "Code does not fit into a 32-bit integer.");
+			\assert(self::LENGTH <= 9, "Code does not fit into a 32-bit integer.");
 			
 			$code = \random_int(
 				10 ** (self::LENGTH - 1),
