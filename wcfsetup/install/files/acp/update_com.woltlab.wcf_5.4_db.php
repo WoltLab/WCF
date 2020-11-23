@@ -10,6 +10,7 @@ use wcf\system\database\table\column\TextDatabaseTableColumn;
 use wcf\system\database\table\column\VarbinaryDatabaseTableColumn;
 use wcf\system\database\table\DatabaseTable;
 use wcf\system\database\table\DatabaseTableChangeProcessor;
+use wcf\system\database\table\index\DatabaseTableForeignKey;
 use wcf\system\database\table\index\DatabaseTableIndex;
 use wcf\system\database\table\index\DatabaseTablePrimaryIndex;
 use wcf\system\database\table\PartialDatabaseTable;
@@ -61,6 +62,18 @@ $tables = [
 			DatabaseTableIndex::create()
 				->type(DatabaseTableIndex::UNIQUE_TYPE)
 				->columns(['userID', 'objectTypeID']),
+		])
+		->foreignKeys([
+			DatabaseTableForeignKey::create()
+				->columns(['userID'])
+				->referencedTable('wcf1_user')
+				->referencedColumns(['userID'])
+				->onDelete('CASCADE'),
+			DatabaseTableForeignKey::create()
+				->columns(['objectTypeID'])
+				->referencedTable('wcf1_object_type')
+				->referencedColumns(['objectTypeID'])
+				->onDelete('CASCADE'),
 		]),
 	
 	DatabaseTable::create('wcf1_user_multifactor_backup')
@@ -77,6 +90,13 @@ $tables = [
 			DatabaseTableIndex::create()
 				->type(DatabaseTableIndex::UNIQUE_TYPE)
 				->columns(['setupID', 'identifier']),
+		])
+		->foreignKeys([
+			DatabaseTableForeignKey::create()
+				->columns(['setupID'])
+				->referencedTable('wcf1_user_multifactor')
+				->referencedColumns(['setupID'])
+				->onDelete('CASCADE'),
 		]),
 		
 	DatabaseTable::create('wcf1_user_multifactor_email')
@@ -89,6 +109,13 @@ $tables = [
 			DatabaseTableIndex::create()
 				->type(DatabaseTableIndex::UNIQUE_TYPE)
 				->columns(['setupID', 'code']),
+		])
+		->foreignKeys([
+			DatabaseTableForeignKey::create()
+				->columns(['setupID'])
+				->referencedTable('wcf1_user_multifactor')
+				->referencedColumns(['setupID'])
+				->onDelete('CASCADE'),
 		]),
 	
 	DatabaseTable::create('wcf1_user_multifactor_totp')
@@ -109,6 +136,13 @@ $tables = [
 			DatabaseTableIndex::create()
 				->type(DatabaseTableIndex::UNIQUE_TYPE)
 				->columns(['setupID', 'deviceID']),
+		])
+		->foreignKeys([
+			DatabaseTableForeignKey::create()
+				->columns(['setupID'])
+				->referencedTable('wcf1_user_multifactor')
+				->referencedColumns(['setupID'])
+				->onDelete('CASCADE'),
 		]),
 ];
 
