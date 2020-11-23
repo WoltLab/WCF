@@ -110,7 +110,6 @@
 		https://github.com/WoltLab/WCF/commit/1ac55ad408d5bfab4f69714c6259cc5d09ceb344
 		Administrators are highly encouraged to apply the CSS adjustments to their custom template version.
 	-->
-	
 	<instructions type="update" fromversion="5.3.0">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
