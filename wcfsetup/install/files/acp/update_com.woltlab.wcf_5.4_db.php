@@ -78,6 +78,18 @@ $tables = [
 				->type(DatabaseTableIndex::UNIQUE_TYPE)
 				->columns(['setupID', 'identifier']),
 		]),
+		
+	DatabaseTable::create('wcf1_user_multifactor_email')
+		->columns([
+			NotNullInt10DatabaseTableColumn::create('setupID'),
+			NotNullVarchar255DatabaseTableColumn::create('code'),
+			NotNullInt10DatabaseTableColumn::create('createTime'),
+		])
+		->indices([
+			DatabaseTableIndex::create()
+				->type(DatabaseTableIndex::UNIQUE_TYPE)
+				->columns(['setupID', 'code']),
+		]),
 	
 	DatabaseTable::create('wcf1_user_multifactor_totp')
 		->columns([
