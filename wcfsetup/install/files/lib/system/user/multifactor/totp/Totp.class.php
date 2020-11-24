@@ -24,7 +24,7 @@ final class Totp {
 	/**
 	 * The number of additional time steps allowed into each direction.
 	 * 
-	 * `2` into each direction allows a total of 5`` codes in total.
+	 * `2` into each direction allows a total of `5` codes in total.
 	 */
 	private const LEEWAY = 2;
 	
