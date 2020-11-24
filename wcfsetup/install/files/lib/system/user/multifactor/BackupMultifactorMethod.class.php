@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\user\multifactor;
+use wcf\system\email\SimpleEmail;
 use wcf\system\flood\FloodControl;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\ButtonFormField;
@@ -275,5 +276,47 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 		if ($statement->getAffectedRows() !== 1) {
 			throw new \RuntimeException('Unable to invalidate the code.');
 		}
+		
+		$this->sendAuthenticationEmail($setup, $usedCode);
+	}
+	
+	/**
+	 * Notifies the user that an emergency code has been used.
+	 */
+	private function sendAuthenticationEmail(Setup $setup, array $usedCode): void {
+		$sql = "SELECT	COUNT(*) - COUNT(useTime) AS count
+			FROM	wcf".WCF_N."_user_multifactor_backup
+			WHERE	setupID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$setup->getId()]);
+		
+		$remaining = $statement->fetchSingleColumn();
+	
+		$email = new SimpleEmail();
+		$email->setRecipient($setup->getUser());
+		
+		$email->setSubject(
+			WCF::getLanguage()->getDynamicVariable('wcf.user.security.multifactor.backup.authenticationEmail.subject', [
+				'remaining' => $remaining,
+				'usedCode' => $usedCode,
+				'setup' => $setup,
+			])
+		);
+		$email->setHtmlMessage(
+			WCF::getLanguage()->getDynamicVariable('wcf.user.security.multifactor.backup.authenticationEmail.body.html', [
+				'remaining' => $remaining,
+				'usedCode' => $usedCode,
+				'setup' => $setup,
+			])
+		);
+		$email->setMessage(
+			WCF::getLanguage()->getDynamicVariable('wcf.user.security.multifactor.backup.authenticationEmail.body.plain', [
+				'remaining' => $remaining,
+				'usedCode' => $usedCode,
+				'setup' => $setup,
+			])
+		);
+		
+		$email->send();
 	}
 }
