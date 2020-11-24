@@ -4920,6 +4920,17 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.security.multifactor.disable.confirm.required"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Bitte bestätige, dass du die Hinweise gelesen hast und mit der Deaktivierung fortfahren möchtest.{else}Bitte bestätigen Sie, dass Sie die Hinweise gelesen haben und mit der Deaktivierung fortfahren möchten.{/if}]]></item>
 		<item name="wcf.user.security.multifactor.disable.success"><![CDATA[Das Verfahren <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> wurde erfolgreich deaktiviert.]]></item>
 		<item name="wcf.user.security.multifactor.disable.success.full"><![CDATA[Die Mehrfaktor-Authentifizierung wurde erfolgreich deaktiviert.]]></item>
+		<item name="wcf.user.security.multifactor.backup.authenticationEmail.subject"><![CDATA[Authentifizierung mittels Notfall-Code auf {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.user.security.multifactor.backup.authenticationEmail.body.html"><![CDATA[<h2>Hallo {$setup->getUser()->username},</h2>
+
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} den Notfall-Code <code>{$usedCode[identifier]}</code> zur Mehrfaktor-Authentifizierung genutzt. Dieser Code ist nun nicht mehr gültig. {plural value=$remaining 0='<b>Es gibt keine weiteren gültigen Codes.</b>' 1='Es verbleibt ein gültiger Code.' other='Es verbleiben # gültige Codes.'}</p>
+
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Mehrfaktor-Authentifizierung in der <a href="{link controller='AccountSecurity' isHtmlEmail=true}{/link}">Account-Sicherheit</a> verwalten und dort neue Notfall-Codes generieren oder die Mehrfaktor-Authentifizierung deaktivieren.</p>]]></item>
+		<item name="wcf.user.security.multifactor.backup.authenticationEmail.body.plain"><![CDATA[Hallo {$setup->getUser()->username},
+
+{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} den Notfall-Code „{$usedCode[identifier]}“ zur Mehrfaktor-Authentifizierung genutzt. Dieser Code ist nun nicht mehr gültig. {plural value=$remaining 0='**Es gibt keine weiteren gültigen Codes.**' 1='Es verbleibt ein gültiger Code.' other='Es verbleiben # gültige Codes.'} {* this line ends with a space *}
+
+{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Mehrfaktor-Authentifizierung in der Account-Sicherheit [URL:{link controller='AccountSecurity' isEmail=true}{/link}] verwalten und dort neue Notfall-Codes generieren oder die Mehrfaktor-Authentifizierung deaktivieren.]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophäen]]></item>
