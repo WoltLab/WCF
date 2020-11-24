@@ -116,12 +116,12 @@ private static $installed = array (
     ),
     'pelago/emogrifier' => 
     array (
-      'pretty_version' => 'v2.1.1',
-      'version' => '2.1.1.0',
+      'pretty_version' => 'v5.0.0',
+      'version' => '5.0.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '8ee7fb5ad772915451ed3415c1992bd3697d4983',
+      'reference' => 'b43b650880d189b0ada61d95d0729c7424b1752d',
     ),
     'psr/http-client' => 
     array (

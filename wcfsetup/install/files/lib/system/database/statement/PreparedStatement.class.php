@@ -242,11 +242,7 @@ class PreparedStatement {
 	}
 	
 	/**
-	 * Returns a one-dimensional list of all rows holding only the value of the specified column. Please see
-	 * `fetchAll()` if you simply want to read all rows into an array. 
-	 * 
-	 * @param string $column
-	 * @return string[]|int[]|float[]
+	 * @deprecated 5.4 - Use ->fetchAll(\PDO::FETCH_COLUMN)
 	 */
 	public function fetchList($column) {
 		$list = [];

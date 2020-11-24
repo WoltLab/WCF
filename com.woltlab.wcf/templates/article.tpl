@@ -308,45 +308,7 @@
 	<section class="section relatedArticles">
 		<h2 class="sectionTitle">{lang}wcf.article.relatedArticles{/lang}</h2>
 		
-		<ul class="articleList">
-			{foreach from=$relatedArticles item='relatedArticle'}
-				<li>
-					<a href="{$relatedArticle->getLink()}">
-						{if $relatedArticle->getTeaserImage() && $relatedArticle->getTeaserImage()->hasThumbnail('tiny')}
-							<div class="box128">
-								<div class="articleListImage">{@$relatedArticle->getTeaserImage()->getThumbnailTag('tiny')}</div>
-						{/if}
-						
-						<div>
-							<div class="containerHeadline">
-								<h3 class="articleListTitle">{$relatedArticle->getTitle()}</h3>
-								<ul class="inlineList articleListMetaData">
-									<li>
-										<span class="icon icon16 fa-clock-o"></span>
-										{@$relatedArticle->time|time}
-									</li>
-									
-									{if $relatedArticle->enableComments}
-										<li>
-											<span class="icon icon16 fa-comments"></span>
-											{lang article=$relatedArticle}wcf.article.articleComments{/lang}
-										</li>
-									{/if}
-								</ul>
-							</div>
-							
-							<div class="containerContent articleListTeaser">
-								{@$relatedArticle->getFormattedTeaser()}
-							</div>
-						</div>
-								
-						{if $relatedArticle->getTeaserImage() && $relatedArticle->getTeaserImage()->hasThumbnail('tiny')}
-							</div>
-						{/if}
-					</a>
-				</li>
-			{/foreach}
-		</ul>
+		{include file='articleListItems' objects=$relatedArticles}
 	</section>
 {/if}
 

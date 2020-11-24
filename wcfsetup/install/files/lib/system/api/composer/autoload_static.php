@@ -30,7 +30,7 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         array (
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Http\\Client\\' => 16,
-            'Pelago\\' => 7,
+            'Pelago\\Emogrifier\\' => 18,
             'ParagonIE\\ConstantTime\\' => 23,
         ),
         'G' => 
@@ -66,7 +66,7 @@ class ComposerStaticInita1f5f7c74275d47a45049a2936db1d0d
         array (
             0 => __DIR__ . '/..' . '/psr/http-client/src',
         ),
-        'Pelago\\' => 
+        'Pelago\\Emogrifier\\' => 
         array (
             0 => __DIR__ . '/..' . '/pelago/emogrifier/src',
         ),

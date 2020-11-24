@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "11c5b4995ff3a595d75c77350b9556ec",
+    "content-hash": "0930361ee03b18bc90818e4c0c6afddd",
     "packages": [
         {
             "name": "chrisjean/php-ico",
@@ -537,39 +537,38 @@
         },
         {
             "name": "pelago/emogrifier",
-            "version": "v2.1.1",
+            "version": "v5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MyIntervals/emogrifier.git",
-                "reference": "8ee7fb5ad772915451ed3415c1992bd3697d4983"
+                "reference": "b43b650880d189b0ada61d95d0729c7424b1752d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MyIntervals/emogrifier/zipball/8ee7fb5ad772915451ed3415c1992bd3697d4983",
-                "reference": "8ee7fb5ad772915451ed3415c1992bd3697d4983",
+                "url": "https://api.github.com/repos/MyIntervals/emogrifier/zipball/b43b650880d189b0ada61d95d0729c7424b1752d",
+                "reference": "b43b650880d189b0ada61d95d0729c7424b1752d",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "ext-libxml": "*",
-                "php": "^5.5.0 || ~7.0.0 || ~7.1.0 || ~7.2.0 || ~7.3.0",
-                "symfony/css-selector": "^3.4.0 || ^4.0.0"
+                "php": "~7.1.0 || ~7.2.0 || ~7.3.0 || ~7.4.0 || ~8.0.0",
+                "symfony/css-selector": "^3.4.32 || ^4.4 || ^5.1"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.2.0",
-                "phpmd/phpmd": "^2.6.0",
-                "phpunit/phpunit": "^4.8.0",
-                "squizlabs/php_codesniffer": "^3.3.2"
+                "php-parallel-lint/php-parallel-lint": "^1.2.0",
+                "slevomat/coding-standard": "^6.4.1",
+                "squizlabs/php_codesniffer": "^3.5.8"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1.x-dev"
+                    "dev-master": "5.0.x-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Pelago\\": "src/"
+                    "Pelago\\Emogrifier\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -577,16 +576,6 @@
                 "MIT"
             ],
             "authors": [
-                {
-                    "name": "John Reeve",
-                    "email": "jreeve@pelagodesign.com"
-                },
-                {
-                    "name": "Cameron Brooks"
-                },
-                {
-                    "name": "Jaime Prado"
-                },
                 {
                     "name": "Oliver Klee",
                     "email": "github@oliverklee.de"
@@ -596,8 +585,18 @@
                     "email": "zoli.szabo+github@gmail.com"
                 },
                 {
+                    "name": "John Reeve",
+                    "email": "jreeve@pelagodesign.com"
+                },
+                {
                     "name": "Jake Hotson",
                     "email": "jake@qzdesign.co.uk"
+                },
+                {
+                    "name": "Cameron Brooks"
+                },
+                {
+                    "name": "Jaime Prado"
                 }
             ],
             "description": "Converts CSS styles into inline style attributes in your HTML code",
@@ -607,7 +606,11 @@
                 "email",
                 "pre-processing"
             ],
-            "time": "2018-12-10T10:36:30+00:00"
+            "support": {
+                "issues": "https://github.com/MyIntervals/emogrifier/issues",
+                "source": "https://github.com/MyIntervals/emogrifier"
+            },
+            "time": "2020-11-23T18:37:25+00:00"
         },
         {
             "name": "psr/http-client",

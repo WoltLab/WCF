@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pelago\Emogrifier\HtmlProcessor;
 
 /**
@@ -8,8 +10,6 @@ namespace Pelago\Emogrifier\HtmlProcessor;
  * - disentangle incorrectly nested tags
  * - add HEAD and BODY elements (if they are missing)
  * - reformat the HTML
- *
- * @internal This class currently is a new technology preview, and its API is still in flux. Don't use it in production.
  *
  * @author Oliver Klee <github@oliverklee.de>
  */

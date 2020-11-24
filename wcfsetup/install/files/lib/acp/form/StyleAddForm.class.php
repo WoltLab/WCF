@@ -225,6 +225,12 @@ class StyleAddForm extends AbstractForm {
 	 */
 	public $customAssets = [];
 	
+	public $supportedApiVersionsCompatibility = [
+		'3.0' => '3.0',
+		'3.1' => '3.1',
+		'5.2' => '5.2 / 5.3',
+	];
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -887,6 +893,7 @@ class StyleAddForm extends AbstractForm {
 			'tmpHash' => $this->tmpHash,
 			'variables' => $this->variables,
 			'supportedApiVersions' => Style::$supportedApiVersions,
+			'supportedApiVersionsCompatibility' => $this->supportedApiVersionsCompatibility,
 			'newVariables' => $this->newVariables,
 			'scrollOffsets' => $this->scrollOffsets,
 			'coverPhotoMinHeight' => UserCoverPhoto::MIN_HEIGHT,

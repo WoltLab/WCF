@@ -161,6 +161,10 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode {
 		$blockElements = HtmlBBCodeParser::getInstance()->getBlockBBCodes();
 		while ($parent = $parent->parentNode) {
 			switch ($parent->nodeName) {
+				case 'a':
+					// Permit the media element to be placed inside a link.
+					break 2;
+				
 				case 'blockquote':
 				case 'body':
 				case 'code':
