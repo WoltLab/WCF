@@ -37,6 +37,7 @@ input.multifactorBackupCode {
 .multifactorTotpNewDevice {
 	display: flex;
 	flex-direction: column;
+	margin-top: 20px;
 	
 	.totpSecretContainer {
 		text-align: center;
@@ -45,6 +46,11 @@ input.multifactorBackupCode {
 			width: 200px;
 			height: 200px;
 		}
+	}
+	
+	.totpSecret {
+		display: inline-block;
+		margin-top: 10px;
 	}
 	
 	.multifactorTotpNewDeviceFields {
