@@ -23,7 +23,7 @@ class HtmlPruner extends AbstractHtmlProcessor
      *
      * @var string
      */
-    const DISPLAY_NONE_MATCHER
+    private const DISPLAY_NONE_MATCHER
         = '//*[@style and contains(translate(translate(@style," ",""),"NOE","noe"),"display:none")'
         . ' and not(@class and contains(concat(" ", normalize-space(@class), " "), " -emogrifier-keep "))]';
 
@@ -39,7 +39,6 @@ class HtmlPruner extends AbstractHtmlProcessor
             return $this;
         }
 
-        /** @var \DOMNode $element */
         foreach ($elementsWithStyleDisplayNone as $element) {
             $parentNode = $element->parentNode;
             if ($parentNode !== null) {
@@ -83,10 +82,8 @@ class HtmlPruner extends AbstractHtmlProcessor
      *
      * @param \DOMNodeList $elements
      * @param string[] $classesToKeep
-     *
-     * @return void
      */
-    private function removeClassesFromElements(\DOMNodeList $elements, array $classesToKeep)
+    private function removeClassesFromElements(\DOMNodeList $elements, array $classesToKeep): void
     {
         $classesToKeepIntersector = new ArrayIntersector($classesToKeep);
 
@@ -106,10 +103,8 @@ class HtmlPruner extends AbstractHtmlProcessor
      * Removes the `class` attribute from each element in `$elements`.
      *
      * @param \DOMNodeList $elements
-     *
-     * @return void
      */
-    private function removeClassAttributeFromElements(\DOMNodeList $elements)
+    private function removeClassAttributeFromElements(\DOMNodeList $elements): void
     {
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
