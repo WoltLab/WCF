@@ -16,12 +16,12 @@ abstract class AbstractHtmlProcessor
     /**
      * @var string
      */
-    const DEFAULT_DOCUMENT_TYPE = '<!DOCTYPE html>';
+    protected const DEFAULT_DOCUMENT_TYPE = '<!DOCTYPE html>';
 
     /**
      * @var string
      */
-    const CONTENT_TYPE_META_TAG = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
+    protected const CONTENT_TYPE_META_TAG = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
 
     /**
      * @var string Regular expression part to match tag names that PHP's DOMDocument implementation is not aware are
@@ -30,7 +30,7 @@ abstract class AbstractHtmlProcessor
      *
      * @see https://bugs.php.net/bug.php?id=73175
      */
-    const PHP_UNRECOGNIZED_VOID_TAGNAME_MATCHER = '(?:command|embed|keygen|source|track|wbr)';
+    protected const PHP_UNRECOGNIZED_VOID_TAGNAME_MATCHER = '(?:command|embed|keygen|source|track|wbr)';
 
     /**
      * @var \DOMDocument|null
@@ -91,10 +91,8 @@ abstract class AbstractHtmlProcessor
      * Sets the HTML to process.
      *
      * @param string $html the HTML to process, must be UTF-8-encoded
-     *
-     * @return void
      */
-    private function setHtml(string $html)
+    private function setHtml(string $html): void
     {
         $this->createUnifiedDomDocument($html);
     }
@@ -124,10 +122,8 @@ abstract class AbstractHtmlProcessor
 
     /**
      * @param \DOMDocument $domDocument
-     *
-     * @return void
      */
-    private function setDomDocument(\DOMDocument $domDocument)
+    private function setDomDocument(\DOMDocument $domDocument): void
     {
         $this->domDocument = $domDocument;
         $this->xPath = new \DOMXPath($this->domDocument);
@@ -188,10 +184,8 @@ abstract class AbstractHtmlProcessor
      * The DOM document will always have a BODY element and a document type.
      *
      * @param string $html
-     *
-     * @return void
      */
-    private function createUnifiedDomDocument(string $html)
+    private function createUnifiedDomDocument(string $html): void
     {
         $this->createRawDomDocument($html);
         $this->ensureExistenceOfBodyElement();
@@ -201,10 +195,8 @@ abstract class AbstractHtmlProcessor
      * Creates a DOMDocument instance from the given HTML and stores it in $this->domDocument.
      *
      * @param string $html
-     *
-     * @return void
      */
-    private function createRawDomDocument(string $html)
+    private function createRawDomDocument(string $html): void
     {
         $domDocument = new \DOMDocument();
         $domDocument->strictErrorChecking = false;
@@ -328,11 +320,9 @@ abstract class AbstractHtmlProcessor
     /**
      * Checks that $this->domDocument has a BODY element and adds it if it is missing.
      *
-     * @return void
-     *
      * @throws \UnexpectedValueException
      */
-    private function ensureExistenceOfBodyElement()
+    private function ensureExistenceOfBodyElement(): void
     {
         if ($this->getDomDocument()->getElementsByTagName('body')->item(0) !== null) {
             return;

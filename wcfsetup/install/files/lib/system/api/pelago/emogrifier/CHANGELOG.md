@@ -10,11 +10,70 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ### Changed
 
 ### Deprecated
-- Support for PHP 7.1 will be removed in Emogrifier 6.0.
 
 ### Removed
 
 ### Fixed
+
+## 5.0.0
+
+### Added
+- Add an `.editorconfig` file
+  ([#940](https://github.com/MyIntervals/emogrifier/pull/940))
+- Support PHP 8.0
+  ([#926](https://github.com/MyIntervals/emogrifier/pull/926))
+- Run the CI build once a week
+  ([#933](https://github.com/MyIntervals/emogrifier/pull/933))
+- Move more development tools to PHIVE
+  ([#894](https://github.com/MyIntervals/emogrifier/pull/894),
+  [#907](https://github.com/MyIntervals/emogrifier/pull/907))
+
+### Changed
+- Automatically add a backslash for global functions
+  ([#909](https://github.com/MyIntervals/emogrifier/pull/909))
+- Update the development tools
+  ([#898](https://github.com/MyIntervals/emogrifier/pull/898),
+  [#895](https://github.com/MyIntervals/emogrifier/pull/895))
+- Upgrade to PHPUnit 7.5
+  ([#888](https://github.com/MyIntervals/emogrifier/pull/888))
+- Enforce constant visibility
+  ([#892](https://github.com/MyIntervals/emogrifier/pull/892))
+- Rename the PHPCS configuration file
+  ([#891](https://github.com/MyIntervals/emogrifier/pull/891),
+  [#896](https://github.com/MyIntervals/emogrifier/pull/896))
+- Make use of PHP 7.1 language features
+  ([#883](https://github.com/MyIntervals/emogrifier/pull/883))
+
+### Deprecated
+- Support for PHP 7.1 will be removed in Emogrifier 6.0.
+
+### Removed
+- Drop support for Symfony 4.3 and 5.0
+  ([#936](https://github.com/MyIntervals/emogrifier/pull/936))
+- Stop checking `tests/` with Psalm
+  ([#885](https://github.com/MyIntervals/emogrifier/pull/885))
+- Drop support for PHP 7.0
+  ([#880](https://github.com/MyIntervals/emogrifier/pull/880))
+
+### Fixed
+- Fix a nonsensical code example in the README
+  ([#920](https://github.com/MyIntervals/emogrifier/issues/920),
+  [#935](https://github.com/MyIntervals/emogrifier/pull/935))
+- Remove `!important` from `style` attributes also when uppercase, mixed case or
+  having whitespace after `!`
+  ([#911](https://github.com/MyIntervals/emogrifier/pull/911))
+- Copy rules using `:...of-type` without a type to the `<style>` element
+  ([#904](https://github.com/MyIntervals/emogrifier/pull/904))
+- Support combinator followed by dynamic pseudo-class in minified CSS
+  ([#903](https://github.com/MyIntervals/emogrifier/pull/903))
+- Preserve all uninlinable (or otherwise unprocessed) at-rules
+  ([#899](https://github.com/MyIntervals/emogrifier/pull/899))
+- Allow Windows CLI to run development tools installed through PHIVE
+  ([#900](https://github.com/MyIntervals/emogrifier/pull/900))
+- Switch to a maintained package for parallel PHP linting
+  ([#884](https://github.com/MyIntervals/emogrifier/pull/884))
+- Add `.0` version suffixes to PHP version requirements
+  ([#881](https://github.com/MyIntervals/emogrifier/pull/881))
 
 ## 4.0.0
 
@@ -47,7 +106,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
   ([#866](https://github.com/MyIntervals/emogrifier/pull/866))
 - Upgrade to V2 of the PHP setup GitHub action
   ([#861](https://github.com/MyIntervals/emogrifier/pull/861))
-- Move the development tools to Phive
+- Move the development tools to PHIVE
   ([#850](https://github.com/MyIntervals/emogrifier/pull/850),
   [#851](https://github.com/MyIntervals/emogrifier/pull/851))
 - Switch the parallel linting to a maintained fork
