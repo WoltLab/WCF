@@ -53,11 +53,12 @@ class PackageUpdateServer extends DatabaseObject {
 		
 		parent::handleData($data);
 		
+		$prefix = ENABLE_ENTERPRISE_MODE ? 'cloud/' : '';
 		if ($this->isWoltLabUpdateServer()) {
-			$this->data['serverURL'] = 'http://update.woltlab.com/'.\wcf\getMinorVersion().'/';
+			$this->data['serverURL'] = 'http://update.woltlab.com/'.$prefix.\wcf\getMinorVersion().'/';
 		}
 		if ($this->isWoltLabStoreServer()) {
-			$this->data['serverURL'] = 'http://store.woltlab.com/'.\wcf\getMinorVersion().'/';
+			$this->data['serverURL'] = 'http://store.woltlab.com/'.$prefix.\wcf\getMinorVersion().'/';
 		}
 		if ($this->isWoltLabUpdateServer() || $this->isWoltLabStoreServer()) {
 			$this->data['isDisabled'] = 0;

@@ -150,7 +150,7 @@ abstract class AbstractArticlePage extends AbstractPage {
 					" . $conditionBuilder . "
 					GROUP BY	tag_to_object.objectID
 					HAVING		COUNT(*) >= " . round(count($this->tags) * ARTICLE_RELATED_ARTICLES_MATCH_THRESHOLD / 100) . "
-					ORDER BY	count DESC, MAX(article.time) DESC";
+					ORDER BY	count DESC, RAND()";
 				$statement = WCF::getDB()->prepareStatement($sql, ARTICLE_RELATED_ARTICLES);
 				$statement->execute($conditionBuilder->getParameters());
 				$articleIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
