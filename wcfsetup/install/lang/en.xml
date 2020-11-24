@@ -5089,6 +5089,10 @@ Open the link below to access the user profile:
 		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser"><![CDATA[Uses mobile device]]></item>
 		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser.error.conflict"><![CDATA[You cannot simultaneously select “Uses mobile device” and “Uses desktop”.]]></item>
 		<item name="wcf.user.condition.mobileBrowser.usesNoMobileBrowser"><![CDATA[Uses desktop]]></item>
+		<item name="wcf.user.condition.multifactor"><![CDATA[Multi-Factor Authentication]]></item>
+		<item name="wcf.user.condition.multifactor.multifactorActive"><![CDATA[Multi-Factor Authentication active]]></item>
+		<item name="wcf.user.condition.multifactor.multifactorActive.error.conflict"><![CDATA[You cannot simultaneously select “Multi-Factor Authentication active” and “Multi-Factor Authentication not active”.]]></item>
+		<item name="wcf.user.condition.multifactor.multifactorNotActive"><![CDATA[Multi-Factor Authentication not active]]></item>
 		<item name="wcf.user.condition.notGroupIDs"><![CDATA[User Not in User Group(s)]]></item>
 		<item name="wcf.user.condition.notGroupIDs.description"><![CDATA[User is not a member of the selected user group(s).]]></item>
 		<item name="wcf.user.condition.notGroupIDs.error.groupIDsIntersection"><![CDATA[The selected user group(s) in “User in User Group(s)” and “User Not in User Group(s)” are conflicting.]]></item>

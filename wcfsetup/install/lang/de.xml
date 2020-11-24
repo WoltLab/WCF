@@ -5092,6 +5092,10 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser"><![CDATA[Verwendet mobilen Browser]]></item>
 		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser.error.conflict"><![CDATA[„Verwendet mobilen Browser“ und „Verwendet keinen mobilen Browser“ können nicht gleichzeitig ausgewählt werden.]]></item>
 		<item name="wcf.user.condition.mobileBrowser.usesNoMobileBrowser"><![CDATA[Verwendet keinen mobilen Browser]]></item>
+		<item name="wcf.user.condition.multifactor"><![CDATA[Mehrfaktor-Authentifizierung]]></item>
+		<item name="wcf.user.condition.multifactor.multifactorActive"><![CDATA[Mehrfaktor-Authentifizierung aktiv]]></item>
+		<item name="wcf.user.condition.multifactor.multifactorActive.error.conflict"><![CDATA[„Mehrfaktor-Authentifizierung aktiv“ und „Mehrfaktor-Authentifizierung nicht aktiv“ können nicht gleichzeitig ausgewählt werden.]]></item>
+		<item name="wcf.user.condition.multifactor.multifactorNotActive"><![CDATA[Mehrfaktor-Authentifizierung nicht aktiv]]></item>
 		<item name="wcf.user.condition.notGroupIDs"><![CDATA[nicht in Benutzergruppen]]></item>
 		<item name="wcf.user.condition.notGroupIDs.description"><![CDATA[Benutzer dürfen in keiner der ausgewählten Benutzergruppen Mitglied sein.]]></item>
 		<item name="wcf.user.condition.notGroupIDs.error.groupIDsIntersection"><![CDATA[Die ausgewählten Benutzergruppen in „in Benutzergruppen“ und „nicht in Benutzergruppen“ sind widersprüchlich.]]></item>
