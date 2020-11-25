@@ -30,6 +30,19 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 	 */
 	private $algorithm;
 	
+	// 4 chunks of 5 digits each result in code space of 10^20 which
+	// is equivalent to 66.4 bits of security. The unhashed 3 chunks
+	// of 5 digits result in 10^15 which is equivalent to 49.8 bits
+	// of security.
+	// This is sufficient for a rate-limited online attack, but a bit
+	// short for an offline attack using a stolen database. In the
+	// latter case the TOTP secret which needs to be stored in a form
+	// that allows generating valid codes poses a far bigger threat
+	// to a single user's security.
+	// Thus we use a 20 digit code. It gives users a warm and fuzzy
+	// feeling that the codes cannot be easily guessed (due to being
+	// longish), while not being unwieldy like a hexadecimal, base32
+	// or base64 string.
 	public const CHUNKS = 4;
 	public const CHUNK_LENGTH = 5;
 	
