@@ -164,6 +164,9 @@ define(["require", "exports"], function (require, exports) {
      * Recursively serializes an object into an encoded URI parameter string.
      */
     function serialize(obj, prefix) {
+        if (obj === null) {
+            return "";
+        }
         const parameters = [];
         Object.keys(obj).forEach((key) => {
             const parameterKey = prefix ? prefix + "[" + key + "]" : key;
