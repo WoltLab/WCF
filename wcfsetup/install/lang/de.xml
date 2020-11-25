@@ -4895,6 +4895,8 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.security.multifactor.email.body.plain"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Einmalcode lautet: {$code}]]></item>
 		<item name="wcf.user.security.multifactor.methods"><![CDATA[Verfahren]]></item>
 		<item name="wcf.user.security.multifactor.authentication"><![CDATA[Mehrfaktor-Authentifizierung]]></item>
+		<item name="wcf.user.security.multifactor.authentication.description"><![CDATA[Dieses Benutzerkonto wird durch einen zweiten Faktor geschützt.]]></item>
+		<item name="wcf.user.security.multifactor.authentication.loginAs"><![CDATA[Anmelden als]]></item>
 		<item name="wcf.user.security.multifactor.backup.code"><![CDATA[Notfall-Code]]></item>
 		<item name="wcf.user.security.multifactor.backup.code.description"><![CDATA[Ein Notfall-Code besteht aus 20 Ziffern und ist nur einmal gültig.]]></item>
 		<item name="wcf.user.security.multifactor.totp.deviceName.description.auth"><![CDATA[Das Gerät, das den genutzten Éinmalcode generiert hat.]]></item>

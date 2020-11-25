@@ -4891,7 +4891,9 @@ Open the link below to access the user profile:
 		<item name="wcf.user.security.multifactor.email.body.html"><![CDATA[Your one time code is: <pre>{$code}</pre>]]></item>
 		<item name="wcf.user.security.multifactor.email.body.plain"><![CDATA[Your one time code is: {$code}]]></item>
 		<item name="wcf.user.security.multifactor.methods"><![CDATA[Method]]></item>
-		<item name="wcf.user.security.multifactor.authentication"><![CDATA[Multi-Factor Authentication]]></item>
+		<item name="wcf.user.security.multifactor.authentication"><![CDATA[Multi-factor Authentication]]></item>
+		<item name="wcf.user.security.multifactor.authentication.description"><![CDATA[This user account is protected by a second factor.]]></item>
+		<item name="wcf.user.security.multifactor.authentication.loginAs"><![CDATA[Log in as]]></item>
 		<item name="wcf.user.security.multifactor.backup.code"><![CDATA[Emergency Code]]></item>
 		<item name="wcf.user.security.multifactor.backup.code.description"><![CDATA[An emergency code consists of 20 digits and may only be used once.]]></item>
 		<item name="wcf.user.security.multifactor.totp.deviceName.description.auth"><![CDATA[The device that generated the used one time code.]]></item>
