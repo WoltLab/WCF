@@ -22,10 +22,6 @@
 
 	<div class="tabMenuContent">
 		<div class="section">
-			<dl>
-				<dt>{lang}wcf.user.security.multifactor.authentication.loginAs{/lang}</dt>
-				<dd>{$user->username}</dd>
-			</dl>
 			{@$form->getHtml()}
 		</div>
 	</div>
