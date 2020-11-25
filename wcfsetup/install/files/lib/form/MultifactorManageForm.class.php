@@ -4,6 +4,8 @@ use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserEditor;
 use wcf\form\AbstractFormBuilderForm;
+use wcf\system\background\BackgroundQueueHandler;
+use wcf\system\email\SimpleEmail;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\FormDocument;
@@ -123,13 +125,23 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 		
 		$this->setup = $setup;
 		
+		$sendEmail = false;
 		if (!$this->hasBackupCodes()) {
 			$this->generateBackupCodes();
+			$sendEmail = true;
 		}
 		
 		$this->enableMultifactorAuth();
 		
 		WCF::getDB()->commitTransaction();
+		
+		// Send the email outside of the transaction.
+		// 
+		// Sending the email is not an absolute requirement and queueing some external
+		// process that might need to be rolled back is a bit wonky from an UX perspective.
+		if ($sendEmail) {
+			$this->sendEmail();
+		}
 		
 		$this->saved();
 	}
@@ -186,7 +198,7 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 	}
 	
 	/**
-	 * Enables multifactor authentication for the user.
+	 * Enables multi-factor authentication for the user.
 	 */
 	protected function enableMultifactorAuth(): void {
 		// This method intentionally does not use UserAction to prevent
@@ -205,6 +217,51 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 		$editor->update([
 			'multifactorActive' => 1,
 		]);
+	}
+	
+	/**
+	 * Sends an email letting the user know that multi-factor authentication
+	 * is enabled now.
+	 */
+	protected function sendEmail(): void {
+		$email = new SimpleEmail();
+		$email->setRecipient(WCF::getUser());
+		
+		$email->setSubject(
+			WCF::getLanguage()->getDynamicVariable('wcf.user.security.multifactor.setupEmail.subject', [
+				'user' => WCF::getUser(),
+				'method' => $this->method,
+				'backupMethod' => $this->getBackupCodesObjectType(),
+			])
+		);
+		$email->setHtmlMessage(
+			WCF::getLanguage()->getDynamicVariable('wcf.user.security.multifactor.setupEmail.body.html', [
+				'user' => WCF::getUser(),
+				'method' => $this->method,
+				'backupMethod' => $this->getBackupCodesObjectType(),
+			])
+		);
+		$email->setMessage(
+			WCF::getLanguage()->getDynamicVariable('wcf.user.security.multifactor.setupEmail.body.plain', [
+				'user' => WCF::getUser(),
+				'method' => $this->method,
+				'backupMethod' => $this->getBackupCodesObjectType(),
+			])
+		);
+		
+		$jobs = $email->getEmail()->getJobs();
+		foreach ($jobs as $job) {
+			// Wait 15 minutes to give the user a bit of time to complete the process of
+			// storing their backup codes somewhere without distracting them by causing
+			// a notification to arrive.
+			// It also allows us to remind the user of the importance of the backup codes
+			// in case they simply close the tab without reading, similar to remarketing
+			// emails.
+			BackgroundQueueHandler::getInstance()->enqueueIn(
+				$job,
+				15 * 60
+			);
+		}
 	}
 	
 	/**
