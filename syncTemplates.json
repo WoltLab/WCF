@@ -26,6 +26,7 @@
     "__labelFormField",
     "__mediaSetCategoryDialog",
     "__messageQuoteManager",
+    "__multifactorAuthenticationLoginAs",
     "__multifactorBackupCodeField",
     "__multifactorEmailCodeField",
     "__multifactorTotpCodeField",
