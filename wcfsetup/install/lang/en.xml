@@ -4942,6 +4942,7 @@ You can manage multi-factor authentication within the Account Security page [URL
 You successfully enabled multi-factor authentication using the „{lang}wcf.user.security.multifactor.{$method->objectType}{/lang}“ method. Going forward you will need to have your second factor handy for every login.
 
 You also received a list of emergency codes to use when your second factor becomes unavailable. **Did you store these emergency codes securely?** If you forgot you can do now by generating new codes in the Emergency Code Management [URL:{link controller='MultifactorManage' object=$backupMethod isEmail=true}{/link}].]]></item>
+		<item name="wcf.user.security.multifactor.authentication.noPendingUserChange"><![CDATA[The multi-factor authentication was not completed in time. The incomplete login process was aborted for security reasons. Please <a href="{link controller='Login'}{/link}">Login</a> once again.]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophies]]></item>

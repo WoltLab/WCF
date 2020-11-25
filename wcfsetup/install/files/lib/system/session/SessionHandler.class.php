@@ -133,11 +133,12 @@ final class SessionHandler extends SingletonFactory {
 	 */
 	private $xsrfToken;
 	
-	private const ACP_SESSION_LIFETIME = 7200;
-	private const GUEST_SESSION_LIFETIME = 7200;
-	private const USER_SESSION_LIFETIME = 86400 * 14;
+	private const ACP_SESSION_LIFETIME = 2 * 3600;
+	private const GUEST_SESSION_LIFETIME = 2 * 3600;
+	private const USER_SESSION_LIFETIME = 14 * 86400;
 	
 	private const CHANGE_USER_AFTER_MULTIFACTOR_KEY = '__changeUserAfterMultifactor__';
+	private const PENDING_USER_LIFETIME = 15 * 60;
 	
 	/**
 	 * Provides access to session data.
@@ -705,7 +706,10 @@ final class SessionHandler extends SingletonFactory {
 	 */
 	public function changeUserAfterMultifactor(User $user): bool {
 		if ($user->multifactorActive) {
-			$this->register(self::CHANGE_USER_AFTER_MULTIFACTOR_KEY, $user->userID);
+			$this->register(self::CHANGE_USER_AFTER_MULTIFACTOR_KEY, [
+				'userId' => $user->userID,
+				'expires' => TIME_NOW + self::PENDING_USER_LIFETIME,
+			]);
 			$this->setLanguageID($user->languageID);
 			
 			return true;
@@ -746,8 +750,15 @@ final class SessionHandler extends SingletonFactory {
 	 * Returns the pending user change initiated by changeUserAfterMultifactor().
 	 */
 	public function getPendingUserChange(): ?User {
-		$userId = $this->getVar(self::CHANGE_USER_AFTER_MULTIFACTOR_KEY);
-		if (!$userId) {
+		$data = $this->getVar(self::CHANGE_USER_AFTER_MULTIFACTOR_KEY);
+		if (!$data) {
+			return null;
+		}
+		
+		$userId = $data['userId'];
+		$expires = $data['expires'];
+		
+		if ($expires < TIME_NOW) {
 			return null;
 		}
 		
