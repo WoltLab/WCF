@@ -4,6 +4,7 @@ use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\email\SimpleEmail;
 use wcf\system\flood\FloodControl;
 use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\CustomFormNode;
 use wcf\system\form\builder\field\ButtonFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -57,6 +58,10 @@ class EmailMultifactorMethod implements IMultifactorMethod {
 			$generateContainer = FormContainer::create('enableContainer')
 				->label('wcf.user.security.multifactor.email.enable')
 				->appendChildren([
+					CustomFormNode::create('explanation')
+						->content(WCF::getLanguage()->getDynamicVariable(
+							'wcf.user.security.multifactor.email.enable.description'
+						)),
 					ButtonFormField::create('enable')
 						->buttonLabel('wcf.user.security.multifactor.email.enable')
 						->objectProperty('action')

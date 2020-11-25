@@ -4933,6 +4933,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 {if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} den Notfall-Code „{$usedCode[identifier]}“ zur Mehrfaktor-Authentifizierung genutzt. Dieser Code ist nun nicht mehr gültig. {plural value=$remaining 0='**Es gibt keine weiteren gültigen Codes.**' 1='Es verbleibt ein gültiger Code.' other='Es verbleiben # gültige Codes.'} {* this line ends with a space *}
 
 {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Mehrfaktor-Authentifizierung in der Account-Sicherheit [URL:{link controller='AccountSecurity' isEmail=true}{/link}] verwalten und dort neue Notfall-Codes generieren oder die Mehrfaktor-Authentifizierung deaktivieren.]]></item>
+		<item name="wcf.user.security.multifactor.email.enable.description"><![CDATA[<p>Bei aktivierter Bestätigung über E-Mail {if LANGUAGE_USE_INFORMAL_VARIANT}erhältst du{else}erhalten Sie{/if} bei jedem Login einen Einmalcode an {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} hinterlegte E-Mail-Adresse ({$__wcf->user->email}). {if LANGUAGE_USE_INFORMAL_VARIANT}Du musst Zugriff auf dein E-Mail-Postfach haben, damit du dich erfolgreich einloggen kannst.{else}Sie müssen Zugriff auf Ihr E-Mail-Postfach haben, damit Sie sich erfolgreich einloggen können.{/if}</p>]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophäen]]></item>
