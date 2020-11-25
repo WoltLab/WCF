@@ -4891,14 +4891,14 @@ Open the link below to access the user profile:
 		<item name="wcf.user.security.multifactor.email.body.html"><![CDATA[Your one time code is: <pre>{$code}</pre>]]></item>
 		<item name="wcf.user.security.multifactor.email.body.plain"><![CDATA[Your one time code is: {$code}]]></item>
 		<item name="wcf.user.security.multifactor.methods"><![CDATA[Method]]></item>
-		<item name="wcf.user.security.multifactor.authentication"><![CDATA[Multi-Factor Authentication]]></item>
+		<item name="wcf.user.security.multifactor.authentication"><![CDATA[Multi-factor Authentication]]></item>
+		<item name="wcf.user.security.multifactor.authentication.description"><![CDATA[This user account is protected by a second factor.]]></item>
+		<item name="wcf.user.security.multifactor.authentication.loginAs"><![CDATA[Log in as]]></item>
 		<item name="wcf.user.security.multifactor.backup.code"><![CDATA[Emergency Code]]></item>
 		<item name="wcf.user.security.multifactor.backup.code.description"><![CDATA[An emergency code consists of 20 digits and may only be used once.]]></item>
 		<item name="wcf.user.security.multifactor.totp.deviceName.description.auth"><![CDATA[The device that generated the used one time code.]]></item>
 		<item name="wcf.user.security.multifactor.authentication.user.headline"><![CDATA[Hello {$user->username}!]]></item>
 		<item name="wcf.user.security.multifactor.authentication.user.content"><![CDATA[The provided credentials are correct, but your account is protected with multi-factor authentication. Please use your second factor to complete the login process.]]></item>
-		<item name="wcf.user.security.multifactor.authentication.logout"><![CDATA[Abort and Logout]]></item>
-		<item name="wcf.user.security.multifactor.authentication.logout.success"><![CDATA[The multi-factor authentication has successfully been aborted.]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.description"><![CDATA[<p class="small">Generate one time codes with an app on your smartphone.</p>]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.description"><![CDATA[<p class="small">You will receive a one time code via email after logging in.</p>]]></item>
 		<item name="wcf.user.security.multifactor.description"><![CDATA[Protect your account by requiring authentication with a second factor for every login.]]></item>
@@ -4927,10 +4927,21 @@ Open the link below to access the user profile:
 <p>You can manage multi-factor authentication within the <a href="{link controller='AccountSecurity' isHtmlEmail=true}{/link}">Account Security</a> page. Within account security you can generate new emergency codes or disable multi-factor authentication.</p>]]></item>
 		<item name="wcf.user.security.multifactor.backup.authenticationEmail.body.plain"><![CDATA[Dear {$setup->getUser()->username},
 
-You used the emergency code “{$usedCode[identifier]}“ for multi-factor authentication. This code no longer is valid. {plural value=$remaining 0='**You don't have any remaining codes.**' 1='You have one remaining code.' other='You have # remaining codes.'} {* this line ends with a space *}
+You used the emergency code “{$usedCode[identifier]}” for multi-factor authentication. This code no longer is valid. {plural value=$remaining 0='**You don't have any remaining codes.**' 1='You have one remaining code.' other='You have # remaining codes.'} {* this line ends with a space *}
 
 You can manage multi-factor authentication within the Account Security page [URL:{link controller='AccountSecurity' isEmail=true}{/link}]. Within account security you can generate new emergency codes or disable multi-factor authentication.]]></item>
 		<item name="wcf.user.security.multifactor.email.enable.description"><![CDATA[<p>With enabled confirmation via email you will receive a one time code via email whenever you login. You will need to have access to your email inbox to be able to login successfully.</p>]]></item>
+		<item name="wcf.user.security.multifactor.setupEmail.subject"><![CDATA[Multi-factor Authentication Enabled on {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.user.security.multifactor.setupEmail.body.html"><![CDATA[<h2>Dear {$user->username},</h2>
+
+<p>You successfully enabled multi-factor authentication using the <b>{lang}wcf.user.security.multifactor.{$method->objectType}{/lang}</b> method. Going forward you will need to have your second factor handy for every login.</p>
+
+<p>You also received a list of emergency codes to use when your second factor becomes unavailable. <b>Did you store these emergency codes securely?</b> If you forgot you can do now by generating new codes in the <a href="{link controller='MultifactorManage' object=$backupMethod isHtmlEmail=true}{/link}">Emergency Code Management</a>.</p>]]></item>
+		<item name="wcf.user.security.multifactor.setupEmail.body.plain"><![CDATA[Dear {$user->username},
+
+You successfully enabled multi-factor authentication using the „{lang}wcf.user.security.multifactor.{$method->objectType}{/lang}“ method. Going forward you will need to have your second factor handy for every login.
+
+You also received a list of emergency codes to use when your second factor becomes unavailable. **Did you store these emergency codes securely?** If you forgot you can do now by generating new codes in the Emergency Code Management [URL:{link controller='MultifactorManage' object=$backupMethod isEmail=true}{/link}].]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophies]]></item>

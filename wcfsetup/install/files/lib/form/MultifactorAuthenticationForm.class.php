@@ -7,6 +7,7 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\multifactor\IMultifactorMethod;
 use wcf\system\user\multifactor\Setup;
@@ -111,6 +112,12 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 	protected function createForm() {
 		parent::createForm();
 		
+		$this->form->appendChild(
+			TemplateFormNode::create('loginAs')
+				->application('wcf')
+				->templateName('__multifactorAuthenticationLoginAs')
+		);
+		
 		$this->processor->createAuthenticationForm($this->form, $this->setup);
 	}
 	
@@ -121,7 +128,7 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 		
 		$setup = $this->setup->lock();
 		
-		$this->returnData = $this->processor->processAuthenticationForm($this->form, $setup);
+		$this->processor->processAuthenticationForm($this->form, $setup);
 		
 		WCF::getDB()->commitTransaction();
 		
