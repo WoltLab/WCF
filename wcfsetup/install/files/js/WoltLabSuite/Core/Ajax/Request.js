@@ -106,8 +106,10 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
                 this._xhr.withCredentials = true;
             }
             const options = Core.clone(this._options);
-            this._xhr.onload = () => {
-                const xhr = this._xhr;
+            // Use a local variable in all callbacks, because `this._xhr` can be overwritten by
+            // subsequent requests while a request is still in-flight.
+            const xhr = this._xhr;
+            xhr.onload = () => {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
                         if (options.responseType && xhr.getResponseHeader("Content-Type").indexOf(options.responseType) !== 0) {
@@ -123,24 +125,24 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
                     }
                 }
             };
-            this._xhr.onerror = () => {
-                this._failure(this._xhr, options);
+            xhr.onerror = () => {
+                this._failure(xhr, options);
             };
             if (this._options.progress) {
-                this._xhr.onprogress = this._options.progress;
+                xhr.onprogress = this._options.progress;
             }
             if (this._options.uploadProgress) {
-                this._xhr.upload.onprogress = this._options.uploadProgress;
+                xhr.upload.onprogress = this._options.uploadProgress;
             }
             if (this._options.type === "POST") {
                 let data = this._options.data;
                 if (typeof data === "object" && Core.getType(data) !== "FormData") {
                     data = Core.serialize(data);
                 }
-                this._xhr.send(data);
+                xhr.send(data);
             }
             else {
-                this._xhr.send();
+                xhr.send();
             }
         }
         /**

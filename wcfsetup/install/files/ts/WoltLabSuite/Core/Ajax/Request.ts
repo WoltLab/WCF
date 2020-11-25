@@ -150,8 +150,11 @@ class AjaxRequest {
     }
 
     const options = Core.clone(this._options) as RequestOptions;
-    this._xhr.onload = () => {
-      const xhr = this._xhr!;
+
+    // Use a local variable in all callbacks, because `this._xhr` can be overwritten by
+    // subsequent requests while a request is still in-flight.
+    const xhr = this._xhr;
+    xhr.onload = () => {
       if (xhr.readyState === XMLHttpRequest.DONE) {
         if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
           if (options.responseType && xhr.getResponseHeader("Content-Type")!.indexOf(options.responseType) !== 0) {
@@ -165,15 +168,15 @@ class AjaxRequest {
         }
       }
     };
-    this._xhr.onerror = () => {
-      this._failure(this._xhr!, options);
+    xhr.onerror = () => {
+      this._failure(xhr, options);
     };
 
     if (this._options.progress) {
-      this._xhr.onprogress = this._options.progress;
+      xhr.onprogress = this._options.progress;
     }
     if (this._options.uploadProgress) {
-      this._xhr.upload.onprogress = this._options.uploadProgress;
+      xhr.upload.onprogress = this._options.uploadProgress;
     }
 
     if (this._options.type === "POST") {
@@ -182,9 +185,9 @@ class AjaxRequest {
         data = Core.serialize(data);
       }
 
-      this._xhr.send(data as any);
+      xhr.send(data as any);
     } else {
-      this._xhr.send();
+      xhr.send();
     }
   }
 
