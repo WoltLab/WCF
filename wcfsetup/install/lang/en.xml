@@ -4899,8 +4899,6 @@ Open the link below to access the user profile:
 		<item name="wcf.user.security.multifactor.totp.deviceName.description.auth"><![CDATA[The device that generated the used one time code.]]></item>
 		<item name="wcf.user.security.multifactor.authentication.user.headline"><![CDATA[Hello {$user->username}!]]></item>
 		<item name="wcf.user.security.multifactor.authentication.user.content"><![CDATA[The provided credentials are correct, but your account is protected with multi-factor authentication. Please use your second factor to complete the login process.]]></item>
-		<item name="wcf.user.security.multifactor.authentication.logout"><![CDATA[Abort and Logout]]></item>
-		<item name="wcf.user.security.multifactor.authentication.logout.success"><![CDATA[The multi-factor authentication has successfully been aborted.]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.description"><![CDATA[<p class="small">Generate one time codes with an app on your smartphone.</p>]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.description"><![CDATA[<p class="small">You will receive a one time code via email after logging in.</p>]]></item>
 		<item name="wcf.user.security.multifactor.description"><![CDATA[Protect your account by requiring authentication with a second factor for every login.]]></item>
