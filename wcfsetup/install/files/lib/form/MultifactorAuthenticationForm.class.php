@@ -6,6 +6,7 @@ use wcf\form\AbstractFormBuilderForm;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\request\LinkHandler;
@@ -77,7 +78,9 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 		
 		$this->user = WCF::getSession()->getPendingUserChange();
 		if (!$this->user) {
-			throw new PermissionDeniedException();
+			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable(
+				'wcf.user.security.multifactor.authentication.noPendingUserChange'
+			));
 		}
 		
 		$this->setups = Setup::getAllForUser($this->user);

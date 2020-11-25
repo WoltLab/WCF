@@ -4945,6 +4945,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 {if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} die Mehrfaktor-Authentifizierung mit dem Verfahren „{lang}wcf.user.security.multifactor.{$method->objectType}{/lang}“ erfolgreich aktiviert. {if LANGUAGE_USE_INFORMAL_VARIANT}Du wirst{else}Sie werden{/if} von nun an bei jedem Login den zusätzlichen Faktor benötigen.
 
 {if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} auch eine Liste von Notfallcodes erhalten, falls der zusätzliche Faktor unbrauchbar werden sollte. **{if LANGUAGE_USE_INFORMAL_VARIANT}Hast du dir{else}Haben Sie sich{/if} die Notfallcodes notiert?** Falls {if LANGUAGE_USE_INFORMAL_VARIANT}du es vergessen hast, kannst du{else}Sie es vergessen haben, können Sie{/if} dies nachholen, indem {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} in der Verwaltung der Notfallcodes [URL:{link controller='MultifactorManage' object=$backupMethod isEmail=true}{/link}] neue Notfallcodes {if LANGUAGE_USE_INFORMAL_VARIANT}generierst{else}generieren{/if}.]]></item>
+		<item name="wcf.user.security.multifactor.authentication.noPendingUserChange"><![CDATA[Die Mehrfaktor-Authentifizierung wurde nicht rechtzeitig abgeschlossen. Aus Sicherheitsgründen wurde der unvollständige Login-Vorgang abgebrochen. Bitte <a href="{link controller='Login'}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}logge dich{else}loggen Sie sich{/if}</a> erneut ein.]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophäen]]></item>
