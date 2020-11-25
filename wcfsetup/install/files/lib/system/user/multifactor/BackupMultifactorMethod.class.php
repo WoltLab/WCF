@@ -3,6 +3,7 @@ namespace wcf\system\user\multifactor;
 use wcf\system\email\SimpleEmail;
 use wcf\system\flood\FloodControl;
 use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\CustomFormNode;
 use wcf\system\form\builder\field\ButtonFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -103,6 +104,10 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 			$regenerateContainer = FormContainer::create('regenerateCodesContainer')
 				->label('wcf.user.security.multifactor.backup.regenerateCodes')
 				->appendChildren([
+					CustomFormNode::create('explanation')
+						->content(WCF::getLanguage()->getDynamicVariable(
+							'wcf.user.security.multifactor.backup.regenerateCodes.description'
+						)),
 					ButtonFormField::create('regenerateCodes')
 						->buttonLabel('wcf.user.security.multifactor.backup.regenerateCodes')
 						->objectProperty('action')
@@ -116,6 +121,8 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 			$form->appendChild($regenerateContainer);
 		}
 		else {
+			// This part of the form is not visible to the end user. It will be implicitly filled in
+			// when setting up the first multi-factor method.
 			$generateContainer = FormContainer::create('generateCodesContainer')
 				->label('wcf.user.security.multifactor.backup.generateCodes')
 				->appendChildren([
