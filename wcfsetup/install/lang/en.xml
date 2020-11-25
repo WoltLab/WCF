@@ -4836,7 +4836,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp"><![CDATA[Smartphone App]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup"><![CDATA[Emergency Codes]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup.manage"><![CDATA[Manage Emergency Codes]]></item>
-		<item name="wcf.user.security.multifactor.backup.regenerateCodes"><![CDATA[Generate New Codes]]></item>
+		<item name="wcf.user.security.multifactor.backup.regenerateCodes"><![CDATA[Generate New Emergency Codes]]></item>
 		<item name="wcf.user.security.multifactor.backup.existingCodes"><![CDATA[Active Emergency Codes]]></item>
 		<item name="wcf.user.security.multifactor.backup.success"><![CDATA[New Codes were generated successfully. Any existing codes are no longer valid. Please carefully note down the codes.]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.manage"><![CDATA[Manage Smartphone App]]></item>
@@ -4930,6 +4930,8 @@ Open the link below to access the user profile:
 You used the emergency code “{$usedCode[identifier]}” for multi-factor authentication. This code no longer is valid. {plural value=$remaining 0='**You don't have any remaining codes.**' 1='You have one remaining code.' other='You have # remaining codes.'} {* this line ends with a space *}
 
 You can manage multi-factor authentication within the Account Security page [URL:{link controller='AccountSecurity' isEmail=true}{/link}]. Within account security you can generate new emergency codes or disable multi-factor authentication.]]></item>
+		<item name="wcf.user.security.multifactor.backup.existingCodes.description"><![CDATA[<p>You can find the latest set of emergency codes for use with the multi-factor authentication below. Codes that are striked out have been used and are no longer valid. Use the bold identifier to compare the list to your notes. Please generate a new set of codes if the listed codes do not match your notes.</p>]]></item>
+		<item name="wcf.user.security.multifactor.backup.regenerateCodes.description"><![CDATA[<p>Generate new emergency codes if you lost or used up your existing set. Generating new emergency codes will invalidate all existing codes.</p>]]></item>
 		<item name="wcf.user.security.multifactor.email.enable.description"><![CDATA[<p>With enabled confirmation via email you will receive a one time code via email whenever you login. You will need to have access to your email inbox to be able to login successfully.</p>]]></item>
 		<item name="wcf.user.security.multifactor.setupEmail.subject"><![CDATA[Multi-factor Authentication Enabled on {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.security.multifactor.setupEmail.body.html"><![CDATA[<h2>Dear {$user->username},</h2>

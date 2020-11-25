@@ -1,3 +1,4 @@
+{lang}wcf.user.security.multifactor.backup.existingCodes.description{/lang}
 <ol class="nativeList multifactorBackupCodes">
 {foreach from=$codes item='code'}
 <li>
