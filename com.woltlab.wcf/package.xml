@@ -108,8 +108,6 @@
 		<instruction type="script">acp/update_com.woltlab.wcf_preventMailAbuse.php</instruction>
 	</instructions>
 	
-	<!-- Include `update_com.woltlab.wcf_5.2.10_orphanedComments.php` in the next update! -->
-	
 	<instructions type="update" fromversion="5.2.9">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
@@ -119,4 +117,6 @@
 		
 		<instruction type="script">acp/update_com.woltlab.wcf_5.2.10_orphanedComments.php</instruction>
 	</instructions>
+	
+	<!-- Delete `update_com.woltlab.wcf_5.2.10_orphanedComments.php` from git for the next update -->
 </package>
