@@ -31,7 +31,8 @@ class FontManager extends SingletonFactory {
 	 */
 	protected function init() {
 		$this->http = HttpFactory::makeClient([
-			'base_uri' => 'https://fonts.woltlab.com/'
+			'base_uri' => 'https://fonts.woltlab.com/',
+			'timeout' => 10,
 		]);
 	}
 	
