@@ -9,7 +9,7 @@ use wcf\system\database\table\PartialDatabaseTable;
 use wcf\system\WCF;
 
 /**
- * Adjusts wcf1_acp_session and wcf1_acp_session_access_log.
+ * Adjusts wcf1_acp_session, wcf1_acp_session_access_log and wcf1_session.
  * 
  * @author	Tim Duesterhus
  * @copyright	2001-2020 WoltLab GmbH
@@ -34,7 +34,11 @@ $tables = [
 		->columns([
 			NotNullVarchar255DatabaseTableColumn::create('requestMethod')
 				->defaultValue(''),
-		])
+		]),
+	PartialDatabaseTable::create('wcf1_session')
+		->columns([
+			MediumblobDatabaseTableColumn::create('sessionVariables')->drop(),
+		]),
 ];
 
 (new DatabaseTableChangeProcessor(

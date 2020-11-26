@@ -73,7 +73,7 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 		<instruction type="template" />
 		
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_3_drop_virtual.php</instruction>
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_4_clean_acp_session.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_4_clean_session.php</instruction>
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_db.php</instruction>
 		
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_removeFiles.php</instruction>
