@@ -365,13 +365,13 @@ class ControllerClipboard {
                   });
               }
 
-              this._executeProxyAction(listItem, data, formData);
+              this.executeProxyAction(listItem, data, formData);
             },
             message,
             template,
           });
         } else {
-          this._executeProxyAction(listItem, data);
+          this.executeProxyAction(listItem, data);
         }
       }
     } else if (message.length) {
@@ -391,11 +391,7 @@ class ControllerClipboard {
   /**
    * Forwards clipboard actions to an individual handler.
    */
-  private _executeProxyAction(
-    listItem: HTMLLIElement,
-    data: ClipboardActionData,
-    formData: ArbitraryObject = {},
-  ): void {
+  private executeProxyAction(listItem: HTMLLIElement, data: ClipboardActionData, formData: ArbitraryObject = {}): void {
     const objectIds = data.parameters.actionName !== "unmarkAll" ? data.parameters.objectIDs : [];
     const parameters = { data: formData };
 

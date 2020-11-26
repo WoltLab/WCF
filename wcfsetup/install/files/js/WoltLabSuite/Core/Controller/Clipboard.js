@@ -268,14 +268,14 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Dom/Change/List
                                         }
                                     });
                                 }
-                                this._executeProxyAction(listItem, data, formData);
+                                this.executeProxyAction(listItem, data, formData);
                             },
                             message,
                             template,
                         });
                     }
                     else {
-                        this._executeProxyAction(listItem, data);
+                        this.executeProxyAction(listItem, data);
                     }
                 }
             }
@@ -293,7 +293,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Dom/Change/List
         /**
          * Forwards clipboard actions to an individual handler.
          */
-        _executeProxyAction(listItem, data, formData = {}) {
+        executeProxyAction(listItem, data, formData = {}) {
             const objectIds = data.parameters.actionName !== "unmarkAll" ? data.parameters.objectIDs : [];
             const parameters = { data: formData };
             if (Core.isPlainObject(data.internalData.parameters)) {
