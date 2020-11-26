@@ -115,6 +115,7 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 						->templateName('multifactorManageBackup')
 						->variables([
 							'codes' => $codes,
+							'isUnveiled' => $returnData !== null,
 						]),
 				]);
 			$form->appendChild($statusContainer);

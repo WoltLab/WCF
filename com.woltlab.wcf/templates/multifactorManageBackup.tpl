@@ -1,4 +1,4 @@
-{lang}wcf.user.security.multifactor.backup.existingCodes.description{/lang}
+{if !$isUnveiled}{lang}wcf.user.security.multifactor.backup.existingCodes.description{/lang}{/if}
 <ol class="nativeList multifactorBackupCodes">
 {foreach from=$codes item='code'}
 <li>
