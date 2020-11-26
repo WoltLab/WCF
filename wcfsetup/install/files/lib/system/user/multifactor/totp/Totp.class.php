@@ -29,6 +29,11 @@ final class Totp {
 	private const LEEWAY = 2;
 	
 	/**
+	 * The amount of randomness to use within the secret.
+	 */
+	private const SECRET_BYTES = 16;
+	
+	/**
 	 * @var string
 	 */
 	private $secret;
@@ -41,7 +46,7 @@ final class Totp {
 	 * Returns a random secret.
 	 */
 	public static function generateSecret(): string {
-		return \random_bytes(16);
+		return \random_bytes(self::SECRET_BYTES);
 	}
 	
 	/**
