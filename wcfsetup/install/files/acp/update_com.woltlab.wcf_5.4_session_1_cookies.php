@@ -18,25 +18,25 @@ use wcf\util\CryptoUtil;
 use wcf\util\HeaderUtil;
 
 // 1) Check whether the cookies are already in place.
-$sessionIdOkay = false;
+$hasValidSessionCookie = false;
 if (!empty($_COOKIE[COOKIE_PREFIX."acp_session"])) {
 	$cookieValue = CryptoUtil::getValueFromSignedString($_COOKIE[COOKIE_PREFIX."acp_session"]);
 	if ($cookieValue) {
 		$sessionID = \bin2hex($cookieValue);
 		if ($sessionID === WCF::getSession()->sessionID) {
-			$sessionIdOkay = true;
+			$hasValidSessionCookie = true;
 		}
 	}
 }
 
-$xsrfTokenOkay = false;
+$hasValidXsrfToken = false;
 if (!empty($_COOKIE['XSRF-TOKEN'])) {
 	if (CryptoUtil::validateSignedString($_COOKIE['XSRF-TOKEN'])) {
-		$xsrfTokenOkay = true;
+		$hasValidXsrfToken = true;
 	}
 }
 
-if ($sessionIdOkay && $xsrfTokenOkay) {
+if ($hasValidSessionCookie && $hasValidXsrfToken) {
 	// The process may continue;
 	return;
 }
