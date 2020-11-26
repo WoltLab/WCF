@@ -51,14 +51,34 @@
 	</instructions>
 	
 	<instructions type="update" fromversion="5.3.*">
+		<!--
+tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
+	acp/update_com.woltlab.wcf_5.4_checkOwnerGroup.php \
+	acp/update_com.woltlab.wcf_5.4_session_1_cookies.php \
+	acp/update_com.woltlab.wcf_5.4_session_2_user_session.php \
+	lib/util/HeaderUtil.class.php \
+	lib/system/package/plugin/AbstractPackageInstallationPlugin.class.php \
+	lib/system/package/plugin/ScriptPackageInstallationPlugin.class.php \
+	lib/system/package/plugin/FilePackageInstallationPlugin.class.php
+		-->
+		<instruction type="file" run="standalone">files_pre.tar</instruction>
+		
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_checkOwnerGroup.php</instruction>
 		
-		<instruction type="file" />
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_1_cookies.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_2_user_session.php</instruction>
+		
+		<instruction type="file" skipStyleUpdate="true" />
 		<instruction type="acpTemplate" />
 		<instruction type="template" />
 		
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_removeFiles.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_3_drop_virtual.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_4_clean_session.php</instruction>
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_db.php</instruction>
+		
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_removeFiles.php</instruction>
+		
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_updateStyle.php</instruction>
 		
 		<instruction type="objectTypeDefinition" />
 		<instruction type="option" />

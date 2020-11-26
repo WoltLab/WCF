@@ -1265,7 +1265,6 @@ CREATE TABLE wcf1_session (
 	parentPageID INT(10),
 	parentPageObjectID INT(10),
 	spiderID INT(10),
-	sessionVariables MEDIUMTEXT,
 	KEY packageID (lastActivityTime, spiderID),
 	KEY pageID (pageID, pageObjectID),
 	KEY parentPageID (parentPageID, parentPageObjectID),
