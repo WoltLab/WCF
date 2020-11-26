@@ -177,8 +177,11 @@ export function getUuid(): string {
  * Recursively serializes an object into an encoded URI parameter string.
  */
 export function serialize(obj: object, prefix?: string): string {
-  const parameters: string[] = [];
+  if (obj === null) {
+    return "";
+  }
 
+  const parameters: string[] = [];
   Object.keys(obj).forEach((key) => {
     const parameterKey = prefix ? prefix + "[" + key + "]" : key;
     const value = obj[key];

@@ -943,7 +943,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.index.woltlab.pluginStore"><![CDATA[Plugin-Store]]></item>
 		<item name="wcf.acp.index.tinyBuild"><![CDATA[Die Seitenbeschleunigung für Gäste verbessert die Ladezeiten für Besucher und Suchmaschinen, es wird empfohlen diese <a href="{link controller='Option' id=1 optionName="visitor_use_tiny_build"}#category_module.system{/link}">zu aktivieren</a>.]]></item>
 		<item name="wcf.acp.index.recaptchaWithoutKey"><![CDATA[Die Nutzung von reCAPTCHA ohne einen individuellen Website-Schlüssel wird von Google nicht mehr unterstützt.<br><br>Für eine weitere Nutzung {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} <a href="{$recaptchaKeyLink}">einen Schlüssel in den Optionen hinterlegen</a>, unterhalb des Eingabefeldes befindet sich eine Anleitung zum Anfordern des Schlüssels.]]></item>
-		<item name="wcf.acp.index.missingLanguageItems"><![CDATA[Es wurden fehlende Sprachvariablen protokolliert (zuletzt: {@$missingLanguageItemsMTime|time}). {if LANGUAGE_USE_INFORMAL_VARIANT}Überprüfe{else}Überprüfen Sie{/if} die <a href="{link controller='DevtoolsMissingLanguageItemList'}{/link}">Liste der fehlenden Texten</a> für weitere Informationen.]]></item>
+		<item name="wcf.acp.index.missingLanguageItems"><![CDATA[Es wurden fehlende Sprachvariablen protokolliert (zuletzt: {@$missingLanguageItemsMTime|time}). {if LANGUAGE_USE_INFORMAL_VARIANT}Überprüfe{else}Überprüfen Sie{/if} die <a href="{link controller='DevtoolsMissingLanguageItemList'}{/link}">Liste der fehlenden Texte</a> für weitere Informationen.]]></item>
 	</category>
 	<category name="wcf.acp.label">
 		<item name="wcf.acp.label.add"><![CDATA[Label hinzufügen]]></item>
@@ -4544,15 +4544,15 @@ Dateianhänge:
 		<item name="wcf.user.username.description"><![CDATA[Der Benutzername muss mindestens {REGISTER_USERNAME_MIN_LENGTH} und darf maximal {REGISTER_USERNAME_MAX_LENGTH} Zeichen lang sein.]]></item>
 		<item name="wcf.user.password.description"><![CDATA[Ein sicheres Kennwort sollte mindestens 10 Zeichen lang sein.]]></item>
 		<item name="wcf.user.password.strength"><![CDATA[Passwortstärke]]></item>
-		<item name="wcf.user.password.zxcvbn.suggestions.use_words_avoid_common_phrases"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Verwende{else}Verwenden Sie{/if} einige Wörter. {if LANGUAGE_USE_INFORMAL_VARIANT}Verweide{else}Vermeiden Sie{/if} gängige Phrasen.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.use_words_avoid_common_phrases"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Verwende{else}Verwenden Sie{/if} einige Wörter. {if LANGUAGE_USE_INFORMAL_VARIANT}Vermeide{else}Vermeiden Sie{/if} gängige Phrasen.]]></item>
 		<item name="wcf.user.password.zxcvbn.suggestions.no_need_for_symbols_digits_uppercase"><![CDATA[Sonderzeichen, Zahlen oder Großbuchstaben werden nicht benötigt.]]></item>
 		<item name="wcf.user.password.zxcvbn.suggestions.add_word_uncommon_better"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Ergänze{else}Ergänzen Sie{/if} ein oder zwei weitere Worte. Unübliche Worte sind zu bevorzugen.]]></item>
 		<item name="wcf.user.password.zxcvbn.suggestions.use_longer_keyboard_pattern"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Verwende{else}Verwenden Sie{/if} ein längeres und zufälligeres Muster auf der Tastatur.]]></item>
-		<item name="wcf.user.password.zxcvbn.suggestions.avoid_repeat"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Verweide{else}Vermeiden Sie{/if} Wiederholungen.]]></item>
-		<item name="wcf.user.password.zxcvbn.suggestions.avoid_sequence"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Verweide{else}Vermeiden Sie{/if} Sequenzen.]]></item>
-		<item name="wcf.user.password.zxcvbn.suggestions.avoid_recent_year"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Verweide{else}Vermeiden Sie{/if} Jahreszahlen der letzten Jahre.]]></item>
-		<item name="wcf.user.password.zxcvbn.suggestions.avoid_associated_year"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Verweide{else}Vermeiden Sie{/if} Jahreszahlen, die {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} zugeordnet werden können.]]></item>
-		<item name="wcf.user.password.zxcvbn.suggestions.avoid_date"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Verweide{else}Vermeiden Sie{/if} Daten und Jahreszahlen, die {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} zugeordnet werden können.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.avoid_repeat"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Vermeide{else}Vermeiden Sie{/if} Wiederholungen.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.avoid_sequence"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Vermeide{else}Vermeiden Sie{/if} Sequenzen.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.avoid_recent_year"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Vermeide{else}Vermeiden Sie{/if} Jahreszahlen der letzten Jahre.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.avoid_associated_year"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Vermeide{else}Vermeiden Sie{/if} Jahreszahlen, die {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} zugeordnet werden können.]]></item>
+		<item name="wcf.user.password.zxcvbn.suggestions.avoid_date"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Vermeide{else}Vermeiden Sie{/if} Daten und Jahreszahlen, die {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} zugeordnet werden können.]]></item>
 		<item name="wcf.user.password.zxcvbn.suggestions.start_upper"><![CDATA[Großbuchstaben zu Beginn erhöhen die Sicherheit nicht.]]></item>
 		<item name="wcf.user.password.zxcvbn.suggestions.all_upper"><![CDATA[Nur Großbuchstaben sind genau so einfach zu erraten, wie nur Kleinbuchstaben.]]></item>
 		<item name="wcf.user.password.zxcvbn.suggestions.reversed"><![CDATA[Umgekehrte Worte sind nicht viel schwieriger zu erraten.]]></item>

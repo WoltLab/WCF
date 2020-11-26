@@ -167,7 +167,8 @@ final class HTTPRequest {
 		};
 		
 		$options = [
-			'timeout' => $this->options['timeout'],
+			'connect_timeout' => $this->options['timeout'],
+			'read_timeout' => $this->options['timeout'],
 			'allow_redirects' => [
 				'max' => $this->options['maxDepth'],
 				'track_redirects' => true,

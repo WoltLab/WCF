@@ -94,7 +94,9 @@ class ImageProxyAction extends AbstractAction {
 					
 					// download image
 					try {
-						$client = HttpFactory::getDefaultClient();
+						$client = HttpFactory::makeClient([
+							'timeout' => 10,
+						]);
 						$request = new Request('GET', $url, [
 							'via' => '1.1 wsc',
 							'accept' => 'image/*',

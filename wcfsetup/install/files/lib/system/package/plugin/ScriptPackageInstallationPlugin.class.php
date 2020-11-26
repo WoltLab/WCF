@@ -2,6 +2,7 @@
 namespace wcf\system\package\plugin;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
+use wcf\system\form\FormDocument;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -47,10 +48,10 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin 
 		if ($flushCache) CacheHandler::getInstance()->flushAll();
 		
 		// run script
-		$this->run($path.$this->instruction['value']);
+		$result = $this->run($path.$this->instruction['value']);
 		
 		// delete script
-		if (@unlink($path.$this->instruction['value'])) {
+		if (!($result instanceof FormDocument) && @unlink($path.$this->instruction['value'])) {
 			// delete file log entry
 			$sql = "DELETE FROM	wcf".WCF_N."_package_installation_file_log
 				WHERE		packageID = ?
@@ -61,6 +62,8 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin 
 				$this->instruction['value']
 			]);
 		}
+		
+		return $result;
 	}
 	
 	/**
@@ -69,7 +72,7 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin 
 	 * @param	string		$scriptPath
 	 */
 	private function run($scriptPath) {
-		include($scriptPath);
+		return include($scriptPath);
 	}
 	
 	/**
