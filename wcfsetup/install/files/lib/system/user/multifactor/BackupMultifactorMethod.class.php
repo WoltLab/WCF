@@ -47,6 +47,11 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 	public const CHUNKS = 4;
 	public const CHUNK_LENGTH = 5;
 	
+	/**
+	 * The number of codes to generate.
+	 */
+	private const CODE_COUNT = 10;
+	
 	private const USER_ATTEMPTS_PER_HOUR = 5;
 	
 	public function __construct() {
@@ -154,19 +159,11 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 	}
 	
 	/**
-	 * @inheritDoc
+	 * Generates a list of codes.
 	 */
-	public function processManagementForm(IFormDocument $form, Setup $setup): array {
-		$formData = $form->getData();
-		\assert($formData['action'] === 'generateCodes' || $formData['action'] === 'regenerateCodes');
-		
-		$sql = "DELETE FROM	wcf".WCF_N."_user_multifactor_backup
-			WHERE		setupID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$setup->getId()]);
-		
+	private function generateCodes(): array {
 		$codes = [];
-		for ($i = 0; $i < 10; $i++) {
+		for ($i = 0; $i < self::CODE_COUNT; $i++) {
 			$chunks = [];
 			for ($part = 0; $part < self::CHUNKS; $part++) {
 				$chunks[] = \random_int(
@@ -183,16 +180,33 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 			$codes[$identifier] = \implode('', $chunks);
 		}
 		
+		return $codes;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function processManagementForm(IFormDocument $form, Setup $setup): array {
+		$formData = $form->getData();
+		\assert($formData['action'] === 'generateCodes' || $formData['action'] === 'regenerateCodes');
+		
+		$sql = "DELETE FROM	wcf".WCF_N."_user_multifactor_backup
+			WHERE		setupID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$setup->getId()]);
+		
+		$codes = $this->generateCodes();
+		
 		$sql = "INSERT INTO	wcf".WCF_N."_user_multifactor_backup
 					(setupID, identifier, code, createTime)
 			VALUES		(?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$algorithName = PasswordAlgorithmManager::getInstance()->getNameFromAlgorithm($this->algorithm);
+		$algorithmName = PasswordAlgorithmManager::getInstance()->getNameFromAlgorithm($this->algorithm);
 		foreach ($codes as $identifier => $code) {
 			$statement->execute([
 				$setup->getId(),
 				$identifier,
-				$algorithName.':'.$this->algorithm->hash($code),
+				$algorithmName.':'.$this->algorithm->hash($code),
 				\TIME_NOW,
 			]);
 		}
