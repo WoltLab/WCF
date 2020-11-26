@@ -343,7 +343,7 @@ class DatabaseTableChangeProcessor {
 			$columnData[$alteredColumn->getName()] = [
 				'action' => 'alter',
 				'data' => $alteredColumn->getData(),
-				'oldColumnName' => $alteredColumn->getName()
+				'newColumnName' => $alteredColumn->getNewName() ?? $alteredColumn->getName()
 			];
 		}
 		
@@ -748,6 +748,10 @@ class DatabaseTableChangeProcessor {
 			if (!empty($diff)) {
 				return true;
 			}
+		}
+		
+		if ($newColumn->getNewName()) {
+			return true;
 		}
 		
 		// default type has to be checked explicitly for `null` to properly detect changing

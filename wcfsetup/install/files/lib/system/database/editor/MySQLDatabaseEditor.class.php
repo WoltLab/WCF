@@ -271,7 +271,19 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 					break;
 					
 				case 'alter':
-					$queries .= "CHANGE COLUMN `{$columnName}` {$this->buildColumnDefinition($data['oldColumnName'], $data['data'])},";
+					$newColumnName = $columnName;
+					if (isset($data['oldColumnName'])) {
+						/**
+						 * @deprecated  5.4     `oldColumnName` was an incorrect name for the index
+						 *                      that is kept for backwards compatibility for now
+						 */
+						$newColumnName = $data['oldColumnName'];
+					}
+					else if (isset($data['newColumnName'])) {
+						$newColumnName = $data['newColumnName'];
+					}
+					
+					$queries .= "CHANGE COLUMN `{$columnName}` {$this->buildColumnDefinition($newColumnName, $data['data'])},";
 					break;
 					
 				case 'drop':
