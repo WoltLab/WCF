@@ -58,7 +58,7 @@ $tables = [
 		])
 		->indices([
 			DatabaseTablePrimaryIndex::create()
-				->columns(['logID']),
+				->columns(['setupID']),
 			DatabaseTableIndex::create()
 				->type(DatabaseTableIndex::UNIQUE_TYPE)
 				->columns(['userID', 'objectTypeID']),
@@ -128,8 +128,9 @@ $tables = [
 				->length(255),
 			NotNullInt10DatabaseTableColumn::create('minCounter'),
 			NotNullInt10DatabaseTableColumn::create('createTime'),
-			IntDatabaseTableColumn::create('createTime')
+			IntDatabaseTableColumn::create('useTime')
 				->length(10)
+				->notNull(false)
 				->defaultValue(null),
 		])
 		->indices([
