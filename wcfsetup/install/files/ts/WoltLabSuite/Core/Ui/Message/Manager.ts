@@ -12,6 +12,7 @@ import { AjaxCallbackObject, AjaxCallbackSetup, ResponseData } from "../../Ajax/
 import * as Core from "../../Core";
 import DomChangeListener from "../../Dom/Change/Listener";
 import * as Language from "../../Language";
+import * as StringUtil from "../../StringUtil";
 
 interface MessageManagerOptions {
   className: string;
@@ -21,7 +22,7 @@ interface MessageManagerOptions {
 type StringableValue = boolean | number | string;
 
 class UiMessageManager implements AjaxCallbackObject {
-  protected readonly _elements = new Map<number, HTMLElement>();
+  protected readonly _elements = new Map<string, HTMLElement>();
   protected readonly _options: MessageManagerOptions;
 
   /**
@@ -49,8 +50,7 @@ class UiMessageManager implements AjaxCallbackObject {
     this._elements.clear();
 
     document.querySelectorAll(this._options.selector).forEach((element: HTMLElement) => {
-      const objectId = ~~(element.dataset.objectId || "0");
-      this._elements.set(objectId, element);
+      this._elements.set(element.dataset.objectId!, element);
     });
   }
 
@@ -58,8 +58,8 @@ class UiMessageManager implements AjaxCallbackObject {
    * Returns a boolean value for the given permission. The permission should not start
    * with "can" or "can-" as this is automatically assumed by this method.
    */
-  getPermission(objectId: number, permission: string): boolean {
-    permission = "can-" + this._getAttributeName(permission);
+  getPermission(objectId: string, permission: string): boolean {
+    permission = "can" + StringUtil.ucfirst(permission);
     const element = this._elements.get(objectId);
     if (element === undefined) {
       throw new Error(`Unknown object id '${objectId}' for selector '${this._options.selector}'`);
@@ -71,14 +71,13 @@ class UiMessageManager implements AjaxCallbackObject {
   /**
    * Returns the given property value from a message, optionally supporting a boolean return value.
    */
-  getPropertyValue(objectId: number, propertyName: string, asBool: boolean): boolean | string {
+  getPropertyValue(objectId: string, propertyName: string, asBool: boolean): boolean | string {
     const element = this._elements.get(objectId);
     if (element === undefined) {
       throw new Error(`Unknown object id '${objectId}' for selector '${this._options.selector}'`);
     }
 
-    const attributeName = this._getAttributeName(propertyName);
-    const value = element.dataset[attributeName] || "";
+    const value = element.dataset[StringUtil.toCamelCase(propertyName)] || "";
 
     if (asBool) {
       return Core.stringToBool(value);
@@ -90,7 +89,7 @@ class UiMessageManager implements AjaxCallbackObject {
   /**
    * Invokes a method for given message object id in order to alter its state or properties.
    */
-  update(objectId: number, actionName: string, parameters?: ArbitraryObject): void {
+  update(objectId: string, actionName: string, parameters?: ArbitraryObject): void {
     Ajax.api(this, {
       actionName: actionName,
       parameters: parameters || {},
@@ -103,7 +102,7 @@ class UiMessageManager implements AjaxCallbackObject {
    * not support setting individual properties per message, instead all property changes
    * are applied to all matching message objects.
    */
-  updateItems(objectIds: number | number[], data: ArbitraryObject): void {
+  updateItems(objectIds: string | string[], data: ArbitraryObject): void {
     if (!Array.isArray(objectIds)) {
       objectIds = [objectIds];
     }
@@ -132,7 +131,7 @@ class UiMessageManager implements AjaxCallbackObject {
   /**
    * Sets or removes a message note identified by its unique CSS class.
    */
-  setNote(objectId: number, className: string, htmlContent: string): void {
+  setNote(objectId: string, className: string, htmlContent: string): void {
     const element = this._elements.get(objectId);
     if (element === undefined) {
       throw new Error(`Unknown object id '${objectId}' for selector '${this._options.selector}'`);
@@ -158,8 +157,7 @@ class UiMessageManager implements AjaxCallbackObject {
    * Updates a single property of a message element.
    */
   protected _update(element: HTMLElement, propertyName: string, propertyValue: StringableValue): void {
-    const attributeName = this._getAttributeName(propertyName);
-    element.dataset[attributeName] = propertyValue.toString();
+    element.dataset[propertyName] = propertyValue.toString();
 
     // handle special properties
     const propertyValueBoolean = propertyValue == 1 || propertyValue === true || propertyValue === "true";
@@ -255,6 +253,8 @@ class UiMessageManager implements AjaxCallbackObject {
 
   /**
    * Transforms camel-cased property names into their attribute equivalent.
+   *
+   * @deprecated 5.4 Access the value via `element.dataset` which uses camel-case.
    */
   protected _getAttributeName(propertyName: string): string {
     if (propertyName.indexOf("-") !== -1) {

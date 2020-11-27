@@ -81,8 +81,10 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin im
 		// delete temporary sourceArchive
 		@unlink($sourceFile);
 		
-		// update acp style file
-		StyleUtil::updateStyleFile();
+		if (!isset($this->instruction['attributes']['skipStyleUpdate'])) {
+			// update acp style file
+			StyleUtil::updateStyleFile();
+		}
 	}
 	
 	/**

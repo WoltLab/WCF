@@ -2,37 +2,35 @@
  * Generic interface for drag and Drop file uploads.
  *
  * @author      Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright  2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Ui/DragAndDrop
  */
-define(['Core', 'EventHandler', 'WoltLabSuite/Core/Ui/Redactor/DragAndDrop'], function (Core, EventHandler, UiRedactorDragAndDrop) {
-    /**
-     * @exports     WoltLabSuite/Core/Ui/DragAndDrop
-     */
-    return {
-        /**
-         * @param       {Object}        options
-         */
-        register: function (options) {
-            var uuid = Core.getUuid();
-            options = Core.extend({
-                element: '',
-                elementId: '',
-                onDrop: function (data) {
-                    /* data: { file: File } */
-                },
-                onGlobalDrop: function (data) {
-                    /* data: { cancelDrop: boolean, event: DragEvent } */
-                }
-            });
-            EventHandler.add('com.woltlab.wcf.redactor2', 'dragAndDrop_' + options.elementId, options.onDrop);
-            EventHandler.add('com.woltlab.wcf.redactor2', 'dragAndDrop_globalDrop_' + options.elementId, options.onGlobalDrop);
-            UiRedactorDragAndDrop.init({
-                uuid: uuid,
-                $editor: [options.element],
-                $element: [{ id: options.elementId }]
-            });
-        }
-    };
+define(["require", "exports", "tslib", "../Core", "../Event/Handler", "./Redactor/DragAndDrop"], function (require, exports, tslib_1, Core, EventHandler, DragAndDrop_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.register = void 0;
+    Core = tslib_1.__importStar(Core);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    function register(options) {
+        const uuid = Core.getUuid();
+        options = Core.extend({
+            element: null,
+            elementId: "",
+            onDrop: function (_data) {
+                /* data: { file: File } */
+            },
+            onGlobalDrop: function (_data) {
+                /* data: { cancelDrop: boolean, event: DragEvent } */
+            },
+        });
+        EventHandler.add("com.woltlab.wcf.redactor2", `dragAndDrop_${options.elementId}`, options.onDrop);
+        EventHandler.add("com.woltlab.wcf.redactor2", `dragAndDrop_globalDrop_${options.elementId}`, options.onGlobalDrop);
+        DragAndDrop_1.init({
+            uuid: uuid,
+            $editor: [options.element],
+            $element: [{ id: options.elementId }],
+        });
+    }
+    exports.register = register;
 });

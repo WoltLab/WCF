@@ -22,7 +22,7 @@ $packageID = $this->installation->getPackageID();
 foreach ($files as $file) {
 	$searchStatement->execute([$file]);
 	$filePackageID = $searchStatement->fetchSingleColumn();
-	if ($filePackageID !== null && $filePackageID != $packageID) {
+	if ($filePackageID !== false && $filePackageID != $packageID) {
 		throw new \UnexpectedValueException("File '{$file}' does not belong to package '{$this->installation->getPackage()->package}' but to package '" . PackageCache::getInstance()->getPackage($filePackageID)->package . "'.");
 	}
 	

@@ -1700,5 +1700,9 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		<option name="http_enable_gzip" />
 		<option name="meta_keywords" />
 		<option name="register_admin_notification" />
+		<option name="session_timeout" />
+		<option name="session_validate_ip_address" />
+		<option name="session_validate_user_agent" />
+		<option name="session_enable_virtualization" />
 	</delete>
 </data>

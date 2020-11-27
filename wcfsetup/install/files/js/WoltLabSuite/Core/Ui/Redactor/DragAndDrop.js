@@ -87,9 +87,8 @@ define(["require", "exports", "tslib", "../../Event/Handler", "../../Language"],
         const target = event.currentTarget;
         const elementId = target.dataset.elementId;
         Array.from(event.dataTransfer.files).forEach((file) => {
-            EventHandler.fire("com.woltlab.wcf.redactor2", `dragAndDrop_${elementId}`, {
-                file,
-            });
+            const eventData = { file };
+            EventHandler.fire("com.woltlab.wcf.redactor2", `dragAndDrop_${elementId}`, eventData);
         });
         // this will reset all drop areas
         dragLeave();

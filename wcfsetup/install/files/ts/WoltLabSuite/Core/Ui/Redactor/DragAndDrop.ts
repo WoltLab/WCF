@@ -14,7 +14,7 @@ import { RedactorEditor } from "./Editor";
 type Uuid = string;
 
 interface EditorData {
-  editor: RedactorEditor;
+  editor: RedactorEditor | RedactorEditorLike;
   element: HTMLElement | null;
 }
 
@@ -109,9 +109,8 @@ function drop(event: DragEvent): void {
   const elementId = target.dataset.elementId!;
 
   Array.from(event.dataTransfer.files).forEach((file) => {
-    EventHandler.fire("com.woltlab.wcf.redactor2", `dragAndDrop_${elementId}`, {
-      file,
-    });
+    const eventData: OnDropPayload = { file };
+    EventHandler.fire("com.woltlab.wcf.redactor2", `dragAndDrop_${elementId}`, eventData);
   });
 
   // this will reset all drop areas
@@ -154,7 +153,7 @@ function dragLeave() {
 function globalDrop(event: DragEvent): void {
   const target = event.target as HTMLElement;
   if (target.closest(".redactor-layer") === null) {
-    const eventData = { cancelDrop: true, event: event };
+    const eventData: OnGlobalDropPayload = { cancelDrop: true, event: event };
     _dragArea.forEach((data) => {
       EventHandler.fire("com.woltlab.wcf.redactor2", `dragAndDrop_globalDrop_${data.editor.$element[0].id}`, eventData);
     });
@@ -186,7 +185,7 @@ function setup() {
 /**
  * Initializes drag and drop support for provided editor instance.
  */
-export function init(editor: RedactorEditor): void {
+export function init(editor: RedactorEditor | RedactorEditorLike): void {
   if (!_didInit) {
     setup();
   }
@@ -195,4 +194,19 @@ export function init(editor: RedactorEditor): void {
     editor: editor,
     element: null,
   });
+}
+
+export interface RedactorEditorLike {
+  uuid: string;
+  $editor: HTMLElement[];
+  $element: HTMLElement[];
+}
+
+export interface OnDropPayload {
+  file: File;
+}
+
+export interface OnGlobalDropPayload {
+  cancelDrop: boolean;
+  event: DragEvent;
 }

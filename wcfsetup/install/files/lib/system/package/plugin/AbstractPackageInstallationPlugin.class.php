@@ -67,7 +67,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 		// call 'update' event
 		EventHandler::getInstance()->fireAction($this, 'update');
 		
-		$this->install();
+		return $this->install();
 	}
 	
 	/**
