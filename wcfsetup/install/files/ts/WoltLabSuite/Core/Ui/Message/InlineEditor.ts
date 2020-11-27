@@ -24,7 +24,7 @@ interface MessageInlineEditorOptions {
   canEditInline: boolean;
 
   className: string;
-  containerId: number;
+  containerId: string;
   dropdownIdentifier: string;
   editorPrefix: string;
 
@@ -656,7 +656,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
   /**
    * Returns the hash added to the url after successfully editing a message.
    */
-  protected _getHash(objectId: number): string {
+  protected _getHash(objectId: string): string {
     return `#message${objectId}`;
   }
 
@@ -678,8 +678,8 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
   /**
    * Returns the element's `data-object-id` value.
    */
-  protected _getObjectId(element: HTMLElement): number {
-    return ~~(element.dataset.objectId || "");
+  protected _getObjectId(element: HTMLElement): string {
+    return element.dataset.objectId || "";
   }
 
   _ajaxFailure(data: ResponseData): boolean {

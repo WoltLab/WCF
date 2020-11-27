@@ -111,6 +111,27 @@ export function shortUnit(number: number): string {
   return formatNumeric(number) + unitSuffix;
 }
 
+/**
+ * Converts a lower-case string containing dashed to camelCase for use
+ * with the `dataset` property.
+ */
+export function toCamelCase(value: string): string {
+  if (!value.includes("-")) {
+    return value;
+  }
+
+  return value
+    .split("-")
+    .map((part, index) => {
+      if (index > 0) {
+        part = ucfirst(part);
+      }
+
+      return part;
+    })
+    .join("");
+}
+
 interface I18nValues {
   decimalPoint: string;
   thousandsSeparator: string;

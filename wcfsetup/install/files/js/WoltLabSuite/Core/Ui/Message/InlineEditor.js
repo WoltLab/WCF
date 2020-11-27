@@ -509,7 +509,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
          * Returns the element's `data-object-id` value.
          */
         _getObjectId(element) {
-            return ~~(element.dataset.objectId || "");
+            return element.dataset.objectId || "";
         }
         _ajaxFailure(data) {
             const elementData = this._elements.get(this._activeElement);
