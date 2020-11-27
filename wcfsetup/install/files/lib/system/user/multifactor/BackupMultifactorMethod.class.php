@@ -224,7 +224,7 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 		
 		$result = null;
 		foreach ($codes as $code) {
-			[$algorithmName, $hash] = \explode(':', $code['code']);
+			[$algorithmName, $hash] = \explode(':', $code['code'], 2);
 			$algorithm = $manager->getAlgorithmFromName($algorithmName);
 			
 			// The use of `&` is intentional to disable the shortcutting logic.
