@@ -144,7 +144,6 @@ class UserAssignToGroupForm extends AbstractForm {
 		}
 		
 		ClipboardHandler::getInstance()->removeItems($this->objectTypeID);
-		SessionHandler::resetSessions($this->userIDs);
 		
 		$this->saved();
 		
