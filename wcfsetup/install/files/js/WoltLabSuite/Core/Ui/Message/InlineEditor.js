@@ -23,6 +23,14 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
          * Initializes the message inline editor.
          */
         constructor(opts) {
+            this.init(opts);
+        }
+        /**
+         * Helper initialization method for legacy inheritance support.
+         */
+        init(opts) {
+            // Define the properties again, the constructor might not be
+            // called in legacy implementations.
             this._activeDropdownElement = null;
             this._activeElement = null;
             this._dropdownMenu = null;

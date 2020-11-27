@@ -75,16 +75,30 @@ interface AjaxResponseMessage extends ResponseData {
 }
 
 class UiMessageInlineEditor implements AjaxCallbackObject {
-  protected _activeDropdownElement: HTMLElement | null = null;
-  protected _activeElement: HTMLElement | null = null;
-  protected _dropdownMenu: HTMLUListElement | null = null;
-  protected readonly _elements = new WeakMap<HTMLElement, ElementData>();
-  protected readonly _options: MessageInlineEditorOptions;
+  protected _activeDropdownElement: HTMLElement | null;
+  protected _activeElement: HTMLElement | null;
+  protected _dropdownMenu: HTMLUListElement | null;
+  protected _elements: WeakMap<HTMLElement, ElementData>;
+  protected _options: MessageInlineEditorOptions;
 
   /**
    * Initializes the message inline editor.
    */
   constructor(opts: Partial<MessageInlineEditorOptions>) {
+    this.init(opts);
+  }
+
+  /**
+   * Helper initialization method for legacy inheritance support.
+   */
+  protected init(opts: Partial<MessageInlineEditorOptions>): void {
+    // Define the properties again, the constructor might not be
+    // called in legacy implementations.
+    this._activeDropdownElement = null;
+    this._activeElement = null;
+    this._dropdownMenu = null;
+    this._elements = new WeakMap<HTMLElement, ElementData>();
+
     this._options = Core.extend(
       {
         canEditInline: false,
