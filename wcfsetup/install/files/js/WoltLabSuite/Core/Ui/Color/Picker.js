@@ -3,17 +3,18 @@
  * guarantee the picker to be ready at the time of call.
  *
  * @author      Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright  2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Ui/Color/Picker
  */
-define(['Core'], function (Core) {
+define(["require", "exports", "tslib", "../../Core"], function (require, exports, tslib_1, Core) {
     "use strict";
-    var _marshal = function (element, options) {
-        if (typeof window.WCF === 'object' && typeof window.WCF.ColorPicker === 'function') {
-            _marshal = function (element, options) {
-                var picker = new window.WCF.ColorPicker(element);
-                if (typeof options.callbackSubmit === 'function') {
+    Core = tslib_1.__importStar(Core);
+    let _marshal = (element, options) => {
+        if (typeof window.WCF === "object" && typeof window.WCF.ColorPicker === "function") {
+            _marshal = (element, options) => {
+                const picker = new window.WCF.ColorPicker(element);
+                if (typeof options.callbackSubmit === "function") {
                     picker.setCallbackSubmit(options.callbackSubmit);
                 }
                 return picker;
@@ -22,8 +23,8 @@ define(['Core'], function (Core) {
         }
         else {
             if (_queue.length === 0) {
-                window.__wcf_bc_colorPickerInit = function () {
-                    _queue.forEach(function (data) {
+                window.__wcf_bc_colorPickerInit = () => {
+                    _queue.forEach((data) => {
                         _marshal(data[0], data[1]);
                     });
                     window.__wcf_bc_colorPickerInit = undefined;
@@ -33,38 +34,30 @@ define(['Core'], function (Core) {
             _queue.push([element, options]);
         }
     };
-    var _queue = [];
-    /**
-     * @constructor
-     */
-    function UiColorPicker(element, options) { this.init(element, options); }
-    UiColorPicker.prototype = {
+    let _queue = [];
+    class UiColorPicker {
         /**
          * Initializes a new color picker instance. This is actually just a wrapper that does
          * not guarantee the picker to be ready at the time of call.
-         *
-         * @param       {Element}       element         input element
-         * @param       {Object}        options         list of initialization options
          */
-        init: function (element, options) {
+        constructor(element, options) {
             if (!(element instanceof Element)) {
                 throw new TypeError("Expected a valid DOM element, use `UiColorPicker.fromSelector()` if you want to use a CSS selector.");
             }
-            this._options = Core.extend({
-                callbackSubmit: null
-            }, options);
-            _marshal(element, this._options);
+            options = Core.extend({
+                callbackSubmit: null,
+            }, options || {});
+            _marshal(element, options);
         }
-    };
-    /**
-     * Initializes a color picker for all input elements matching the given selector.
-     *
-     * @param       {string}        selector        CSS selector
-     */
-    UiColorPicker.fromSelector = function (selector) {
-        elBySelAll(selector, undefined, function (element) {
-            new UiColorPicker(element);
-        });
-    };
+        /**
+         * Initializes a color picker for all input elements matching the given selector.
+         */
+        static fromSelector(selector) {
+            document.querySelectorAll(selector).forEach((element) => {
+                new UiColorPicker(element);
+            });
+        }
+    }
+    Core.enableLegacyInheritance(UiColorPicker);
     return UiColorPicker;
 });
