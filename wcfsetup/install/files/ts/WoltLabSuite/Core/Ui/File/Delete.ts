@@ -13,6 +13,7 @@ import { AjaxCallbackObject, AjaxCallbackSetup, DatabaseObjectActionResponse } f
 import * as Core from "../../Core";
 import DomChangeListener from "../../Dom/Change/Listener";
 import * as Language from "../../Language";
+import { FileUploadHandler } from "./Data";
 
 interface AjaxResponse extends DatabaseObjectActionResponse {
   uniqueFileId: string;
@@ -30,11 +31,14 @@ class UiFileDelete implements AjaxCallbackObject {
   private readonly internalId: string;
   private readonly isSingleImagePreview: boolean;
   private readonly target: HTMLElement;
-  // TODO: uploadHandler should not be `any`
-  private readonly uploadHandler: any;
+  private readonly uploadHandler: FileUploadHandler;
 
-  // TODO: uploadHandler should not be `any`
-  constructor(buttonContainerId: string, targetId: string, isSingleImagePreview: boolean, uploadHandler: any) {
+  constructor(
+    buttonContainerId: string,
+    targetId: string,
+    isSingleImagePreview: boolean,
+    uploadHandler: FileUploadHandler,
+  ) {
     this.isSingleImagePreview = isSingleImagePreview;
     this.uploadHandler = uploadHandler;
 
