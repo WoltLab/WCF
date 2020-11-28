@@ -1,25 +1,33 @@
-define(['Language', 'Ui/Dialog'], function (Language, UiDialog) {
-    return {
-        init: function () {
-            elBySelAll('.jsButtonCopyBox', undefined, (function (button) {
-                button.addEventListener('click', this._click.bind(this));
-            }).bind(this));
-        },
-        /**
-         * @param {Event} event
-         * @protected
-         */
-        _click: function (event) {
+define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog"], function (require, exports, tslib_1, Language, UiDialog) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.init = void 0;
+    Language = tslib_1.__importStar(Language);
+    UiDialog = tslib_1.__importStar(UiDialog);
+    class AcpUiBoxCopy {
+        constructor() {
+            document.querySelectorAll(".jsButtonCopyBox").forEach((button) => {
+                button.addEventListener("click", (ev) => this.click(ev));
+            });
+        }
+        click(event) {
             event.preventDefault();
             UiDialog.open(this);
-        },
-        _dialogSetup: function () {
+        }
+        _dialogSetup() {
             return {
-                id: 'acpBoxCopyDialog',
+                id: "acpBoxCopyDialog",
                 options: {
-                    title: Language.get('wcf.acp.box.copy')
-                }
+                    title: Language.get("wcf.acp.box.copy"),
+                },
             };
         }
-    };
+    }
+    let acpUiBoxCopy;
+    function init() {
+        if (!acpUiBoxCopy) {
+            acpUiBoxCopy = new AcpUiBoxCopy();
+        }
+    }
+    exports.init = init;
 });
