@@ -2,6 +2,8 @@
 namespace wcf\system\worker;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
+use wcf\data\user\UserList;
+use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\content\provider\IUserContentProvider;
@@ -29,9 +31,9 @@ class UserContentRemoveWorker extends AbstractWorker {
 	
 	/**
 	 * user
-	 * @var	User
+	 * @var	User[]
 	 */
-	protected $user = null;
+	protected $user = [];
 	
 	/**
 	 * data
@@ -49,18 +51,34 @@ class UserContentRemoveWorker extends AbstractWorker {
 	 * @inheritDoc
 	 */
 	public function validate() {
-		if (!isset($this->parameters['userID'])) {
-			throw new \InvalidArgumentException('userID missing');
+		if (isset($this->parameters['userID']) && !isset($this->parameters['userIDs'])) {
+			$this->parameters['userIDs'] = [$this->parameters['userID']];
 		}
 		
-		$this->user = new User($this->parameters['userID']);
-		
-		if (!$this->user->userID) {
-			throw new \InvalidArgumentException('userID is unknown.');
+		if (isset($this->parameters['userIDs']) && is_array($this->parameters['userIDs']) && !empty($this->parameters['userIDs'])) {
+			$userList = new UserList();
+			$userList->setObjectIDs($this->parameters['userIDs']);
+			$userList->readObjects();
+			
+			if ($userList->count() !== count($this->parameters['userIDs'])) {
+				$diff = array_diff($this->parameters['userIDs'], array_map(function (User $user) {
+					return $user->userID;
+				}, $userList->getObjects()));
+				
+				throw new \InvalidArgumentException('The parameter `userIDs` contains unknown values ('. implode(', ', $diff) .').');
+			}
+			
+			foreach ($userList as $user) {
+				if (!$user->canEdit()) {
+					throw new PermissionDeniedException();
+				}
+				
+				$this->user[] = $user;
+			}
 		}
 		
-		if (!$this->user->canEdit()) {
-			throw new PermissionDeniedException();
+		if (empty($this->user)) {
+			throw new \InvalidArgumentException('The parameter `userIDs` is empty.');
 		}
 		
 		if (isset($this->parameters['contentProvider'])) {
@@ -86,11 +104,11 @@ class UserContentRemoveWorker extends AbstractWorker {
 		else {
 			$data = WCF::getSession()->getVar(self::USER_CONTENT_REMOVE_WORKER_SESSION_NAME);
 			
-			if (!is_array($data) || !isset($data[$this->user->userID])) {
+			if (!is_array($data) || !isset($data[$this->generateKey()])) {
 				throw new \RuntimeException('`data` variable in session is invalid or missing.');
 			}
 			
-			$this->data = $data[$this->user->userID];
+			$this->data = $data[$this->generateKey()];
 		}
 	}
 	
@@ -128,19 +146,29 @@ class UserContentRemoveWorker extends AbstractWorker {
 		
 		foreach ($contentProviders as $contentProvider) {
 			if ($this->contentProvider === null || (is_array($this->contentProvider) && in_array($contentProvider->objectType, $this->contentProvider))) {
-				/** @var IUserContentProvider $processor */
-				$processor = $contentProvider->getProcessor();
-				$contentList = $processor->getContentListForUser($this->user);
-				$count = $contentList->countObjects();
-				
-				if ($count) {
-					$this->data['provider'][$contentProvider->objectType] = [
-						'count' => $count,
-						'objectTypeID' => $contentProvider->objectTypeID,
-						'nicevalue' => $contentProvider->nicevalue ?: 0
-					];
+				foreach ($this->user as $user) {
+					/** @var IUserContentProvider $processor */
+					$processor = $contentProvider->getProcessor();
+					$contentList = $processor->getContentListForUser($user);
+					$count = $contentList->countObjects();
 					
-					$this->data['count'] += ceil($count / $this->limit) * $this->limit;
+					if ($count) {
+						if (!isset($this->data['provider'][$contentProvider->objectType])) {
+							$this->data['provider'][$contentProvider->objectType] = [
+								'count' => 0,
+								'objectTypeID' => $contentProvider->objectTypeID,
+								'nicevalue' => $contentProvider->nicevalue ?: 0,
+								'user' => [],
+							];
+						}
+						
+						$this->data['provider'][$contentProvider->objectType]['user'][$user->userID] = [
+							'count' => $count,
+						];
+						$this->data['provider'][$contentProvider->objectType]['count'] += $count;
+						
+						$this->data['count'] += ceil($count / $this->limit) * $this->limit;
+					}
 				}
 			}
 		}
@@ -175,10 +203,20 @@ class UserContentRemoveWorker extends AbstractWorker {
 		/** @var IUserContentProvider $processor */
 		$processor = ObjectTypeCache::getInstance()->getObjectType($this->data['provider'][$providerObjectType]['objectTypeID'])->getProcessor();
 		
-		$objectList = $processor->getContentListForUser($this->user);
+		$userIDs = array_keys($this->data['provider'][$providerObjectType]['user']);
+		$userID = array_shift($userIDs);
+		$user = new User($userID);
+		
+		$objectList = $processor->getContentListForUser($user);
 		$objectList->sqlLimit = $this->limit;
 		$objectList->readObjectIDs();
 		$processor->deleteContent($objectList->objectIDs);
+		
+		$this->data['provider'][$providerObjectType]['user'][$userID]['count'] -= $this->limit;
+		
+		if ($this->data['provider'][$providerObjectType]['user'][$userID]['count'] <= 0) {
+			unset($this->data['provider'][$providerObjectType]['user'][$userID]);
+		} 
 		
 		$this->data['provider'][$providerObjectType]['count'] -= $this->limit;
 		
@@ -199,7 +237,7 @@ class UserContentRemoveWorker extends AbstractWorker {
 			$dataArray = [];
 		}
 		
-		$dataArray[$this->user->userID] = $this->data;
+		$dataArray[$this->generateKey()] = $this->data;
 		
 		WCF::getSession()->register(self::USER_CONTENT_REMOVE_WORKER_SESSION_NAME, $dataArray);
 	}
@@ -209,5 +247,17 @@ class UserContentRemoveWorker extends AbstractWorker {
 	 */
 	public function getProceedURL() {
 		return LinkHandler::getInstance()->getLink('UserList');
+	}
+	
+	/**
+	 * Generates a key for session data saving.
+	 */
+	protected function generateKey(): string {
+		$userIDs = array_map(function (User $user) {
+			return $user->userID;
+		}, $this->user);
+		sort($userIDs);
+		
+		return sha1(implode(';', $userIDs));
 	}
 }
