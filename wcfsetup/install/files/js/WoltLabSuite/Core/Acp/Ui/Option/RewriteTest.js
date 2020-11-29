@@ -81,7 +81,7 @@ define(["require", "exports", "tslib", "../../../Ajax/Request", "../../../Langua
                 });
             });
             const results = await Promise.all(tests.map((test) => test.catch((result) => result)));
-            const passed = results.some((result) => !result.pass);
+            const passed = !results.some((result) => !result.pass);
             // Delay the status update to prevent UI flicker.
             await new Promise((resolve) => window.setTimeout(resolve, 500));
             if (passed) {

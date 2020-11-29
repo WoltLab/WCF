@@ -39,11 +39,7 @@ class EmailSmtpTest implements AjaxCallbackObject {
       return;
     }
 
-    if (smtpCheckbox) {
-      this.onChange(smtpCheckbox);
-    }
-
-    this.container = document.createElement("div");
+    this.container = document.createElement("dl");
     this.container.innerHTML = `<dt>${Language.get("wcf.acp.email.smtp.test")}</dt>
 <dd>
   <a href="#" class="button">${Language.get("wcf.acp.email.smtp.test.run")}</a>
@@ -52,6 +48,10 @@ class EmailSmtpTest implements AjaxCallbackObject {
 
     this.buttonRunTest = this.container.querySelector("a")!;
     this.buttonRunTest.addEventListener("click", (ev) => this.onClick(ev));
+
+    if (smtpCheckbox) {
+      this.onChange(smtpCheckbox);
+    }
   }
 
   private onChange(checkbox: HTMLInputElement): void {

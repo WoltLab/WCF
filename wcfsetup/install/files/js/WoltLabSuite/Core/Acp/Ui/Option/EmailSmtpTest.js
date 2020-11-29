@@ -27,10 +27,7 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
             if (methods.length === 0) {
                 return;
             }
-            if (smtpCheckbox) {
-                this.onChange(smtpCheckbox);
-            }
-            this.container = document.createElement("div");
+            this.container = document.createElement("dl");
             this.container.innerHTML = `<dt>${Language.get("wcf.acp.email.smtp.test")}</dt>
 <dd>
   <a href="#" class="button">${Language.get("wcf.acp.email.smtp.test.run")}</a>
@@ -38,6 +35,9 @@ define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "..
 </dd>`;
             this.buttonRunTest = this.container.querySelector("a");
             this.buttonRunTest.addEventListener("click", (ev) => this.onClick(ev));
+            if (smtpCheckbox) {
+                this.onChange(smtpCheckbox);
+            }
         }
         onChange(checkbox) {
             if (checkbox.value === "smtp" && checkbox.checked) {
