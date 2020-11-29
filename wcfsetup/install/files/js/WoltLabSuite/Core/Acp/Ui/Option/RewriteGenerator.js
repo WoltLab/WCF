@@ -1,74 +1,79 @@
 /**
  * Automatic URL rewrite rule generation.
  *
- * @author	Florian Gail
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Acp/Ui/Option/RewriteTest
+ * @author  Florian Gail
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Acp/Ui/Option/RewriteGenerator
  */
-define(['Ajax', 'Language', 'Ui/Dialog'], function (Ajax, Language, UiDialog) {
+define(["require", "exports", "tslib", "../../../Ajax", "../../../Language", "../../../Ui/Dialog"], function (require, exports, tslib_1, Ajax, Language, Dialog_1) {
     "use strict";
-    var _buttonGenerate = null;
-    var _container = null;
-    /**
-     * @exports     WoltLabSuite/Core/Acp/Ui/Option/RewriteTest
-     */
-    return {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.init = void 0;
+    Ajax = tslib_1.__importStar(Ajax);
+    Language = tslib_1.__importStar(Language);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    class RewriteGenerator {
         /**
          * Initializes the generator for rewrite rules
          */
-        init: function () {
-            var urlOmitIndexPhp = elById('url_omit_index_php');
+        constructor() {
+            const urlOmitIndexPhp = document.getElementById("url_omit_index_php");
             // This configuration part is unavailable when running in enterprise mode.
             if (urlOmitIndexPhp === null) {
                 return;
             }
-            _container = elCreate('dl');
-            var dt = elCreate('dt');
-            dt.classList.add('jsOnly');
-            var dd = elCreate('dd');
-            _buttonGenerate = elCreate('a');
-            _buttonGenerate.className = 'button';
-            _buttonGenerate.href = '#';
-            _buttonGenerate.textContent = Language.get('wcf.acp.rewrite.generate');
-            _buttonGenerate.addEventListener('click', this._onClick.bind(this));
-            dd.appendChild(_buttonGenerate);
-            var description = elCreate('small');
-            description.textContent = Language.get('wcf.acp.rewrite.description');
+            this.container = document.createElement("dl");
+            const dt = document.createElement("dt");
+            dt.classList.add("jsOnly");
+            const dd = document.createElement("dd");
+            this.buttonGenerate = document.createElement("a");
+            this.buttonGenerate.className = "button";
+            this.buttonGenerate.href = "#";
+            this.buttonGenerate.textContent = Language.get("wcf.acp.rewrite.generate");
+            this.buttonGenerate.addEventListener("click", (ev) => this._onClick(ev));
+            dd.appendChild(this.buttonGenerate);
+            const description = document.createElement("small");
+            description.textContent = Language.get("wcf.acp.rewrite.description");
             dd.appendChild(description);
-            _container.appendChild(dt);
-            _container.appendChild(dd);
-            var insertAfter = urlOmitIndexPhp.closest('dl');
-            insertAfter.parentNode.insertBefore(_container, insertAfter.nextSibling);
-        },
+            this.container.appendChild(dt);
+            this.container.appendChild(dd);
+            const insertAfter = urlOmitIndexPhp.closest("dl");
+            insertAfter.insertAdjacentElement("afterend", this.container);
+        }
         /**
          * Fires an AJAX request and opens the dialog
-         *
-         * @param       {Event}         event
          */
-        _onClick: function (event) {
+        _onClick(event) {
             event.preventDefault();
             Ajax.api(this);
-        },
-        _dialogSetup: function () {
+        }
+        _dialogSetup() {
             return {
-                id: 'dialogRewriteRules',
+                id: "dialogRewriteRules",
                 source: null,
                 options: {
-                    title: Language.get('wcf.acp.rewrite')
-                }
+                    title: Language.get("wcf.acp.rewrite"),
+                },
             };
-        },
-        _ajaxSetup: function () {
+        }
+        _ajaxSetup() {
             return {
                 data: {
-                    actionName: 'generateRewriteRules',
-                    className: 'wcf\\data\\option\\OptionAction'
-                }
+                    actionName: "generateRewriteRules",
+                    className: "wcf\\data\\option\\OptionAction",
+                },
             };
-        },
-        _ajaxSuccess: function (data) {
-            UiDialog.open(this, data.returnValues);
         }
-    };
+        _ajaxSuccess(data) {
+            Dialog_1.default.open(this, data.returnValues);
+        }
+    }
+    let rewriteGenerator;
+    function init() {
+        if (!rewriteGenerator) {
+            rewriteGenerator = new RewriteGenerator();
+        }
+    }
+    exports.init = init;
 });
