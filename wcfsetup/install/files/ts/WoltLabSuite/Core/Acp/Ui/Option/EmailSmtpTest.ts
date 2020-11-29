@@ -21,7 +21,7 @@ interface AjaxResponse {
 
 class EmailSmtpTest implements AjaxCallbackObject {
   private readonly buttonRunTest: HTMLAnchorElement;
-  private readonly container: HTMLDivElement;
+  private readonly container: HTMLDListElement;
 
   constructor() {
     let smtpCheckbox: HTMLInputElement | null = null;
