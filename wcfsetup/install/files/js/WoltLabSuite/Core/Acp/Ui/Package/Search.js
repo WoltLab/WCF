@@ -6,103 +6,106 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Acp/Ui/Package/Search
  */
-define(['Ajax', 'WoltLabSuite/Core/Acp/Ui/Package/PrepareInstallation'], function (Ajax, AcpUiPackagePrepareInstallation) {
-    'use strict';
-    function AcpUiPackageSearch() { this.init(); }
-    AcpUiPackageSearch.prototype = {
-        init: function () {
-            this._input = elById('packageSearchInput');
-            this._installation = new AcpUiPackagePrepareInstallation();
-            this._isBusy = false;
-            this._isFirstRequest = true;
-            this._lastValue = '';
-            this._options = {
+define(["require", "exports", "tslib", "./PrepareInstallation", "../../../Ajax", "../../../Core"], function (require, exports, tslib_1, PrepareInstallation_1, Ajax, Core) {
+    "use strict";
+    PrepareInstallation_1 = tslib_1.__importDefault(PrepareInstallation_1);
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    class AcpUiPackageSearch {
+        constructor() {
+            this.isBusy = false;
+            this.isFirstRequest = true;
+            this.lastValue = "";
+            this.request = undefined;
+            this.timerDelay = undefined;
+            this.input = document.getElementById("packageSearchInput");
+            this.installation = new PrepareInstallation_1.default();
+            this.options = {
                 delay: 300,
-                minLength: 3
+                minLength: 3,
             };
-            this._request = null;
-            this._resultList = elById('packageSearchResultList');
-            this._resultListContainer = elById('packageSearchResultContainer');
-            this._resultCounter = elById('packageSearchResultCounter');
-            this._timerDelay = null;
-            this._input.addEventListener('keyup', this._keyup.bind(this));
-        },
-        _keyup: function () {
-            var value = this._input.value.trim();
-            if (this._lastValue === value) {
+            this.resultList = document.getElementById("packageSearchResultList");
+            this.resultListContainer = document.getElementById("packageSearchResultContainer");
+            this.resultCounter = document.getElementById("packageSearchResultCounter");
+            this.input.addEventListener("keyup", () => this.keyup());
+        }
+        keyup() {
+            const value = this.input.value.trim();
+            if (this.lastValue === value) {
                 return;
             }
-            this._lastValue = value;
-            if (value.length < this._options.minLength) {
-                this._setStatus('idle');
+            this.lastValue = value;
+            if (value.length < this.options.minLength) {
+                this.setStatus("idle");
                 return;
             }
-            if (this._isFirstRequest) {
-                if (!this._isBusy) {
-                    this._isBusy = true;
-                    this._setStatus('refreshDatabase');
+            if (this.isFirstRequest) {
+                if (!this.isBusy) {
+                    this.isBusy = true;
+                    this.setStatus("refreshDatabase");
                     Ajax.api(this, {
-                        actionName: 'refreshDatabase'
+                        actionName: "refreshDatabase",
                     });
                 }
                 return;
             }
-            if (this._timerDelay !== null) {
-                window.clearTimeout(this._timerDelay);
+            if (this.timerDelay !== null) {
+                window.clearTimeout(this.timerDelay);
             }
-            this._timerDelay = window.setTimeout((function () {
-                this._setStatus('loading');
-                this._search(value);
-            }).bind(this), this._options.delay);
-        },
-        _search: function (value) {
-            if (this._request) {
-                this._request.abortPrevious();
+            this.timerDelay = window.setTimeout(() => {
+                this.setStatus("loading");
+                this.search(value);
+            }, this.options.delay);
+        }
+        search(value) {
+            if (this.request) {
+                this.request.abortPrevious();
             }
-            this._request = Ajax.api(this, {
+            this.request = Ajax.api(this, {
                 parameters: {
-                    searchString: value
-                }
+                    searchString: value,
+                },
             });
-        },
-        _setStatus: function (status) {
-            elData(this._resultListContainer, 'status', status);
-        },
-        _ajaxSuccess: function (data) {
+        }
+        setStatus(status) {
+            this.resultListContainer.dataset.status = status;
+        }
+        _ajaxSuccess(data) {
             switch (data.actionName) {
-                case 'refreshDatabase':
-                    this._isFirstRequest = false;
-                    this._lastValue = '';
-                    this._keyup();
+                case "refreshDatabase":
+                    this.isFirstRequest = false;
+                    this.lastValue = "";
+                    this.keyup();
                     break;
-                case 'search':
+                case "search":
                     if (data.returnValues.count > 0) {
-                        this._resultList.innerHTML = data.returnValues.template;
-                        this._resultCounter.textContent = data.returnValues.count;
-                        this._setStatus('showResults');
-                        elBySelAll('.jsInstallPackage', this._resultList, (function (button) {
-                            button.addEventListener('click', (function (event) {
+                        this.resultList.innerHTML = data.returnValues.template;
+                        this.resultCounter.textContent = data.returnValues.count.toString();
+                        this.setStatus("showResults");
+                        this.resultList.querySelectorAll(".jsInstallPackage").forEach((button) => {
+                            button.addEventListener("click", (event) => {
                                 event.preventDefault();
                                 button.blur();
-                                this._installation.start(elData(button, 'package'), elData(button, 'package-version'));
-                            }).bind(this));
-                        }).bind(this));
+                                this.installation.start(button.dataset.package, button.dataset.packageVersion);
+                            });
+                        });
                     }
                     else {
-                        this._setStatus('noResults');
+                        this.setStatus("noResults");
                     }
                     break;
             }
-        },
-        _ajaxSetup: function () {
+        }
+        _ajaxSetup() {
             return {
                 data: {
-                    actionName: 'search',
-                    className: 'wcf\\data\\package\\update\\PackageUpdateAction'
+                    actionName: "search",
+                    className: "wcf\\data\\package\\update\\PackageUpdateAction",
                 },
-                silent: true
+                silent: true,
             };
         }
-    };
+    }
+    Core.enableLegacyInheritance(AcpUiPackageSearch);
     return AcpUiPackageSearch;
 });
