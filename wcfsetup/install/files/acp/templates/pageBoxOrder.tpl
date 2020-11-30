@@ -119,10 +119,10 @@
 			'wcf.acp.page.boxOrder.discard.confirmMessage': '{jslang}wcf.acp.page.boxOrder.discard.confirmMessage{/jslang}'
 		});
 		
-		var boxes = new Dictionary();
+		const boxes = new Map();
 		{foreach from=$boxes key=position item=boxData}
 			{if $position != 'mainMenu'}
-				boxes.set('{$position}', [{implode from=$boxData item=box}{ boxID: {@$box->boxID}, name: '{$box->name|encodeJS}', isDisabled: {if $box->isDisabled}true{else}false{/if} }{/implode}]);
+				boxes.set('{$position}', [{implode from=$boxData item=box}{ boxId: {@$box->boxID}, name: '{$box->name|encodeJS}', isDisabled: {if $box->isDisabled}true{else}false{/if} }{/implode}]);
 			{/if}
 		{/foreach}
 		
