@@ -1,161 +1,154 @@
 /**
  * Automatic URL rewrite support testing.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Acp/Ui/Option/RewriteTest
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Acp/Ui/Option/RewriteTest
  */
-define(['AjaxRequest', 'Language', 'Ui/Dialog'], function (AjaxRequest, Language, UiDialog) {
+define(["require", "exports", "tslib", "../../../Ajax/Request", "../../../Language", "../../../Ui/Dialog", "../../../Dom/Util"], function (require, exports, tslib_1, Request_1, Language, Dialog_1, Util_1) {
     "use strict";
-    var _apps;
-    var _buttonStartTest = elById('rewriteTestStart');
-    var _callbackChange = null;
-    var _option = elById('url_omit_index_php');
-    var _testPassed = false;
-    var _testUrl = '';
-    /**
-     * @exports     WoltLabSuite/Core/Acp/Ui/Option/RewriteTest
-     */
-    return {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.init = void 0;
+    Request_1 = tslib_1.__importDefault(Request_1);
+    Language = tslib_1.__importStar(Language);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    class RewriteTest {
         /**
          * Initializes the rewrite test, but aborts early if URL rewriting was
          * enabled at page init.
-         *
-         * @param       {Dictionary}    apps
          */
-        init: function (apps) {
+        constructor(apps) {
+            this.buttonStartTest = document.getElementById("rewriteTestStart");
+            this.passed = false;
+            const urlOmitIndexPhp = document.getElementById("url_omit_index_php");
             // This configuration part is unavailable when running in enterprise mode.
-            if (_option === null) {
+            if (urlOmitIndexPhp === null) {
                 return;
             }
-            if (_option.checked) {
+            this.urlOmitIndexPhp = urlOmitIndexPhp;
+            if (this.urlOmitIndexPhp.checked) {
                 // option is already enabled, ignore it
                 return;
             }
-            _callbackChange = this.onChange.bind(this);
-            _option.addEventListener('change', _callbackChange);
-            _apps = apps;
-        },
+            this.callbackChange = (ev) => this.onChange(ev);
+            this.urlOmitIndexPhp.addEventListener("change", this.callbackChange);
+            this.apps = apps;
+        }
         /**
          * Forces the rewrite test when attempting to enable the URL rewriting.
-         *
-         * @param       {Event}         event
          */
-        onChange: function (event) {
+        onChange(event) {
             event.preventDefault();
-            UiDialog.open(this);
-        },
+            Dialog_1.default.open(this);
+        }
         /**
          * Runs the actual rewrite test.
-         *
-         * @param       {Event?}        event
-         * @protected
          */
-        _runTest: function (event) {
-            if (event instanceof Event)
+        async runTest(event) {
+            if (event instanceof Event) {
                 event.preventDefault();
-            if (_buttonStartTest.disabled)
+            }
+            if (this.buttonStartTest.classList.contains("disabled")) {
                 return;
-            _buttonStartTest.disabled = true;
-            this._setStatus('running');
-            var tests = [];
-            _apps.forEach(function (url, app) {
-                tests.push(new Promise(function (resolve, reject) {
-                    var failure = function () {
-                        reject({ app: app, pass: false });
-                    };
-                    var request = new AjaxRequest({
+            }
+            this.buttonStartTest.classList.add("disabled");
+            this.setStatus("running");
+            const tests = Array.from(this.apps).map(([app, url]) => {
+                return new Promise((resolve, reject) => {
+                    const request = new Request_1.default({
                         ignoreError: true,
                         // bypass the LinkHandler, because rewrites aren't enabled yet
                         url: url,
-                        type: 'GET',
+                        type: "GET",
                         includeRequestedWith: false,
-                        success: function (data) {
-                            if (!data.hasOwnProperty('core_rewrite_test') || data.core_rewrite_test !== 'passed') {
-                                failure();
+                        success: (data) => {
+                            if (!Object.prototype.hasOwnProperty.call(data, "core_rewrite_test") ||
+                                data.core_rewrite_test !== "passed") {
+                                reject({ app, pass: false });
                             }
                             else {
-                                resolve({ app: app, pass: true });
+                                resolve({ app, pass: true });
                             }
                         },
-                        failure: failure
+                        failure: () => {
+                            reject({ app, pass: false });
+                            return true;
+                        },
                     });
                     request.sendRequest(false);
-                }));
+                });
             });
-            Promise.all(tests.map(function (test) {
-                // wait for all promises, even if some are rejected
-                // this will also cause `then()` to be always called
-                return test.catch(function (result) {
-                    return result;
-                });
-            })).then((function (results) {
-                var passed = true;
-                results.forEach(function (result) {
-                    if (!result.pass) {
-                        passed = false;
-                    }
-                });
-                window.setTimeout((function () {
-                    if (passed) {
-                        _testPassed = true;
-                        this._setStatus('success');
-                        _option.removeEventListener('change', _callbackChange);
-                        window.setTimeout((function () {
-                            if (UiDialog.isOpen(this)) {
-                                UiDialog.close(this);
-                            }
-                        }).bind(this), 1000);
-                    }
-                    else {
-                        _buttonStartTest.disabled = false;
-                        var html = '';
-                        results.forEach(function (result) {
-                            html += '<li><span class="badge label ' + (result.pass ? 'green' : 'red') + '">' + Language.get('wcf.acp.option.url_omit_index_php.test.status.' + (result.pass ? 'success' : 'failure')) + '</span> ' + result.app + '</li>';
-                        });
-                        elById('dialogRewriteTestFailureResults').innerHTML = html;
-                        this._setStatus('failure');
-                    }
-                }).bind(this), 500);
-            }).bind(this));
-        },
+            const results = await Promise.all(tests.map((test) => test.catch((result) => result)));
+            const passed = results.every((result) => result.pass);
+            // Delay the status update to prevent UI flicker.
+            await new Promise((resolve) => window.setTimeout(resolve, 500));
+            if (passed) {
+                this.passed = true;
+                this.setStatus("success");
+                this.urlOmitIndexPhp.removeEventListener("change", this.callbackChange);
+                await new Promise((resolve) => window.setTimeout(resolve, 1000));
+                if (Dialog_1.default.isOpen(this)) {
+                    Dialog_1.default.close(this);
+                }
+            }
+            else {
+                this.buttonStartTest.classList.remove("disabled");
+                const testFailureResults = document.getElementById("dialogRewriteTestFailureResults");
+                testFailureResults.innerHTML = results
+                    .map((result) => {
+                    return `<li><span class="badge label ${result.pass ? "green" : "red"}">${Language.get("wcf.acp.option.url_omit_index_php.test.status." + (result.pass ? "success" : "failure"))}</span> ${result.app}</li>`;
+                })
+                    .join("");
+                this.setStatus("failure");
+            }
+        }
         /**
          * Displays the appropriate dialog message.
-         *
-         * @param       {string}        status
-         * @protected
          */
-        _setStatus: function (status) {
-            var containers = [
-                elById('dialogRewriteTestRunning'),
-                elById('dialogRewriteTestSuccess'),
-                elById('dialogRewriteTestFailure')
+        setStatus(status) {
+            const containers = [
+                document.getElementById("dialogRewriteTestRunning"),
+                document.getElementById("dialogRewriteTestSuccess"),
+                document.getElementById("dialogRewriteTestFailure"),
             ];
-            containers.forEach(elHide);
-            var i = 0;
-            if (status === 'success')
+            containers.forEach((element) => Util_1.default.hide(element));
+            let i = 0;
+            if (status === "success") {
                 i = 1;
-            else if (status === 'failure')
+            }
+            else if (status === "failure") {
                 i = 2;
-            elShow(containers[i]);
-        },
-        _dialogSetup: function () {
+            }
+            Util_1.default.show(containers[i]);
+        }
+        _dialogSetup() {
             return {
-                id: 'dialogRewriteTest',
+                id: "dialogRewriteTest",
                 options: {
-                    onClose: function () {
-                        if (!_testPassed)
-                            elById('url_omit_index_php_no').checked = true;
+                    onClose: () => {
+                        if (!this.passed) {
+                            const urlOmitIndexPhpNo = document.getElementById("url_omit_index_php_no");
+                            urlOmitIndexPhpNo.checked = true;
+                        }
                     },
-                    onSetup: (function () {
-                        _buttonStartTest.addEventListener('click', this._runTest.bind(this));
-                    }).bind(this),
-                    onShow: this._runTest.bind(this),
-                    silent: true,
-                    title: Language.get('wcf.acp.option.url_omit_index_php')
-                }
+                    onSetup: () => {
+                        this.buttonStartTest.addEventListener("click", (ev) => {
+                            void this.runTest(ev);
+                        });
+                    },
+                    onShow: () => this.runTest(),
+                    title: Language.get("wcf.acp.option.url_omit_index_php"),
+                },
             };
         }
-    };
+    }
+    let rewriteTest;
+    function init(apps) {
+        if (!rewriteTest) {
+            rewriteTest = new RewriteTest(apps);
+        }
+    }
+    exports.init = init;
 });

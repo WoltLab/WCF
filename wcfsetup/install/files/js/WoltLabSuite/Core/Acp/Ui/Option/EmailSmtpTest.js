@@ -1,105 +1,125 @@
 /**
  * Simple SMTP connection testing.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Acp/Ui/Option/EmailSmtpTest
+ * @author  Alexander Ebert
+ * @copyright  2001-2018 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Acp/Ui/Option/EmailSmtpTest
  */
-define(['Ajax', 'Core', 'Language'], function (Ajax, Core, Language) {
+define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Util", "../../../Language"], function (require, exports, tslib_1, Ajax, Util_1, Language) {
     "use strict";
-    var _buttonRunTest = null;
-    var _container = null;
-    return {
-        init: function () {
-            var smtpCheckbox = null;
-            var methods = elBySelAll('input[name="values[mail_send_method]"]', undefined, (function (radioCheckbox) {
-                radioCheckbox.addEventListener('change', this._onChange.bind(this));
-                if (radioCheckbox.value === 'smtp')
-                    smtpCheckbox = radioCheckbox;
-            }).bind(this));
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.init = void 0;
+    Ajax = tslib_1.__importStar(Ajax);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Language = tslib_1.__importStar(Language);
+    class EmailSmtpTest {
+        constructor() {
+            let smtpCheckbox = null;
+            const methods = document.querySelectorAll('input[name="values[mail_send_method]"]');
+            methods.forEach((checkbox) => {
+                checkbox.addEventListener("change", () => this.onChange(checkbox));
+                if (checkbox.value === "smtp") {
+                    smtpCheckbox = checkbox;
+                }
+            });
             // This configuration part is unavailable when running in enterprise mode.
             if (methods.length === 0) {
                 return;
             }
-            Core.triggerEvent(smtpCheckbox, 'change');
-        },
-        _onChange: function (event) {
-            var checkbox = event.currentTarget;
-            if (checkbox.value === 'smtp' && checkbox.checked) {
-                if (_container === null)
-                    this._initUi(checkbox);
-                elShow(_container);
+            this.container = document.createElement("dl");
+            this.container.innerHTML = `<dt>${Language.get("wcf.acp.email.smtp.test")}</dt>
+<dd>
+  <a href="#" class="button">${Language.get("wcf.acp.email.smtp.test.run")}</a>
+  <small>${Language.get("wcf.acp.email.smtp.test.description")}</small>
+</dd>`;
+            this.buttonRunTest = this.container.querySelector("a");
+            this.buttonRunTest.addEventListener("click", (ev) => this.onClick(ev));
+            if (smtpCheckbox) {
+                this.onChange(smtpCheckbox);
             }
-            else if (_container !== null) {
-                elHide(_container);
+        }
+        onChange(checkbox) {
+            if (checkbox.value === "smtp" && checkbox.checked) {
+                if (this.container.parentElement === null) {
+                    this.initUi(checkbox);
+                }
+                Util_1.default.show(this.container);
             }
-        },
-        _initUi: function (checkbox) {
-            var html = '<dt>' + Language.get('wcf.acp.email.smtp.test') + '</dt>';
-            html += '<dd>';
-            html += '<a href="#" class="button">' + Language.get('wcf.acp.email.smtp.test.run') + '</a>';
-            html += '<small>' + Language.get('wcf.acp.email.smtp.test.description') + '</small>';
-            html += '</dd>';
-            _container = elCreate('dl');
-            _container.innerHTML = html;
-            _buttonRunTest = elBySel('a', _container);
-            _buttonRunTest.addEventListener('click', this._onClick.bind(this));
-            var insertAfter = checkbox.closest('dl');
-            insertAfter.parentNode.insertBefore(_container, insertAfter.nextSibling);
-        },
-        _onClick: function (event) {
+            else if (this.container.parentElement !== null) {
+                Util_1.default.hide(this.container);
+            }
+        }
+        initUi(checkbox) {
+            const insertAfter = checkbox.closest("dl");
+            insertAfter.insertAdjacentElement("afterend", this.container);
+        }
+        onClick(event) {
             event.preventDefault();
-            _buttonRunTest.disabled = true;
-            _buttonRunTest.innerHTML = '<span class="icon icon16 fa-spinner"></span> ' + Language.get('wcf.global.loading');
-            elInnerError(_buttonRunTest, false);
-            window.setTimeout((function () {
-                var startTls = elBySel('input[name="values[mail_smtp_starttls]"]:checked');
+            this.buttonRunTest.classList.add("disabled");
+            this.buttonRunTest.innerHTML = `<span class="icon icon16 fa-spinner"></span> ${Language.get("wcf.global.loading")}`;
+            Util_1.default.innerError(this.buttonRunTest, false);
+            window.setTimeout(() => {
+                const startTls = document.querySelector('input[name="values[mail_smtp_starttls]"]:checked');
+                const host = document.getElementById("mail_smtp_host");
+                const port = document.getElementById("mail_smtp_port");
+                const user = document.getElementById("mail_smtp_user");
+                const password = document.getElementById("mail_smtp_password");
                 Ajax.api(this, {
                     parameters: {
-                        host: elById('mail_smtp_host').value,
-                        port: elById('mail_smtp_port').value,
-                        startTls: (startTls) ? startTls.value : '',
-                        user: elById('mail_smtp_user').value,
-                        password: elById('mail_smtp_password').value
-                    }
+                        host: host.value,
+                        port: port.value,
+                        startTls: startTls ? startTls.value : "",
+                        user: user.value,
+                        password: password.value,
+                    },
                 });
-            }).bind(this), 100);
-        },
-        _ajaxSuccess: function (data) {
-            var result = data.returnValues.validationResult;
-            if (result === '') {
-                this._resetButton(true);
+            }, 100);
+        }
+        _ajaxSuccess(data) {
+            const result = data.returnValues.validationResult;
+            if (result === "") {
+                this.resetButton(true);
             }
             else {
-                this._resetButton(false, result);
+                this.resetButton(false, result);
             }
-        },
-        _ajaxFailure: function (data) {
-            var result = '';
+        }
+        _ajaxFailure(data) {
+            let result = "";
             if (data && data.returnValues && data.returnValues.fieldName) {
-                result = Language.get('wcf.acp.email.smtp.test.error.empty.' + data.returnValues.fieldName);
+                result = Language.get(`wcf.acp.email.smtp.test.error.empty.${data.returnValues.fieldName}`);
             }
-            this._resetButton(false, result);
-            return (result === '');
-        },
-        _resetButton: function (success, errorMessage) {
-            _buttonRunTest.disabled = false;
-            if (success)
-                _buttonRunTest.innerHTML = '<span class="icon icon16 fa-check green"></span> ' + Language.get('wcf.acp.email.smtp.test.run.success');
-            else
-                _buttonRunTest.innerHTML = Language.get('wcf.acp.email.smtp.test.run');
-            if (errorMessage)
-                elInnerError(_buttonRunTest, errorMessage);
-        },
-        _ajaxSetup: function () {
+            this.resetButton(false, result);
+            return result === "";
+        }
+        resetButton(success, errorMessage) {
+            this.buttonRunTest.classList.remove("disabled");
+            if (success) {
+                this.buttonRunTest.innerHTML = `<span class="icon icon16 fa-check green"></span> ${Language.get("wcf.acp.email.smtp.test.run.success")}`;
+            }
+            else {
+                this.buttonRunTest.innerHTML = Language.get("wcf.acp.email.smtp.test.run");
+            }
+            if (errorMessage) {
+                Util_1.default.innerError(this.buttonRunTest, errorMessage);
+            }
+        }
+        _ajaxSetup() {
             return {
                 data: {
-                    actionName: 'emailSmtpTest',
-                    className: 'wcf\\data\\option\\OptionAction'
+                    actionName: "emailSmtpTest",
+                    className: "wcf\\data\\option\\OptionAction",
                 },
-                silent: true
+                silent: true,
             };
         }
-    };
+    }
+    let emailSmtpTest;
+    function init() {
+        if (!emailSmtpTest) {
+            emailSmtpTest = new EmailSmtpTest();
+        }
+    }
+    exports.init = init;
 });
