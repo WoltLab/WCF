@@ -1,120 +1,126 @@
 /**
  * Provides the interface logic to add and edit menu items.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Acp/Ui/Menu/Item/Handler
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Acp/Ui/Menu/Item/Handler
  */
-define(['Dictionary', 'Language', 'WoltLabSuite/Core/Ui/Page/Search/Handler'], function (Dictionary, Language, UiPageSearchHandler) {
+define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Language", "../../../../Ui/Page/Search/Handler"], function (require, exports, tslib_1, Util_1, Language, UiPageSearchHandler) {
     "use strict";
-    var _activePageId = 0;
-    var _cache;
-    var _containerExternalLink;
-    var _containerInternalLink;
-    var _containerPageObjectId = null;
-    var _handlers;
-    var _pageId;
-    var _pageObjectId;
-    /**
-     * @exports     WoltLabSuite/Core/Acp/Ui/Menu/Item/Handler
-     */
-    return {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.init = void 0;
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Language = tslib_1.__importStar(Language);
+    UiPageSearchHandler = tslib_1.__importStar(UiPageSearchHandler);
+    class AcpUiMenuItemHandler {
         /**
          * Initializes the interface logic.
-         *
-         * @param       {Dictionary}    handlers        list of handlers by page id supporting page object ids
          */
-        init: function (handlers) {
-            _handlers = handlers;
-            _containerInternalLink = elById('pageIDContainer');
-            _containerExternalLink = elById('externalURLContainer');
-            _containerPageObjectId = elById('pageObjectIDContainer');
-            if (_handlers.size) {
-                _pageId = elById('pageID');
-                _pageId.addEventListener('change', this._togglePageId.bind(this));
-                _pageObjectId = elById('pageObjectID');
-                _cache = new Dictionary();
-                _activePageId = ~~_pageId.value;
-                if (_activePageId && _handlers.has(_activePageId)) {
-                    _cache.set(_activePageId, ~~_pageObjectId.value);
+        constructor(handlers) {
+            this.activePageId = 0;
+            this.cache = new Map();
+            this.handlers = handlers;
+            this.containerInternalLink = document.getElementById("pageIDContainer");
+            this.containerExternalLink = document.getElementById("externalURLContainer");
+            this.containerPageObjectId = document.getElementById("pageObjectIDContainer");
+            if (this.handlers.size) {
+                this.pageId = document.getElementById("pageID");
+                this.pageId.addEventListener("change", this.togglePageId.bind(this));
+                this.pageObjectId = document.getElementById("pageObjectID");
+                this.activePageId = ~~this.pageId.value;
+                if (this.activePageId && this.handlers.has(this.activePageId)) {
+                    this.cache.set(this.activePageId, ~~this.pageObjectId.value);
                 }
-                elById('searchPageObjectID').addEventListener('click', this._openSearch.bind(this));
+                const searchButton = document.getElementById("searchPageObjectID");
+                searchButton.addEventListener("click", (ev) => this.openSearch(ev));
                 // toggle page object id container on init
-                if (_handlers.has(~~_pageId.value)) {
-                    elShow(_containerPageObjectId);
+                if (this.handlers.has(~~this.pageId.value)) {
+                    Util_1.default.show(this.containerPageObjectId);
                 }
             }
-            elBySelAll('input[name="isInternalLink"]', null, (function (input) {
-                input.addEventListener('change', this._toggleIsInternalLink.bind(this, input.value));
+            document.querySelectorAll('input[name="isInternalLink"]').forEach((input) => {
+                input.addEventListener("change", () => this.toggleIsInternalLink(input.value));
                 if (input.checked) {
-                    this._toggleIsInternalLink(input.value);
+                    this.toggleIsInternalLink(input.value);
                 }
-            }).bind(this));
-        },
+            });
+        }
         /**
          * Toggles between the interface for internal and external links.
-         *
-         * @param       {string}        value   selected option value
-         * @protected
          */
-        _toggleIsInternalLink: function (value) {
+        toggleIsInternalLink(value) {
             if (~~value) {
-                elShow(_containerInternalLink);
-                elHide(_containerExternalLink);
-                if (_handlers.size)
-                    this._togglePageId();
+                Util_1.default.show(this.containerInternalLink);
+                Util_1.default.hide(this.containerExternalLink);
+                if (this.handlers.size) {
+                    this.togglePageId();
+                }
             }
             else {
-                elHide(_containerInternalLink);
-                elHide(_containerPageObjectId);
-                elShow(_containerExternalLink);
+                Util_1.default.hide(this.containerInternalLink);
+                Util_1.default.hide(this.containerPageObjectId);
+                Util_1.default.show(this.containerExternalLink);
             }
-        },
+        }
         /**
          * Handles the changed page selection.
-         *
-         * @protected
          */
-        _togglePageId: function () {
-            if (_handlers.has(_activePageId)) {
-                _cache.set(_activePageId, ~~_pageObjectId.value);
+        togglePageId() {
+            if (this.handlers.has(this.activePageId)) {
+                this.cache.set(this.activePageId, ~~this.pageObjectId.value);
             }
-            _activePageId = ~~_pageId.value;
+            this.activePageId = ~~this.pageId.value;
             // page w/o pageObjectID support, discard value
-            if (!_handlers.has(_activePageId)) {
-                _pageObjectId.value = '';
-                elHide(_containerPageObjectId);
+            if (!this.handlers.has(this.activePageId)) {
+                this.pageObjectId.value = "";
+                Util_1.default.hide(this.containerPageObjectId);
                 return;
             }
-            var newValue = ~~_cache.get(_activePageId);
-            _pageObjectId.value = (newValue) ? newValue : '';
-            var pageIdentifier = elData(_pageId.options[_pageId.selectedIndex], 'identifier');
-            var languageItem = 'wcf.page.pageObjectID.' + pageIdentifier;
+            const newValue = this.cache.get(this.activePageId);
+            this.pageObjectId.value = newValue ? newValue.toString() : "";
+            const selectedOption = this.pageId.options[this.pageId.selectedIndex];
+            const pageIdentifier = selectedOption.dataset.identifier;
+            let languageItem = `wcf.page.pageObjectID.${pageIdentifier}`;
             if (Language.get(languageItem) === languageItem) {
-                languageItem = 'wcf.page.pageObjectID';
+                languageItem = "wcf.page.pageObjectID";
             }
-            elByTag('label', _containerPageObjectId)[0].textContent = Language.get(languageItem);
-            elShow(_containerPageObjectId);
-        },
+            this.containerPageObjectId.querySelector("label").textContent = Language.get(languageItem);
+            Util_1.default.show(this.containerPageObjectId);
+        }
         /**
          * Opens the handler lookup dialog.
-         *
-         * @param       {Event}         event           event object
-         * @protected
          */
-        _openSearch: function (event) {
+        openSearch(event) {
             event.preventDefault();
-            var labelLanguageItem;
-            var pageIdentifier = elData(_pageId.options[_pageId.selectedIndex], 'identifier');
-            var languageItem = 'wcf.page.pageObjectID.search.' + pageIdentifier;
+            const selectedOption = this.pageId.options[this.pageId.selectedIndex];
+            const pageIdentifier = selectedOption.dataset.identifier;
+            const languageItem = `wcf.page.pageObjectID.search.${pageIdentifier}`;
+            let labelLanguageItem;
             if (Language.get(languageItem) !== languageItem) {
                 labelLanguageItem = languageItem;
             }
-            UiPageSearchHandler.open(_activePageId, _pageId.options[_pageId.selectedIndex].textContent.trim(), function (objectId) {
-                _pageObjectId.value = objectId;
-                _cache.set(_activePageId, objectId);
+            UiPageSearchHandler.open(this.activePageId, selectedOption.textContent.trim(), (objectId) => {
+                this.pageObjectId.value = objectId.toString();
+                this.cache.set(this.activePageId, objectId);
             }, labelLanguageItem);
         }
-    };
+    }
+    let acpUiMenuItemHandler;
+    function init(handlers) {
+        if (!acpUiMenuItemHandler) {
+            let map;
+            if (!(handlers instanceof Map)) {
+                map = new Map();
+                handlers.forEach((value, key) => {
+                    map.set(~~~key, value);
+                });
+            }
+            else {
+                map = handlers;
+            }
+            acpUiMenuItemHandler = new AcpUiMenuItemHandler(map);
+        }
+    }
+    exports.init = init;
 });
