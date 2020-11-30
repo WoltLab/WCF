@@ -68,7 +68,9 @@ class AcpUiMenuItemHandler {
     if (~~value) {
       DomUtil.show(this.containerInternalLink);
       DomUtil.hide(this.containerExternalLink);
-      if (this.handlers.size) this.togglePageId();
+      if (this.handlers.size) {
+        this.togglePageId();
+      }
     } else {
       DomUtil.hide(this.containerInternalLink);
       DomUtil.hide(this.containerPageObjectId);

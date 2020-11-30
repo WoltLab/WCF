@@ -53,8 +53,9 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Lang
             if (~~value) {
                 Util_1.default.show(this.containerInternalLink);
                 Util_1.default.hide(this.containerExternalLink);
-                if (this.handlers.size)
+                if (this.handlers.size) {
                     this.togglePageId();
+                }
             }
             else {
                 Util_1.default.hide(this.containerInternalLink);
