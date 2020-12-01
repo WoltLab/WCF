@@ -866,6 +866,21 @@ E-Mail: [E-Mail-Adresse der verantwortlichen Stelle]</p><p><br></p><p>Verantwort
 				<title>Mehrfaktor-Authentifizierung deaktivieren</title>
 			</content>
 		</page>
+		<page identifier="com.woltlab.wcf.Reauthentication">
+			<pageType>system</pageType>
+			<controller>wcf\form\ReauthenticationForm</controller>
+			<name language="en">Re-authentication</name>
+			<name language="de">Erneute Authentifizierung</name>
+			<hasFixedParent>1</hasFixedParent>
+			<excludeFromLandingPage>1</excludeFromLandingPage>
+			<availableDuringOfflineMode>1</availableDuringOfflineMode>
+			<content language="en">
+				<title>Re-authentication</title>
+			</content>
+			<content language="de">
+				<title>Erneute Authentifizierung</title>
+			</content>
+		</page>
 	</import>
 	<delete>
 		<page identifier="com.woltlab.wcf.Mail"/>
