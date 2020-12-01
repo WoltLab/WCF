@@ -877,6 +877,11 @@ final class SessionHandler extends SingletonFactory {
 			throw new \BadMethodCallException('The current user is a guest.');
 		}
 		
+		// Reauthentication for third party authentication is not supported.
+		if ($this->getUser()->authData) {
+			return false;
+		}
+		
 		$data = $this->getVar(self::REAUTHENTICATION_KEY);
 		
 		// Request a new authentication if no stored information is available.
