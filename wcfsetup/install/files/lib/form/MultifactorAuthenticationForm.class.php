@@ -7,7 +7,6 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
-use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\multifactor\IMultifactorMethod;
