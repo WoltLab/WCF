@@ -137,8 +137,13 @@ final class SessionHandler extends SingletonFactory {
 	private const GUEST_SESSION_LIFETIME = 2 * 3600;
 	private const USER_SESSION_LIFETIME = 14 * 86400;
 	
-	private const CHANGE_USER_AFTER_MULTIFACTOR_KEY = '__changeUserAfterMultifactor__';
+	private const CHANGE_USER_AFTER_MULTIFACTOR_KEY = self::class."\0__changeUserAfterMultifactor__";
 	private const PENDING_USER_LIFETIME = 15 * 60;
+	
+	private const REAUTHENTICATION_KEY = self::class."\0__reauthentication__";
+	private const REAUTHENTICATION_HARD_LIMIT = 12 * 3600;
+	private const REAUTHENTICATION_SOFT_LIMIT = 2 * 3600;
+	private const REAUTHENTICATION_GRACE_PERIOD = 15 * 60;
 	
 	/**
 	 * Provides access to session data.
@@ -856,6 +861,82 @@ final class SessionHandler extends SingletonFactory {
 				throw new \LogicException('Unreachable');
 			}
 		}
+	}
+	
+	/**
+	 * Checks whether the user needs to authenticate themselves once again
+	 * to access a security critical area.
+	 * 
+	 * If `true` is returned you should perform a redirect to `ReAuthenticationForm`,
+	 * otherwise the user is sufficiently authenticated and may proceed.
+	 *
+	 * @throws \BadMethodCallException If the current user is a guest.
+	 */
+	public function needsReauthentication(): bool {
+		if (!$this->getUser()->userID) {
+			throw new \BadMethodCallException('The current user is a guest.');
+		}
+		
+		$data = $this->getVar(self::REAUTHENTICATION_KEY);
+		
+		// Request a new authentication if no stored information is available.
+		if (!$data) {
+			return true;
+		}
+		
+		$lastAuthentication = $data['lastAuthentication'];
+		$lastCheck = $data['lastCheck'];
+		
+		// Request a new authentication if the hard limit since the last authentication
+		// is exceeded.
+		if ($lastAuthentication < (TIME_NOW - self::REAUTHENTICATION_HARD_LIMIT)) {
+			return true;
+		}
+		
+		// Request a new authentication if the soft limit since the last authentication
+		// is exceeded ...
+		if ($lastAuthentication < (TIME_NOW - self::REAUTHENTICATION_SOFT_LIMIT)) {
+			// ... and the grace period since the last check is also exceeded.
+			if ($lastCheck < (TIME_NOW - self::REAUTHENTICATION_GRACE_PERIOD)) {
+				return true;
+			}
+		}
+		
+		// If we reach this point we determined that a new authentication is not necessary.
+		\assert(
+			($lastAuthentication >= TIME_NOW - self::REAUTHENTICATION_SOFT_LIMIT) ||
+			($lastAuthentication >= TIME_NOW - self::REAUTHENTICATION_HARD_LIMIT &&
+				$lastCheck >= TIME_NOW - self::REAUTHENTICATION_GRACE_PERIOD)
+		);
+		
+		// Update the lastCheck timestamp to make sure that the grace period works properly.
+		// 
+		// The grace period allows the user to complete their action if the soft limit
+		// expires between loading a form and actually submitting that form, provided that
+		// the user does not take longer than the grace period to fill in the form.
+		$data['lastCheck'] = TIME_NOW;
+		$this->register(self::REAUTHENTICATION_KEY, $data);
+		
+		return false;
+	}
+	
+	/**
+	 * Registers that the user performed reauthentication successfully.
+	 * 
+	 * This method should be considered to be semi-public and is intended to be used
+	 * by `ReAuthenticationForm` only.
+	 * 
+	 * @throws \BadMethodCallException If the current user is a guest.
+	 */
+	public function registerReauthentication(): void {
+		if (!$this->getUser()->userID) {
+			throw new \BadMethodCallException('The current user is a guest.');
+		}
+		
+		$this->register(self::REAUTHENTICATION_KEY, [
+			'lastAuthentication' => TIME_NOW,
+			'lastCheck' => TIME_NOW,
+		]);
 	}
 	
 	/**
