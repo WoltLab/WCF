@@ -251,6 +251,7 @@ class StyleEditForm extends StyleAddForm {
 				'apiVersion' => $this->apiVersion
 			]),
 			'uploads' => $this->uploads,
+			'removedUploads' => $this->removedUploads,
 			'customAssets' => $this->customAssets,
 			'tmpHash' => $this->tmpHash,
 			'variables' => $this->variables,
