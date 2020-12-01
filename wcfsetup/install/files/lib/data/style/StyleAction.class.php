@@ -184,13 +184,8 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 				/** @var \wcf\system\file\upload\UploadFile $file */
 				$file = $this->parameters['uploads'][$type];
 				
-				if ($style->getVariable($type) && file_exists($style->getAssetPath().basename($style->getVariable($type)))) {
-					if (!$file || $style->getAssetPath().basename($style->getVariable($type)) !== $file->getLocation()) {
-						unlink($style->getAssetPath().basename($style->getVariable($type)));
-					}
-				}
-				
-				if ($file !== null) {
+				// Only save file, if it is not proccessed. 
+				if ($file !== null && !$file->isProcessed()) {
 					$fileLocation = $file->getLocation();
 					$extension = pathinfo($file->getFilename(), PATHINFO_EXTENSION);
 					$newName = $type.'-'.\bin2hex(\random_bytes(4)).'.'.$extension;
@@ -199,9 +194,15 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 					$this->parameters['variables'][$type] = $newName;
 					$file->setProcessed($newLocation);
 				}
-				else {
+				else if ($file === null) {
 					$this->parameters['variables'][$type] = '';
 				}
+			}
+		}
+		
+		foreach ($this->parameters['removedUploads'] as $removedUpload) {
+			if (file_exists($removedUpload->getLocation())) {
+				unlink($removedUpload->getLocation());
 			}
 		}
 		
