@@ -47,6 +47,7 @@
     "__topReaction",
     "__uploadFormField",
     "__userFormField",
+    "__userPasswordFormField",
     "__usernameFormField",
     "__valueFormFieldDependency",
     "__wysiwygAttachmentFormField",
