@@ -437,14 +437,16 @@ class UserEditForm extends UserAddForm {
 		$this->objectAction = new UserAction([$this->userID], 'update', $data);
 		$this->objectAction->executeAction();
 		
+		// reload user
+		$this->user = new UserEditor(new User($this->userID));
+		
 		// update user rank
-		$editor = new UserEditor(new User($this->userID));
 		if (MODULE_USER_RANK) {
-			$action = new UserProfileAction([$editor], 'updateUserRank');
+			$action = new UserProfileAction([$this->user], 'updateUserRank');
 			$action->executeAction();
 		}
 		if (MODULE_USERS_ONLINE) {
-			$action = new UserProfileAction([$editor], 'updateUserOnlineMarking');
+			$action = new UserProfileAction([$this->user], 'updateUserOnlineMarking');
 			$action->executeAction();
 		}
 		
@@ -461,8 +463,8 @@ class UserEditForm extends UserAddForm {
 		// reset password
 		$this->password = $this->confirmPassword = '';
 		
-		// reload user when deleting the cover photo or disconnecting from 3rd party auth provider
-		if ($this->deleteCoverPhoto || $this->disconnect3rdParty) $this->user = new User($this->userID);
+		// reload user
+		$this->user = new UserEditor(new User($this->userID));
 		
 		// show success message
 		WCF::getTPL()->assign('success', true);
