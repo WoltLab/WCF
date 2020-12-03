@@ -2,7 +2,6 @@
 namespace wcf\system\captcha;
 use wcf\system\recaptcha\RecaptchaHandlerV2;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Captcha handler for reCAPTCHA.
@@ -37,16 +36,9 @@ class RecaptchaHandler implements ICaptchaHandler {
 	public function getFormElement() {
 		if (WCF::getSession()->getVar('recaptchaDone')) return '';
 		
-		if (!RECAPTCHA_PUBLICKEY || !RECAPTCHA_PRIVATEKEY) {
-			// V1
-			\wcf\system\recaptcha\RecaptchaHandler::getInstance()->assignVariables();
-		}
-		else {
-			// V2
-			WCF::getTPL()->assign([
-				'recaptchaLegacyMode' => true
-			]);
-		}
+		WCF::getTPL()->assign([
+			'recaptchaLegacyMode' => true
+		]);
 		
 		return WCF::getTPL()->fetch('recaptcha');
 	}
@@ -72,16 +64,8 @@ class RecaptchaHandler implements ICaptchaHandler {
 	 * @inheritDoc
 	 */
 	public function readFormParameters() {
-		if (!RECAPTCHA_PUBLICKEY || !RECAPTCHA_PRIVATEKEY) {
-			// V1
-			if (isset($_POST['recaptcha_challenge_field'])) $this->challenge = StringUtil::trim($_POST['recaptcha_challenge_field']);
-			if (isset($_POST['recaptcha_response_field'])) $this->response = StringUtil::trim($_POST['recaptcha_response_field']);
-		}
-		else {
-			// V2
-			if (isset($_POST['recaptcha-type'])) $this->challenge = $_POST['recaptcha-type'];
-			if (isset($_POST['g-recaptcha-response'])) $this->response = $_POST['g-recaptcha-response'];
-		}
+		if (isset($_POST['recaptcha-type'])) $this->challenge = $_POST['recaptcha-type'];
+		if (isset($_POST['g-recaptcha-response'])) $this->response = $_POST['g-recaptcha-response'];
 	}
 	
 	/**
@@ -97,13 +81,6 @@ class RecaptchaHandler implements ICaptchaHandler {
 	public function validate() {
 		if (WCF::getSession()->getVar('recaptchaDone')) return;
 		
-		if (!RECAPTCHA_PUBLICKEY || !RECAPTCHA_PRIVATEKEY) {
-			// V1
-			\wcf\system\recaptcha\RecaptchaHandler::getInstance()->validate($this->challenge, $this->response);
-		}
-		else {
-			// V2
-			RecaptchaHandlerV2::getInstance()->validate($this->response, $this->challenge ?: 'v2');
-		}
+		RecaptchaHandlerV2::getInstance()->validate($this->response, $this->challenge ?: 'v2');
 	}
 }
