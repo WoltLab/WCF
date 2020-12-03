@@ -17,6 +17,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\style\StyleHandler;
+use wcf\system\user\multifactor\Setup;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -136,6 +137,12 @@ class UserEditForm extends UserAddForm {
 	public $disconnect3rdParty = 0;
 	
 	/**
+	 * true to disable multifactor authentication
+	 * @var boolean
+	 */
+	public $multifactorDisable = 0;
+	
+	/**
 	 * list of available styles for the edited user
 	 * @var         Style[]
 	 * @since       5.3
@@ -211,6 +218,9 @@ class UserEditForm extends UserAddForm {
 		}
 		
 		if (WCF::getSession()->getPermission('admin.user.canEditPassword') && isset($_POST['disconnect3rdParty'])) $this->disconnect3rdParty = 1;
+		if (WCF::getSession()->getPermission('admin.user.canEditPassword') && isset($_POST['multifactorDisable'])) {
+			$this->multifactorDisable = 1;
+		}
 	}
 	
 	/**
@@ -436,6 +446,20 @@ class UserEditForm extends UserAddForm {
 		
 		$this->objectAction = new UserAction([$this->userID], 'update', $data);
 		$this->objectAction->executeAction();
+		
+		// disable multifactor authentication
+		if (WCF::getSession()->getPermission('admin.user.canEditPassword') && $this->multifactorDisable) {
+			WCF::getDB()->beginTransaction();
+			$setups = Setup::getAllForUser($this->user->getDecoratedObject());
+			foreach ($setups as $setup) {
+				$setup->delete();
+			}
+		
+			$this->user->update([
+				'multifactorActive' => 0,
+			]);
+			WCF::getDB()->commitTransaction();
+		}
 		
 		// reload user
 		$this->user = new UserEditor(new User($this->userID));
