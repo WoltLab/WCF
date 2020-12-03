@@ -4943,6 +4943,7 @@ You successfully enabled multi-factor authentication using the „{lang}wcf.user
 
 You also received a list of emergency codes to use when your second factor becomes unavailable. **Did you store these emergency codes securely?** If you forgot you can do now by generating new codes in the Emergency Code Management [URL:{link controller='MultifactorManage' object=$backupMethod isEmail=true}{/link}].]]></item>
 		<item name="wcf.user.security.multifactor.authentication.noPendingUserChange"><![CDATA[The multi-factor authentication was not completed in time. The incomplete login process was aborted for security reasons. Please <a href="{link controller='Login'}{/link}">Login</a> once again.]]></item>
+		<item name="wcf.user.security.multifactor.authentication.noSetup"><![CDATA[The account <strong>{$user->username}</strong> is protected by multi-factor authentication, but no methods are set up. Please contact the administrator for support.]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophies]]></item>

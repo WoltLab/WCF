@@ -86,7 +86,12 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 		$this->setups = Setup::getAllForUser($this->user);
 		
 		if (empty($this->setups)) {
-			throw new \LogicException('Unreachable');
+			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable(
+				'wcf.user.security.multifactor.authentication.noSetup',
+				[
+					'user' => $this->user,
+				]
+			));
 		}
 		
 		\uasort($this->setups, function (Setup $a, Setup $b) {
