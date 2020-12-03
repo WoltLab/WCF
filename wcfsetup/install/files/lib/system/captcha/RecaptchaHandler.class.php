@@ -1,13 +1,16 @@
 <?php
 namespace wcf\system\captcha;
-use wcf\system\recaptcha\RecaptchaHandlerV2;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
+use wcf\util\HTTPRequest;
+use wcf\util\JSON;
+use wcf\util\UserUtil;
 
 /**
  * Captcha handler for reCAPTCHA.
  * 
- * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
+ * @author	Tim Duesterhus, Matthias Schmidt
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Captcha
  */
@@ -81,6 +84,44 @@ class RecaptchaHandler implements ICaptchaHandler {
 	public function validate() {
 		if (WCF::getSession()->getVar('recaptchaDone')) return;
 		
-		RecaptchaHandlerV2::getInstance()->validate($this->response, $this->challenge ?: 'v2');
+		// fail if response is empty to avoid sending api requests
+		if (empty($this->response)) {
+			throw new UserInputException('recaptchaString', 'false');
+		}
+		
+		$type = $this->challenge ?: 'v2';
+		
+		if ($type === 'v2') {
+			$key = RECAPTCHA_PRIVATEKEY;
+		}
+		else if ($type === 'invisible') {
+			$key = RECAPTCHA_PRIVATEKEY_INVISIBLE;
+		}
+		else {
+			throw new \InvalidArgumentException('$type must be either v2 or invisible.');
+		}
+		
+		$request = new HTTPRequest('https://www.google.com/recaptcha/api/siteverify?secret='.rawurlencode($key).'&response='.rawurlencode($this->response).'&remoteip='.rawurlencode(UserUtil::getIpAddress()), ['timeout' => 10]);
+		
+		try {
+			$request->execute();
+			$reply = $request->getReply();
+			$data = JSON::decode($reply['body']);
+			
+			if ($data['success']) {
+				// yeah
+			}
+			else {
+				throw new UserInputException('recaptchaString', 'false');
+			}
+		}
+		catch (\Exception $e) {
+			if ($e instanceof UserInputException) throw $e;
+			
+			// log error, but accept captcha
+			\wcf\functions\exception\logThrowable($e);
+		}
+		
+		WCF::getSession()->register('recaptchaDone', true);
 	}
 }
