@@ -1262,12 +1262,12 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.cache_source_type"><![CDATA[Cache-Methode]]></item>
 		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Beachte{else}Beachten Sie{/if}, dass einige Methoden spezielle Anforderungen an das Server-System stellen und nicht auf jedem Server zur Verfügung stehen.]]></item>
 		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[Dateisystem (Standard)]]></item>
-		<item name="wcf.acp.option.cache_source_type.memcached"><![CDATA[Memcached (Veraltet)]]></item>
+		<item name="wcf.acp.option.cache_source_type.memcached"><![CDATA[Memcached (Obsolet)]]></item>
 		<item name="wcf.acp.option.cache_source_type.redis"><![CDATA[Redis]]></item>
 		<item name="wcf.acp.option.category.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.category.general.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[Allgemein]]></item>
-		<item name="wcf.acp.option.category.general.cache.memcached"><![CDATA[Memcached (Veraltet)]]></item>
+		<item name="wcf.acp.option.category.general.cache.memcached"><![CDATA[Memcached (Obsolet)]]></item>
 		<item name="wcf.acp.option.category.general.cache.memcached.description"><![CDATA[Die Unterstützung für Memcached ist veraltet und wird in einer zukünftigen Version von WoltLab Suite™ entfernt. Benutzern von Memcached wird empfohlen auf Redis zu wechseln.]]></item>
 		<item name="wcf.acp.option.category.general.cache.redis"><![CDATA[Redis]]></item>
 		<item name="wcf.acp.option.category.general.cache.redis.description"><![CDATA[Redis speichert häufig benötigte Daten im Arbeitsspeicher zwischen. Dies kann die Last auf die Datenbank und das Dateisystem drastisch reduzieren. {if LANGUAGE_USE_INFORMAL_VARIANT}Lies{else}Lesen Sie{/if} mehr über dieses Thema auf der folgenden Seite: <a href="https://redis.io/" class="externalURL">redis.io</a>.]]></item>
