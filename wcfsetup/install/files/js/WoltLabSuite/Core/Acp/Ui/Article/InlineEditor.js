@@ -1,249 +1,216 @@
 /**
  * Handles article trash, restore and delete.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Acp/Ui/Article/InlineEditor
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Acp/Ui/Article/InlineEditor
  */
-define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Language', 'Ui/Confirmation', 'Ui/Dialog', 'Ui/Notification', 'WoltLabSuite/Core/Controller/Clipboard'], function (Ajax, Core, Dictionary, DomUtil, EventHandler, Language, UiConfirmation, UiDialog, UiNotification, ControllerClipboard) {
+define(["require", "exports", "tslib", "../../../Ajax", "../../../Controller/Clipboard", "../../../Core", "../../../Dom/Util", "../../../Event/Handler", "../../../Language", "../../../Ui/Confirmation", "../../../Ui/Dialog", "../../../Ui/Notification"], function (require, exports, tslib_1, Ajax, ControllerClipboard, Core, Util_1, EventHandler, Language, UiConfirmation, Dialog_1, UiNotification) {
     "use strict";
-    var _articles = new Dictionary();
-    /**
-     * @constructor
-     */
-    function AcpUiArticleInlineEditor(objectId, options) { this.init(objectId, options); }
-    AcpUiArticleInlineEditor.prototype = {
+    Ajax = tslib_1.__importStar(Ajax);
+    ControllerClipboard = tslib_1.__importStar(ControllerClipboard);
+    Core = tslib_1.__importStar(Core);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    Language = tslib_1.__importStar(Language);
+    UiConfirmation = tslib_1.__importStar(UiConfirmation);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    UiNotification = tslib_1.__importStar(UiNotification);
+    const articles = new Map();
+    class AcpUiArticleInlineEditor {
         /**
          * Initializes the ACP inline editor for articles.
-         *
-         * @param       {int}           objectId        article id, equals 0 on the article list, but is non-zero when editing a single article
-         * @param       {Object}        options         list of configuration options
          */
-        init: function (objectId, options) {
-            this._options = Core.extend({
+        constructor(objectId, options) {
+            this.options = Core.extend({
                 i18n: {
                     defaultLanguageId: 0,
                     isI18n: false,
                     languages: {},
                 },
-                redirectUrl: ''
+                redirectUrl: "",
             }, options);
             if (objectId) {
-                this._initArticle(null, objectId);
+                this.initArticle(undefined, ~~objectId);
             }
             else {
-                elBySelAll('.jsArticleRow', undefined, this._initArticle.bind(this));
-                EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.article', this._clipboardAction.bind(this));
+                document.querySelectorAll(".jsArticleRow").forEach((article) => this.initArticle(article, 0));
+                EventHandler.add("com.woltlab.wcf.clipboard", "com.woltlab.wcf.article", (data) => this.clipboardAction(data));
             }
-        },
+        }
         /**
          * Reacts to executed clipboard actions.
-         *
-         * @param	{object<string, *>}	actionData	data of the executed clipboard action
          */
-        _clipboardAction: function (actionData) {
+        clipboardAction(actionData) {
             // only consider events if the action has been executed
             if (actionData.responseData !== null) {
-                var triggerFunction;
-                switch (actionData.data.actionName) {
-                    case 'com.woltlab.wcf.article.delete':
-                        triggerFunction = this._triggerDelete;
-                        break;
-                    case 'com.woltlab.wcf.article.publish':
-                        triggerFunction = this._triggerPublish;
-                        break;
-                    case 'com.woltlab.wcf.article.restore':
-                        triggerFunction = this._triggerRestore;
-                        break;
-                    case 'com.woltlab.wcf.article.trash':
-                        triggerFunction = this._triggerTrash;
-                        break;
-                    case 'com.woltlab.wcf.article.unpublish':
-                        triggerFunction = this._triggerUnpublish;
-                        break;
-                }
+                const callbackFunction = new Map([
+                    ["com.woltlab.wcf.article.delete", (articleId) => this.triggerDelete(articleId)],
+                    ["com.woltlab.wcf.article.publish", (articleId) => this.triggerPublish(articleId)],
+                    ["com.woltlab.wcf.article.restore", (articleId) => this.triggerRestore(articleId)],
+                    ["com.woltlab.wcf.article.trash", (articleId) => this.triggerTrash(articleId)],
+                    ["com.woltlab.wcf.article.unpublish", (articleId) => this.triggerUnpublish(articleId)],
+                ]);
+                const triggerFunction = callbackFunction.get(actionData.data.actionName);
                 if (triggerFunction) {
-                    for (var i = 0, length = actionData.responseData.objectIDs.length; i < length; i++) {
-                        triggerFunction(actionData.responseData.objectIDs[i]);
-                    }
+                    actionData.responseData.objectIDs.forEach((objectId) => triggerFunction(objectId));
                     UiNotification.show();
                 }
             }
-            else if (actionData.data.actionName === 'com.woltlab.wcf.article.setCategory') {
-                try {
-                    UiDialog.getDialog('articleCategoryDialog');
-                    UiDialog.openStatic('articleCategoryDialog');
-                }
-                catch (e) {
-                    UiDialog.openStatic('articleCategoryDialog', actionData.data.internalData.template, {
-                        title: Language.get('wcf.acp.article.setCategory')
-                    });
-                    elBySel('[data-type=submit]', UiDialog.getDialog('articleCategoryDialog').content).addEventListener('click', this._submitSetCategory.bind(this));
-                }
+            else if (actionData.data.actionName === "com.woltlab.wcf.article.setCategory") {
+                const dialog = Dialog_1.default.openStatic("articleCategoryDialog", actionData.data.internalData.template, {
+                    title: Language.get("wcf.acp.article.setCategory"),
+                });
+                const submitButton = dialog.content.querySelector("[data-type=submit]");
+                submitButton.addEventListener("click", (ev) => this.submitSetCategory(ev, dialog.content));
             }
-        },
+        }
         /**
          * Is called, if the set category dialog form is submitted.
-         *
-         * @param	{Event}		event		form submit button click event
          */
-        _submitSetCategory: function (event) {
-            var dialog = UiDialog.getDialog('articleCategoryDialog').content;
-            var innerErrors = elByClass('innerError', dialog);
-            var select = elBySel('select[name=categoryID]', dialog);
-            var categoryId = ~~elBySel('select[name=categoryID]', event.currentTarget.parentNode.parentNode).value;
+        submitSetCategory(event, content) {
+            event.preventDefault();
+            const innerError = content.querySelector(".innerError");
+            const select = content.querySelector("select[name=categoryID]");
+            const categoryId = ~~select.value;
             if (categoryId) {
                 Ajax.api(this, {
-                    actionName: 'setCategory',
+                    actionName: "setCategory",
                     parameters: {
                         categoryID: categoryId,
-                        useMarkedArticles: true
-                    }
+                        useMarkedArticles: true,
+                    },
                 });
-                if (innerErrors.length === 1) {
-                    elRemove(innerErrors.item(0));
+                if (innerError) {
+                    innerError.remove();
                 }
-                UiDialog.close('articleCategoryDialog');
+                Dialog_1.default.close("articleCategoryDialog");
             }
-            else if (innerErrors.length === 0) {
-                elInnerError(select, Language.get('wcf.global.form.error.empty'));
+            else if (!innerError) {
+                Util_1.default.innerError(select, Language.get("wcf.global.form.error.empty"));
             }
-        },
+        }
         /**
          * Initializes an article row element.
-         *
-         * @param       {Element}       article         article row element
-         * @param       {int}           objectId        optional article id
-         * @protected
          */
-        _initArticle: function (article, objectId) {
-            var isArticleEdit = false;
+        initArticle(article, objectId) {
+            let isArticleEdit = false;
             if (!article && ~~objectId > 0) {
                 isArticleEdit = true;
                 article = undefined;
             }
             else {
-                objectId = ~~elData(article, 'object-id');
+                objectId = ~~article.dataset.objectId;
             }
-            var buttonDelete = elBySel('.jsButtonDelete', article);
-            buttonDelete.addEventListener('click', this._prompt.bind(this, objectId, 'delete'));
-            var buttonRestore = elBySel('.jsButtonRestore', article);
-            buttonRestore.addEventListener('click', this._prompt.bind(this, objectId, 'restore'));
-            var buttonTrash = elBySel('.jsButtonTrash', article);
-            buttonTrash.addEventListener('click', this._prompt.bind(this, objectId, 'trash'));
+            const scope = article || document;
+            const buttonDelete = scope.querySelector(".jsButtonDelete");
+            buttonDelete.addEventListener("click", (ev) => this.prompt(ev, objectId, "delete"));
+            const buttonRestore = scope.querySelector(".jsButtonRestore");
+            buttonRestore.addEventListener("click", (ev) => this.prompt(ev, objectId, "restore"));
+            const buttonTrash = scope.querySelector(".jsButtonTrash");
+            buttonTrash.addEventListener("click", (ev) => this.prompt(ev, objectId, "trash"));
             if (isArticleEdit) {
-                var buttonToggleI18n = elBySel('.jsButtonToggleI18n', article);
-                if (buttonToggleI18n !== null)
-                    buttonToggleI18n.addEventListener('click', this._toggleI18n.bind(this, objectId));
+                const buttonToggleI18n = scope.querySelector(".jsButtonToggleI18n");
+                if (buttonToggleI18n !== null) {
+                    buttonToggleI18n.addEventListener("click", (ev) => this.toggleI18n(ev, objectId));
+                }
             }
-            _articles.set(objectId, {
+            articles.set(objectId, {
                 buttons: {
                     delete: buttonDelete,
                     restore: buttonRestore,
-                    trash: buttonTrash
+                    trash: buttonTrash,
                 },
                 element: article,
-                isArticleEdit: isArticleEdit
+                isArticleEdit: isArticleEdit,
             });
-        },
+        }
         /**
          * Prompts a user to confirm the clicked action before executing it.
-         *
-         * @param       {int}           objectId        article id
-         * @param       {string}        actionName      action name
-         * @param       {Event}         event           event object
-         * @protected
          */
-        _prompt: function (objectId, actionName, event) {
+        prompt(event, objectId, actionName) {
             event.preventDefault();
-            var article = _articles.get(objectId);
+            const article = articles.get(objectId);
             UiConfirmation.show({
-                confirm: (function () { this._invoke(objectId, actionName); }).bind(this),
-                message: elData(article.buttons[actionName], 'confirm-message-html'),
-                messageIsHtml: true
+                confirm: () => {
+                    this.invoke(objectId, actionName);
+                },
+                message: article.buttons[actionName].dataset.confirmMessageHtml,
+                messageIsHtml: true,
             });
-        },
+        }
         /**
          * Toggles an article between i18n and monolingual.
-         *
-         * @param       {int}           objectId        article id
-         * @param       {Event}         event           event object
-         * @protected
          */
-        _toggleI18n: function (objectId, event) {
+        toggleI18n(event, objectId) {
             event.preventDefault();
-            var html = '<p>' + Language.get('wcf.acp.article.i18n.' + (this._options.i18n.isI18n ? 'fromI18n' : 'toI18n') + '.confirmMessage') + '</p>';
+            const phrase = Language.get("wcf.acp.article.i18n." + (this.options.i18n.isI18n ? "fromI18n" : "toI18n") + ".confirmMessage");
+            let html = `<p>${phrase}</p>`;
             // build language selection
-            if (this._options.i18n.isI18n) {
-                html += '<dl><dt>' + Language.get('wcf.acp.article.i18n.source') + '</dt><dd>';
-                for (var languageId in this._options.i18n.languages) {
-                    if (this._options.i18n.languages.hasOwnProperty(languageId)) {
-                        html += '<label><input type="radio" name="i18nLanguage" value="' + languageId + '"' + (~~this._options.i18n.defaultLanguageId === ~~languageId ? ' checked' : '') + '> ' + this._options.i18n.languages[languageId] + '</label>';
-                    }
-                }
-                html += '</dd></dl>';
+            if (this.options.i18n.isI18n) {
+                html += `<dl><dt>${Language.get("wcf.acp.article.i18n.source")}</dt><dd>`;
+                const defaultLanguageId = this.options.i18n.defaultLanguageId.toString();
+                html += Object.entries(this.options.i18n.languages)
+                    .map(([languageId, languageName]) => {
+                    return `<label><input type="radio" name="i18nLanguage" value="${languageId}" ${defaultLanguageId === languageId ? "checked" : ""}> ${languageName}</label>`;
+                })
+                    .join("");
+                html += "</dd></dl>";
             }
             UiConfirmation.show({
-                confirm: (function (parameters, content) {
-                    var languageId = 0;
-                    if (this._options.i18n.isI18n) {
-                        languageId = elBySel("input[name='i18nLanguage']:checked", content.parentNode).value;
+                confirm: (parameters, content) => {
+                    let languageId = 0;
+                    if (this.options.i18n.isI18n) {
+                        const input = content.parentElement.querySelector("input[name='i18nLanguage']:checked");
+                        languageId = ~~input.value;
                     }
                     Ajax.api(this, {
-                        actionName: 'toggleI18n',
+                        actionName: "toggleI18n",
                         objectIDs: [objectId],
                         parameters: {
-                            languageID: languageId
-                        }
+                            languageID: languageId,
+                        },
                     });
-                }).bind(this),
+                },
                 message: html,
-                messageIsHtml: true
+                messageIsHtml: true,
             });
-        },
+        }
         /**
          * Invokes the selected action.
-         *
-         * @param       {int}           objectId        article id
-         * @param       {string}        actionName      action name
-         * @protected
          */
-        _invoke: function (objectId, actionName) {
+        invoke(objectId, actionName) {
             Ajax.api(this, {
                 actionName: actionName,
-                objectIDs: [objectId]
+                objectIDs: [objectId],
             });
-        },
+        }
         /**
          * Handles an article being deleted.
-         *
-         * @param	{int}		articleId	id of the deleted article
          */
-        _triggerDelete: function (articleId) {
-            var article = _articles.get(articleId);
+        triggerDelete(articleId) {
+            const article = articles.get(articleId);
             if (!article) {
                 // The affected article might be hidden by the filter settings.
                 return;
             }
             if (article.isArticleEdit) {
-                window.location = this._options.redirectUrl;
+                window.location.href = this.options.redirectUrl;
             }
             else {
-                var tbody = article.element.parentNode;
-                elRemove(article.element);
-                if (elBySel('tr', tbody) === null) {
+                const tbody = article.element.parentElement;
+                article.element.remove();
+                if (tbody.querySelector("tr") === null) {
                     window.location.reload();
                 }
             }
-        },
+        }
         /**
          * Handles publishing an article via clipboard.
-         *
-         * @param	{int}		articleId	id of the published article
          */
-        _triggerPublish: function (articleId) {
-            var article = _articles.get(articleId);
+        triggerPublish(articleId) {
+            const article = articles.get(articleId);
             if (!article) {
                 // The affected article might be hidden by the filter settings.
                 return;
@@ -252,62 +219,60 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Language', 'U
                 // unsupported
             }
             else {
-                elRemove(elBySel('.jsUnpublishedArticle', article.element));
+                const notice = article.element.querySelector(".jsUnpublishedArticle");
+                notice.remove();
             }
-        },
+        }
         /**
          * Handles an article being restored.
-         *
-         * @param	{int}		articleId	id of the deleted article
          */
-        _triggerRestore: function (articleId) {
-            var article = _articles.get(articleId);
+        triggerRestore(articleId) {
+            const article = articles.get(articleId);
             if (!article) {
                 // The affected article might be hidden by the filter settings.
                 return;
             }
-            elHide(article.buttons.delete);
-            elHide(article.buttons.restore);
-            elShow(article.buttons.trash);
+            Util_1.default.hide(article.buttons.delete);
+            Util_1.default.hide(article.buttons.restore);
+            Util_1.default.show(article.buttons.trash);
             if (article.isArticleEdit) {
-                elHide(elBySel('.jsArticleNoticeTrash'));
+                const notice = document.querySelector(".jsArticleNoticeTrash");
+                Util_1.default.hide(notice);
             }
             else {
-                elRemove(elBySel('.jsIconDeleted', article.element));
+                const icon = article.element.querySelector(".jsIconDeleted");
+                icon.remove();
             }
-        },
+        }
         /**
          * Handles an article being trashed.
-         *
-         * @param	{int}		articleId	id of the deleted article
          */
-        _triggerTrash: function (articleId) {
-            var article = _articles.get(articleId);
+        triggerTrash(articleId) {
+            const article = articles.get(articleId);
             if (!article) {
                 // The affected article might be hidden by the filter settings.
                 return;
             }
-            elShow(article.buttons.delete);
-            elShow(article.buttons.restore);
-            elHide(article.buttons.trash);
+            Util_1.default.show(article.buttons.delete);
+            Util_1.default.show(article.buttons.restore);
+            Util_1.default.hide(article.buttons.trash);
             if (article.isArticleEdit) {
-                elShow(elBySel('.jsArticleNoticeTrash'));
+                const notice = document.querySelector(".jsArticleNoticeTrash");
+                Util_1.default.show(notice);
             }
             else {
-                var badge = elCreate('span');
-                badge.className = 'badge label red jsIconDeleted';
-                badge.textContent = Language.get('wcf.message.status.deleted');
-                var h3 = elBySel('.containerHeadline > h3', article.element);
-                h3.insertBefore(badge, h3.firstChild);
+                const badge = document.createElement("span");
+                badge.className = "badge label red jsIconDeleted";
+                badge.textContent = Language.get("wcf.message.status.deleted");
+                const h3 = article.element.querySelector(".containerHeadline > h3");
+                h3.insertAdjacentElement("afterbegin", badge);
             }
-        },
+        }
         /**
          * Handles unpublishing an article via clipboard.
-         *
-         * @param	{int}		articleId	id of the unpublished article
          */
-        _triggerUnpublish: function (articleId) {
-            var article = _articles.get(articleId);
+        triggerUnpublish(articleId) {
+            const article = articles.get(articleId);
             if (!article) {
                 // The affected article might be hidden by the filter settings.
                 return;
@@ -316,44 +281,43 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Language', 'U
                 // unsupported
             }
             else {
-                var badge = elCreate('span');
-                badge.className = 'badge jsUnpublishedArticle';
-                badge.textContent = Language.get('wcf.acp.article.publicationStatus.unpublished');
-                var h3 = elBySel('.containerHeadline > h3', article.element);
-                var a = elBySel('a', h3);
+                const badge = document.createElement("span");
+                badge.className = "badge jsUnpublishedArticle";
+                badge.textContent = Language.get("wcf.acp.article.publicationStatus.unpublished");
+                const h3 = article.element.querySelector(".containerHeadline > h3");
+                const a = h3.querySelector("a");
                 h3.insertBefore(badge, a);
                 h3.insertBefore(document.createTextNode(" "), a);
             }
-        },
-        _ajaxSuccess: function (data) {
-            var notificationCallback;
+        }
+        _ajaxSuccess(data) {
+            let notificationCallback;
             switch (data.actionName) {
-                case 'delete':
-                    this._triggerDelete(data.objectIDs[0]);
+                case "delete":
+                    this.triggerDelete(data.objectIDs[0]);
                     break;
-                case 'restore':
-                    this._triggerRestore(data.objectIDs[0]);
+                case "restore":
+                    this.triggerRestore(data.objectIDs[0]);
                     break;
-                case 'setCategory':
-                    notificationCallback = window.location.reload.bind(window.location);
+                case "setCategory":
+                case "toggleI18n":
+                    notificationCallback = () => window.location.reload();
                     break;
-                case 'toggleI18n':
-                    UiNotification.show(undefined, function () { window.location.reload(); });
-                    break;
-                case 'trash':
-                    this._triggerTrash(data.objectIDs[0]);
+                case "trash":
+                    this.triggerTrash(data.objectIDs[0]);
                     break;
             }
             UiNotification.show(undefined, notificationCallback);
             ControllerClipboard.reload();
-        },
-        _ajaxSetup: function () {
+        }
+        _ajaxSetup() {
             return {
                 data: {
-                    className: 'wcf\\data\\article\\ArticleAction'
-                }
+                    className: "wcf\\data\\article\\ArticleAction",
+                },
             };
         }
-    };
+    }
+    Core.enableLegacyInheritance(AcpUiArticleInlineEditor);
     return AcpUiArticleInlineEditor;
 });
