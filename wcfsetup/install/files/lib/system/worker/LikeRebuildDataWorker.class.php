@@ -31,7 +31,7 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		$this->objectList->sqlOrderBy = 'like_table.objectID, like_table.likeID';
+		$this->objectList->sqlOrderBy = 'like_table.objectTypeID, like_table.objectID, like_table.likeID';
 	}
 	
 	/**
