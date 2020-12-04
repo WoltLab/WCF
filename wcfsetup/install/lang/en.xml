@@ -260,7 +260,7 @@
 		<item name="wcf.acp.cache.list.perm"><![CDATA[Permissions]]></item>
 		<item name="wcf.acp.cache.list.size"><![CDATA[Size]]></item>
 		<item name="wcf.acp.cache.source.type.DiskCacheSource"><![CDATA[Filesystem]]></item>
-		<item name="wcf.acp.cache.source.type.MemcachedCacheSource"><![CDATA[Memcached (Deprecated)]]></item>
+		<item name="wcf.acp.cache.source.type.MemcachedCacheSource"><![CDATA[Memcached (Not Recommended)]]></item>
 		<item name="wcf.acp.cache.source.type.RedisCacheSource"><![CDATA[Redis]]></item>
 		<item name="wcf.acp.cache.type.data"><![CDATA[Data]]></item>
 		<item name="wcf.acp.cache.type.language"><![CDATA[Languages]]></item>
@@ -1239,12 +1239,12 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.cache_source_type"><![CDATA[Caching Method]]></item>
 		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[Caching methods different from filesystem require special extensions or services running on your machine.]]></item>
 		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[Use Filesystem (default)]]></item>
-		<item name="wcf.acp.option.cache_source_type.memcached"><![CDATA[Use Memcached (Deprecated)]]></item>
+		<item name="wcf.acp.option.cache_source_type.memcached"><![CDATA[Use Memcached (Not Recommended)]]></item>
 		<item name="wcf.acp.option.cache_source_type.redis"><![CDATA[Use Redis]]></item>
 		<item name="wcf.acp.option.category.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.general.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[General]]></item>
-		<item name="wcf.acp.option.category.general.cache.memcached"><![CDATA[Memcached (Deprecated)]]></item>
+		<item name="wcf.acp.option.category.general.cache.memcached"><![CDATA[Memcached (Not Recommended)]]></item>
 		<item name="wcf.acp.option.category.general.cache.memcached.description"><![CDATA[The support for Memcached is deprecated and will be removed in a future version of WoltLab Suite™. Memcached users are encouraged to switch to Redis.]]></item>
 		<item name="wcf.acp.option.category.general.cache.redis"><![CDATA[Redis]]></item>
 		<item name="wcf.acp.option.category.general.cache.redis.description"><![CDATA[Redis uses the machine’s memory to store frequently accessed data, reducing database and filesystem load. Read more about Redis on <a href="https://redis.io/" class="externalURL">redis.io</a>.]]></item>
