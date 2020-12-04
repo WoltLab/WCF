@@ -198,6 +198,9 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 				else if ($file === null) {
 					$this->parameters['variables'][$type] = '';
 				}
+				else {
+					$this->parameters['variables'][$type] = basename($file->getLocation());
+				}
 			}
 		}
 		
@@ -320,7 +323,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 			/** @var \wcf\system\file\upload\UploadFile $file */
 			$file = $this->parameters['uploads']['favicon'];
 			
-			if ($file !== null) {
+			if ($file !== null && !$file->isProcessed()) {
 				$fileLocation = $file->getLocation();
 				if (($imageData = getimagesize($fileLocation)) === false) {
 					throw new \InvalidArgumentException('The given favicon is not an image');
@@ -354,7 +357,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 				$file->setProcessed($newLocation);
 				$hasFavicon = true;
 			}
-			else {
+			else if ($file === null) {
 				foreach ($images as $filename => $length) {
 					unlink($style->getAssetPath().$filename);
 				}

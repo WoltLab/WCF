@@ -75,10 +75,6 @@ class AJAXFileDeleteAction extends AbstractSecureAction {
 		if (isset($_POST['uniqueFileId'])) {
 			$this->uniqueFileId = $_POST['uniqueFileId'];
 		}
-		
-		if (!UploadHandler::getInstance()->isValidUniqueFileId($this->internalId, $this->uniqueFileId)) {
-			throw new UserInputException('uniqueFileId', 'invalid');
-		}
 	}
 	
 	/**
@@ -87,7 +83,9 @@ class AJAXFileDeleteAction extends AbstractSecureAction {
 	public function execute() {
 		parent::execute();
 		
-		UploadHandler::getInstance()->removeFile($this->internalId, $this->uniqueFileId);
+		if (UploadHandler::getInstance()->isValidUniqueFileId($this->internalId, $this->uniqueFileId)) {
+			UploadHandler::getInstance()->removeFile($this->internalId, $this->uniqueFileId);
+		}
 		
 		$this->sendJsonResponse([
 			'uniqueFileId' => $this->uniqueFileId
