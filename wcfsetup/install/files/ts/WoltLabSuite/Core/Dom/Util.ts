@@ -421,6 +421,17 @@ const DomUtil = {
   },
 
   /**
+   * Shorthand function to toggle the element visibility using either `hide()` or `show()`.
+   */
+  toggle(element: HTMLElement): void {
+    if (this.isHidden(element)) {
+      this.show(element);
+    } else {
+      this.hide(element);
+    }
+  },
+
+  /**
    * Displays or removes an error message below the provided element.
    */
   innerError(element: HTMLElement, errorMessage?: string | false | null, isHtml?: boolean): HTMLElement | null {
