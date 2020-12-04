@@ -3151,7 +3151,7 @@ Your account on the website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/li
 		<item name="wcf.acp.user.exportGdpr"><![CDATA[Export Personal Data (GDPR)]]></item>
 		<item name="wcf.acp.user.coverPhoto.description"><![CDATA[You can upload a cover photo on their user profile page.]]></item>
 		<item name="wcf.acp.user.security.multifactor"><![CDATA[Multi-factor authentication]]></item>
-		<item name="wcf.acp.user.security.multifactor.active"><![CDATA[<span class="icon icon16 fa-check green"></span> Active]]></item>
+		<item name="wcf.acp.user.security.multifactor.active"><![CDATA[Active]]></item>
 		<item name="wcf.acp.user.security.multifactor.active.description"><![CDATA[This user account is protected by a second factor.]]></item>
 		<item name="wcf.acp.user.security.multifactor.disable"><![CDATA[Completely Disable Multi-factor Authentication]]></item>
 		<item name="wcf.acp.user.security.multifactor.disable.description"><![CDATA[Completely disables multi-factor authentication for the account <strong>{$user->username}</strong>. The user will need to setup up multi-factor authentication from scratch if this checkbox is checked.<br>

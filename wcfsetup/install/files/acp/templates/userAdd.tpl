@@ -191,7 +191,7 @@
 						<dl>
 							<dt>{lang}wcf.acp.user.security.multifactor{/lang}</dt>
 							<dd>
-								{lang}wcf.acp.user.security.multifactor.active{/lang}
+								<span class="icon icon16 fa-check green"></span> {lang}wcf.acp.user.security.multifactor.active{/lang}
 								<small>{lang}wcf.acp.user.security.multifactor.active.description{/lang}</small>
 							</dd>
 						</dl>

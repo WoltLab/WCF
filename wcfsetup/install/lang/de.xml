@@ -3227,7 +3227,7 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.acp.user.exportGdpr"><![CDATA[Persönliche Daten exportieren (DSGVO)]]></item>
 		<item name="wcf.acp.user.coverPhoto.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} ein Titelbild im Profil des Benutzers hochladen.]]></item>
 		<item name="wcf.acp.user.security.multifactor"><![CDATA[Mehrfaktor-Authentifizierung]]></item>
-		<item name="wcf.acp.user.security.multifactor.active"><![CDATA[<span class="icon icon16 fa-check green"></span> Aktiv]]></item>
+		<item name="wcf.acp.user.security.multifactor.active"><![CDATA[Aktiv]]></item>
 		<item name="wcf.acp.user.security.multifactor.active.description"><![CDATA[Dieses Benutzerkonto wird durch einen zweiten Faktor geschützt.]]></item>
 		<item name="wcf.acp.user.security.multifactor.disable"><![CDATA[Mehrfaktor-Authentifizierung vollständig deaktivieren]]></item>
 		<item name="wcf.acp.user.security.multifactor.disable.description"><![CDATA[Deaktiviert die Mehrfaktor-Authentifizierung für das Benutzerkonto <strong>{$user->username}</strong> vollständig. Der Benutzer muss die Mehrfaktor-Authentifizierung anschließend erneut einrichten.<br>
