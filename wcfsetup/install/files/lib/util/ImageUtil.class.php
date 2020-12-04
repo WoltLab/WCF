@@ -55,12 +55,12 @@ final class ImageUtil {
 		if (@getimagesize($location) !== false) {
 			$extension = pathinfo($filename, PATHINFO_EXTENSION);
 			
-			if (in_array($extension, self::$imageExtensions)) {
+			if (in_array(mb_strtolower($extension), self::$imageExtensions)) {
 				return true;
 			}
 		}
 		else if ($handleSvgAsValidImage) {
-			if (in_array(FileUtil::getMimeType($location), ['image/svg', 'image/svg+xml']) && pathinfo($filename, PATHINFO_EXTENSION) === 'svg') {
+			if (in_array(FileUtil::getMimeType($location), ['image/svg', 'image/svg+xml']) && mb_strtolower(pathinfo($filename, PATHINFO_EXTENSION)) === 'svg') {
 				return true;
 			}
 		}

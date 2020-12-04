@@ -447,7 +447,7 @@ class UploadHandler extends SingletonFactory {
 			return false; 
 		}
 		
-		if (!in_array(pathinfo($imageName, PATHINFO_EXTENSION), array_merge(self::VALID_IMAGE_EXTENSIONS, $svgImageAllowed ? ['svg'] : []))) {
+		if (!in_array(mb_strtolower(pathinfo($imageName, PATHINFO_EXTENSION)), array_merge(self::VALID_IMAGE_EXTENSIONS, $svgImageAllowed ? ['svg'] : []))) {
 			return false;
 		}
 		
