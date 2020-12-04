@@ -63,15 +63,18 @@
 			{content}
 				{assign var=__breadcrumbsDepth value=0}
 				{foreach from=$__wcf->getBreadcrumbs() item=$breadcrumb}
-					<li class="menuOverlayItem">
-						<a href="{$breadcrumb->getURL()}" class="menuOverlayItemLink">
-							<span{if $__breadcrumbsDepth} style="padding-left: {$__breadcrumbsDepth * 20}px" {/if} class="box24">
-								<span class="icon icon24 fa-{if $__breadcrumbsDepth}caret-right{else}home{/if}"></span>
-								<span class="menuOverlayItemTitle">{$breadcrumb->getLabel()}</span>
-							</span>
-						</a>
-					</li>
-					{assign var=__breadcrumbsDepth value=$__breadcrumbsDepth + 1}
+					{* skip breadcrumbs that do not expose a visible label *}
+					{if $breadcrumb->getLabel()}
+						<li class="menuOverlayItem">
+							<a href="{$breadcrumb->getURL()}" class="menuOverlayItemLink">
+								<span{if $__breadcrumbsDepth} style="padding-left: {$__breadcrumbsDepth * 20}px" {/if} class="box24">
+									<span class="icon icon24 fa-{if $__breadcrumbsDepth}caret-right{else}home{/if}"></span>
+									<span class="menuOverlayItemTitle">{$breadcrumb->getLabel()}</span>
+								</span>
+							</a>
+						</li>
+						{assign var=__breadcrumbsDepth value=$__breadcrumbsDepth + 1}
+					{/if}
 				{/foreach}
 			{/content}
 		{/hascontent}
