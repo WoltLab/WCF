@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\worker;
 use wcf\data\like\LikeList;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\user\activity\point\UserActivityPointHandler;
 use wcf\system\WCF;
 
@@ -95,24 +96,23 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 		// update activity points
 		UserActivityPointHandler::getInstance()->fireEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $itemsToUser, false);
 		
-		$statementConditionParameters = [];
-		foreach ($likeObjectData as $objectTypeID => $objects) {
-			foreach ($objects as $objectID => $object) {
-				$statementConditionParameters[] = $objectTypeID;
-				$statementConditionParameters[] = $objectID;
-			}
-		}
-		
-		$sql = "SELECT          objectTypeID, objectID, objectUserID, likes, dislikes, cumulativeLikes, cachedReactions
-			FROM            wcf".WCF_N."_like_object
-			WHERE           (objectTypeID, objectID) IN (". str_repeat('(?, ?), ', (count($statementConditionParameters) / 2) - 1) ." (?, ?))";
-		$objectStatement = WCF::getDB()->prepareStatement($sql);
-		$objectStatement->execute($statementConditionParameters);
 		$rows = [];
-		while ($row = $objectStatement->fetchArray()) {
-			if (!isset($rows[$row['objectTypeID']])) $rows[$row['objectTypeID']] = [];
+		foreach ($likeObjectData as $objectTypeID => $objects) {
+			if (!isset($rows[$objectTypeID])) {
+				$rows[$objectTypeID] = [];
+			}
 			
-			$rows[$row['objectTypeID']][$row['objectID']] = $row;
+			$condition = new PreparedStatementConditionBuilder();
+			$condition->add('objectTypeID = ?', [$objectTypeID]);
+			$condition->add('objectID IN (?)', [array_keys($objects)]);
+			$sql = "SELECT          objectTypeID, objectID, objectUserID, likes, dislikes, cumulativeLikes, cachedReactions
+				FROM            wcf".WCF_N."_like_object
+				".$condition;
+			$objectStatement = WCF::getDB()->prepareStatement($sql);
+			$objectStatement->execute($condition->getParameters());
+			while ($row = $objectStatement->fetchArray()) {
+				$rows[$objectTypeID][$row['objectID']] = $row;
+			}
 		}
 		
 		$sql = "INSERT INTO		        wcf".WCF_N."_like_object
