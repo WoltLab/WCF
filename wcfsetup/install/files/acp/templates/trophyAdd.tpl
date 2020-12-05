@@ -199,9 +199,7 @@
 	
 					<script data-relocate="true">
 						require(['WoltLabSuite/Core/Acp/Ui/Trophy/Upload'], function(IconUpload) {
-							new IconUpload({if $action == 'add'}0{else}{$trophy->trophyID}{/if}, '{$tmpHash}', {
-								input: 'uploadIconFile'
-							});
+							new IconUpload({if $action == 'add'}0{else}{$trophy->trophyID}{/if}, '{$tmpHash}');
 						});
 					</script>
 				</dd>
