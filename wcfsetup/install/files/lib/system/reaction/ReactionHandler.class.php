@@ -806,6 +806,6 @@ class ReactionHandler extends SingletonFactory {
 			]);
 		}
 		
-		return implode(',', $reactionsOuput);
+		return implode(', ', $reactionsOuput);
 	}
 }
