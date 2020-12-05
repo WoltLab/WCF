@@ -505,8 +505,8 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
         /**
          * Rebuilds dialog identified by given id.
          */
-        rebuild(id) {
-            id = this._getDialogId(id);
+        rebuild(elementId) {
+            const id = this._getDialogId(elementId);
             const data = _dialogs.get(id);
             if (data === undefined) {
                 throw new Error("Expected a valid dialog id, '" + id + "' does not match any active dialog.");

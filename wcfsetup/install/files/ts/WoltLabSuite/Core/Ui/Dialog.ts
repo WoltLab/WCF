@@ -601,8 +601,8 @@ const UiDialog = {
   /**
    * Rebuilds dialog identified by given id.
    */
-  rebuild(id: string): void {
-    id = this._getDialogId(id);
+  rebuild(elementId: ElementIdOrCallbackObject): void {
+    const id = this._getDialogId(elementId);
 
     const data = _dialogs.get(id);
     if (data === undefined) {

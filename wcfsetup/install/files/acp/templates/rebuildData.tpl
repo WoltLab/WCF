@@ -17,13 +17,10 @@
 					
 					// ajax
 					className: elData(button, 'class-name'),
-					loopCount: -1,
-					parameters: { },
 					
 					// callbacks
 					callbackAbort: null,
-					callbackFailure: null,
-					callbackSuccess: function() {
+					callbackSuccess: () => {
 						{if $convertEncoding}
 							var span = button.nextElementSibling;
 							if (span && span.nodeName === 'SPAN') elRemove(span);
