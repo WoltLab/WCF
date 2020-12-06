@@ -96,7 +96,9 @@ define(['Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'ObjectMap', 'Ui/Dialog'
             }
             var media = this._media.get(~~elData(event.currentTarget, 'object-id'));
             // save selected media in store element
-            elById(elData(this._activeButton, 'store')).value = media.mediaID;
+            var input = elById(elData(this._activeButton, 'store'));
+            input.value = media.mediaID;
+            Core.triggerEvent(input, 'change');
             // display selected media
             var display = elData(this._activeButton, 'display');
             if (display) {
@@ -174,7 +176,9 @@ define(['Core', 'Dom/Traverse', 'Dom/Util', 'Language', 'ObjectMap', 'Ui/Dialog'
             var removeButton = event.currentTarget;
             elHide(removeButton);
             var button = removeButton.previousElementSibling;
-            elById(elData(button, 'store')).value = 0;
+            var input = elById(elData(button, 'store'));
+            input.value = '';
+            Core.triggerEvent(input, 'change');
             var display = elData(button, 'display');
             if (display) {
                 var displayElement = elById(display);
