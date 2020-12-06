@@ -1,73 +1,54 @@
 /**
- * Provides API to easily create a dialog form created by form builder.
+ * Provides API to create a dialog form created by form builder.
  *
- * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Form/Builder/Dialog
- * @since	5.2
+ * @author  Matthias Schmidt
+ * @copyright 2001-2020 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Form/Builder/Dialog
+ * @since 5.2
  */
-define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function (Ajax, Core, FormBuilderManager, UiDialog) {
+define(["require", "exports", "tslib", "../../Core", "../../Ui/Dialog", "../../Ajax", "./Manager"], function (require, exports, tslib_1, Core, Dialog_1, Ajax, Manager_1) {
     "use strict";
-    /**
-     * @constructor
-     */
-    function FormBuilderDialog(dialogId, className, actionName, options) {
-        this.init(dialogId, className, actionName, options);
-    }
-    ;
-    FormBuilderDialog.prototype = {
-        /**
-         * Initializes the dialog.
-         *
-         * @param	{string}	dialogId
-         * @param	{string}	className
-         * @param	{string}	actionName
-         * @param	{{actionParameters: object, destoryOnClose: boolean, dialog: object}}	options
-         */
-        init: function (dialogId, className, actionName, options) {
+    Core = tslib_1.__importStar(Core);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    Ajax = tslib_1.__importStar(Ajax);
+    Manager_1 = tslib_1.__importDefault(Manager_1);
+    class FormBuilderDialog {
+        constructor(dialogId, className, actionName, options) {
+            this.init(dialogId, className, actionName, options);
+        }
+        init(dialogId, className, actionName, options) {
             this._dialogId = dialogId;
             this._className = className;
             this._actionName = actionName;
             this._options = Core.extend({
                 actionParameters: {},
                 destroyOnClose: false,
-                usesDboAction: this._className.match(/\w+\\data\\/)
+                usesDboAction: this._className.match(/\w+\\data\\/),
             }, options);
             this._options.dialog = Core.extend(this._options.dialog || {}, {
-                onClose: this._dialogOnClose.bind(this)
+                onClose: this._dialogOnClose.bind(this),
             });
-            this._formId = '';
-            this._dialogContent = '';
-        },
-        /**
-         * Returns the data for Ajax to setup the Ajax/Request object.
-         *
-         * @return	{object}	setup data for Ajax/Request object
-         */
-        _ajaxSetup: function () {
-            var options = {
+            this._formId = "";
+            this._dialogContent = "";
+        }
+        _ajaxSetup() {
+            const options = {
                 data: {
                     actionName: this._actionName,
                     className: this._className,
-                    parameters: this._options.actionParameters
-                }
+                    parameters: this._options.actionParameters,
+                },
             };
-            // by default, `AJAXProxyAction` is used which relies on an `IDatabaseObjectAction`
-            // object; if no such object is used but an `IAJAXInvokeAction` object,
-            // `AJAXInvokeAction` has to be used
+            // By default, `AJAXProxyAction` is used which relies on an `IDatabaseObjectAction` object; if
+            // no such object is used but an `IAJAXInvokeAction` object, `AJAXInvokeAction` has to be used.
             if (!this._options.usesDboAction) {
-                options.url = 'index.php?ajax-invoke/&t=' + SECURITY_TOKEN;
+                options.url = "index.php?ajax-invoke/&t=" + window.SECURITY_TOKEN;
                 options.withCredentials = true;
             }
             return options;
-        },
-        /**
-         * Handles successful Ajax requests.
-         *
-         * @param	{object}	data	response data
-         */
-        _ajaxSuccess: function (data) {
+        }
+        _ajaxSuccess(data) {
             switch (data.actionName) {
                 case this._actionName:
                     if (data.returnValues === undefined) {
@@ -82,7 +63,7 @@ define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function (Ajax, Core, FormBui
                     this._openDialogContent(data.returnValues.formId, data.returnValues.dialog);
                     break;
                 case this._options.submitActionName:
-                    // if the validation failed, the dialog is shown again
+                    // If the validation failed, the dialog is shown again.
                     if (data.returnValues && data.returnValues.formId && data.returnValues.dialog) {
                         if (data.returnValues.formId !== this._formId) {
                             throw new Error("Mismatch between form ids: expected '" + this._formId + "' but got '" + data.returnValues.formId + "'.");
@@ -91,7 +72,7 @@ define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function (Ajax, Core, FormBui
                     }
                     else {
                         this.destroy();
-                        if (typeof this._options.successCallback === 'function') {
+                        if (typeof this._options.successCallback === "function") {
                             this._options.successCallback(data.returnValues || {});
                         }
                     }
@@ -99,131 +80,110 @@ define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function (Ajax, Core, FormBui
                 default:
                     throw new Error("Cannot handle action '" + data.actionName + "'.");
             }
-        },
-        /**
-         * Is called when clicking on the dialog form's close button.
-         */
-        _closeDialog: function () {
-            UiDialog.close(this);
-            if (typeof this._options.closeCallback === 'function') {
+        }
+        _closeDialog() {
+            Dialog_1.default.close(this);
+            if (typeof this._options.closeCallback === "function") {
                 this._options.closeCallback();
             }
-        },
-        /**
-         * Is called by the dialog API when the dialog is closed.
-         */
-        _dialogOnClose: function () {
+        }
+        _dialogOnClose() {
             if (this._options.destroyOnClose) {
                 this.destroy();
             }
-        },
-        /**
-         * Returns the data used to setup the dialog.
-         *
-         * @return	{object}	setup data
-         */
-        _dialogSetup: function () {
+        }
+        _dialogSetup() {
             return {
                 id: this._dialogId,
                 options: this._options.dialog,
-                source: this._dialogContent
+                source: this._dialogContent,
             };
-        },
-        /**
-         * Is called by the dialog API when the dialog form is submitted.
-         */
-        _dialogSubmit: function () {
-            this.getData().then(this._submitForm.bind(this));
-        },
+        }
+        _dialogSubmit() {
+            this.getData().then((formData) => this._submitForm(formData));
+        }
         /**
          * Opens the form dialog with the given form content.
-         *
-         * @param	{string}	formId
-         * @param	{string}	dialogContent
          */
-        _openDialogContent: function (formId, dialogContent) {
+        _openDialogContent(formId, dialogContent) {
             this.destroy(true);
             this._formId = formId;
             this._dialogContent = dialogContent;
-            var dialogData = UiDialog.open(this, this._dialogContent);
-            var cancelButton = elBySel('button[data-type=cancel]', dialogData.content);
-            if (cancelButton !== null && !elDataBool(cancelButton, 'has-event-listener')) {
-                cancelButton.addEventListener('click', this._closeDialog.bind(this));
-                elData(cancelButton, 'has-event-listener', 1);
+            const dialogData = Dialog_1.default.open(this, this._dialogContent);
+            const cancelButton = dialogData.content.querySelector("button[data-type=cancel]");
+            if (cancelButton !== null && !Core.stringToBool(cancelButton.dataset.hasEventListener || "")) {
+                cancelButton.addEventListener("click", () => this._closeDialog());
+                cancelButton.dataset.hasEventListener = "1";
             }
-            this._additionalSubmitButtons = document.querySelectorAll(':not(.formSubmit) button[type="submit"]', dialogData.content);
+            this._additionalSubmitButtons = Array.from(dialogData.content.querySelectorAll(':not(.formSubmit) button[type="submit"]'));
             this._additionalSubmitButtons.forEach((submit) => {
-                submit.addEventListener('click', (ev) => {
+                submit.addEventListener("click", (ev) => {
                     // Mark the button that was clicked so that the button data handlers know
                     // which data needs to be submitted.
                     this._additionalSubmitButtons.forEach((button) => {
-                        button.dataset.isClicked = (button === submit) ? "1" : "0";
+                        button.dataset.isClicked = button === submit ? "1" : "0";
                     });
                     // Enable other `click` event listeners to be executed first before the form
                     // is submitted.
-                    setTimeout(() => UiDialog.submit(this._dialogId), 0);
+                    setTimeout(() => Dialog_1.default.submit(this._dialogId), 0);
                 });
             });
-        },
+        }
         /**
          * Submits the form with the given form data.
-         *
-         * @param	{object}	formData
          */
-        _submitForm: function (formData) {
-            var submitButton = elBySel('button[data-type=submit]', UiDialog.getDialog(this).content);
-            if (typeof this._options.onSubmit === 'function') {
+        _submitForm(formData) {
+            const dialogData = Dialog_1.default.getDialog(this);
+            const submitButton = dialogData.content.querySelector("button[data-type=submit]");
+            if (typeof this._options.onSubmit === "function") {
                 this._options.onSubmit(formData, submitButton);
             }
-            else if (typeof this._options.submitActionName === 'string') {
+            else if (typeof this._options.submitActionName === "string") {
                 submitButton.disabled = true;
-                this._additionalSubmitButtons.forEach((submit) => submit.disabled = true);
+                this._additionalSubmitButtons.forEach((submit) => (submit.disabled = true));
                 Ajax.api(this, {
                     actionName: this._options.submitActionName,
                     parameters: {
                         data: formData,
-                        formId: this._formId
-                    }
+                        formId: this._formId,
+                    },
                 });
             }
-        },
+        }
         /**
-         * Destroys the dialog.
-         *
-         * @param	{boolean}	ignoreDialog	if `true`, the actual dialog is not destroyed, only the form is
+         * Destroys the dialog form.
          */
-        destroy: function (ignoreDialog) {
-            if (this._formId !== '') {
-                if (FormBuilderManager.hasForm(this._formId)) {
-                    FormBuilderManager.unregisterForm(this._formId);
+        destroy(ignoreDialog = false) {
+            if (this._formId !== "") {
+                if (Manager_1.default.hasForm(this._formId)) {
+                    Manager_1.default.unregisterForm(this._formId);
                 }
                 if (ignoreDialog !== true) {
-                    UiDialog.destroy(this);
+                    Dialog_1.default.destroy(this);
                 }
             }
-        },
+        }
         /**
-         * Returns a promise that all of the dialog form's data.
-         *
-         * @return	{Promise}
+         * Returns a promise that provides all of the dialog form's data.
          */
-        getData: function () {
-            if (this._formId === '') {
+        getData() {
+            if (this._formId === "") {
                 throw new Error("Form has not been requested yet.");
             }
-            return FormBuilderManager.getData(this._formId);
-        },
+            return Manager_1.default.getData(this._formId);
+        }
         /**
          * Opens the dialog form.
          */
-        open: function () {
-            if (UiDialog.getDialog(this._dialogId)) {
-                UiDialog.openStatic(this._dialogId);
+        open() {
+            if (Dialog_1.default.getDialog(this._dialogId)) {
+                Dialog_1.default.open(this);
             }
             else {
                 Ajax.api(this);
             }
         }
-    };
+    }
+    Core.enableLegacyInheritance(FormBuilderDialog);
     return FormBuilderDialog;
 });
