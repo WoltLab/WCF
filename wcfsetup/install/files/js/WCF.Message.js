@@ -1155,24 +1155,19 @@ if (COMPILER_TARGET_DEFAULT) {
 			WCF.DOMNodeInsertedHandler.addCallback('WCF.Message.Quote.Handler' + objectType.hashCode(), $.proxy(this._initContainers, this));
 			
 			// Prevent the tooltip from being selectable while the touch pointer is being moved.
-			var timer = null;
-			document.addEventListener('selectionchange', (function() {
-				if (!this._copyQuote[0].classList.contains('active')) {
-					return;
+			const tooltip = this._copyQuote[0];
+			document.addEventListener("touchstart", function (event) {
+				if (tooltip.classList.contains("active")) {
+					const target = event.target;
+					if (target !== tooltip && !tooltip.contains(target)) {
+						tooltip.classList.add("touchForceInaccessible");
+						
+						document.addEventListener("touchend", function () {
+							tooltip.classList.remove("touchForceInaccessible");
+						}, {once: true});
+					}
 				}
-				
-				this._copyQuote[0].classList.add('touchForceInaccessible');
-				
-				if (timer !== null) {
-					window.clearTimeout(timer);
-				}
-				
-				timer = window.setTimeout((function() {
-					this._copyQuote[0].classList.remove('touchForceInaccessible');
-					
-					timer = null;
-				}).bind(this), 50);
-			}).bind(this));
+			}, {passive: true});
 		},
 		
 		/**
