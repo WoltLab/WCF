@@ -24,7 +24,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Ui/Dialog", "../../A
             this._options = Core.extend({
                 actionParameters: {},
                 destroyOnClose: false,
-                usesDboAction: this._className.match(/\w+\\data\\/),
+                usesDboAction: new RegExp(/\w+\\data\\/).test(this._className),
             }, options);
             this._options.dialog = Core.extend(this._options.dialog || {}, {
                 onClose: this._dialogOnClose.bind(this),
@@ -117,7 +117,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Ui/Dialog", "../../A
             }
             this._additionalSubmitButtons = Array.from(dialogData.content.querySelectorAll(':not(.formSubmit) button[type="submit"]'));
             this._additionalSubmitButtons.forEach((submit) => {
-                submit.addEventListener("click", (ev) => {
+                submit.addEventListener("click", () => {
                     // Mark the button that was clicked so that the button data handlers know
                     // which data needs to be submitted.
                     this._additionalSubmitButtons.forEach((button) => {

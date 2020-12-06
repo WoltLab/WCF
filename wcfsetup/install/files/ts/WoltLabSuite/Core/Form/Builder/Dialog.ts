@@ -10,7 +10,7 @@
 
 import * as Core from "../../Core";
 import UiDialog from "../../Ui/Dialog";
-import { DialogCallbackObject, DialogCallbackSetup, DialogData, DialogOptions } from "../../Ui/Dialog/Data";
+import { DialogCallbackObject, DialogCallbackSetup, DialogData } from "../../Ui/Dialog/Data";
 import * as Ajax from "../../Ajax";
 import { AjaxCallbackObject, AjaxCallbackSetup, DatabaseObjectActionResponse, RequestOptions } from "../../Ajax/Data";
 import FormBuilderManager from "./Manager";
@@ -46,7 +46,7 @@ class FormBuilderDialog implements AjaxCallbackObject, DialogCallbackObject {
       {
         actionParameters: {},
         destroyOnClose: false,
-        usesDboAction: this._className.match(/\w+\\data\\/),
+        usesDboAction: new RegExp(/\w+\\data\\/).test(this._className),
       },
       options,
     ) as FormBuilderDialogOptions;
@@ -164,7 +164,7 @@ class FormBuilderDialog implements AjaxCallbackObject, DialogCallbackObject {
       dialogData.content.querySelectorAll(':not(.formSubmit) button[type="submit"]'),
     );
     this._additionalSubmitButtons.forEach((submit) => {
-      submit.addEventListener("click", (ev) => {
+      submit.addEventListener("click", () => {
         // Mark the button that was clicked so that the button data handlers know
         // which data needs to be submitted.
         this._additionalSubmitButtons.forEach((button) => {
@@ -205,7 +205,7 @@ class FormBuilderDialog implements AjaxCallbackObject, DialogCallbackObject {
   /**
    * Destroys the dialog form.
    */
-  public destroy(ignoreDialog: boolean = false): void {
+  public destroy(ignoreDialog = false): void {
     if (this._formId !== "") {
       if (FormBuilderManager.hasForm(this._formId)) {
         FormBuilderManager.unregisterForm(this._formId);
@@ -231,7 +231,7 @@ class FormBuilderDialog implements AjaxCallbackObject, DialogCallbackObject {
   /**
    * Opens the dialog form.
    */
-  public open() {
+  public open(): void {
     if (UiDialog.getDialog(this._dialogId)) {
       UiDialog.open(this);
     } else {
