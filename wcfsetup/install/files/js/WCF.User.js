@@ -1795,11 +1795,11 @@ if (COMPILER_TARGET_DEFAULT) {
 				}
 				
 				// work-around for legacy notifications
-				if (!$item.find('a:not(.notificationItemMarkAsConfirmed)').length) {
-					$item.find('.details > p:eq(0)').html(function (index, oldHTML) {
-						return '<a href="' + $item.data('link') + '">' + oldHTML + '</a>';
-					});
-				}
+				var details = item.querySelector('.details > p:first-child');
+				details.classList.add("pointer");
+				details.addEventListener('click', function(event) {
+					window.location.href = $item.data('link');
+				});
 			}).bind(this));
 			
 			WCF.DOMNodeInsertedHandler.execute();
