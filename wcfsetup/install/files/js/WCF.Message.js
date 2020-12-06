@@ -1592,6 +1592,12 @@ if (COMPILER_TARGET_DEFAULT) {
 				}
 			});
 			this._proxy.sendRequest();
+			
+			const selection = window.getSelection();
+			if (selection.rangeCount) {
+				selection.removeAllRanges();
+				this._copyQuote[0].classList.remove("active");
+			}
 		},
 		
 		/**
