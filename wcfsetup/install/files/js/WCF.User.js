@@ -629,6 +629,11 @@ if (COMPILER_TARGET_DEFAULT) {
 			
 			elBySelAll('.interactiveDropdownItemShadowLink', this._dropdown.getItemList()[0], (function (link) {
 				link.addEventListener('click', (function (event) {
+					if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+						// Only close the drop-down if no key modifier was pressed.
+						return;
+					}
+					
 					this._dropdown.close();
 				}).bind(this));
 			}.bind(this)));
