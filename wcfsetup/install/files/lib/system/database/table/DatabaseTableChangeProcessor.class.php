@@ -1084,6 +1084,13 @@ class DatabaseTableChangeProcessor {
 								];
 							}
 						}
+						else if ($column->getNewName()) {
+							$errors[] = [
+								'columnName' => $column->getName(),
+								'tableName' => $table->getName(),
+								'type' => 'renameNonexistingColumn'
+							];
+						}
 					}
 					
 					foreach ($table->getIndices() as $index) {
