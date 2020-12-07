@@ -70,6 +70,14 @@ class StyleImportForm extends AbstractForm {
 			$archive = new PackageArchive($this->source['tmp_name']);
 			$archive->openArchive();
 			
+			if (!WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage')) {
+				throw new UserInputException('source', 'isPackageNoPermission');
+			}
+			
+			if (ENABLE_ENTERPRISE_MODE && !WCF::getUser()->hasOwnerAccess()) {
+				throw new UserInputException('source', 'isPackageNoPermission');
+			}
+			
 			// check if the package is an application
 			if ($archive->getPackageInfo('isApplication')) {
 				throw new SystemException("Package is application");

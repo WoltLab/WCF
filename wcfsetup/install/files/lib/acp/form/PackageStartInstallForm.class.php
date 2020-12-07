@@ -89,6 +89,10 @@ class PackageStartInstallForm extends AbstractForm {
 		parent::validate();
 		
 		if ($this->stylePackageImportLocation) {
+			if (ENABLE_ENTERPRISE_MODE && !WCF::getUser()->hasOwnerAccess()) {
+				throw new IllegalLinkException();
+			}
+			
 			try {
 				$this->validateUploadPackage($this->stylePackageImportLocation);
 			}
