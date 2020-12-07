@@ -482,14 +482,18 @@ $.Redactor.prototype.WoltLabCaret = function() {
 		
 		_handleEditorClick: function (event) {
 			var clientY = event.clientY;
+
+			// Treat this as a collapsed selection instead, because the iOS Safari
+			// breaks event delegation and refuses to trigger click-style events
+			// for non-link/non-input elements. Thanks Apple.
+			var isIosTouch = _iOS && _touchstartTarget === event.target && this.utils.isBlockTag(_touchstartTarget.nodeName);
+			
+			if (clientY === undefined && isIosTouch) {
+				clientY = event.changedTouches[0].clientY;
+			}
+			
 			if (!this.selection.get().isCollapsed) {
-				if (_isSafari && _iOS && _touchstartTarget === event.target && this.utils.isBlockTag(_touchstartTarget.nodeName)) {
-					// Treat this as a collapsed selection instead, because the iOS Safari
-					// breaks event delegation and refuses to trigger click-style events
-					// for non-link/non-input elements. Thanks Apple.
-					clientY = event.changedTouches[0].clientY;
-				}
-				else {
+				if (!isIosTouch || clientY === undefined) {
 					// ignore text selection
 					return;
 				}
