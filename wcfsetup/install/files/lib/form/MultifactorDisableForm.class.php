@@ -11,6 +11,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\authentication\TReauthenticationCheck;
 use wcf\system\user\multifactor\Setup;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -25,6 +26,8 @@ use wcf\util\HeaderUtil;
  * @since	5.4
  */
 class MultifactorDisableForm extends AbstractFormBuilderForm {
+	use TReauthenticationCheck;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -68,6 +71,10 @@ class MultifactorDisableForm extends AbstractFormBuilderForm {
 		$this->setup = $this->setups[$_GET['id']];
 		$this->method = $this->setup->getObjectType();
 		\assert($this->method->getDefinition()->definitionName === 'com.woltlab.wcf.multifactor');
+		
+		$this->requestReauthentication(LinkHandler::getInstance()->getControllerLink(static::class, [
+			'object' => $this->setup,
+		]));
 		
 		// Backup codes may not be disabled.
 		if ($this->method->objectType === 'com.woltlab.wcf.multifactor.backup') {

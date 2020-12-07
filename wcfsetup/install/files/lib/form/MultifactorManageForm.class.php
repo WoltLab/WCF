@@ -13,6 +13,7 @@ use wcf\system\form\builder\IFormParentNode;
 use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\authentication\TReauthenticationCheck;
 use wcf\system\user\multifactor\IMultifactorMethod;
 use wcf\system\user\multifactor\Setup;
 use wcf\system\WCF;
@@ -27,6 +28,8 @@ use wcf\system\WCF;
  * @since	5.4
  */
 class MultifactorManageForm extends AbstractFormBuilderForm {
+	use TReauthenticationCheck;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -84,6 +87,10 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 		$this->method = $objectType;
 		$this->processor = $this->method->getProcessor();
 		$this->setup = Setup::find($this->method, WCF::getUser());
+		
+		$this->requestReauthentication(LinkHandler::getInstance()->getControllerLink(static::class, [
+			'object' => $this->method,
+		]));
 		
 		// Backup codes may not be managed if they are not yet set up.
 		if ($this->method->objectType === 'com.woltlab.wcf.multifactor.backup' && !$this->setup) {
