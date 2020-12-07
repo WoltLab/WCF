@@ -29,6 +29,13 @@ $.Redactor.prototype.WoltLabSmiley = function() {
 			smiley = elById(id);
 			smiley.removeAttribute('id');
 			
+			// Check if there is a zero-width whitespace after the smiley, Safari does
+			// not like them that much (caret will be placed inside a character).
+			const nextSibling = smiley.nextSibling;
+			if (nextSibling && nextSibling.nodeType === Node.TEXT_NODE && nextSibling.textContent === "\u200B") {
+				nextSibling.remove();
+			}
+			
 			smiley.parentNode.insertBefore(document.createTextNode(" "), smiley);
 			
 			const whitespace = document.createTextNode(" ");
