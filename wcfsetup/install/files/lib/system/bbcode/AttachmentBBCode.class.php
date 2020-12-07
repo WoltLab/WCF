@@ -91,9 +91,9 @@ class AttachmentBBCode extends AbstractBBCode {
 					$thumbnail = true;
 				}
 				
-				// check if width is valid and the original is accessible by viewer
+				// Force the use of the thumbnail if the user cannot access the full version.
 				if (!$thumbnail && !$attachment->canDownload()) {
-					$thumbnail = false;
+					$thumbnail = true;
 				}
 				
 				if (!$thumbnail) {
