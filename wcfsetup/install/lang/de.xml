@@ -3226,6 +3226,12 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.acp.user.action.unconfirmEmail"><![CDATA[Bestätigung der E-Mail-Adresse widerrufen]]></item>
 		<item name="wcf.acp.user.exportGdpr"><![CDATA[Persönliche Daten exportieren (DSGVO)]]></item>
 		<item name="wcf.acp.user.coverPhoto.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} ein Titelbild im Profil des Benutzers hochladen.]]></item>
+		<item name="wcf.acp.user.security.multifactor"><![CDATA[Mehrfaktor-Authentifizierung]]></item>
+		<item name="wcf.acp.user.security.multifactor.active"><![CDATA[Aktiv]]></item>
+		<item name="wcf.acp.user.security.multifactor.active.description"><![CDATA[Dieses Benutzerkonto wird durch einen zweiten Faktor geschützt.]]></item>
+		<item name="wcf.acp.user.security.multifactor.disable"><![CDATA[Mehrfaktor-Authentifizierung vollständig deaktivieren]]></item>
+		<item name="wcf.acp.user.security.multifactor.disable.description"><![CDATA[Deaktiviert die Mehrfaktor-Authentifizierung für das Benutzerkonto <strong>{$user->username}</strong> vollständig. Der Benutzer muss die Mehrfaktor-Authentifizierung anschließend erneut einrichten.<br>
+<strong>Achtung:</strong> Die Mehrfaktor-Authentifizierung wird von Benutzern aktiv eingerichtet, um das eigene Benutzerkonto besser zu schützen. {if LANGUAGE_USE_INFORMAL_VARIANT}Stelle sicher, dass du den Benutzer ausreichend authentifizierst, bevor du die Mehrfaktor-Authentifizierung deaktivierst.{else}Stellen Sie sicher, dass Sie den Benutzer ausreichend authentifizieren, bevor Sie die Mehrfaktor-Authentifizierung deaktivieren.{/if}]]></item>
 	</category>
 	<category name="wcf.acp.worker">
 		<item name="wcf.acp.worker.abort.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Ausführung wirklich abbrechen?]]></item>

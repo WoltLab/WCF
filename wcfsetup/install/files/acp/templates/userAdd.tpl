@@ -183,6 +183,32 @@
 						{event name='passwordFields'}
 					</section>
 				{/if}
+				
+				{if $action == 'edit' && $user->multifactorActive}
+					<section class="section">
+						<h2 class="sectionTitle">{lang}wcf.acp.user.security.multifactor{/lang}</h2>
+						
+						<dl>
+							<dt>{lang}wcf.acp.user.security.multifactor{/lang}</dt>
+							<dd>
+								<span class="icon icon16 fa-check green"></span> {lang}wcf.acp.user.security.multifactor.active{/lang}
+								<small>{lang}wcf.acp.user.security.multifactor.active.description{/lang}</small>
+							</dd>
+						</dl>
+						
+						<dl>
+							<dt></dt>
+							<dd>
+								<label>
+									<input type="checkbox" id="multifactorDisable" name="multifactorDisable" value="1"> {lang}wcf.acp.user.security.multifactor.disable{/lang}
+								</label>
+								<small>
+									{lang}wcf.acp.user.security.multifactor.disable.description{/lang}
+								</small>
+							</dd>
+						</dl>
+					</section>
+				{/if}
 			{/if}
 			
 			{if $action == 'edit' && $__wcf->session->getPermission('admin.user.canBanUser') && $__wcf->user->userID != $userID}
