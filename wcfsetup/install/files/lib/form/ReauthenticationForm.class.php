@@ -4,6 +4,7 @@ use wcf\form\AbstractFormBuilderForm;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\form\builder\field\user\UserPasswordField;
+use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -54,10 +55,12 @@ class ReauthenticationForm extends AbstractFormBuilderForm {
 	protected function createForm() {
 		parent::createForm();
 		
-		$this->form->appendChild(
+		$this->form->appendChildren([
+			TemplateFormNode::create('loginAs')
+				->templateName('__reauthenticationLoginAs'),
 			UserPasswordField::create()
 				->required(),
-		);
+		]);
 	}
 	
 	/**

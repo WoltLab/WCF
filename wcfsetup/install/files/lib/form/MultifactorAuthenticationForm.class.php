@@ -121,7 +121,6 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 		
 		$this->form->appendChild(
 			TemplateFormNode::create('loginAs')
-				->application('wcf')
 				->templateName('__multifactorAuthenticationLoginAs')
 		);
 		
