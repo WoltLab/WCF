@@ -535,6 +535,11 @@ if (COMPILER_TARGET_DEFAULT) {
 			
 			elBySelAll('.interactiveDropdownItemShadowLink', this._dropdown.getItemList()[0], (function (link) {
 				link.addEventListener('click', (function (event) {
+					if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+						// Only close the drop-down if no key modifier was pressed.
+						return;
+					}
+					
 					this._dropdown.close();
 				}).bind(this));
 			}.bind(this)));
@@ -1701,11 +1706,11 @@ if (COMPILER_TARGET_DEFAULT) {
 				}
 				
 				// work-around for legacy notifications
-				if (!$item.find('a:not(.notificationItemMarkAsConfirmed)').length) {
-					$item.find('.details > p:eq(0)').html(function (index, oldHTML) {
-						return '<a href="' + $item.data('link') + '">' + oldHTML + '</a>';
-					});
-				}
+				var details = item.querySelector('.details > p:first-child');
+				details.classList.add("pointer");
+				details.addEventListener('click', function(event) {
+					window.location.href = $item.data('link');
+				});
 			}).bind(this));
 			
 			WCF.DOMNodeInsertedHandler.execute();
