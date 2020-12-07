@@ -1,58 +1,73 @@
 /**
  * Provides the dialog overlay to add a new page.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Acp/Ui/Page/Add
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Acp/Ui/Page/Add
  */
-define(['Core', 'Language', 'Ui/Dialog'], function (Core, Language, UiDialog) {
+define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dialog"], function (require, exports, tslib_1, Language, Dialog_1) {
     "use strict";
-    var _languages, _link;
-    /**
-     * @exports     WoltLabSuite/Core/Acp/Ui/Page/Add
-     */
-    return {
-        /**
-         * Initializes the page add handler.
-         *
-         * @param       {string}        link            redirect URL
-         * @param       {int}           languages       number of available languages
-         */
-        init: function (link, languages) {
-            _languages = languages;
-            _link = link;
-            var buttons = elBySelAll('.jsButtonPageAdd');
-            for (var i = 0, length = buttons.length; i < length; i++) {
-                buttons[i].addEventListener('click', this.openDialog.bind(this));
-            }
-        },
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.openDialog = exports.init = void 0;
+    Language = tslib_1.__importStar(Language);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    class AcpUiPageAdd {
+        constructor(link, isI18n) {
+            this.link = link;
+            this.isI18n = isI18n;
+            document.querySelectorAll(".jsButtonPageAdd").forEach((button) => {
+                button.addEventListener("click", (ev) => this.openDialog(ev));
+            });
+        }
         /**
          * Opens the 'Add Page' dialog.
-         *
-         * @param       {Event=}        event   event object
          */
-        openDialog: function (event) {
+        openDialog(event) {
             if (event instanceof Event) {
                 event.preventDefault();
             }
-            UiDialog.open(this);
-        },
-        _dialogSetup: function () {
+            Dialog_1.default.open(this);
+        }
+        _dialogSetup() {
             return {
-                id: 'pageAddDialog',
+                id: "pageAddDialog",
                 options: {
-                    onSetup: function (content) {
-                        elBySel('button', content).addEventListener('click', function (event) {
+                    onSetup: (content) => {
+                        const button = content.querySelector("button");
+                        button.addEventListener("click", (event) => {
                             event.preventDefault();
-                            var pageType = elBySel('input[name="pageType"]:checked', content).value;
-                            var isMultilingual = (_languages > 1) ? elBySel('input[name="isMultilingual"]:checked', content).value : 0;
-                            window.location = _link.replace(/{\$pageType}/, pageType).replace(/{\$isMultilingual}/, isMultilingual);
+                            const pageType = content.querySelector('input[name="pageType"]:checked').value;
+                            let isMultilingual = "0";
+                            if (this.isI18n) {
+                                isMultilingual = content.querySelector('input[name="isMultilingual"]:checked')
+                                    .value;
+                            }
+                            window.location.href = this.link
+                                .replace("{$pageType}", pageType)
+                                .replace("{$isMultilingual}", isMultilingual);
                         });
                     },
-                    title: Language.get('wcf.acp.page.add')
-                }
+                    title: Language.get("wcf.acp.page.add"),
+                },
             };
         }
-    };
+    }
+    let acpUiPageAdd;
+    /**
+     * Initializes the page add handler.
+     */
+    function init(link, languages) {
+        if (!acpUiPageAdd) {
+            acpUiPageAdd = new AcpUiPageAdd(link, languages > 0);
+        }
+    }
+    exports.init = init;
+    /**
+     * Opens the 'Add Page' dialog.
+     */
+    function openDialog() {
+        acpUiPageAdd.openDialog();
+    }
+    exports.openDialog = openDialog;
 });

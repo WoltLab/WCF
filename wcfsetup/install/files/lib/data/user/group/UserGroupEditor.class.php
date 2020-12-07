@@ -5,7 +5,7 @@ use wcf\data\IEditableCachedObject;
 use wcf\system\cache\builder\UserGroupCacheBuilder;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\exception\SystemException;
-use wcf\system\session\SessionHandler;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
 /**
@@ -181,11 +181,11 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 	 * @inheritDoc
 	 */
 	public static function resetCache() {
-		// clear cache
+		// Clear group cache.
 		UserGroupCacheBuilder::getInstance()->reset();
 		UserGroupPermissionCacheBuilder::getInstance()->reset();
 		
-		// clear sessions
-		SessionHandler::resetSessions();
+		// Clear cached group assignments.
+		UserStorageHandler::getInstance()->resetAll('groupIDs');
 	}
 }

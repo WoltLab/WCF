@@ -12,6 +12,7 @@ use wcf\util\StringUtil;
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cache\Source
+ * @deprecated	5.4 - Memcached is deprecated in favor of Redis if a distributed in-memory cache is required.
  */
 class MemcachedCacheSource implements ICacheSource {
 	/**

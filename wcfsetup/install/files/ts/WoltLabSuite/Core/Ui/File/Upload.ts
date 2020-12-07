@@ -15,6 +15,7 @@ import { default as DeleteHandler } from "./Delete";
 import DomUtil from "../../Dom/Util";
 import * as Language from "../../Language";
 import Upload from "../../Upload";
+import { FileUploadHandler } from "./Data";
 
 interface FileUploadOptions extends UploadOptions {
   // image preview
@@ -41,7 +42,7 @@ interface AjaxResponse {
   files: FileData[];
 }
 
-class FileUpload extends Upload<FileUploadOptions> {
+class FileUpload extends Upload<FileUploadOptions> implements FileUploadHandler {
   protected readonly _deleteHandler: DeleteHandler;
 
   constructor(buttonContainerId: string, targetId: string, options: Partial<FileUploadOptions>) {

@@ -1,5 +1,5 @@
 <?php
-use wcf\system\session\SessionHandler;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
 
@@ -15,8 +15,8 @@ $sql = "UPDATE	wcf".WCF_N."_package_installation_plugin
 $statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute([1]);
 
-// reset sessions
-SessionHandler::resetSessions();
+// Clear any outdated cached data from WCFSetup.
+UserStorageHandler::getInstance()->clear();
 
 // update acp templates
 $sql = "UPDATE	wcf".WCF_N."_acp_template

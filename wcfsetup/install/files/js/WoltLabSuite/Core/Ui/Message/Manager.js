@@ -6,12 +6,13 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Message/Manager
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Language"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Language) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Change/Listener", "../../Language", "../../StringUtil"], function (require, exports, tslib_1, Ajax, Core, Listener_1, Language, StringUtil) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     Listener_1 = tslib_1.__importDefault(Listener_1);
     Language = tslib_1.__importStar(Language);
+    StringUtil = tslib_1.__importStar(StringUtil);
     class UiMessageManager {
         /**
          * Initializes a new manager instance.
@@ -32,8 +33,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
         rebuild() {
             this._elements.clear();
             document.querySelectorAll(this._options.selector).forEach((element) => {
-                const objectId = ~~(element.dataset.objectId || "0");
-                this._elements.set(objectId, element);
+                this._elements.set(element.dataset.objectId, element);
             });
         }
         /**
@@ -41,7 +41,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
          * with "can" or "can-" as this is automatically assumed by this method.
          */
         getPermission(objectId, permission) {
-            permission = "can-" + this._getAttributeName(permission);
+            permission = "can" + StringUtil.ucfirst(permission);
             const element = this._elements.get(objectId);
             if (element === undefined) {
                 throw new Error(`Unknown object id '${objectId}' for selector '${this._options.selector}'`);
@@ -56,8 +56,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             if (element === undefined) {
                 throw new Error(`Unknown object id '${objectId}' for selector '${this._options.selector}'`);
             }
-            const attributeName = this._getAttributeName(propertyName);
-            const value = element.dataset[attributeName] || "";
+            const value = element.dataset[StringUtil.toCamelCase(propertyName)] || "";
             if (asBool) {
                 return Core.stringToBool(value);
             }
@@ -125,8 +124,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
          * Updates a single property of a message element.
          */
         _update(element, propertyName, propertyValue) {
-            const attributeName = this._getAttributeName(propertyName);
-            element.dataset[attributeName] = propertyValue.toString();
+            element.dataset[propertyName] = propertyValue.toString();
             // handle special properties
             const propertyValueBoolean = propertyValue == 1 || propertyValue === true || propertyValue === "true";
             this._updateState(element, propertyName, propertyValue, propertyValueBoolean);
@@ -194,6 +192,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
         }
         /**
          * Transforms camel-cased property names into their attribute equivalent.
+         *
+         * @deprecated 5.4 Access the value via `element.dataset` which uses camel-case.
          */
         _getAttributeName(propertyName) {
             if (propertyName.indexOf("-") !== -1) {

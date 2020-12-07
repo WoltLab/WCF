@@ -2,115 +2,119 @@
  * Provides helper functions to sort boxes per page.
  *
  * @author      Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright  2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Acp/Ui/Page/BoxOrder
  */
-define(['Ajax', 'Language', 'Dom/ChangeListener', 'Ui/Confirmation', 'Ui/Notification'], function (Ajax, Language, DomChangeListener, UiConfirmation, UiNotification) {
+define(["require", "exports", "tslib", "../../../Ajax", "../../../Dom/Change/Listener", "../../../Language", "../../../Ui/Confirmation", "../../../Ui/Notification"], function (require, exports, tslib_1, Ajax, Listener_1, Language, UiConfirmation, UiNotification) {
     "use strict";
-    var _pageId = 0;
-    var _pbo = elById('pbo');
-    /**
-     * @exports     WoltLabSuite/Core/Acp/Ui/Page/BoxOrder
-     */
-    return {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.init = void 0;
+    Ajax = tslib_1.__importStar(Ajax);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Language = tslib_1.__importStar(Language);
+    UiConfirmation = tslib_1.__importStar(UiConfirmation);
+    UiNotification = tslib_1.__importStar(UiNotification);
+    class AcpUiPageBoxOrder {
         /**
          * Initializes the sorting capabilities.
-         *
-         * @param       {int}           pageId          page id
-         * @param       {Dictionary}    boxes           list of boxes per position
          */
-        init: function (pageId, boxes) {
-            _pageId = pageId;
-            boxes.forEach(function (boxData, position) {
-                var container = elCreate('ul');
-                boxData.forEach(function (box) {
-                    var item = elCreate('li');
-                    elData(item, 'box-id', box.boxID);
-                    var icon = '';
+        constructor(pageId, boxes) {
+            this.pageId = pageId;
+            this.pbo = document.getElementById("pbo");
+            boxes.forEach((boxData, position) => {
+                const container = document.createElement("ul");
+                boxData.forEach((box) => {
+                    const item = document.createElement("li");
+                    item.dataset.boxId = box.boxId.toString();
+                    let icon = "";
                     if (box.isDisabled) {
-                        icon = ' <span class="icon icon16 fa-exclamation-triangle red jsTooltip" title="' + Language.get('wcf.acp.box.isDisabled') + '"></span>';
+                        icon = ` <span class="icon icon16 fa-exclamation-triangle red jsTooltip" title="${Language.get("wcf.acp.box.isDisabled")}"></span>`;
                     }
                     item.innerHTML = box.name + icon;
                     container.appendChild(item);
                 });
                 if (boxData.length > 1) {
                     window.jQuery(container).sortable({
-                        opacity: .6,
-                        placeholder: 'sortablePlaceholder'
+                        opacity: 0.6,
+                        placeholder: "sortablePlaceholder",
                     });
                 }
-                elBySel('[data-placeholder="' + position + '"]', _pbo).appendChild(container);
+                const wrapper = this.pbo.querySelector(`[data-placeholder="${position}"]`);
+                wrapper.appendChild(container);
             });
-            elBySel('button[data-type="submit"]').addEventListener('click', this._save.bind(this));
-            var buttonDiscard = elBySel('.jsButtonCustomShowOrder');
+            const submitButton = document.querySelector('button[data-type="submit"]');
+            submitButton.addEventListener("click", (ev) => this.save(ev));
+            const buttonDiscard = document.querySelector(".jsButtonCustomShowOrder");
             if (buttonDiscard)
-                buttonDiscard.addEventListener('click', this._discard.bind(this));
-            DomChangeListener.trigger();
-        },
+                buttonDiscard.addEventListener("click", (ev) => this.discard(ev));
+            Listener_1.default.trigger();
+        }
         /**
          * Saves the order of all boxes per position.
-         *
-         * @param       {Event}         event           event object
-         * @protected
          */
-        _save: function (event) {
+        save(event) {
             event.preventDefault();
-            var data = {};
+            const data = {};
             // collect data
-            elBySelAll('[data-placeholder]', _pbo, function (position) {
-                var boxes = [];
-                elBySelAll('li', position, function (li) {
-                    var id = ~~elData(li, 'box-id');
-                    if (id)
-                        boxes.push(id);
-                });
-                data[elData(position, 'placeholder')] = boxes;
+            this.pbo.querySelectorAll("[data-placeholder]").forEach((position) => {
+                const boxIds = Array.from(position.querySelectorAll("li"))
+                    .map((element) => ~~element.dataset.boxId)
+                    .filter((id) => id > 0);
+                const placeholder = position.dataset.placeholder;
+                data[placeholder] = boxIds;
             });
             Ajax.api(this, {
                 parameters: {
-                    position: data
-                }
+                    position: data,
+                },
             });
-        },
+        }
         /**
          * Shows an dialog to discard the individual box show order for this page.
-         *
-         * @param       {Event}         event           event object
-         * @protected
          */
-        _discard: function (event) {
+        discard(event) {
             event.preventDefault();
             UiConfirmation.show({
-                confirm: (function () {
+                confirm: () => {
                     Ajax.api(this, {
-                        actionName: 'resetPosition'
+                        actionName: "resetPosition",
                     });
-                }).bind(this),
-                message: Language.get('wcf.acp.page.boxOrder.discard.confirmMessage')
+                },
+                message: Language.get("wcf.acp.page.boxOrder.discard.confirmMessage"),
             });
-        },
-        _ajaxSuccess: function (data) {
+        }
+        _ajaxSuccess(data) {
             switch (data.actionName) {
-                case 'updatePosition':
+                case "updatePosition":
                     UiNotification.show();
                     break;
-                case 'resetPosition':
-                    UiNotification.show(undefined, function () {
+                case "resetPosition":
+                    UiNotification.show(undefined, () => {
                         window.location.reload();
                     });
                     break;
             }
-        },
-        _ajaxSetup: function () {
+        }
+        _ajaxSetup() {
             return {
                 data: {
-                    actionName: 'updatePosition',
-                    className: 'wcf\\data\\page\\PageAction',
-                    interfaceName: 'wcf\\data\\ISortableAction',
-                    objectIDs: [_pageId]
-                }
+                    actionName: "updatePosition",
+                    className: "wcf\\data\\page\\PageAction",
+                    interfaceName: "wcf\\data\\ISortableAction",
+                    objectIDs: [this.pageId],
+                },
             };
         }
-    };
+    }
+    let acpUiPageBoxOrder;
+    /**
+     * Initializes the sorting capabilities.
+     */
+    function init(pageId, boxes) {
+        if (!acpUiPageBoxOrder) {
+            acpUiPageBoxOrder = new AcpUiPageBoxOrder(pageId, boxes);
+        }
+    }
+    exports.init = init;
 });

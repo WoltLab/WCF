@@ -207,15 +207,20 @@
 
 #likeList .likeTypeSelection {
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: flex-end;
 	
-	.buttonGroup li {
-		display: flex;
-		justify-content: stretch;
+	.buttonGroup {
+		margin-bottom: 0;
 		
-		a {
+		li {
 			display: flex;
-			align-items: center;
+			justify-content: stretch;
+			
+			a {
+				display: flex;
+				align-items: center;
+			}
 		}
 	}
 }

@@ -42,8 +42,11 @@
 			<ol class="breadcrumbs">
 				{assign var=__breadcrumbsDepth value=0}
 				{foreach from=$__wcf->getBreadcrumbs() item=$breadcrumb}
-					<li><a href="{$breadcrumb->getURL()}">{$breadcrumb->getLabel()}</a></li>
-					{assign var=__breadcrumbsDepth value=$__breadcrumbsDepth + 1}
+					{* skip breadcrumbs that do not expose a visible label *}
+					{if $breadcrumb->getLabel()}
+						<li><a href="{$breadcrumb->getURL()}">{$breadcrumb->getLabel()}</a></li>
+						{assign var=__breadcrumbsDepth value=$__breadcrumbsDepth + 1}
+					{/if}
 				{/foreach}
 			</ol>
 		</amp-sidebar>

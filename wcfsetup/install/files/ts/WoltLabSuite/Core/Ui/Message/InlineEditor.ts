@@ -24,7 +24,7 @@ interface MessageInlineEditorOptions {
   canEditInline: boolean;
 
   className: string;
-  containerId: number;
+  containerId: string;
   dropdownIdentifier: string;
   editorPrefix: string;
 
@@ -75,16 +75,30 @@ interface AjaxResponseMessage extends ResponseData {
 }
 
 class UiMessageInlineEditor implements AjaxCallbackObject {
-  protected _activeDropdownElement: HTMLElement | null = null;
-  protected _activeElement: HTMLElement | null = null;
-  protected _dropdownMenu: HTMLUListElement | null = null;
-  protected readonly _elements = new WeakMap<HTMLElement, ElementData>();
-  protected readonly _options: MessageInlineEditorOptions;
+  protected _activeDropdownElement: HTMLElement | null;
+  protected _activeElement: HTMLElement | null;
+  protected _dropdownMenu: HTMLUListElement | null;
+  protected _elements: WeakMap<HTMLElement, ElementData>;
+  protected _options: MessageInlineEditorOptions;
 
   /**
    * Initializes the message inline editor.
    */
   constructor(opts: Partial<MessageInlineEditorOptions>) {
+    this.init(opts);
+  }
+
+  /**
+   * Helper initialization method for legacy inheritance support.
+   */
+  protected init(opts: Partial<MessageInlineEditorOptions>): void {
+    // Define the properties again, the constructor might not be
+    // called in legacy implementations.
+    this._activeDropdownElement = null;
+    this._activeElement = null;
+    this._dropdownMenu = null;
+    this._elements = new WeakMap<HTMLElement, ElementData>();
+
     this._options = Core.extend(
       {
         canEditInline: false,
@@ -642,7 +656,7 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
   /**
    * Returns the hash added to the url after successfully editing a message.
    */
-  protected _getHash(objectId: number): string {
+  protected _getHash(objectId: string): string {
     return `#message${objectId}`;
   }
 
@@ -664,8 +678,8 @@ class UiMessageInlineEditor implements AjaxCallbackObject {
   /**
    * Returns the element's `data-object-id` value.
    */
-  protected _getObjectId(element: HTMLElement): number {
-    return ~~(element.dataset.objectId || "");
+  protected _getObjectId(element: HTMLElement): string {
+    return element.dataset.objectId || "";
   }
 
   _ajaxFailure(data: ResponseData): boolean {

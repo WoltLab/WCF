@@ -185,13 +185,8 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 				/** @var \wcf\system\file\upload\UploadFile $file */
 				$file = $this->parameters['uploads'][$type];
 				
-				if ($style->getVariable($type) && file_exists($style->getAssetPath().basename($style->getVariable($type)))) {
-					if (!$file || $style->getAssetPath().basename($style->getVariable($type)) !== $file->getLocation()) {
-						unlink($style->getAssetPath().basename($style->getVariable($type)));
-					}
-				}
-				
-				if ($file !== null) {
+				// Only save file, if it is not proccessed. 
+				if ($file !== null && !$file->isProcessed()) {
 					$fileLocation = $file->getLocation();
 					$extension = pathinfo($file->getFilename(), PATHINFO_EXTENSION);
 					$newName = $type.'-'.Hex::encode(\random_bytes(4)).'.'.$extension;
@@ -200,9 +195,18 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 					$this->parameters['variables'][$type] = $newName;
 					$file->setProcessed($newLocation);
 				}
-				else {
+				else if ($file === null) {
 					$this->parameters['variables'][$type] = '';
 				}
+				else {
+					$this->parameters['variables'][$type] = basename($file->getLocation());
+				}
+			}
+		}
+		
+		foreach ($this->parameters['removedUploads'] as $removedUpload) {
+			if (file_exists($removedUpload->getLocation())) {
+				unlink($removedUpload->getLocation());
 			}
 		}
 		
@@ -319,7 +323,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 			/** @var \wcf\system\file\upload\UploadFile $file */
 			$file = $this->parameters['uploads']['favicon'];
 			
-			if ($file !== null) {
+			if ($file !== null && !$file->isProcessed()) {
 				$fileLocation = $file->getLocation();
 				if (($imageData = getimagesize($fileLocation)) === false) {
 					throw new \InvalidArgumentException('The given favicon is not an image');
@@ -353,7 +357,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 				$file->setProcessed($newLocation);
 				$hasFavicon = true;
 			}
-			else {
+			else if ($file === null) {
 				foreach ($images as $filename => $length) {
 					unlink($style->getAssetPath().$filename);
 				}

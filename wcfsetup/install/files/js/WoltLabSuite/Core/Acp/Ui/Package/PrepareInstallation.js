@@ -7,94 +7,96 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Acp/Ui/Package/PrepareInstallation
  */
-define(['Ajax', 'Core', 'Language', 'Ui/Dialog'], function (Ajax, Core, Language, UiDialog) {
-    'use strict';
-    function AcpUiPackagePrepareInstallation() { }
-    AcpUiPackagePrepareInstallation.prototype = {
-        /**
-         * @param {string} identifier
-         * @param {string} version
-         */
-        start: function (identifier, version) {
-            this._identifier = identifier;
-            this._version = version;
-            this._prepare({});
-        },
-        /**
-         * @param {Object} authData
-         */
-        _prepare: function (authData) {
-            var packages = {};
-            packages[this._identifier] = this._version;
+define(["require", "exports", "tslib", "../../../Ajax", "../../../Core", "../../../Language", "../../../Ui/Dialog", "../../../Dom/Util"], function (require, exports, tslib_1, Ajax, Core, Language, Dialog_1, Util_1) {
+    "use strict";
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    Language = tslib_1.__importStar(Language);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    class AcpUiPackagePrepareInstallation {
+        constructor() {
+            this.identifier = "";
+            this.version = "";
+        }
+        start(identifier, version) {
+            this.identifier = identifier;
+            this.version = version;
+            this.prepare({});
+        }
+        prepare(authData) {
+            const packages = {};
+            packages[this.identifier] = this.version;
             Ajax.api(this, {
                 parameters: {
                     authData: authData,
-                    packages: packages
-                }
+                    packages: packages,
+                },
             });
-        },
-        /**
-         * @param {number} packageUpdateServerId
-         * @param {Event} event
-         */
-        _submit: function (packageUpdateServerId, event) {
-            event.preventDefault();
-            var usernameInput = elById('packageUpdateServerUsername');
-            var passwordInput = elById('packageUpdateServerPassword');
-            elInnerError(usernameInput, false);
-            elInnerError(passwordInput, false);
-            var username = usernameInput.value.trim();
-            if (username === '') {
-                elInnerError(usernameInput, Language.get('wcf.global.form.error.empty'));
+        }
+        submit(packageUpdateServerId) {
+            const usernameInput = document.getElementById("packageUpdateServerUsername");
+            const passwordInput = document.getElementById("packageUpdateServerPassword");
+            Util_1.default.innerError(usernameInput, false);
+            Util_1.default.innerError(passwordInput, false);
+            const username = usernameInput.value.trim();
+            if (username === "") {
+                Util_1.default.innerError(usernameInput, Language.get("wcf.global.form.error.empty"));
             }
             else {
-                var password = passwordInput.value.trim();
-                if (password === '') {
-                    elInnerError(passwordInput, Language.get('wcf.global.form.error.empty'));
+                const password = passwordInput.value.trim();
+                if (password === "") {
+                    Util_1.default.innerError(passwordInput, Language.get("wcf.global.form.error.empty"));
                 }
                 else {
-                    this._prepare({
+                    const saveCredentials = document.getElementById("packageUpdateServerSaveCredentials");
+                    this.prepare({
                         packageUpdateServerID: packageUpdateServerId,
-                        password: password,
-                        saveCredentials: elById('packageUpdateServerSaveCredentials').checked,
-                        username: username
+                        password,
+                        saveCredentials: saveCredentials.checked,
+                        username,
                     });
                 }
             }
-        },
-        _ajaxSuccess: function (data) {
+        }
+        _ajaxSuccess(data) {
             if (data.returnValues.queueID) {
-                if (UiDialog.isOpen(this)) {
-                    UiDialog.close(this);
+                if (Dialog_1.default.isOpen(this)) {
+                    Dialog_1.default.close(this);
                 }
-                var installation = new window.WCF.ACP.Package.Installation(data.returnValues.queueID, undefined, false);
+                const installation = new window.WCF.ACP.Package.Installation(data.returnValues.queueID, undefined, false);
                 installation.prepareInstallation();
             }
             else if (data.returnValues.template) {
-                UiDialog.open(this, data.returnValues.template);
+                Dialog_1.default.open(this, data.returnValues.template);
             }
-        },
-        _ajaxSetup: function () {
+        }
+        _ajaxSetup() {
             return {
                 data: {
-                    actionName: 'prepareInstallation',
-                    className: 'wcf\\data\\package\\update\\PackageUpdateAction'
-                }
-            };
-        },
-        _dialogSetup: function () {
-            return {
-                id: 'packageDownloadAuthorization',
-                options: {
-                    onSetup: (function (content) {
-                        var button = elBySel('.formSubmit > button', content);
-                        button.addEventListener('click', this._submit.bind(this, elData(button, 'package-update-server-id')));
-                    }).bind(this),
-                    title: Language.get('wcf.acp.package.update.unauthorized')
+                    actionName: "prepareInstallation",
+                    className: "wcf\\data\\package\\update\\PackageUpdateAction",
                 },
-                source: null
             };
         }
-    };
+        _dialogSetup() {
+            return {
+                id: "packageDownloadAuthorization",
+                options: {
+                    onSetup: (content) => {
+                        const button = content.querySelector(".formSubmit > button");
+                        button.addEventListener("click", (event) => {
+                            event.preventDefault();
+                            const packageUpdateServerId = ~~button.dataset.packageUpdateServerId;
+                            this.submit(packageUpdateServerId);
+                        });
+                    },
+                    title: Language.get("wcf.acp.package.update.unauthorized"),
+                },
+                source: null,
+            };
+        }
+    }
+    Core.enableLegacyInheritance(AcpUiPackagePrepareInstallation);
     return AcpUiPackagePrepareInstallation;
 });

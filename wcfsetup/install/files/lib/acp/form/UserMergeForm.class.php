@@ -3,12 +3,12 @@ namespace wcf\acp\form;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
+use wcf\data\user\UserEditor;
 use wcf\form\AbstractForm;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
-use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 
 /**
@@ -259,7 +259,7 @@ class UserMergeForm extends AbstractForm {
 		
 		// reset clipboard
 		ClipboardHandler::getInstance()->removeItems($this->objectTypeID);
-		SessionHandler::resetSessions($this->userIDs);
+		UserEditor::resetCache();
 		$this->saved();
 		
 		// show success message

@@ -10,7 +10,7 @@
 define(["require", "exports", "tslib", "./NumberUtil"], function (require, exports, tslib_1, NumberUtil) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.setupI18n = exports.shortUnit = exports.unescapeHTML = exports.ucfirst = exports.lcfirst = exports.formatNumeric = exports.escapeRegExp = exports.escapeHTML = exports.addThousandsSeparator = void 0;
+    exports.setupI18n = exports.toCamelCase = exports.shortUnit = exports.unescapeHTML = exports.ucfirst = exports.lcfirst = exports.formatNumeric = exports.escapeRegExp = exports.escapeHTML = exports.addThousandsSeparator = void 0;
     NumberUtil = tslib_1.__importStar(NumberUtil);
     let _decimalPoint = ".";
     let _thousandsSeparator = ",";
@@ -106,6 +106,25 @@ define(["require", "exports", "tslib", "./NumberUtil"], function (require, expor
         return formatNumeric(number) + unitSuffix;
     }
     exports.shortUnit = shortUnit;
+    /**
+     * Converts a lower-case string containing dashed to camelCase for use
+     * with the `dataset` property.
+     */
+    function toCamelCase(value) {
+        if (!value.includes("-")) {
+            return value;
+        }
+        return value
+            .split("-")
+            .map((part, index) => {
+            if (index > 0) {
+                part = ucfirst(part);
+            }
+            return part;
+        })
+            .join("");
+    }
+    exports.toCamelCase = toCamelCase;
     function setupI18n(values) {
         _decimalPoint = values.decimalPoint;
         _thousandsSeparator = values.thousandsSeparator;

@@ -6,9 +6,9 @@ use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\language\LanguageFactory;
-use wcf\system\session\SessionHandler;
 use wcf\system\user\authentication\password\algorithm\Invalid as InvalidPasswordAlgorithm;
 use wcf\system\user\authentication\password\PasswordAlgorithmManager;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
 /**
@@ -290,6 +290,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	 * @inheritDoc
 	 */
 	public static function resetCache() {
-		SessionHandler::resetSessions();
+		UserStorageHandler::getInstance()->resetAll('groupIDs');
+		UserStorageHandler::getInstance()->resetAll('languageIDs');
 	}
 }

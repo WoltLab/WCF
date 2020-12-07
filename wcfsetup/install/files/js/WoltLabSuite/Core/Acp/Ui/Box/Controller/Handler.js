@@ -1,60 +1,63 @@
 /**
  * Provides the interface logic to add and edit boxes.
  *
- * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Acp/Ui/Box/Controller/Handler
+ * @author  Matthias Schmidt
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Acp/Ui/Box/Controller/Handler
  */
-define(['Ajax', 'Dom/Util', 'EventHandler'], function (Ajax, DomUtil, EventHandler) {
+define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Dom/Util", "../../../../Event/Handler"], function (require, exports, tslib_1, Ajax, Util_1, EventHandler) {
     "use strict";
-    var _boxControllerContainer = elById('boxControllerContainer');
-    var _boxController = elById('boxControllerID');
-    var _boxConditions = elById('boxConditions');
-    /**
-     * @exports	WoltLabSuite/Core/Acp/Ui/Box/Controller/Handler
-     */
-    return {
-        init: function (initialObjectTypeId) {
-            _boxController.addEventListener('change', this._updateConditions.bind(this));
-            elShow(_boxControllerContainer);
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.init = void 0;
+    Ajax = tslib_1.__importStar(Ajax);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    class AcpUiBoxControllerHandler {
+        constructor(initialObjectTypeId) {
+            this.boxControllerContainer = document.getElementById("boxControllerContainer");
+            this.boxController = document.getElementById("boxControllerID");
+            this.boxConditions = document.getElementById("boxConditions");
+            this.boxController.addEventListener("change", () => this.updateConditions());
+            Util_1.default.show(this.boxControllerContainer);
             if (initialObjectTypeId === undefined) {
-                this._updateConditions();
+                this.updateConditions();
             }
-        },
+        }
         /**
          * Sets up ajax request object.
-         *
-         * @return	{object}	request options
          */
-        _ajaxSetup: function () {
+        _ajaxSetup() {
             return {
                 data: {
-                    actionName: 'getBoxConditionsTemplate',
-                    className: 'wcf\\data\\box\\BoxAction'
-                }
+                    actionName: "getBoxConditionsTemplate",
+                    className: "wcf\\data\\box\\BoxAction",
+                },
             };
-        },
+        }
         /**
          * Handles successful AJAX requests.
-         *
-         * @param	{object}	data	response data
          */
-        _ajaxSuccess: function (data) {
-            DomUtil.setInnerHtml(_boxConditions, data.returnValues.template);
-        },
+        _ajaxSuccess(data) {
+            Util_1.default.setInnerHtml(this.boxConditions, data.returnValues.template);
+        }
         /**
          * Updates the displayed box conditions based on the selected dynamic box controller.
-         *
-         * @protected
          */
-        _updateConditions: function () {
-            EventHandler.fire('com.woltlab.wcf.boxControllerHandler', 'updateConditions');
+        updateConditions() {
+            EventHandler.fire("com.woltlab.wcf.boxControllerHandler", "updateConditions");
             Ajax.api(this, {
                 parameters: {
-                    objectTypeID: ~~_boxController.value
-                }
+                    objectTypeID: ~~this.boxController.value,
+                },
             });
         }
-    };
+    }
+    let acpUiBoxControllerHandler;
+    function init(initialObjectTypeId) {
+        if (!acpUiBoxControllerHandler) {
+            acpUiBoxControllerHandler = new AcpUiBoxControllerHandler(initialObjectTypeId);
+        }
+    }
+    exports.init = init;
 });
