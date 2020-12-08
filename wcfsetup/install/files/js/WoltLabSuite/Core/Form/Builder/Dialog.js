@@ -7,12 +7,12 @@
  * @module  WoltLabSuite/Core/Form/Builder/Dialog
  * @since 5.2
  */
-define(["require", "exports", "tslib", "../../Core", "../../Ui/Dialog", "../../Ajax", "./Manager"], function (require, exports, tslib_1, Core, Dialog_1, Ajax, Manager_1) {
+define(["require", "exports", "tslib", "../../Core", "../../Ui/Dialog", "../../Ajax", "./Manager"], function (require, exports, tslib_1, Core, Dialog_1, Ajax, FormBuilderManager) {
     "use strict";
     Core = tslib_1.__importStar(Core);
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     Ajax = tslib_1.__importStar(Ajax);
-    Manager_1 = tslib_1.__importDefault(Manager_1);
+    FormBuilderManager = tslib_1.__importStar(FormBuilderManager);
     class FormBuilderDialog {
         constructor(dialogId, className, actionName, options) {
             this.init(dialogId, className, actionName, options);
@@ -24,10 +24,10 @@ define(["require", "exports", "tslib", "../../Core", "../../Ui/Dialog", "../../A
             this._options = Core.extend({
                 actionParameters: {},
                 destroyOnClose: false,
-                usesDboAction: new RegExp(/\w+\\data\\/).test(this._className),
+                usesDboAction: /\w+\\data\\/.test(this._className),
             }, options);
             this._options.dialog = Core.extend(this._options.dialog || {}, {
-                onClose: this._dialogOnClose.bind(this),
+                onClose: () => this._dialogOnClose(),
             });
             this._formId = "";
             this._dialogContent = "";
@@ -155,8 +155,8 @@ define(["require", "exports", "tslib", "../../Core", "../../Ui/Dialog", "../../A
          */
         destroy(ignoreDialog = false) {
             if (this._formId !== "") {
-                if (Manager_1.default.hasForm(this._formId)) {
-                    Manager_1.default.unregisterForm(this._formId);
+                if (FormBuilderManager.hasForm(this._formId)) {
+                    FormBuilderManager.unregisterForm(this._formId);
                 }
                 if (ignoreDialog !== true) {
                     Dialog_1.default.destroy(this);
@@ -170,7 +170,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Ui/Dialog", "../../A
             if (this._formId === "") {
                 throw new Error("Form has not been requested yet.");
             }
-            return Manager_1.default.getData(this._formId);
+            return FormBuilderManager.getData(this._formId);
         }
         /**
          * Opens the dialog form.

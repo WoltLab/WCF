@@ -13,7 +13,7 @@ import UiDialog from "../../Ui/Dialog";
 import { DialogCallbackObject, DialogCallbackSetup, DialogData } from "../../Ui/Dialog/Data";
 import * as Ajax from "../../Ajax";
 import { AjaxCallbackObject, AjaxCallbackSetup, DatabaseObjectActionResponse, RequestOptions } from "../../Ajax/Data";
-import FormBuilderManager from "./Manager";
+import * as FormBuilderManager from "./Manager";
 import { FormBuilderData, FormBuilderDialogOptions } from "./Data";
 
 interface AjaxResponseReturnValues {
@@ -46,12 +46,12 @@ class FormBuilderDialog implements AjaxCallbackObject, DialogCallbackObject {
       {
         actionParameters: {},
         destroyOnClose: false,
-        usesDboAction: new RegExp(/\w+\\data\\/).test(this._className),
+        usesDboAction: /\w+\\data\\/.test(this._className),
       },
       options,
     ) as FormBuilderDialogOptions;
     this._options.dialog = Core.extend(this._options.dialog || {}, {
-      onClose: this._dialogOnClose.bind(this),
+      onClose: () => this._dialogOnClose(),
     });
 
     this._formId = "";

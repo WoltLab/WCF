@@ -15,161 +15,152 @@ import Field from "./Field/Field";
 import DependencyManager from "./Field/Dependency/Manager";
 import { FormBuilderData } from "./Data";
 
-const _fields = new Map<string, Map<string, Field>>();
-const _forms = new Map<string, HTMLElement>();
+type FormId = string;
+type FieldId = string;
 
-const FormBuilderManager = {
-  /**
-   * Returns a promise returning the data of the form with the given id.
-   */
-  getData(formId: string): Promise<FormBuilderData> {
-    if (!this.hasForm(formId)) {
-      throw new Error("Unknown form with id '" + formId + "'.");
+const _fields = new Map<FormId, Map<FieldId, Field>>();
+const _forms = new Map<FormId, HTMLElement>();
+
+/**
+ * Returns a promise returning the data of the form with the given id.
+ */
+export function getData(formId: FieldId): Promise<FormBuilderData> {
+  if (!hasForm(formId)) {
+    throw new Error("Unknown form with id '" + formId + "'.");
+  }
+
+  const promises: Promise<FormBuilderData>[] = [];
+
+  _fields.get(formId)!.forEach(function (field) {
+    const fieldData = field.getData();
+
+    if (!(fieldData instanceof Promise)) {
+      throw new TypeError("Data for field with id '" + field.getId() + "' is no promise.");
     }
 
-    const promises: Promise<FormBuilderData>[] = [];
+    promises.push(fieldData);
+  });
 
-    _fields.get(formId)!.forEach(function (field) {
-      const fieldData = field.getData();
+  return Promise.all(promises).then(function (promiseData: FormBuilderData[]) {
+    return promiseData.reduce((carry, current) => Core.extend(carry, current), {});
+  });
+}
 
-      if (!(fieldData instanceof Promise)) {
-        throw new TypeError("Data for field with id '" + field.getId() + "' is no promise.");
-      }
+/**
+ * Returns the registered form field with given.
+ *
+ * @since 5.2.3
+ */
+export function getField(formId: FieldId, fieldId: FieldId): Field {
+  if (!hasField(formId, fieldId)) {
+    throw new Error("Unknown field with id '" + formId + "' for form with id '" + fieldId + "'.");
+  }
 
-      promises.push(fieldData);
-    });
+  return _fields.get(formId)!.get(fieldId)!;
+}
 
-    return Promise.all(promises).then(function (promiseData: FormBuilderData[]) {
-      let data = {};
+/**
+ * Returns the registered form with given id.
+ */
+export function getForm(formId: FieldId): HTMLElement {
+  if (!hasForm(formId)) {
+    throw new Error("Unknown form with id '" + formId + "'.");
+  }
 
-      promiseData.forEach((_data) => {
-        data = Core.extend(data, _data);
-      });
+  return _forms.get(formId)!;
+}
 
-      return data;
-    });
-  },
+/**
+ * Returns `true` if a field with the given id has been registered for the form with the given id
+ * and `false` otherwise.
+ */
+export function hasField(formId: FieldId, fieldId: FieldId): boolean {
+  if (!hasForm(formId)) {
+    throw new Error("Unknown form with id '" + formId + "'.");
+  }
 
-  /**
-   * Returns the registered form field with given.
-   *
-   * @since 5.2.3
-   */
-  getField(formId: string, fieldId: string): Field {
-    if (!this.hasField(formId, fieldId)) {
-      throw new Error("Unknown field with id '" + formId + "' for form with id '" + fieldId + "'.");
-    }
+  return _fields.get(formId)!.has(fieldId);
+}
 
-    return _fields.get(formId)!.get(fieldId)!;
-  },
+/**
+ * Returns `true` if a form with the given id has been registered and `false` otherwise.
+ */
+export function hasForm(formId: FieldId): boolean {
+  return _forms.has(formId);
+}
 
-  /**
-   * Returns the registered form with given id.
-   */
-  getForm(formId: string): HTMLElement {
-    if (!this.hasForm(formId)) {
-      throw new Error("Unknown form with id '" + formId + "'.");
-    }
+/**
+ * Registers the given field for the form with the given id.
+ */
+export function registerField(formId: FieldId, field: Field): void {
+  if (!hasForm(formId)) {
+    throw new Error("Unknown form with id '" + formId + "'.");
+  }
 
-    return _forms.get(formId)!;
-  },
+  if (!(field instanceof Field)) {
+    throw new Error("Add field is no instance of 'WoltLabSuite/Core/Form/Builder/Field/Field'.");
+  }
 
-  /**
-   * Returns `true` if a field with the given id has been registered for the form with the given id
-   * and `false` otherwise.
-   */
-  hasField(formId: string, fieldId: string): boolean {
-    if (!this.hasForm(formId)) {
-      throw new Error("Unknown form with id '" + formId + "'.");
-    }
+  const fieldId = field.getId();
 
-    return _fields.get(formId)!.has(fieldId);
-  },
+  if (hasField(formId, fieldId)) {
+    throw new Error(
+      "Form field with id '" + fieldId + "' has already been registered for form with id '" + formId + "'.",
+    );
+  }
 
-  /**
-   * Returns `true` if a form with the given id has been registered and `false` otherwise.
-   */
-  hasForm(formId): boolean {
-    return _forms.has(formId);
-  },
+  _fields.get(formId)!.set(fieldId, field);
 
-  /**
-   * Registers the given field for the form with the given id.
-   */
-  registerField(formId: string, field: Field): void {
-    if (!this.hasForm(formId)) {
-      throw new Error("Unknown form with id '" + formId + "'.");
-    }
+  EventHandler.fire("WoltLabSuite/Core/Form/Builder/Manager", "registerField", {
+    field: field,
+    formId: formId,
+  });
+}
 
-    if (!(field instanceof Field)) {
-      throw new Error("Add field is no instance of 'WoltLabSuite/Core/Form/Builder/Field/Field'.");
-    }
+/**
+ * Registers the form with the given id.
+ */
+export function registerForm(formId: FieldId): void {
+  if (hasForm(formId)) {
+    throw new Error("Form with id '" + formId + "' has already been registered.");
+  }
 
-    const fieldId = field.getId();
+  const form = document.getElementById(formId);
+  if (form === null) {
+    throw new Error("Unknown form with id '" + formId + "'.");
+  }
 
-    if (this.hasField(formId, fieldId)) {
-      throw new Error(
-        "Form field with id '" + fieldId + "' has already been registered for form with id '" + formId + "'.",
-      );
-    }
+  _forms.set(formId, form);
+  _fields.set(formId, new Map<FieldId, Field>());
 
-    _fields.get(formId)!.set(fieldId, field);
+  EventHandler.fire("WoltLabSuite/Core/Form/Builder/Manager", "registerForm", {
+    formId: formId,
+  });
+}
 
-    EventHandler.fire("WoltLabSuite/Core/Form/Builder/Manager", "registerField", {
-      field: field,
-      formId: formId,
-    });
-  },
+/**
+ * Unregisters the form with the given id.
+ */
+export function unregisterForm(formId: FieldId): void {
+  if (!hasForm(formId)) {
+    throw new Error("Unknown form with id '" + formId + "'.");
+  }
 
-  /**
-   * Registers the form with the given id.
-   */
-  registerForm(formId: string): void {
-    if (this.hasForm(formId)) {
-      throw new Error("Form with id '" + formId + "' has already been registered.");
-    }
+  EventHandler.fire("WoltLabSuite/Core/Form/Builder/Manager", "beforeUnregisterForm", {
+    formId: formId,
+  });
 
-    const form = document.getElementById(formId);
-    if (form === null) {
-      throw new Error("Unknown form with id '" + formId + "'.");
-    }
+  _forms.delete(formId);
 
-    _forms.set(formId, form);
-    _fields.set(formId, new Map<string, Field>());
+  _fields.get(formId)!.forEach(function (field) {
+    field.destroy();
+  });
 
-    EventHandler.fire("WoltLabSuite/Core/Form/Builder/Manager", "registerForm", {
-      formId: formId,
-    });
-  },
+  _fields.delete(formId);
 
-  /**
-   * Unregisters the form with the given id.
-   */
-  unregisterForm: function (formId: string): void {
-    if (!this.hasForm(formId)) {
-      throw new Error("Unknown form with id '" + formId + "'.");
-    }
+  DependencyManager.unregister(formId);
 
-    EventHandler.fire("WoltLabSuite/Core/Form/Builder/Manager", "beforeUnregisterForm", {
-      formId: formId,
-    });
-
-    _forms.delete(formId);
-
-    _fields.get(formId)!.forEach(function (field) {
-      field.destroy();
-    });
-
-    _fields.delete(formId);
-
-    DependencyManager.unregister(formId);
-
-    EventHandler.fire("WoltLabSuite/Core/Form/Builder/Manager", "afterUnregisterForm", {
-      formId: formId,
-    });
-  },
-};
-
-Core.enableLegacyInheritance(FormBuilderManager);
-
-export = FormBuilderManager;
+  EventHandler.fire("WoltLabSuite/Core/Form/Builder/Manager", "afterUnregisterForm", {
+    formId: formId,
+  });
+}
