@@ -140,7 +140,7 @@ class FormBuilderDialog implements AjaxCallbackObject, DialogCallbackObject {
   }
 
   _dialogSubmit(): void {
-    this.getData().then((formData: FormBuilderData) => this._submitForm(formData));
+    void this.getData().then((formData: FormBuilderData) => this._submitForm(formData));
   }
 
   /**

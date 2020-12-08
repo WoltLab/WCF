@@ -100,7 +100,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Ui/Dialog", "../../A
             };
         }
         _dialogSubmit() {
-            this.getData().then((formData) => this._submitForm(formData));
+            void this.getData().then((formData) => this._submitForm(formData));
         }
         /**
          * Opens the form dialog with the given form content.
