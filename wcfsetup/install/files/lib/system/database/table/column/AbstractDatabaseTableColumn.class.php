@@ -27,6 +27,12 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn {
 	protected $name;
 	
 	/**
+	 * new name of the database table column
+	 * @var ?string
+	 */
+	protected $newName;
+	
+	/**
 	 * is `true` if the values of the column may not be `null`
 	 * @var	bool
 	 */
@@ -97,6 +103,14 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn {
 	
 	/**
 	 * @inheritDoc
+	 * @since       5.4
+	 */
+	public function getNewName(): ?string {
+		return $this->newName;
+	}
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function getName() {
 		if ($this->name === null) {
@@ -142,6 +156,20 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn {
 	 */
 	public function notNull($notNull = true) {
 		$this->notNull = $notNull;
+		
+		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since       5.4
+	 */
+	public function renameTo(string $newName): self {
+		if ($newName === $this->getName()) {
+			throw new \InvalidArgumentException("'{$newName}' is the current name of the column.");
+		}
+		
+		$this->newName = $newName;
 		
 		return $this;
 	}
