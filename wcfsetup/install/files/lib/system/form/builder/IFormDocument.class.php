@@ -309,6 +309,22 @@ interface IFormDocument extends IFormParentNode {
 	public function updatedObject(IStorableObject $object, $loadValues = true);
 	
 	/**
+	 * Sets whether required fields are marked in the output and returns this document.
+	 * 
+	 * @since       5.4
+	 */
+	public function markRequiredFields(bool $markRequiredFields = true): self;
+	
+	/**
+	 * Returns `true` if required fields are marked in the output and `false` otherwise.
+	 * 
+	 * By default, required fields are marked in the output.
+	 *
+	 * @since       5.4
+	 */
+	public function marksRequiredFields(): bool;
+	
+	/**
 	 * Sets the `method` property of the HTML `form` element and returns this document.
 	 * 
 	 * @param	string		$method		form method
