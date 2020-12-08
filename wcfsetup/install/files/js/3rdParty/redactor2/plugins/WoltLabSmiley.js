@@ -29,11 +29,29 @@ $.Redactor.prototype.WoltLabSmiley = function() {
 			smiley = elById(id);
 			smiley.removeAttribute('id');
 			
-			// Safari does not properly update the caret position on insert
-			this.caret.after(smiley);
+			// Check if there is a zero-width whitespace after the smiley, Safari does
+			// not like them that much (caret will be placed inside a character).
+			const nextSibling = smiley.nextSibling;
+			if (nextSibling && nextSibling.nodeType === Node.TEXT_NODE && nextSibling.textContent === "\u200B") {
+				nextSibling.remove();
+			}
 			
+			smiley.parentNode.insertBefore(document.createTextNode(" "), smiley);
+			
+			const whitespace = document.createTextNode(" ");
+			smiley.parentNode.insertBefore(whitespace, smiley.nextSibling);
+			
+			// Replace the image with itself to forcefully invalidate any references.
 			//noinspection SillyAssignmentJS
 			smiley.outerHTML = smiley.outerHTML;
+
+			const selection = window.getSelection();
+			const range = document.createRange();
+			range.selectNode(whitespace);
+			range.collapse(false);
+
+			selection.removeAllRanges();
+			selection.addRange(range);
 			
 			// force-save the caret position
 			this.WoltLabCaret.forceSelectionSave();

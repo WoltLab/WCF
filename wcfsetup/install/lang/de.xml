@@ -2911,6 +2911,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.style.import.source.upload"><![CDATA[Stil hochladen]]></item>
 		<item name="wcf.acp.style.import.source.upload.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} eine Stil-Datei von {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} lokalen Rechner an.]]></item>
 		<item name="wcf.acp.style.import.source.error.importFailed"><![CDATA[Der Stil konnte nicht importiert werden. Es handelt sich nicht um eine gültige Stil-Datei.]]></item>
+		<item name="wcf.acp.style.import.source.error.isPackageNoPermission"><![CDATA[Der Stil konnte nicht importiert werden. Es handelt sich um ein Paket und {if LANGUAGE_USE_INFORMAL_VARIANT}du verfügst{else}Sie verfügen{/if} nicht über die notwendigen Zugriffsrechte um Pakete zu installieren.]]></item>
 		<item name="wcf.acp.style.license"><![CDATA[Lizenz]]></item>
 		<item name="wcf.acp.style.list"><![CDATA[Stile]]></item>
 		<item name="wcf.acp.style.packageName"><![CDATA[Paketbezeichner]]></item>
