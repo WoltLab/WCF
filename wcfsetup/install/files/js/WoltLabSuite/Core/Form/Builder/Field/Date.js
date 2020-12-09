@@ -1,30 +1,15 @@
-/**
- * Data handler for a date form builder field in an Ajax form.
- *
- * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Form/Builder/Field/Date
- * @since	5.2
- */
-define(['Core', 'WoltLabSuite/Core/Date/Picker', './Field'], function (Core, DatePicker, FormBuilderField) {
+define(["require", "exports", "tslib", "./Field", "../../../Date/Picker", "../../../Core"], function (require, exports, tslib_1, Field_1, Picker_1, Core) {
     "use strict";
-    /**
-     * @constructor
-     */
-    function FormBuilderFieldDate(fieldId) {
-        this.init(fieldId);
-    }
-    ;
-    Core.inherit(FormBuilderFieldDate, FormBuilderField, {
-        /**
-         * @see	WoltLabSuite/Core/Form/Builder/Field/Field#_getData
-         */
-        _getData: function () {
-            var data = {};
-            data[this._fieldId] = DatePicker.getValue(this._field);
-            return data;
+    Field_1 = tslib_1.__importDefault(Field_1);
+    Picker_1 = tslib_1.__importDefault(Picker_1);
+    Core = tslib_1.__importStar(Core);
+    class Date extends Field_1.default {
+        _getData() {
+            return {
+                [this._fieldId]: Picker_1.default.getValue(this._field),
+            };
         }
-    });
-    return FormBuilderFieldDate;
+    }
+    Core.enableLegacyInheritance(Date);
+    return Date;
 });
