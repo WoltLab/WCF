@@ -240,6 +240,8 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 	 * @inheritDoc
 	 */
 	public function createAuthenticationForm(IFormDocument $form, Setup $setup): void {
+		$form->markRequiredFields(false);
+		
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_user_multifactor_backup
 			WHERE	setupID = ?";
