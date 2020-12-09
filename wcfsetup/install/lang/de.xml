@@ -4841,82 +4841,55 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 	</category>
 	<category name="wcf.user.security">
 		<item name="wcf.user.security.activeSessions"><![CDATA[Aktive Sitzungen]]></item>
+		<item name="wcf.user.security.activeSessions.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du bist{else}Sie sind{/if} derzeit in den aufgelisteten Webbrowsern eingeloggt. {if LANGUAGE_USE_INFORMAL_VARIANT}Beende Sitzungen, die du nicht mehr benötigst oder nicht erkennst.{else}Beenden Sie Sitzungen, die Sie nicht mehr benötigen oder nicht erkennen.{/if} {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst dein Kennwort{else}Sie können Ihr Kennwort{/if} in der <a href="{link controller='AccountManagement'}{/link}">Benutzerkonto-Verwaltung</a> ändern.]]></item>
 		<item name="wcf.user.security.currentSession"><![CDATA[Aktuelle Sitzung]]></item>
 		<item name="wcf.user.security.deleteSession"><![CDATA[Sitzung beenden]]></item>
 		<item name="wcf.user.security.deleteSession.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Sitzung wirklich beenden?]]></item>
-		<item name="wcf.user.security.sessionName"><![CDATA[{if $session->getUserAgent()->getBrowser()}{$session->getUserAgent()->getBrowser()}{if $session->getUserAgent()->getOS()} auf {$session->getUserAgent()->getOS()}{/if}{else}Unbekanntes Gerät{/if}]]></item>
 		<item name="wcf.user.security.ipAddress"><![CDATA[IP-Adresse]]></item>
 		<item name="wcf.user.security.lastActivity"><![CDATA[Sitzung zuletzt aktiv]]></item>
 		<item name="wcf.user.security.multifactor"><![CDATA[Mehrfaktor-Authentifizierung]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp"><![CDATA[Smartphone-App]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup"><![CDATA[Notfall-Codes]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup.manage"><![CDATA[Notfallcodes verwalten]]></item>
-		<item name="wcf.user.security.multifactor.backup.regenerateCodes"><![CDATA[Neue Notfallcodes generieren]]></item>
+		<item name="wcf.user.security.multifactor.active"><![CDATA[Aktiv]]></item>
+		<item name="wcf.user.security.multifactor.authentication"><![CDATA[Mehrfaktor-Authentifizierung]]></item>
+		<item name="wcf.user.security.multifactor.authentication.description"><![CDATA[Dieses Benutzerkonto wird durch einen zweiten Faktor geschützt.]]></item>
+		<item name="wcf.user.security.multifactor.authentication.loginAs"><![CDATA[Anmelden als]]></item>
+		<item name="wcf.user.security.multifactor.authentication.noPendingUserChange"><![CDATA[Die Mehrfaktor-Authentifizierung wurde nicht rechtzeitig abgeschlossen. Aus Sicherheitsgründen wurde der unvollständige Login-Vorgang abgebrochen. Bitte <a href="{link controller='Login'}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}logge dich{else}loggen Sie sich{/if}</a> erneut ein.]]></item>
+		<item name="wcf.user.security.multifactor.authentication.noSetup"><![CDATA[Das Benutzerkonto <strong>{$user->username}</strong> ist mit der Mehrfaktor-Authentifizierung geschützt, es sind jedoch keine aktiven Verfahren verfügbar. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich{else}wenden Sie sich{/if} an den Administrator.]]></item>
+		<item name="wcf.user.security.multifactor.backup.authenticationEmail.body.html"><![CDATA[<h2>Hallo {$setup->getUser()->username},</h2>
+
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} den Notfall-Code <code>{$usedCode[identifier]}</code> zur Mehrfaktor-Authentifizierung genutzt. Dieser Code ist nun nicht mehr gültig. {plural value=$remaining 0='<b>Es gibt keine weiteren gültigen Codes.</b>' 1='Es verbleibt ein gültiger Code.' other='Es verbleiben # gültige Codes.'}</p>
+
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Mehrfaktor-Authentifizierung in der <a href="{link controller='AccountSecurity' isHtmlEmail=true}{/link}">Account-Sicherheit</a> verwalten und dort neue Notfall-Codes generieren oder die Mehrfaktor-Authentifizierung deaktivieren.</p>]]></item>
+		<item name="wcf.user.security.multifactor.backup.authenticationEmail.body.plain"><![CDATA[Hallo {$setup->getUser()->username},
+
+{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} den Notfall-Code „{$usedCode[identifier]}“ zur Mehrfaktor-Authentifizierung genutzt. Dieser Code ist nun nicht mehr gültig. {plural value=$remaining 0='**Es gibt keine weiteren gültigen Codes.**' 1='Es verbleibt ein gültiger Code.' other='Es verbleiben # gültige Codes.'} {* this line ends with a space *}
+
+{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Mehrfaktor-Authentifizierung in der Account-Sicherheit [URL:{link controller='AccountSecurity' isEmail=true}{/link}] verwalten und dort neue Notfall-Codes generieren oder die Mehrfaktor-Authentifizierung deaktivieren.]]></item>
+		<item name="wcf.user.security.multifactor.backup.authenticationEmail.subject"><![CDATA[Authentifizierung mittels Notfall-Code auf {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.user.security.multifactor.backup.code"><![CDATA[Notfall-Code]]></item>
+		<item name="wcf.user.security.multifactor.backup.code.description"><![CDATA[Ein Notfall-Code besteht aus 20 Ziffern und ist nur einmal gültig.]]></item>
+		<item name="wcf.user.security.multifactor.backup.error.flood"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche es{else}versuchen Sie es{/if} später erneut.]]></item>
 		<item name="wcf.user.security.multifactor.backup.existingCodes"><![CDATA[Aktive Notfallcodes]]></item>
-		<item name="wcf.user.security.multifactor.backup.success"><![CDATA[Es wurden erfolgreich neue Codes generiert. Bestehende Codes sind nicht mehr gültig. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}schreibe dir{else}schreiben Sie sich{/if} die Codes gut auf!]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.manage"><![CDATA[Smartphone-App verwalten]]></item>
-		<item name="wcf.user.security.multifactor.totp.newDevice"><![CDATA[Smartphone hinzufügen]]></item>
-		<item name="wcf.user.security.multifactor.totp.deviceName"><![CDATA[Gerätename]]></item>
-		<item name="wcf.user.security.multifactor.totp.deviceName.placeholder"><![CDATA[Smartphone von {$__wcf->user->username}]]></item>
-		<item name="wcf.user.security.multifactor.totp.code"><![CDATA[Einmalcode]]></item>
-		<item name="wcf.user.security.multifactor.totp.status"><![CDATA[<ul class="inlineList small commaSeparated">
-<li>{plural value=$count 0="Nicht eingerichtet" 1="Ein Gerät eingerichtet" other="# Geräte eingerichtet"}</li>
-{if $lastUsed}<li>Am {@$lastUsed|plainTime} zuletzt verwendet</li>{/if}
-</ul>]]></item>
+		<item name="wcf.user.security.multifactor.backup.existingCodes.description"><![CDATA[<p>Unterhalb {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} den zuletzt generierten Satz an Notfallcodes für die Mehrfaktor-Authentifizierung. Durchgestrichene Notfallcodes wurden bereits verwendet und sind nicht mehr gültig. {if LANGUAGE_USE_INFORMAL_VARIANT}Verwende{else}Verwenden Sie{/if} die fettgedruckte Nummer, um die Notfallcodes mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Notizen abzugleichen. {if LANGUAGE_USE_INFORMAL_VARIANT}Generiere neue Codes, falls deine Notizen{else}Generieren Sie neue Codes, falls Ihre Notizen{/if} nicht zu der angezeigten Liste passen.</p>]]></item>
+		<item name="wcf.user.security.multifactor.backup.generateCodes"><![CDATA[Codes generieren]]></item>
+		<item name="wcf.user.security.multifactor.backup.regenerateCodes"><![CDATA[Neue Notfallcodes generieren]]></item>
+		<item name="wcf.user.security.multifactor.backup.regenerateCodes.description"><![CDATA[<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Generiere{else}Generieren Sie{/if} neue Notfallcodes, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du deinen{else}Sie Ihren{/if} bisherigen Satz verlegt oder verbraucht haben. Die Generierung neuer Notfallcodes wird alle bestehenden Notfallcodes ungültig machen.</p>]]></item>
 		<item name="wcf.user.security.multifactor.backup.status"><![CDATA[<ul class="inlineList small commaSeparated">
 <li>{plural value=$count 0="Keine Codes verbleibend" 1="Ein Code verbleibend" other="# Codes verbleibend"}</li>
 {if $lastUsed}<li>Am {@$lastUsed|plainTime} zuletzt verwendet</li>{/if}
 </ul>]]></item>
-		<item name="wcf.user.security.multifactor.manage"><![CDATA[Verwalten]]></item>
-		<item name="wcf.user.security.multifactor.setup"><![CDATA[Einrichten]]></item>
-		<item name="wcf.user.security.multifactor.active"><![CDATA[Aktiv]]></item>
-		<item name="wcf.user.security.multifactor.backup.generateCodes"><![CDATA[Codes generieren]]></item>
-		<item name="wcf.user.security.multifactor.totp.devices"><![CDATA[Aktive Smartphones]]></item>
-		<item name="wcf.user.security.multifactor.totp.error.flood"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche es{else}versuchen Sie es{/if} später erneut.]]></item>
-		<item name="wcf.user.security.multifactor.backup.error.flood"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche es{else}versuchen Sie es{/if} später erneut.]]></item>
-		<item name="wcf.user.security.multifactor.totp.deviceName.description.setup"><![CDATA[Ein beliebiger Name, der dieses Gerät identifiziert.]]></item>
-		<item name="wcf.user.security.multifactor.totp.code.description"><![CDATA[Der durch die Smartphone-App generierte 6-stellige Einmalcode.]]></item>
-		<item name="wcf.user.security.multifactor.totp.newDevice.description"><![CDATA[<p>Authentifizieren Sie sich mit Hilfe einer App auf Ihrem Smartphone.</p>
-<ol class="nativeList">
-<li>{if LANGUAGE_USE_INFORMAL_VARIANT}Installiere{else}Installieren Sie{/if} eine Authentifizierungs-App wie beispielsweise Google Authenticator (<a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" class="externalURL">Android</a>, <a href="https://apps.apple.com/app/google-authenticator/id388497605" class="externalURL">iOS</a>) oder Authy (<a href="https://play.google.com/store/apps/details?id=com.authy.authy" class="externalURL">Android</a>, <a href="https://apps.apple.com/app/authy/id494168017" class="externalURL">iOS</a>).</li>
-<li>{if LANGUAGE_USE_INFORMAL_VARIANT}Scanne{else}Scannen Sie{/if} den QR-Code in der App.</li>
-<li>{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} den durch die App generierten 6-stelligen Einmalcode ein.</li>
-</ol>]]></item>
-		<item name="wcf.user.security.multifactor.totp.success.add"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Smartphone <strong>{$deviceName}</strong> wurde erfolgreich hinterlegt.]]></item>
-		<item name="wcf.user.security.multifactor.totp.createTime"><![CDATA[Eingerichtet]]></item>
-		<item name="wcf.user.security.multifactor.totp.useTime"><![CDATA[Zuletzt Benutzt]]></item>
-		<item name="wcf.user.security.multifactor.totp.lastDevice"><![CDATA[Wenn Sie ihr Smartphone wechseln möchten, fügen Sie bitte zunächst Ihr neues Smartphone hinzu, bevor Sie Ihr letztes Gerät <strong>{$deviceName}</strong> entfernen. {if LANGUAGE_USE_INFORMAL_VARIANT}Verwende{else}Verwenden Sie{/if} bitte die <a href="{link controller='AccountSecurity'}{/link}">Übersicht in der Benutzerkonto-Sicherheit</a>, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Mehrfaktor-Authentifizierung deaktivieren {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}.]]></item>
-		<item name="wcf.user.security.multifactor.totp.lastDevice.title"><![CDATA[Letztes Gerät]]></item>
-		<item name="wcf.user.security.multifactor.totp.success.delete"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Smartphone <strong>{$deviceName}</strong> wurde erfolgreich entfernt.]]></item>
-		<item name="wcf.user.security.multifactor.initialBackup"><![CDATA[<p>Die Mehrfaktor-Authentifizierung ist ab sofort für {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto aktiv. {if LANGUAGE_USE_INFORMAL_VARIANT}Du wirst{else}Sie werden{/if} von nun an bei jedem Login den zusätzlichen Faktor benötigen.</p>
-<p><br></p>
-<p>Zusätzlich wurden Backup-Codes generiert, mit denen der Zugriff wiederhergestellt werden kann, falls der zusätzliche Faktor unbrauchbar wird.</p>
-<p><br></p>
-<p>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}Notiere oder speichere dir{else}Notieren oder speichern Sie{/if} sich die unterhalb angezeigten Notfall-Codes. Ein möglicher Aufbewahrungsort könnte ein Blatt Papier in einem Aktenordner sein.</p>]]></item>
+		<item name="wcf.user.security.multifactor.backup.success"><![CDATA[Es wurden erfolgreich neue Codes generiert. Bestehende Codes sind nicht mehr gültig. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}schreibe dir{else}schreiben Sie sich{/if} die Codes gut auf!]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup"><![CDATA[Notfall-Codes]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup.manage"><![CDATA[Notfallcodes verwalten]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email"><![CDATA[Einmalcode über E-Mail]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.manage"><![CDATA[Einmalcode über E-Mail]]></item>
-		<item name="wcf.user.security.multifactor.email.enabled"><![CDATA[E-Mails aktiviert]]></item>
-		<item name="wcf.user.security.multifactor.email.enabled.description"><![CDATA[<p>Die Mehrfaktor-Authentifizierung über E-Mail ist aktiv. {if LANGUAGE_USE_INFORMAL_VARIANT}Du erhältst{else}Sie erhalten{/if} bei jedem Login eine E-Mail mit einem einmal gültigen Code.</p>
-<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Verwende{else}Verwenden Sie{/if} bitte die <a href="{link controller='AccountSecurity'}{/link}">Übersicht in der Benutzerkonto-Sicherheit</a>, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Mehrfaktor-Authentifizierung deaktivieren {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}.</p>]]></item>
-		<item name="wcf.user.security.multifactor.email.enable"><![CDATA[Bestätigung über E-Mail aktivieren]]></item>
-		<item name="wcf.user.security.multifactor.email.success"><![CDATA[Die zusätzliche Authentifizierung via E-Mail wurde erfolgreich aktiviert.]]></item>
-		<item name="wcf.user.security.multifactor.email.code"><![CDATA[Einmalcode]]></item>
-		<item name="wcf.user.security.multifactor.email.code.description"><![CDATA[Der Einmalcode wurde um <strong>{$lastCode|date:'H:i:s'}</strong> an {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse bei <strong>{$emailDomain}</strong> gesendet.]]></item>
-		<item name="wcf.user.security.multifactor.email.subject"><![CDATA[{$code} ist {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}ihr{/if} Einmalcode for {@PAGE_TITLE|language}]]></item>
-		<item name="wcf.user.security.multifactor.email.body.html"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Einmalcode lautet: <pre>{$code}</pre>]]></item>
-		<item name="wcf.user.security.multifactor.email.body.plain"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Einmalcode lautet: {$code}]]></item>
-		<item name="wcf.user.security.multifactor.methods"><![CDATA[Verfahren]]></item>
-		<item name="wcf.user.security.multifactor.authentication"><![CDATA[Mehrfaktor-Authentifizierung]]></item>
-		<item name="wcf.user.security.multifactor.authentication.description"><![CDATA[Dieses Benutzerkonto wird durch einen zweiten Faktor geschützt.]]></item>
-		<item name="wcf.user.security.multifactor.authentication.loginAs"><![CDATA[Anmelden als]]></item>
-		<item name="wcf.user.security.multifactor.backup.code"><![CDATA[Notfall-Code]]></item>
-		<item name="wcf.user.security.multifactor.backup.code.description"><![CDATA[Ein Notfall-Code besteht aus 20 Ziffern und ist nur einmal gültig.]]></item>
-		<item name="wcf.user.security.multifactor.totp.deviceName.description.auth"><![CDATA[Das Gerät, das den genutzten Einmalcode generiert hat.]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.description"><![CDATA[<p class="small">{if LANGUAGE_USE_INFORMAL_VARIANT}Generiere Einmalcodes mit einer App auf deinem Smartphone.{else}Generieren Sie Einmalcodes mit einer App auf Ihrem Smartphone.{/if}</p>]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.description"><![CDATA[<p class="small">{if LANGUAGE_USE_INFORMAL_VARIANT}Du erhältst bei jedem Login einen Einmalcode an deine E-Mail-Adresse.{else}Sie erhalten bei jedem Login einen Einmalcode an Ihre E-Mail-Adresse.{/if}</p>]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.manage"><![CDATA[Einmalcode über E-Mail]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp"><![CDATA[Smartphone-App]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.description"><![CDATA[<p class="small">{if LANGUAGE_USE_INFORMAL_VARIANT}Generiere Einmalcodes mit einer App auf deinem Smartphone.{else}Generieren Sie Einmalcodes mit einer App auf Ihrem Smartphone.{/if}</p>]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.manage"><![CDATA[Smartphone-App verwalten]]></item>
 		<item name="wcf.user.security.multifactor.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Schütze dein Benutzerkonto{else}Schützen Sie Ihr Benutzerkonto{/if}, indem bei jedem Login eine zusätzliche Authentifizierung mit Hilfe eines zweiten Faktors erforderlich ist.]]></item>
-		<item name="wcf.user.security.activeSessions.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du bist{else}Sie sind{/if} derzeit in den aufgelisteten Webbrowsern eingeloggt. {if LANGUAGE_USE_INFORMAL_VARIANT}Beende Sitzungen, die du nicht mehr benötigst oder nicht erkennst.{else}Beenden Sie Sitzungen, die Sie nicht mehr benötigen oder nicht erkennen.{/if} {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst dein Kennwort{else}Sie können Ihr Kennwort{/if} in der <a href="{link controller='AccountManagement'}{/link}">Benutzerkonto-Verwaltung</a> ändern.]]></item>
 		<item name="wcf.user.security.multifactor.disable"><![CDATA[Deaktivieren]]></item>
+		<item name="wcf.user.security.multifactor.disable.confirm"><![CDATA[{if $remaining|empty}Mehrfaktor-Authentifizierung vollständig deaktivieren{else}<strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> deaktivieren{/if}]]></item>
+		<item name="wcf.user.security.multifactor.disable.confirm.required"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Bitte bestätige, dass du die Hinweise gelesen hast und mit der Deaktivierung fortfahren möchtest.{else}Bitte bestätigen Sie, dass Sie die Hinweise gelesen haben und mit der Deaktivierung fortfahren möchten.{/if}]]></item>
 		<item name="wcf.user.security.multifactor.disable.explanation"><![CDATA[<p>Mit dem Absenden dieses Formulars {if LANGUAGE_USE_INFORMAL_VARIANT}deaktivierst du{else}deaktivieren Sie{/if} das Verfahren <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> zur Nutzung mit der Mehrfaktor-Authentifizierung. {if LANGUAGE_USE_INFORMAL_VARIANT}Du wirst{else}Sie werden{/if} dieses Verfahren anschließend nicht mehr nutzen können, um {if LANGUAGE_USE_INFORMAL_VARIANT}dich{else}sich{/if} zu authentifizieren.</p>
 {if !$remaining|empty}
 <p>Nach Deaktivierung von <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> {plural value=$remaining|count 1='steht folgendes' other='stehen folgende'} Verfahren weiterhin zur Mehrfaktor-Authentifizierung zur Verfügung.</p>
@@ -4928,25 +4901,28 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 {else}
 <p>Die Deaktivierung des Verfahrens wird die Mehrfaktor-Authentifizierung für {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto vollständig deaktivieren, da es das einzige aktive Verfahren ist.</p>
 {/if}]]></item>
-		<item name="wcf.user.security.multifactor.disable.confirm"><![CDATA[{if $remaining|empty}Mehrfaktor-Authentifizierung vollständig deaktivieren{else}<strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> deaktivieren{/if}]]></item>
-		<item name="wcf.user.security.multifactor.disable.confirm.required"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Bitte bestätige, dass du die Hinweise gelesen hast und mit der Deaktivierung fortfahren möchtest.{else}Bitte bestätigen Sie, dass Sie die Hinweise gelesen haben und mit der Deaktivierung fortfahren möchten.{/if}]]></item>
 		<item name="wcf.user.security.multifactor.disable.success"><![CDATA[Das Verfahren <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> wurde erfolgreich deaktiviert.]]></item>
 		<item name="wcf.user.security.multifactor.disable.success.full"><![CDATA[Die Mehrfaktor-Authentifizierung wurde erfolgreich deaktiviert.]]></item>
-		<item name="wcf.user.security.multifactor.backup.authenticationEmail.subject"><![CDATA[Authentifizierung mittels Notfall-Code auf {@PAGE_TITLE|language}]]></item>
-		<item name="wcf.user.security.multifactor.backup.authenticationEmail.body.html"><![CDATA[<h2>Hallo {$setup->getUser()->username},</h2>
-
-<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} den Notfall-Code <code>{$usedCode[identifier]}</code> zur Mehrfaktor-Authentifizierung genutzt. Dieser Code ist nun nicht mehr gültig. {plural value=$remaining 0='<b>Es gibt keine weiteren gültigen Codes.</b>' 1='Es verbleibt ein gültiger Code.' other='Es verbleiben # gültige Codes.'}</p>
-
-<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Mehrfaktor-Authentifizierung in der <a href="{link controller='AccountSecurity' isHtmlEmail=true}{/link}">Account-Sicherheit</a> verwalten und dort neue Notfall-Codes generieren oder die Mehrfaktor-Authentifizierung deaktivieren.</p>]]></item>
-		<item name="wcf.user.security.multifactor.backup.authenticationEmail.body.plain"><![CDATA[Hallo {$setup->getUser()->username},
-
-{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} den Notfall-Code „{$usedCode[identifier]}“ zur Mehrfaktor-Authentifizierung genutzt. Dieser Code ist nun nicht mehr gültig. {plural value=$remaining 0='**Es gibt keine weiteren gültigen Codes.**' 1='Es verbleibt ein gültiger Code.' other='Es verbleiben # gültige Codes.'} {* this line ends with a space *}
-
-{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Mehrfaktor-Authentifizierung in der Account-Sicherheit [URL:{link controller='AccountSecurity' isEmail=true}{/link}] verwalten und dort neue Notfall-Codes generieren oder die Mehrfaktor-Authentifizierung deaktivieren.]]></item>
-		<item name="wcf.user.security.multifactor.backup.existingCodes.description"><![CDATA[<p>Unterhalb {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} den zuletzt generierten Satz an Notfallcodes für die Mehrfaktor-Authentifizierung. Durchgestrichene Notfallcodes wurden bereits verwendet und sind nicht mehr gültig. {if LANGUAGE_USE_INFORMAL_VARIANT}Verwende{else}Verwenden Sie{/if} die fettgedruckte Nummer, um die Notfallcodes mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Notizen abzugleichen. {if LANGUAGE_USE_INFORMAL_VARIANT}Generiere neue Codes, falls deine Notizen{else}Generieren Sie neue Codes, falls Ihre Notizen{/if} nicht zu der angezeigten Liste passen.</p>]]></item>
-		<item name="wcf.user.security.multifactor.backup.regenerateCodes.description"><![CDATA[<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Generiere{else}Generieren Sie{/if} neue Notfallcodes, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du deinen{else}Sie Ihren{/if} bisherigen Satz verlegt oder verbraucht haben. Die Generierung neuer Notfallcodes wird alle bestehenden Notfallcodes ungültig machen.</p>]]></item>
+		<item name="wcf.user.security.multifactor.email.body.html"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Einmalcode lautet: <pre>{$code}</pre>]]></item>
+		<item name="wcf.user.security.multifactor.email.body.plain"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Einmalcode lautet: {$code}]]></item>
+		<item name="wcf.user.security.multifactor.email.code"><![CDATA[Einmalcode]]></item>
+		<item name="wcf.user.security.multifactor.email.code.description"><![CDATA[Der Einmalcode wurde um <strong>{$lastCode|date:'H:i:s'}</strong> an {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse bei <strong>{$emailDomain}</strong> gesendet.]]></item>
+		<item name="wcf.user.security.multifactor.email.enable"><![CDATA[Bestätigung über E-Mail aktivieren]]></item>
 		<item name="wcf.user.security.multifactor.email.enable.description"><![CDATA[<p>Bei aktivierter Bestätigung über E-Mail {if LANGUAGE_USE_INFORMAL_VARIANT}erhältst du{else}erhalten Sie{/if} bei jedem Login einen Einmalcode an {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} hinterlegte E-Mail-Adresse ({$__wcf->user->email}). {if LANGUAGE_USE_INFORMAL_VARIANT}Du musst Zugriff auf dein E-Mail-Postfach haben, damit du dich erfolgreich einloggen kannst.{else}Sie müssen Zugriff auf Ihr E-Mail-Postfach haben, damit Sie sich erfolgreich einloggen können.{/if}</p>]]></item>
-		<item name="wcf.user.security.multifactor.setupEmail.subject"><![CDATA[Mehrfaktor-Authentifizierung auf {@PAGE_TITLE|language} aktiviert]]></item>
+		<item name="wcf.user.security.multifactor.email.enabled"><![CDATA[E-Mails aktiviert]]></item>
+		<item name="wcf.user.security.multifactor.email.enabled.description"><![CDATA[<p>Die Mehrfaktor-Authentifizierung über E-Mail ist aktiv. {if LANGUAGE_USE_INFORMAL_VARIANT}Du erhältst{else}Sie erhalten{/if} bei jedem Login eine E-Mail mit einem einmal gültigen Code.</p>
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Verwende{else}Verwenden Sie{/if} bitte die <a href="{link controller='AccountSecurity'}{/link}">Übersicht in der Benutzerkonto-Sicherheit</a>, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Mehrfaktor-Authentifizierung deaktivieren {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}.</p>]]></item>
+		<item name="wcf.user.security.multifactor.email.subject"><![CDATA[{$code} ist {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}ihr{/if} Einmalcode for {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.user.security.multifactor.email.success"><![CDATA[Die zusätzliche Authentifizierung via E-Mail wurde erfolgreich aktiviert.]]></item>
+		<item name="wcf.user.security.multifactor.error.invalidCode"><![CDATA[Der eingebene Code ist ungültig.]]></item>
+		<item name="wcf.user.security.multifactor.initialBackup"><![CDATA[<p>Die Mehrfaktor-Authentifizierung ist ab sofort für {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto aktiv. {if LANGUAGE_USE_INFORMAL_VARIANT}Du wirst{else}Sie werden{/if} von nun an bei jedem Login den zusätzlichen Faktor benötigen.</p>
+<p><br></p>
+<p>Zusätzlich wurden Backup-Codes generiert, mit denen der Zugriff wiederhergestellt werden kann, falls der zusätzliche Faktor unbrauchbar wird.</p>
+<p><br></p>
+<p>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}Notiere oder speichere dir{else}Notieren oder speichern Sie{/if} sich die unterhalb angezeigten Notfall-Codes. Ein möglicher Aufbewahrungsort könnte ein Blatt Papier in einem Aktenordner sein.</p>]]></item>
+		<item name="wcf.user.security.multifactor.manage"><![CDATA[Verwalten]]></item>
+		<item name="wcf.user.security.multifactor.methods"><![CDATA[Verfahren]]></item>
+		<item name="wcf.user.security.multifactor.setup"><![CDATA[Einrichten]]></item>
 		<item name="wcf.user.security.multifactor.setupEmail.body.html"><![CDATA[<h2>Hallo {$user->username},</h2>
 
 <p>{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} die Mehrfaktor-Authentifizierung mit dem Verfahren <b>{lang}wcf.user.security.multifactor.{$method->objectType}{/lang}</b> erfolgreich aktiviert. {if LANGUAGE_USE_INFORMAL_VARIANT}Du wirst{else}Sie werden{/if} von nun an bei jedem Login den zusätzlichen Faktor benötigen.</p>
@@ -4957,9 +4933,33 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 {if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} die Mehrfaktor-Authentifizierung mit dem Verfahren „{lang}wcf.user.security.multifactor.{$method->objectType}{/lang}“ erfolgreich aktiviert. {if LANGUAGE_USE_INFORMAL_VARIANT}Du wirst{else}Sie werden{/if} von nun an bei jedem Login den zusätzlichen Faktor benötigen.
 
 {if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} auch eine Liste von Notfallcodes erhalten, falls der zusätzliche Faktor unbrauchbar werden sollte. **{if LANGUAGE_USE_INFORMAL_VARIANT}Hast du dir{else}Haben Sie sich{/if} die Notfallcodes notiert?** Falls {if LANGUAGE_USE_INFORMAL_VARIANT}du es vergessen hast, kannst du{else}Sie es vergessen haben, können Sie{/if} dies nachholen, indem {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} in der Verwaltung der Notfallcodes [URL:{link controller='MultifactorManage' object=$backupMethod isEmail=true}{/link}] neue Notfallcodes {if LANGUAGE_USE_INFORMAL_VARIANT}generierst{else}generieren{/if}.]]></item>
-		<item name="wcf.user.security.multifactor.authentication.noPendingUserChange"><![CDATA[Die Mehrfaktor-Authentifizierung wurde nicht rechtzeitig abgeschlossen. Aus Sicherheitsgründen wurde der unvollständige Login-Vorgang abgebrochen. Bitte <a href="{link controller='Login'}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}logge dich{else}loggen Sie sich{/if}</a> erneut ein.]]></item>
-		<item name="wcf.user.security.multifactor.authentication.noSetup"><![CDATA[Das Benutzerkonto <strong>{$user->username}</strong> ist mit der Mehrfaktor-Authentifizierung geschützt, es sind jedoch keine aktiven Verfahren verfügbar. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich{else}wenden Sie sich{/if} an den Administrator.]]></item>
-		<item name="wcf.user.security.multifactor.error.invalidCode"><![CDATA[Der eingebene Code ist ungültig.]]></item>
+		<item name="wcf.user.security.multifactor.setupEmail.subject"><![CDATA[Mehrfaktor-Authentifizierung auf {@PAGE_TITLE|language} aktiviert]]></item>
+		<item name="wcf.user.security.multifactor.totp.code"><![CDATA[Einmalcode]]></item>
+		<item name="wcf.user.security.multifactor.totp.code.description"><![CDATA[Der durch die Smartphone-App generierte 6-stellige Einmalcode.]]></item>
+		<item name="wcf.user.security.multifactor.totp.createTime"><![CDATA[Eingerichtet]]></item>
+		<item name="wcf.user.security.multifactor.totp.deviceName"><![CDATA[Gerätename]]></item>
+		<item name="wcf.user.security.multifactor.totp.deviceName.description.auth"><![CDATA[Das Gerät, das den genutzten Einmalcode generiert hat.]]></item>
+		<item name="wcf.user.security.multifactor.totp.deviceName.description.setup"><![CDATA[Ein beliebiger Name, der dieses Gerät identifiziert.]]></item>
+		<item name="wcf.user.security.multifactor.totp.deviceName.placeholder"><![CDATA[Smartphone von {$__wcf->user->username}]]></item>
+		<item name="wcf.user.security.multifactor.totp.devices"><![CDATA[Aktive Smartphones]]></item>
+		<item name="wcf.user.security.multifactor.totp.error.flood"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}versuche es{else}versuchen Sie es{/if} später erneut.]]></item>
+		<item name="wcf.user.security.multifactor.totp.lastDevice"><![CDATA[Wenn Sie ihr Smartphone wechseln möchten, fügen Sie bitte zunächst Ihr neues Smartphone hinzu, bevor Sie Ihr letztes Gerät <strong>{$deviceName}</strong> entfernen. {if LANGUAGE_USE_INFORMAL_VARIANT}Verwende{else}Verwenden Sie{/if} bitte die <a href="{link controller='AccountSecurity'}{/link}">Übersicht in der Benutzerkonto-Sicherheit</a>, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Mehrfaktor-Authentifizierung deaktivieren {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}.]]></item>
+		<item name="wcf.user.security.multifactor.totp.lastDevice.title"><![CDATA[Letztes Gerät]]></item>
+		<item name="wcf.user.security.multifactor.totp.newDevice"><![CDATA[Smartphone hinzufügen]]></item>
+		<item name="wcf.user.security.multifactor.totp.newDevice.description"><![CDATA[<p>Authentifizieren Sie sich mit Hilfe einer App auf Ihrem Smartphone.</p>
+<ol class="nativeList">
+<li>{if LANGUAGE_USE_INFORMAL_VARIANT}Installiere{else}Installieren Sie{/if} eine Authentifizierungs-App wie beispielsweise Google Authenticator (<a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" class="externalURL">Android</a>, <a href="https://apps.apple.com/app/google-authenticator/id388497605" class="externalURL">iOS</a>) oder Authy (<a href="https://play.google.com/store/apps/details?id=com.authy.authy" class="externalURL">Android</a>, <a href="https://apps.apple.com/app/authy/id494168017" class="externalURL">iOS</a>).</li>
+<li>{if LANGUAGE_USE_INFORMAL_VARIANT}Scanne{else}Scannen Sie{/if} den QR-Code in der App.</li>
+<li>{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} den durch die App generierten 6-stelligen Einmalcode ein.</li>
+</ol>]]></item>
+		<item name="wcf.user.security.multifactor.totp.status"><![CDATA[<ul class="inlineList small commaSeparated">
+<li>{plural value=$count 0="Nicht eingerichtet" 1="Ein Gerät eingerichtet" other="# Geräte eingerichtet"}</li>
+{if $lastUsed}<li>Am {@$lastUsed|plainTime} zuletzt verwendet</li>{/if}
+</ul>]]></item>
+		<item name="wcf.user.security.multifactor.totp.success.add"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Smartphone <strong>{$deviceName}</strong> wurde erfolgreich hinterlegt.]]></item>
+		<item name="wcf.user.security.multifactor.totp.success.delete"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Smartphone <strong>{$deviceName}</strong> wurde erfolgreich entfernt.]]></item>
+		<item name="wcf.user.security.multifactor.totp.useTime"><![CDATA[Zuletzt Benutzt]]></item>
+		<item name="wcf.user.security.sessionName"><![CDATA[{if $session->getUserAgent()->getBrowser()}{$session->getUserAgent()->getBrowser()}{if $session->getUserAgent()->getOS()} auf {$session->getUserAgent()->getOS()}{/if}{else}Unbekanntes Gerät{/if}]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophäen]]></item>

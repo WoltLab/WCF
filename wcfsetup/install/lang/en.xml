@@ -4838,82 +4838,55 @@ Open the link below to access the user profile:
 	</category>
 	<category name="wcf.user.security">
 		<item name="wcf.user.security.activeSessions"><![CDATA[Active Sessions]]></item>
+		<item name="wcf.user.security.activeSessions.description"><![CDATA[You are currently logged into your account in the listed web browsers. Revoke sessions you no longer need or that you do not recognize. You can change your password within the <a href="{link controller='AccountManagement'}{/link}">Account Management Form</a>.]]></item>
 		<item name="wcf.user.security.currentSession"><![CDATA[Current Session]]></item>
 		<item name="wcf.user.security.deleteSession"><![CDATA[Revoke Session]]></item>
 		<item name="wcf.user.security.deleteSession.confirmMessage"><![CDATA[Do you really want to revoke the session?]]></item>
-		<item name="wcf.user.security.sessionName"><![CDATA[{if $session->getUserAgent()->getBrowser()}{$session->getUserAgent()->getBrowser()}{if $session->getUserAgent()->getOS()} on {$session->getUserAgent()->getOS()}{/if}{else}Unknown Device{/if}]]></item>
 		<item name="wcf.user.security.ipAddress"><![CDATA[IP Address]]></item>
 		<item name="wcf.user.security.lastActivity"><![CDATA[Last active]]></item>
 		<item name="wcf.user.security.multifactor"><![CDATA[Multi-factor Authentication]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp"><![CDATA[Smartphone App]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup"><![CDATA[Emergency Codes]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup.manage"><![CDATA[Manage Emergency Codes]]></item>
-		<item name="wcf.user.security.multifactor.backup.regenerateCodes"><![CDATA[Generate New Emergency Codes]]></item>
+		<item name="wcf.user.security.multifactor.active"><![CDATA[Active]]></item>
+		<item name="wcf.user.security.multifactor.authentication"><![CDATA[Multi-factor Authentication]]></item>
+		<item name="wcf.user.security.multifactor.authentication.description"><![CDATA[This user account is protected by a second factor.]]></item>
+		<item name="wcf.user.security.multifactor.authentication.loginAs"><![CDATA[Log in as]]></item>
+		<item name="wcf.user.security.multifactor.authentication.noPendingUserChange"><![CDATA[The multi-factor authentication was not completed in time. The incomplete login process was aborted for security reasons. Please <a href="{link controller='Login'}{/link}">Login</a> once again.]]></item>
+		<item name="wcf.user.security.multifactor.authentication.noSetup"><![CDATA[The account <strong>{$user->username}</strong> is protected by multi-factor authentication, but no methods are set up. Please contact the administrator for support.]]></item>
+		<item name="wcf.user.security.multifactor.backup.authenticationEmail.body.html"><![CDATA[<h2>Dear {$setup->getUser()->username},</h2>
+
+<p>You used the emergency code <code>{$usedCode[identifier]}</code> for multi-factor authentication. This code no longer is valid. {plural value=$remaining 0='<b>You don't have any remaining codes.</b>' 1='You have one remaining code.' other='You have # remaining codes.'}</p>
+
+<p>You can manage multi-factor authentication within the <a href="{link controller='AccountSecurity' isHtmlEmail=true}{/link}">Account Security</a> page. Within account security you can generate new emergency codes or disable multi-factor authentication.</p>]]></item>
+		<item name="wcf.user.security.multifactor.backup.authenticationEmail.body.plain"><![CDATA[Dear {$setup->getUser()->username},
+
+You used the emergency code “{$usedCode[identifier]}” for multi-factor authentication. This code no longer is valid. {plural value=$remaining 0='**You don't have any remaining codes.**' 1='You have one remaining code.' other='You have # remaining codes.'} {* this line ends with a space *}
+
+You can manage multi-factor authentication within the Account Security page [URL:{link controller='AccountSecurity' isEmail=true}{/link}]. Within account security you can generate new emergency codes or disable multi-factor authentication.]]></item>
+		<item name="wcf.user.security.multifactor.backup.authenticationEmail.subject"><![CDATA[Authentication using emergency code on {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.user.security.multifactor.backup.code"><![CDATA[Emergency Code]]></item>
+		<item name="wcf.user.security.multifactor.backup.code.description"><![CDATA[An emergency code consists of 20 digits and may only be used once.]]></item>
+		<item name="wcf.user.security.multifactor.backup.error.flood"><![CDATA[Please try again later.]]></item>
 		<item name="wcf.user.security.multifactor.backup.existingCodes"><![CDATA[Active Emergency Codes]]></item>
-		<item name="wcf.user.security.multifactor.backup.success"><![CDATA[New Codes were generated successfully. Any existing codes are no longer valid. Please carefully note down the codes.]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.manage"><![CDATA[Manage Smartphone App]]></item>
-		<item name="wcf.user.security.multifactor.totp.newDevice"><![CDATA[Add Smartphone]]></item>
-		<item name="wcf.user.security.multifactor.totp.deviceName"><![CDATA[Device Name]]></item>
-		<item name="wcf.user.security.multifactor.totp.deviceName.placeholder"><![CDATA[{$__wcf->user->username}’s Smartphone]]></item>
-		<item name="wcf.user.security.multifactor.totp.code"><![CDATA[One Time Code]]></item>
-		<item name="wcf.user.security.multifactor.totp.status"><![CDATA[<ul class="inlineList small commaSeparated">
-<li>{plural value=$count 0="Not set up" 1="One device set up" other="# devices set up"}</li>
-{if $lastUsed}<li>Last used on {@$lastUsed|plainTime}</li>{/if}
-</ul>]]></item>
+		<item name="wcf.user.security.multifactor.backup.existingCodes.description"><![CDATA[<p>You can find the latest set of emergency codes for use with the multi-factor authentication below. Codes that are striked out have been used and are no longer valid. Use the bold identifier to compare the list to your notes. Please generate a new set of codes if the listed codes do not match your notes.</p>]]></item>
+		<item name="wcf.user.security.multifactor.backup.generateCodes"><![CDATA[Generate Codes]]></item>
+		<item name="wcf.user.security.multifactor.backup.regenerateCodes"><![CDATA[Generate New Emergency Codes]]></item>
+		<item name="wcf.user.security.multifactor.backup.regenerateCodes.description"><![CDATA[<p>Generate new emergency codes if you lost or used up your existing set. Generating new emergency codes will invalidate all existing codes.</p>]]></item>
 		<item name="wcf.user.security.multifactor.backup.status"><![CDATA[<ul class="inlineList small commaSeparated">
 <li>{plural value=$count 0="No codes remaining" 1="One code remaining" other="# codes remaining"}</li>
 {if $lastUsed}<li>Last used on {@$lastUsed|plainTime}</li>{/if}
 </ul>]]></item>
-		<item name="wcf.user.security.multifactor.manage"><![CDATA[Manage]]></item>
-		<item name="wcf.user.security.multifactor.setup"><![CDATA[Set Up]]></item>
-		<item name="wcf.user.security.multifactor.active"><![CDATA[Active]]></item>
-		<item name="wcf.user.security.multifactor.backup.generateCodes"><![CDATA[Generate Codes]]></item>
-		<item name="wcf.user.security.multifactor.totp.devices"><![CDATA[Active Smartphones]]></item>
-		<item name="wcf.user.security.multifactor.totp.error.flood"><![CDATA[Please try again later.]]></item>
-		<item name="wcf.user.security.multifactor.backup.error.flood"><![CDATA[Please try again later.]]></item>
-		<item name="wcf.user.security.multifactor.totp.deviceName.description.setup"><![CDATA[An arbitrary name identifying this device.]]></item>
-		<item name="wcf.user.security.multifactor.totp.code.description"><![CDATA[The 6-digit one time code generated by the smartphone app.]]></item>
-		<item name="wcf.user.security.multifactor.totp.newDevice.description"><![CDATA[<p>Authenticate using an app on your smartphone.</p>
-<ol class="nativeList">
-<li>Install an authentication app such as Google Authenticator (<a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" class="externalURL">Android</a>, <a href="https://apps.apple.com/app/google-authenticator/id388497605" class="externalURL">iOS</a>) or Authy (<a href="https://play.google.com/store/apps/details?id=com.authy.authy" class="externalURL">Android</a>, <a href="https://apps.apple.com/app/authy/id494168017" class="externalURL">iOS</a>).</li>
-<li>Scan the QR code within the app.</li>
-<li>Enter the 6 digit one time code generated by the app.</li>
-</ol>]]></item>
-		<item name="wcf.user.security.multifactor.totp.success.add"><![CDATA[Your smartphone <strong>{$deviceName}</strong> has successfully been added.]]></item>
-		<item name="wcf.user.security.multifactor.totp.createTime"><![CDATA[Set Up]]></item>
-		<item name="wcf.user.security.multifactor.totp.useTime"><![CDATA[Last Used]]></item>
-		<item name="wcf.user.security.multifactor.totp.lastDevice"><![CDATA[Please add your new device before removing your last device <strong>{$deviceName}</strong> if you want to switch phones. Use the <a href="{link controller='AccountSecurity'}{/link}">Overview in Account Security</a> if you want to disable multi-factor authentication.]]></item>
-		<item name="wcf.user.security.multifactor.totp.lastDevice.title"><![CDATA[Last Device]]></item>
-		<item name="wcf.user.security.multifactor.totp.success.delete"><![CDATA[Your smartphone <strong>{$deviceName}</strong> has successfully been removed.]]></item>
-		<item name="wcf.user.security.multifactor.initialBackup"><![CDATA[<p>The multi-factor authentication is enabled for your account starting now. Going forward you will need to have your second factor handy for every login.</p>
-<p><br></p>
-<p>In addition we generated emergency codes for you. They will allow you to gain access to your account in case your second factor becomes unavailable.</p>
-<p><br></p>
-<p>Please carefully note or save the emergency codes shown below. An example of a secure storage could be a piece of paper within a filing cabinet.</p>]]></item>
+		<item name="wcf.user.security.multifactor.backup.success"><![CDATA[New Codes were generated successfully. Any existing codes are no longer valid. Please carefully note down the codes.]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup"><![CDATA[Emergency Codes]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.backup.manage"><![CDATA[Manage Emergency Codes]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email"><![CDATA[Code via Email]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.manage"><![CDATA[Code via Email]]></item>
-		<item name="wcf.user.security.multifactor.email.enabled"><![CDATA[Emails Enabled]]></item>
-		<item name="wcf.user.security.multifactor.email.enabled.description"><![CDATA[<p>Multi-factor authentication via email is enabled for your account. You will receive a one time code via email whenever you login.</p>
-<p>Use the <a href="{link controller='AccountSecurity'}{/link}">Overview in Account Security</a> if you want to disable multi-factor authentication.</p>]]></item>
-		<item name="wcf.user.security.multifactor.email.enable"><![CDATA[Enable confirmation via email]]></item>
-		<item name="wcf.user.security.multifactor.email.success"><![CDATA[The additional authentication via email has successfully been enabled.]]></item>
-		<item name="wcf.user.security.multifactor.email.code"><![CDATA[One Time Code]]></item>
-		<item name="wcf.user.security.multifactor.email.code.description"><![CDATA[The one time code was sent at <strong>{$lastCode|date:'g:i:s a'}</strong> to your email address at <strong>{$emailDomain}</strong>.]]></item>
-		<item name="wcf.user.security.multifactor.email.subject"><![CDATA[{$code} is your one time code for {@PAGE_TITLE|language}]]></item>
-		<item name="wcf.user.security.multifactor.email.body.html"><![CDATA[Your one time code is: <pre>{$code}</pre>]]></item>
-		<item name="wcf.user.security.multifactor.email.body.plain"><![CDATA[Your one time code is: {$code}]]></item>
-		<item name="wcf.user.security.multifactor.methods"><![CDATA[Method]]></item>
-		<item name="wcf.user.security.multifactor.authentication"><![CDATA[Multi-factor Authentication]]></item>
-		<item name="wcf.user.security.multifactor.authentication.description"><![CDATA[This user account is protected by a second factor.]]></item>
-		<item name="wcf.user.security.multifactor.authentication.loginAs"><![CDATA[Log in as]]></item>
-		<item name="wcf.user.security.multifactor.backup.code"><![CDATA[Emergency Code]]></item>
-		<item name="wcf.user.security.multifactor.backup.code.description"><![CDATA[An emergency code consists of 20 digits and may only be used once.]]></item>
-		<item name="wcf.user.security.multifactor.totp.deviceName.description.auth"><![CDATA[The device that generated the used one time code.]]></item>
-		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.description"><![CDATA[<p class="small">Generate one time codes with an app on your smartphone.</p>]]></item>
 		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.description"><![CDATA[<p class="small">You will receive a one time code via email after logging in.</p>]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.email.manage"><![CDATA[Code via Email]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp"><![CDATA[Smartphone App]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.description"><![CDATA[<p class="small">Generate one time codes with an app on your smartphone.</p>]]></item>
+		<item name="wcf.user.security.multifactor.com.woltlab.wcf.multifactor.totp.manage"><![CDATA[Manage Smartphone App]]></item>
 		<item name="wcf.user.security.multifactor.description"><![CDATA[Protect your account by requiring authentication with a second factor for every login.]]></item>
-		<item name="wcf.user.security.activeSessions.description"><![CDATA[You are currently logged into your account in the listed web browsers. Revoke sessions you no longer need or that you do not recognize. You can change your password within the <a href="{link controller='AccountManagement'}{/link}">Account Management Form</a>.]]></item>
 		<item name="wcf.user.security.multifactor.disable"><![CDATA[Disable]]></item>
+		<item name="wcf.user.security.multifactor.disable.confirm"><![CDATA[{if $remaining|empty}Completely Disable Multi-factor Authentication{else}Disable <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong>{/if}]]></item>
+		<item name="wcf.user.security.multifactor.disable.confirm.required"><![CDATA[Please confirm that you read the explanation and that you would like to proceed.]]></item>
 		<item name="wcf.user.security.multifactor.disable.explanation"><![CDATA[<p>By submitting this form the <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> method for multi-factor authentication will be disabled. You will no longer be able to use this method to authenticate yourself.</p>
 {if !$remaining|empty}
 <p>After disabling <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> the following methods will still be available for multi-factor authentication.</p>
@@ -4925,25 +4898,28 @@ Open the link below to access the user profile:
 {else}
 <p>Disabling <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> will fully disable the use of multi-factor authentication for your account as it is the only active method.</p>
 {/if}]]></item>
-		<item name="wcf.user.security.multifactor.disable.confirm"><![CDATA[{if $remaining|empty}Completely Disable Multi-factor Authentication{else}Disable <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong>{/if}]]></item>
-		<item name="wcf.user.security.multifactor.disable.confirm.required"><![CDATA[Please confirm that you read the explanation and that you would like to proceed.]]></item>
 		<item name="wcf.user.security.multifactor.disable.success"><![CDATA[The <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> method has successfully been disabled.]]></item>
 		<item name="wcf.user.security.multifactor.disable.success.full"><![CDATA[The multi-factor authentication has successfully been disabled.]]></item>
-		<item name="wcf.user.security.multifactor.backup.authenticationEmail.subject"><![CDATA[Authentication using emergency code on {@PAGE_TITLE|language}]]></item>
-		<item name="wcf.user.security.multifactor.backup.authenticationEmail.body.html"><![CDATA[<h2>Dear {$setup->getUser()->username},</h2>
-
-<p>You used the emergency code <code>{$usedCode[identifier]}</code> for multi-factor authentication. This code no longer is valid. {plural value=$remaining 0='<b>You don't have any remaining codes.</b>' 1='You have one remaining code.' other='You have # remaining codes.'}</p>
-
-<p>You can manage multi-factor authentication within the <a href="{link controller='AccountSecurity' isHtmlEmail=true}{/link}">Account Security</a> page. Within account security you can generate new emergency codes or disable multi-factor authentication.</p>]]></item>
-		<item name="wcf.user.security.multifactor.backup.authenticationEmail.body.plain"><![CDATA[Dear {$setup->getUser()->username},
-
-You used the emergency code “{$usedCode[identifier]}” for multi-factor authentication. This code no longer is valid. {plural value=$remaining 0='**You don't have any remaining codes.**' 1='You have one remaining code.' other='You have # remaining codes.'} {* this line ends with a space *}
-
-You can manage multi-factor authentication within the Account Security page [URL:{link controller='AccountSecurity' isEmail=true}{/link}]. Within account security you can generate new emergency codes or disable multi-factor authentication.]]></item>
-		<item name="wcf.user.security.multifactor.backup.existingCodes.description"><![CDATA[<p>You can find the latest set of emergency codes for use with the multi-factor authentication below. Codes that are striked out have been used and are no longer valid. Use the bold identifier to compare the list to your notes. Please generate a new set of codes if the listed codes do not match your notes.</p>]]></item>
-		<item name="wcf.user.security.multifactor.backup.regenerateCodes.description"><![CDATA[<p>Generate new emergency codes if you lost or used up your existing set. Generating new emergency codes will invalidate all existing codes.</p>]]></item>
+		<item name="wcf.user.security.multifactor.email.body.html"><![CDATA[Your one time code is: <pre>{$code}</pre>]]></item>
+		<item name="wcf.user.security.multifactor.email.body.plain"><![CDATA[Your one time code is: {$code}]]></item>
+		<item name="wcf.user.security.multifactor.email.code"><![CDATA[One Time Code]]></item>
+		<item name="wcf.user.security.multifactor.email.code.description"><![CDATA[The one time code was sent at <strong>{$lastCode|date:'g:i:s a'}</strong> to your email address at <strong>{$emailDomain}</strong>.]]></item>
+		<item name="wcf.user.security.multifactor.email.enable"><![CDATA[Enable confirmation via email]]></item>
 		<item name="wcf.user.security.multifactor.email.enable.description"><![CDATA[<p>With enabled confirmation via email you will receive a one time code via email whenever you login. You will need to have access to your email inbox to be able to login successfully.</p>]]></item>
-		<item name="wcf.user.security.multifactor.setupEmail.subject"><![CDATA[Multi-factor Authentication Enabled on {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.user.security.multifactor.email.enabled"><![CDATA[Emails Enabled]]></item>
+		<item name="wcf.user.security.multifactor.email.enabled.description"><![CDATA[<p>Multi-factor authentication via email is enabled for your account. You will receive a one time code via email whenever you login.</p>
+<p>Use the <a href="{link controller='AccountSecurity'}{/link}">Overview in Account Security</a> if you want to disable multi-factor authentication.</p>]]></item>
+		<item name="wcf.user.security.multifactor.email.subject"><![CDATA[{$code} is your one time code for {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.user.security.multifactor.email.success"><![CDATA[The additional authentication via email has successfully been enabled.]]></item>
+		<item name="wcf.user.security.multifactor.error.invalidCode"><![CDATA[The given code is invalid.]]></item>
+		<item name="wcf.user.security.multifactor.initialBackup"><![CDATA[<p>The multi-factor authentication is enabled for your account starting now. Going forward you will need to have your second factor handy for every login.</p>
+<p><br></p>
+<p>In addition we generated emergency codes for you. They will allow you to gain access to your account in case your second factor becomes unavailable.</p>
+<p><br></p>
+<p>Please carefully note or save the emergency codes shown below. An example of a secure storage could be a piece of paper within a filing cabinet.</p>]]></item>
+		<item name="wcf.user.security.multifactor.manage"><![CDATA[Manage]]></item>
+		<item name="wcf.user.security.multifactor.methods"><![CDATA[Method]]></item>
+		<item name="wcf.user.security.multifactor.setup"><![CDATA[Set Up]]></item>
 		<item name="wcf.user.security.multifactor.setupEmail.body.html"><![CDATA[<h2>Dear {$user->username},</h2>
 
 <p>You successfully enabled multi-factor authentication using the <b>{lang}wcf.user.security.multifactor.{$method->objectType}{/lang}</b> method. Going forward you will need to have your second factor handy for every login.</p>
@@ -4954,9 +4930,33 @@ You can manage multi-factor authentication within the Account Security page [URL
 You successfully enabled multi-factor authentication using the „{lang}wcf.user.security.multifactor.{$method->objectType}{/lang}“ method. Going forward you will need to have your second factor handy for every login.
 
 You also received a list of emergency codes to use when your second factor becomes unavailable. **Did you store these emergency codes securely?** If you forgot you can do now by generating new codes in the Emergency Code Management [URL:{link controller='MultifactorManage' object=$backupMethod isEmail=true}{/link}].]]></item>
-		<item name="wcf.user.security.multifactor.authentication.noPendingUserChange"><![CDATA[The multi-factor authentication was not completed in time. The incomplete login process was aborted for security reasons. Please <a href="{link controller='Login'}{/link}">Login</a> once again.]]></item>
-		<item name="wcf.user.security.multifactor.authentication.noSetup"><![CDATA[The account <strong>{$user->username}</strong> is protected by multi-factor authentication, but no methods are set up. Please contact the administrator for support.]]></item>
-		<item name="wcf.user.security.multifactor.error.invalidCode"><![CDATA[The given code is invalid.]]></item>
+		<item name="wcf.user.security.multifactor.setupEmail.subject"><![CDATA[Multi-factor Authentication Enabled on {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.user.security.multifactor.totp.code"><![CDATA[One Time Code]]></item>
+		<item name="wcf.user.security.multifactor.totp.code.description"><![CDATA[The 6-digit one time code generated by the smartphone app.]]></item>
+		<item name="wcf.user.security.multifactor.totp.createTime"><![CDATA[Set Up]]></item>
+		<item name="wcf.user.security.multifactor.totp.deviceName"><![CDATA[Device Name]]></item>
+		<item name="wcf.user.security.multifactor.totp.deviceName.description.auth"><![CDATA[The device that generated the used one time code.]]></item>
+		<item name="wcf.user.security.multifactor.totp.deviceName.description.setup"><![CDATA[An arbitrary name identifying this device.]]></item>
+		<item name="wcf.user.security.multifactor.totp.deviceName.placeholder"><![CDATA[{$__wcf->user->username}’s Smartphone]]></item>
+		<item name="wcf.user.security.multifactor.totp.devices"><![CDATA[Active Smartphones]]></item>
+		<item name="wcf.user.security.multifactor.totp.error.flood"><![CDATA[Please try again later.]]></item>
+		<item name="wcf.user.security.multifactor.totp.lastDevice"><![CDATA[Please add your new device before removing your last device <strong>{$deviceName}</strong> if you want to switch phones. Use the <a href="{link controller='AccountSecurity'}{/link}">Overview in Account Security</a> if you want to disable multi-factor authentication.]]></item>
+		<item name="wcf.user.security.multifactor.totp.lastDevice.title"><![CDATA[Last Device]]></item>
+		<item name="wcf.user.security.multifactor.totp.newDevice"><![CDATA[Add Smartphone]]></item>
+		<item name="wcf.user.security.multifactor.totp.newDevice.description"><![CDATA[<p>Authenticate using an app on your smartphone.</p>
+<ol class="nativeList">
+<li>Install an authentication app such as Google Authenticator (<a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" class="externalURL">Android</a>, <a href="https://apps.apple.com/app/google-authenticator/id388497605" class="externalURL">iOS</a>) or Authy (<a href="https://play.google.com/store/apps/details?id=com.authy.authy" class="externalURL">Android</a>, <a href="https://apps.apple.com/app/authy/id494168017" class="externalURL">iOS</a>).</li>
+<li>Scan the QR code within the app.</li>
+<li>Enter the 6 digit one time code generated by the app.</li>
+</ol>]]></item>
+		<item name="wcf.user.security.multifactor.totp.status"><![CDATA[<ul class="inlineList small commaSeparated">
+<li>{plural value=$count 0="Not set up" 1="One device set up" other="# devices set up"}</li>
+{if $lastUsed}<li>Last used on {@$lastUsed|plainTime}</li>{/if}
+</ul>]]></item>
+		<item name="wcf.user.security.multifactor.totp.success.add"><![CDATA[Your smartphone <strong>{$deviceName}</strong> has successfully been added.]]></item>
+		<item name="wcf.user.security.multifactor.totp.success.delete"><![CDATA[Your smartphone <strong>{$deviceName}</strong> has successfully been removed.]]></item>
+		<item name="wcf.user.security.multifactor.totp.useTime"><![CDATA[Last Used]]></item>
+		<item name="wcf.user.security.sessionName"><![CDATA[{if $session->getUserAgent()->getBrowser()}{$session->getUserAgent()->getBrowser()}{if $session->getUserAgent()->getOS()} on {$session->getUserAgent()->getOS()}{/if}{else}Unknown Device{/if}]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophies]]></item>
