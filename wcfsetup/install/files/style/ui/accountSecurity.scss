@@ -6,3 +6,63 @@
 .accountSecurityInformation {
 	flex: 1 1 auto;
 }
+
+.multifactorBackupCode {
+	font-family: monospace;
+	&.used {
+		text-decoration: line-through;
+	}
+	.chunk {
+		margin-left: 5px;
+		&:first-child {
+			margin-left: 0;
+			font-weight: 600;
+		}
+	}
+}
+
+// Just .multifactorTotpCode is not specific enough.
+input.multifactorTotpCode,
+input.multifactorEmailCode {
+	font-family: monospace;
+	font-weight: 600;
+	font-size: 28px;
+}
+input.multifactorBackupCode {
+	font-family: monospace;
+	font-weight: 600;
+	font-size: 18px;
+}
+
+.multifactorTotpNewDevice {
+	display: flex;
+	flex-direction: column;
+	margin-top: 20px;
+	
+	.totpSecretContainer {
+		text-align: center;
+		
+		canvas {
+			width: 200px;
+			height: 200px;
+		}
+	}
+	
+	.totpSecret {
+		display: inline-block;
+		margin-top: 10px;
+	}
+	
+	.multifactorTotpNewDeviceFields {
+		flex: 1 1 auto;
+	}
+	
+	@include screen-md-up {
+		flex-direction: row;
+		
+		.totpSecretContainer {
+			width: 250px;
+			margin: 0 5px;
+		}
+	}
+}

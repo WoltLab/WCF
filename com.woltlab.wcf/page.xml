@@ -657,7 +657,6 @@
 			<name language="de">Dashboard</name>
 			<name language="en">Dashboard</name>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
-
 			<content>
 				<title>Dashboard</title>
 				<customURL>dashboard</customURL>
@@ -669,7 +668,6 @@
 			<name language="en">Cookie Policy</name>
 			<availableDuringOfflineMode>1</availableDuringOfflineMode>
 			<allowSpidersToIndex>0</allowSpidersToIndex>
-			
 			<content language="en">
 				<title>Cookie Policy</title>
 				<content><![CDATA[<p>This website uses cookies required to operate and use this site. Below you will find an explanation on our cookie usage.</p>
@@ -729,7 +727,6 @@
 			<name language="en">Privacy Policy</name>
 			<availableDuringOfflineMode>1</availableDuringOfflineMode>
 			<allowSpidersToIndex>0</allowSpidersToIndex>
-			
 			<content language="en">
 				<title>Privacy Policy</title>
 				<content><![CDATA[<h2>1. An overview of data protection</h2>
@@ -831,8 +828,61 @@ E-Mail: [E-Mail-Adresse der verantwortlichen Stelle]</p><p><br></p><p>Verantwort
 				<customURL>datenschutzerklaerung</customURL>
 			</content>
 		</page>
+		<page identifier="com.woltlab.wcf.MultifactorManage">
+			<pageType>system</pageType>
+			<controller>wcf\form\MultifactorManageForm</controller>
+			<name language="en">Manage Multi-Factor Authentication</name>
+			<name language="de">Mehrfaktor-Authentifizierung einrichten</name>
+			<hasFixedParent>1</hasFixedParent>
+			<parent>com.woltlab.wcf.AccountSecurity</parent>
+			<excludeFromLandingPage>1</excludeFromLandingPage>
+			<requireObjectID>1</requireObjectID>
+		</page>
+		<page identifier="com.woltlab.wcf.MultifactorAuthentication">
+			<pageType>system</pageType>
+			<controller>wcf\form\MultifactorAuthenticationForm</controller>
+			<name language="en">Multi-Factor Authentication</name>
+			<name language="de">Mehrfaktor-Authentifizierung</name>
+			<hasFixedParent>1</hasFixedParent>
+			<parent>com.woltlab.wcf.Login</parent>
+			<excludeFromLandingPage>1</excludeFromLandingPage>
+			<availableDuringOfflineMode>1</availableDuringOfflineMode>
+			<requireObjectID>1</requireObjectID>
+		</page>
+		<page identifier="com.woltlab.wcf.MultifactorDisable">
+			<pageType>system</pageType>
+			<controller>wcf\form\MultifactorDisableForm</controller>
+			<name language="en">Disable Multi-Factor Authentication</name>
+			<name language="de">Mehrfaktor-Authentifizierung deaktivieren</name>
+			<hasFixedParent>1</hasFixedParent>
+			<parent>com.woltlab.wcf.AccountSecurity</parent>
+			<excludeFromLandingPage>1</excludeFromLandingPage>
+			<availableDuringOfflineMode>1</availableDuringOfflineMode>
+			<requireObjectID>1</requireObjectID>
+			<content language="en">
+				<title>Disable Multi-Factor Authentication</title>
+			</content>
+			<content language="de">
+				<title>Mehrfaktor-Authentifizierung deaktivieren</title>
+			</content>
+		</page>
+		<page identifier="com.woltlab.wcf.Reauthentication">
+			<pageType>system</pageType>
+			<controller>wcf\form\ReauthenticationForm</controller>
+			<name language="en">Re-authentication</name>
+			<name language="de">Erneute Authentifizierung</name>
+			<hasFixedParent>1</hasFixedParent>
+			<excludeFromLandingPage>1</excludeFromLandingPage>
+			<availableDuringOfflineMode>1</availableDuringOfflineMode>
+			<content language="en">
+				<title>Re-authentication</title>
+			</content>
+			<content language="de">
+				<title>Erneute Authentifizierung</title>
+			</content>
+		</page>
 	</import>
 	<delete>
-		<page identifier="com.woltlab.wcf.Mail" />
+		<page identifier="com.woltlab.wcf.Mail"/>
 	</delete>
 </data>

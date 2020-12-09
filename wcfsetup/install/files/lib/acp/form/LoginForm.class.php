@@ -5,9 +5,11 @@ use wcf\data\user\authentication\failure\UserAuthenticationFailureAction;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\form\AbstractCaptchaForm;
+use wcf\form\MultifactorAuthenticationForm;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\UserInputException;
+use wcf\system\request\LinkHandler;
 use wcf\system\request\RequestHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\user\authentication\EmailUserAuthentication;
@@ -200,16 +202,22 @@ class LoginForm extends AbstractCaptchaForm {
 		parent::save();
 		
 		// change user
-		WCF::getSession()->changeUser($this->user);
+		$needsMultifactor = WCF::getSession()->changeUserAfterMultifactorAuthentication($this->user);
 		$this->saved();
 		
-		$this->performRedirect();
+		$this->performRedirect($needsMultifactor);
 	}
 	
 	/**
 	 * Performs the redirect after successful authentication.
 	 */
-	protected function performRedirect() {
+	protected function performRedirect(bool $needsMultifactor = false) {
+		if ($needsMultifactor) {
+			$this->url = LinkHandler::getInstance()->getLink('MultifactorAuthentication', [
+				'url' => $this->url,
+			]);
+		}
+		
 		if (!empty($this->url)) {
 			HeaderUtil::redirect($this->url);
 		}

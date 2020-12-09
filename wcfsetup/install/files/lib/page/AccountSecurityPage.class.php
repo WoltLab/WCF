@@ -1,14 +1,17 @@
 <?php
 namespace wcf\page;
+use wcf\data\object\type\ObjectType;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\session\Session;
 use wcf\system\session\SessionHandler;
+use wcf\system\user\multifactor\Setup;
 use wcf\system\WCF;
 
 /**
  * Shows the account security page.
  *
- * @author	Joshua Ruesweg
+ * @author	Tim Duesterhus, Joshua Ruesweg
  * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
@@ -26,6 +29,16 @@ class AccountSecurityPage extends AbstractPage {
 	private $activeSessions;
 	
 	/**
+	 * @var ObjectType[]
+	 */
+	private $multifactorMethods;
+	
+	/**
+	 * @var Setup[]
+	 */
+	private $enabledMultifactorMethods;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readData() {
@@ -36,6 +49,19 @@ class AccountSecurityPage extends AbstractPage {
 		usort($this->activeSessions, function ($a, $b) {
 			return $b->getLastActivityTime() <=> $a->getLastActivityTime();
 		});
+		
+		$this->multifactorMethods = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.multifactor');
+		
+		$setups = Setup::getAllForUser(WCF::getUser());
+		foreach ($setups as $setup) {
+			$this->enabledMultifactorMethods[$setup->getObjectType()->objectTypeID] = $setup;
+		}
+		
+		usort($this->multifactorMethods, function (ObjectType $a, ObjectType $b) {
+			$aEnabled = isset($this->enabledMultifactorMethods[$a->objectTypeID]) ? 1 : 0;
+			$bEnabled = isset($this->enabledMultifactorMethods[$b->objectTypeID]) ? 1 : 0;
+			return $bEnabled <=> $aEnabled ?: $b->priority <=> $a->priority;
+		});
 	}
 	
 	/**
@@ -45,7 +71,9 @@ class AccountSecurityPage extends AbstractPage {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign([
-			'activeSessions' => $this->activeSessions
+			'activeSessions' => $this->activeSessions,
+			'multifactorMethods' => $this->multifactorMethods,
+			'enabledMultifactorMethods' => $this->enabledMultifactorMethods,
 		]);
 	}
 	
