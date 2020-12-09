@@ -3,6 +3,7 @@ namespace wcf\system\form\builder\field;
 use wcf\system\captcha\ICaptchaHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\IFormFieldValidationError;
 use wcf\system\form\builder\IObjectTypeFormNode;
 use wcf\system\form\builder\TObjectTypeFormNode;
 
@@ -38,6 +39,11 @@ class CaptchaFormField extends AbstractFormField implements IObjectTypeFormNode 
 	protected $validationException;
 	
 	/**
+	 * @var IFormFieldValidationError
+	 */
+	protected $validationError;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function cleanup() {
@@ -66,6 +72,15 @@ class CaptchaFormField extends AbstractFormField implements IObjectTypeFormNode 
 		if ($this->validationException !== null) {
 			$variables['errorField'] = $this->validationException->getField();
 			$variables['errorType'] = $this->validationException->getType();
+		}
+		
+		// The error message is shown by the captcha handler itself but up until now, the form
+		// builder API needs at least one validation error present to detect validation errors.
+		// Now, however, we can remove the validation error again.
+		if ($this->validationError) {
+			$this->validationErrors = array_filter($this->validationErrors, function(IFormFieldValidationError $validationError) {
+				return $validationError !== $this->validationError;
+			});
 		}
 		
 		return $variables;
@@ -140,7 +155,8 @@ class CaptchaFormField extends AbstractFormField implements IObjectTypeFormNode 
 		}
 		catch (UserInputException $e) {
 			$this->validationException = $e;
-			$this->addValidationError(new FormFieldValidationError($e->getType()));
+			$this->validationError = new FormFieldValidationError($e->getType());
+			$this->addValidationError($this->validationError);
 		}
 	}
 	
