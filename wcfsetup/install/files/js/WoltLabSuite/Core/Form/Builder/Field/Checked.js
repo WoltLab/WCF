@@ -2,30 +2,23 @@
  * Data handler for a form builder field in an Ajax form that stores its value via a checkbox being
  * checked or not.
  *
- * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Form/Builder/Field/Checked
- * @since	5.2
+ * @author  Matthias Schmidt
+ * @copyright 2001-2020 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Form/Builder/Field/Checked
+ * @since 5.2
  */
-define(['Core', './Field'], function (Core, FormBuilderField) {
+define(["require", "exports", "tslib", "./Field", "../../../Core"], function (require, exports, tslib_1, Field_1, Core) {
     "use strict";
-    /**
-     * @constructor
-     */
-    function FormBuilderFieldInput(fieldId) {
-        this.init(fieldId);
-    }
-    ;
-    Core.inherit(FormBuilderFieldInput, FormBuilderField, {
-        /**
-         * @see	WoltLabSuite/Core/Form/Builder/Field/Field#_getData
-         */
-        _getData: function () {
-            var data = {};
-            data[this._fieldId] = ~~this._field.checked;
-            return data;
+    Field_1 = tslib_1.__importDefault(Field_1);
+    Core = tslib_1.__importStar(Core);
+    class Checked extends Field_1.default {
+        _getData() {
+            return {
+                [this._fieldId]: this._field.checked ? "1" : "0",
+            };
         }
-    });
-    return FormBuilderFieldInput;
+    }
+    Core.enableLegacyInheritance(Checked);
+    return Checked;
 });
