@@ -81,7 +81,10 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 						$minCounter = 0;
 						if (!$totp->validateTotpCode($field->getValue(), $minCounter, new \DateTime())) {
 							$field->value('');
-							$field->addValidationError(new FormFieldValidationError('invalid'));
+							$field->addValidationError(new FormFieldValidationError(
+								'invalidCode',
+								'wcf.user.security.multifactor.error.invalidCode'
+							));
 						}
 						$field->minCounter($minCounter);
 					})),
@@ -310,14 +313,18 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 						}
 					}
 					if ($selectedDevice === null) {
-						$field->addValidationError(new FormFieldValidationError('invalid'));
+						// This should never happen.
+						$field->addValidationError(new FormFieldValidationError('unreachable'));
 					}
 					
 					$totp = new Totp($selectedDevice['secret']);
 					$minCounter = $selectedDevice['minCounter'];
 					if (!$totp->validateTotpCode($field->getValue(), $minCounter, new \DateTime())) {
 						$field->value('');
-						$field->addValidationError(new FormFieldValidationError('invalid'));
+						$field->addValidationError(new FormFieldValidationError(
+							'invalidCode',
+							'wcf.user.security.multifactor.error.invalidCode'
+						));
 					}
 					$field->minCounter($minCounter);
 				})),

@@ -201,7 +201,10 @@ class EmailMultifactorMethod implements IMultifactorMethod {
 					
 					if ($this->findValidCode($userCode, $codes) === null) {
 						$field->value('');
-						$field->addValidationError(new FormFieldValidationError('invalid'));
+						$field->addValidationError(new FormFieldValidationError(
+							'invalidCode',
+							'wcf.user.security.multifactor.error.invalidCode'
+						));
 					}
 				})),
 		]);
