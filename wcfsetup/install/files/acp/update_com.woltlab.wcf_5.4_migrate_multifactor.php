@@ -10,6 +10,7 @@
  */
 
 use ParagonIE\ConstantTime\Base32;
+use ParagonIE\ConstantTime\Hex;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\package\PackageCache;
 use wcf\data\user\User;
@@ -98,7 +99,7 @@ foreach ($userIDs as $userID) {
 	while ($row = $existingTotpAuthenticatorStatement->fetchArray()) {
 		$createTotpStatement->execute([
 			$totpSetup->getId(),
-			\bin2hex(\random_bytes(16)),
+			Hex::encode(\random_bytes(16)),
 			$row['name'],
 			Base32::decodeUpper($row['secret']),
 			($row['time'] / 30),
