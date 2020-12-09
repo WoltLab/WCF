@@ -1,41 +1,31 @@
 /**
  * Data handler for a radio button form builder field in an Ajax form.
  *
- * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Form/Builder/Field/RadioButton
- * @since	5.2
+ * @author  Matthias Schmidt
+ * @copyright 2001-2020 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Form/Builder/Field/RadioButton
+ * @since 5.2
  */
-define(['Core', './Field'], function (Core, FormBuilderField) {
+define(["require", "exports", "tslib", "./Field", "../../../Core"], function (require, exports, tslib_1, Field_1, Core) {
     "use strict";
-    /**
-     * @constructor
-     */
-    function FormBuilderFieldRadioButton(fieldId) {
-        this.init(fieldId);
-    }
-    ;
-    Core.inherit(FormBuilderFieldRadioButton, FormBuilderField, {
-        /**
-         * @see	WoltLabSuite/Core/Form/Builder/Field/Field#getData
-         */
-        _getData: function () {
-            var data = {};
-            for (var i = 0, length = this._fields.length; i < length; i++) {
-                if (this._fields[i].checked) {
-                    data[this._fieldId] = this._fields[i].value;
-                    break;
+    Field_1 = tslib_1.__importDefault(Field_1);
+    Core = tslib_1.__importStar(Core);
+    class RadioButton extends Field_1.default {
+        _getData() {
+            const data = {};
+            this._fields.some((input) => {
+                if (input.checked) {
+                    data[this._fieldId] = input.value;
+                    return true;
                 }
-            }
+            });
             return data;
-        },
-        /**
-         * @see	WoltLabSuite/Core/Form/Builder/Field/Field#_readField
-         */
-        _readField: function () {
-            this._fields = elBySelAll('input[name=' + this._fieldId + ']');
-        },
-    });
-    return FormBuilderFieldRadioButton;
+        }
+        _readField() {
+            this._fields = Array.from(document.querySelectorAll("input[name=" + this._fieldId + "]"));
+        }
+    }
+    Core.enableLegacyInheritance(RadioButton);
+    return RadioButton;
 });
