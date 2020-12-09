@@ -709,7 +709,7 @@ final class SessionHandler extends SingletonFactory {
 	 * 
 	 * If `true` is returned you should perform a redirect to `MultifactorAuthenticationForm`.
 	 */
-	public function changeUserAfterMultifactor(User $user): bool {
+	public function changeUserAfterMultifactorAuthentication(User $user): bool {
 		if ($user->multifactorActive) {
 			$this->register(self::CHANGE_USER_AFTER_MULTIFACTOR_KEY, [
 				'userId' => $user->userID,

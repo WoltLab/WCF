@@ -202,7 +202,7 @@ class LoginForm extends AbstractCaptchaForm {
 		parent::save();
 		
 		// change user
-		$needsMultifactor = WCF::getSession()->changeUserAfterMultifactor($this->user);
+		$needsMultifactor = WCF::getSession()->changeUserAfterMultifactorAuthentication($this->user);
 		$this->saved();
 		
 		$this->performRedirect($needsMultifactor);

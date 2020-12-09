@@ -24,7 +24,7 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 		if (FORCE_LOGIN) WCF::getSession()->unregister('__wsc_forceLoginRedirect');
 		
 		// change user
-		$needsMultifactor = WCF::getSession()->changeUserAfterMultifactor($this->user);
+		$needsMultifactor = WCF::getSession()->changeUserAfterMultifactorAuthentication($this->user);
 		
 		$this->saved();
 		
