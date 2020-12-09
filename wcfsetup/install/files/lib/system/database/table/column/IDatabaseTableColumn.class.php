@@ -48,6 +48,13 @@ interface IDatabaseTableColumn {
 	public function getName();
 	
 	/**
+	 * Returns the new name of the column or `null` if the column's name is unchanged.
+	 *
+	 * @since       5.4
+	 */
+	public function getNewName(): ?string;
+	
+	/**
 	 * Returns the type of the column.
 	 * 
 	 * @return	string
@@ -76,6 +83,13 @@ interface IDatabaseTableColumn {
 	 * @return	$this
 	 */
 	public function notNull($notNull = true);
+	
+	/**
+	 * Sets the new name of the column and returns the column.
+	 * 
+	 * @since       5.4
+	 */
+	public function renameTo(string $newName): self;
 	
 	/**
 	 * Returns `true` if the column will be dropped.

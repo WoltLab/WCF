@@ -249,6 +249,14 @@ class DatabaseTableChangeProcessor {
 				$this->prepareColumnLog($tableName, $column);
 			}
 			
+			$renamedColumnsWithLog = [];
+			foreach ($columnsToAlter as $column) {
+				if ($column->getNewName() && $this->getColumnLog($tableName, $column) !== null) {
+					$this->prepareColumnLog($tableName, $column, true);
+					$renamedColumnsWithLog[] = $column;
+				}
+			}
+			
 			$this->applyColumnChanges(
 				$tableName,
 				$columnsToAdd,
@@ -258,6 +266,11 @@ class DatabaseTableChangeProcessor {
 			
 			foreach ($columnsToAdd as $column) {
 				$this->finalizeColumnLog($tableName, $column);
+			}
+			
+			foreach ($renamedColumnsWithLog as $column) {
+				$this->finalizeColumnLog($tableName, $column, true);
+				$this->deleteColumnLog($tableName, $column);
 			}
 			
 			foreach ($columnsToDrop as $column) {
@@ -324,7 +337,7 @@ class DatabaseTableChangeProcessor {
 		$columnData = [];
 		foreach ($droppedColumns as $droppedColumn) {
 			$columnData[$droppedColumn->getName()] = [
-				'action' => 'drop'
+				'action' => 'drop',
 			];
 			
 			foreach ($this->getExistingTable($tableName)->getForeignKeys() as $foreignKey) {
@@ -336,14 +349,14 @@ class DatabaseTableChangeProcessor {
 		foreach ($addedColumns as $addedColumn) {
 			$columnData[$addedColumn->getName()] = [
 				'action' => 'add',
-				'data' => $addedColumn->getData()
+				'data' => $addedColumn->getData(),
 			];
 		}
 		foreach ($alteredColumns as $alteredColumn) {
 			$columnData[$alteredColumn->getName()] = [
 				'action' => 'alter',
 				'data' => $alteredColumn->getData(),
-				'oldColumnName' => $alteredColumn->getName()
+				'newColumnName' => $alteredColumn->getNewName() ?? $alteredColumn->getName(),
 			];
 		}
 		
@@ -750,6 +763,10 @@ class DatabaseTableChangeProcessor {
 			}
 		}
 		
+		if ($newColumn->getNewName()) {
+			return true;
+		}
+		
 		// default type has to be checked explicitly for `null` to properly detect changing
 		// from no default value (`null`) and to an empty string as default value (and vice
 		// versa)
@@ -812,9 +829,13 @@ class DatabaseTableChangeProcessor {
 	 * 
 	 * @param	string			$tableName
 	 * @param	IDatabaseTableColumn	$column
+	 * @param       bool                    $useNewName
 	 */
-	protected function finalizeColumnLog($tableName, IDatabaseTableColumn $column) {
-		$this->finalizeLog(['sqlTable' => $tableName, 'sqlColumn' => $column->getName()]);
+	protected function finalizeColumnLog($tableName, IDatabaseTableColumn $column, bool $useNewName = false) {
+		$this->finalizeLog([
+			'sqlTable' => $tableName,
+			'sqlColumn' => $useNewName ? $column->getNewName() : $column->getName(),
+		]);
 	}
 	
 	/**
@@ -867,6 +888,37 @@ class DatabaseTableChangeProcessor {
 	 */
 	protected function finalizeTableLog(DatabaseTable $table) {
 		$this->finalizeLog(['sqlTable' => $table->getName()]);
+	}
+	
+	/**
+	 * Returns the log entry for the given column or `null` if there is no explicit entry for
+	 * this column.
+	 * 
+	 * @param       string                  $tableName
+	 * @param       IDatabaseTableColumn    $column
+	 * @return      array|null
+	 * @since       5.4
+	 */
+	protected function getColumnLog(string $tableName, IDatabaseTableColumn $column): ?array {
+		$sql = "SELECT  *
+			FROM    wcf" . WCF_N . "_package_installation_sql_log
+			WHERE   packageID = ?
+			        AND sqlTable = ?
+			        AND sqlColumn = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		$statement->execute([
+			$this->package->packageID,
+			$tableName,
+			$column->getName(),
+		]);
+		
+		$row = $statement->fetchSingleRow();
+		if ($row === false) {
+			return null;
+		}
+		
+		return $row;
 	}
 	
 	/**
@@ -948,9 +1000,13 @@ class DatabaseTableChangeProcessor {
 	 * 
 	 * @param	string			$tableName
 	 * @param	IDatabaseTableColumn	$column
+	 * @param       bool                    $useNewName
 	 */
-	protected function prepareColumnLog($tableName, IDatabaseTableColumn $column) {
-		$this->prepareLog(['sqlTable' => $tableName, 'sqlColumn' => $column->getName()]);
+	protected function prepareColumnLog($tableName, IDatabaseTableColumn $column, bool $useNewName = false) {
+		$this->prepareLog([
+			'sqlTable' => $tableName,
+			'sqlColumn' => $useNewName ? $column->getNewName() : $column->getName(),
+		]);
 	}
 	
 	/**
@@ -1079,6 +1135,13 @@ class DatabaseTableChangeProcessor {
 									'type' => 'foreignColumnChange'
 								];
 							}
+						}
+						else if ($column->getNewName()) {
+							$errors[] = [
+								'columnName' => $column->getName(),
+								'tableName' => $table->getName(),
+								'type' => 'renameNonexistingColumn'
+							];
 						}
 					}
 					

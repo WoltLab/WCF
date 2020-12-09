@@ -1946,6 +1946,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		The column {$error[tableName]}.{$error[columnName]} belongs to a different package and thus cannot be dropped.
 	{else if $error[type] === 'foreignColumnChange'}
 		The column {$error[tableName]}.{$error[columnName]} belongs to a different package and thus cannot be dropped.
+	{else if $error[type] === 'renameNonexistingColumn'}
+		The column {$error[tableName]}.{$error[columnName]} does not exist and thus cannot be renamed.
 	{else if $error[type] === 'foreignIndexDrop'}
 		The index {$error[tableName]} ({$error[columnNames]}) belongs to a different package and thus cannot be dropped.
 	{else if $error[type] === 'foreignForeignKeyDrop'}
@@ -2840,6 +2842,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.import.source.upload"><![CDATA[Upload Style]]></item>
 		<item name="wcf.acp.style.import.source.upload.description"><![CDATA[Upload a style from your local machine.]]></item>
 		<item name="wcf.acp.style.import.source.error.importFailed"><![CDATA[Unable to import the selected style, the uploaded file is not a valid style.]]></item>
+		<item name="wcf.acp.style.import.source.error.isPackageNoPermission"><![CDATA[Unable to import the selected style, the uploaded file is a package and you may not install new packages.]]></item>
 		<item name="wcf.acp.style.license"><![CDATA[License]]></item>
 		<item name="wcf.acp.style.list"><![CDATA[Styles]]></item>
 		<item name="wcf.acp.style.packageName"><![CDATA[Package Identifier]]></item>
@@ -4791,7 +4794,7 @@ If you have trouble confirming your email address, please contact the
 administrator at: {@MAIL_ADMIN_ADDRESS}. Please ignore this email if you did
 not register with us.]]></item>
 		<item name="wcf.user.register.needAdminActivation"><![CDATA[Your account must be activated by an administrator in order to use the full scope of the website.]]></item>
-		<item name="wcf.user.register.needEmailConfirmation"><![CDATA[Your email address is not activated yet. <a href="{link controller='RegisterNewActivationCode'}{/link}">Activate now your email address</a>. {if $__wcf->user->canEmailConfirm()}<a href="{link controller='RegisterActivation'}{/link}">Confirm your email address</a>{else}To activate your email address contact the administrator of this site.{/if}.]]></item>
+		<item name="wcf.user.register.needEmailConfirmation"><![CDATA[Your email address is not activated yet. {if $__wcf->user->canEmailConfirm()}<a href="{link controller='RegisterNewActivationCode'}{/link}">Confirm your email address</a>{else}To activate your email address contact the administrator of this site{/if}.]]></item>
 		<!-- Success Messages -->
 		<item name="wcf.user.register.success"><![CDATA[Thank you for registering, {$user->username}.<br>
 Your registration is now completed.]]></item>

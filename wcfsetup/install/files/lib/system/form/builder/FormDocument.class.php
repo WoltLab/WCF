@@ -100,6 +100,11 @@ class FormDocument implements IFormDocument {
 	protected $formMode;
 	
 	/**
+	 * @var bool
+	 */
+	protected $markRequiredFields = true;
+	
+	/**
 	 * `method` property of the HTML `form` element
 	 * @var	string
 	 */
@@ -529,9 +534,31 @@ class FormDocument implements IFormDocument {
 	
 	/**
 	 * @inheritDoc
+	 * @since       5.4
+	 */
+	public function markRequiredFields(bool $markRequiredFields = true): self {
+		$this->markRequiredFields = $markRequiredFields;
+		
+		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since       5.4
+	 */
+	public function marksRequiredFields(): bool {
+		return $this->markRequiredFields;
+	}
+	
+	/**
+	 * @inheritDoc
 	 * @since	5.3
 	 */
 	public function needsRequiredFieldsInfo() {
+		if (!$this->marksRequiredFields()) {
+			return false;
+		}
+		
 		/** @var IFormNode $node */
 		foreach ($this->getIterator() as $node) {
 			if (
