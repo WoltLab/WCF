@@ -2,42 +2,35 @@
  * Data handler for an i18n form builder field in an Ajax form that stores its value in an input's
  * value attribute.
  *
- * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Form/Builder/Field/ValueI18n
- * @since	5.2
+ * @author  Matthias Schmidt
+ * @copyright 2001-2020 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Form/Builder/Field/ValueI18n
+ * @since 5.2
  */
-define(['Core', './Field', 'WoltLabSuite/Core/Language/Input'], function (Core, FormBuilderField, LanguageInput) {
+define(["require", "exports", "tslib", "./Field", "../../../Language/Input", "../../../Core"], function (require, exports, tslib_1, Field_1, LanguageInput, Core) {
     "use strict";
-    /**
-     * @constructor
-     */
-    function FormBuilderFieldValueI18n(fieldId) {
-        this.init(fieldId);
-    }
-    ;
-    Core.inherit(FormBuilderFieldValueI18n, FormBuilderField, {
-        /**
-         * @see	WoltLabSuite/Core/Form/Builder/Field/Field#_getData
-         */
-        _getData: function () {
-            var data = {};
-            var values = LanguageInput.getValues(this._fieldId);
+    Field_1 = tslib_1.__importDefault(Field_1);
+    LanguageInput = tslib_1.__importStar(LanguageInput);
+    Core = tslib_1.__importStar(Core);
+    class ValueI18n extends Field_1.default {
+        _getData() {
+            const data = {};
+            const values = LanguageInput.getValues(this._fieldId);
             if (values.size > 1) {
-                data[this._fieldId + '_i18n'] = values.toObject();
+                values.forEach((value, key) => {
+                    data[this._fieldId + "_i18n"][key] = value;
+                });
             }
             else {
                 data[this._fieldId] = values.get(0);
             }
             return data;
-        },
-        /**
-         * @see	WoltLabSuite/Core/Form/Builder/Field/Field#destroy
-         */
-        destroy: function () {
+        }
+        destroy() {
             LanguageInput.unregister(this._fieldId);
         }
-    });
-    return FormBuilderFieldValueI18n;
+    }
+    Core.enableLegacyInheritance(ValueI18n);
+    return ValueI18n;
 });
