@@ -1,7 +1,7 @@
 {if $recaptchaLegacyMode|empty}
 	{include file='captcha'}
 {else}
-	{if RECAPTCHA_PUBLICKEY !== '' && RECAPTCHA_PRIVATEKEY !== ''}
+	{if RECAPTCHA_PUBLICKEY && RECAPTCHA_PRIVATEKEY}
 		{if $supportsAsyncCaptcha|isset && $supportsAsyncCaptcha && RECAPTCHA_PUBLICKEY_INVISIBLE && RECAPTCHA_PRIVATEKEY_INVISIBLE}
 		<section class="section">
 			<h2 class="sectionTitle">{lang}wcf.recaptcha.title{/lang}</h2>
