@@ -347,7 +347,6 @@
 		<item name="wcf.acp.dataImport.cli.configure.data.error.noSelection"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} keine Daten zum Import ausgewählt. Der Import wird beendet.]]></item>
 		<item name="wcf.acp.dataImport.cli.configure.data.error.invalid"><![CDATA[Der ausgewählte Datentyp ist ungültig.]]></item>
 		<item name="wcf.acp.dataImport.cli.configure.data.selectAll"><![CDATA[Alle Daten]]></item>
-		<item name="wcf.acp.dataImport.cli.info.wcf"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} keine App beim Skript-Aufruf mittels --packageID={PACKAGE_ID} geladen. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} Daten für eine App importieren {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} das Skript mit der ID des entsprechenden Pakets starten. {if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} mit dem Import fortfahren? [YN]]]></item>
 		<item name="wcf.acp.dataImport.cli.selection"><![CDATA[Auswahl? [{if $minSelection == $maxSelection}{$minSelection}{else}{$minSelection}-{$maxSelection}{/if}]]]></item>
 		<item name="wcf.acp.dataImport.completed"><![CDATA[Import abgeschlossen.]]></item>
 		<item name="wcf.acp.dataImport.configure.data"><![CDATA[Daten]]></item>

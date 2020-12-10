@@ -123,17 +123,6 @@ class ImportCLICommand implements ICLICommand {
 			return;
 		}
 		
-		if (PACKAGE_ID == 1) {
-			CLIWCF::getReader()->println(StringUtil::stripHTML(WCF::getLanguage()->get('wcf.acp.dataImport.cli.info.wcf')));
-			
-			$answer = CLIWCF::getReader()->readLine('> ');
-			if ($answer === null) exit;
-			if (mb_strtolower($answer) != 'y') {
-				CLIWCF::getReader()->setHistoryEnabled(true);
-				return;
-			}
-		}
-		
 		// step 1) previous import
 		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_import_mapping";
