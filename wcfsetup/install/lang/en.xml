@@ -1956,6 +1956,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		The column {$error[tableName]}.{$error[columnName]} belongs to a different package and thus cannot be dropped.
 	{else if $error[type] === 'foreignIndexDrop'}
 		The index {$error[tableName]} ({$error[columnNames]}) belongs to a different package and thus cannot be dropped.
+	{else if $error[type] === 'nullColumnInPrimaryIndex'}
+		The primary index {$error[tableName]} ({$error[columnNames]}) contains the column {$error[columnName]} whose values can be NULL.
 	{else if $error[type] === 'foreignForeignKeyDrop'}
 		The foreign key {$error[tableName]} ({$error[columnNames]}) belongs to a different package and thus cannot be dropped.
 	{else}
