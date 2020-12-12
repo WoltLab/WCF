@@ -356,6 +356,16 @@ class ImagickImageAdapter implements IImageAdapter {
 			fclose($file);
 		}
 		else {
+			// Greatly reduces the time required to create the image and drastically
+			// reduces the filesize to more reasonable levels without a visible
+			// quality loss.
+			//
+			// See https://github.com/Imagick/imagick/issues/360
+			if ($image->getImageFormat() == 'GIF') {
+				$image = $image->deconstructImages();
+				$image->quantizeImages(256, \Imagick::COLORSPACE_SRGB, 0, false, false);
+			}
+			
 			$image->writeImages($filename, true);
 		}
 	}
