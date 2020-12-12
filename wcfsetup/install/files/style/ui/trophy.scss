@@ -60,6 +60,11 @@
 			> span:last-child {
 				margin-left: 5px;
 			}
+
+			input,
+			.trophyIcon {
+				flex-shrink: 0;
+			}
 		}
 	}
 }
