@@ -324,7 +324,6 @@
 		<item name="wcf.acp.dataImport.cli.configure.data.error.noSelection"><![CDATA[You did not specify any data for importing, the import has been aborted.]]></item>
 		<item name="wcf.acp.dataImport.cli.configure.data.error.invalid"><![CDATA[The selected data type is invalid.]]></item>
 		<item name="wcf.acp.dataImport.cli.configure.data.selectAll"><![CDATA[All data]]></item>
-		<item name="wcf.acp.dataImport.cli.info.wcf"><![CDATA[You did not load any application through --packageID={PACKAGE_ID}. If you wish to import application-specific data, you must call this script along with the desired package ID. Do you wish to continue the import? [YN]]]></item>
 		<item name="wcf.acp.dataImport.cli.selection"><![CDATA[Selection? [{if $minSelection == $maxSelection}{$minSelection}{else}{$minSelection}-{$maxSelection}{/if}]]]></item>
 		<item name="wcf.acp.dataImport.completed"><![CDATA[Import completed.]]></item>
 		<item name="wcf.acp.dataImport.configure.data"><![CDATA[Data]]></item>
@@ -1950,6 +1949,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		The column {$error[tableName]}.{$error[columnName]} does not exist and thus cannot be renamed.
 	{else if $error[type] === 'foreignIndexDrop'}
 		The index {$error[tableName]} ({$error[columnNames]}) belongs to a different package and thus cannot be dropped.
+	{else if $error[type] === 'nullColumnInPrimaryIndex'}
+		The primary index {$error[tableName]} ({$error[columnNames]}) contains the column {$error[columnName]} whose values can be NULL.
 	{else if $error[type] === 'foreignForeignKeyDrop'}
 		The foreign key {$error[tableName]} ({$error[columnNames]}) belongs to a different package and thus cannot be dropped.
 	{else}

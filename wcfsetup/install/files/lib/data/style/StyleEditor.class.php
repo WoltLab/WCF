@@ -1089,6 +1089,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$styleEditor->update([
 			'imagePath' => FileUtil::getRelativePath(WCF_DIR, $style->getAssetPath()),
 		]);
+		$styleEditor = new StyleEditor(new Style($style->styleID));
 		
 		// save variables
 		if ($variables !== null) {

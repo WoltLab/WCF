@@ -1103,80 +1103,98 @@ class DatabaseTableChangeProcessor {
 					}
 				}
 			}
-			else if (in_array($table->getName(), $this->existingTableNames)) {
-				if (!isset($this->tablePackageIDs[$table->getName()])) {
-					$errors[] = [
-						'tableName' => $table->getName(),
-						'type' => 'unregisteredTableChange'
-					];
-				}
-				else {
-					$existingTable = DatabaseTable::createFromExistingTable($this->dbEditor, $table->getName());
-					$existingColumns = $existingTable->getColumns();
-					$existingIndices = $existingTable->getIndices();
-					$existingForeignKeys = $existingTable->getForeignKeys();
-					
-					foreach ($table->getColumns() as $column) {
-						if (isset($existingColumns[$column->getName()])) {
-							$columnPackageID = $this->getColumnPackageID($table, $column);
-							if ($column->willBeDropped()) {
-								if ($columnPackageID !== $this->package->packageID) {
+			else {
+				if (in_array($table->getName(), $this->existingTableNames)) {
+					if (!isset($this->tablePackageIDs[$table->getName()])) {
+						$errors[] = [
+							'tableName' => $table->getName(),
+							'type' => 'unregisteredTableChange',
+						];
+					}
+					else {
+						$existingTable = DatabaseTable::createFromExistingTable($this->dbEditor, $table->getName());
+						$existingColumns = $existingTable->getColumns();
+						$existingIndices = $existingTable->getIndices();
+						$existingForeignKeys = $existingTable->getForeignKeys();
+						
+						foreach ($table->getColumns() as $column) {
+							if (isset($existingColumns[$column->getName()])) {
+								$columnPackageID = $this->getColumnPackageID($table, $column);
+								if ($column->willBeDropped()) {
+									if ($columnPackageID !== $this->package->packageID) {
+										$errors[] = [
+											'columnName' => $column->getName(),
+											'tableName' => $table->getName(),
+											'type' => 'foreignColumnDrop',
+										];
+									}
+								}
+								else if ($columnPackageID !== $this->package->packageID) {
 									$errors[] = [
 										'columnName' => $column->getName(),
 										'tableName' => $table->getName(),
-										'type' => 'foreignColumnDrop'
+										'type' => 'foreignColumnChange',
 									];
 								}
 							}
-							else if ($columnPackageID !== $this->package->packageID) {
+							else if ($column->getNewName()) {
 								$errors[] = [
 									'columnName' => $column->getName(),
 									'tableName' => $table->getName(),
-									'type' => 'foreignColumnChange'
+									'type' => 'renameNonexistingColumn'
 								];
 							}
 						}
-						else if ($column->getNewName()) {
-							$errors[] = [
-								'columnName' => $column->getName(),
-								'tableName' => $table->getName(),
-								'type' => 'renameNonexistingColumn'
-							];
-						}
-					}
-					
-					foreach ($table->getIndices() as $index) {
-						foreach ($existingIndices as $existingIndex) {
-							if (empty(array_diff($index->getData(), $existingIndex->getData()))) {
-								if ($index->willBeDropped()) {
-									if ($this->getIndexPackageID($table, $index) !== $this->package->packageID) {
-										$errors[] = [
-											'columnNames' => implode(',', $existingIndex->getColumns()),
-											'tableName' => $table->getName(),
-											'type' => 'foreignIndexDrop'
-										];
+						
+						foreach ($table->getIndices() as $index) {
+							foreach ($existingIndices as $existingIndex) {
+								if (empty(array_diff($index->getData(), $existingIndex->getData()))) {
+									if ($index->willBeDropped()) {
+										if ($this->getIndexPackageID($table, $index) !== $this->package->packageID) {
+											$errors[] = [
+												'columnNames' => implode(',', $existingIndex->getColumns()),
+												'tableName' => $table->getName(),
+												'type' => 'foreignIndexDrop',
+											];
+										}
 									}
+									
+									continue 2;
 								}
-								
-								continue 2;
+							}
+						}
+						
+						foreach ($table->getForeignKeys() as $foreignKey) {
+							foreach ($existingForeignKeys as $existingForeignKey) {
+								if (empty(array_diff($foreignKey->getData(), $existingForeignKey->getData()))) {
+									if ($foreignKey->willBeDropped()) {
+										if ($this->getForeignKeyPackageID($table, $foreignKey) !== $this->package->packageID) {
+											$errors[] = [
+												'columnNames' => implode(',', $existingForeignKey->getColumns()),
+												'tableName' => $table->getName(),
+												'type' => 'foreignForeignKeyDrop',
+											];
+										}
+									}
+									
+									continue 2;
+								}
 							}
 						}
 					}
-					
-					foreach ($table->getForeignKeys() as $foreignKey) {
-						foreach ($existingForeignKeys as $existingForeignKey) {
-							if (empty(array_diff($foreignKey->getData(), $existingForeignKey->getData()))) {
-								if ($foreignKey->willBeDropped()) {
-									if ($this->getForeignKeyPackageID($table, $foreignKey) !== $this->package->packageID) {
-										$errors[] = [
-											'columnNames' => implode(',', $existingForeignKey->getColumns()),
-											'tableName' => $table->getName(),
-											'type' => 'foreignForeignKeyDrop'
-										];
-									}
-								}
-								
-								continue 2;
+				}
+				
+				foreach ($table->getIndices() as $index) {
+					if ($index->getType() === DatabaseTableIndex::PRIMARY_TYPE && !$index->willBeDropped()) {
+						foreach ($index->getColumns() as $indexColumn) {
+							$column = $this->getColumnByName($indexColumn, $table, $existingTable);
+							if ($column !== null && !$column->isNotNull()) {
+								$errors[] = [
+									'columnName' => $indexColumn,
+									'columnNames' => implode(',', $index->getColumns()),
+									'tableName' => $table->getName(),
+									'type' => 'nullColumnInPrimaryIndex',
+								];
 							}
 						}
 					}
@@ -1185,5 +1203,33 @@ class DatabaseTableChangeProcessor {
 		}
 		
 		return $errors;
+	}
+	
+	/**
+	 * Returns the column with the given name from the given table.
+	 * 
+	 * @param       string                  $columnName
+	 * @param       DatabaseTable           $updateTable
+	 * @param       DatabaseTable|null      $existingTable
+	 * @return      IDatabaseTableColumn|null
+	 * @since       5.2.10
+	 */
+	protected function getColumnByName($columnName, DatabaseTable $updateTable, DatabaseTable $existingTable = null) {
+		foreach ($updateTable->getColumns() as $column) {
+			if (
+				($column->getNewName() === $columnName)
+				|| ($column->getName() === $columnName && !$column->getNewName())
+			) {
+				return $column;
+			}
+		}
+		
+		foreach ($existingTable->getColumns() as $column) {
+			if ($column->getName() === $columnName) {
+				return $column;
+			}
+		}
+		
+		return null;
 	}
 }
