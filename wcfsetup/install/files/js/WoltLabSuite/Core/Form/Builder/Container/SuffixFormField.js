@@ -1,61 +1,57 @@
 /**
  * Handles the dropdowns of form fields with a suffix.
  *
- * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Form/Builder/Container/SuffixFormField
- * @since	5.2
+ * @author  Matthias Schmidt
+ * @copyright 2001-2020 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Form/Builder/Container/SuffixFormField
+ * @since 5.2
  */
-define(['EventHandler', 'Ui/SimpleDropdown'], function (EventHandler, UiSimpleDropdown) {
+define(["require", "exports", "tslib", "../../../Ui/Dropdown/Simple", "../../../Event/Handler", "../../../Core"], function (require, exports, tslib_1, Simple_1, EventHandler, Core) {
     "use strict";
-    /**
-     * @constructor
-     */
-    function PrefixSuffixFormFieldContainer(formId, suffixFieldId) {
-        this._formId = formId;
-        this._suffixField = elById(suffixFieldId);
-        this._suffixDropdownMenu = UiSimpleDropdown.getDropdownMenu(suffixFieldId + '_dropdown');
-        this._suffixDropdownToggle = elByClass('dropdownToggle', UiSimpleDropdown.getDropdown(suffixFieldId + '_dropdown'))[0];
-        var listItems = this._suffixDropdownMenu.children;
-        for (var i = 0, length = listItems.length; i < length; i++) {
-            listItems[i].addEventListener('click', this._changeSuffixSelection.bind(this));
+    Simple_1 = tslib_1.__importDefault(Simple_1);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    Core = tslib_1.__importStar(Core);
+    class SuffixFormField {
+        constructor(formId, suffixFieldId) {
+            this._formId = formId;
+            this._suffixField = document.getElementById(suffixFieldId);
+            this._suffixDropdownMenu = Simple_1.default.getDropdownMenu(suffixFieldId + "_dropdown");
+            this._suffixDropdownToggle = Simple_1.default.getDropdown(suffixFieldId + "_dropdown").getElementsByClassName("dropdownToggle")[0];
+            Array.from(this._suffixDropdownMenu.children).forEach((listItem) => {
+                listItem.addEventListener("click", (ev) => this._changeSuffixSelection(ev));
+            });
+            EventHandler.add("WoltLabSuite/Core/Form/Builder/Manager", "afterUnregisterForm", (data) => this._destroyDropdown(data));
         }
-        EventHandler.add('WoltLabSuite/Core/Form/Builder/Manager', 'afterUnregisterForm', this._destroyDropdown.bind(this));
-    }
-    ;
-    PrefixSuffixFormFieldContainer.prototype = {
         /**
          * Handles changing the suffix selection.
-         *
-         * @param	{Event}		event
          */
-        _changeSuffixSelection: function (event) {
-            if (event.currentTarget.classList.contains('disabled')) {
+        _changeSuffixSelection(event) {
+            const target = event.currentTarget;
+            if (target.classList.contains("disabled")) {
                 return;
             }
-            var listItems = this._suffixDropdownMenu.children;
-            for (var i = 0, length = listItems.length; i < length; i++) {
-                if (listItems[i] === event.currentTarget) {
-                    listItems[i].classList.add('active');
+            Array.from(this._suffixDropdownMenu.children).forEach((listItem) => {
+                if (listItem === target) {
+                    listItem.classList.add("active");
                 }
                 else {
-                    listItems[i].classList.remove('active');
+                    listItem.classList.remove("active");
                 }
-            }
-            this._suffixField.value = elData(event.currentTarget, 'value');
-            this._suffixDropdownToggle.innerHTML = elData(event.currentTarget, 'label') + ' <span class="icon icon16 fa-caret-down pointer"></span>';
-        },
+            });
+            this._suffixField.value = target.dataset.value;
+            this._suffixDropdownToggle.innerHTML =
+                target.dataset.label + ' <span class="icon icon16 fa-caret-down pointer"></span>';
+        }
         /**
-         * Destorys the suffix dropdown if the parent form is unregistered.
-         *
-         * @param	{object}	data	event data
+         * Destroys the suffix dropdown if the parent form is unregistered.
          */
-        _destroyDropdown: function (data) {
+        _destroyDropdown(data) {
             if (data.formId === this._formId) {
-                UiSimpleDropdown.destroy(this._suffixDropdownMenu.id);
+                Simple_1.default.destroy(this._suffixDropdownMenu.id);
             }
         }
-    };
-    return PrefixSuffixFormFieldContainer;
+    }
+    Core.enableLegacyInheritance(SuffixFormField);
+    return SuffixFormField;
 });
