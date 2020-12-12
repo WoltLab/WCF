@@ -15,9 +15,7 @@ import * as Core from "../../../Core";
 
 class Tag extends Field {
   protected _getData(): FormBuilderData {
-    const values: string[] = UiItemList.getValues(this._fieldId).map((item) => {
-      return item.value;
-    });
+    const values: string[] = UiItemList.getValues(this._fieldId).map((item) => item.value);
 
     return {
       [this._fieldId]: values,

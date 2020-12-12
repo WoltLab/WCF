@@ -14,9 +14,7 @@ define(["require", "exports", "tslib", "./Field", "../../../Ui/ItemList", "../..
     Core = tslib_1.__importStar(Core);
     class Tag extends Field_1.default {
         _getData() {
-            const values = UiItemList.getValues(this._fieldId).map((item) => {
-                return item.value;
-            });
+            const values = UiItemList.getValues(this._fieldId).map((item) => item.value);
             return {
                 [this._fieldId]: values,
             };

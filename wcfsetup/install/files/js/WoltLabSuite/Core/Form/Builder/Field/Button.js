@@ -10,6 +10,7 @@
 define(["require", "exports", "tslib", "./Field"], function (require, exports, tslib_1, Field_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    exports.Button = void 0;
     Field_1 = tslib_1.__importDefault(Field_1);
     class Button extends Field_1.default {
         _getData() {
@@ -20,5 +21,6 @@ define(["require", "exports", "tslib", "./Field"], function (require, exports, t
             return data;
         }
     }
+    exports.Button = Button;
     exports.default = Button;
 });

@@ -11,7 +11,7 @@
 import Field from "./Field";
 import { FormBuilderData } from "../Data";
 
-export default class Button extends Field {
+export class Button extends Field {
   protected _getData(): FormBuilderData {
     const data = {};
 
@@ -22,3 +22,5 @@ export default class Button extends Field {
     return data;
   }
 }
+
+export default Button;

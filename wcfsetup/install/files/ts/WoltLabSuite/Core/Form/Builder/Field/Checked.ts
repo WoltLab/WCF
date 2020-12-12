@@ -16,7 +16,7 @@ import * as Core from "../../../Core";
 class Checked extends Field {
   protected _getData(): FormBuilderData {
     return {
-      [this._fieldId]: (this._field as HTMLInputElement).checked ? "1" : "0",
+      [this._fieldId]: (this._field as HTMLInputElement).checked ? 1 : 0,
     };
   }
 }

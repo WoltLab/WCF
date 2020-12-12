@@ -19,6 +19,7 @@ define(["require", "exports", "tslib", "./Field", "../../../Core"], function (re
                     data[this._fieldId] = input.value;
                     return true;
                 }
+                return false;
             });
             return data;
         }

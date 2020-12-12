@@ -23,6 +23,8 @@ class RadioButton extends Field {
         data[this._fieldId] = input.value;
         return true;
       }
+
+      return false;
     });
 
     return data;
