@@ -55,7 +55,9 @@ class SessionAccessLogListener implements IParameterizedEventListener {
 			// Fetch request URI + request ID (if available).
 			$requestURI = UserUtil::getRequestURI();
 			if ($requestId = \wcf\getRequestId()) {
-				$requestURI .= ' ('.$requestId.')';
+				$requestIdSuffix = ' ('.$requestId.')';
+				// Ensure that the request ID fits by truncating the URI.
+				$requestURI = substr($requestURI, 0, 255 - strlen($requestIdSuffix)).$requestIdSuffix;
 			}
 			
 			// Get controller name + the AJAX action.
