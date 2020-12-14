@@ -37,7 +37,7 @@ class LanguageItemFormNode implements IFormChildNode {
 	/**
 	 * Returns the name of the language item shown in the form node.
 	 * 
-	 * @throws      \BadMethodCallException         if language iten has not been set yet
+	 * @throws      \BadMethodCallException         if language item has not been set yet
 	 */
 	public function getLanguageItem(): string {
 		if ($this->languageItem === null) {
