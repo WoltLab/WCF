@@ -13,7 +13,7 @@ use wcf\system\user\authentication\password\IPasswordAlgorithm;
  */
 final class Bcrypt implements IPasswordAlgorithm {
 	private const OPTIONS = [
-		'cost' => 10,
+		'cost' => 12,
 	];
 	
 	/**
