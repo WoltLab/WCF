@@ -349,15 +349,17 @@ class ImagickImageAdapter implements IImageAdapter {
 			throw new SystemException("Given image is not a valid Imagick-object.");
 		}
 		
-		// circumvent writeImages() bug in version 3.1.0 RC 1
-		if (phpversion('imagick') == '3.1.0RC1' && $this->supportsWritingAnimatedGIF) {
-			$file = fopen($filename, 'w');
-			$image->writeImagesFile($file);
-			fclose($file);
+		// Greatly reduces the time required to create the image and drastically
+		// reduces the filesize to more reasonable levels without a visible
+		// quality loss.
+		//
+		// See https://github.com/Imagick/imagick/issues/360
+		if ($image->getImageFormat() == 'GIF') {
+			$image = $image->deconstructImages();
+			$image->quantizeImages(256, \Imagick::COLORSPACE_SRGB, 0, false, false);
 		}
-		else {
-			$image->writeImages($filename, true);
-		}
+		
+		$image->writeImages($filename, true);
 	}
 	
 	/**
