@@ -8,7 +8,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
-use wcf\system\form\builder\TemplateFormNode;
+use wcf\system\form\builder\LanguageItemFormNode;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\TReauthenticationCheck;
@@ -89,8 +89,8 @@ class MultifactorDisableForm extends AbstractFormBuilderForm {
 		parent::createForm();
 		
 		$this->form->appendChildren([
-			TemplateFormNode::create('explanation')
-				->templateName('__multifactorDisableExplanation')
+			LanguageItemFormNode::create('explanation')
+				->languageItem('wcf.user.security.multifactor.disable.explanation')
 				->variables([
 					'remaining' =>	$this->setupsWithoutDisableRequest(
 						$this->setupsWithoutBackupCodes($this->setups)
