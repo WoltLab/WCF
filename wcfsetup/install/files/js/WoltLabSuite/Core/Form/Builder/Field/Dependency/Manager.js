@@ -177,7 +177,7 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Even
                 let dependenciesMet = true;
                 nodeDependencies.forEach((dependency) => {
                     if (!dependency.checkDependency()) {
-                        dependentNode.style.display = "none";
+                        this._hide(dependentNode);
                         dependenciesMet = false;
                     }
                 });
