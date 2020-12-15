@@ -1,103 +1,112 @@
 /**
  * Provides a dialog to copy an existing template group.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Acp/Ui/Template/Group/Copy
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Acp/Ui/Template/Group/Copy
  */
-define(['Ajax', 'Language', 'Ui/Dialog', 'Ui/Notification'], function (Ajax, Language, UiDialog, UiNotification) {
+define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language", "../../../../Ui/Dialog", "../../../../Ui/Notification", "../../../../Dom/Util"], function (require, exports, tslib_1, Ajax, Language, Dialog_1, UiNotification, Util_1) {
     "use strict";
-    var _name = null;
-    var _folderName = null;
-    var _templateGroupId = 0;
-    /**
-     * @exports     WoltLabSuite/Core/Acp/Ui/Template/Group/Copy
-     */
-    return {
-        /**
-         * Initializes the dialog handler.
-         *
-         * @param       {int}           templateGroupId
-         */
-        init: function (templateGroupId) {
-            _templateGroupId = templateGroupId;
-            elBySel('.jsButtonCopy').addEventListener('click', this._click.bind(this));
-        },
-        /**
-         * Handles clicks on the 'Copy Template Group' button.
-         *
-         * @param       {Event}         event
-         * @protected
-         */
-        _click: function (event) {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.init = void 0;
+    Ajax = tslib_1.__importStar(Ajax);
+    Language = tslib_1.__importStar(Language);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    UiNotification = tslib_1.__importStar(UiNotification);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    class AcpUiTemplateGroupCopy {
+        constructor(templateGroupId) {
+            this.folderName = undefined;
+            this.name = undefined;
+            this.templateGroupId = templateGroupId;
+            const button = document.querySelector(".jsButtonCopy");
+            button.addEventListener("click", (ev) => this.click(ev));
+        }
+        click(event) {
             event.preventDefault();
-            UiDialog.open(this);
-        },
-        _dialogSubmit: function () {
+            Dialog_1.default.open(this);
+        }
+        _dialogSubmit() {
             Ajax.api(this, {
                 parameters: {
-                    templateGroupName: _name.value,
-                    templateGroupFolderName: _folderName.value
-                }
-            });
-        },
-        _ajaxSuccess: function (data) {
-            UiDialog.close(this);
-            UiNotification.show(undefined, function () {
-                //noinspection JSUnresolvedVariable
-                window.location = data.returnValues.redirectURL;
-            });
-        },
-        _dialogSetup: function () {
-            return {
-                id: 'templateGroupCopy',
-                options: {
-                    onSetup: (function () {
-                        ['Name', 'FolderName'].forEach((function (type) {
-                            var input = elById('copyTemplateGroup' + type);
-                            input.value = elById('templateGroup' + type).value;
-                            if (type === 'Name')
-                                _name = input;
-                            else
-                                _folderName = input;
-                        }).bind(this));
-                    }).bind(this),
-                    title: Language.get('wcf.acp.template.group.copy')
+                    templateGroupName: this.name.value,
+                    templateGroupFolderName: this.folderName.value,
                 },
-                source: '<dl>' +
-                    '<dt><label for="copyTemplateGroupName">' + Language.get('wcf.global.name') + '</label></dt>' +
-                    '<dd><input type="text" id="copyTemplateGroupName" class="long" data-dialog-submit-on-enter="true" required></dd>' +
-                    '</dl>' +
-                    '<dl>' +
-                    '<dt><label for="copyTemplateGroupFolderName">' + Language.get('wcf.acp.template.group.folderName') + '</label></dt>' +
-                    '<dd><input type="text" id="copyTemplateGroupFolderName" class="long" data-dialog-submit-on-enter="true" required></dd>' +
-                    '</dl>' +
-                    '<div class="formSubmit">' +
-                    '<button class="buttonPrimary" data-type="submit">' + Language.get('wcf.global.button.submit') + '</button>' +
-                    '</div>'
+            });
+        }
+        _ajaxSuccess(data) {
+            Dialog_1.default.close(this);
+            UiNotification.show(undefined, () => {
+                window.location.href = data.returnValues.redirectURL;
+            });
+        }
+        _dialogSetup() {
+            return {
+                id: "templateGroupCopy",
+                options: {
+                    onSetup: () => {
+                        ["Name", "FolderName"].forEach((type) => {
+                            const input = document.getElementById("copyTemplateGroup" + type);
+                            input.value = document.getElementById("templateGroup" + type).value;
+                            if (type === "Name") {
+                                this.name = input;
+                            }
+                            else {
+                                this.folderName = input;
+                            }
+                        });
+                    },
+                    title: Language.get("wcf.acp.template.group.copy"),
+                },
+                source: `<dl>
+  <dt>
+    <label for="copyTemplateGroupName">${Language.get("wcf.global.name")}</label>
+  </dt>
+  <dd>
+    <input type="text" id="copyTemplateGroupName" class="long" data-dialog-submit-on-enter="true" required>
+  </dd>
+</dl>
+<dl>
+  <dt>
+    <label for="copyTemplateGroupFolderName">${Language.get("wcf.acp.template.group.folderName")}</label>
+  </dt>
+  <dd>
+    <input type="text" id="copyTemplateGroupFolderName" class="long" data-dialog-submit-on-enter="true" required>
+  </dd>
+</dl>
+<div class="formSubmit">
+  <button class="buttonPrimary" data-type="submit">${Language.get("wcf.global.button.submit")}</button>
+</div>`,
             };
-        },
-        _ajaxSetup: function () {
+        }
+        _ajaxSetup() {
             return {
                 data: {
-                    actionName: 'copy',
-                    className: 'wcf\\data\\template\\group\\TemplateGroupAction',
-                    objectIDs: [_templateGroupId]
+                    actionName: "copy",
+                    className: "wcf\\data\\template\\group\\TemplateGroupAction",
+                    objectIDs: [this.templateGroupId],
                 },
-                /** @var {{returnValues:{fieldName: string, errorType: string}}} data */
-                failure: function (data) {
+                failure: (data) => {
                     if (data && data.returnValues && data.returnValues.fieldName && data.returnValues.errorType) {
-                        if (data.returnValues.fieldName === 'templateGroupName') {
-                            elInnerError(_name, Language.get('wcf.acp.template.group.name.error.' + data.returnValues.errorType));
+                        if (data.returnValues.fieldName === "templateGroupName") {
+                            Util_1.default.innerError(this.name, Language.get(`wcf.acp.template.group.name.error.${data.returnValues.errorType}`));
                         }
                         else {
-                            elInnerError(_folderName, Language.get('wcf.acp.template.group.folderName.error.' + data.returnValues.errorType));
+                            Util_1.default.innerError(this.folderName, Language.get(`wcf.acp.template.group.folderName.error.${data.returnValues.errorType}`));
                         }
                         return false;
                     }
-                }
+                    return true;
+                },
             };
         }
-    };
+    }
+    let acpUiTemplateGroupCopy;
+    function init(templateGroupId) {
+        if (!acpUiTemplateGroupCopy) {
+            acpUiTemplateGroupCopy = new AcpUiTemplateGroupCopy(templateGroupId);
+        }
+    }
+    exports.init = init;
 });
