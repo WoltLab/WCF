@@ -8,7 +8,7 @@
  * @since 5.2
  */
 
-import Manager from "./Manager";
+import * as DependencyManager from "./Manager";
 import * as Core from "../../../../Core";
 
 abstract class FormBuilderFormFieldDependency {
@@ -96,7 +96,7 @@ abstract class FormBuilderFormFieldDependency {
       }
     }
 
-    Manager.addDependency(this);
+    DependencyManager.addDependency(this);
   }
 }
 

@@ -12,7 +12,7 @@
 import * as Core from "../../Core";
 import * as EventHandler from "../../Event/Handler";
 import Field from "./Field/Field";
-import DependencyManager from "./Field/Dependency/Manager";
+import * as DependencyManager from "./Field/Dependency/Manager";
 import { FormBuilderData } from "./Data";
 
 type FormId = string;

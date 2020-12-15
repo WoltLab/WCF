@@ -8,11 +8,12 @@
  * @see module:WoltLabSuite/Core/Form/Builder/Field/Dependency/Abstract
  * @since 5.4
  */
-define(["require", "exports", "tslib", "./Abstract", "./Manager", "../../../../Core"], function (require, exports, tslib_1, Abstract_1, Manager_1, Core) {
+define(["require", "exports", "tslib", "./Abstract", "./Manager"], function (require, exports, tslib_1, Abstract_1, DependencyManager) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.IsNotClicked = void 0;
     Abstract_1 = tslib_1.__importDefault(Abstract_1);
-    Manager_1 = tslib_1.__importDefault(Manager_1);
-    Core = tslib_1.__importStar(Core);
+    DependencyManager = tslib_1.__importStar(DependencyManager);
     class IsNotClicked extends Abstract_1.default {
         constructor(dependentElementId, fieldId) {
             super(dependentElementId, fieldId);
@@ -21,13 +22,13 @@ define(["require", "exports", "tslib", "./Abstract", "./Manager", "../../../../C
             // events.
             this._field.addEventListener("click", () => {
                 this._field.dataset.isClicked = "1";
-                Manager_1.default.checkDependencies();
+                DependencyManager.checkDependencies();
             });
         }
         checkDependency() {
             return this._field.dataset.isClicked !== "1";
         }
     }
-    Core.enableLegacyInheritance(IsNotClicked);
-    return IsNotClicked;
+    exports.IsNotClicked = IsNotClicked;
+    exports.default = IsNotClicked;
 });

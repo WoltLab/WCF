@@ -8,14 +8,14 @@
  * @module  WoltLabSuite/Core/Form/Builder/Manager
  * @since 5.2
  */
-define(["require", "exports", "tslib", "../../Core", "../../Event/Handler", "./Field/Field", "./Field/Dependency/Manager"], function (require, exports, tslib_1, Core, EventHandler, Field_1, Manager_1) {
+define(["require", "exports", "tslib", "../../Core", "../../Event/Handler", "./Field/Field", "./Field/Dependency/Manager"], function (require, exports, tslib_1, Core, EventHandler, Field_1, DependencyManager) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.unregisterForm = exports.registerForm = exports.registerField = exports.hasForm = exports.hasField = exports.getForm = exports.getField = exports.getData = void 0;
     Core = tslib_1.__importStar(Core);
     EventHandler = tslib_1.__importStar(EventHandler);
     Field_1 = tslib_1.__importDefault(Field_1);
-    Manager_1 = tslib_1.__importDefault(Manager_1);
+    DependencyManager = tslib_1.__importStar(DependencyManager);
     const _fields = new Map();
     const _forms = new Map();
     /**
@@ -132,7 +132,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Event/Handler", "./F
             field.destroy();
         });
         _fields.delete(formId);
-        Manager_1.default.unregister(formId);
+        DependencyManager.unregister(formId);
         EventHandler.fire("WoltLabSuite/Core/Form/Builder/Manager", "afterUnregisterForm", {
             formId: formId,
         });

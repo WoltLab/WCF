@@ -20,7 +20,7 @@ class Label {
   protected readonly _labelChooser: HTMLElement;
   protected readonly _options: LabelFormFieldOptions;
 
-  constructor(fieldId: string, labelId: string, options: LabelFormFieldOptions) {
+  constructor(fieldId: string, labelId: string, options: Partial<LabelFormFieldOptions>) {
     this._formFieldContainer = document.getElementById(fieldId + "Container")!;
     this._labelChooser = this._formFieldContainer.getElementsByClassName("labelChooser")[0] as HTMLElement;
     this._options = Core.extend(

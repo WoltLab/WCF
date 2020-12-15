@@ -12,7 +12,7 @@
 
 import Abstract from "./Abstract";
 import * as Core from "../../../../../Core";
-import DependencyManager from "../Manager";
+import * as DependencyManager from "../Manager";
 
 class Default extends Abstract {
   public checkContainer(): void {

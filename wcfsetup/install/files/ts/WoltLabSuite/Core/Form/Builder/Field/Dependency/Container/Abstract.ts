@@ -9,10 +9,10 @@
  * @since 5.2
  */
 
-import DependencyManager from "../Manager";
+import * as DependencyManager from "../Manager";
 import * as Core from "../../../../../Core";
 
-class Abstract {
+abstract class Abstract {
   protected _container: HTMLElement;
 
   constructor(containerId: string) {

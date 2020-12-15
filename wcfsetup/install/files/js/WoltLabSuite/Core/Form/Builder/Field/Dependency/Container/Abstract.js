@@ -8,9 +8,9 @@
  * @module  WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Abstract
  * @since 5.2
  */
-define(["require", "exports", "tslib", "../Manager", "../../../../../Core"], function (require, exports, tslib_1, Manager_1, Core) {
+define(["require", "exports", "tslib", "../Manager", "../../../../../Core"], function (require, exports, tslib_1, DependencyManager, Core) {
     "use strict";
-    Manager_1 = tslib_1.__importDefault(Manager_1);
+    DependencyManager = tslib_1.__importStar(DependencyManager);
     Core = tslib_1.__importStar(Core);
     class Abstract {
         constructor(containerId) {
@@ -33,7 +33,7 @@ define(["require", "exports", "tslib", "../Manager", "../../../../../Core"], fun
             if (this._container === null) {
                 throw new Error("Unknown container with id '" + containerId + "'.");
             }
-            Manager_1.default.addContainerCheckCallback(() => this.checkContainer());
+            DependencyManager.addContainerCheckCallback(() => this.checkContainer());
         }
     }
     Core.enableLegacyInheritance(Abstract);

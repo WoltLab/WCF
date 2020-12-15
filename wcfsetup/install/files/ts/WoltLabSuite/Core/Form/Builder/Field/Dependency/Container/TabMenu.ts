@@ -11,7 +11,7 @@
  */
 
 import Abstract from "./Abstract";
-import DependencyManager from "../Manager";
+import * as DependencyManager from "../Manager";
 import * as DomUtil from "../../../../../Dom/Util";
 import * as UiTabMenu from "../../../../../Ui/TabMenu";
 import * as Core from "../../../../../Core";

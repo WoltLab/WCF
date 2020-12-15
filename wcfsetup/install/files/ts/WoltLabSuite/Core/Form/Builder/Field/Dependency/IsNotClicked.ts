@@ -10,10 +10,9 @@
  */
 
 import Abstract from "./Abstract";
-import Manager from "./Manager";
-import * as Core from "../../../../Core";
+import * as DependencyManager from "./Manager";
 
-class IsNotClicked extends Abstract {
+export class IsNotClicked extends Abstract {
   constructor(dependentElementId: string, fieldId: string) {
     super(dependentElementId, fieldId);
 
@@ -23,7 +22,7 @@ class IsNotClicked extends Abstract {
     this._field.addEventListener("click", () => {
       this._field.dataset.isClicked = "1";
 
-      Manager.checkDependencies();
+      DependencyManager.checkDependencies();
     });
   }
 
@@ -32,6 +31,4 @@ class IsNotClicked extends Abstract {
   }
 }
 
-Core.enableLegacyInheritance(IsNotClicked);
-
-export = IsNotClicked;
+export default IsNotClicked;

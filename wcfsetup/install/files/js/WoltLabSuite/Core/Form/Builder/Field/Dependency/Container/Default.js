@@ -9,18 +9,18 @@
  * @see module:WoltLabSuite/Core/Form/Builder/Field/Dependency/Abstract
  * @since 5.2
  */
-define(["require", "exports", "tslib", "./Abstract", "../../../../../Core", "../Manager"], function (require, exports, tslib_1, Abstract_1, Core, Manager_1) {
+define(["require", "exports", "tslib", "./Abstract", "../../../../../Core", "../Manager"], function (require, exports, tslib_1, Abstract_1, Core, DependencyManager) {
     "use strict";
     Abstract_1 = tslib_1.__importDefault(Abstract_1);
     Core = tslib_1.__importStar(Core);
-    Manager_1 = tslib_1.__importDefault(Manager_1);
+    DependencyManager = tslib_1.__importStar(DependencyManager);
     class Default extends Abstract_1.default {
         checkContainer() {
             if (Core.stringToBool(this._container.dataset.ignoreDependencies || "")) {
                 return;
             }
             // only consider containers that have not been hidden by their own dependencies
-            if (Manager_1.default.isHiddenByDependencies(this._container)) {
+            if (DependencyManager.isHiddenByDependencies(this._container)) {
                 return;
             }
             const containerIsVisible = this._container.style.display !== "none";
@@ -40,7 +40,7 @@ define(["require", "exports", "tslib", "./Abstract", "../../../../../Core", "../
                 }
                 // check containers again to make sure parent containers can react to
                 // changing the visibility of this container
-                Manager_1.default.checkContainers();
+                DependencyManager.checkContainers();
             }
         }
     }

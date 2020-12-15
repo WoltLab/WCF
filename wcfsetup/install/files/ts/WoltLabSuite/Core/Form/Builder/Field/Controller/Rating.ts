@@ -56,7 +56,7 @@ class Rating {
   /**
    * Saves the rating associated with the clicked rating element.
    */
-  _listItemClick(event: Event): void {
+  protected _listItemClick(event: Event): void {
     const target = event.currentTarget as HTMLElement;
     this._input.value = target.dataset.rating!;
 
@@ -68,7 +68,7 @@ class Rating {
   /**
    * Updates the rating UI when hovering over a rating element.
    */
-  _listItemMouseEnter(event: Event): void {
+  protected _listItemMouseEnter(event: Event): void {
     const target = event.currentTarget as HTMLElement;
     const currentRating = target.dataset.rating!;
 
@@ -83,7 +83,7 @@ class Rating {
    * Updates the rating UI when leaving a rating element by changing all rating elements
    * to their default state.
    */
-  _listItemMouseLeave(): void {
+  protected _listItemMouseLeave(): void {
     this._ratingElements.forEach((ratingElement) => {
       const icon = ratingElement.getElementsByClassName("icon")[0]! as HTMLElement;
 
@@ -94,7 +94,7 @@ class Rating {
   /**
    * Handles clicks on meta buttons.
    */
-  _metaButtonClick(event: Event): void {
+  protected _metaButtonClick(event: Event): void {
     const target = event.currentTarget as HTMLElement;
     if (target.dataset.action === "removeRating") {
       this._input.value = "";
@@ -106,7 +106,7 @@ class Rating {
   /**
    * Updates the rating UI by changing the rating elements to the stored rating state.
    */
-  _restoreRating(): void {
+  protected _restoreRating(): void {
     this._ratingElements.forEach((ratingElement, rating) => {
       const icon = ratingElement.getElementsByClassName("icon")[0]! as HTMLElement;
 
@@ -117,7 +117,7 @@ class Rating {
   /**
    * Toggles the state of the given icon based on the given state parameter.
    */
-  _toggleIcon(icon: HTMLElement, active = false): void {
+  protected _toggleIcon(icon: HTMLElement, active = false): void {
     if (active) {
       icon.classList.remove(...this._defaultCssClasses);
       icon.classList.add(...this._activeCssClasses);
