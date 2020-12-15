@@ -18,7 +18,7 @@ type PropertiesMap = Map<string, string>;
 
 const _dependencyHiddenNodes = new Set<HTMLElement>();
 const _fields = new Map<string, HTMLElement>();
-const _forms = new Set<HTMLElement>();
+const _forms = new WeakSet<HTMLElement>();
 const _nodeDependencies = new Map<string, FormBuilderFormFieldDependency[]>();
 const _validatedFieldProperties = new WeakMap<HTMLElement, PropertiesMap>();
 
