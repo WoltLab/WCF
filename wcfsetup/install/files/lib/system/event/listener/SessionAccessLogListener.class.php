@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\event\listener;
+use wcf\action\AJAXInvokeAction;
 use wcf\data\acp\session\access\log\ACPSessionAccessLogEditor;
 use wcf\data\acp\session\log\ACPSessionLog;
 use wcf\data\acp\session\log\ACPSessionLogEditor;
@@ -51,22 +52,30 @@ class SessionAccessLogListener implements IParameterizedEventListener {
 				$sessionLogID = $sessionLog->sessionLogID;
 			}
 			
-			// format request uri
+			// Fetch request URI + request ID (if available).
 			$requestURI = UserUtil::getRequestURI();
-			// remove directories
-			$URIComponents = explode('/', $requestURI);
-			$requestURI = array_pop($URIComponents);
-			// remove session url
-			$requestURI = preg_replace('/(?:\?|&)s=[a-f0-9]{40}/', '', $requestURI);
+			if ($requestId = \wcf\getRequestId()) {
+				$requestIdSuffix = ' ('.$requestId.')';
+				// Ensure that the request ID fits by truncating the URI.
+				$requestURI = substr($requestURI, 0, 255 - strlen($requestIdSuffix)).$requestIdSuffix;
+			}
+			
+			// Get controller name + the AJAX action.
+			$className = get_class($eventObj);
+			if ($eventObj instanceof AJAXInvokeAction) {
+				if (isset($_REQUEST['className']) && isset($_REQUEST['actionName'])) {
+					$className .= ' ('.$_REQUEST['className'].':'.$_REQUEST['actionName'].')';
+				}
+			}
 			
 			// save access
 			ACPSessionAccessLogEditor::create([
 				'sessionLogID' => $sessionLogID,
 				'ipAddress' => UserUtil::getIpAddress(),
 				'time' => TIME_NOW,
-				'requestURI' => $requestURI,
+				'requestURI' => substr($requestURI, 0, 255),
 				'requestMethod' => substr($_SERVER['REQUEST_METHOD'] ?? '', 0, 255),
-				'className' => get_class($eventObj)
+				'className' => substr($className, 0, 255)
 			]);
 		}
 	}
