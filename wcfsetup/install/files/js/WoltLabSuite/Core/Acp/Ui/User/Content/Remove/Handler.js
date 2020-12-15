@@ -1,96 +1,92 @@
 /**
  * Provides the trophy icon designer.
  *
- * @author	Joshua Ruesweg
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Handler
+ * @author  Joshua Ruesweg
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Handler
  * @since       5.2
  */
-define(['Ajax', 'Language', 'Ui/Dialog', 'WoltLabSuite/Core/Acp/Ui/Worker'], function (Ajax, Language, UiDialog, Worker) {
+define(["require", "exports", "tslib", "../../../Worker", "../../../../../Ajax", "../../../../../Language", "../../../../../Ui/Dialog"], function (require, exports, tslib_1, Worker_1, Ajax, Language, Dialog_1) {
     "use strict";
-    /**
-     * Creates a new worker instance.
-     * @constructor
-     */
-    function Handler(element, userId) { this.init(element, userId); }
-    Handler.prototype = {
+    Worker_1 = tslib_1.__importDefault(Worker_1);
+    Ajax = tslib_1.__importStar(Ajax);
+    Language = tslib_1.__importStar(Language);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    class AcpUserContentRemoveHandler {
         /**
          * Initializes the content remove handler.
          */
-        init: function (element, userId) {
-            element.addEventListener('click', this._click.bind(this));
-            this._userId = userId;
-        },
+        constructor(element, userId) {
+            this.userId = userId;
+            this.dialogId = `userRemoveContentHandler-${this.userId}`;
+            element.addEventListener("click", (ev) => this.click(ev));
+        }
         /**
          * Click on the remove content button.
-         *
-         * @param	{object}	event		click event
          */
-        _click: function (event) {
+        click(event) {
             event.preventDefault();
             Ajax.api(this);
-        },
+        }
         /**
          * Executes the remove content worker.
-         *
-         * @param       {Array}         objectTypes
          */
-        _executeWorker: function (objectTypes) {
-            new Worker({
+        executeWorker(objectTypes) {
+            new Worker_1.default({
                 // dialog
-                dialogId: 'removeContentWorker',
-                dialogTitle: Language.get('wcf.acp.content.removeContent'),
+                dialogId: "removeContentWorker",
+                dialogTitle: Language.get("wcf.acp.content.removeContent"),
                 // ajax
-                className: '\\wcf\\system\\worker\\UserContentRemoveWorker',
+                className: "\\wcf\\system\\worker\\UserContentRemoveWorker",
                 parameters: {
-                    userID: this._userId,
-                    contentProvider: objectTypes
-                }
+                    userID: this.userId,
+                    contentProvider: objectTypes,
+                },
             });
-        },
+        }
         /**
          * Handles a click on the submit button in the overlay.
          */
-        _submit: function () {
-            var objectTypeInputs = elBySelAll('input.contentProviderObjectType', UiDialog.getDialog('userRemoveContentHandler-' + this._userId).content);
-            var objectTypes = [];
-            for (var i = 0, length = objectTypeInputs.length; i < length; i++) {
-                if (objectTypeInputs[i].checked) {
-                    objectTypes.push(objectTypeInputs[i].name);
-                }
+        submit() {
+            const objectTypes = Array.from(this.dialogContent.querySelectorAll("input.contentProviderObjectType"))
+                .filter((element) => element.checked)
+                .map((element) => element.name);
+            Dialog_1.default.close(this.dialogId);
+            if (objectTypes.length > 0) {
+                window.setTimeout(() => {
+                    this.executeWorker(objectTypes);
+                }, 200);
             }
-            UiDialog.close('userRemoveContentHandler-' + this._userId);
-            window.setTimeout(function () {
-                if (objectTypes.length > 0) {
-                    this._executeWorker(objectTypes);
-                }
-            }.bind(this), 200);
-        },
-        _ajaxSuccess: function (data) {
-            UiDialog.open(this, data.returnValues.template);
-            elBySel('input[type="submit"]', UiDialog.getDialog('userRemoveContentHandler-' + this._userId).content).addEventListener('click', this._submit.bind(this));
-        },
-        _ajaxSetup: function () {
+        }
+        get dialogContent() {
+            return Dialog_1.default.getDialog(this.dialogId).content;
+        }
+        _ajaxSuccess(data) {
+            Dialog_1.default.open(this, data.returnValues.template);
+            const submitButton = this.dialogContent.querySelector('input[type="submit"]');
+            submitButton.addEventListener("click", () => this.submit());
+        }
+        _ajaxSetup() {
             return {
                 data: {
-                    actionName: 'prepareRemoveContent',
-                    className: 'wcf\\data\\user\\UserAction',
+                    actionName: "prepareRemoveContent",
+                    className: "wcf\\data\\user\\UserAction",
                     parameters: {
-                        userID: this._userId
-                    }
-                }
-            };
-        },
-        _dialogSetup: function () {
-            return {
-                id: 'userRemoveContentHandler-' + this._userId,
-                options: {
-                    title: Language.get('wcf.acp.content.removeContent')
+                        userID: this.userId,
+                    },
                 },
-                source: null
             };
         }
-    };
-    return Handler;
+        _dialogSetup() {
+            return {
+                id: this.dialogId,
+                options: {
+                    title: Language.get("wcf.acp.content.removeContent"),
+                },
+                source: null,
+            };
+        }
+    }
+    return AcpUserContentRemoveHandler;
 });

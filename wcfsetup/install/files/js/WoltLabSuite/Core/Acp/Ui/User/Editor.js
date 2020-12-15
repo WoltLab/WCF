@@ -1,102 +1,108 @@
 /**
  * User editing capabilities for the user list.
  *
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Acp/Ui/User/Editor
+ * @author  Alexander Ebert
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Acp/Ui/User/Editor
  * @since       3.1
  */
-define(['Ajax', 'Core', 'EventHandler', 'Language', 'Ui/Notification', 'Ui/SimpleDropdown', 'WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Handler'], function (Ajax, Core, EventHandler, Language, UiNotification, UiSimpleDropdown, RemoveContentHandler) {
+define(["require", "exports", "tslib", "./Content/Remove/Handler", "../../../Ajax", "../../../Core", "../../../Event/Handler", "../../../Language", "../../../Ui/Notification", "../../../Ui/Dropdown/Simple", "../../../Dom/Util"], function (require, exports, tslib_1, Handler_1, Ajax, Core, EventHandler, Language, UiNotification, Simple_1, Util_1) {
     "use strict";
-    /**
-     * @exports     WoltLabSuite/Core/Acp/Ui/User/Editor
-     */
-    return {
+    Handler_1 = tslib_1.__importDefault(Handler_1);
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    Language = tslib_1.__importStar(Language);
+    UiNotification = tslib_1.__importStar(UiNotification);
+    Simple_1 = tslib_1.__importDefault(Simple_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    class AcpUiUserEditor {
         /**
          * Initializes the edit dropdown for each user.
          */
-        init: function () {
-            elBySelAll('.jsUserRow', undefined, this._initUser.bind(this));
-            EventHandler.add('com.woltlab.wcf.acp.user', 'refresh', this._refreshUsers.bind(this));
-        },
+        constructor() {
+            document.querySelectorAll(".jsUserRow").forEach((userRow) => this.initUser(userRow));
+            EventHandler.add("com.woltlab.wcf.acp.user", "refresh", (data) => this.refreshUsers(data));
+        }
         /**
          * Initializes the edit dropdown for a user.
-         *
-         * @param       {Element}       userRow
-         * @protected
          */
-        _initUser: function (userRow) {
-            var userId = ~~elData(userRow, 'object-id');
-            var dropdownMenu = UiSimpleDropdown.getDropdownMenu('userListDropdown' + userId);
-            var legacyButtonContainer = elBySel('.jsLegacyButtons', userRow);
+        initUser(userRow) {
+            const userId = ~~userRow.dataset.objectId;
+            const dropdownId = `userListDropdown${userId}`;
+            const dropdownMenu = Simple_1.default.getDropdownMenu(dropdownId);
+            const legacyButtonContainer = userRow.querySelector(".jsLegacyButtons");
             if (dropdownMenu.childElementCount === 0 && legacyButtonContainer.childElementCount === 0) {
-                elBySel('.dropdownToggle', userRow).classList.add('disabled');
+                const toggleButton = userRow.querySelector(".dropdownToggle");
+                toggleButton.classList.add("disabled");
                 return;
             }
-            UiSimpleDropdown.registerCallback('userListDropdown' + userId, (function (identifier, action) {
-                if (action === 'open') {
-                    this._rebuild(userId, dropdownMenu, legacyButtonContainer);
+            Simple_1.default.registerCallback(dropdownId, (identifier, action) => {
+                if (action === "open") {
+                    this.rebuild(dropdownMenu, legacyButtonContainer);
                 }
-            }).bind(this));
-            var editLink = elBySel('.jsEditLink', dropdownMenu);
+            });
+            const editLink = dropdownMenu.querySelector(".jsEditLink");
             if (editLink !== null) {
-                elBySel('.dropdownToggle', userRow).addEventListener('dblclick', function (event) {
+                const toggleButton = userRow.querySelector(".dropdownToggle");
+                toggleButton.addEventListener("dblclick", (event) => {
                     event.preventDefault();
                     editLink.click();
                 });
             }
-            var sendNewPassword = elBySel('.jsSendNewPassword', dropdownMenu);
+            const sendNewPassword = dropdownMenu.querySelector(".jsSendNewPassword");
             if (sendNewPassword !== null) {
-                sendNewPassword.addEventListener('click', function (event) {
+                sendNewPassword.addEventListener("click", (event) => {
                     event.preventDefault();
                     // emulate clipboard selection
-                    EventHandler.fire('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.user', {
+                    EventHandler.fire("com.woltlab.wcf.clipboard", "com.woltlab.wcf.user", {
                         data: {
-                            actionName: 'com.woltlab.wcf.user.sendNewPassword',
+                            actionName: "com.woltlab.wcf.user.sendNewPassword",
                             parameters: {
-                                confirmMessage: Language.get('wcf.acp.user.action.sendNewPassword.confirmMessage'),
-                                objectIDs: [userId]
-                            }
+                                confirmMessage: Language.get("wcf.acp.user.action.sendNewPassword.confirmMessage"),
+                                objectIDs: [userId],
+                            },
                         },
                         responseData: {
-                            actionName: 'com.woltlab.wcf.user.sendNewPassword',
-                            objectIDs: [userId]
-                        }
+                            actionName: "com.woltlab.wcf.user.sendNewPassword",
+                            objectIDs: [userId],
+                        },
                     });
                 });
             }
-            var deleteContent = elBySel('.jsDeleteContent', dropdownMenu);
+            const deleteContent = dropdownMenu.querySelector(".jsDeleteContent");
             if (deleteContent !== null) {
-                new RemoveContentHandler(deleteContent, userId);
+                new Handler_1.default(deleteContent, userId);
             }
-            var toggleConfirmEmail = elBySel('.jsConfirmEmailToggle', dropdownMenu);
+            const toggleConfirmEmail = dropdownMenu.querySelector(".jsConfirmEmailToggle");
             if (toggleConfirmEmail !== null) {
-                toggleConfirmEmail.addEventListener('click', function (event) {
+                toggleConfirmEmail.addEventListener("click", (event) => {
                     event.preventDefault();
                     Ajax.api({
-                        _ajaxSetup: function () {
+                        _ajaxSetup: () => {
+                            const isEmailConfirmed = Core.stringToBool(userRow.dataset.emailConfirmed);
                             return {
                                 data: {
-                                    actionName: (elDataBool(userRow, 'email-confirmed') ? 'un' : '') + 'confirmEmail',
-                                    className: 'wcf\\data\\user\\UserAction',
-                                    objectIDs: [userId]
-                                }
+                                    actionName: (isEmailConfirmed ? "un" : "") + "confirmEmail",
+                                    className: "wcf\\data\\user\\UserAction",
+                                    objectIDs: [userId],
+                                },
                             };
-                        }
-                    }, null, function (data) {
-                        elBySelAll('.jsUserRow', undefined, function (userRow) {
-                            var userId = parseInt(elData(userRow, 'object-id'));
-                            if (data.objectIDs.indexOf(userId) !== -1) {
-                                var confirmEmailButton = elBySel('.jsConfirmEmailToggle', UiSimpleDropdown.getDropdownMenu('userListDropdown' + userId));
+                        },
+                    }, undefined, (data) => {
+                        document.querySelectorAll(".jsUserRow").forEach((userRow) => {
+                            const userId = ~~userRow.dataset.objectId;
+                            if (data.objectIDs.includes(userId)) {
+                                const confirmEmailButton = dropdownMenu.querySelector(".jsConfirmEmailToggle");
                                 switch (data.actionName) {
-                                    case 'confirmEmail':
-                                        elData(userRow, 'email-confirmed', 'true');
-                                        confirmEmailButton.textContent = elData(confirmEmailButton, 'unconfirm-email-message');
+                                    case "confirmEmail":
+                                        userRow.dataset.emailConfirmed = "true";
+                                        confirmEmailButton.textContent = confirmEmailButton.dataset.unconfirmEmailMessage;
                                         break;
-                                    case 'unconfirmEmail':
-                                        elData(userRow, 'email-confirmed', 'false');
-                                        confirmEmailButton.textContent = elData(confirmEmailButton, 'confirm-email-message');
+                                    case "unconfirmEmail":
+                                        userRow.dataset.emailEonfirmed = "false";
+                                        confirmEmailButton.textContent = confirmEmailButton.dataset.confirmEmailMessage;
                                         break;
                                     default:
                                         throw new Error("Unreachable");
@@ -107,99 +113,93 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Ui/Notification', 'Ui/Simpl
                     });
                 });
             }
-        },
+        }
         /**
          * Rebuilds the dropdown by adding wrapper links for legacy buttons,
          * that will eventually receive the click event.
-         *
-         * @param       {int}           userId
-         * @param       {Element}       dropdownMenu
-         * @param       {Element}       legacyButtonContainer
-         * @protected
          */
-        _rebuild: function (userId, dropdownMenu, legacyButtonContainer) {
-            elBySelAll('.jsLegacyItem', dropdownMenu, elRemove);
+        rebuild(dropdownMenu, legacyButtonContainer) {
+            dropdownMenu.querySelectorAll(".jsLegacyItem").forEach((element) => element.remove());
             // inject buttons
-            var button, item, link;
-            var items = [];
-            var deleteButton = null;
-            for (var i = 0, length = legacyButtonContainer.childElementCount; i < length; i++) {
-                button = legacyButtonContainer.children[i];
-                if (button.classList.contains('jsDeleteButton')) {
+            const items = [];
+            let deleteButton = null;
+            Array.from(legacyButtonContainer.children).forEach((button) => {
+                if (button.classList.contains("jsDeleteButton")) {
                     deleteButton = button;
-                    continue;
+                    return;
                 }
-                item = elCreate('li');
-                item.className = 'jsLegacyItem';
+                const item = document.createElement("li");
+                item.className = "jsLegacyItem";
                 item.innerHTML = '<a href="#"></a>';
-                link = item.children[0];
-                link.textContent = elData(button, 'tooltip') || button.title;
-                (function (button) {
-                    link.addEventListener('click', function (event) {
-                        event.preventDefault();
-                        // forward click onto original button
-                        if (button.nodeName === 'A')
-                            button.click();
-                        else
-                            Core.triggerEvent(button, 'click');
-                    });
-                })(button);
-                items.push(item);
-            }
-            while (items.length) {
-                dropdownMenu.insertBefore(items.pop(), dropdownMenu.firstElementChild);
-            }
-            if (deleteButton !== null) {
-                elBySel('.jsDispatchDelete', dropdownMenu).addEventListener('click', function (event) {
+                const link = item.children[0];
+                link.textContent = button.dataset.tooltip || button.title;
+                link.addEventListener("click", (event) => {
                     event.preventDefault();
-                    Core.triggerEvent(deleteButton, 'click');
+                    // forward click onto original button
+                    if (button.nodeName === "A") {
+                        button.click();
+                    }
+                    else {
+                        Core.triggerEvent(button, "click");
+                    }
+                });
+                items.push(item);
+            });
+            items.forEach((item) => {
+                dropdownMenu.insertAdjacentElement("afterbegin", item);
+            });
+            if (deleteButton !== null) {
+                const dispatchDeleteButton = dropdownMenu.querySelector(".jsDispatchDelete");
+                dispatchDeleteButton.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    deleteButton.click();
                 });
             }
             // check if there are visible items before each divider
-            for (i = 0, length = dropdownMenu.childElementCount; i < length; i++) {
-                elShow(dropdownMenu.children[i]);
-            }
-            var hasItem = false;
-            for (i = 0, length = dropdownMenu.childElementCount; i < length; i++) {
-                item = dropdownMenu.children[i];
-                if (item.classList.contains('dropdownDivider')) {
-                    if (!hasItem)
-                        elHide(item);
+            const listItems = Array.from(dropdownMenu.children);
+            listItems.forEach((element) => Util_1.default.show(element));
+            let hasItem = false;
+            listItems.forEach((item) => {
+                if (item.classList.contains("dropdownDivider")) {
+                    if (!hasItem) {
+                        Util_1.default.hide(item);
+                    }
                 }
                 else {
                     hasItem = true;
                 }
-            }
-        },
-        _refreshUsers: function (data) {
-            elBySelAll('.jsUserRow', undefined, function (userRow) {
-                var userId = parseInt(elData(userRow, 'object-id'));
-                if (data.userIds.indexOf(userId) !== -1) {
-                    var userStatusIcons = elBySel('.userStatusIcons', userRow);
-                    var banned = elDataBool(userRow, 'banned');
-                    var iconBanned = elBySel('.jsUserStatusBanned', userRow);
+            });
+        }
+        refreshUsers(data) {
+            document.querySelectorAll(".jsUserRow").forEach((userRow) => {
+                const userId = ~~userRow.dataset.objectId;
+                if (data.userIds.includes(userId)) {
+                    const userStatusIcons = userRow.querySelector(".userStatusIcons");
+                    const banned = Core.stringToBool(userRow.dataset.banned);
+                    let iconBanned = userRow.querySelector(".jsUserStatusBanned");
                     if (banned && iconBanned === null) {
-                        iconBanned = elCreate('span');
-                        iconBanned.className = 'icon icon16 fa-lock jsUserStatusBanned jsTooltip';
-                        iconBanned.title = Language.get('wcf.user.status.banned');
-                        userStatusIcons.insertBefore(iconBanned, null);
+                        iconBanned = document.createElement("span");
+                        iconBanned.className = "icon icon16 fa-lock jsUserStatusBanned jsTooltip";
+                        iconBanned.title = Language.get("wcf.user.status.banned");
+                        userStatusIcons.appendChild(iconBanned);
                     }
                     else if (!banned && iconBanned !== null) {
-                        elRemove(iconBanned);
+                        iconBanned.remove();
                     }
-                    var isDisabled = elDataBool(userRow, 'enabled') === false;
-                    var iconIsDisabled = elBySel('.jsUserStatusIsDisabled', userRow);
+                    const isDisabled = !Core.stringToBool(userRow.dataset.enabled);
+                    let iconIsDisabled = userRow.querySelector(".jsUserStatusIsDisabled");
                     if (isDisabled && iconIsDisabled === null) {
-                        iconIsDisabled = elCreate('span');
-                        iconIsDisabled.className = 'icon icon16 fa-power-off jsUserStatusIsDisabled jsTooltip';
-                        iconIsDisabled.title = Language.get('wcf.user.status.isDisabled');
+                        iconIsDisabled = document.createElement("span");
+                        iconIsDisabled.className = "icon icon16 fa-power-off jsUserStatusIsDisabled jsTooltip";
+                        iconIsDisabled.title = Language.get("wcf.user.status.isDisabled");
                         userStatusIcons.appendChild(iconIsDisabled);
                     }
                     else if (!isDisabled && iconIsDisabled !== null) {
-                        elRemove(iconIsDisabled);
+                        iconIsDisabled.remove();
                     }
                 }
             });
         }
-    };
+    }
+    return AcpUiUserEditor;
 });
