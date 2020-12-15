@@ -3,12 +3,12 @@ namespace wcf\system\user\multifactor;
 use wcf\system\email\SimpleEmail;
 use wcf\system\flood\FloodControl;
 use wcf\system\form\builder\container\FormContainer;
-use wcf\system\form\builder\CustomFormNode;
 use wcf\system\form\builder\field\ButtonFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\IFormDocument;
+use wcf\system\form\builder\LanguageItemFormNode;
 use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\user\authentication\password\algorithm\Bcrypt;
 use wcf\system\user\authentication\password\IPasswordAlgorithm;
@@ -123,10 +123,8 @@ class BackupMultifactorMethod implements IMultifactorMethod {
 			$regenerateContainer = FormContainer::create('regenerateCodesContainer')
 				->label('wcf.user.security.multifactor.backup.regenerateCodes')
 				->appendChildren([
-					CustomFormNode::create('explanation')
-						->content(WCF::getLanguage()->getDynamicVariable(
-							'wcf.user.security.multifactor.backup.regenerateCodes.description'
-						)),
+					LanguageItemFormNode::create('explanation')
+						->languageItem('wcf.user.security.multifactor.backup.regenerateCodes.description'),
 					ButtonFormField::create('regenerateCodes')
 						->buttonLabel('wcf.user.security.multifactor.backup.regenerateCodes')
 						->objectProperty('action')

@@ -10,7 +10,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\FormDocument;
 use wcf\system\form\builder\IFormParentNode;
-use wcf\system\form\builder\TemplateFormNode;
+use wcf\system\form\builder\LanguageItemFormNode;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\TReauthenticationCheck;
@@ -196,8 +196,8 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 		/** @var IFormParentNode $container */
 		$container = $form->getNodeById('existingCodesContainer');
 		$container->insertBefore(
-			TemplateFormNode::create('initialBackup')
-				->templateName('__multifactorManageInitialBackup'),
+			LanguageItemFormNode::create('initialBackup')
+				->languageItem('wcf.user.security.multifactor.initialBackup'),
 			'existingCodes'
 		);
 		$form->build();
