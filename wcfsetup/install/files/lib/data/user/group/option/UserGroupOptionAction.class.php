@@ -2,6 +2,7 @@
 namespace wcf\data\user\group\option;
 use wcf\data\user\group\UserGroupEditor;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
 /**
@@ -26,15 +27,21 @@ class UserGroupOptionAction extends AbstractDatabaseObjectAction {
 	 * Updates option values for given option id.
 	 */
 	public function updateValues() {
+		/** @var UserGroupOption $option */
 		$option = current($this->objects);
+		
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("optionID = ?", [$option->optionID]);
+		if (!empty($this->parameters['values'])) {
+			$groupIDs = array_keys($this->parameters['values']);
+			$conditions->add("groupID IN (?)", [$groupIDs]);
+		}
 		
 		// remove old values
 		$sql = "DELETE FROM	wcf".WCF_N."_user_group_option_value
-			WHERE		optionID = ?";
+			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([
-			$option->optionID
-		]);
+		$statement->execute($conditions->getParameters());
 		
 		if (!empty($this->parameters['values'])) {
 			$sql = "INSERT INTO	wcf".WCF_N."_user_group_option_value
