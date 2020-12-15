@@ -7,7 +7,7 @@
  * @module	WoltLabSuite/Core/Form/Builder/Field/Dependency/Manager
  * @since	5.2
  */
-define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Traverse', 'Dom/Util', 'ObjectMap'], function(Dictionary, DomChangeListener, EventHandler, List, DomTraverse, DomUtil, ObjectMap) {
+define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Util', 'ObjectMap'], function(Dictionary, DomChangeListener, EventHandler, List, DomUtil, ObjectMap) {
 	"use strict";
 	
 	/**
@@ -73,7 +73,7 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
 			
 			// also hide tab menu entry
 			if (node.classList.contains('tabMenuContent')) {
-				elBySelAll('li', DomTraverse.prevByClass(node, 'tabMenu'), function(tabLink) {
+				elBySelAll('li', node.parentNode.querySelector('.tabMenu'), function(tabLink) {
 					if (elData(tabLink, 'name') === elData(node, 'name')) {
 						elHide(tabLink);
 					}
@@ -122,7 +122,7 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
 			
 			// also show tab menu entry
 			if (node.classList.contains('tabMenuContent')) {
-				elBySelAll('li', DomTraverse.prevByClass(node, 'tabMenu'), function(tabLink) {
+				elBySelAll('li', node.parentNode.querySelector('.tabMenu'), function(tabLink) {
 					if (elData(tabLink, 'name') === elData(node, 'name')) {
 						elShow(tabLink);
 					}
