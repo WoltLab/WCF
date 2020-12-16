@@ -3429,6 +3429,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich {if $count == 1}einem Benutzer{else}{#$count} Benutzern{/if} ein neues Kennwort zusenden?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.confirmEmail"><![CDATA[E-Mail-Adresse bestätigen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.unconfirmEmail"><![CDATA[Bestätigung der E-Mail-Adresse widerrufen ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.deleteUserContent"><![CDATA[Inhalte der Benutzer löschen ({#$count})]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.article.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Artikel]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.media.marked"><![CDATA[{if $count == 1}Eine Datei{else}{#$count} Dateien{/if}]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.tag.marked"><![CDATA[{if $count == 1}Ein Tag{else}{#$count} Tags{/if}]]></item>

@@ -240,6 +240,10 @@ class UserContentRemoveWorker extends AbstractWorker {
 		$dataArray[$this->generateKey()] = $this->data;
 		
 		WCF::getSession()->register(self::USER_CONTENT_REMOVE_WORKER_SESSION_NAME, $dataArray);
+		
+		ClipboardHandler::getInstance()->unmark(array_map(function (User $user) {
+			return $user->userID;
+		}, $this->user), ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
 	}
 	
 	/**
