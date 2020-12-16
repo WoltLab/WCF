@@ -333,7 +333,6 @@ final class SessionHandler extends SingletonFactory {
 			$hasSession = $this->getExistingSession($sessionID);
 		}
 		
-		// create new session
 		if (!$hasSession) {
 			$this->create();
 		}
@@ -350,10 +349,39 @@ final class SessionHandler extends SingletonFactory {
 			$hasSession = $this->getExistingSession($sessionID);
 		}
 		
-		// create new session
-		if (!$hasSession) {
+		if ($hasSession) {
+			$this->maybeRefreshCookie();
+		}
+		else {
 			$this->create();
 		}
+	}
+	
+	/**
+	 * Refreshes the session cookie, extending the expiry.
+	 */
+	private function maybeRefreshCookie(): void {
+		// Guests and ACP use short-lived sessions with an actual
+		// session cookie.
+		if (!$this->user->userID) return;
+		if ($this->isACP) return;
+		
+		$cookieData = $this->getParsedCookieData();
+		
+		// No refresh is needed if userId and timestep match up.
+		if (
+			$cookieData['userId'] === $this->user->userID &&
+			$cookieData['timestep'] === $this->getCookieTimestep()
+		) {
+			return;
+		}
+		
+		// Refresh the cookie.
+		HeaderUtil::setCookie(
+			($this->isACP ? 'acp' : 'user') . '_session',
+			$this->getCookieValue(),
+			TIME_NOW + (self::USER_SESSION_LIFETIME * 2)
+		);
 	}
 	
 	/**
@@ -572,15 +600,6 @@ final class SessionHandler extends SingletonFactory {
 			TIME_NOW,
 			$this->sessionID,
 		]);
-		
-		// Refresh cookie.
-		if ($this->user->userID && !$this->isACP) {
-			HeaderUtil::setCookie(
-				($this->isACP ? 'acp' : 'user') . '_session',
-				$this->getCookieValue(),
-				TIME_NOW + 86400 * 14
-			);
-		}
 		
 		// Fetch legacy session.
 		if (!$this->isACP) {
