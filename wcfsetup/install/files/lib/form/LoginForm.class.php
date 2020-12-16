@@ -1,7 +1,6 @@
 <?php
 namespace wcf\form;
 use wcf\system\request\LinkHandler;
-use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\WCF;
 
 /**
