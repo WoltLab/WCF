@@ -244,7 +244,7 @@ final class SessionHandler extends SingletonFactory {
 	 * 
 	 * @see SessionHandler::parseCookie()
 	 */
-	private function getParsedCookieData(?bool $isACP = null): ?array {
+	public function getParsedCookieData(?bool $isACP = null): ?array {
 		if ($isACP === null) {
 			$isACP = $this->isACP;
 		}
