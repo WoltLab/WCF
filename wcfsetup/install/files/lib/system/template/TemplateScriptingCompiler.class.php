@@ -76,6 +76,7 @@ class TemplateScriptingCompiler {
 		'implode',
 		'in_array',
 		'is_array',
+		'is_null',
 		'is_numeric',
 		'is_object',
 		'iterator_count',
