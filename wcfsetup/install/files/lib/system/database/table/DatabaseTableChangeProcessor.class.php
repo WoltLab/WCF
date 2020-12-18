@@ -469,7 +469,7 @@ class DatabaseTableChangeProcessor {
 						$this->splitNodeMessage .= "Added foreign key '{$tableName}." . implode(',', $foreignKey->getColumns()) . "'.";
 						break 2;
 					}
-					else if (!empty(array_diff($foreignKey->getData(), $existingForeignKey->getData()))) {
+					else if (!empty(array_diff($foreignKey->getData(), $matchingExistingForeignKey->getData()))) {
 						if (!isset($this->foreignKeysToDrop[$tableName])) {
 							$this->foreignKeysToDrop[$tableName] = [];
 						}
@@ -1104,6 +1104,7 @@ class DatabaseTableChangeProcessor {
 				}
 			}
 			else {
+				$existingTable = null;
 				if (in_array($table->getName(), $this->existingTableNames)) {
 					if (!isset($this->tablePackageIDs[$table->getName()])) {
 						$errors[] = [
@@ -1216,10 +1217,7 @@ class DatabaseTableChangeProcessor {
 	 */
 	protected function getColumnByName($columnName, DatabaseTable $updateTable, DatabaseTable $existingTable = null) {
 		foreach ($updateTable->getColumns() as $column) {
-			if (
-				($column->getNewName() === $columnName)
-				|| ($column->getName() === $columnName && !$column->getNewName())
-			) {
+			if ($column->getName() === $columnName) {
 				return $column;
 			}
 		}

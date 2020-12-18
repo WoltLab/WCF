@@ -247,6 +247,34 @@ class OptionHandler implements IOptionHandler {
 	}
 	
 	/**
+	 * Counts the number of options in a specific option category.
+	 *
+	 * @param	string		$categoryName
+	 * @return	int
+	 */
+	public function countCategoryOptions($categoryName = '') {
+		$count = 0;
+		
+		if (isset($this->cachedCategoryStructure[$categoryName])) {
+			foreach ($this->cachedCategoryStructure[$categoryName] as $subCategoryName) {
+				$count += $this->countCategoryOptions($subCategoryName);
+			}
+		}
+		
+		if ($categoryName !== '') {
+			if (isset($this->cachedOptionToCategories[$categoryName])) {
+				foreach ($this->cachedOptionToCategories[$categoryName] as $optionName) {
+					if (isset($this->options[$optionName]) && $this->checkOption($this->options[$optionName])) {
+						$count++;
+					}
+				}
+			}
+		}
+		
+		return $count;
+	}
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readData() {
