@@ -2,7 +2,6 @@
 namespace wcf\system\search;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\SingletonFactory;
-use wcf\util\StringUtil;
 
 /**
  * Default implementation for search engines, this class should be extended by
@@ -34,99 +33,14 @@ abstract class AbstractSearchEngine extends SingletonFactory implements ISearchE
 	}
 	
 	/**
-	 * Manipulates the search term (< and > used as quotation marks):
-	 * 
-	 * - <test foo> becomes <+test* +foo*>
-	 * - <test -foo bar> becomes <+test* -foo* +bar*>
-	 * - <test "foo bar"> becomes <+test* +"foo bar">
-	 * 
-	 * @see	http://dev.mysql.com/doc/refman/5.5/en/fulltext-boolean.html
-	 * 
-	 * @param	string		$query
-	 * @return	string
+	 * @deprecated 5.4 - This method is dangerous. See https://github.com/WoltLab/WCF/issues/3815.
 	 */
 	protected function parseSearchQuery($query) {
-		$query = StringUtil::trim($query);
-		
-		// expand search terms with a * unless they're encapsulated with quotes
-		$inQuotes = false;
-		$previousChar = $tmp = '';
-		$controlCharacterOrSpace = false;
-		$chars = ['+', '-', '*'];
-		$ftMinWordLen = $this->getFulltextMinimumWordLength();
-		for ($i = 0, $length = mb_strlen($query); $i < $length; $i++) {
-			$char = mb_substr($query, $i, 1);
-			
-			if ($inQuotes) {
-				if ($char == '"') {
-					$inQuotes = false;
-				}
-			}
-			else {
-				if ($char == '"') {
-					$inQuotes = true;
-				}
-				else {
-					if ($char == ' ' && !$controlCharacterOrSpace) {
-						$controlCharacterOrSpace = true;
-						$tmp .= '*';
-					}
-					else if (in_array($char, $chars)) {
-						$controlCharacterOrSpace = true;
-					}
-					else {
-						$controlCharacterOrSpace = false;
-					}
-				}
-			}
-			
-			/*
-			 * prepend a plus sign (logical AND) if ALL these conditions are given:
-			 * 
-			 * 1) previous character:
-			 *   - is empty (start of string)
-			 *   - is a space (MySQL uses spaces to separate words)
-			 * 
-			 * 2) not within quotation marks
-			 * 
-			 * 3) current char:
-			 *   - is NOT +, - or *
-			 */
-			if (($previousChar == '' || $previousChar == ' ') && !$inQuotes && !in_array($char, $chars)) {
-				// check if the term is shorter than the minimum fulltext word length
-				if ($i + $ftMinWordLen <= $length) {
-					$term = '';// $char;
-					for ($j = $i, $innerLength = $ftMinWordLen + $i; $j < $innerLength; $j++) {
-						$currentChar = mb_substr($query, $j, 1);
-						if ($currentChar == '"' || $currentChar == ' ' || in_array($currentChar, $chars)) {
-							break;
-						}
-						
-						$term .= $currentChar;
-					}
-					
-					if (mb_strlen($term) == $ftMinWordLen) {
-						$tmp .= '+';
-					}
-				}
-			}
-			
-			$tmp .= $char;
-			$previousChar = $char;
-		}
-		
-		// handle last char
-		if (!$inQuotes && !$controlCharacterOrSpace) {
-			$tmp .= '*';
-		}
-		
-		return $tmp;
+		throw new \BadMethodCallException('Using the generic `parseSearchQuery()` method is dangerous. See WoltLab/WCF#3815 (https://github.com/WoltLab/WCF/issues/3815).');
 	}
 	
 	/**
-	 * Returns minimum word length for fulltext indices.
-	 * 
-	 * @return	integer
+	 * @deprecated 5.4 - This method was required for use in parseSearchQuery().
 	 */
 	abstract protected function getFulltextMinimumWordLength();
 	
