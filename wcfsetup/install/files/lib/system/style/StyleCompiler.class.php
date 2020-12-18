@@ -521,7 +521,10 @@ EOT;
 		
 		// force code boxes to be always LTR
 		$content .= "\n/* RTL fix for code boxes */\n";
-		$content .= '.codeBox > div > ol > li > span:last-child, .redactor-layer pre { direction: ltr; text-align: left; } .codeBox > div > ol > li > span:last-child { display: block; }';
+		$content .= ".redactor-layer pre { direction: ltr; text-align: left; }\n";
+		$content .= ".codeBoxCode { direction: ltr; } \n";
+		$content .= ".codeBox .codeBoxCode { padding-left: 7ch; padding-right: 0; } \n";
+		$content .= ".codeBox .codeBoxCode > code .codeBoxLine > a { margin-left: -7ch; margin-right: 0; text-align: right; } \n";
 		
 		// write stylesheet for RTL
 		file_put_contents($filename.'-rtl.css', $content);
