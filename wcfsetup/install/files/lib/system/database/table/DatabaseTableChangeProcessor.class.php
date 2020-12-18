@@ -1048,6 +1048,7 @@ class DatabaseTableChangeProcessor {
 				}
 			}
 			else {
+				$existingTable = null;
 				if (in_array($table->getName(), $this->existingTableNames)) {
 					if (!isset($this->tablePackageIDs[$table->getName()])) {
 						$errors[] = [
