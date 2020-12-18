@@ -22,7 +22,7 @@ class Value extends Abstract {
       throw new Error("Values have not been set.");
     }
 
-    let values: string[] = [];
+    const values: string[] = [];
     if (this._field) {
       if (DependencyManager.isHiddenByDependencies(this._field)) {
         return false;

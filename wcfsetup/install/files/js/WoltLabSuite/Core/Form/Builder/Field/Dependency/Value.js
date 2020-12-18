@@ -22,7 +22,7 @@ define(["require", "exports", "tslib", "./Abstract", "./Manager", "../../../../C
             if (!this._values) {
                 throw new Error("Values have not been set.");
             }
-            let values = [];
+            const values = [];
             if (this._field) {
                 if (DependencyManager.isHiddenByDependencies(this._field)) {
                     return false;
