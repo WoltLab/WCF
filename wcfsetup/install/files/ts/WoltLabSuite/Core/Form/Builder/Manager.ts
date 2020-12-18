@@ -31,7 +31,7 @@ export function getData(formId: FieldId): Promise<FormBuilderData> {
 
   const promises: Promise<FormBuilderData>[] = [];
 
-  _fields.get(formId)!.forEach(function (field) {
+  _fields.get(formId)!.forEach((field) => {
     const fieldData = field.getData();
 
     if (!(fieldData instanceof Promise)) {
@@ -41,7 +41,7 @@ export function getData(formId: FieldId): Promise<FormBuilderData> {
     promises.push(fieldData);
   });
 
-  return Promise.all(promises).then(function (promiseData: FormBuilderData[]) {
+  return Promise.all(promises).then((promiseData: FormBuilderData[]) => {
     return promiseData.reduce((carry, current) => Core.extend(carry, current), {});
   });
 }
