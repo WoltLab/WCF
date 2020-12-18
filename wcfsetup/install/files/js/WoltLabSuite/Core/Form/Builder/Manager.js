@@ -26,14 +26,14 @@ define(["require", "exports", "tslib", "../../Core", "../../Event/Handler", "./F
             throw new Error("Unknown form with id '" + formId + "'.");
         }
         const promises = [];
-        _fields.get(formId).forEach(function (field) {
+        _fields.get(formId).forEach((field) => {
             const fieldData = field.getData();
             if (!(fieldData instanceof Promise)) {
                 throw new TypeError("Data for field with id '" + field.getId() + "' is no promise.");
             }
             promises.push(fieldData);
         });
-        return Promise.all(promises).then(function (promiseData) {
+        return Promise.all(promises).then((promiseData) => {
             return promiseData.reduce((carry, current) => Core.extend(carry, current), {});
         });
     }
