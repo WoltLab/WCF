@@ -25,7 +25,7 @@ class CheckboxFormField extends BooleanFormField {
 			$this->templateName,
 			'wcf',
 			[
-				'field' => $this
+				'field' => $this,
 			]
 		);
 	}
