@@ -44,7 +44,7 @@ class UserMenu extends TreeMenu {
 		// Hide links to user option categories without accessible options.
 		if (strpos($item->menuItem, 'wcf.user.option.category.') === 0) {
 			$categoryName = str_replace('wcf.user.option.category.', '', $item->menuItem);
-			if (empty($this->optionHandler->getOptionTree($categoryName))) {
+			if (!$this->optionHandler->countCategoryOptions($categoryName)) {
 				return false;
 			}
 		}
