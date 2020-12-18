@@ -1154,10 +1154,7 @@ class DatabaseTableChangeProcessor {
 	 */
 	protected function getColumnByName($columnName, DatabaseTable $updateTable, DatabaseTable $existingTable = null) {
 		foreach ($updateTable->getColumns() as $column) {
-			if (
-				($column->getNewName() === $columnName)
-				|| ($column->getName() === $columnName && !$column->getNewName())
-			) {
+			if ($column->getName() === $columnName) {
 				return $column;
 			}
 		}
