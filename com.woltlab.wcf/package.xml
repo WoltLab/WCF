@@ -104,22 +104,9 @@
 		<instruction type="sql">update_5.3.sql</instruction>
 	</instructions>
 	
-	<!-- Run update_com.woltlab.wcf_5.3.1_style.php for 5.3.0 -> 5.3.1 -->
-	<!-- Include `update_com.woltlab.wcf_5.3_orphanedComments.php` in the next update! -->
+	<!-- Run update_com.woltlab.wcf_5.3.2_style.php for 5.3.1 -> 5.3.2 -->
 	<!-- Add a note about the updated CSS in email_html.tpl to the release notes:
 		https://github.com/WoltLab/WCF/commit/1ac55ad408d5bfab4f69714c6259cc5d09ceb344
 		Administrators are highly encouraged to apply the CSS adjustments to their custom template version.
 	-->
-	<instructions type="update" fromversion="5.3.0">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
-		
-		<instruction type="language" />
-		
-		<instruction type="option" />
-		
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.3.1_style.php</instruction>
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.3_orphanedComments.php</instruction>
-	</instructions>
 </package>
