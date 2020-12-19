@@ -50,7 +50,7 @@
 				'wcf.acp.user.action.sendNewPassword.confirmMessage': '{jslang}wcf.acp.user.action.sendNewPassword.confirmMessage{/jslang}'
 			});
 			
-			AcpUiUserList.init();
+			new AcpUiUserList();
 		});
 		
 		{event name='javascriptInit'}
