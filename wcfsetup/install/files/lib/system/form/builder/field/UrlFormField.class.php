@@ -16,6 +16,18 @@ use wcf\util\Url;
 class UrlFormField extends TextFormField {
 	/**
 	 * @inheritDoc
+	 * @since       5.4
+	 */
+	protected function getValidAutoCompleteTokens(): array {
+		return [
+			'url',
+			'photo',
+			'impp',
+		];
+	}
+	
+	/**
+	 * @inheritDoc
 	 */
 	protected function validateText($text, Language $language = null) {
 		if ($this->isRequired() && ($this->getValue() === null || $this->getValue() === '')) {
