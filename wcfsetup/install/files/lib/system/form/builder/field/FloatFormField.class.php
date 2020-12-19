@@ -12,4 +12,14 @@ namespace wcf\system\form\builder\field;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class FloatFormField extends AbstractNumericFormField {}
+class FloatFormField extends AbstractNumericFormField {
+	/**
+	 * @inheritDoc
+	 * @since       5.4
+	 */
+	protected function getValidAutoCompleteTokens(): array {
+		return [
+			'transaction-amount',
+		];
+	}
+}

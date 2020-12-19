@@ -17,4 +17,18 @@ class IntegerFormField extends AbstractNumericFormField {
 	 * @inheritDoc
 	 */
 	protected $integerValues = true;
+	
+	/**
+	 * @inheritDoc
+	 * @since       5.4
+	 */
+	protected function getValidAutoCompleteTokens(): array {
+		return [
+			'cc-exp-month',
+			'cc-exp-year',
+			'bday-day',
+			'bday-month',
+			'bday-year',
+		];
+	}
 }
