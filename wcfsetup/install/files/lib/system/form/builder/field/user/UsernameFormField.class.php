@@ -1,12 +1,14 @@
 <?php
 namespace wcf\system\form\builder\field\user;
 use wcf\system\form\builder\field\AbstractFormField;
+use wcf\system\form\builder\field\IAutoCompleteFormField;
 use wcf\system\form\builder\field\IAutoFocusFormField;
 use wcf\system\form\builder\field\IImmutableFormField;
 use wcf\system\form\builder\field\IMaximumLengthFormField;
 use wcf\system\form\builder\field\IMinimumLengthFormField;
 use wcf\system\form\builder\field\INullableFormField;
 use wcf\system\form\builder\field\IPlaceholderFormField;
+use wcf\system\form\builder\field\TAutoCompleteFormField;
 use wcf\system\form\builder\field\TAutoFocusFormField;
 use wcf\system\form\builder\field\TDefaultIdFormField;
 use wcf\system\form\builder\field\TImmutableFormField;
@@ -30,7 +32,8 @@ use wcf\util\UserUtil;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field\User
  * @since	5.2
  */
-class UsernameFormField extends AbstractFormField implements IAutoFocusFormField, IImmutableFormField, IMaximumLengthFormField, IMinimumLengthFormField, INullableFormField, IPlaceholderFormField {
+class UsernameFormField extends AbstractFormField implements IAutoCompleteFormField, IAutoFocusFormField, IImmutableFormField, IMaximumLengthFormField, IMinimumLengthFormField, INullableFormField, IPlaceholderFormField {
+	use TAutoCompleteFormField;
 	use TAutoFocusFormField;
 	use TDefaultIdFormField;
 	use TImmutableFormField;
@@ -56,6 +59,14 @@ class UsernameFormField extends AbstractFormField implements IAutoFocusFormField
 		$this->label('wcf.user.username');
 		$this->maximumLength(100);
 		$this->minimumLength(3);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since       5.4
+	 */
+	protected function getValidAutoCompleteTokens(): array {
+		return ['username'];
 	}
 	
 	/**
