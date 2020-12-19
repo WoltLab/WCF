@@ -24,6 +24,10 @@ define(['Dictionary', 'Language'], function (Dictionary, Language) {
 	/** @var {Element} */
 	var _wrapper;
 	
+	var _resetLastPosition = window.debounce(function () {
+		_lastPosition = -1;
+	}, 50, false);
+	
 	/**
 	 * @exports     WoltLabSuite/Core/Ui/Page/Action
 	 */
@@ -50,11 +54,34 @@ define(['Dictionary', 'Language'], function (Dictionary, Language) {
 			
 			document.body.appendChild(_wrapper);
 			
+			var debounce = window.debounce(this._onScroll.bind(this), 100, false);
 			window.addEventListener(
-				'scroll',
-				window.debounce(this._onScroll.bind(this), 100, false),
+				"scroll",
+				function () {
+					if (_lastPosition === -1) {
+						_lastPosition = window.pageYOffset;
+						
+						// Invoke the scroll handler once to immediately respond to
+						// the user action before debouncing all further calls.
+						window.setTimeout(function () {
+							this._onScroll();
+							
+							_lastPosition = window.pageYOffset;
+						}.bind(this), 60);
+					}
+
+					debounce();
+				}.bind(this),
 				{passive: true}
 			);
+			
+			window.addEventListener("touchstart", function () {
+				// Force a reset of the scroll position to trigger an immediate reaction
+				// when the user touches the display again.
+				if (_lastPosition !== -1) {
+					_lastPosition = -1;
+				}
+			}, {passive: true});
 			
 			this._onScroll();
 		},
@@ -72,10 +99,7 @@ define(['Dictionary', 'Language'], function (Dictionary, Language) {
 			return button;
 		},
 		
-		/**
-		 * @param {Event=} event
-		 */
-		_onScroll: function (event) {
+		_onScroll: function () {
 			if (document.documentElement.classList.contains('disableScrolling')) {
 				// Ignore any scroll events that take place while body scrolling is disabled,
 				// because it messes up the scroll offsets.
@@ -86,6 +110,7 @@ define(['Dictionary', 'Language'], function (Dictionary, Language) {
 			if (offset === _lastPosition) {
 				// Ignore any scroll event that is fired but without a position change. This can
 				// happen after closing a dialog that prevented the body from being scrolled.
+				_resetLastPosition();
 				return;
 			}
 			
@@ -106,7 +131,7 @@ define(['Dictionary', 'Language'], function (Dictionary, Language) {
 				_wrapper.classList[offset < _lastPosition ? 'remove' : 'add']('scrolledDown');
 			}
 			
-			_lastPosition = offset;
+			_lastPosition = -1;
 		},
 		
 		/**
