@@ -23,6 +23,17 @@ class MultilineTextFormField extends TextFormField {
 	protected $templateName = '__multilineTextFormField';
 	
 	/**
+	 * @inheritDoc
+	 * @since       5.4
+	 */
+	protected function getValidAutoCompleteTokens(): array {
+		return array_merge(
+			parent::getValidAutoCompleteTokens(),
+			['street-address']
+		);
+	}
+	
+	/**
 	 * Returns the number of rows of the textarea. If the number of rows has not been
 	 * explicitly set, `10` is returned.
 	 * 
