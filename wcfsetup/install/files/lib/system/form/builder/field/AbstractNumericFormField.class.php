@@ -11,8 +11,9 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-abstract class AbstractNumericFormField extends AbstractFormField implements IAutoFocusFormField, IImmutableFormField, IMaximumFormField, IMinimumFormField, INullableFormField, IPlaceholderFormField, ISuffixedFormField {
+abstract class AbstractNumericFormField extends AbstractFormField implements IAutoFocusFormField, ICssClassFormField, IImmutableFormField, IMaximumFormField, IMinimumFormField, INullableFormField, IPlaceholderFormField, ISuffixedFormField {
 	use TAutoFocusFormField;
+	use TCssClassFormField;
 	use TImmutableFormField;
 	use TMaximumFormField;
 	use TMinimumFormField;
@@ -41,6 +42,13 @@ abstract class AbstractNumericFormField extends AbstractFormField implements IAu
 	 * @inheritDoc
 	 */
 	protected $templateName = '__numericFormField';
+	
+	/**
+	 * Creates a new instance of `AbstractNumericFormField`.
+	 */
+	public function __construct() {
+		$this->addFieldClass('short');
+	}
 	
 	/**
 	 * Returns the default value for the input element's step attribute.
