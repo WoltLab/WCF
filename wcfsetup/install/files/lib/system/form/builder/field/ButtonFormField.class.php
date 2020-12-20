@@ -13,7 +13,9 @@ use wcf\system\WCF;
  * @package     WoltLabSuite\Core\System\Form\Builder\Field
  * @since       5.4
  */
-class ButtonFormField extends AbstractFormField {
+class ButtonFormField extends AbstractFormField implements ICssClassFormField {
+	use TCssClassFormField;
+	
 	/**
 	 * text shown on the button
 	 * @var ?string
