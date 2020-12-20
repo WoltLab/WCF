@@ -65,7 +65,7 @@ class UserLastActivityTimeIntervalDaysCondition extends AbstractSingleFieldCondi
 	 */
 	public function checkObject(DatabaseObject $object, array $conditionData) {
 		if (!($object instanceof User) && !ClassUtil::isDecoratedInstanceOf($object, User::class)) {
-			throw new InvalidObjectArgument($objectList, User::class);
+			throw new InvalidObjectArgument($object, User::class);
 		}
 		
 		if (isset($conditionData['startDays'])) {
