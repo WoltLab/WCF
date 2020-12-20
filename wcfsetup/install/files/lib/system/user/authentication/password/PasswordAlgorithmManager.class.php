@@ -18,7 +18,7 @@ final class PasswordAlgorithmManager extends SingletonFactory {
 	/**
 	 * Returns the password algorithm with the given name.
 	 *
-	 * @throws InvalidArgumentException If the password algorithm does not exist.
+	 * @throws \InvalidArgumentException If the password algorithm does not exist.
 	 * @throws ImplementationException If the password algorithm does not implement IPasswordAlgorithm.
 	 */
 	public function getAlgorithmFromName(string $name): IPasswordAlgorithm {
