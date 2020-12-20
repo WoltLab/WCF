@@ -1155,10 +1155,10 @@ if (COMPILER_TARGET_DEFAULT) {
 			WCF.DOMNodeInsertedHandler.addCallback('WCF.Message.Quote.Handler' + objectType.hashCode(), $.proxy(this._initContainers, this));
 			
 			// Prevent the tooltip from being selectable while the touch pointer is being moved.
-			const tooltip = this._copyQuote[0];
+			var tooltip = this._copyQuote[0];
 			document.addEventListener("touchstart", function (event) {
 				if (tooltip.classList.contains("active")) {
-					const target = event.target;
+					var target = event.target;
 					if (target !== tooltip && !tooltip.contains(target)) {
 						tooltip.classList.add("touchForceInaccessible");
 						
@@ -1593,7 +1593,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			});
 			this._proxy.sendRequest();
 			
-			const selection = window.getSelection();
+			var selection = window.getSelection();
 			if (selection.rangeCount) {
 				selection.removeAllRanges();
 				this._copyQuote[0].classList.remove("active");
