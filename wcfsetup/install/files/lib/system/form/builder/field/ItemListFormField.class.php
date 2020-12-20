@@ -14,8 +14,9 @@ use wcf\util\ArrayUtil;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class ItemListFormField extends AbstractFormField implements IAutoFocusFormField, IImmutableFormField, IMultipleFormField {
+class ItemListFormField extends AbstractFormField implements IAutoFocusFormField, ICssClassFormField, IImmutableFormField, IMultipleFormField {
 	use TAutoFocusFormField;
+	use TCssClassFormField;
 	use TImmutableFormField;
 	use TMultipleFormField;
 	
@@ -67,6 +68,7 @@ class ItemListFormField extends AbstractFormField implements IAutoFocusFormField
 	 */
 	public function __construct() {
 		$this->multiple();
+		$this->addFieldClass('long');
 	}
 	
 	/**

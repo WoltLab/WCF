@@ -1,4 +1,10 @@
-<input type="text" id="{@$field->getPrefixedId()}" name="{@$field->getPrefixedId()}" class="long"{if $field->isAutofocused()} autofocus{/if}{if $field->isImmutable()} disabled{/if}>
+<input type="text" {*
+	*}id="{@$field->getPrefixedId()}" {*
+	*}name="{@$field->getPrefixedId()}"{*
+	*}{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
+	*}{if $field->isAutofocused()} autofocus{/if}{*
+	*}{if $field->isImmutable()} disabled{/if}{*
+*}>
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Ui/ItemList/Static'], function(UiItemListStatic) {
