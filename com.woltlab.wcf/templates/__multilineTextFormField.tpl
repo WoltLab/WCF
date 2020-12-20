@@ -1,6 +1,7 @@
 <textarea id="{@$field->getPrefixedId()}" {*
 	*}name="{@$field->getPrefixedId()}" {*
 	*}rows="{@$field->getRows()}"{*
+	*}{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
 	*}{if $field->isAutofocused()} autofocus{/if}{*
 	*}{if $field->isRequired()} required{/if}{*
 	*}{if $field->isImmutable()} disabled{/if}{*
