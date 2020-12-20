@@ -48,7 +48,7 @@ trait TAutoCompleteFormField {
 	}
 	
 	/**
-	 * Returns all valid `autocomplete` tokens. If an empty array is returned, all tokens are considered valid.
+	 * Returns all valid `autocomplete` tokens.
 	 *
 	 * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#inappropriate-for-the-control
 	 */
