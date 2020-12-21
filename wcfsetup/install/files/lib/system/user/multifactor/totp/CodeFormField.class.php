@@ -29,6 +29,7 @@ class CodeFormField extends TextFormField {
 	public function __construct() {
 		$this->minimumLength(Totp::CODE_LENGTH);
 		$this->maximumLength(Totp::CODE_LENGTH);
+		$this->addFieldClass('multifactorTotpCode');
 		
 		$placeholder = '';
 		$gen = Helper::digitStream();
