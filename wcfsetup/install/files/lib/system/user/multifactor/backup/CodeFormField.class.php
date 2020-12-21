@@ -36,6 +36,7 @@ class CodeFormField extends TextFormField {
 		$this->chunks(BackupMultifactorMethod::CHUNKS);
 		$this->chunkLength(BackupMultifactorMethod::CHUNK_LENGTH);
 		$this->minimumLength($this->getChunks() * $this->getChunkLength());
+		$this->addFieldClass('multifactorBackupCode');
 		
 		$placeholder = '';
 		$gen = Helper::digitStream();
