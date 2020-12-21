@@ -18,6 +18,10 @@ let _lastPosition = -1;
 let _toTopButton: HTMLElement;
 let _wrapper: HTMLElement;
 
+const _resetLastPosition = Core.debounce(() => {
+  _lastPosition = -1;
+}, 50);
+
 function buildToTopButton(): HTMLAnchorElement {
   const button = document.createElement("a");
   button.className = "button buttonPrimary pageActionButtonToTop initiallyHidden jsTooltip";
@@ -42,6 +46,7 @@ function onScroll(): void {
   if (offset === _lastPosition) {
     // Ignore any scroll event that is fired but without a position change. This can
     // happen after closing a dialog that prevented the body from being scrolled.
+    _resetLastPosition();
     return;
   }
 
@@ -61,7 +66,7 @@ function onScroll(): void {
     _wrapper.classList[offset < _lastPosition ? "remove" : "add"]("scrolledDown");
   }
 
-  _lastPosition = offset;
+  _lastPosition = -1;
 }
 
 function scrollToTop(event: MouseEvent): void {
@@ -104,7 +109,38 @@ export function setup(): void {
 
   document.body.appendChild(_wrapper);
 
-  window.addEventListener("scroll", Core.debounce(onScroll, 100), { passive: true });
+  const debounce = Core.debounce(onScroll, 100);
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (_lastPosition === -1) {
+        _lastPosition = window.pageYOffset;
+
+        // Invoke the scroll handler once to immediately respond to
+        // the user action before debouncing all further calls.
+        window.setTimeout(() => {
+          onScroll();
+
+          _lastPosition = window.pageYOffset;
+        }, 60);
+      }
+
+      debounce();
+    },
+    { passive: true },
+  );
+
+  window.addEventListener(
+    "touchstart",
+    () => {
+      // Force a reset of the scroll position to trigger an immediate reaction
+      // when the user touches the display again.
+      if (_lastPosition !== -1) {
+        _lastPosition = -1;
+      }
+    },
+    { passive: true },
+  );
 
   onScroll();
 }
