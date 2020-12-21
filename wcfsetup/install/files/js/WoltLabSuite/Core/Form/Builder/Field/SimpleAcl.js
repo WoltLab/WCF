@@ -1,47 +1,22 @@
-/**
- * Data handler for a simple acl form builder field in an Ajax form.
- *
- * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Form/Builder/Field/SimpleAcl
- * @since	5.2
- */
-define(['Core', './Field'], function (Core, FormBuilderField) {
+define(["require", "exports", "tslib", "./Field", "../../../Core"], function (require, exports, tslib_1, Field_1, Core) {
     "use strict";
-    /**
-     * @constructor
-     */
-    function FormBuilderFieldSimpleAcl(fieldId) {
-        this.init(fieldId);
-    }
-    ;
-    Core.inherit(FormBuilderFieldSimpleAcl, FormBuilderField, {
-        /**
-         * @see	WoltLabSuite/Core/Form/Builder/Field/Field#_getData
-         */
-        _getData: function () {
-            var groupIds = [];
-            elBySelAll('input[name="' + this._fieldId + '[group][]"]', undefined, function (input) {
-                groupIds.push(~~input.value);
-            });
-            var usersIds = [];
-            elBySelAll('input[name="' + this._fieldId + '[user][]"]', undefined, function (input) {
-                usersIds.push(~~input.value);
-            });
-            var data = {};
-            data[this._fieldId] = {
-                group: groupIds,
-                user: usersIds
+    Field_1 = tslib_1.__importDefault(Field_1);
+    Core = tslib_1.__importStar(Core);
+    class SimpleAcl extends Field_1.default {
+        _getData() {
+            const groupIds = Array.from(document.querySelectorAll('input[name="' + this._fieldId + '[group][]"]')).map((input) => input.value);
+            const usersIds = Array.from(document.querySelectorAll('input[name="' + this._fieldId + '[user][]"]')).map((input) => input.value);
+            return {
+                [this._fieldId]: {
+                    group: groupIds,
+                    user: usersIds,
+                },
             };
-            return data;
-        },
-        /**
-         * @see	WoltLabSuite/Core/Form/Builder/Field/Field#_readField
-         */
-        _readField: function () {
+        }
+        _readField() {
             // does nothing
         }
-    });
-    return FormBuilderFieldSimpleAcl;
+    }
+    Core.enableLegacyInheritance(SimpleAcl);
+    return SimpleAcl;
 });

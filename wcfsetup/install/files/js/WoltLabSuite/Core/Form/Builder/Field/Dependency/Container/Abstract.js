@@ -2,49 +2,40 @@
  * Abstract implementation of a handler for the visibility of container due the dependencies
  * of its children.
  *
- * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Abstract
- * @since	5.2
+ * @author  Matthias Schmidt
+ * @copyright 2001-2020 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Abstract
+ * @since 5.2
  */
-define(['EventHandler', '../Manager'], function (EventHandler, DependencyManager) {
+define(["require", "exports", "tslib", "../Manager", "../../../../../Core"], function (require, exports, tslib_1, DependencyManager, Core) {
     "use strict";
-    /**
-     * @constructor
-     */
-    function Abstract(containerId) {
-        this.init(containerId);
-    }
-    ;
-    Abstract.prototype = {
+    DependencyManager = tslib_1.__importStar(DependencyManager);
+    Core = tslib_1.__importStar(Core);
+    class Abstract {
+        constructor(containerId) {
+            this.init(containerId);
+        }
         /**
-         * Checks if the container should be visible and shows or hides it accordingly.
-         *
-         * @abstract
+         * Returns `true` if the dependency is met and thus if the container should be shown.
          */
-        checkContainer: function () {
+        checkContainer() {
             throw new Error("Missing implementation of WoltLabSuite/Core/Form/Builder/Field/Dependency/Container.checkContainer!");
-        },
+        }
         /**
-         * Initializes a new container dependency handler for the container with the given
-         * id.
-         *
-         * @param	{string}	containerId	id of the handled container
-         *
-         * @throws	{TypeError}			if container id is no string
-         * @throws	{Error}				if container id is invalid
+         * Initializes a new container dependency handler for the container with the given id.
          */
-        init: function (containerId) {
-            if (typeof containerId !== 'string') {
+        init(containerId) {
+            if (typeof containerId !== "string") {
                 throw new TypeError("Container id has to be a string.");
             }
-            this._container = elById(containerId);
+            this._container = document.getElementById(containerId);
             if (this._container === null) {
                 throw new Error("Unknown container with id '" + containerId + "'.");
             }
-            DependencyManager.addContainerCheckCallback(this.checkContainer.bind(this));
+            DependencyManager.addContainerCheckCallback(() => this.checkContainer());
         }
-    };
+    }
+    Core.enableLegacyInheritance(Abstract);
     return Abstract;
 });

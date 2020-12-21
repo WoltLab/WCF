@@ -1,129 +1,103 @@
 /**
  * Handles the JavaScript part of the label form field.
  *
- * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Form/Builder/Field/Controller/Label
- * @since	5.2
+ * @author  Alexander Ebert, Matthias Schmidt
+ * @copyright 2001-2020 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Form/Builder/Field/Controller/Label
+ * @since 5.2
  */
-define(['Core', 'Dom/Util', 'Language', 'Ui/SimpleDropdown'], function (Core, DomUtil, Language, UiSimpleDropdown) {
+define(["require", "exports", "tslib", "../../../../Core", "../../../../Dom/Util", "../../../../Language", "../../../../Ui/Dropdown/Simple"], function (require, exports, tslib_1, Core, DomUtil, Language, Simple_1) {
     "use strict";
-    /**
-     * @constructor
-     */
-    function FormBuilderFieldLabel(fielId, labelId, options) {
-        this.init(fielId, labelId, options);
-    }
-    ;
-    FormBuilderFieldLabel.prototype = {
-        /**
-         * Initializes the label form field.
-         *
-         * @param	{string}	fieldId		id of the relevant form builder field
-         * @param	{integer}	labelId		id of the currently selected label
-         * @param	{object}	options		additional label options
-         */
-        init: function (fieldId, labelId, options) {
-            this._formFieldContainer = elById(fieldId + 'Container');
-            this._labelChooser = elByClass('labelChooser', this._formFieldContainer)[0];
+    Core = tslib_1.__importStar(Core);
+    DomUtil = tslib_1.__importStar(DomUtil);
+    Language = tslib_1.__importStar(Language);
+    Simple_1 = tslib_1.__importDefault(Simple_1);
+    class Label {
+        constructor(fieldId, labelId, options) {
+            this._formFieldContainer = document.getElementById(fieldId + "Container");
+            this._labelChooser = this._formFieldContainer.getElementsByClassName("labelChooser")[0];
             this._options = Core.extend({
                 forceSelection: false,
-                showWithoutSelection: false
+                showWithoutSelection: false,
             }, options);
-            this._input = elCreate('input');
-            this._input.type = 'hidden';
+            this._input = document.createElement("input");
+            this._input.type = "hidden";
             this._input.id = fieldId;
             this._input.name = fieldId;
-            this._input.value = ~~labelId;
+            this._input.value = labelId;
             this._formFieldContainer.appendChild(this._input);
-            var labelChooserId = DomUtil.identify(this._labelChooser);
+            const labelChooserId = DomUtil.identify(this._labelChooser);
             // init dropdown
-            var dropdownMenu = UiSimpleDropdown.getDropdownMenu(labelChooserId);
+            let dropdownMenu = Simple_1.default.getDropdownMenu(labelChooserId);
             if (dropdownMenu === null) {
-                UiSimpleDropdown.init(elByClass('dropdownToggle', this._labelChooser)[0]);
-                dropdownMenu = UiSimpleDropdown.getDropdownMenu(labelChooserId);
+                Simple_1.default.init(this._labelChooser.getElementsByClassName("dropdownToggle")[0]);
+                dropdownMenu = Simple_1.default.getDropdownMenu(labelChooserId);
             }
-            var additionalOptionList = null;
+            let additionalOptionList = null;
             if (this._options.showWithoutSelection || !this._options.forceSelection) {
-                additionalOptionList = elCreate('ul');
+                additionalOptionList = document.createElement("ul");
                 dropdownMenu.appendChild(additionalOptionList);
-                var dropdownDivider = elCreate('li');
-                dropdownDivider.className = 'dropdownDivider';
+                const dropdownDivider = document.createElement("li");
+                dropdownDivider.classList.add("dropdownDivider");
                 additionalOptionList.appendChild(dropdownDivider);
             }
             if (this._options.showWithoutSelection) {
-                var listItem = elCreate('li');
-                elData(listItem, 'label-id', -1);
+                const listItem = document.createElement("li");
+                listItem.dataset.labelId = "-1";
                 this._blockScroll(listItem);
                 additionalOptionList.appendChild(listItem);
-                var span = elCreate('span');
+                const span = document.createElement("span");
                 listItem.appendChild(span);
-                var label = elCreate('span');
-                label.className = 'badge label';
-                label.innerHTML = Language.get('wcf.label.withoutSelection');
+                const label = document.createElement("span");
+                label.classList.add("badge", "label");
+                label.innerHTML = Language.get("wcf.label.withoutSelection");
                 span.appendChild(label);
             }
             if (!this._options.forceSelection) {
-                var listItem = elCreate('li');
-                elData(listItem, 'label-id', 0);
+                const listItem = document.createElement("li");
+                listItem.dataset.labelId = "0";
                 this._blockScroll(listItem);
                 additionalOptionList.appendChild(listItem);
-                var span = elCreate('span');
+                const span = document.createElement("span");
                 listItem.appendChild(span);
-                var label = elCreate('span');
-                label.className = 'badge label';
-                label.innerHTML = Language.get('wcf.label.none');
+                const label = document.createElement("span");
+                label.classList.add("badge", "label");
+                label.innerHTML = Language.get("wcf.label.none");
                 span.appendChild(label);
             }
-            elBySelAll('li:not(.dropdownDivider)', dropdownMenu, function (listItem) {
-                listItem.addEventListener('click', this._click.bind(this));
+            dropdownMenu.querySelectorAll("li:not(.dropdownDivider)").forEach((listItem) => {
+                listItem.addEventListener("click", (ev) => this._click(ev));
                 if (labelId) {
-                    if (~~elData(listItem, 'label-id') === labelId) {
+                    if (listItem.dataset.labelId === labelId) {
                         this._selectLabel(listItem);
                     }
                 }
-            }.bind(this));
-        },
-        /**
-         * Blocks page scrolling for the given element.
-         *
-         * @param	{HTMLElement}		element
-         */
-        _blockScroll: function (element) {
-            element.addEventListener('wheel', function (event) {
-                event.preventDefault();
-            }, {
-                passive: false
             });
-        },
-        /**
-         * Select a label after clicking on it.
-         *
-         * @param	{Event}		event	click event in label selection dropdown
-         */
-        _click: function (event) {
+        }
+        _blockScroll(element) {
+            element.addEventListener("wheel", (ev) => ev.preventDefault(), {
+                passive: false,
+            });
+        }
+        _click(event) {
             event.preventDefault();
-            this._selectLabel(event.currentTarget, false);
-        },
-        /**
-         * Selects the given label.
-         *
-         * @param	{HTMLElement}	label
-         */
-        _selectLabel: function (label) {
+            this._selectLabel(event.currentTarget);
+        }
+        _selectLabel(label) {
             // save label
-            var labelId = elData(label, 'label-id');
+            let labelId = label.dataset.labelId;
             if (!labelId) {
-                labelId = 0;
+                labelId = "0";
             }
             // replace button with currently selected label
-            var displayLabel = elBySel('span > span', label);
-            var button = elBySel('.dropdownToggle > span', this._labelChooser);
+            const displayLabel = label.querySelector("span > span");
+            const button = this._labelChooser.querySelector(".dropdownToggle > span");
             button.className = displayLabel.className;
             button.textContent = displayLabel.textContent;
             this._input.value = labelId;
         }
-    };
-    return FormBuilderFieldLabel;
+    }
+    Core.enableLegacyInheritance(Label);
+    return Label;
 });

@@ -1,34 +1,25 @@
 /**
  * Data handler for a tag form builder field in an Ajax form.
  *
- * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Form/Builder/Field/Tag
- * @since	5.2
+ * @author  Matthias Schmidt
+ * @copyright 2001-2020 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Form/Builder/Field/Tag
+ * @since 5.2
  */
-define(['Core', './Field', 'WoltLabSuite/Core/Ui/ItemList'], function (Core, FormBuilderField, UiItemList) {
+define(["require", "exports", "tslib", "./Field", "../../../Ui/ItemList", "../../../Core"], function (require, exports, tslib_1, Field_1, UiItemList, Core) {
     "use strict";
-    /**
-     * @constructor
-     */
-    function FormBuilderFieldTag(fieldId) {
-        this.init(fieldId);
-    }
-    ;
-    Core.inherit(FormBuilderFieldTag, FormBuilderField, {
-        /**
-         * @see	WoltLabSuite/Core/Form/Builder/Field/Field#_getData
-         */
-        _getData: function () {
-            var data = {};
-            data[this._fieldId] = [];
-            var values = UiItemList.getValues(this._fieldId);
-            for (var i = 0, length = values.length; i < length; i++) {
-                data[this._fieldId].push(values[i].value);
-            }
-            return data;
+    Field_1 = tslib_1.__importDefault(Field_1);
+    UiItemList = tslib_1.__importStar(UiItemList);
+    Core = tslib_1.__importStar(Core);
+    class Tag extends Field_1.default {
+        _getData() {
+            const values = UiItemList.getValues(this._fieldId).map((item) => item.value);
+            return {
+                [this._fieldId]: values,
+            };
         }
-    });
-    return FormBuilderFieldTag;
+    }
+    Core.enableLegacyInheritance(Tag);
+    return Tag;
 });
