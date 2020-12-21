@@ -3,8 +3,8 @@
 	*}name="{@$field->getPrefixedId()}" {*
 	*}value="{if !$field->isI18n() || !$field->hasI18nValues() || $availableLanguages|count === 1}{$field->getValue()}{/if}" {*
 	*}{if !$field->getFieldClasses()|empty}class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}" {/if}{*
-	*}pattern="[0-9\s]*" {*
-	*}inputmode="numeric"{*
+	*}pattern="[0-9\s]*"{*
+	*}{if $field->getInputMode() !== null} inputmode="{$field->getInputMode()}"{/if}{*
 	*}{if $field->getChunks() && $field->getChunkLength()} size="{$field->getChunks() - 1 + $field->getChunks() * $field->getChunkLength()}"{/if}{*
 	*}{if $field->getAutoComplete() !== null} autocomplete="{$field->getAutoComplete()}"{/if}{*
 	*}{if $field->isAutofocused()} autofocus{/if}{*
