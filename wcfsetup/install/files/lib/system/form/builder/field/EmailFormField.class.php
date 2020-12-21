@@ -16,8 +16,9 @@ use wcf\util\UserUtil;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class EmailFormField extends AbstractFormField implements IAutoFocusFormField, II18nFormField, IImmutableFormField, IPlaceholderFormField {
+class EmailFormField extends AbstractFormField implements IAutoFocusFormField, ICssClassFormField, II18nFormField, IImmutableFormField, IPlaceholderFormField {
 	use TAutoFocusFormField;
+	use TCssClassFormField;
 	use TImmutableFormField;
 	use TI18nFormField {
 		validate as protected i18nValidate;
@@ -39,6 +40,7 @@ class EmailFormField extends AbstractFormField implements IAutoFocusFormField, I
 	 */
 	public function __construct() {
 		$this->label('wcf.form.field.email');
+		$this->addFieldClass('long');
 	}
 	
 	/**

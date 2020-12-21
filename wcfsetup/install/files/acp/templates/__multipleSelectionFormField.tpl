@@ -22,6 +22,7 @@
 						*}type="checkbox" {*
 						*}name="{@$field->getPrefixedId()}[]" {*
 						*}value="{$__fieldNestedOption[value]}"{*
+						*}{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
 						*}{if $field->getValue() !== null && $__fieldNestedOption[value]|in_array:$field->getValue() && $__fieldNestedOption[isSelectable]} checked{/if}{*
 						*}{if $field->isImmutable() || !$__fieldNestedOption[isSelectable]} disabled{/if}{*
 					*}> {@$__fieldNestedOption[label]}</label>
@@ -34,6 +35,7 @@
 			<input type="checkbox" {*
 				*}name="{@$field->getPrefixedId()}[]" {*
 				*}value="{$__fieldNestedOption[value]}"{*
+				*}{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
 				*}{if $field->getValue() !== null && $__fieldNestedOption[value]|in_array:$field->getValue() && $__fieldNestedOption[isSelectable]} checked{/if}{*
 				*}{if $field->isImmutable() || !$__fieldNestedOption[isSelectable]} disabled{/if}{*
 			*}> {@$__fieldNestedOption[label]}

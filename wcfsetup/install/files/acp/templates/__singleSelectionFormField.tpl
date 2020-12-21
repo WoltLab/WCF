@@ -22,6 +22,7 @@
 						*}type="radio" {*
 						*}name="{@$field->getPrefixedId()}" {*
 						*}value="{$__fieldNestedOption[value]}"{*
+						*}{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
 						*}{if $field->getValue() == $__fieldNestedOption[value] && $__fieldNestedOption[isSelectable]} checked{/if}{*
 						*}{if $field->isImmutable() || !$__fieldNestedOption[isSelectable]} disabled{/if}{*
 					*}> {@$__fieldNestedOption[label]}</label>
@@ -29,7 +30,10 @@
 		{/foreach}
 	</ul>
 {else}
-	<select id="{@$field->getPrefixedId()}" name="{@$field->getPrefixedId()}">
+	<select id="{@$field->getPrefixedId()}" {*
+		*}name="{@$field->getPrefixedId()}"{*
+		*}{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
+	*}>
 		{foreach from=$field->getNestedOptions() item=__fieldNestedOption}
 			<option {*
 				*}name="{@$field->getPrefixedId()}" {*

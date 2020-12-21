@@ -13,8 +13,9 @@ use wcf\util\DateUtil;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class DateFormField extends AbstractFormField implements IAutoFocusFormField, IImmutableFormField, INullableFormField {
+class DateFormField extends AbstractFormField implements IAutoFocusFormField, ICssClassFormField, IImmutableFormField, INullableFormField {
 	use TAutoFocusFormField;
+	use TCssClassFormField;
 	use TImmutableFormField;
 	use TNullableFormField;
 	
@@ -56,6 +57,13 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 	
 	const DATE_FORMAT = 'Y-m-d';
 	const TIME_FORMAT = 'Y-m-d\TH:i:sP';
+	
+	/**
+	 * Creates a new instance of `DateFormField`.
+	 */
+	public function __construct() {
+		$this->addFieldClass('medium');
+	}
 	
 	/**
 	 * Sets the earliest valid date in `DateFormField::$saveValueFormat` format and returns this

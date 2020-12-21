@@ -2,7 +2,7 @@
 	*}id="{@$field->getPrefixedId()}" {*
 	*}name="{@$field->getPrefixedId()}" {*
 	*}value="{if !$field->isI18n() || !$field->hasI18nValues() || $availableLanguages|count === 1}{$field->getValue()}{/if}" {*
-	*}class="multifactorBackupCode" {*
+	*}{if !$field->getFieldClasses()|empty}class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}" {/if}{*
 	*}autocomplete="off" {*
 	*}pattern="[0-9\s]*" {*
 	*}inputmode="numeric"{*

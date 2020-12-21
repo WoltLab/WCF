@@ -11,7 +11,8 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class SingleSelectionFormField extends AbstractFormField implements IImmutableFormField, IFilterableSelectionFormField, INullableFormField {
+class SingleSelectionFormField extends AbstractFormField implements ICssClassFormField, IImmutableFormField, IFilterableSelectionFormField, INullableFormField {
+	use TCssClassFormField;
 	use TImmutableFormField;
 	use TFilterableSelectionFormField {
 		filterable as protected traitFilterable;

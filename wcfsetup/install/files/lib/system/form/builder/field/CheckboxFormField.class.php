@@ -11,7 +11,9 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.3
  */
-class CheckboxFormField extends BooleanFormField {
+class CheckboxFormField extends BooleanFormField implements ICssClassFormField {
+	use TCssClassFormField;
+	
 	/**
 	 * @inheritDoc
 	 */
