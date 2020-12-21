@@ -113,9 +113,7 @@ class TotpMultifactorMethod implements IMultifactorMethod {
 			$statement->execute([$setup->getId()]);
 			$devicesContainer = DevicesContainer::create('devices')
 				->label('wcf.user.security.multifactor.totp.devices');
-			while ($row = $statement->fetchArray()) {
-				$devices[] = $row;
-			}
+			$devices = $statement->fetchAll(\PDO::FETCH_ASSOC);
 			
 			$canBeDeleted = \count($devices) > 1;
 			foreach ($devices as $row) {
