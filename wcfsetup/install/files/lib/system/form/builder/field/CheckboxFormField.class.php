@@ -17,14 +17,13 @@ class CheckboxFormField extends BooleanFormField implements ICssClassFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected $templateName = '__checkboxFormField';
-	
-	/**
-	 * @inheritDoc
-	 */
 	public function getHtml() {
+		if ($this->requiresLabel() && $this->getLabel() === null) {
+			throw new \UnexpectedValueException("Form field '{$this->getPrefixedId()}' requires a label.");
+		}
+		
 		return WCF::getTPL()->fetch(
-			$this->templateName,
+			'__checkboxFormField',
 			'wcf',
 			[
 				'field' => $this,

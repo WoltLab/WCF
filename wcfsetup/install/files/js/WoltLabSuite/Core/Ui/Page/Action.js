@@ -18,6 +18,9 @@ define(["require", "exports", "tslib", "../../Core", "../../Language"], function
     let _lastPosition = -1;
     let _toTopButton;
     let _wrapper;
+    const _resetLastPosition = Core.debounce(() => {
+        _lastPosition = -1;
+    }, 50);
     function buildToTopButton() {
         const button = document.createElement("a");
         button.className = "button buttonPrimary pageActionButtonToTop initiallyHidden jsTooltip";
@@ -38,6 +41,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language"], function
         if (offset === _lastPosition) {
             // Ignore any scroll event that is fired but without a position change. This can
             // happen after closing a dialog that prevented the body from being scrolled.
+            _resetLastPosition();
             return;
         }
         if (offset >= 300) {
@@ -53,7 +57,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language"], function
         if (_lastPosition !== -1) {
             _wrapper.classList[offset < _lastPosition ? "remove" : "add"]("scrolledDown");
         }
-        _lastPosition = offset;
+        _lastPosition = -1;
     }
     function scrollToTop(event) {
         event.preventDefault();
@@ -85,7 +89,26 @@ define(["require", "exports", "tslib", "../../Core", "../../Language"], function
         _toTopButton = buildToTopButton();
         _wrapper.appendChild(_toTopButton);
         document.body.appendChild(_wrapper);
-        window.addEventListener("scroll", Core.debounce(onScroll, 100), { passive: true });
+        const debounce = Core.debounce(onScroll, 100);
+        window.addEventListener("scroll", () => {
+            if (_lastPosition === -1) {
+                _lastPosition = window.pageYOffset;
+                // Invoke the scroll handler once to immediately respond to
+                // the user action before debouncing all further calls.
+                window.setTimeout(() => {
+                    onScroll();
+                    _lastPosition = window.pageYOffset;
+                }, 60);
+            }
+            debounce();
+        }, { passive: true });
+        window.addEventListener("touchstart", () => {
+            // Force a reset of the scroll position to trigger an immediate reaction
+            // when the user touches the display again.
+            if (_lastPosition !== -1) {
+                _lastPosition = -1;
+            }
+        }, { passive: true });
         onScroll();
     }
     exports.setup = setup;

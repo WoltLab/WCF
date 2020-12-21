@@ -572,8 +572,8 @@ class StyleAddForm extends AbstractForm {
 				
 				$maxWidth = $options['size']['maxWidth'] ?? PHP_INT_MAX;
 				$maxHeight = $options['size']['maxHeight'] ?? PHP_INT_MAX;
-				$minWidth = $options['size']['maxWidth'] ?? 0;
-				$minHeight = $options['size']['maxHeight'] ?? 0;
+				$minWidth = $options['size']['minWidth'] ?? 0;
+				$minHeight = $options['size']['minHeight'] ?? 0;
 				
 				if ($options['size']['resize'] ?? true) {
 					if ($imageData[0] > $maxWidth || $imageData[1] > $maxHeight) {

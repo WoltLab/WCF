@@ -110,6 +110,8 @@
 			font-family: Consolas, 'Courier New', monospace;
 			
 			.codeBoxLine {
+				display: block;
+				
 				> a {
 					margin-left: -7ch;
 					overflow: hidden;

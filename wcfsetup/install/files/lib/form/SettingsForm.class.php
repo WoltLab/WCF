@@ -130,7 +130,7 @@ class SettingsForm extends AbstractForm {
 			
 			Trophy::sort($this->availableTrophies, 'showOrder');
 		}
-		else if (empty($this->optionHandler->getOptionTree())) {
+		else if (!$this->optionHandler->countCategoryOptions('settings.'.$this->category)) {
 			throw new IllegalLinkException();
 		}
 	}

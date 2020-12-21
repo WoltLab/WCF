@@ -10,7 +10,7 @@
 	{assign var='lineNumber' value=$startLineNumber}
 	<pre class="codeBoxCode collapsibleBbcodeOverflow"><code{if $language} class="language-{$language}"{/if}>{foreach from=$content item=line}{*
 		*}{assign var='codeLineID' value='codeLine_'|concat:$lineNumber:'_':$codeID}{*
-		*}<div class="codeBoxLine" id="{$codeLineID}"><a href="{@$__wcf->getAnchor($codeLineID)}" class="lineAnchor" title="{@$lineNumber}"></a><span>{$line}</span></div>{*
+		*}<span class="codeBoxLine" id="{$codeLineID}"><a href="{@$__wcf->getAnchor($codeLineID)}" class="lineAnchor" title="{@$lineNumber}"></a><span>{$line}</span></span>{*
 		*}{assign var='lineNumber' value=$lineNumber+1}{*
 	*}{/foreach}</code></pre>
 	

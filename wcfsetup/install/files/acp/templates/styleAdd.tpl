@@ -315,7 +315,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{elseif $errorType == 'minWidth' || $errorType == 'minHeight' || $errorType == 'maxWidth' || $errorType == 'maxHeight'}
-									{lang}wcf.image.coverPhoto.upload.error.dimensions{/lang}
+									{lang}wcf.acp.style.favicon.error.dimensions{/lang}
 								{else}
 									{lang}wcf.acp.style.favicon.error.{$errorType}{/lang}
 								{/if}

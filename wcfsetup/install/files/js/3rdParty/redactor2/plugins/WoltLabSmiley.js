@@ -31,22 +31,22 @@ $.Redactor.prototype.WoltLabSmiley = function() {
 			
 			// Check if there is a zero-width whitespace after the smiley, Safari does
 			// not like them that much (caret will be placed inside a character).
-			const nextSibling = smiley.nextSibling;
+			var nextSibling = smiley.nextSibling;
 			if (nextSibling && nextSibling.nodeType === Node.TEXT_NODE && nextSibling.textContent === "\u200B") {
 				nextSibling.remove();
 			}
 			
 			smiley.parentNode.insertBefore(document.createTextNode(" "), smiley);
 			
-			const whitespace = document.createTextNode(" ");
+			var whitespace = document.createTextNode(" ");
 			smiley.parentNode.insertBefore(whitespace, smiley.nextSibling);
 			
 			// Replace the image with itself to forcefully invalidate any references.
 			//noinspection SillyAssignmentJS
 			smiley.outerHTML = smiley.outerHTML;
 
-			const selection = window.getSelection();
-			const range = document.createRange();
+			var selection = window.getSelection();
+			var range = document.createRange();
 			range.selectNode(whitespace);
 			range.collapse(false);
 
