@@ -16,11 +16,12 @@ use wcf\util\UserUtil;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class EmailFormField extends AbstractFormField implements IAutoCompleteFormField, IAutoFocusFormField, ICssClassFormField, II18nFormField, IImmutableFormField, IPlaceholderFormField {
+class EmailFormField extends AbstractFormField implements IAutoCompleteFormField, IAutoFocusFormField, ICssClassFormField, II18nFormField, IImmutableFormField, IInputModeFormField, IPlaceholderFormField {
 	use TAutoCompleteFormField;
 	use TAutoFocusFormField;
 	use TCssClassFormField;
 	use TImmutableFormField;
+	use TInputModeFormField;
 	use TI18nFormField {
 		validate as protected i18nValidate;
 	}
@@ -52,6 +53,13 @@ class EmailFormField extends AbstractFormField implements IAutoCompleteFormField
 		return array_merge(['email'], array_map(function(string $context): string {
 			return $context . ' email';
 		}, ['home', 'work', 'mobile', 'fax', 'pager']));
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function getValidInputModes(): array {
+		return ['email'];
 	}
 	
 	/**
