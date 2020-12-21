@@ -30,6 +30,7 @@ class CodeFormField extends TextFormField {
 		$this->minimumLength(Totp::CODE_LENGTH);
 		$this->maximumLength(Totp::CODE_LENGTH);
 		$this->addFieldClass('multifactorTotpCode');
+		$this->autoComplete('off');
 		
 		$placeholder = '';
 		$gen = Helper::digitStream();

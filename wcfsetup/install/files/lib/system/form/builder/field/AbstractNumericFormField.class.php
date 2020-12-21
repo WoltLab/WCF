@@ -11,7 +11,8 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-abstract class AbstractNumericFormField extends AbstractFormField implements IAutoFocusFormField, ICssClassFormField, IImmutableFormField, IMaximumFormField, IMinimumFormField, INullableFormField, IPlaceholderFormField, ISuffixedFormField {
+abstract class AbstractNumericFormField extends AbstractFormField implements IAutoCompleteFormField, IAutoFocusFormField, ICssClassFormField, IImmutableFormField, IMaximumFormField, IMinimumFormField, INullableFormField, IPlaceholderFormField, ISuffixedFormField {
+	use TAutoCompleteFormField;
 	use TAutoFocusFormField;
 	use TCssClassFormField;
 	use TImmutableFormField;

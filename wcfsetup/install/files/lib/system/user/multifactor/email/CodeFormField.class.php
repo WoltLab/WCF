@@ -26,6 +26,7 @@ class CodeFormField extends TextFormField {
 		$this->minimumLength(EmailMultifactorMethod::LENGTH);
 		$this->maximumLength(EmailMultifactorMethod::LENGTH);
 		$this->addFieldClass('multifactorEmailCode');
+		$this->autoComplete('off');
 		
 		$placeholder = '';
 		$gen = Helper::digitStream();

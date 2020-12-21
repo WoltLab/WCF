@@ -1,8 +1,10 @@
 <?php
 namespace wcf\system\form\builder\field\user;
 use wcf\system\form\builder\field\AbstractFormField;
+use wcf\system\form\builder\field\IAutoCompleteFormField;
 use wcf\system\form\builder\field\IAutoFocusFormField;
 use wcf\system\form\builder\field\IPlaceholderFormField;
+use wcf\system\form\builder\field\TAutoCompleteFormField;
 use wcf\system\form\builder\field\TAutoFocusFormField;
 use wcf\system\form\builder\field\TDefaultIdFormField;
 use wcf\system\form\builder\field\TPlaceholderFormField;
@@ -22,7 +24,8 @@ use wcf\system\WCF;
  * @package     WoltLabSuite\Core\System\Form\Builder\Field\User
  * @since       5.4
  */
-class UserPasswordField extends AbstractFormField implements IAutoFocusFormField, IPlaceholderFormField {
+class UserPasswordField extends AbstractFormField implements IAutoCompleteFormField, IAutoFocusFormField, IPlaceholderFormField {
+	use TAutoCompleteFormField;
 	use TAutoFocusFormField;
 	use TDefaultIdFormField;
 	use TPlaceholderFormField;
@@ -49,6 +52,14 @@ class UserPasswordField extends AbstractFormField implements IAutoFocusFormField
 	 */
 	protected static function getDefaultId() {
 		return 'password';
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since       5.4
+	 */
+	protected function getValidAutoCompleteTokens(): array {
+		return ['current-password'];
 	}
 	
 	/**
