@@ -1123,17 +1123,29 @@ class DatabaseTableChangeProcessor {
 				}
 				
 				foreach ($table->getIndices() as $index) {
-					if ($index->getType() === DatabaseTableIndex::PRIMARY_TYPE && !$index->willBeDropped()) {
-						foreach ($index->getColumns() as $indexColumn) {
-							$column = $this->getColumnByName($indexColumn, $table, $existingTable);
-							if ($column !== null && !$column->isNotNull()) {
+					foreach ($index->getColumns() as $indexColumn) {
+						$column = $this->getColumnByName($indexColumn, $table, $existingTable);
+						if ($column === null) {
+							if (!$index->willBeDropped()) {
 								$errors[] = [
 									'columnName' => $indexColumn,
 									'columnNames' => implode(',', $index->getColumns()),
 									'tableName' => $table->getName(),
-									'type' => 'nullColumnInPrimaryIndex',
+									'type' => 'nonexistingColumnInIndex',
 								];
 							}
+						}
+						else if (
+							$index->getType() === DatabaseTableIndex::PRIMARY_TYPE
+							&& !$index->willBeDropped()
+							&& !$column->isNotNull()
+						) {
+							$errors[] = [
+								'columnName' => $indexColumn,
+								'columnNames' => implode(',', $index->getColumns()),
+								'tableName' => $table->getName(),
+								'type' => 'nullColumnInPrimaryIndex',
+							];
 						}
 					}
 				}
