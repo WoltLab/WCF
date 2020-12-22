@@ -33,7 +33,7 @@ class UserContentRemoveWorker extends AbstractWorker {
 	 * user
 	 * @var	User[]
 	 */
-	protected $user = [];
+	protected $users = [];
 	
 	/**
 	 * data
@@ -73,11 +73,11 @@ class UserContentRemoveWorker extends AbstractWorker {
 					throw new PermissionDeniedException();
 				}
 				
-				$this->user[] = $user;
+				$this->users[] = $user;
 			}
 		}
 		
-		if (empty($this->user)) {
+		if (empty($this->users)) {
 			throw new \InvalidArgumentException('The parameter `userIDs` is empty.');
 		}
 		
@@ -146,7 +146,7 @@ class UserContentRemoveWorker extends AbstractWorker {
 		
 		foreach ($contentProviders as $contentProvider) {
 			if ($this->contentProvider === null || (is_array($this->contentProvider) && in_array($contentProvider->objectType, $this->contentProvider))) {
-				foreach ($this->user as $user) {
+				foreach ($this->users as $user) {
 					/** @var IUserContentProvider $processor */
 					$processor = $contentProvider->getProcessor();
 					$contentList = $processor->getContentListForUser($user);
@@ -243,7 +243,7 @@ class UserContentRemoveWorker extends AbstractWorker {
 		
 		ClipboardHandler::getInstance()->unmark(array_map(function (User $user) {
 			return $user->userID;
-		}, $this->user), ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
+		}, $this->users), ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
 	}
 	
 	/**
@@ -259,7 +259,7 @@ class UserContentRemoveWorker extends AbstractWorker {
 	protected function generateKey(): string {
 		$userIDs = array_map(function (User $user) {
 			return $user->userID;
-		}, $this->user);
+		}, $this->users);
 		sort($userIDs);
 		
 		return sha1(implode(';', $userIDs));
