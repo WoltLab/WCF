@@ -4,8 +4,8 @@
 	*}value="{if !$field->isI18n() || !$field->hasI18nValues() || $availableLanguages|count === 1}{$field->getValue()}{/if}" {*
 	*}{if !$field->getFieldClasses()|empty}class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}" {/if}{*
 	*}{if $field->getMaximumLength() !== null}size="{$field->getMaximumLength()}" {/if}{*
-	*}pattern="[0-9]*" {*
-	*}inputmode="numeric"{*
+	*}pattern="[0-9]*"{*
+	*}{if $field->getInputMode() !== null} inputmode="{$field->getInputMode()}"{/if}{*
 	*}{if $field->getAutoComplete() !== null} autocomplete="{$field->getAutoComplete()}"{/if}{*
 	*}{if $field->isAutofocused()} autofocus{/if}{*
 	*}{if $field->isRequired()} required{/if}{*

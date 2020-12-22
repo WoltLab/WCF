@@ -29,6 +29,13 @@ class UrlFormField extends TextFormField {
 	/**
 	 * @inheritDoc
 	 */
+	protected function getValidInputModes(): array {
+		return ['url'];
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected function validateText($text, Language $language = null) {
 		if ($this->isRequired() && ($this->getValue() === null || $this->getValue() === '')) {
 			$this->addValidationError(new FormFieldValidationError('empty'));

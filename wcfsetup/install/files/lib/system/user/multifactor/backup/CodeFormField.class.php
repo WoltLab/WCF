@@ -38,6 +38,7 @@ class CodeFormField extends TextFormField {
 		$this->minimumLength($this->getChunks() * $this->getChunkLength());
 		$this->addFieldClass('multifactorBackupCode');
 		$this->autoComplete('off');
+		$this->inputMode('numeric');
 		
 		$placeholder = '';
 		$gen = Helper::digitStream();

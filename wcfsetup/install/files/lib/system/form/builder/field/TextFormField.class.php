@@ -13,11 +13,12 @@ use wcf\system\language\LanguageFactory;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class TextFormField extends AbstractFormField implements IAutoCompleteFormField, IAutoFocusFormField, ICssClassFormField, II18nFormField, IImmutableFormField, IMaximumLengthFormField, IMinimumLengthFormField, IPlaceholderFormField {
+class TextFormField extends AbstractFormField implements IAutoCompleteFormField, IAutoFocusFormField, ICssClassFormField, II18nFormField, IImmutableFormField, IInputModeFormField, IMaximumLengthFormField, IMinimumLengthFormField, IPlaceholderFormField {
 	use TTextAutoCompleteFormField;
 	use TAutoFocusFormField;
 	use TCssClassFormField;
 	use TImmutableFormField;
+	use TInputModeFormField;
 	use TI18nFormField {
 		validate as protected i18nValidate;
 	}
@@ -40,6 +41,21 @@ class TextFormField extends AbstractFormField implements IAutoCompleteFormField,
 	 */
 	public function __construct() {
 		$this->addFieldClass('long');
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function getValidInputModes(): array {
+		return [
+			'text',
+			'tel',
+			'url',
+			'email',
+			'numeric',
+			'decimal',
+			'search',
+		];
 	}
 	
 	/**
