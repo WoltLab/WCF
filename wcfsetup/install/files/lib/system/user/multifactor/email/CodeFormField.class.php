@@ -28,6 +28,7 @@ class CodeFormField extends TextFormField {
 		$this->addFieldClass('multifactorEmailCode');
 		$this->autoComplete('off');
 		$this->inputMode('numeric');
+		$this->pattern('[0-9\s]*');
 		
 		$placeholder = '';
 		$gen = Helper::digitStream();
