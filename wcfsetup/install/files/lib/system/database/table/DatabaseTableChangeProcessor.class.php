@@ -1225,9 +1225,11 @@ class DatabaseTableChangeProcessor {
 			}
 		}
 		
-		foreach ($existingTable->getColumns() as $column) {
-			if ($column->getName() === $columnName) {
-				return $column;
+		if ($existingTable) {
+			foreach ($existingTable->getColumns() as $column) {
+				if ($column->getName() === $columnName) {
+					return $column;
+				}
 			}
 		}
 		
