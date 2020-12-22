@@ -5,6 +5,7 @@
 	*}{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
 	*}{if $field->getInputMode() !== null} inputmode="{$field->getInputMode()}"{/if}{*
 	*}{if $field->getAutoComplete() !== null} autocomplete="{$field->getAutoComplete()}"{/if}{*
+	*}{if $field->getPattern() !== null} pattern="{$field->getPattern()}"{/if}{*
 	*}{if $field->isAutofocused()} autofocus{/if}{*
 	*}{if $field->isRequired()} required{/if}{*
 	*}{if $field->isImmutable()} disabled{/if}{*

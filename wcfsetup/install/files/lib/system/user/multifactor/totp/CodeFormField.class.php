@@ -32,6 +32,7 @@ class CodeFormField extends TextFormField {
 		$this->addFieldClass('multifactorTotpCode');
 		$this->autoComplete('off');
 		$this->inputMode('numeric');
+		$this->pattern('[0-9]*');
 		
 		$placeholder = '';
 		$gen = Helper::digitStream();

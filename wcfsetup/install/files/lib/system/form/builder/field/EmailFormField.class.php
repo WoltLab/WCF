@@ -16,7 +16,7 @@ use wcf\util\UserUtil;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class EmailFormField extends AbstractFormField implements IAutoCompleteFormField, IAutoFocusFormField, ICssClassFormField, II18nFormField, IImmutableFormField, IInputModeFormField, IPlaceholderFormField {
+class EmailFormField extends AbstractFormField implements IAutoCompleteFormField, IAutoFocusFormField, ICssClassFormField, II18nFormField, IImmutableFormField, IInputModeFormField, IPatternFormField, IPlaceholderFormField {
 	use TAutoCompleteFormField;
 	use TAutoFocusFormField;
 	use TCssClassFormField;
@@ -25,6 +25,7 @@ class EmailFormField extends AbstractFormField implements IAutoCompleteFormField
 	use TI18nFormField {
 		validate as protected i18nValidate;
 	}
+	use TPatternFormField;
 	use TPlaceholderFormField;
 	
 	/**
