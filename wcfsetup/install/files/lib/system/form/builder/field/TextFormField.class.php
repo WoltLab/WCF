@@ -13,7 +13,7 @@ use wcf\system\language\LanguageFactory;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class TextFormField extends AbstractFormField implements IAutoCompleteFormField, IAutoFocusFormField, ICssClassFormField, II18nFormField, IImmutableFormField, IInputModeFormField, IMaximumLengthFormField, IMinimumLengthFormField, IPlaceholderFormField {
+class TextFormField extends AbstractFormField implements IAutoCompleteFormField, IAutoFocusFormField, ICssClassFormField, II18nFormField, IImmutableFormField, IInputModeFormField, IMaximumLengthFormField, IMinimumLengthFormField, IPatternFormField, IPlaceholderFormField {
 	use TTextAutoCompleteFormField;
 	use TAutoFocusFormField;
 	use TCssClassFormField;
@@ -24,6 +24,7 @@ class TextFormField extends AbstractFormField implements IAutoCompleteFormField,
 	}
 	use TMaximumLengthFormField;
 	use TMinimumLengthFormField;
+	use TPatternFormField;
 	use TPlaceholderFormField;
 	
 	/**
