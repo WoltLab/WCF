@@ -1956,6 +1956,8 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		Die Spalte {$error[tableName]}.{$error[columnName]} gehört zu einem anderen Paket und kann deshalb nicht gelöscht werden.
 	{else if $error[type] === 'foreignIndexDrop'}
 		Der Index {$error[tableName]} ({$error[columnNames]}) gehört zu einem anderen Paket und kann deshalb nicht gelöscht werden.
+	{else if $error[type] === 'nonexistingColumnInIndex'}
+		Der Index {$error[tableName]} ({$error[columnNames]}) enthält die nicht existierende Spalte {$error[columnName]}.
 	{else if $error[type] === 'nullColumnInPrimaryIndex'}
 		Der Primärindex {$error[tableName]} ({$error[columnNames]}) enthält die Spalte {$error[columnName]}, deren Werte NULL sein können.
 	{else if $error[type] === 'foreignForeignKeyDrop'}
