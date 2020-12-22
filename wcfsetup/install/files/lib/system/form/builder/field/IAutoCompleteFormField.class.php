@@ -19,7 +19,7 @@ interface IAutoCompleteFormField {
 	 *
 	 * @throws      \InvalidArgumentException       if an invalid `autocomplete` token is included in the attribute value
 	 */
-	public function autoComplete(?string $autocomplete): self;
+	public function autoComplete(?string $autoComplete): self;
 	
 	/**
 	 * Returns the `autocomplete` attribute of the form field.
