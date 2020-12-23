@@ -10,6 +10,7 @@
 			*} data-autosave-last-edit-time="{@$field->getLastEditTime()}"{*
 		*}{/if}{*
 	*}{/if}{*
+	*}{foreach from=$field->getFieldAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 *}>{$field->getValue()}</textarea>
 
 {include file='wysiwyg' wysiwygSelector=$field->getPrefixedId()}

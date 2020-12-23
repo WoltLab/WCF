@@ -17,11 +17,6 @@ class CodeFormField extends TextFormField {
 	use TDefaultIdFormField;
 	
 	/**
-	 * @inheritDoc
-	 */
-	protected $templateName = '__multifactorTotpCodeField';
-	
-	/**
 	 * @var ?int
 	 */
 	protected $minCounter;
@@ -29,6 +24,7 @@ class CodeFormField extends TextFormField {
 	public function __construct() {
 		$this->minimumLength(Totp::CODE_LENGTH);
 		$this->maximumLength(Totp::CODE_LENGTH);
+		$this->fieldAttribute('size', Totp::CODE_LENGTH);
 		$this->addFieldClass('multifactorTotpCode');
 		$this->autoComplete('off');
 		$this->inputMode('numeric');

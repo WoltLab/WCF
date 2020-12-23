@@ -9,4 +9,6 @@
 	*}{if $field->isImmutable()} disabled{/if}{*
 	*}{if $field->getEarliestDate() !== null} min="{$dateFormFieldEarliestDate}"{/if}{*
 	*}{if $field->getLatestDate() !== null} max="{$dateFormFieldLatestDate}"{/if}{*
+	*}{foreach from=$field->getFieldAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
+
 *}>

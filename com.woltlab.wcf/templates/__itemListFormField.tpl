@@ -4,6 +4,7 @@
 	*}{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
 	*}{if $field->isAutofocused()} autofocus{/if}{*
 	*}{if $field->isImmutable()} disabled{/if}{*
+	*}{foreach from=$field->getFieldAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 *}>
 
 <script data-relocate="true">

@@ -60,4 +60,17 @@ class MultilineTextFormField extends TextFormField {
 		
 		return $this;
 	}
+	
+	/**
+	 * @inheritDoc
+	 * @since       5.4
+	 */
+	protected static function getReservedFieldAttributes(): array {
+		return array_merge(
+			parent::getReservedFieldAttributes(),
+			[
+				'rows',
+			]
+		);
+	}
 }

@@ -10,6 +10,7 @@
 				*}{if $field->isRequired()} required{/if}{*
 				*}{if $field->isImmutable()} disabled{/if}{*
 				*}{if $field->getValue()} checked{/if}{*
+				*}{foreach from=$field->getFieldAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 			*}>
 			{@$field->getLabel()}{if $field->isRequired()} <span class="formFieldRequired">*</span>{/if}
 		</label>

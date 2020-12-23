@@ -16,7 +16,10 @@ use wcf\util\UserUtil;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class EmailFormField extends AbstractFormField implements IAutoCompleteFormField, IAutoFocusFormField, ICssClassFormField, II18nFormField, IImmutableFormField, IInputModeFormField, IPatternFormField, IPlaceholderFormField {
+class EmailFormField extends AbstractFormField implements IAttributeFormField, IAutoCompleteFormField, IAutoFocusFormField, ICssClassFormField, II18nFormField, IImmutableFormField, IInputModeFormField, IPatternFormField, IPlaceholderFormField {
+	use TAttributeFormField {
+		getReservedFieldAttributes as private defaultGetReservedFieldAttributes;
+	}
 	use TAutoCompleteFormField;
 	use TAutoFocusFormField;
 	use TCssClassFormField;
@@ -112,5 +115,18 @@ class EmailFormField extends AbstractFormField implements IAutoCompleteFormField
 				['language' => $language]
 			));
 		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since       5.4
+	 */
+	protected static function getReservedFieldAttributes(): array {
+		return array_merge(
+			static::defaultGetReservedFieldAttributes(),
+			[
+				'maxlength',
+			]
+		);
 	}
 }

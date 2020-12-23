@@ -27,15 +27,11 @@ class CodeFormField extends TextFormField {
 	 */
 	protected $chunkLength;
 	
-	/**
-	 * @inheritDoc
-	 */
-	protected $templateName = '__multifactorBackupCodeField';
-	
 	public function __construct() {
 		$this->chunks(BackupMultifactorMethod::CHUNKS);
 		$this->chunkLength(BackupMultifactorMethod::CHUNK_LENGTH);
 		$this->minimumLength($this->getChunks() * $this->getChunkLength());
+		$this->fieldAttribute('size', $this->getChunks() - 1 + $this->getChunks() * $this->getChunkLength());
 		$this->addFieldClass('multifactorBackupCode');
 		$this->autoComplete('off');
 		$this->inputMode('numeric');

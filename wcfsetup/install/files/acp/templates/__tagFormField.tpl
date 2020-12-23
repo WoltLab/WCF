@@ -1,4 +1,9 @@
-<input id="{@$field->getPrefixedId()}" type="text" value="" class="long">
+<input id="{@$field->getPrefixedId()}" {*
+	*}type="text" {*
+	*}value="" {*
+	*}class="long"{*
+	*}{foreach from=$field->getFieldAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
+*}>
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {

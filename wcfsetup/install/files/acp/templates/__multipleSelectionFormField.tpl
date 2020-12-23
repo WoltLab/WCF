@@ -25,6 +25,7 @@
 						*}{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
 						*}{if $field->getValue() !== null && $__fieldNestedOption[value]|in_array:$field->getValue() && $__fieldNestedOption[isSelectable]} checked{/if}{*
 						*}{if $field->isImmutable() || !$__fieldNestedOption[isSelectable]} disabled{/if}{*
+						*}{foreach from=$field->getFieldAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 					*}> {@$__fieldNestedOption[label]}</label>
 			</li>
 		{/foreach}
@@ -38,6 +39,7 @@
 				*}{if !$field->getFieldClasses()|empty} class="{implode from=$field->getFieldClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
 				*}{if $field->getValue() !== null && $__fieldNestedOption[value]|in_array:$field->getValue() && $__fieldNestedOption[isSelectable]} checked{/if}{*
 				*}{if $field->isImmutable() || !$__fieldNestedOption[isSelectable]} disabled{/if}{*
+				*}{foreach from=$field->getFieldAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 			*}> {@$__fieldNestedOption[label]}
 		</label>
 	{/foreach}
