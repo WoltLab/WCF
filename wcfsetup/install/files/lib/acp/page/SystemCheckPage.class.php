@@ -274,7 +274,7 @@ class SystemCheckPage extends AbstractPage {
 		$statement->execute($conditionBuilder->getParameters());
 		
 		while ($row = $statement->fetchArray()) {
-			if ($row['ENGINE'] !== 'MyISAM') {
+			if ($row['ENGINE'] !== 'InnoDB') {
 				$this->results['mysql']['searchEngine']['incorrectTables'][$row['TABLE_NAME']] = $row['ENGINE'];
 			}
 		}
