@@ -13,7 +13,8 @@ use wcf\system\WCF;
  * @package     WoltLabSuite\Core\System\Form\Builder\Field
  * @since       5.4
  */
-class ButtonFormField extends AbstractFormField implements ICssClassFormField {
+class ButtonFormField extends AbstractFormField implements IAttributeFormField, ICssClassFormField {
+	use TInputAttributeFormField;
 	use TCssClassFormField;
 	
 	/**
