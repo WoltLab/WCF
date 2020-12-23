@@ -13,7 +13,10 @@ use wcf\util\DateUtil;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class DateFormField extends AbstractFormField implements IAutoFocusFormField, ICssClassFormField, IImmutableFormField, INullableFormField {
+class DateFormField extends AbstractFormField implements IAttributeFormField, IAutoFocusFormField, ICssClassFormField, IImmutableFormField, INullableFormField {
+	use TInputAttributeFormField {
+		getReservedFieldAttributes as private inputGetReservedFieldAttributes;
+	}
 	use TAutoFocusFormField;
 	use TCssClassFormField;
 	use TImmutableFormField;
@@ -417,5 +420,19 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, IC
 		}
 		
 		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since       5.4
+	 */
+	protected static function getReservedFieldAttributes(): array {
+		return array_merge(
+			static::inputGetReservedFieldAttributes(),
+			[
+				'max',
+				'min',
+			]
+		);
 	}
 }
