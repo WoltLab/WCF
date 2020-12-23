@@ -11,6 +11,7 @@
 	*}{if $field->getMaximumLength() !== null} maxlength="{$field->getMaximumLength()}"{/if}{*
 	*}{if $field->getInputMode() !== null} inputmode="{$field->getInputMode()}"{/if}{*
 	*}{if $field->getPlaceholder() !== null} placeholder="{$field->getPlaceholder()}"{/if}{*
+	*}{foreach from=$field->getFieldAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 *}>{$field->getValue()}</textarea>
 
 {if $field->isI18n()}
