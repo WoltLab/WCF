@@ -505,6 +505,12 @@
 		<!-- /importers -->
 		<!-- rebuild data workers -->
 		<type>
+			<name>com.woltlab.wcf.searchEngineConvertInnoDb</name>
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+			<classname>wcf\system\worker\SearchEngineConvertInnoDbWorker</classname>
+			<nicevalue>-200</nicevalue>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.like</name>
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
 			<classname>wcf\system\worker\LikeRebuildDataWorker</classname>
