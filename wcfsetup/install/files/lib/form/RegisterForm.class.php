@@ -435,8 +435,8 @@ class RegisterForm extends UserAddForm {
 				break;
 			}
 			
-			// create fake password
-			$this->password = Hex::encode(\random_bytes(20));
+			// Accounts connected to a 3rdParty login do not have passwords.
+			$this->password = null;
 		}
 
 		$eventParameters = [
