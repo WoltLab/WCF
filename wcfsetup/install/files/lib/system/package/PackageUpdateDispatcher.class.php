@@ -13,6 +13,7 @@ use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\HTTPRequest;
 use wcf\util\JSON;
+use wcf\util\StringUtil;
 use wcf\util\XML;
 
 /**
@@ -79,8 +80,17 @@ class PackageUpdateDispatcher extends SingletonFactory {
 				$errorMessage = $e->getMessage();
 			}
 			catch (PackageUpdateUnauthorizedException $e) {
-				$reply = $e->getRequest()->getReply();
-				list($errorMessage) = reset($reply['httpHeaders']);
+				$body = $e->getRequest()->getReply()['body'];
+				
+				// Try to find the page <title>.
+				if (preg_match('~<title>(?<title>.*?)</title>~', $body, $matches)) {
+					$errorMessage = $matches['title'];
+				}
+				else {
+					$errorMessage = $body;
+				}
+				
+				$errorMessage = mb_substr(StringUtil::trim(strip_tags($errorMessage)), 0, 65000);
 			}
 			
 			if ($errorMessage) {
