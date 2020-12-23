@@ -11,7 +11,10 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-abstract class AbstractNumericFormField extends AbstractFormField implements IAutoCompleteFormField, IAutoFocusFormField, ICssClassFormField, IImmutableFormField, IInputModeFormField, IMaximumFormField, IMinimumFormField, INullableFormField, IPlaceholderFormField, ISuffixedFormField {
+abstract class AbstractNumericFormField extends AbstractFormField implements IAttributeFormField, IAutoCompleteFormField, IAutoFocusFormField, ICssClassFormField, IImmutableFormField, IInputModeFormField, IMaximumFormField, IMinimumFormField, INullableFormField, IPlaceholderFormField, ISuffixedFormField {
+	use TAttributeFormField {
+		getReservedFieldAttributes as private defaultGetReservedFieldAttributes;
+	}
 	use TAutoCompleteFormField;
 	use TAutoFocusFormField;
 	use TCssClassFormField;
@@ -212,5 +215,18 @@ abstract class AbstractNumericFormField extends AbstractFormField implements IAu
 		}
 		
 		return parent::value($value);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since       5.4
+	 */
+	protected static function getReservedFieldAttributes(): array {
+		return array_merge(
+			static::defaultGetReservedFieldAttributes(),
+			[
+				'step',
+			]
+		);
 	}
 }
