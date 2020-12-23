@@ -17,6 +17,8 @@ use wcf\util\StringUtil;
  * @since	3.0
  */
 class MediaPage extends AbstractPage {
+	const AVAILABLE_DURING_OFFLINE_MODE = true;
+	
 	/**
 	 * etag for the media file
 	 * @var	string
