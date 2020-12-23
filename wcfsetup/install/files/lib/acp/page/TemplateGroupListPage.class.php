@@ -37,7 +37,7 @@ class TemplateGroupListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $validSortFields = ['templateGroupID', 'templateGroupName', 'templateGroupFolderName', 'templates'];
+	public $validSortFields = ['templateGroupID', 'templateGroupName', 'templateGroupFolderName', 'templates', 'styles'];
 	
 	/**
 	 * @inheritDoc
@@ -45,6 +45,7 @@ class TemplateGroupListPage extends SortablePage {
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		$this->objectList->sqlSelects = "(SELECT COUNT(*) FROM wcf".WCF_N."_template WHERE templateGroupID = template_group.templateGroupID) AS templates";
+		$this->objectList->sqlSelects = "(SELECT COUNT(*) FROM wcf".WCF_N."_template WHERE templateGroupID = template_group.templateGroupID) AS templates,
+						 (SELECT COUNT(*) FROM wcf".WCF_N."_style WHERE templateGroupID = template_group.templateGroupID) AS styles";
 	}
 }

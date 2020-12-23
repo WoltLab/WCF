@@ -47,6 +47,7 @@
 					<th class="columnTitle columnTemplateGroupName{if $sortField == 'templateGroupName'} active {@$sortOrder}{/if}"><a href="{link controller='TemplateGroupList'}pageNo={@$pageNo}&sortField=templateGroupName&sortOrder={if $sortField == 'templateGroupName' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.name{/lang}</a></th>
 					<th class="columnText columnTemplateGroupFolderName{if $sortField == 'templateGroupFolderName'} active {@$sortOrder}{/if}"><a href="{link controller='TemplateGroupList'}pageNo={@$pageNo}&sortField=templateGroupFolderName&sortOrder={if $sortField == 'templateGroupFolderName' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.template.group.folderName{/lang}</a></th>
 					<th class="columnDigits columnTemplates{if $sortField == 'templates'} active {@$sortOrder}{/if}"><a href="{link controller='TemplateGroupList'}pageNo={@$pageNo}&sortField=templates&sortOrder={if $sortField == 'templates' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.template.group.templates{/lang}</a></th>
+					<th class="columnDigits columnStyles{if $sortField == 'styles'} active {@$sortOrder}{/if}"><a href="{link controller='TemplateGroupList'}pageNo={@$pageNo}&sortField=styles&sortOrder={if $sortField == 'styles' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.template.group.styles{/lang}</a></th>
 					
 					{event name='columnHeads'}
 				</tr>
@@ -84,6 +85,7 @@
 						</td>
 						<td class="columnText columnTemplateGroupFolderName">{$templateGroup->templateGroupFolderName}</td>
 						<td class="columnDigits columnTemplates">{#$templateGroup->templates}</td>
+						<td class="columnDigits columnStyles">{#$templateGroup->styles}</td>
 						
 						{event name='columns'}
 					</tr>

@@ -2997,6 +2997,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.template.group.copy"><![CDATA[Templategruppe kopieren]]></item>
 		<item name="wcf.acp.template.group.edit"><![CDATA[Templategruppe bearbeiten]]></item>
 		<item name="wcf.acp.template.group.templates"><![CDATA[Templates]]></item>
+		<item name="wcf.acp.template.group.styles"><![CDATA[Stile]]></item>
 		<item name="wcf.acp.template.error.noGroups"><![CDATA[Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} ein eigenes Template erstellen {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} eine <a href="{link controller='TemplateGroupAdd'}{/link}">Templategruppe hinzufügen</a>.]]></item>
 		<item name="wcf.acp.template.group.folderName"><![CDATA[Verzeichnis]]></item>
 		<item name="wcf.acp.template.group.parentTemplateGroup"><![CDATA[Übergeordnete Templategruppe]]></item>
