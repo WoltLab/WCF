@@ -5,8 +5,10 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\AbstractFormField;
+use wcf\system\form\builder\field\IAttributeFormField;
 use wcf\system\form\builder\field\IMaximumLengthFormField;
 use wcf\system\form\builder\field\IMinimumLengthFormField;
+use wcf\system\form\builder\field\TInputAttributeFormField;
 use wcf\system\form\builder\field\TMaximumLengthFormField;
 use wcf\system\form\builder\field\TMinimumLengthFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -28,7 +30,10 @@ use wcf\util\StringUtil;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormField, IMinimumLengthFormField, IObjectTypeFormNode {
+class WysiwygFormField extends AbstractFormField implements IAttributeFormField, IMaximumLengthFormField, IMinimumLengthFormField, IObjectTypeFormNode {
+	use TInputAttributeFormField {
+		getReservedFieldAttributes as private inputGetReservedFieldAttributes;
+	}
 	use TMaximumLengthFormField;
 	use TMinimumLengthFormField;
 	use TObjectTypeFormNode;
@@ -408,5 +413,21 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 		}
 		
 		parent::validate();
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since       5.4
+	 */
+	protected static function getReservedFieldAttributes(): array {
+		return array_merge(
+			static::inputGetReservedFieldAttributes(),
+			[
+				'data-autosave',
+				'data-autosave-last-edit-time',
+				'data-disable-attachments',
+				'data-support-mention',
+			]
+		);
 	}
 }
