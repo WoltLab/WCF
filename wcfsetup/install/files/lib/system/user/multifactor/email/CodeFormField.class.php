@@ -17,14 +17,10 @@ use wcf\system\user\multifactor\Helper;
 class CodeFormField extends TextFormField {
 	use TDefaultIdFormField;
 	
-	/**
-	 * @inheritDoc
-	 */
-	protected $templateName = '__multifactorEmailCodeField';
-	
 	public function __construct() {
 		$this->minimumLength(EmailMultifactorMethod::LENGTH);
 		$this->maximumLength(EmailMultifactorMethod::LENGTH);
+		$this->fieldAttribute('size', EmailMultifactorMethod::LENGTH);
 		$this->addFieldClass('multifactorEmailCode');
 		$this->autoComplete('off');
 		$this->inputMode('numeric');
