@@ -1,9 +1,11 @@
 <?php
 namespace wcf\acp\page;
 use wcf\data\application\Application;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\page\AbstractPage;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\search\SearchIndexManager;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -122,6 +124,10 @@ class SystemCheckPage extends AbstractPage {
 			'result' => false,
 			'version' => '0.0.0',
 			'foreignKeys' => false,
+			'searchEngine' => [
+				'result' => false, 
+				'incorrectTables' => [],
+			],
 		],
 		'php' => [
 			'gd' => [
@@ -251,7 +257,31 @@ class SystemCheckPage extends AbstractPage {
 		
 		$this->results['mysql']['foreignKeys'] = $statement->fetchSingleColumn() == $expectedForeignKeyCount;
 		
-		if ($this->results['mysql']['result'] && $this->results['mysql']['innodb'] && $this->results['mysql']['foreignKeys']) {
+		// check search engine tables
+		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.searchableObjectType');
+		$tableNames = [];
+		foreach ($objectTypes as $objectType) {
+			$tableNames[] = SearchIndexManager::getTableName($objectType->objectType);
+		}
+		$conditionBuilder = new PreparedStatementConditionBuilder(true);
+		$conditionBuilder->add('TABLE_NAME IN (?)', [$tableNames]);
+		$conditionBuilder->add('TABLE_SCHEMA = ?', [WCF::getDB()->getDatabaseName()]);
+		
+		$sql = "SELECT          TABLE_NAME, ENGINE
+			FROM            INFORMATION_SCHEMA.TABLES
+			". $conditionBuilder;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditionBuilder->getParameters());
+		
+		while ($row = $statement->fetchArray()) {
+			if ($row['ENGINE'] !== 'MyISAM') {
+				$this->results['mysql']['searchEngine']['incorrectTables'][$row['TABLE_NAME']] = $row['ENGINE'];
+			}
+		}
+		
+		$this->results['mysql']['searchEngine']['result'] = empty($this->results['mysql']['searchEngine']['incorrectTables']);
+		
+		if ($this->results['mysql']['result'] && $this->results['mysql']['innodb'] && $this->results['mysql']['foreignKeys'] && $this->results['mysql']['searchEngine']['result']) {
 			$this->results['status']['mysql'] = true;
 		}
 	}
