@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\form\builder\field\user;
 use wcf\system\form\builder\field\AbstractFormField;
+use wcf\system\form\builder\field\IAttributeFormField;
 use wcf\system\form\builder\field\IAutoCompleteFormField;
 use wcf\system\form\builder\field\IAutoFocusFormField;
 use wcf\system\form\builder\field\IImmutableFormField;
@@ -12,6 +13,7 @@ use wcf\system\form\builder\field\TAutoCompleteFormField;
 use wcf\system\form\builder\field\TAutoFocusFormField;
 use wcf\system\form\builder\field\TDefaultIdFormField;
 use wcf\system\form\builder\field\TImmutableFormField;
+use wcf\system\form\builder\field\TInputAttributeFormField;
 use wcf\system\form\builder\field\TMaximumLengthFormField;
 use wcf\system\form\builder\field\TMinimumLengthFormField;
 use wcf\system\form\builder\field\TNullableFormField;
@@ -32,7 +34,8 @@ use wcf\util\UserUtil;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field\User
  * @since	5.2
  */
-class UsernameFormField extends AbstractFormField implements IAutoCompleteFormField, IAutoFocusFormField, IImmutableFormField, IMaximumLengthFormField, IMinimumLengthFormField, INullableFormField, IPlaceholderFormField {
+class UsernameFormField extends AbstractFormField implements IAttributeFormField, IAutoCompleteFormField, IAutoFocusFormField, IImmutableFormField, IMaximumLengthFormField, IMinimumLengthFormField, INullableFormField, IPlaceholderFormField {
+	use TInputAttributeFormField;
 	use TAutoCompleteFormField;
 	use TAutoFocusFormField;
 	use TDefaultIdFormField;
