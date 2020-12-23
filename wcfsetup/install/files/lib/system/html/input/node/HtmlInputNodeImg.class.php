@@ -169,6 +169,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode {
 				case 'body':
 				case 'code':
 				case 'div':
+				case 'li':
 				case 'p':
 				case 'td':
 				case 'woltlab-quote':
