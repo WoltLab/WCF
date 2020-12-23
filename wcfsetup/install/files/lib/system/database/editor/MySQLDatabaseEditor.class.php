@@ -215,11 +215,9 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 		}
 		
 		// build index definition
-		$hasFulltextIndex = false;
 		foreach ($indices as $index) {
 			if (!empty($indexDefinition)) $indexDefinition .= ',';
 			$indexDefinition .= $this->buildIndexDefinition($index['name'], $index['data']);
-			if ($index['data']['type'] == 'FULLTEXT') $hasFulltextIndex = true;
 		}
 		
 		// create table
@@ -227,7 +225,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 				".$columnDefinition."
 				".(!empty($indexDefinition) ? ',' : '')."
 				".$indexDefinition."
-			) ENGINE=".($hasFulltextIndex ? 'MyISAM' : 'InnoDB')." DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
 	}

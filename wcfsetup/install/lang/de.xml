@@ -943,6 +943,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.index.tinyBuild"><![CDATA[Die Seitenbeschleunigung für Gäste verbessert die Ladezeiten für Besucher und Suchmaschinen, es wird empfohlen diese <a href="{link controller='Option' id=1 optionName="visitor_use_tiny_build"}#category_module.system{/link}">zu aktivieren</a>.]]></item>
 		<item name="wcf.acp.index.recaptchaWithoutKey"><![CDATA[Die Nutzung von reCAPTCHA ohne einen individuellen Website-Schlüssel wird von Google nicht mehr unterstützt.<br><br>Für eine weitere Nutzung {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} <a href="{$recaptchaKeyLink}">einen Schlüssel in den Optionen hinterlegen</a>, unterhalb des Eingabefeldes befindet sich eine Anleitung zum Anfordern des Schlüssels.]]></item>
 		<item name="wcf.acp.index.missingLanguageItems"><![CDATA[Es wurden fehlende Sprachvariablen protokolliert (zuletzt: {@$missingLanguageItemsMTime|time}). {if LANGUAGE_USE_INFORMAL_VARIANT}Überprüfe{else}Überprüfen Sie{/if} die <a href="{link controller='DevtoolsMissingLanguageItemList'}{/link}">Liste der fehlenden Texte</a> für weitere Informationen.]]></item>
+		<item name="wcf.acp.index.nonInnoDbSearch"><![CDATA[Nicht alle Tabellen benutzen die Storage-Engine InnoDB. Details {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} in der <a href="{link controller='SystemCheck'}{/link}">Systemüberprüfung</a>.]]></item>
 	</category>
 	<category name="wcf.acp.label">
 		<item name="wcf.acp.label.add"><![CDATA[Label hinzufügen]]></item>
@@ -2644,6 +2645,8 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.activityPointEvent.description"><![CDATA[Berechnet Punkte pro Aktivität neu]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.activityPointItems"><![CDATA[Punkte-Aktivitäten aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.activityPointItems.description"><![CDATA[Berechnet Anzahl an Aktivitäten neu, für die Benutzer Punkte erhalten; aktualisiert Benutzerränge]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.searchEngineConvertInnoDb.description"><![CDATA[Stellt die Tabellen des Suchindex auf die InnoDB-Engine um.]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.searchEngineConvertInnoDb"><![CDATA[Suchindex auf InnoDB umstellen]]></item>
 	</category>
 	<category name="wcf.acp.rescueMode">
 		<item name="wcf.acp.rescueMode"><![CDATA[Systemwiederherstellung]]></item>
@@ -2750,8 +2753,8 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.systemCheck.mysql.foreignKeys"><![CDATA[Fremdschlüssel]]></item>
 		<item name="wcf.acp.systemCheck.mysql.foreignKeys.description"><![CDATA[Fremdschlüssel werden mit der Installation in der Datenbank angelegt und werden für einen einwandfreien Betrieb benötigt.]]></item>
 		<item name="wcf.acp.systemCheck.mysql.searchEngine"><![CDATA[Suche]]></item>
-		<item name="wcf.acp.systemCheck.mysql.searchEngine.description"><![CDATA[Alle Tabellen, die für die Suche genutzt werden, müssen mit der Storage-Engine MyISAM betrieben werden.]]></item>
-		<item name="wcf.acp.systemCheck.mysql.searchEngine.incorrect"><![CDATA[Die folgenden Tabellen verwenden eine inkorrekte Storage-Engine (erwartete Storage-Engine: <code>MyISAM</code>): {implode from=$results[mysql][searchEngine][incorrectTables] key=tableName item=engine glue=", "}<code>{$tableName}</code> (<code>{$engine}</code>){/implode}.]]></item>
+		<item name="wcf.acp.systemCheck.mysql.searchEngine.description"><![CDATA[Alle Tabellen, die für die Suche genutzt werden, müssen mit der Storage-Engine InnoDB betrieben werden.]]></item>
+		<item name="wcf.acp.systemCheck.mysql.searchEngine.incorrect"><![CDATA[Die folgenden Tabellen verwenden eine inkorrekte Storage-Engine (erwartete Storage-Engine: <code>InnoDB</code>): {implode from=$results[mysql][searchEngine][incorrectTables] key=tableName item=engine glue=", "}<code>{$tableName}</code> (<code>{$engine}</code>){/implode}.]]></item>
 		<item name="wcf.acp.systemCheck.php.extension"><![CDATA[Erweiterungen]]></item>
 		<item name="wcf.acp.systemCheck.php.extension.description"><![CDATA[Die offiziellen Erweiterungen von PHP stellen zusätzliche Funktionen bereit, die für den Betrieb der Software notwendig sind.]]></item>
 		<item name="wcf.acp.systemCheck.php.memoryLimit"><![CDATA[Verfügbarer Arbeitsspeicher („memory_limit“)]]></item>
