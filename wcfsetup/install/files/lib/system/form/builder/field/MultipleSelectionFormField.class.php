@@ -13,7 +13,8 @@ use wcf\system\form\builder\IFormDocument;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class MultipleSelectionFormField extends AbstractFormField implements ICssClassFormField, IFilterableSelectionFormField, IImmutableFormField {
+class MultipleSelectionFormField extends AbstractFormField implements IAttributeFormField, ICssClassFormField, IFilterableSelectionFormField, IImmutableFormField {
+	use TInputAttributeFormField;
 	use TCssClassFormField;
 	use TFilterableSelectionFormField;
 	use TImmutableFormField;
