@@ -126,93 +126,304 @@ class MysqlSearchEngine extends AbstractSearchEngine {
 	}
 	
 	/**
-	 * Manipulates the search term (< and > used as quotation marks):
+	 * Manipulates the search term by adding prefixes and suffixes.
 	 * 
-	 * - <test foo> becomes <+test* +foo*>
-	 * - <test -foo bar> becomes <+test* -foo* +bar*>
-	 * - <test "foo bar"> becomes <+test* +"foo bar">
-	 * 
-	 * @see	http://dev.mysql.com/doc/refman/5.5/en/fulltext-boolean.html
-	 * 
-	 * @param	string		$query
-	 * @return	string
+	 * - `test foo` becomes `+test* +foo*`
+	 * - `test -foo bar` becomes `+test* -foo +bar*`
+	 * - `test <foo bar` becomes `+test* <foo* +bar*`
+	 * - `test "foo bar"` becomes `+test* +"foo bar"`
 	 */
 	protected function parseSearchQuery($query) {
 		$query = StringUtil::trim($query);
 		
-		// expand search terms with a * unless they're encapsulated with quotes
-		$inQuotes = false;
-		$previousChar = $tmp = '';
-		$controlCharacterOrSpace = false;
-		$chars = ['+', '-', '*'];
-		$ftMinWordLen = $this->getFulltextMinimumWordLength();
-		for ($i = 0, $length = mb_strlen($query); $i < $length; $i++) {
-			$char = mb_substr($query, $i, 1);
+		$result = [];
+		foreach ($this->splitIntoTerms($query) as $term) {
+			[$prefix, $word, $suffix] = $term;
 			
-			if ($inQuotes) {
-				if ($char == '"') {
-					$inQuotes = false;
+			// Ignore parentheses.
+			if ($word === '(' || $word === ')') {
+				continue;
+			}
+			
+			// Add a '+' prefix if no prefix is given.
+			if (!$prefix) {
+				$prefix = '+';
+			}
+			if (!$suffix) {
+				// Add a '*' suffix if no suffix is given,
+				// - the word is not quoted, and
+				// - the prefix is not '-'.
+				if ($word[0] !== '"' && $prefix !== '-') {
+					$suffix = '*';
 				}
 			}
-			else {
-				if ($char == '"') {
-					$inQuotes = true;
+			
+			$result[] = $prefix.$word.$suffix;
+		}
+		
+		return implode(' ', $result);
+	}
+	
+	/**
+	 * Parses the query into separate search terms.
+	 * 
+	 * The parser is based off the original InnoDB search query parser with
+	 * a small difference: Prefixes are only understood if they stand right
+	 * beside the search term. InnoDB allows an arbitrary number of whitespace
+	 * after the prefix, leading to unexpected results if the search query
+	 * was copied from a sentence that uses the dash as word separator.
+	 * 
+	 * The resulting terms should not be split by MySQL when concatenated
+	 * with spaces and neither should they cause syntax errors.
+	 * 
+	 * Examples:
+	 * 
+	 * Query: `Apfel - Banane`
+	 * Word: |Apfel|
+	 * Word: |Banane|
+	 * 
+	 * Query: `Apfel -Banane`
+	 * Word: |Apfel|
+	 * Word: -|Banane|
+	 * 
+	 * Query: ` Apfel `
+	 * Word: |Apfel|
+	 * 
+	 * Query: ` Apfel Banane `
+	 * Word: |Apfel|
+	 * Word: |Banane|
+	 * 
+	 * Query: `Apfel*`
+	 * Word: |Apfel|*
+	 * 
+	 * Query: `Apfel *`
+	 * Word: |Apfel|
+	 * 
+	 * Query: `Apfel * Banane`
+	 * Word: |Apfel|
+	 * Word: |Banane|
+	 * 
+	 * Query: `+-"Apfel Banane"*`
+	 * Word: -|"Apfel Banane"|
+	 * 
+	 * Query: `Äpfel Bananen`
+	 * Word: |Äpfel|
+	 * Word: |Bananen|
+	 * 
+	 * Query: `+-*`
+	 * 
+	 * Query: `"Apfel`
+	 * Word: |"Apfel"|
+	 * 
+	 * Query: `"Apfel Banane" @8`
+	 * Word: |"Apfel Banane"|
+	 * 
+	 * Query: `Apfel Banane @8`
+	 * Word: |Apfel|
+	 * Word: |Banane|
+	 * 
+	 * Query: `+((+Apfel -Banane) (-Apfel +Banane)) >Clementine`
+	 * Word: +|(|
+	 * Word: |(|
+	 * Word: +|Apfel|
+	 * Word: -|Banane|
+	 * Word: |)|
+	 * Word: |(|
+	 * Word: -|Apfel|
+	 * Word: +|Banane|
+	 * Word: |)|
+	 * Word: |)|
+	 * Word: >|Clementine|
+	 * 
+	 * @see	https://dev.mysql.com/doc/refman/8.0/en/fulltext-boolean.html
+	 * @see	https://github.com/mysql/mysql-server/blob/ee4455a33b10f1b1886044322e4893f587b319ed/storage/innobase/fts/fts0pars.y
+	 * @see	https://github.com/mysql/mysql-server/blob/ee4455a33b10f1b1886044322e4893f587b319ed/storage/innobase/fts/fts0blex.l
+	 */
+	protected function splitIntoTerms($query) {
+		$state = 'beforePrefix';
+		
+		$parentheses = 0;
+		$word = "";
+		$isQuoted = null;
+		$prefix = null;
+		$suffix = null;
+		
+		for ($i = 0, $max = strlen($query); $i < $max;) {
+			$char = $query[$i];
+			
+			// Treat ASCII control characters as spaces.
+			if (ord($query[$i]) < 0x20 || ord($query[$i]) == 0x7f) {
+				$char = " ";
+			}
+			
+			if ($state === 'beforePrefix') {
+				// Skip Whitespace.
+				if (in_array($char, [
+					' ',
+					"\t"
+				])) {
+					$i++;
+					continue;
+				}
+				
+				// After a word is before a word. Handle the closing parenthesis
+				// early on to avoid needing through all the states.
+				if ($char === ')') {
+					if ($parentheses > 0) {
+						$word = ')';
+					}
+					$parentheses--;
+					$i++;
+					$state = 'finish';
+					continue;
+				}
+				
+				$state = 'prefix';
+				
+				// No increment, we must interpret the current character as a prefix.
+				continue;
+			}
+			else if ($state === 'prefix') {
+				if (in_array($char, [
+					'-',
+					'+',
+					'~',
+					'<',
+					'>',
+				])) {
+					// The last prefix character wins.
+					$prefix = $char;
+					$i++;
+					continue;
 				}
 				else {
-					if ($char == ' ' && !$controlCharacterOrSpace) {
-						$controlCharacterOrSpace = true;
-						$tmp .= '*';
-					}
-					else if (in_array($char, $chars)) {
-						$controlCharacterOrSpace = true;
+					$state = 'word';
+					// No increment, we must interpret the current character as a word.
+					continue;
+				}
+			}
+			else if ($state === 'word') {
+				// Parentheses might have a prefix, so we handle them
+				// inside of the 'word' state.
+				if ($char === '(') {
+					$word = '(';
+					$parentheses++;
+					$i++;
+					
+					// Immediately go to the finish to allow for parsing the prefix
+					// of the first word within the parenthesis.
+					$state = 'finish';
+					continue;
+				}
+				
+				// Check whether this word is quoted.
+				if ($isQuoted === null) {
+					if ($char === '"') {
+						$isQuoted = true;
+						$word .= $char;
+						$i++;
+						continue;
 					}
 					else {
-						$controlCharacterOrSpace = false;
+						$isQuoted = false;
+					}
+				}
+				
+				if ($isQuoted) {
+					$word .= $char;
+					if ($char === '"') {
+						$state = 'suffix';
+					}
+					$i++;
+					continue;
+				}
+				else {
+					if (preg_match('/[^" \n*()+\-<>~@%]/', $char)) {
+						$word .= $char;
+						$i++;
+						continue;
+					}
+					else {
+						$state = 'suffix';
+						// No increment, we must interpret the current character as a suffix.
+						continue;
 					}
 				}
 			}
-			
-			/*
-			 * prepend a plus sign (logical AND) if ALL these conditions are given:
-			 * 
-			 * 1) previous character:
-			 *   - is empty (start of string)
-			 *   - is a space (MySQL uses spaces to separate words)
-			 * 
-			 * 2) not within quotation marks
-			 * 
-			 * 3) current char:
-			 *   - is NOT +, - or *
-			 */
-			if (($previousChar == '' || $previousChar == ' ') && !$inQuotes && !in_array($char, $chars)) {
-				// check if the term is shorter than the minimum fulltext word length
-				if ($i + $ftMinWordLen <= $length) {
-					$term = '';// $char;
-					for ($j = $i, $innerLength = $ftMinWordLen + $i; $j < $innerLength; $j++) {
-						$currentChar = mb_substr($query, $j, 1);
-						if ($currentChar == '"' || $currentChar == ' ' || in_array($currentChar, $chars)) {
-							break;
-						}
-						
-						$term .= $currentChar;
-					}
-					
-					if (mb_strlen($term) == $ftMinWordLen) {
-						$tmp .= '+';
-					}
+			else if ($state === 'suffix') {
+				if (!$isQuoted && in_array($char, [
+					'*'
+				])) {
+					$suffix = $char;
+					$i++;
+					continue;
+				}
+				else if ($char == '@') {
+					$state = 'atSign';
+					$i++;
+					continue;
+				}
+				else {
+					$state = 'finish';
+					// No increment, we must yield the word and then continue parsing at
+					// the current position to prevent skipping characters.
+					continue;
 				}
 			}
+			else if ($state === 'atSign') {
+				if (preg_match('/[0-9]/', $char)) {
+					$i++;
+					continue;
+				}
+				else {
+					$state = 'finish';
+					// No increment, we must yield the word and then continue parsing at
+					// the current position to prevent skipping characters.
+					continue;
+				}
+			}
+			else if ($state === 'finish') {
+				// Yield only if the word is non-empty.
+				if ($word) {
+					yield [$prefix, $word, $suffix];
+				}
+				
+				$state = 'beforePrefix';
+				$word = "";
+				$isQuoted = null;
+				$prefix = null;
+				$suffix = null;
+				
+				// It's a bit unclear what we need to do for the percent sign.
+				// It may not appear within a word, but it is no legal operator either.
+				// Just skip it here to prevent infinite loops, due to no state making
+				// progress at the percent sign.
+				if ($char === '%') {
+					$i++;
+				}
+				
+				// No increment, we must interpret the current character as a prefix.
+				continue;
+			}
+			else {
+				throw new \Exception('Unreachable');
+			}
+		}
+		
+		// Yield only if the word is non-empty.
+		if ($word) {
+			// Add missing quote.
+			if ($isQuoted && substr($word, -1) !== '"') {
+				$word .= '"';
+			}
 			
-			$tmp .= $char;
-			$previousChar = $char;
+			yield [$prefix, $word, $suffix];
 		}
 		
-		// handle last char
-		if (!$inQuotes && !$controlCharacterOrSpace) {
-			$tmp .= '*';
+		// Yield the remaining closing parentheses.
+		while ($parentheses-- > 0) {
+			yield ['', ')', ''];
 		}
-		
-		return $tmp;
 	}
 	
 	/**
