@@ -52,12 +52,6 @@ trait TFormNode {
 	protected $isPopulated = false;
 	
 	/**
-	 * list of attribute names that may not be set using `attribute()`
-	 * @var	string[]
-	 */
-	protected $reservedAttributes = ['class', 'id', 'name'];
-	
-	/**
 	 * Adds the given CSS class to this node and returns this node.
 	 * 
 	 * @param	string		$class		added CSS class name
@@ -502,6 +496,21 @@ trait TFormNode {
 	}
 	
 	/**
+	 * Returns a list of attributes that are not accessible via the attribute methods.
+	 *
+	 * @return      string[]
+	 * @since       5.2.11
+	 */
+	protected static function getReservedAttributes() {
+		return [
+			'class',
+			'id',
+			'name',
+			'style',
+		];
+	}
+	
+	/**
 	 * Checks if the given attribute name class a and a valid attribute name.
 	 * 
 	 * @param	string		$name		checked argument name
@@ -511,6 +520,10 @@ trait TFormNode {
 	public static function validateAttribute($name) {
 		if (preg_match('~^[_A-z][_A-z0-9-]*$~', $name) !== 1) {
 			throw new \InvalidArgumentException("Invalid name '{$name}' given.");
+		}
+		
+		if (in_array(strtolower($name), static::getReservedAttributes())) {
+			throw new \InvalidArgumentException("Attribute '{$name}' is not accessible as an attribute.");
 		}
 	}
 	
