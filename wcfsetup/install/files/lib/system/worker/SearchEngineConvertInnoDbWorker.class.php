@@ -12,6 +12,7 @@ use wcf\system\WCF;
  * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Worker
+ * @since       5.4
  */
 class SearchEngineConvertInnoDbWorker extends AbstractRebuildDataWorker {
 	/**
@@ -23,9 +24,9 @@ class SearchEngineConvertInnoDbWorker extends AbstractRebuildDataWorker {
 	 * @inheritDoc
 	 */
 	public function initObjectList() {
-		// This rebuild worker has no database object list
-		// therefore we do nothing in this method an overwrite
-		// the parent method, that it does not throw an exception.
+		// This rebuild worker has no database object list and
+		// therefore, we do nothing in this method and overwrite
+		// the parent method so no exception is thrown.
 	}
 	
 	/**
