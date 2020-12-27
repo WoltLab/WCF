@@ -21,6 +21,17 @@ class VarbinaryDatabaseTableColumn extends AbstractDatabaseTableColumn implement
 	/**
 	 * @inheritDoc
 	 */
+	public function getLength() {
+		if ($this->length === null) {
+			throw new \LogicException('The length of varbinary fields must be explicitly set.');
+		}
+		
+		return $this->traitGetLength();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function getMaximumLength() {
 		return 65535;
 	}
