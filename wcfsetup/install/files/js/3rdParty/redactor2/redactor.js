@@ -4727,7 +4727,49 @@
 					}
 				},
 				formatUncollapsed: function (tag, params) {
+					var element;
+					
 					this.selection.save();
+
+					var range = window.getSelection().getRangeAt(0);
+					var contents = range.cloneContents();
+					if (contents.querySelector(tag) === null) {
+						element = range.startContainer;
+						if (element.nodeType === Node.TEXT_NODE) {
+							element = element.parentElement;
+						}
+
+						var parentWithTheSameTag = element.closest(tag);
+						if (parentWithTheSameTag !== null && this.core.editor()[0].contains(parentWithTheSameTag)) {
+							// We need to split the matching parent element
+							// by moving everything to the left and the right
+							// into separate nodes.
+							var leftElement = document.createElement(tag);
+							parentWithTheSameTag.insertAdjacentElement("beforebegin", leftElement);
+
+							var leftRange = document.createRange();
+							leftRange.selectNodeContents(parentWithTheSameTag);
+							leftRange.setEnd(range.startContainer, range.startOffset);
+							leftElement.appendChild(leftRange.extractContents());
+
+							var rightElement = document.createElement(tag);
+							parentWithTheSameTag.insertAdjacentElement("afterend", rightElement);
+
+							var rightRange = document.createRange();
+							rightRange.selectNodeContents(parentWithTheSameTag);
+							rightRange.setStart(range.endContainer, range.endOffset);
+							rightElement.appendChild(rightRange.extractContents());
+
+							// Finally remove the offending parent element.
+							var parentElement = parentWithTheSameTag.parentElement;
+							while (parentWithTheSameTag.childNodes.length) {
+								parentElement.insertBefore(parentWithTheSameTag.childNodes[0], parentWithTheSameTag);
+							}
+							parentWithTheSameTag.remove();
+							
+							return;
+						}
+					}
 					
 					var nodes = this.inline.getClearedNodes();
 					this.inline.setNodesStriked(nodes, tag, params);
@@ -4741,7 +4783,7 @@
 					// WoltLab: Chrome misbehaves in some cases, causing the `<strike>` element for
 					// contained elements to be stripped. Instead, those children are assigned the
 					// CSS style `text-decoration-line: line-through`.
-					var chromeElements = this.core.editor()[0].querySelectorAll('[style*="line-through"]'), element, strike;
+					var chromeElements = this.core.editor()[0].querySelectorAll('[style*="line-through"]'), strike;
 					for (var i = 0, length = chromeElements.length; i < length; i++) {
 						element = chromeElements[0];
 
