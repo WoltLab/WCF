@@ -4,6 +4,7 @@ use wcf\data\media\ViewableMedia;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\IImmutableFormField;
 use wcf\system\form\builder\field\TImmutableFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
 
 /**
  * Implementation of a form field to select a single media file.
@@ -45,6 +46,7 @@ class SingleMediaSelectionFormField extends AbstractFormField implements IImmuta
 	 * @return	ViewableMedia
 	 * 
 	 * @throws	\InvalidArgumentException	if no or an invalid media id is set as value
+	 * @throws	\UnexpectedValueException	if no or an invalid media id is set as value
 	 */
 	public function getMedia() {
 		if ($this->media === null) {
@@ -116,6 +118,10 @@ class SingleMediaSelectionFormField extends AbstractFormField implements IImmuta
 		}
 		catch (\UnexpectedValueException $e) {
 			$this->value = null;
+		}
+		
+		if (!$this->getValue() && $this->isRequired()) {
+			$this->addValidationError(new FormFieldValidationError('empty'));
 		}
 	}
 }
