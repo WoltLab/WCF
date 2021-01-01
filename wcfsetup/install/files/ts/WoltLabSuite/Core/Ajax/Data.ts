@@ -28,6 +28,7 @@ export interface DatabaseObjectActionResponse extends ResponseData {
     | any[];
 }
 
+// Return `false` to suppress the error message.
 export type CallbackFailure = (
   data: ResponseData,
   responseText: string,
