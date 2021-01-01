@@ -25,9 +25,6 @@ import * as UiPageAction from "./Ui/Page/Action";
 import * as UiTabMenu from "./Ui/TabMenu";
 import * as UiTooltip from "./Ui/Tooltip";
 
-// Import favico.js into the global namespace.
-import "favico.js";
-
 // perfectScrollbar does not need to be bound anywhere, it just has to be loaded for WCF.js
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import perfectScrollbar from "perfect-scrollbar";

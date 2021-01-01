@@ -2,7 +2,6 @@
   "name": "@woltlab/wcf",
   "version": "5.4.0",
   "devDependencies": {
-    "@types/favico.js": "0.0.28",
     "@types/perfect-scrollbar": "^0.6.1",
     "@typescript-eslint/eslint-plugin": "^4.6.0",
     "@typescript-eslint/parser": "^4.6.0",
