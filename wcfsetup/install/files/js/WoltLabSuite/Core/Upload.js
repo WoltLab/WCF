@@ -65,6 +65,7 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Dom/Change
          * Creates the upload button.
          */
         _createButton() {
+            this._fileUpload = document.createElement("input");
             this._fileUpload.type = "file";
             this._fileUpload.name = this._options.name;
             if (this._options.multiple) {
@@ -74,6 +75,7 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Dom/Change
                 this._fileUpload.accept = this._options.acceptableFiles.join(",");
             }
             this._fileUpload.addEventListener("change", (ev) => this._upload(ev));
+            this._button = document.createElement("p");
             this._button.className = "button uploadButton";
             this._button.setAttribute("role", "button");
             this._fileUpload.addEventListener("focus", () => {
