@@ -42,7 +42,7 @@ window.WCF.Language.addObject = Language.addObject;
 // WCF.System.Event compatibility
 window.__wcf_bc_eventHandler = EventHandler;
 
-interface BoostrapOptions {
+export interface BoostrapOptions {
   enableMobileMenu: boolean;
 }
 
