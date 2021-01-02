@@ -195,6 +195,7 @@ class CronjobScheduler extends SingletonFactory {
 				WHERE	        isDisabled = ?
 						AND state = ?
 						AND nextExec <= ?
+				ORDER BY        failCount ASC
 				FOR UPDATE";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([
