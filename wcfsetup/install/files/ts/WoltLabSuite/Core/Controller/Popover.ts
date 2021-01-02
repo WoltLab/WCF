@@ -28,19 +28,19 @@ const enum Delay {
 type CallbackLoad = (objectId: number | string, popover: ControllerPopover, element: HTMLElement) => void;
 
 interface PopoverOptions {
-  attributeName: string;
+  attributeName?: string;
   className: string;
   dboAction: string;
   identifier: string;
-  legacy: boolean;
-  loadCallback: CallbackLoad;
+  legacy?: boolean;
+  loadCallback?: CallbackLoad;
 }
 
 interface HandlerData {
   attributeName: string;
   dboAction: string;
   legacy: boolean;
-  loadCallback: CallbackLoad;
+  loadCallback?: CallbackLoad;
   selector: string;
 }
 
