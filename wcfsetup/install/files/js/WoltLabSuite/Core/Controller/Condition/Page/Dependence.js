@@ -1,105 +1,85 @@
 /**
  * Shows and hides an element that depends on certain selected pages when setting up conditions.
  *
- * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Controller/Condition/Page/Dependence
+ * @author  Matthias Schmidt
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Controller/Condition/Page/Dependence
  */
-define(['Dom/ChangeListener', 'Dom/Traverse', 'EventHandler', 'ObjectMap'], function (DomChangeListener, DomTraverse, EventHandler, ObjectMap) {
+define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Event/Handler"], function (require, exports, tslib_1, Util_1, EventHandler) {
     "use strict";
-    if (!COMPILER_TARGET_DEFAULT) {
-        var Fake = function () { };
-        Fake.prototype = {
-            register: function () { },
-            _checkVisibility: function () { },
-            _hideDependentElement: function () { },
-            _showDependentElement: function () { }
-        };
-        return Fake;
-    }
-    var _pages = elBySelAll('input[name="pageIDs[]"]');
-    var _dependentElements = [];
-    var _pageIds = new ObjectMap();
-    var _hiddenElements = new ObjectMap();
-    var _didInit = false;
-    return {
-        register: function (dependentElement, pageIds) {
-            _dependentElements.push(dependentElement);
-            _pageIds.set(dependentElement, pageIds);
-            _hiddenElements.set(dependentElement, []);
-            if (!_didInit) {
-                for (var i = 0, length = _pages.length; i < length; i++) {
-                    _pages[i].addEventListener('change', this._checkVisibility.bind(this));
-                }
-                _didInit = true;
-            }
-            // remove the dependent element before submit if it is hidden
-            DomTraverse.parentByTag(dependentElement, 'FORM').addEventListener('submit', function () {
-                if (dependentElement.style.getPropertyValue('display') === 'none') {
-                    dependentElement.remove();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.register = void 0;
+    Util_1 = tslib_1.__importDefault(Util_1);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    const _pages = Array.from(document.querySelectorAll('input[name="pageIDs[]"]'));
+    const _dependentElements = [];
+    const _pageIds = new WeakMap();
+    const _hiddenElements = new WeakMap();
+    let _didInit = false;
+    /**
+     * Checks if only relevant pages are selected. If that is the case, the dependent
+     * element is shown, otherwise it is hidden.
+     */
+    function checkVisibility() {
+        _dependentElements.forEach((dependentElement) => {
+            const pageIds = _pageIds.get(dependentElement);
+            const checkedPageIds = [];
+            _pages.forEach((page) => {
+                if (page.checked) {
+                    checkedPageIds.push(~~page.value);
                 }
             });
-            this._checkVisibility();
-        },
-        /**
-         * Checks if only relevant pages are selected. If that is the case, the dependent
-         * element is shown, otherwise it is hidden.
-         *
-         * @private
-         */
-        _checkVisibility: function () {
-            var dependentElement, page, pageIds, checkedPageIds, irrelevantPageIds;
-            depenentElementLoop: for (var i = 0, length = _dependentElements.length; i < length; i++) {
-                dependentElement = _dependentElements[i];
-                pageIds = _pageIds.get(dependentElement);
-                checkedPageIds = [];
-                for (var j = 0, length2 = _pages.length; j < length2; j++) {
-                    page = _pages[j];
-                    if (page.checked) {
-                        checkedPageIds.push(~~page.value);
-                    }
-                }
-                irrelevantPageIds = checkedPageIds.filter(function (pageId) {
-                    return pageIds.indexOf(pageId) === -1;
-                });
-                if (!checkedPageIds.length || irrelevantPageIds.length) {
-                    this._hideDependentElement(dependentElement);
-                }
-                else {
-                    this._showDependentElement(dependentElement);
-                }
+            const irrelevantPageIds = checkedPageIds.filter((pageId) => pageIds.includes(pageId));
+            if (!checkedPageIds.length || irrelevantPageIds.length) {
+                hideDependentElement(dependentElement);
             }
-            EventHandler.fire('com.woltlab.wcf.pageConditionDependence', 'checkVisivility');
-        },
-        /**
-         * Hides all elements that depend on the given element.
-         *
-         * @param	{HTMLElement}	dependentElement
-         */
-        _hideDependentElement: function (dependentElement) {
-            elHide(dependentElement);
-            var hiddenElements = _hiddenElements.get(dependentElement);
-            for (var i = 0, length = hiddenElements.length; i < length; i++) {
-                elHide(hiddenElements[i]);
+            else {
+                showDependentElement(dependentElement);
             }
-            _hiddenElements.set(dependentElement, []);
-        },
-        /**
-         * Shows all elements that depend on the given element.
-         *
-         * @param	{HTMLElement}	dependentElement
-         */
-        _showDependentElement: function (dependentElement) {
-            elShow(dependentElement);
-            // make sure that all parent elements are also visible
-            var parentNode = dependentElement;
-            while ((parentNode = parentNode.parentNode) && parentNode instanceof Element) {
-                if (parentNode.style.getPropertyValue('display') === 'none') {
-                    _hiddenElements.get(dependentElement).push(parentNode);
-                }
-                elShow(parentNode);
+        });
+        EventHandler.fire("com.woltlab.wcf.pageConditionDependence", "checkVisivility");
+    }
+    /**
+     * Hides all elements that depend on the given element.
+     */
+    function hideDependentElement(dependentElement) {
+        Util_1.default.hide(dependentElement);
+        const hiddenElements = _hiddenElements.get(dependentElement);
+        hiddenElements.forEach((hiddenElement) => Util_1.default.hide(hiddenElement));
+        _hiddenElements.set(dependentElement, []);
+    }
+    /**
+     * Shows all elements that depend on the given element.
+     */
+    function showDependentElement(dependentElement) {
+        Util_1.default.show(dependentElement);
+        // make sure that all parent elements are also visible
+        let parentElement = dependentElement;
+        while ((parentElement = parentElement.parentElement) && parentElement) {
+            if (Util_1.default.isHidden(parentElement)) {
+                _hiddenElements.get(dependentElement).push(parentElement);
             }
+            Util_1.default.show(parentElement);
         }
-    };
+    }
+    function register(dependentElement, pageIds) {
+        _dependentElements.push(dependentElement);
+        _pageIds.set(dependentElement, pageIds);
+        _hiddenElements.set(dependentElement, []);
+        if (!_didInit) {
+            _pages.forEach((page) => {
+                page.addEventListener("change", () => checkVisibility());
+            });
+            _didInit = true;
+        }
+        // remove the dependent element before submit if it is hidden
+        dependentElement.closest("form").addEventListener("submit", () => {
+            if (Util_1.default.isHidden(dependentElement)) {
+                dependentElement.remove();
+            }
+        });
+        checkVisibility();
+    }
+    exports.register = register;
 });
