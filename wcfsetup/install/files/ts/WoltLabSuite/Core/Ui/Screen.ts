@@ -50,7 +50,7 @@ const _mqMapEdge = new Map<string, string>();
  * Returns a UUID that is used to internal identify the callbacks, can be used
  * to remove binding by calling the `remove` method.
  */
-export function on(query: string, callbacks: Callbacks): string {
+export function on(query: string, callbacks: Partial<Callbacks>): string {
   const uuid = Core.getUuid(),
     queryObject = _getQueryObject(query);
 
