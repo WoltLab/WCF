@@ -250,7 +250,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
                 });
             }
             if (createdList) {
-                this.list.parentElement.insertBefore(this.element, this.list.nextSibling);
+                this.element.insertAdjacentElement("afterend", this.list);
                 const parent = this.element.parentElement;
                 Simple_1.default.initFragment(parent, this.list);
                 this.dropdownContainerId = Util_1.default.identify(parent);
