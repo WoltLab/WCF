@@ -201,7 +201,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Dom/Change/List
                 clipboardObject.classList.remove("jsMarked");
             }
             if (data.markAll !== null) {
-                data.markAll.checked = Array.from(data.checkboxes).some((item) => !item.checked);
+                data.markAll.checked = !Array.from(data.checkboxes).some((item) => !item.checked);
                 this.setParentAsMarked(data.markAll, isMarked);
             }
             this.setParentAsMarked(checkbox, checkbox.checked);

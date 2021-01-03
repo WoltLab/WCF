@@ -299,7 +299,7 @@ class UiSearchInput {
     }
 
     if (createdList) {
-      this.list.parentElement!.insertBefore(this.element, this.list.nextSibling);
+      this.element.insertAdjacentElement("afterend", this.list);
       const parent = this.element.parentElement!;
       UiDropdownSimple.initFragment(parent, this.list);
 

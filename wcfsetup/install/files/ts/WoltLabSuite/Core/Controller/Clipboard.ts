@@ -282,7 +282,7 @@ class ControllerClipboard {
     }
 
     if (data.markAll !== null) {
-      data.markAll.checked = Array.from(data.checkboxes).some((item) => !item.checked);
+      data.markAll.checked = !Array.from(data.checkboxes).some((item) => !item.checked);
 
       this.setParentAsMarked(data.markAll, isMarked);
     }

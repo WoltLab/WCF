@@ -16,10 +16,10 @@ import * as Language from "./Language";
 import { FileCollection, FileElements, FileLikeObject, UploadId, UploadOptions } from "./Upload/Data";
 
 abstract class Upload<TOptions extends UploadOptions = UploadOptions> {
-  protected readonly _button = document.createElement("p");
+  protected _button = document.createElement("p");
   protected readonly _buttonContainer: HTMLElement;
   protected readonly _fileElements: FileElements[] = [];
-  protected readonly _fileUpload = document.createElement("input");
+  protected _fileUpload = document.createElement("input");
   protected _internalFileId = 0;
   protected readonly _multiFileUploadIds: unknown[] = [];
   protected readonly _options: TOptions;
@@ -83,6 +83,7 @@ abstract class Upload<TOptions extends UploadOptions = UploadOptions> {
    * Creates the upload button.
    */
   protected _createButton(): void {
+    this._fileUpload = document.createElement("input");
     this._fileUpload.type = "file";
     this._fileUpload.name = this._options.name;
     if (this._options.multiple) {
@@ -93,6 +94,7 @@ abstract class Upload<TOptions extends UploadOptions = UploadOptions> {
     }
     this._fileUpload.addEventListener("change", (ev) => this._upload(ev));
 
+    this._button = document.createElement("p");
     this._button.className = "button uploadButton";
     this._button.setAttribute("role", "button");
     this._fileUpload.addEventListener("focus", () => {

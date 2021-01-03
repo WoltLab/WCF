@@ -26,6 +26,10 @@ define(["require", "exports", "tslib", "../../Core", "./Delete", "../../Dom/Util
                 imagePreview: false,
                 // max files
                 maxFiles: null,
+                // Dummy value, because it is checked in the base method, without using it with this upload handler.
+                className: "invalid",
+                // url
+                url: `index.php?ajax-file-upload/&t=${window.SECURITY_TOKEN}`,
             }, options);
             options.multiple = options.maxFiles === null || options.maxFiles > 1;
             super(buttonContainerId, targetId, options);
