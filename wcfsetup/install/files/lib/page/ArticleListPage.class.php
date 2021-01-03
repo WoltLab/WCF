@@ -107,7 +107,7 @@ class ArticleListPage extends SortablePage {
 		if (!empty($_REQUEST['showArticleAddDialog'])) $this->showArticleAddDialog = 1;
 		
 		// read available label groups
-		$this->labelGroups = ArticleCategory::getAccessibleLabelGroups('canViewLabel');
+		$this->labelGroups = $this->getLabelGroups();
 		if (!empty($this->labelGroups) && isset($_REQUEST['labelIDs']) && is_array($_REQUEST['labelIDs'])) {
 			$this->labelIDs = $_REQUEST['labelIDs'];
 			
@@ -149,6 +149,16 @@ class ArticleListPage extends SortablePage {
 		}
 		
 		$this->canonicalURL = LinkHandler::getInstance()->getLink('ArticleList', $this->controllerParameters, ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : ''));
+	}
+	
+	/**
+	 * Returns the label groups shown on this page.
+	 * 
+	 * @return      ViewableLabelGroup[]
+	 * @since       5.4
+	 */
+	protected function getLabelGroups(): array {
+		return ArticleCategory::getAccessibleLabelGroups('canViewLabel');
 	}
 	
 	/**

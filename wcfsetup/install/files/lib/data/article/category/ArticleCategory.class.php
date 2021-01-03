@@ -154,6 +154,23 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
 	}
 	
 	/**
+	 * Returns the label groups for this category.
+	 * 
+	 * @param       string        $permission
+	 * @return      ViewableLabelGroup[]
+	 * @since       5.4
+	 */
+	public function getLabelGroups(string $permission = 'canSetLabel'): array {
+		$labelGroupsToCategories = ArticleCategoryLabelCacheBuilder::getInstance()->getData();
+		
+		if (isset($labelGroupsToCategories[$this->categoryID])) {
+			return LabelHandler::getInstance()->getLabelGroups($labelGroupsToCategories[$this->categoryID], true, $permission);
+		}
+		
+		return [];
+	}
+	
+	/**
 	 * Returns true if the active user has subscribed to this category.
 	 *
 	 * @return	boolean
