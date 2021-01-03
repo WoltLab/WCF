@@ -92,6 +92,11 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Date/Time/R
                 window.jQuery(() => {
                     UiPageAction.setup();
                 });
+                // jQuery.browser.mobile is a deprecated legacy property that was used
+                // to determine the class of devices being used.
+                const jq = window.jQuery;
+                jq.browser = jq.browser || {};
+                jq.browser.mobile = Environment.platform() !== "desktop";
                 window.jQuery.holdReady(false);
             }
         }, 20);

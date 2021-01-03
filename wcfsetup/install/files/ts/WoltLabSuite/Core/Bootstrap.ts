@@ -111,6 +111,13 @@ export function setup(options: BoostrapOptions): void {
       window.jQuery(() => {
         UiPageAction.setup();
       });
+
+      // jQuery.browser.mobile is a deprecated legacy property that was used
+      // to determine the class of devices being used.
+      const jq = window.jQuery as any;
+      jq.browser = jq.browser || {};
+      jq.browser.mobile = Environment.platform() !== "desktop";
+
       window.jQuery.holdReady(false);
     }
   }, 20);
