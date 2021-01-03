@@ -80,3 +80,20 @@ export interface RequestOptions {
 
   callbackObject?: AjaxCallbackObject | null;
 }
+
+interface PreviousException {
+  message: string;
+  stacktrace: string;
+}
+
+export interface AjaxResponseException extends ResponseData {
+  exceptionID?: string;
+  previous: PreviousException[];
+  file?: string;
+  line?: number;
+  message: string;
+  returnValues?: {
+    description?: string;
+  };
+  stacktrace?: string;
+}

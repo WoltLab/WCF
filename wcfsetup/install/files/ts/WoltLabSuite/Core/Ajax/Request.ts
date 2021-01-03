@@ -11,28 +11,11 @@
  */
 
 import * as AjaxStatus from "./Status";
-import { ResponseData, RequestOptions, RequestData } from "./Data";
+import { ResponseData, RequestOptions, RequestData, AjaxResponseException } from "./Data";
 import * as Core from "../Core";
 import DomChangeListener from "../Dom/Change/Listener";
 import DomUtil from "../Dom/Util";
 import * as Language from "../Language";
-
-interface PreviousException {
-  message: string;
-  stacktrace: string;
-}
-
-interface AjaxResponseException extends ResponseData {
-  exceptionID?: string;
-  previous: PreviousException[];
-  file?: string;
-  line?: number;
-  message: string;
-  returnValues?: {
-    description?: string;
-  };
-  stacktrace?: string;
-}
 
 let _didInit = false;
 let _ignoreAllErrors = false;
