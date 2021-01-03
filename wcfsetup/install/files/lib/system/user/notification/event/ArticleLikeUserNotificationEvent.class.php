@@ -133,6 +133,17 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
 	/**
 	 * @inheritDoc
 	 */
+	public function isVisible() {
+		if (!MODULE_ARTICLE || !MODULE_LIKE) {
+			return false;
+		}
+		
+		return parent::isVisible();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected static function createTestLikeObject(UserProfile $recipient, UserProfile $author) {
 		return new LikeableArticle(self::getTestArticle(self::createTestCategory(ArticleCategory::OBJECT_TYPE_NAME), $author));
 	}
