@@ -156,7 +156,6 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
 	/**
 	 * Returns the label groups for this category.
 	 * 
-	 * @param       string        $permission
 	 * @return      ViewableLabelGroup[]
 	 * @since       5.4
 	 */

@@ -65,7 +65,7 @@ class CategoryArticleListPage extends ArticleListPage {
 	}
 	
 	/**
-	 * @inerhitDoc
+	 * @inheritDoc
 	 */
 	protected function getLabelGroups(): array {
 		return $this->category->getLabelGroups('canViewLabel');
