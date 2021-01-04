@@ -39,9 +39,9 @@ define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../
             this.popover.appendChild(pointer);
             document.body.appendChild(this.popover);
             // event listener
-            this.popover.addEventListener("mouseenter", this.popoverMouseEnter.bind(this));
+            this.popover.addEventListener("mouseenter", () => this.popoverMouseEnter());
             this.popover.addEventListener("mouseleave", () => this.mouseLeave());
-            this.popover.addEventListener("animationend", this.clearContent.bind(this));
+            this.popover.addEventListener("animationend", () => this.clearContent());
             window.addEventListener("beforeunload", () => {
                 this.suspended = true;
                 if (this.timerEnter) {
@@ -242,27 +242,35 @@ define(["require", "exports", "tslib", "../Ajax", "../Dom/Change/Listener", "../
             }
             const cacheId = elementData.element.dataset.cacheId;
             const data = this.cache.get(cacheId);
-            if (data.state === 2 /* Ready */) {
-                this.popoverContent.appendChild(data.content);
-                this.rebuild();
-            }
-            else if (data.state === 0 /* None */) {
-                data.state = 1 /* Loading */;
-                const handler = this.handlers.get(elementData.identifier);
-                if (handler.loadCallback) {
-                    handler.loadCallback(elementData.objectId, this, elementData.element);
+            switch (data.state) {
+                case 2 /* Ready */: {
+                    this.popoverContent.appendChild(data.content);
+                    this.rebuild();
+                    break;
                 }
-                else if (handler.dboAction) {
-                    const callback = (data) => {
-                        this.setContent(elementData.identifier, elementData.objectId, data.returnValues.template);
-                        return true;
-                    };
-                    this.ajaxApi({
-                        actionName: "getPopover",
-                        className: handler.dboAction,
-                        interfaceName: "wcf\\data\\IPopoverAction",
-                        objectIDs: [elementData.objectId],
-                    }, callback, callback);
+                case 0 /* None */: {
+                    data.state = 1 /* Loading */;
+                    const handler = this.handlers.get(elementData.identifier);
+                    if (handler.loadCallback) {
+                        handler.loadCallback(elementData.objectId, this, elementData.element);
+                    }
+                    else if (handler.dboAction) {
+                        const callback = (data) => {
+                            this.setContent(elementData.identifier, elementData.objectId, data.returnValues.template);
+                            return true;
+                        };
+                        this.ajaxApi({
+                            actionName: "getPopover",
+                            className: handler.dboAction,
+                            interfaceName: "wcf\\data\\IPopoverAction",
+                            objectIDs: [elementData.objectId],
+                        }, callback, callback);
+                    }
+                    break;
+                }
+                case 1 /* Loading */: {
+                    // Do not interrupt inflight requests.
+                    break;
                 }
             }
         }

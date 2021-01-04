@@ -69,11 +69,8 @@ define(["require", "exports"], function (require, exports) {
     function observe() {
         document.querySelectorAll(".jsCollapsibleBbcode").forEach((container) => {
             // find the matching toggle button
-            const toggleButtons = [];
-            container.querySelectorAll(".toggleButton:not(.jsToggleButtonEnabled)").forEach((button) => {
-                if (button.closest(".jsCollapsibleBbcode") === container) {
-                    toggleButtons.push(button);
-                }
+            const toggleButtons = Array.from(container.querySelectorAll(".toggleButton:not(.jsToggleButtonEnabled)")).filter((button) => {
+                return button.closest(".jsCollapsibleBbcode") === container;
             });
             const overflowContainer = container.querySelector(".collapsibleBbcodeOverflow") || container;
             if (toggleButtons.length > 0) {

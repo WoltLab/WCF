@@ -68,11 +68,10 @@ function toggleContainer(container: HTMLElement, toggleButtons: HTMLElement[], e
 export function observe(): void {
   document.querySelectorAll(".jsCollapsibleBbcode").forEach((container: HTMLElement) => {
     // find the matching toggle button
-    const toggleButtons: HTMLElement[] = [];
-    container.querySelectorAll(".toggleButton:not(.jsToggleButtonEnabled)").forEach((button: HTMLElement) => {
-      if (button.closest(".jsCollapsibleBbcode") === container) {
-        toggleButtons.push(button);
-      }
+    const toggleButtons = Array.from<HTMLElement>(
+      container.querySelectorAll(".toggleButton:not(.jsToggleButtonEnabled)"),
+    ).filter((button) => {
+      return button.closest(".jsCollapsibleBbcode") === container;
     });
 
     const overflowContainer = (container.querySelector(".collapsibleBbcodeOverflow") as HTMLElement) || container;

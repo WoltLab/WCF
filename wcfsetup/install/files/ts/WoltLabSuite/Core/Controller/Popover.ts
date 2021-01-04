@@ -86,10 +86,10 @@ class ControllerPopover implements AjaxCallbackObject {
     document.body.appendChild(this.popover);
 
     // event listener
-    this.popover.addEventListener("mouseenter", this.popoverMouseEnter.bind(this));
+    this.popover.addEventListener("mouseenter", () => this.popoverMouseEnter());
     this.popover.addEventListener("mouseleave", () => this.mouseLeave());
 
-    this.popover.addEventListener("animationend", this.clearContent.bind(this));
+    this.popover.addEventListener("animationend", () => this.clearContent());
 
     window.addEventListener("beforeunload", () => {
       this.suspended = true;
@@ -334,33 +334,46 @@ class ControllerPopover implements AjaxCallbackObject {
     const cacheId = elementData.element.dataset.cacheId!;
     const data = this.cache.get(cacheId)!;
 
-    if (data.state === State.Ready) {
-      this.popoverContent.appendChild(data.content!);
+    switch (data.state) {
+      case State.Ready: {
+        this.popoverContent.appendChild(data.content!);
 
-      this.rebuild();
-    } else if (data.state === State.None) {
-      data.state = State.Loading;
+        this.rebuild();
 
-      const handler = this.handlers.get(elementData.identifier)!;
-      if (handler.loadCallback) {
-        handler.loadCallback(elementData.objectId, this, elementData.element);
-      } else if (handler.dboAction) {
-        const callback = (data) => {
-          this.setContent(elementData.identifier, elementData.objectId, data.returnValues.template);
+        break;
+      }
 
-          return true;
-        };
+      case State.None: {
+        data.state = State.Loading;
 
-        this.ajaxApi(
-          {
-            actionName: "getPopover",
-            className: handler.dboAction,
-            interfaceName: "wcf\\data\\IPopoverAction",
-            objectIDs: [elementData.objectId],
-          },
-          callback,
-          callback,
-        );
+        const handler = this.handlers.get(elementData.identifier)!;
+        if (handler.loadCallback) {
+          handler.loadCallback(elementData.objectId, this, elementData.element);
+        } else if (handler.dboAction) {
+          const callback = (data) => {
+            this.setContent(elementData.identifier, elementData.objectId, data.returnValues.template);
+
+            return true;
+          };
+
+          this.ajaxApi(
+            {
+              actionName: "getPopover",
+              className: handler.dboAction,
+              interfaceName: "wcf\\data\\IPopoverAction",
+              objectIDs: [elementData.objectId],
+            },
+            callback,
+            callback,
+          );
+        }
+
+        break;
+      }
+
+      case State.Loading: {
+        // Do not interrupt inflight requests.
+        break;
       }
     }
   }
