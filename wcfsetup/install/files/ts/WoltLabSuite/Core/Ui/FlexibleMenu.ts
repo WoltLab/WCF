@@ -48,7 +48,7 @@ export function register(containerId: string): void {
     return;
   }
 
-  const list = DomTraverse.childByTag(container, "UL") as HTMLUListElement;
+  const list = DomTraverse.childByTag(container, "UL");
   if (list === null) {
     throw "Expected an <ul> element as child of container '" + containerId + "'.";
   }
@@ -99,7 +99,7 @@ export function rebuild(containerId: string): void {
   availableWidth -= DomUtil.styleAsInt(styles, "margin-right");
 
   const list = _itemLists.get(containerId)!;
-  const items = DomTraverse.childrenByTag(list, "LI") as HTMLLIElement[];
+  const items = DomTraverse.childrenByTag(list, "LI");
   let dropdown = _dropdowns.get(containerId);
   let dropdownWidth = 0;
   if (dropdown !== undefined) {

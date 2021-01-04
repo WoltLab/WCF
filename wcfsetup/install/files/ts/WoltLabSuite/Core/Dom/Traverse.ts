@@ -89,6 +89,11 @@ export function childByClass(element: Element, className: string): Element | nul
 /**
  * Examines child elements and returns the first child which equals the given tag.
  */
+export function childByTag<K extends Uppercase<keyof HTMLElementTagNameMap>>(
+  element: Element,
+  tagName: K,
+): HTMLElementTagNameMap[Lowercase<K>] | null;
+export function childByTag(element: Element, tagName: string): Element | null;
 export function childByTag(element: Element, tagName: string): Element | null {
   return _getChildren(element, Type.TagName, tagName)[0] || null;
 }
@@ -110,6 +115,11 @@ export function childrenByClass(element: Element, className: string): Element[] 
 /**
  * Examines child elements and returns all children which equal the given tag.
  */
+export function childrenByTag<K extends Uppercase<keyof HTMLElementTagNameMap>>(
+  element: Element,
+  tagName: K,
+): HTMLElementTagNameMap[Lowercase<K>][];
+export function childrenByTag(element: Element, tagName: string): Element[];
 export function childrenByTag(element: Element, tagName: string): Element[] {
   return _getChildren(element, Type.TagName, tagName);
 }
