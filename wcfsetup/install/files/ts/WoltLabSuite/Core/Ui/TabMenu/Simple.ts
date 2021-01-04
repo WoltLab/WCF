@@ -43,7 +43,7 @@ class TabMenuSimple {
       return false;
     }
 
-    const nav = DomTraverse.childByTag(this.container, "NAV") as HTMLElement;
+    const nav = DomTraverse.childByTag(this.container, "NAV");
     if (nav === null) {
       return false;
     }
@@ -54,7 +54,7 @@ class TabMenuSimple {
       return false;
     }
 
-    DomTraverse.childrenByTag(this.container, "DIV").forEach((container: HTMLElement) => {
+    DomTraverse.childrenByTag(this.container, "DIV").forEach((container) => {
       let name = container.dataset.name;
       if (!name) {
         name = DomUtil.identify(container);

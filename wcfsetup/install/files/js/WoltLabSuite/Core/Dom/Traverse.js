@@ -70,9 +70,6 @@ define(["require", "exports"], function (require, exports) {
         return _getChildren(element, 2 /* ClassName */, className)[0] || null;
     }
     exports.childByClass = childByClass;
-    /**
-     * Examines child elements and returns the first child which equals the given tag.
-     */
     function childByTag(element, tagName) {
         return _getChildren(element, 3 /* TagName */, tagName)[0] || null;
     }
@@ -91,9 +88,6 @@ define(["require", "exports"], function (require, exports) {
         return _getChildren(element, 2 /* ClassName */, className);
     }
     exports.childrenByClass = childrenByClass;
-    /**
-     * Examines child elements and returns all children which equal the given tag.
-     */
     function childrenByTag(element, tagName) {
         return _getChildren(element, 3 /* TagName */, tagName);
     }
