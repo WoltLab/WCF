@@ -1,138 +1,107 @@
 /**
  * Initializes modules required for media clipboard.
  *
- * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Media/Clipboard
+ * @author  Matthias Schmidt
+ * @copyright 2001-2021 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Media/Clipboard
  */
-define([
-    'Ajax',
-    'Dom/ChangeListener',
-    'EventHandler',
-    'Language',
-    'Ui/Dialog',
-    'Ui/Notification',
-    'WoltLabSuite/Core/Controller/Clipboard',
-    'WoltLabSuite/Core/Media/Editor',
-    'WoltLabSuite/Core/Media/List/Upload'
-], function (Ajax, DomChangeListener, EventHandler, Language, UiDialog, UiNotification, Clipboard, MediaEditor, MediaListUpload) {
+define(["require", "exports", "tslib", "../Controller/Clipboard", "../Ui/Notification", "../Ui/Dialog", "../Event/Handler", "../Language", "../Ajax"], function (require, exports, tslib_1, Clipboard, UiNotification, UiDialog, EventHandler, Language, Ajax) {
     "use strict";
-    if (!COMPILER_TARGET_DEFAULT) {
-        var Fake = function () { };
-        Fake.prototype = {
-            init: function () { },
-            _ajaxSetup: function () { },
-            _ajaxSuccess: function () { },
-            _clipboardAction: function () { },
-            _dialogSetup: function () { },
-            _edit: function () { },
-            _setCategory: function () { }
-        };
-        return Fake;
-    }
-    var _clipboardObjectIds = [];
-    var _mediaManager;
-    /**
-     * @exports	WoltLabSuite/Core/Media/Clipboard
-     */
-    return {
-        init: function (pageClassName, hasMarkedItems, mediaManager) {
-            Clipboard.setup({
-                hasMarkedItems: hasMarkedItems,
-                pageClassName: pageClassName
-            });
-            _mediaManager = mediaManager;
-            EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.media', this._clipboardAction.bind(this));
-        },
-        /**
-         * Returns the data used to setup the AJAX request object.
-         *
-         * @return	{object}	setup data
-         */
-        _ajaxSetup: function () {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.init = void 0;
+    Clipboard = tslib_1.__importStar(Clipboard);
+    UiNotification = tslib_1.__importStar(UiNotification);
+    UiDialog = tslib_1.__importStar(UiDialog);
+    EventHandler = tslib_1.__importStar(EventHandler);
+    Language = tslib_1.__importStar(Language);
+    Ajax = tslib_1.__importStar(Ajax);
+    let _mediaManager;
+    class MediaClipboard {
+        _ajaxSetup() {
             return {
                 data: {
-                    className: 'wcf\\data\\media\\MediaAction'
-                }
+                    className: "wcf\\data\\media\\MediaAction",
+                },
             };
-        },
-        /**
-         * Handles successful AJAX request.
-         *
-         * @param	{object}	data	response data
-         */
-        _ajaxSuccess: function (data) {
+        }
+        _ajaxSuccess(data) {
             switch (data.actionName) {
-                case 'getSetCategoryDialog':
+                case "getSetCategoryDialog":
                     UiDialog.open(this, data.returnValues.template);
                     break;
-                case 'setCategory':
+                case "setCategory":
                     UiDialog.close(this);
                     UiNotification.show();
                     Clipboard.reload();
                     break;
             }
-        },
-        /**
-         * Returns the data used to setup the dialog.
-         *
-         * @return	{object}	setup data
-         */
-        _dialogSetup: function () {
-            return {
-                id: 'mediaSetCategoryDialog',
-                options: {
-                    onSetup: function (content) {
-                        elBySel('button', content).addEventListener('click', function (event) {
-                            event.preventDefault();
-                            this._setCategory(~~elBySel('select[name="categoryID"]', content).value);
-                            event.currentTarget.disabled = true;
-                        }.bind(this));
-                    }.bind(this),
-                    title: Language.get('wcf.media.setCategory')
-                },
-                source: null
-            };
-        },
-        /**
-         * Handles successful clipboard actions.
-         *
-         * @param	{object}	actionData
-         */
-        _clipboardAction: function (actionData) {
-            var mediaIds = actionData.data.parameters.objectIDs;
-            switch (actionData.data.actionName) {
-                case 'com.woltlab.wcf.media.delete':
-                    // only consider events if the action has been executed
-                    if (actionData.responseData !== null) {
-                        _mediaManager.clipboardDeleteMedia(mediaIds);
-                    }
-                    break;
-                case 'com.woltlab.wcf.media.insert':
-                    _mediaManager.clipboardInsertMedia(mediaIds);
-                    break;
-                case 'com.woltlab.wcf.media.setCategory':
-                    _clipboardObjectIds = mediaIds;
-                    Ajax.api(this, {
-                        actionName: 'getSetCategoryDialog'
-                    });
-                    break;
-            }
-        },
-        /**
-         * Sets the category of the marked media files.
-         *
-         * @param	{int}		categoryID	selected category id
-         */
-        _setCategory: function (categoryID) {
-            Ajax.api(this, {
-                actionName: 'setCategory',
-                objectIDs: _clipboardObjectIds,
-                parameters: {
-                    categoryID: categoryID
-                }
-            });
         }
-    };
+        _dialogSetup() {
+            return {
+                id: "mediaSetCategoryDialog",
+                options: {
+                    onSetup: (content) => {
+                        content.querySelector("button").addEventListener("click", (event) => {
+                            event.preventDefault();
+                            const category = content.querySelector('select[name="categoryID"]');
+                            setCategory(~~category.value);
+                            const target = event.currentTarget;
+                            target.disabled = true;
+                        });
+                    },
+                    title: Language.get("wcf.media.setCategory"),
+                },
+                source: null,
+            };
+        }
+    }
+    const ajax = new MediaClipboard();
+    let clipboardObjectIds = [];
+    /**
+     * Handles successful clipboard actions.
+     */
+    function clipboardAction(actionData) {
+        const mediaIds = actionData.data.parameters.objectIDs;
+        switch (actionData.data.actionName) {
+            case "com.woltlab.wcf.media.delete":
+                // only consider events if the action has been executed
+                if (actionData.responseData !== null) {
+                    _mediaManager.clipboardDeleteMedia(mediaIds);
+                }
+                break;
+            case "com.woltlab.wcf.media.insert": {
+                const mediaManagerEditor = _mediaManager;
+                mediaManagerEditor.clipboardInsertMedia(mediaIds);
+                break;
+            }
+            case "com.woltlab.wcf.media.setCategory":
+                clipboardObjectIds = mediaIds;
+                Ajax.api(ajax, {
+                    actionName: "getSetCategoryDialog",
+                });
+                break;
+        }
+    }
+    /**
+     * Sets the category of the marked media files.
+     */
+    function setCategory(categoryID) {
+        Ajax.api(ajax, {
+            actionName: "setCategory",
+            objectIDs: clipboardObjectIds,
+            parameters: {
+                categoryID: categoryID,
+            },
+        });
+    }
+    function init(pageClassName, hasMarkedItems, mediaManager) {
+        Clipboard.setup({
+            hasMarkedItems: hasMarkedItems,
+            pageClassName: pageClassName,
+        });
+        _mediaManager = mediaManager;
+        EventHandler.add("com.woltlab.wcf.clipboard", "com.woltlab.wcf.media", (data) => clipboardAction(data));
+    }
+    exports.init = init;
 });
