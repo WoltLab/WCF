@@ -1,14 +1,17 @@
 /**
- * Augments the Prism syntax highlighter with additional functions.
+ * Loads Prism while disabling automated highlighting.
  *
  * @author	Tim Duesterhus
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2021 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Prism
  */
 window.Prism = window.Prism || {};
 window.Prism.manual = true;
 define(['prism/prism'], function () {
+    /**
+     * @deprecated 5.4 - Use WoltLabSuite/Core/Prism/Helper#splitIntoLines.
+     */
     Prism.wscSplitIntoLines = function (container) {
         var frag = document.createDocumentFragment();
         var lineNo = 1;
