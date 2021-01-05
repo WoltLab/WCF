@@ -6,6 +6,7 @@ requirejs.config({
 		'Pica': '3rdParty/pica',
 		'pica': '3rdParty/pica',
 		prism: '3rdParty/prism',
+		'prismjs': '3rdParty/prism/prism',
 		'qr-creator': '3rdParty/qr-creator.min',
 		tslib: '3rdParty/tslib',
 		zxcvbn: '3rdParty/zxcvbn',

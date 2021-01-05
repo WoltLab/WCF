@@ -6,110 +6,93 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Bbcode/Code
  */
-define([
-    'Language', 'WoltLabSuite/Core/Ui/Notification', 'WoltLabSuite/Core/Clipboard', 'WoltLabSuite/Core/Prism', 'prism/prism-meta'
-], function (Language, UiNotification, Clipboard, Prism, PrismMeta) {
+define(["require", "exports", "tslib", "../Language", "../Clipboard", "../Ui/Notification", "../Prism", "../Prism/Helper", "../prism-meta"], function (require, exports, tslib_1, Language, Clipboard, UiNotification, Prism_1, PrismHelper, prism_meta_1) {
     "use strict";
-    /** @const */ var CHUNK_SIZE = 50;
-    // Define idleify() for piecewiese highlighting to not block the UI thread.
-    var idleify = function (callback) {
-        return function () {
-            var args = arguments;
-            return new Promise(function (resolve, reject) {
-                var body = function () {
-                    try {
-                        resolve(callback.apply(null, args));
-                    }
-                    catch (e) {
-                        reject(e);
-                    }
-                };
-                if (window.requestIdleCallback) {
-                    window.requestIdleCallback(body, { timeout: 5000 });
-                }
-                else {
-                    setTimeout(body, 0);
-                }
-            });
-        };
-    };
-    /**
-     * @constructor
-     */
-    function Code(container) {
-        var matches;
-        this.container = container;
-        this.codeContainer = elBySel('.codeBoxCode > code', this.container);
-        this.language = null;
-        for (var i = 0; i < this.codeContainer.classList.length; i++) {
-            if ((matches = this.codeContainer.classList[i].match(/language-(.*)/))) {
-                this.language = matches[1];
+    Language = tslib_1.__importStar(Language);
+    Clipboard = tslib_1.__importStar(Clipboard);
+    UiNotification = tslib_1.__importStar(UiNotification);
+    Prism_1 = tslib_1.__importDefault(Prism_1);
+    PrismHelper = tslib_1.__importStar(PrismHelper);
+    prism_meta_1 = tslib_1.__importDefault(prism_meta_1);
+    async function waitForIdle() {
+        return new Promise((resolve, _reject) => {
+            if (window.requestIdleCallback) {
+                window.requestIdleCallback(resolve, { timeout: 5000 });
             }
+            else {
+                setTimeout(resolve, 0);
+            }
+        });
+    }
+    class Code {
+        constructor(container) {
+            var _a;
+            this.container = container;
+            this.codeContainer = this.container.querySelector(".codeBoxCode > code");
+            this.language = (_a = Array.from(this.codeContainer.classList)
+                .find((klass) => /^language-([a-z0-9_-]+)$/.test(klass))) === null || _a === void 0 ? void 0 : _a.replace(/^language-/, "");
+        }
+        static processAll() {
+            document.querySelectorAll(".codeBox:not([data-processed])").forEach((codeBox) => {
+                codeBox.dataset.processed = "1";
+                const handle = new Code(codeBox);
+                if (handle.language) {
+                    void handle.highlight();
+                }
+                handle.createCopyButton();
+            });
+        }
+        createCopyButton() {
+            const header = this.container.querySelector(".codeBoxHeader");
+            if (!header) {
+                return;
+            }
+            const button = document.createElement("span");
+            button.className = "icon icon24 fa-files-o pointer jsTooltip";
+            button.setAttribute("title", Language.get("wcf.message.bbcode.code.copy"));
+            button.addEventListener("click", async () => {
+                await Clipboard.copyElementTextToClipboard(this.codeContainer);
+                UiNotification.show(Language.get("wcf.message.bbcode.code.copy.success"));
+            });
+            header.appendChild(button);
+        }
+        async highlight() {
+            if (!this.language) {
+                throw new Error("No language detected");
+            }
+            if (!prism_meta_1.default[this.language]) {
+                throw new Error(`Unknown language '${this.language}'`);
+            }
+            this.container.classList.add("highlighting");
+            // Step 1) Load the requested grammar.
+            await new Promise((resolve_1, reject_1) => { require(["prism/components/prism-" + prism_meta_1.default[this.language].file], resolve_1, reject_1); }).then(tslib_1.__importStar);
+            // Step 2) Perform the highlighting into a temporary element.
+            await waitForIdle();
+            const grammar = Prism_1.default.languages[this.language];
+            if (!grammar) {
+                throw new Error(`Invalid language '${this.language}' given.`);
+            }
+            const container = document.createElement("div");
+            container.innerHTML = Prism_1.default.highlight(this.codeContainer.textContent, grammar, this.language);
+            // Step 3) Insert the highlighted lines into the page.
+            // This is performed in small chunks to prevent the UI thread from being blocked for complex
+            // highlight results.
+            await waitForIdle();
+            const originalLines = this.codeContainer.querySelectorAll(".codeBoxLine > span");
+            const highlightedLines = PrismHelper.splitIntoLines(container);
+            for (let chunkStart = 0, max = originalLines.length; chunkStart < max; chunkStart += Code.chunkSize) {
+                await waitForIdle();
+                const chunkEnd = Math.min(chunkStart + Code.chunkSize, max);
+                for (let offset = chunkStart; offset < chunkEnd; offset++) {
+                    const toReplace = originalLines[offset];
+                    const replacement = highlightedLines.next().value;
+                    toReplace.parentNode.replaceChild(replacement, toReplace);
+                }
+            }
+            this.container.classList.remove("highlighting");
+            this.container.classList.add("highlighted");
         }
     }
-    Code.processAll = function () {
-        elBySelAll('.codeBox:not([data-processed])', document, function (codeBox) {
-            elData(codeBox, 'processed', '1');
-            var handle = new Code(codeBox);
-            if (handle.language)
-                handle.highlight();
-            handle.createCopyButton();
-        });
-    };
-    Code.prototype = {
-        createCopyButton: function () {
-            var header = elBySel('.codeBoxHeader', this.container);
-            var button = elCreate('span');
-            button.className = 'icon icon24 fa-files-o pointer jsTooltip';
-            button.setAttribute('title', Language.get('wcf.message.bbcode.code.copy'));
-            button.addEventListener('click', function () {
-                Clipboard.copyElementTextToClipboard(this.codeContainer).then(function () {
-                    UiNotification.show(Language.get('wcf.message.bbcode.code.copy.success'));
-                });
-            }.bind(this));
-            header.appendChild(button);
-        },
-        highlight: function () {
-            if (!this.language) {
-                return Promise.reject(new Error('No language detected'));
-            }
-            if (!PrismMeta[this.language]) {
-                return Promise.reject(new Error('Unknown language ' + this.language));
-            }
-            this.container.classList.add('highlighting');
-            return require(['prism/components/prism-' + PrismMeta[this.language].file])
-                .then(idleify(function () {
-                var grammar = Prism.languages[this.language];
-                if (!grammar) {
-                    throw new Error('Invalid language ' + language + ' given.');
-                }
-                var container = elCreate('div');
-                container.innerHTML = Prism.highlight(this.codeContainer.textContent, grammar, this.language);
-                return container;
-            }.bind(this)))
-                .then(idleify(function (container) {
-                var highlighted = Prism.wscSplitIntoLines(container);
-                var highlightedLines = elBySelAll('[data-number]', highlighted);
-                var originalLines = elBySelAll('.codeBoxLine > span', this.codeContainer);
-                if (highlightedLines.length !== originalLines.length) {
-                    throw new Error('Unreachable');
-                }
-                var promises = [];
-                for (var chunkStart = 0, max = highlightedLines.length; chunkStart < max; chunkStart += CHUNK_SIZE) {
-                    promises.push(idleify(function (chunkStart) {
-                        var chunkEnd = Math.min(chunkStart + CHUNK_SIZE, max);
-                        for (var offset = chunkStart; offset < chunkEnd; offset++) {
-                            originalLines[offset].parentNode.replaceChild(highlightedLines[offset], originalLines[offset]);
-                        }
-                    })(chunkStart));
-                }
-                return Promise.all(promises);
-            }.bind(this)))
-                .then(function () {
-                this.container.classList.remove('highlighting');
-                this.container.classList.add('highlighted');
-            }.bind(this));
-        }
-    };
+    Code.chunkSize = 50;
     return Code;
 });
