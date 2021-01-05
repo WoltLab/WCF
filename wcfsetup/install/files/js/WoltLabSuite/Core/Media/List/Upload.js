@@ -1,62 +1,34 @@
 /**
  * Uploads media files.
  *
- * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Media/List/Upload
+ * @author  Matthias Schmidt
+ * @copyright 2001-2021 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Media/List/Upload
  */
-define([
-    'Core', 'Dom/Util', '../Upload'
-], function (Core, DomUtil, MediaUpload) {
+define(["require", "exports", "tslib", "../Upload", "../../Core"], function (require, exports, tslib_1, Upload_1, Core) {
     "use strict";
-    if (!COMPILER_TARGET_DEFAULT) {
-        var Fake = function () { };
-        Fake.prototype = {
-            _createButton: function () { },
-            _success: function () { },
-            _upload: function () { },
-            _createFileElement: function () { },
-            _getParameters: function () { },
-            _uploadFiles: function () { },
-            _createFileElements: function () { },
-            _failure: function () { },
-            _insertButton: function () { },
-            _progress: function () { },
-            _removeButton: function () { }
-        };
-        return Fake;
-    }
-    /**
-     * @constructor
-     */
-    function MediaListUpload(buttonContainerId, targetId, options) {
-        MediaUpload.call(this, buttonContainerId, targetId, options);
-    }
-    Core.inherit(MediaListUpload, MediaUpload, {
-        /**
-         * Creates the upload button.
-         */
-        _createButton: function () {
-            MediaListUpload._super.prototype._createButton.call(this);
-            var span = elBySel('span', this._button);
-            var space = document.createTextNode(' ');
-            DomUtil.prepend(space, span);
-            var icon = elCreate('span');
-            icon.className = 'icon icon16 fa-upload';
-            DomUtil.prepend(icon, span);
-        },
-        /**
-         * @see	WoltLabSuite/Core/Upload#_getParameters
-         */
-        _getParameters: function () {
+    Upload_1 = tslib_1.__importDefault(Upload_1);
+    Core = tslib_1.__importStar(Core);
+    class MediaListUpload extends Upload_1.default {
+        _createButton() {
+            super._createButton();
+            const span = this._button.querySelector("span");
+            const space = document.createTextNode(" ");
+            span.insertBefore(space, span.childNodes[0]);
+            const icon = document.createElement("span");
+            icon.className = "icon icon16 fa-upload";
+            span.insertBefore(icon, span.childNodes[0]);
+        }
+        _getParameters() {
             if (this._options.categoryId) {
-                return Core.extend(MediaListUpload._super.prototype._getParameters.call(this), {
-                    categoryID: this._options.categoryId
+                return Core.extend(super._getParameters(), {
+                    categoryID: this._options.categoryId,
                 });
             }
-            return MediaListUpload._super.prototype._getParameters.call(this);
+            return super._getParameters();
         }
-    });
+    }
+    Core.enableLegacyInheritance(MediaListUpload);
     return MediaListUpload;
 });
