@@ -14,7 +14,6 @@ define(["require", "exports", "tslib", "../Language", "../Clipboard", "../Ui/Not
     Prism_1 = tslib_1.__importDefault(Prism_1);
     PrismHelper = tslib_1.__importStar(PrismHelper);
     prism_meta_1 = tslib_1.__importDefault(prism_meta_1);
-    const CHUNK_SIZE = 50;
     async function waitForIdle() {
         return new Promise((resolve, _reject) => {
             if (window.requestIdleCallback) {
@@ -82,9 +81,9 @@ define(["require", "exports", "tslib", "../Language", "../Clipboard", "../Ui/Not
             await waitForIdle();
             const originalLines = this.codeContainer.querySelectorAll(".codeBoxLine > span");
             const highlightedLines = PrismHelper.splitIntoLines(container);
-            for (let chunkStart = 0, max = originalLines.length; chunkStart < max; chunkStart += CHUNK_SIZE) {
+            for (let chunkStart = 0, max = originalLines.length; chunkStart < max; chunkStart += Code.chunkSize) {
                 await waitForIdle();
-                const chunkEnd = Math.min(chunkStart + CHUNK_SIZE, max);
+                const chunkEnd = Math.min(chunkStart + Code.chunkSize, max);
                 for (let offset = chunkStart; offset < chunkEnd; offset++) {
                     const toReplace = originalLines[offset];
                     const replacement = highlightedLines.next().value;
@@ -95,5 +94,6 @@ define(["require", "exports", "tslib", "../Language", "../Clipboard", "../Ui/Not
             this.container.classList.add("highlighted");
         }
     }
+    Code.chunkSize = 50;
     return Code;
 });

@@ -14,8 +14,6 @@ import Prism from "../Prism";
 import * as PrismHelper from "../Prism/Helper";
 import PrismMeta from "../prism-meta";
 
-const CHUNK_SIZE = 50;
-
 async function waitForIdle(): Promise<void> {
   return new Promise((resolve, _reject) => {
     if ((window as any).requestIdleCallback) {
@@ -27,6 +25,8 @@ async function waitForIdle(): Promise<void> {
 }
 
 class Code {
+  private static readonly chunkSize = 50;
+
   private readonly container: HTMLElement;
   private codeContainer: HTMLElement;
   private language: string | undefined;
@@ -105,10 +105,10 @@ class Code {
     const originalLines = this.codeContainer.querySelectorAll(".codeBoxLine > span");
     const highlightedLines = PrismHelper.splitIntoLines(container);
 
-    for (let chunkStart = 0, max = originalLines.length; chunkStart < max; chunkStart += CHUNK_SIZE) {
+    for (let chunkStart = 0, max = originalLines.length; chunkStart < max; chunkStart += Code.chunkSize) {
       await waitForIdle();
 
-      const chunkEnd = Math.min(chunkStart + CHUNK_SIZE, max);
+      const chunkEnd = Math.min(chunkStart + Code.chunkSize, max);
 
       for (let offset = chunkStart; offset < chunkEnd; offset++) {
         const toReplace = originalLines[offset]!;
