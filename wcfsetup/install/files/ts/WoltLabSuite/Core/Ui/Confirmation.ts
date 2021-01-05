@@ -15,7 +15,7 @@ import { DialogCallbackObject, DialogCallbackSetup } from "./Dialog/Data";
 
 class UiConfirmation implements DialogCallbackObject {
   private _active = false;
-  private parameters: CallbackParameters;
+  private parameters: ConfirmationCallbackParameters;
 
   private readonly confirmButton: HTMLElement;
   private readonly _content: HTMLElement;
@@ -149,25 +149,25 @@ function getConfirmation(): UiConfirmation {
 
 type LegacyResult = "cancel" | "confirm";
 
-type CallbackParameters = {
+export type ConfirmationCallbackParameters = {
   [key: string]: any;
 };
 
 interface BasicConfirmationOptions {
   message: string;
   messageIsHtml?: boolean;
-  parameters?: CallbackParameters;
+  parameters?: ConfirmationCallbackParameters;
   template?: string;
 }
 
 interface LegacyConfirmationOptions extends BasicConfirmationOptions {
   cancel?: never;
   confirm?: never;
-  legacyCallback: (result: LegacyResult, parameters: CallbackParameters, element: HTMLElement) => void;
+  legacyCallback: (result: LegacyResult, parameters: ConfirmationCallbackParameters, element: HTMLElement) => void;
 }
 
-type CallbackCancel = (parameters: CallbackParameters) => void;
-type CallbackConfirm = (parameters: CallbackParameters, content: HTMLElement) => void;
+type CallbackCancel = (parameters: ConfirmationCallbackParameters) => void;
+type CallbackConfirm = (parameters: ConfirmationCallbackParameters, content: HTMLElement) => void;
 
 interface NewConfirmationOptions extends BasicConfirmationOptions {
   cancel?: CallbackCancel;

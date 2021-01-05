@@ -1,169 +1,173 @@
 /**
  * Map route planner based on Google Maps.
  *
- * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Controller/Map/Route/Planner
+ * @author  Matthias Schmidt
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Controller/Map/Route/Planner
  */
-define([
-    'Dom/Traverse',
-    'Dom/Util',
-    'Language',
-    'Ui/Dialog',
-    'WoltLabSuite/Core/Ajax/Status'
-], function (DomTraverse, DomUtil, Language, UiDialog, AjaxStatus) {
-    /**
-     * @constructor
-     */
-    function Planner(buttonId, destination) {
-        this._button = elById(buttonId);
-        if (this._button === null) {
-            throw new Error("Unknown button with id '" + buttonId + "'");
+define(["require", "exports", "tslib", "../../../Ajax/Status", "../../../Core", "../../../Dom/Util", "../../../Language", "../../../Ui/Dialog"], function (require, exports, tslib_1, AjaxStatus, Core, Util_1, Language, Dialog_1) {
+    "use strict";
+    AjaxStatus = tslib_1.__importStar(AjaxStatus);
+    Core = tslib_1.__importStar(Core);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    Language = tslib_1.__importStar(Language);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    class ControllerMapRoutePlanner {
+        constructor(buttonId, destination) {
+            this.didInitDialog = false;
+            this.directionsRenderer = undefined;
+            this.directionsService = undefined;
+            this.googleLink = undefined;
+            this.lastOrigin = undefined;
+            this.map = undefined;
+            this.originInput = undefined;
+            this.travelMode = undefined;
+            const button = document.getElementById(buttonId);
+            if (button === null) {
+                throw new Error(`Unknown button with id '${buttonId}'`);
+            }
+            this.button = button;
+            this.button.addEventListener("click", (ev) => this.openDialog(ev));
+            this.destination = destination;
         }
-        this._button.addEventListener('click', this._openDialog.bind(this));
-        this._destination = destination;
-    }
-    Planner.prototype = {
-        /**
-         * Sets up the route planner dialog.
-         */
-        _dialogSetup: function () {
-            return {
-                id: this._button.id + 'Dialog',
-                options: {
-                    onShow: this._initDialog.bind(this),
-                    title: Language.get('wcf.map.route.planner')
-                },
-                source: '<div class="googleMapsDirectionsContainer" style="display: none;">' +
-                    '<div class="googleMap"></div>' +
-                    '<div class="googleMapsDirections"></div>' +
-                    '</div>' +
-                    '<small class="googleMapsDirectionsGoogleLinkContainer"><a href="' + this._getGoogleMapsLink() + '" class="googleMapsDirectionsGoogleLink" target="_blank" style="display: none;">' + Language.get('wcf.map.route.viewOnGoogleMaps') + '</a></small>' +
-                    '<dl>' +
-                    '<dt>' + Language.get('wcf.map.route.origin') + '</dt>' +
-                    '<dd><input type="text" name="origin" class="long" autofocus /></dd>' +
-                    '</dl>' +
-                    '<dl style="display: none;">' +
-                    '<dt>' + Language.get('wcf.map.route.travelMode') + '</dt>' +
-                    '<dd>' +
-                    '<select name="travelMode">' +
-                    '<option value="driving">' + Language.get('wcf.map.route.travelMode.driving') + '</option>' +
-                    '<option value="walking">' + Language.get('wcf.map.route.travelMode.walking') + '</option>' +
-                    '<option value="bicycling">' + Language.get('wcf.map.route.travelMode.bicycling') + '</option>' +
-                    '<option value="transit">' + Language.get('wcf.map.route.travelMode.transit') + '</option>' +
-                    '</select>' +
-                    '</dd>' +
-                    '</dl>'
-            };
-        },
         /**
          * Calculates the route based on the given result of a location search.
-         *
-         * @param	{object}	data
          */
-        _calculateRoute: function (data) {
-            var dialog = UiDialog.getDialog(this).dialog;
+        _calculateRoute(data) {
+            const dialog = Dialog_1.default.getDialog(this).dialog;
             if (data.label) {
-                this._originInput.value = data.label;
+                this.originInput.value = data.label;
             }
-            if (this._map === undefined) {
-                this._map = new google.maps.Map(elByClass('googleMap', dialog)[0], {
-                    disableDoubleClickZoom: WCF.Location.GoogleMaps.Settings.get('disableDoubleClickZoom'),
-                    draggable: WCF.Location.GoogleMaps.Settings.get('draggable'),
+            if (this.map === undefined) {
+                const mapContainer = dialog.querySelector(".googleMap");
+                this.map = new google.maps.Map(mapContainer, {
+                    disableDoubleClickZoom: window.WCF.Location.GoogleMaps.Settings.get("disableDoubleClickZoom"),
+                    draggable: window.WCF.Location.GoogleMaps.Settings.get("draggable"),
                     mapTypeId: google.maps.MapTypeId.ROADMAP,
-                    scaleControl: WCF.Location.GoogleMaps.Settings.get('scaleControl'),
-                    scrollwheel: WCF.Location.GoogleMaps.Settings.get('scrollwheel')
+                    scaleControl: window.WCF.Location.GoogleMaps.Settings.get("scaleControl"),
+                    scrollwheel: window.WCF.Location.GoogleMaps.Settings.get("scrollwheel"),
                 });
-                this._directionsService = new google.maps.DirectionsService();
-                this._directionsRenderer = new google.maps.DirectionsRenderer();
-                this._directionsRenderer.setMap(this._map);
-                this._directionsRenderer.setPanel(elByClass('googleMapsDirections', dialog)[0]);
-                this._googleLink = elByClass('googleMapsDirectionsGoogleLink', dialog)[0];
+                this.directionsService = new google.maps.DirectionsService();
+                this.directionsRenderer = new google.maps.DirectionsRenderer();
+                this.directionsRenderer.setMap(this.map);
+                const directionsContainer = dialog.querySelector(".googleMapsDirections");
+                this.directionsRenderer.setPanel(directionsContainer);
+                this.googleLink = dialog.querySelector(".googleMapsDirectionsGoogleLink");
             }
-            var request = {
-                destination: this._destination,
+            const request = {
+                destination: this.destination,
                 origin: data.location,
                 provideRouteAlternatives: true,
-                travelMode: google.maps.TravelMode[this._travelMode.value.toUpperCase()]
+                travelMode: google.maps.TravelMode[this.travelMode.value.toUpperCase()],
             };
             AjaxStatus.show();
-            this._directionsService.route(request, this._setRoute.bind(this));
-            elAttr(this._googleLink, 'href', this._getGoogleMapsLink(data.location, this._travelMode.value));
-            this._lastOrigin = data.location;
-        },
+            this.directionsService.route(request, (result, status) => this.setRoute(result, status));
+            this.googleLink.href = this.getGoogleMapsLink(data.location, this.travelMode.value);
+            this.lastOrigin = data.location;
+        }
         /**
          * Returns the Google Maps link based on the given optional directions origin
          * and optional travel mode.
-         *
-         * @param	{google.maps.LatLng}	origin
-         * @param	{string}		travelMode
-         * @return	{string}
          */
-        _getGoogleMapsLink: function (origin, travelMode) {
+        getGoogleMapsLink(origin, travelMode) {
             if (origin) {
-                var link = 'https://www.google.com/maps/dir/?api=1' +
-                    '&origin=' + origin.lat() + ',' + origin.lng() + '' +
-                    '&destination=' + this._destination.lat() + ',' + this._destination.lng();
+                let link = `https://www.google.com/maps/dir/?api=1&origin=${origin.lat()},${origin.lng()}&destination=${this.destination.lat()},${this.destination.lng()}`;
                 if (travelMode) {
-                    link += '&travelmode=' + travelMode;
+                    link += `&travelmode=${travelMode}`;
                 }
                 return link;
             }
-            return 'https://www.google.com/maps/search/?api=1&query=' + this._destination.lat() + ',' + this._destination.lng();
-        },
+            return `https://www.google.com/maps/search/?api=1&query=${this.destination.lat()},${this.destination.lng()}`;
+        }
         /**
          * Initializes the route planning dialog.
          */
-        _initDialog: function () {
-            if (!this._didInitDialog) {
-                var dialog = UiDialog.getDialog(this).dialog;
+        initDialog() {
+            if (!this.didInitDialog) {
+                const dialog = Dialog_1.default.getDialog(this).dialog;
                 // make input element a location search
-                this._originInput = elBySel('input[name="origin"]', dialog);
-                new WCF.Location.GoogleMaps.LocationSearch(this._originInput, this._calculateRoute.bind(this));
-                this._travelMode = elBySel('select[name="travelMode"]', dialog);
-                this._travelMode.addEventListener('change', this._updateRoute.bind(this));
-                this._didInitDialog = true;
+                this.originInput = dialog.querySelector('input[name="origin"]');
+                new window.WCF.Location.GoogleMaps.LocationSearch(this.originInput, (data) => this._calculateRoute(data));
+                this.travelMode = dialog.querySelector('select[name="travelMode"]');
+                this.travelMode.addEventListener("change", this.updateRoute.bind(this));
+                this.didInitDialog = true;
             }
-        },
+        }
         /**
          * Opens the route planning dialog.
          */
-        _openDialog: function () {
-            UiDialog.open(this);
-        },
+        openDialog(event) {
+            event.preventDefault();
+            Dialog_1.default.open(this);
+        }
         /**
          * Handles the response of the direction service.
-         *
-         * @param	{object}	result
-         * @param	{string}	status
          */
-        _setRoute: function (result, status) {
+        setRoute(result, status) {
             AjaxStatus.hide();
-            if (status === 'OK') {
-                elShow(this._map.getDiv().parentNode);
-                google.maps.event.trigger(this._map, 'resize');
-                this._directionsRenderer.setDirections(result);
-                elShow(DomTraverse.parentByTag(this._travelMode, 'DL'));
-                elShow(this._googleLink);
-                elInnerError(this._originInput, false);
+            if (status === "OK") {
+                Util_1.default.show(this.map.getDiv().parentElement);
+                google.maps.event.trigger(this.map, "resize");
+                this.directionsRenderer.setDirections(result);
+                Util_1.default.show(this.travelMode.closest("dl"));
+                Util_1.default.show(this.googleLink);
+                Util_1.default.innerError(this.originInput, false);
             }
             else {
                 // map irrelevant errors to not found error
-                if (status !== 'OVER_QUERY_LIMIT' && status !== 'REQUEST_DENIED') {
-                    status = 'NOT_FOUND';
+                if (status !== "OVER_QUERY_LIMIT" && status !== "REQUEST_DENIED") {
+                    status = google.maps.DirectionsStatus.NOT_FOUND;
                 }
-                elInnerError(this._originInput, Language.get('wcf.map.route.error.' + status.toLowerCase()));
+                Util_1.default.innerError(this.originInput, Language.get(`wcf.map.route.error.${status.toLowerCase()}`));
             }
-        },
+        }
         /**
          * Updates the route after the travel mode has been changed.
          */
-        _updateRoute: function () {
+        updateRoute() {
             this._calculateRoute({
-                location: this._lastOrigin
+                location: this.lastOrigin,
             });
         }
-    };
-    return Planner;
+        /**
+         * Sets up the route planner dialog.
+         */
+        _dialogSetup() {
+            return {
+                id: this.button.id + "Dialog",
+                options: {
+                    onShow: this.initDialog.bind(this),
+                    title: Language.get("wcf.map.route.planner"),
+                },
+                source: `
+<div class="googleMapsDirectionsContainer" style="display: none;">
+  <div class="googleMap"></div>
+  <div class="googleMapsDirections"></div>
+</div>
+<small class="googleMapsDirectionsGoogleLinkContainer">
+  <a href="${this.getGoogleMapsLink()}" class="googleMapsDirectionsGoogleLink" target="_blank" style="display: none;">${Language.get("wcf.map.route.viewOnGoogleMaps")}</a>
+</small>
+<dl>
+  <dt>${Language.get("wcf.map.route.origin")}</dt>
+  <dd>
+    <input type="text" name="origin" class="long" autofocus>
+  </dd>
+</dl>
+<dl style="display: none;">
+  <dt>${Language.get("wcf.map.route.travelMode")}</dt>
+  <dd>
+    <select name="travelMode">
+      <option value="driving">${Language.get("wcf.map.route.travelMode.driving")}</option>
+      <option value="walking">${Language.get("wcf.map.route.travelMode.walking")}</option>
+      <option value="bicycling">${Language.get("wcf.map.route.travelMode.bicycling")}</option>
+      <option value="transit">${Language.get("wcf.map.route.travelMode.transit")}</option>
+    </select>
+  </dd>
+</dl>`,
+            };
+        }
+    }
+    Core.enableLegacyInheritance(ControllerMapRoutePlanner);
+    return ControllerMapRoutePlanner;
 });

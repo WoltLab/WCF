@@ -1,18 +1,21 @@
-define(['WoltLabSuite/Core/Ui/Page/Search'], function (UiPageSearch) {
+define(["require", "exports", "tslib", "../../../Core", "../../../Ui/Page/Search"], function (require, exports, tslib_1, Core, UiPageSearch) {
     "use strict";
-    function AcpUiCodeMirrorPage(elementId) { this.init(elementId); }
-    AcpUiCodeMirrorPage.prototype = {
-        init: function (elementId) {
-            this._element = elById(elementId);
-            elById('codemirror-' + elementId + '-page').addEventListener('click', this._click.bind(this));
-        },
-        _click: function (event) {
-            event.preventDefault();
-            UiPageSearch.open(this._insert.bind(this));
-        },
-        _insert: function (pageID) {
-            this._element.codemirror.replaceSelection('{{ page="' + pageID + '" }}');
+    Core = tslib_1.__importStar(Core);
+    UiPageSearch = tslib_1.__importStar(UiPageSearch);
+    class AcpUiCodeMirrorPage {
+        constructor(elementId) {
+            this.element = document.getElementById(elementId);
+            const insertButton = document.getElementById(`codemirror-${elementId}-page`);
+            insertButton.addEventListener("click", (ev) => this._click(ev));
         }
-    };
+        _click(event) {
+            event.preventDefault();
+            UiPageSearch.open((pageID) => this._insert(pageID));
+        }
+        _insert(pageID) {
+            this.element.codemirror.replaceSelection(`{{ page="${pageID}" }}`);
+        }
+    }
+    Core.enableLegacyInheritance(AcpUiCodeMirrorPage);
     return AcpUiCodeMirrorPage;
 });

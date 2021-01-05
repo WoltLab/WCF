@@ -2,6 +2,7 @@ import DatePicker from "./wcfsetup/install/files/ts/WoltLabSuite/Core/Date/Picke
 import Devtools from "./wcfsetup/install/files/ts/WoltLabSuite/Core/Devtools";
 import DomUtil from "./wcfsetup/install/files/ts/WoltLabSuite/Core/Dom/Util";
 import * as ColorUtil from "./wcfsetup/install/files/ts/WoltLabSuite/Core/ColorUtil";
+import * as EventHandler from "./wcfsetup/install/files/ts/WoltLabSuite/Core/Event/Handler";
 import UiDropdownSimple from "./wcfsetup/install/files/ts/WoltLabSuite/Core/Ui/Dropdown/Simple";
 import "@woltlab/zxcvbn";
 import { Reaction } from "./wcfsetup/install/files/ts/WoltLabSuite/Core/Ui/Reaction/Data";
@@ -20,6 +21,7 @@ declare global {
     WCF_PATH: string;
     WSC_API_URL: string;
 
+    Favico: any;
     jQuery: JQueryStatic;
     WCF: any;
     bc_wcfDomUtil: typeof DomUtil;
@@ -27,6 +29,7 @@ declare global {
     __wcf_bc_colorPickerInit?: () => void;
     __wcf_bc_colorUtil: typeof ColorUtil;
     __wcf_bc_datePicker: typeof DatePicker;
+    __wcf_bc_eventHandler: typeof EventHandler;
   }
 
   interface String {

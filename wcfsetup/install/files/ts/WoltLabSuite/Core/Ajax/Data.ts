@@ -28,6 +28,7 @@ export interface DatabaseObjectActionResponse extends ResponseData {
     | any[];
 }
 
+/** Return `false` to suppress the error message. */
 export type CallbackFailure = (
   data: ResponseData,
   responseText: string,
@@ -78,4 +79,21 @@ export interface RequestOptions {
   uploadProgress?: CallbackUploadProgress;
 
   callbackObject?: AjaxCallbackObject | null;
+}
+
+interface PreviousException {
+  message: string;
+  stacktrace: string;
+}
+
+export interface AjaxResponseException extends ResponseData {
+  exceptionID?: string;
+  previous: PreviousException[];
+  file?: string;
+  line?: number;
+  message: string;
+  returnValues?: {
+    description?: string;
+  };
+  stacktrace?: string;
 }

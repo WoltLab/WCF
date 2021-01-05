@@ -419,15 +419,17 @@ if (COMPILER_TARGET_DEFAULT) {
 			this._super($('#userNotifications'), 'userNotifications', options);
 			
 			try {
-				this._favico = new Favico({
-					animation: 'none',
-					type: 'circle'
+				require(["favico"], (Favico) => {
+					this._favico = new Favico({
+						animation: 'none',
+						type: 'circle'
+					});
+					
+					if (this._badge !== null) {
+						var $count = parseInt(this._badge.text()) || 0;
+						this._favico.badge($count);
+					}
 				});
-				
-				if (this._badge !== null) {
-					var $count = parseInt(this._badge.text()) || 0;
-					this._favico.badge($count);
-				}
 			}
 			catch (e) {
 				console.debug("[WCF.User.Panel.Notification] Failed to initialized Favico: " + e.message);

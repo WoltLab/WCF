@@ -1,109 +1,117 @@
 /**
  * Executes user notification tests.
  *
- * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Acp/Ui/Devtools/Project/QuickSetup
+ * @author  Matthias Schmidt
+ * @copyright  2001-2019 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Acp/Ui/Devtools/Project/QuickSetup
  */
-define(['Ajax', 'Dictionary', 'Language', 'Ui/Dialog'], function (Ajax, Dictionary, Language, UiDialog) {
-    var _buttons = elByClass('jsTestEventButton');
-    var _titles = new Dictionary();
-    return {
+define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language", "../../../../Ui/Dialog", "../../../../Dom/Util"], function (require, exports, tslib_1, Ajax, Language, Dialog_1, Util_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.init = void 0;
+    Ajax = tslib_1.__importStar(Ajax);
+    Language = tslib_1.__importStar(Language);
+    Dialog_1 = tslib_1.__importDefault(Dialog_1);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    class AcpUiDevtoolsNotificationTest {
         /**
          * Initializes the user notification test handler.
          */
-        init: function () {
-            Array.prototype.forEach.call(_buttons, function (button) {
-                button.addEventListener('click', this._test.bind(this));
-                _titles.set(~~elData(button, 'event-id'), elData(button, 'title'));
-            }.bind(this));
-        },
-        /**
-         * Returns the data used to setup the AJAX request object.
-         *
-         * @return	{object}	setup data
-         */
-        _ajaxSetup: function () {
-            return {
-                data: {
-                    actionName: 'testEvent',
-                    className: 'wcf\\data\\user\\notification\\event\\UserNotificationEventAction'
-                }
-            };
-        },
-        /**
-         * Handles successful AJAX request.
-         *
-         * @param	{object}	data	response data
-         */
-        _ajaxSuccess: function (data) {
-            UiDialog.open(this, data.returnValues.template);
-            UiDialog.setTitle(this, _titles.get(~~data.returnValues.eventID));
-            var dialog = UiDialog.getDialog(this).dialog;
-            elBySelAll('.formSubmit button', dialog, function (button) {
-                button.addEventListener('click', this._changeView.bind(this));
-            }.bind(this));
-            // fix some margin issues
-            var errors = elByClass('error', dialog);
-            if (errors.length === 1) {
-                errors.item(0).style.setProperty('margin-top', '0px');
-                errors.item(0).style.setProperty('margin-bottom', '20px');
-            }
-            elBySelAll('.notificationTestSection', dialog, function (section) {
-                section.style.setProperty('margin-top', '0px');
-            });
-            elById('notificationTestDialog').parentNode.scrollTop = 0;
-            // restore buttons
-            Array.prototype.forEach.call(_buttons, function (button) {
-                button.innerHTML = Language.get('wcf.acp.devtools.notificationTest.button.test');
-                button.disabled = false;
-            });
-        },
-        /**
-         * Changes the view after clicking on one of the buttons.
-         *
-         * @param	{Event}		event		button click event
-         */
-        _changeView: function (event) {
-            var button = event.currentTarget;
-            var dialog = UiDialog.getDialog(this).dialog;
-            elBySelAll('.notificationTestSection', dialog, elHide);
-            elShow(elById(button.id.replace('Button', '')));
-            var primaryButton = elBySel('.formSubmit .buttonPrimary', dialog);
-            primaryButton.classList.remove('buttonPrimary');
-            primaryButton.classList.add('button');
-            button.classList.remove('button');
-            button.classList.add('buttonPrimary');
-            elById('notificationTestDialog').parentNode.scrollTop = 0;
-        },
-        /**
-         * Returns the data used to setup the dialog.
-         *
-         * @return	{object}	setup data
-         */
-        _dialogSetup: function () {
-            return {
-                id: 'notificationTestDialog',
-                source: null
-            };
-        },
-        /**
-         * Executes a test after clicking on a test button.
-         *
-         * @param	{Event}		event
-         */
-        _test: function (event) {
-            var button = event.currentTarget;
-            button.innerHTML = '<span class="icon icon16 fa-spinner"></span>';
-            Array.prototype.forEach.call(_buttons, function (button) {
-                button.disabled = true;
-            });
-            Ajax.api(this, {
-                parameters: {
-                    eventID: elData(button, 'event-id')
-                }
+        constructor() {
+            this.titles = new Map();
+            this.buttons = Array.from(document.querySelectorAll(".jsTestEventButton"));
+            this.buttons.forEach((button) => {
+                button.addEventListener("click", (ev) => this.test(ev));
+                const eventId = ~~button.dataset.eventId;
+                const title = button.dataset.title;
+                this.titles.set(eventId, title);
             });
         }
-    };
+        /**
+         * Returns the data used to setup the AJAX request object.
+         */
+        _ajaxSetup() {
+            return {
+                data: {
+                    actionName: "testEvent",
+                    className: "wcf\\data\\user\\notification\\event\\UserNotificationEventAction",
+                },
+            };
+        }
+        /**
+         * Handles successful AJAX request.
+         */
+        _ajaxSuccess(data) {
+            Dialog_1.default.open(this, data.returnValues.template);
+            Dialog_1.default.setTitle(this, this.titles.get(~~data.returnValues.eventID));
+            const dialog = Dialog_1.default.getDialog(this).dialog;
+            dialog.querySelectorAll(".formSubmit button").forEach((button) => {
+                button.addEventListener("click", (ev) => this.changeView(ev));
+            });
+            // fix some margin issues
+            const errors = Array.from(dialog.querySelectorAll(".error"));
+            if (errors.length === 1) {
+                errors[0].style.setProperty("margin-top", "0px");
+                errors[0].style.setProperty("margin-bottom", "20px");
+            }
+            dialog.querySelectorAll(".notificationTestSection").forEach((section) => {
+                section.style.setProperty("margin-top", "0px");
+            });
+            document.getElementById("notificationTestDialog").parentElement.scrollTop = 0;
+            // restore buttons
+            this.buttons.forEach((button) => {
+                button.innerHTML = Language.get("wcf.acp.devtools.notificationTest.button.test");
+                button.disabled = false;
+            });
+        }
+        /**
+         * Changes the view after clicking on one of the buttons.
+         */
+        changeView(event) {
+            const button = event.currentTarget;
+            const dialog = Dialog_1.default.getDialog(this).dialog;
+            dialog.querySelectorAll(".notificationTestSection").forEach((section) => Util_1.default.hide(section));
+            const containerId = button.id.replace("Button", "");
+            Util_1.default.show(document.getElementById(containerId));
+            const primaryButton = dialog.querySelector(".formSubmit .buttonPrimary");
+            primaryButton.classList.remove("buttonPrimary");
+            primaryButton.classList.add("button");
+            button.classList.remove("button");
+            button.classList.add("buttonPrimary");
+            document.getElementById("notificationTestDialog").parentElement.scrollTop = 0;
+        }
+        /**
+         * Returns the data used to setup the dialog.
+         */
+        _dialogSetup() {
+            return {
+                id: "notificationTestDialog",
+                source: null,
+            };
+        }
+        /**
+         * Executes a test after clicking on a test button.
+         */
+        test(event) {
+            const button = event.currentTarget;
+            button.innerHTML = '<span class="icon icon16 fa-spinner"></span>';
+            this.buttons.forEach((button) => (button.disabled = true));
+            Ajax.api(this, {
+                parameters: {
+                    eventID: ~~button.dataset.eventId,
+                },
+            });
+        }
+    }
+    let acpUiDevtoolsNotificationTest;
+    /**
+     * Initializes the user notification test handler.
+     */
+    function init() {
+        if (!acpUiDevtoolsNotificationTest) {
+            acpUiDevtoolsNotificationTest = new AcpUiDevtoolsNotificationTest();
+        }
+    }
+    exports.init = init;
 });
