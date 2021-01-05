@@ -349,7 +349,11 @@ abstract class Upload<TOptions extends UploadOptions = UploadOptions> {
     }
 
     // recursively append additional parameters to form data
-    function appendFormData(parameters: object, prefix?: string): void {
+    function appendFormData(parameters: object | null, prefix?: string): void {
+      if (parameters === null) {
+        return;
+      }
+
       prefix = prefix || "";
 
       Object.entries(parameters).forEach(([key, value]) => {

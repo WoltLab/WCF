@@ -281,6 +281,9 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Dom/Change
             }
             // recursively append additional parameters to form data
             function appendFormData(parameters, prefix) {
+                if (parameters === null) {
+                    return;
+                }
                 prefix = prefix || "";
                 Object.entries(parameters).forEach(([key, value]) => {
                     if (typeof value === "object") {
