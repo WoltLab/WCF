@@ -31,11 +31,13 @@ export interface RedactorEditor {
     editor(): JQuery;
     element(): JQuery;
     textarea(): JQuery;
+    toolbar(): JQuery;
   };
   focus: {
     end(): void;
   };
   insert: {
+    html(html: string): void;
     text(text: string): void;
   };
   selection: {
