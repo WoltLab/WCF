@@ -50,10 +50,9 @@ define(["require", "exports", "tslib", "../Language", "../Clipboard", "../Ui/Not
             const button = document.createElement("span");
             button.className = "icon icon24 fa-files-o pointer jsTooltip";
             button.setAttribute("title", Language.get("wcf.message.bbcode.code.copy"));
-            button.addEventListener("click", () => {
-                void Clipboard.copyElementTextToClipboard(this.codeContainer).then(() => {
-                    UiNotification.show(Language.get("wcf.message.bbcode.code.copy.success"));
-                });
+            button.addEventListener("click", async () => {
+                await Clipboard.copyElementTextToClipboard(this.codeContainer);
+                UiNotification.show(Language.get("wcf.message.bbcode.code.copy.success"));
             });
             header.appendChild(button);
         }
