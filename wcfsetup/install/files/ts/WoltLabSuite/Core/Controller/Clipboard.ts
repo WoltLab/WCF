@@ -22,7 +22,7 @@ import * as UiScreen from "../Ui/Screen";
 interface ClipboardOptions {
   hasMarkedItems: boolean;
   pageClassName: string;
-  pageObjectId: number;
+  pageObjectId?: number;
 }
 
 interface ContainerData {
@@ -78,7 +78,7 @@ class ControllerClipboard {
   private itemData = new WeakMap<HTMLLIElement, ClipboardActionData>();
   private readonly knownCheckboxes = new WeakSet<HTMLInputElement>();
   private readonly pageClassNames: string[] = [];
-  private pageObjectId = 0;
+  private pageObjectId? = 0;
   private readonly reloadPageOnSuccess = new Map<string, string[]>();
 
   /**
