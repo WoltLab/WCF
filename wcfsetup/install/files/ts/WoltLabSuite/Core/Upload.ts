@@ -391,7 +391,7 @@ abstract class Upload<TOptions extends UploadOptions = UploadOptions> {
    *
    * @since  5.2
    */
-  protected hasPendingUploads(): boolean {
+  public hasPendingUploads(): boolean {
     return (
       this._fileElements.find((elements) => {
         return elements.find((el) => el.querySelector("progress") !== null);
