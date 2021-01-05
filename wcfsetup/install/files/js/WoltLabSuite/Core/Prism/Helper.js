@@ -1,39 +1,33 @@
+/**
+ * Provide helper functions for prism processing.
+ *
+ * @author	Tim Duesterhus
+ * @copyright	2001-2021 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	WoltLabSuite/Core/Prism/Helper
+ */
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.splitIntoLines = void 0;
-    /**
-     * Provide helper functions for prism processing.
-     *
-     * @author	Tim Duesterhus
-     * @copyright	2001-2021 WoltLab GmbH
-     * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
-     * @module	WoltLabSuite/Core/Prism/Helper
-     */
-    function splitIntoLines(container) {
-        const frag = document.createDocumentFragment();
-        let lineNo = 1;
-        const newLine = () => {
-            const line = document.createElement("span");
-            line.dataset.number = lineNo.toString();
-            lineNo++;
-            frag.appendChild(line);
-            return line;
-        };
+    function* splitIntoLines(container) {
         const it = document.createNodeIterator(container, NodeFilter.SHOW_TEXT, {
             acceptNode() {
                 return NodeFilter.FILTER_ACCEPT;
             },
         });
-        let line = newLine();
+        let line = document.createElement("span");
         let node;
         while ((node = it.nextNode())) {
             const text = node;
-            text.data.split(/\r?\n/).forEach((codeLine, index) => {
+            const lines = text.data.split(/\r?\n/);
+            for (let i = 0, max = lines.length; i < max; i++) {
+                const codeLine = lines[i];
                 // We are behind a newline, insert \n and create new container.
-                if (index >= 1) {
+                if (i >= 1) {
                     line.appendChild(document.createTextNode("\n"));
-                    line = newLine();
+                    yield line;
+                    line = document.createElement("span");
                 }
                 let current = document.createTextNode(codeLine);
                 // Copy hierarchy (to preserve CSS classes).
@@ -45,9 +39,9 @@ define(["require", "exports"], function (require, exports) {
                     parent = parent.parentNode;
                 }
                 line.appendChild(current);
-            });
+            }
         }
-        return frag;
+        yield line;
     }
     exports.splitIntoLines = splitIntoLines;
 });

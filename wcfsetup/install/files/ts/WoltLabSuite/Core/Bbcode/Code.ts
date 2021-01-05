@@ -83,8 +83,10 @@ class Code {
 
     this.container.classList.add("highlighting");
 
+    // Step 1) Load the requested grammar.
     await import("prism/components/prism-" + PrismMeta[this.language].file);
 
+    // Step 2) Perform the highlighting into a temporary element.
     await waitForIdle();
 
     const grammar = Prism.languages[this.language];
@@ -95,22 +97,23 @@ class Code {
     const container = document.createElement("div");
     container.innerHTML = Prism.highlight(this.codeContainer.textContent!, grammar, this.language);
 
+    // Step 3) Insert the highlighted lines into the page.
+    // This is performed in small chunks to prevent the UI thread from being blocked for complex
+    // highlight results.
     await waitForIdle();
 
-    const highlighted = PrismHelper.splitIntoLines(container);
-    const highlightedLines = highlighted.querySelectorAll("[data-number]");
     const originalLines = this.codeContainer.querySelectorAll(".codeBoxLine > span");
+    const highlightedLines = PrismHelper.splitIntoLines(container);
 
-    if (highlightedLines.length !== originalLines.length) {
-      throw new Error("Unreachable");
-    }
-
-    for (let chunkStart = 0, max = highlightedLines.length; chunkStart < max; chunkStart += CHUNK_SIZE) {
+    for (let chunkStart = 0, max = originalLines.length; chunkStart < max; chunkStart += CHUNK_SIZE) {
       await waitForIdle();
+
       const chunkEnd = Math.min(chunkStart + CHUNK_SIZE, max);
 
       for (let offset = chunkStart; offset < chunkEnd; offset++) {
-        originalLines[offset]!.parentNode!.replaceChild(highlightedLines[offset], originalLines[offset]);
+        const toReplace = originalLines[offset]!;
+        const replacement = highlightedLines.next().value as Element;
+        toReplace.parentNode!.replaceChild(replacement, toReplace);
       }
     }
 

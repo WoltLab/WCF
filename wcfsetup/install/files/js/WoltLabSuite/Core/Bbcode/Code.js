@@ -66,7 +66,9 @@ define(["require", "exports", "tslib", "../Language", "../Clipboard", "../Ui/Not
                 throw new Error(`Unknown language '${this.language}'`);
             }
             this.container.classList.add("highlighting");
+            // Step 1) Load the requested grammar.
             await new Promise((resolve_1, reject_1) => { require(["prism/components/prism-" + prism_meta_1.default[this.language].file], resolve_1, reject_1); }).then(tslib_1.__importStar);
+            // Step 2) Perform the highlighting into a temporary element.
             await waitForIdle();
             const grammar = Prism_1.default.languages[this.language];
             if (!grammar) {
@@ -74,18 +76,19 @@ define(["require", "exports", "tslib", "../Language", "../Clipboard", "../Ui/Not
             }
             const container = document.createElement("div");
             container.innerHTML = Prism_1.default.highlight(this.codeContainer.textContent, grammar, this.language);
+            // Step 3) Insert the highlighted lines into the page.
+            // This is performed in small chunks to prevent the UI thread from being blocked for complex
+            // highlight results.
             await waitForIdle();
-            const highlighted = PrismHelper.splitIntoLines(container);
-            const highlightedLines = highlighted.querySelectorAll("[data-number]");
             const originalLines = this.codeContainer.querySelectorAll(".codeBoxLine > span");
-            if (highlightedLines.length !== originalLines.length) {
-                throw new Error("Unreachable");
-            }
-            for (let chunkStart = 0, max = highlightedLines.length; chunkStart < max; chunkStart += CHUNK_SIZE) {
+            const highlightedLines = PrismHelper.splitIntoLines(container);
+            for (let chunkStart = 0, max = originalLines.length; chunkStart < max; chunkStart += CHUNK_SIZE) {
                 await waitForIdle();
                 const chunkEnd = Math.min(chunkStart + CHUNK_SIZE, max);
                 for (let offset = chunkStart; offset < chunkEnd; offset++) {
-                    originalLines[offset].parentNode.replaceChild(highlightedLines[offset], originalLines[offset]);
+                    const toReplace = originalLines[offset];
+                    const replacement = highlightedLines.next().value;
+                    toReplace.parentNode.replaceChild(replacement, toReplace);
                 }
             }
             this.container.classList.remove("highlighting");

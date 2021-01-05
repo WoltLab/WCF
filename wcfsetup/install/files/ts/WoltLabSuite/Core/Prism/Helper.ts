@@ -6,32 +6,27 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Prism/Helper
  */
-export function splitIntoLines(container: Node): DocumentFragment {
-  const frag = document.createDocumentFragment();
-  let lineNo = 1;
-  const newLine = () => {
-    const line = document.createElement("span");
-    line.dataset.number = lineNo.toString();
-    lineNo++;
-    frag.appendChild(line);
-    return line;
-  };
 
+export function* splitIntoLines(container: Node): Generator<Element, void> {
   const it = document.createNodeIterator(container, NodeFilter.SHOW_TEXT, {
     acceptNode() {
       return NodeFilter.FILTER_ACCEPT;
     },
   });
 
-  let line = newLine();
+  let line = document.createElement("span");
   let node;
   while ((node = it.nextNode())) {
     const text = node as Text;
-    text.data.split(/\r?\n/).forEach((codeLine, index) => {
+    const lines = text.data.split(/\r?\n/);
+
+    for (let i = 0, max = lines.length; i < max; i++) {
+      const codeLine = lines[i];
       // We are behind a newline, insert \n and create new container.
-      if (index >= 1) {
+      if (i >= 1) {
         line.appendChild(document.createTextNode("\n"));
-        line = newLine();
+        yield line;
+        line = document.createElement("span");
       }
 
       let current: Node = document.createTextNode(codeLine);
@@ -44,7 +39,7 @@ export function splitIntoLines(container: Node): DocumentFragment {
         parent = parent.parentNode;
       }
       line.appendChild(current);
-    });
+    }
   }
-  return frag;
+  yield line;
 }
