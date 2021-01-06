@@ -11,7 +11,9 @@ namespace wcf\system\database\table\column;
  * @since	5.2
  */
 class VarbinaryDatabaseTableColumn extends AbstractDatabaseTableColumn implements ILengthDatabaseTableColumn {
-	use TLengthDatabaseTableColumn;
+	use TLengthDatabaseTableColumn {
+		TLengthDatabaseTableColumn::getLength as traitGetLength;
+	}
 	
 	/**
 	 * @inheritDoc
