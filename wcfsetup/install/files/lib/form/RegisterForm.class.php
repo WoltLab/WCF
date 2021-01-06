@@ -5,12 +5,10 @@ use wcf\acp\form\UserAddForm;
 use wcf\data\blacklist\entry\BlacklistEntry;
 use wcf\data\object\type\ObjectType;
 use wcf\data\user\avatar\Gravatar;
-use wcf\data\user\avatar\UserAvatarAction;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
-use wcf\data\user\UserProfile;
 use wcf\system\captcha\CaptchaHandler;
 use wcf\system\email\mime\MimePartFacade;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
@@ -332,7 +330,6 @@ class RegisterForm extends UserAddForm {
 		$saveOptions = $this->optionHandler->save();
 		$registerVia3rdParty = false;
 		
-		$avatarURL = '';
 		if ($this->isExternalAuthentication) {
 			switch (WCF::getSession()->getVar('__3rdPartyProvider')) {
 				case 'github':
@@ -348,9 +345,6 @@ class RegisterForm extends UserAddForm {
 						if (WCF::getSession()->getVar('__email') && WCF::getSession()->getVar('__email') == $this->email) {
 							$registerVia3rdParty = true;
 						}
-						
-						if (isset($githubData['bio']) && User::getUserOptionID('aboutMe') !== null) $saveOptions[User::getUserOptionID('aboutMe')] = $githubData['bio'];
-						if (isset($githubData['location']) && User::getUserOptionID('location') !== null) $saveOptions[User::getUserOptionID('location')] = $githubData['location'];
 					}
 				break;
 				case 'twitter':
@@ -363,14 +357,6 @@ class RegisterForm extends UserAddForm {
 						
 						if (WCF::getSession()->getVar('__email') && WCF::getSession()->getVar('__email') == $this->email) {
 							$registerVia3rdParty = true;
-						}
-						
-						if (isset($twitterData['description']) && User::getUserOptionID('aboutMe') !== null) $saveOptions[User::getUserOptionID('aboutMe')] = $twitterData['description'];
-						if (isset($twitterData['location']) && User::getUserOptionID('location') !== null) $saveOptions[User::getUserOptionID('location')] = $twitterData['location'];
-						
-						// avatar
-						if (isset($twitterData['profile_image_url'])) {
-							$avatarURL = $twitterData['profile_image_url'];
 						}
 					}
 				break;
@@ -385,19 +371,6 @@ class RegisterForm extends UserAddForm {
 						if (isset($facebookData['email']) && $facebookData['email'] == $this->email) {
 							$registerVia3rdParty = true;
 						}
-						
-						if (isset($facebookData['gender']) && User::getUserOptionID('gender') !== null) $saveOptions[User::getUserOptionID('gender')] = ($facebookData['gender'] == 'male' ? UserProfile::GENDER_MALE : UserProfile::GENDER_FEMALE);
-						
-						if (isset($facebookData['birthday']) && User::getUserOptionID('birthday') !== null) {
-							[$month, $day, $year] = explode('/', $facebookData['birthday']);
-							$saveOptions[User::getUserOptionID('birthday')] = $year.'-'.$month.'-'.$day;
-						}
-						if (isset($facebookData['location']) && User::getUserOptionID('location') !== null) $saveOptions[User::getUserOptionID('location')] = $facebookData['location']['name'];
-						
-						// avatar
-						if (isset($facebookData['picture']) && !$facebookData['picture']['data']['is_silhouette']) {
-							$avatarURL = $facebookData['picture']['data']['url'];
-						}
 					}
 				break;
 				case 'google':
@@ -410,22 +383,6 @@ class RegisterForm extends UserAddForm {
 						
 						if (isset($googleData['email']) && $googleData['email'] == $this->email) {
 							$registerVia3rdParty = true;
-						}
-						
-						if (isset($googleData['gender']) && User::getUserOptionID('gender') !== null) {
-							switch ($googleData['gender']) {
-								case 'male':
-									$saveOptions[User::getUserOptionID('gender')] = UserProfile::GENDER_MALE;
-								break;
-								case 'female':
-									$saveOptions[User::getUserOptionID('gender')] = UserProfile::GENDER_FEMALE;
-								break;
-							}
-						}
-						
-						// avatar
-						if (isset($googleData['picture'])) {
-							$avatarURL = $googleData['picture'];
 						}
 					}
 				break;
@@ -484,15 +441,6 @@ class RegisterForm extends UserAddForm {
 		
 		// update session
 		WCF::getSession()->changeUser($user);
-		
-		// set avatar if provided
-		if (!empty($avatarURL)) {
-			$userAvatarAction = new UserAvatarAction([], 'fetchRemoteAvatar', [
-				'url' => $avatarURL,
-				'userEditor' => $userEditor
-			]);
-			$userAvatarAction->executeAction();
-		}
 		
 		// activation management
 		if (REGISTER_ACTIVATION_METHOD == User::REGISTER_ACTIVATION_NONE && empty($this->blacklistMatches)) {
