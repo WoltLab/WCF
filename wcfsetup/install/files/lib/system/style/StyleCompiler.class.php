@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\style;
 use ScssPhp\ScssPhp\Compiler;
-use ScssPhp\ScssPhp\Formatter\Crunched as CrunchedFormatter;
+use ScssPhp\ScssPhp\OutputStyle;
 use wcf\data\application\Application;
 use wcf\data\option\Option;
 use wcf\data\style\Style;
@@ -503,7 +503,7 @@ EOT;
 		}
 		
 		try {
-			$this->compiler->setFormatter(CrunchedFormatter::class);
+			$this->compiler->setOutputStyle(OutputStyle::COMPRESSED);
 			$content = $this->compiler->compile($scss);
 		}
 		catch (\Exception $e) {

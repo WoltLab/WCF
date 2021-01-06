@@ -786,17 +786,17 @@
         },
         {
             "name": "scssphp/scssphp",
-            "version": "1.3",
-            "version_normalized": "1.3.0.0",
+            "version": "v1.4.1",
+            "version_normalized": "1.4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/scssphp/scssphp.git",
-                "reference": "261cd018025d5790e135a1e5b694d6af186e6bca"
+                "reference": "ba86c963b94ec7ebd6e19d90cdab90d89667dbf7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/scssphp/scssphp/zipball/261cd018025d5790e135a1e5b694d6af186e6bca",
-                "reference": "261cd018025d5790e135a1e5b694d6af186e6bca",
+                "url": "https://api.github.com/repos/scssphp/scssphp/zipball/ba86c963b94ec7ebd6e19d90cdab90d89667dbf7",
+                "reference": "ba86c963b94ec7ebd6e19d90cdab90d89667dbf7",
                 "shasum": ""
             },
             "require": {
@@ -806,12 +806,13 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5 || ^8.3 || ^9.4",
-                "sass/sass-spec": "2020.08.10",
+                "sass/sass-spec": "2020.12.29",
                 "squizlabs/php_codesniffer": "~3.5",
+                "symfony/phpunit-bridge": "^5.1",
                 "twbs/bootstrap": "~4.3",
                 "zurb/foundation": "~6.5"
             },
-            "time": "2020-10-29T11:09:57+00:00",
+            "time": "2021-01-04T13:23:23+00:00",
             "bin": [
                 "bin/pscss"
             ],
@@ -849,7 +850,7 @@
             ],
             "support": {
                 "issues": "https://github.com/scssphp/scssphp/issues",
-                "source": "https://github.com/scssphp/scssphp/tree/1.3"
+                "source": "https://github.com/scssphp/scssphp/tree/v1.4.1"
             },
             "install-path": "../scssphp/scssphp"
         },
@@ -1053,6 +1054,6 @@
             "install-path": "../true/punycode"
         }
     ],
-    "dev": true,
+    "dev": false,
     "dev-package-names": []
 }

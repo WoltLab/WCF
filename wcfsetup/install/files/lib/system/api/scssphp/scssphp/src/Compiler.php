@@ -13,19 +13,16 @@
 namespace ScssPhp\ScssPhp;
 
 use ScssPhp\ScssPhp\Base\Range;
-use ScssPhp\ScssPhp\Block;
-use ScssPhp\ScssPhp\Cache;
-use ScssPhp\ScssPhp\Colors;
 use ScssPhp\ScssPhp\Compiler\Environment;
 use ScssPhp\ScssPhp\Exception\CompilerException;
+use ScssPhp\ScssPhp\Exception\ParserException;
 use ScssPhp\ScssPhp\Exception\SassScriptException;
+use ScssPhp\ScssPhp\Formatter\Compressed;
+use ScssPhp\ScssPhp\Formatter\Expanded;
 use ScssPhp\ScssPhp\Formatter\OutputBlock;
-use ScssPhp\ScssPhp\Node;
 use ScssPhp\ScssPhp\Node\Number;
 use ScssPhp\ScssPhp\SourceMap\SourceMapGenerator;
-use ScssPhp\ScssPhp\Type;
-use ScssPhp\ScssPhp\Parser;
-use ScssPhp\ScssPhp\Util;
+use ScssPhp\ScssPhp\Util\Path;
 
 /**
  * The scss compiler and parser.
@@ -92,7 +89,7 @@ class Compiler
     const SOURCE_MAP_FILE   = 2;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected static $operatorNames = [
         '+'   => 'add',
@@ -111,7 +108,7 @@ class Compiler
     ];
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected static $namespaces = [
         'special'  => '%',
@@ -135,60 +132,156 @@ class Compiler
     public static $with         = [Type::T_KEYWORD, 'with'];
     public static $without      = [Type::T_KEYWORD, 'without'];
 
-    protected $importPaths = [''];
+    /**
+     * @var array<int, string|callable>
+     */
+    protected $importPaths = [];
+    /**
+     * @var array<string, Block>
+     */
     protected $importCache = [];
+    /**
+     * @var string[]
+     */
     protected $importedFiles = [];
     protected $userFunctions = [];
     protected $registeredVars = [];
+    /**
+     * @var array<string, bool>
+     */
     protected $registeredFeatures = [
         'extend-selector-pseudoclass' => false,
         'at-error'                    => true,
-        'units-level-3'               => false,
+        'units-level-3'               => true,
         'global-variable-shadowing'   => false,
     ];
 
+    /**
+     * @var string|null
+     */
     protected $encoding = null;
     /**
      * @deprecated
      */
     protected $lineNumberStyle = null;
 
+    /**
+     * @var int|SourceMapGenerator
+     * @phpstan-var self::SOURCE_MAP_*|SourceMapGenerator
+     */
     protected $sourceMap = self::SOURCE_MAP_NONE;
     protected $sourceMapOptions = [];
 
     /**
      * @var string|\ScssPhp\ScssPhp\Formatter
      */
-    protected $formatter = 'ScssPhp\ScssPhp\Formatter\Nested';
+    protected $formatter = Expanded::class;
 
+    /**
+     * @var Environment
+     */
     protected $rootEnv;
+    /**
+     * @var OutputBlock|null
+     */
     protected $rootBlock;
 
     /**
      * @var \ScssPhp\ScssPhp\Compiler\Environment
      */
     protected $env;
+    /**
+     * @var OutputBlock|null
+     */
     protected $scope;
+    /**
+     * @var Environment|null
+     */
     protected $storeEnv;
+    /**
+     * @var bool|null
+     */
     protected $charsetSeen;
+    /**
+     * @var array<int, string>
+     */
     protected $sourceNames;
 
+    /**
+     * @var Cache|null
+     */
     protected $cache;
 
+    /**
+     * @var int
+     */
     protected $indentLevel;
+    /**
+     * @var array[]
+     */
     protected $extends;
+    /**
+     * @var array<string, int[]>
+     */
     protected $extendsMap;
+    /**
+     * @var array<string, int>
+     */
     protected $parsedFiles;
+    /**
+     * @var Parser|null
+     */
     protected $parser;
+    /**
+     * @var int|null
+     */
     protected $sourceIndex;
+    /**
+     * @var int|null
+     */
     protected $sourceLine;
+    /**
+     * @var int|null
+     */
     protected $sourceColumn;
+    /**
+     * @var resource
+     */
     protected $stderr;
+    /**
+     * @var bool|null
+     */
     protected $shouldEvaluate;
+    /**
+     * @var null
+     * @deprecated
+     */
     protected $ignoreErrors;
+    /**
+     * @var bool
+     */
     protected $ignoreCallStackMessage = false;
 
+    /**
+     * @var array[]
+     */
     protected $callStack = [];
+
+    /**
+     * The directory of the currently processed file
+     *
+     * @var string|null
+     */
+    private $currentDirectory;
+
+    /**
+     * The directory of the input file
+     *
+     * @var string
+     */
+    private $rootDirectory;
+
+    private $legacyCwdImportPath = true;
 
     /**
      * Constructor
@@ -210,7 +303,7 @@ class Compiler
     /**
      * Get compiler options
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getCompileOptions()
     {
@@ -222,6 +315,7 @@ class Compiler
             'sourceMap'          => serialize($this->sourceMap),
             'sourceMapOptions'   => $this->sourceMapOptions,
             'formatter'          => $this->formatter,
+            'legacyImportPath'   => $this->legacyCwdImportPath,
         ];
 
         return $options;
@@ -231,6 +325,8 @@ class Compiler
      * Set an alternative error output stream, for testing purpose only
      *
      * @param resource $handle
+     *
+     * @return void
      */
     public function setErrorOuput($handle)
     {
@@ -283,6 +379,15 @@ class Compiler
         $this->shouldEvaluate = null;
         $this->ignoreCallStackMessage = false;
 
+        if (!\is_null($path) && is_file($path)) {
+            $path = realpath($path) ?: $path;
+            $this->currentDirectory = dirname($path);
+            $this->rootDirectory = $this->currentDirectory;
+        } else {
+            $this->currentDirectory = null;
+            $this->rootDirectory = getcwd();
+        }
+
         try {
             $this->parser = $this->parserFactory($path);
             $tree         = $this->parser->parse($code);
@@ -309,8 +414,17 @@ class Compiler
 
             $out = $this->formatter->format($this->scope, $sourceMapGenerator);
 
+            $prefix = '';
+
+            if (!$this->charsetSeen) {
+                if (strlen($out) !== Util::mbStrlen($out)) {
+                    $prefix = '@charset "UTF-8";' . "\n";
+                    $out = $prefix . $out;
+                }
+            }
+
             if (! empty($out) && $this->sourceMap && $this->sourceMap !== self::SOURCE_MAP_NONE) {
-                $sourceMap    = $sourceMapGenerator->generateJson();
+                $sourceMap    = $sourceMapGenerator->generateJson($prefix);
                 $sourceMapUrl = null;
 
                 switch ($this->sourceMap) {
@@ -336,12 +450,6 @@ class Compiler
             ];
 
             $this->cache->setCache('compile', $cacheKey, $v, $compileOptions);
-        }
-
-        if (!$this->charsetSeen && function_exists('mb_strlen')) {
-            if (strlen($out) !== mb_strlen($out)) {
-                $out = '@charset "UTF-8";' . "\n" . $out;
-            }
         }
 
         return $out;
@@ -400,6 +508,8 @@ class Compiler
      * @param array      $target
      * @param array      $origin
      * @param array|null $block
+     *
+     * @return void
      */
     protected function pushExtends($target, $origin, $block)
     {
@@ -450,6 +560,8 @@ class Compiler
      * Compile root
      *
      * @param \ScssPhp\ScssPhp\Block $rootBlock
+     *
+     * @return void
      */
     protected function compileRoot(Block $rootBlock)
     {
@@ -462,6 +574,8 @@ class Compiler
 
     /**
      * Report missing selectors
+     *
+     * @return void
      */
     protected function missingSelectors()
     {
@@ -490,6 +604,8 @@ class Compiler
      *
      * @param \ScssPhp\ScssPhp\Formatter\OutputBlock $block
      * @param string                                 $parentKey
+     *
+     * @return void
      */
     protected function flattenSelectors(OutputBlock $block, $parentKey = null)
     {
@@ -586,6 +702,8 @@ class Compiler
      * @param array   $out
      * @param integer $from
      * @param boolean $initial
+     *
+     * @return void
      */
     protected function matchExtends($selector, &$out, $from = 0, $initial = true)
     {
@@ -739,6 +857,8 @@ class Compiler
      *
      * @param array $out
      * @param array $extended
+     *
+     * @return void
      */
     protected function pushOrMergeExtentedSelector(&$out, $extended)
     {
@@ -990,6 +1110,8 @@ class Compiler
      * Compile media
      *
      * @param \ScssPhp\ScssPhp\Block $media
+     *
+     * @return void
      */
     protected function compileMedia(Block $media)
     {
@@ -1072,6 +1194,8 @@ class Compiler
      *
      * @param \ScssPhp\ScssPhp\Block|array $block
      * @param \ScssPhp\ScssPhp\Formatter\OutputBlock $out
+     *
+     * @return void
      */
     protected function compileDirective($directive, OutputBlock $out)
     {
@@ -1129,6 +1253,8 @@ class Compiler
      * Compile at-root
      *
      * @param \ScssPhp\ScssPhp\Block $block
+     *
+     * @return void
      */
     protected function compileAtRoot(Block $block)
     {
@@ -1185,7 +1311,7 @@ class Compiler
      * @param array                                  $with
      * @param array                                  $without
      *
-     * @return mixed
+     * @return OutputBlock
      */
     protected function filterScopeWithWithout($scope, $with, $without)
     {
@@ -1258,7 +1384,7 @@ class Compiler
      * @param \ScssPhp\ScssPhp\Formatter\OutputBlock $scope
      * @param \ScssPhp\ScssPhp\Formatter\OutputBlock $previousScope
      *
-     * @return mixed
+     * @return OutputBlock
      */
     protected function completeScope($scope, $previousScope)
     {
@@ -1354,11 +1480,13 @@ class Compiler
     /**
      * Filter env stack
      *
-     * @param array $envs
+     * @param Environment[] $envs
      * @param array $with
      * @param array $without
      *
-     * @return \ScssPhp\ScssPhp\Compiler\Environment
+     * @return Environment
+     *
+     * @phpstan-param  non-empty-array<Environment> $envs
      */
     protected function filterWithWithout($envs, $with, $without)
     {
@@ -1451,6 +1579,8 @@ class Compiler
      *
      * @param \ScssPhp\ScssPhp\Block $block
      * @param array                  $selectors
+     *
+     * @return void
      */
     protected function compileKeyframeBlock(Block $block, $selectors)
     {
@@ -1479,6 +1609,8 @@ class Compiler
      *
      * @param \ScssPhp\ScssPhp\Block                 $block
      * @param \ScssPhp\ScssPhp\Formatter\OutputBlock $out
+     *
+     * @return void
      */
     protected function compileNestedPropertiesBlock(Block $block, OutputBlock $out)
     {
@@ -1513,6 +1645,8 @@ class Compiler
      *
      * @param \ScssPhp\ScssPhp\Block $block
      * @param array                  $selectors
+     *
+     * @return void
      */
     protected function compileNestedBlock(Block $block, $selectors)
     {
@@ -1574,6 +1708,8 @@ class Compiler
      * @see Compiler::compileChild()
      *
      * @param \ScssPhp\ScssPhp\Block $block
+     *
+     * @return void
      */
     protected function compileBlock(Block $block)
     {
@@ -1613,7 +1749,7 @@ class Compiler
      * @param array   $value
      * @param boolean $pushEnv
      *
-     * @return array|mixed|string
+     * @return string
      */
     protected function compileCommentValue($value, $pushEnv = false)
     {
@@ -1647,6 +1783,8 @@ class Compiler
      * Compile root level comment
      *
      * @param array $block
+     *
+     * @return void
      */
     protected function compileComment($block)
     {
@@ -1675,7 +1813,13 @@ class Compiler
             $buffer    = $this->collapseSelectors($selectors);
             $parser    = $this->parserFactory(__METHOD__);
 
-            if ($parser->parseSelector($buffer, $newSelectors, true)) {
+            try {
+                $isValid = $parser->parseSelector($buffer, $newSelectors, true);
+            } catch (ParserException $e) {
+                throw $this->error($e->getMessage());
+            }
+
+            if ($isValid) {
                 $selectors = array_map([$this, 'evalSelector'], $newSelectors);
             }
         }
@@ -1921,6 +2065,11 @@ class Compiler
         return false;
     }
 
+    /**
+     * @param string $name
+     *
+     * @return void
+     */
     protected function pushCallStack($name = '')
     {
         $this->callStack[] = [
@@ -1940,6 +2089,9 @@ class Compiler
         }
     }
 
+    /**
+     * @return void
+     */
     protected function popCallStack()
     {
         array_pop($this->callStack);
@@ -1974,12 +2126,14 @@ class Compiler
     }
 
     /**
-     * Compile children and throw exception if unexpected @return
+     * Compile children and throw exception if unexpected `@return`
      *
      * @param array                                  $stms
      * @param \ScssPhp\ScssPhp\Formatter\OutputBlock $out
      * @param \ScssPhp\ScssPhp\Block                 $selfParent
      * @param string                                 $traceName
+     *
+     * @return void
      *
      * @throws \Exception
      */
@@ -2010,7 +2164,7 @@ class Compiler
 
 
     /**
-     * evaluate media query : compile internal value keeping the structure inchanged
+     * evaluate media query : compile internal value keeping the structure unchanged
      *
      * @param array $queryList
      *
@@ -2359,7 +2513,7 @@ class Compiler
     }
 
     /**
-     * @param $rawPath
+     * @param array $rawPath
      * @return string
      * @throws CompilerException
      */
@@ -2367,12 +2521,12 @@ class Compiler
     {
         $path = $this->compileValue($rawPath);
 
-        // case url() without quotes : supress \r \n remaining in the path
+        // case url() without quotes : suppress \r \n remaining in the path
         // if this is a real string there can not be CR or LF char
         if (strpos($path, 'url(') === 0) {
             $path = str_replace(array("\r", "\n"), array('', ' '), $path);
         } else {
-            // if this is a file name in a string, spaces shoudl be escaped
+            // if this is a file name in a string, spaces should be escaped
             $path = $this->reduce($rawPath);
             $path = $this->escapeImportPathString($path);
             $path = $this->compileValue($path);
@@ -2410,9 +2564,11 @@ class Compiler
      * Append a root directive like @import or @charset as near as the possible from the source code
      * (keeping before comments, @import and @charset coming before in the source code)
      *
-     * @param string                                        $line
-     * @param @param \ScssPhp\ScssPhp\Formatter\OutputBlock $out
-     * @param array                                         $allowed
+     * @param string                                 $line
+     * @param \ScssPhp\ScssPhp\Formatter\OutputBlock $out
+     * @param array                                  $allowed
+     *
+     * @return void
      */
     protected function appendRootDirective($line, $out, $allowed = [Type::T_COMMENT])
     {
@@ -2461,6 +2617,8 @@ class Compiler
      * @param \ScssPhp\ScssPhp\Formatter\OutputBlock $out
      * @param string                                 $type
      * @param string|mixed                           $line
+     *
+     * @return void
      */
     protected function appendOutputLine(OutputBlock $out, $type, $line)
     {
@@ -2495,7 +2653,7 @@ class Compiler
      * @param array                                  $child
      * @param \ScssPhp\ScssPhp\Formatter\OutputBlock $out
      *
-     * @return array
+     * @return array|Number|null
      */
     protected function compileChild($child, OutputBlock $out)
     {
@@ -2969,7 +3127,7 @@ class Compiler
             case Type::T_DEBUG:
                 list(, $value) = $child;
 
-                $fname = $this->sourceNames[$this->sourceIndex];
+                $fname = $this->getPrettyPath($this->sourceNames[$this->sourceIndex]);
                 $line  = $this->sourceLine;
                 $value = $this->compileDebugValue($value);
 
@@ -2979,7 +3137,7 @@ class Compiler
             case Type::T_WARN:
                 list(, $value) = $child;
 
-                $fname = $this->sourceNames[$this->sourceIndex];
+                $fname = $this->getPrettyPath($this->sourceNames[$this->sourceIndex]);
                 $line  = $this->sourceLine;
                 $value = $this->compileDebugValue($value);
 
@@ -2989,7 +3147,7 @@ class Compiler
             case Type::T_ERROR:
                 list(, $value) = $child;
 
-                $fname = $this->sourceNames[$this->sourceIndex];
+                $fname = $this->getPrettyPath($this->sourceNames[$this->sourceIndex]);
                 $line  = $this->sourceLine;
                 $value = $this->compileValue($this->reduce($value, true));
 
@@ -3004,7 +3162,7 @@ class Compiler
      * Reduce expression to string
      *
      * @param array $exp
-     * @param true $keepParens
+     * @param bool $keepParens
      *
      * @return array
      */
@@ -3042,7 +3200,7 @@ class Compiler
     /**
      * Is truthy?
      *
-     * @param array $value
+     * @param array|Number $value
      *
      * @return boolean
      */
@@ -3090,7 +3248,7 @@ class Compiler
     /**
      * Reduce value
      *
-     * @param array   $value
+     * @param array|Number $value
      * @param boolean $inExp
      *
      * @return null|string|array|Number
@@ -3252,7 +3410,7 @@ class Compiler
      * @param string $name
      * @param array  $argValues
      *
-     * @return array|null
+     * @return array|Number
      */
     protected function fncall($functionReference, $argValues)
     {
@@ -3498,9 +3656,9 @@ class Compiler
     /**
      * Normalize value
      *
-     * @param array $value
+     * @param array|Number $value
      *
-     * @return array
+     * @return array|Number
      */
     public function normalizeValue($value)
     {
@@ -3636,11 +3794,11 @@ class Compiler
     /**
      * Boolean and
      *
-     * @param array   $left
-     * @param array   $right
+     * @param array|Number $left
+     * @param array|Number  $right
      * @param boolean $shouldEval
      *
-     * @return array|null
+     * @return array|Number|null
      */
     protected function opAnd($left, $right, $shouldEval)
     {
@@ -3664,11 +3822,11 @@ class Compiler
     /**
      * Boolean or
      *
-     * @param array   $left
-     * @param array   $right
+     * @param array|Number $left
+     * @param array|Number $right
      * @param boolean $shouldEval
      *
-     * @return array|null
+     * @return array|Number|null
      */
     protected function opOr($left, $right, $shouldEval)
     {
@@ -3700,6 +3858,15 @@ class Compiler
      */
     protected function opColorColor($op, $left, $right)
     {
+        if ($op !== '==' && $op !== '!=') {
+            $warning = "Color arithmetic is deprecated and will be an error in future versions.\n"
+                . "Consider using Sass's color functions instead.";
+            $fname = $this->getPrettyPath($this->sourceNames[$this->sourceIndex]);
+            $line  = $this->sourceLine;
+
+            fwrite($this->stderr, "DEPRECATION WARNING: $warning\n         on line $line of $fname\n\n");
+        }
+
         $out = [Type::T_COLOR];
 
         foreach ([1, 2, 3] as $i) {
@@ -3766,6 +3933,14 @@ class Compiler
      */
     protected function opColorNumber($op, $left, Number $right)
     {
+        if ($op === '==') {
+            return static::$false;
+        }
+
+        if ($op === '!=') {
+            return static::$true;
+        }
+
         $value = $right->getDimension();
 
         return $this->opColorColor(
@@ -3786,6 +3961,14 @@ class Compiler
      */
     protected function opNumberColor($op, Number $left, $right)
     {
+        if ($op === '==') {
+            return static::$false;
+        }
+
+        if ($op === '!=') {
+            return static::$true;
+        }
+
         $value = $left->getDimension();
 
         return $this->opColorColor(
@@ -3798,8 +3981,8 @@ class Compiler
     /**
      * Compare number1 == number2
      *
-     * @param array $left
-     * @param array $right
+     * @param array|Number $left
+     * @param array|Number $right
      *
      * @return array
      */
@@ -3819,8 +4002,8 @@ class Compiler
     /**
      * Compare number1 != number2
      *
-     * @param array $left
-     * @param array $right
+     * @param array|Number $left
+     * @param array|Number $right
      *
      * @return array
      */
@@ -3931,8 +4114,8 @@ class Compiler
 
     /**
      * Escape non printable chars in strings output as in dart-sass
-     * @param $string
-     * @return string|string[]
+     * @param string $string
+     * @return string
      */
     public function escapeNonPrintableChars($string, $inKeyword = false)
     {
@@ -3984,9 +4167,9 @@ class Compiler
      *
      * @api
      *
-     * @param array $value
+     * @param array|Number|string $value
      *
-     * @return string|array
+     * @return string
      */
     public function compileValue($value)
     {
@@ -4513,9 +4696,11 @@ class Compiler
     /**
      * Convert env linked list to stack
      *
-     * @param \ScssPhp\ScssPhp\Compiler\Environment $env
+     * @param Environment $env
      *
-     * @return array
+     * @return Environment[]
+     *
+     * @phpstan-return non-empty-array<Environment>
      */
     protected function compactEnv(Environment $env)
     {
@@ -4529,9 +4714,11 @@ class Compiler
     /**
      * Convert env stack to singly linked list
      *
-     * @param array $envs
+     * @param Environment[] $envs
      *
-     * @return \ScssPhp\ScssPhp\Compiler\Environment
+     * @return Environment
+     *
+     * @phpstan-param  non-empty-array<Environment> $envs
      */
     protected function extractEnv($envs)
     {
@@ -4567,6 +4754,8 @@ class Compiler
 
     /**
      * Pop environment
+     *
+     * @return void
      */
     protected function popEnv()
     {
@@ -4577,8 +4766,10 @@ class Compiler
     /**
      * Propagate vars from a just poped Env (used in @each and @for)
      *
-     * @param array      $store
-     * @param null|array $excludedVars
+     * @param array         $store
+     * @param null|string[] $excludedVars
+     *
+     * @return void
      */
     protected function backPropagateEnv($store, $excludedVars = null)
     {
@@ -4607,6 +4798,8 @@ class Compiler
      * @param boolean                               $shadow
      * @param \ScssPhp\ScssPhp\Compiler\Environment $env
      * @param mixed                                 $valueUnreduced
+     *
+     * @return void
      */
     protected function set($name, $value, $shadow = false, Environment $env = null, $valueUnreduced = null)
     {
@@ -4630,6 +4823,8 @@ class Compiler
      * @param mixed                                 $value
      * @param \ScssPhp\ScssPhp\Compiler\Environment $env
      * @param mixed                                 $valueUnreduced
+     *
+     * @return void
      */
     protected function setExisting($name, $value, Environment $env, $valueUnreduced = null)
     {
@@ -4688,6 +4883,8 @@ class Compiler
      * @param mixed                                 $value
      * @param \ScssPhp\ScssPhp\Compiler\Environment $env
      * @param mixed                                 $valueUnreduced
+     *
+     * @return void
      */
     protected function setRaw($name, $value, Environment $env, $valueUnreduced = null)
     {
@@ -4784,6 +4981,8 @@ class Compiler
      * Inject variables
      *
      * @param array $args
+     *
+     * @return void
      */
     protected function injectVariables(array $args)
     {
@@ -4812,6 +5011,8 @@ class Compiler
      * @api
      *
      * @param array $variables
+     *
+     * @return void
      */
     public function setVariables(array $variables)
     {
@@ -4824,6 +5025,8 @@ class Compiler
      * @api
      *
      * @param string $name
+     *
+     * @return void
      */
     public function unsetVariable($name)
     {
@@ -4848,6 +5051,8 @@ class Compiler
      * @api
      *
      * @param string $path
+     *
+     * @return void
      */
     public function addParsedFile($path)
     {
@@ -4874,6 +5079,8 @@ class Compiler
      * @api
      *
      * @param string|callable $path
+     *
+     * @return void
      */
     public function addImportPath($path)
     {
@@ -4887,11 +5094,24 @@ class Compiler
      *
      * @api
      *
-     * @param string|array $path
+     * @param string|array<string|callable> $path
+     *
+     * @return void
      */
     public function setImportPaths($path)
     {
-        $this->importPaths = (array) $path;
+        $paths = (array) $path;
+        $actualImportPaths = array_filter($paths, function ($path) {
+            return $path !== '';
+        });
+
+        $this->legacyCwdImportPath = \count($actualImportPaths) !== \count($paths);
+
+        if ($this->legacyCwdImportPath) {
+            @trigger_error('Passing an empty string in the import paths to refer to the current working directory is deprecated. If that\'s the intended behavior, the value of "getcwd()" should be used directly instead. If this was used for resolving relative imports of the input alongside "chdir" with the source directory, the path of the input file should be passed to "compile()" instead.', E_USER_DEPRECATED);
+        }
+
+        $this->importPaths = $actualImportPaths;
     }
 
     /**
@@ -4900,6 +5120,8 @@ class Compiler
      * @api
      *
      * @param integer $numberPrecision
+     *
+     * @return void
      *
      * @deprecated The number precision is not configurable anymore. The default is enough for all browsers.
      */
@@ -4910,14 +5132,50 @@ class Compiler
     }
 
     /**
+     * Sets the output style.
+     *
+     * @api
+     *
+     * @param string $style One of the OutputStyle constants
+     *
+     * @return void
+     *
+     * @phpstan-param OutputStyle::* $style
+     */
+    public function setOutputStyle($style)
+    {
+        switch ($style) {
+            case OutputStyle::EXPANDED:
+                $this->formatter = Expanded::class;
+                break;
+
+            case OutputStyle::COMPRESSED:
+                $this->formatter = Compressed::class;
+                break;
+
+            default:
+                throw new \InvalidArgumentException(sprintf('Invalid output style "%s".', $style));
+        }
+    }
+
+    /**
      * Set formatter
      *
      * @api
      *
      * @param string $formatterName
+     *
+     * @return void
+     *
+     * @deprecated Use {@see setOutputStyle} instead.
      */
     public function setFormatter($formatterName)
     {
+        if (!\in_array($formatterName, [Expanded::class, Compressed::class], true)) {
+            @trigger_error('Formatters other than Expanded and Compressed are deprecated.', E_USER_DEPRECATED);
+        }
+        @trigger_error('The method "setFormatter" is deprecated. Use "setOutputStyle" instead.', E_USER_DEPRECATED);
+
         $this->formatter = $formatterName;
     }
 
@@ -4927,6 +5185,8 @@ class Compiler
      * @api
      *
      * @param string $lineNumberStyle
+     *
+     * @return void
      *
      * @deprecated The line number output is not supported anymore. Use source maps instead.
      */
@@ -4942,6 +5202,10 @@ class Compiler
      * @api
      *
      * @param integer $sourceMap
+     *
+     * @return void
+     *
+     * @phpstan-param self::SOURCE_MAP_* $sourceMap
      */
     public function setSourceMap($sourceMap)
     {
@@ -4954,6 +5218,8 @@ class Compiler
      * @api
      *
      * @param array $sourceMapOptions
+     *
+     * @return void
      */
     public function setSourceMapOptions($sourceMapOptions)
     {
@@ -4967,7 +5233,9 @@ class Compiler
      *
      * @param string   $name
      * @param callable $func
-     * @param array    $prototype
+     * @param array|null $prototype
+     *
+     * @return void
      */
     public function registerFunction($name, $func, $prototype = null)
     {
@@ -4980,6 +5248,8 @@ class Compiler
      * @api
      *
      * @param string $name
+     *
+     * @return void
      */
     public function unregisterFunction($name)
     {
@@ -4992,6 +5262,8 @@ class Compiler
      * @api
      *
      * @param string $name
+     *
+     * @return void
      *
      * @deprecated Registering additional features is deprecated.
      */
@@ -5007,10 +5279,12 @@ class Compiler
      *
      * @param string                                 $path
      * @param \ScssPhp\ScssPhp\Formatter\OutputBlock $out
+     *
+     * @return void
      */
     protected function importFile($path, OutputBlock $out)
     {
-        $this->pushCallStack('import ' . $path);
+        $this->pushCallStack('import ' . $this->getPrettyPath($path));
         // see if tree is cached
         $realPath = realpath($path);
 
@@ -5026,11 +5300,11 @@ class Compiler
             $this->importCache[$realPath] = $tree;
         }
 
-        $pi = pathinfo($path);
+        $currentDirectory = $this->currentDirectory;
+        $this->currentDirectory = dirname($path);
 
-        array_unshift($this->importPaths, $pi['dirname']);
         $this->compileChildrenNoReturn($tree->children, $out);
-        array_shift($this->importPaths);
+        $this->currentDirectory = $currentDirectory;
         $this->popCallStack();
     }
 
@@ -5045,59 +5319,40 @@ class Compiler
      */
     public function findImport($url)
     {
-        $urls = [];
-
-        $hasExtension = preg_match('/[.]s?css$/', $url);
-
         // for "normal" scss imports (ignore vanilla css and external requests)
-        if (! preg_match('~\.css$|^https?://|^//~', $url)) {
-            $isPartial = (strpos(basename($url), '_') === 0);
+        // Callback importers are still called for BC.
+        if (preg_match('~\.css$|^https?://|^//~', $url)) {
+            foreach ($this->importPaths as $dir) {
+                if (\is_string($dir)) {
+                    continue;
+                }
 
-            // try both normal and the _partial filename
-            $urls = [$url . ($hasExtension ? '' : '.scss')];
+                if (\is_callable($dir)) {
+                    // check custom callback for import path
+                    $file = \call_user_func($dir, $url);
 
-            if (! $isPartial) {
-                $urls[] = preg_replace('~[^/]+$~', '_\0', $url) . ($hasExtension ? '' : '.scss');
+                    if (! \is_null($file)) {
+                        return $file;
+                    }
+                }
             }
+            return null;
+        }
 
-            if (! $hasExtension) {
-                $urls[] = "$url/index.scss";
-                // allow to find a plain css file, *if* no scss or partial scss is found
-                $urls[] .= $url . '.css';
+        if (!\is_null($this->currentDirectory)) {
+            $relativePath = $this->resolveImportPath($url, $this->currentDirectory);
+
+            if (!\is_null($relativePath)) {
+                return $relativePath;
             }
         }
 
         foreach ($this->importPaths as $dir) {
             if (\is_string($dir)) {
-                // check urls for normal import paths
-                foreach ($urls as $full) {
-                    $found = [];
-                    $separator = (
-                        ! empty($dir) &&
-                        substr($dir, -1) !== '/' &&
-                        substr($full, 0, 1) !== '/'
-                    ) ? '/' : '';
-                    $full = $dir . $separator . $full;
+                $path = $this->resolveImportPath($url, $dir);
 
-                    if (is_file($file = $full)) {
-                        $found[] = $file;
-                    }
-                    if (! $isPartial) {
-                        $full = dirname($full) . '/_' . basename($full);
-                        if (is_file($file = $full)) {
-                            $found[] = $file;
-                        }
-                    }
-                    if ($found) {
-                        if (\count($found) === 1) {
-                            return reset($found);
-                        }
-                        if (\count($found) > 1) {
-                            throw $this->error(
-                                "Error: It's not clear which file to import. Found: " . implode(', ', $found)
-                            );
-                        }
-                    }
+                if (!\is_null($path)) {
+                    return $path;
                 }
             } elseif (\is_callable($dir)) {
                 // check custom callback for import path
@@ -5109,13 +5364,140 @@ class Compiler
             }
         }
 
-        if ($urls) {
-            if (! $hasExtension || preg_match('/[.]scss$/', $url)) {
-                throw $this->error("`$url` file not found for @import");
+        if ($this->legacyCwdImportPath) {
+            $path = $this->resolveImportPath($url, getcwd());
+
+            if (!\is_null($path)) {
+                @trigger_error('Resolving imports relatively to the current working directory is deprecated. If that\'s the intended behavior, the value of "getcwd()" should be added as an import path explicitly instead. If this was used for resolving relative imports of the input alongside "chdir" with the source directory, the path of the input file should be passed to "compile()" instead.', E_USER_DEPRECATED);
+
+                return $path;
             }
         }
 
-        return null;
+        throw $this->error("`$url` file not found for @import");
+    }
+
+    /**
+     * @param string $url
+     * @param string $baseDir
+     *
+     * @return string|null
+     */
+    private function resolveImportPath($url, $baseDir)
+    {
+        $path = Path::join($baseDir, $url);
+
+        $hasExtension = preg_match('/.scss$/', $url);
+
+        if ($hasExtension) {
+            return $this->checkImportPathConflicts($this->tryImportPath($path));
+        }
+
+        $result = $this->checkImportPathConflicts($this->tryImportPathWithExtensions($path));
+
+        if (!\is_null($result)) {
+            return $result;
+        }
+
+        return $this->tryImportPathAsDirectory($path);
+    }
+
+    /**
+     * @param string[] $paths
+     *
+     * @return string|null
+     */
+    private function checkImportPathConflicts(array $paths)
+    {
+        if (\count($paths) === 0) {
+            return null;
+        }
+
+        if (\count($paths) === 1) {
+            return $paths[0];
+        }
+
+        $formattedPrettyPaths = [];
+
+        foreach ($paths as $path) {
+            $formattedPrettyPaths[] = '  ' . $this->getPrettyPath($path);
+        }
+
+        throw $this->error("It's not clear which file to import. Found:\n" . implode("\n", $formattedPrettyPaths));
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return string[]
+     */
+    private function tryImportPathWithExtensions($path)
+    {
+        $result = $this->tryImportPath($path.'.scss');
+
+        if ($result) {
+            return $result;
+        }
+
+        return $this->tryImportPath($path.'.css');
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return string[]
+     */
+    private function tryImportPath($path)
+    {
+        $partial = dirname($path).'/_'.basename($path);
+
+        $candidates = [];
+
+        if (is_file($partial)) {
+            $candidates[] = $partial;
+        }
+
+        if (is_file($path)) {
+            $candidates[] = $path;
+        }
+
+        return $candidates;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return string|null
+     */
+    private function tryImportPathAsDirectory($path)
+    {
+        if (!is_dir($path)) {
+            return null;
+        }
+
+        return $this->checkImportPathConflicts($this->tryImportPathWithExtensions($path.'/index'));
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    private function getPrettyPath($path)
+    {
+        $normalizedPath = $path;
+        $normalizedRootDirectory = $this->rootDirectory.'/';
+
+        if (\DIRECTORY_SEPARATOR === '\\') {
+            $normalizedRootDirectory = str_replace('\\', '/', $normalizedRootDirectory);
+            $normalizedPath = str_replace('\\', '/', $path);
+        }
+
+        if (0 === strpos($normalizedPath, $normalizedRootDirectory)) {
+            return substr($normalizedPath, \strlen($normalizedRootDirectory));
+        }
+
+        return $path;
     }
 
     /**
@@ -5124,6 +5506,8 @@ class Compiler
      * @api
      *
      * @param string $encoding
+     *
+     * @return void
      */
     public function setEncoding($encoding)
     {
@@ -5203,7 +5587,7 @@ class Compiler
             $column = $this->sourceColumn;
 
             $loc = isset($this->sourceNames[$this->sourceIndex])
-                ? $this->sourceNames[$this->sourceIndex] . " on line $line, at column $column"
+                ? $this->getPrettyPath($this->sourceNames[$this->sourceIndex]) . " on line $line, at column $column"
                 : "line: $line, column: $column";
 
             $msg = "$msg: $loc";
@@ -5269,7 +5653,7 @@ class Compiler
                 if ($all || (isset($call['n']) && $call['n'])) {
                     $msg = '#' . $ncall++ . ' ' . $call['n'] . ' ';
                     $msg .= (isset($this->sourceNames[$call[Parser::SOURCE_INDEX]])
-                          ? $this->sourceNames[$call[Parser::SOURCE_INDEX]]
+                          ? $this->getPrettyPath($this->sourceNames[$call[Parser::SOURCE_INDEX]])
                           : '(unknown file)');
                     $msg .= ' on line ' . $call[Parser::SOURCE_LINE];
 
@@ -5313,7 +5697,7 @@ class Compiler
      * @param Object $func
      * @param array  $argValues
      *
-     * @return array $returnValue
+     * @return array
      */
     protected function callScssFunction($func, $argValues)
     {
@@ -5357,7 +5741,7 @@ class Compiler
      * @param array  $prototype
      * @param array  $args
      *
-     * @return array
+     * @return array|Number|null
      */
     protected function callNativeFunction($name, $function, $prototype, $args)
     {
@@ -5369,7 +5753,7 @@ class Compiler
         }
         @list($sorted, $kwargs) = $sorted_kwargs;
 
-        if ($name !== 'if' && $name !== 'call') {
+        if ($name !== 'if') {
             $inExp = true;
 
             if ($name === 'join') {
@@ -5405,7 +5789,7 @@ class Compiler
 
     /**
      * Normalize native function name
-     * @param $name
+     * @param string $name
      * @return string
      */
     public static function normalizeNativeFunctionName($name)
@@ -5423,7 +5807,7 @@ class Compiler
 
     /**
      * Check if a function is a native built-in scss function, for css parsing
-     * @param $name
+     * @param string $name
      * @return bool
      */
     public static function isNativeFunction($name)
@@ -5839,9 +6223,9 @@ class Compiler
     /**
      * Coerce something to map
      *
-     * @param array $item
+     * @param array|Number $item
      *
-     * @return array
+     * @return array|Number
      */
     protected function coerceMap($item)
     {
@@ -5917,9 +6301,9 @@ class Compiler
     /**
      * Coerce color for expression
      *
-     * @param array $value
+     * @param array|Number $value
      *
-     * @return array|null
+     * @return array|Number
      */
     protected function coerceForExpression($value)
     {
@@ -5933,7 +6317,8 @@ class Compiler
     /**
      * Coerce value to color
      *
-     * @param array $value
+     * @param array|Number $value
+     * @param bool         $inRGBFunction
      *
      * @return array|null
      */
@@ -6111,9 +6496,9 @@ class Compiler
     /**
      * Coerce value to string
      *
-     * @param array $value
+     * @param array|Number $value
      *
-     * @return array|null
+     * @return array
      */
     protected function coerceString($value)
     {
@@ -6129,7 +6514,7 @@ class Compiler
      *
      * @api
      *
-     * @param array $value
+     * @param array|Number $value
      * @param string $varName
      *
      * @return array
@@ -6157,7 +6542,7 @@ class Compiler
     /**
      * Coerce value to a percentage
      *
-     * @param array $value
+     * @param array|Number $value
      *
      * @return integer|float
      */
@@ -6179,7 +6564,7 @@ class Compiler
      *
      * @api
      *
-     * @param array $value
+     * @param array|Number $value
      *
      * @return array
      *
@@ -6201,7 +6586,7 @@ class Compiler
      *
      * @api
      *
-     * @param array $value
+     * @param array|Number $value
      *
      * @return array
      *
@@ -6221,7 +6606,7 @@ class Compiler
      *
      * @api
      *
-     * @param array $value
+     * @param array|Number $value
      *
      * @return array
      *
@@ -6241,7 +6626,7 @@ class Compiler
      *
      * @api
      *
-     * @param mixed $value
+     * @param array|Number $value
      * @param string $varName
      *
      * @return Number
@@ -6264,10 +6649,10 @@ class Compiler
      *
      * @api
      *
-     * @param array $value
+     * @param array|Number $value
      * @param string $varName
      *
-     * @return integer|float
+     * @return integer
      *
      * @throws \Exception
      */
@@ -6416,10 +6801,10 @@ class Compiler
     protected static $libCall = ['function', 'args...'];
     protected function libCall($args, $kwargs)
     {
-        $functionReference = $this->reduce(array_shift($args), true);
+        $functionReference = array_shift($args);
 
         if (in_array($functionReference[0], [Type::T_STRING, Type::T_KEYWORD])) {
-            $name = $this->compileStringContent($this->coerceString($this->reduce($functionReference, true)));
+            $name = $this->compileStringContent($this->coerceString($functionReference));
             $warning = "DEPRECATION WARNING: Passing a string to call() is deprecated and will be illegal\n"
                 . "in Sass 4.0. Use call(function-reference($name)) instead.";
             fwrite($this->stderr, "$warning\n\n");
@@ -6457,11 +6842,11 @@ class Compiler
     ];
     protected function libGetFunction($args)
     {
-        $name = $this->compileStringContent($this->coerceString($this->reduce(array_shift($args), true)));
+        $name = $this->compileStringContent($this->coerceString(array_shift($args)));
         $isCss = false;
 
         if (count($args)) {
-            $isCss = $this->reduce(array_shift($args), true);
+            $isCss = array_shift($args);
             $isCss = (($isCss === static::$true) ? true : false);
         }
 
@@ -6594,7 +6979,14 @@ class Compiler
         return $this->libRgb($args, $kwargs, 'rgba');
     }
 
-    // helper function for adjust_color, change_color, and scale_color
+    /**
+     * Helper function for adjust_color, change_color, and scale_color
+     *
+     * @param array<array|Number> $args
+     * @param callable $fn
+     *
+     * @return array
+     */
     protected function alterColor($args, $fn)
     {
         $color = $this->assertColor($args[0]);
@@ -6700,7 +7092,7 @@ class Compiler
         $color = $this->coerceColor($args[0]);
 
         if (\is_null($color)) {
-            $this->throwError('Error: argument `$color` of `ie-hex-str($color)` must be a color');
+            throw $this->error('Error: argument `$color` of `ie-hex-str($color)` must be a color');
         }
 
         $color[4] = isset($color[4]) ? round(255 * $color[4]) : 255;
@@ -6714,7 +7106,7 @@ class Compiler
         $color = $this->coerceColor($args[0]);
 
         if (\is_null($color)) {
-            $this->throwError('Error: argument `$color` of `red($color)` must be a color');
+            throw $this->error('Error: argument `$color` of `red($color)` must be a color');
         }
 
         return $color[1];
@@ -6726,7 +7118,7 @@ class Compiler
         $color = $this->coerceColor($args[0]);
 
         if (\is_null($color)) {
-            $this->throwError('Error: argument `$color` of `green($color)` must be a color');
+            throw $this->error('Error: argument `$color` of `green($color)` must be a color');
         }
 
         return $color[2];
@@ -6738,7 +7130,7 @@ class Compiler
         $color = $this->coerceColor($args[0]);
 
         if (\is_null($color)) {
-            $this->throwError('Error: argument `$color` of `blue($color)` must be a color');
+            throw $this->error('Error: argument `$color` of `blue($color)` must be a color');
         }
 
         return $color[3];
@@ -7377,6 +7769,13 @@ class Compiler
         return false;
     }
 
+    /**
+     * @param array $list1
+     * @param array|Number|null $sep
+     *
+     * @return string
+     * @throws CompilerException
+     */
     protected function listSeparatorForJoin($list1, $sep)
     {
         if (! isset($sep)) {
@@ -7574,7 +7973,7 @@ class Compiler
         if (! \strlen($substringContent)) {
             $result = 0;
         } else {
-            $result = strpos($stringContent, $substringContent);
+            $result = Util::mbStrpos($stringContent, $substringContent);
         }
 
         return $result === false ? static::$null : new Number($result + 1, '');
@@ -7647,7 +8046,7 @@ class Compiler
         $string = $this->coerceString($args[0]);
         $stringContent = $this->compileStringContent($string);
 
-        $string[2] = [\function_exists('mb_strtolower') ? mb_strtolower($stringContent) : strtolower($stringContent)];
+        $string[2] = [$this->stringTransformAsciiOnly($stringContent, 'strtolower')];
 
         return $string;
     }
@@ -7658,9 +8057,36 @@ class Compiler
         $string = $this->coerceString($args[0]);
         $stringContent = $this->compileStringContent($string);
 
-        $string[2] = [\function_exists('mb_strtoupper') ? mb_strtoupper($stringContent) : strtoupper($stringContent)];
+        $string[2] = [$this->stringTransformAsciiOnly($stringContent, 'strtoupper')];
 
         return $string;
+    }
+
+    /**
+     * Apply a filter on a string content, only on ascii chars
+     * let extended chars untouched
+     *
+     * @param string $stringContent
+     * @param callable $filter
+     * @return string
+     */
+    protected function stringTransformAsciiOnly($stringContent, $filter)
+    {
+        $mblength = Util::mbStrlen($stringContent);
+        if ($mblength === strlen($stringContent)) {
+            return $filter($stringContent);
+        }
+        $filteredString = "";
+        for ($i = 0; $i < $mblength; $i++) {
+            $char = Util::mbSubstr($stringContent, $i, 1);
+            if (strlen($char) > 1) {
+                $filteredString .= $char;
+            } else {
+                $filteredString .= $filter($char);
+            }
+        }
+
+        return $filteredString;
     }
 
     protected static $libFeatureExists = ['feature'];
@@ -8369,7 +8795,7 @@ class Compiler
      * @param array $part
      * @param array $compound
      *
-     * @return array|boolean
+     * @return array|false
      */
     protected function matchPartInCompound($part, $compound)
     {
@@ -8464,7 +8890,7 @@ class Compiler
      * @param string $tag1
      * @param string $tag2
      *
-     * @return array|boolean
+     * @return array|false
      */
     protected function checkCompatibleTags($tag1, $tag2)
     {
