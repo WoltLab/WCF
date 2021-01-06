@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\worker;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
@@ -113,10 +114,14 @@ class UserContentRemoveWorker extends AbstractWorker {
 			'count' => 0
 		];
 		
+		/** @var ObjectType[] $contentProviders */
+		$contentProviders = [];
+		
 		// add the required object types for the select content provider
 		if (is_array($this->contentProviders)) {
 			foreach ($this->contentProviders as $contentProvider) {
 				$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.content.userContentProvider', $contentProvider);
+				$contentProviders[] = $objectType;
 				
 				if ($objectType->requiredobjecttype !== null) {
 					$objectTypeNames = explode(',', $objectType->requiredobjecttype);
@@ -129,12 +134,14 @@ class UserContentRemoveWorker extends AbstractWorker {
 						}
 						
 						$this->contentProviders[] = $objectTypeName;
+						$contentProviders[] = $objectType;
 					}
 				}
 			}
 		}
-		
-		$contentProviders = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.content.userContentProvider');
+		else {
+			$contentProviders = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.content.userContentProvider');
+		}
 		
 		// sort object types
 		uasort($contentProviders, function ($a, $b) {
@@ -145,22 +152,20 @@ class UserContentRemoveWorker extends AbstractWorker {
 		});
 		
 		foreach ($contentProviders as $contentProvider) {
-			if ($this->contentProviders === null || (is_array($this->contentProviders) && in_array($contentProvider->objectType, $this->contentProviders))) {
-				foreach ($this->users as $user) {
-					/** @var IUserContentProvider $processor */
-					$processor = $contentProvider->getProcessor();
-					$contentList = $processor->getContentListForUser($user);
-					$count = $contentList->countObjects();
+			foreach ($this->users as $user) {
+				/** @var IUserContentProvider $processor */
+				$processor = $contentProvider->getProcessor();
+				$contentList = $processor->getContentListForUser($user);
+				$count = $contentList->countObjects();
+				
+				if ($count) {
+					$this->data['provider'][] = [
+						'userID' => $user->userID,
+						'objectTypeID' => $contentProvider->objectTypeID,
+						'count' => $count
+					];
 					
-					if ($count) {
-						$this->data['provider'][] = [
-							'userID' => $user->userID,
-							'objectTypeID' => $contentProvider->objectTypeID,
-							'count' => $count
-						];
-						
-						$this->data['count'] += ceil($count / $this->limit) * $this->limit;
-					}
+					$this->data['count'] += ceil($count / $this->limit) * $this->limit;
 				}
 			}
 		}
