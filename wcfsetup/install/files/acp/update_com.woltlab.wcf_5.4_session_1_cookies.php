@@ -3,7 +3,7 @@
  * Sets the new session cookies.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2020 WoltLab GmbH
+ * @copyright	2001-2021 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core
  */
@@ -21,8 +21,8 @@ use wcf\util\HeaderUtil;
 $hasValidSessionCookie = false;
 if (!empty($_COOKIE[COOKIE_PREFIX."acp_session"])) {
 	$cookieValue = CryptoUtil::getValueFromSignedString($_COOKIE[COOKIE_PREFIX."acp_session"]);
-	if ($cookieValue) {
-		$sessionID = \bin2hex($cookieValue);
+	if ($cookieValue && \mb_strlen($cookieValue, '8bit') === 26) {
+		$sessionID = \bin2hex(\mb_substr($cookieValue, 1, 20, '8bit'));
 		if ($sessionID === WCF::getSession()->sessionID) {
 			$hasValidSessionCookie = true;
 		}
@@ -45,7 +45,13 @@ if ($hasValidSessionCookie && $hasValidXsrfToken) {
 HeaderUtil::setCookie(
 	"acp_session",
 	CryptoUtil::createSignedString(
-		\hex2bin(WCF::getSession()->sessionID)
+		\pack(
+			'CA20CN',
+			1,
+			\hex2bin(WCF::getSession()->sessionID),
+			0,
+			WCF::getUser()->userID
+		)
 	)
 );
 
