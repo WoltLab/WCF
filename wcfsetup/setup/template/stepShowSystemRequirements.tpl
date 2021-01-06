@@ -205,6 +205,28 @@
 				</dl>
 			</div>
 		</section>
+		
+		<section class="section">
+			<h2 class="sectionTitle">{lang}wcf.global.systemRequirements.intl{/lang}</h2>
+			
+			<div class="row rowColGap formGrid">
+				<dl class="col-xs-12 col-md-6">
+					<dt>{lang}wcf.global.systemRequirements.element.recommended{/lang}</dt>
+					<dd>{lang}wcf.global.systemRequirements.active{/lang}</dd>
+				</dl>
+				
+				<dl class="col-xs-12 col-md-6">
+					<dt>{lang}wcf.global.systemRequirements.element.yours{/lang}</dt>
+					<dd>
+						<span class="badge {if !$system.intl.result}red{else}green{/if}">
+						{if !$system.intl.result}{lang}wcf.global.systemRequirements.notActive{/lang}{else}
+							{lang}wcf.global.systemRequirements.active{/lang}
+						{/if}</span>
+						{if !$system.intl.result}<small>{lang}wcf.global.systemRequirements.intl.description{/lang}</small>{/if}
+					</dd>
+				</dl>
+			</div>
+		</section>
 	</section>
 
 	<div class="formSubmit">
