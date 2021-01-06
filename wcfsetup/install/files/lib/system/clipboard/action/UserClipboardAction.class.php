@@ -25,7 +25,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $supportedActions = ['assignToGroup', 'ban', 'confirmEmail', 'delete', 'enable', 'exportMailAddress', 'merge', 'sendMail', 'sendNewPassword', 'resendActivationMail', 'unconfirmEmail'];
+	protected $supportedActions = ['assignToGroup', 'ban', 'confirmEmail', 'delete', 'deleteUserContent', 'enable', 'exportMailAddress', 'merge', 'sendMail', 'sendNewPassword', 'resendActivationMail', 'unconfirmEmail'];
 	
 	/**
 	 * @inheritDoc
@@ -281,5 +281,15 @@ class UserClipboardAction extends AbstractClipboardAction {
 		}
 		
 		return $userIDs;
+	}
+	
+	/**
+	 * Returns the ids of the users whose contents can be deleted.
+	 * 
+	 * @return      integer[]
+	 * @since       5.4
+	 */
+	protected function validateDeleteUserContent() {
+		return $this->__validateAccessibleGroups(array_keys($this->objects));
 	}
 }

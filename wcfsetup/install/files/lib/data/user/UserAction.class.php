@@ -1008,8 +1008,10 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		return [
 			'template' => WCF::getTPL()->fetch('removeUserContentDialog', 'wcf', [
 				'knownContentProvider' => $knownContentProvider,
-				'userID' => $this->parameters['userID'],
-				'user' => $this->parameters['user']
+				'userIDs' => $this->parameters['userIDs'],
+				'users' => $this->parameters['users'],
+				'userID' => $this->parameters['userID'] ?? null,
+				'user' => $this->parameters['user'] ?? null,
 			])
 		];
 	}
@@ -1020,14 +1022,35 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * @since       5.2
 	 */
 	public function validatePrepareRemoveContent() {
-		if (!isset($this->parameters['userID'])) {
-			throw new \InvalidArgumentException("userID missing");
+		if (!isset($this->parameters['userIDs']) && isset($this->parameters['userID'])) {
+			$this->parameters['userIDs'] = [$this->parameters['userID']];
 		}
 		
-		$this->parameters['user'] = new User($this->parameters['userID']);
+		if (!isset($this->parameters['userIDs']) || !is_array($this->parameters['userIDs'])) {
+			throw new \InvalidArgumentException("Parameter 'userIDs' is missing or invalid.");
+		}
 		
-		if ($this->parameters['user']->userID && !$this->parameters['user']->canEdit()) {
-			throw new PermissionDeniedException();
+		$userList = new UserList();
+		$userList->setObjectIDs($this->parameters['userIDs']);
+		$userList->readObjects();
+		$userObjects = $userList->getObjects();
+		
+		$this->parameters['users'] = [];
+		foreach ($this->parameters['userIDs'] as $userID) {
+			if (!isset($userObjects[$userID])) {
+				throw new \InvalidArgumentException("The userID '". $userID ."' is unknown.");
+			}
+			
+			if (!$userObjects[$userID]->canEdit()) {
+				throw new PermissionDeniedException();
+			}
+			
+			$this->parameters['users'][] = $userObjects[$userID];
+		}
+		
+		if (count($this->parameters['userIDs']) === 1) {
+			$this->parameters['userID'] = reset($this->parameters['userIDs']);
+			$this->parameters['user'] = reset($this->parameters['users']); 
 		}
 	}
 	
