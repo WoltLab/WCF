@@ -166,12 +166,12 @@ private static $installed = array (
     ),
     'scssphp/scssphp' => 
     array (
-      'pretty_version' => '1.3',
-      'version' => '1.3.0.0',
+      'pretty_version' => 'v1.4.1',
+      'version' => '1.4.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '261cd018025d5790e135a1e5b694d6af186e6bca',
+      'reference' => 'ba86c963b94ec7ebd6e19d90cdab90d89667dbf7',
     ),
     'symfony/css-selector' => 
     array (

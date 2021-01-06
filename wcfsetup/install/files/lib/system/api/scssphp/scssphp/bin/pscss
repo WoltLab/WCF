@@ -20,6 +20,8 @@ if (version_compare(PHP_VERSION, '5.6') < 0) {
 include __DIR__ . '/../scss.inc.php';
 
 use ScssPhp\ScssPhp\Compiler;
+use ScssPhp\ScssPhp\Exception\SassException;
+use ScssPhp\ScssPhp\OutputStyle;
 use ScssPhp\ScssPhp\Parser;
 use ScssPhp\ScssPhp\Version;
 
@@ -76,7 +78,7 @@ Options include:
     --load-path=PATH    Set import path [-I]
     --precision=N       [deprecated] Ignored. (default 10) [-p]
     --sourcemap         Create source map file
-    --style=FORMAT      Set the output format (compact, compressed, crunched, expanded, or nested) [-s, -t]
+    --style=FORMAT      Set the output style (compressed or expanded) [-s, -t]
     --version           Print the version [-v]
 
 EOT;
@@ -151,14 +153,6 @@ EOT;
 
 if ($inputFile) {
     $data = file_get_contents($inputFile);
-
-    $newWorkingDir = dirname(realpath($inputFile));
-    $oldWorkingDir = getcwd();
-
-    if ($oldWorkingDir !== $newWorkingDir) {
-        $changeDir = chdir($newWorkingDir);
-        $inputFile = basename($inputFile);
-    }
 } else {
     $data = '';
 
@@ -182,7 +176,12 @@ if ($loadPaths) {
 }
 
 if ($style) {
-    $scss->setFormatter('ScssPhp\\ScssPhp\\Formatter\\' . ucfirst($style));
+    if ($style === OutputStyle::COMPRESSED || $style === OutputStyle::EXPANDED) {
+        $scss->setOutputStyle($style);
+    } else {
+        fwrite(STDERR, "WARNING: the $style style is deprecated.\n");
+        $scss->setFormatter('ScssPhp\\ScssPhp\\Formatter\\' . ucfirst($style));
+    }
 }
 
 if ($sourceMap) {
@@ -193,8 +192,9 @@ if ($encoding) {
     $scss->setEncoding($encoding);
 }
 
-echo $scss->compile($data, $inputFile);
-
-if ($changeDir) {
-    chdir($oldWorkingDir);
+try {
+    echo $scss->compile($data, $inputFile);
+} catch (SassException $e) {
+    fwrite(STDERR, $e->getMessage()."\n");
+    exit(1);
 }

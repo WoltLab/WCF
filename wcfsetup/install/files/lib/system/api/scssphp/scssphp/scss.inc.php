@@ -6,6 +6,7 @@ if (version_compare(PHP_VERSION, '5.6') < 0) {
 
 if (! class_exists('ScssPhp\ScssPhp\Version', false)) {
     include_once __DIR__ . '/src/Base/Range.php';
+    include_once __DIR__ . '/src/OutputStyle.php';
     include_once __DIR__ . '/src/Block.php';
     include_once __DIR__ . '/src/Cache.php';
     include_once __DIR__ . '/src/Colors.php';
@@ -32,6 +33,7 @@ if (! class_exists('ScssPhp\ScssPhp\Version', false)) {
     include_once __DIR__ . '/src/SourceMap/Base64VLQ.php';
     include_once __DIR__ . '/src/SourceMap/SourceMapGenerator.php';
     include_once __DIR__ . '/src/Type.php';
+    include_once __DIR__ . '/src/Util/Path.php';
     include_once __DIR__ . '/src/Util.php';
     include_once __DIR__ . '/src/Version.php';
 }

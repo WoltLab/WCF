@@ -12,12 +12,7 @@
 
 namespace ScssPhp\ScssPhp;
 
-use ScssPhp\ScssPhp\Block;
-use ScssPhp\ScssPhp\Cache;
-use ScssPhp\ScssPhp\Compiler;
 use ScssPhp\ScssPhp\Exception\ParserException;
-use ScssPhp\ScssPhp\Node;
-use ScssPhp\ScssPhp\Type;
 
 /**
  * Parser
@@ -31,7 +26,7 @@ class Parser
     const SOURCE_COLUMN = -3;
 
     /**
-     * @var array
+     * @var array<string, int>
      */
     protected static $precedence = [
         '='   => 0,
@@ -50,24 +45,65 @@ class Parser
         '%'   => 6,
     ];
 
+    /**
+     * @var string
+     */
     protected static $commentPattern;
+    /**
+     * @var string
+     */
     protected static $operatorPattern;
+    /**
+     * @var string
+     */
     protected static $whitePattern;
 
+    /**
+     * @var Cache|null
+     */
     protected $cache;
 
     private $sourceName;
     private $sourceIndex;
+    /**
+     * @var array<int, int>
+     */
     private $sourcePositions;
+    /**
+     * @var array|null
+     */
     private $charset;
+    /**
+     * The current offset in the buffer
+     *
+     * @var int
+     */
     private $count;
+    /**
+     * @var Block
+     */
     private $env;
+    /**
+     * @var bool
+     */
     private $inParens;
+    /**
+     * @var bool
+     */
     private $eatWhiteDefault;
+    /**
+     * @var bool
+     */
     private $discardComments;
     private $allowVars;
+    /**
+     * @var string
+     */
     private $buffer;
     private $utf8;
+    /**
+     * @var string|null
+     */
     private $encoding;
     private $patternModifiers;
     private $commentsSeen;
@@ -79,12 +115,13 @@ class Parser
      *
      * @api
      *
-     * @param string                 $sourceName
-     * @param integer                $sourceIndex
-     * @param string                 $encoding
-     * @param \ScssPhp\ScssPhp\Cache $cache
+     * @param string      $sourceName
+     * @param integer     $sourceIndex
+     * @param string|null $encoding
+     * @param Cache|null  $cache
+     * @param bool        $cssOnly
      */
-    public function __construct($sourceName, $sourceIndex = 0, $encoding = 'utf-8', $cache = null, $cssOnly = false)
+    public function __construct($sourceName, $sourceIndex = 0, $encoding = 'utf-8', Cache $cache = null, $cssOnly = false)
     {
         $this->sourceName       = $sourceName ?: '(stdin)';
         $this->sourceIndex      = $sourceIndex;
@@ -109,9 +146,7 @@ class Parser
                 : '/' . $commentSingle . '[^\n]*\s*|(' . static::$commentPattern . ')\s*|\s+/AisS';
         }
 
-        if ($cache) {
-            $this->cache = $cache;
-        }
+        $this->cache = $cache;
     }
 
     /**
@@ -133,7 +168,7 @@ class Parser
      *
      * @param string $msg
      *
-     * @throws \ScssPhp\ScssPhp\Exception\ParserException
+     * @throws ParserException
      *
      * @deprecated use "parseError" and throw the exception in the caller instead.
      */
@@ -188,7 +223,7 @@ class Parser
      *
      * @param string $buffer
      *
-     * @return \ScssPhp\ScssPhp\Block
+     * @return Block
      */
     public function parse($buffer)
     {
@@ -298,6 +333,11 @@ class Parser
 
         $this->saveEncoding();
         $this->extractLineNumbers($this->buffer);
+
+        // discard space/comments at the start
+        $this->discardComments = true;
+        $this->whitespace();
+        $this->discardComments = false;
 
         $selector = $this->selectors($out);
 
@@ -1038,10 +1078,10 @@ class Parser
     /**
      * Push block onto parse tree
      *
-     * @param array   $selectors
+     * @param array|null $selectors
      * @param integer $pos
      *
-     * @return \ScssPhp\ScssPhp\Block
+     * @return Block
      */
     protected function pushBlock($selectors, $pos = 0)
     {
@@ -1087,7 +1127,7 @@ class Parser
      * @param string  $type
      * @param integer $pos
      *
-     * @return \ScssPhp\ScssPhp\Block
+     * @return Block
      */
     protected function pushSpecialBlock($type, $pos)
     {
@@ -1100,7 +1140,7 @@ class Parser
     /**
      * Pop scope and return last block
      *
-     * @return \ScssPhp\ScssPhp\Block
+     * @return Block
      *
      * @throws \Exception
      */
@@ -1165,7 +1205,7 @@ class Parser
     /**
      * Assert a parsed part is plain CSS Valid
      *
-     * @param array $parsed
+     * @param array|false $parsed
      * @param int $startPos
      * @throws ParserException
      */
@@ -1326,6 +1366,7 @@ class Parser
                     ]
                 ];
 
+            case Type::T_CUSTOM_PROPERTY:
             case Type::T_UNARY:
                 $parsed[2] = $this->isPlainCssValidElement($parsed[2]);
                 if (! $parsed[2]) {
@@ -1579,7 +1620,7 @@ class Parser
     /**
      * Append statement to current block
      *
-     * @param array   $statement
+     * @param array|null $statement
      * @param integer $pos
      */
     protected function append($statement, $pos = null)
@@ -1914,7 +1955,7 @@ class Parser
 
     /**
      * Check if a generic directive is known to be able to allow almost any syntax or not
-     * @param $directiveName
+     * @param mixed $directiveName
      * @return bool
      */
     protected function isKnownGenericDirective($directiveName)
@@ -2092,10 +2133,10 @@ class Parser
     /**
      * Parse generic list
      *
-     * @param array    $out
-     * @param callable $parseItem
-     * @param string   $delim
-     * @param boolean  $flatten
+     * @param array   $out
+     * @param string  $parseItem The name of the method used to parse items
+     * @param string  $delim
+     * @param boolean $flatten
      *
      * @return boolean
      */
@@ -2990,6 +3031,11 @@ class Parser
         return false;
     }
 
+    /**
+     * @param string $out
+     * @param bool $inKeywords
+     * @return bool
+     */
     protected function matchEscapeCharacter(&$out, $inKeywords = false)
     {
         $s = $this->count;
@@ -3003,6 +3049,10 @@ class Parser
                     break;
                 }
             }
+
+            // CSS allows Unicode escape sequences to be followed by a delimiter space
+            // (necessary in some cases for shorter sequences to disambiguate their end)
+            $this->matchChar(' ', false);
 
             $value = hexdec($hex);
 
@@ -3329,8 +3379,8 @@ class Parser
     /**
      * Parse comma separated selector list
      *
-     * @param array   $out
-     * @param boolean $subSelector
+     * @param array $out
+     * @param string|boolean $subSelector
      *
      * @return boolean
      */
@@ -3365,8 +3415,8 @@ class Parser
     /**
      * Parse whitespace separated selector list
      *
-     * @param array   $out
-     * @param boolean $subSelector
+     * @param array          $out
+     * @param string|boolean $subSelector
      *
      * @return boolean
      */
@@ -3413,14 +3463,63 @@ class Parser
     }
 
     /**
+     * parsing escaped chars in selectors:
+     * - escaped single chars are kept escaped in the selector but in a normalized form
+     *   (if not in 0-9a-f range as this would be ambigous)
+     * - other escaped sequences (multibyte chars or 0-9a-f) are kept in their initial escaped form,
+     *   normalized to lowercase
+     *
+     * TODO: this is a fallback solution. Ideally escaped chars in selectors should be encoded as the genuine chars,
+     * and escaping added when printing in the Compiler, where/if it's mandatory
+     * - but this require a better formal selector representation instead of the array we have now
+     *
+     * @param string $out
+     * @param bool $keepEscapedNumber
+     * @return bool
+     */
+    protected function matchEscapeCharacterInSelector(&$out, $keepEscapedNumber = false)
+    {
+        $s_escape = $this->count;
+        if ($this->match('\\\\', $m)) {
+            $out = '\\' . $m[0];
+            return true;
+        }
+
+        if ($this->matchEscapeCharacter($escapedout, true)) {
+            if (strlen($escapedout) === 1) {
+                if (!preg_match(",\w,", $escapedout)) {
+                    $out = '\\' . $escapedout;
+                    return true;
+                } elseif (! $keepEscapedNumber || ! \is_numeric($escapedout)) {
+                    $out = $escapedout;
+                    return true;
+                }
+            }
+            $escape_sequence = rtrim(substr($this->buffer, $s_escape, $this->count - $s_escape));
+            if (strlen($escape_sequence) < 6) {
+                $escape_sequence .= ' ';
+            }
+            $out = '\\' . strtolower($escape_sequence);
+            return true;
+        }
+        if ($this->match('\\S', $m)) {
+            $out = '\\' . $m[0];
+            return true;
+        }
+
+
+        return false;
+    }
+
+    /**
      * Parse the parts that make up a selector
      *
      * {@internal
      *     div[yes=no]#something.hello.world:nth-child(-2n+1)%placeholder
      * }}
      *
-     * @param array   $out
-     * @param boolean $subSelector
+     * @param array          $out
+     * @param string|boolean $subSelector
      *
      * @return boolean
      */
@@ -3472,9 +3571,14 @@ class Parser
                     continue 2;
             }
 
-            if ($char === '\\' && $this->match('\\\\\S', $m)) {
-                $parts[] = $m[0];
-                continue;
+            // handling of escaping in selectors : get the escaped char
+            if ($char === '\\') {
+                $this->count++;
+                if ($this->matchEscapeCharacterInSelector($escaped, true)) {
+                    $parts[] = $escaped;
+                    continue;
+                }
+                $this->count--;
             }
 
             if ($char === '%') {
@@ -3617,7 +3721,7 @@ class Parser
                 continue;
             }
 
-            if ($this->restrictedKeyword($name)) {
+            if ($this->restrictedKeyword($name, false, true)) {
                 $parts[] = $name;
                 continue;
             }
@@ -3670,16 +3774,17 @@ class Parser
      *
      * @param string  $word
      * @param boolean $eatWhitespace
+     * @param boolean $inSelector
      *
      * @return boolean
      */
-    protected function keyword(&$word, $eatWhitespace = null)
+    protected function keyword(&$word, $eatWhitespace = null, $inSelector = false)
     {
         $s = $this->count;
         $match = $this->match(
             $this->utf8
-                ? '(([\pL\w\x{00A0}-\x{10FFFF}_\-\*!"\']|[\\\\].)([\pL\w\x{00A0}-\x{10FFFF}\-_"\']|[\\\\].)*)'
-                : '(([\w_\-\*!"\']|[\\\\].)([\w\-_"\']|[\\\\].)*)',
+                ? '(([\pL\w\x{00A0}-\x{10FFFF}_\-\*!"\']|\\\\[a-f0-9]{6} ?|\\\\[a-f0-9]{1,5}(?![a-f0-9]) ?|[\\\\].)([\pL\w\x{00A0}-\x{10FFFF}\-_"\']|\\\\[a-f0-9]{6} ?|\\\\[a-f0-9]{1,5}(?![a-f0-9]) ?|[\\\\].)*)'
+                : '(([\w_\-\*!"\']|\\\\[a-f0-9]{6} ?|\\\\[a-f0-9]{1,5}(?![a-f0-9]) ?|[\\\\].)([\w\-_"\']|\\\\[a-f0-9]{6} ?|\\\\[a-f0-9]{1,5}(?![a-f0-9]) ?|[\\\\].)*)',
             $m,
             false
         );
@@ -3700,7 +3805,12 @@ class Parser
                         $this->count < $send
                         && $char === '\\'
                         && !$previousEscape
-                        && $this->matchEscapeCharacter($out, true)
+                        && (
+                            $inSelector ?
+                                $this->matchEscapeCharacterInSelector($out)
+                                :
+                                $this->matchEscapeCharacter($out, true)
+                        )
                     ) {
                         $escapedWord[] = $out;
                     } else {
@@ -3731,14 +3841,15 @@ class Parser
      *
      * @param string  $word
      * @param boolean $eatWhitespace
+     * @param boolean $inSelector
      *
      * @return boolean
      */
-    protected function restrictedKeyword(&$word, $eatWhitespace = null)
+    protected function restrictedKeyword(&$word, $eatWhitespace = null, $inSelector = false)
     {
         $s = $this->count;
 
-        if ($this->keyword($word, $eatWhitespace) && (\ord($word[0]) > 57 || \ord($word[0]) < 48)) {
+        if ($this->keyword($word, $eatWhitespace, $inSelector) && (\ord($word[0]) > 57 || \ord($word[0]) < 48)) {
             return true;
         }
 
