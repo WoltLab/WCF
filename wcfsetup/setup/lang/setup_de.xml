@@ -40,6 +40,8 @@
 		<item name="wcf.global.systemRequirements.openSSL.description"><![CDATA[Ihre PHP-Version wurde ohne Unterstützung für OpenSSL kompiliert und kann daher keine sicheren Verbindungen aufbauen.]]></item>
 		<item name="wcf.global.systemRequirements.curl"><![CDATA[„curl“ PHP-Erweiterung]]></item>
 		<item name="wcf.global.systemRequirements.curl.description"><![CDATA[Ihre PHP-Version wurde ohne Unterstützung für cURL kompiliert. Die Unterstützung externer Verbindungen kann eingeschränkt sein.]]></item>
+		<item name="wcf.global.systemRequirements.intl"><![CDATA[„intl“ PHP-Erweiterung]]></item>
+		<item name="wcf.global.systemRequirements.intl.description"><![CDATA[Ihre PHP-Version wurde ohne Unterstützung für native Internationalisierung kompiliert. Die Leistungsfähigkeit der Mehrsprachigkeit kann reduziert sein.]]></item>
 		<item name="wcf.global.systemRequirements.hostname"><![CDATA[Hostname]]></item>
 		<item name="wcf.global.systemRequirements.hostname.requirement"><![CDATA[Korrekter Hostname]]></item>
 		<item name="wcf.global.systemRequirements.hostname.description"><![CDATA[Der vom Webserver ermittelte Hostname muss dem Hostnamen in der Adressleiste des Webbrowsers entsprechen.]]></item>
