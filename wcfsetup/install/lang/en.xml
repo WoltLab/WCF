@@ -3070,7 +3070,6 @@ You can define the default sender in “Configuration » Options » General » E
 		<item name="wcf.acp.user.rank.hideTitle.error.rankImage"><![CDATA[This option requires a valid rank image.]]></item>
 		<item name="wcf.acp.user.rank.image"><![CDATA[Rank Image]]></item>
 		<item name="wcf.acp.user.rank.list"><![CDATA[User Ranks]]></item>
-		<item name="wcf.acp.user.rank.rankImage.description"><![CDATA[The path must be either relative to WCF’s directory or absolute.]]></item>
 		<item name="wcf.acp.user.rank.requiredGender.description"><![CDATA[The rank can be restricted to a specific gender.]]></item>
 		<item name="wcf.acp.user.rank.requiredPoints"><![CDATA[Points]]></item>
 		<item name="wcf.acp.user.rank.requiredPoints.description"><![CDATA[The required number of activity points to obtain this rank.]]></item>

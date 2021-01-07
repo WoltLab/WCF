@@ -3142,7 +3142,6 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter „Konfiguration �
 		<item name="wcf.acp.user.rank.hideTitle.error.rankImage"><![CDATA[Diese Option erfordert eine gültige Ranggrafik.]]></item>
 		<item name="wcf.acp.user.rank.image"><![CDATA[Ranggrafik]]></item>
 		<item name="wcf.acp.user.rank.list"><![CDATA[Benutzerränge]]></item>
-		<item name="wcf.acp.user.rank.rankImage.description"><![CDATA[Der Pfad zur Ranggrafik kann relativ zum WCF-Verzeichnis oder absolut angegeben werden.]]></item>
 		<item name="wcf.acp.user.rank.requiredGender.description"><![CDATA[Optional {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diesen Benutzerrang auf Benutzer mit einem bestimmten Geschlecht einschränken.]]></item>
 		<item name="wcf.acp.user.rank.requiredPoints"><![CDATA[Punkte]]></item>
 		<item name="wcf.acp.user.rank.requiredPoints.description"><![CDATA[Benötigte Menge an Aktivitätspunkten, die ein Benutzer erreichen muss, um in diesen Rang aufzusteigen.]]></item>
