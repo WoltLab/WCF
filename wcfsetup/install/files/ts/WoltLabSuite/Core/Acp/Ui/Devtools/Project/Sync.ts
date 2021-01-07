@@ -37,7 +37,7 @@ class AcpUiDevtoolsProjectSync {
   private readonly projectId: number;
   private queue: PendingPip[] = [];
 
-  constructor(projectId) {
+  constructor(projectId: number) {
     this.projectId = projectId;
 
     const restrictedSync = document.getElementById("syncShowOnlyMatches") as HTMLInputElement;

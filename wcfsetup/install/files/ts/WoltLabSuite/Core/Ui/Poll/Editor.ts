@@ -34,7 +34,7 @@ interface AjaxResponse extends DatabaseObjectActionResponse {
 }
 
 interface ValidationApi {
-  throwError: (HTMLElement, string) => void;
+  throwError: (container: HTMLElement, message: string) => void;
 }
 
 interface ValidationData {
@@ -342,7 +342,7 @@ class UiPollEditor {
       const maxVotes = ~~this.maxVotesField.value;
 
       if (maxVotes && maxVotes > nonEmptyOptionCount) {
-        data.api.throwError(this.maxVotesField.parentElement, Language.get("wcf.poll.maxVotes.error.invalid"));
+        data.api.throwError(this.maxVotesField.parentElement!, Language.get("wcf.poll.maxVotes.error.invalid"));
         data.valid = false;
       } else {
         EventHandler.fire("com.woltlab.wcf.poll.editor", "validate", {

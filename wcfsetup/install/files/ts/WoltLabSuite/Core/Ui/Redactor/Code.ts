@@ -192,7 +192,7 @@ class UiRedactorCode implements DialogCallbackObject {
           let highlighters = `<option value="">${Language.get("wcf.editor.code.highlighter.detect")}</option>
             <option value="plain">${Language.get("wcf.editor.code.highlighter.plain")}</option>`;
 
-          const values: Highlighter[] = this._editor.opts.woltlab.highlighters.map((highlighter) => {
+          const values: Highlighter[] = this._editor.opts.woltlab.highlighters.map((highlighter: string) => {
             return [highlighter, PrismMeta[highlighter].title];
           });
 

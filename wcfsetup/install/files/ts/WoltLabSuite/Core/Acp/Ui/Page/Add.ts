@@ -7,7 +7,7 @@
  * @module  WoltLabSuite/Core/Acp/Ui/Page/Add
  */
 
-import { DialogCallbackObject } from "../../../Ui/Dialog/Data";
+import { DialogCallbackObject, DialogCallbackSetup } from "../../../Ui/Dialog/Data";
 import * as Language from "../../../Language";
 import UiDialog from "../../../Ui/Dialog";
 
@@ -35,7 +35,7 @@ class AcpUiPageAdd implements DialogCallbackObject {
     UiDialog.open(this);
   }
 
-  _dialogSetup() {
+  _dialogSetup(): ReturnType<DialogCallbackSetup> {
     return {
       id: "pageAddDialog",
       options: {

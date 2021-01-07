@@ -94,7 +94,7 @@ define(["require", "exports", "tslib", "../../Dom/Util"], function (require, exp
      */
     function isBoundaryElement(element, parent, type) {
         let node = element;
-        while ((node = node[`${type}Sibling`])) {
+        while ((node = node[type])) {
             if (node.nodeType !== Node.TEXT_NODE || node.textContent.replace(/\u200B/, "") !== "") {
                 return false;
             }
@@ -215,8 +215,8 @@ define(["require", "exports", "tslib", "../../Dom/Util"], function (require, exp
             if (tmpElement === null && firstSelectedElement.parentElement === lastSelectedElement.parentElement) {
                 const parent = firstSelectedElement.parentElement;
                 if (parent.nodeName === "SPAN" && parent.style.getPropertyValue(property) !== "") {
-                    if (isBoundaryElement(firstSelectedElement, parent, "previous") &&
-                        isBoundaryElement(lastSelectedElement, parent, "next")) {
+                    if (isBoundaryElement(firstSelectedElement, parent, "previousSibling") &&
+                        isBoundaryElement(lastSelectedElement, parent, "nextSibling")) {
                         Util_1.default.unwrapChildNodes(parent);
                     }
                 }

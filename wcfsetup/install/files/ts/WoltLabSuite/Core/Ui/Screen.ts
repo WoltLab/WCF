@@ -14,7 +14,7 @@ import * as Environment from "../Environment";
 const _mql = new Map<string, MediaQueryData>();
 
 let _scrollDisableCounter = 0;
-let _scrollOffsetFrom: string;
+let _scrollOffsetFrom: "body" | "documentElement";
 let _scrollTop = 0;
 let _pageOverlayCounter = 0;
 

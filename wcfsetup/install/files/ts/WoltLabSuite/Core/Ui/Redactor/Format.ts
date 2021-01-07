@@ -109,9 +109,13 @@ function getLastMatchingParent(
  * of its parent, ignoring empty text nodes appearing between the
  * element and the boundary.
  */
-function isBoundaryElement(element: HTMLElement, parent: HTMLElement, type: string): boolean {
-  let node = element;
-  while ((node = node[`${type}Sibling`])) {
+function isBoundaryElement(
+  element: HTMLElement,
+  parent: HTMLElement,
+  type: "previousSibling" | "nextSibling",
+): boolean {
+  let node: Node | null = element;
+  while ((node = node[type])) {
     if (node.nodeType !== Node.TEXT_NODE || node.textContent!.replace(/\u200B/, "") !== "") {
       return false;
     }
@@ -262,8 +266,8 @@ export function format(editorElement: HTMLElement, property: string, value: stri
       const parent = firstSelectedElement.parentElement!;
       if (parent.nodeName === "SPAN" && parent.style.getPropertyValue(property) !== "") {
         if (
-          isBoundaryElement(firstSelectedElement, parent, "previous") &&
-          isBoundaryElement(lastSelectedElement, parent, "next")
+          isBoundaryElement(firstSelectedElement, parent, "previousSibling") &&
+          isBoundaryElement(lastSelectedElement, parent, "nextSibling")
         ) {
           DomUtil.unwrapChildNodes(parent);
         }

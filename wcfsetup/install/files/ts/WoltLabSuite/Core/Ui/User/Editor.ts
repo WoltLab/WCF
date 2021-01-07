@@ -213,7 +213,11 @@ class UserEditor implements AjaxCallbackObject, DialogCallbackObject {
           let label = reason.nextElementSibling as HTMLElement;
           const phrase = "wcf.user." + this.actionName + ".reason.description";
           label.textContent = Language.get(phrase);
-          window[label.textContent === phrase ? "elHide" : "elShow"](label);
+          if (label.textContent === phrase) {
+            DomUtil.hide(label);
+          } else {
+            DomUtil.show(label);
+          }
 
           label = document.getElementById("wcfUiUserEditorNeverExpires")!.nextElementSibling as HTMLElement;
           label.textContent = Language.get("wcf.user." + this.actionName + ".neverExpires");

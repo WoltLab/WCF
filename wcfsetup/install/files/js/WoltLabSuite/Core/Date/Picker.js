@@ -577,7 +577,7 @@ define(["require", "exports", "tslib", "../Core", "./Util", "../Dom/Change/Liste
                     }
                     else {
                         element.dataset.value = time.toString();
-                        const format = isTimeOnly ? "formatTime" : "formatDate" + (isDateTime ? "Time" : "");
+                        const format = isTimeOnly ? "formatTime" : isDateTime ? "formatDateTime" : "formatDate";
                         value = DateUtil[format](date);
                     }
                 }

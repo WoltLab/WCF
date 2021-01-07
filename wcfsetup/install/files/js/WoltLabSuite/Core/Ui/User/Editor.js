@@ -177,7 +177,12 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
                         let label = reason.nextElementSibling;
                         const phrase = "wcf.user." + this.actionName + ".reason.description";
                         label.textContent = Language.get(phrase);
-                        window[label.textContent === phrase ? "elHide" : "elShow"](label);
+                        if (label.textContent === phrase) {
+                            Util_1.default.hide(label);
+                        }
+                        else {
+                            Util_1.default.show(label);
+                        }
                         label = document.getElementById("wcfUiUserEditorNeverExpires").nextElementSibling;
                         label.textContent = Language.get("wcf.user." + this.actionName + ".neverExpires");
                         label = content.querySelector('label[for="wcfUiUserEditorExpires"]');
