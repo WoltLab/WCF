@@ -472,6 +472,23 @@ const DomUtil = {
 
     return innerError as HTMLElement | null;
   },
+
+  /**
+   * Finds the closest element that matches the provided selector. This is a helper
+   * function because `closest()` does exist on elements only.
+   */
+  closest(node: Node, selector: string): HTMLElement | null {
+    const element = node instanceof HTMLElement ? node : node.parentElement!;
+    return element.closest(selector);
+  },
+
+  /**
+   * Returns the `node` if it is an element or its parent. This is useful when working
+   * with the range of a text selection.
+   */
+  getClosestElement(node: Node): HTMLElement {
+    return node instanceof HTMLElement ? node : node.parentElement!;
+  },
 };
 
 interface Dimensions {
