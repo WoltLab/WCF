@@ -5,13 +5,13 @@ use wcf\data\user\authentication\failure\UserAuthenticationFailureAction;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\form\AbstractCaptchaForm;
-use wcf\form\MultifactorAuthenticationForm;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\request\RequestHandler;
 use wcf\system\request\RouteHandler;
+use wcf\system\session\SessionHandler;
 use wcf\system\user\authentication\EmailUserAuthentication;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\WCF;
@@ -243,9 +243,12 @@ class LoginForm extends AbstractCaptchaForm {
 		
 		// get preferred username
 		if (empty($_POST)) {
-			if (isset($_COOKIE[COOKIE_PREFIX.'userID'])) {
-				$user = new User(intval($_COOKIE[COOKIE_PREFIX.'userID']));
-				if ($user->userID) $this->username = $user->username;
+			$cookieData = SessionHandler::getInstance()->getParsedCookieData(false);
+			if (isset($cookieData['userId'])) {
+				$user = new User($cookieData['userId']);
+				if ($user->userID) {
+					$this->username = $user->username;
+				}
 			}
 		}
 	}

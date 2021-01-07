@@ -201,38 +201,117 @@ final class SessionHandler extends SingletonFactory {
 	public function setHasValidCookie($hasValidCookie) { }
 	
 	/**
-	 * Returns the session ID stored in the session cookie or `null`.
+	 * Parses the session cookie value, returning an array with the stored fields.
+	 * 
+	 * The return array is guaranteed to have a `sessionId` key.
 	 */
-	private function getSessionIdFromCookie(): ?string {
-		$cookieName = COOKIE_PREFIX.($this->isACP ? 'acp' : 'user')."_session";
+	private function parseCookie(string $value): array {
+		$length = \mb_strlen($value, '8bit');
+		if ($length < 1) {
+			throw new \InvalidArgumentException(\sprintf(
+				'Expected at least 1 Byte, %d given.',
+				$length
+			));
+		}
+		
+		$version = \unpack('Cversion', $value)['version'];
+		if (!in_array($version, [1], true)) {
+			throw new \InvalidArgumentException(\sprintf(
+				'Unknown version %d',
+				$version
+			));
+		}
+		
+		if ($version === 1) {
+			if ($length !== 26) {
+				throw new \InvalidArgumentException(\sprintf(
+					'Expected exactly 26 Bytes, %d given.',
+					$length
+				));
+			}
+			$data = \unpack('Cversion/A20sessionId/Ctimestep/NuserId', $value);
+			$data['sessionId'] = Hex::encode($data['sessionId']);
+			
+			return $data;
+		}
+		
+		throw new \LogicException('Unreachable');
+	}
+	
+	/**
+	 * Extracts the data from the cookie identified by the `$isACP` parameter.
+	 * If the `$isACP` parameter is `null` the current environment is assumed.
+	 * 
+	 * @see SessionHandler::parseCookie()
+	 */
+	public function getParsedCookieData(?bool $isACP = null): ?array {
+		if ($isACP === null) {
+			$isACP = $this->isACP;
+		}
+		
+		$cookieName = COOKIE_PREFIX.($isACP ? 'acp' : 'user')."_session";
 		
 		if (!empty($_COOKIE[$cookieName])) {
 			if (!PACKAGE_ID) {
-				return $_COOKIE[$cookieName];
+				return [
+					'sessionId' => $_COOKIE[$cookieName],
+				];
 			}
 			
-			$compressedSessionId = CryptoUtil::getValueFromSignedString($_COOKIE[$cookieName]);
+			$cookieData = CryptoUtil::getValueFromSignedString($_COOKIE[$cookieName]);
 			
 			// Check whether the sessionId was correctly signed.
-			if (!$compressedSessionId) {
+			if (!$cookieData) {
 				return null;
 			}
 			
-			return Hex::encode($compressedSessionId);
+			try {
+				return $this->parseCookie($cookieData);
+			}
+			catch (\InvalidArgumentException $e) {
+				return null;
+			}
 		}
 		
 		return null;
 	}
 	
 	/**
-	 * Returns the signed session ID for use in a cookie.
+	 * Returns the session ID stored in the session cookie or `null`.
 	 */
-	private function getSessionIdForCookie(string $sessionID): string {
-		if (!PACKAGE_ID) {
-			return $sessionID;
+	private function getSessionIdFromCookie(): ?string {
+		$cookieData = $this->getParsedCookieData();
+		
+		if ($cookieData) {
+			return $cookieData['sessionId'];
 		}
 		
-		return CryptoUtil::createSignedString(Hex::decode($sessionID));
+		return null;
+	}
+	
+	/**
+	 * Returns the current time step. The time step changes
+	 * every 6 hours.
+	 */
+	private function getCookieTimestep(): int {
+		return floor(TIME_NOW / (6 * 3600)) & 0xFF;
+	}
+	
+	/**
+	 * Returns the signed session data for use in a cookie.
+	 */
+	private function getCookieValue(): string {
+		if (!PACKAGE_ID) {
+			return $this->sessionID;
+		}
+		
+		return CryptoUtil::createSignedString(\pack(
+			'CA20CN',
+			1,
+			Hex::decode($this->sessionID),
+			$this->getCookieTimestep(),
+			$this->user->userID ?: 0
+		));
 	}
 	
 	/**
@@ -254,7 +333,6 @@ final class SessionHandler extends SingletonFactory {
 			$hasSession = $this->getExistingSession($sessionID);
 		}
 		
-		// create new session
 		if (!$hasSession) {
 			$this->create();
 		}
@@ -271,10 +349,39 @@ final class SessionHandler extends SingletonFactory {
 			$hasSession = $this->getExistingSession($sessionID);
 		}
 		
-		// create new session
-		if (!$hasSession) {
+		if ($hasSession) {
+			$this->maybeRefreshCookie();
+		}
+		else {
 			$this->create();
 		}
+	}
+	
+	/**
+	 * Refreshes the session cookie, extending the expiry.
+	 */
+	private function maybeRefreshCookie(): void {
+		// Guests and ACP use short-lived sessions with an actual
+		// session cookie.
+		if (!$this->user->userID) return;
+		if ($this->isACP) return;
+		
+		$cookieData = $this->getParsedCookieData();
+		
+		// No refresh is needed if userId and timestep match up.
+		if (
+			$cookieData['userId'] === $this->user->userID &&
+			$cookieData['timestep'] === $this->getCookieTimestep()
+		) {
+			return;
+		}
+		
+		// Refresh the cookie.
+		HeaderUtil::setCookie(
+			($this->isACP ? 'acp' : 'user') . '_session',
+			$this->getCookieValue(),
+			TIME_NOW + (self::USER_SESSION_LIFETIME * 2)
+		);
 	}
 	
 	/**
@@ -494,15 +601,6 @@ final class SessionHandler extends SingletonFactory {
 			$this->sessionID,
 		]);
 		
-		// Refresh cookie.
-		if ($this->user->userID && !$this->isACP) {
-			HeaderUtil::setCookie(
-				($this->isACP ? 'acp' : 'user') . '_session',
-				$this->getSessionIdForCookie($this->sessionID),
-				TIME_NOW + 86400 * 14
-			);
-		}
-		
 		// Fetch legacy session.
 		if (!$this->isACP) {
 			$condition = new PreparedStatementConditionBuilder();
@@ -555,14 +653,14 @@ final class SessionHandler extends SingletonFactory {
 			\serialize([]),
 		]);
 		
-		HeaderUtil::setCookie(
-			($this->isACP ? 'acp' : 'user')."_session",
-			$this->getSessionIdForCookie($this->sessionID)
-		);
-		
 		$this->variables = [];
 		$this->user = new User(null);
 		$this->firstVisit = true;
+		
+		HeaderUtil::setCookie(
+			($this->isACP ? 'acp' : 'user')."_session",
+			$this->getCookieValue()
+		);
 		
 		// Maintain legacy session table for users online list.
 		if (!$this->isACP) {
