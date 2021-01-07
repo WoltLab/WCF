@@ -159,7 +159,7 @@ class TwitterAuthAction extends AbstractAction {
 		
 		// user declined
 		if (isset($_GET['denied'])) {
-			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.3rdparty.twitter.login.error.denied'));
+			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.3rdparty.login.error.denied'));
 		}
 		
 		// start auth by fetching request_token
