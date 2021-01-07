@@ -5065,6 +5065,9 @@ You also received a list of emergency codes to use when your second factor becom
 		<item name="wcf.user.3rdparty"><![CDATA[Third-Party Login]]></item>
 		<item name="wcf.user.3rdparty.login.error.access_denied"><![CDATA[Access to your external account has been rejected.]]></item>
 		<item name="wcf.user.3rdparty.login.error.denied"><![CDATA[Access to your external account has been rejected.]]></item>
+		<item name="wcf.user.3rdparty.login.error.httpError"><![CDATA[Unable to communicate with the external service. Internal error code: <code>{$exceptionID}</code>.]]></item>
+		<item name="wcf.user.3rdparty.login.error.genericException"><![CDATA[An error occurred while processing your authentication request. Please contact the administrator for help. Internal error code: <code>{$exceptionID}</code>.]]></item>
+		<item name="wcf.user.3rdparty.login.error.stateValidation"><![CDATA[Unable to find the authentication request. Maybe your session expired.]]></item>
 		<item name="wcf.user.3rdparty.github"><![CDATA[GitHub]]></item>
 		<item name="wcf.user.3rdparty.github.login"><![CDATA[Login with GitHub]]></item>
 		<item name="wcf.user.3rdparty.github.register"><![CDATA[You are creating an account through <span class="icon icon16 fa-github"></span>&nbsp;GitHub. The username and your email address have therefore already been entered.]]></item>

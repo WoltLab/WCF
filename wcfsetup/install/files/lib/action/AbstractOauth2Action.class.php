@@ -1,11 +1,13 @@
 <?php
 namespace wcf\action;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 use ParagonIE\ConstantTime\Hex;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\io\HttpFactory;
+use wcf\system\user\authentication\oauth\exception\StateValidationException;
 use wcf\system\user\authentication\oauth\User as OauthUser;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -105,13 +107,13 @@ abstract class AbstractOauth2Action extends AbstractAction {
 	 */
 	protected function validateState() {
 		if (!isset($_GET['state'])) {
-			throw new \Exception('Missing state parameter');
+			throw new StateValidationException('Missing state parameter');
 		}
 		if (!($sessionState = WCF::getSession()->getVar(self::STATE))) {
-			throw new \Exception('Missing state in session');
+			throw new StateValidationException('Missing state in session');
 		}
 		if (!\hash_equals($sessionState, (string) $_GET['state'])) {
-			throw new \Exception('Mismatching state');
+			throw new StateValidationException('Mismatching state');
 		}
 		
 		WCF::getSession()->unregister(self::STATE);
@@ -132,12 +134,18 @@ abstract class AbstractOauth2Action extends AbstractAction {
 			'code' => $_GET['code'],
 		], '', '&', PHP_QUERY_RFC1738));
 		
-		$response = $this->getHttpClient()->send($request);
-		
-		// Validate state. Validation of state is executed after fetching the
-		// access_token to invalidate 'code'.
-		if ($this->supportsState()) {
-			$this->validateState();
+		try {
+			$response = $this->getHttpClient()->send($request);
+		}
+		finally {
+			// Validate state. Validation of state is executed after fetching the
+			// access_token to invalidate 'code'.
+			//
+			// Validation is happening within the `finally` so that the StateValidationException
+			// overwrites any GuzzleException (improving the error message).
+			if ($this->supportsState()) {
+				$this->validateState();
+			}
 		}
 		
 		$parsed = JSON::decode((string) $response->getBody());
@@ -190,17 +198,42 @@ abstract class AbstractOauth2Action extends AbstractAction {
 	public function execute() {
 		parent::execute();
 		
-		if (isset($_GET['code'])) {
-			$accessToken = $this->codeToAccessToken($_GET['code']);
-			$oauthUser = $this->getUser($accessToken);
+		try {
+			if (isset($_GET['code'])) {
+				$accessToken = $this->codeToAccessToken($_GET['code']);
+				$oauthUser = $this->getUser($accessToken);
+				
+				$this->processUser($oauthUser);
+			}
+			else if (isset($_GET['error'])) {
+				$this->handleError($_GET['error']);
+			}
+			else {
+				$this->initiate();
+			}
+		}
+		catch (NamedUserException | PermissionDeniedException $e) {
+			throw $e;
+		}
+		catch (StateValidationException $e) {
+			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable(
+				'wcf.user.3rdparty.login.error.stateValidation'
+			));
+		}
+		catch (\Exception $e) {
+			$exceptionID = \wcf\functions\exception\logThrowable($e);
 			
-			$this->processUser($oauthUser);
-		}
-		else if (isset($_GET['error'])) {
-			$this->handleError($_GET['error']);
-		}
-		else {
-			$this->initiate();
+			$type = 'genericException';
+			if ($e instanceof GuzzleException) {
+				$type = 'httpError';
+			}
+			
+			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable(
+				'wcf.user.3rdparty.login.error.'.$type,
+				[
+					'exceptionID' => $exceptionID,
+				]
+			));
 		}
 	}
 }

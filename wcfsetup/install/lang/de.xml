@@ -5068,6 +5068,9 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.3rdparty"><![CDATA[Drittanbieter]]></item>
 		<item name="wcf.user.3rdparty.login.error.access_denied"><![CDATA[Da {if LANGUAGE_USE_INFORMAL_VARIANT}du die Berechtigungen verweigert hast{else}Sie die Berechtigungen verweigert haben{/if}, ist die Anmeldung nicht möglich.]]></item>
 		<item name="wcf.user.3rdparty.login.error.denied"><![CDATA[Da {if LANGUAGE_USE_INFORMAL_VARIANT}du die Berechtigungen verweigert hast{else}Sie die Berechtigungen verweigert haben{/if}, ist die Anmeldung nicht möglich.]]></item>
+		<item name="wcf.user.3rdparty.login.error.httpError"><![CDATA[Die Kommunikation mit dem externen Dienst ist fehlgeschlagen. Interner Fehlercode: <code>{$exceptionID}</code>.]]></item>
+		<item name="wcf.user.3rdparty.login.error.genericException"><![CDATA[Bei der Verarbeitung der Anfrage ist ein Fehler aufgetreten. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich{else}wenden Sie sich{/if} an den Administrator. Interner Fehlercode: <code>{$exceptionID}</code>.]]></item>
+		<item name="wcf.user.3rdparty.login.error.stateValidation"><![CDATA[Die Anfrage konnte nicht zugeordnet werden. Möglicherweise ist {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Sitzung abgelaufen.]]></item>
 		<item name="wcf.user.3rdparty.github"><![CDATA[GitHub]]></item>
 		<item name="wcf.user.3rdparty.github.login"><![CDATA[Mit GitHub anmelden]]></item>
 		<item name="wcf.user.3rdparty.github.register"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erstellst{else}Sie erstellen{/if} ein Benutzerkonto über <span class="icon icon16 fa-github"></span>&nbsp;GitHub. Der Benutzername und {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse wurden daher bereits ausgefüllt.]]></item>
