@@ -3,8 +3,8 @@ namespace wcf\action;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
 use ParagonIE\ConstantTime\Hex;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\io\HttpFactory;
 use wcf\system\user\authentication\oauth\User as OauthUser;
 use wcf\system\WCF;
@@ -34,7 +34,7 @@ abstract class AbstractOauth2Action extends AbstractAction {
 		parent::readParameters();
 		
 		if (WCF::getSession()->spiderID) {
-			throw new IllegalLinkException();
+			throw new PermissionDeniedException();
 		}
 	}
 	
