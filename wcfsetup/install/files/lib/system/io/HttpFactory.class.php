@@ -57,6 +57,7 @@ final class HttpFactory {
 		$defaults = [
 			'proxy' => PROXY_SERVER_HTTP,
 			'headers' => [],
+			'timeout' => 60,
 		];
 		
 		foreach ($defaults as $key => $value) {

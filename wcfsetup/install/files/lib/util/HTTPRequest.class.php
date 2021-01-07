@@ -167,6 +167,8 @@ final class HTTPRequest {
 		};
 		
 		$options = [
+			// No overall timeout
+			'timeout' => 0,
 			'connect_timeout' => $this->options['timeout'],
 			'read_timeout' => $this->options['timeout'],
 			'allow_redirects' => [
