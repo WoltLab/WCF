@@ -235,7 +235,7 @@ final class SessionHandler extends SingletonFactory {
 	 * @see SessionHandler::parseCookie()
 	 * @since 5.4
 	 */
-	public function getParsedCookieData(): ?array {
+	private function getParsedCookieData(): ?array {
 		$cookieName = COOKIE_PREFIX."user_session";
 		
 		if (!empty($_COOKIE[$cookieName])) {
