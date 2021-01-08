@@ -81,7 +81,8 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 		
 		<!-- Cleanup for the new session system. -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_3_drop_virtual.php</instruction>
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_4_clean_session.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_4_drop_acp.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_5_clean_session.php</instruction>
 		
 		<!-- Non-critical database adjustments. -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_db.php</instruction>
