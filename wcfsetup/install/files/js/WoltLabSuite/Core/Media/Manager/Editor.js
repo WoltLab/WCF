@@ -156,7 +156,6 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
         _insertMedia(event, thumbnailSize, closeEditor = false) {
             if (closeEditor === undefined)
                 closeEditor = true;
-            const insertType = "separate";
             // update insert options with selected values if method is called by clicking on 'insert' button
             // in dialog
             if (event) {
@@ -166,16 +165,10 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
                 thumbnailSize = thumbnailSizeSelect.value;
             }
             if (this._options.callbackInsert !== null) {
-                this._options.callbackInsert(this._mediaToInsert, insertType, thumbnailSize);
+                this._options.callbackInsert(this._mediaToInsert, "separate", thumbnailSize);
             }
             else {
-                if (insertType === "separate") {
-                    this._options.editor.buffer.set();
-                    this._mediaToInsert.forEach((media) => this._insertMediaItem(thumbnailSize, media));
-                }
-                else {
-                    this._insertMediaGallery();
-                }
+                this._options.editor.buffer.set();
             }
             if (this._mediaToInsertByClipboard) {
                 Clipboard.unmark("com.woltlab.wcf.media", Array.from(this._mediaToInsert.keys()));
@@ -186,14 +179,6 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
             if (closeEditor) {
                 UiDialog.close(this);
             }
-        }
-        /**
-         * Inserts a series of uploaded images into the editor using a slider.
-         */
-        _insertMediaGallery() {
-            const mediaIds = Array.from(this._mediaToInsert.keys());
-            this._options.editor.buffer.set();
-            this._options.editor.insert.text("[wsmg='" + mediaIds.join(",") + "'][/wsmg]");
         }
         /**
          * Inserts a single media item into the editor.

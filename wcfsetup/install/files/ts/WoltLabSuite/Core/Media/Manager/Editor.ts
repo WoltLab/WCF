@@ -205,8 +205,6 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
   protected _insertMedia(event?: Event | null, thumbnailSize?: string, closeEditor = false): void {
     if (closeEditor === undefined) closeEditor = true;
 
-    const insertType = "separate";
-
     // update insert options with selected values if method is called by clicking on 'insert' button
     // in dialog
     if (event) {
@@ -218,15 +216,9 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
     }
 
     if (this._options.callbackInsert !== null) {
-      this._options.callbackInsert(this._mediaToInsert, insertType, thumbnailSize!);
+      this._options.callbackInsert(this._mediaToInsert, "separate", thumbnailSize!);
     } else {
-      if (insertType === "separate") {
-        this._options.editor!.buffer.set();
-
-        this._mediaToInsert.forEach((media) => this._insertMediaItem(thumbnailSize!, media));
-      } else {
-        this._insertMediaGallery();
-      }
+      this._options.editor!.buffer.set();
     }
 
     if (this._mediaToInsertByClipboard) {
@@ -240,16 +232,6 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
     if (closeEditor) {
       UiDialog.close(this);
     }
-  }
-
-  /**
-   * Inserts a series of uploaded images into the editor using a slider.
-   */
-  protected _insertMediaGallery(): void {
-    const mediaIds = Array.from(this._mediaToInsert.keys());
-
-    this._options.editor!.buffer.set();
-    this._options.editor!.insert.text("[wsmg='" + mediaIds.join(",") + "'][/wsmg]");
   }
 
   /**
