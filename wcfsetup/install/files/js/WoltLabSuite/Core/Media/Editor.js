@@ -67,9 +67,7 @@ define(["require", "exports", "tslib", "../Core", "../Ui/Notification", "../Ui/D
          */
         _initEditor(content, data) {
             this._availableLanguageCount = ~~data.returnValues.availableLanguageCount;
-            this._categoryIds = data.returnValues.categoryIDs.map(function (number) {
-                return ~~number;
-            });
+            this._categoryIds = data.returnValues.categoryIDs.map((number) => number);
             if (data.returnValues.mediaData) {
                 this._media = data.returnValues.mediaData;
             }
@@ -80,7 +78,12 @@ define(["require", "exports", "tslib", "../Core", "../Ui/Notification", "../Ui/D
                 }
                 if (this._categoryIds.length) {
                     const categoryID = content.querySelector("select[name=categoryID]");
-                    categoryID.value = this._media.categoryID;
+                    if (this._media.categoryID) {
+                        categoryID.value = this._media.categoryID.toString();
+                    }
+                    else {
+                        categoryID.value = "0";
+                    }
                 }
                 const title = content.querySelector("input[name=title]");
                 const altText = content.querySelector("input[name=altText]");
@@ -157,13 +160,9 @@ define(["require", "exports", "tslib", "../Core", "../Ui/Notification", "../Ui/D
             const captionEnableHtml = content.querySelector("input[name=captionEnableHtml]");
             const title = content.querySelector("input[name=title]");
             let hasError = false;
-            const altTextError = altText
-                ? DomTraverse.childByClass(altText.parentNode.parentNode, "innerError")
-                : false;
-            const captionError = caption
-                ? DomTraverse.childByClass(caption.parentNode.parentNode, "innerError")
-                : false;
-            const titleError = DomTraverse.childByClass(title.parentNode.parentNode, "innerError");
+            const altTextError = altText ? DomTraverse.childByClass(altText.parentNode, "innerError") : false;
+            const captionError = caption ? DomTraverse.childByClass(caption.parentNode, "innerError") : false;
+            const titleError = DomTraverse.childByClass(title.parentNode, "innerError");
             // category
             this._oldCategoryId = this._media.categoryID;
             if (this._categoryIds.length) {
@@ -192,28 +191,19 @@ define(["require", "exports", "tslib", "../Core", "../Ui/Notification", "../Ui/D
                 if (altText && !LanguageInput.validate(altText.id, true)) {
                     hasError = true;
                     if (!altTextError) {
-                        const error = document.createElement("small");
-                        error.className = "innerError";
-                        error.textContent = Language.get("wcf.global.form.error.multilingual");
-                        altText.parentNode.parentNode.appendChild(error);
+                        DomUtil.innerError(altText, Language.get("wcf.global.form.error.multilingual"));
                     }
                 }
                 if (caption && !LanguageInput.validate(caption.id, true)) {
                     hasError = true;
                     if (!captionError) {
-                        const error = document.createElement("small");
-                        error.className = "innerError";
-                        error.textContent = Language.get("wcf.global.form.error.multilingual");
-                        caption.parentNode.parentNode.appendChild(error);
+                        DomUtil.innerError(caption, Language.get("wcf.global.form.error.multilingual"));
                     }
                 }
                 if (!LanguageInput.validate(title.id, true)) {
                     hasError = true;
                     if (!titleError) {
-                        const error = document.createElement("small");
-                        error.className = "innerError";
-                        error.textContent = Language.get("wcf.global.form.error.multilingual");
-                        title.parentNode.parentNode.appendChild(error);
+                        DomUtil.innerError(title, Language.get("wcf.global.form.error.multilingual"));
                     }
                 }
                 this._media.altText = altText ? this.mapToI18nValues(LanguageInput.getValues(altText.id)) : "";
@@ -235,19 +225,9 @@ define(["require", "exports", "tslib", "../Core", "../Ui/Notification", "../Ui/D
             const aclValues = {
                 allowAll: ~~document.getElementById(`mediaEditor_${this._media.mediaID}_aclAllowAll`)
                     .checked,
-                group: [],
-                user: [],
+                group: Array.from(content.querySelectorAll(`input[name="mediaEditor_${this._media.mediaID}_aclValues[group][]"]`)).map((aclGroup) => ~~aclGroup.value),
+                user: Array.from(content.querySelectorAll(`input[name="mediaEditor_${this._media.mediaID}_aclValues[user][]"]`)).map((aclUser) => ~~aclUser.value),
             };
-            content
-                .querySelectorAll(`input[name="mediaEditor_${this._media.mediaID}_aclValues[group][]"]`)
-                .forEach((aclGroup) => {
-                aclValues.group.push(~~aclGroup.value);
-            });
-            content
-                .querySelectorAll(`input[name="mediaEditor_${this._media.mediaID}_aclValues[user][]"]`)
-                .forEach((aclUser) => {
-                aclValues.user.push(~~aclUser.value);
-            });
             if (!hasError) {
                 if (altTextError) {
                     altTextError.remove();
@@ -299,7 +279,7 @@ define(["require", "exports", "tslib", "../Core", "../Ui/Notification", "../Ui/D
                 if (document.getElementById(`altText_${mediaId}`)) {
                     LanguageInput.enable(`altText_${mediaId}`);
                 }
-                languageChooserContainer.style.display = "none";
+                DomUtil.hide(languageChooserContainer);
             }
             else {
                 LanguageInput.disable(`title_${mediaId}`);
@@ -309,7 +289,7 @@ define(["require", "exports", "tslib", "../Core", "../Ui/Notification", "../Ui/D
                 if (document.getElementById(`altText_${mediaId}`)) {
                     LanguageInput.disable(`altText_${mediaId}`);
                 }
-                languageChooserContainer.style.display = "block";
+                DomUtil.show(languageChooserContainer);
             }
         }
         /**
@@ -339,11 +319,11 @@ define(["require", "exports", "tslib", "../Core", "../Ui/Notification", "../Ui/D
                             id: `mediaEditor_${mediaId}`,
                             options: {
                                 backdropCloseOnClick: false,
-                                onClose: this._close.bind(this),
+                                onClose: () => this._close(),
                                 title: Language.get("wcf.media.edit"),
                             },
                             source: {
-                                after: this._initEditor.bind(this),
+                                after: (content, responseData) => this._initEditor(content, responseData),
                                 data: {
                                     actionName: "getEditorDialog",
                                     className: "wcf\\data\\media\\MediaAction",

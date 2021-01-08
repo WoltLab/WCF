@@ -28,10 +28,10 @@ const _mediaEditor = new MediaEditor({
 const _tableBody = document.getElementById("mediaListTableBody")!;
 let _upload: MediaListUpload;
 
-type MediaListOptions = {
+interface MediaListOptions {
   categoryId?: number;
   hasMarkedItems?: boolean;
-};
+}
 
 export function init(options: MediaListOptions): void {
   options = options || {};
@@ -49,7 +49,7 @@ export function init(options: MediaListOptions): void {
 
   // eslint-disable-next-line
   //@ts-ignore
-  var deleteAction = new WCF.Action.Delete("wcf\\data\\media\\MediaAction", ".jsMediaRow");
+  const deleteAction = new WCF.Action.Delete("wcf\\data\\media\\MediaAction", ".jsMediaRow");
   deleteAction.setCallback(deleteCallback);
 
   addButtonEventListeners();
@@ -75,7 +75,7 @@ function addButtonEventListeners(): void {
  * Is triggered after media files have been deleted using the delete icon.
  */
 function deleteCallback(objectIds?: number[]): void {
-  var tableRowCount = _tableBody.getElementsByTagName("tr").length;
+  const tableRowCount = _tableBody.getElementsByTagName("tr").length;
   if (objectIds === undefined) {
     if (!tableRowCount) {
       window.location.reload();
@@ -84,7 +84,7 @@ function deleteCallback(objectIds?: number[]): void {
     // table is empty, reload page
     window.location.reload();
   } else {
-    Clipboard.reload.bind(Clipboard);
+    Clipboard.reload();
   }
 }
 
@@ -100,7 +100,7 @@ function edit(event: Event): void {
  */
 function openEditorAfterUpload(data: MediaUploadSuccessEventData) {
   if (data.upload === _upload && !data.isMultiFileUpload && !_upload.hasPendingUploads()) {
-    var keys = Object.keys(data.media);
+    const keys = Object.keys(data.media);
 
     if (keys.length) {
       _mediaEditor.edit(data.media[keys[0]]);
@@ -113,7 +113,7 @@ function openEditorAfterUpload(data: MediaUploadSuccessEventData) {
  */
 function clipboardDeleteMedia(mediaIds: number[]) {
   Array.from(document.getElementsByClassName("jsMediaRow")).forEach((media) => {
-    const mediaID = ~~media.querySelector<HTMLElement>(".jsClipboardItem")!.dataset.objectId!;
+    const mediaID = ~~(media.querySelector(".jsClipboardItem") as HTMLElement).dataset.objectId!;
 
     if (mediaIds.indexOf(mediaID) !== -1) {
       media.remove();

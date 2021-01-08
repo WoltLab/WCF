@@ -14,6 +14,7 @@ import * as DomTraverse from "../../Dom/Traverse";
 import * as FileUtil from "../../FileUtil";
 import * as Language from "../../Language";
 import * as UiDialog from "../../Ui/Dialog";
+import DomUtil from "../../Dom/Util";
 
 class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
   protected _activeButton: HTMLElement | null = null;
@@ -32,7 +33,7 @@ class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
       if (store) {
         const storeElement = document.getElementById(store) as HTMLInputElement;
         if (storeElement && storeElement.tagName === "INPUT") {
-          button.addEventListener("click", this._click.bind(this));
+          button.addEventListener("click", (ev) => this._click(ev));
 
           this._storeElements.set(button, storeElement);
 
@@ -46,7 +47,7 @@ class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
           removeButton.appendChild(icon);
 
           if (!storeElement.value) {
-            removeButton.style.display = "none";
+            DomUtil.hide(removeButton);
           }
           removeButton.addEventListener("click", (ev) => this._removeMedia(ev));
         }
@@ -63,7 +64,7 @@ class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
       const chooseIcon = listItem.querySelector(".jsMediaSelectButton");
       if (chooseIcon) {
         chooseIcon.classList.remove("jsMediaSelectButton");
-        chooseIcon.addEventListener("click", (ev: MouseEvent) => this._chooseMedia(ev));
+        chooseIcon.addEventListener("click", (ev) => this._chooseMedia(ev));
       }
     });
   }
@@ -71,7 +72,7 @@ class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
   /**
    * Handles clicking on a media choose icon.
    */
-  protected _chooseMedia(event: MouseEvent): void {
+  protected _chooseMedia(event: Event): void {
     if (this._activeButton === null) {
       throw new Error("Media cannot be chosen if no button is active.");
     }
@@ -82,7 +83,7 @@ class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
 
     // save selected media in store element
     const input = document.getElementById(this._activeButton.dataset.store!) as HTMLInputElement;
-    input.value = (media.mediaID as unknown) as string;
+    input.value = media.mediaID.toString();
     Core.triggerEvent(input, "change");
 
     // display selected media
@@ -119,7 +120,7 @@ class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
     UiDialog.close(this);
   }
 
-  protected _click(event: MouseEvent): void {
+  protected _click(event: Event): void {
     event.preventDefault();
     this._activeButton = event.currentTarget as HTMLInputElement;
 
@@ -151,7 +152,7 @@ class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
 
     const listItem = document.createElement("li");
     listItem.className = "jsMediaSelectButton";
-    listItem.dataset.objectId = (media.mediaID as unknown) as string;
+    listItem.dataset.objectId = media.mediaID.toString();
     buttons.appendChild(listItem);
 
     listItem.innerHTML =
@@ -165,7 +166,7 @@ class MediaManagerSelect extends MediaManager<MediaManagerSelectOptions> {
   /**
    * Handles clicking on the remove button.
    */
-  protected _removeMedia(event: MouseEvent): void {
+  protected _removeMedia(event: Event): void {
     event.preventDefault();
 
     const removeButton = event.currentTarget as HTMLSpanElement;

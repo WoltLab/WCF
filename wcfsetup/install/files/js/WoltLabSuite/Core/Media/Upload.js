@@ -8,8 +8,6 @@
  */
 define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", "../Dom/Traverse", "../Language", "../User", "../Date/Util", "../FileUtil", "../Dom/Change/Listener", "../Event/Handler"], function (require, exports, tslib_1, Upload_1, Core, DomUtil, DomTraverse, Language, User_1, DateUtil, FileUtil, DomChangeListener, EventHandler) {
     "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.MediaUpload = void 0;
     Upload_1 = tslib_1.__importDefault(Upload_1);
     Core = tslib_1.__importStar(Core);
     DomUtil = tslib_1.__importStar(DomUtil);
@@ -60,10 +58,10 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                 }
                 Array.from(fileElement.getElementsByTagName("TD")).forEach((cell) => {
                     if (cell.classList.contains("columnMark")) {
-                        cell.querySelectorAll("[data-object-id]").forEach((el) => (el.style.display = "none"));
+                        cell.querySelectorAll("[data-object-id]").forEach((el) => DomUtil.hide(el));
                     }
                     else if (cell.classList.contains("columnIcon")) {
-                        cell.querySelectorAll("[data-object-id]").forEach((el) => (el.style.display = "none"));
+                        cell.querySelectorAll("[data-object-id]").forEach((el) => DomUtil.hide(el));
                         cell.querySelector(".mediaEditButton").classList.add("jsMediaEditButton");
                         cell.querySelector(".jsDeleteButton").dataset.confirmMessageHtml = Language.get("wcf.media.delete.confirmMessage", {
                             title: file.name,
@@ -170,10 +168,10 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                     if (media) {
                         // update object id
                         file.querySelectorAll("[data-object-id]").forEach((el) => {
-                            el.dataset.objectId = media.mediaID;
+                            el.dataset.objectId = media.mediaID.toString();
                             el.style.removeProperty("display");
                         });
-                        file.querySelector(".columnMediaID").textContent = media.mediaID;
+                        file.querySelector(".columnMediaID").textContent = media.mediaID.toString();
                         // update icon
                         this._replaceFileIcon(file.querySelector(".fa-spinner"), media, 48);
                     }
@@ -187,13 +185,11 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                         }
                         const fileIcon = file.querySelector(".fa-spinner");
                         fileIcon.classList.remove("fa-spinner");
-                        fileIcon.classList.add("fa-remove");
-                        fileIcon.classList.add("pointer");
-                        fileIcon.classList.add("jsTooltip");
+                        fileIcon.classList.add("fa-remove", "pointer", "jsTooltip");
                         fileIcon.title = Language.get("wcf.global.button.delete");
                         fileIcon.addEventListener("click", (event) => {
                             const target = event.currentTarget;
-                            target.parentNode.parentNode.parentNode.remove();
+                            target.closest(".mediaFile").remove();
                             EventHandler.fire("com.woltlab.wcf.media.upload", "removedErroneousUploadRow");
                         });
                         file.classList.add("uploadFailed");
@@ -210,7 +206,7 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                         const fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, "mediaThumbnail"), "SPAN");
                         this._replaceFileIcon(fileIcon, media, 144);
                         file.className = "jsClipboardObject mediaFile";
-                        file.dataset.objectId = media.mediaID;
+                        file.dataset.objectId = media.mediaID.toString();
                         if (this._mediaManager) {
                             this._mediaManager.setupMediaElement(media, file);
                             this._mediaManager.addMedia(media, file);
@@ -226,10 +222,8 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                         }
                         const fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, "mediaThumbnail"), "SPAN");
                         fileIcon.classList.remove("fa-spinner");
-                        fileIcon.classList.add("fa-remove");
-                        fileIcon.classList.add("pointer");
-                        file.classList.add("uploadFailed");
-                        file.classList.add("jsTooltip");
+                        fileIcon.classList.add("fa-remove", "pointer");
+                        file.classList.add("uploadFailed", "jsTooltip");
                         file.title = Language.get("wcf.global.button.delete");
                         file.addEventListener("click", () => file.remove());
                         const title = DomTraverse.childByClass(DomTraverse.childByClass(file, "mediaInformation"), "mediaTitle");
@@ -249,7 +243,6 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
             });
         }
     }
-    exports.MediaUpload = MediaUpload;
     Core.enableLegacyInheritance(MediaUpload);
-    exports.default = MediaUpload;
+    return MediaUpload;
 });

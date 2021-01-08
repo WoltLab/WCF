@@ -40,7 +40,7 @@ define(["require", "exports", "tslib", "../../Media/List/Upload", "../../Media/C
         EventHandler.add("com.woltlab.wcf.media.upload", "removedErroneousUploadRow", () => deleteCallback());
         // eslint-disable-next-line
         //@ts-ignore
-        var deleteAction = new WCF.Action.Delete("wcf\\data\\media\\MediaAction", ".jsMediaRow");
+        const deleteAction = new WCF.Action.Delete("wcf\\data\\media\\MediaAction", ".jsMediaRow");
         deleteAction.setCallback(deleteCallback);
         addButtonEventListeners();
         DomChangeListener.add("WoltLabSuite/Core/Controller/Media/List", () => addButtonEventListeners());
@@ -60,7 +60,7 @@ define(["require", "exports", "tslib", "../../Media/List/Upload", "../../Media/C
      * Is triggered after media files have been deleted using the delete icon.
      */
     function deleteCallback(objectIds) {
-        var tableRowCount = _tableBody.getElementsByTagName("tr").length;
+        const tableRowCount = _tableBody.getElementsByTagName("tr").length;
         if (objectIds === undefined) {
             if (!tableRowCount) {
                 window.location.reload();
@@ -71,7 +71,7 @@ define(["require", "exports", "tslib", "../../Media/List/Upload", "../../Media/C
             window.location.reload();
         }
         else {
-            Clipboard.reload.bind(Clipboard);
+            Clipboard.reload();
         }
     }
     /**
@@ -85,7 +85,7 @@ define(["require", "exports", "tslib", "../../Media/List/Upload", "../../Media/C
      */
     function openEditorAfterUpload(data) {
         if (data.upload === _upload && !data.isMultiFileUpload && !_upload.hasPendingUploads()) {
-            var keys = Object.keys(data.media);
+            const keys = Object.keys(data.media);
             if (keys.length) {
                 _mediaEditor.edit(data.media[keys[0]]);
             }

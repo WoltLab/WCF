@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Media/Manager/Editor
  */
-define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Handler", "../../Dom/Traverse", "../../Language", "../../Ui/Dialog", "../../Controller/Clipboard"], function (require, exports, tslib_1, Base_1, Core, EventHandler, DomTraverse, Language, UiDialog, Clipboard) {
+define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Handler", "../../Dom/Traverse", "../../Language", "../../Ui/Dialog", "../../Controller/Clipboard", "../../Dom/Util"], function (require, exports, tslib_1, Base_1, Core, EventHandler, DomTraverse, Language, UiDialog, Clipboard, Util_1) {
     "use strict";
     Base_1 = tslib_1.__importDefault(Base_1);
     Core = tslib_1.__importStar(Core);
@@ -15,6 +15,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
     Language = tslib_1.__importStar(Language);
     UiDialog = tslib_1.__importStar(UiDialog);
     Clipboard = tslib_1.__importStar(Clipboard);
+    Util_1 = tslib_1.__importDefault(Util_1);
     class MediaManagerEditor extends Base_1.default {
         constructor(options) {
             options = Core.extend({
@@ -89,10 +90,10 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
                     return {
                         id: this._getInsertDialogId(),
                         options: {
-                            onClose: this._editorClose.bind(this),
+                            onClose: () => this._editorClose(),
                             onSetup: (content) => {
                                 content.querySelector(".buttonPrimary").addEventListener("click", (ev) => this._insertMedia(ev));
-                                content.querySelector(".thumbnailSizeSelection").style.display = "block";
+                                Util_1.default.show(content.querySelector(".thumbnailSizeSelection"));
                             },
                             title: Language.get("wcf.media.insert"),
                         },
@@ -143,11 +144,8 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
         _getThumbnailSizes() {
             return ["small", "medium", "large"]
                 .map((size) => {
-                let supportSize = true;
-                this._mediaToInsert.forEach(function (media) {
-                    if (!media[size + "ThumbnailType"]) {
-                        supportSize = false;
-                    }
+                const supportSize = Array.from(this._mediaToInsert).every(([_mediaId, media]) => {
+                    return media[size + "ThumbnailType"] !== null;
                 });
                 if (supportSize) {
                     return size;
@@ -184,11 +182,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
                 }
             }
             if (this._mediaToInsertByClipboard) {
-                const mediaIds = [];
-                this._mediaToInsert.forEach(function (media) {
-                    mediaIds.push(~~media.mediaID);
-                });
-                Clipboard.unmark("com.woltlab.wcf.media", mediaIds);
+                Clipboard.unmark("com.woltlab.wcf.media", Array.from(this._mediaToInsert.keys()));
             }
             this._mediaToInsert = new Map();
             this._mediaToInsertByClipboard = false;
@@ -270,14 +264,14 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
             this._mediaToInsert = new Map();
             this._mediaToInsertByClipboard = insertedByClipboard || false;
             // open the insert dialog if all media files are images
-            let imagesOnly = true, media;
-            for (let i = 0, length = mediaIds.length; i < length; i++) {
-                media = this._media.get(mediaIds[i]);
+            let imagesOnly = true;
+            mediaIds.forEach((mediaId) => {
+                const media = this._media.get(mediaId);
                 this._mediaToInsert.set(media.mediaID, media);
                 if (!media.isImage) {
                     imagesOnly = false;
                 }
-            }
+            });
             if (imagesOnly) {
                 const thumbnailSizes = this._getThumbnailSizes();
                 if (thumbnailSizes.length) {
@@ -307,7 +301,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
             const buttons = mediaElement.querySelector("nav.buttonGroupNavigation > ul");
             const listItem = document.createElement("li");
             listItem.className = "jsMediaInsertButton";
-            listItem.dataset.objectId = media.mediaID;
+            listItem.dataset.objectId = media.mediaID.toString();
             buttons.appendChild(listItem);
             listItem.innerHTML = `
       <a>

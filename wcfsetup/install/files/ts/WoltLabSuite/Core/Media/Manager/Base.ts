@@ -28,24 +28,24 @@ import * as MediaClipboard from "../Clipboard";
 
 let mediaManagerCounter = 0;
 
-type DialogInitAjaxResponseData = {
+interface DialogInitAjaxResponseData {
   returnValues: {
     hasMarkedItems: number;
     media: object;
     pageCount: number;
   };
-};
+}
 
-type SetMediaAdditionalData = {
+interface SetMediaAdditionalData {
   pageCount: number;
   pageNo: number;
-};
+}
 
 abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerOptions>
   implements DialogCallbackObject, MediaEditorCallbackObject {
   protected _forceClipboard = false;
   protected _hadInitiallyMarkedItems = false;
-  protected readonly _id = `mediaManager${mediaManagerCounter++}`;
+  protected readonly _id;
   protected readonly _listItems = new Map<number, HTMLLIElement>();
   protected _media = new Map<number, Media>();
   protected _mediaCategorySelect: HTMLSelectElement | null;
@@ -65,6 +65,8 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
       },
       options,
     ) as TOptions;
+
+    this._id = `mediaManager${mediaManagerCounter++}`;
 
     if (Permission.get("admin.content.cms.canManageMedia")) {
       this._mediaEditor = new MediaEditor(this);
@@ -87,7 +89,7 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
       const editIcon = listItem.querySelector(".jsMediaEditButton");
       if (editIcon) {
         editIcon.classList.remove("jsMediaEditButton");
-        editIcon.addEventListener("click", (ev: MouseEvent) => this._editMedia(ev));
+        editIcon.addEventListener("click", (ev) => this._editMedia(ev));
       }
     });
   }
@@ -102,7 +104,7 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
   /**
    * Handles clicks on the media manager button.
    */
-  protected _click(event: MouseEvent): void {
+  protected _click(event: Event): void {
     event.preventDefault();
 
     UiDialog.open(this);
@@ -168,7 +170,7 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
 
       this._mediaCategorySelect = dialog.querySelector(".mediaManagerCategoryList > select");
       if (this._mediaCategorySelect) {
-        this._mediaCategorySelect.addEventListener("change", this._categoryChange.bind(this));
+        this._mediaCategorySelect.addEventListener("change", () => this._categoryChange());
       }
 
       // store list items locally
@@ -211,7 +213,7 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
   /**
    * Opens the media editor for a media file.
    */
-  protected _editMedia(event: MouseEvent): void {
+  protected _editMedia(event: Event): void {
     if (!Permission.get("admin.content.cms.canManageMedia")) {
       throw new Error("You are not allowed to edit media files.");
     }
@@ -296,11 +298,11 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
 
       this._pagination = new UiPagination(newPagination, {
         activePage: pageNo,
-        callbackSwitch: this._search!.search.bind(this._search),
+        callbackSwitch: (pageNo: number) => this._search!.search(pageNo),
         maxPage: pageCount,
       });
     } else if (this._pagination) {
-      this._pagination.getElement().style.display = "none";
+      DomUtil.hide(this._pagination.getElement());
     }
   }
 
@@ -332,16 +334,13 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
    * Sets the displayed media (after a search).
    */
   _setMedia(media: object): void {
-    this._media = new Map<number, Media>();
-    Object.entries(media).forEach(([mediaId, media]) => {
-      this._media.set(~~mediaId, media);
-    });
+    this._media = new Map<number, Media>(Object.entries(media).map(([mediaId, media]) => [~~mediaId, media]));
 
     let info = DomTraverse.nextByClass(this._mediaManagerMediaList!, "info") as HTMLElement;
 
     if (this._media.size) {
       if (info) {
-        info.style.display = "none";
+        DomUtil.hide(info);
       }
     } else {
       if (info === null) {
@@ -350,15 +349,15 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
         info.textContent = Language.get("wcf.media.search.noResults");
       }
 
-      info.style.display = "block";
+      DomUtil.show(info);
       DomUtil.insertAfter(info, this._mediaManagerMediaList!);
     }
 
     DomTraverse.childrenByTag(this._mediaManagerMediaList!, "LI").forEach((listItem) => {
       if (!this._media.has(~~listItem.dataset.objectId!)) {
-        listItem.style.display = "none";
+        DomUtil.hide(listItem);
       } else {
-        listItem.style.display = "block";
+        DomUtil.show(listItem);
       }
     });
 
@@ -508,13 +507,13 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
     const checkbox = document.createElement("input");
     checkbox.className = "jsClipboardItem";
     checkbox.type = "checkbox";
-    checkbox.dataset.objectId = (media.mediaID as unknown) as string;
+    checkbox.dataset.objectId = media.mediaID.toString();
     label.appendChild(checkbox);
 
     if (Permission.get("admin.content.cms.canManageMedia")) {
       const editButton = document.createElement("li");
       editButton.className = "jsMediaEditButton";
-      editButton.dataset.objectId = (media.mediaID as unknown) as string;
+      editButton.dataset.objectId = media.mediaID.toString();
       buttons.appendChild(editButton);
 
       editButton.innerHTML = `
@@ -525,7 +524,7 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
 
       const deleteButton = document.createElement("li");
       deleteButton.className = "jsDeleteButton";
-      deleteButton.dataset.objectId = (media.mediaID as unknown) as string;
+      deleteButton.dataset.objectId = media.mediaID.toString();
 
       // use temporary title to not unescape html in filename
       const uuid = Core.getUuid();

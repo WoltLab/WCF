@@ -132,11 +132,7 @@ const _mimeTypeExtensionMapping = new Map<string, string>(
 /**
  * Formats the given filesize.
  */
-export function formatFilesize(byte: number, precision?: number): string {
-  if (precision === undefined) {
-    precision = 2;
-  }
-
+export function formatFilesize(byte: number, precision = 2): string {
   let symbol = "Byte";
   if (byte >= 1000) {
     byte /= 1000;

@@ -23,13 +23,13 @@ import * as Ajax from "../Ajax";
 import MediaReplace from "./Replace";
 import { I18nValues } from "../Language/Input";
 
-type InitEditorData = {
+interface InitEditorData {
   returnValues: {
     availableLanguageCount: number;
     categoryIDs: number[];
     mediaData?: Media;
   };
-};
+}
 
 class MediaEditor implements AjaxCallbackObject {
   protected _availableLanguageCount = 1;
@@ -90,9 +90,7 @@ class MediaEditor implements AjaxCallbackObject {
    */
   protected _initEditor(content: HTMLElement, data: InitEditorData): void {
     this._availableLanguageCount = ~~data.returnValues.availableLanguageCount;
-    this._categoryIds = data.returnValues.categoryIDs.map(function (number) {
-      return ~~number;
-    });
+    this._categoryIds = data.returnValues.categoryIDs.map((number) => number);
 
     if (data.returnValues.mediaData) {
       this._media = data.returnValues.mediaData;
@@ -109,7 +107,11 @@ class MediaEditor implements AjaxCallbackObject {
 
       if (this._categoryIds.length) {
         const categoryID = content.querySelector("select[name=categoryID]") as HTMLSelectElement;
-        categoryID.value = (this._media!.categoryID as unknown) as string;
+        if (this._media!.categoryID) {
+          categoryID.value = this._media!.categoryID.toString();
+        } else {
+          categoryID.value = "0";
+        }
       }
 
       const title = content.querySelector("input[name=title]") as HTMLInputElement;
@@ -205,18 +207,14 @@ class MediaEditor implements AjaxCallbackObject {
     const title = content.querySelector("input[name=title]") as HTMLInputElement;
 
     let hasError = false;
-    const altTextError = altText
-      ? DomTraverse.childByClass(altText.parentNode!.parentNode as HTMLElement, "innerError")
-      : false;
-    const captionError = caption
-      ? DomTraverse.childByClass(caption.parentNode!.parentNode as HTMLElement, "innerError")
-      : false;
-    const titleError = DomTraverse.childByClass(title.parentNode!.parentNode as HTMLElement, "innerError");
+    const altTextError = altText ? DomTraverse.childByClass(altText.parentNode! as HTMLElement, "innerError") : false;
+    const captionError = caption ? DomTraverse.childByClass(caption.parentNode! as HTMLElement, "innerError") : false;
+    const titleError = DomTraverse.childByClass(title.parentNode! as HTMLElement, "innerError");
 
     // category
     this._oldCategoryId = this._media!.categoryID;
     if (this._categoryIds.length) {
-      this._media!.categoryID = ~~categoryId!.value;
+      this._media!.categoryID = ~~categoryId.value;
 
       // if the selected category id not valid (manipulated DOM), ignore
       if (this._categoryIds.indexOf(this._media!.categoryID) === -1) {
@@ -243,28 +241,19 @@ class MediaEditor implements AjaxCallbackObject {
       if (altText && !LanguageInput.validate(altText.id, true)) {
         hasError = true;
         if (!altTextError) {
-          const error = document.createElement("small");
-          error.className = "innerError";
-          error.textContent = Language.get("wcf.global.form.error.multilingual");
-          altText.parentNode!.parentNode!.appendChild(error);
+          DomUtil.innerError(altText, Language.get("wcf.global.form.error.multilingual"));
         }
       }
       if (caption && !LanguageInput.validate(caption.id, true)) {
         hasError = true;
         if (!captionError) {
-          const error = document.createElement("small");
-          error.className = "innerError";
-          error.textContent = Language.get("wcf.global.form.error.multilingual");
-          caption.parentNode!.parentNode!.appendChild(error);
+          DomUtil.innerError(caption, Language.get("wcf.global.form.error.multilingual"));
         }
       }
       if (!LanguageInput.validate(title.id, true)) {
         hasError = true;
         if (!titleError) {
-          const error = document.createElement("small");
-          error.className = "innerError";
-          error.textContent = Language.get("wcf.global.form.error.multilingual");
-          title.parentNode!.parentNode!.appendChild(error);
+          DomUtil.innerError(title, Language.get("wcf.global.form.error.multilingual"));
         }
       }
 
@@ -287,21 +276,13 @@ class MediaEditor implements AjaxCallbackObject {
     const aclValues = {
       allowAll: ~~(document.getElementById(`mediaEditor_${this._media!.mediaID}_aclAllowAll`)! as HTMLInputElement)
         .checked,
-      group: [] as number[],
-      user: [] as number[],
+      group: Array.from(
+        content.querySelectorAll(`input[name="mediaEditor_${this._media!.mediaID}_aclValues[group][]"]`),
+      ).map((aclGroup: HTMLInputElement) => ~~aclGroup.value),
+      user: Array.from(
+        content.querySelectorAll(`input[name="mediaEditor_${this._media!.mediaID}_aclValues[user][]"]`),
+      ).map((aclUser: HTMLInputElement) => ~~aclUser.value),
     };
-
-    content
-      .querySelectorAll(`input[name="mediaEditor_${this._media!.mediaID}_aclValues[group][]"]`)
-      .forEach((aclGroup: HTMLInputElement) => {
-        aclValues.group.push(~~aclGroup.value);
-      });
-
-    content
-      .querySelectorAll(`input[name="mediaEditor_${this._media!.mediaID}_aclValues[user][]"]`)
-      .forEach((aclUser: HTMLInputElement) => {
-        aclValues.user.push(~~aclUser.value);
-      });
 
     if (!hasError) {
       if (altTextError) {
@@ -361,7 +342,7 @@ class MediaEditor implements AjaxCallbackObject {
         LanguageInput.enable(`altText_${mediaId}`);
       }
 
-      languageChooserContainer.style.display = "none";
+      DomUtil.hide(languageChooserContainer);
     } else {
       LanguageInput.disable(`title_${mediaId}`);
       if (document.getElementById(`caption_${mediaId}`)) {
@@ -371,7 +352,7 @@ class MediaEditor implements AjaxCallbackObject {
         LanguageInput.disable(`altText_${mediaId}`);
       }
 
-      languageChooserContainer.style.display = "block";
+      DomUtil.show(languageChooserContainer);
     }
   }
 
@@ -404,11 +385,11 @@ class MediaEditor implements AjaxCallbackObject {
             id: `mediaEditor_${mediaId}`,
             options: {
               backdropCloseOnClick: false,
-              onClose: this._close.bind(this),
+              onClose: () => this._close(),
               title: Language.get("wcf.media.edit"),
             },
             source: {
-              after: this._initEditor.bind(this),
+              after: (content: HTMLElement, responseData: InitEditorData) => this._initEditor(content, responseData),
               data: {
                 actionName: "getEditorDialog",
                 className: "wcf\\data\\media\\MediaAction",

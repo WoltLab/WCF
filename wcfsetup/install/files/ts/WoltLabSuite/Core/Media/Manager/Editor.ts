@@ -16,6 +16,7 @@ import * as Language from "../../Language";
 import * as UiDialog from "../../Ui/Dialog";
 import * as Clipboard from "../../Controller/Clipboard";
 import { OnDropPayload } from "../../Ui/Redactor/DragAndDrop";
+import DomUtil from "../../Dom/Util";
 
 type PasteFromClipboard = {
   blob: Blob;
@@ -85,7 +86,7 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
       const insertIcon = listItem.querySelector(".jsMediaInsertButton");
       if (insertIcon) {
         insertIcon.classList.remove("jsMediaInsertButton");
-        insertIcon.addEventListener("click", (ev: MouseEvent) => this._openInsertDialog(ev));
+        insertIcon.addEventListener("click", (ev) => this._openInsertDialog(ev));
       }
     });
   }
@@ -126,11 +127,11 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
         return {
           id: this._getInsertDialogId(),
           options: {
-            onClose: this._editorClose.bind(this),
+            onClose: () => this._editorClose(),
             onSetup: (content) => {
               content.querySelector(".buttonPrimary")!.addEventListener("click", (ev) => this._insertMedia(ev));
 
-              (content.querySelector(".thumbnailSizeSelection") as HTMLElement).style.display = "block";
+              DomUtil.show(content.querySelector(".thumbnailSizeSelection") as HTMLElement);
             },
             title: Language.get("wcf.media.insert"),
           },
@@ -140,7 +141,7 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
     });
   }
 
-  protected _click(event: MouseEvent): void {
+  protected _click(event: Event): void {
     this._activeButton = event.currentTarget;
 
     super._click(event);
@@ -191,11 +192,8 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
   protected _getThumbnailSizes(): string[] {
     return ["small", "medium", "large"]
       .map((size) => {
-        let supportSize = true;
-        this._mediaToInsert.forEach(function (media) {
-          if (!media[size + "ThumbnailType"]) {
-            supportSize = false;
-          }
+        const supportSize = Array.from(this._mediaToInsert).every(([_mediaId, media]) => {
+          return media[size + "ThumbnailType"] !== null;
         });
 
         if (supportSize) {
@@ -238,12 +236,7 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
     }
 
     if (this._mediaToInsertByClipboard) {
-      const mediaIds: number[] = [];
-      this._mediaToInsert.forEach(function (media) {
-        mediaIds.push(~~media.mediaID);
-      });
-
-      Clipboard.unmark("com.woltlab.wcf.media", mediaIds);
+      Clipboard.unmark("com.woltlab.wcf.media", Array.from(this._mediaToInsert.keys()));
     }
 
     this._mediaToInsert = new Map<number, Media>();
@@ -325,7 +318,7 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
   /**
    * Handles clicking on the insert button.
    */
-  protected _openInsertDialog(event: MouseEvent): void {
+  protected _openInsertDialog(event: Event): void {
     const target = event.currentTarget as HTMLElement;
 
     this.insertMedia([~~target.dataset.objectId!]);
@@ -346,16 +339,15 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
     this._mediaToInsertByClipboard = insertedByClipboard || false;
 
     // open the insert dialog if all media files are images
-    let imagesOnly = true,
-      media;
-    for (let i = 0, length = mediaIds.length; i < length; i++) {
-      media = this._media.get(mediaIds[i]);
+    let imagesOnly = true;
+    mediaIds.forEach((mediaId) => {
+      const media = this._media.get(mediaId)!;
       this._mediaToInsert.set(media.mediaID, media);
 
       if (!media.isImage) {
         imagesOnly = false;
       }
-    }
+    });
 
     if (imagesOnly) {
       const thumbnailSizes = this._getThumbnailSizes();
@@ -387,7 +379,7 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
 
     const listItem = document.createElement("li");
     listItem.className = "jsMediaInsertButton";
-    listItem.dataset.objectId = (media.mediaID as unknown) as string;
+    listItem.dataset.objectId = media.mediaID.toString();
     buttons.appendChild(listItem);
 
     listItem.innerHTML = `

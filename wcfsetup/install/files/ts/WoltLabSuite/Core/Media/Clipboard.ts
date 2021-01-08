@@ -73,15 +73,15 @@ const ajax = new MediaClipboard();
 
 let clipboardObjectIds: number[] = [];
 
-type ClipboardActionData = {
+interface ClipboardActionData {
   data: {
-    actionName: string;
+    actionName: "com.woltlab.wcf.media.delete" | "com.woltlab.wcf.media.insert" | "com.woltlab.wcf.media.setCategory";
     parameters: {
       objectIDs: number[];
     };
   };
   responseData: null;
-};
+}
 
 /**
  * Handles successful clipboard actions.

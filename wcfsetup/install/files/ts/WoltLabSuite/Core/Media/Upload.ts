@@ -26,7 +26,7 @@ import {
 import * as EventHandler from "../Event/Handler";
 import MediaManager from "./Manager/Base";
 
-export class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> extends Upload<TOptions> {
+class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> extends Upload<TOptions> {
   protected _categoryId: number | null = null;
   protected readonly _elementTagSize: number;
   protected readonly _mediaManager: MediaManager | null;
@@ -82,9 +82,9 @@ export class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOption
 
       Array.from(fileElement.getElementsByTagName("TD")).forEach((cell: HTMLTableDataCellElement) => {
         if (cell.classList.contains("columnMark")) {
-          cell.querySelectorAll("[data-object-id]").forEach((el: HTMLElement) => (el.style.display = "none"));
+          cell.querySelectorAll("[data-object-id]").forEach((el: HTMLElement) => DomUtil.hide(el));
         } else if (cell.classList.contains("columnIcon")) {
-          cell.querySelectorAll("[data-object-id]").forEach((el: HTMLElement) => (el.style.display = "none"));
+          cell.querySelectorAll("[data-object-id]").forEach((el: HTMLElement) => DomUtil.hide(el));
 
           cell.querySelector(".mediaEditButton")!.classList.add("jsMediaEditButton");
           (cell.querySelector(".jsDeleteButton") as HTMLElement).dataset.confirmMessageHtml = Language.get(
@@ -211,11 +211,11 @@ export class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOption
         if (media) {
           // update object id
           file.querySelectorAll("[data-object-id]").forEach((el: HTMLElement) => {
-            el.dataset.objectId = (media.mediaID as unknown) as string;
+            el.dataset.objectId = media.mediaID.toString();
             el.style.removeProperty("display");
           });
 
-          file.querySelector(".columnMediaID")!.textContent = (media.mediaID as unknown) as string;
+          file.querySelector(".columnMediaID")!.textContent = media.mediaID.toString();
 
           // update icon
           this._replaceFileIcon(file.querySelector(".fa-spinner") as HTMLSpanElement, media, 48);
@@ -230,13 +230,11 @@ export class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOption
 
           const fileIcon = file.querySelector(".fa-spinner") as HTMLSpanElement;
           fileIcon.classList.remove("fa-spinner");
-          fileIcon.classList.add("fa-remove");
-          fileIcon.classList.add("pointer");
-          fileIcon.classList.add("jsTooltip");
+          fileIcon.classList.add("fa-remove", "pointer", "jsTooltip");
           fileIcon.title = Language.get("wcf.global.button.delete");
           fileIcon.addEventListener("click", (event) => {
             const target = event.currentTarget as HTMLSpanElement;
-            (target.parentNode!.parentNode!.parentNode! as HTMLElement).remove();
+            target.closest(".mediaFile")!.remove();
 
             EventHandler.fire("com.woltlab.wcf.media.upload", "removedErroneousUploadRow");
           });
@@ -262,7 +260,7 @@ export class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOption
           this._replaceFileIcon(fileIcon, media, 144);
 
           file.className = "jsClipboardObject mediaFile";
-          file.dataset.objectId = (media.mediaID as unknown) as string;
+          file.dataset.objectId = media.mediaID.toString();
 
           if (this._mediaManager) {
             this._mediaManager.setupMediaElement(media, file);
@@ -279,11 +277,9 @@ export class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOption
 
           const fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, "mediaThumbnail")!, "SPAN")!;
           fileIcon.classList.remove("fa-spinner");
-          fileIcon.classList.add("fa-remove");
-          fileIcon.classList.add("pointer");
+          fileIcon.classList.add("fa-remove", "pointer");
 
-          file.classList.add("uploadFailed");
-          file.classList.add("jsTooltip");
+          file.classList.add("uploadFailed", "jsTooltip");
           file.title = Language.get("wcf.global.button.delete");
           file.addEventListener("click", () => file.remove());
 
@@ -312,4 +308,4 @@ export class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOption
 
 Core.enableLegacyInheritance(MediaUpload);
 
-export default MediaUpload;
+export = MediaUpload;

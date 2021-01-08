@@ -6,12 +6,13 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Media/Manager/Search
  */
-define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Language", "../../Ajax", "../../Core"], function (require, exports, tslib_1, DomTraverse, Language, Ajax, Core) {
+define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Language", "../../Ajax", "../../Core", "../../Dom/Util"], function (require, exports, tslib_1, DomTraverse, Language, Ajax, Core, Util_1) {
     "use strict";
     DomTraverse = tslib_1.__importStar(DomTraverse);
     Language = tslib_1.__importStar(Language);
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
+    Util_1 = tslib_1.__importDefault(Util_1);
     class MediaManagerSearch {
         constructor(mediaManager) {
             this._searchMode = false;
@@ -55,7 +56,7 @@ define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Language", "
         _hideStringThresholdError() {
             const innerInfo = DomTraverse.childByClass(this._input.parentNode.parentNode, "innerInfo");
             if (innerInfo) {
-                innerInfo.style.display = "none";
+                Util_1.default.hide(innerInfo);
             }
         }
         /**
@@ -79,7 +80,7 @@ define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Language", "
         _showStringThresholdError() {
             let innerInfo = DomTraverse.childByClass(this._input.parentNode.parentNode, "innerInfo");
             if (innerInfo) {
-                innerInfo.style.display = "block";
+                Util_1.default.show(innerInfo);
             }
             else {
                 innerInfo = document.createElement("p");
@@ -94,7 +95,7 @@ define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Language", "
          * Hides the media search.
          */
         hideSearch() {
-            this._searchContainer.style.display = "none";
+            Util_1.default.hide(this._searchContainer);
         }
         /**
          * Resets the media search.
@@ -106,7 +107,7 @@ define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Language", "
          * Shows the media search.
          */
         showSearch() {
-            this._searchContainer.style.display = "block";
+            Util_1.default.show(this._searchContainer);
         }
         /**
          * Sends an AJAX request to fetch search results.

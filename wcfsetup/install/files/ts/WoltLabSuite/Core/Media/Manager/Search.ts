@@ -14,15 +14,16 @@ import * as DomTraverse from "../../Dom/Traverse";
 import * as Language from "../../Language";
 import * as Ajax from "../../Ajax";
 import * as Core from "../../Core";
+import DomUtil from "../../Dom/Util";
 
-type AjaxResponseData = {
+interface AjaxResponseData {
   returnValues: {
     media?: Media;
     pageCount?: number;
     pageNo?: number;
     template?: string;
   };
-};
+}
 
 class MediaManagerSearch implements AjaxCallbackObject {
   protected readonly _cancelButton: HTMLSpanElement;
@@ -84,7 +85,7 @@ class MediaManagerSearch implements AjaxCallbackObject {
       "innerInfo",
     ) as HTMLElement;
     if (innerInfo) {
-      innerInfo.style.display = "none";
+      DomUtil.hide(innerInfo);
     }
   }
 
@@ -114,7 +115,7 @@ class MediaManagerSearch implements AjaxCallbackObject {
       "innerInfo",
     ) as HTMLParagraphElement;
     if (innerInfo) {
-      innerInfo.style.display = "block";
+      DomUtil.show(innerInfo);
     } else {
       innerInfo = document.createElement("p");
       innerInfo.className = "innerInfo";
@@ -130,7 +131,7 @@ class MediaManagerSearch implements AjaxCallbackObject {
    * Hides the media search.
    */
   public hideSearch(): void {
-    this._searchContainer.style.display = "none";
+    DomUtil.hide(this._searchContainer);
   }
 
   /**
@@ -144,7 +145,7 @@ class MediaManagerSearch implements AjaxCallbackObject {
    * Shows the media search.
    */
   public showSearch(): void {
-    this._searchContainer.style.display = "block";
+    DomUtil.show(this._searchContainer);
   }
 
   /**

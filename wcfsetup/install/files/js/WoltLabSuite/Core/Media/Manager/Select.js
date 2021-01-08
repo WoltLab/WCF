@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Media/Manager/Select
  */
-define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traverse", "../../FileUtil", "../../Language", "../../Ui/Dialog"], function (require, exports, tslib_1, Base_1, Core, DomTraverse, FileUtil, Language, UiDialog) {
+define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traverse", "../../FileUtil", "../../Language", "../../Ui/Dialog", "../../Dom/Util"], function (require, exports, tslib_1, Base_1, Core, DomTraverse, FileUtil, Language, UiDialog, Util_1) {
     "use strict";
     Base_1 = tslib_1.__importDefault(Base_1);
     Core = tslib_1.__importStar(Core);
@@ -14,6 +14,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traver
     FileUtil = tslib_1.__importStar(FileUtil);
     Language = tslib_1.__importStar(Language);
     UiDialog = tslib_1.__importStar(UiDialog);
+    Util_1 = tslib_1.__importDefault(Util_1);
     class MediaManagerSelect extends Base_1.default {
         constructor(options) {
             super(options);
@@ -26,7 +27,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traver
                 if (store) {
                     const storeElement = document.getElementById(store);
                     if (storeElement && storeElement.tagName === "INPUT") {
-                        button.addEventListener("click", this._click.bind(this));
+                        button.addEventListener("click", (ev) => this._click(ev));
                         this._storeElements.set(button, storeElement);
                         // add remove button
                         const removeButton = document.createElement("p");
@@ -36,7 +37,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traver
                         icon.className = "icon icon16 fa-times";
                         removeButton.appendChild(icon);
                         if (!storeElement.value) {
-                            removeButton.style.display = "none";
+                            Util_1.default.hide(removeButton);
                         }
                         removeButton.addEventListener("click", (ev) => this._removeMedia(ev));
                     }
@@ -66,7 +67,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traver
             const media = this._media.get(~~target.dataset.objectId);
             // save selected media in store element
             const input = document.getElementById(this._activeButton.dataset.store);
-            input.value = media.mediaID;
+            input.value = media.mediaID.toString();
             Core.triggerEvent(input, "change");
             // display selected media
             const display = this._activeButton.dataset.display;
@@ -124,7 +125,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Dom/Traver
             const buttons = mediaElement.querySelector("nav.buttonGroupNavigation > ul");
             const listItem = document.createElement("li");
             listItem.className = "jsMediaSelectButton";
-            listItem.dataset.objectId = media.mediaID;
+            listItem.dataset.objectId = media.mediaID.toString();
             buttons.appendChild(listItem);
             listItem.innerHTML =
                 '<a><span class="icon icon16 fa-check jsTooltip" title="' +

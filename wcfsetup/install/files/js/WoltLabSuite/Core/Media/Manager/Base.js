@@ -29,7 +29,6 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
         constructor(options) {
             this._forceClipboard = false;
             this._hadInitiallyMarkedItems = false;
-            this._id = `mediaManager${mediaManagerCounter++}`;
             this._listItems = new Map();
             this._media = new Map();
             this._mediaEditor = null;
@@ -42,6 +41,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
                 imagesOnly: false,
                 minSearchLength: 3,
             }, options);
+            this._id = `mediaManager${mediaManagerCounter++}`;
             if (Permission.get("admin.content.cms.canManageMedia")) {
                 this._mediaEditor = new Editor_1.default(this);
             }
@@ -128,7 +128,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
                 this._mediaManagerMediaList = dialog.querySelector(".mediaManagerMediaList");
                 this._mediaCategorySelect = dialog.querySelector(".mediaManagerCategoryList > select");
                 if (this._mediaCategorySelect) {
-                    this._mediaCategorySelect.addEventListener("change", this._categoryChange.bind(this));
+                    this._mediaCategorySelect.addEventListener("change", () => this._categoryChange());
                 }
                 // store list items locally
                 const listItems = DomTraverse.childrenByTag(this._mediaManagerMediaList, "LI");
@@ -234,12 +234,12 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
                 DomUtil.replaceElement(UiDialog.getDialog(this).content.querySelector(".jsPagination"), newPagination);
                 this._pagination = new Pagination_1.default(newPagination, {
                     activePage: pageNo,
-                    callbackSwitch: this._search.search.bind(this._search),
+                    callbackSwitch: (pageNo) => this._search.search(pageNo),
                     maxPage: pageCount,
                 });
             }
             else if (this._pagination) {
-                this._pagination.getElement().style.display = "none";
+                DomUtil.hide(this._pagination.getElement());
             }
         }
         /**
@@ -266,14 +266,11 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
          * Sets the displayed media (after a search).
          */
         _setMedia(media) {
-            this._media = new Map();
-            Object.entries(media).forEach(([mediaId, media]) => {
-                this._media.set(~~mediaId, media);
-            });
+            this._media = new Map(Object.entries(media).map(([mediaId, media]) => [~~mediaId, media]));
             let info = DomTraverse.nextByClass(this._mediaManagerMediaList, "info");
             if (this._media.size) {
                 if (info) {
-                    info.style.display = "none";
+                    DomUtil.hide(info);
                 }
             }
             else {
@@ -282,15 +279,15 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
                     info.className = "info";
                     info.textContent = Language.get("wcf.media.search.noResults");
                 }
-                info.style.display = "block";
+                DomUtil.show(info);
                 DomUtil.insertAfter(info, this._mediaManagerMediaList);
             }
             DomTraverse.childrenByTag(this._mediaManagerMediaList, "LI").forEach((listItem) => {
                 if (!this._media.has(~~listItem.dataset.objectId)) {
-                    listItem.style.display = "none";
+                    DomUtil.hide(listItem);
                 }
                 else {
-                    listItem.style.display = "block";
+                    DomUtil.show(listItem);
                 }
             });
             DomChangeListener.trigger();
@@ -414,12 +411,12 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
             const checkbox = document.createElement("input");
             checkbox.className = "jsClipboardItem";
             checkbox.type = "checkbox";
-            checkbox.dataset.objectId = media.mediaID;
+            checkbox.dataset.objectId = media.mediaID.toString();
             label.appendChild(checkbox);
             if (Permission.get("admin.content.cms.canManageMedia")) {
                 const editButton = document.createElement("li");
                 editButton.className = "jsMediaEditButton";
-                editButton.dataset.objectId = media.mediaID;
+                editButton.dataset.objectId = media.mediaID.toString();
                 buttons.appendChild(editButton);
                 editButton.innerHTML = `
         <a>
@@ -428,7 +425,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
         </a>`;
                 const deleteButton = document.createElement("li");
                 deleteButton.className = "jsDeleteButton";
-                deleteButton.dataset.objectId = media.mediaID;
+                deleteButton.dataset.objectId = media.mediaID.toString();
                 // use temporary title to not unescape html in filename
                 const uuid = Core.getUuid();
                 deleteButton.dataset.confirmMessageHtml = StringUtil.unescapeHTML(Language.get("wcf.media.delete.confirmMessage", {
