@@ -238,24 +238,6 @@ class LoginForm extends AbstractCaptchaForm {
 	/**
 	 * @inheritDoc
 	 */
-	public function readData() {
-		parent::readData();
-		
-		// get preferred username
-		if (empty($_POST)) {
-			$cookieData = SessionHandler::getInstance()->getParsedCookieData(false);
-			if (isset($cookieData['userId'])) {
-				$user = new User($cookieData['userId']);
-				if ($user->userID) {
-					$this->username = $user->username;
-				}
-			}
-		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
