@@ -132,11 +132,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
          * Returns the id of the insert dialog based on the media files to be inserted.
          */
         _getInsertDialogId() {
-            let dialogId = "mediaInsert";
-            this._mediaToInsert.forEach((media, mediaId) => {
-                dialogId += `-${mediaId}`;
-            });
-            return dialogId;
+            return ["mediaInsert", ...this._mediaToInsert.keys()].join("-");
         }
         /**
          * Returns the supported thumbnail sizes (excluding `original`) for all media images to be inserted.
@@ -144,10 +140,10 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
         _getThumbnailSizes() {
             return ["small", "medium", "large"]
                 .map((size) => {
-                const supportSize = Array.from(this._mediaToInsert).every(([_mediaId, media]) => {
+                const sizeSupported = Array.from(this._mediaToInsert.values()).every((media) => {
                     return media[size + "ThumbnailType"] !== null;
                 });
-                if (supportSize) {
+                if (sizeSupported) {
                     return size;
                 }
                 return null;
@@ -195,10 +191,7 @@ define(["require", "exports", "tslib", "./Base", "../../Core", "../../Event/Hand
          * Inserts a series of uploaded images into the editor using a slider.
          */
         _insertMediaGallery() {
-            const mediaIds = [];
-            this._mediaToInsert.forEach(function (media) {
-                mediaIds.push(media.mediaID);
-            });
+            const mediaIds = Array.from(this._mediaToInsert.keys());
             this._options.editor.buffer.set();
             this._options.editor.insert.text("[wsmg='" + mediaIds.join(",") + "'][/wsmg]");
         }

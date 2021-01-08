@@ -13,13 +13,13 @@ import * as EventHandler from "../../Event/Handler";
 import MediaEditor from "../../Media/Editor";
 import * as DomChangeListener from "../../Dom/Change/Listener";
 import * as Clipboard from "../../Controller/Clipboard";
-import { MediaUploadSuccessEventData } from "../../Media/Data";
+import { Media, MediaUploadSuccessEventData } from "../../Media/Data";
 import MediaManager from "../../Media/Manager/Base";
 
 const _mediaEditor = new MediaEditor({
-  _editorSuccess: function (media, oldCategoryId) {
+  _editorSuccess: (media: Media, oldCategoryId: number) => {
     if (media.categoryID != oldCategoryId) {
-      window.setTimeout(function () {
+      window.setTimeout(() => {
         window.location.reload();
       }, 500);
     }

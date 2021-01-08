@@ -90,17 +90,18 @@ class MediaEditor implements AjaxCallbackObject {
    */
   protected _initEditor(content: HTMLElement, data: InitEditorData): void {
     this._availableLanguageCount = ~~data.returnValues.availableLanguageCount;
-    this._categoryIds = data.returnValues.categoryIDs.map((number) => number);
+    this._categoryIds = data.returnValues.categoryIDs.map((number) => ~~number);
 
     if (data.returnValues.mediaData) {
       this._media = data.returnValues.mediaData;
     }
+    const mediaId = this._media!.mediaID;
 
     // make sure that the language chooser is initialized first
     setTimeout(() => {
       if (this._availableLanguageCount > 1) {
         LanguageChooser.setLanguageId(
-          `mediaEditor_${this._media!.mediaID}_languageID`,
+          `mediaEditor_${mediaId}_languageID`,
           this._media!.languageID || window.LANGUAGE_ID,
         );
       }
@@ -117,29 +118,24 @@ class MediaEditor implements AjaxCallbackObject {
       const title = content.querySelector("input[name=title]") as HTMLInputElement;
       const altText = content.querySelector("input[name=altText]") as HTMLInputElement;
       const caption = content.querySelector("textarea[name=caption]") as HTMLInputElement;
-      const mediaId = this._media!.mediaID;
 
       if (this._availableLanguageCount > 1 && this._media!.isMultilingual) {
         if (document.getElementById(`altText_${mediaId}`)) {
-          LanguageInput.setValues(`altText_${this._media!.mediaID}`, (this._media!.altText || {}) as I18nValues);
+          LanguageInput.setValues(`altText_${mediaId}`, (this._media!.altText || {}) as I18nValues);
         }
 
         if (document.getElementById(`caption_${mediaId}`)) {
-          LanguageInput.setValues(`caption_${this._media!.mediaID}`, (this._media!.caption || {}) as I18nValues);
+          LanguageInput.setValues(`caption_${mediaId}`, (this._media!.caption || {}) as I18nValues);
         }
 
-        LanguageInput.setValues(`title_${this._media!.mediaID}`, (this._media!.title || {}) as I18nValues);
+        LanguageInput.setValues(`title_${mediaId}`, (this._media!.title || {}) as I18nValues);
       } else {
-        title.value = this._media!.title ? this._media!.title[this._media!.languageID || window.LANGUAGE_ID] : "";
+        title.value = this._media?.title[this._media!.languageID || window.LANGUAGE_ID] || "";
         if (altText) {
-          altText.value = this._media!.altText
-            ? this._media!.altText[this._media!.languageID || window.LANGUAGE_ID]
-            : "";
+          altText.value = this._media?.altText[this._media!.languageID || window.LANGUAGE_ID] || "";
         }
         if (caption) {
-          caption.value = this._media!.caption
-            ? this._media!.caption[this._media!.languageID || window.LANGUAGE_ID]
-            : "";
+          caption.value = this._media?.caption[this._media!.languageID || window.LANGUAGE_ID] || "";
         }
       }
 
@@ -159,7 +155,7 @@ class MediaEditor implements AjaxCallbackObject {
 
       // remove focus from input elements and scroll dialog to top
       (document.activeElement! as HTMLElement).blur();
-      (document.getElementById(`mediaEditor_${this._media!.mediaID}`)!.parentNode as HTMLElement).scrollTop = 0;
+      (document.getElementById(`mediaEditor_${mediaId}`)!.parentNode as HTMLElement).scrollTop = 0;
 
       // Initialize button to replace media file.
       const uploadButton = content.querySelector(".mediaManagerMediaReplaceButton")!;
@@ -169,7 +165,7 @@ class MediaEditor implements AjaxCallbackObject {
         content.appendChild(target);
       }
       new MediaReplace(
-        ~~this._media!.mediaID,
+        mediaId,
         DomUtil.identify(uploadButton),
         // Pass an anonymous element for non-images which is required internally
         // but not needed in this case.

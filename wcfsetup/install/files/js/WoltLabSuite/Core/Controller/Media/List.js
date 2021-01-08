@@ -17,9 +17,9 @@ define(["require", "exports", "tslib", "../../Media/List/Upload", "../../Media/C
     DomChangeListener = tslib_1.__importStar(DomChangeListener);
     Clipboard = tslib_1.__importStar(Clipboard);
     const _mediaEditor = new Editor_1.default({
-        _editorSuccess: function (media, oldCategoryId) {
+        _editorSuccess: (media, oldCategoryId) => {
             if (media.categoryID != oldCategoryId) {
-                window.setTimeout(function () {
+                window.setTimeout(() => {
                     window.location.reload();
                 }, 500);
             }

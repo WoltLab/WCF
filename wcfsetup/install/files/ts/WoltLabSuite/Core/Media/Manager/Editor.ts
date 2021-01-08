@@ -18,9 +18,9 @@ import * as Clipboard from "../../Controller/Clipboard";
 import { OnDropPayload } from "../../Ui/Redactor/DragAndDrop";
 import DomUtil from "../../Dom/Util";
 
-type PasteFromClipboard = {
+interface PasteFromClipboard {
   blob: Blob;
-};
+}
 
 class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
   protected _activeButton;
@@ -177,13 +177,7 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
    * Returns the id of the insert dialog based on the media files to be inserted.
    */
   protected _getInsertDialogId(): string {
-    let dialogId = "mediaInsert";
-
-    this._mediaToInsert.forEach((media, mediaId) => {
-      dialogId += `-${mediaId}`;
-    });
-
-    return dialogId;
+    return ["mediaInsert", ...this._mediaToInsert.keys()].join("-");
   }
 
   /**
@@ -192,11 +186,11 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
   protected _getThumbnailSizes(): string[] {
     return ["small", "medium", "large"]
       .map((size) => {
-        const supportSize = Array.from(this._mediaToInsert).every(([_mediaId, media]) => {
+        const sizeSupported = Array.from(this._mediaToInsert.values()).every((media) => {
           return media[size + "ThumbnailType"] !== null;
         });
 
-        if (supportSize) {
+        if (sizeSupported) {
           return size;
         }
 
@@ -252,10 +246,7 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
    * Inserts a series of uploaded images into the editor using a slider.
    */
   protected _insertMediaGallery(): void {
-    const mediaIds: number[] = [];
-    this._mediaToInsert.forEach(function (media) {
-      mediaIds.push(media.mediaID);
-    });
+    const mediaIds = Array.from(this._mediaToInsert.keys());
 
     this._options.editor!.buffer.set();
     this._options.editor!.insert.text("[wsmg='" + mediaIds.join(",") + "'][/wsmg]");

@@ -67,14 +67,16 @@ define(["require", "exports", "tslib", "../Core", "../Ui/Notification", "../Ui/D
          */
         _initEditor(content, data) {
             this._availableLanguageCount = ~~data.returnValues.availableLanguageCount;
-            this._categoryIds = data.returnValues.categoryIDs.map((number) => number);
+            this._categoryIds = data.returnValues.categoryIDs.map((number) => ~~number);
             if (data.returnValues.mediaData) {
                 this._media = data.returnValues.mediaData;
             }
+            const mediaId = this._media.mediaID;
             // make sure that the language chooser is initialized first
             setTimeout(() => {
+                var _a, _b, _c;
                 if (this._availableLanguageCount > 1) {
-                    LanguageChooser.setLanguageId(`mediaEditor_${this._media.mediaID}_languageID`, this._media.languageID || window.LANGUAGE_ID);
+                    LanguageChooser.setLanguageId(`mediaEditor_${mediaId}_languageID`, this._media.languageID || window.LANGUAGE_ID);
                 }
                 if (this._categoryIds.length) {
                     const categoryID = content.querySelector("select[name=categoryID]");
@@ -88,27 +90,22 @@ define(["require", "exports", "tslib", "../Core", "../Ui/Notification", "../Ui/D
                 const title = content.querySelector("input[name=title]");
                 const altText = content.querySelector("input[name=altText]");
                 const caption = content.querySelector("textarea[name=caption]");
-                const mediaId = this._media.mediaID;
                 if (this._availableLanguageCount > 1 && this._media.isMultilingual) {
                     if (document.getElementById(`altText_${mediaId}`)) {
-                        LanguageInput.setValues(`altText_${this._media.mediaID}`, (this._media.altText || {}));
+                        LanguageInput.setValues(`altText_${mediaId}`, (this._media.altText || {}));
                     }
                     if (document.getElementById(`caption_${mediaId}`)) {
-                        LanguageInput.setValues(`caption_${this._media.mediaID}`, (this._media.caption || {}));
+                        LanguageInput.setValues(`caption_${mediaId}`, (this._media.caption || {}));
                     }
-                    LanguageInput.setValues(`title_${this._media.mediaID}`, (this._media.title || {}));
+                    LanguageInput.setValues(`title_${mediaId}`, (this._media.title || {}));
                 }
                 else {
-                    title.value = this._media.title ? this._media.title[this._media.languageID || window.LANGUAGE_ID] : "";
+                    title.value = ((_a = this._media) === null || _a === void 0 ? void 0 : _a.title[this._media.languageID || window.LANGUAGE_ID]) || "";
                     if (altText) {
-                        altText.value = this._media.altText
-                            ? this._media.altText[this._media.languageID || window.LANGUAGE_ID]
-                            : "";
+                        altText.value = ((_b = this._media) === null || _b === void 0 ? void 0 : _b.altText[this._media.languageID || window.LANGUAGE_ID]) || "";
                     }
                     if (caption) {
-                        caption.value = this._media.caption
-                            ? this._media.caption[this._media.languageID || window.LANGUAGE_ID]
-                            : "";
+                        caption.value = ((_c = this._media) === null || _c === void 0 ? void 0 : _c.caption[this._media.languageID || window.LANGUAGE_ID]) || "";
                     }
                 }
                 if (this._availableLanguageCount > 1) {
@@ -123,7 +120,7 @@ define(["require", "exports", "tslib", "../Core", "../Ui/Notification", "../Ui/D
                 content.querySelector("button[data-type=submit]").addEventListener("click", () => this._saveData());
                 // remove focus from input elements and scroll dialog to top
                 document.activeElement.blur();
-                document.getElementById(`mediaEditor_${this._media.mediaID}`).parentNode.scrollTop = 0;
+                document.getElementById(`mediaEditor_${mediaId}`).parentNode.scrollTop = 0;
                 // Initialize button to replace media file.
                 const uploadButton = content.querySelector(".mediaManagerMediaReplaceButton");
                 let target = content.querySelector(".mediaThumbnail");
@@ -131,7 +128,7 @@ define(["require", "exports", "tslib", "../Core", "../Ui/Notification", "../Ui/D
                     target = document.createElement("div");
                     content.appendChild(target);
                 }
-                new Replace_1.default(~~this._media.mediaID, DomUtil.identify(uploadButton), 
+                new Replace_1.default(mediaId, DomUtil.identify(uploadButton), 
                 // Pass an anonymous element for non-images which is required internally
                 // but not needed in this case.
                 DomUtil.identify(target), {
