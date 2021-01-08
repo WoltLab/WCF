@@ -24,10 +24,12 @@ class SessionAccessLogListener implements IParameterizedEventListener {
 			// try to find existing session log
 			$sql = "SELECT	sessionLogID
 				FROM	wcf".WCF_N."_acp_session_log
-				WHERE	sessionID = ?";
+				WHERE	sessionID = ?
+				AND	lastActivityTime > ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([
 				WCF::getSession()->sessionID,
+				(TIME_NOW - 15 * 60)
 			]);
 			$row = $statement->fetchArray();
 			if (!empty($row['sessionLogID'])) {
