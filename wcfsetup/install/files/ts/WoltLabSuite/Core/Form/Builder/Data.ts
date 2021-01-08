@@ -4,6 +4,11 @@ interface InternalFormBuilderData {
   [key: string]: any;
 }
 
+export interface AjaxResponseReturnValues {
+  dialog: string;
+  formId: string;
+}
+
 export type FormBuilderData = InternalFormBuilderData | Promise<InternalFormBuilderData>;
 
 export interface FormBuilderDialogOptions {
@@ -13,9 +18,9 @@ export interface FormBuilderDialogOptions {
   closeCallback: () => void;
   destroyOnClose: boolean;
   dialog: DialogOptions;
-  onSubmit: (FormBuilderData, HTMLButtonElement) => void;
+  onSubmit: (formData: FormBuilderData, submitButton: HTMLButtonElement) => void;
   submitActionName?: string;
-  successCallback: (AjaxResponseReturnValues) => void;
+  successCallback: (returnValues: AjaxResponseReturnValues) => void;
   usesDboAction: boolean;
 }
 

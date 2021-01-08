@@ -14,12 +14,7 @@ import { DialogCallbackObject, DialogCallbackSetup, DialogData } from "../../Ui/
 import * as Ajax from "../../Ajax";
 import { AjaxCallbackObject, AjaxCallbackSetup, DatabaseObjectActionResponse, RequestOptions } from "../../Ajax/Data";
 import * as FormBuilderManager from "./Manager";
-import { FormBuilderData, FormBuilderDialogOptions } from "./Data";
-
-interface AjaxResponseReturnValues {
-  dialog: string;
-  formId: string;
-}
+import { AjaxResponseReturnValues, FormBuilderData, FormBuilderDialogOptions } from "./Data";
 
 interface AjaxResponse extends DatabaseObjectActionResponse {
   returnValues: AjaxResponseReturnValues;

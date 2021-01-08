@@ -131,7 +131,7 @@ function selectErroneousTabs(): void {
   });
 }
 
-function scrollEnable(isSetup) {
+function scrollEnable(isSetup: boolean) {
   _enableTabScroll = true;
   _tabMenus.forEach((tabMenu) => {
     const activeTab = tabMenu.getActiveTab();
@@ -147,7 +147,14 @@ function scrollDisable() {
   _enableTabScroll = false;
 }
 
-function scrollMenu(list, left, scrollLeft, scrollWidth, width, paddingRight) {
+function scrollMenu(
+  list: HTMLElement,
+  left: number,
+  scrollLeft: number,
+  scrollWidth: number,
+  width: number,
+  paddingRight: boolean,
+) {
   // allow some padding to indicate overflow
   if (paddingRight) {
     left -= 15;
@@ -170,7 +177,7 @@ function scrollMenu(list, left, scrollLeft, scrollWidth, width, paddingRight) {
 
   // new value is larger, we're scrolling towards the end
   if (scrollLeft < left) {
-    list.firstElementChild.style.setProperty("margin-left", `${scrollLeft - left}px`, "");
+    (list.firstElementChild as HTMLElement).style.setProperty("margin-left", `${scrollLeft - left}px`, "");
   } else {
     // new value is smaller, we're scrolling towards the start
     list.style.setProperty("padding-left", `${scrollLeft - left}px`, "");
@@ -178,7 +185,7 @@ function scrollMenu(list, left, scrollLeft, scrollWidth, width, paddingRight) {
 
   setTimeout(() => {
     list.classList.remove("enableAnimation");
-    list.firstElementChild.style.removeProperty("margin-left");
+    (list.firstElementChild as HTMLElement).style.removeProperty("margin-left");
     list.style.removeProperty("padding-left");
     list.scrollLeft = left;
   }, 300);
@@ -202,7 +209,7 @@ function rebuildMenuOverflow(menu: HTMLElement): void {
       overlayLeft.className = "tabMenuOverlayLeft icon icon24 fa-angle-left";
       overlayLeft.addEventListener("click", () => {
         const listWidth = list.clientWidth;
-        scrollMenu(list, list.scrollLeft - ~~(listWidth / 2), list.scrollLeft, list.scrollWidth, listWidth, 0);
+        scrollMenu(list, list.scrollLeft - ~~(listWidth / 2), list.scrollLeft, list.scrollWidth, listWidth, false);
       });
       menu.insertBefore(overlayLeft, menu.firstChild);
     }
@@ -220,7 +227,7 @@ function rebuildMenuOverflow(menu: HTMLElement): void {
       overlayRight.className = "tabMenuOverlayRight icon icon24 fa-angle-right";
       overlayRight.addEventListener("click", () => {
         const listWidth = list.clientWidth;
-        scrollMenu(list, list.scrollLeft + ~~(listWidth / 2), list.scrollLeft, list.scrollWidth, listWidth, 0);
+        scrollMenu(list, list.scrollLeft + ~~(listWidth / 2), list.scrollLeft, list.scrollWidth, listWidth, false);
       });
 
       menu.appendChild(overlayRight);

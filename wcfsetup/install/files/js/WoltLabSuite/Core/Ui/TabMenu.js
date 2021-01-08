@@ -181,7 +181,7 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
                 overlayLeft.className = "tabMenuOverlayLeft icon icon24 fa-angle-left";
                 overlayLeft.addEventListener("click", () => {
                     const listWidth = list.clientWidth;
-                    scrollMenu(list, list.scrollLeft - ~~(listWidth / 2), list.scrollLeft, list.scrollWidth, listWidth, 0);
+                    scrollMenu(list, list.scrollLeft - ~~(listWidth / 2), list.scrollLeft, list.scrollWidth, listWidth, false);
                 });
                 menu.insertBefore(overlayLeft, menu.firstChild);
             }
@@ -198,7 +198,7 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Dom/Util", 
                 overlayRight.className = "tabMenuOverlayRight icon icon24 fa-angle-right";
                 overlayRight.addEventListener("click", () => {
                     const listWidth = list.clientWidth;
-                    scrollMenu(list, list.scrollLeft + ~~(listWidth / 2), list.scrollLeft, list.scrollWidth, listWidth, 0);
+                    scrollMenu(list, list.scrollLeft + ~~(listWidth / 2), list.scrollLeft, list.scrollWidth, listWidth, false);
                 });
                 menu.appendChild(overlayRight);
             }

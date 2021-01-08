@@ -15,6 +15,8 @@ const enum Type {
   TagName,
 }
 
+type SiblingType = "nextElementSibling" | "previousElementSibling";
+
 const _test = new Map<Type, (...args: any[]) => boolean>([
   [Type.None, () => true],
   [Type.Selector, (element: Element, selector: string) => element.matches(selector)],
@@ -58,7 +60,7 @@ function _getParent(element: Element, type: Type, value: string, untilElement?: 
   return null;
 }
 
-function _getSibling(element: Element, siblingType: string, type: Type, value: string): Element | null {
+function _getSibling(element: Element, siblingType: SiblingType, type: Type, value: string): Element | null {
   if (!(element instanceof Element)) {
     throw new TypeError("Expected a valid element as first argument.");
   }

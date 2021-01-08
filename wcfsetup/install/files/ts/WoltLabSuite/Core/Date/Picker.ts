@@ -698,8 +698,15 @@ const DatePicker = {
             value = "";
           } else {
             element.dataset.value = time.toString();
-            const format = isTimeOnly ? "formatTime" : "formatDate" + (isDateTime ? "Time" : "");
-            value = DateUtil[format](date);
+            if (isTimeOnly) {
+              value = DateUtil.formatTime(date);
+            } else {
+              if (isDateTime) {
+                value = DateUtil.formatDateTime(date);
+              } else {
+                value = DateUtil.formatDate(date);
+              }
+            }
           }
         }
 
