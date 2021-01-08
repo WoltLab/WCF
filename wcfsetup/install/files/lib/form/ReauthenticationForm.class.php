@@ -3,6 +3,7 @@ namespace wcf\form;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\field\user\UserPasswordField;
 use wcf\system\form\builder\TemplateFormNode;
 use wcf\system\request\LinkHandler;
@@ -42,6 +43,10 @@ class ReauthenticationForm extends AbstractFormBuilderForm {
 		}
 		else {
 			throw new IllegalLinkException();
+		}
+		
+		if (!WCF::getUser()->userID) {
+			throw new PermissionDeniedException();
 		}
 		
 		if (!WCF::getSession()->needsReauthentication()) {
