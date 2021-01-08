@@ -19,8 +19,8 @@ use wcf\util\HeaderUtil;
 
 // 1) Check whether the cookies are already in place.
 $hasValidSessionCookie = false;
-if (!empty($_COOKIE[COOKIE_PREFIX."acp_session"])) {
-	$cookieValue = CryptoUtil::getValueFromSignedString($_COOKIE[COOKIE_PREFIX."acp_session"]);
+if (!empty($_COOKIE[COOKIE_PREFIX."user_session"])) {
+	$cookieValue = CryptoUtil::getValueFromSignedString($_COOKIE[COOKIE_PREFIX."user_session"]);
 	if ($cookieValue && \mb_strlen($cookieValue, '8bit') === 26) {
 		$sessionID = \bin2hex(\mb_substr($cookieValue, 1, 20, '8bit'));
 		if ($sessionID === WCF::getSession()->sessionID) {
@@ -43,7 +43,7 @@ if ($hasValidSessionCookie && $hasValidXsrfToken) {
 
 // 2) Set new session cookie.
 HeaderUtil::setCookie(
-	"acp_session",
+	"user_session",
 	CryptoUtil::createSignedString(
 		\pack(
 			'CA20CN',
