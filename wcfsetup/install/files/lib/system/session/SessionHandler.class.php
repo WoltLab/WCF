@@ -1319,14 +1319,6 @@ final class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * @since      5.4
-	 * @deprecated       5.4 - This is a noop
-	 */
-	public function deleteAcpSessionsExcept(User $user, ?string $sessionID = null): void {
-		// noop
-	}
-	
-	/**
 	 * Deletes a user session with the given session ID.
 	 * 
 	 * @since       5.4
@@ -1342,13 +1334,5 @@ final class SessionHandler extends SingletonFactory {
 			WHERE	        sessionID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$sessionID]);
-	}
-	
-	/**
-	 * @since       5.4
-	 * @deprecated       5.4 - This is a noop
-	 */
-	public function deleteAcpSession(string $sessionID): void {
-		// noop
 	}
 }
