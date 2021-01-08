@@ -130,12 +130,12 @@ class MediaEditor implements AjaxCallbackObject {
 
         LanguageInput.setValues(`title_${mediaId}`, (this._media!.title || {}) as I18nValues);
       } else {
-        title.value = this._media?.title[this._media!.languageID || window.LANGUAGE_ID] || "";
+        title.value = this._media?.title[this._media.languageID || window.LANGUAGE_ID] || "";
         if (altText) {
-          altText.value = this._media?.altText[this._media!.languageID || window.LANGUAGE_ID] || "";
+          altText.value = this._media?.altText[this._media.languageID || window.LANGUAGE_ID] || "";
         }
         if (caption) {
-          caption.value = this._media?.caption[this._media!.languageID || window.LANGUAGE_ID] || "";
+          caption.value = this._media?.caption[this._media.languageID || window.LANGUAGE_ID] || "";
         }
       }
 
