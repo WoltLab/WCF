@@ -138,7 +138,7 @@ class WCFACP extends WCF {
 				exit;
 			}
 		}
-		else if (empty($pathInfo) || !preg_match('~^/?(login|logout|multifactor-authentication)/~i', $pathInfo)) {
+		else if (empty($pathInfo) || !preg_match('~^/?(login|logout|multifactor-authentication|reauthentication)/~i', $pathInfo)) {
 			if (WCF::getUser()->userID == 0) {
 				// work-around for AJAX-requests within ACP
 				if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
@@ -170,6 +170,13 @@ class WCFACP extends WCF {
 				}
 				else {
 					WCF::getSession()->checkPermissions(['admin.general.canUseAcp']);
+				}
+				
+				if (WCF::getSession()->needsReauthentication()) {
+					HeaderUtil::redirect(LinkHandler::getInstance()->getLink('Reauthentication', [
+						'url' => RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . WCF::getSession()->requestURI
+					]));
+					exit;
 				}
 				
 				// force debug mode if in ACP and authenticated
