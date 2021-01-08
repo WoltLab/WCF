@@ -214,13 +214,13 @@ final class SessionHandler extends SingletonFactory {
 		}
 		
 		if ($version === 1) {
-			if ($length !== 26) {
+			if ($length !== 22) {
 				throw new \InvalidArgumentException(\sprintf(
-					'Expected exactly 26 Bytes, %d given.',
+					'Expected exactly 22 Bytes, %d given.',
 					$length
 				));
 			}
-			$data = \unpack('Cversion/A20sessionId/Ctimestep/NuserId', $value);
+			$data = \unpack('Cversion/A20sessionId/Ctimestep', $value);
 			$data['sessionId'] = Hex::encode($data['sessionId']);
 			
 			return $data;
@@ -293,11 +293,10 @@ final class SessionHandler extends SingletonFactory {
 		}
 		
 		return CryptoUtil::createSignedString(\pack(
-			'CA20CN',
+			'CA20C',
 			1,
 			Hex::decode($this->sessionID),
-			$this->getCookieTimestep(),
-			$this->user->userID ?: 0
+			$this->getCookieTimestep()
 		));
 	}
 	
@@ -353,11 +352,8 @@ final class SessionHandler extends SingletonFactory {
 		
 		$cookieData = $this->getParsedCookieData();
 		
-		// No refresh is needed if userId and timestep match up.
-		if (
-			$cookieData['userId'] === $this->user->userID &&
-			$cookieData['timestep'] === $this->getCookieTimestep()
-		) {
+		// No refresh is needed if the timestep matches up.
+		if ($cookieData['timestep'] === $this->getCookieTimestep()) {
 			return;
 		}
 		

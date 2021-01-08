@@ -21,7 +21,7 @@ use wcf\util\HeaderUtil;
 $hasValidSessionCookie = false;
 if (!empty($_COOKIE[COOKIE_PREFIX."user_session"])) {
 	$cookieValue = CryptoUtil::getValueFromSignedString($_COOKIE[COOKIE_PREFIX."user_session"]);
-	if ($cookieValue && \mb_strlen($cookieValue, '8bit') === 26) {
+	if ($cookieValue && \mb_strlen($cookieValue, '8bit') === 22) {
 		$sessionID = \bin2hex(\mb_substr($cookieValue, 1, 20, '8bit'));
 		if ($sessionID === WCF::getSession()->sessionID) {
 			$hasValidSessionCookie = true;
@@ -46,11 +46,10 @@ HeaderUtil::setCookie(
 	"user_session",
 	CryptoUtil::createSignedString(
 		\pack(
-			'CA20CN',
+			'CA20C',
 			1,
 			\hex2bin(WCF::getSession()->sessionID),
-			0,
-			WCF::getUser()->userID
+			0
 		)
 	)
 );

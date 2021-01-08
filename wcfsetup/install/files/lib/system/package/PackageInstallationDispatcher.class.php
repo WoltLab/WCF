@@ -244,11 +244,10 @@ class PackageInstallationDispatcher {
 						// function during the setup.
 						CryptoUtil::createSignedString(
 							\pack(
-								'CA20CN',
+								'CA20C',
 								1,
 								\hex2bin(WCF::getSession()->sessionID),
-								0,
-								WCF::getUser()->userID
+								0
 							)
 						)
 					);
