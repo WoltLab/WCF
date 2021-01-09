@@ -43,7 +43,7 @@ use wcf\util\XMLWriter;
 class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	const EXCLUDE_WCF_VERSION = '6.0.0 Alpha 1';
 	const INFO_FILE = 'style.xml';
-	const VALID_IMAGE_EXTENSIONS = ['gif', 'jpg', 'jpeg', 'png', 'svg', 'xml', 'json'];
+	const VALID_IMAGE_EXTENSIONS = ['gif', 'jpg', 'jpeg', 'png', 'svg', 'xml', 'json', "webp"];
 	
 	/**
 	 * list of compatible API versions
@@ -904,7 +904,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$imagesTar = new TarWriter($imagesTarName);
 			FileUtil::makeWritable($imagesTarName);
 			
-			$regEx = new Regex('\.(jpg|jpeg|gif|png|svg|ico|json|xml|txt)$', Regex::CASE_INSENSITIVE);
+			$regEx = new Regex('\.(jpg|jpeg|gif|png|svg|ico|json|xml|txt|webp)$', Regex::CASE_INSENSITIVE);
 			$iterator = new \RecursiveIteratorIterator(
 				new \RecursiveDirectoryIterator(
 					$this->getAssetPath(),

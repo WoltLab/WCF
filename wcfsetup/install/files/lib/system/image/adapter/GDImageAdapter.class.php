@@ -111,9 +111,16 @@ class GDImageAdapter implements IImageAdapter {
 				}
 			break;
 			
+			case IMAGETYPE_WEBP:
+				// suppress warnings and properly handle errors
+				$this->image = @imagecreatefromwebp($file);
+				if ($this->image === false) {
+					throw new SystemException("Could not read webp image '".$file."'.");
+				}
+			break;
+			
 			default:
 				throw new SystemException("Could not read image '".$file."', format is not recognized.");
-			break;
 		}
 	}
 	
@@ -347,6 +354,9 @@ class GDImageAdapter implements IImageAdapter {
 		}
 		else if ($this->type == IMAGETYPE_PNG) {
 			imagepng($image);
+		}
+		else if ($this->type == IMAGETYPE_WEBP) {
+			imagewebp($image);
 		}
 		else if (function_exists('imageJPEG')) {
 			imagejpeg($image, null, 90);
