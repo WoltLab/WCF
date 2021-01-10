@@ -181,6 +181,23 @@ final class ImageUtil {
 	}
 	
 	/**
+	 * Examines the `accept` header to determine if the browser
+	 * supports WebP images.
+	 */
+	public static function browserSupportsWebP(): bool {
+		static $supportsWebP = null;
+		
+		if ($supportsWebP === null) {
+			$supportsWebP = false;
+			if (!empty($_SERVER["HTTP_ACCEPT"]) && preg_match("~(?:^|[,;])image/webp[,;]~", $_SERVER["HTTP_ACCEPT"])) {
+				$supportsWebP = true;
+			}
+		}
+		
+		return $supportsWebP;
+	}
+	
+	/**
 	 * Forbid creation of ImageUtil objects.
 	 */
 	private function __construct() {

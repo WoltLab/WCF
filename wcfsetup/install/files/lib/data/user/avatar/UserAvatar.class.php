@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\user\avatar;
 use wcf\data\DatabaseObject;
+use wcf\util\ImageUtil;
 use wcf\util\StringUtil;
 use wcf\system\WCF;
 
@@ -19,6 +20,7 @@ use wcf\system\WCF;
  * @property-read	integer		$height			height of the user avatar image
  * @property-read	integer|null	$userID			id of the user to which the user avatar belongs or null
  * @property-read	string		$fileHash		SHA1 hash of the original avatar file
+ * @property-read	integer		$hasWebP		`1` if there is a WebP variant, else `0`
  */
 class UserAvatar extends DatabaseObject implements IUserAvatar {
 	/**
@@ -65,7 +67,14 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 	 * @return	string
 	 */
 	public function getFilename($size = null) {
-		return substr($this->fileHash, 0, 2) . '/' . $this->avatarID . '-' . $this->fileHash . ($size !== null ? ('-' . $size) : '') . '.' . $this->avatarExtension;
+		if ($this->hasWebP && ImageUtil::browserSupportsWebP()) {
+			$fileExtension = "webp";
+		}
+		else {
+			$fileExtension = $this->avatarExtension;
+		}
+		
+		return substr($this->fileHash, 0, 2) . '/' . $this->avatarID . '-' . $this->fileHash . ($size !== null ? ('-' . $size) : '') . '.' . $fileExtension;
 	}
 	
 	/**

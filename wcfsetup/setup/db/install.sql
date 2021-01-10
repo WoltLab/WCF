@@ -1553,7 +1553,8 @@ CREATE TABLE wcf1_user_avatar (
 	width SMALLINT(5) NOT NULL DEFAULT 0,
 	height SMALLINT(5) NOT NULL DEFAULT 0,
 	userID INT(10),
-	fileHash VARCHAR(40) NOT NULL DEFAULT ''
+	fileHash VARCHAR(40) NOT NULL DEFAULT '',
+	hasWebP TINYINT(1) NOT NULL DEFAULT 0,
 );
 
 DROP TABLE IF EXISTS wcf1_user_collapsible_content;
