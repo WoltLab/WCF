@@ -102,6 +102,12 @@ class AvatarUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 			if (@copy($fileLocation, $this->avatar->getLocation())) {
 				@unlink($fileLocation);
 				
+				// Create the WebP variant or the JPEG fallback of the avatar.
+				$avatarEditor = new UserAvatarEditor($this->avatar);
+				if ($avatarEditor->createAvatarVariant()) {
+					$this->avatar = new UserAvatar($this->avatar->avatarID);
+				}
+				
 				// delete old avatar
 				if ($this->user->avatarID) {
 					$action = new UserAvatarAction([$this->user->avatarID], 'delete');

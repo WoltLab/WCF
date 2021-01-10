@@ -54,20 +54,22 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 	 * Returns the physical location of this avatar.
 	 * 
 	 * @param	integer		$size
+	 * @param boolean $forceWebP
 	 * @return	string
 	 */
-	public function getLocation($size = null) {
-		return WCF_DIR . 'images/avatars/' . $this->getFilename($size);
+	public function getLocation($size = null, $forceWebP = null) {
+		return WCF_DIR . 'images/avatars/' . $this->getFilename($size, $forceWebP);
 	}
 	
 	/**
 	 * Returns the file name of this avatar.
 	 * 
 	 * @param	integer		$size
+	 * @param boolean $forceWebP
 	 * @return	string
 	 */
-	public function getFilename($size = null) {
-		if ($this->hasWebP && ImageUtil::browserSupportsWebP()) {
+	public function getFilename($size = null, $forceWebP = null) {
+		if ($forceWebP === true || ($forceWebP === null && $this->hasWebP && ImageUtil::browserSupportsWebP())) {
 			$fileExtension = "webp";
 		}
 		else {
