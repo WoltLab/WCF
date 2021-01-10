@@ -58,12 +58,16 @@ class UserAvatarEditor extends DatabaseObjectEditor {
 		foreach (UserAvatar::$avatarThumbnailSizes as $size) {
 			if ($this->width < $size && $this->height < $size) break;
 			
-			@unlink($this->getLocation($size));
+			@unlink($this->getLocation($size, false));
 		}
-		@unlink($this->getLocation('resize'));
+		@unlink($this->getLocation('resize', false));
 		
 		// delete original size
-		@unlink($this->getLocation());
+		@unlink($this->getLocation(null, false));
+		
+		if ($this->hasWebP) {
+			@unlink($this->getLocation(null, true));
+		}
 	}
 	
 	/**
