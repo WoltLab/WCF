@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\user\avatar;
 use wcf\data\DatabaseObjectEditor;
+use wcf\system\image\ImageHandler;
 use wcf\system\WCF;
 
 /**
@@ -89,13 +90,12 @@ class UserAvatarEditor extends DatabaseObjectEditor {
 			return false;
 		}
 		
-		// The image adapters do not support the conversion to different
-		// file types. However, we do require full GD support for jpeg, png
-		// and WebP, therefore we can safely rely on the GD library for
-		// the conversion. The images are so small, that neither the speed
-		// nor the quality will noticeably differ from Imagick.
 		$filename = $this->getLocation();
 		$filenameWebP = $this->getLocation(null, true);
+		
+		$imageAdapter = ImageHandler::getInstance()->getAdapter();
+		$imageAdapter->loadFile($filename);
+		$image = $imageAdapter->getImage();
 		
 		$data = ["hasWebP" => 1];
 		
@@ -104,8 +104,7 @@ class UserAvatarEditor extends DatabaseObjectEditor {
 		if ($this->avatarExtension === "webp") {
 			$filenameJpeg = preg_replace('~\.webp$~', '.jpeg', $filenameWebP);
 			
-			$source = imagecreatefromwebp($filename);
-			imagejpeg($source, $filenameJpeg);
+			$imageAdapter->saveImageAs($image, $filenameJpeg, "jpeg", 80);
 			
 			$data = [
 				"avatarExtension" => "jpeg",
@@ -113,22 +112,7 @@ class UserAvatarEditor extends DatabaseObjectEditor {
 			];
 		}
 		else {
-			// The source avatar is not a WebP image.
-			switch ($this->avatarExtension) {
-				case "jpg":
-				case "jpeg":
-					$source = imagecreatefromjpeg($filename);
-					break;
-				
-				case "png":
-					$source = imagecreatefrompng($filename);
-					break;
-				
-				default:
-					throw new \LogicException("Unreachable");
-			}
-			
-			imagewebp($source, $this->getLocation(null, true));
+			$imageAdapter->saveImageAs($imageAdapter, $this->getLocation(null, true), "webp", 80);
 		}
 		
 		$this->update($data);
