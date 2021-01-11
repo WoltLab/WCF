@@ -494,7 +494,7 @@
 		emptyHtml: '<p>&#x200b;</p>',
 		invisibleSpace: '&#x200b;',
 		emptyHtmlRendered: $('').html('​').html(),
-		imageTypes: ['image/png', 'image/jpeg', 'image/gif', "image/webp"],
+		imageTypes: ['image/png', 'image/jpeg', 'image/gif', 'image/webp'],
 		userAgent: navigator.userAgent.toLowerCase(),
 		observe: {
 			dropdowns: []

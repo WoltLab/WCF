@@ -43,7 +43,7 @@ use wcf\util\XMLWriter;
 class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	const EXCLUDE_WCF_VERSION = '6.0.0 Alpha 1';
 	const INFO_FILE = 'style.xml';
-	const VALID_IMAGE_EXTENSIONS = ['gif', 'jpg', 'jpeg', 'png', 'svg', 'xml', 'json', "webp"];
+	const VALID_IMAGE_EXTENSIONS = ['gif', 'jpg', 'jpeg', 'png', 'svg', 'xml', 'json', 'webp'];
 	
 	/**
 	 * list of compatible API versions

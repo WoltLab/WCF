@@ -336,7 +336,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				promise = Array.prototype.reduce.call(files, (function (acc, file) {
 					return acc.then((function (arr) {
 						// Ignore anything that is not one of the 4 basic image types.
-						if (['image/png', 'image/gif', 'image/jpeg', "image/webp"].indexOf(file.type) === -1) {
+						if (['image/png', 'image/gif', 'image/jpeg', 'image/webp'].indexOf(file.type) === -1) {
 							arr.push(file);
 							return arr;
 						}

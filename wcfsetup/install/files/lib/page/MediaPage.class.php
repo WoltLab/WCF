@@ -65,7 +65,7 @@ class MediaPage extends AbstractPage {
 		'image/x-png',
 		'application/pdf',
 		'image/pjpeg',
-		"image/webp",
+		'image/webp',
 	];
 	
 	/**
