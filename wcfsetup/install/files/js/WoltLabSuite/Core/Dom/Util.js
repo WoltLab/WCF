@@ -403,7 +403,8 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
         },
         /**
          * Finds the closest element that matches the provided selector. This is a helper
-         * function because `closest()` does exist on elements only.
+         * function because `closest()` does exist on elements only, for example, it is
+         * missing on text nodes.
          */
         closest(node, selector) {
             const element = node instanceof HTMLElement ? node : node.parentElement;

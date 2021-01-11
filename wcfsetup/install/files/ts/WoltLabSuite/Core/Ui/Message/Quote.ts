@@ -23,7 +23,7 @@ interface ElementBoundaries {
   top: number;
 }
 
-class UiMessageQuote implements AjaxCallbackObject {
+export class UiMessageQuote implements AjaxCallbackObject {
   private activeMessageId = "";
 
   private readonly className: string;

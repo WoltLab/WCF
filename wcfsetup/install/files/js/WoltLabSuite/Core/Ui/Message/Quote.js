@@ -1,6 +1,7 @@
 define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/Handler", "../../Language", "../../Dom/Change/Listener", "../../Dom/Util"], function (require, exports, tslib_1, Ajax, Core, EventHandler, Language, Listener_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    exports.UiMessageQuote = void 0;
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     EventHandler = tslib_1.__importStar(EventHandler);
@@ -418,5 +419,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
             });
         }
     }
+    exports.UiMessageQuote = UiMessageQuote;
     exports.default = UiMessageQuote;
 });
