@@ -496,6 +496,47 @@ class GDImageAdapter implements IImageAdapter {
 	/**
 	 * @inheritDoc
 	 */
+	public function saveImageAs($image, string $filename, string $type, int $quality = 100): void {
+		if (!$this->isImage($image)) {
+			throw new SystemException("Given image is not a valid image resource.");
+		}
+		
+		ob_start();
+		
+		imagealphablending($image, false);
+		imagesavealpha($image, true);
+		
+		switch ($type) {
+			case "gif":
+				imagegif($image);
+				break;
+				
+			case "jpg":
+			case "jpeg":
+				imagejpeg($image, null, $quality);
+				break;
+				
+			case "png":
+				imagepng($image, null, $quality);
+				break;
+			
+			case "webp":
+				imagewebp($image, null, $quality);
+				break;
+			
+			default:
+				throw new \LogicException("Unreachable");
+		}
+		
+		$stream = ob_get_contents();
+		ob_end_clean();
+		
+		file_put_contents($filename, $stream);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public static function isSupported() {
 		return function_exists('gd_info');
 	}
