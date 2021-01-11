@@ -388,7 +388,6 @@ class SmtpEmailTransport implements IEmailTransport {
 	 * @param	Mailbox		$envelopeTo
 	 * @throws	\Exception
 	 * @throws	PermanentFailure
-	 * @throws	SystemException
 	 */
 	public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo) {
 		// delivery is locked
@@ -407,7 +406,7 @@ class SmtpEmailTransport implements IEmailTransport {
 				$this->disconnect();
 				throw $e;
 			}
-			catch (SystemException $e) {
+			catch (\Exception $e) {
 				$this->disconnect();
 				throw $e;
 			}
