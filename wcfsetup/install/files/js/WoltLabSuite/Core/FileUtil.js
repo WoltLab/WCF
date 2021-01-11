@@ -110,10 +110,7 @@ define(["require", "exports", "tslib", "./StringUtil"], function (require, expor
     /**
      * Formats the given filesize.
      */
-    function formatFilesize(byte, precision) {
-        if (precision === undefined) {
-            precision = 2;
-        }
+    function formatFilesize(byte, precision = 2) {
         let symbol = "Byte";
         if (byte >= 1000) {
             byte /= 1000;

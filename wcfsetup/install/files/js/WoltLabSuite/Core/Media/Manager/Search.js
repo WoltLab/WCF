@@ -1,94 +1,71 @@
 /**
  * Provides the media search for the media manager.
  *
- * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Media/Manager/Search
+ * @author  Matthias Schmidt
+ * @copyright 2001-2021 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Media/Manager/Search
  */
-define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/SimpleDropdown'], function (Ajax, Core, DomTraverse, DomUtil, EventKey, Language, UiSimpleDropdown) {
+define(["require", "exports", "tslib", "../../Dom/Traverse", "../../Language", "../../Ajax", "../../Core", "../../Dom/Util"], function (require, exports, tslib_1, DomTraverse, Language, Ajax, Core, Util_1) {
     "use strict";
-    if (!COMPILER_TARGET_DEFAULT) {
-        var Fake = function () { };
-        Fake.prototype = {
-            _ajaxSetup: function () { },
-            _ajaxSuccess: function () { },
-            _cancelSearch: function () { },
-            _keyPress: function () { },
-            _search: function () { },
-            hideSearch: function () { },
-            resetSearch: function () { },
-            showSearch: function () { }
-        };
-        return Fake;
-    }
-    /**
-     * @constructor
-     */
-    function MediaManagerSearch(mediaManager) {
-        this._mediaManager = mediaManager;
-        this._searchMode = false;
-        this._searchContainer = elByClass('mediaManagerSearch', mediaManager.getDialog())[0];
-        this._input = elByClass('mediaManagerSearchField', mediaManager.getDialog())[0];
-        this._input.addEventListener('keypress', this._keyPress.bind(this));
-        this._cancelButton = elByClass('mediaManagerSearchCancelButton', mediaManager.getDialog())[0];
-        this._cancelButton.addEventListener('click', this._cancelSearch.bind(this));
-    }
-    MediaManagerSearch.prototype = {
-        /**
-         * Returns the data for Ajax to setup the Ajax/Request object.
-         *
-         * @return	{object}	setup data for Ajax/Request object
-         */
-        _ajaxSetup: function () {
+    DomTraverse = tslib_1.__importStar(DomTraverse);
+    Language = tslib_1.__importStar(Language);
+    Ajax = tslib_1.__importStar(Ajax);
+    Core = tslib_1.__importStar(Core);
+    Util_1 = tslib_1.__importDefault(Util_1);
+    class MediaManagerSearch {
+        constructor(mediaManager) {
+            this._searchMode = false;
+            this._mediaManager = mediaManager;
+            const dialog = mediaManager.getDialog();
+            this._searchContainer = dialog.querySelector(".mediaManagerSearch");
+            this._input = dialog.querySelector(".mediaManagerSearchField");
+            this._input.addEventListener("keypress", (ev) => this._keyPress(ev));
+            this._cancelButton = dialog.querySelector(".mediaManagerSearchCancelButton");
+            this._cancelButton.addEventListener("click", () => this._cancelSearch());
+        }
+        _ajaxSetup() {
             return {
                 data: {
-                    actionName: 'getSearchResultList',
-                    className: 'wcf\\data\\media\\MediaAction',
-                    interfaceName: 'wcf\\data\\ISearchAction'
-                }
+                    actionName: "getSearchResultList",
+                    className: "wcf\\data\\media\\MediaAction",
+                    interfaceName: "wcf\\data\\ISearchAction",
+                },
             };
-        },
-        /**
-         * Handles successful AJAX requests.
-         *
-         * @param	{object}	data	response data
-         */
-        _ajaxSuccess: function (data) {
-            this._mediaManager.setMedia(data.returnValues.media || {}, data.returnValues.template || '', {
+        }
+        _ajaxSuccess(data) {
+            this._mediaManager.setMedia(data.returnValues.media || {}, data.returnValues.template || "", {
                 pageCount: data.returnValues.pageCount || 0,
-                pageNo: data.returnValues.pageNo || 0
+                pageNo: data.returnValues.pageNo || 0,
             });
-            elByClass('dialogContent', this._mediaManager.getDialog())[0].scrollTop = 0;
-        },
+            this._mediaManager.getDialog().querySelector(".dialogContent").scrollTop = 0;
+        }
         /**
          * Cancels the search after clicking on the cancel search button.
          */
-        _cancelSearch: function () {
+        _cancelSearch() {
             if (this._searchMode) {
                 this._searchMode = false;
                 this.resetSearch();
                 this._mediaManager.resetMedia();
             }
-        },
+        }
         /**
          * Hides the search string threshold error.
          */
-        _hideStringThresholdError: function () {
-            var innerInfo = DomTraverse.childByClass(this._input.parentNode.parentNode, 'innerInfo');
+        _hideStringThresholdError() {
+            const innerInfo = DomTraverse.childByClass(this._input.parentNode.parentNode, "innerInfo");
             if (innerInfo) {
-                elHide(innerInfo);
+                Util_1.default.hide(innerInfo);
             }
-        },
+        }
         /**
          * Handles the `[ENTER]` key to submit the form.
-         *
-         * @param	{Event}		event		event object
          */
-        _keyPress: function (event) {
-            if (EventKey.Enter(event)) {
+        _keyPress(event) {
+            if (event.key === "Enter") {
                 event.preventDefault();
-                if (this._input.value.length >= this._mediaManager.getOption('minSearchLength')) {
+                if (this._input.value.length >= this._mediaManager.getOption("minSearchLength")) {
                     this._hideStringThresholdError();
                     this.search();
                 }
@@ -96,55 +73,53 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/
                     this._showStringThresholdError();
                 }
             }
-        },
+        }
         /**
          * Shows the search string threshold error.
          */
-        _showStringThresholdError: function () {
-            var innerInfo = DomTraverse.childByClass(this._input.parentNode.parentNode, 'innerInfo');
+        _showStringThresholdError() {
+            let innerInfo = DomTraverse.childByClass(this._input.parentNode.parentNode, "innerInfo");
             if (innerInfo) {
-                elShow(innerInfo);
+                Util_1.default.show(innerInfo);
             }
             else {
-                innerInfo = elCreate('p');
-                innerInfo.className = 'innerInfo';
-                innerInfo.textContent = Language.get('wcf.media.search.info.searchStringThreshold', {
-                    minSearchLength: this._mediaManager.getOption('minSearchLength')
+                innerInfo = document.createElement("p");
+                innerInfo.className = "innerInfo";
+                innerInfo.textContent = Language.get("wcf.media.search.info.searchStringThreshold", {
+                    minSearchLength: this._mediaManager.getOption("minSearchLength"),
                 });
-                DomUtil.insertAfter(innerInfo, this._input.parentNode);
+                this._input.parentNode.insertAdjacentElement("afterend", innerInfo);
             }
-        },
+        }
         /**
          * Hides the media search.
          */
-        hideSearch: function () {
-            elHide(this._searchContainer);
-        },
+        hideSearch() {
+            Util_1.default.hide(this._searchContainer);
+        }
         /**
          * Resets the media search.
          */
-        resetSearch: function () {
-            this._input.value = '';
-        },
+        resetSearch() {
+            this._input.value = "";
+        }
         /**
          * Shows the media search.
          */
-        showSearch: function () {
-            elShow(this._searchContainer);
-        },
+        showSearch() {
+            Util_1.default.show(this._searchContainer);
+        }
         /**
          * Sends an AJAX request to fetch search results.
-         *
-         * @param	{integer}	pageNo
          */
-        search: function (pageNo) {
+        search(pageNo) {
             if (typeof pageNo !== "number") {
                 pageNo = 1;
             }
-            var searchString = this._input.value;
-            if (searchString && this._input.value.length < this._mediaManager.getOption('minSearchLength')) {
+            let searchString = this._input.value;
+            if (searchString && this._input.value.length < this._mediaManager.getOption("minSearchLength")) {
                 this._showStringThresholdError();
-                searchString = '';
+                searchString = "";
             }
             else {
                 this._hideStringThresholdError();
@@ -153,13 +128,14 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/
             Ajax.api(this, {
                 parameters: {
                     categoryID: this._mediaManager.getCategoryId(),
-                    imagesOnly: this._mediaManager.getOption('imagesOnly'),
+                    imagesOnly: this._mediaManager.getOption("imagesOnly"),
                     mode: this._mediaManager.getMode(),
                     pageNo: pageNo,
-                    searchString: searchString
-                }
+                    searchString: searchString,
+                },
             });
-        },
-    };
+        }
+    }
+    Core.enableLegacyInheritance(MediaManagerSearch);
     return MediaManagerSearch;
 });
