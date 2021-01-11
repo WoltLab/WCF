@@ -2,6 +2,7 @@
 namespace wcf\data\user\rank;
 use wcf\data\DatabaseObject;
 use wcf\data\ITitledObject;
+use wcf\system\file\upload\UploadFile;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -24,6 +25,9 @@ use wcf\util\StringUtil;
  * @property-read	integer		$hideTitle		hides the generic title of the rank, but not custom titles, `0` to show the title at all times
  */
 class UserRank extends DatabaseObject implements ITitledObject {
+	
+	public const RANK_IMAGE_DIR = 'images/rank/';
+	
 	/**
 	 * Returns the image of this user rank.
 	 * 
@@ -31,7 +35,7 @@ class UserRank extends DatabaseObject implements ITitledObject {
 	 */
 	public function getImage() {
 		if ($this->rankImage) {
-			$image = '<img src="'.(!preg_match('~^(/|https?://)~i', $this->rankImage) ? WCF::getPath() : '').StringUtil::encodeHTML($this->rankImage).'" alt="">';
+			$image = '<img src="'. WCF::getPath() . self::RANK_IMAGE_DIR . StringUtil::encodeHTML($this->rankImage) .'" alt="">';
 			if ($this->repeatImage > 1) $image = str_repeat($image, $this->repeatImage);
 			return $image;
 		}
@@ -54,5 +58,18 @@ class UserRank extends DatabaseObject implements ITitledObject {
 	 */
 	public function showTitle() {
 		return !$this->rankImage || !$this->hideTitle;
+	}
+	
+	/**
+	 * Returns the currently uploaded rank image or null, if the rank has no image.
+	 *
+	 * @since       5.4
+	 */
+	public function getImageFile(): ?UploadFile {
+		if ($this->rankImage) {
+			return new UploadFile(WCF_DIR . self::RANK_IMAGE_DIR . $this->rankImage, $this->rankImage, true, true, true);
+		}
+		
+		return null;
 	}
 }

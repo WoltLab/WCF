@@ -96,13 +96,16 @@
 		<dl{if $errorField == 'rankImage'} class="formError"{/if}>
 			<dt><label for="rankImage">{lang}wcf.acp.user.rank.image{/lang}</label></dt>
 			<dd>
-				<input type="text" id="rankImage" name="rankImage" value="{$rankImage}" class="long">
+				{@$__wcf->getUploadHandler()->renderField('rankImage')}
 				{if $errorField == 'rankImage'}
 					<small class="innerError">
-						{lang}wcf.acp.user.rank.image.error.{@$errorType}{/lang}
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.acp.user.rank.image.error.{$errorType}{/lang}
+						{/if}
 					</small>
 				{/if}
-				<small>{lang}wcf.acp.user.rank.rankImage.description{/lang}</small>
 			</dd>
 		</dl>
 		
@@ -118,13 +121,6 @@
 				<small>{lang}wcf.acp.user.rank.repeatImage.description{/lang}</small>
 			</dd>
 		</dl>
-		
-		{if $action == 'edit' && $rank->rankImage}
-			<dl>
-				<dt><label>{lang}wcf.acp.user.rank.currentImage{/lang}</label></dt>
-				<dd>{@$rank->getImage()}</dd>
-			</dl>
-		{/if}
 		
 		<dl{if $errorField == 'hideTitle'} class="formError"{/if}>
 			<dt></dt>

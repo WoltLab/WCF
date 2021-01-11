@@ -4,6 +4,7 @@ use wcf\data\user\rank\UserRank;
 use wcf\data\user\rank\UserRankAction;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\file\upload\UploadHandler;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 
@@ -62,16 +63,19 @@ class UserRankEditForm extends UserRankAddForm {
 		}
 		
 		// update label
-		$this->objectAction = new UserRankAction([$this->rank], 'update', ['data' => array_merge($this->additionalFields, [
-			'rankTitle' => $this->rankTitle,
-			'cssClassName' => $this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName,
-			'groupID' => $this->groupID,
-			'requiredPoints' => $this->requiredPoints,
-			'rankImage' => $this->rankImage,
-			'repeatImage' => $this->repeatImage,
-			'requiredGender' => $this->requiredGender,
-			'hideTitle' => $this->hideTitle
-		])]);
+		$this->objectAction = new UserRankAction([$this->rank], 'update', [
+			'data' => array_merge($this->additionalFields, [
+				'rankTitle' => $this->rankTitle,
+				'cssClassName' => $this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName,
+				'groupID' => $this->groupID,
+				'requiredPoints' => $this->requiredPoints,
+				'repeatImage' => $this->repeatImage,
+				'requiredGender' => $this->requiredGender,
+				'hideTitle' => $this->hideTitle
+			]),
+			'rankImageFile' => $this->rankImageFile,
+			'rankImageFile__removedFiles' => $this->removedRankImages,
+		]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
@@ -102,6 +106,12 @@ class UserRankEditForm extends UserRankAddForm {
 			$this->repeatImage = $this->rank->repeatImage;
 			$this->rankImage = $this->rank->rankImage;
 			$this->hideTitle = $this->rank->hideTitle;
+			
+			if ($this->rank->getImageFile()) {
+				UploadHandler::getInstance()->registerFilesByField('rankImage', [
+					$this->rank->getImageFile()
+				]);
+			}
 		}
 	}
 	
