@@ -201,6 +201,10 @@ class SmtpEmailTransport implements IEmailTransport {
 				}
 			}
 			else {
+				if ($this->connection->eof()) {
+					throw new TransientFailure("Unexpected EOF / connection close from SMTP server.");
+				}
+				
 				throw new TransientFailure("Unexpected reply '".$data."' from SMTP server.");
 			}
 		}
@@ -303,11 +307,12 @@ class SmtpEmailTransport implements IEmailTransport {
 	protected function auth() {
 		if (!$this->username || !$this->password) return;
 		
+		$authException = null;
 		foreach ($this->features as $feature) {
 			$parameters = explode(" ", $feature);
 			
 			if ($parameters[0] == 'auth') {
-				// try mechanisms in order of preference
+				// Try mechanisms in order of preference.
 				foreach (['login', 'plain'] as $method) {
 					if (in_array($method, $parameters)) {
 						switch ($method) {
@@ -317,6 +322,7 @@ class SmtpEmailTransport implements IEmailTransport {
 									$this->read([334]);
 								}
 								catch (SystemException $e) {
+									$authException = $e;
 									// try next authentication method
 									continue 2;
 								}
@@ -326,6 +332,8 @@ class SmtpEmailTransport implements IEmailTransport {
 								$this->write(base64_encode($this->password));
 								$this->lastWrite = '*redacted*';
 								$this->read([235]);
+								
+								// Authentication was successful.
 								return;
 							break;
 							case 'plain':
@@ -335,22 +343,27 @@ class SmtpEmailTransport implements IEmailTransport {
 									$this->read([334]);
 								}
 								catch (SystemException $e) {
+									$authException = $e;
 									// try next authentication method
 									continue 2;
 								}
 								$this->write(base64_encode("\0".$this->username."\0".$this->password));
 								$this->lastWrite = '*redacted*';
 								$this->read([235]);
+								
+								// Authentication was successful.
 								return;
 						}
 					}
 				}
 				
-				return;
+				// No mechanism was accepted.
+				break;
 			}
 		}
 		
 		// server does not support auth
+		throw new TransientFailure("Remote SMTP server does not support AUTH, but SMTP credentials are specified.", 0, $authException);
 	}
 	
 	/**
@@ -379,7 +392,6 @@ class SmtpEmailTransport implements IEmailTransport {
 	 * @param	Mailbox		$envelopeTo
 	 * @throws	\Exception
 	 * @throws	PermanentFailure
-	 * @throws	SystemException
 	 */
 	public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo) {
 		// delivery is locked
@@ -398,7 +410,7 @@ class SmtpEmailTransport implements IEmailTransport {
 				$this->disconnect();
 				throw $e;
 			}
-			catch (SystemException $e) {
+			catch (\Exception $e) {
 				$this->disconnect();
 				throw $e;
 			}
