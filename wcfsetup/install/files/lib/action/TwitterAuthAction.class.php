@@ -2,12 +2,11 @@
 namespace wcf\action;
 use ParagonIE\ConstantTime\Hex;
 use wcf\data\user\User;
-use wcf\data\user\UserEditor;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
-use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\HTTPRequest;
@@ -34,7 +33,7 @@ class TwitterAuthAction extends AbstractAction {
 		parent::readParameters();
 		
 		if (WCF::getSession()->spiderID) {
-			throw new IllegalLinkException();
+			throw new PermissionDeniedException();
 		}
 	}
 	
@@ -159,7 +158,7 @@ class TwitterAuthAction extends AbstractAction {
 		
 		// user declined
 		if (isset($_GET['denied'])) {
-			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.3rdparty.twitter.login.error.denied'));
+			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.3rdparty.login.error.denied'));
 		}
 		
 		// start auth by fetching request_token

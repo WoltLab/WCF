@@ -209,7 +209,7 @@
 						<dl>
 							<dt>{lang}wcf.user.3rdparty.github{/lang}</dt>
 							<dd>
-								{if $__wcf->getSession()->getVar('__githubToken')}
+								{if $__wcf->session->getVar('__3rdPartyProvider') === 'github' && $__wcf->session->getVar('__oauthUser')}
 									<label><input type="checkbox" name="githubConnect" value="1"{if $githubConnect} checked{/if}> {lang}wcf.user.3rdparty.github.connect{/lang}</label>
 								{else}
 									<a href="{link controller='GithubAuth'}{/link}" class="thirdPartyLoginButton githubLoginButton button"><span class="icon icon24 fa-github"></span> <span>{lang}wcf.user.3rdparty.github.connect{/lang}</span></a>
@@ -235,7 +235,7 @@
 						<dl>
 							<dt>{lang}wcf.user.3rdparty.facebook{/lang}</dt>
 							<dd>
-								{if $__wcf->getSession()->getVar('__facebookData')}
+								{if $__wcf->session->getVar('__3rdPartyProvider') === 'facebook' && $__wcf->session->getVar('__oauthUser')}
 									<label><input type="checkbox" name="facebookConnect" value="1"{if $facebookConnect} checked{/if}> {lang}wcf.user.3rdparty.facebook.connect{/lang}</label>
 								{else}
 									<a href="{link controller='FacebookAuth'}{/link}" class="thirdPartyLoginButton facebookLoginButton button"><span class="icon icon24 fa-facebook"></span> <span>{lang}wcf.user.3rdparty.facebook.connect{/lang}</span></a>
@@ -248,7 +248,7 @@
 						<dl>
 							<dt>{lang}wcf.user.3rdparty.google{/lang}</dt>
 							<dd>
-								{if $__wcf->getSession()->getVar('__googleData')}
+								{if $__wcf->session->getVar('__3rdPartyProvider') === 'google' && $__wcf->session->getVar('__oauthUser')}
 									<label><input type="checkbox" name="googleConnect" value="1"{if $googleConnect} checked{/if}> {lang}wcf.user.3rdparty.google.connect{/lang}</label>
 								{else}
 									<a href="{link controller='GoogleAuth'}{/link}" class="thirdPartyLoginButton googleLoginButton button"><span class="icon icon24 fa-google"></span> <span>{lang}wcf.user.3rdparty.google.connect{/lang}</span></a>
