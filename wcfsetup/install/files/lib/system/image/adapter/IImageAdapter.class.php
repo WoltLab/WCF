@@ -223,6 +223,8 @@ interface IImageAdapter {
 	
 	/**
 	 * Saves an image using a different file type.
+	 * 
+	 * @since 5.4
 	 */
 	public function saveImageAs($image, string $filename, string $type, int $quality = 100): void;
 	
