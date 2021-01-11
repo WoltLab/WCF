@@ -201,6 +201,10 @@ class SmtpEmailTransport implements IEmailTransport {
 				}
 			}
 			else {
+				if ($this->connection->eof()) {
+					throw new TransientFailure("Unexpected EOF / connection close from SMTP server.");
+				}
+				
 				throw new TransientFailure("Unexpected reply '".$data."' from SMTP server.");
 			}
 		}
