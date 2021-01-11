@@ -466,7 +466,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	 */
 	public function saveImageAs($image, string $filename, string $type, int $quality = 100): void {
 		if (!($image instanceof \Imagick)) {
-			throw new SystemException("Given image is not a valid Imagick-object.");
+			throw new \InvalidArgumentException("Given image is not a valid Imagick-object.");
 		}
 		
 		// Greatly reduces the time required to create the image and drastically

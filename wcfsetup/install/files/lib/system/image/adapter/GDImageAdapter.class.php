@@ -347,8 +347,11 @@ class GDImageAdapter implements IImageAdapter {
 		
 		ob_start();
 		
+		// fix PNG alpha channel handling
+		// see http://php.net/manual/en/function.imagecopymerge.php#92787
 		imagealphablending($image, false);
 		imagesavealpha($image, true);
+		
 		if ($this->type == IMAGETYPE_GIF) {
 			imagegif($image);
 		}
@@ -498,11 +501,13 @@ class GDImageAdapter implements IImageAdapter {
 	 */
 	public function saveImageAs($image, string $filename, string $type, int $quality = 100): void {
 		if (!$this->isImage($image)) {
-			throw new SystemException("Given image is not a valid image resource.");
+			throw new \InvalidArgumentException("Given image is not a valid image resource.");
 		}
 		
 		ob_start();
 		
+		// fix PNG alpha channel handling
+		// see http://php.net/manual/en/function.imagecopymerge.php#92787
 		imagealphablending($image, false);
 		imagesavealpha($image, true);
 		
@@ -525,7 +530,7 @@ class GDImageAdapter implements IImageAdapter {
 				break;
 			
 			default:
-				throw new \LogicException("Unreachable");
+				throw new \InvalidArgumentException("Unreachable");
 		}
 		
 		$stream = ob_get_contents();
