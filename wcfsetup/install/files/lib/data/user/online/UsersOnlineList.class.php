@@ -99,19 +99,27 @@ class UsersOnlineList extends SessionList {
 			".$conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditionBuilder->getParameters());
+		
+		$users = $userIDs = [];
 		while ($row = $statement->fetchArray()) {
-			$user = new UserOnline(new User(null, $row));
-			
 			$this->stats['total']++;
+			
+			$user = new UserOnline(new User(null, $row));
 			if ($user->userID) {
 				$this->stats['members']++;
-				
-				if ($user->canViewOnlineStatus && !self::isVisibleUser($user)) {
-					$this->stats['invisible']++;
-				}
+				$users[] = $user;
+				$userIDs[] = $user->userID;
 			}
 			else {
 				$this->stats['guests']++;
+			}
+		}
+		
+		UserStorageHandler::getInstance()->loadStorage($userIDs);
+		
+		foreach ($users as $user) {
+			if ($user->canViewOnlineStatus && !self::isVisibleUser($user)) {
+				$this->stats['invisible']++;
 			}
 		}
 	}
