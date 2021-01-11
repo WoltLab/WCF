@@ -2694,7 +2694,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.systemCheck.directories.writable"><![CDATA[Writable Directories]]></item>
 		<item name="wcf.acp.systemCheck.directories.writable.description"><![CDATA[Some directories are being written to during the normal operation. The user that runs the PHP process must have write access.]]></item>
 		<item name="wcf.acp.systemCheck.php.gd"><![CDATA[Supported formats of the GD library]]></item>
-		<item name="wcf.acp.systemCheck.php.gd.description"><![CDATA[The GD library must be installed with support for the formats “jpeg” and “png”.]]></item>
+		<item name="wcf.acp.systemCheck.php.gd.description"><![CDATA[The GD library must be installed with support for the formats “jpeg”, “png” and “webp”.]]></item>
 	</category>
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Add Server]]></item>
@@ -3965,7 +3965,7 @@ Attachments:
 		<item name="wcf.image.coverPhoto.upload.error.minWidth"><![CDATA[The image is too small.]]></item>
 		<item name="wcf.image.coverPhoto.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
 		<item name="wcf.image.coverPhoto.upload.error.invalidExtension"><![CDATA[The file extension is invalid.]]></item>
-		<item name="wcf.image.coverPhoto.upload.limits"><![CDATA[Minimum Image Size: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} pixels<br>Maximum Image Size: {$coverPhotoDimensions.max.width}×{$coverPhotoDimensions.max.height} pixels<br>Allowed File Extensions: gif, jpg, jpeg, png<br>Maximum Filesize: {$__wcf->session->getPermission($coverPhotoPermissionMaxSize)|filesize}]]></item>
+		<item name="wcf.image.coverPhoto.upload.limits"><![CDATA[Minimum Image Size: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} pixels<br>Maximum Image Size: {$coverPhotoDimensions.max.width}×{$coverPhotoDimensions.max.height} pixels<br>Allowed File Extensions: gif, jpg, jpeg, png, webp<br>Maximum Filesize: {$__wcf->session->getPermission($coverPhotoPermissionMaxSize)|filesize}]]></item>
 	</category>
 	<category name="wcf.imageViewer">
 		<item name="wcf.imageViewer.button.enlarge"><![CDATA[Full Screen Mode]]></item>
@@ -5181,7 +5181,7 @@ You also received a list of emergency codes to use when your second factor becom
 		<item name="wcf.user.coverPhoto.error.disabled"><![CDATA[The administrators {if $__wcf->user->coverPhotoHash}have banned your cover photo and {/if}disallowed you from using a cover photo{if $__wcf->user->disableCoverPhotoReason}: {$__wcf->user->disableCoverPhotoReason}{/if}.]]></item>
 		<item name="wcf.user.coverPhoto.noImage"><![CDATA[The user has not yet uploaded a cover photo.]]></item>
 		<item name="wcf.user.coverPhoto.upload"><![CDATA[Upload Cover Photo]]></item>
-		<item name="wcf.user.coverPhoto.upload.description"><![CDATA[Minimum Image Size: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} pixels<br>Maximum Image Size: {$coverPhotoDimensions.max.width}×{$coverPhotoDimensions.max.height} pixels<br>Allowed File Extensions: gif, jpg, jpeg, png<br>Maximum Filesize: {$__wcf->session->getPermission('user.profile.coverPhoto.maxSize')|filesize}]]></item>
+		<item name="wcf.user.coverPhoto.upload.description"><![CDATA[Minimum Image Size: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} pixels<br>Maximum Image Size: {$coverPhotoDimensions.max.width}×{$coverPhotoDimensions.max.height} pixels<br>Allowed File Extensions: gif, jpg, jpeg, png, webp<br>Maximum Filesize: {$__wcf->session->getPermission('user.profile.coverPhoto.maxSize')|filesize}]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.badImage"><![CDATA[The uploaded file is not an image.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.fileExtension"><![CDATA[The file has an invalid extension.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.maxHeight"><![CDATA[The image is too tall.]]></item>

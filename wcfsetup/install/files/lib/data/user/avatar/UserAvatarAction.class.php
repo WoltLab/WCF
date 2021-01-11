@@ -149,7 +149,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 		if ($imageData !== false) {
 			$tmp['extension'] = ImageUtil::getExtensionByMimeType($imageData['mime']);
 			
-			if (!in_array($tmp['extension'], ['jpeg', 'jpg', 'png', 'gif'])) {
+			if (!in_array($tmp['extension'], ['jpeg', 'jpg', 'png', 'gif', 'webp'])) {
 				@unlink($filename);
 				return;
 			}

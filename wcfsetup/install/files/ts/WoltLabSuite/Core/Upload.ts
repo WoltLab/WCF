@@ -278,6 +278,9 @@ abstract class Upload<TOptions extends UploadOptions = UploadOptions> {
         case "image/png":
           fileExtension = "png";
           break;
+        case "image/webp":
+          fileExtension = "webp";
+          break;
       }
       files.push({
         name: `pasted-from-clipboard.${fileExtension}`,

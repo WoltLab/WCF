@@ -572,6 +572,7 @@
 jpg
 jpeg
 png
+webp
 bmp
 zip
 txt
@@ -624,6 +625,7 @@ pdf</defaultvalue>
 jpg
 jpeg
 png
+webp
 bmp
 zip
 txt
@@ -685,6 +687,7 @@ pdf</defaultvalue>
 jpg
 jpeg
 png
+webp
 bmp</defaultvalue>
 				<wildcard>*</wildcard>
 				<options>module_user_signature</options>
@@ -811,7 +814,8 @@ bmp</defaultvalue>
 				<defaultvalue>gif
 jpg
 jpeg
-png</defaultvalue>
+png
+webp</defaultvalue>
 				<usersonly>1</usersonly>
 			</option>
 			<option name="user.profile.coverPhoto.canSeeCoverPhotos">

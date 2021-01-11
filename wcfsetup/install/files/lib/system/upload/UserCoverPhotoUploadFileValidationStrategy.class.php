@@ -19,7 +19,7 @@ class UserCoverPhotoUploadFileValidationStrategy implements IUploadFileValidatio
 	 * list of allowed file extensions
 	 * @var string[]
 	 */
-	public static $allowedExtensions = ['gif', 'jpg', 'jpeg', 'png'];
+	public static $allowedExtensions = ['gif', 'jpg', 'jpeg', 'png', 'webp'];
 	
 	/**
 	 * @inheritDoc

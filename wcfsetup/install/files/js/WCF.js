@@ -6076,6 +6076,10 @@ WCF.Upload = Class.extend({
 					case 'image/gif':
 						$ext = '.gif';
 						break;
+					
+					case 'image/webp':
+						$ext = '.webp';
+						break;
 				}
 				
 				$files.push({

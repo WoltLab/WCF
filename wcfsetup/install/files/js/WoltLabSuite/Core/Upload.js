@@ -215,6 +215,9 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Dom/Change
                     case "image/png":
                         fileExtension = "png";
                         break;
+                    case "image/webp":
+                        fileExtension = "webp";
+                        break;
                 }
                 files.push({
                     name: `pasted-from-clipboard.${fileExtension}`,
