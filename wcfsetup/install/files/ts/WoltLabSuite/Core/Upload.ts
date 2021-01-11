@@ -278,6 +278,9 @@ abstract class Upload<TOptions extends UploadOptions = UploadOptions> {
         case "image/png":
           fileExtension = "png";
           break;
+        case "image/webp":
+          fileExtension = "webp";
+          break;
       }
       files.push({
         name: `pasted-from-clipboard.${fileExtension}`,
@@ -349,7 +352,11 @@ abstract class Upload<TOptions extends UploadOptions = UploadOptions> {
     }
 
     // recursively append additional parameters to form data
-    function appendFormData(parameters: object, prefix?: string): void {
+    function appendFormData(parameters: object | null, prefix?: string): void {
+      if (parameters === null) {
+        return;
+      }
+
       prefix = prefix || "";
 
       Object.entries(parameters).forEach(([key, value]) => {
@@ -387,7 +394,7 @@ abstract class Upload<TOptions extends UploadOptions = UploadOptions> {
    *
    * @since  5.2
    */
-  protected hasPendingUploads(): boolean {
+  public hasPendingUploads(): boolean {
     return (
       this._fileElements.find((elements) => {
         return elements.find((el) => el.querySelector("progress") !== null);

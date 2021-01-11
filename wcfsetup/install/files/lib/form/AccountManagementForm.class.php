@@ -378,13 +378,16 @@ class AccountManagementForm extends AbstractForm {
 		
 		// 3rdParty
 		if (GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== '') {
-			if ($this->githubConnect && WCF::getSession()->getVar('__githubData')) {
-				$githubData = WCF::getSession()->getVar('__githubData');
-				$updateParameters['authData'] = 'github:'.$githubData['id'];
+			if (	$this->githubConnect &&
+				WCF::getSession()->getVar('__3rdPartyProvider') == 'github' &&
+				($oauthUser = WCF::getSession()->getVar('__oauthUser'))
+			) {
+				$updateParameters['authData'] = 'github:'.$oauthUser->getId();
+				$updateParameters['password'] = null;
 				$success[] = 'wcf.user.3rdparty.github.connect.success';
 				
-				WCF::getSession()->unregister('__githubToken');
-				WCF::getSession()->unregister('__githubUsername');
+				WCF::getSession()->unregister('__3rdPartyProvider');
+				WCF::getSession()->unregister('__oauthUser');
 			}
 		}
 		if ($this->githubDisconnect && StringUtil::startsWith(WCF::getUser()->authData, 'github:')) {
@@ -406,13 +409,17 @@ class AccountManagementForm extends AbstractForm {
 			$success[] = 'wcf.user.3rdparty.twitter.disconnect.success';
 		}
 		if (FACEBOOK_PUBLIC_KEY !== '' && FACEBOOK_PRIVATE_KEY !== '') {
-			if ($this->facebookConnect && WCF::getSession()->getVar('__facebookData')) {
-				$facebookData = WCF::getSession()->getVar('__facebookData');
-				$updateParameters['authData'] = 'facebook:'.$facebookData['id'];
+			if (
+				$this->facebookConnect &&
+				WCF::getSession()->getVar('__3rdPartyProvider') == 'facebook' &&
+				($oauthUser = WCF::getSession()->getVar('__oauthUser'))
+			) {
+				$updateParameters['authData'] = 'facebook:'.$oauthUser->getId();
+				$updateParameters['password'] = null;
 				$success[] = 'wcf.user.3rdparty.facebook.connect.success';
 				
-				WCF::getSession()->unregister('__facebookData');
-				WCF::getSession()->unregister('__facebookUsername');
+				WCF::getSession()->unregister('__3rdPartyProvider');
+				WCF::getSession()->unregister('__oauthUser');
 			}
 		}
 		if ($this->facebookDisconnect && StringUtil::startsWith(WCF::getUser()->authData, 'facebook:')) {
@@ -420,13 +427,17 @@ class AccountManagementForm extends AbstractForm {
 			$success[] = 'wcf.user.3rdparty.facebook.disconnect.success';
 		}
 		if (GOOGLE_PUBLIC_KEY !== '' && GOOGLE_PRIVATE_KEY !== '') {
-			if ($this->googleConnect && WCF::getSession()->getVar('__googleData')) {
-				$googleData = WCF::getSession()->getVar('__googleData');
-				$updateParameters['authData'] = 'google:'.$googleData['sub'];
+			if (
+				$this->googleConnect &&
+				WCF::getSession()->getVar('__3rdPartyProvider') == 'google' &&
+				($oauthUser = WCF::getSession()->getVar('__oauthUser'))
+			) {
+				$updateParameters['authData'] = 'google:'.$oauthUser->getId();
+				$updateParameters['password'] = null;
 				$success[] = 'wcf.user.3rdparty.google.connect.success';
 				
-				WCF::getSession()->unregister('__googleData');
-				WCF::getSession()->unregister('__googleUsername');
+				WCF::getSession()->unregister('__3rdPartyProvider');
+				WCF::getSession()->unregister('__oauthUser');
 			}
 		}
 		if ($this->googleDisconnect && StringUtil::startsWith(WCF::getUser()->authData, 'google:')) {

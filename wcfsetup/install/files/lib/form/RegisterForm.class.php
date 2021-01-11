@@ -219,11 +219,9 @@ class RegisterForm extends UserAddForm {
 			
 			if (WCF::getSession()->getVar('__username')) {
 				$this->username = WCF::getSession()->getVar('__username');
-				WCF::getSession()->unregister('__username');
 			}
 			if (WCF::getSession()->getVar('__email')) {
 				$this->email = $this->confirmEmail = WCF::getSession()->getVar('__email');
-				WCF::getSession()->unregister('__email');
 			}
 			
 			WCF::getSession()->register('registrationStartTime', TIME_NOW);
@@ -331,27 +329,20 @@ class RegisterForm extends UserAddForm {
 		$registerVia3rdParty = false;
 		
 		if ($this->isExternalAuthentication) {
-			switch (WCF::getSession()->getVar('__3rdPartyProvider')) {
+			$provider = WCF::getSession()->getVar('__3rdPartyProvider');
+			switch ($provider) {
 				case 'github':
-					// GitHub
-					if (WCF::getSession()->getVar('__githubData')) {
-						$githubData = WCF::getSession()->getVar('__githubData');
-						
-						$this->additionalFields['authData'] = 'github:'.$githubData['id'];
-						
-						WCF::getSession()->unregister('__githubData');
-						WCF::getSession()->unregister('__githubToken');
-						
-						if (WCF::getSession()->getVar('__email') && WCF::getSession()->getVar('__email') == $this->email) {
-							$registerVia3rdParty = true;
-						}
+				case 'facebook':
+				case 'google':
+					if (($oauthUser = WCF::getSession()->getVar('__oauthUser'))) {
+						$this->additionalFields['authData'] = $provider.':'.$oauthUser->getId();
 					}
 				break;
 				case 'twitter':
 					// Twitter
 					if (WCF::getSession()->getVar('__twitterData')) {
 						$twitterData = WCF::getSession()->getVar('__twitterData');
-						$this->additionalFields['authData'] = 'twitter:'.(isset($twitterData['id']) ? $twitterData['id'] : $twitterData['user_id']);
+						$this->additionalFields['authData'] = 'twitter:'.($twitterData['id'] ?? $twitterData['user_id']);
 						
 						WCF::getSession()->unregister('__twitterData');
 						
@@ -360,38 +351,16 @@ class RegisterForm extends UserAddForm {
 						}
 					}
 				break;
-				case 'facebook':
-					// Facebook
-					if (WCF::getSession()->getVar('__facebookData')) {
-						$facebookData = WCF::getSession()->getVar('__facebookData');
-						$this->additionalFields['authData'] = 'facebook:'.$facebookData['id'];
-						
-						WCF::getSession()->unregister('__facebookData');
-						
-						if (isset($facebookData['email']) && $facebookData['email'] == $this->email) {
-							$registerVia3rdParty = true;
-						}
-					}
-				break;
-				case 'google':
-					// Google Plus
-					if (WCF::getSession()->getVar('__googleData')) {
-						$googleData = WCF::getSession()->getVar('__googleData');
-						$this->additionalFields['authData'] = 'google:'.$googleData['sub'];
-						
-						WCF::getSession()->unregister('__googleData');
-						
-						if (isset($googleData['email']) && $googleData['email'] == $this->email) {
-							$registerVia3rdParty = true;
-						}
-					}
-				break;
 			}
 			
 			// Accounts connected to a 3rdParty login do not have passwords.
 			$this->password = null;
+		
+			if (WCF::getSession()->getVar('__email') && WCF::getSession()->getVar('__email') == $this->email) {
+				$registerVia3rdParty = true;
+			}
 		}
-
+		
 		$eventParameters = [
 			'saveOptions' => $saveOptions,
 			'registerVia3rdParty' => $registerVia3rdParty,

@@ -659,7 +659,7 @@ final class FileUtil {
 			// excel
 			'xls' => 'excel', 'ods' => 'excel', 'xlsx' => 'excel',
 			// image
-			'gif' => 'image', 'jpg' => 'image', 'jpeg' => 'image', 'png' => 'image', 'bmp' => 'image',
+			'gif' => 'image', 'jpg' => 'image', 'jpeg' => 'image', 'png' => 'image', 'bmp' => 'image', 'webp' => 'image',
 			// video
 			'avi' => 'video', 'wmv' => 'video', 'mov' => 'video', 'mp4' => 'video', 'mpg' => 'video', 'mpeg' => 'video', 'flv' => 'video',
 			// pdf

@@ -1,190 +1,165 @@
 /**
  * Handles editing media files via dialog.
  *
- * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Media/Editor
+ * @author  Matthias Schmidt
+ * @copyright 2001-2021 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Media/Editor
  */
-define([
-    'Ajax',
-    'Core',
-    'Dictionary',
-    'Dom/ChangeListener',
-    'Dom/Traverse',
-    'Dom/Util',
-    'Language',
-    'Ui/Dialog',
-    'Ui/Notification',
-    'WoltLabSuite/Core/Language/Chooser',
-    'WoltLabSuite/Core/Language/Input',
-    'EventKey',
-    'WoltLabSuite/Core/Media/Replace'
-], function (Ajax, Core, Dictionary, DomChangeListener, DomTraverse, DomUtil, Language, UiDialog, UiNotification, LanguageChooser, LanguageInput, EventKey, MediaReplace) {
+define(["require", "exports", "tslib", "../Core", "../Ui/Notification", "../Ui/Dialog", "../Language/Chooser", "../Language/Input", "../Dom/Util", "../Dom/Traverse", "../Dom/Change/Listener", "../Language", "../Ajax", "./Replace"], function (require, exports, tslib_1, Core, UiNotification, UiDialog, LanguageChooser, LanguageInput, DomUtil, DomTraverse, Listener_1, Language, Ajax, Replace_1) {
     "use strict";
-    if (!COMPILER_TARGET_DEFAULT) {
-        var Fake = function () { };
-        Fake.prototype = {
-            _ajaxSetup: function () { },
-            _ajaxSuccess: function () { },
-            _close: function () { },
-            _keyPress: function () { },
-            _saveData: function () { },
-            _updateLanguageFields: function () { },
-            edit: function () { }
-        };
-        return Fake;
-    }
-    /**
-     * @constructor
-     */
-    function MediaEditor(callbackObject) {
-        this._callbackObject = callbackObject || {};
-        if (this._callbackObject._editorClose && typeof this._callbackObject._editorClose !== 'function') {
-            throw new TypeError("Callback object has no function '_editorClose'.");
+    Core = tslib_1.__importStar(Core);
+    UiNotification = tslib_1.__importStar(UiNotification);
+    UiDialog = tslib_1.__importStar(UiDialog);
+    LanguageChooser = tslib_1.__importStar(LanguageChooser);
+    LanguageInput = tslib_1.__importStar(LanguageInput);
+    DomUtil = tslib_1.__importStar(DomUtil);
+    DomTraverse = tslib_1.__importStar(DomTraverse);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
+    Language = tslib_1.__importStar(Language);
+    Ajax = tslib_1.__importStar(Ajax);
+    Replace_1 = tslib_1.__importDefault(Replace_1);
+    class MediaEditor {
+        constructor(callbackObject) {
+            this._availableLanguageCount = 1;
+            this._categoryIds = [];
+            this._dialogs = new Map();
+            this._media = null;
+            this._oldCategoryId = 0;
+            this._callbackObject = callbackObject || {};
+            if (this._callbackObject._editorClose && typeof this._callbackObject._editorClose !== "function") {
+                throw new TypeError("Callback object has no function '_editorClose'.");
+            }
+            if (this._callbackObject._editorSuccess && typeof this._callbackObject._editorSuccess !== "function") {
+                throw new TypeError("Callback object has no function '_editorSuccess'.");
+            }
         }
-        if (this._callbackObject._editorSuccess && typeof this._callbackObject._editorSuccess !== 'function') {
-            throw new TypeError("Callback object has no function '_editorSuccess'.");
-        }
-        this._media = null;
-        this._availableLanguageCount = 1;
-        this._categoryIds = [];
-        this._oldCategoryId = 0;
-        this._dialogs = new Dictionary();
-    }
-    MediaEditor.prototype = {
-        /**
-         * Returns the data for Ajax to setup the Ajax/Request object.
-         *
-         * @return	{object}	setup data for Ajax/Request object
-         */
-        _ajaxSetup: function () {
+        _ajaxSetup() {
             return {
                 data: {
-                    actionName: 'update',
-                    className: 'wcf\\data\\media\\MediaAction'
-                }
+                    actionName: "update",
+                    className: "wcf\\data\\media\\MediaAction",
+                },
             };
-        },
-        /**
-         * Handles successful AJAX requests.
-         *
-         * @param	{object}	data	response data
-         */
-        _ajaxSuccess: function (data) {
+        }
+        _ajaxSuccess() {
             UiNotification.show();
             if (this._callbackObject._editorSuccess) {
                 this._callbackObject._editorSuccess(this._media, this._oldCategoryId);
                 this._oldCategoryId = 0;
             }
-            UiDialog.close('mediaEditor_' + this._media.mediaID);
+            UiDialog.close(`mediaEditor_${this._media.mediaID}`);
             this._media = null;
-        },
+        }
         /**
          * Is called if an editor is manually closed by the user.
          */
-        _close: function () {
+        _close() {
             this._media = null;
             if (this._callbackObject._editorClose) {
                 this._callbackObject._editorClose();
             }
-        },
+        }
         /**
          * Initializes the editor dialog.
          *
-         * @param       {HTMLElement}           content
-         * @param       {object}                data
-         * @since       5.3
+         * @since 5.3
          */
-        _initEditor: function (content, data) {
+        _initEditor(content, data) {
             this._availableLanguageCount = ~~data.returnValues.availableLanguageCount;
-            this._categoryIds = data.returnValues.categoryIDs.map(function (number) {
-                return ~~number;
-            });
-            var didLoadMediaData = false;
+            this._categoryIds = data.returnValues.categoryIDs.map((number) => ~~number);
             if (data.returnValues.mediaData) {
                 this._media = data.returnValues.mediaData;
-                didLoadMediaData = true;
             }
+            const mediaId = this._media.mediaID;
             // make sure that the language chooser is initialized first
-            setTimeout(function () {
+            setTimeout(() => {
+                var _a, _b, _c;
                 if (this._availableLanguageCount > 1) {
-                    LanguageChooser.setLanguageId('mediaEditor_' + this._media.mediaID + '_languageID', this._media.languageID || LANGUAGE_ID);
+                    LanguageChooser.setLanguageId(`mediaEditor_${mediaId}_languageID`, this._media.languageID || window.LANGUAGE_ID);
                 }
                 if (this._categoryIds.length) {
-                    elBySel('select[name=categoryID]', content).value = ~~this._media.categoryID;
+                    const categoryID = content.querySelector("select[name=categoryID]");
+                    if (this._media.categoryID) {
+                        categoryID.value = this._media.categoryID.toString();
+                    }
+                    else {
+                        categoryID.value = "0";
+                    }
                 }
-                var title = elBySel('input[name=title]', content);
-                var altText = elBySel('input[name=altText]', content);
-                var caption = elBySel('textarea[name=caption]', content);
+                const title = content.querySelector("input[name=title]");
+                const altText = content.querySelector("input[name=altText]");
+                const caption = content.querySelector("textarea[name=caption]");
                 if (this._availableLanguageCount > 1 && this._media.isMultilingual) {
-                    if (elById('altText_' + this._media.mediaID))
-                        LanguageInput.setValues('altText_' + this._media.mediaID, Dictionary.fromObject(this._media.altText || {}));
-                    if (elById('caption_' + this._media.mediaID))
-                        LanguageInput.setValues('caption_' + this._media.mediaID, Dictionary.fromObject(this._media.caption || {}));
-                    LanguageInput.setValues('title_' + this._media.mediaID, Dictionary.fromObject(this._media.title || {}));
+                    if (document.getElementById(`altText_${mediaId}`)) {
+                        LanguageInput.setValues(`altText_${mediaId}`, (this._media.altText || {}));
+                    }
+                    if (document.getElementById(`caption_${mediaId}`)) {
+                        LanguageInput.setValues(`caption_${mediaId}`, (this._media.caption || {}));
+                    }
+                    LanguageInput.setValues(`title_${mediaId}`, (this._media.title || {}));
                 }
                 else {
-                    title.value = this._media.title ? this._media.title[this._media.languageID || LANGUAGE_ID] : '';
-                    if (altText)
-                        altText.value = this._media.altText ? this._media.altText[this._media.languageID || LANGUAGE_ID] : '';
-                    if (caption)
-                        caption.value = this._media.caption ? this._media.caption[this._media.languageID || LANGUAGE_ID] : '';
+                    title.value = ((_a = this._media) === null || _a === void 0 ? void 0 : _a.title[this._media.languageID || window.LANGUAGE_ID]) || "";
+                    if (altText) {
+                        altText.value = ((_b = this._media) === null || _b === void 0 ? void 0 : _b.altText[this._media.languageID || window.LANGUAGE_ID]) || "";
+                    }
+                    if (caption) {
+                        caption.value = ((_c = this._media) === null || _c === void 0 ? void 0 : _c.caption[this._media.languageID || window.LANGUAGE_ID]) || "";
+                    }
                 }
                 if (this._availableLanguageCount > 1) {
-                    var isMultilingual = elBySel('input[name=isMultilingual]', content);
-                    isMultilingual.addEventListener('change', this._updateLanguageFields.bind(this));
+                    const isMultilingual = content.querySelector("input[name=isMultilingual]");
+                    isMultilingual.addEventListener("change", (ev) => this._updateLanguageFields(ev));
                     this._updateLanguageFields(null, isMultilingual);
                 }
-                var keyPress = this._keyPress.bind(this);
-                if (altText)
-                    altText.addEventListener('keypress', keyPress);
-                title.addEventListener('keypress', keyPress);
-                elBySel('button[data-type=submit]', content).addEventListener('click', this._saveData.bind(this));
+                if (altText) {
+                    altText.addEventListener("keypress", (ev) => this._keyPress(ev));
+                }
+                title.addEventListener("keypress", (ev) => this._keyPress(ev));
+                content.querySelector("button[data-type=submit]").addEventListener("click", () => this._saveData());
                 // remove focus from input elements and scroll dialog to top
                 document.activeElement.blur();
-                elById('mediaEditor_' + this._media.mediaID).parentNode.scrollTop = 0;
+                document.getElementById(`mediaEditor_${mediaId}`).parentNode.scrollTop = 0;
                 // Initialize button to replace media file.
-                var uploadButton = elByClass('mediaManagerMediaReplaceButton', content)[0];
-                var target = elByClass('mediaThumbnail', content)[0];
+                const uploadButton = content.querySelector(".mediaManagerMediaReplaceButton");
+                let target = content.querySelector(".mediaThumbnail");
                 if (!target) {
-                    target = elCreate('div');
+                    target = document.createElement("div");
                     content.appendChild(target);
                 }
-                new MediaReplace(this._media.mediaID, DomUtil.identify(uploadButton), 
+                new Replace_1.default(mediaId, DomUtil.identify(uploadButton), 
                 // Pass an anonymous element for non-images which is required internally
                 // but not needed in this case.
                 DomUtil.identify(target), {
-                    mediaEditor: this
+                    mediaEditor: this,
                 });
-                DomChangeListener.trigger();
-            }.bind(this), 200);
-        },
+                Listener_1.default.trigger();
+            }, 200);
+        }
         /**
          * Handles the `[ENTER]` key to submit the form.
-         *
-         * @param	{object}	event		event object
          */
-        _keyPress: function (event) {
-            if (EventKey.Enter(event)) {
+        _keyPress(event) {
+            if (event.key === "Enter") {
                 event.preventDefault();
                 this._saveData();
             }
-        },
+        }
         /**
          * Saves the data of the currently edited media.
          */
-        _saveData: function () {
-            var content = UiDialog.getDialog('mediaEditor_' + this._media.mediaID).content;
-            var categoryId = elBySel('select[name=categoryID]', content);
-            var altText = elBySel('input[name=altText]', content);
-            var caption = elBySel('textarea[name=caption]', content);
-            var captionEnableHtml = elBySel('input[name=captionEnableHtml]', content);
-            var title = elBySel('input[name=title]', content);
-            var hasError = false;
-            var altTextError = (altText ? DomTraverse.childByClass(altText.parentNode.parentNode, 'innerError') : false);
-            var captionError = (caption ? DomTraverse.childByClass(caption.parentNode.parentNode, 'innerError') : false);
-            var titleError = DomTraverse.childByClass(title.parentNode.parentNode, 'innerError');
+        _saveData() {
+            const content = UiDialog.getDialog(`mediaEditor_${this._media.mediaID}`).content;
+            const categoryId = content.querySelector("select[name=categoryID]");
+            const altText = content.querySelector("input[name=altText]");
+            const caption = content.querySelector("textarea[name=caption]");
+            const captionEnableHtml = content.querySelector("input[name=captionEnableHtml]");
+            const title = content.querySelector("input[name=title]");
+            let hasError = false;
+            const altTextError = altText ? DomTraverse.childByClass(altText.parentNode, "innerError") : false;
+            const captionError = caption ? DomTraverse.childByClass(caption.parentNode, "innerError") : false;
+            const titleError = DomTraverse.childByClass(title.parentNode, "innerError");
             // category
             this._oldCategoryId = this._media.categoryID;
             if (this._categoryIds.length) {
@@ -196,80 +171,72 @@ define([
             }
             // language and multilingualism
             if (this._availableLanguageCount > 1) {
-                this._media.isMultilingual = ~~elBySel('input[name=isMultilingual]', content).checked;
-                this._media.languageID = this._media.isMultilingual ? null : LanguageChooser.getLanguageId('mediaEditor_' + this._media.mediaID + '_languageID');
+                const isMultilingual = content.querySelector("input[name=isMultilingual]");
+                this._media.isMultilingual = ~~isMultilingual.checked;
+                this._media.languageID = this._media.isMultilingual
+                    ? null
+                    : LanguageChooser.getLanguageId(`mediaEditor_${this._media.mediaID}_languageID`);
             }
             else {
-                this._media.languageID = LANGUAGE_ID;
+                this._media.languageID = window.LANGUAGE_ID;
             }
             // altText, caption and title
             this._media.altText = {};
             this._media.caption = {};
             this._media.title = {};
             if (this._availableLanguageCount > 1 && this._media.isMultilingual) {
-                if (elById('altText_' + this._media.mediaID) && !LanguageInput.validate('altText_' + this._media.mediaID, true)) {
+                if (altText && !LanguageInput.validate(altText.id, true)) {
                     hasError = true;
                     if (!altTextError) {
-                        var error = elCreate('small');
-                        error.className = 'innerError';
-                        error.textContent = Language.get('wcf.global.form.error.multilingual');
-                        altText.parentNode.parentNode.appendChild(error);
+                        DomUtil.innerError(altText, Language.get("wcf.global.form.error.multilingual"));
                     }
                 }
-                if (elById('caption_' + this._media.mediaID) && !LanguageInput.validate('caption_' + this._media.mediaID, true)) {
+                if (caption && !LanguageInput.validate(caption.id, true)) {
                     hasError = true;
                     if (!captionError) {
-                        var error = elCreate('small');
-                        error.className = 'innerError';
-                        error.textContent = Language.get('wcf.global.form.error.multilingual');
-                        caption.parentNode.parentNode.appendChild(error);
+                        DomUtil.innerError(caption, Language.get("wcf.global.form.error.multilingual"));
                     }
                 }
-                if (!LanguageInput.validate('title_' + this._media.mediaID, true)) {
+                if (!LanguageInput.validate(title.id, true)) {
                     hasError = true;
                     if (!titleError) {
-                        var error = elCreate('small');
-                        error.className = 'innerError';
-                        error.textContent = Language.get('wcf.global.form.error.multilingual');
-                        title.parentNode.parentNode.appendChild(error);
+                        DomUtil.innerError(title, Language.get("wcf.global.form.error.multilingual"));
                     }
                 }
-                this._media.altText = (elById('altText_' + this._media.mediaID) ? LanguageInput.getValues('altText_' + this._media.mediaID).toObject() : '');
-                this._media.caption = (elById('caption_' + this._media.mediaID) ? LanguageInput.getValues('caption_' + this._media.mediaID).toObject() : '');
-                this._media.title = LanguageInput.getValues('title_' + this._media.mediaID).toObject();
+                this._media.altText = altText ? this.mapToI18nValues(LanguageInput.getValues(altText.id)) : "";
+                this._media.caption = caption ? this.mapToI18nValues(LanguageInput.getValues(caption.id)) : "";
+                this._media.title = this.mapToI18nValues(LanguageInput.getValues(title.id));
             }
             else {
-                this._media.altText[this._media.languageID] = (altText ? altText.value : '');
-                this._media.caption[this._media.languageID] = (caption ? caption.value : '');
+                this._media.altText[this._media.languageID] = altText ? altText.value : "";
+                this._media.caption[this._media.languageID] = caption ? caption.value : "";
                 this._media.title[this._media.languageID] = title.value;
             }
             // captionEnableHtml
-            if (captionEnableHtml)
+            if (captionEnableHtml) {
                 this._media.captionEnableHtml = ~~captionEnableHtml.checked;
-            else
+            }
+            else {
                 this._media.captionEnableHtml = 0;
-            var aclValues = {
-                allowAll: ~~elById('mediaEditor_' + this._media.mediaID + '_aclAllowAll').checked,
-                group: [],
-                user: []
+            }
+            const aclValues = {
+                allowAll: ~~document.getElementById(`mediaEditor_${this._media.mediaID}_aclAllowAll`)
+                    .checked,
+                group: Array.from(content.querySelectorAll(`input[name="mediaEditor_${this._media.mediaID}_aclValues[group][]"]`)).map((aclGroup) => ~~aclGroup.value),
+                user: Array.from(content.querySelectorAll(`input[name="mediaEditor_${this._media.mediaID}_aclValues[user][]"]`)).map((aclUser) => ~~aclUser.value),
             };
-            var aclGroups = elBySelAll('input[name="mediaEditor_' + this._media.mediaID + 'aclValues[group][]"]', content);
-            for (var i = 0, length = aclGroups.length; i < length; i++) {
-                aclValues.group.push(~~aclGroups[i].value);
-            }
-            var aclUsers = elBySelAll('input[name="mediaEditor_' + this._media.mediaID + 'aclValues[user][]"]', content);
-            for (var i = 0, length = aclUsers.length; i < length; i++) {
-                aclValues.user.push(~~aclUsers[i].value);
-            }
             if (!hasError) {
-                if (altTextError)
-                    elRemove(altTextError);
-                if (captionError)
-                    elRemove(captionError);
-                if (titleError)
-                    elRemove(titleError);
+                if (altTextError) {
+                    altTextError.remove();
+                }
+                if (captionError) {
+                    captionError.remove();
+                }
+                if (titleError) {
+                    titleError.remove();
+                }
                 Ajax.api(this, {
-                    actionName: 'update',
+                    actionName: "update",
                     objectIDs: [this._media.mediaID],
                     parameters: {
                         aclValues: aclValues,
@@ -279,88 +246,102 @@ define([
                             captionEnableHtml: this._media.captionEnableHtml,
                             categoryID: this._media.categoryID,
                             isMultilingual: this._media.isMultilingual,
-                            languageID: this._media.languageID
+                            languageID: this._media.languageID,
                         },
-                        title: this._media.title
-                    }
+                        title: this._media.title,
+                    },
                 });
-            }
-        },
-        /**
-         * Updates language-related input fields depending on whether multilingualism
-         * is enabled.
-         */
-        _updateLanguageFields: function (event, element) {
-            if (event)
-                element = event.currentTarget;
-            var languageChooserContainer = elById('mediaEditor_' + this._media.mediaID + '_languageIDContainer').parentNode;
-            if (element.checked) {
-                LanguageInput.enable('title_' + this._media.mediaID);
-                if (elById('caption_' + this._media.mediaID))
-                    LanguageInput.enable('caption_' + this._media.mediaID);
-                if (elById('altText_' + this._media.mediaID))
-                    LanguageInput.enable('altText_' + this._media.mediaID);
-                elHide(languageChooserContainer);
-            }
-            else {
-                LanguageInput.disable('title_' + this._media.mediaID);
-                if (elById('caption_' + this._media.mediaID))
-                    LanguageInput.disable('caption_' + this._media.mediaID);
-                if (elById('altText_' + this._media.mediaID))
-                    LanguageInput.disable('altText_' + this._media.mediaID);
-                elShow(languageChooserContainer);
-            }
-        },
-        /**
-         * Edits the media with the given data.
-         *
-         * @param	{object|integer}	media		data of the edited media or media id for which the data will be loaded
-         */
-        edit: function (media) {
-            if (typeof media !== 'object') {
-                media = {
-                    mediaID: ~~media
-                };
-            }
-            if (this._media !== null) {
-                throw new Error("Cannot edit media with id '" + media.mediaID + "' while editing media with id '" + this._media.mediaID + "'");
-            }
-            this._media = media;
-            if (!this._dialogs.has('mediaEditor_' + media.mediaID)) {
-                this._dialogs.set('mediaEditor_' + media.mediaID, {
-                    _dialogSetup: function () {
-                        return {
-                            id: 'mediaEditor_' + media.mediaID,
-                            options: {
-                                backdropCloseOnClick: false,
-                                onClose: this._close.bind(this),
-                                title: Language.get('wcf.media.edit')
-                            },
-                            source: {
-                                after: this._initEditor.bind(this),
-                                data: {
-                                    actionName: 'getEditorDialog',
-                                    className: 'wcf\\data\\media\\MediaAction',
-                                    objectIDs: [media.mediaID]
-                                }
-                            }
-                        };
-                    }.bind(this)
-                });
-            }
-            UiDialog.open(this._dialogs.get('mediaEditor_' + media.mediaID));
-        },
-        /**
-         * Updates the data of the currently edited media file.
-         *
-         * @param       {object}        data
-         * @since       5.3
-         */
-        updateData: function (data) {
-            if (this._callbackObject._editorSuccess) {
-                this._callbackObject._editorSuccess(data);
             }
         }
-    };
+        mapToI18nValues(values) {
+            const obj = {};
+            values.forEach((value, key) => (obj[key] = value));
+            return obj;
+        }
+        /**
+         * Updates language-related input fields depending on whether multilingualis is enabled.
+         */
+        _updateLanguageFields(event, element) {
+            if (event) {
+                element = event.currentTarget;
+            }
+            const mediaId = this._media.mediaID;
+            const languageChooserContainer = document.getElementById(`mediaEditor_${mediaId}_languageIDContainer`)
+                .parentNode;
+            if (element.checked) {
+                LanguageInput.enable(`title_${mediaId}`);
+                if (document.getElementById(`caption_${mediaId}`)) {
+                    LanguageInput.enable(`caption_${mediaId}`);
+                }
+                if (document.getElementById(`altText_${mediaId}`)) {
+                    LanguageInput.enable(`altText_${mediaId}`);
+                }
+                DomUtil.hide(languageChooserContainer);
+            }
+            else {
+                LanguageInput.disable(`title_${mediaId}`);
+                if (document.getElementById(`caption_${mediaId}`)) {
+                    LanguageInput.disable(`caption_${mediaId}`);
+                }
+                if (document.getElementById(`altText_${mediaId}`)) {
+                    LanguageInput.disable(`altText_${mediaId}`);
+                }
+                DomUtil.show(languageChooserContainer);
+            }
+        }
+        /**
+         * Edits the media with the given data or id.
+         */
+        edit(editedMedia) {
+            let media;
+            let mediaId = 0;
+            if (typeof editedMedia === "object") {
+                media = editedMedia;
+                mediaId = media.mediaID;
+            }
+            else {
+                media = {
+                    mediaID: editedMedia,
+                };
+                mediaId = editedMedia;
+            }
+            if (this._media !== null) {
+                throw new Error(`Cannot edit media with id ${mediaId} while editing media with id '${this._media.mediaID}'.`);
+            }
+            this._media = media;
+            if (!this._dialogs.has(`mediaEditor_${mediaId}`)) {
+                this._dialogs.set(`mediaEditor_${mediaId}`, {
+                    _dialogSetup: () => {
+                        return {
+                            id: `mediaEditor_${mediaId}`,
+                            options: {
+                                backdropCloseOnClick: false,
+                                onClose: () => this._close(),
+                                title: Language.get("wcf.media.edit"),
+                            },
+                            source: {
+                                after: (content, responseData) => this._initEditor(content, responseData),
+                                data: {
+                                    actionName: "getEditorDialog",
+                                    className: "wcf\\data\\media\\MediaAction",
+                                    objectIDs: [mediaId],
+                                },
+                            },
+                        };
+                    },
+                });
+            }
+            UiDialog.open(this._dialogs.get(`mediaEditor_${mediaId}`));
+        }
+        /**
+         * Updates the data of the currently edited media file.
+         */
+        updateData(media) {
+            if (this._callbackObject._editorSuccess) {
+                this._callbackObject._editorSuccess(media);
+            }
+        }
+    }
+    Core.enableLegacyInheritance(MediaEditor);
     return MediaEditor;
 });

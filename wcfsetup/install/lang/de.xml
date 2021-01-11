@@ -2766,7 +2766,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.systemCheck.directories.writable"><![CDATA[Beschreibbare Verzeichnisse]]></item>
 		<item name="wcf.acp.systemCheck.directories.writable.description"><![CDATA[Einige Verzeichnisse werden zur Laufzeit durch die Software beschrieben, der PHP-Benutzer muss Schreibrechte haben.]]></item>
 		<item name="wcf.acp.systemCheck.php.gd"><![CDATA[Unterstützte Formate der GD-Bibliothek]]></item>
-		<item name="wcf.acp.systemCheck.php.gd.description"><![CDATA[Die GD-Bibliothek muss inklusive der Unterstützung der Formate „jpeg“ und „png“ installiert sein.]]></item>
+		<item name="wcf.acp.systemCheck.php.gd.description"><![CDATA[Die GD-Bibliothek muss inklusive der Unterstützung der Formate „jpeg“, „png“ und „webp“ installiert sein.]]></item>
 	</category>
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Server hinzufügen]]></item>
@@ -3142,7 +3142,6 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter „Konfiguration �
 		<item name="wcf.acp.user.rank.hideTitle.error.rankImage"><![CDATA[Diese Option erfordert eine gültige Ranggrafik.]]></item>
 		<item name="wcf.acp.user.rank.image"><![CDATA[Ranggrafik]]></item>
 		<item name="wcf.acp.user.rank.list"><![CDATA[Benutzerränge]]></item>
-		<item name="wcf.acp.user.rank.rankImage.description"><![CDATA[Der Pfad zur Ranggrafik kann relativ zum WCF-Verzeichnis oder absolut angegeben werden.]]></item>
 		<item name="wcf.acp.user.rank.requiredGender.description"><![CDATA[Optional {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diesen Benutzerrang auf Benutzer mit einem bestimmten Geschlecht einschränken.]]></item>
 		<item name="wcf.acp.user.rank.requiredPoints"><![CDATA[Punkte]]></item>
 		<item name="wcf.acp.user.rank.requiredPoints.description"><![CDATA[Benötigte Menge an Aktivitätspunkten, die ein Benutzer erreichen muss, um in diesen Rang aufzusteigen.]]></item>
@@ -4020,7 +4019,7 @@ Dateianhänge:
 		<item name="wcf.image.coverPhoto.upload.error.minWidth"><![CDATA[Das Bild ist zu schmal.]]></item>
 		<item name="wcf.image.coverPhoto.upload.error.uploadFailed"><![CDATA[Beim Hochladen der Datei ist ein unbekannter Fehler aufgetreten.]]></item>
 		<item name="wcf.image.coverPhoto.upload.error.invalidExtension"><![CDATA[Die Datei hat eine ungültige Dateiendung.]]></item>
-		<item name="wcf.image.coverPhoto.upload.limits"><![CDATA[Minimale Bildgröße: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} Pixel<br>Maximale Bildgröße: {$coverPhotoDimensions.max.width}×{$coverPhotoDimensions.max.height} Pixel<br>Erlaubte Dateiendungen: gif, jpg, jpeg, png<br>Maximale Dateigröße: {$__wcf->session->getPermission($coverPhotoPermissionMaxSize)|filesize}]]></item>
+		<item name="wcf.image.coverPhoto.upload.limits"><![CDATA[Minimale Bildgröße: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} Pixel<br>Maximale Bildgröße: {$coverPhotoDimensions.max.width}×{$coverPhotoDimensions.max.height} Pixel<br>Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp<br>Maximale Dateigröße: {$__wcf->session->getPermission($coverPhotoPermissionMaxSize)|filesize}]]></item>
 	</category>
 	<category name="wcf.imageViewer">
 		<item name="wcf.imageViewer.button.enlarge"><![CDATA[Vollbild-Modus]]></item>
@@ -5066,18 +5065,21 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 	</category>
 	<category name="wcf.user.3rdparty">
 		<item name="wcf.user.3rdparty"><![CDATA[Drittanbieter]]></item>
+		<item name="wcf.user.3rdparty.login.error.access_denied"><![CDATA[Da {if LANGUAGE_USE_INFORMAL_VARIANT}du die Berechtigungen verweigert hast{else}Sie die Berechtigungen verweigert haben{/if}, ist die Anmeldung nicht möglich.]]></item>
+		<item name="wcf.user.3rdparty.login.error.denied"><![CDATA[Da {if LANGUAGE_USE_INFORMAL_VARIANT}du die Berechtigungen verweigert hast{else}Sie die Berechtigungen verweigert haben{/if}, ist die Anmeldung nicht möglich.]]></item>
+		<item name="wcf.user.3rdparty.login.error.httpError"><![CDATA[Die Kommunikation mit dem externen Dienst ist fehlgeschlagen. Interner Fehlercode: <code>{$exceptionID}</code>.]]></item>
+		<item name="wcf.user.3rdparty.login.error.genericException"><![CDATA[Bei der Verarbeitung der Anfrage ist ein Fehler aufgetreten. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich{else}wenden Sie sich{/if} an den Administrator. Interner Fehlercode: <code>{$exceptionID}</code>.]]></item>
+		<item name="wcf.user.3rdparty.login.error.stateValidation"><![CDATA[Die Anfrage konnte nicht zugeordnet werden. Möglicherweise ist {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Sitzung abgelaufen.]]></item>
 		<item name="wcf.user.3rdparty.github"><![CDATA[GitHub]]></item>
 		<item name="wcf.user.3rdparty.github.login"><![CDATA[Mit GitHub anmelden]]></item>
-		<item name="wcf.user.3rdparty.github.login.error.access_denied"><![CDATA[Da {if LANGUAGE_USE_INFORMAL_VARIANT}du die Berechtigungen verweigert hast{else}Sie die Berechtigungen verweigert haben{/if}, ist die Anmeldung mit GitHub nicht möglich.]]></item>
 		<item name="wcf.user.3rdparty.github.register"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erstellst{else}Sie erstellen{/if} ein Benutzerkonto über <span class="icon icon16 fa-github"></span>&nbsp;GitHub. Der Benutzername und {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse wurden daher bereits ausgefüllt.]]></item>
-		<item name="wcf.user.3rdparty.github.connect"><![CDATA[Mit GitHub-Konto {if $__wcf->session->getVar('__githubUsername')}(„<a href="https://github.com/{$__wcf->session->getVar('__githubUsername')}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__githubUsername')}</a>“){/if} verknüpfen]]></item>
+		<item name="wcf.user.3rdparty.github.connect"><![CDATA[Mit GitHub-Konto {if $__wcf->session->getVar('__3rdPartyProvider') === 'github'}(„<a href="https://github.com/{$__wcf->session->getVar('__oauthUser')->getUsername()}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__oauthUser')->getUsername()}</a>“){/if} verknüpfen]]></item>
 		<item name="wcf.user.3rdparty.github.connect.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wurde erfolgreich mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} GitHub-Konto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.github.connect.error.inuse"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} GitHub-Konto ist bereits mit einem anderen Benutzerkonto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.github.disconnect"><![CDATA[Verknüpfung mit GitHub trennen]]></item>
 		<item name="wcf.user.3rdparty.github.disconnect.success"><![CDATA[Die Verknüpfung mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} GitHub-Konto wurde erfolgreich getrennt.]]></item>
 		<item name="wcf.user.3rdparty.twitter"><![CDATA[Twitter]]></item>
 		<item name="wcf.user.3rdparty.twitter.login"><![CDATA[Mit Twitter anmelden]]></item>
-		<item name="wcf.user.3rdparty.twitter.login.error.denied"><![CDATA[Da {if LANGUAGE_USE_INFORMAL_VARIANT}du die Berechtigungen verweigert hast{else}Sie die Berechtigungen verweigert haben{/if}, ist die Anmeldung mit Twitter nicht möglich.]]></item>
 		<item name="wcf.user.3rdparty.twitter.register"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erstellst{else}Sie erstellen{/if} ein Benutzerkonto über &nbsp;Twitter. Der Benutzername wurde daher bereits ausgefüllt. {if LANGUAGE_USE_INFORMAL_VARIANT}Gib nun noch deine{else}Geben Sie nun noch Ihre{/if} E-Mail-Adresse an und {if LANGUAGE_USE_INFORMAL_VARIANT}du kannst{else}Sie können{/if} sofort loslegen!]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect"><![CDATA[Mit Twitter-Konto {if $__wcf->session->getVar('__twitterUsername')}(„<a href="https://twitter.com/{$__wcf->session->getVar('__twitterUsername')}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__twitterUsername')}</a>“){/if} verknüpfen]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wurde erfolgreich mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Twitter-Konto verknüpft.]]></item>
@@ -5086,18 +5088,16 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.3rdparty.twitter.disconnect.success"><![CDATA[Die Verknüpfung mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Twitter-Konto wurde erfolgreich getrennt.]]></item>
 		<item name="wcf.user.3rdparty.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.3rdparty.facebook.login"><![CDATA[Mit Facebook anmelden]]></item>
-		<item name="wcf.user.3rdparty.facebook.login.error.access_denied"><![CDATA[Da {if LANGUAGE_USE_INFORMAL_VARIANT}du die Berechtigungen verweigert hast{else}Sie die Berechtigungen verweigert haben{/if}, ist die Anmeldung mit Facebook nicht möglich.]]></item>
 		<item name="wcf.user.3rdparty.facebook.register"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erstellst{else}Sie erstellen{/if} ein Benutzerkonto über <span class="icon icon16 fa-facebook"></span>&nbsp;Facebook. Der Benutzername und {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse wurden daher bereits ausgefüllt.]]></item>
-		<item name="wcf.user.3rdparty.facebook.connect"><![CDATA[Mit Facebook-Konto {if $__wcf->session->getVar('__facebookUsername')}(„{$__wcf->session->getVar('__facebookUsername')}“){/if} verknüpfen]]></item>
+		<item name="wcf.user.3rdparty.facebook.connect"><![CDATA[Mit Facebook-Konto {if $__wcf->session->getVar('__3rdPartyProvider') === 'facebook'}(„{$$__wcf->session->getVar('__oauthUser')->getUsername()}“){/if} verknüpfen]]></item>
 		<item name="wcf.user.3rdparty.facebook.connect.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wurde erfolgreich mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Facebook-Konto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.facebook.connect.error.inuse"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Facebook-Konto ist bereits mit einem anderen Benutzerkonto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.facebook.disconnect"><![CDATA[Verknüpfung mit Facebook trennen]]></item>
 		<item name="wcf.user.3rdparty.facebook.disconnect.success"><![CDATA[Die Verknüpfung mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Facebook-Konto wurde erfolgreich getrennt.]]></item>
 		<item name="wcf.user.3rdparty.google"><![CDATA[Google]]></item>
 		<item name="wcf.user.3rdparty.google.login"><![CDATA[Mit Google anmelden]]></item>
-		<item name="wcf.user.3rdparty.google.login.error.access_denied"><![CDATA[Da {if LANGUAGE_USE_INFORMAL_VARIANT}du die Berechtigungen verweigert hast{else}Sie die Berechtigungen verweigert haben{/if}, ist die Anmeldung mit Google nicht möglich.]]></item>
 		<item name="wcf.user.3rdparty.google.register"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erstellst{else}Sie erstellen{/if} ein Benutzerkonto über <span class="icon icon16 fa-google"></span>&nbsp;Google. Der Benutzername und {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse wurden daher bereits ausgefüllt.]]></item>
-		<item name="wcf.user.3rdparty.google.connect"><![CDATA[Mit Google-Konto {if $__wcf->session->getVar('__googleUsername')}(„{$__wcf->session->getVar('__googleUsername')}“){/if} verknüpfen]]></item>
+		<item name="wcf.user.3rdparty.google.connect"><![CDATA[Mit Google-Konto {if $__wcf->session->getVar('__3rdPartyProvider') === 'google'}(„{$__wcf->session->getVar('__oauthUser')->getUsername()}“){/if} verknüpfen]]></item>
 		<item name="wcf.user.3rdparty.google.connect.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wurde erfolgreich mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Google-Konto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.google.connect.error.inuse"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Google-Konto ist bereits mit einem anderen Benutzerkonto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.google.disconnect"><![CDATA[Verknüpfung mit Google trennen]]></item>
@@ -5184,7 +5184,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.coverPhoto.error.disabled"><![CDATA[Der Administrator hat{if $__wcf->user->coverPhotoHash} {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} derzeitiges Titelbild gesperrt und{/if} {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} die weitere Nutzungsberechtigung der Titelbild-Funktion {if !$__wcf->user->disableCoverPhotoReason}entzogen.{else} aus folgenden Gründen entzogen: {$__wcf->user->disableCoverPhotoReason}{/if}]]></item>
 		<item name="wcf.user.coverPhoto.noImage"><![CDATA[Der Benutzer hat noch kein Titelbild hochgeladen.]]></item>
 		<item name="wcf.user.coverPhoto.upload"><![CDATA[Titelbild hochladen]]></item>
-		<item name="wcf.user.coverPhoto.upload.description"><![CDATA[Minimale Bildgröße: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} Pixel<br>Maximale Bildgröße: {$coverPhotoDimensions.max.width}×{$coverPhotoDimensions.max.height} Pixel<br>Erlaubte Dateiendungen: gif, jpg, jpeg, png<br>Maximale Dateigröße: {$__wcf->session->getPermission('user.profile.coverPhoto.maxSize')|filesize}]]></item>
+		<item name="wcf.user.coverPhoto.upload.description"><![CDATA[Minimale Bildgröße: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} Pixel<br>Maximale Bildgröße: {$coverPhotoDimensions.max.width}×{$coverPhotoDimensions.max.height} Pixel<br>Erlaubte Dateiendungen: gif, jpg, jpeg, png, webp<br>Maximale Dateigröße: {$__wcf->session->getPermission('user.profile.coverPhoto.maxSize')|filesize}]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.badImage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} kein gültiges Bild hochgeladen.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.fileExtension"><![CDATA[Die Datei hat eine ungültige Dateiendung.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.maxHeight"><![CDATA[Das Bild ist zu hoch.]]></item>

@@ -133,6 +133,7 @@ class SystemCheckPage extends AbstractPage {
 			'gd' => [
 				'jpeg' => false,
 				'png' => false,
+				'webp' => false,
 				'result' => false,
 			],
 			'extension' => [],
@@ -384,8 +385,11 @@ class SystemCheckPage extends AbstractPage {
 		$gdInfo = \gd_info();
 		$this->results['php']['gd']['jpeg'] = !empty($gdInfo['JPEG Support']);
 		$this->results['php']['gd']['png'] = !empty($gdInfo['PNG Support']);
+		$this->results['php']['gd']['webp'] = !empty($gdInfo['WebP Support']);
 		
-		$this->results['php']['gd']['result'] = $this->results['php']['gd']['jpeg'] && $this->results['php']['gd']['png'];
+		$this->results['php']['gd']['result'] = $this->results['php']['gd']['jpeg']
+			&& $this->results['php']['gd']['png']
+			&& $this->results['php']['gd']['webp'];
 		
 		$this->results['status']['php'] = $this->results['status']['php'] && $this->results['php']['gd']['result'];
 	}

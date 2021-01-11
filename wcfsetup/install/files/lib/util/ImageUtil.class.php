@@ -16,7 +16,7 @@ final class ImageUtil {
 	 * image extensions
 	 * @var array
 	 */
-	protected static $imageExtensions = ['jpeg', 'jpg', 'png', 'gif'];
+	protected static $imageExtensions = ['jpeg', 'jpg', 'png', 'gif', "webp"];
 	
 	/**
 	 * Checks the content of an image for bad sections, e.g. the use of javascript
@@ -92,6 +92,8 @@ final class ImageUtil {
 				return 'bmp';
 			case 'image/tiff':
 				return 'tiff';
+			case 'image/webp':
+				return 'webp';
 			default:
 				return '';
 		}

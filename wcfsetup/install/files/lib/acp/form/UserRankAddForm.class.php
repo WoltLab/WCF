@@ -6,6 +6,9 @@ use wcf\data\user\rank\UserRankEditor;
 use wcf\data\user\UserProfile;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
+use wcf\system\file\upload\UploadField;
+use wcf\system\file\upload\UploadFile;
+use wcf\system\file\upload\UploadHandler;
 use wcf\system\language\I18nHandler;
 use wcf\system\Regex;
 use wcf\system\request\LinkHandler;
@@ -67,8 +70,7 @@ class UserRankAddForm extends AbstractForm {
 	public $requiredPoints = 0;
 	
 	/**
-	 * path to user rank image
-	 * @var	string
+	 * @deprecated since 5.4
 	 */
 	public $rankImage = '';
 	
@@ -110,12 +112,35 @@ class UserRankAddForm extends AbstractForm {
 	];
 	
 	/**
+	 * @var UploadFile[]
+	 */
+	public $removedRankImages;
+	
+	/**
+	 * @var UploadFile|bool
+	 */
+	public $rankImageFile;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
 		
 		I18nHandler::getInstance()->register('rankTitle');
+		
+		$this->rebuildUploadField();
+	}
+	
+	protected function rebuildUploadField(): void {
+		if (UploadHandler::getInstance()->isRegisteredFieldId('rankImage')) {
+			UploadHandler::getInstance()->unregisterUploadField('rankImage');
+		}
+		$field = new UploadField('rankImage');
+		$field->setImageOnly(true);
+		$field->setAllowSvgImage(true);
+		$field->maxFiles = 1;
+		UploadHandler::getInstance()->registerUploadField($field);
 	}
 	
 	/**
@@ -131,10 +156,13 @@ class UserRankAddForm extends AbstractForm {
 		if (isset($_POST['customCssClassName'])) $this->customCssClassName = StringUtil::trim($_POST['customCssClassName']);
 		if (isset($_POST['groupID'])) $this->groupID = intval($_POST['groupID']);
 		if (isset($_POST['requiredPoints'])) $this->requiredPoints = intval($_POST['requiredPoints']);
-		if (isset($_POST['rankImage'])) $this->rankImage = StringUtil::trim($_POST['rankImage']);
 		if (isset($_POST['repeatImage'])) $this->repeatImage = intval($_POST['repeatImage']);
 		if (isset($_POST['requiredGender'])) $this->requiredGender = intval($_POST['requiredGender']);
 		if (isset($_POST['hideTitle'])) $this->hideTitle = intval($_POST['hideTitle']);
+		
+		$this->removedRankImages = UploadHandler::getInstance()->getRemovedFiledByFieldId('rankImage');
+		$rankImageFiles = UploadHandler::getInstance()->getFilesByFieldId('rankImage');
+		$this->rankImageFile = reset($rankImageFiles);
 	}
 	
 	/**
@@ -180,7 +208,7 @@ class UserRankAddForm extends AbstractForm {
 			$this->requiredGender = 0;
 		}
 		
-		if ($this->hideTitle && !$this->rankImage) {
+		if ($this->hideTitle && !$this->rankImageFile) {
 			throw new UserInputException('hideTitle', 'rankImage');
 		}
 	}
@@ -192,16 +220,18 @@ class UserRankAddForm extends AbstractForm {
 		parent::save();
 		
 		// save label
-		$this->objectAction = new UserRankAction([], 'create', ['data' => array_merge($this->additionalFields, [
-			'rankTitle' => $this->rankTitle,
-			'cssClassName' => $this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName,
-			'groupID' => $this->groupID,
-			'requiredPoints' => $this->requiredPoints,
-			'rankImage' => $this->rankImage,
-			'repeatImage' => $this->repeatImage,
-			'requiredGender' => $this->requiredGender,
-			'hideTitle' => ($this->hideTitle ? 1 : 0)
-		])]);
+		$this->objectAction = new UserRankAction([], 'create', [
+			'data' => array_merge($this->additionalFields, [
+				'rankTitle' => $this->rankTitle,
+				'cssClassName' => $this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName,
+				'groupID' => $this->groupID,
+				'requiredPoints' => $this->requiredPoints,
+				'repeatImage' => $this->repeatImage,
+				'requiredGender' => $this->requiredGender,
+				'hideTitle' => ($this->hideTitle ? 1 : 0)
+			]), 
+			'rankImageFile' => $this->rankImageFile,
+		]);
 		$returnValues = $this->objectAction->executeAction();
 		$rankID = $returnValues['returnValues']->rankID;
 		
@@ -222,6 +252,7 @@ class UserRankAddForm extends AbstractForm {
 		$this->repeatImage = 1;
 		
 		I18nHandler::getInstance()->reset();
+		$this->rebuildUploadField();
 		
 		// show success message
 		WCF::getTPL()->assign([

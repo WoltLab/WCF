@@ -222,6 +222,13 @@ interface IImageAdapter {
 	public function overlayImageRelative($file, $position, $margin, $opacity);
 	
 	/**
+	 * Saves an image using a different file type.
+	 * 
+	 * @since 5.4
+	 */
+	public function saveImageAs($image, string $filename, string $type, int $quality = 100): void;
+	
+	/**
 	 * Determines if an image adapter is supported.
 	 * 
 	 * @return	boolean

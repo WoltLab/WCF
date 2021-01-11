@@ -101,5 +101,8 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 		
 		<!-- Migration of multi-factor authentication. -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_migrate_multifactor.php</instruction>
+		
+		<!-- Migration of the rank images -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_migrate_rank_images.php</instruction>
 	</instructions>
 </package>

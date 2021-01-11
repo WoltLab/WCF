@@ -27,7 +27,7 @@ class UploadHandler extends SingletonFactory {
 	 * @var string
 	 * @deprecated 5.3 Use \wcf\util\ImageUtil::$imageExtensions instead (direct replacement).
 	 */
-	const VALID_IMAGE_EXTENSIONS = ['jpeg', 'jpg', 'png', 'gif'];
+	const VALID_IMAGE_EXTENSIONS = ['jpeg', 'jpg', 'png', 'gif', 'webp'];
 	
 	/**
 	 * Contains the registered upload fields. 

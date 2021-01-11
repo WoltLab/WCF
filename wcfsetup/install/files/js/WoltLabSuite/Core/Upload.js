@@ -215,6 +215,9 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Dom/Change
                     case "image/png":
                         fileExtension = "png";
                         break;
+                    case "image/webp":
+                        fileExtension = "webp";
+                        break;
                 }
                 files.push({
                     name: `pasted-from-clipboard.${fileExtension}`,
@@ -281,6 +284,9 @@ define(["require", "exports", "tslib", "./Ajax/Request", "./Core", "./Dom/Change
             }
             // recursively append additional parameters to form data
             function appendFormData(parameters, prefix) {
+                if (parameters === null) {
+                    return;
+                }
                 prefix = prefix || "";
                 Object.entries(parameters).forEach(([key, value]) => {
                     if (typeof value === "object") {

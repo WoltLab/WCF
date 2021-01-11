@@ -1,28 +1,26 @@
 <?php
 namespace wcf\action;
-use ParagonIE\ConstantTime\Hex;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Psr7\Request;
 use wcf\data\user\User;
-use wcf\data\user\UserEditor;
-use wcf\system\exception\IllegalLinkException;
+use wcf\form\RegisterForm;
 use wcf\system\exception\NamedUserException;
-use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
-use wcf\system\user\authentication\UserAuthenticationFactory;
+use wcf\system\user\authentication\oauth\User as OauthUser;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
-use wcf\util\HTTPRequest;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
- * Handles github auth.
+ * Performs authentication against GitHub.com
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2021 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Action
  */
-class GithubAuthAction extends AbstractAction {
+final class GithubAuthAction extends AbstractOauth2Action {
 	/**
 	 * @inheritDoc
 	 */
@@ -31,140 +29,144 @@ class GithubAuthAction extends AbstractAction {
 	/**
 	 * @inheritDoc
 	 */
-	public function readParameters() {
-		parent::readParameters();
-		
-		if (WCF::getSession()->spiderID) {
-			throw new IllegalLinkException();
-		}
+	protected function getTokenEndpoint(): string {
+		return 'https://github.com/login/oauth/access_token';
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function execute() {
-		parent::execute();
+	protected function getClientId(): string {
+		return StringUtil::trim(GITHUB_PUBLIC_KEY);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function getClientSecret(): string {
+		return StringUtil::trim(GITHUB_PRIVATE_KEY);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function getScope(): string {
+		return 'user:email';
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function getAuthorizeUrl(): string {
+		return 'https://github.com/login/oauth/authorize';
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function getCallbackUrl(): string {
+		return LinkHandler::getInstance()->getControllerLink(self::class);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function supportsState(): bool { 
+		return true;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function getUser(array $accessToken): OauthUser { 
+		$request = new Request('GET', 'https://api.github.com/user', [
+			'accept' => 'application/json',
+			'authorization' => \sprintf('Bearer %s', $accessToken['access_token']),
+		]);
+		$response = $this->getHttpClient()->send($request);
+		$parsed = JSON::decode((string) $response->getBody());
 		
-		// user accepted the connection
-		if (isset($_GET['code'])) {
-			try {
-				// fetch access_token
-				$request = new HTTPRequest('https://github.com/login/oauth/access_token', [], [
-					'client_id' => StringUtil::trim(GITHUB_PUBLIC_KEY),
-					'client_secret' => StringUtil::trim(GITHUB_PRIVATE_KEY),
-					'code' => $_GET['code']
-				]);
-				$request->execute();
-				$reply = $request->getReply();
+		$parsed['__id'] = $parsed['id'];
+		$parsed['__username'] = $parsed['login'];
+		$parsed['accessToken'] = $accessToken;
+		
+		return new OauthUser($parsed);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function processUser(OauthUser $oauthUser) {
+		$user = User::getUserByAuthData('github:'.$oauthUser->getId());
+		
+		if ($user->userID) {
+			if (WCF::getUser()->userID) {
+				// This account belongs to an existing user, but we are already logged in.
+				// This can't be handled.
 				
-				$content = $reply['body'];
-			}
-			catch (SystemException $e) {
-				\wcf\functions\exception\logThrowable($e);
-				throw new IllegalLinkException();
-			}
-			
-			// validate state, validation of state is executed after fetching the access_token to invalidate 'code'
-			if (!isset($_GET['state']) || !WCF::getSession()->getVar('__githubInit') || !\hash_equals(WCF::getSession()->getVar('__githubInit'), $_GET['state'])) throw new IllegalLinkException();
-			WCF::getSession()->unregister('__githubInit');
-			
-			parse_str($content, $data);
-			
-			// check whether the token is okay
-			if (isset($data['error'])) throw new IllegalLinkException();
-			
-			try {
-				// fetch userdata
-				$request = new HTTPRequest('https://api.github.com/user');
-				$request->addHeader('Authorization', 'token '.$data['access_token']);
-				$request->execute();
-				$reply = $request->getReply();
-				$userData = JSON::decode(StringUtil::trim($reply['body']));
-			}
-			catch (SystemException $e) {
-				\wcf\functions\exception\logThrowable($e);
-				throw new IllegalLinkException();
-			}
-			
-			// check whether a user is connected to this github account
-			$user = User::getUserByAuthData('github:'.$userData['id']);
-			if (!$user->userID) {
-				$user = User::getUserByAuthData('github:'.$data['access_token']);
-				$userEditor = new UserEditor($user);
-				$userEditor->update(['authData' => 'github:'.$userData['id']]);
-			}
-			
-			if ($user->userID) {
-				// a user is already connected, but we are logged in, break
-				if (WCF::getUser()->userID) {
-					throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.3rdparty.github.connect.error.inuse'));
-				}
-				// perform login
-				else {
-					WCF::getSession()->changeUser($user);
-					WCF::getSession()->update();
-					HeaderUtil::redirect(LinkHandler::getInstance()->getLink());
-				}
+				throw new NamedUserException(
+					WCF::getLanguage()->getDynamicVariable('wcf.user.3rdparty.github.connect.error.inuse')
+				);
 			}
 			else {
-				WCF::getSession()->register('__3rdPartyProvider', 'github');
-				// save data for connection
-				if (WCF::getUser()->userID) {
-					WCF::getSession()->register('__githubUsername', $userData['login']);
-					WCF::getSession()->register('__githubToken', $data['access_token']);
-					
-					HeaderUtil::redirect(LinkHandler::getInstance()->getLink('AccountManagement').'#3rdParty');
-				}
-				// save data and redirect to registration
-				else {
-					WCF::getSession()->register('__githubData', $userData);
-					WCF::getSession()->register('__username', $userData['login']);
-					
-					try {
-						$request = new HTTPRequest('https://api.github.com/user/emails');
-						$request->addHeader('Authorization', 'token '.$data['access_token']);
-						$request->execute();
-						$reply = $request->getReply();
-						$emails = JSON::decode(StringUtil::trim($reply['body']));
-						
-						// search primary email
-						$email = $emails[0]['email'];
-						foreach ($emails as $tmp) {
-							if ($tmp['primary']) {
-								$email = $tmp['email'];
-								break;
-							}
-						}
-						WCF::getSession()->register('__email', $email);
-					}
-					catch (SystemException $e) {
-					}
-					WCF::getSession()->register('__githubToken', $data['access_token']);
-					
-					// we assume that bots won't register on github first
-					// thus no need for a captcha
-					if (REGISTER_USE_CAPTCHA) {
-						WCF::getSession()->register('noRegistrationCaptcha', true);
-					}
-					
-					WCF::getSession()->update();
-					HeaderUtil::redirect(LinkHandler::getInstance()->getLink('Register'));
-				}
+				// This account belongs to an existing user, we are not logged in.
+				// Perform the login.
+				
+				WCF::getSession()->changeUser($user);
+				WCF::getSession()->update();
+				HeaderUtil::redirect(LinkHandler::getInstance()->getLink());
+				exit;
 			}
+		}
+		else {
+			WCF::getSession()->register('__3rdPartyProvider', 'github');
 			
-			$this->executed();
-			exit;
+			if (WCF::getUser()->userID) {
+				// This account does not belong to anyone and we are already logged in.
+				// Thus we want to connect this account.
+				
+				WCF::getSession()->register('__oauthUser', $oauthUser);
+
+				HeaderUtil::redirect(LinkHandler::getInstance()->getLink('AccountManagement').'#3rdParty');
+				exit;
+			}
+			else {
+				// This account does not belong to anyone and we are not logged in.
+				// Thus we want to connect this account to a newly registered user.
+				
+				try {
+					$request = new Request('GET', 'https://api.github.com/user/emails', [
+						'accept' => 'application/json',
+						'authorization' => \sprintf('Bearer %s', $oauthUser["accessToken"]["access_token"]),
+					]);
+					$response = $this->getHttpClient()->send($request);
+					$emails = JSON::decode((string) $response->getBody());
+					
+					// search primary email
+					$email = $emails[0]['email'];
+					foreach ($emails as $tmp) {
+						if ($tmp['primary']) {
+							$email = $tmp['email'];
+							break;
+						}
+					}
+					$oauthUser["__email"] = $email;
+				}
+				catch (GuzzleException $e) {
+				}
+				
+				WCF::getSession()->register('__oauthUser', $oauthUser);
+				WCF::getSession()->register('__username', $oauthUser->getUsername());
+				WCF::getSession()->register('__email', $oauthUser->getEmail());
+				
+				// We assume that bots won't register an external account first, so
+				// we skip the captcha.
+				WCF::getSession()->register('noRegistrationCaptcha', true);
+				
+				WCF::getSession()->update();
+				HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(RegisterForm::class));
+				exit;
+			}
 		}
-		// user declined or any other error that may occur
-		if (isset($_GET['error'])) {
-			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.3rdparty.github.login.error.'.$_GET['error']));
-		}
-		
-		// start auth by redirecting to github
-		$token = Hex::encode(\random_bytes(20));
-		WCF::getSession()->register('__githubInit', $token);
-		HeaderUtil::redirect("https://github.com/login/oauth/authorize?client_id=".rawurlencode(StringUtil::trim(GITHUB_PUBLIC_KEY))."&scope=".rawurlencode('user:email')."&state=".$token);
-		$this->executed();
-		exit;
 	}
 }

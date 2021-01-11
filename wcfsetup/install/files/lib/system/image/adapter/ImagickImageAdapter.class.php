@@ -462,6 +462,46 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
+	 * @inheritDoc
+	 */
+	public function saveImageAs($image, string $filename, string $type, int $quality = 100): void {
+		if (!($image instanceof \Imagick)) {
+			throw new \InvalidArgumentException("Given image is not a valid Imagick-object.");
+		}
+		
+		// Greatly reduces the time required to create the image and drastically
+		// reduces the filesize to more reasonable levels without a visible
+		// quality loss.
+		//
+		// See https://github.com/Imagick/imagick/issues/360
+		if ($image->getImageFormat() == "GIF") {
+			$image = $image->deconstructImages();
+			$image->quantizeImages(256, \Imagick::COLORSPACE_SRGB, 0, false, false);
+		}
+		
+		switch ($type) {
+			case "jpg":
+			case "jpeg":
+				$fileFormat = "jpg";
+				break;
+			
+			case "png":
+				$fileFormat = "png";
+				break;
+			
+			case "webp":
+				$fileFormat = "webp";
+				break;
+			
+			default:
+				throw new \LogicException("Unreachable");
+		}
+		
+		$image->writeImages("{$fileFormat}:{$filename}", true);
+	}
+	
+	
+	/**
 	 * @param string $version
 	 * @return bool
 	 */

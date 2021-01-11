@@ -85,7 +85,7 @@ class NotificationEmailDeliveryBackgroundJob extends AbstractBackgroundJob {
 		$statement->closeCursor();
 
 		// Drop email if the notification is deleted.
-		if (!$notification->notificationID) {
+		if (!$notification || !$notification->notificationID) {
 			return;
 		}
 		
