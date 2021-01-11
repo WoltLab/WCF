@@ -347,8 +347,11 @@ class GDImageAdapter implements IImageAdapter {
 		
 		ob_start();
 		
+		// fix PNG alpha channel handling
+		// see http://php.net/manual/en/function.imagecopymerge.php#92787
 		imagealphablending($image, false);
 		imagesavealpha($image, true);
+		
 		if ($this->type == IMAGETYPE_GIF) {
 			imagegif($image);
 		}
@@ -491,6 +494,49 @@ class GDImageAdapter implements IImageAdapter {
 	 */
 	public function overlayImageRelative($file, $position, $margin, $opacity) {
 		// does nothing
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function saveImageAs($image, string $filename, string $type, int $quality = 100): void {
+		if (!$this->isImage($image)) {
+			throw new \InvalidArgumentException("Given image is not a valid image resource.");
+		}
+		
+		ob_start();
+		
+		// fix PNG alpha channel handling
+		// see http://php.net/manual/en/function.imagecopymerge.php#92787
+		imagealphablending($image, false);
+		imagesavealpha($image, true);
+		
+		switch ($type) {
+			case "gif":
+				imagegif($image);
+				break;
+				
+			case "jpg":
+			case "jpeg":
+				imagejpeg($image, null, $quality);
+				break;
+				
+			case "png":
+				imagepng($image, null, $quality);
+				break;
+			
+			case "webp":
+				imagewebp($image, null, $quality);
+				break;
+			
+			default:
+				throw new \InvalidArgumentException("Unreachable");
+		}
+		
+		$stream = ob_get_contents();
+		ob_end_clean();
+		
+		file_put_contents($filename, $stream);
 	}
 	
 	/**

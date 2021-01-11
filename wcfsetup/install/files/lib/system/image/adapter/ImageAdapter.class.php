@@ -369,6 +369,30 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter {
 	/**
 	 * @inheritDoc
 	 */
+	public function saveImageAs($image, string $filename, string $type, int $quality = 100): void {
+		switch ($type) {
+			case "gif":
+			case "jpg":
+			case "jpeg":
+			case "png":
+			case "webp":
+				break;
+				
+			default:
+				throw new \InvalidArgumentException("Unsupported image format '{$type}'.");
+		}
+		
+		if ($quality < 0 || $quality > 100) {
+			throw new \InvalidArgumentException("The quality must be an integer between 0 and 100.");
+		}
+		
+		$this->adapter->saveImageAs($image, $filename, $type, $quality);
+	}
+	
+	
+	/**
+	 * @inheritDoc
+	 */
 	public static function isSupported() {
 		return false;
 	}
