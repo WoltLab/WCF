@@ -9,7 +9,7 @@
 
 import MediaManager from "./Base";
 import * as Core from "../../Core";
-import { Media, MediaManagerEditorOptions, MediaUploadSuccessEventData } from "../Data";
+import { Media, MediaInsertType, MediaManagerEditorOptions, MediaUploadSuccessEventData } from "../Data";
 import * as EventHandler from "../../Event/Handler";
 import * as DomTraverse from "../../Dom/Traverse";
 import * as Language from "../../Language";
@@ -216,7 +216,7 @@ class MediaManagerEditor extends MediaManager<MediaManagerEditorOptions> {
     }
 
     if (this._options.callbackInsert !== null) {
-      this._options.callbackInsert(this._mediaToInsert, "separate", thumbnailSize!);
+      this._options.callbackInsert(this._mediaToInsert, MediaInsertType.Separate, thumbnailSize!);
     } else {
       this._options.editor!.buffer.set();
     }

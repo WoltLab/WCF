@@ -1,4 +1,4 @@
-import { Media } from "../../../Media/Data";
+import { Media, MediaInsertType } from "../../../Media/Data";
 import MediaManagerEditor from "../../../Media/Manager/Editor";
 import * as Core from "../../../Core";
 
@@ -17,20 +17,16 @@ class AcpUiCodeMirrorMedia {
     });
   }
 
-  protected insert(mediaList: Map<number, Media>, insertType: string, thumbnailSize: string): void {
-    let content: string;
+  protected insert(mediaList: Map<number, Media>, insertType: MediaInsertType, thumbnailSize: string): void {
+    switch (insertType) {
+      case MediaInsertType.Separate: {
+        const content = Array.from(mediaList.values())
+          .map((item) => `{{ media="${item.mediaID}" size="${thumbnailSize}" }}`)
+          .join("");
 
-    if (insertType === "gallery") {
-      const mediaIds = Array.from(mediaList.values()).map((item) => item.mediaID);
-
-      content = `{{ mediaGallery="${mediaIds.join(",")}" }}`;
-    } else {
-      content = Array.from(mediaList.values())
-        .map((item) => `{{ media="${item.mediaID}" size="${thumbnailSize}" }}`)
-        .join("");
+        (this.element as any).codemirror.replaceSelection(content);
+      }
     }
-
-    (this.element as any).codemirror.replaceSelection(content);
   }
 }
 

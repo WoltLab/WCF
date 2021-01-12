@@ -13,17 +13,14 @@ define(["require", "exports", "tslib", "../../../Media/Manager/Editor", "../../.
             });
         }
         insert(mediaList, insertType, thumbnailSize) {
-            let content;
-            if (insertType === "gallery") {
-                const mediaIds = Array.from(mediaList.values()).map((item) => item.mediaID);
-                content = `{{ mediaGallery="${mediaIds.join(",")}" }}`;
+            switch (insertType) {
+                case "separate" /* Separate */: {
+                    const content = Array.from(mediaList.values())
+                        .map((item) => `{{ media="${item.mediaID}" size="${thumbnailSize}" }}`)
+                        .join("");
+                    this.element.codemirror.replaceSelection(content);
+                }
             }
-            else {
-                content = Array.from(mediaList.values())
-                    .map((item) => `{{ media="${item.mediaID}" size="${thumbnailSize}" }}`)
-                    .join("");
-            }
-            this.element.codemirror.replaceSelection(content);
         }
     }
     Core.enableLegacyInheritance(AcpUiCodeMirrorMedia);
