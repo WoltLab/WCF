@@ -23,10 +23,10 @@ class Tab extends Abstract {
       return;
     }
 
-    const containerIsVisible = this._container.style.display !== "none";
-    const containerShouldBeVisible = Array.from(this._container.children).some((child: HTMLElement) => {
-      return child.style.display !== "none";
-    });
+    const containerIsVisible = !DomUtil.isHidden(this._container);
+    const containerShouldBeVisible = Array.from(this._container.children).some(
+      (child: HTMLElement) => !DomUtil.isHidden(child),
+    );
 
     if (containerIsVisible !== containerShouldBeVisible) {
       const tabMenuListItem = this._container.parentNode!.parentNode!.querySelector(
@@ -41,11 +41,11 @@ class Tab extends Abstract {
       }
 
       if (containerShouldBeVisible) {
-        this._container.style.display = "block";
-        tabMenuListItem.style.display = "block";
+        DomUtil.show(this._container);
+        DomUtil.show(tabMenuListItem);
       } else {
-        this._container.style.display = "none";
-        tabMenuListItem.style.display = "none";
+        DomUtil.hide(this._container);
+        DomUtil.hide(tabMenuListItem);
 
         const tabMenu = UiTabMenu.getTabMenu(
           DomUtil.identify(tabMenuListItem.closest(".tabMenuContainer") as HTMLElement),

@@ -22,18 +22,16 @@ define(["require", "exports", "tslib", "./Abstract", "../Manager", "../../../../
             if (DependencyManager.isHiddenByDependencies(this._container)) {
                 return;
             }
-            const containerIsVisible = this._container.style.display !== "none";
+            const containerIsVisible = !DomUtil.isHidden(this._container);
             const listItems = this._container.parentNode.querySelectorAll("#" + DomUtil.identify(this._container) + " > nav > ul > li");
-            const containerShouldBeVisible = Array.from(listItems).some((child) => {
-                return child.style.display !== "none";
-            });
+            const containerShouldBeVisible = Array.from(listItems).some((child) => !DomUtil.isHidden(child));
             if (containerIsVisible !== containerShouldBeVisible) {
                 if (containerShouldBeVisible) {
-                    this._container.style.display = "block";
+                    DomUtil.show(this._container);
                     UiTabMenu.getTabMenu(DomUtil.identify(this._container)).selectFirstVisible();
                 }
                 else {
-                    this._container.style.display = "none";
+                    DomUtil.hide(this._container);
                 }
                 // check containers again to make sure parent containers can react to
                 // changing the visibility of this container

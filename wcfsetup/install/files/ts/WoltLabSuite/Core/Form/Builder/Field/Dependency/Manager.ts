@@ -29,7 +29,7 @@ type Callback = (...args: any[]) => void;
  * Hides the given node because of its own dependencies.
  */
 function _hide(node: HTMLElement): void {
-  node.style.display = "none";
+  DomUtil.hide(node);
   _dependencyHiddenNodes.add(node);
 
   // also hide tab menu entry
@@ -39,7 +39,7 @@ function _hide(node: HTMLElement): void {
       .querySelectorAll("li")
       .forEach((tabLink) => {
         if (tabLink.dataset.name === node.dataset.name) {
-          tabLink.style.display = "none";
+          DomUtil.hide(tabLink);
         }
       });
   }
@@ -78,7 +78,7 @@ function _hide(node: HTMLElement): void {
  * Shows the given node because of its own dependencies.
  */
 function _show(node: HTMLElement): void {
-  node.style.display = "block";
+  DomUtil.show(node);
   _dependencyHiddenNodes.delete(node);
 
   // also show tab menu entry
@@ -88,7 +88,7 @@ function _show(node: HTMLElement): void {
       .querySelectorAll("li")
       .forEach((tabLink) => {
         if (tabLink.dataset.name === node.dataset.name) {
-          tabLink.style.display = "block";
+          DomUtil.show(tabLink);
         }
       });
   }
@@ -97,7 +97,7 @@ function _show(node: HTMLElement): void {
     // if a container is shown, ignore all fields that
     // have a hidden parent element within the container
     let parentNode = validatedField.parentNode! as HTMLElement;
-    while (parentNode !== node && parentNode.style.getPropertyValue("display") !== "none") {
+    while (parentNode !== node && !DomUtil.isHidden(parentNode)) {
       parentNode = parentNode.parentNode! as HTMLElement;
     }
 

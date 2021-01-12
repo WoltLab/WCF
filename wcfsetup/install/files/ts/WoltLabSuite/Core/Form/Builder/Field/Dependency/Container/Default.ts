@@ -13,6 +13,7 @@
 import Abstract from "./Abstract";
 import * as Core from "../../../../../Core";
 import * as DependencyManager from "../Manager";
+import DomUtil from "../../../../../Dom/Util";
 
 class Default extends Abstract {
   public checkContainer(): void {
@@ -25,21 +26,21 @@ class Default extends Abstract {
       return;
     }
 
-    const containerIsVisible = this._container.style.display !== "none";
+    const containerIsVisible = !DomUtil.isHidden(this._container);
     const containerShouldBeVisible = Array.from(this._container.children).some((child: HTMLElement, index) => {
       // ignore container header for visibility considerations
       if (index === 0 && (child.tagName === "H2" || child.tagName === "HEADER")) {
         return false;
       }
 
-      return child.style.display !== "none";
+      return !DomUtil.isHidden(child);
     });
 
     if (containerIsVisible !== containerShouldBeVisible) {
       if (containerShouldBeVisible) {
-        this._container.style.display = "block";
+        DomUtil.show(this._container);
       } else {
-        this._container.style.display = "none";
+        DomUtil.hide(this._container);
       }
 
       // check containers again to make sure parent containers can react to
