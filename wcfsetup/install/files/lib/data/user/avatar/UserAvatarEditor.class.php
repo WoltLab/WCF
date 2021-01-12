@@ -112,7 +112,7 @@ class UserAvatarEditor extends DatabaseObjectEditor {
 			];
 		}
 		else {
-			$imageAdapter->saveImageAs($imageAdapter, $this->getLocation(null, true), "webp", 80);
+			$imageAdapter->saveImageAs($image, $this->getLocation(null, true), "webp", 80);
 		}
 		
 		$this->update($data);
