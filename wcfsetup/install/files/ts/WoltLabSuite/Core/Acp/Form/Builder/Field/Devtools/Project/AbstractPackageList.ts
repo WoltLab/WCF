@@ -23,10 +23,10 @@ abstract class AbstractPackageList<TPackageData extends PackageData = PackageDat
   protected readonly packageIdentifier: HTMLInputElement;
 
   // see `wcf\data\package\Package::isValidPackageName()`
-  protected static packageIdentifierRegExp = new RegExp(/^[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/);
+  protected static readonly packageIdentifierRegExp = new RegExp(/^[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/);
 
   // see `wcf\data\package\Package::isValidVersion()`
-  protected static versionRegExp = new RegExp(
+  protected static readonly versionRegExp = new RegExp(
     /^([0-9]+).([0-9]+)\.([0-9]+)( (a|alpha|b|beta|d|dev|rc|pl) ([0-9]+))?$/i,
   );
 

@@ -30,10 +30,12 @@ interface InstructionsData {
   errors?: string[];
   fromVersion?: string;
   instructions?: Instruction[];
-  type: "install" | "update";
+  type: InstructionsType;
 }
 
+type InstructionsType = "install" | "update";
 type InstructionsId = number | string;
+type PipFilenameMap = { [k: string]: string };
 
 class Instructions {
   protected readonly addButton: HTMLAnchorElement;
@@ -47,15 +49,15 @@ class Instructions {
   protected readonly instructionsType: HTMLSelectElement;
   protected readonly instructionsTemplate: Template;
   protected readonly instructionEditDialogTemplate: Template;
-  protected readonly pipDefaultFilenames: { [k: string]: string };
+  protected readonly pipDefaultFilenames: PipFilenameMap;
 
-  protected static applicationPips = ["acpTemplate", "file", "script", "template"];
+  protected static readonly applicationPips = ["acpTemplate", "file", "script", "template"];
 
   // see `wcf\data\package\Package::isValidPackageName()`
-  protected static packageIdentifierRegExp = new RegExp(/^[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/);
+  protected static readonly packageIdentifierRegExp = new RegExp(/^[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/);
 
   // see `wcf\data\package\Package::isValidVersion()`
-  protected static versionRegExp = new RegExp(
+  protected static readonly versionRegExp = new RegExp(
     /^([0-9]+).([0-9]+)\.([0-9]+)( (a|alpha|b|beta|d|dev|rc|pl) ([0-9]+))?$/i,
   );
 
@@ -64,7 +66,7 @@ class Instructions {
     instructionsTemplate: Template,
     instructionsEditDialogTemplate: Template,
     instructionEditDialogTemplate: Template,
-    pipDefaultFilenames: { [k: string]: string },
+    pipDefaultFilenames: PipFilenameMap,
     existingInstructions: InstructionsData[],
   ) {
     this.formFieldId = formFieldId;
@@ -126,7 +128,7 @@ class Instructions {
     event.stopPropagation();
 
     const instructionsId = ((event.currentTarget as HTMLElement).closest("li.section") as HTMLElement).dataset
-      .instrictionsId!;
+      .instructionsId!;
 
     // note: data will be validated/filtered by the server
 
@@ -244,7 +246,7 @@ class Instructions {
 
     this.addInstructionsByData({
       fromVersion: this.instructionsType.value === "update" ? this.fromVersion.value : "",
-      type: this.instructionsType.value as "install" | "update",
+      type: this.instructionsType.value as InstructionsType,
     });
 
     // empty fields

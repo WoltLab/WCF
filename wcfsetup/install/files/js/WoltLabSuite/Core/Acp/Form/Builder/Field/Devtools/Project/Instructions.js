@@ -69,7 +69,7 @@ define(["require", "exports", "tslib", "../../../../../../Core", "../../../../..
             event.preventDefault();
             event.stopPropagation();
             const instructionsId = event.currentTarget.closest("li.section").dataset
-                .instrictionsId;
+                .instructionsId;
             // note: data will be validated/filtered by the server
             const pipField = document.getElementById(`${this.formFieldId}_instructions${instructionsId}_pip`);
             // ignore pressing button if no PIP has been selected
