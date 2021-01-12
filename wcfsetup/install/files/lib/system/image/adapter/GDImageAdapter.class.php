@@ -530,7 +530,7 @@ class GDImageAdapter implements IImageAdapter {
 				break;
 			
 			default:
-				throw new \InvalidArgumentException("Unreachable");
+				throw new \LogicException("Unreachable");
 		}
 		
 		$stream = ob_get_contents();
