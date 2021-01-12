@@ -1,33 +1,31 @@
-define(['WoltLabSuite/Core/Media/Manager/Editor'], function (MediaManagerEditor) {
+define(["require", "exports", "tslib", "../../../Media/Manager/Editor", "../../../Core"], function (require, exports, tslib_1, Editor_1, Core) {
     "use strict";
-    function AcpUiCodeMirrorMedia(elementId) { this.init(elementId); }
-    AcpUiCodeMirrorMedia.prototype = {
-        init: function (elementId) {
-            this._element = elById(elementId);
-            var button = elById('codemirror-' + elementId + '-media');
+    Editor_1 = tslib_1.__importDefault(Editor_1);
+    Core = tslib_1.__importStar(Core);
+    class AcpUiCodeMirrorMedia {
+        constructor(elementId) {
+            this.element = document.getElementById(elementId);
+            const button = document.getElementById(`codemirror-${elementId}-media`);
             button.classList.add(button.id);
-            new MediaManagerEditor({
+            new Editor_1.default({
                 buttonClass: button.id,
-                callbackInsert: this._insert.bind(this),
-                editor: null
+                callbackInsert: (media, insertType, thumbnailSize) => this.insert(media, insertType, thumbnailSize),
             });
-        },
-        _insert: function (mediaList, insertType, thumbnailSize) {
-            var content = '';
-            if (insertType === 'gallery') {
-                var mediaIds = [];
-                mediaList.forEach(function (item) {
-                    mediaIds.push(item.mediaID);
-                });
-                content = '{{ mediaGallery="' + mediaIds.join(',') + '" }}';
+        }
+        insert(mediaList, insertType, thumbnailSize) {
+            let content;
+            if (insertType === "gallery") {
+                const mediaIds = Array.from(mediaList.values()).map((item) => item.mediaID);
+                content = `{{ mediaGallery="${mediaIds.join(",")}" }}`;
             }
             else {
-                mediaList.forEach(function (item) {
-                    content += '{{ media="' + item.mediaID + '" size="' + thumbnailSize + '" }}';
-                });
+                content = Array.from(mediaList.values())
+                    .map((item) => `{{ media="${item.mediaID}" size="${thumbnailSize}" }}`)
+                    .join("");
             }
-            this._element.codemirror.replaceSelection(content);
+            this.element.codemirror.replaceSelection(content);
         }
-    };
+    }
+    Core.enableLegacyInheritance(AcpUiCodeMirrorMedia);
     return AcpUiCodeMirrorMedia;
 });
