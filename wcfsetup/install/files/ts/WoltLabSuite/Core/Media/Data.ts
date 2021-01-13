@@ -38,9 +38,13 @@ export interface MediaManagerOptions {
   minSearchLength: number;
 }
 
+export const enum MediaInsertType {
+  Separate = "separate",
+}
+
 export interface MediaManagerEditorOptions extends MediaManagerOptions {
   buttonClass?: string;
-  callbackInsert: (media: Map<number, Media>, insertType: string, thumbnailSize: string) => void;
+  callbackInsert: (media: Map<number, Media>, insertType: MediaInsertType, thumbnailSize: string) => void;
   editor?: RedactorEditor;
 }
 
