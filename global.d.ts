@@ -40,6 +40,8 @@ declare global {
     sortable(...args: any[]): unknown;
 
     redactor(...args: any[]): unknown;
+
+    messageTabMenu(...args: any[]): unknown;
   }
 
   type ArbitraryObject = Record<string, unknown>;
