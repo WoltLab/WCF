@@ -32,7 +32,7 @@ class Checkboxes extends Field {
   }
 
   protected _readField(): void {
-    this._fields = Array.from(document.querySelectorAll("input[name=" + this._fieldId + "]"));
+    this._fields = Array.from(document.querySelectorAll(`input[name="${this._fieldId}[]"]`));
   }
 }
 
