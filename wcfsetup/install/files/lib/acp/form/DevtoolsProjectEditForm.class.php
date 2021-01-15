@@ -261,11 +261,11 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 		$requirements = $packageArchive->getRequirements();
 		if (!empty($requirements)) {
 			$requirementData = [];
-			foreach ($requirements as $optional) {
+			foreach ($requirements as $requirement) {
 				$requirementData[] = [
-					'file' => isset($optional['file']) ? 1 : 0,
-					'minVersion' => $optional['minversion'] ?? '',
-					'packageIdentifier' => $optional['name']
+					'file' => isset($requirement['file']) ? 1 : 0,
+					'minVersion' => $requirement['minversion'] ?? '',
+					'packageIdentifier' => $requirement['name']
 				];
 			}
 			
@@ -292,9 +292,9 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 		$optionals = $packageArchive->getOptionals();
 		if (!empty($optionals)) {
 			$exclusionData = [];
-			foreach ($optionals as $optional) {
+			foreach ($optionals as $requirement) {
 				$exclusionData[] = [
-					'packageIdentifier' => $optional['name']
+					'packageIdentifier' => $requirement['name']
 				];
 			}
 			
