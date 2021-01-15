@@ -588,7 +588,6 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm {
 			->appendChild(
 				DevtoolsProjectInstructionsFormField::create()
 					->label('wcf.acp.devtools.project.instructions')
-					->description('wcf.acp.devtools.project.instructions')
 					->addValidator(new FormFieldValidator('updateFromPreviousVersion', function(DevtoolsProjectInstructionsFormField $formField) {
 						/** @var TextFormField $versionField */
 						$versionField = $this->form->getNodeById('version');
