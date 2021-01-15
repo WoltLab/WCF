@@ -11,7 +11,7 @@
 import Field from "./Field";
 import { FormBuilderData } from "../Data";
 import * as Core from "../../../Core";
-import * as UiItemList from "../../../Ui/ItemList/Static";
+import * as UiItemList from "../../../Ui/ItemList";
 
 class User extends Field {
   protected _getData(): FormBuilderData {
