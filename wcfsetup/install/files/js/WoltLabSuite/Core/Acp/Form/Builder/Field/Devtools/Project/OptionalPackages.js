@@ -1,33 +1,26 @@
 /**
  * Manages the packages entered in a devtools project optional package form field.
  *
- * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/OptionalPackages
- * @see 	module:WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/AbstractPackageList
- * @since	5.2
+ * @author  Matthias Schmidt
+ * @copyright 2001-2021 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/OptionalPackages
+ * @see module:WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/AbstractPackageList
+ * @since 5.2
  */
-define(['./AbstractPackageList', 'Core', 'Language'], function (AbstractPackageList, Core, Language) {
+define(["require", "exports", "tslib", "./AbstractPackageList", "../../../../../../Core", "../../../../../../Language"], function (require, exports, tslib_1, AbstractPackageList_1, Core, Language) {
     "use strict";
-    /**
-     * @constructor
-     */
-    function OptionalPackages(formFieldId, existingPackages) {
-        this.init(formFieldId, existingPackages);
-    }
-    ;
-    Core.inherit(OptionalPackages, AbstractPackageList, {
-        /**
-         * @see	WoltLabSuite/Core/Form/Builder/Field/Devtools/Project/AbstractPackageList#_populateListItem
-         */
-        _populateListItem: function (listItem, packageData) {
-            OptionalPackages._super.prototype._populateListItem.call(this, listItem, packageData);
-            listItem.innerHTML = ' ' + Language.get('wcf.acp.devtools.project.optionalPackage.optionalPackage', {
-                file: packageData.file,
-                packageIdentifier: packageData.packageIdentifier
-            });
+    AbstractPackageList_1 = tslib_1.__importDefault(AbstractPackageList_1);
+    Core = tslib_1.__importStar(Core);
+    Language = tslib_1.__importStar(Language);
+    class OptionalPackages extends AbstractPackageList_1.default {
+        populateListItem(listItem, packageData) {
+            super.populateListItem(listItem, packageData);
+            listItem.innerHTML = ` ${Language.get("wcf.acp.devtools.project.optionalPackage.optionalPackage", {
+                packageIdentifier: packageData.packageIdentifier,
+            })}`;
         }
-    });
+    }
+    Core.enableLegacyInheritance(OptionalPackages);
     return OptionalPackages;
 });
