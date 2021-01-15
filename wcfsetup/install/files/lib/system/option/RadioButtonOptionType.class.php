@@ -47,6 +47,12 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableCon
 			$options['enableOptions'][$key] = $optionData['enableOptions'];
 		}
 		
+		// Check, if the current value is invalid and use a valid default value as current selection. 
+		if (!isset($this->getSelectOptions($option)[$value])) {
+			$keys = array_keys($this->getSelectOptions($option));
+			$value = reset($keys);
+		}
+		
 		WCF::getTPL()->assign([
 			'disableOptions' => $options['disableOptions'],
 			'enableOptions' => $options['enableOptions'],
