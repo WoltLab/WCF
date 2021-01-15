@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\form\builder\container;
 use wcf\data\IStorableObject;
+use wcf\system\form\builder\container\wysiwyg\WysiwygFormContainer;
 use wcf\system\form\builder\IFormChildNode;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\TFormChildNode;
@@ -102,7 +103,7 @@ class FormContainer implements IFormContainer {
 		
 		if ($child instanceof ITabMenuFormContainer) {
 			$parent = $this;
-			while (!($parent instanceof IFormDocument) && $parent = $parent->getParent()) {
+			while (!($parent instanceof IFormDocument || $parent instanceof WysiwygFormContainer) && $parent = $parent->getParent()) {
 				if ($parent instanceof ITabMenuFormContainer) {
 					throw new \InvalidArgumentException("A tab menu container may only have another tab menu container as a parent, not as an earlier ancestor.");
 				}
