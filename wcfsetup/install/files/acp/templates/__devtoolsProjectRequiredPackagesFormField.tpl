@@ -48,7 +48,7 @@
 		new RequiredPackagesFormField('{@$field->getPrefixedId()}', [
 			{implode from=$field->getValue() item=requiredPackage}
 				{
-					file: '{$requiredPackage[file]}',
+					file: {if $requiredPackage[file]}true{else}false{/if},
 					minVersion: '{$requiredPackage[minVersion]}',
 					packageIdentifier: '{$requiredPackage[packageIdentifier]}'
 				}
