@@ -1,3 +1,5 @@
+import { ResponseData } from "../../../Ajax/Data";
+
 export interface MessageInlineEditorOptions {
   canEditInline: boolean;
 
@@ -19,4 +21,18 @@ export interface ItemData {
 
 export interface ElementVisibility {
   [key: string]: boolean;
+}
+
+export interface AjaxResponseEditor extends ResponseData {
+  returnValues: {
+    template: string;
+  };
+}
+
+export interface AjaxResponseMessage extends ResponseData {
+  returnValues: {
+    attachmentList?: string;
+    message: string;
+    poll?: string;
+  };
 }

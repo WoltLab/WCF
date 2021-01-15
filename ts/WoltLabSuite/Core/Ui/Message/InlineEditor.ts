@@ -19,8 +19,13 @@ import { NotificationAction } from "../Dropdown/Data";
 import * as UiDropdownReusable from "../Dropdown/Reusable";
 import * as UiNotification from "../Notification";
 import * as UiScroll from "../Scroll";
-
-import { ElementVisibility, ItemData, MessageInlineEditorOptions } from "./InlineEditor/Data";
+import {
+  AjaxResponseEditor,
+  AjaxResponseMessage,
+  ElementVisibility,
+  ItemData,
+  MessageInlineEditorOptions,
+} from "./InlineEditor/Data";
 
 interface ElementData {
   button: HTMLAnchorElement;
@@ -37,20 +42,6 @@ interface ValidationData {
   parameters: ArbitraryObject;
   valid: boolean;
   promises: Promise<void>[];
-}
-
-interface AjaxResponseEditor extends ResponseData {
-  returnValues: {
-    template: string;
-  };
-}
-
-interface AjaxResponseMessage extends ResponseData {
-  returnValues: {
-    attachmentList?: string;
-    message: string;
-    poll?: string;
-  };
 }
 
 class UiMessageInlineEditor implements AjaxCallbackObject {
