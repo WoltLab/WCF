@@ -20,19 +20,7 @@ import * as UiDropdownReusable from "../Dropdown/Reusable";
 import * as UiNotification from "../Notification";
 import * as UiScroll from "../Scroll";
 
-interface MessageInlineEditorOptions {
-  canEditInline: boolean;
-
-  className: string;
-  containerId: string;
-  dropdownIdentifier: string;
-  editorPrefix: string;
-
-  messageSelector: string;
-
-  // This is the legacy jQuery based class.
-  quoteManager: any;
-}
+import { ElementVisibility, ItemData, MessageInlineEditorOptions } from "./InlineEditor/Data";
 
 interface ElementData {
   button: HTMLAnchorElement;
@@ -42,15 +30,6 @@ interface ElementData {
   messageFooterButtons: HTMLUListElement;
   messageHeader: HTMLElement;
   messageText: HTMLElement;
-}
-
-interface ItemData {
-  item: "divider" | "editItem" | string;
-  label?: string;
-}
-
-interface ElementVisibility {
-  [key: string]: boolean;
 }
 
 interface ValidationData {
