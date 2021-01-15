@@ -1,13 +1,13 @@
 {
   "include": [
     "global.d.ts",
-    "wcfsetup/install/files/ts/**/*"
+    "ts/**/*"
   ],
   "compilerOptions": {
     "allowJs": true,
     "target": "es2017",
     "module": "amd",
-    "rootDir": "wcfsetup/install/files/ts/",
+    "rootDir": "ts/",
     "outDir": "wcfsetup/install/files/js/",
     "lib": [
       "dom",

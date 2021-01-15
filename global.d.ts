@@ -1,11 +1,11 @@
-import DatePicker from "./wcfsetup/install/files/ts/WoltLabSuite/Core/Date/Picker";
-import Devtools from "./wcfsetup/install/files/ts/WoltLabSuite/Core/Devtools";
-import DomUtil from "./wcfsetup/install/files/ts/WoltLabSuite/Core/Dom/Util";
-import * as ColorUtil from "./wcfsetup/install/files/ts/WoltLabSuite/Core/ColorUtil";
-import * as EventHandler from "./wcfsetup/install/files/ts/WoltLabSuite/Core/Event/Handler";
-import UiDropdownSimple from "./wcfsetup/install/files/ts/WoltLabSuite/Core/Ui/Dropdown/Simple";
+import DatePicker from "./ts/WoltLabSuite/Core/Date/Picker";
+import Devtools from "./ts/WoltLabSuite/Core/Devtools";
+import DomUtil from "./ts/WoltLabSuite/Core/Dom/Util";
+import * as ColorUtil from "./ts/WoltLabSuite/Core/ColorUtil";
+import * as EventHandler from "./ts/WoltLabSuite/Core/Event/Handler";
+import UiDropdownSimple from "./ts/WoltLabSuite/Core/Ui/Dropdown/Simple";
 import "@woltlab/zxcvbn";
-import { Reaction } from "./wcfsetup/install/files/ts/WoltLabSuite/Core/Ui/Reaction/Data";
+import { Reaction } from "./ts/WoltLabSuite/Core/Ui/Reaction/Data";
 
 declare global {
   interface Window {
