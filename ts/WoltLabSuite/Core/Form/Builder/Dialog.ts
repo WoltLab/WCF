@@ -29,11 +29,16 @@ class FormBuilderDialog implements AjaxCallbackObject, DialogCallbackObject {
   protected _options: FormBuilderDialogOptions;
   protected _additionalSubmitButtons: HTMLButtonElement[];
 
-  constructor(dialogId: string, className: string, actionName: string, options: FormBuilderDialogOptions) {
+  constructor(dialogId: string, className: string, actionName: string, options: Partial<FormBuilderDialogOptions>) {
     this.init(dialogId, className, actionName, options);
   }
 
-  protected init(dialogId: string, className: string, actionName: string, options: FormBuilderDialogOptions): void {
+  protected init(
+    dialogId: string,
+    className: string,
+    actionName: string,
+    options: Partial<FormBuilderDialogOptions>,
+  ): void {
     this._dialogId = dialogId;
     this._className = className;
     this._actionName = actionName;

@@ -47,6 +47,8 @@ class ClassNameFormField extends TextFormField {
 	 * Creates a new instance of `ClassNameFormField`.
 	 */
 	public function __construct() {
+		parent::__construct();
+		
 		$this->label('wcf.form.field.className');
 	}
 	

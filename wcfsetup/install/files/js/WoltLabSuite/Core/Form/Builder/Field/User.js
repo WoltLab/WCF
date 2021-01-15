@@ -7,7 +7,7 @@
  * @module  WoltLabSuite/Core/Form/Builder/Field/User
  * @since 5.2
  */
-define(["require", "exports", "tslib", "./Field", "../../../Core", "../../../Ui/ItemList/Static"], function (require, exports, tslib_1, Field_1, Core, UiItemList) {
+define(["require", "exports", "tslib", "./Field", "../../../Core", "../../../Ui/ItemList"], function (require, exports, tslib_1, Field_1, Core, UiItemList) {
     "use strict";
     Field_1 = tslib_1.__importDefault(Field_1);
     Core = tslib_1.__importStar(Core);

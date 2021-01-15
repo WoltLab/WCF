@@ -348,7 +348,8 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 				->objectProperty('templatecode')
 				->label('wcf.acp.pip.templateListener.templateCode')
 				->description('wcf.acp.pip.templateListener.templateCode.description')
-				->required(),
+				->required()
+				->addFieldClass('monospace'),
 			
 			IntegerFormField::create('niceValue')
 				->objectProperty('nice')
