@@ -71,6 +71,8 @@ class UiMessageManager implements AjaxCallbackObject {
   /**
    * Returns the given property value from a message, optionally supporting a boolean return value.
    */
+  getPropertyValue(objectId: string, propertyName: string, asBool: true): boolean;
+  getPropertyValue(objectId: string, propertyName: string, asBool: false): string;
   getPropertyValue(objectId: string, propertyName: string, asBool: boolean): boolean | string {
     const element = this._elements.get(objectId);
     if (element === undefined) {
