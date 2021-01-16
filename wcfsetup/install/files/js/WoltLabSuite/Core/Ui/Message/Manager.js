@@ -48,9 +48,6 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             }
             return Core.stringToBool(element.dataset[permission] || "");
         }
-        /**
-         * Returns the given property value from a message, optionally supporting a boolean return value.
-         */
         getPropertyValue(objectId, propertyName, asBool) {
             const element = this._elements.get(objectId);
             if (element === undefined) {
