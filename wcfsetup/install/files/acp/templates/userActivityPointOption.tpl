@@ -1,11 +1,15 @@
 {include file='header' pageTitle='wcf.acp.user.activityPoint.option'}
 
 <script data-relocate="true">
-	$(function() {
-		WCF.Language.add('wcf.acp.worker.abort.confirmMessage', '{jslang}wcf.acp.worker.abort.confirmMessage{/jslang}');
+	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Worker'], function (Language, AcpUiWorker) {
+		Language.add('wcf.acp.worker.abort.confirmMessage', '{jslang}wcf.acp.worker.abort.confirmMessage{/jslang}');
 		
-		$('#updateEvents').click(function () {
-			new WCF.ACP.Worker('events', 'wcf\\system\\worker\\UserActivityPointUpdateEventsWorker', '{jslang}wcf.acp.user.activityPoint.updateEvents{/jslang}');
+		document.getElementById('updateEvents').addEventListener('click', () => {
+			new AcpUiWorker({
+				dialogId: 'events',
+				dialogTitle: '{jslang}wcf.acp.user.activityPoint.updateEvents{/jslang}',
+				className: 'wcf\\system\\worker\\UserActivityPointUpdateEventsWorker',
+			});
 		});
 	});
 </script>
