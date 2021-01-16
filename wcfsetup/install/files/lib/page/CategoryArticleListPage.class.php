@@ -2,7 +2,6 @@
 namespace wcf\page;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\CategoryArticleList;
-use wcf\data\label\group\ViewableLabelGroup;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\page\PageLocationManager;

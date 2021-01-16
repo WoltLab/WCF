@@ -1,6 +1,5 @@
 <?php
 namespace wcf\form;
-use wcf\form\AbstractFormBuilderForm;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;

@@ -4,7 +4,6 @@ use wcf\acp\form\MasterPasswordForm;
 use wcf\acp\form\MasterPasswordInitForm;
 use wcf\data\menu\Menu;
 use wcf\data\menu\MenuCache;
-use wcf\data\user\group\UserGroup;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
 use wcf\system\event\EventHandler;

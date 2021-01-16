@@ -2,7 +2,6 @@
 namespace wcf\data\session;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\event\EventHandler;
-use wcf\system\session\SessionHandler;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;

@@ -3,7 +3,6 @@ namespace wcf\form;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserEditor;
-use wcf\form\AbstractFormBuilderForm;
 use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\email\SimpleEmail;
 use wcf\system\exception\IllegalLinkException;

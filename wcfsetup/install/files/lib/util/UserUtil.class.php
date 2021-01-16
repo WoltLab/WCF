@@ -1,6 +1,5 @@
 <?php
 namespace wcf\util;
-use wcf\system\event\EventHandler;
 use wcf\system\WCF;
 
 /**
