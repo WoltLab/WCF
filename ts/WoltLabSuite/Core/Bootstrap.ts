@@ -24,6 +24,7 @@ import * as UiMobile from "./Ui/Mobile";
 import * as UiPageAction from "./Ui/Page/Action";
 import * as UiTabMenu from "./Ui/TabMenu";
 import * as UiTooltip from "./Ui/Tooltip";
+import * as UiPageJumpTo from "./Ui/Page/JumpTo";
 
 // perfectScrollbar does not need to be bound anywhere, it just has to be loaded for WCF.js
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -121,6 +122,8 @@ export function setup(options: BoostrapOptions): void {
       window.jQuery.holdReady(false);
     }
   }, 20);
+
+  document.querySelectorAll(".pagination").forEach((el: HTMLElement) => UiPageJumpTo.init(el));
 
   initA11y();
 
