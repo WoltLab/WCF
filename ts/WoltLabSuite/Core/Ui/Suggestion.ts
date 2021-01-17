@@ -218,7 +218,7 @@ class UiSuggestion implements AjaxCallbackObject {
       this.dropdownMenu.innerHTML = "";
     }
 
-    if (Array.isArray(data.returnValues)) {
+    if (Array.isArray(data.returnValues) && data.returnValues.length > 0) {
       data.returnValues.forEach((item, index) => {
         const anchor = document.createElement("a");
         if (item.icon) {
