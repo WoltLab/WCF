@@ -4412,7 +4412,7 @@ Dateianhänge:
 		<item name="wcf.reactions.summary.noReactions"><![CDATA[Es gibt bisher keine Reaktionen dieses Types auf das Objekt.]]></item>
 		<item name="wcf.reactions.summary.listReactions"><![CDATA[Reaktionen auflisten]]></item>
 		<item name="wcf.reactions.react"><![CDATA[Reagieren]]></item>
-		<item name="wcf.reactions.reactionTypeCount"><![CDATA[{@$reaction->renderIcon()}×{#$count}]]></item>
+		<item name="wcf.reactions.reactionTypeCount"><![CDATA[{@$reaction->renderIcon()}&#x202F;×&#x202F;{#$count}]]></item>
 	</category>
 	<category name="wcf.reactionType">
 		<item name="wcf.reactionType.title1"><![CDATA[Gefällt mir]]></item>

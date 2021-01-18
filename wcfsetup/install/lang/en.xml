@@ -4413,7 +4413,7 @@ Attachments:
 		<item name="wcf.reactions.summary.noReactions"><![CDATA[There are no reactions at the moment.]]></item>
 		<item name="wcf.reactions.summary.listReactions"><![CDATA[List Reactions]]></item>
 		<item name="wcf.reactions.react"><![CDATA[React]]></item>
-		<item name="wcf.reactions.reactionTypeCount"><![CDATA[{@$reaction->renderIcon()}×{#$count}]]></item>
+		<item name="wcf.reactions.reactionTypeCount"><![CDATA[{@$reaction->renderIcon()}&#x202F;×&#x202F;{#$count}]]></item>
 	</category>
 	<category name="wcf.reactionType">
 		<item name="wcf.reactionType.title1"><![CDATA[Like]]></item>
