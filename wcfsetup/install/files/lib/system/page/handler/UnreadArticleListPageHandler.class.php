@@ -15,14 +15,14 @@ class UnreadArticleListPageHandler extends AbstractMenuPageHandler {
 	/**
 	 * @inheritDoc
 	 */
-	public function getOutstandingItemCount(/** @noinspection PhpUnusedParameterInspection */$objectID = null) {
+	public function getOutstandingItemCount($objectID = null) {
 		return ViewableArticle::getUnreadArticles();
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function isVisible(/** @noinspection PhpUnusedParameterInspection */$objectID = null) {
+	public function isVisible($objectID = null) {
 		return ARTICLE_ENABLE_VISIT_TRACKING && !empty(ViewableArticle::getUnreadArticles());
 	}
 }

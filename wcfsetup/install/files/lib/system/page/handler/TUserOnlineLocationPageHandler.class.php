@@ -49,7 +49,7 @@ trait TUserOnlineLocationPageHandler {
 	 * @param	UserOnline	$user		user online object with request data
 	 * @see	IOnlineLocationPageHandler::prepareOnlineLocation()
 	 */
-	public function prepareOnlineLocation(/** @noinspection PhpUnusedParameterInspection */Page $page, UserOnline $user) {
+	public function prepareOnlineLocation(Page $page, UserOnline $user) {
 		if ($user->pageObjectID !== null) {
 			UserRuntimeCache::getInstance()->cacheObjectID($user->pageObjectID);
 		}
