@@ -12,7 +12,6 @@ use wcf\data\article\ViewableArticle;
  * @since	5.2
  */
 class UnreadArticleListPageHandler extends AbstractMenuPageHandler {
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */
@@ -20,7 +19,6 @@ class UnreadArticleListPageHandler extends AbstractMenuPageHandler {
 		return ViewableArticle::getUnreadArticles();
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */

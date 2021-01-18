@@ -33,7 +33,6 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
 		return ViewableArticleRuntimeCache::getInstance()->getObject($objectID) !== null;
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */

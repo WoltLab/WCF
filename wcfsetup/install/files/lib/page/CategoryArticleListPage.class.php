@@ -81,7 +81,6 @@ class CategoryArticleListPage extends ArticleListPage {
 		}
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */

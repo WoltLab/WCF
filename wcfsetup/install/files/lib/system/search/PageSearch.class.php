@@ -81,7 +81,6 @@ class PageSearch extends AbstractSearchableObjectType {
 		return 'wcf'.WCF_N.'_page_content.pageContentID';
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */
@@ -108,7 +107,6 @@ class PageSearch extends AbstractSearchableObjectType {
 		return $conditionBuilder;
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */

@@ -28,7 +28,6 @@ class TrophyPageHandler extends AbstractLookupPageHandler {
 		return TrophyCache::getInstance()->getTrophyByID($objectID) !== null; 
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */

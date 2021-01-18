@@ -53,7 +53,6 @@ class TrophyCategory extends AbstractDecoratedCategory implements ITitledLinkObj
 		]);
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */

@@ -101,7 +101,6 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
 		]);
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */

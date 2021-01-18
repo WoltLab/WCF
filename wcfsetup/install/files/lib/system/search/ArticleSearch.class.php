@@ -93,7 +93,6 @@ class ArticleSearch extends AbstractSearchableObjectType {
 		return 'wcf'.WCF_N.'_article.time';
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */
@@ -117,7 +116,6 @@ class ArticleSearch extends AbstractSearchableObjectType {
 		return $conditionBuilder;
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */
@@ -125,7 +123,6 @@ class ArticleSearch extends AbstractSearchableObjectType {
 		return 'INNER JOIN wcf'.WCF_N.'_article ON (wcf'.WCF_N.'_article.articleID = '.$this->getTableName().'.articleID)';
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */
@@ -133,7 +130,6 @@ class ArticleSearch extends AbstractSearchableObjectType {
 		return 'searchArticle';
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */
@@ -141,7 +137,6 @@ class ArticleSearch extends AbstractSearchableObjectType {
 		return ['articleCategoryIDs' => $this->articleCategoryIDs];
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */

@@ -46,7 +46,6 @@ class LikeableArticle extends AbstractLikeObject implements IReactionObject {
 		return $this->userID;
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */
@@ -63,7 +62,6 @@ class LikeableArticle extends AbstractLikeObject implements IReactionObject {
 		$editor->update(['cumulativeLikes' => $cumulativeLikes]);
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */
