@@ -26,7 +26,7 @@ class CategoryArticleListPage extends ArticleListPage {
 	
 	/**
 	 * id of the category the listed articles belong to
-	 * @var	integer
+	 * @var	int
 	 */
 	public $categoryID = 0;
 	

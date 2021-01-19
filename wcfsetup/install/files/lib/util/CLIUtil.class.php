@@ -74,7 +74,7 @@ final class CLIUtil {
 	/**
 	 * Formats time.
 	 * 
-	 * @param	integer	$timestamp
+	 * @param	int	$timestamp
 	 * @return	string
 	 */
 	public static function formatTime($timestamp) {
@@ -88,7 +88,7 @@ final class CLIUtil {
 	/**
 	 * Formats dates.
 	 * 
-	 * @param	integer	$timestamp
+	 * @param	int	$timestamp
 	 * @return	string
 	 */
 	public static function formatDate($timestamp) {

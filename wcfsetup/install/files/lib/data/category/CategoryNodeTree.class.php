@@ -14,7 +14,7 @@ use wcf\system\exception\SystemException;
 class CategoryNodeTree implements \IteratorAggregate {
 	/**
 	 * list of ids of categories which will not be included in the node tree
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $excludedCategoryIDs = [];
 	
@@ -26,7 +26,7 @@ class CategoryNodeTree implements \IteratorAggregate {
 	
 	/**
 	 * maximum depth considered when building the node tree
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $maxDepth = -1;
 	
@@ -38,7 +38,7 @@ class CategoryNodeTree implements \IteratorAggregate {
 	
 	/**
 	 * id of the parent category
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $parentCategoryID = 0;
 	
@@ -58,9 +58,9 @@ class CategoryNodeTree implements \IteratorAggregate {
 	 * Creates a new instance of CategoryNodeTree.
 	 * 
 	 * @param	string			$objectType
-	 * @param	integer			$parentCategoryID
+	 * @param	int			$parentCategoryID
 	 * @param	boolean			$includeDisabledCategories
-	 * @param	integer[]		$excludedCategoryIDs
+	 * @param	int[]		$excludedCategoryIDs
 	 * @throws	SystemException
 	 */
 	public function __construct($objectType, $parentCategoryID = 0, $includeDisabledCategories = false, array $excludedCategoryIDs = []) {
@@ -79,7 +79,7 @@ class CategoryNodeTree implements \IteratorAggregate {
 	 * Sets the maximum depth considered when building the node tree, defaults
 	 * to -1 which equals infinite.
 	 * 
-	 * @param	integer		$maxDepth
+	 * @param	int		$maxDepth
 	 */
 	public function setMaxDepth($maxDepth) {
 		$this->maxDepth = $maxDepth;
@@ -97,7 +97,7 @@ class CategoryNodeTree implements \IteratorAggregate {
 	 * Builds a certain level of the tree.
 	 * 
 	 * @param	CategoryNode	$parentNode
-	 * @param	integer		$depth
+	 * @param	int		$depth
 	 */
 	protected function buildTreeLevel(CategoryNode $parentNode, $depth = 0) {
 		if ($this->maxDepth != -1 && $depth < 0) {
@@ -119,7 +119,7 @@ class CategoryNodeTree implements \IteratorAggregate {
 	/**
 	 * Returns the category with the given id.
 	 * 
-	 * @param	integer		$categoryID
+	 * @param	int		$categoryID
 	 * @return	Category
 	 */
 	protected function getCategory($categoryID) {
@@ -150,7 +150,7 @@ class CategoryNodeTree implements \IteratorAggregate {
 	/**
 	 * Returns the category node for the category with the given id.
 	 * 
-	 * @param	integer		$categoryID
+	 * @param	int		$categoryID
 	 * @return	CategoryNode
 	 */
 	protected function getNode($categoryID) {

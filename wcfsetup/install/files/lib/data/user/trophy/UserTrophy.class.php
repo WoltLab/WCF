@@ -19,13 +19,13 @@ use wcf\util\StringUtil;
  * @package	WoltLabSuite\Core\Data\User\Trophy
  * @since	3.1
  *
- * @property-read	integer		$userTrophyID			unique id of the user trophy
- * @property-read	integer		$trophyID			trophy id
- * @property-read	integer		$userID				user id
- * @property-read	integer		$time				the time when the trophy was rewarded
+ * @property-read	int		$userTrophyID			unique id of the user trophy
+ * @property-read	int		$trophyID			trophy id
+ * @property-read	int		$userID				user id
+ * @property-read	int		$time				the time when the trophy was rewarded
  * @property-read	string		$description			the custom trophy description
  * @property-read	string		$useCustomDescription		`1`, if the trophy use a custom description
- * @property-read	integer		$trophyUseHtml		        `1`, if the trophy use a html description
+ * @property-read	int		$trophyUseHtml		        `1`, if the trophy use a html description
  */
 class UserTrophy extends DatabaseObject {
 	/**

@@ -70,13 +70,13 @@ class LabelGroupAddForm extends AbstractForm {
 	
 	/**
 	 * object type id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $objectTypeID = 0;
 	
 	/**
 	 * show order
-	 * @var	integer
+	 * @var	int
 	 */
 	public $showOrder = 0;
 	
@@ -229,7 +229,7 @@ class LabelGroupAddForm extends AbstractForm {
 	/**
 	 * Saves label group to object relations.
 	 * 
-	 * @param	integer		$groupID
+	 * @param	int		$groupID
 	 */
 	protected function saveObjectTypeRelations($groupID) {
 		WCF::getDB()->beginTransaction();

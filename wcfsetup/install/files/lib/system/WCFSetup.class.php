@@ -208,7 +208,7 @@ class WCFSetup extends WCF {
 	/**
 	 * Calculates the current state of the progress bar.
 	 * 
-	 * @param	integer		$currentStep
+	 * @param	int		$currentStep
 	 */
 	protected function calcProgress($currentStep) {
 		// calculate progress
@@ -820,7 +820,7 @@ class WCFSetup extends WCF {
 	 * which will be created in the next step.
 	 * 
 	 * @param	\wcf\system\database\Database	$db
-	 * @param	integer				$dbNumber
+	 * @param	int				$dbNumber
 	 * @return	string[]	list of already existing tables
 	 */
 	protected function getConflictedTables($db, $dbNumber) {

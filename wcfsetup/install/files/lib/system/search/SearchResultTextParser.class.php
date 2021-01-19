@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
 class SearchResultTextParser extends SingletonFactory {
 	/**
 	 * max length for message abstract
-	 * @var	integer
+	 * @var	int
 	 */
 	const MAX_LENGTH = 500;
 	

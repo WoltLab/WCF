@@ -32,7 +32,7 @@ class CaptchaQuestionAddForm extends AbstractForm {
 	
 	/**
 	 * 1 if the question is disabled
-	 * @var	integer
+	 * @var	int
 	 */
 	public $isDisabled = 0;
 	

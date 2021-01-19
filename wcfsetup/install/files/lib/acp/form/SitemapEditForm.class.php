@@ -75,13 +75,13 @@ class SitemapEditForm extends AbstractForm {
 	
 	/**
 	 * `1` iff the sitemap is disabled. Otherwise `0`.
-	 * @var integer
+	 * @var int
 	 */
 	public $isDisabled = 0;
 
 	/**
 	 * The time in seconds how long the sitemap should be cached. 
-	 * @var integer
+	 * @var int
 	 */
 	public $rebuildTime = 172800; // two days
 	

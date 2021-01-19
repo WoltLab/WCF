@@ -22,114 +22,114 @@ class PackageValidationException extends SystemException {
 	
 	/**
 	 * missing archive, expects the detail 'archive' and optionally 'targetArchive' (extracting archive from the archive)
-	 * @var	integer
+	 * @var	int
 	 */
 	const FILE_NOT_FOUND = 1;
 	
 	/**
 	 * missing package.xml, expects the detail 'archive'
-	 * @var	integer
+	 * @var	int
 	 */
 	const MISSING_PACKAGE_XML = 2;
 	
 	/**
 	 * package name violates WCF's schema, expects the detail 'packageName'
-	 * @var	integer
+	 * @var	int
 	 */
 	const INVALID_PACKAGE_NAME = 3;
 	
 	/**
 	 * package version violates WCF's schema, expects the detail 'packageVersion'
-	 * @var	integer
+	 * @var	int
 	 */
 	const INVALID_PACKAGE_VERSION = 4;
 	
 	/**
 	 * package contains no install instructions and an update is not possible, expects the detail 'packageName'
-	 * @var	integer
+	 * @var	int
 	 */
 	const NO_INSTALL_PATH = 5;
 	
 	/**
 	 * package is already installed and cannot be updated using current archive, expects the details 'packageName', 'packageVersion' and 'deliveredPackageVersion'
-	 * @var	integer
+	 * @var	int
 	 */
 	const NO_UPDATE_PATH = 6;
 	
 	/**
 	 * packages which exclude the current package, expects the detail 'packages' (list of \wcf\data\package\Package)
-	 * @var	integer
+	 * @var	int
 	 */
 	const EXCLUDING_PACKAGES = 7;
 	
 	/**
 	 * packages which are excluded by current package, expects the detail 'packages' (list of \wcf\data\package\Package)
-	 * @var	integer
+	 * @var	int
 	 */
 	const EXCLUDED_PACKAGES = 8;
 	
 	/**
 	 * package version is lower than the request version, expects the details 'packageName', 'packageVersion' and 'deliveredPackageVersion'
-	 * @var	integer
+	 * @var	int
 	 */
 	const INSUFFICIENT_VERSION = 9;
 	
 	/**
 	 * requirement is set but neither installed nor provided, expects the details 'packageName', 'packageVersion' and 'package' (must be
 	 * an instance of \wcf\data\package\Package or null if not installed)
-	 * @var	integer
+	 * @var	int
 	 */
 	const MISSING_REQUIREMENT = 10;
 	
 	/**
 	 * file reference for a package installation plugin is missing, expects the details 'pip', 'type' and 'value'
-	 * @var	integer
+	 * @var	int
 	 */
 	const MISSING_INSTRUCTION_FILE = 11;
 	
 	/**
 	 * the uploaded version is already installed, expects the details 'packageName' and 'packageVersion'
-	 * @var integer
+	 * @var int
 	 */
 	const ALREADY_INSTALLED = 12;
 	
 	/**
 	 * the provided API version string is invalid and does not fall into the range from `2017` through `2099`
-	 * @var integer
+	 * @var int
 	 * @deprecated 5.2
 	 */
 	const INVALID_API_VERSION = 13;
 	
 	/**
 	 * the package is not compatible with the current API version or any other of the supported ones
-	 * @var integer
+	 * @var int
 	 * @deprecated 5.2
 	 */
 	const INCOMPATIBLE_API_VERSION = 14;
 	
 	/**
 	 * the package lacks any sort of API compatibility data
-	 * @var integer
+	 * @var int
 	 * @deprecated 5.2
 	 */
 	const MISSING_API_VERSION = 15;
 	
 	/**
 	 * the void is not the only instruction
-	 * @var integer
+	 * @var int
 	 */
 	const VOID_NOT_ALONE = 16;
 	
 	/**
 	 * the void is used during installation
-	 * @var integer
+	 * @var int
 	 */
 	const VOID_ON_INSTALL = 17;
 	
 	/**
 	 * Creates a new PackageArchiveValidationException.
 	 * 
-	 * @param	integer		$code
+	 * @param	int		$code
 	 * @param	string[]	$details
 	 */
 	public function __construct($code, array $details = []) {
@@ -150,7 +150,7 @@ class PackageValidationException extends SystemException {
 	/**
 	 * Returns the readable error message.
 	 * 
-	 * @param	integer		$code
+	 * @param	int		$code
 	 * @return	string
 	 */
 	public function getErrorMessage($code = null) {
@@ -164,7 +164,7 @@ class PackageValidationException extends SystemException {
 	/**
 	 * Returns legacy error messages to mimic WCF 2.0.x PackageArchive's exceptions.
 	 * 
-	 * @param	integer		$code
+	 * @param	int		$code
 	 * @return	string
 	 */
 	protected function getLegacyMessage($code) {

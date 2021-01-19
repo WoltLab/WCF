@@ -91,8 +91,8 @@ final class UserRegistrationUtil {
 	 * Generates a random activation code with the given length.
 	 * Warning: A length greater than 9 is out of integer range.
 	 * 
-	 * @param	integer		$length
-	 * @return	integer
+	 * @param	int		$length
+	 * @return	int
 	 */
 	public static function getActivationCode($length = 9) {
 		return random_int(pow(10, $length - 1), pow(10, $length) - 1);

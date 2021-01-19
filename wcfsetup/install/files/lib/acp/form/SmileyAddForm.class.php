@@ -51,13 +51,13 @@ class SmileyAddForm extends AbstractForm {
 	
 	/**
 	 * show order value
-	 * @var	integer
+	 * @var	int
 	 */
 	public $showOrder = 0;
 	
 	/**
 	 * categoryID value
-	 * @var	integer
+	 * @var	int
 	 */
 	public $categoryID = 0;
 	

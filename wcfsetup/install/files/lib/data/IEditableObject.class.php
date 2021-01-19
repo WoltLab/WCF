@@ -42,7 +42,7 @@ interface IEditableObject extends IStorableObject {
 	 * objects.
 	 * 
 	 * @param	array	$objectIDs
-	 * @return	integer
+	 * @return	int
 	 */
 	public static function deleteAll(array $objectIDs = []);
 }

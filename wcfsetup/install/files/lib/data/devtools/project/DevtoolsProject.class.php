@@ -20,7 +20,7 @@ use wcf\util\DirectoryUtil;
  * @package	WoltLabSuite\Core\Devtools\Project
  * @since	3.1
  * 
- * @property-read	integer		$projectID	unique id of the project
+ * @property-read	int		$projectID	unique id of the project
  * @property-read	string		$name		internal name for display inside the ACP
  * @property-read	string		$path		file system path
  */

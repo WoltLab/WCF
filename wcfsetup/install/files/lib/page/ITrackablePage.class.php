@@ -35,7 +35,7 @@ interface ITrackablePage {
 	/**
 	 * Returns the parent object id.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getParentObjectID();
 	
@@ -49,7 +49,7 @@ interface ITrackablePage {
 	/**
 	 * Returns the object id.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getObjectID();
 }

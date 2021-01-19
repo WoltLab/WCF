@@ -23,7 +23,7 @@ class TrophyImporter extends AbstractImporter {
 	
 	/**
 	 * category for orphaned trophies
-	 * @var	integer
+	 * @var	int
 	 */
 	private $importCategoryID = 0;
 	
@@ -97,7 +97,7 @@ class TrophyImporter extends AbstractImporter {
 	/**
 	 * Returns a categoryID for trophies without categoryID.
 	 *
-	 * @return integer
+	 * @return int
 	 */
 	private function getImportCategoryID() {
 		if (!$this->importCategoryID) {

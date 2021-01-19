@@ -90,7 +90,7 @@ class RegisterForm extends UserAddForm {
 	
 	/**
 	 * min number of seconds between form request and submit
-	 * @var	integer
+	 * @var	int
 	 */
 	public static $minRegistrationTime = 10;
 	
@@ -475,7 +475,7 @@ class RegisterForm extends UserAddForm {
 	}
 	
 	/**
-	 * @return      integer[]
+	 * @return      int[]
 	 * @since       5.2
 	 */
 	protected function getRecipientsForNotificationEvent() {

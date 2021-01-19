@@ -15,7 +15,7 @@ use wcf\system\exception\SystemException;
 class DatabaseException extends SystemException {
 	/**
 	 * error number
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $errorNumber = null;
 	
@@ -85,7 +85,7 @@ class DatabaseException extends SystemException {
 	/**
 	 * Returns the error number of this exception.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getErrorNumber() {
 		return $this->errorNumber;

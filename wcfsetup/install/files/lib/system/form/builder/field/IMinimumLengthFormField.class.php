@@ -27,7 +27,7 @@ interface IMinimumLengthFormField extends IFormField {
 	 * @param	null|int	$minimumLength	minimum field value length
 	 * @return	static				this field
 	 * 
-	 * @throws	\InvalidArgumentException	if the given minimum length is no integer or otherwise invalid
+	 * @throws	\InvalidArgumentException	if the given minimum length is no int or otherwise invalid
 	 */
 	public function minimumLength($minimumLength = null);
 	

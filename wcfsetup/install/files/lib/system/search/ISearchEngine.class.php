@@ -33,7 +33,7 @@ interface ISearchEngine {
 	 * @param	boolean					$subjectOnly
 	 * @param	PreparedStatementConditionBuilder	$searchIndexCondition
 	 * @param	string					$orderBy
-	 * @param	integer					$limit
+	 * @param	int					$limit
 	 * @return	array
 	 */
 	public function getInnerJoin($objectTypeName, $q, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, $orderBy = 'time DESC', $limit = 1000);
@@ -54,7 +54,7 @@ interface ISearchEngine {
 	 * @param	PreparedStatementConditionBuilder	$searchIndexCondition
 	 * @param	array					$additionalConditions
 	 * @param	string					$orderBy
-	 * @param	integer					$limit
+	 * @param	int					$limit
 	 * @return	array
 	 */
 	public function search($q, array $objectTypes, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, array $additionalConditions = [], $orderBy = 'time DESC', $limit = 1000);

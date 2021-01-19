@@ -115,7 +115,7 @@ class DataImportForm extends AbstractForm {
 	
 	/**
 	 * user merge mode
-	 * @var	integer
+	 * @var	int
 	 */
 	public $userMergeMode = UserImporter::MERGE_MODE_EMAIL;
 	

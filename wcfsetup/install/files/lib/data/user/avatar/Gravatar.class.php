@@ -30,13 +30,13 @@ class Gravatar extends DefaultAvatar {
 	
 	/**
 	 * gravatar expire time (days)
-	 * @var	integer
+	 * @var	int
 	 */
 	const GRAVATAR_CACHE_EXPIRE = 7;
 	
 	/**
 	 * user id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $userID = 0;
 	
@@ -61,7 +61,7 @@ class Gravatar extends DefaultAvatar {
 	/**
 	 * Creates a new Gravatar object.
 	 * 
-	 * @param	integer		$userID
+	 * @param	int		$userID
 	 * @param	string		$gravatar
 	 * @param	string		$fileExtension
 	 */

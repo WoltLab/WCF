@@ -48,7 +48,7 @@ class UserPage extends AbstractPage {
 	
 	/**
 	 * user id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $userID = 0;
 	

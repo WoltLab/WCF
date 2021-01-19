@@ -60,7 +60,7 @@ class LikeHandler extends SingletonFactory {
 	 * Returns a like object.
 	 * 
 	 * @param	ObjectType	$objectType
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @return	LikeObject|null
 	 */
 	public function getLikeObject(ObjectType $objectType, $objectID) {
@@ -83,7 +83,7 @@ class LikeHandler extends SingletonFactory {
 	 * 
 	 * @param	ObjectType	$objectType
 	 * @param	array		$objectIDs
-	 * @return	integer
+	 * @return	int
 	 */
 	public function loadLikeObjects(ObjectType $objectType, array $objectIDs) {
 		return ReactionHandler::getInstance()->loadLikeObjects($objectType, $objectIDs);
@@ -94,8 +94,8 @@ class LikeHandler extends SingletonFactory {
 	 * 
 	 * @param	ILikeObject	$likeable
 	 * @param	User		$user
-	 * @param	integer		$likeValue
-	 * @param	integer		$time
+	 * @param	int		$likeValue
+	 * @param	int		$time
 	 * @return	array
 	 */
 	public function like(ILikeObject $likeable, User $user, $likeValue, $time = TIME_NOW) {
@@ -150,7 +150,7 @@ class LikeHandler extends SingletonFactory {
 	 * Removes all likes for given objects.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer[]	$objectIDs
+	 * @param	int[]	$objectIDs
 	 * @param	string[]	$notificationObjectTypes
 	 */
 	public function removeLikes($objectType, array $objectIDs, array $notificationObjectTypes = []) {

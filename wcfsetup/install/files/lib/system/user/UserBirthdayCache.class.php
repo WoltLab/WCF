@@ -15,20 +15,20 @@ use wcf\system\SingletonFactory;
 class UserBirthdayCache extends SingletonFactory {
 	/**
 	 * loaded months
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $monthsLoaded = [];
 	
 	/**
 	 * user birthdays
-	 * @var	integer[][]
+	 * @var	int[][]
 	 */
 	protected $birthdays = [];
 	
 	/**
 	 * Loads the birthday cache.
 	 * 
-	 * @param	integer		$month
+	 * @param	int		$month
 	 */
 	protected function loadMonth($month) {
 		if (!isset($this->monthsLoaded[$month])) {
@@ -47,9 +47,9 @@ class UserBirthdayCache extends SingletonFactory {
 	/**
 	 * Returns the user birthdays for a specific day.
 	 * 
-	 * @param	integer		$month
-	 * @param	integer		$day
-	 * @return	integer[]	list of user ids
+	 * @param	int		$month
+	 * @param	int		$day
+	 * @return	int[]	list of user ids
 	 */
 	public function getBirthdays($month, $day) {
 		$this->loadMonth($month);

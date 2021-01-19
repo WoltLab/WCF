@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
 class SendMailUserBulkProcessingAction extends AbstractUserBulkProcessingAction {
 	/**
 	 * is 1 if HTML for the email is enabled
-	 * @var	integer
+	 * @var	int
 	 */
 	public $enableHTML = 0;
 	

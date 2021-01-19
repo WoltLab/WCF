@@ -734,7 +734,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	/**
 	 * Enables a comment.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function enable() {
 		if ($this->comment === null) $this->comment = reset($this->objects);
@@ -777,7 +777,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	/**
 	 * Enables a response.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function enableResponse() {
 		if ($this->comment === null) $this->comment = reset($this->objects);
@@ -965,7 +965,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	/**
 	 * Removes a comment or response.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function remove() {
 		if ($this->comment !== null) {
@@ -1180,7 +1180,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	/**
 	 * Validates object type id parameter.
 	 * 
-	 * @param       integer         $objectTypeID
+	 * @param       int         $objectTypeID
 	 * @return	ObjectType
 	 * @throws	UserInputException
 	 */
@@ -1288,7 +1288,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	 * Returns the current html input processor or a new one if `$message` is not null.
 	 * 
 	 * @param       string|null     $message        source message
-	 * @param       integer         $objectID       object id
+	 * @param       int         $objectID       object id
 	 * @return      HtmlInputProcessor
 	 */
 	public function getHtmlInputProcessor($message = null, $objectID = 0) {

@@ -22,7 +22,7 @@ class TemplateEditForm extends TemplateAddForm {
 	
 	/**
 	 * template id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $templateID = 0;
 	

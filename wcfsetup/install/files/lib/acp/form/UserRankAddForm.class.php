@@ -41,7 +41,7 @@ class UserRankAddForm extends AbstractForm {
 	
 	/**
 	 * rank group id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $groupID = 0;
 	
@@ -65,7 +65,7 @@ class UserRankAddForm extends AbstractForm {
 	
 	/**
 	 * required activity points to acquire the rank
-	 * @var	integer
+	 * @var	int
 	 */
 	public $requiredPoints = 0;
 	
@@ -76,19 +76,19 @@ class UserRankAddForm extends AbstractForm {
 	
 	/**
 	 * number of image repeats
-	 * @var	integer
+	 * @var	int
 	 */
 	public $repeatImage = 1;
 	
 	/**
 	 * required gender setting (1=male; 2=female)
-	 * @var	integer
+	 * @var	int
 	 */
 	public $requiredGender = 0;
 	
 	/**
 	 * hide generic user title
-	 * @var integer
+	 * @var int
 	 */
 	public $hideTitle = 0;
 	

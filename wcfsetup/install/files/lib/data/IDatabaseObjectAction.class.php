@@ -30,7 +30,7 @@ interface IDatabaseObjectAction {
 	/**
 	 * Returns DatabaseObject-related object ids.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function getObjectIDs();
 	

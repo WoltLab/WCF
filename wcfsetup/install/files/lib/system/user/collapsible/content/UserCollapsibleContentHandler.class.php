@@ -24,7 +24,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 	
 	/**
 	 * list of collapsed object ids per object type id
-	 * @var	integer[][]
+	 * @var	int[][]
 	 */
 	protected $collapsedContent = [];
 	
@@ -66,7 +66,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 	 * null, if object type is unknown.
 	 * 
 	 * @param	string		$objectType
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getObjectTypeID($objectType) {
 		if (isset($this->cache['objectTypeIDs'][$objectType])) {
@@ -79,8 +79,8 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 	/**
 	 * Returns a list of object ids being collapsed by current user.
 	 * 
-	 * @param	integer		$objectTypeID
-	 * @return	integer[]
+	 * @param	int		$objectTypeID
+	 * @return	int[]
 	 */
 	public function getCollapsedContent($objectTypeID) {
 		if (!isset($this->collapsedContent[$objectTypeID])) {
@@ -125,7 +125,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 	/**
 	 * Marks content as collapsed.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 * @param	string		$objectID
 	 */
 	public function markAsCollapsed($objectTypeID, $objectID) {
@@ -176,7 +176,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 	/**
 	 * Marks content as opened, thus removing the collapsed marking.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 * @param	string		$objectID
 	 */
 	public function markAsOpened($objectTypeID, $objectID) {
@@ -216,7 +216,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 	/**
 	 * Deletes all saved states for a specific object type.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 */
 	public function reset($objectTypeID) {
 		if (WCF::getUser()->userID) {
@@ -251,7 +251,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 	 * specific object type for all users.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @throws	InvalidObjectTypeException
 	 */
 	public function resetAll($objectType, $objectID = null) {

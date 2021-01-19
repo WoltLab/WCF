@@ -97,8 +97,8 @@ class RedisCacheSource implements ICacheSource {
 	/**
 	 * Returns time to live in seconds, defaults to 3 days.
 	 * 
-	 * @param	integer		$maxLifetime
-	 * @return	integer
+	 * @param	int		$maxLifetime
+	 * @return	int
 	 */
 	protected function getTTL($maxLifetime = 0) {
 		if ($maxLifetime) return $maxLifetime;

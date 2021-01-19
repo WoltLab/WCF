@@ -11,9 +11,9 @@ namespace wcf\data;
  * @since	3.0
  * 
  * @property-read	string		$fileType	type of the physical attachment file
- * @property-read	integer		$isImage	is `1` if the file is an image, otherwise `0`
- * @property-read	integer		$width		width of the file if `$isImage` is `1`, otherwise `0`
- * @property-read	integer		$height		height of the file if `$isImage` is `1`, otherwise `0`
+ * @property-read	int		$isImage	is `1` if the file is an image, otherwise `0`
+ * @property-read	int		$width		width of the file if `$isImage` is `1`, otherwise `0`
+ * @property-read	int		$height		height of the file if `$isImage` is `1`, otherwise `0`
  */
 interface IFile extends IStorableObject {
 	/**

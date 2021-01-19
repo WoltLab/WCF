@@ -34,7 +34,7 @@ class StyleEditForm extends StyleAddForm {
 	
 	/**
 	 * style id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $styleID = 0;
 	

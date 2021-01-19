@@ -77,7 +77,7 @@ class AdministrativeAttachmentList extends AttachmentList {
 	/**
 	 * Returns attachment statistics.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function getStats() {
 		$sql = "SELECT	COUNT(*) AS count,

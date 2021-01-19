@@ -14,12 +14,12 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Paid\Subscription\Transaction\Log
  * 
- * @property-read	integer		$logID				unique id of the paid subscription transaction log entry
- * @property-read	integer|null	$subscriptionUserID		id of the paid subscription-user-association or `null` if no such association exists
- * @property-read	integer|null	$userID				id of the user who caused the paid subscription transaction log entry or `null` if the user does not exist anymore
- * @property-read	integer		$subscriptionID			id of the paid subscription
- * @property-read	integer		$paymentMethodObjectTypeID	id of the `com.woltlab.wcf.payment.method` object type
- * @property-read	integer		$logTime			timestamp at which the log has been created
+ * @property-read	int		$logID				unique id of the paid subscription transaction log entry
+ * @property-read	int|null	$subscriptionUserID		id of the paid subscription-user-association or `null` if no such association exists
+ * @property-read	int|null	$userID				id of the user who caused the paid subscription transaction log entry or `null` if the user does not exist anymore
+ * @property-read	int		$subscriptionID			id of the paid subscription
+ * @property-read	int		$paymentMethodObjectTypeID	id of the `com.woltlab.wcf.payment.method` object type
+ * @property-read	int		$logTime			timestamp at which the log has been created
  * @property-read	string		$transactionID			identifier of the paid subscription transaction
  * @property-read	string		$transactionDetails		serialized details of the paid subscription transaction
  * @property-read	string		$logMessage			log message describing the status of the paid subscription transaction
@@ -85,7 +85,7 @@ class PaidSubscriptionTransactionLog extends DatabaseObject {
 	/**
 	 * Returns the transaction log entry by transaction id or `null` if no such entry exists.
 	 * 
-	 * @param	integer		$paymentMethodObjectTypeID
+	 * @param	int		$paymentMethodObjectTypeID
 	 * @param	string		$transactionID
 	 * @return	PaidSubscriptionTransactionLog|null
 	 */

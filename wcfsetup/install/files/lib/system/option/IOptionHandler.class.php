@@ -37,7 +37,7 @@ interface IOptionHandler {
 	 * Returns the tree of options.
 	 * 
 	 * @param	string		$parentCategoryName
-	 * @param	integer		$level
+	 * @param	int		$level
 	 * @return	array
 	 */
 	public function getOptionTree($parentCategoryName = '', $level = 0);

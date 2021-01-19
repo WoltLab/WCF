@@ -27,7 +27,7 @@ interface ICacheSource {
 	 * Returns a cached variable.
 	 * 
 	 * @param	string		$cacheName
-	 * @param	integer		$maxLifetime
+	 * @param	int		$maxLifetime
 	 * @return	mixed
 	 */
 	public function get($cacheName, $maxLifetime);
@@ -37,7 +37,7 @@ interface ICacheSource {
 	 * 
 	 * @param	string		$cacheName
 	 * @param	mixed		$value
-	 * @param	integer		$maxLifetime
+	 * @param	int		$maxLifetime
 	 */
 	public function set($cacheName, $value, $maxLifetime);
 }

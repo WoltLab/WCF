@@ -48,7 +48,7 @@ class I18nPlural {
 	 * `f` is the fractional number as a whole number (1.234 yields 234)
 	 *
 	 * @param       number          $n
-	 * @return      integer
+	 * @return      int
 	 */
 	private static function getF($n) {
 		$n = (string)$n;
@@ -64,7 +64,7 @@ class I18nPlural {
 	 * `v` represents the number of digits of the fractional part (1.234 yields 3)
 	 *
 	 * @param       number          $n
-	 * @return      integer
+	 * @return      int
 	 */
 	private static function getV($n) {
 		return strlen(preg_replace('/^[^.]*\.?/', '', (string)$n));

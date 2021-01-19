@@ -595,7 +595,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	 * Unmarks the media files with the given ids. If no media ids are given,
 	 * all media files currently loaded are unmarked.
 	 * 
-	 * @param	integer[]	$mediaIDs	ids of the media files to be unmarked
+	 * @param	int[]	$mediaIDs	ids of the media files to be unmarked
 	 */
 	protected function unmarkItems(array $mediaIDs = []) {
 		if (empty($mediaIDs)) {

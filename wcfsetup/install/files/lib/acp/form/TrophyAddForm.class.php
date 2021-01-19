@@ -41,7 +41,7 @@ class TrophyAddForm extends AbstractAcpForm {
 	
 	/**
 	 * category id for the trophy.
-	 * @var integer
+	 * @var int
 	 */
 	public $categoryID = 0;
 	

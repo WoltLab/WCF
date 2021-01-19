@@ -22,13 +22,13 @@ class AbstractCategoryImporter extends AbstractImporter {
 	
 	/**
 	 * object type id for categories
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $objectTypeID = 0;
 	
 	/**
 	 * object type name
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $objectTypeName = '';
 	

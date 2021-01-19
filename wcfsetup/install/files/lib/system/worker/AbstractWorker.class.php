@@ -12,19 +12,19 @@ namespace wcf\system\worker;
 abstract class AbstractWorker implements IWorker {
 	/**
 	 * count of total actions (limited by $limit per loop)
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $count = null;
 	
 	/**
 	 * limit of actions per loop
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $limit = 0;
 	
 	/**
 	 * current loop count
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $loopCount = 0;
 	

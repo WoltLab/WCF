@@ -63,7 +63,7 @@ class PaidSubscriptionAddForm extends AbstractForm {
 	
 	/**
 	 * subscription show order
-	 * @var	integer
+	 * @var	int
 	 */
 	public $showOrder = 0;
 	
@@ -87,7 +87,7 @@ class PaidSubscriptionAddForm extends AbstractForm {
 	
 	/**
 	 * subscription length
-	 * @var	integer
+	 * @var	int
 	 */
 	public $subscriptionLength = 0;
 	
@@ -105,13 +105,13 @@ class PaidSubscriptionAddForm extends AbstractForm {
 	
 	/**
 	 * list of group ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $groupIDs = [];
 	
 	/**
 	 * list of excluded subscriptions
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $excludedSubscriptionIDs = [];
 	

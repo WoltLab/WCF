@@ -38,7 +38,7 @@ class ACPSearchHandler extends SingletonFactory {
 	 * Returns a list of search result collections for given query.
 	 * 
 	 * @param	string		$query
-	 * @param	integer		$limit
+	 * @param	int		$limit
 	 * @param       string          $providerName
 	 * @return	ACPSearchResultList[]
 	 * @throws	ImplementationException

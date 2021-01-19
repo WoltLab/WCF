@@ -27,9 +27,9 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * Prepares the update of the show order of this category and return the
 	 * correct new show order.
 	 * 
-	 * @param	integer		$parentCategoryID
-	 * @param	integer		$showOrder
-	 * @return	integer
+	 * @param	int		$parentCategoryID
+	 * @param	int		$showOrder
+	 * @return	int
 	 */
 	public function updateShowOrder($parentCategoryID, $showOrder) {
 		// correct invalid values
@@ -149,10 +149,10 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	/**
 	 * Returns the show order for a new category.
 	 * 
-	 * @param	integer		$objectTypeID
-	 * @param	integer		$parentCategoryID
-	 * @param	integer		$showOrder
-	 * @return	integer
+	 * @param	int		$objectTypeID
+	 * @param	int		$parentCategoryID
+	 * @param	int		$showOrder
+	 * @return	int
 	 */
 	protected static function getShowOrder($objectTypeID, $parentCategoryID, $showOrder) {
 		// correct invalid values

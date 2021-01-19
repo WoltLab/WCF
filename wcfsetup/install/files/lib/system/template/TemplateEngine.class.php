@@ -28,7 +28,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * active language id used to identify specific language versions of compiled templates
-	 * @var	integer
+	 * @var	int
 	 */
 	public $languageID = 0;
 	
@@ -70,7 +70,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * active template group id
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $templateGroupID = 0;
 	
@@ -142,7 +142,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Sets active language id.
 	 * 
-	 * @param	integer		$languageID
+	 * @param	int		$languageID
 	 */
 	public function setLanguageID($languageID) {
 		$this->languageID = $languageID;
@@ -631,7 +631,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Returns the active template group id.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getTemplateGroupID() {
 		return $this->templateGroupID;
@@ -640,7 +640,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Sets the active template group id.
 	 * 
-	 * @param	integer		$templateGroupID
+	 * @param	int		$templateGroupID
 	 */
 	public function setTemplateGroupID($templateGroupID) {
 		if ($templateGroupID && !isset($this->templateGroupCache[$templateGroupID])) {

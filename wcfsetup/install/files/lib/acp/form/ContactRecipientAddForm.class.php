@@ -48,13 +48,13 @@ class ContactRecipientAddForm extends AbstractForm {
 	
 	/**
 	 * 1 if the recipient is disabled
-	 * @var	integer
+	 * @var	int
 	 */
 	public $isDisabled = 0;
 	
 	/**
 	 * order used to the show the recipients
-	 * @var	integer
+	 * @var	int
 	 */
 	public $showOrder = 0;
 	

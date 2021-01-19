@@ -20,7 +20,7 @@ class MessageQuoteAction extends AJAXProxyAction {
 	/**
 	 * indicates if the WCF.Message.Quote.Manager object requesting data has any
 	 * quote handlers which require updated object ids of full quotes
-	 * @var	integer
+	 * @var	int
 	 */
 	public $_getFullQuoteObjectIDs = false;
 	
@@ -120,7 +120,7 @@ class MessageQuoteAction extends AJAXProxyAction {
 	/**
 	 * Returns the count of stored quotes.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	protected function count() {
 		return MessageQuoteManager::getInstance()->countQuotes();
@@ -149,7 +149,7 @@ class MessageQuoteAction extends AJAXProxyAction {
 	/**
 	 * Removes a list of quotes from storage and returns the remaining count.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 * @throws	SystemException
 	 * @throws	UserInputException
 	 */
@@ -170,7 +170,7 @@ class MessageQuoteAction extends AJAXProxyAction {
 	/**
 	 * Removes all quotes marked for removal and returns the remaining count.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	protected function removeMarkedQuotes() {
 		MessageQuoteManager::getInstance()->removeMarkedQuotes();

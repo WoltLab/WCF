@@ -23,7 +23,7 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	
 	/**
 	 * template group id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $templateGroupID = 0;
 	

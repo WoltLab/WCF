@@ -195,7 +195,7 @@ final class PasswordUtil {
 	/**
 	 * Generates a random alphanumeric user password with the given character length.
 	 * 
-	 * @param	integer		$length
+	 * @param	int		$length
 	 * @return	string
 	 */
 	public static function getRandomPassword($length = 12) {

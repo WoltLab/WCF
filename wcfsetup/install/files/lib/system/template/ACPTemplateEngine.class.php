@@ -52,7 +52,7 @@ class ACPTemplateEngine extends TemplateEngine {
 	/**
 	 * This method always throws, because changing the template group is not supported.
 	 * 
-	 * @param	integer		$templateGroupID
+	 * @param	int		$templateGroupID
 	 * @throws	\BadMethodCallException
 	 */
 	public function setTemplateGroupID($templateGroupID) {

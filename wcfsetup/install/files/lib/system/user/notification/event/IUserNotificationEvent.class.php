@@ -76,7 +76,7 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Returns the author id for this notification event.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getAuthorID();
 	

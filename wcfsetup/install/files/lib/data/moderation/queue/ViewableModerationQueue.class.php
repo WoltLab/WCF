@@ -149,7 +149,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
 	/**
 	 * Returns a viewable moderation queue entry.
 	 * 
-	 * @param	integer		$queueID
+	 * @param	int		$queueID
 	 * @return	ViewableModerationQueue
 	 */
 	public static function getViewableModerationQueue($queueID) {

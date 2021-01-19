@@ -51,7 +51,7 @@ class ViewableComment extends DatabaseObjectDecorator {
 	/**
 	 * Returns a specific comment decorated as comment entry.
 	 * 
-	 * @param	integer		$commentID
+	 * @param	int		$commentID
 	 * @return	ViewableComment
 	 */
 	public static function getComment($commentID) {

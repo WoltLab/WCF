@@ -237,7 +237,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * in case they are now empty.
 	 * 
 	 * @param	array		$categoryIDs
-	 * @param	integer		$packageID
+	 * @param	int		$packageID
 	 */
 	protected function deleteEmptyCategories(array $categoryIDs, $packageID) {
 		// Get empty categories which where changed by this package.

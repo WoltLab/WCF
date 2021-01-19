@@ -30,7 +30,7 @@ class BBCodeEditForm extends BBCodeAddForm {
 	
 	/**
 	 * bbcode id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $bbcodeID = 0;
 	

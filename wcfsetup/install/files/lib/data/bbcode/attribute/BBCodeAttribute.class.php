@@ -11,13 +11,13 @@ use wcf\data\DatabaseObject;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Bbcode\Attribute
  *
- * @property-read	integer		$attributeID		unique id of the bbcode attribute
- * @property-read	integer		$bbcodeID		id of the bbcode the attribute belongs to
- * @property-read	integer		$attributeNo		number of bbcode attribute
+ * @property-read	int		$attributeID		unique id of the bbcode attribute
+ * @property-read	int		$bbcodeID		id of the bbcode the attribute belongs to
+ * @property-read	int		$attributeNo		number of bbcode attribute
  * @property-read	string		$attributeHtml		html code used to render the bbcode attribute or empty if no such html code exists
  * @property-read	string		$validationPattern	regular expression used to validate the bbcode attribute's value or empty if no such regular expression exists
- * @property-read	integer		$required		is `1` if the bbcode attribute is required of the bbcode, otherwise `0`
- * @property-read	integer		$useText		is `1` if the bbcode's content will be used as the bbcode attribute value
+ * @property-read	int		$required		is `1` if the bbcode attribute is required of the bbcode, otherwise `0`
+ * @property-read	int		$useText		is `1` if the bbcode's content will be used as the bbcode attribute value
  */
 class BBCodeAttribute extends DatabaseObject {
 	/**

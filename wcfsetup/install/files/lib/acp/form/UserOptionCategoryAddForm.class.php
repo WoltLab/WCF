@@ -35,7 +35,7 @@ class UserOptionCategoryAddForm extends AbstractForm {
 	
 	/**
 	 * show order
-	 * @var	integer
+	 * @var	int
 	 */
 	public $showOrder = 0;
 	

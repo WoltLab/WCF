@@ -64,7 +64,7 @@ class PageAddForm extends AbstractForm {
 	
 	/**
 	 * parent page id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $parentPageID = 0;
 	
@@ -88,7 +88,7 @@ class PageAddForm extends AbstractForm {
 	
 	/**
 	 * application id of the page
-	 * @var	integer
+	 * @var	int
 	 */
 	public $applicationPackageID = 1;
 	
@@ -136,7 +136,7 @@ class PageAddForm extends AbstractForm {
 	
 	/**
 	 * list of box ids
-	 * @var integer[]
+	 * @var int[]
 	 */
 	public $boxIDs = [];
 	
@@ -177,7 +177,7 @@ class PageAddForm extends AbstractForm {
 	
 	/**
 	 * parent menu item id
-	 * @var integer
+	 * @var int
 	 */
 	public $parentMenuItemID;
 	
@@ -411,7 +411,7 @@ class PageAddForm extends AbstractForm {
 	/**
 	 * Validates given custom url.
 	 * 
-	 * @param       integer                 $languageID
+	 * @param       int                 $languageID
 	 * @param       string                  $customURL
 	 *
 	 * @throws	UserInputException
@@ -696,7 +696,7 @@ class PageAddForm extends AbstractForm {
 	/**
 	 * Returns the list of box ids that are enabled by default.
 	 * 
-	 * @return      integer[]
+	 * @return      int[]
 	 */
 	protected function getDefaultBoxIDs() {
 		$boxIDs = [];

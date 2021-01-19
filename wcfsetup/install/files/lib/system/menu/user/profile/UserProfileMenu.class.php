@@ -101,7 +101,7 @@ class UserProfileMenu extends SingletonFactory {
 	/**
 	 * Returns the first visible menu item.
 	 * 
-	 * @param 	integer		$userID
+	 * @param 	int		$userID
 	 * @return	UserProfileMenuItem
 	 */
 	public function getActiveMenuItem($userID = 0) {

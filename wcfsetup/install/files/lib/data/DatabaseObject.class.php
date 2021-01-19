@@ -102,7 +102,7 @@ abstract class DatabaseObject implements IIDObject, IStorableObject {
 	/**
 	 * Returns the id of the object.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getObjectID() {
 		return $this->data[static::getDatabaseTableIndexName()];

@@ -42,7 +42,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
 	
 	/**
 	 * iterator index
-	 * @var	integer
+	 * @var	int
 	 */
 	private $position = 0;
 	
@@ -73,7 +73,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
 	/**
 	 * Returns timestamp of oldest response loaded.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getLastResponseTime() {
 		$lastResponseTime = 0;

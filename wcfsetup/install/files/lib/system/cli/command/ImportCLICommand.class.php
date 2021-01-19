@@ -98,7 +98,7 @@ class ImportCLICommand implements ICLICommand {
 	
 	/**
 	 * user merge mode
-	 * @var	integer
+	 * @var	int
 	 */
 	public $userMergeMode = 0;
 	

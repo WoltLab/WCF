@@ -87,7 +87,7 @@ class ViewableUserActivityEventList extends UserActivityEventList {
 	/**
 	 * Returns timestamp of oldest entry fetched.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getLastEventTime() {
 		$lastEventTime = 0;
@@ -105,7 +105,7 @@ class ViewableUserActivityEventList extends UserActivityEventList {
 	/**
 	 * Validates event permissions and returns a list of orphaned event ids.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function validateEvents() {
 		$orphanedEventIDs = [];
@@ -127,7 +127,7 @@ class ViewableUserActivityEventList extends UserActivityEventList {
 	/**
 	 * Truncates the items in object list to given number of items.
 	 * 
-	 * @param       integer         $limit
+	 * @param       int         $limit
 	 */
 	public function truncate($limit) {
 		$this->objects = array_slice($this->objects, 0, $limit, true);

@@ -166,8 +166,8 @@ class UsersOnlineList extends SessionList {
 	/**
 	 * Checks the 'canViewOnlineStatus' setting.
 	 * 
-	 * @param	integer		$userID
-	 * @param	integer		$canViewOnlineStatus
+	 * @param	int		$userID
+	 * @param	int		$canViewOnlineStatus
 	 * @return	boolean
 	 * @deprecated  5.3             Use `isVisibleUser` instead
 	 */

@@ -73,67 +73,67 @@ class AccountManagementForm extends AbstractForm {
 	
 	/**
 	 * indicates if the user quit
-	 * @var	integer
+	 * @var	int
 	 */
 	public $quit = 0;
 	
 	/**
 	 * indicates if the user canceled their quit
-	 * @var	integer
+	 * @var	int
 	 */
 	public $cancelQuit = 0;
 	
 	/**
 	 * timestamp at which the user quit
-	 * @var	integer
+	 * @var	int
 	 */
 	public $quitStarted = 0;
 	
 	/**
 	 * indicates if the user wants to connect github
-	 * @var	integer
+	 * @var	int
 	 */
 	public $githubConnect = 0;
 	
 	/**
 	 * indicates if the user wants to disconnect github
-	 * @var	integer
+	 * @var	int
 	 */
 	public $githubDisconnect = 0;
 	
 	/**
 	 * indicates if the user wants to connect twitter
-	 * @var	integer
+	 * @var	int
 	 */
 	public $twitterConnect = 0;
 	
 	/**
 	 * indicates if the user wants to disconnect twitter
-	 * @var	integer
+	 * @var	int
 	 */
 	public $twitterDisconnect = 0;
 	
 	/**
 	 * indicates if the user wants to connect facebook
-	 * @var	integer
+	 * @var	int
 	 */
 	public $facebookConnect = 0;
 	
 	/**
 	 * indicates if the user wants to disconnect facebook
-	 * @var	integer
+	 * @var	int
 	 */
 	public $facebookDisconnect = 0;
 	
 	/**
 	 * indicates if the user wants to connect google
-	 * @var	integer
+	 * @var	int
 	 */
 	public $googleConnect = 0;
 	
 	/**
 	 * indicates if the user wants to disconnect google
-	 * @var	integer
+	 * @var	int
 	 */
 	public $googleDisconnect = 0;
 	

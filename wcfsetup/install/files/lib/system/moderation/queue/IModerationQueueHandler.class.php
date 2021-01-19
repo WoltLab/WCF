@@ -22,23 +22,23 @@ interface IModerationQueueHandler {
 	/**
 	 * Returns the container id for current object id, may return 0.
 	 * 
-	 * @param	integer		$objectID
-	 * @return	integer
+	 * @param	int		$objectID
+	 * @return	int
 	 */
 	public function getContainerID($objectID);
 	
 	/**
 	 * Validates object ids and returns orphaned queue ids.
 	 * 
-	 * @param	integer[]		$queues
-	 * @return	integer[]
+	 * @param	int[]		$queues
+	 * @return	int[]
 	 */
 	public function identifyOrphans(array $queues);
 	
 	/**
 	 * Returns true if given object id is valid.
 	 * 
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @return	boolean
 	 */
 	public function isValid($objectID);
@@ -71,7 +71,7 @@ interface IModerationQueueHandler {
 	 * Removes queses from database, should only be called if the referenced
 	 * object is permanently deleted.
 	 * 
-	 * @param	integer[]		$objectIDs
+	 * @param	int[]		$objectIDs
 	 */
 	public function removeQueues(array $objectIDs);
 	
@@ -79,7 +79,7 @@ interface IModerationQueueHandler {
 	 * Returns true, if given user is affected by given queue entry.
 	 * 
 	 * @param	ModerationQueue		$queue
-	 * @param	integer			$userID
+	 * @param	int			$userID
 	 * @return	boolean
 	 */
 	public function isAffectedUser(ModerationQueue $queue, $userID);

@@ -15,7 +15,7 @@ interface ICommentManager {
 	/**
 	 * Returns true if the current user may add comments or responses.
 	 * 
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @return	boolean
 	 */
 	public function canAdd($objectID);
@@ -23,7 +23,7 @@ interface ICommentManager {
 	/**
 	 * Returns true if a comment requires approval.
 	 * 
-	 * @param       integer         $objectID
+	 * @param       int         $objectID
 	 * @return      boolean
 	 */
 	public function canAddWithoutApproval($objectID);
@@ -63,8 +63,8 @@ interface ICommentManager {
 	 * Returns true if the current user may moderated content identified by
 	 * object type id and object id.
 	 * 
-	 * @param	integer		$objectTypeID
-	 * @param	integer		$objectID
+	 * @param	int		$objectTypeID
+	 * @param	int		$objectID
 	 * @return	boolean
 	 */
 	public function canModerate($objectTypeID, $objectID);
@@ -72,15 +72,15 @@ interface ICommentManager {
 	/**
 	 * Returns the amount of comments per page.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getCommentsPerPage();
 	
 	/**
 	 * Returns a link to the commented object with the given object type id and object id.
 	 * 
-	 * @param	integer		$objectTypeID
-	 * @param	integer		$objectID
+	 * @param	int		$objectTypeID
+	 * @param	int		$objectID
 	 * @return	string
 	 */
 	public function getLink($objectTypeID, $objectID);
@@ -104,8 +104,8 @@ interface ICommentManager {
 	/**
 	 * Returns the title for a comment or response.
 	 * 
-	 * @param	integer		$objectTypeID
-	 * @param	integer		$objectID
+	 * @param	int		$objectTypeID
+	 * @param	int		$objectID
 	 * @param	boolean		$isResponse
 	 * @return	string
 	 */
@@ -115,7 +115,7 @@ interface ICommentManager {
 	 * Returns true if comments and responses for given object id are accessible
 	 * by current user.
 	 * 
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @param	boolean		$validateWritePermission
 	 * @return	boolean
 	 */
@@ -124,8 +124,8 @@ interface ICommentManager {
 	/**
 	 * Updates total count of comments (includes responses).
 	 * 
-	 * @param	integer		$objectID
-	 * @param	integer		$value
+	 * @param	int		$objectID
+	 * @param	int		$value
 	 */
 	public function updateCounter($objectID, $value);
 	

@@ -180,7 +180,7 @@ final class StringUtil {
 	/**
 	 * Formats an integer.
 	 * 
-	 * @param	integer		$integer
+	 * @param	int		$integer
 	 * @return	string
 	 */
 	public static function formatInteger($integer) {
@@ -196,7 +196,7 @@ final class StringUtil {
 	 * Formats a double.
 	 * 
 	 * @param	double		$double
-	 * @param	integer		$maxDecimals
+	 * @param	int		$maxDecimals
 	 * @return	string
 	 */
 	public static function formatDouble($double, $maxDecimals = 0) {
@@ -286,7 +286,7 @@ final class StringUtil {
 	 * @param	string		$search
 	 * @param	string		$replace
 	 * @param	string		$subject
-	 * @param	integer		$count
+	 * @param	int		$count
 	 * @return	string
 	 */
 	public static function replaceIgnoreCase($search, $replace, $subject, &$count = 0) {
@@ -303,7 +303,7 @@ final class StringUtil {
 	 * Alias to php str_split() function with multibyte support.
 	 * 
 	 * @param	string		$string
-	 * @param	integer		$length
+	 * @param	int		$length
 	 * @return	string[]
 	 */
 	public static function split($string, $length = 1) {
@@ -354,9 +354,9 @@ final class StringUtil {
 	 * Alias to php str_pad function with multibyte support.
 	 * 
 	 * @param	string		$input
-	 * @param	integer		$padLength
+	 * @param	int		$padLength
 	 * @param	string		$padString
-	 * @param	integer		$padType
+	 * @param	int		$padType
 	 * @return	string
 	 */
 	public static function pad($input, $padLength, $padString = ' ', $padType = STR_PAD_RIGHT) {
@@ -382,7 +382,7 @@ final class StringUtil {
 	/**
 	 * Takes a numeric HTML entity value and returns the appropriate UTF-8 bytes.
 	 * 
-	 * @param	integer		$dec		html entity value
+	 * @param	int		$dec		html entity value
 	 * @return	string				utf-8 bytes
 	 */
 	public static function getCharacter($dec) {
@@ -406,7 +406,7 @@ final class StringUtil {
 	 * @see		http://www1.tip.nl/~t876506/utf8tbl.html
 	 * 
 	 * @param	string		$c
-	 * @return	integer
+	 * @return	int
 	 */
 	public static function getCharValue($c) {
 		$ud = 0;
@@ -548,7 +548,7 @@ final class StringUtil {
 	 * Truncates the given string to a certain number of characters.
 	 * 
 	 * @param	string		$string		string which shall be truncated
-	 * @param	integer		$length		string length after truncating
+	 * @param	int		$length		string length after truncating
 	 * @param	string		$etc		string to append when $string is truncated
 	 * @param	boolean		$breakWords	should words be broken in the middle
 	 * @return	string				truncated string
@@ -576,7 +576,7 @@ final class StringUtil {
 	 * Truncates a string containing HTML code and keeps the HTML syntax intact.
 	 * 
 	 * @param	string		$string			string which shall be truncated
-	 * @param	integer		$length			string length after truncating
+	 * @param	int		$length			string length after truncating
 	 * @param	string		$etc			ending string which will be appended after truncating
 	 * @param	boolean		$breakWords		if false words will not be split and the return string might be shorter than $length
 	 * @return	string					truncated string
@@ -726,7 +726,7 @@ final class StringUtil {
 	 * Splits given string into smaller chunks.
 	 * 
 	 * @param	string		$string
-	 * @param	integer		$length
+	 * @param	int		$length
 	 * @param	string		$break
 	 * @return	string
 	 */
@@ -738,7 +738,7 @@ final class StringUtil {
 	 * Simple multi-byte safe wordwrap() function.
 	 * 
 	 * @param	string		$string
-	 * @param	integer		$width
+	 * @param	int		$width
 	 * @param	string		$break
 	 * @return	string
 	 */
@@ -769,7 +769,7 @@ final class StringUtil {
 	/**
 	 * Shortens numbers larger than 1000 by using unit suffixes.
 	 * 
-	 * @param       integer         $number
+	 * @param       int         $number
 	 * @return      string
 	 */
 	public static function getShortUnit($number) {

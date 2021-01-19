@@ -48,7 +48,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
 	
 	/**
 	 * subscribed categories
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected static $subscribedCategories;
 	
@@ -112,7 +112,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
 	 * Returns a list with ids of accessible categories.
 	 * 
 	 * @param	string[]	$permissions
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public static function getAccessibleCategoryIDs(array $permissions = ['canReadArticle']) {
 		$categoryIDs = [];
@@ -181,7 +181,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
 	/**
 	 * Returns the list of subscribed categories.
 	 *
-	 * @return	integer[]
+	 * @return	int[]
 	 * @since       5.2
 	 */
 	public static function getSubscribedCategoryIDs() {

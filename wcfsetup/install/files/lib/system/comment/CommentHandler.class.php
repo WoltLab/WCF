@@ -57,7 +57,7 @@ class CommentHandler extends SingletonFactory {
 	 * such object type exists.
 	 * 
 	 * @param	string		$objectType
-	 * @return	integer|null
+	 * @return	int|null
 	 */
 	public function getObjectTypeID($objectType) {
 		if (isset($this->cache['objectTypeIDs'][$objectType])) {
@@ -71,7 +71,7 @@ class CommentHandler extends SingletonFactory {
 	 * Returns the comment object type with the given name or `null` if no such
 	 * object type exists.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 * @return	ObjectType|null
 	 */
 	public function getObjectType($objectTypeID) {
@@ -102,8 +102,8 @@ class CommentHandler extends SingletonFactory {
 	 * Returns a comment list for a given object type and object id.
 	 * 
 	 * @param	ICommentManager		$commentManager
-	 * @param	integer			$objectTypeID
-	 * @param	integer			$objectID
+	 * @param	int			$objectTypeID
+	 * @param	int			$objectID
 	 * @param	boolean			$readObjects
 	 * @return	StructuredCommentList
 	 */
@@ -120,7 +120,7 @@ class CommentHandler extends SingletonFactory {
 	 * Removes all comments for given objects.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer[]	$objectIDs
+	 * @param	int[]	$objectIDs
 	 */
 	public function deleteObjects($objectType, array $objectIDs) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
@@ -207,8 +207,8 @@ class CommentHandler extends SingletonFactory {
 	 * the given ids as confirmed for the active user.
 	 * 
 	 * @param	string		$objectType	comment object type name
-	 * @param	integer[]	$objectIDs	ids of the objects whose comment-related notifications will be marked as confirmed
-	 * @param	integer		$time		only notifications older than the given timestamp will be marked as confirmed
+	 * @param	int[]	$objectIDs	ids of the objects whose comment-related notifications will be marked as confirmed
+	 * @param	int		$time		only notifications older than the given timestamp will be marked as confirmed
 	 * @throws	\InvalidArgumentException	if invalid comment object type name is given
 	 * @since	5.2
 	 */

@@ -11,17 +11,17 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Profile\Visitor
  *
- * @property-read	integer		$visitorID	unique id of the user profile visitor
- * @property-read	integer		$ownerID	id of the user whose user profile has been visited
- * @property-read	integer		$userID		id of the user visiting the user profile 
- * @property-read	integer		$time		timestamp of the (latest) visit
+ * @property-read	int		$visitorID	unique id of the user profile visitor
+ * @property-read	int		$ownerID	id of the user whose user profile has been visited
+ * @property-read	int		$userID		id of the user visiting the user profile 
+ * @property-read	int		$time		timestamp of the (latest) visit
  */
 class UserProfileVisitor extends DatabaseObject {
 	/**
 	 * Returns a profile visitor object or `null` if it does not exist.
 	 * 
-	 * @param	integer		$ownerID
-	 * @param	integer		$userID
+	 * @param	int		$ownerID
+	 * @param	int		$userID
 	 * @return	UserProfileVisitor|null
 	 */
 	public static function getObject($ownerID, $userID) {

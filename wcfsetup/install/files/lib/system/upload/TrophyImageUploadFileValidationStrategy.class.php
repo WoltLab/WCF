@@ -14,7 +14,7 @@ use wcf\util\ImageUtil;
 class TrophyImageUploadFileValidationStrategy implements IUploadFileValidationStrategy {
 	/**
 	 * minimum trophy image width and height
-	 * @var integer
+	 * @var int
 	 */
 	const MIN_TROPHY_IMAGE_SIZE = 64;
 	

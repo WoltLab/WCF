@@ -24,12 +24,12 @@ class AbstractLikeImporter extends AbstractImporter {
 	
 	/**
 	 * object type id for likes
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $objectTypeID = 0;
 	
 	/**
-	 * @var integer|null
+	 * @var int|null
 	 */
 	protected static $dislikeReactionTypeID;
 	
@@ -76,7 +76,7 @@ class AbstractLikeImporter extends AbstractImporter {
 	}
 	
 	/**
-	 * @return integer
+	 * @return int
 	 */
 	protected static function getDislikeReactionTypeID() {
 		if (self::$dislikeReactionTypeID === null) {

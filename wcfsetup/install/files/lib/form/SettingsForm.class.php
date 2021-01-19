@@ -76,25 +76,25 @@ class SettingsForm extends AbstractForm {
 	
 	/**
 	 * list of content language ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $contentLanguageIDs = [];
 	
 	/**
 	 * language id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $languageID = 0;
 	
 	/**
 	 * style id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $styleID = 0;
 	
 	/**
 	 * special trophies
-	 * @var integer[]
+	 * @var int[]
 	 */
 	public $specialTrophies = [];
 	

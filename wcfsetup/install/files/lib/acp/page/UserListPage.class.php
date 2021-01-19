@@ -68,7 +68,7 @@ class UserListPage extends SortablePage {
 	
 	/**
 	 * list of marked user ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $markedUsers = [];
 	
@@ -91,13 +91,13 @@ class UserListPage extends SortablePage {
 	
 	/**
 	 * id of a user search
-	 * @var	integer
+	 * @var	int
 	 */
 	public $searchID = 0;
 	
 	/**
 	 * list of user ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $userIDs = [];
 	

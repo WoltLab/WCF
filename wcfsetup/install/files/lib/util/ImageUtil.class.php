@@ -103,8 +103,8 @@ final class ImageUtil {
 	 * Enforces dimensions for given image.
 	 *
 	 * @param	string		$filename
-	 * @param       integer         $maxWidth
-	 * @param       integer         $maxHeight
+	 * @param       int         $maxWidth
+	 * @param       int         $maxHeight
 	 * @param	boolean		$obtainDimensions
 	 * @return	string          new filename if file was changed, otherwise old filename
 	 * @since       5.2

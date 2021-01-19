@@ -34,7 +34,7 @@ class ArticleEditForm extends ArticleAddForm {
 	
 	/**
 	 * article id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $articleID = 0;
 	

@@ -113,7 +113,7 @@ class PackageInstallationScheduler {
 	 * 
 	 * @param	string		$package	package identifier
 	 * @param	string		$version	package version
-	 * @param	integer		$stackPosition
+	 * @param	int		$stackPosition
 	 * @param	boolean		$validateInstallInstructions
 	 */
 	protected function installPackage($package, $version = '', $stackPosition = -1, $validateInstallInstructions = false) {
@@ -146,7 +146,7 @@ class PackageInstallationScheduler {
 	 * Resolves the package requirements of an package update.
 	 * Starts the installation or update to higher version of required packages.
 	 * 
-	 * @param	integer		$packageUpdateVersionID
+	 * @param	int		$packageUpdateVersionID
 	 */
 	protected function resolveRequirements($packageUpdateVersionID) {
 		// resolve requirements
@@ -443,7 +443,7 @@ class PackageInstallationScheduler {
 	/**
 	 * Updates an existing package.
 	 * 
-	 * @param	integer		$packageID
+	 * @param	int		$packageID
 	 * @param	string		$version
 	 */
 	protected function updatePackage($packageID, $version) {
@@ -618,7 +618,7 @@ class PackageInstallationScheduler {
 	 * 
 	 * @param	array		$updateThreadListA
 	 * @param	array		$updateThreadListB
-	 * @return	integer
+	 * @return	int
 	 */
 	protected function compareUpdateThreadLists($updateThreadListA, $updateThreadListB) {
 		$countA = count($updateThreadListA);

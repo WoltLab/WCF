@@ -27,7 +27,7 @@ class CategoryPermissionHandler extends SingletonFactory {
 	 * 
 	 * @param	Category	$category
 	 * @param	User		$user
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function getPermissions(Category $category, User $user = null) {
 		if ($user === null) {

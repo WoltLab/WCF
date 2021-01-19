@@ -31,13 +31,13 @@ class UserCoverPhotoCondition extends AbstractSelectCondition implements IConten
 	
 	/**
 	 * value of the "user has no cover photo" option
-	 * @var	integer
+	 * @var	int
 	 */
 	const NO_COVER_PHOTO = 0;
 	
 	/**
 	 * value of the "user has a cover photo" option
-	 * @var	integer
+	 * @var	int
 	 */
 	const COVER_PHOTO = 1;
 	

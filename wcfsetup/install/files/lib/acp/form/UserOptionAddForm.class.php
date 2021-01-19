@@ -97,13 +97,13 @@ class UserOptionAddForm extends AbstractForm {
 	
 	/**
 	 * edit permission bitmask
-	 * @var	integer
+	 * @var	int
 	 */
 	public $editable = 3;
 	
 	/**
 	 * view permission bitmask
-	 * @var	integer
+	 * @var	int
 	 */
 	public $visible = 15;
 	
@@ -115,7 +115,7 @@ class UserOptionAddForm extends AbstractForm {
 	
 	/**
 	 * show order
-	 * @var	integer
+	 * @var	int
 	 */
 	public $showOrder = 0;
 	

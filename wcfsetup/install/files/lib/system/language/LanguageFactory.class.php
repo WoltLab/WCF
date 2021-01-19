@@ -45,7 +45,7 @@ class LanguageFactory extends SingletonFactory {
 	/**
 	 * Returns a Language object for the language with the given id.
 	 * 
-	 * @param	integer		$languageID
+	 * @param	int		$languageID
 	 * @return	Language
 	 */
 	public function getLanguage($languageID) {
@@ -63,7 +63,7 @@ class LanguageFactory extends SingletonFactory {
 	/**
 	 * Returns the preferred language of the current user.
 	 * 
-	 * @param	integer		$languageID
+	 * @param	int		$languageID
 	 * @return	Language
 	 */
 	public function getUserLanguage($languageID = 0) {
@@ -128,7 +128,7 @@ class LanguageFactory extends SingletonFactory {
 	/**
 	 * Returns language category by id.
 	 * 
-	 * @param	integer		$languageCategoryID
+	 * @param	int		$languageCategoryID
 	 * @return	LanguageCategory
 	 */
 	public function getCategoryByID($languageCategoryID) {
@@ -249,7 +249,7 @@ class LanguageFactory extends SingletonFactory {
 	/**
 	 * Returns the default language id
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getDefaultLanguageID() {
 		return $this->cache['default'];
@@ -283,7 +283,7 @@ class LanguageFactory extends SingletonFactory {
 	/**
 	 * Returns the list of content language ids.
 	 * 
-	 * @return      integer[]
+	 * @return      int[]
 	 * @since       3.1
 	 */
 	public function getContentLanguageIDs() {
@@ -300,7 +300,7 @@ class LanguageFactory extends SingletonFactory {
 	/**
 	 * Makes given language the default language.
 	 * 
-	 * @param	integer		$languageID
+	 * @param	int		$languageID
 	 */
 	public function makeDefault($languageID) {
 		// remove old default language
@@ -345,7 +345,7 @@ class LanguageFactory extends SingletonFactory {
 	/**
 	 * Returns the number of phrases that have been automatically disabled in the past 7 days.
 	 * 
-	 * @return      integer
+	 * @return      int
 	 */
 	public function countRecentlyDisabledCustomValues() {
 		$sql = "SELECT  COUNT(*) AS count

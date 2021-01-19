@@ -26,7 +26,7 @@ class SimpleAclResolver extends SingletonFactory {
 	 * one of its group is allowed.
 	 * 
 	 * @param       string          $objectType     object type name
-	 * @param       integer         $objectID       object id
+	 * @param       int         $objectID       object id
 	 * @param       User|null       $user           user object, if `null` uses current user
 	 * @return      boolean         false if user is not allowed
 	 */

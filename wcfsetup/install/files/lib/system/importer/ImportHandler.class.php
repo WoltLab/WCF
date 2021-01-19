@@ -37,7 +37,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	
 	/**
 	 * user merge mode
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $userMergeMode = 2;
 	
@@ -84,7 +84,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	 * 
 	 * @param	string		$type
 	 * @param	mixed		$oldID
-	 * @return	integer		$newID
+	 * @return	int		$newID
 	 */
 	public function getNewID($type, $oldID) {
 		if (!$oldID) return null;
@@ -119,8 +119,8 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	 * Saves an id mapping.
 	 * 
 	 * @param	string		$type
-	 * @param	integer		$oldID
-	 * @param	integer		$newID
+	 * @param	int		$oldID
+	 * @param	int		$newID
 	 */
 	public function saveNewID($type, $oldID, $newID) {
 		$objectTypeID = $this->objectTypes[$type]->objectTypeID;
@@ -159,7 +159,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	/**
 	 * Sets the user merge mode.
 	 * 
-	 * @param	integer		$mode
+	 * @param	int		$mode
 	 */
 	public function setUserMergeMode($mode) {
 		$this->userMergeMode = $mode;
@@ -168,7 +168,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	/**
 	 * Returns the user merge mode.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getUserMergeMode() {
 		return $this->userMergeMode;

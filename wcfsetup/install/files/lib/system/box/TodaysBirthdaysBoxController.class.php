@@ -136,7 +136,7 @@ class TodaysBirthdaysBoxController extends AbstractDatabaseObjectListBoxControll
 	/**
 	 * Filters given user ids.
 	 * 
-	 * @param	integer[]	$userIDs
+	 * @param	int[]	$userIDs
 	 */
 	protected function filterUserIDs(&$userIDs) {
 		// does nothing, can be overwritten by child classes

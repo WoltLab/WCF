@@ -13,10 +13,10 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Captcha\Question
  * 
- * @property-read	integer		$questionID	unique id of the captcha question
+ * @property-read	int		$questionID	unique id of the captcha question
  * @property-read	string		$question	question of the captcha or name of language item which contains the question
  * @property-read	string		$answers	newline-separated list of answers or name of language item which contains the answers
- * @property-read	integer		$isDisabled	is `1` if the captcha question is disabled and thus not offered to answer, otherwise `0`
+ * @property-read	int		$isDisabled	is `1` if the captcha question is disabled and thus not offered to answer, otherwise `0`
  */
 class CaptchaQuestion extends DatabaseObject {
 	/**

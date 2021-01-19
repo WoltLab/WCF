@@ -26,7 +26,7 @@ use wcf\util\StringUtil;
 class VersionTrackerListPage extends AbstractPage {
 	/**
 	 * object id
-	 * @var integer
+	 * @var int
 	 */
 	public $objectID = 0;
 	
@@ -48,7 +48,7 @@ class VersionTrackerListPage extends AbstractPage {
 	
 	/**
 	 * left / old version id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $oldID = 0;
 	
@@ -60,7 +60,7 @@ class VersionTrackerListPage extends AbstractPage {
 	
 	/**
 	 * right / new version id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $newID = 0;
 	

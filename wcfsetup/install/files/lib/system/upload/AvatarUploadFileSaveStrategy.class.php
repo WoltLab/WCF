@@ -22,7 +22,7 @@ use wcf\util\ImageUtil;
  */
 class AvatarUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 	/**
-	 * @var integer
+	 * @var int
 	 */
 	protected $userID = 0;
 	
@@ -39,7 +39,7 @@ class AvatarUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 	/**
 	 * Creates a new instance of AvatarUploadFileSaveStrategy.
 	 *
-	 * @param	integer		$userID
+	 * @param	int		$userID
 	 */
 	public function __construct($userID = null) {
 		$this->userID = ($userID ?: WCF::getUser()->userID);

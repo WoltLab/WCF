@@ -37,7 +37,7 @@ class PaidSubscriptionUserAddForm extends AbstractForm {
 	
 	/**
 	 * subscription id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $subscriptionID = 0;
 	

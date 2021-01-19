@@ -19,7 +19,7 @@ abstract class AbstractLabelObjectTypeHandler extends SingletonFactory implement
 	
 	/**
 	 * object type id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $objectTypeID = 0;
 	

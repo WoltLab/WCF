@@ -32,7 +32,7 @@ class BBCodeMediaProviderAddForm extends AbstractForm {
 	
 	/**
 	 * media provider package id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $packageID = PACKAGE_ID;
 	

@@ -22,7 +22,7 @@ abstract class AbstractRuntimeCache extends SingletonFactory implements IRuntime
 	
 	/**
 	 * ids of objects which will be fetched next
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $objectIDs = [];
 	

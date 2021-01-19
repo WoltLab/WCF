@@ -24,14 +24,14 @@ interface IObjectTreeNode extends \Countable, IIDObject, \RecursiveIterator {
 	 * 
 	 * The minimum depth is `1`.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getDepth();
 	
 	/**
 	 * Returns the number of open parent nodes.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getOpenParentNodes();
 	

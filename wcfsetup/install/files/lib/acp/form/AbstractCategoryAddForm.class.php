@@ -27,7 +27,7 @@ use wcf\util\ArrayUtil;
 abstract class AbstractCategoryAddForm extends AbstractForm {
 	/**
 	 * id of the category acl object type
-	 * @var	integer
+	 * @var	int
 	 */
 	public $aclObjectTypeID = 0;
 	
@@ -51,13 +51,13 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	
 	/**
 	 * is `1` if HTML is used in the description
-	 * @var	integer
+	 * @var	int
 	 */
 	public $descriptionUseHtml = 0;
 	
 	/**
 	 * indicates if the category is disabled
-	 * @var	integer
+	 * @var	int
 	 */
 	public $isDisabled = 0;
 	
@@ -87,7 +87,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	
 	/**
 	 * id of the package the created package belongs to
-	 * @var	integer
+	 * @var	int
 	 */
 	public $packageID = 0;
 	
@@ -99,13 +99,13 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	
 	/**
 	 * id of the parent category id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $parentCategoryID = 0;
 	
 	/**
 	 * category show order
-	 * @var	integer
+	 * @var	int
 	 */
 	public $showOrder = 0;
 	

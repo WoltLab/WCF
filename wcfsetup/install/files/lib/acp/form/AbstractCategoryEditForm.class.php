@@ -31,7 +31,7 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 	
 	/**
 	 * id of the edited category
-	 * @var	integer
+	 * @var	int
 	 */
 	public $categoryID = 0;
 	

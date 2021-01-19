@@ -20,20 +20,20 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\Data\Article
  * @since	3.0
  *
- * @property-read	integer		$articleID		unique id of the article
- * @property-read	integer|null	$userID			id of the user the article belongs to or `null` if the user does not exist anymore
+ * @property-read	int		$articleID		unique id of the article
+ * @property-read	int|null	$userID			id of the user the article belongs to or `null` if the user does not exist anymore
  * @property-read	string		$username		name of the user the article belongs to
- * @property-read	integer		$time			timestamp at which the comment has been written
- * @property-read	integer		$categoryID		id of the category the article belongs to
- * @property-read	integer		$isMultilingual		is `1` if the article is available in multiple languages, otherwise `0`
- * @property-read	integer		$publicationStatus	publication status of the article (see `Article::UNPUBLISHED`, `Article::PUBLISHED` and `Article::DELAYED_PUBLICATION`)
- * @property-read	integer		$publicationDate	timestamp at which the article will be automatically published or `0` if it has already been published
- * @property-read	integer		$enableComments		is `1` if comments are enabled for the article, otherwise `0`
- * @property-read	integer		$comments		number of comments on the article
- * @property-read	integer		$views			number of times the article has been viewed
- * @property-read	integer		$cumulativeLikes	cumulative result of likes (counting `+1`) and dislikes (counting `-1`) for the article
- * @property-read	integer		$isDeleted		is 1 if the article is in trash bin, otherwise 0
- * @property-read	integer		$hasLabels		is `1` if labels are assigned to the article
+ * @property-read	int		$time			timestamp at which the comment has been written
+ * @property-read	int		$categoryID		id of the category the article belongs to
+ * @property-read	int		$isMultilingual		is `1` if the article is available in multiple languages, otherwise `0`
+ * @property-read	int		$publicationStatus	publication status of the article (see `Article::UNPUBLISHED`, `Article::PUBLISHED` and `Article::DELAYED_PUBLICATION`)
+ * @property-read	int		$publicationDate	timestamp at which the article will be automatically published or `0` if it has already been published
+ * @property-read	int		$enableComments		is `1` if comments are enabled for the article, otherwise `0`
+ * @property-read	int		$comments		number of comments on the article
+ * @property-read	int		$views			number of times the article has been viewed
+ * @property-read	int		$cumulativeLikes	cumulative result of likes (counting `+1`) and dislikes (counting `-1`) for the article
+ * @property-read	int		$isDeleted		is 1 if the article is in trash bin, otherwise 0
+ * @property-read	int		$hasLabels		is `1` if labels are assigned to the article
  */
 class Article extends DatabaseObject implements ILinkableObject, IUserContent {
 	/**

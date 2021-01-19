@@ -43,7 +43,7 @@ class PackageListPage extends SortablePage {
 	
 	/**
 	 * package id for uninstallation
-	 * @var	integer
+	 * @var	int
 	 */
 	public $packageID = 0;
 	

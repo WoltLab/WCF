@@ -39,7 +39,7 @@ class PageCache extends SingletonFactory {
 	/**
 	 * Returns a page by page id or null.
 	 * 
-	 * @param	integer		$pageID		page id
+	 * @param	int		$pageID		page id
 	 * @return	Page|null
 	 */
 	public function getPage($pageID) {
@@ -82,8 +82,8 @@ class PageCache extends SingletonFactory {
 	 * Returns the localized page title by page id, optionally retrieving the title
 	 * for given language id if it is a multilingual page.
 	 * 
-	 * @param	integer		$pageID		page id
-	 * @param	integer		$languageID	specific value by language id
+	 * @param	int		$pageID		page id
+	 * @param	int		$languageID	specific value by language id
 	 * @return	string	localized page title
 	 */
 	public function getPageTitle($pageID, $languageID = null) {

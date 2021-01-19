@@ -25,7 +25,7 @@ class CmsPage extends AbstractPage {
 	public $content;
 	
 	/**
-	 * @var	integer
+	 * @var	int
 	 */
 	public $languageID;
 	
@@ -35,7 +35,7 @@ class CmsPage extends AbstractPage {
 	public $page;
 	
 	/**
-	 * @var	integer
+	 * @var	int
 	 */
 	public $pageID;
 	

@@ -65,7 +65,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	
 	/**
 	 * group priority
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $priority = 0;
 	
@@ -77,7 +77,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	
 	/**
 	 * shows the members of this group on the team page
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $showOnTeamPage = 0;
 	

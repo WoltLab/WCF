@@ -71,7 +71,7 @@ class GZipFile extends File {
 	/**
 	 * Returns the filesize of the unzipped file.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getFileSize() {
 		$byteBlock = 1<<14;

@@ -40,7 +40,7 @@ class HtmlInputNodeTextParser {
 	
 	/**
 	 * number of found smilies
-	 * @var integer
+	 * @var int
 	 */
 	protected $smileyCount = 0;
 	
@@ -83,7 +83,7 @@ class HtmlInputNodeTextParser {
 	 * HtmlInputNodeTextParser constructor.
 	 * 
 	 * @param HtmlInputNodeProcessor $htmlInputNodeProcessor
-	 * @param integer $smileyCount
+	 * @param int $smileyCount
 	 */
 	public function __construct(HtmlInputNodeProcessor $htmlInputNodeProcessor, $smileyCount = 0) {
 		$this->htmlInputNodeProcessor = $htmlInputNodeProcessor;

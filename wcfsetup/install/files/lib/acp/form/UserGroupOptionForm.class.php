@@ -74,7 +74,7 @@ class UserGroupOptionForm extends AbstractForm {
 	
 	/**
 	 * user group option id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $userGroupOptionID = 0;
 	

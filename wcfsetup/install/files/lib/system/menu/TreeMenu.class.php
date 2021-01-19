@@ -182,7 +182,7 @@ abstract class TreeMenu extends SingletonFactory {
 	/**
 	 * Returns the active menu item.
 	 * 
-	 * @param	integer		$level
+	 * @param	int		$level
 	 * @return	string
 	 */
 	public function getActiveMenuItem($level = 0) {

@@ -42,7 +42,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
 	 * Returns a level 1 or 2 category id for given category name.
 	 * 
 	 * @param	string		$categoryName
-	 * @return	integer
+	 * @return	int
 	 */
 	protected function getCategoryID($categoryName) {
 		return $this->getTopCategory($categoryName)->categoryID;

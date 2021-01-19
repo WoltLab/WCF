@@ -34,7 +34,7 @@ interface IPaymentMethod {
 	 * @param	string		$returnURL
 	 * @param	string		$cancelReturnURL
 	 * @param	boolean		$isRecurring
-	 * @param	integer		$subscriptionLength
+	 * @param	int		$subscriptionLength
 	 * @param	string		$subscriptionLengthUnit
 	 * 
 	 * @return	string

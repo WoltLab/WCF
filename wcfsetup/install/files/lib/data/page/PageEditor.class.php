@@ -32,7 +32,7 @@ class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
 	 * Creates or updates the page's template file.
 	 * 
-	 * @param       integer         $languageID     language id or `null`
+	 * @param       int         $languageID     language id or `null`
 	 * @param       string          $content        template content
 	 */
 	public function updateTemplate($languageID, $content) {
@@ -58,7 +58,7 @@ class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	 * Returns true if given custom url is unique.
 	 * 
 	 * @param       string          $customURL
-	 * @param       integer         $packageID
+	 * @param       int         $packageID
 	 *
 	 * @return      boolean
 	 */

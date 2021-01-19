@@ -56,7 +56,7 @@ class ArticleAddForm extends AbstractForm {
 	
 	/**
 	 * category id
-	 * @var integer
+	 * @var int
 	 */
 	public $categoryID = 0;
 	
@@ -86,7 +86,7 @@ class ArticleAddForm extends AbstractForm {
 	
 	/**
 	 * publication status
-	 * @var integer
+	 * @var int
 	 */
 	public $publicationStatus = Article::PUBLISHED;
 	
@@ -151,13 +151,13 @@ class ArticleAddForm extends AbstractForm {
 	
 	/**
 	 * image ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $imageID = [];
 	
 	/**
 	 * thumbnail image ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $teaserImageID = [];
 	
@@ -187,7 +187,7 @@ class ArticleAddForm extends AbstractForm {
 	
 	/**
 	 * list of label ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $labelIDs = [];
 	

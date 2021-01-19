@@ -23,7 +23,7 @@ class CronjobEditForm extends CronjobAddForm {
 	
 	/**
 	 * cronjob id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $cronjobID = 0;
 	

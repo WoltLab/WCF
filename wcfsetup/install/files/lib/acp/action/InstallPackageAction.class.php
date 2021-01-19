@@ -40,7 +40,7 @@ class InstallPackageAction extends AbstractDialogAction {
 	
 	/**
 	 * current queue id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $queueID = 0;
 	
@@ -207,7 +207,7 @@ class InstallPackageAction extends AbstractDialogAction {
 	/**
 	 * Returns current action by queue id.
 	 * 
-	 * @param	integer		$queueID
+	 * @param	int		$queueID
 	 * @return	string
 	 */
 	protected function getCurrentAction($queueID) {

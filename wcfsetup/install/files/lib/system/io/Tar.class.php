@@ -64,7 +64,7 @@ class Tar implements IArchive {
 	
 	/**
 	 * chunk size for extracting
-	 * @var	integer
+	 * @var	int
 	 */
 	const CHUNK_SIZE = 8192;
 	

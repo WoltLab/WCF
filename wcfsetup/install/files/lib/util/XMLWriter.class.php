@@ -19,7 +19,7 @@ class XMLWriter {
 	
 	/**
 	 * number of open elements
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $openElements = 0;
 	

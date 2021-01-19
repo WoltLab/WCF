@@ -27,7 +27,7 @@ class NewPasswordForm extends AbstractForm {
 	
 	/**
 	 * user id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $userID = 0;
 	

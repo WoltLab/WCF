@@ -122,7 +122,7 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
 	/**
 	 * Returns the liked response's id.
 	 *
-	 * @return      integer
+	 * @return      int
 	 */
 	protected function getResponseID() {
 		// this is the `wcfN_like.objectID` value

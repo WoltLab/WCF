@@ -15,7 +15,7 @@ interface IModerationQueueManager {
 	/**
 	 * Creates queue assignments for matching object type ids.
 	 * 
-	 * @param	integer			$objectTypeID
+	 * @param	int			$objectTypeID
 	 * @param	ModerationQueue[]	$queues
 	 */
 	public function assignQueues($objectTypeID, array $queues);
@@ -24,7 +24,7 @@ interface IModerationQueueManager {
 	 * Returns true if given object type is valid, optionally checking object id.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @return	boolean
 	 */
 	public function isValid($objectType, $objectID = null);
@@ -32,7 +32,7 @@ interface IModerationQueueManager {
 	/**
 	 * Returns link for viewing/editing objects for this moderation type.
 	 * 
-	 * @param	integer		$queueID
+	 * @param	int		$queueID
 	 * @return	string
 	 */
 	public function getLink($queueID);
@@ -41,7 +41,7 @@ interface IModerationQueueManager {
 	 * Returns object type id for given object type.
 	 * 
 	 * @param	string		$objectType
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getObjectTypeID($objectType);
 	
@@ -49,7 +49,7 @@ interface IModerationQueueManager {
 	 * Returns object type processor by object type.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 * @return	object
 	 */
 	public function getProcessor($objectType, $objectTypeID = null);
@@ -57,7 +57,7 @@ interface IModerationQueueManager {
 	/**
 	 * Populates object properties for viewing.
 	 * 
-	 * @param	integer				$objectTypeID
+	 * @param	int				$objectTypeID
 	 * @param	ViewableModerationQueue[]	$objects
 	 */
 	public function populate($objectTypeID, array $objects);

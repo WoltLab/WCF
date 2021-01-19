@@ -22,7 +22,7 @@ use wcf\util\StringUtil;
 class UninstallPackageAction extends InstallPackageAction {
 	/**
 	 * active package id
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $packageID = 0;
 	

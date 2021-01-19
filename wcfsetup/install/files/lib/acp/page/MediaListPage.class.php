@@ -27,7 +27,7 @@ class MediaListPage extends SortablePage {
 	
 	/**
 	 * id of the selected media category
-	 * @var	integer
+	 * @var	int
 	 */
 	public $categoryID = 0;
 	

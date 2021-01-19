@@ -19,9 +19,9 @@ use wcf\util\UserUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Online
  *
- * @property-read	integer|null	$pageID			id of the last visited page
- * @property-read	integer|null	$pageObjectID		id of the object the last visited page belongs to
- * @property-read	integer|null	$parentPageObjectID	id of the parent of the object the last visited page belongs to
+ * @property-read	int|null	$pageID			id of the last visited page
+ * @property-read	int|null	$pageObjectID		id of the object the last visited page belongs to
+ * @property-read	int|null	$parentPageObjectID	id of the parent of the object the last visited page belongs to
  * @property-read	string|null	$userOnlineMarking	HTML code used to print the formatted name of a user group member
  */
 class UserOnline extends UserProfile {

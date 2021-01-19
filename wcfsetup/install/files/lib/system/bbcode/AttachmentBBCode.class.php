@@ -24,7 +24,7 @@ class AttachmentBBCode extends AbstractBBCode {
 	
 	/**
 	 * active object id
-	 * @var	integer
+	 * @var	int
 	 * @deprecated
 	 */
 	protected static $objectID = 0;
@@ -194,7 +194,7 @@ class AttachmentBBCode extends AbstractBBCode {
 	/**
 	 * Sets the active object id.
 	 * 
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @deprecated
 	 */
 	public static function setObjectID($objectID) {

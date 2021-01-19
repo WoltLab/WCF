@@ -26,7 +26,7 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage {
 	
 	/**
 	 * indicates the range of the listed items
-	 * @var	integer
+	 * @var	int
 	 */
 	public $endIndex = 0;
 	
@@ -55,13 +55,13 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage {
 	
 	/**
 	 * number of items shown per page
-	 * @var	integer
+	 * @var	int
 	 */
 	public $itemsPerPage = 100;
 	
 	/**
 	 * number of all items
-	 * @var	integer
+	 * @var	int
 	 */
 	public $items = 0;
 	
@@ -83,13 +83,13 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage {
 	
 	/**
 	 * current page number
-	 * @var	integer
+	 * @var	int
 	 */
 	public $pageNo = 0;
 	
 	/**
 	 * number of all pages
-	 * @var	integer
+	 * @var	int
 	 */
 	public $pages = 0;
 	
@@ -113,13 +113,13 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage {
 	
 	/**
 	 * project id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $projectID = 0;
 	
 	/**
 	 * indicates the range of the listed items
-	 * @var	integer
+	 * @var	int
 	 */
 	public $startIndex = 0;
 	

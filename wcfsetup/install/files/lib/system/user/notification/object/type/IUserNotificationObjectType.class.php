@@ -15,7 +15,7 @@ interface IUserNotificationObjectType extends IDatabaseObjectProcessor {
 	/**
 	 * Returns notification objects by their IDs.
 	 * 
-	 * @param	integer[]	$objectIDs
+	 * @param	int[]	$objectIDs
 	 * @return	IUserNotificationObject[]
 	 */
 	public function getObjectsByIDs(array $objectIDs);

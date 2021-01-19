@@ -24,7 +24,7 @@ class ArticleImporter extends AbstractImporter {
 	
 	/**
 	 * category for orphaned articles
-	 * @var	integer
+	 * @var	int
 	 */
 	private $importCategoryID = 0;
 	
@@ -118,7 +118,7 @@ class ArticleImporter extends AbstractImporter {
 	/**
 	 * Returns the id of the category used for articles without previous categories.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	private function getImportCategoryID() {
 		if (!$this->importCategoryID) {

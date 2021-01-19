@@ -207,7 +207,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	 * 
 	 * @param	string		$tableName
 	 * @param	string		$columnName
-	 * @return	integer		package id
+	 * @return	int		package id
 	 */
 	protected function getColumnOwnerID($tableName, $columnName) {
 		$sql = "SELECT	packageID
@@ -230,7 +230,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	 * 
 	 * @param	string		$tableName
 	 * @param	string		$indexName
-	 * @return	integer		package id
+	 * @return	int		package id
 	 */
 	protected function getIndexOwnerID($tableName, $indexName) {
 		$sql = "SELECT	packageID

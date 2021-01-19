@@ -33,13 +33,13 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	
 	/**
 	 * ids of collapsed categories
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $collapsedCategoryIDs = null;
 	
 	/**
 	 * id of the collapsible category object type
-	 * @var	integer
+	 * @var	int
 	 */
 	public $collapsibleObjectTypeID = 0;
 	

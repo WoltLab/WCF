@@ -21,7 +21,7 @@ use wcf\util\ArrayUtil;
 class MessageQuoteManager extends SingletonFactory {
 	/**
 	 * current object ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $objectIDs = [];
 	
@@ -51,7 +51,7 @@ class MessageQuoteManager extends SingletonFactory {
 	
 	/**
 	 * message id for quoting
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $quoteMessageID = 0;
 	
@@ -86,8 +86,8 @@ class MessageQuoteManager extends SingletonFactory {
 	 * $message and $obj->getMessage() for $fullQuote.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer		$parentObjectID
-	 * @param	integer		$objectID
+	 * @param	int		$parentObjectID
+	 * @param	int		$objectID
 	 * @param	string		$message
 	 * @param	string		$fullQuote
 	 * @param	boolean		$returnFalseIfExists
@@ -157,7 +157,7 @@ class MessageQuoteManager extends SingletonFactory {
 	 * Returns the quote id for given quote.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @param	string		$message
 	 * @param	string		$fullQuote
 	 * @return	string
@@ -286,7 +286,7 @@ class MessageQuoteManager extends SingletonFactory {
 	 * Returns a list of quotes by object type and id.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer[]	$objectIDs
+	 * @param	int[]	$objectIDs
 	 * @param	boolean		$markForRemoval
 	 * @return	string[]
 	 */
@@ -326,7 +326,7 @@ class MessageQuoteManager extends SingletonFactory {
 	 * Returns a list of quotes by object type and parent object id.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer		$parentObjectID
+	 * @param	int		$parentObjectID
 	 * @param	boolean		$markForRemoval
 	 * @return	string[]
 	 */
@@ -384,7 +384,7 @@ class MessageQuoteManager extends SingletonFactory {
 	 * Returns the object id by quote id.
 	 * 
 	 * @param	string		$quoteID
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getObjectID($quoteID) {
 		if (isset($this->quoteData[$quoteID])) {
@@ -467,7 +467,7 @@ class MessageQuoteManager extends SingletonFactory {
 	/**
 	 * Returns the number of stored quotes.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function countQuotes() {
 		$count = 0;
@@ -515,7 +515,7 @@ class MessageQuoteManager extends SingletonFactory {
 	 * Sets object type and object ids.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer[]	$objectIDs
+	 * @param	int[]	$objectIDs
 	 * @throws	SystemException
 	 */
 	public function initObjects($objectType, array $objectIDs) {
@@ -589,7 +589,7 @@ class MessageQuoteManager extends SingletonFactory {
 	/**
 	 * Returns quote message id.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getQuoteMessageID() {
 		return $this->quoteMessageID;
@@ -598,7 +598,7 @@ class MessageQuoteManager extends SingletonFactory {
 	/**
 	 * Removes orphaned quote ids
 	 * 
-	 * @param	integer[]		$quoteIDs
+	 * @param	int[]		$quoteIDs
 	 */
 	public function removeOrphanedQuotes(array $quoteIDs) {
 		foreach ($quoteIDs as $quoteID) {

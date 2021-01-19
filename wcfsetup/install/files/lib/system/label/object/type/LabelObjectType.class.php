@@ -12,7 +12,7 @@ namespace wcf\system\label\object\type;
 class LabelObjectType {
 	/**
 	 * indentation level
-	 * @var	integer
+	 * @var	int
 	 */
 	public $depth = 0;
 	
@@ -30,13 +30,13 @@ class LabelObjectType {
 	
 	/**
 	 * object id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $objectID = 0;
 	
 	/**
 	 * option value
-	 * @var	integer
+	 * @var	int
 	 */
 	public $optionValue = 0;
 	
@@ -44,8 +44,8 @@ class LabelObjectType {
 	 * Creates a new LabelObjectType object.
 	 * 
 	 * @param	string		$label
-	 * @param	integer		$objectID
-	 * @param	integer		$depth
+	 * @param	int		$objectID
+	 * @param	int		$depth
 	 * @param	boolean		$isCategory
 	 */
 	public function __construct($label, $objectID = 0, $depth = 0, $isCategory = false) {
@@ -66,7 +66,7 @@ class LabelObjectType {
 	
 	/**
 	 * Returns the object id.
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getObjectID() {
 		return $this->objectID;
@@ -84,7 +84,7 @@ class LabelObjectType {
 	/**
 	 * Returns indentation level.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getDepth() {
 		return $this->depth;
@@ -93,7 +93,7 @@ class LabelObjectType {
 	/**
 	 * Sets option value.
 	 * 
-	 * @param	integer		$optionValue
+	 * @param	int		$optionValue
 	 */
 	public function setOptionValue($optionValue) {
 		$this->optionValue = $optionValue;
@@ -102,7 +102,7 @@ class LabelObjectType {
 	/**
 	 * Returns option value.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getOptionValue() {
 		return $this->optionValue;

@@ -32,12 +32,12 @@ use wcf\util\UserUtil;
  * @package	WoltLabSuite\Core\System\Session
  *
  * @property-read	string		$sessionID		unique textual identifier of the session
- * @property-read	integer|null	$userID			id of the user the session belongs to or `null` if the session belongs to a guest
- * @property-read	integer|null	$pageID			id of the latest page visited
- * @property-read	integer|null	$pageObjectID		id of the object the latest page visited belongs to
- * @property-read	integer|null	$parentPageID		id of the parent page of latest page visited
- * @property-read	integer|null	$parentPageObjectID	id of the object the parent page of latest page visited belongs to
- * @property-read	integer		$spiderID		id of the spider the session belongs to
+ * @property-read	int|null	$userID			id of the user the session belongs to or `null` if the session belongs to a guest
+ * @property-read	int|null	$pageID			id of the latest page visited
+ * @property-read	int|null	$pageObjectID		id of the object the latest page visited belongs to
+ * @property-read	int|null	$parentPageID		id of the parent page of latest page visited
+ * @property-read	int|null	$parentPageObjectID	id of the object the parent page of latest page visited belongs to
+ * @property-read	int		$spiderID		id of the spider the session belongs to
  */
 final class SessionHandler extends SingletonFactory {
 	/**
@@ -66,13 +66,13 @@ final class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * language id for active user
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $languageID = 0;
 	
 	/**
 	 * language ids for active user
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $languageIDs = null;
 	
@@ -94,7 +94,7 @@ final class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * style id
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $styleID = null;
 	
@@ -763,7 +763,7 @@ final class SessionHandler extends SingletonFactory {
 	/**
 	 * Returns language ids for active user.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function getLanguageIDs() {
 		$this->loadLanguageIDs();
@@ -1178,7 +1178,7 @@ final class SessionHandler extends SingletonFactory {
 	/**
 	 * Returns currently active language id.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getLanguageID() {
 		return $this->languageID;
@@ -1187,7 +1187,7 @@ final class SessionHandler extends SingletonFactory {
 	/**
 	 * Sets the currently active language id.
 	 * 
-	 * @param	integer		$languageID
+	 * @param	int		$languageID
 	 */
 	public function setLanguageID($languageID) {
 		$this->languageID = $languageID;
@@ -1197,7 +1197,7 @@ final class SessionHandler extends SingletonFactory {
 	/**
 	 * Returns currently active style id.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getStyleID() {
 		return $this->styleID;
@@ -1206,7 +1206,7 @@ final class SessionHandler extends SingletonFactory {
 	/**
 	 * Sets the currently active style id.
 	 * 
-	 * @param	integer		$styleID
+	 * @param	int		$styleID
 	 */
 	public function setStyleID($styleID) {
 		$this->styleID = $styleID;
@@ -1216,7 +1216,7 @@ final class SessionHandler extends SingletonFactory {
 	/**
 	 * Resets session-specific storage data.
 	 * 
-	 * @param	integer[]	$userIDs
+	 * @param	int[]	$userIDs
 	 */
 	public static function resetSessions(array $userIDs = []) {
 		if (!empty($userIDs)) {

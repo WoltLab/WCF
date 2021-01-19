@@ -57,7 +57,7 @@ class StyleExportForm extends AbstractForm {
 	
 	/**
 	 * style id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $styleID = 0;
 	

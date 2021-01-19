@@ -72,7 +72,7 @@ class PageLocationManager extends SingletonFactory {
 	 * is its assumed priority when matching suitable menu items.
 	 * 
 	 * @param	string			$identifier		internal page identifier
-	 * @param	integer			$pageObjectID		page object id
+	 * @param	int			$pageObjectID		page object id
 	 * @param	ITitledLinkObject	$locationObject		optional label for breadcrumbs usage
 	 * @param       boolean                 $useAsParentLocation
 	 * @throws	SystemException

@@ -24,9 +24,9 @@ class TagEngine extends SingletonFactory {
 	 * Adds tags to a tagged object.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @param	array		$tags
-	 * @param	integer		$languageID
+	 * @param	int		$languageID
 	 * @param	boolean		$replace
 	 */
 	public function addObjectTags($objectType, $objectID, array $tags, $languageID, $replace = true) {
@@ -93,8 +93,8 @@ class TagEngine extends SingletonFactory {
 	 * Deletes all tags assigned to given tagged object.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer		$objectID
-	 * @param	integer		$languageID
+	 * @param	int		$objectID
+	 * @param	int		$languageID
 	 */
 	public function deleteObjectTags($objectType, $objectID, $languageID = null) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
@@ -116,7 +116,7 @@ class TagEngine extends SingletonFactory {
 	 * Deletes all tags assigned to given tagged objects.
 	 * 
 	 * @param	string			$objectType
-	 * @param	integer[]		$objectIDs
+	 * @param	int[]		$objectIDs
 	 */
 	public function deleteObjects($objectType, array $objectIDs) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
@@ -135,8 +135,8 @@ class TagEngine extends SingletonFactory {
 	 * Returns all tags set for given object.
 	 * 
 	 * @param	string			$objectType
-	 * @param	integer			$objectID
-	 * @param	integer[]		$languageIDs
+	 * @param	int			$objectID
+	 * @param	int[]		$languageIDs
 	 * @return	Tag[]
 	 */
 	public function getObjectTags($objectType, $objectID, array $languageIDs = []) {
@@ -149,8 +149,8 @@ class TagEngine extends SingletonFactory {
 	 * Returns all tags set for given objects.
 	 * 
 	 * @param	string			$objectType
-	 * @param	integer[]		$objectIDs
-	 * @param	integer[]		$languageIDs
+	 * @param	int[]		$objectIDs
+	 * @param	int[]		$languageIDs
 	 * @return	array
 	 */
 	public function getObjectsTags($objectType, array $objectIDs, array $languageIDs = []) {
@@ -202,7 +202,7 @@ class TagEngine extends SingletonFactory {
 	 * Returns id of the object type with the given name.
 	 * 
 	 * @param	string		$objectType
-	 * @return	integer
+	 * @return	int
 	 * @throws	InvalidObjectTypeException
 	 */
 	public function getObjectTypeID($objectType) {
@@ -223,8 +223,8 @@ class TagEngine extends SingletonFactory {
 	 * there are two or more top language ids with the same amount of tags.
 	 * 
 	 * @param       string          $objectType
-	 * @param       integer         $objectID
-	 * @return      integer|null
+	 * @param       int         $objectID
+	 * @return      int|null
 	 */
 	public function getImplicitLanguageID($objectType, $objectID) {
 		$existingTags = $this->getObjectTags($objectType, $objectID);

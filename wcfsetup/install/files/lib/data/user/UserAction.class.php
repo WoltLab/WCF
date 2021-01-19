@@ -599,7 +599,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	/**
 	 * Unmarks users.
 	 * 
-	 * @param	integer[]	$userIDs
+	 * @param	int[]	$userIDs
 	 */
 	protected function unmarkItems(array $userIDs = []) {
 		if (empty($userIDs)) {

@@ -814,7 +814,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Unmarks articles.
 	 * 
-	 * @param	integer[]	$articleIDs
+	 * @param	int[]	$articleIDs
 	 */
 	protected function unmarkItems(array $articleIDs = []) {
 		if (empty($articleIDs)) {

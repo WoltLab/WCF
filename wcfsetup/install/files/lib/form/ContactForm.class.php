@@ -55,7 +55,7 @@ class ContactForm extends AbstractCaptchaForm {
 	
 	/**
 	 * recipient id
-	 * @var integer
+	 * @var int
 	 */
 	public $recipientID = 0;
 	

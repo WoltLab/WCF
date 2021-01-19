@@ -42,7 +42,7 @@ class UserEditForm extends UserAddForm {
 	
 	/**
 	 * user id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $userID = 0;
 	
@@ -66,7 +66,7 @@ class UserEditForm extends UserAddForm {
 	
 	/**
 	 * date when the ban expires
-	 * @var	integer
+	 * @var	int
 	 */
 	public $banExpires = 0;
 	
@@ -96,7 +96,7 @@ class UserEditForm extends UserAddForm {
 	
 	/**
 	 * date when the avatar will be enabled again
-	 * @var	integer
+	 * @var	int
 	 */
 	public $disableAvatarExpires = 0;
 	
@@ -120,7 +120,7 @@ class UserEditForm extends UserAddForm {
 	
 	/**
 	 * date when the cover photo will be enabled again
-	 * @var	integer
+	 * @var	int
 	 */
 	public $disableCoverPhotoExpires = 0;
 	

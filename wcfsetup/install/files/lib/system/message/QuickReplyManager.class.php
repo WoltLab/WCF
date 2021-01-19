@@ -34,7 +34,7 @@ class QuickReplyManager extends SingletonFactory {
 	
 	/**
 	 * object id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $objectID = 0;
 	
@@ -48,7 +48,7 @@ class QuickReplyManager extends SingletonFactory {
 	 * Returns a stored message from session.
 	 * 
 	 * @param	string		$type
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @return	string
 	 */
 	public function getMessage($type, $objectID) {
@@ -66,7 +66,7 @@ class QuickReplyManager extends SingletonFactory {
 	 * Stores a message in session.
 	 * 
 	 * @param	string		$type
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @param	string		$message
 	 */
 	public function setMessage($type, $objectID, $message) {
@@ -77,7 +77,7 @@ class QuickReplyManager extends SingletonFactory {
 	 * Removes a stored message from session.
 	 * 
 	 * @param	string		$type
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 */
 	public function removeMessage($type, $objectID) {
 		WCF::getSession()->unregister('quickReply-'.$type.'-'.$objectID);

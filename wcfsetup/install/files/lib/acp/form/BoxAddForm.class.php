@@ -67,7 +67,7 @@ class BoxAddForm extends AbstractForm {
 	
 	/**
 	 * show order
-	 * @var	integer
+	 * @var	int
 	 */
 	public $showOrder = 0;
 	
@@ -109,7 +109,7 @@ class BoxAddForm extends AbstractForm {
 	
 	/**
 	 * image ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $imageID = [];
 	
@@ -121,13 +121,13 @@ class BoxAddForm extends AbstractForm {
 	
 	/**
 	 * page ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $pageIDs = [];
 	
 	/**
 	 * object type id of the selected box controller
-	 * @var	integer
+	 * @var	int
 	 */
 	public $boxControllerID = 0;
 	

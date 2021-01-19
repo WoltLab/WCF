@@ -22,7 +22,7 @@ final class FileUtil {
 	
 	/**
 	 * memory limit in bytes
-	 * @var	integer
+	 * @var	int
 	 */
 	protected static $memoryLimit = null;
 	
@@ -355,8 +355,8 @@ final class FileUtil {
 	/**
 	 * Formats the given filesize.
 	 * 
-	 * @param	integer		$byte
-	 * @param	integer		$precision
+	 * @param	int		$byte
+	 * @param	int		$precision
 	 * @return	string
 	 */
 	public static function formatFilesize($byte, $precision = 2) {
@@ -386,8 +386,8 @@ final class FileUtil {
 	 * 
 	 * For more information: <http://en.wikipedia.org/wiki/Binary_prefix>
 	 * 
-	 * @param	integer		$byte
-	 * @param	integer		$precision
+	 * @param	int		$byte
+	 * @param	int		$precision
 	 * @return	string
 	 */
 	public static function formatFilesizeBinary($byte, $precision = 2) {
@@ -593,7 +593,7 @@ final class FileUtil {
 	/**
 	 * Returns memory limit in bytes.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public static function getMemoryLimit() {
 		if (self::$memoryLimit === null) {
@@ -635,7 +635,7 @@ final class FileUtil {
 	/**
 	 * Returns true if the given amount of memory is available.
 	 * 
-	 * @param	integer		$neededMemory
+	 * @param	int		$neededMemory
 	 * @return	boolean
 	 */
 	public static function checkMemoryLimit($neededMemory) {

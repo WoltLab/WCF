@@ -53,12 +53,12 @@ class CronjobLogListPage extends SortablePage {
 	public $objectListClassName = CronjobLogList::class;
 	
 	/**
-	 * @var integer
+	 * @var int
 	 */
 	public $cronjobID = 0;
 	
 	/**
-	 * @var integer
+	 * @var int
 	 */
 	public $success = -1;
 	

@@ -21,7 +21,7 @@ class ArticleLabelObjectHandler extends AbstractLabelObjectHandler {
 	/**
 	 * Sets the label groups available for the categories with the given ids.
 	 * 
-	 * @param	integer[]		$categoryIDs
+	 * @param	int[]		$categoryIDs
 	 */
 	public function setCategoryIDs($categoryIDs) {
 		$labelGroupsToCategories = ArticleCategoryLabelCacheBuilder::getInstance()->getData();

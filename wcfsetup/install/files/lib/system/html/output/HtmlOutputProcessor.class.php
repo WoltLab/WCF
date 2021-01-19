@@ -37,7 +37,7 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 	
 	/**
 	 * content language id
-	 * @var integer
+	 * @var int
 	 */
 	protected $languageID;
 	
@@ -58,9 +58,9 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 	 *
 	 * @param       string          $html                           html string
 	 * @param       string          $objectType                     object type identifier
-	 * @param       integer         $objectID                       object id
+	 * @param       int         $objectID                       object id
 	 * @param	boolean		$doKeywordHighlighting          enable keyword highlighting
-	 * @param       integer         $languageID                     content language id
+	 * @param       int         $languageID                     content language id
 	 */
 	public function process($html, $objectType, $objectID, $doKeywordHighlighting = true, $languageID = null) {
 		$this->languageID = $languageID;

@@ -32,7 +32,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	
 	/**
 	 * list of permissions by type
-	 * @var	integer[][]
+	 * @var	int[][]
 	 */
 	protected $permissions = [
 		'group' => [],
@@ -41,13 +41,13 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	
 	/**
 	 * current iterator index
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $index = 0;
 	
 	/**
 	 * list of index to object relation
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $indexToObject = null;
 	
@@ -82,7 +82,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	/**
 	 * Returns true, if label is known.
 	 * 
-	 * @param	integer		$labelID
+	 * @param	int		$labelID
 	 * @return	boolean
 	 */
 	public function isValid($labelID) {
@@ -93,7 +93,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	 * Returns true, if the given user fulfils option id permissions.
 	 * If the user parameter is null, the method checks the current user.
 	 *
-	 * @param	integer		$optionID
+	 * @param	int		$optionID
 	 * @param	User		$user
 	 * @return	boolean
 	 */
@@ -124,7 +124,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	/**
 	 * Returns a list of label ids.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function getLabelIDs() {
 		return array_keys($this->labels);
@@ -142,7 +142,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	/**
 	 * Returns a label by id.
 	 * 
-	 * @param	integer		$labelID
+	 * @param	int		$labelID
 	 * @return	Label|null
 	 */
 	public function getLabel($labelID) {

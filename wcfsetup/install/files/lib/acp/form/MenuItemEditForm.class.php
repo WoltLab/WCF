@@ -22,7 +22,7 @@ use wcf\system\WCF;
 class MenuItemEditForm extends MenuItemAddForm {
 	/**
 	 * menu item id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $itemID = 0;
 	

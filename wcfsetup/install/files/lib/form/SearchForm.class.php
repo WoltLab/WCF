@@ -32,7 +32,7 @@ class SearchForm extends AbstractCaptchaForm {
 	
 	/**
 	 * end date
-	 * @var	integer
+	 * @var	int
 	 */
 	public $endDate = '';
 	
@@ -44,13 +44,13 @@ class SearchForm extends AbstractCaptchaForm {
 	
 	/**
 	 * search id used for modification
-	 * @var	integer
+	 * @var	int
 	 */
 	public $modifySearchID = 0;
 	
 	/**
 	 * require exact matches
-	 * @var	integer
+	 * @var	int
 	 */
 	public $nameExactly = 1;
 	
@@ -78,7 +78,7 @@ class SearchForm extends AbstractCaptchaForm {
 	
 	/**
 	 * user id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $userID = 0;
 	
@@ -101,7 +101,7 @@ class SearchForm extends AbstractCaptchaForm {
 	
 	/**
 	 * search id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $searchID = 0;
 	
@@ -125,13 +125,13 @@ class SearchForm extends AbstractCaptchaForm {
 	
 	/**
 	 * start date
-	 * @var	integer
+	 * @var	int
 	 */
 	public $startDate = '';
 	
 	/**
 	 * search for subject only
-	 * @var	integer
+	 * @var	int
 	 */
 	public $subjectOnly = 0;
 	
@@ -486,7 +486,7 @@ class SearchForm extends AbstractCaptchaForm {
 	/**
 	 * Returns user ids.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function getUserIDs() {
 		$userIDs = [];

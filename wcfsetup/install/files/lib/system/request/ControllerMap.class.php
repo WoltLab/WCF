@@ -203,8 +203,8 @@ class ControllerMap extends SingletonFactory {
 	 * Looks up a cms page URL, returns an array containing the application identifier
 	 * and url controller name or null if there was no match.
 	 * 
-	 * @param	integer		$pageID		page id
-	 * @param	integer		$languageID	content language id
+	 * @param	int		$pageID		page id
+	 * @param	int		$languageID	content language id
 	 * @return	string[]|null
 	 */
 	public function lookupCmsPage($pageID, $languageID) {

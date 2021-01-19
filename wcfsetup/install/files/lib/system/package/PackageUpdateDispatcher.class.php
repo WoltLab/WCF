@@ -34,7 +34,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	/**
 	 * Refreshes the package database.
 	 * 
-	 * @param	integer[]		$packageUpdateServerIDs
+	 * @param	int[]		$packageUpdateServerIDs
 	 * @param	boolean			$ignoreCache
 	 */
 	public function refreshPackageDatabase(array $packageUpdateServerIDs = [], $ignoreCache = false) {
@@ -477,7 +477,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * Updates information parsed from a packages_update.xml into the database.
 	 * 
 	 * @param	array		$allNewPackages
-	 * @param	integer		$packageUpdateServerID
+	 * @param	int		$packageUpdateServerID
 	 */
 	protected function savePackageUpdates(array &$allNewPackages, $packageUpdateServerID) {
 		$excludedPackagesParameters = $fromversionParameters = $insertParameters = $optionalInserts = $requirementInserts = $compatibilityInserts = [];
@@ -834,7 +834,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * Removes unnecessary updates of requirements from the list of available updates.
 	 * 
 	 * @param	array		$updates
-	 * @param	integer		$packageUpdateVersionID
+	 * @param	int		$packageUpdateVersionID
 	 * @return	array		$updates
 	 */
 	protected function removeUpdateRequirements(array $updates, $packageUpdateVersionID) {

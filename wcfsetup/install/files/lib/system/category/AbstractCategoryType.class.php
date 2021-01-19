@@ -46,7 +46,7 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	
 	/**
 	 * maximum category nesting label
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $maximumNestingLevel = -1;
 	

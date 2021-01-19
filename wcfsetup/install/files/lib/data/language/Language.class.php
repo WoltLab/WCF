@@ -14,13 +14,13 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Language
  * 
- * @property-read	integer		$languageID		unique id of the language
+ * @property-read	int		$languageID		unique id of the language
  * @property-read	string		$languageCode		code of the language according to ISO 639-1
  * @property-read	string		$languageName		name of the language within the language itself
  * @property-read	string		$countryCode		code of the country using the language according to ISO 3166-1, used to determine the language's country flag  
- * @property-read	integer		$isDefault		is `1` if the language is the default language, otherwise `0`
- * @property-read	integer		$hasContent		is `1` if the language can be selected when creating language-specific content, otherwise `0`
- * @property-read	integer		$isDisabled		is `1` if the language is disabled and thus not selectable, otherwise `0`
+ * @property-read	int		$isDefault		is `1` if the language is the default language, otherwise `0`
+ * @property-read	int		$hasContent		is `1` if the language can be selected when creating language-specific content, otherwise `0`
+ * @property-read	int		$isDisabled		is `1` if the language is disabled and thus not selectable, otherwise `0`
  */
 class Language extends DatabaseObject {
 	/**
@@ -43,7 +43,7 @@ class Language extends DatabaseObject {
 	
 	/**
 	 * id of the active package
-	 * @var	integer
+	 * @var	int
 	 */
 	public $packageID = PACKAGE_ID;
 	

@@ -37,7 +37,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	 * Inserts the page number into the link.
 	 * 
 	 * @param	string		$link
-	 * @param	integer		$pageNo
+	 * @param	int		$pageNo
 	 * @return	string		final link
 	 */
 	protected static function insertPageNumber($link, $pageNo) {
@@ -50,9 +50,9 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	 * Generates HTML code for a link.
 	 * 
 	 * @param	string		$link
-	 * @param	integer		$pageNo
-	 * @param	integer		$activePage
-	 * @param	integer		$pages
+	 * @param	int		$pageNo
+	 * @param	int		$activePage
+	 * @param	int		$pages
 	 * @return	string
 	 */
 	protected function makeLink($link, $pageNo, $activePage, $pages) {
@@ -69,7 +69,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	 * Generates HTML code for 'previous' link.
 	 * 
 	 * @param	string		$link
-	 * @param	integer		$pageNo
+	 * @param	int		$pageNo
 	 * @return	string
 	 */
 	protected function makePreviousLink($link, $pageNo) {
@@ -85,8 +85,8 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	 * Generates HTML code for 'next' link.
 	 * 
 	 * @param	string		$link
-	 * @param	integer		$pageNo
-	 * @param	integer		$pages
+	 * @param	int		$pageNo
+	 * @param	int		$pages
 	 * @return	string
 	 */
 	protected function makeNextLink($link, $pageNo, $pages) {

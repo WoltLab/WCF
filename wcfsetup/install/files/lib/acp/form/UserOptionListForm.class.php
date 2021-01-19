@@ -35,7 +35,7 @@ abstract class UserOptionListForm extends AbstractOptionListForm {
 	/**
 	 * Returns the default form language id.
 	 * 
-	 * @return	integer		$languageID
+	 * @return	int		$languageID
 	 */
 	protected function getDefaultFormLanguageID() {
 		return LanguageFactory::getInstance()->getDefaultLanguageID();

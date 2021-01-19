@@ -20,7 +20,7 @@ class AbstractWatchedObjectImporter extends AbstractImporter {
 	
 	/**
 	 * object type id for watched objects
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $objectTypeID = 0;
 	

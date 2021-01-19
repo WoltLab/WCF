@@ -34,19 +34,19 @@ class PackageValidationManager extends SingletonFactory {
 	
 	/**
 	 * validation will only check if the primary package looks like it can be installed or updated
-	 * @var	integer
+	 * @var	int
 	 */
 	const VALIDATION_WEAK = 0;
 	
 	/**
 	 * validation will recursively check dependencies
-	 * @var	integer
+	 * @var	int
 	 */
 	const VALIDATION_RECURSIVE = 1;
 	
 	/**
 	 * validation will use the previously gathered exclusions and check them
-	 * @var	integer
+	 * @var	int
 	 */
 	const VALIDATION_EXCLUSION = 2;
 	

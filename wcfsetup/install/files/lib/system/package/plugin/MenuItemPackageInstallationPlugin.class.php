@@ -236,9 +236,9 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * Returns the show order for a new item that will append it to the current
 	 * menu or parent item.
 	 * 
-	 * @param	integer		$menuID
-	 * @param	integer		$parentItemID
-	 * @return	integer
+	 * @param	int		$menuID
+	 * @param	int		$parentItemID
+	 * @return	int
 	 */
 	protected function getItemOrder($menuID, $parentItemID = null) {
 		$sql = "SELECT	MAX(showOrder) AS showOrder

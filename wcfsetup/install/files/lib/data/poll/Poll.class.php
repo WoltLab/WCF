@@ -14,18 +14,18 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Poll
  *
- * @property-read	integer		$pollID			unique id of the poll
- * @property-read	integer		$objectTypeID		id of the `com.woltlab.wcf.poll` object type
- * @property-read	integer		$objectID		id of the poll container object the poll belongs to
+ * @property-read	int		$pollID			unique id of the poll
+ * @property-read	int		$objectTypeID		id of the `com.woltlab.wcf.poll` object type
+ * @property-read	int		$objectID		id of the poll container object the poll belongs to
  * @property-read	string		$question		question of the poll
- * @property-read	integer		$time			timestamp at which the poll has been created
- * @property-read	integer		$endTime		timestamp at which the poll has been/will be closed
- * @property-read	integer		$isChangeable		is `1` if participants can change their vote, otherwise `0`
- * @property-read	integer		$isPublic		is `1` if the result of the poll is public, otherwise `0`
- * @property-read	integer		$sortByVotes		is `1` if the results will be sorted by votes, otherwise `0`
- * @property-read	integer		$resultsRequireVote	is `1` if a user has to have voted to see the results, otherwise `0`
- * @property-read	integer		$maxVotes		maximum number of options the user can select
- * @property-read	integer		$votes			number of votes in the poll
+ * @property-read	int		$time			timestamp at which the poll has been created
+ * @property-read	int		$endTime		timestamp at which the poll has been/will be closed
+ * @property-read	int		$isChangeable		is `1` if participants can change their vote, otherwise `0`
+ * @property-read	int		$isPublic		is `1` if the result of the poll is public, otherwise `0`
+ * @property-read	int		$sortByVotes		is `1` if the results will be sorted by votes, otherwise `0`
+ * @property-read	int		$resultsRequireVote	is `1` if a user has to have voted to see the results, otherwise `0`
+ * @property-read	int		$maxVotes		maximum number of options the user can select
+ * @property-read	int		$votes			number of votes in the poll
  */
 class Poll extends DatabaseObject {
 	/**

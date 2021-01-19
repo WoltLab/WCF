@@ -14,7 +14,7 @@ use wcf\data\user\UserList;
 abstract class AbstractSortedUserCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * default limit value if no limit parameter is provided
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $defaultLimit = 5;
 	

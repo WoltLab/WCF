@@ -49,7 +49,7 @@ class MenuAddForm extends AbstractForm {
 	
 	/**
 	 * show order
-	 * @var	integer
+	 * @var	int
 	 */
 	public $showOrder = 0;
 	
@@ -73,7 +73,7 @@ class MenuAddForm extends AbstractForm {
 	
 	/**
 	 * page ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $pageIDs = [];
 	

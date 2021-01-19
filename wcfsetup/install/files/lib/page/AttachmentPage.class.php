@@ -24,7 +24,7 @@ class AttachmentPage extends AbstractPage {
 	
 	/**
 	 * attachment id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $attachmentID = 0;
 	

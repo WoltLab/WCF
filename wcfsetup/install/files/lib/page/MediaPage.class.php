@@ -39,7 +39,7 @@ class MediaPage extends AbstractPage {
 	
 	/**
 	 * id of the requested media file
-	 * @var	integer
+	 * @var	int
 	 */
 	public $mediaID = 0;
 	

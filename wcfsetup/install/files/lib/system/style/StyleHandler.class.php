@@ -87,7 +87,7 @@ class StyleHandler extends SingletonFactory {
 	/**
 	 * Changes the active style.
 	 * 
-	 * @param	integer		$styleID
+	 * @param	int		$styleID
 	 * @param	boolean		$ignorePermissions
 	 * @throws	SystemException
 	 */
@@ -162,7 +162,7 @@ class StyleHandler extends SingletonFactory {
 	/**
 	 * Returns number of available styles.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function countStyles() {
 		return count($this->getAvailableStyles());

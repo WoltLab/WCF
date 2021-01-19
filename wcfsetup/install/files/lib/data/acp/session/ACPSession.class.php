@@ -12,10 +12,10 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\Data\Acp\Session
  *
  * @property-read	string		$sessionID		unique textual identifier of the acp session
- * @property-read	integer|null	$userID			id of the user the acp session belongs to or `null` if the acp session belongs to a guest
+ * @property-read	int|null	$userID			id of the user the acp session belongs to or `null` if the acp session belongs to a guest
  * @property-read	string		$ipAddress		id of the user whom the acp session belongs to
  * @property-read	string		$userAgent		user agent of the user whom the acp session belongs to
- * @property-read	integer		$lastActivityTime	timestamp at which the latest activity occurred
+ * @property-read	int		$lastActivityTime	timestamp at which the latest activity occurred
  * @property-read	string		$requestURI		uri of the latest request
  * @property-read	string		$requestMethod		used request method of the latest request (`GET`, `POST`)
  * @property-read	string		$sessionVariables	serialized array with variables stored on a session-basis
@@ -39,7 +39,7 @@ class ACPSession extends DatabaseObject {
 	 * Returns the existing session object for given user id or null if there
 	 * is no such session.
 	 * 
-	 * @param	integer		$userID
+	 * @param	int		$userID
 	 * @return	ACPSession
 	 */
 	public static function getSessionByUserID($userID) {

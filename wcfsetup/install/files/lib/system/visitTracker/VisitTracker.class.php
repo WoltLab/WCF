@@ -17,7 +17,7 @@ use wcf\system\WCF;
 class VisitTracker extends SingletonFactory {
 	/**
 	 * default tracking lifetime
-	 * @var	integer
+	 * @var	int
 	 */
 	const DEFAULT_LIFETIME = 604800; // = one week
 	
@@ -45,7 +45,7 @@ class VisitTracker extends SingletonFactory {
 	 * Returns the object type id of the given visit tracker object type.
 	 * 
 	 * @param	string		$objectType
-	 * @return	integer
+	 * @return	int
 	 * @throws	SystemException
 	 */
 	public function getObjectTypeID($objectType) {
@@ -60,7 +60,7 @@ class VisitTracker extends SingletonFactory {
 	 * Returns the last visit time for a whole object type.
 	 * 
 	 * @param	string		$objectType
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getVisitTime($objectType) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
@@ -113,8 +113,8 @@ class VisitTracker extends SingletonFactory {
 	 * Returns the last visit time for a specific object.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer		$objectID
-	 * @return	integer
+	 * @param	int		$objectID
+	 * @return	int
 	 */
 	public function getObjectVisitTime($objectType, $objectID) {
 		if (WCF::getUser()->userID) {
@@ -156,8 +156,8 @@ class VisitTracker extends SingletonFactory {
 	 * Tracks an object visit for the users with the given ids.
 	 *
 	 * @param   string      $objectType
-	 * @param   integer     $objectID
-	 * @param   integer[]   $userIDs
+	 * @param   int     $objectID
+	 * @param   int[]   $userIDs
 	 * @param   int         $time
 	 */
 	public function trackObjectVisitByUserIDs($objectType, $objectID, array $userIDs, $time = TIME_NOW) {
@@ -180,8 +180,8 @@ class VisitTracker extends SingletonFactory {
 	 * Tracks an object visit.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer		$objectID
-	 * @param	integer		$time
+	 * @param	int		$objectID
+	 * @param	int		$time
 	 */
 	public function trackObjectVisit($objectType, $objectID, $time = TIME_NOW) {
 		if (WCF::getUser()->userID) {
@@ -201,7 +201,7 @@ class VisitTracker extends SingletonFactory {
 	 * Tracks an object type visit.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer		$time
+	 * @param	int		$time
 	 */
 	public function trackTypeVisit($objectType, $time = TIME_NOW) {
 		if (WCF::getUser()->userID) {

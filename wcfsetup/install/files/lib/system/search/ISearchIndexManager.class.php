@@ -14,13 +14,13 @@ interface ISearchIndexManager {
 	 * Adds or updates an entry.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @param	string		$message
 	 * @param	string		$subject
-	 * @param	integer		$time
-	 * @param	integer		$userID
+	 * @param	int		$time
+	 * @param	int		$userID
 	 * @param	string		$username
-	 * @param	integer		$languageID
+	 * @param	int		$languageID
 	 * @param	string		$metaData
 	 */
 	public function set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '');
@@ -29,13 +29,13 @@ interface ISearchIndexManager {
 	 * Adds a new entry.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @param	string		$message
 	 * @param	string		$subject
-	 * @param	integer		$time
-	 * @param	integer		$userID
+	 * @param	int		$time
+	 * @param	int		$userID
 	 * @param	string		$username
-	 * @param	integer		$languageID
+	 * @param	int		$languageID
 	 * @param	string		$metaData
 	 * @deprecated  3.0 - please use `set()` instead
 	 */
@@ -45,13 +45,13 @@ interface ISearchIndexManager {
 	 * Updates the search index.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @param	string		$message
 	 * @param	string		$subject
-	 * @param	integer		$time
-	 * @param	integer		$userID
+	 * @param	int		$time
+	 * @param	int		$userID
 	 * @param	string		$username
-	 * @param	integer		$languageID
+	 * @param	int		$languageID
 	 * @param	string		$metaData
 	 * @deprecated  3.0 - please use `set() instead`
 	 */
@@ -61,7 +61,7 @@ interface ISearchIndexManager {
 	 * Deletes search index entries.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer[]	$objectIDs
+	 * @param	int[]	$objectIDs
 	 */
 	public function delete($objectType, array $objectIDs);
 	

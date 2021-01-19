@@ -26,7 +26,7 @@ class GroupedUserList implements \Countable, \Iterator {
 	
 	/**
 	 * current iterator index
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $index = 0;
 	
@@ -38,7 +38,7 @@ class GroupedUserList implements \Countable, \Iterator {
 	
 	/**
 	 * list of user ids assigned for this group
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $userIDs = [];
 	
@@ -81,7 +81,7 @@ class GroupedUserList implements \Countable, \Iterator {
 	/**
 	 * Adds a list of user ids to this group.
 	 * 
-	 * @param	integer[]		$userIDs
+	 * @param	int[]		$userIDs
 	 */
 	public function addUserIDs(array $userIDs) {
 		foreach ($userIDs as $userID) {

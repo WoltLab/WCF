@@ -13,14 +13,14 @@ interface ILabelObjectTypeHandler {
 	/**
 	 * Sets object type id.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 */
 	public function setObjectTypeID($objectTypeID);
 	
 	/**
 	 * Returns object type id.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getObjectTypeID();
 	

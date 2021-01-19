@@ -22,14 +22,14 @@ class ArticleCategoryNode extends CategoryNode {
 	
 	/**
 	 * number of articles in the category
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $articles;
 	
 	/**
 	 * Returns number of articles in the category.
 	 *
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getArticles() {
 		if ($this->articles === null) {

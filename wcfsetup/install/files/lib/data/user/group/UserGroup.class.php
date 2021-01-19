@@ -16,17 +16,17 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Group
  *
- * @property-read	integer		$groupID		unique id of the user group
+ * @property-read	int		$groupID		unique id of the user group
  * @property-read	string		$groupName		name of the user group or name of language
  *                item which contains the name
  * @property-read	string		$groupDescription	description of the user group or name of
  *                language item which contains the description
- * @property-read	integer		$groupType		identifier of the type of user group
- * @property-read	integer		$priority		priority of the user group used to determine
+ * @property-read	int		$groupType		identifier of the type of user group
+ * @property-read	int		$priority		priority of the user group used to determine
  *                member's user rank and online marking
  * @property-read	string		$userOnlineMarking	HTML code used to print the formatted name of
  *                a user group member
- * @property-read	integer		$showOnTeamPage		is `1` if the user group and its members
+ * @property-read	int		$showOnTeamPage		is `1` if the user group and its members
  *                should be shown on the team page, otherwise `0`
  * @property-read       int             $allowMention           is `1` if the user group can be mentioned in messages,
  *                      otherwise `0`
@@ -34,25 +34,25 @@ use wcf\system\WCF;
 class UserGroup extends DatabaseObject implements ITitledObject {
 	/**
 	 * group type everyone user group
-	 * @var	integer
+	 * @var	int
 	 */
 	const EVERYONE = 1;
 	
 	/**
 	 * group type guests user group
-	 * @var	integer
+	 * @var	int
 	 */
 	const GUESTS = 2;
 	
 	/**
 	 * group type registered users user group
-	 * @var	integer
+	 * @var	int
 	 */
 	const USERS = 3;
 	
 	/**
 	 * group type of other user groups
-	 * @var	integer
+	 * @var	int
 	 */
 	const OTHER = 4;
 	
@@ -70,7 +70,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	
 	/**
 	 * list of accessible groups for active user
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected static $accessibleGroups = null;
 	
@@ -88,8 +88,8 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns group ids by given type.
 	 * 
-	 * @param	integer[]		$types
-	 * @return	integer[]
+	 * @param	int[]		$types
+	 * @return	int[]
 	 */
 	public static function getGroupIDsByType(array $types) {
 		self::getCache();
@@ -108,8 +108,8 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns groups by given type. Returns all groups if no types given.
 	 * 
-	 * @param	integer[]	$types
-	 * @param	integer[]	$invalidGroupTypes
+	 * @param	int[]	$types
+	 * @param	int[]	$invalidGroupTypes
 	 * @return	UserGroup[]
 	 */
 	public static function getGroupsByType(array $types = [], array $invalidGroupTypes = []) {
@@ -128,8 +128,8 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns a sorted list of groups filtered by given type.
 	 *
-	 * @param	integer[]	$types
-	 * @param	integer[]	$invalidGroupTypes
+	 * @param	int[]	$types
+	 * @param	int[]	$invalidGroupTypes
 	 * @return	UserGroup[]
 	 * @since       5.3
 	 */
@@ -144,7 +144,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns unique group by given type. Only works for the default user groups.
 	 * 
-	 * @param	integer		$type
+	 * @param	int		$type
 	 * @return	UserGroup
 	 * @throws	SystemException
 	 */
@@ -161,7 +161,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	 * Returns the user group with the given id or null if no such user group
 	 * exists.
 	 * 
-	 * @param	integer		$groupID
+	 * @param	int		$groupID
 	 * @return	UserGroup|null
 	 */
 	public static function getGroupByID($groupID) {
@@ -177,7 +177,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns a list of groups by group id.
 	 * 
-	 * @param       integer[]       $groupIDs       list of group ids
+	 * @param       int[]       $groupIDs       list of group ids
 	 * @return      UserGroup[]
 	 */
 	public static function getGroupsByIDs(array $groupIDs) {
@@ -269,8 +269,8 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns a list of accessible groups.
 	 * 
-	 * @param	integer[]		$groupTypes
-	 * @param	integer[]		$invalidGroupTypes
+	 * @param	int[]		$groupTypes
+	 * @param	int[]		$invalidGroupTypes
 	 * @return	UserGroup[]
 	 */
 	public static function getAccessibleGroups(array $groupTypes = [], array $invalidGroupTypes = []) {
@@ -288,8 +288,8 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns a sorted list of accessible groups.
 	 * 
-	 * @param	integer[]		$groupTypes
-	 * @param	integer[]		$invalidGroupTypes
+	 * @param	int[]		$groupTypes
+	 * @param	int[]		$invalidGroupTypes
 	 * @return	UserGroup[]
 	 * @since       5.2
 	 */

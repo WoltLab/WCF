@@ -23,7 +23,7 @@ class AdEditForm extends AdAddForm {
 	
 	/**
 	 * id of the edited ad
-	 * @var	integer
+	 * @var	int
 	 */
 	public $adID = 0;
 	

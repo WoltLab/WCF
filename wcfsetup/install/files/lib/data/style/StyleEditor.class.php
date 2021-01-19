@@ -47,7 +47,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	
 	/**
 	 * list of compatible API versions
-	 * @var integer[]
+	 * @var int[]
 	 * @deprecated 5.2
 	 */
 	public static $compatibilityApiVersions = [2018];
@@ -348,7 +348,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 * Imports a style.
 	 * 
 	 * @param	string		$filename
-	 * @param	integer		$packageID
+	 * @param	int		$packageID
 	 * @param	StyleEditor	$style
 	 * @param	boolean		$skipFontDownload
 	 * @return	StyleEditor

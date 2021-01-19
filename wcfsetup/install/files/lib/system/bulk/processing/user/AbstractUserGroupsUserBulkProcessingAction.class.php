@@ -35,7 +35,7 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
 	
 	/**
 	 * ids of selected user groups
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $userGroupIDs = [];
 	

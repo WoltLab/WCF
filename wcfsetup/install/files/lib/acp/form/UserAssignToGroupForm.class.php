@@ -35,13 +35,13 @@ class UserAssignToGroupForm extends AbstractForm {
 	
 	/**
 	 * ids of the relevant users
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $userIDs = [];
 	
 	/**
 	 * ids of the assigned user groups
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $groupIDs = [];
 	
@@ -59,7 +59,7 @@ class UserAssignToGroupForm extends AbstractForm {
 	
 	/**
 	 * id of the user clipboard item object type
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $objectTypeID = null;
 	

@@ -50,7 +50,7 @@ interface IArchive {
 	 * Returns false if not found.
 	 * 
 	 * @param	string		$filename
-	 * @return	integer				index of the requested file
+	 * @return	int				index of the requested file
 	 */
 	public function getIndexByFilename($filename);
 }

@@ -24,13 +24,13 @@ class CategoryHandler extends SingletonFactory {
 	
 	/**
 	 * category ids grouped by the object type they belong to
-	 * @var	integer[][]
+	 * @var	int[][]
 	 */
 	protected $objectTypeCategoryIDs = [];
 	
 	/**
 	 * maps the names of the category object types to the object type ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $objectTypeIDs = [];
 	
@@ -66,7 +66,7 @@ class CategoryHandler extends SingletonFactory {
 	/**
 	 * Returns the category with the given id or `null` if no such category exists.
 	 * 
-	 * @param	integer		$categoryID
+	 * @param	int		$categoryID
 	 * @return	Category|null
 	 */
 	public function getCategory($categoryID) {
@@ -82,8 +82,8 @@ class CategoryHandler extends SingletonFactory {
 	 * 
 	 * The second parameter is only needed if $categoryID is 0.
 	 * 
-	 * @param	integer		$categoryID
-	 * @param	integer		$objectTypeID
+	 * @param	int		$categoryID
+	 * @param	int		$objectTypeID
 	 * @return	Category[]
 	 * @throws	SystemException
 	 */
@@ -105,7 +105,7 @@ class CategoryHandler extends SingletonFactory {
 	/**
 	 * Returns the category object type with the given id or `null` if no such object type exists.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 * @return	ObjectType|null
 	 */
 	public function getObjectType($objectTypeID) {

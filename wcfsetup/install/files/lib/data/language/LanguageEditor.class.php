@@ -58,7 +58,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	/**
 	 * Write the languages files.
 	 * 
-	 * @param	integer[]		$languageCategoryIDs
+	 * @param	int[]		$languageCategoryIDs
 	 */
 	protected function writeLanguageFiles(array $languageCategoryIDs) {
 		$conditions = new PreparedStatementConditionBuilder();
@@ -119,7 +119,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	/**
 	 * Exports this language.
 	 * 
-	 * @param	integer[]	$packageIDArray
+	 * @param	int[]	$packageIDArray
 	 * @param	boolean		$exportCustomValues
 	 */
 	public function export($packageIDArray = [], $exportCustomValues = false) {
@@ -235,7 +235,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * Updates the relevant language files automatically.
 	 * 
 	 * @param	XML		$xml
-	 * @param	integer		$packageID
+	 * @param	int		$packageID
 	 * @param	boolean		$updateFiles
 	 * @param	boolean		$updateExistingItems
 	 * @throws	\InvalidArgumentException	if given XML file is invalid
@@ -634,7 +634,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * Updates the relevant language files automatically.
 	 * 
 	 * @param	XML	        $xml
-	 * @param	integer		$packageID
+	 * @param	int		$packageID
 	 * @param       Language        $source
 	 * @return	LanguageEditor
 	 */
@@ -692,7 +692,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * 
 	 * @param	array			$items
 	 * @param	LanguageCategory	$category
-	 * @param	integer			$packageID
+	 * @param	int			$packageID
 	 * @param	array			$useCustom
 	 */
 	public function updateItems(array $items, LanguageCategory $category, $packageID = PACKAGE_ID, array $useCustom = []) {
@@ -804,8 +804,8 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	/**
 	 * Copies all cms contents (article, box, media, page) from given source language to language specified as $destinationLanguageID.
 	 *
-	 * @param	integer         $sourceLanguageID
-	 * @param       integer         $destinationLanguageID
+	 * @param	int         $sourceLanguageID
+	 * @param       int         $destinationLanguageID
 	 */
 	public static function copyLanguageContent($sourceLanguageID, $destinationLanguageID) {
 		// article content

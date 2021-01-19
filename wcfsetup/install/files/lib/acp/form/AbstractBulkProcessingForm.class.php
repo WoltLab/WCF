@@ -25,7 +25,7 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 	
 	/**
 	 * number of objects affected by bulk processing
-	 * @var	integer
+	 * @var	int
 	 */
 	public $affectedObjectCount = 0;
 	

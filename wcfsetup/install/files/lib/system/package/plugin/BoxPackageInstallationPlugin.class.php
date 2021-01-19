@@ -285,7 +285,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 * menu or parent item.
 	 *
 	 * @param	string		$position	box position
-	 * @return	integer
+	 * @return	int
 	 */
 	protected function getItemOrder($position) {
 		$sql = "SELECT	MAX(showOrder) AS showOrder

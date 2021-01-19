@@ -14,25 +14,25 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Like
  *
- * @property-read	integer		$likeID			unique id of the like
- * @property-read	integer		$objectID		id of the liked object
- * @property-read	integer		$objectTypeID		id of the `com.woltlab.wcf.like.likeableObject` object type
- * @property-read	integer|null	$objectUserID		id of the user who created the liked object or null if user has been deleted or object was created by guest
- * @property-read	integer		$userID			id of the user who created the like
- * @property-read	integer		$time			timestamp at which the like has been created
- * @property-read	integer		$likeValue		value of the like (`+1` = like, `-1` = dislike, see `Like::LIKE` and `Like::Dislike`)
- * @property-read	integer		$reactionTypeID		reactionTypeID of the reaction
+ * @property-read	int		$likeID			unique id of the like
+ * @property-read	int		$objectID		id of the liked object
+ * @property-read	int		$objectTypeID		id of the `com.woltlab.wcf.like.likeableObject` object type
+ * @property-read	int|null	$objectUserID		id of the user who created the liked object or null if user has been deleted or object was created by guest
+ * @property-read	int		$userID			id of the user who created the like
+ * @property-read	int		$time			timestamp at which the like has been created
+ * @property-read	int		$likeValue		value of the like (`+1` = like, `-1` = dislike, see `Like::LIKE` and `Like::Dislike`)
+ * @property-read	int		$reactionTypeID		reactionTypeID of the reaction
  */
 class Like extends DatabaseObject {
 	/**
 	 * like value
-	 * @var	integer
+	 * @var	int
 	 */
 	const LIKE = 1;
 	
 	/**
 	 * dislike value
-	 * @var	integer
+	 * @var	int
 	 */
 	const DISLIKE = -1;
 	
@@ -59,9 +59,9 @@ class Like extends DatabaseObject {
 	/**
 	 * Returns the like with given type, object id and user id.
 	 * 
-	 * @param	integer		$objectTypeID
-	 * @param	integer		$objectID
-	 * @param	integer		$userID
+	 * @param	int		$objectTypeID
+	 * @param	int		$objectID
+	 * @param	int		$userID
 	 * @return	Like
 	 */
 	public static function getLike($objectTypeID, $objectID, $userID) {

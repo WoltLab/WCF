@@ -65,7 +65,7 @@ class UserAddForm extends UserOptionListForm {
 	
 	/**
 	 * user group ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $groupIDs = [];
 	
@@ -76,13 +76,13 @@ class UserAddForm extends UserOptionListForm {
 	
 	/**
 	 * language id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $languageID = 0;
 	
 	/**
 	 * visible languages
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $visibleLanguages = [];
 	
@@ -112,7 +112,7 @@ class UserAddForm extends UserOptionListForm {
 	
 	/**
 	 * date when the signature will be enabled again
-	 * @var	integer
+	 * @var	int
 	 */
 	public $disableSignatureExpires = 0;
 	

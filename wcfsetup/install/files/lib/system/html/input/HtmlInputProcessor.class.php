@@ -45,7 +45,7 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 	 *
 	 * @param       string          $html                   html string
 	 * @param       string          $objectType             object type identifier
-	 * @param       integer         $objectID               object id
+	 * @param       int         $objectID               object id
 	 * @param       boolean         $convertFromBBCode      interpret input as bbcode
 	 */
 	public function process($html, $objectType, $objectID = 0, $convertFromBBCode = false) {
@@ -92,7 +92,7 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 	 * 
 	 * @param       string          $html           html string
 	 * @param       string          $objectType     object type identifier
-	 * @param       integer         $objectID       object id
+	 * @param       int         $objectID       object id
 	 * @since       3.1
 	 */
 	public function reprocess($html, $objectType, $objectID) {
@@ -143,7 +143,7 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 	 * 
 	 * @param       string          $html           html string
 	 * @param       string          $objectType     object type identifier
-	 * @param       integer         $objectID       object id
+	 * @param       int         $objectID       object id
 	 * @throws      \UnexpectedValueException
 	 */
 	public function processEmbeddedContent($html, $objectType, $objectID) {
@@ -170,7 +170,7 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 	/**
 	 * Enforces the maximum depth of nested quotes.
 	 *
-	 * @param	integer		$depth
+	 * @param	int		$depth
 	 */
 	public function enforceQuoteDepth($depth) {
 		$this->getHtmlInputNodeProcessor()->enforceQuoteDepth($depth);
@@ -226,7 +226,7 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 	/**
 	 * Sets the new object id.
 	 * 
-	 * @param       integer         $objectID       object id
+	 * @param       int         $objectID       object id
 	 */
 	public function setObjectID($objectID) {
 		$this->context['objectID'] = $objectID;

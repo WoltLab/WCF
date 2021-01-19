@@ -27,7 +27,7 @@ interface ISearchResultObject {
 	/**
 	 * Returns the creation time.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getTime();
 	

@@ -24,7 +24,7 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 	
 	/**
 	 * id of the edited subscription
-	 * @var	integer
+	 * @var	int
 	 */
 	public $subscriptionID = 0;
 	

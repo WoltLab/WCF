@@ -30,7 +30,7 @@ class LanguageExportForm extends AbstractForm {
 	
 	/**
 	 * language id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $languageID = 0;
 	
@@ -60,7 +60,7 @@ class LanguageExportForm extends AbstractForm {
 	
 	/**
 	 * max package name length
-	 * @var	integer
+	 * @var	int
 	 */
 	public $packageNameLength = 0;
 	

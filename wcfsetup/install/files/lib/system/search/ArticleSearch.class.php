@@ -25,7 +25,7 @@ use wcf\util\ArrayUtil;
 class ArticleSearch extends AbstractSearchableObjectType {
 	/**
 	 * ids of the selected categories
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $articleCategoryIDs = [];
 	

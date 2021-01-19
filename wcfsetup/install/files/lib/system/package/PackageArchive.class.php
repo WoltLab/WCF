@@ -71,7 +71,7 @@ class PackageArchive {
 	
 	/**
 	 * list of compatible API versions
-	 * @var integer[]
+	 * @var int[]
 	 * @deprecated 5.2
 	 */
 	protected $compatibility = [];
@@ -614,7 +614,7 @@ class PackageArchive {
 	/**
 	 * Returns the list of compatible API versions.
 	 * 
-	 * @return      integer[]
+	 * @return      int[]
 	 * @deprecated 5.2
 	 */
 	public function getCompatibleVersions() {

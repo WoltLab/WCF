@@ -22,13 +22,13 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
 	
 	/**
 	 * evaluation end date, `0` to disable
-	 * @var integer
+	 * @var int
 	 */
 	protected $evaluationEndDate = 0;
 	
 	/**
 	 * WoltLab Plugin-Store file id
-	 * @var integer
+	 * @var int
 	 */
 	protected $evaluationPluginStoreID = 0;
 	
@@ -40,7 +40,7 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
 	
 	/**
 	 * application's package id
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $packageID = 0;
 	

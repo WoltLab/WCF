@@ -14,7 +14,7 @@ interface IStackableUserNotificationObject extends IUserNotificationObject {
 	/**
 	 * Returns the ID of the related object.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getRelatedObjectID();
 }

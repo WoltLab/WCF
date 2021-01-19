@@ -23,7 +23,7 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm {
 	
 	/**
 	 * category id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $categoryID = 0;
 	

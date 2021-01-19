@@ -24,7 +24,7 @@ class UserRankEditForm extends UserRankAddForm {
 	
 	/**
 	 * rank id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $rankID = 0;
 	

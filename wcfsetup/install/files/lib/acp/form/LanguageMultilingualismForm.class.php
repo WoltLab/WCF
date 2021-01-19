@@ -31,13 +31,13 @@ class LanguageMultilingualismForm extends AbstractForm {
 	
 	/**
 	 * indicates if multilingualism is enabled
-	 * @var	integer
+	 * @var	int
 	 */
 	public $enable = 0;
 	
 	/**
 	 * ids of selected available languages
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $languageIDs = [];
 	

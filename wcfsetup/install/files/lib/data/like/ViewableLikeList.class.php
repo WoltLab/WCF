@@ -85,7 +85,7 @@ class ViewableLikeList extends LikeList {
 	/**
 	 * Returns timestamp of oldest like fetched.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getLastLikeTime() {
 		$lastLikeTime = 0;

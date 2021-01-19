@@ -13,17 +13,17 @@ use wcf\util\ArrayUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Tag
  * 
- * @property-read	integer		$tagID		unique id of the tag
- * @property-read	integer		$languageID	id of the language the tag belongs to
+ * @property-read	int		$tagID		unique id of the tag
+ * @property-read	int		$languageID	id of the language the tag belongs to
  * @property-read	string		$name		name/text of the tag
- * @property-read	integer|null	$synonymFor	id of the tag for which the tag is a synonym or `null` if the tag is no synonym
+ * @property-read	int|null	$synonymFor	id of the tag for which the tag is a synonym or `null` if the tag is no synonym
  */
 class Tag extends DatabaseObject implements IRouteController {
 	/**
 	 * Return the tag with the given name or null of no such tag exists.
 	 * 
 	 * @param	string		$name
-	 * @param	integer		$languageID
+	 * @param	int		$languageID
 	 * @return	Tag|null
 	 */
 	public static function getTag($name, $languageID = 0) {

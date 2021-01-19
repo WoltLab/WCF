@@ -15,7 +15,7 @@ use wcf\system\WCF;
 class UserBirthdayCondition extends AbstractCondition implements IContentCondition {
 	/**
 	 * 1 if birthday today checkbox is checked
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $birthdayToday = 0;
 	

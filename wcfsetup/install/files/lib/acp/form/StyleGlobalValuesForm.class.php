@@ -31,7 +31,7 @@ class StyleGlobalValuesForm extends AbstractForm {
 
 	/**
 	 * current scroll offset before submitting the form
-	 * @var integer
+	 * @var int
 	 */
 	public $stylesScrollOffset = 0;
 	

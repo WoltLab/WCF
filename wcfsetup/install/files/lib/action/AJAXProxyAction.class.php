@@ -30,7 +30,7 @@ class AJAXProxyAction extends AJAXInvokeAction {
 	
 	/**
 	 * list of object ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $objectIDs = [];
 	

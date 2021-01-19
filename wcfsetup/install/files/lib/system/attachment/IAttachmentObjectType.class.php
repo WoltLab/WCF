@@ -15,7 +15,7 @@ interface IAttachmentObjectType {
 	/**
 	 * Returns true if the active user has the permission to download attachments.
 	 * 
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @return	boolean
 	 */
 	public function canDownload($objectID);
@@ -24,7 +24,7 @@ interface IAttachmentObjectType {
 	 * Returns true if the active user has the permission to view attachment
 	 * previews (thumbnails).
 	 * 
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @return	boolean
 	 */
 	public function canViewPreview($objectID);
@@ -32,8 +32,8 @@ interface IAttachmentObjectType {
 	/**
 	 * Returns true if the active user has the permission to upload attachments.
 	 * 
-	 * @param	integer		$objectID
-	 * @param	integer		$parentObjectID
+	 * @param	int		$objectID
+	 * @param	int		$parentObjectID
 	 * @return	boolean
 	 */
 	public function canUpload($objectID, $parentObjectID = 0);
@@ -41,7 +41,7 @@ interface IAttachmentObjectType {
 	/**
 	 * Returns true if the active user has the permission to delete attachments.
 	 * 
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @return	boolean
 	 */
 	public function canDelete($objectID);
@@ -49,7 +49,7 @@ interface IAttachmentObjectType {
 	/**
 	 * Returns the maximum filesize for an attachment.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getMaxSize();
 	
@@ -63,14 +63,14 @@ interface IAttachmentObjectType {
 	/**
 	 * Returns the maximum number of attachments.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getMaxCount();
 	
 	/**
 	 * Returns the container object of an attachment or `null` if the container object does not exist.
 	 * 
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @return	IUserContent|null
 	 */
 	public function getObject($objectID);
@@ -78,7 +78,7 @@ interface IAttachmentObjectType {
 	/**
 	 * Caches the data of the given container objects.
 	 * 
-	 * @param	integer[]	$objectIDs
+	 * @param	int[]	$objectIDs
 	 */
 	public function cacheObjects(array $objectIDs);
 	

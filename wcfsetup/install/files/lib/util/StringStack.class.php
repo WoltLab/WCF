@@ -12,7 +12,7 @@ namespace wcf\util;
 final class StringStack {
 	/**
 	 * hash index
-	 * @var	integer
+	 * @var	int
 	 */
 	protected static $i = 0;
 	

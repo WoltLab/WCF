@@ -33,7 +33,7 @@ abstract class AbstractArticlePage extends AbstractPage {
 	
 	/**
 	 * article content id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $articleContentID = 0;
 	

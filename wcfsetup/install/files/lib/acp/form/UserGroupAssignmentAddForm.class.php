@@ -33,13 +33,13 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 	
 	/**
 	 * id of the selected user group
-	 * @var	integer
+	 * @var	int
 	 */
 	public $groupID = 0;
 	
 	/**
 	 * true if the automatic assignment is disabled
-	 * @var	integer
+	 * @var	int
 	 */
 	public $isDisabled = 0;
 	

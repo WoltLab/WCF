@@ -61,7 +61,7 @@ class LabelListPage extends SortablePage {
 	
 	/**
 	 * if of the label group to which the displayed labels belong
-	 * @var	integer
+	 * @var	int
 	 */
 	public $groupID = 0;
 	

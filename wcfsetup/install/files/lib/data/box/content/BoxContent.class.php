@@ -15,13 +15,13 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\Data\Box\Content
  * @since	3.0
  *
- * @property-read	integer		$boxContentID		unique id of the box content
- * @property-read	integer		$boxID			id of the box the box content belongs to
- * @property-read	integer		$languageID		id of the box content's language
+ * @property-read	int		$boxContentID		unique id of the box content
+ * @property-read	int		$boxID			id of the box the box content belongs to
+ * @property-read	int		$languageID		id of the box content's language
  * @property-read	string		$title			title of the page in the associated language
  * @property-read	string		$content		actual content of the box in the associated language
- * @property-read	integer|null	$imageID		id of the (image) media object used as box image for the associated language or `null` if no image is used
- * @property-read	integer		$hasEmbeddedObjects	is `1` if the box content contains embedded objects, otherwise `0`
+ * @property-read	int|null	$imageID		id of the (image) media object used as box image for the associated language or `null` if no image is used
+ * @property-read	int		$hasEmbeddedObjects	is `1` if the box content contains embedded objects, otherwise `0`
  */
 class BoxContent extends DatabaseObject {
 	/**
@@ -43,8 +43,8 @@ class BoxContent extends DatabaseObject {
 	/**
 	 * Returns a certain box content or `null` if it does not exist.
 	 *
-	 * @param       integer         $boxID
-	 * @param       integer         $languageID
+	 * @param       int         $boxID
+	 * @param       int         $languageID
 	 * @return      BoxContent|null
 	 */
 	public static function getBoxContent($boxID, $languageID) {

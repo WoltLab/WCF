@@ -101,7 +101,7 @@ class Installer {
 	 * Creates a file in the target directory.
 	 * 
 	 * @param	string		$file
-	 * @param	integer		$index
+	 * @param	int		$index
 	 * @param	Tar		$tar
 	 */
 	protected function createFile($file, $index, Tar $tar) {

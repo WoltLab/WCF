@@ -35,7 +35,7 @@ class ModerationQueueManager extends SingletonFactory {
 	
 	/**
 	 * list of object type names categorized by type
-	 * @var	integer[][]
+	 * @var	int[][]
 	 */
 	protected $objectTypeNames = [];
 	
@@ -96,7 +96,7 @@ class ModerationQueueManager extends SingletonFactory {
 	 * 
 	 * @param	string		$definitionName
 	 * @param	string		$objectType
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 * @return	object
 	 */
 	public function getProcessor($definitionName, $objectType, $objectTypeID = null) {
@@ -114,8 +114,8 @@ class ModerationQueueManager extends SingletonFactory {
 	/**
 	 * Returns link for viewing/editing an object type.
 	 * 
-	 * @param	integer		$objectTypeID
-	 * @param	integer		$queueID
+	 * @param	int		$objectTypeID
+	 * @param	int		$queueID
 	 * @return	string
 	 */
 	public function getLink($objectTypeID, $queueID) {
@@ -133,7 +133,7 @@ class ModerationQueueManager extends SingletonFactory {
 	 * 
 	 * @param	string		$definitionName
 	 * @param	string		$objectType
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getObjectTypeID($definitionName, $objectType) {
 		if ($this->isValid($definitionName, $objectType)) {
@@ -164,8 +164,8 @@ class ModerationQueueManager extends SingletonFactory {
 	/**
 	 * Returns a list of object type ids for given definition ids.
 	 * 
-	 * @param	integer[]		$definitionIDs
-	 * @return	integer[]
+	 * @param	int[]		$definitionIDs
+	 * @return	int[]
 	 */
 	public function getObjectTypeIDs(array $definitionIDs) {
 		$objectTypeIDs = [];
@@ -183,7 +183,7 @@ class ModerationQueueManager extends SingletonFactory {
 	/**
 	 * Populates object properties for viewing.
 	 * 
-	 * @param	integer				$objectTypeID
+	 * @param	int				$objectTypeID
 	 * @param	ViewableModerationQueue[]	$objects
 	 * @throws	SystemException
 	 */
@@ -207,7 +207,7 @@ class ModerationQueueManager extends SingletonFactory {
 	/**
 	 * Returns the count of outstanding moderation queue items.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getOutstandingModerationCount() {
 		// get count
@@ -244,7 +244,7 @@ class ModerationQueueManager extends SingletonFactory {
 	 * Returns the count of unread moderation queue items.
 	 * 
 	 * @param	boolean		$skipCache
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getUnreadModerationCount($skipCache = false) {
 		// get count
@@ -373,7 +373,7 @@ class ModerationQueueManager extends SingletonFactory {
 	/**
 	 * Removes a list of orphaned queue ids.
 	 * 
-	 * @param	integer[]		$queueIDs
+	 * @param	int[]		$queueIDs
 	 */
 	public function removeOrphans(array $queueIDs) {
 		if (!empty($queueIDs)) {
@@ -391,7 +391,7 @@ class ModerationQueueManager extends SingletonFactory {
 	/**
 	 * Resets moderation count for all users or optionally only for one user.
 	 * 
-	 * @param	integer		$userID
+	 * @param	int		$userID
 	 */
 	public function resetModerationCount($userID = null) {
 		if ($userID === null) {
@@ -441,7 +441,7 @@ class ModerationQueueManager extends SingletonFactory {
 	 * Removes moderation queues, should only be called if related objects are permanently deleted.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer[]	$objectIDs
+	 * @param	int[]	$objectIDs
 	 * @throws	SystemException
 	 */
 	public function removeQueues($objectType, array $objectIDs) {

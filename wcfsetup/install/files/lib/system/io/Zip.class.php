@@ -218,7 +218,7 @@ class Zip extends File implements IArchive {
 	 * Checks whether the next record is a file.
 	 * This does not change the position of the file-pointer.
 	 * 
-	 * @param	integer		$offset		where to start reading
+	 * @param	int		$offset		where to start reading
 	 * @return	boolean
 	 * @throws	SystemException
 	 */
@@ -238,7 +238,7 @@ class Zip extends File implements IArchive {
 	/**
 	 * Reads a file and returns it.
 	 * 
-	 * @param	integer		$offset		where to start reading
+	 * @param	int		$offset		where to start reading
 	 * @return	array
 	 * @throws	SystemException
 	 */
@@ -322,7 +322,7 @@ class Zip extends File implements IArchive {
 	/**
 	 * Reads in the specified number of bytes and unpacks them.
 	 * 
-	 * @param	integer		$length		Number of bytes to read
+	 * @param	int		$length		Number of bytes to read
 	 * @param	string		$type		Which type are the bytes of
 	 * @return	mixed
 	 */

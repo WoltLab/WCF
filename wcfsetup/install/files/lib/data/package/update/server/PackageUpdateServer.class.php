@@ -16,12 +16,12 @@ use wcf\util\Url;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Package\Update\Server
  *
- * @property-read	integer		$packageUpdateServerID		unique id of the package update server
+ * @property-read	int		$packageUpdateServerID		unique id of the package update server
  * @property-read	string		$serverURL			url of the package update server
  * @property-read	string		$loginUsername			username used to login on the package update server
  * @property-read	string		$loginPassword			password used to login on the package update server
- * @property-read	integer		$isDisabled			is `1` if the package update server is disabled and thus not considered for package updates, otherwise `0`
- * @property-read	integer		$lastUpdateTime			timestamp at which the data of the package update server has been fetched the last time
+ * @property-read	int		$isDisabled			is `1` if the package update server is disabled and thus not considered for package updates, otherwise `0`
+ * @property-read	int		$lastUpdateTime			timestamp at which the data of the package update server has been fetched the last time
  * @property-read	string		$status				status of the package update server (`online` or `offline`)
  * @property-read	string		$errorMessage			error message if the package update server if offline or empty otherwise 
  * @property-read	string		$apiVersion			version of the supported package update server api (`2.0`, `2.1`)
@@ -68,7 +68,7 @@ class PackageUpdateServer extends DatabaseObject {
 	/**
 	 * Returns all active update package servers sorted by hostname.
 	 * 
-	 * @param	integer[]	$packageUpdateServerIDs
+	 * @param	int[]	$packageUpdateServerIDs
 	 * @return	PackageUpdateServer[]
 	 */
 	public static final function getActiveUpdateServers(array $packageUpdateServerIDs = []) {
@@ -167,7 +167,7 @@ class PackageUpdateServer extends DatabaseObject {
 	/**
 	 * Stores auth data for a package update server.
 	 * 
-	 * @param	integer		$packageUpdateServerID
+	 * @param	int		$packageUpdateServerID
 	 * @param	string		$username
 	 * @param	string		$password
 	 * @param	boolean		$saveCredentials
@@ -197,7 +197,7 @@ class PackageUpdateServer extends DatabaseObject {
 	/**
 	 * Returns true if update server requires license data instead of username/password.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public final function requiresLicense() {
 		return Regex::compile('^https?://update.woltlab.com/')->match($this->serverURL);

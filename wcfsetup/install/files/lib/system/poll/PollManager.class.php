@@ -33,7 +33,7 @@ class PollManager extends SingletonFactory {
 	
 	/**
 	 * current object id
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $objectID = 0;
 	
@@ -65,7 +65,7 @@ class PollManager extends SingletonFactory {
 	
 	/**
 	 * poll id
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $pollID = 0;
 	
@@ -88,7 +88,7 @@ class PollManager extends SingletonFactory {
 	/**
 	 * Removes a list of polls by id.
 	 * 
-	 * @param	integer[]		$pollIDs
+	 * @param	int[]		$pollIDs
 	 */
 	public function removePolls(array $pollIDs) {
 		$conditions = new PreparedStatementConditionBuilder();
@@ -104,8 +104,8 @@ class PollManager extends SingletonFactory {
 	 * Sets object data.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer		$objectID
-	 * @param	integer		$pollID
+	 * @param	int		$objectID
+	 * @param	int		$pollID
 	 * @return	boolean
 	 * @throws	SystemException
 	 */
@@ -244,8 +244,8 @@ class PollManager extends SingletonFactory {
 	 * Handles poll creation, modification and deletion. Returns poll id or zero
 	 * if poll was deleted or nothing was created.
 	 * 
-	 * @param	integer		$objectID
-	 * @return	integer
+	 * @param	int		$objectID
+	 * @return	int
 	 * @throws	SystemException
 	 */
 	public function save($objectID = null) {
@@ -307,7 +307,7 @@ class PollManager extends SingletonFactory {
 	 * 
 	 * @param	IPollContainer		$pollContainer		object the poll belongs to
 	 * @param	array			$pollData		poll data
-	 * @return	null|integer					id of the poll
+	 * @return	null|int					id of the poll
 	 * @since	5.2
 	 */
 	public function savePoll(IPollContainer $pollContainer, array $pollData) {
@@ -376,7 +376,7 @@ class PollManager extends SingletonFactory {
 	/**
 	 * Returns a list of polls including options and vote state for current user.
 	 * 
-	 * @param	integer[]		$pollIDs
+	 * @param	int[]		$pollIDs
 	 * @return	Poll[]
 	 */
 	public function getPolls(array $pollIDs) {
@@ -404,7 +404,7 @@ class PollManager extends SingletonFactory {
 	/**
 	 * Returns a list of poll options with vote state for current user.
 	 * 
-	 * @param	integer[]	$pollIDs
+	 * @param	int[]	$pollIDs
 	 * @return	PollOptionList
 	 */
 	public function getPollOptions(array $pollIDs) {
@@ -443,7 +443,7 @@ class PollManager extends SingletonFactory {
 	 * Returns the handler object for given object type. Returns false if object type (id)
 	 * is not found, or null if no handler is assigned.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 * @param	string		$objectType
 	 * @return	mixed
 	 * @throws	SystemException

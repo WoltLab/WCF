@@ -60,7 +60,7 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm {
 	
 	/**
 	 * show order
-	 * @var	integer
+	 * @var	int
 	 */
 	public $showOrder = 0;
 	
@@ -97,7 +97,7 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm {
 	
 	/**
 	 * object id
-	 * @var integer
+	 * @var int
 	 */
 	public $optionID;
 	

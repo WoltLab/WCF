@@ -64,7 +64,7 @@ interface IOptionType {
 	 * 
 	 * @param	mixed		$value1
 	 * @param	mixed		$value2
-	 * @return	integer
+	 * @return	int
 	 */
 	public function compare($value1, $value2);
 	

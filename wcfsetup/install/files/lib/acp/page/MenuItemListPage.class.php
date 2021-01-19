@@ -34,7 +34,7 @@ class MenuItemListPage extends AbstractPage {
 	
 	/**
 	 * menu id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $menuID = 0;
 	

@@ -324,7 +324,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Validates object type id parameter.
 	 *
-	 * @param       integer         $objectTypeID
+	 * @param       int         $objectTypeID
 	 * @return	ObjectType
 	 * @throws	UserInputException
 	 */
@@ -353,7 +353,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 	 * Returns the current html input processor or a new one if `$message` is not null.
 	 *
 	 * @param       string|null     $message        source message
-	 * @param       integer         $objectID       object id
+	 * @param       int         $objectID       object id
 	 * @return      HtmlInputProcessor
 	 */
 	public function getHtmlInputProcessor($message = null, $objectID = 0) {

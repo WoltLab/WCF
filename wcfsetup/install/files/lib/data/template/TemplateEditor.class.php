@@ -61,7 +61,7 @@ class TemplateEditor extends DatabaseObjectEditor {
 	 * Renames the file of this template.
 	 * 
 	 * @param	string		$name
-	 * @param	integer		$templateGroupID
+	 * @param	int		$templateGroupID
 	 */
 	public function rename($name, $templateGroupID = 0) {
 		// get current path

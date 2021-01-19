@@ -78,7 +78,7 @@ if (!defined('NO_IMPORTS')) {
 class WCF {
 	/**
 	 * list of supported legacy API versions
-	 * @var integer[]
+	 * @var int[]
 	 * @deprecated 5.2
 	 */
 	private static $supportedLegacyApiVersions = [2017, 2018];
@@ -302,10 +302,10 @@ class WCF {
 	/**
 	 * Turns PHP errors into an ErrorException.
 	 * 
-	 * @param	integer		$severity
+	 * @param	int		$severity
 	 * @param	string		$message
 	 * @param	string		$file
-	 * @param	integer		$line
+	 * @param	int		$line
 	 * @throws	ErrorException
 	 */
 	public static final function handleError($severity, $message, $file, $line) {
@@ -705,7 +705,7 @@ class WCF {
 	/**
 	 * Loads an application on runtime, do not use this outside the package installation.
 	 * 
-	 * @param	integer		$packageID
+	 * @param	int		$packageID
 	 */
 	public static function loadRuntimeApplication($packageID) {
 		$package = new Package($packageID);
@@ -792,7 +792,7 @@ class WCF {
 	/**
 	 * Changes the active language.
 	 * 
-	 * @param	integer		$languageID
+	 * @param	int		$languageID
 	 */
 	public static final function setLanguage($languageID) {
 		if (!$languageID || LanguageFactory::getInstance()->getLanguage($languageID) === null) {
@@ -1051,7 +1051,7 @@ class WCF {
 	/**
 	 * Returns number of available updates.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getAvailableUpdates() {
 		$data = PackageUpdateCacheBuilder::getInstance()->getData();
@@ -1128,7 +1128,7 @@ class WCF {
 	/**
 	 * Returns true if the given API version is currently supported.
 	 * 
-	 * @param       integer         $apiVersion
+	 * @param       int         $apiVersion
 	 * @return      boolean
 	 * @deprecated 5.2
 	 */
@@ -1139,7 +1139,7 @@ class WCF {
 	/**
 	 * Returns the list of supported legacy API versions.
 	 * 
-	 * @return      integer[]
+	 * @return      int[]
 	 * @deprecated 5.2
 	 */
 	public static function getSupportedLegacyApiVersions() {

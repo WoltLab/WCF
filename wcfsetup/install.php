@@ -62,7 +62,7 @@ class SystemException extends \Exception implements IPrintableException {
 	 * Creates a new SystemException.
 	 *
 	 * @param	string		$message	error message
-	 * @param	integer		$code		error code
+	 * @param	int		$code		error code
 	 * @param	string		$description	description of the error
 	 * @param	\Exception	$previous	repacked Exception
 	 */
@@ -508,10 +508,10 @@ function handleException($e) {
 /**
  * Catches php errors and throws instead a system exception.
  *
- * @param	integer		$errorNo
+ * @param	int		$errorNo
  * @param	string		$message
  * @param	string		$filename
- * @param	integer		$lineNo
+ * @param	int		$lineNo
  * @throws	SystemException
  */
 function handleError($errorNo, $message, $filename, $lineNo) {
@@ -541,7 +541,7 @@ if (!function_exists('is_countable')) {
 class BasicFileUtil {
 	/**
 	 * chmod mode
-	 * @var	integer
+	 * @var	int
 	 */
 	protected static $mode = null;
 	
@@ -813,7 +813,7 @@ class Tar {
 	
 	/**
 	 * chunk size for extracting
-	 * @var	integer
+	 * @var	int
 	 */
 	const CHUNK_SIZE = 8192;
 	
@@ -1226,7 +1226,7 @@ class GZipFile extends File {
 	/**
 	 * Returns the filesize of the unzipped file.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getFileSize() {
 		$byteBlock = 1<<14;

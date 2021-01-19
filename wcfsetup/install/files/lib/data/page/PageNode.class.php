@@ -29,13 +29,13 @@ class PageNode extends DatabaseObjectDecorator implements \Countable, \Recursive
 	
 	/**
 	 * node depth
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $depth = 0;
 	
 	/**
 	 * iterator position
-	 * @var	integer
+	 * @var	int
 	 */
 	private $position = 0;
 	
@@ -49,7 +49,7 @@ class PageNode extends DatabaseObjectDecorator implements \Countable, \Recursive
 	 * 
 	 * @param	PageNode	$parentNode
 	 * @param	Page		$page
-	 * @param	integer		$depth
+	 * @param	int		$depth
 	 */
 	public function __construct($parentNode = null, Page $page = null, $depth = 0) {
 		if ($page === null) {
@@ -82,7 +82,7 @@ class PageNode extends DatabaseObjectDecorator implements \Countable, \Recursive
 	/**
 	 * Returns the number of children.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function count() {
 		return count($this->children);
@@ -140,7 +140,7 @@ class PageNode extends DatabaseObjectDecorator implements \Countable, \Recursive
 	/**
 	 * Returns node depth.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getDepth() {
 		return $this->depth;

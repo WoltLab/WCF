@@ -44,13 +44,13 @@ class LanguageItemListPage extends SortablePage {
 	
 	/**
 	 * language id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $languageID = 0;
 	
 	/**
 	 * language category id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $languageCategoryID = 0;
 	
@@ -86,7 +86,7 @@ class LanguageItemListPage extends SortablePage {
 	
 	/**
 	 * is `1` if only custom language items (created via ACP) should be shown
-	 * @var	integer
+	 * @var	int
 	 * @since	5.2
 	 */
 	public $isCustomLanguageItem = 0;

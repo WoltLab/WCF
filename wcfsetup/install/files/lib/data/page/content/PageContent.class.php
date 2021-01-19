@@ -17,14 +17,14 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\Data\Page\Content
  * @since	3.0
  *
- * @property-read	integer		$pageContentID		unique id of the page content
- * @property-read	integer		$pageID			id of the page the page content belongs to
- * @property-read	integer		$languageID		id of the page content's language
+ * @property-read	int		$pageContentID		unique id of the page content
+ * @property-read	int		$pageID			id of the page the page content belongs to
+ * @property-read	int		$languageID		id of the page content's language
  * @property-read	string		$title			title of the page in the associated language
  * @property-read	string		$content		actual content of the page in the associated language
  * @property-read	string		$metaDescription	meta description of the page in the associated language
  * @property-read	string		$customURL		custom url of the page in the associated language
- * @property-read	integer		$hasEmbeddedObjects	is `1` if the page content contains embedded objects, otherwise `0`
+ * @property-read	int		$hasEmbeddedObjects	is `1` if the page content contains embedded objects, otherwise `0`
  */
 class PageContent extends DatabaseObject implements ILinkableObject {
 	/**
@@ -85,8 +85,8 @@ class PageContent extends DatabaseObject implements ILinkableObject {
 	/**
 	 * Returns a certain page content.
 	 *
-	 * @param       integer         $pageID
-	 * @param       integer         $languageID
+	 * @param       int         $pageID
+	 * @param       int         $languageID
 	 * @return      PageContent|null
 	 */
 	public static function getPageContent($pageID, $languageID) {

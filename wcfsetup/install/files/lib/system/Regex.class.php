@@ -19,91 +19,91 @@ final class Regex {
 	
 	/**
 	 * indicates that no modifier is applied
-	 * @var	integer
+	 * @var	int
 	 */
 	const MODIFIER_NONE = 0;
 	
 	/**
 	 * indicates case insensitive matching
-	 * @var	integer
+	 * @var	int
 	 */
 	const CASE_INSENSITIVE = 1;
 	
 	/**
 	 * indicates ungreedy matching
-	 * @var	integer
+	 * @var	int
 	 */
 	const UNGREEDY = 2;
 	
 	/**
 	 * indicates that no extra time is spent on analysing
-	 * @var	integer
+	 * @var	int
 	 */
 	const NO_ANALYSE = 8;
 	
 	/**
 	 * indicates that whitespaces are ignored in regex
-	 * @var	integer
+	 * @var	int
 	 */
 	const IGNORE_WHITESPACE = 16;
 	
 	/**
 	 * indicates that a dot matches every char
-	 * @var	integer
+	 * @var	int
 	 */
 	const DOT_ALL = 32;
 	
 	/**
 	 * indicates that ^/$ match start and end of a line instead of the whole string
-	 * @var	integer
+	 * @var	int
 	 */
 	const MULTILINE = 64;
 	
 	/**
 	 * indicates that pattern string is treated as UTF-8.
-	 * @var	integer
+	 * @var	int
 	 */
 	const UTF_8 = 128;
 	
 	/**
 	 * indicates that no flags are set
-	 * @var	integer
+	 * @var	int
 	 */
 	const FLAGS_NONE = 0;
 	
 	/**
 	 * indicates that default flags are set
-	 * @var	integer
+	 * @var	int
 	 */
 	const FLAGS_DEFAULT = 1;
 	
 	/**
 	 * captures the offset of an match (all excluding replace)
-	 * @var	integer
+	 * @var	int
 	 */
 	const CAPTURE_OFFSET = 2;
 	
 	/**
 	 * indicates default pattern ordering (match all only)
-	 * @var	integer
+	 * @var	int
 	 */
 	const ORDER_MATCH_BY_PATTERN = 4;
 	
 	/**
 	 * indicates alternative set ordering (match all only)
-	 * @var	integer
+	 * @var	int
 	 */
 	const ORDER_MATCH_BY_SET = 8;
 	
 	/**
 	 * indicates that only non-empty pieces will be splitted (split only)
-	 * @var	integer
+	 * @var	int
 	 */
 	const SPLIT_NON_EMPTY_ONLY = 16;
 	
 	/**
 	 * indicates that the split delimiter is returned as well (split only)
-	 * @var	integer
+	 * @var	int
 	 */
 	const CAPTURE_SPLIT_DELIMITER = 32;
 	
@@ -123,7 +123,7 @@ final class Regex {
 	 * Creates a regex.
 	 * 
 	 * @param	string		$regex
-	 * @param	integer		$modifier
+	 * @param	int		$modifier
 	 */
 	public function __construct($regex, $modifier = self::MODIFIER_NONE) {
 		// escape delimiter
@@ -178,8 +178,8 @@ final class Regex {
 	 * 
 	 * @param	string		$string		string to match
 	 * @param	boolean		$all		indicates if all matches are collected
-	 * @param	integer		$flags		match flags
-	 * @return	integer				return value of preg_match(_all)
+	 * @param	int		$flags		match flags
+	 * @return	int				return value of preg_match(_all)
 	 */
 	public function match($string, $all = false, $flags = self::FLAGS_DEFAULT) {
 		$matchFlags = 0;
@@ -215,7 +215,7 @@ final class Regex {
 	 * Splits the string with the regex.
 	 * 
 	 * @param	string		$string
-	 * @param	integer		$flags
+	 * @param	int		$flags
 	 * @return	string[]
 	 */
 	public function split($string, $flags = self::FLAGS_DEFAULT) {

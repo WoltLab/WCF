@@ -120,7 +120,7 @@ abstract class AbstractDecoratedCategory extends DatabaseObjectDecorator {
 	 * Returns the decorated category with the given id or `null` if no such
 	 * category exists.
 	 * 
-	 * @param	integer		$categoryID
+	 * @param	int		$categoryID
 	 * @return	AbstractDecoratedCategory|null
 	 */
 	public static function getCategory($categoryID) {

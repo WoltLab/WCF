@@ -54,7 +54,7 @@ class ClipboardHandler extends SingletonFactory {
 	
 	/**
 	 * page object id
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $pageObjectID = 0;
 	
@@ -88,7 +88,7 @@ class ClipboardHandler extends SingletonFactory {
 	 * Marks objects as marked.
 	 * 
 	 * @param	array		$objectIDs
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 */
 	public function mark(array $objectIDs, $objectTypeID) {
 		// remove existing entries first, prevents conflict with INSERT
@@ -111,7 +111,7 @@ class ClipboardHandler extends SingletonFactory {
 	 * Removes an object marking.
 	 * 
 	 * @param	array		$objectIDs
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 */
 	public function unmark(array $objectIDs, $objectTypeID) {
 		$conditions = new PreparedStatementConditionBuilder();
@@ -128,7 +128,7 @@ class ClipboardHandler extends SingletonFactory {
 	/**
 	 * Unmarks all items of given type.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 */
 	public function unmarkAll($objectTypeID) {
 		$sql = "DELETE FROM	wcf".WCF_N."_clipboard_item
@@ -146,7 +146,7 @@ class ClipboardHandler extends SingletonFactory {
 	 * clipboard object type exists.
 	 * 
 	 * @param	string		$typeName
-	 * @return	integer|null
+	 * @return	int|null
 	 */
 	public function getObjectTypeID($typeName) {
 		if (isset($this->cache['objectTypeNames'][$typeName])) {
@@ -160,7 +160,7 @@ class ClipboardHandler extends SingletonFactory {
 	 * Returns the clipboard object type with the given id or `null` if no such
 	 * clipboard object type exists.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 * @return	ObjectType|null
 	 */
 	public function getObjectType($objectTypeID) {
@@ -176,7 +176,7 @@ class ClipboardHandler extends SingletonFactory {
 	 * clipboard object type exists.
 	 * 
 	 * @param	string		$objectType
-	 * @return	integer|null
+	 * @return	int|null
 	 */
 	public function getObjectTypeByName($objectType) {
 		foreach ($this->cache['objectTypes'] as $objectTypeID => $objectTypeObj) {
@@ -191,7 +191,7 @@ class ClipboardHandler extends SingletonFactory {
 	/**
 	 * Loads a list of marked items grouped by type name.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 * @throws	SystemException
 	 */
 	protected function loadMarkedItems($objectTypeID = null) {
@@ -281,7 +281,7 @@ class ClipboardHandler extends SingletonFactory {
 	/**
 	 * Loads a list of marked items grouped by type name.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 * @return	array
 	 */
 	public function getMarkedItems($objectTypeID = null) {
@@ -305,7 +305,7 @@ class ClipboardHandler extends SingletonFactory {
 	 * Returns the data of the items for clipboard editor or `null` if no items are marked.
 	 * 
 	 * @param	string|string[]		$page
-	 * @param	integer			$pageObjectID
+	 * @param	int			$pageObjectID
 	 * @return	array|null
 	 * @throws	ImplementationException
 	 */
@@ -391,7 +391,7 @@ class ClipboardHandler extends SingletonFactory {
 	/**
 	 * Removes items from clipboard.
 	 * 
-	 * @param	integer		$typeID
+	 * @param	int		$typeID
 	 */
 	public function removeItems($typeID = null) {
 		$conditions = new PreparedStatementConditionBuilder();
@@ -407,8 +407,8 @@ class ClipboardHandler extends SingletonFactory {
 	/**
 	 * Returns true (1) if at least one item (of the given object type) is marked.
 	 * 
-	 * @param	integer		$objectTypeID
-	 * @return	integer
+	 * @param	int		$objectTypeID
+	 * @return	int
 	 */
 	public function hasMarkedItems($objectTypeID = null) {
 		if (!WCF::getUser()->userID) return 0;
@@ -440,7 +440,7 @@ class ClipboardHandler extends SingletonFactory {
 	/**
 	 * Returns page object id.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getPageObjectID() {
 		return $this->pageObjectID;

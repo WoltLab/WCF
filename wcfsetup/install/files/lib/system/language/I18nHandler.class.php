@@ -282,7 +282,7 @@ class I18nHandler extends SingletonFactory {
 	 * @param	string|string[]		$elementID		either the id of the element or externally passed array `languageID => value`
 	 * @param	string			$languageVariable
 	 * @param	string			$languageCategory
-	 * @param	integer			$packageID
+	 * @param	int			$packageID
 	 */
 	public function save($elementID, $languageVariable, $languageCategory, $packageID = PACKAGE_ID) {
 		// get language category id
@@ -405,8 +405,8 @@ class I18nHandler extends SingletonFactory {
 	/**
 	 * Sets additional options for elements, required if updating values.
 	 * 
-	 * @param	integer		$elementID
-	 * @param	integer		$packageID
+	 * @param	int		$elementID
+	 * @param	int		$packageID
 	 * @param	string		$value
 	 * @param	string		$pattern
 	 */

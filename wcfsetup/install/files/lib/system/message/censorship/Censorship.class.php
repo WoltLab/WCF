@@ -163,7 +163,7 @@ class Censorship extends SingletonFactory {
 	/**
 	 * Looks behind in the word list.
 	 * 
-	 * @param	integer		$index
+	 * @param	int		$index
 	 * @param	string		$search
 	 * @return	boolean
 	 */
@@ -183,7 +183,7 @@ class Censorship extends SingletonFactory {
 	/**
 	 * Looks ahead in the word list.
 	 * 
-	 * @param	integer		$index
+	 * @param	int		$index
 	 * @param	string		$search
 	 * @return	mixed
 	 */

@@ -21,7 +21,7 @@ class UserObjectWatchHandler extends SingletonFactory {
 	 * Returns the id of the given object type.
 	 * 
 	 * @param	string		$objectTypeName
-	 * @return	integer
+	 * @return	int
 	 * @throws	SystemException
 	 */
 	public function getObjectTypeID($objectTypeName) {
@@ -44,7 +44,7 @@ class UserObjectWatchHandler extends SingletonFactory {
 	 * Resets the object watch cache for all subscriber of the given object.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer[]	$objectIDs
+	 * @param	int[]	$objectIDs
 	 */
 	public function resetObjects($objectType, array $objectIDs) {
 		// get object type id
@@ -71,8 +71,8 @@ class UserObjectWatchHandler extends SingletonFactory {
 	 * Deletes the given objects.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer[]	$objectIDs
-	 * @param	integer[]	$userIDs
+	 * @param	int[]	$objectIDs
+	 * @param	int[]	$userIDs
 	 */
 	public function deleteObjects($objectType, array $objectIDs, array $userIDs = []) {
 		// get object type id
@@ -94,7 +94,7 @@ class UserObjectWatchHandler extends SingletonFactory {
 	 * Updates a watched object for all subscriber.
 	 * 
 	 * @param	string				$objectType
-	 * @param	integer				$objectID
+	 * @param	int				$objectID
 	 * @param	string				$notificationEventName
 	 * @param	string				$notificationObjectType
 	 * @param	IUserNotificationObject		$notificationObject

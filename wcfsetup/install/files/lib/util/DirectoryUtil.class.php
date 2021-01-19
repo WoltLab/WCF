@@ -31,7 +31,7 @@ final class DirectoryUtil {
 	
 	/**
 	 * directory size in bytes
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $size = 0;
 	
@@ -49,7 +49,7 @@ final class DirectoryUtil {
 	
 	/**
 	 * indicates that files won't be sorted
-	 * @var	integer
+	 * @var	int
 	 */
 	const SORT_NONE = -1;
 	
@@ -117,7 +117,7 @@ final class DirectoryUtil {
 	/**
 	 * Returns a sorted list of files.
 	 * 
-	 * @param	integer		$order			sort-order
+	 * @param	int		$order			sort-order
 	 * @param	Regex		$pattern		pattern to match
 	 * @param	boolean		$negativeMatch		true if the pattern should be inversed
 	 * @return	string[]
@@ -154,7 +154,7 @@ final class DirectoryUtil {
 	/**
 	 * Returns a sorted list of files, with DirectoryIterator object as value
 	 * 
-	 * @param	integer		$order			sort order
+	 * @param	int		$order			sort order
 	 * @param	Regex		$pattern		pattern to match
 	 * @param	boolean		$negativeMatch		should the pattern be inversed
 	 * @return	\DirectoryIterator[]
@@ -309,7 +309,7 @@ final class DirectoryUtil {
 	/**
 	 * Calculates the size of the directory.
 	 * 
-	 * @return	integer		directory size in bytes
+	 * @return	int		directory size in bytes
 	 * @throws	SystemException
 	 */
 	public function getSize() {

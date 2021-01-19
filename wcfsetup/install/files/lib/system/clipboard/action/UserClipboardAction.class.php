@@ -88,7 +88,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the users which can be deleted.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	protected function validateDelete() {
 		// check permissions
@@ -102,7 +102,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the users which can be banned.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	protected function validateBan() {
 		// check permissions
@@ -123,9 +123,9 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Validates accessible groups.
 	 * 
-	 * @param	integer[]	$userIDs
+	 * @param	int[]	$userIDs
 	 * @param	boolean		$ignoreOwnUser
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	protected function __validateAccessibleGroups(array $userIDs, $ignoreOwnUser = true) {
 		if ($ignoreOwnUser) {
@@ -164,7 +164,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the users which can be marked as email confirmed.
 	 *
-	 * @return	integer[]
+	 * @return	int[]
 	 * @since	5.3
 	 */
 	protected function validateConfirmEmail() {
@@ -185,7 +185,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the users which can be unmarked as email confirmed.
 	 *
-	 * @return	integer[]
+	 * @return	int[]
 	 * @since	5.3
 	 */
 	protected function validateUnconfirmEmail() {
@@ -206,7 +206,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the users which can be sent new passwords.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function validateSendNewPassword() {
 		// check permissions
@@ -226,7 +226,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the users which can be enabled.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 * @since	3.0
 	 */
 	protected function validateEnable() {
@@ -247,7 +247,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the users which can be merge.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 * @since	3.0
 	 */
 	protected function validateMerge() {
@@ -265,7 +265,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the users which aren't activated.
 	 *
-	 * @return	integer[]
+	 * @return	int[]
 	 * @since	5.2
 	 */
 	protected function validateResendActivationMail() {
@@ -286,7 +286,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the users whose contents can be deleted.
 	 * 
-	 * @return      integer[]
+	 * @return      int[]
 	 * @since       5.4
 	 */
 	protected function validateDeleteUserContent() {

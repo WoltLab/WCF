@@ -71,7 +71,7 @@ class ApplicationHandler extends SingletonFactory {
 	 * Returns an application delivered by the package with the given id or `null`
 	 * if no such application exists.
 	 * 
-	 * @param	integer			$packageID	package id
+	 * @param	int			$packageID	package id
 	 * @return	Application|null	application object
 	 * @since	3.0
 	 */
@@ -167,7 +167,7 @@ class ApplicationHandler extends SingletonFactory {
 	/**
 	 * Returns abbreviation for a given package id or `null` if application is unknown.
 	 * 
-	 * @param	integer		$packageID	unique package id
+	 * @param	int		$packageID	unique package id
 	 * @return	string|null
 	 */
 	public function getAbbreviation($packageID) {

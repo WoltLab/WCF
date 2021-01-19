@@ -52,7 +52,7 @@ class TemplateListPage extends SortablePage {
 	
 	/**
 	 * template group id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $templateGroupID = 0;
 	

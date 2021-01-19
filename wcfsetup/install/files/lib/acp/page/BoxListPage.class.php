@@ -81,7 +81,7 @@ class BoxListPage extends SortablePage {
 	
 	/**
 	 * display 'Add Box' dialog on load
-	 * @var integer
+	 * @var int
 	 */
 	public $showBoxAddDialog = 0;
 	

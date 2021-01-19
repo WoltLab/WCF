@@ -19,13 +19,13 @@ class RemoteFile extends File {
 	
 	/**
 	 * port
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $port = 0;
 	
 	/**
 	 * error number
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $errorNumber = 0;
 	
@@ -46,8 +46,8 @@ class RemoteFile extends File {
 	 * Opens a new connection to a remote host.
 	 * 
 	 * @param	string		$host
-	 * @param	integer		$port
-	 * @param	integer		$timeout
+	 * @param	int		$port
+	 * @param	int		$timeout
 	 * @param	array		$options
 	 * @throws	SystemException
 	 */
@@ -74,7 +74,7 @@ class RemoteFile extends File {
 	/**
 	 * Returns the error number of the last error.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getErrorNumber() {
 		return $this->errorNumber;

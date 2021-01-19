@@ -24,7 +24,7 @@ final class Url implements \ArrayAccess {
 	
 	/**
 	 * maps properties to the array indices
-	 * @var integer[]
+	 * @var int[]
 	 */
 	private static $propertyMap = [
 		PHP_URL_SCHEME => 'scheme',
@@ -78,7 +78,7 @@ final class Url implements \ArrayAccess {
 	 * that they're non-empty.
 	 * 
 	 * @param       string          $url
-	 * @param       integer[]       $components
+	 * @param       int[]       $components
 	 * @return      boolean
 	 */
 	public static function contains($url, array $components) {
@@ -138,12 +138,12 @@ final class Url implements \ArrayAccess {
 	}
 	
 	/**
-	 * Attempts to resolve string properties and maps them to their integer-based
+	 * Attempts to resolve string properties and maps them to their int-based
 	 * component indices. Will throw an exception if the property is unknown,
 	 * making it easier to spot typos.
 	 * 
 	 * @param       mixed   $property
-	 * @return      integer
+	 * @return      int
 	 * @throws      \RuntimeException
 	 */
 	private function getIndex($property) {

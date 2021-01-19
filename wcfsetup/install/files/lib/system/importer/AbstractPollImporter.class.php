@@ -19,7 +19,7 @@ class AbstractPollImporter extends AbstractImporter {
 	
 	/**
 	 * object type id for poll
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $objectTypeID = 0;
 	

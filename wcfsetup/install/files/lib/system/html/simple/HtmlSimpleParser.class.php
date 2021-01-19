@@ -44,7 +44,7 @@ class HtmlSimpleParser extends SingletonFactory {
 	 * Sets the embedded object context.
 	 * 
 	 * @param       string          $objectType     object type identifier
-	 * @param       integer         $objectID       object id
+	 * @param       int         $objectID       object id
 	 */
 	public function setContext($objectType, $objectID) {
 		MessageEmbeddedObjectManager::getInstance()->setActiveMessage($objectType, $objectID);
@@ -59,7 +59,7 @@ class HtmlSimpleParser extends SingletonFactory {
 	 * Parses a message to identify any embedded content using simple placeholders.
 	 * 
 	 * @param       string          $objectType     object type identifier
-	 * @param       integer         $objectID       object id
+	 * @param       int         $objectID       object id
 	 * @param       string          $message        message content
 	 * @return      boolean         true if there is at least one embedded content found
 	 */
@@ -98,7 +98,7 @@ class HtmlSimpleParser extends SingletonFactory {
 	 * Replaces simple placeholders with embedded content data.
 	 * 
 	 * @param       string          $objectType     object type identifier
-	 * @param       integer         $objectID       object id
+	 * @param       int         $objectID       object id
 	 * @param       string          $message        message content
 	 * @return      string          parsed and replaced string
 	 */

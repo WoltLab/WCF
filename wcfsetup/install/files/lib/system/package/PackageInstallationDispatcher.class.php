@@ -1021,7 +1021,7 @@ class PackageInstallationDispatcher {
 	/**
 	 * Returns current package id.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getPackageID() {
 		return $this->queue->packageID;
@@ -1050,8 +1050,8 @@ class PackageInstallationDispatcher {
 	 * Opens the package installation queue and
 	 * starts the installation, update or uninstallation of the first entry.
 	 * 
-	 * @param	integer		$parentQueueID
-	 * @param	integer		$processNo
+	 * @param	int		$parentQueueID
+	 * @param	int		$processNo
 	 */
 	public static function openQueue($parentQueueID = 0, $processNo = 0) {
 		$conditions = new PreparedStatementConditionBuilder();
@@ -1083,7 +1083,7 @@ class PackageInstallationDispatcher {
 	/**
 	 * Checks the package installation queue for outstanding entries.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public static function checkPackageInstallationQueue() {
 		$sql = "SELECT		queueID
@@ -1297,7 +1297,7 @@ class PackageInstallationDispatcher {
 	 * Converts shorthand byte values into an integer representing bytes.
 	 * 
 	 * @param	string		$value
-	 * @return	integer
+	 * @return	int
 	 * @see		http://www.php.net/manual/en/faq.using.php#faq.using.shorthandbytes
 	 */
 	protected static function convertShorthandByteValue($value) {

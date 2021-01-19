@@ -30,7 +30,7 @@ interface IMessageQuickReplyAction {
 	 * Returns a message list object.
 	 * 
 	 * @param	DatabaseObject		$container
-	 * @param	integer			$lastMessageTime
+	 * @param	int			$lastMessageTime
 	 * @return	DatabaseObjectList
 	 */
 	public function getMessageList(DatabaseObject $container, $lastMessageTime);

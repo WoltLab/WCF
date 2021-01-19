@@ -1087,7 +1087,7 @@ class TemplateScriptingCompiler {
 	 * 
 	 * @param	string		$errorMsg
 	 * @param	string		$file
-	 * @param	integer		$line
+	 * @param	int		$line
 	 * @return	string
 	 */
 	public static function formatSyntaxError($errorMsg, $file = null, $line = null) {
@@ -1650,7 +1650,7 @@ class TemplateScriptingCompiler {
 	/**
 	 * Returns the current line number.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getCurrentLineNo() {
 		return $this->currentLineNo;

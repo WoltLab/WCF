@@ -20,7 +20,7 @@ class UserTrophyList extends DatabaseObjectList {
 	/**
 	 * Returns a user trophy list for a certain users.
 	 * 
-	 * @param 	integer[] 	$userIDs
+	 * @param 	int[] 	$userIDs
 	 * @param 	boolean		$includeDisabled
 	 * @return 	UserTrophy[][]
 	 */

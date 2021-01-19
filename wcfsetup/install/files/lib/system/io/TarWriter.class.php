@@ -201,12 +201,12 @@ class TarWriter extends Tar {
 	 * Writes header block.
 	 * 
 	 * @param	string		$filename
-	 * @param	integer		$size
-	 * @param	integer		$mtime
-	 * @param	integer		$permissions
+	 * @param	int		$size
+	 * @param	int		$mtime
+	 * @param	int		$permissions
 	 * @param	string		$typeFlag
-	 * @param	integer		$uid
-	 * @param	integer		$gid
+	 * @param	int		$uid
+	 * @param	int		$gid
 	 * @return	boolean
 	 */
 	public function writeHeaderBlock($filename, $size, $mtime = 0, $permissions = 0, $typeFlag = '', $uid = 0, $gid = 0) {

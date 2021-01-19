@@ -26,7 +26,7 @@ interface IMultiRecipientCommentUserNotificationObjectType {
 	 * is returned, no notifications should be sent.
 	 * 
 	 * @param	Comment		$comment
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function getRecipientIDs(Comment $comment);
 }

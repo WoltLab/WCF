@@ -46,13 +46,13 @@ abstract class AbstractModificationLogHandler extends SingletonFactory {
 	 * Creates a modification log entry.
 	 * 
 	 * @param	string		$action
-	 * @param	integer		$objectID
-	 * @param	integer|null	$parentObjectID
+	 * @param	int		$objectID
+	 * @param	int|null	$parentObjectID
 	 * @param	array		$additionalData
-	 * @param	integer		$time
-	 * @param	integer|null	$userID
+	 * @param	int		$time
+	 * @param	int|null	$userID
 	 * @param	string|null	$username
-	 * @param	integer		$hidden
+	 * @param	int		$hidden
 	 * @return	ModificationLog
 	 */
 	public function createLog($action, $objectID, $parentObjectID = null, array $additionalData = [], $time = TIME_NOW, $userID = null, $username = null, $hidden = 1) {
@@ -94,7 +94,7 @@ abstract class AbstractModificationLogHandler extends SingletonFactory {
 	/**
 	 * Deletes modification log entries.
 	 * 
-	 * @param	integer[]	$objectIDs
+	 * @param	int[]	$objectIDs
 	 * @param	string[]	$ignoredActions		names of actions whose log entries will not be deleted
 	 */
 	public function deleteLogs(array $objectIDs, array $ignoredActions = []) {
@@ -116,7 +116,7 @@ abstract class AbstractModificationLogHandler extends SingletonFactory {
 	/**
 	 * Deletes modification log entries by the id of the parent object.
 	 * 
-	 * @param	integer[]	$parentObjectIDs
+	 * @param	int[]	$parentObjectIDs
 	 */
 	public function deleteLogsByParentIDs(array $parentObjectIDs) {
 		if (empty($parentObjectIDs)) return;
@@ -149,8 +149,8 @@ abstract class AbstractModificationLogHandler extends SingletonFactory {
 	/**
 	 * Updates the parent object id of modification log entries.
 	 * 
-	 * @param	integer[]	$objectIDs
-	 * @param	integer		$newParentObjectID
+	 * @param	int[]	$objectIDs
+	 * @param	int		$newParentObjectID
 	 */
 	public function updateParentObjectID(array $objectIDs, $newParentObjectID) {
 		if (empty($objectIDs)) return;

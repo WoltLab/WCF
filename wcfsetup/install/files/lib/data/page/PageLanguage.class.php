@@ -16,21 +16,21 @@ use wcf\system\request\LinkHandler;
 class PageLanguage {
 	/**
 	 * language id
-	 * @var integer
+	 * @var int
 	 */
 	protected $languageID;
 	
 	/**
 	 * page id
-	 * @var integer
+	 * @var int
 	 */
 	protected $pageID;
 	
 	/**
 	 * Creates a new PageLanguage object.
 	 *
-	 * @param       integer         $pageID
-	 * @param       integer         $languageID
+	 * @param       int         $pageID
+	 * @param       int         $languageID
 	 */
 	public function __construct($pageID, $languageID) {
 		$this->pageID = $pageID;

@@ -56,7 +56,7 @@ class AdAddForm extends AbstractForm {
 	
 	/**
 	 * 1 if the ad is disabled
-	 * @var	integer
+	 * @var	int
 	 */
 	public $isDisabled = 0;
 	
@@ -74,13 +74,13 @@ class AdAddForm extends AbstractForm {
 	
 	/**
 	 * id of the selected location's object type
-	 * @var	integer
+	 * @var	int
 	 */
 	public $objectTypeID = 0;
 	
 	/**
 	 * order used to the show the ads
-	 * @var	integer
+	 * @var	int
 	 */
 	public $showOrder = 0;
 	

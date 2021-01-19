@@ -13,8 +13,8 @@ interface ICommentUserNotificationObjectType {
 	/**
 	 * Returns owner id of comment context.
 	 * 
-	 * @param	integer		$objectID
-	 * @return	integer
+	 * @param	int		$objectID
+	 * @return	int
 	 */
 	public function getOwnerID($objectID);
 }

@@ -25,7 +25,7 @@ class TemplateDiffPage extends AbstractPage {
 	
 	/**
 	 * template id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $templateID = 0;
 	
@@ -37,7 +37,7 @@ class TemplateDiffPage extends AbstractPage {
 	
 	/**
 	 * template id of the template to compare with
-	 * @var	integer
+	 * @var	int
 	 */
 	public $parentID = 0;
 	

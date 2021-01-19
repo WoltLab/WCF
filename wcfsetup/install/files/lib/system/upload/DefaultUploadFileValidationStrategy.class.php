@@ -12,7 +12,7 @@ namespace wcf\system\upload;
 class DefaultUploadFileValidationStrategy implements IUploadFileValidationStrategy {
 	/**
 	 * allowed max size
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $maxFilesize = 0;
 	
@@ -31,7 +31,7 @@ class DefaultUploadFileValidationStrategy implements IUploadFileValidationStrate
 	/**
 	 * Creates a new DefaultUploadFileValidationStrategy object.
 	 * 
-	 * @param	integer		$maxFilesize
+	 * @param	int		$maxFilesize
 	 * @param	string[]	$fileExtensions
 	 */
 	public function __construct($maxFilesize, array $fileExtensions) {

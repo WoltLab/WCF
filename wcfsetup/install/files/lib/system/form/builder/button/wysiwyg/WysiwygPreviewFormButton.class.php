@@ -20,7 +20,7 @@ class WysiwygPreviewFormButton extends FormButton implements IObjectTypeFormNode
 	
 	/**
 	 * id of the previewed message
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $objectId = 0;
 	
@@ -41,7 +41,7 @@ class WysiwygPreviewFormButton extends FormButton implements IObjectTypeFormNode
 	 * 
 	 * By default, `0` is returned.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getObjectId() {
 		return $this->objectId;
@@ -57,7 +57,7 @@ class WysiwygPreviewFormButton extends FormButton implements IObjectTypeFormNode
 	/**
 	 * Sets the id of the previewed message and returns this button.
 	 * 
-	 * @param	integer		$objectId	id of previewed message
+	 * @param	int		$objectId	id of previewed message
 	 * @return	WysiwygPreviewFormButton	this button
 	 */
 	public function objectId($objectId) {

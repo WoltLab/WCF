@@ -107,7 +107,7 @@ class BoxHandler extends SingletonFactory {
 	/**
 	 * Returns the box with the given id or `null` if it does not exist.
 	 * 
-	 * @param	integer		$boxID
+	 * @param	int		$boxID
 	 * @return	Box|null
 	 */
 	public function getBox($boxID) {
@@ -217,7 +217,7 @@ class BoxHandler extends SingletonFactory {
 	/**
 	 * Returns the list of boxes sorted by their global and page-local show order.
 	 * 
-	 * @param       integer         $pageID         page id
+	 * @param       int         $pageID         page id
 	 * @param       boolean         $forDisplay     enables content loading and removes inaccessible boxes from view
 	 * @return      Box[][]
 	 */
@@ -307,7 +307,7 @@ class BoxHandler extends SingletonFactory {
 	/**
 	 * Returns true if provided page id uses a custom box show order.
 	 * 
-	 * @param       integer         $pageID         page id
+	 * @param       int         $pageID         page id
 	 * @return      boolean         true if there is a custom show order for boxes
 	 */
 	public static function hasCustomShowOrder($pageID) {

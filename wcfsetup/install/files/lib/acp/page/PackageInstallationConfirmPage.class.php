@@ -36,7 +36,7 @@ class PackageInstallationConfirmPage extends AbstractPage {
 	
 	/**
 	 * queue id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $queueID = 0;
 	

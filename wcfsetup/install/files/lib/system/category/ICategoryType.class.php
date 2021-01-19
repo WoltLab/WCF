@@ -123,7 +123,7 @@ interface ICategoryType {
 	 * Returns the maximum category nesting level for this type. "-1" means
 	 * that there is no maximum.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getMaximumNestingLevel();
 	

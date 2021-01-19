@@ -121,7 +121,7 @@ class SmileyCache extends SingletonFactory {
 	/**
 	 * Returns all the smilies of a category.
 	 * 
-	 * @param	integer		$categoryID
+	 * @param	int		$categoryID
 	 * @return	array
 	 */
 	public function getCategorySmilies($categoryID = null) {

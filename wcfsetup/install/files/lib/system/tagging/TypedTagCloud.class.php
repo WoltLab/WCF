@@ -14,7 +14,7 @@ use wcf\system\cache\builder\TypedTagCloudCacheBuilder;
 class TypedTagCloud extends TagCloud {
 	/**
 	 * object type ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $objectTypeIDs = [];
 	
@@ -22,7 +22,7 @@ class TypedTagCloud extends TagCloud {
 	 * Constructs a new TypedTagCloud object.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer[]	$languageIDs
+	 * @param	int[]	$languageIDs
 	 */
 	public function __construct($objectType, array $languageIDs = []) {
 		$objectTypeObj = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.tagging.taggableObject', $objectType);

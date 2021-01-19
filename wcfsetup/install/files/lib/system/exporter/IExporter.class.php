@@ -32,7 +32,7 @@ interface IExporter {
 	 * Counts the number of required loops for given type.
 	 * 
 	 * @param	string		$objectType
-	 * @return	integer
+	 * @return	int
 	 */
 	public function countLoops($objectType);
 	
@@ -40,7 +40,7 @@ interface IExporter {
 	 * Runs the data export.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer		$loopCount
+	 * @param	int		$loopCount
 	 */
 	public function exportData($objectType, $loopCount = 0);
 	

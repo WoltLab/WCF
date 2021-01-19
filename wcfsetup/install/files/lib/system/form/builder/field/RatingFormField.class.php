@@ -128,7 +128,7 @@ class RatingFormField extends AbstractFormField implements IImmutableFormField, 
 	/**
 	 * Returns the sorted list of possible ratings used to generate the form field's html code.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function getRatings() {
 		if (WCF::getLanguage()->get('wcf.global.pageDirection') === 'rtl') {

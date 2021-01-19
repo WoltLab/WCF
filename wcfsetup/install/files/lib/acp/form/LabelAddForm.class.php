@@ -33,7 +33,7 @@ class LabelAddForm extends AbstractForm {
 	
 	/**
 	 * label group id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $groupID = 0;
 	
@@ -82,7 +82,7 @@ class LabelAddForm extends AbstractForm {
 	
 	/**
 	 * show order
-	 * @var	integer
+	 * @var	int
 	 */
 	public $showOrder = 0;
 	

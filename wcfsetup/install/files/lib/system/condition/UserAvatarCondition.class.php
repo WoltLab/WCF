@@ -30,19 +30,19 @@ class UserAvatarCondition extends AbstractSelectCondition implements IContentCon
 	
 	/**
 	 * value of the "user has no avatar" option
-	 * @var	integer
+	 * @var	int
 	 */
 	const NO_AVATAR = 0;
 	
 	/**
 	 * value of the "user has a custom avatar" option
-	 * @var	integer
+	 * @var	int
 	 */
 	const AVATAR = 1;
 	
 	/**
 	 * value of the "user has a gravatar" option
-	 * @var	integer
+	 * @var	int
 	 */
 	const GRAVATAR = 2;
 	

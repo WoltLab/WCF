@@ -70,7 +70,7 @@ class PageListPage extends SortablePage {
 	
 	/**
 	 * application id of the page
-	 * @var integer
+	 * @var int
 	 */
 	public $applicationPackageID = 0;
 	

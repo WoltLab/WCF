@@ -21,7 +21,7 @@ class CommentUserProfileMenuContent extends SingletonFactory implements IUserPro
 	
 	/**
 	 * object type id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $objectTypeID = 0;
 	

@@ -20,7 +20,7 @@ trait TObjectTreeNode {
 	
 	/**
 	 * current iterator key
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $index = 0;
 	
@@ -49,7 +49,7 @@ trait TObjectTreeNode {
 	/**
 	 * Returns the number of child nodes.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function count() {
 		return count($this->children);
@@ -78,7 +78,7 @@ trait TObjectTreeNode {
 	 * 
 	 * The minimum depth is `1`.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getDepth() {
 		$element = $this;
@@ -95,7 +95,7 @@ trait TObjectTreeNode {
 	/**
 	 * Returns the number of open parent nodes.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getOpenParentNodes() {
 		$element = $this;
@@ -130,7 +130,7 @@ trait TObjectTreeNode {
 	/**
 	 * Return the key of the currently iterated child node.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function key() {
 		return $this->index;

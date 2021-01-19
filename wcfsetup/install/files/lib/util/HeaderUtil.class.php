@@ -32,7 +32,7 @@ final class HeaderUtil {
 	 * 
 	 * @param	string		$name
 	 * @param	string		$value
-	 * @param	integer		$expire
+	 * @param	int		$expire
 	 */
 	public static function setCookie($name, $value = '', $expire = 0) {
 		$cookieDomain = self::getCookieDomain();
@@ -154,7 +154,7 @@ final class HeaderUtil {
 	 * 
 	 * @param	string		$location
 	 * @param	string		$message
-	 * @param	integer		$delay
+	 * @param	int		$delay
 	 * @param	string		$status
 	 */
 	public static function delayedRedirect($location, $message, $delay = 5, $status = 'success') {

@@ -29,7 +29,7 @@ class LabelEditForm extends LabelAddForm {
 	
 	/**
 	 * label id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $labelID = 0;
 	

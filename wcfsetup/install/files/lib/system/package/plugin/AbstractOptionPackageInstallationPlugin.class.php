@@ -341,7 +341,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 * 
 	 * @param	array		$option
 	 * @param	string		$categoryName
-	 * @param	integer		$existingOptionID
+	 * @param	int		$existingOptionID
 	 */
 	abstract protected function saveOption($option, $categoryName, $existingOptionID = 0);
 	

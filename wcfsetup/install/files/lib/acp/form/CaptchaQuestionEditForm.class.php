@@ -29,7 +29,7 @@ class CaptchaQuestionEditForm extends CaptchaQuestionAddForm {
 	
 	/**
 	 * id of the edited captcha question
-	 * @var	integer
+	 * @var	int
 	 */
 	public $captchaQuestionID = 0;
 	

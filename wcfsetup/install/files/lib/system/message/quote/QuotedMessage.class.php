@@ -15,9 +15,9 @@ use wcf\data\IMessage;
  * @method	string		getFormattedMessage()
  * @method	string		getLink()
  * @method	string		getMessage()
- * @method	integer		getTime()
+ * @method	int		getTime()
  * @method	string		getTitle()
- * @method	integer		getUserID()
+ * @method	int		getUserID()
  * @method	string		getUsername()
  * @method	boolean		isVisible()
  */
@@ -48,13 +48,13 @@ class QuotedMessage implements \Countable, \Iterator {
 	
 	/**
 	 * current iterator index
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $index = 0;
 	
 	/**
 	 * list of index to object relation
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $indexToObject = null;
 	

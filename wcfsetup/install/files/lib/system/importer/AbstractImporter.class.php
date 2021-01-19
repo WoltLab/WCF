@@ -59,7 +59,7 @@ abstract class AbstractImporter implements IImporter {
 	 * Returns the language category id.
 	 * 
 	 * @param       string          $languageCategory
-	 * @return      integer
+	 * @return      int
 	 */
 	protected function getLanguageCategoryID($languageCategory) {
 		static $languageCategoryIDs = [];

@@ -21,13 +21,13 @@ class UserMobileBrowserCondition extends AbstractSingleFieldCondition implements
 	
 	/**
 	 * 1 if mobile browser checkbox is checked
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $usesMobileBrowser = 0;
 	
 	/**
 	 * 1 if not use mobile browser checkbox is checked
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $usesNoMobileBrowser = 0;
 	

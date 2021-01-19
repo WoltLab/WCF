@@ -21,7 +21,7 @@ class PackagePage extends AbstractPage {
 	
 	/**
 	 * list of compatible API versions
-	 * @var integer[]
+	 * @var int[]
 	 */
 	public $compatibleVersions = [];
 	
@@ -32,7 +32,7 @@ class PackagePage extends AbstractPage {
 	
 	/**
 	 * id of the package
-	 * @var	integer
+	 * @var	int
 	 */
 	public $packageID = 0;
 	
@@ -44,7 +44,7 @@ class PackagePage extends AbstractPage {
 	
 	/**
 	 * Plugin-Store fileID
-	 * @var integer
+	 * @var int
 	 */
 	public $pluginStoreFileID = 0;
 	

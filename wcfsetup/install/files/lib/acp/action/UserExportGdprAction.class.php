@@ -117,7 +117,7 @@ class UserExportGdprAction extends AbstractAction {
 	public $user;
 	
 	/**
-	 * @var integer
+	 * @var int
 	 */
 	public $userID = 0;
 	

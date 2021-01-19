@@ -27,7 +27,7 @@ class SignatureCache extends SingletonFactory {
 	
 	/**
 	 * The userIDs which are cached by the message embedded object manager. 
-	 * @var integer[]
+	 * @var int[]
 	 */
 	protected $cachedUserIDs = [];
 	
@@ -58,7 +58,7 @@ class SignatureCache extends SingletonFactory {
 	/**
 	 * Loads the embedded objects for the given users. 
 	 * 
-	 * @param       integer[]       $userIDs
+	 * @param       int[]       $userIDs
 	 * @since       5.2
 	 */
 	public function cacheUserSignature(array $userIDs) {

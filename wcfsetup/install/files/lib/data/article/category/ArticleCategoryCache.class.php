@@ -19,7 +19,7 @@ use wcf\system\WCF;
 class ArticleCategoryCache extends SingletonFactory {
 	/**
 	 * number of total articles
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $articles;
 	
@@ -56,10 +56,10 @@ class ArticleCategoryCache extends SingletonFactory {
 	/**
 	 * Counts the articles contained in this category and its children.
 	 *
-	 * @param       integer[]       $categoryToParent
-	 * @param       integer[]       $articles
-	 * @param       integer         $categoryID
-	 * @return      integer
+	 * @param       int[]       $categoryToParent
+	 * @param       int[]       $articles
+	 * @param       int         $categoryID
+	 * @return      int
 	 */
 	protected function countArticles(array &$categoryToParent, array &$articles, $categoryID) {
 		$count = (isset($articles[$categoryID])) ? $articles[$categoryID] : 0;
@@ -78,8 +78,8 @@ class ArticleCategoryCache extends SingletonFactory {
 	/**
 	 * Returns the number of articles in the category with the given id.
 	 * 
-	 * @param	integer		$categoryID
-	 * @return	integer
+	 * @param	int		$categoryID
+	 * @return	int
 	 */
 	public function getArticles($categoryID) {
 		if ($this->articles === null) {

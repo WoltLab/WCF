@@ -29,7 +29,7 @@ class BoxEditForm extends BoxAddForm {
 	
 	/**
 	 * box id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $boxID = 0;
 	

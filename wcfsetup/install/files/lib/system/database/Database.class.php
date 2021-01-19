@@ -38,7 +38,7 @@ abstract class Database {
 	
 	/**
 	 * sql server post
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $port = 0;
 	
@@ -68,7 +68,7 @@ abstract class Database {
 	
 	/**
 	 * number of executed queries
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $queryCount = 0;
 	
@@ -86,7 +86,7 @@ abstract class Database {
 	
 	/**
 	 * amount of active transactions
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $activeTransactions = 0;
 	
@@ -109,7 +109,7 @@ abstract class Database {
 	 * @param	string		$user			SQL database server username
 	 * @param	string		$password		SQL database server password
 	 * @param	string		$database		SQL database server database name
-	 * @param	integer		$port			SQL database server port
+	 * @param	int		$port			SQL database server port
 	 * @param	boolean		$failsafeTest
 	 * @param	boolean		$tryToCreateDatabase
 	 * @param	array		$defaultDriverOptions
@@ -142,7 +142,7 @@ abstract class Database {
 	 * 
 	 * @param	string		$table
 	 * @param	string		$field
-	 * @return	integer
+	 * @return	int
 	 * @throws	DatabaseException
 	 */
 	public function getInsertID($table, $field) {
@@ -244,8 +244,8 @@ abstract class Database {
 	 * Prepares a statement for execution and returns a statement object.
 	 * 
 	 * @param	string			$statement
-	 * @param	integer			$limit
-	 * @param	integer			$offset
+	 * @param	int			$limit
+	 * @param	int			$offset
 	 * @return	PreparedStatement
 	 * @throws	DatabaseQueryException
 	 */
@@ -291,8 +291,8 @@ abstract class Database {
 	 * Other database implementations should override this function. 
 	 * 
 	 * @param	string		$query
-	 * @param	integer		$limit
-	 * @param	integer		$offset
+	 * @param	int		$limit
+	 * @param	int		$offset
 	 * @return	string
 	 */
 	public function handleLimitParameter($query, $limit = 0, $offset = 0) {
@@ -306,7 +306,7 @@ abstract class Database {
 	/**
 	 * Returns the number of the last error.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getErrorNumber() {
 		if ($this->pdo !== null) return $this->pdo->errorCode();
@@ -382,7 +382,7 @@ abstract class Database {
 	/**
 	 * Returns the amount of executed sql queries.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getQueryCount() {
 		return $this->queryCount;

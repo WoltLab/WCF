@@ -38,7 +38,7 @@ class DevtoolsProjectPipListPage extends AbstractPage {
 	
 	/**
 	 * project id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $projectID = 0;
 	

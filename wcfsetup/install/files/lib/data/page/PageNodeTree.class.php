@@ -13,13 +13,13 @@ namespace wcf\data\page;
 class PageNodeTree {
 	/**
 	 * parent page id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $parentID = null;
 	
 	/**
 	 * start depth
-	 * @var	integer
+	 * @var	int
 	 */
 	public $startDepth = 0;
 	
@@ -44,8 +44,8 @@ class PageNodeTree {
 	/**
 	 * Creates a new PageNodeTree object.
 	 *
-	 * @param	integer			$parentID
-	 * @param	integer			$startDepth
+	 * @param	int			$parentID
+	 * @param	int			$startDepth
 	 */
 	public function __construct($parentID = null, $startDepth = 0) {
 		$this->parentID = $parentID;
@@ -73,7 +73,7 @@ class PageNodeTree {
 	/**
 	 * Generates the node tree recursively.
 	 * 
-	 * @param	integer			$parentID
+	 * @param	int			$parentID
 	 * @param	PageNode		$parentNode
 	 * @return	PageNode[]
 	 */

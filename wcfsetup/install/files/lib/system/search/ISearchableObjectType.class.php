@@ -24,7 +24,7 @@ interface ISearchableObjectType {
 	/**
 	 * Returns the object with the given object id.
 	 * 
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @return	ISearchResultObject
 	 */
 	public function getObject($objectID);

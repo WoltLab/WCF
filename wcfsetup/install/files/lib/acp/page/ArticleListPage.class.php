@@ -65,7 +65,7 @@ class ArticleListPage extends SortablePage {
 	
 	/**
 	 * category id
-	 * @var integer
+	 * @var int
 	 */
 	public $categoryID = 0;
 	
@@ -89,13 +89,13 @@ class ArticleListPage extends SortablePage {
 	
 	/**
 	 * display 'Add Article' dialog on load
-	 * @var integer
+	 * @var int
 	 */
 	public $showArticleAddDialog = 0;
 	
 	/**
 	 * publication status filter
-	 * @var integer
+	 * @var int
 	 */
 	public $publicationStatus = -1;
 	
