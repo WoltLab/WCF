@@ -699,7 +699,6 @@ class Email {
 			// must treat the content as if the header did not appear in first place, this
 			// also overrules the gzip header if present
 			@header('Content-Encoding: identity');
-			HeaderUtil::exceptionDisableGzip();
 		}
 		
 		$dumpBody = function ($body, $depth) use (&$dumpBody) {
