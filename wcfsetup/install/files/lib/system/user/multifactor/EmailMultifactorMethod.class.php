@@ -22,7 +22,7 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\System\User\Multifactor
  * @since	5.4
  */
-class EmailMultifactorMethod implements IMultifactorMethod {
+final class EmailMultifactorMethod implements IMultifactorMethod {
 	private const LIFETIME = 10 * 60;
 	private const REFRESH_AFTER = 2 * 60;
 	
