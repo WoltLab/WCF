@@ -87,6 +87,13 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 		$this->method = $objectType;
 		$this->processor = $this->method->getProcessor();
 		$this->setup = Setup::find($this->method, WCF::getUser());
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function checkPermissions() {
+		parent::checkPermissions();
 		
 		$this->requestReauthentication(LinkHandler::getInstance()->getControllerLink(static::class, [
 			'object' => $this->method,
