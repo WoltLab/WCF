@@ -5089,7 +5089,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.3rdparty.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.3rdparty.facebook.login"><![CDATA[Mit Facebook anmelden]]></item>
 		<item name="wcf.user.3rdparty.facebook.register"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du erstellst{else}Sie erstellen{/if} ein Benutzerkonto über <span class="icon icon16 fa-facebook"></span>&nbsp;Facebook. Der Benutzername und {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} E-Mail-Adresse wurden daher bereits ausgefüllt.]]></item>
-		<item name="wcf.user.3rdparty.facebook.connect"><![CDATA[Mit Facebook-Konto {if $__wcf->session->getVar('__3rdPartyProvider') === 'facebook'}(„{$$__wcf->session->getVar('__oauthUser')->getUsername()}“){/if} verknüpfen]]></item>
+		<item name="wcf.user.3rdparty.facebook.connect"><![CDATA[Mit Facebook-Konto {if $__wcf->session->getVar('__3rdPartyProvider') === 'facebook'}(„{$__wcf->session->getVar('__oauthUser')->getUsername()}“){/if} verknüpfen]]></item>
 		<item name="wcf.user.3rdparty.facebook.connect.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wurde erfolgreich mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Facebook-Konto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.facebook.connect.error.inuse"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Facebook-Konto ist bereits mit einem anderen Benutzerkonto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.facebook.disconnect"><![CDATA[Verknüpfung mit Facebook trennen]]></item>
