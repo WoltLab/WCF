@@ -11,7 +11,7 @@
 {if $mailID|isset}
 	<script data-relocate="true">
 		require(['Language', 'WoltLabSuite/Core/Acp/Ui/Worker'], function (Language, AcpUiWorker) {
-			Language.add('wcf.acp.worker.abort.confirmMessage', '{lang}wcf.acp.worker.abort.confirmMessage{/lang}');
+			Language.add('wcf.acp.worker.abort.confirmMessage', '{jslang}wcf.acp.worker.abort.confirmMessage{/jslang}');
 			
 			new AcpUiWorker({
 				dialogId: 'mail',
