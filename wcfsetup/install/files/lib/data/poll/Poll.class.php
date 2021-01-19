@@ -30,7 +30,7 @@ use wcf\system\WCF;
 class Poll extends DatabaseObject {
 	/**
 	 * participation status
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $isParticipant = false;
 	
@@ -65,7 +65,7 @@ class Poll extends DatabaseObject {
 	/**
 	 * Returns a list of poll options.
 	 * 
-	 * @param	boolean		$isResultDisplay
+	 * @param	bool		$isResultDisplay
 	 * @return	PollOption[]
 	 */
 	public function getOptions($isResultDisplay = false) {
@@ -93,7 +93,7 @@ class Poll extends DatabaseObject {
 	/**
 	 * Returns true if current user is a participant.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isParticipant() {
 		$this->loadOptions();
@@ -123,7 +123,7 @@ class Poll extends DatabaseObject {
 	/**
 	 * Returns true if poll is already finished.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isFinished() {
 		return ($this->endTime && $this->endTime <= TIME_NOW);
@@ -132,7 +132,7 @@ class Poll extends DatabaseObject {
 	/**
 	 * Returns true if current user can vote.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canVote() {
 		// guest voting is not possible
@@ -164,7 +164,7 @@ class Poll extends DatabaseObject {
 	/**
 	 * Returns true if current user can see the result.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canSeeResult() {
 		if ($this->isFinished() || $this->isParticipant() || !$this->resultsRequireVote) {
@@ -177,7 +177,7 @@ class Poll extends DatabaseObject {
 	/**
 	 * Returns true if current user can view the participant list.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canViewParticipants() {
 		if ($this->canSeeResult() && $this->isPublic) {

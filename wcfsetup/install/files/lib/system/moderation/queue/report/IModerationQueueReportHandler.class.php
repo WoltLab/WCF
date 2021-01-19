@@ -16,7 +16,7 @@ interface IModerationQueueReportHandler extends IModerationQueueHandler {
 	 * Returns true if current user can report given content.
 	 * 
 	 * @param	int		$objectID
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canReport($objectID);
 	

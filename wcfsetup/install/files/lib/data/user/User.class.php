@@ -84,7 +84,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 	
 	/**
 	 * true, if user has access to the ACP
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $hasAdministrativePermissions;
 	
@@ -140,7 +140,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 	 * Returns true if the given password is the correct password for this user.
 	 * 
 	 * @param	string		$password
-	 * @return	boolean		password correct
+	 * @return	bool		password correct
 	 */
 	public function checkPassword($password) {
 		$isValid = false;
@@ -188,7 +188,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 	/**
 	 * Returns an array with all the groups in which the actual user is a member.
 	 * 
-	 * @param	boolean		$skipCache
+	 * @param	bool		$skipCache
 	 * @return	int[]
 	 */
 	public function getGroupIDs($skipCache = false) {
@@ -267,7 +267,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 	 * Returns the value of the user option with the given name.
 	 * 
 	 * @param	string		$name		user option name
-	 * @param       boolean         $filterDisabled suppress values for disabled options
+	 * @param       bool         $filterDisabled suppress values for disabled options
 	 * @return	mixed				user option value
 	 */
 	public function getUserOption($name, $filterDisabled = false) {
@@ -395,7 +395,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 	/**
 	 * Returns true if this user is marked.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isMarked() {
 		$markedUsers = WCF::getSession()->getVar('markedUsers');
@@ -409,7 +409,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 	/**
 	 * Returns true if the email is confirmed.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 * @since       5.3
 	 */
 	public function isEmailConfirmed() {
@@ -488,7 +488,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 	/**
 	 * Returns true if the active user can edit this user.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canEdit() {
 		return (WCF::getSession()->getPermission('admin.user.canEditUser') && UserGroup::isAccessibleGroup($this->getGroupIDs()));
@@ -497,7 +497,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 	/**
 	 * Returns true, if this user has access to the ACP.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasAdministrativeAccess() {
 		if ($this->hasAdministrativePermissions === null) {
@@ -575,7 +575,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 	 * Returns the social network privacy settings of the user.
 	 * @deprecated 3.0
 	 * 
-	 * @return	boolean[]
+	 * @return	bool[]
 	 */
 	public function getSocialNetworkPrivacySettings() {
 		return [
@@ -602,7 +602,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 	/**
 	 * Returns true, if this user can purchase paid subscriptions.
 	 *
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function canPurchasePaidSubscriptions() {
 		return WCF::getUser()->userID && !$this->pendingActivation();
@@ -644,7 +644,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 	/**
 	 * Returns true if this user is not activated.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 * @since       5.3
 	 */
 	public function pendingActivation() {
@@ -654,7 +654,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 	/**
 	 * Returns true if this user requires activation by the user.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 * @since       5.3
 	 */
 	public function requiresEmailActivation() {
@@ -664,7 +664,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 	/**
 	 * Returns true if this user requires the activation by an admin.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 * @since       5.3
 	 */
 	public function requiresAdminActivation() {
@@ -674,7 +674,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 	/**
 	 * Returns true if this user can confirm the email themself.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 * @since       5.3
 	 */
 	public function canEmailConfirm() {
@@ -684,7 +684,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 	/**
 	 * Returns true, if the user must confirm his email by themself. 
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 * @since       5.3
 	 */
 	public function mustSelfEmailConfirm() {

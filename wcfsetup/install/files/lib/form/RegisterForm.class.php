@@ -41,7 +41,7 @@ use wcf\util\UserUtil;
 class RegisterForm extends UserAddForm {
 	/**
 	 * true if external authentication is used
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $isExternalAuthentication = false;
 	
@@ -71,7 +71,7 @@ class RegisterForm extends UserAddForm {
 	
 	/**
 	 * true if captcha is used
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $useCaptcha = REGISTER_USE_CAPTCHA;
 	

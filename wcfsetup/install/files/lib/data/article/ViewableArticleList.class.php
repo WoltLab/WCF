@@ -29,7 +29,7 @@ class ViewableArticleList extends ArticleList {
 	
 	/**
 	 * enables/disables the loading of article content objects
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $contentLoading = true;
 	
@@ -102,7 +102,7 @@ class ViewableArticleList extends ArticleList {
 	/**
 	 * Enables/disables the loading of article content objects.
 	 *
-	 * @param	boolean		$enable
+	 * @param	bool		$enable
 	 */
 	public function enableContentLoading($enable = true) {
 		$this->contentLoading = $enable;

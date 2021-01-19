@@ -14,7 +14,7 @@ interface ITrackablePage {
 	/**
 	 * Returns true if this page should be tracked.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isTracked();
 	

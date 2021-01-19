@@ -33,7 +33,7 @@ interface IBlockTemplatePlugin {
 	 * This function is called before every execution of this block function.
 	 * 
 	 * @param	TemplateEngine		$tplObj
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function next(TemplateEngine $tplObj);
 }

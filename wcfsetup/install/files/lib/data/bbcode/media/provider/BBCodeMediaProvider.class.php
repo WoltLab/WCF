@@ -58,7 +58,7 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController {
 	 * Returns true if given URL is a media URL.
 	 * 
 	 * @param	string		$url
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isMediaURL($url) {
 		foreach (static::getCache() as $provider) {
@@ -74,7 +74,7 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController {
 	 * Checks whether this provider matches the given URL.
 	 * 
 	 * @param	string		$url
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function matches($url) {
 		$lines = explode("\n", StringUtil::unifyNewlines($this->regex));

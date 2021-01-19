@@ -64,19 +64,19 @@ class WysiwygFormField extends AbstractFormField implements IAttributeFormField,
 	
 	/**
 	 * is `true` if this form field supports attachments, otherwise `false`
-	 * @var	boolean 
+	 * @var	bool 
 	 */
 	protected $supportAttachments = false;
 	
 	/**
 	 * is `true` if this form field supports mentions, otherwise `false`
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $supportMentions = false;
 	
 	/**
 	 * is `true` if this form field supports quotes, otherwise `false`
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $supportQuotes = false;
 	
@@ -285,7 +285,7 @@ class WysiwygFormField extends AbstractFormField implements IAttributeFormField,
 	/**
 	 * Sets if the form field supports attachments and returns this field.
 	 * 
-	 * @param	boolean		$supportAttachments
+	 * @param	bool		$supportAttachments
 	 * @return	WysiwygFormField		this field
 	 */
 	public function supportAttachments($supportAttachments = true) {
@@ -297,7 +297,7 @@ class WysiwygFormField extends AbstractFormField implements IAttributeFormField,
 	/**
 	 * Sets if the form field supports mentions and returns this field.
 	 * 
-	 * @param	boolean		$supportMentions
+	 * @param	bool		$supportMentions
 	 * @return	WysiwygFormField		this field
 	 */
 	public function supportMentions($supportMentions = true) {
@@ -309,7 +309,7 @@ class WysiwygFormField extends AbstractFormField implements IAttributeFormField,
 	/**
 	 * Sets if the form field supports quotes and returns this field.
 	 * 
-	 * @param	boolean		$supportQuotes
+	 * @param	bool		$supportQuotes
 	 * @return	WysiwygFormField		this field
 	 */
 	public function supportQuotes($supportQuotes = true) {
@@ -336,7 +336,7 @@ class WysiwygFormField extends AbstractFormField implements IAttributeFormField,
 	 * 
 	 * By default, attachments are not supported.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function supportsAttachments() {
 		return $this->supportAttachments;
@@ -347,7 +347,7 @@ class WysiwygFormField extends AbstractFormField implements IAttributeFormField,
 	 * 
 	 * By default, mentions are not supported.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function supportsMentions() {
 		return $this->supportMentions;
@@ -358,7 +358,7 @@ class WysiwygFormField extends AbstractFormField implements IAttributeFormField,
 	 * 
 	 * By default, quotes are not supported.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function supportsQuotes() {
 		return $this->supportQuotes;

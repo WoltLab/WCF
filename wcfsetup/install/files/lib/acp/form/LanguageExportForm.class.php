@@ -54,7 +54,7 @@ class LanguageExportForm extends AbstractForm {
 	
 	/**
 	 * true to export custom variables
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $exportCustomValues = false;
 	

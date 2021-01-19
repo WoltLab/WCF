@@ -116,7 +116,7 @@ final class DoubleBcrypt implements IPasswordAlgorithm {
 	 * Returns true if given bcrypt hash uses a different cost factor and should be re-computed.
 	 * 
 	 * @param	string		$hash
-	 * @return	boolean
+	 * @return	bool
 	 */
 	private static function isDifferentBlowfish($hash) {
 		$currentCost = \intval(self::BCRYPT_COST);

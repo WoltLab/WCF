@@ -159,7 +159,7 @@ final class Regex {
 	/**
 	 * Checks whether the regex is syntactically correct.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isValid() {
 		try {
@@ -177,7 +177,7 @@ final class Regex {
 	 * Checks whether the regex matches the given string.
 	 * 
 	 * @param	string		$string		string to match
-	 * @param	boolean		$all		indicates if all matches are collected
+	 * @param	bool		$all		indicates if all matches are collected
 	 * @param	int		$flags		match flags
 	 * @return	int				return value of preg_match(_all)
 	 */

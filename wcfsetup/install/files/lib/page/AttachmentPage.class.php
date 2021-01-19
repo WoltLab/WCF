@@ -36,13 +36,13 @@ class AttachmentPage extends AbstractPage {
 	
 	/**
 	 * shows the tiny thumbnail
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $tiny = 0;
 	
 	/**
 	 * shows the standard thumbnail
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $thumbnail = 0;
 	

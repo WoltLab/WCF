@@ -37,7 +37,7 @@ class Menu extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns true if the active user can delete this menu.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canDelete() {
 		if (WCF::getSession()->getPermission('admin.content.cms.canManageMenu') && !$this->originIsSystem) {
@@ -59,7 +59,7 @@ class Menu extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns false if this menu has no content (has menu items).
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasContent() {
 		return $this->getMenuItemNodeTree()->getVisibleItemCount() > 0;

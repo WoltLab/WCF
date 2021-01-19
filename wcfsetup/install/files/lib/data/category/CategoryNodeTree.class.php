@@ -20,7 +20,7 @@ class CategoryNodeTree implements \IteratorAggregate {
 	
 	/**
 	 * if true, disabled categories are also included in the node tree
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $includeDisabledCategories = false;
 	
@@ -59,7 +59,7 @@ class CategoryNodeTree implements \IteratorAggregate {
 	 * 
 	 * @param	string			$objectType
 	 * @param	int			$parentCategoryID
-	 * @param	boolean			$includeDisabledCategories
+	 * @param	bool			$includeDisabledCategories
 	 * @param	int[]		$excludedCategoryIDs
 	 * @throws	SystemException
 	 */
@@ -178,7 +178,7 @@ class CategoryNodeTree implements \IteratorAggregate {
 	 * to be included in this tree.
 	 * 
 	 * @param	CategoryNode		$categoryNode
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function isIncluded(CategoryNode $categoryNode) {
 		return (!$categoryNode->isDisabled || $this->includeDisabledCategories) && !in_array($categoryNode->categoryID, $this->excludedCategoryIDs);

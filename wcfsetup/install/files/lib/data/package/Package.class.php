@@ -94,7 +94,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
 	/**
 	 * Returns true if this package is required by other packages.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isRequired() {
 		self::loadRequirements();
@@ -105,7 +105,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
 	/**
 	 * Returns true if package is a plugin.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isPlugin() {
 		if ($this->isApplication) {
@@ -203,7 +203,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
 	/**
 	 * Returns true if current user can uninstall this package.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canUninstall() {
 		if (!WCF::getSession()->getPermission('admin.configuration.package.canUninstallPackage')) {
@@ -294,7 +294,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
 	 * Returns true if package identified by $package is already installed.
 	 * 
 	 * @param	string		$package
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isAlreadyInstalled($package) {
 		$sql = "SELECT	COUNT(*)
@@ -322,7 +322,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
 	 * the respective package.
 	 * 
 	 * @param	string		$packageName
-	 * @return	boolean		isValid
+	 * @return	bool		isValid
 	 */
 	public static function isValidPackageName($packageName) {
 		if (mb_strlen($packageName) < 3 || mb_strlen($packageName) > 191) {
@@ -341,7 +341,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
 	 * 	3.1.7 rC 4
 	 * 
 	 * @param	string		$version
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isValidVersion($version) {
 		return preg_match('~^([0-9]+)\.([0-9]+)\.([0-9]+)(\ (a|alpha|b|beta|d|dev|rc|pl)\ ([0-9]+))?$~is', $version);
@@ -360,7 +360,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
 	 * 
 	 * @param	string		$currentVersion
 	 * @param	string		$fromVersion
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function checkFromversion($currentVersion, $fromVersion) {
 		if (mb_strpos($fromVersion, '*') !== false) {
@@ -386,7 +386,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
 	 * @param	string		$version1
 	 * @param	string		$version2
 	 * @param	string		$operator
-	 * @return	boolean		result
+	 * @return	bool		result
 	 * @see	http://www.php.net/manual/en/function.version-compare.php
 	 */
 	public static function compareVersion($version1, $version2, $operator = null) {

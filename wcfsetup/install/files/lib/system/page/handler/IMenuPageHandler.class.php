@@ -25,7 +25,7 @@ interface IMenuPageHandler {
 	 * of the page itself. The visibility can optionally be scoped to the given object id.
 	 * 
 	 * @param	int|null	$objectID	optional page object id
-	 * @return	boolean		false if the page should be hidden from menus
+	 * @return	bool		false if the page should be hidden from menus
 	 */
 	public function isVisible($objectID = null);
 }

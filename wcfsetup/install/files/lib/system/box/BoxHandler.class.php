@@ -38,7 +38,7 @@ class BoxHandler extends SingletonFactory {
 	protected $boxesByPosition = [];
 	
 	/**
-	 * @var boolean
+	 * @var bool
 	 */
 	protected static $disablePageLayout = false;
 	
@@ -153,7 +153,7 @@ class BoxHandler extends SingletonFactory {
 	 *
 	 * @param	string		$boxIdentifier
 	 * @param	string[]	$pageIdentifiers
-	 * @param	boolean		$visible
+	 * @param	bool		$visible
 	 * @throws	\InvalidArgumentException
 	 */
 	public function addBoxToPageAssignments($boxIdentifier, array $pageIdentifiers, $visible = true) {
@@ -194,7 +194,7 @@ class BoxHandler extends SingletonFactory {
 	/**
 	 * Returns true if the left sidebar contains at least one visible menu.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 * @since       3.1
 	 */
 	public function sidebarLeftHasMenu() {
@@ -218,7 +218,7 @@ class BoxHandler extends SingletonFactory {
 	 * Returns the list of boxes sorted by their global and page-local show order.
 	 * 
 	 * @param       int         $pageID         page id
-	 * @param       boolean         $forDisplay     enables content loading and removes inaccessible boxes from view
+	 * @param       bool         $forDisplay     enables content loading and removes inaccessible boxes from view
 	 * @return      Box[][]
 	 */
 	public static function loadBoxes($pageID, $forDisplay) {
@@ -308,7 +308,7 @@ class BoxHandler extends SingletonFactory {
 	 * Returns true if provided page id uses a custom box show order.
 	 * 
 	 * @param       int         $pageID         page id
-	 * @return      boolean         true if there is a custom show order for boxes
+	 * @return      bool         true if there is a custom show order for boxes
 	 */
 	public static function hasCustomShowOrder($pageID) {
 		$sql = "SELECT  COUNT(*) AS count

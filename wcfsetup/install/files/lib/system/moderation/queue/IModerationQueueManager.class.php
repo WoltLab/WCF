@@ -25,7 +25,7 @@ interface IModerationQueueManager {
 	 * 
 	 * @param	string		$objectType
 	 * @param	int		$objectID
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isValid($objectType, $objectID = null);
 	
@@ -66,7 +66,7 @@ interface IModerationQueueManager {
 	 * Returns whether the affected content may be removed.
 	 * 
 	 * @param	ModerationQueue		$queue
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canRemoveContent(ModerationQueue $queue);
 	

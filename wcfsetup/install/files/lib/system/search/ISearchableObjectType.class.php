@@ -103,7 +103,7 @@ interface ISearchableObjectType {
 	/**
 	 * Returns true if the current user can use this searchable object type.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isAccessible();
 	

@@ -27,7 +27,7 @@ abstract class RecaptchaForm extends AbstractForm {
 	
 	/**
 	 * enable recaptcha
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $useCaptcha = true;
 	

@@ -78,7 +78,7 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent {
 	/**
 	 * Returns true if the active user can delete this article.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canDelete() {
 		if (WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
@@ -95,7 +95,7 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent {
 	/**
 	 * Returns true if the active user has access to this article.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canRead() {
 		if ($this->isDeleted && !WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
@@ -118,7 +118,7 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent {
 	/**
 	 * Returns true if the current user can edit these article.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 * @since       5.2
 	 */
 	public function canEdit() {
@@ -142,7 +142,7 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent {
 	/**
 	 * Returns true if the current user can publish these article. 
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 * @since       5.2
 	 */
 	public function canPublish() {

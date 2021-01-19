@@ -349,7 +349,7 @@ final class HTTPRequest {
 	 * 
 	 * @param	string		$name
 	 * @param	string		$value
-	 * @param	boolean		$append
+	 * @param	bool		$append
 	 */
 	public function addHeader($name, $value, $append = false) {
 		// 4.2 Field names are case-insensitive.

@@ -16,7 +16,7 @@ use wcf\system\WCF;
 class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 	/**
 	 * template type supports template groups
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $supportsTemplateGroups = false;
 	

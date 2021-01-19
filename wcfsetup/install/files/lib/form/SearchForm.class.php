@@ -38,7 +38,7 @@ class SearchForm extends AbstractCaptchaForm {
 	
 	/**
 	 * true, if search should be modified
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $modifySearch = null;
 	
@@ -137,7 +137,7 @@ class SearchForm extends AbstractCaptchaForm {
 	
 	/**
 	 * mark as submitted form if modifying search
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $submit = false;
 	

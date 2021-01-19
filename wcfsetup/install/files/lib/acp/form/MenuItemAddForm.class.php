@@ -50,13 +50,13 @@ class MenuItemAddForm extends AbstractForm {
 	
 	/**
 	 * activation state
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $isDisabled = false;
 	
 	/**
 	 * internal link
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $isInternalLink = true;
 	

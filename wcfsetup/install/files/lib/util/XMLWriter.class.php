@@ -13,7 +13,7 @@ use wcf\system\exception\SystemException;
 class XMLWriter {
 	/**
 	 * true, if a document is still processed
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $activeDocument = false;
 	

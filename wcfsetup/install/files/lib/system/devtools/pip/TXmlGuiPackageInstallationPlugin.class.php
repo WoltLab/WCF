@@ -180,7 +180,7 @@ trait TXmlGuiPackageInstallationPlugin {
 	 * on the value of `$addDeleteInstruction`, adds a delete instruction.
 	 * 
 	 * @param	string		$identifier
-	 * @param	boolean		$addDeleteInstruction
+	 * @param	bool		$addDeleteInstruction
 	 */
 	public function deleteEntry($identifier, $addDeleteInstruction) {
 		$xml = $this->getProjectXml();
@@ -225,7 +225,7 @@ trait TXmlGuiPackageInstallationPlugin {
 	 * because there is no content left.
 	 * 
 	 * @param	\DOMDocument	$document	sanitized document
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function sanitizeXmlFileAfterDeleteEntry(\DOMDocument $document) {
 		$data = $document->getElementsByTagName('data')->item(0);
@@ -690,7 +690,7 @@ XML;
 	 * Returns `true` if this package installation plugin supports delete
 	 * instructions.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function supportsDeleteInstruction() {
 		return true;

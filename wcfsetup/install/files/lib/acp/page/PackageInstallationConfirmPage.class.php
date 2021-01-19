@@ -42,14 +42,14 @@ class PackageInstallationConfirmPage extends AbstractPage {
 	
 	/**
 	 * package validation result
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $validationPassed = false;
 	
 	/**
 	 * true if the package to be installed was uploaded via the import style
 	 * form
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $installingImportedStyle = false;
 	

@@ -295,8 +295,8 @@ class TemplateScriptingCompiler {
 	 * @param	string		$identifier
 	 * @param	string		$sourceContent
 	 * @param	array		$metaData
-	 * @param	boolean		$isolated
-	 * @return	array|boolean
+	 * @param	bool		$isolated
+	 * @return	array|bool
 	 * @throws	SystemException
 	 */
 	public function compileString($identifier, $sourceContent, array $metaData = [], $isolated = false) {
@@ -658,7 +658,7 @@ class TemplateScriptingCompiler {
 	/**
 	 * Compiles a capture tag and returns the compiled PHP code.
 	 * 
-	 * @param	boolean		$startTag
+	 * @param	bool		$startTag
 	 * @param	string		$captureTag
 	 * @return	string
 	 */
@@ -1105,7 +1105,7 @@ class TemplateScriptingCompiler {
 	 * Compiles an {if} tag and returns the compiled PHP code.
 	 * 
 	 * @param	string		$tagArgs
-	 * @param	boolean		$elseif		true, if this tag is an else tag
+	 * @param	bool		$elseif		true, if this tag is an else tag
 	 * @return	string
 	 * @throws	SystemException
 	 */
@@ -1251,7 +1251,7 @@ class TemplateScriptingCompiler {
 	 * 
 	 * @param	string		$variable
 	 * @param	string		$type
-	 * @param	boolean		$allowConstants
+	 * @param	bool		$allowConstants
 	 * @return	string
 	 */
 	protected function compileSimpleVariable($variable, $type = '', $allowConstants = true) {
@@ -1294,7 +1294,7 @@ class TemplateScriptingCompiler {
 	 * Compiles a variable tag and returns the compiled PHP code.
 	 * 
 	 * @param	string		$tag
-	 * @param	boolean		$replaceQuotes
+	 * @param	bool		$replaceQuotes
 	 * @return	string
 	 * @throws	SystemException
 	 */

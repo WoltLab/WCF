@@ -24,7 +24,7 @@ interface IStorableObject {
 	 * is not NULL.
 	 * 
 	 * @param	string		$name
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function __isset($name);
 	
@@ -52,7 +52,7 @@ interface IStorableObject {
 	/**
 	 * Returns true if database table index is an identity column.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function getDatabaseTableIndexIsIdentity();
 	

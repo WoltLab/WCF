@@ -98,7 +98,7 @@ class AbstractAttachmentImporter extends AbstractImporter {
 	 * @param	string		$message
 	 * @param	int		$oldID
 	 * @param	int		$newID
-	 * @return	string|boolean
+	 * @return	string|bool
 	 */
 	protected function fixEmbeddedAttachments($message, $oldID, $newID) {
 		if (mb_strripos($message, '[attach]'.$oldID.'[/attach]') !== false || mb_strripos($message, '[attach='.$oldID.']') !== false || mb_strripos($message, '[attach='.$oldID.',') !== false) {

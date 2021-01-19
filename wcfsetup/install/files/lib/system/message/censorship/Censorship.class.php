@@ -165,7 +165,7 @@ class Censorship extends SingletonFactory {
 	 * 
 	 * @param	int		$index
 	 * @param	string		$search
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function lookBehind($index, $search) {
 		if (isset($this->words[$index])) {

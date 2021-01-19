@@ -82,7 +82,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	
 	/**
 	 * enables the automatic usage of the qualified shorthand
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $useQualifiedShorthand = true;
 	

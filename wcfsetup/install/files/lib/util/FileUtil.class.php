@@ -217,7 +217,7 @@ final class FileUtil {
 	 * necessary.
 	 * 
 	 * @param	string		$path
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function makePath($path) {
 		// directory already exists, abort
@@ -270,7 +270,7 @@ final class FileUtil {
 	 * 
 	 * @param	string		$folder
 	 * @param	string		$searchfile
-	 * @param	boolean		$recursive
+	 * @param	bool		$recursive
 	 * @return	mixed
 	 */
 	public static function scanFolder($folder, $searchfile, $recursive = true) {
@@ -306,7 +306,7 @@ final class FileUtil {
 	 * Returns true if the given filename is an url (http or ftp).
 	 * 
 	 * @param	string		$filename
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isURL($filename) {
 		return preg_match('!^(https?|ftp)://!', $filename);
@@ -446,7 +446,7 @@ final class FileUtil {
 	 * otherwise it considers the file to be binary.
 	 * 
 	 * @param	string		$file
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isBinary($file) {
 		// open file
@@ -469,7 +469,7 @@ final class FileUtil {
 	 * 
 	 * @param	string		$gzipped
 	 * @param	string		$destination
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function uncompressFile($gzipped, $destination) {
 		if (!@is_file($gzipped)) {
@@ -493,7 +493,7 @@ final class FileUtil {
 	/**
 	 * Returns true if php is running as apache module.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isApacheModule() {
 		return function_exists('apache_get_version');
@@ -636,7 +636,7 @@ final class FileUtil {
 	 * Returns true if the given amount of memory is available.
 	 * 
 	 * @param	int		$neededMemory
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function checkMemoryLimit($neededMemory) {
 		return self::getMemoryLimit() == -1 || self::getMemoryLimit() > (memory_get_usage() + $neededMemory);

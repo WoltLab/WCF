@@ -20,7 +20,7 @@ use wcf\data\DatabaseObject;
 class PollOption extends DatabaseObject {
 	/**
 	 * true, if option was selected by current user
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $selected = false;
 	

@@ -55,7 +55,7 @@ class MenuItem extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns true if the active user can delete this menu item.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canDelete() {
 		if (WCF::getSession()->getPermission('admin.content.cms.canManageMenu') && !$this->originIsSystem) {
@@ -68,7 +68,7 @@ class MenuItem extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns true if the active user can disable this menu item.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canDisable() {
 		if (WCF::getSession()->getPermission('admin.content.cms.canManageMenu')) {
@@ -115,7 +115,7 @@ class MenuItem extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns false if this item should be hidden from menu.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isVisible() {
 		if ($this->isDisabled) {
@@ -154,7 +154,7 @@ class MenuItem extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns true if this item is an external link.
 	 * 
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isExternalLink() {
 		return ($this->externalURL ? !ApplicationHandler::getInstance()->isInternalURL($this->externalURL) : false);

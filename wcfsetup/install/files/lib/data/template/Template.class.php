@@ -92,7 +92,7 @@ class Template extends DatabaseObject {
 	 * Returns true if current template is considered system critical and
 	 * may not be customized at any point.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function canCopy() {
 		if (self::isSystemCritical($this->templateName)) {
@@ -109,7 +109,7 @@ class Template extends DatabaseObject {
 	 * may not be customized at any point.
 	 * 
 	 * @param       string          $templateName
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public static function isSystemCritical($templateName) {
 		return in_array($templateName, self::$systemCriticalTemplates);

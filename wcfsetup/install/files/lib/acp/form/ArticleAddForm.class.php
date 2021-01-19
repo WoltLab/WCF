@@ -50,7 +50,7 @@ class ArticleAddForm extends AbstractForm {
 	
 	/**
 	 * true if created article is multi-lingual
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $isMultilingual = 0;
 	
@@ -104,7 +104,7 @@ class ArticleAddForm extends AbstractForm {
 	
 	/**
 	 * enables the comment function
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $enableComments = ARTICLE_ENABLE_COMMENTS_DEFAULT_VALUE;
 	

@@ -45,7 +45,7 @@ interface IObjectTreeNode extends \Countable, IIDObject, \RecursiveIterator {
 	/**
 	 * Returns `true` if this node is the last sibling and `false` otherwise.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isLastSibling();
 	

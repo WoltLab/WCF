@@ -63,7 +63,7 @@ class TrophyCategory extends AbstractDecoratedCategory implements ITitledLinkObj
 	/**
 	 * Returns the trophies for the category. 
 	 * 
-	 * @param 	boolean 	$includeDisabled 
+	 * @param 	bool 	$includeDisabled 
 	 * @return 	Trophy[]
 	 */
 	public function getTrophies($includeDisabled = false) {

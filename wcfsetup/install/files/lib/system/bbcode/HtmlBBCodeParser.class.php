@@ -36,7 +36,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 	
 	/**
 	 * Google AMP support
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $isGoogleAmp = false;
 	
@@ -93,7 +93,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 	/**
 	 * Enables or disables Google AMP support.
 	 * 
-	 * @param       boolean         $isGoogleAmp
+	 * @param       bool         $isGoogleAmp
 	 * @since       3.1
 	 */
 	public function setIsGoogleAmp($isGoogleAmp) {
@@ -103,7 +103,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 	/**
 	 * Returns true if Google AMP support is enabled.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 * @since       3.1
 	 */
 	public function getIsGoogleAmp() {
@@ -365,7 +365,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 	 * 
 	 * @param	string		$name			bbcode identifier
 	 * @param	array		$attributes		list of attributes
-	 * @param	boolean		$openingTagOnly		only render the opening tag
+	 * @param	bool		$openingTagOnly		only render the opening tag
 	 * @return	string
 	 */
 	public function buildBBCodeTag($name, $attributes, $openingTagOnly = false) {
@@ -514,7 +514,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 	 * Returns true if provided name is a valid bbcode identifier.
 	 * 
 	 * @param	string		$name		bbcode identifier
-	 * @return	boolean		true if provided name is a valid bbcode identifier
+	 * @return	bool		true if provided name is a valid bbcode identifier
 	 */
 	protected function isValidBBCodeName($name) {
 		return preg_match($this->validBBCodePattern, $name) === 1;

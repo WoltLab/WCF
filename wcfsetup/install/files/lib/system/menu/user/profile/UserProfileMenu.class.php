@@ -66,7 +66,7 @@ class UserProfileMenu extends SingletonFactory {
 	 * Checks the options and permissions of given menu item.
 	 * 
 	 * @param	UserProfileMenuItem	$item
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function checkMenuItem(UserProfileMenuItem $item) {
 		return $item->validateOptions() && $item->validatePermissions();
@@ -85,7 +85,7 @@ class UserProfileMenu extends SingletonFactory {
 	 * Sets active menu item.
 	 * 
 	 * @param	string		$menuItem
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function setActiveMenuItem($menuItem) {
 		foreach ($this->menuItems as $item) {

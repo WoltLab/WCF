@@ -95,7 +95,7 @@ class Style extends DatabaseObject {
 	 * in emails)
 	 * 
 	 * @param	string		$variableName
-	 * @param	boolean		$toHex
+	 * @param	bool		$toHex
 	 * @return	string
 	 */
 	public function getVariable($variableName, $toHex = false) {
@@ -266,7 +266,7 @@ class Style extends DatabaseObject {
 	 * Returns the path to a favicon-related file.
 	 * 
 	 * @param	string		$filename	name of the file
-	 * @param	boolean		$absolutePath	if `true`, the absolute path is returned, otherwise the path relative to WCF is returned
+	 * @param	bool		$absolutePath	if `true`, the absolute path is returned, otherwise the path relative to WCF is returned
 	 * @return	string
 	 */
 	protected function getFaviconPath($filename, $absolutePath = true) {

@@ -158,7 +158,7 @@ class Box extends DatabaseObject {
 	/**
 	 * Returns true if the active user can delete this box.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canDelete() {
 		if (WCF::getSession()->getPermission('admin.content.cms.canManageBox') && !$this->originIsSystem) {
@@ -288,7 +288,7 @@ class Box extends DatabaseObject {
 	/**
 	 * Returns false if this box has no content.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasContent() {
 		if ($this->boxType == 'system') {
@@ -404,7 +404,7 @@ class Box extends DatabaseObject {
 	/**
 	 * Returns true if this box has a link.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasLink() {
 		if ($this->boxType == 'system') {
@@ -506,7 +506,7 @@ class Box extends DatabaseObject {
 	/**
 	 * Returns true if this box is accessible by current user.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isAccessible() {
 		return SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.box', $this->boxID);
@@ -524,7 +524,7 @@ class Box extends DatabaseObject {
 	/**
 	 * Returns true if an edit button should be displayed for this box.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 * @since       5.2
 	 */
 	public function showEditButton() {

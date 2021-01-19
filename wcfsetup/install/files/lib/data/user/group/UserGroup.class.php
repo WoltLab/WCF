@@ -195,7 +195,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	 * given, the active user is used.
 	 * 
 	 * @param	User            $user   user object or current user if null
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isMember(User $user = null) {
 		if ($user === null) $user = WCF::getUser();
@@ -207,7 +207,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns true if this is the 'Everyone' group.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 * @since	3.0
 	 */
 	public function isEveryone() {
@@ -217,7 +217,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns true if this is the 'Users' group.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 * @since       3.1
 	 */
 	public function isUsers() {
@@ -248,7 +248,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	 * Returns true if the given groups are accessible for the active user.
 	 * 
 	 * @param	array		$groupIDs
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isAccessibleGroup(array $groupIDs = []) {
 		if (self::$accessibleGroups === null) {
@@ -308,7 +308,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	 *  b) This is the 'Owner' group.
 	 *  c) The group can access all groups (the 'Owner' group does not count).
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isAdminGroup() {
 		// WCFSetup
@@ -330,7 +330,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns true if the current group is a moderator-group.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isModGroup() {
 		// workaround for WCF-Setup
@@ -351,7 +351,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns true if this group is accessible for the active user.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isAccessible() {
 		return self::isAccessibleGroup([$this->groupID]);
@@ -388,7 +388,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns true if current user may delete this group.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isDeletable() {
 		// insufficient permissions
@@ -409,7 +409,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns true if current user may edit this group.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isEditable() {
 		// insufficient permissions

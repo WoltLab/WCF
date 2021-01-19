@@ -80,7 +80,7 @@ class ImportCLICommand implements ICLICommand {
 	
 	/**
 	 * indicates if the imported will be quit
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $quitImport = false;
 	

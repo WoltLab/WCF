@@ -96,7 +96,7 @@ class Like extends DatabaseObject {
 	/**
 	 * Returns true, if like value is a like.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 * @deprecated	5.2
 	 */
 	public function isLike() {
@@ -106,7 +106,7 @@ class Like extends DatabaseObject {
 	/**
 	 * Returns true, if like value is a dislike.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 * @deprecated	5.2
 	 */
 	public function isDislike() {

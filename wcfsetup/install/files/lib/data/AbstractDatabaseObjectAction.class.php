@@ -424,7 +424,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * Reads an integer value and validates it.
 	 * 
 	 * @param	string		$variableName
-	 * @param	boolean		$allowEmpty
+	 * @param	bool		$allowEmpty
 	 * @param	string		$arrayIndex
 	 */
 	protected function readInteger($variableName, $allowEmpty = false, $arrayIndex = '') {
@@ -435,7 +435,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * Reads an integer array and validates it.
 	 * 
 	 * @param	string		$variableName
-	 * @param	boolean		$allowEmpty
+	 * @param	bool		$allowEmpty
 	 * @param	string		$arrayIndex
 	 * @since	3.0
 	 */
@@ -447,7 +447,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * Reads a string value and validates it.
 	 * 
 	 * @param	string		$variableName
-	 * @param	boolean		$allowEmpty
+	 * @param	bool		$allowEmpty
 	 * @param	string		$arrayIndex
 	 */
 	protected function readString($variableName, $allowEmpty = false, $arrayIndex = '') {
@@ -458,7 +458,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * Reads a string array and validates it.
 	 * 
 	 * @param	string		$variableName
-	 * @param	boolean		$allowEmpty
+	 * @param	bool		$allowEmpty
 	 * @param	string		$arrayIndex
 	 * @since	3.0
 	 */
@@ -470,7 +470,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * Reads a boolean value and validates it.
 	 * 
 	 * @param	string		$variableName
-	 * @param	boolean		$allowEmpty
+	 * @param	bool		$allowEmpty
 	 * @param	string		$arrayIndex
 	 */
 	protected function readBoolean($variableName, $allowEmpty = false, $arrayIndex = '') {
@@ -481,7 +481,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * Reads a json-encoded value and validates it.
 	 * 
 	 * @param	string		$variableName
-	 * @param	boolean		$allowEmpty
+	 * @param	bool		$allowEmpty
 	 * @param	string		$arrayIndex
 	 */
 	protected function readJSON($variableName, $allowEmpty = false, $arrayIndex = '') {
@@ -494,7 +494,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * variable will be always created with a sane value if it does not exist.
 	 * 
 	 * @param	string		$variableName
-	 * @param	boolean		$allowEmpty
+	 * @param	bool		$allowEmpty
 	 * @param	string		$arrayIndex
 	 * @param	int		$type
 	 * @param	int		$structure

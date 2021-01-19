@@ -39,7 +39,7 @@ interface IModerationQueueHandler {
 	 * Returns true if given object id is valid.
 	 * 
 	 * @param	int		$objectID
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isValid($objectID);
 	
@@ -63,7 +63,7 @@ interface IModerationQueueHandler {
 	 * Returns true if the affected content may be removed.
 	 * 
 	 * @param	ModerationQueue		$queue
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canRemoveContent(ModerationQueue $queue);
 	
@@ -80,7 +80,7 @@ interface IModerationQueueHandler {
 	 * 
 	 * @param	ModerationQueue		$queue
 	 * @param	int			$userID
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isAffectedUser(ModerationQueue $queue, $userID);
 	

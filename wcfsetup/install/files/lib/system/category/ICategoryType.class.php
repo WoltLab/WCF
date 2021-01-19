@@ -29,21 +29,21 @@ interface ICategoryType {
 	/**
 	 * Returns true if the active user can add a category of this type.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canAddCategory();
 	
 	/**
 	 * Returns true if the active user can delete a category of this type.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canDeleteCategory();
 	
 	/**
 	 * Returns true if the active user can edit a category of this type.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canEditCategory();
 	
@@ -69,7 +69,7 @@ interface ICategoryType {
 	/**
 	 * Returns true if a category of this type may have no empty description.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function forceDescription();
 	
@@ -114,7 +114,7 @@ interface ICategoryType {
 	 * is used.
 	 * 
 	 * @param	string		$name
-	 * @param	boolean		$optional
+	 * @param	bool		$optional
 	 * @return	string
 	 */
 	public function getLanguageVariable($name, $optional = false);
@@ -138,14 +138,14 @@ interface ICategoryType {
 	/**
 	 * Returns true if categories of this type have descriptions.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasDescription();
 	
 	/**
 	 * Returns `true` if the descriptions of categories of this type support HTML.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 * @since	5.2
 	 */
 	public function supportsHtmlDescription();

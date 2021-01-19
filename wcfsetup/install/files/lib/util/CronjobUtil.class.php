@@ -19,13 +19,13 @@ use wcf\system\exception\SystemException;
 final class CronjobUtil {
 	/**
 	 * indicates if day of month is restricted (not '*')
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected static $domRestricted = false;
 	
 	/**
 	 * indicates if day of week is restricted (not '*')
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected static $dowRestricted = false;
 	
@@ -371,8 +371,8 @@ final class CronjobUtil {
 	 * 
 	 * @param	array		$values
 	 * @param	int		$timeBase
-	 * @param	boolean		$addAnDay
-	 * @return	boolean
+	 * @param	bool		$addAnDay
+	 * @return	bool
 	 */
 	protected static function calculateMinute(array &$values, &$timeBase, $addAnDay) {
 		$returnValue = false;
@@ -405,7 +405,7 @@ final class CronjobUtil {
 	 * 
 	 * @param	int		$needle
 	 * @param	array		$haystack
-	 * @param	boolean		$continue
+	 * @param	bool		$continue
 	 * @return	mixed
 	 */
 	protected static function findKey($needle, array &$haystack, $continue = true) {

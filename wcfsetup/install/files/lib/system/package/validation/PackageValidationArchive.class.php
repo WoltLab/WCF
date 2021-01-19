@@ -82,7 +82,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	 * 
 	 * @param	int		$validationMode
 	 * @param	string		$requiredVersion
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function validate($validationMode, $requiredVersion = '') {
 		if ($validationMode !== PackageValidationManager::VALIDATION_EXCLUSION) {

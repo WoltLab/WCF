@@ -13,7 +13,7 @@ interface IUserAvatar {
 	/**
 	 * Returns true if this avatar can be cropped.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 * @deprecated  3.0
 	 */
 	public function canCrop();

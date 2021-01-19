@@ -42,13 +42,13 @@ use wcf\util\UserUtil;
 final class SessionHandler extends SingletonFactory {
 	/**
 	 * prevents update on shutdown
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $doNotUpdate = false;
 	
 	/**
 	 * disables page tracking
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $disableTracking = false;
 		
@@ -60,7 +60,7 @@ final class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * true if within ACP or WCFSetup
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $isACP = false;
 	
@@ -112,13 +112,13 @@ final class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * indicates if session variables changed and must be saved upon shutdown
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $variablesChanged = false;
 	
 	/**
 	 * true if this is a new session
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $firstVisit = false;
 	
@@ -317,7 +317,7 @@ final class SessionHandler extends SingletonFactory {
 	/**
 	 * Returns true if client provided a valid session cookie.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 * @since	3.0
 	 */
 	public function hasValidCookie(): bool {
@@ -496,7 +496,7 @@ final class SessionHandler extends SingletonFactory {
 	 * given token is invalid.
 	 * 
 	 * @param	string		$token
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function checkSecurityToken($token) {
 		// The output of CryptoUtil::createSignedString() is not url-safe. For compatibility
@@ -711,7 +711,7 @@ final class SessionHandler extends SingletonFactory {
 	 * compatibility, while preventing ACLs from overruling a 'Never' setting.
 	 * 
 	 * @param       string          $permission
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function getNeverPermission($permission) {
 		$this->loadGroupData();
@@ -886,7 +886,7 @@ final class SessionHandler extends SingletonFactory {
 	 * logged in, after the login his old session is used to store his full data.
 	 * 
 	 * @param	User		$user
-	 * @param	boolean		$hideSession	if true, database won't be updated
+	 * @param	bool		$hideSession	if true, database won't be updated
 	 */
 	public function changeUser(User $user, $hideSession = false) {
 		$eventParameters = ['user' => $user, 'hideSession' => $hideSession];
@@ -1251,7 +1251,7 @@ final class SessionHandler extends SingletonFactory {
 	/**
 	 * Returns true if this is a new session.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isFirstVisit() {
 		return $this->firstVisit;

@@ -37,7 +37,7 @@ class RemoteFile extends File {
 	
 	/**
 	 * true if PHP supports SSL/TLS
-	 * @var	boolean
+	 * @var	bool
 	 */
 	private static $hasSSLSupport = null;
 	
@@ -93,8 +93,8 @@ class RemoteFile extends File {
 	 * Switches TLS support for this connection.
 	 * Usually used in combination with 'STARTTLS'
 	 * 
-	 * @param	boolean	$enable		Whether TLS support should be enabled
-	 * @return	boolean			True on success, false otherwise
+	 * @param	bool	$enable		Whether TLS support should be enabled
+	 * @return	bool			True on success, false otherwise
 	 */
 	public function setTLS($enable) {
 		if (!$this->hasTLSSupport()) return false;
@@ -122,7 +122,7 @@ class RemoteFile extends File {
 	/**
 	 * Returns whether TLS support is available.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasTLSSupport() {
 		return function_exists('stream_socket_enable_crypto');
@@ -131,7 +131,7 @@ class RemoteFile extends File {
 	/**
 	 * Returns true if PHP supports SSL/TLS.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function supportsSSL() {
 		if (static::$hasSSLSupport === null) {

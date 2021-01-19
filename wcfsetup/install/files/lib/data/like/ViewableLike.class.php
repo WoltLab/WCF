@@ -31,7 +31,7 @@ class ViewableLike extends DatabaseObjectDecorator {
 	
 	/**
 	 * accessible by current user
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $isAccessible = false;
 	
@@ -64,7 +64,7 @@ class ViewableLike extends DatabaseObjectDecorator {
 	/**
 	 * Returns true if like is accessible by current user.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isAccessible() {
 		return $this->isAccessible;

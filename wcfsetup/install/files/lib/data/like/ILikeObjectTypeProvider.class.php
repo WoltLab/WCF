@@ -16,7 +16,7 @@ interface ILikeObjectTypeProvider extends IObjectTypeProvider {
 	 * Returns true if the active user can access the given likeable object.
 	 * 
 	 * @param	ILikeObject	$object
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function checkPermissions(ILikeObject $object);
 }

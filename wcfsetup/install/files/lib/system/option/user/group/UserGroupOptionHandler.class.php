@@ -31,7 +31,7 @@ class UserGroupOptionHandler extends OptionHandler {
 	
 	/**
 	 * true if current user can edit every user group
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $isAdmin = null;
 	
@@ -118,7 +118,7 @@ class UserGroupOptionHandler extends OptionHandler {
 	/**
 	 * Returns true if current user has the permissions to edit every user group.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function isAdmin() {
 		if ($this->isAdmin === null) {

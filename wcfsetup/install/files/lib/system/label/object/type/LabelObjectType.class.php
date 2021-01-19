@@ -18,7 +18,7 @@ class LabelObjectType {
 	
 	/**
 	 * object type is a category
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $isCategory = false;
 	
@@ -46,7 +46,7 @@ class LabelObjectType {
 	 * @param	string		$label
 	 * @param	int		$objectID
 	 * @param	int		$depth
-	 * @param	boolean		$isCategory
+	 * @param	bool		$isCategory
 	 */
 	public function __construct($label, $objectID = 0, $depth = 0, $isCategory = false) {
 		$this->depth = $depth;
@@ -75,7 +75,7 @@ class LabelObjectType {
 	/**
 	 * Returns true, if object type is a category.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isCategory() {
 		return $this->isCategory;

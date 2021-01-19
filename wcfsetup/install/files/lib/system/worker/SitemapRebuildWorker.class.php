@@ -265,7 +265,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker {
 	/**
 	 * Writes the sitemap.xml index file and links all sitemaps.
 	 * 
-	 * @param       boolean         $closeFile      Close a previously opened handle.
+	 * @param       bool         $closeFile      Close a previously opened handle.
 	 */
 	protected function writeIndexFile($closeFile = true) {
 		$file = new AtomicWriter(self::getSitemapPath() . 'sitemap.xml');
@@ -287,7 +287,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker {
 	/**
 	 * Generates a new temporary file and appends the sitemap start.
 	 * 
-	 * @param       boolean         $closeFile      Close a previously opened handle.
+	 * @param       bool         $closeFile      Close a previously opened handle.
 	 */
 	protected function generateTmpFile($closeFile = true) {
 		if ($closeFile) $this->closeFile();

@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
 abstract class Highlighter extends SingletonFactory {
 	/**
 	 * allow multiline quotes
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $allowsNewslinesInQuotes = false;
 	

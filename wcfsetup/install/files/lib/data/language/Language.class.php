@@ -84,7 +84,7 @@ class Language extends DatabaseObject {
 	 * Returns a single language variable.
 	 * 
 	 * @param	string		$item
-	 * @param	boolean		$optional
+	 * @param	bool		$optional
 	 * @return	string
 	 */
 	public function get($item, $optional = false) {
@@ -145,7 +145,7 @@ class Language extends DatabaseObject {
 	 * 
 	 * @param	string		$item
 	 * @param	array		$variables
-	 * @param	boolean		$optional
+	 * @param	bool		$optional
 	 * @return	string		result
 	 */
 	public function getDynamicVariable($item, array $variables = [], $optional = false) {
@@ -205,7 +205,7 @@ class Language extends DatabaseObject {
 	 * Loads category files.
 	 * 
 	 * @param	string		$category
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function loadCategory($category) {
 		if (!LanguageFactory::getInstance()->isValidCategory($category)) {
@@ -245,7 +245,7 @@ class Language extends DatabaseObject {
 	 * Returns true if given items includes template scripting.
 	 * 
 	 * @param	string		$item
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isDynamicItem($item) {
 		if (isset($this->dynamicItems[$item])) {

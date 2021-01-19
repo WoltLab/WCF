@@ -206,7 +206,7 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
 	/**
 	 * Returns true if the media file can be accessed by the active user.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isAccessible() {
 		if ($this->canManage()) {
@@ -237,7 +237,7 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
 	 * Returns true if a thumbnail version with the given size is available.
 	 *
 	 * @param	string		$size
-	 * @return	boolean
+	 * @return	bool
 	 * @throws	\InvalidArgumentException
 	 */
 	public function hasThumbnail($size) {

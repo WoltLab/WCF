@@ -58,7 +58,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	/**
 	 * acl permissions of this category for the active user
 	 * @deprecated
-	 * @var	boolean[]
+	 * @var	bool[]
 	 */
 	protected $permissions = null;
 	
@@ -71,7 +71,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	
 	/**
 	 * fallback return value used in Category::getPermission()
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $defaultPermission = false;
 	
@@ -189,7 +189,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	 * Returns true if given category is a parent category of this category.
 	 * 
 	 * @param	Category	$category
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isParentCategory(Category $category) {
 		return in_array($category, $this->getParentCategories());

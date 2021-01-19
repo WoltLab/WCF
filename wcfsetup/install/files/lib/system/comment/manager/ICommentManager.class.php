@@ -16,7 +16,7 @@ interface ICommentManager {
 	 * Returns true if the current user may add comments or responses.
 	 * 
 	 * @param	int		$objectID
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canAdd($objectID);
 	
@@ -24,7 +24,7 @@ interface ICommentManager {
 	 * Returns true if a comment requires approval.
 	 * 
 	 * @param       int         $objectID
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function canAddWithoutApproval($objectID);
 	
@@ -32,7 +32,7 @@ interface ICommentManager {
 	 * Returns true if the current user may edit given comment.
 	 * 
 	 * @param	Comment		$comment
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canEditComment(Comment $comment);
 	
@@ -40,7 +40,7 @@ interface ICommentManager {
 	 * Returns true if the current user may edit given response.
 	 * 
 	 * @param	CommentResponse		$response
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canEditResponse(CommentResponse $response);
 	
@@ -48,7 +48,7 @@ interface ICommentManager {
 	 * Returns true if the current user may delete given comment.
 	 * 
 	 * @param	Comment		$comment
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canDeleteComment(Comment $comment);
 	
@@ -65,7 +65,7 @@ interface ICommentManager {
 	 * 
 	 * @param	int		$objectTypeID
 	 * @param	int		$objectID
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canModerate($objectTypeID, $objectID);
 	
@@ -106,7 +106,7 @@ interface ICommentManager {
 	 * 
 	 * @param	int		$objectTypeID
 	 * @param	int		$objectID
-	 * @param	boolean		$isResponse
+	 * @param	bool		$isResponse
 	 * @return	string
 	 */
 	public function getTitle($objectTypeID, $objectID, $isResponse = false);
@@ -116,8 +116,8 @@ interface ICommentManager {
 	 * by current user.
 	 * 
 	 * @param	int		$objectID
-	 * @param	boolean		$validateWritePermission
-	 * @return	boolean
+	 * @param	bool		$validateWritePermission
+	 * @return	bool
 	 */
 	public function isAccessible($objectID, $validateWritePermission = false);
 	
@@ -132,14 +132,14 @@ interface ICommentManager {
 	/**
 	 * Returns true if this comment type supports likes.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function supportsLike();
 	
 	/**
 	 * Returns true if this comment type supports reports.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function supportsReport();
 	
@@ -153,7 +153,7 @@ interface ICommentManager {
 	 * the content's author.
 	 * 
 	 * @param	Comment|CommentResponse	$commentOrResponse
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isContentAuthor($commentOrResponse);
 }

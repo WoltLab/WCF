@@ -30,7 +30,7 @@ use wcf\system\WCF;
 class UserPage extends AbstractPage {
 	/**
 	 * edit profile on page load
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $editOnInit = false;
 	

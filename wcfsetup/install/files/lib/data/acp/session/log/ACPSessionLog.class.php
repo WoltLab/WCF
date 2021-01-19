@@ -55,7 +55,7 @@ class ACPSessionLog extends DatabaseObject {
 	/**
 	 * Returns true if this session is active.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isActive() {
 		return $this->active ? true : false;
@@ -64,7 +64,7 @@ class ACPSessionLog extends DatabaseObject {
 	/**
 	 * Returns true if this session is the active user session.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isActiveUserSession() {
 		if ($this->isActive() && $this->sessionID == WCF::getSession()->sessionID) {

@@ -17,7 +17,7 @@ use wcf\system\WCF;
  * @property-read	string		$title
  * @property-read	int		$showOrder		position of the reaction type in relation to the other reaction types
  * @property-read	string		$iconFile		the file location of the icon
- * @property-read	boolean		$isAssignable 		`1`, if the reaction can be assigned
+ * @property-read	bool		$isAssignable 		`1`, if the reaction can be assigned
  */
 class ReactionType extends DatabaseObject implements ITitledObject {
 	/**

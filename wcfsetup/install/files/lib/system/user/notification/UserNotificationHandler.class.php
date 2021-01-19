@@ -289,7 +289,7 @@ class UserNotificationHandler extends SingletonFactory {
 	/**
 	 * Returns the number of outstanding notifications for the active user.
 	 * 
-	 * @param	boolean		$skipCache
+	 * @param	bool		$skipCache
 	 * @return	int
 	 */
 	public function getNotificationCount($skipCache = false) {
@@ -345,7 +345,7 @@ class UserNotificationHandler extends SingletonFactory {
 	 * 
 	 * @param	int		$limit
 	 * @param	int		$offset
-	 * @param	boolean		$showConfirmedNotifications	DEPRECATED
+	 * @param	bool		$showConfirmedNotifications	DEPRECATED
 	 * @return	mixed[]
 	 */
 	public function getNotifications($limit = 5, $offset = 0, $showConfirmedNotifications = false) {

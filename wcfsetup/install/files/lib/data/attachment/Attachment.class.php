@@ -46,13 +46,13 @@ use wcf\util\StringUtil;
 class Attachment extends DatabaseObject implements ILinkableObject, IRouteController, IThumbnailFile {
 	/**
 	 * indicates if the attachment is embedded
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $embedded = false;
 	
 	/**
 	 * user permissions for attachment access
-	 * @var	boolean[]
+	 * @var	bool[]
 	 */
 	protected $permissions = [];
 	
@@ -70,7 +70,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 	/**
 	 * Returns true if a user has the permission to download this attachment.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canDownload() {
 		return $this->getPermission('canDownload');
@@ -80,7 +80,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 	 * Returns true if a user has the permission to view the preview of this
 	 * attachment.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canViewPreview() {
 		return $this->getPermission('canViewPreview');
@@ -90,7 +90,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 	 * Returns true if a user has the permission to delete the preview of this
 	 * attachment.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canDelete() {
 		return $this->getPermission('canDelete');
@@ -100,7 +100,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 	 * Checks permissions.
 	 * 
 	 * @param	string		$permission
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function getPermission($permission) {
 		if (!isset($this->permissions[$permission])) {
@@ -126,7 +126,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 	/**
 	 * Sets the permissions for attachment access.
 	 * 
-	 * @param	boolean[]		$permissions
+	 * @param	bool[]		$permissions
 	 */
 	public function setPermissions(array $permissions) {
 		$this->permissions = $permissions;
@@ -233,7 +233,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 	/**
 	 * Returns true if this attachment is embedded.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isEmbedded() {
 		return $this->embedded;
@@ -242,7 +242,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 	/**
 	 * Returns true if this attachment should be shown as an image.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function showAsImage() {
 		if ($this->isImage) {
@@ -259,7 +259,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 	/**
 	 * Returns true if this attachment has a thumbnail.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasThumbnail() {
 		return ($this->thumbnailType ? true : false);
@@ -268,7 +268,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 	/**
 	 * Returns true if this attachment should be shown as a file.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function showAsFile() {
 		return !$this->showAsImage();

@@ -19,7 +19,7 @@ use wcf\data\IMessage;
  * @method	string		getTitle()
  * @method	int		getUserID()
  * @method	string		getUsername()
- * @method	boolean		isVisible()
+ * @method	bool		isVisible()
  */
 class QuotedMessage implements \Countable, \Iterator {
 	/**
@@ -36,7 +36,7 @@ class QuotedMessage implements \Countable, \Iterator {
 	
 	/**
 	 * overrides full quote flag
-	 * @var boolean[]
+	 * @var bool[]
 	 */
 	public $overrideIsFullQuote = [];
 	
@@ -102,7 +102,7 @@ class QuotedMessage implements \Countable, \Iterator {
 	 * Overrides the full quote flag.
 	 * 
 	 * @param       string          $quoteID
-	 * @param       boolean         $overrideIsFullQuote
+	 * @param       bool         $overrideIsFullQuote
 	 */
 	public function setOverrideIsFullQuote($quoteID, $overrideIsFullQuote) {
 		$this->overrideIsFullQuote[$quoteID] = $overrideIsFullQuote;
@@ -135,7 +135,7 @@ class QuotedMessage implements \Countable, \Iterator {
 	 * Returns true if given quote id represents a full quote.
 	 * 
 	 * @param	string		$quoteID
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isFullQuote($quoteID) {
 		if (isset($this->overrideIsFullQuote[$quoteID])) {

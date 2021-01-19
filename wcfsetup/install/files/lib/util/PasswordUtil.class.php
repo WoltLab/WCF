@@ -67,7 +67,7 @@ final class PasswordUtil {
 	 * Returns true if given encryption type is supported.
 	 * 
 	 * @param	string		$type
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isSupported($type) {
 		if (in_array($type, self::$supportedEncryptionTypes)) {
@@ -108,7 +108,7 @@ final class PasswordUtil {
 	 * @param	string		$username
 	 * @param	string		$password
 	 * @param	string		$dbHash
-	 * @return	boolean
+	 * @return	bool
 	 * @throws	SystemException
 	 */
 	public static function checkPassword($username, $password, $dbHash) {

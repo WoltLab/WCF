@@ -23,7 +23,7 @@ use wcf\util\StringUtil;
 class UserMailForm extends AbstractForm {
 	/**
 	 * enable html for message body
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $enableHTML = false;
 	

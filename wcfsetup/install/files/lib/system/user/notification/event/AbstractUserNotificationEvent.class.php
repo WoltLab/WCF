@@ -42,7 +42,7 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	
 	/**
 	 * notification stacking support
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $stackable = false;
 	

@@ -28,7 +28,7 @@ use wcf\util\StringUtil;
 class Notice extends DatabaseObject implements IRouteController {
 	/**
 	 * true if the active user has dismissed the notice
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $isDismissed = null;
 	
@@ -72,7 +72,7 @@ class Notice extends DatabaseObject implements IRouteController {
 	/**
 	 * Returns true if the active user has dismissed the notice.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isDismissed() {
 		if (!$this->isDismissible) return false;

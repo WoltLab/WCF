@@ -96,7 +96,7 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
 	/**
 	 * Enables this option.
 	 * 
-	 * @param	boolean		$enable
+	 * @param	bool		$enable
 	 */
 	public function enable($enable = true) {
 		$value = intval(!$enable);

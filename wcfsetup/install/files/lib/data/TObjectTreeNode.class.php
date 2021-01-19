@@ -121,7 +121,7 @@ trait TObjectTreeNode {
 	/**
 	 * Returns `true` if the node as any children and return `false` otherwise.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasChildren() {
 		return !empty($this->children);
@@ -139,7 +139,7 @@ trait TObjectTreeNode {
 	/**
 	 * Returns `true` if this node is the last sibling and `false` otherwise.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isLastSibling() {
 		foreach ($this->parentNode as $key => $child) {
@@ -182,7 +182,7 @@ trait TObjectTreeNode {
 	/**
 	 * Returns `true` if current iteration position is valid and `false` otherwise.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function valid() {
 		return isset($this->children[$this->index]);

@@ -60,7 +60,7 @@ class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	 * @param       string          $customURL
 	 * @param       int         $packageID
 	 *
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public static function isUniqueCustomUrl($customURL, $packageID = 1) {
 		// check controller

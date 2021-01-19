@@ -70,13 +70,13 @@ class BBCodeAddForm extends AbstractForm {
 	
 	/**
 	 * true if bbcode is a block element
-	 * @var boolean
+	 * @var bool
 	 */
 	public $isBlockElement = false;
 	
 	/**
 	 * true, if bbcode contains source code
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $isSourceCode = false;
 	
@@ -92,7 +92,7 @@ class BBCodeAddForm extends AbstractForm {
 	
 	/**
 	 * show editor button
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $showButton = false;
 	

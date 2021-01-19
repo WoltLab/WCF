@@ -15,7 +15,7 @@ use wcf\system\request\RequestHandler;
 class MenuItemNodeTree {
 	/**
 	 * if `false`, individual menu item visibility will not be checked
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $checkVisibility;
 	
@@ -54,7 +54,7 @@ class MenuItemNodeTree {
 	 * 
 	 * @param	int		$menuID			menu id
 	 * @param	MenuItemList	$menuItemList		optional object to be provided when building the tree from cache
-	 * @param	boolean		$checkVisibility	if `false`, individual menu item visibility will not be checked
+	 * @param	bool		$checkVisibility	if `false`, individual menu item visibility will not be checked
 	 */
 	public function __construct($menuID, MenuItemList $menuItemList = null, $checkVisibility = true) {
 		$this->menuID = $menuID;

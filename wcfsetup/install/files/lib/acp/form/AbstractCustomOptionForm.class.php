@@ -54,7 +54,7 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm {
 	
 	/**
 	 * field is required
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $required = 0;
 	
@@ -66,7 +66,7 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm {
 	
 	/**
 	 * 1 if the option is disabled
-	 * @var	boolean
+	 * @var	bool
 	 * @since	5.2
 	 */
 	public $isDisabled = 0;

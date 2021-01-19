@@ -54,19 +54,19 @@ abstract class AbstractPage implements IPage {
 	
 	/**
 	 * is true if canonical URL will be enforced even if POST data is represent
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $forceCanonicalURL = false;
 	
 	/**
 	 * is true if the redirect should use a 307 instead of the default 301, not recommended in general
-	 * @var boolean
+	 * @var bool
 	 */
 	public $softRedirectCanonicalURL = false;
 	
 	/**
 	 * indicates if you need to be logged in to access this page
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $loginRequired = false;
 	

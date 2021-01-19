@@ -633,7 +633,7 @@ XML;
 	/**
 	 * Returns the xml objects for this pip.
 	 * 
-	 * @param	boolean		$createXmlFiles		if `true` and if a relevant XML file does not exist, it is created
+	 * @param	bool		$createXmlFiles		if `true` and if a relevant XML file does not exist, it is created
 	 * @return	XML[]
 	 */
 	protected function getProjectXmls($createXmlFiles = false) {

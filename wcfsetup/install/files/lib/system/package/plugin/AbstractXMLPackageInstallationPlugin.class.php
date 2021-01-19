@@ -197,7 +197,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	 * languages, optionally returning only the best matching value.
 	 * 
 	 * @param	string[]	$values			list of values by language code
-	 * @param	boolean		$singleValueOnly	true to return only the best matching value
+	 * @param	bool		$singleValueOnly	true to return only the best matching value
 	 * @return	string[]|string	matching i18n values controller by `$singleValueOnly`
 	 * @since	3.0
 	 */

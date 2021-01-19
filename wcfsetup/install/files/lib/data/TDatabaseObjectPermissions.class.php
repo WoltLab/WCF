@@ -16,7 +16,7 @@ trait TDatabaseObjectPermissions {
 	 * Returns true if the active user has at least one permission required
 	 * by this object.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function validatePermissions() {
 		if ($this->permissions) {

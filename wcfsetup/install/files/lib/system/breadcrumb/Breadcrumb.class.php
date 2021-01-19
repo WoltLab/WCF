@@ -47,7 +47,7 @@ class Breadcrumb {
 	 * May be left empty to disable url functionality.
 	 * 
 	 * @param	string		$url
-	 * @param	boolean		$appendSession	This parameter is unused as of version 3.0
+	 * @param	bool		$appendSession	This parameter is unused as of version 3.0
 	 */
 	public function setURL($url, $appendSession = false) {
 		$this->url = $url;

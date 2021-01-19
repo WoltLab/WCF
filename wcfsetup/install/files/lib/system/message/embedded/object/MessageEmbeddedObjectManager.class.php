@@ -71,8 +71,8 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 * Registers the embedded objects found in given message.
 	 * 
 	 * @param       HtmlInputProcessor      $htmlInputProcessor     html input processor instance holding embedded object data
-	 * @param       boolean                 $isBulk                 true for bulk operations
-	 * @return      boolean                 true if at least one embedded object was found
+	 * @param       bool                 $isBulk                 true for bulk operations
+	 * @return      bool                 true if at least one embedded object was found
 	 */
 	public function registerObjects(HtmlInputProcessor $htmlInputProcessor, $isBulk = false) {
 		$context = $htmlInputProcessor->getContext();
@@ -167,7 +167,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 * @param       string          $messageObjectType      object type identifier
 	 * @param       int         $messageID              object id
 	 * @param       int[][]     $embeddedContent        list of object ids for embedded objects by object type id
-	 * @return      boolean         true if at least one embedded object was found
+	 * @return      bool         true if at least one embedded object was found
 	 */
 	public function registerSimpleObjects($messageObjectType, $messageID, array $embeddedContent) {
 		$messageObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType);

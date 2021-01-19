@@ -108,7 +108,7 @@ class UploadHandler extends SingletonFactory {
 	 * Returns the removed but previosly proccessed files for a specific fieldId.
 	 *
 	 * @param       string          $fieldId
-	 * @param       boolean         $processFiles
+	 * @param       bool         $processFiles
 	 * @return      UploadFile[]
 	 * 
 	 * @throws      \InvalidArgumentException       if the given fieldId is unknown
@@ -125,7 +125,7 @@ class UploadHandler extends SingletonFactory {
 	 * Returns the removed but previosly proccessed files for a specific internalId.
 	 *
 	 * @param       string          $internalId
-	 * @param       boolean         $processFiles
+	 * @param       bool         $processFiles
 	 * @return      UploadFile[]
 	 */
 	public function getRemovedFiledByInternalId($internalId, $processFiles = true) {
@@ -221,7 +221,7 @@ class UploadHandler extends SingletonFactory {
 	 * Returns true, if the given internalId is valid.
 	 * 
 	 * @param       string          $internalId
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function isValidInternalId($internalId) {
 		return isset($this->getStorage()[$internalId]); 
@@ -232,7 +232,7 @@ class UploadHandler extends SingletonFactory {
 	 * 
 	 * @param       string        $internalId
 	 * @param       string        $uniqueFileId
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function isValidUniqueFileId($internalId, $uniqueFileId) {
 		return $this->getFileByUniqueFileId($internalId, $uniqueFileId) !== null; 
@@ -358,7 +358,7 @@ class UploadHandler extends SingletonFactory {
 	 * Returns true, iff a field with the given fieldId is already registered. 
 	 * 
 	 * @param       string          $fieldId
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function isRegisteredFieldId($fieldId) {
 		return isset($this->fields[$fieldId]);

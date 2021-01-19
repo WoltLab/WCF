@@ -61,7 +61,7 @@ class HtmlSimpleParser extends SingletonFactory {
 	 * @param       string          $objectType     object type identifier
 	 * @param       int         $objectID       object id
 	 * @param       string          $message        message content
-	 * @return      boolean         true if there is at least one embedded content found
+	 * @return      bool         true if there is at least one embedded content found
 	 */
 	public function parse($objectType, $objectID, $message) {
 		preg_match_all($this->regexHandlers, $message, $matches);

@@ -374,7 +374,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 	 * with the box conditions.
 	 * 
 	 * @param	Box		$box			box object
-	 * @param	boolean		$setConditionData	if true, the condition object types are populated with the box conditions' data
+	 * @param	bool		$setConditionData	if true, the condition object types are populated with the box conditions' data
 	 */
 	public function setBox(Box $box, $setConditionData = true) {
 		parent::setBox($box);

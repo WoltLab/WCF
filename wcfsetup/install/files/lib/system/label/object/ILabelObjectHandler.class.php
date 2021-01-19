@@ -33,7 +33,7 @@ interface ILabelObjectHandler {
 	 * 
 	 * @param	int[]	$labelIDs
 	 * @param	string		$optionName
-	 * @param	boolean		$legacyReturnValue
+	 * @param	bool		$legacyReturnValue
 	 * @return	mixed
 	 */
 	public function validateLabelIDs(array $labelIDs, $optionName = '', $legacyReturnValue = true);
@@ -43,7 +43,7 @@ interface ILabelObjectHandler {
 	 * 
 	 * @param	int[]		$labelIDs
 	 * @param	int			$objectID
-	 * @param	boolean			$validatePermissions
+	 * @param	bool			$validatePermissions
 	 * @see		\wcf\system\label\LabelHandler::setLabels()
 	 */
 	public function setLabels(array $labelIDs, $objectID, $validatePermissions = true);
@@ -52,7 +52,7 @@ interface ILabelObjectHandler {
 	 * Removes all assigned labels.
 	 * 
 	 * @param	int		$objectID
-	 * @param	boolean		$validatePermissions
+	 * @param	bool		$validatePermissions
 	 * @see		\wcf\system\label\LabelHandler::removeLabels()
 	 */
 	public function removeLabels($objectID, $validatePermissions = true);
@@ -61,7 +61,7 @@ interface ILabelObjectHandler {
 	 * Returns a list of assigned labels.
 	 * 
 	 * @param	int[]		$objectIDs
-	 * @param	boolean			$validatePermissions
+	 * @param	bool			$validatePermissions
 	 * @return	Label[]
 	 */
 	public function getAssignedLabels(array $objectIDs, $validatePermissions = true);

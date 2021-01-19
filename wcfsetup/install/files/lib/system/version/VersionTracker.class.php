@@ -271,7 +271,7 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction {
 	 * Creates a database table for an object type unless it exists already.
 	 * 
 	 * @param       ObjectType      $objectType     target object type
-	 * @return      boolean         false if table already exists
+	 * @return      bool         false if table already exists
 	 */
 	protected function createStorageTable(ObjectType $objectType) {
 		$baseTableName = $this->getTableName($objectType);

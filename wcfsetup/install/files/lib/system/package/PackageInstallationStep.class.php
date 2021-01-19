@@ -31,7 +31,7 @@ class PackageInstallationStep {
 	
 	/**
 	 * indicates if current current node should be splitted
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $splitNode = false;
 	
@@ -84,7 +84,7 @@ class PackageInstallationStep {
 	/**
 	 * Returns true if current step holds a form document object.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasDocument() {
 		return ($this->document !== null);
@@ -103,7 +103,7 @@ class PackageInstallationStep {
 	/**
 	 * Returns true if node should be splitted.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function splitNode() {
 		return $this->splitNode;

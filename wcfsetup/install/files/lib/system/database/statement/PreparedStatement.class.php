@@ -216,7 +216,7 @@ class PreparedStatement {
 	 * 
 	 * @param	string		$keyColumn	name of the key column
 	 * @param	string		$valueColumn	name of the value column
-	 * @param	boolean		$uniqueKey	if `true`, a one-dimensional array is returned, otherwise, for each key an array of fetched values is returned 
+	 * @param	bool		$uniqueKey	if `true`, a one-dimensional array is returned, otherwise, for each key an array of fetched values is returned 
 	 * @return	string[]|string[][]
 	 */
 	public function fetchMap($keyColumn, $valueColumn, $uniqueKey = true) {

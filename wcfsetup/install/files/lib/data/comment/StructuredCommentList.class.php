@@ -68,7 +68,7 @@ class StructuredCommentList extends CommentList {
 	
 	/**
 	 * enables/disables the loading of responses
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $responseLoading = true;
 	

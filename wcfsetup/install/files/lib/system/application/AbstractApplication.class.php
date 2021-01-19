@@ -34,7 +34,7 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
 	
 	/**
 	 * true, if current application is active (directly invoked, not dependent)
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $isActiveApplication = false;
 	

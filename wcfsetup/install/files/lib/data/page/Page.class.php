@@ -88,7 +88,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	/**
 	 * Returns true if the active user can delete this page.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canDelete() {
 		if (WCF::getSession()->getPermission('admin.content.cms.canManagePage') && !$this->originIsSystem && !$this->isLandingPage) {
@@ -101,7 +101,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	/**
 	 * Returns true if the active user can disable this page.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canDisable() {
 		if (WCF::getSession()->getPermission('admin.content.cms.canManagePage') && (!$this->originIsSystem || $this->pageType != 'system') && !$this->isLandingPage) {
@@ -228,7 +228,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	 * Returns false if this page should be hidden from menus, but does not control the accessibility
 	 * of the page itself.
 	 *
-	 * @return	boolean		false if the page should be hidden from menus
+	 * @return	bool		false if the page should be hidden from menus
 	 */
 	public function isVisible() {
 		if ($this->isDisabled) return false;
@@ -241,7 +241,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	/**
 	 * Returns true if this page is accessible by current user.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isAccessible() {
 		return SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.page', $this->pageID);

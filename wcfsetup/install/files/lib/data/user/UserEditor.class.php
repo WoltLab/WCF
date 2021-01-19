@@ -172,8 +172,8 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	 * Adds a user to the groups he should be in.
 	 * 
 	 * @param	array		$groupIDs
-	 * @param	boolean		$deleteOldGroups
-	 * @param	boolean		$addDefaultGroups
+	 * @param	bool		$deleteOldGroups
+	 * @param	bool		$addDefaultGroups
 	 */
 	public function addToGroups(array $groupIDs, $deleteOldGroups = true, $addDefaultGroups = true) {
 		// add default groups
@@ -250,7 +250,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	 * Saves the visible languages of a user.
 	 * 
 	 * @param	array		$languageIDs
-	 * @param	boolean		$deleteOldLanguages
+	 * @param	bool		$deleteOldLanguages
 	 */
 	public function addToLanguages(array $languageIDs, $deleteOldLanguages = true) {
 		// remove previous languages

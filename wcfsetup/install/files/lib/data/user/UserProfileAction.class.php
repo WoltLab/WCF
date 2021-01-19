@@ -645,7 +645,7 @@ class UserProfileAction extends UserAction implements IPopoverAction {
 	 * Returns the user option handler object.
 	 * 
 	 * @param	User		$user
-	 * @param	boolean		$editMode
+	 * @param	bool		$editMode
 	 * @return	UserOptionHandler
 	 */
 	protected function getOptionHandler(User $user, $editMode = true) {

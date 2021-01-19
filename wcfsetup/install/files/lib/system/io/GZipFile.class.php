@@ -11,13 +11,13 @@ use wcf\system\exception\SystemException;
  * @package	WoltLabSuite\Core\System\Io
  * 
  * @method	resource	open($mode, $use_include_path = 0)
- * @method	boolean		rewind()
+ * @method	bool		rewind()
  */
 class GZipFile extends File {
 	/**
 	 * checks if gz*64 functions are available instead of gz*
 	 * https://bugs.php.net/bug.php?id=53829
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected static $gzopen64 = null;
 	

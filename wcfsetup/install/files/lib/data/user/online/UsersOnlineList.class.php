@@ -168,7 +168,7 @@ class UsersOnlineList extends SessionList {
 	 * 
 	 * @param	int		$userID
 	 * @param	int		$canViewOnlineStatus
-	 * @return	boolean
+	 * @return	bool
 	 * @deprecated  5.3             Use `isVisibleUser` instead
 	 */
 	public static function isVisible($userID, $canViewOnlineStatus) {
@@ -206,7 +206,7 @@ class UsersOnlineList extends SessionList {
 	 * Checks the 'canViewOnlineStatus' setting for the given user.
 	 * 
 	 * @param       UserOnline      $userOnline
-	 * @return      boolean
+	 * @return      bool
 	 * @since       5.3
 	 */
 	public static function isVisibleUser(UserOnline $userOnline) {

@@ -43,7 +43,7 @@ final class Url implements \ArrayAccess {
 	 * This method is a wrapper around filter_var with FILTER_VALIDATE_URL.
 	 * 
 	 * @param       string          $url
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public static function is($url) {
 		return filter_var($url, FILTER_VALIDATE_URL) !== false;
@@ -79,7 +79,7 @@ final class Url implements \ArrayAccess {
 	 * 
 	 * @param       string          $url
 	 * @param       int[]       $components
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public static function contains($url, array $components) {
 		$result = self::parse($url);

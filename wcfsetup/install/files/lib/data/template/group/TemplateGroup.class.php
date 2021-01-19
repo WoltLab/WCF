@@ -33,7 +33,7 @@ class TemplateGroup extends DatabaseObject {
 	 * Returns whether the template group is immutable (i.e. whether it's the email
 	 * template group).
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isImmutable() {
 		return $this->templateGroupFolderName === '_wcf_email/';

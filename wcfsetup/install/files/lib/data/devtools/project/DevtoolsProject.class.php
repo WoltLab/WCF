@@ -33,7 +33,7 @@ class DevtoolsProject extends DatabaseObject {
 	protected $didFetchPackage = false;
 	
 	/**
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $isCore;
 	
@@ -72,7 +72,7 @@ class DevtoolsProject extends DatabaseObject {
 	 * Validates the repository and returns the first error message, or
 	 * an empty string on success.
 	 * 
-	 * @param boolean $pathOnly
+	 * @param bool $pathOnly
 	 * @return      string
 	 */
 	public function validate($pathOnly = false) {
@@ -90,7 +90,7 @@ class DevtoolsProject extends DatabaseObject {
 	/**
 	 * Returns true if this project appears to be `WoltLab Suite Core`.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function isCore() {
 		if ($this->isCore === null) {
@@ -239,7 +239,7 @@ class DevtoolsProject extends DatabaseObject {
 	 * Returns true if the path appears to point to `WoltLab Suite Core`.
 	 * 
 	 * @param       string          $path
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public static function pathIsCore($path) {
 		return (is_dir($path . 'com.woltlab.wcf') && file_exists($path . 'com.woltlab.wcf/package.xml'));

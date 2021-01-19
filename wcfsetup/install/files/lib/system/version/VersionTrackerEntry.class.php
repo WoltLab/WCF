@@ -73,7 +73,7 @@ class VersionTrackerEntry {
 	 * is not NULL.
 	 *
 	 * @param	string		$name
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function __isset($name) {
 		return isset($this->data[$name]);

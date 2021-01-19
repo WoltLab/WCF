@@ -64,7 +64,7 @@ class I18nHandler extends SingletonFactory {
 	 * Registers a new element id, returns false if element id is already set.
 	 * 
 	 * @param	string		$elementID
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function register($elementID) {
 		if (in_array($elementID, $this->elementIDs)) {
@@ -129,7 +129,7 @@ class I18nHandler extends SingletonFactory {
 	 * Returns true if given element has disabled i18n functionality.
 	 * 
 	 * @param	string		$elementID
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isPlainValue($elementID) {
 		if (isset($this->plainValues[$elementID])) {
@@ -143,7 +143,7 @@ class I18nHandler extends SingletonFactory {
 	 * Returns true if given element has enabled i18n functionality.
 	 * 
 	 * @param	string		$elementID
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasI18nValues($elementID) {
 		if (isset($this->i18nValues[$elementID])) {
@@ -193,7 +193,7 @@ class I18nHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$elementID
 	 * @param	string		$plainValue
-	 * @param	boolean		$forceAsPlainValue	if `true`, the value is added as a plain value in any case
+	 * @param	bool		$forceAsPlainValue	if `true`, the value is added as a plain value in any case
 	 * @throws	SystemException
 	 */
 	public function setValue($elementID, $plainValue, $forceAsPlainValue = false) {
@@ -238,9 +238,9 @@ class I18nHandler extends SingletonFactory {
 	 * Returns true if the value with the given id is valid.
 	 * 
 	 * @param	string		$elementID
-	 * @param	boolean		$requireI18n
-	 * @param	boolean		$permitEmptyValue
-	 * @return	boolean
+	 * @param	bool		$requireI18n
+	 * @param	bool		$permitEmptyValue
+	 * @return	bool
 	 */
 	public function validateValue($elementID, $requireI18n = false, $permitEmptyValue = false) {
 		// do not force i18n if only one language is available
@@ -422,7 +422,7 @@ class I18nHandler extends SingletonFactory {
 	 * Assigns element values to template. Using request data once reading
 	 * initial database data is explicitly disallowed.
 	 * 
-	 * @param	boolean		$useRequestData
+	 * @param	bool		$useRequestData
 	 */
 	public function assignVariables($useRequestData = true) {
 		$elementValues = [];
@@ -508,7 +508,7 @@ class I18nHandler extends SingletonFactory {
 	 * Returns true if given string equals a language variable.
 	 * 
 	 * @param	string		$string
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function isLanguageVariable($string) {
 		if ($this->regex === null) {

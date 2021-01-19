@@ -49,7 +49,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$objectType
 	 * @param	string		$objectID
-	 * @return	boolean
+	 * @return	bool
 	 * @throws	InvalidObjectTypeException
 	 */
 	public function isCollapsed($objectType, $objectID) {

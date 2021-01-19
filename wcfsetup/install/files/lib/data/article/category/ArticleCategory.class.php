@@ -171,7 +171,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
 	/**
 	 * Returns true if the active user has subscribed to this category.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 * @since       5.2
 	 */
 	public function isSubscribed() {

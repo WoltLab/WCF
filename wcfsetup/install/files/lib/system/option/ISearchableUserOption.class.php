@@ -27,7 +27,7 @@ interface ISearchableUserOption {
 	 * @param	PreparedStatementConditionBuilder	$conditions
 	 * @param	Option					$option
 	 * @param	mixed					$value
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value);
 }

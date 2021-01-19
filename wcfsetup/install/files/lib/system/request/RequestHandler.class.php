@@ -29,13 +29,13 @@ class RequestHandler extends SingletonFactory {
 	
 	/**
 	 * true, if current domain mismatch any known domain
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $inRescueMode = false;
 	
 	/**
 	 * indicates if the request is an acp request
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $isACPRequest = false;
 	
@@ -50,7 +50,7 @@ class RequestHandler extends SingletonFactory {
 	 * Handles a http request.
 	 *
 	 * @param	string		$application
-	 * @param	boolean		$isACPRequest
+	 * @param	bool		$isACPRequest
 	 * @throws	AJAXException
 	 * @throws	IllegalLinkException
 	 * @throws	SystemException
@@ -319,7 +319,7 @@ class RequestHandler extends SingletonFactory {
 	/**
 	 * Returns true if the request is an acp request.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isACPRequest() {
 		return $this->isACPRequest;
@@ -328,7 +328,7 @@ class RequestHandler extends SingletonFactory {
 	/**
 	 * Returns true, if current host mismatches any known domain.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function inRescueMode() {
 		return $this->inRescueMode;

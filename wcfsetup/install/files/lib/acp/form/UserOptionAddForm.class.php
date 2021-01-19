@@ -85,13 +85,13 @@ class UserOptionAddForm extends AbstractForm {
 	
 	/**
 	 * field is required
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $required = 0;
 	
 	/**
 	 * shows this field in the registration process
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $askDuringRegistration = 0;
 	
@@ -109,7 +109,7 @@ class UserOptionAddForm extends AbstractForm {
 	
 	/**
 	 * field is searchable
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $searchable = 0;
 	

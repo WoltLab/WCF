@@ -49,7 +49,7 @@ class BoxAddForm extends AbstractForm {
 	
 	/**
 	 * true if created box is multi-lingual
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $isMultilingual = 0;
 	
@@ -73,7 +73,7 @@ class BoxAddForm extends AbstractForm {
 	
 	/**
 	 * true if created box is visible everywhere 
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $visibleEverywhere = 1;
 	
@@ -85,7 +85,7 @@ class BoxAddForm extends AbstractForm {
 	
 	/**
 	 * true if box header is visible
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $showHeader = 1;
 	

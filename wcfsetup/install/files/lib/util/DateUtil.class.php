@@ -198,7 +198,7 @@ final class DateUtil {
 	 * Returns a formatted date interval.
 	 * 
 	 * @param	\DateInterval	$interval	interval to be formatted
-	 * @param	boolean		$fullInterval	if `true`, the complete interval is returned, otherwise a rounded interval is used
+	 * @param	bool		$fullInterval	if `true`, the complete interval is returned, otherwise a rounded interval is used
 	 * @param	int		$formatType	format type for the interval, use the class constant FORMAT_DEFAULT, FORMAT_SENTENCE or FORMAT_PLAIN
 	 * @return	string
 	 */
@@ -524,7 +524,7 @@ final class DateUtil {
 	 * @param	int		$timestamp		target timestamp
 	 * @param	string		$date			localized date
 	 * @param	string		$time			localized time
-	 * @param	boolean		$isFutureDate		true if timestamp is in the future
+	 * @param	bool		$isFutureDate		true if timestamp is in the future
 	 * @return	string		relative time
 	 */
 	public static function getRelativeTime(\DateTime $dateTimeObject, $timestamp, $date, $time, $isFutureDate) {

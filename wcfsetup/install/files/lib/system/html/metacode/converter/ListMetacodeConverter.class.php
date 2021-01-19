@@ -179,7 +179,7 @@ class ListMetacodeConverter extends AbstractMetacodeConverter {
 	 * with nested lists handled in the wrong order.
 	 * 
 	 * @param       \DOMNode        $node           target node
-	 * @return      boolean         true if provided node is within another list
+	 * @return      bool         true if provided node is within another list
 	 */
 	protected function isInsideList(\DOMNode $node) {
 		/** @var \DOMElement $parent */

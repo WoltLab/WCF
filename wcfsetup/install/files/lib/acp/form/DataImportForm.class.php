@@ -109,7 +109,7 @@ class DataImportForm extends AbstractForm {
 	
 	/**
 	 * display notice for existing import mappings
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $showMappingNotice = false;
 	

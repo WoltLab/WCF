@@ -111,7 +111,7 @@ class DiskCacheSource implements ICacheSource {
 	 * 
 	 * @param	string		$filename
 	 * @param	int		$maxLifetime
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function needRebuild($filename, $maxLifetime) {
 		// cache does not exist

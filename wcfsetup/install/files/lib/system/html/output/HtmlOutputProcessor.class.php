@@ -59,7 +59,7 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 	 * @param       string          $html                           html string
 	 * @param       string          $objectType                     object type identifier
 	 * @param       int         $objectID                       object id
-	 * @param	boolean		$doKeywordHighlighting          enable keyword highlighting
+	 * @param	bool		$doKeywordHighlighting          enable keyword highlighting
 	 * @param       int         $languageID                     content language id
 	 */
 	public function process($html, $objectType, $objectID, $doKeywordHighlighting = true, $languageID = null) {

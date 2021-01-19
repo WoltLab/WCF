@@ -1241,7 +1241,7 @@ class PackageInstallationDispatcher {
 	 * Validates if an function exists and is not blacklisted by suhosin extension.
 	 * 
 	 * @param	string		$function
-	 * @return	boolean
+	 * @return	bool
 	 * @see		http://de.php.net/manual/en/function.function-exists.php#77980
 	 */
 	protected static function functionExists($function) {
@@ -1268,7 +1268,7 @@ class PackageInstallationDispatcher {
 	 * @param	string		$setting
 	 * @param	string		$value
 	 * @param	mixed		$compareValue
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected static function compareSetting($setting, $value, $compareValue) {
 		if ($compareValue === false) return false;

@@ -73,7 +73,7 @@ abstract class CustomOption extends Option implements ITitledObject {
 	/**
 	 * Returns true if the option is visible
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isVisible() {
 		return !$this->isDisabled;
@@ -121,7 +121,7 @@ abstract class CustomOption extends Option implements ITitledObject {
 	/**
 	 * Returns the formatted value of this option.
 	 * 
-	 * @param       boolean         $forcePlaintext
+	 * @param       bool         $forcePlaintext
 	 * @return	string
 	 */
 	public function getFormattedOptionValue($forcePlaintext = false) {
@@ -190,7 +190,7 @@ abstract class CustomOption extends Option implements ITitledObject {
 	 * Returns true if this option can be deleted, defaults to false for
 	 * options created through the package system.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function canDelete() {
 		return !$this->originIsSystem;
@@ -199,7 +199,7 @@ abstract class CustomOption extends Option implements ITitledObject {
 	/**
 	 * Returns true if this option represents a message-type value.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function isMessage() {
 		return ($this->optionType === 'textarea' || $this->optionType === 'message');

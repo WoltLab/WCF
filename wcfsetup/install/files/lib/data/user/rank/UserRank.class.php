@@ -54,7 +54,7 @@ class UserRank extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns true if the generic rank title should be displayed.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function showTitle() {
 		return !$this->rankImage || !$this->hideTitle;

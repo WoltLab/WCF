@@ -127,7 +127,7 @@ class WCF {
 	
 	/**
 	 * overrides disabled debug mode
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected static $overrideDebugMode = false;
 	
@@ -145,13 +145,13 @@ class WCF {
 	
 	/**
 	 * true if Zend Opcache is loaded and enabled
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected static $zendOpcacheEnabled;
 	
 	/**
 	 * force logout during destructor call
-	 * @var boolean
+	 * @var bool
 	 */
 	protected static $forceLogout = false;
 	
@@ -587,7 +587,7 @@ class WCF {
 	 * Loads an application.
 	 * 
 	 * @param	Application		$application
-	 * @param	boolean			$isDependentApplication
+	 * @param	bool			$isDependentApplication
 	 * @return	IApplication
 	 * @throws	SystemException
 	 */
@@ -783,7 +783,7 @@ class WCF {
 	/**
 	 * Returns true if current application (WCF) is treated as active and was invoked directly.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isActiveApplication() {
 		return (ApplicationHandler::getInstance()->getActiveApplication()->packageID == 1);
@@ -891,8 +891,8 @@ class WCF {
 	/**
 	 * Returns true if the debug mode is enabled, otherwise false.
 	 * 
-	 * @param	boolean		$ignoreACP
-	 * @return	boolean
+	 * @param	bool		$ignoreACP
+	 * @return	bool
 	 */
 	public static function debugModeIsEnabled($ignoreACP = false) {
 		// ACP override
@@ -909,7 +909,7 @@ class WCF {
 	/**
 	 * Returns true if benchmarking is enabled, otherwise false.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function benchmarkIsEnabled() {
 		// benchmarking is enabled by default
@@ -1091,7 +1091,7 @@ class WCF {
 	/**
 	 * Returns true if the desktop notifications should be enabled.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function useDesktopNotifications() {
 		if (!ENABLE_DESKTOP_NOTIFICATIONS) {
@@ -1115,7 +1115,7 @@ class WCF {
 	/**
 	 * Returns true if currently active request represents the landing page.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isLandingPage() {
 		if (self::getActiveRequest() === null) {
@@ -1129,7 +1129,7 @@ class WCF {
 	 * Returns true if the given API version is currently supported.
 	 * 
 	 * @param       int         $apiVersion
-	 * @return      boolean
+	 * @return      bool
 	 * @deprecated 5.2
 	 */
 	public static function isSupportedApiVersion($apiVersion) {

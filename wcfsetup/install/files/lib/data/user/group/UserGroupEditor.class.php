@@ -118,7 +118,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 	 * Updates the value from the accessiblegroups option.
 	 * 
 	 * @param	int		$groupID	this group is added or deleted in the value
-	 * @param	boolean		$delete		flag for group deletion
+	 * @param	bool		$delete		flag for group deletion
 	 * @throws	SystemException
 	 */
 	protected static function updateAccessibleGroups($groupID, $delete = false) {

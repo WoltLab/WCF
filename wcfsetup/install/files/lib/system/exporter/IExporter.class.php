@@ -54,7 +54,7 @@ interface IExporter {
 	/**
 	 * Validates given file system path. Returns false on failure.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function validateFileAccess();
 	
@@ -62,7 +62,7 @@ interface IExporter {
 	 * Validates the selected data types. Returns false on failure.
 	 * 
 	 * @param	array		$selectedData
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function validateSelectedData(array $selectedData);
 	

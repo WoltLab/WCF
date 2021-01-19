@@ -29,7 +29,7 @@ use wcf\util\HeaderUtil;
 class WCFACP extends WCF {
 	/**
 	 * rescue mode
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected static $inRescueMode;
 	
@@ -84,7 +84,7 @@ class WCFACP extends WCF {
 	/**
 	 * Returns true if ACP is currently in rescue mode.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function inRescueMode() {
 		if (self::$inRescueMode === null) {

@@ -31,7 +31,7 @@ abstract class AbstractSortedUserCacheBuilder extends AbstractCacheBuilder {
 	
 	/**
 	 * if `true`, only positive values of the database column will be considered
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $positiveValuesOnly = false;
 	

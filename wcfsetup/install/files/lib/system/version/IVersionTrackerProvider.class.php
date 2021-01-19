@@ -16,7 +16,7 @@ interface IVersionTrackerProvider extends IObjectTypeProvider {
 	/**
 	 * Returns true if current user can view the stored versions of this type.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function canAccess();
 	
@@ -71,7 +71,7 @@ interface IVersionTrackerProvider extends IObjectTypeProvider {
 	 * payload's array indices represent language ids rather than property values.
 	 * 
 	 * @param       IVersionTrackerObject   $object         target object
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function isI18n(IVersionTrackerObject $object);
 	

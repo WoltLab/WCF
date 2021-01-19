@@ -90,7 +90,7 @@ class MessageQuoteManager extends SingletonFactory {
 	 * @param	int		$objectID
 	 * @param	string		$message
 	 * @param	string		$fullQuote
-	 * @param	boolean		$returnFalseIfExists
+	 * @param	bool		$returnFalseIfExists
 	 * @return	mixed
 	 * @throws	SystemException
 	 */
@@ -170,7 +170,7 @@ class MessageQuoteManager extends SingletonFactory {
 	 * Removes a quote from storage and returns true if the quote has successfully been removed.
 	 * 
 	 * @param	string		$quoteID
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function removeQuote($quoteID) {
 		if (!isset($this->quoteData[$quoteID])) {
@@ -268,7 +268,7 @@ class MessageQuoteManager extends SingletonFactory {
 	/**
 	 * Returns a list of quotes.
 	 * 
-	 * @param	boolean		$supportPaste
+	 * @param	bool		$supportPaste
 	 * @return	string
 	 */
 	public function getQuotes($supportPaste = false) {
@@ -287,7 +287,7 @@ class MessageQuoteManager extends SingletonFactory {
 	 * 
 	 * @param	string		$objectType
 	 * @param	int[]	$objectIDs
-	 * @param	boolean		$markForRemoval
+	 * @param	bool		$markForRemoval
 	 * @return	string[]
 	 */
 	public function getQuotesByObjectIDs($objectType, array $objectIDs, $markForRemoval = true) {
@@ -327,7 +327,7 @@ class MessageQuoteManager extends SingletonFactory {
 	 * 
 	 * @param	string		$objectType
 	 * @param	int		$parentObjectID
-	 * @param	boolean		$markForRemoval
+	 * @param	bool		$markForRemoval
 	 * @return	string[]
 	 */
 	public function getQuotesByParentObjectID($objectType, $parentObjectID, $markForRemoval = true) {
@@ -366,7 +366,7 @@ class MessageQuoteManager extends SingletonFactory {
 	 * Returns a quote by id.
 	 * 
 	 * @param	string		$quoteID
-	 * @param	boolean		$useFullQuote
+	 * @param	bool		$useFullQuote
 	 * @return	string
 	 */
 	public function getQuote($quoteID, $useFullQuote = true) {
@@ -423,7 +423,7 @@ class MessageQuoteManager extends SingletonFactory {
 	 * 
 	 * @param	IMessage	$message
 	 * @param	string		$text
-	 * @param	boolean		$renderAsString
+	 * @param	bool		$renderAsString
 	 * @return	array|string
 	 */
 	public function renderQuote(IMessage $message, $text, $renderAsString = true) {
@@ -612,7 +612,7 @@ class MessageQuoteManager extends SingletonFactory {
 	 * Returns true if a quote id represents a full quote.
 	 * 
 	 * @param       string          $quoteID
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function isFullQuote($quoteID) {
 		return isset($this->quoteData[$quoteID . '_fq']);

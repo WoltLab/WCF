@@ -67,7 +67,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	
 	/**
 	 * enables multilingualism
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $enableMultilingualism = false;
 	

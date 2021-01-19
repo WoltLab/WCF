@@ -64,7 +64,7 @@ class UserOnline extends UserProfile {
 	 * automatically determine the location.
 	 * 
 	 * @param	string|null	$location
-	 * @return	boolean		`true` if the location has been successfully set, otherwise `false`
+	 * @return	bool		`true` if the location has been successfully set, otherwise `false`
 	 */
 	public function setLocation($location = null) {
 		if ($location === null) {

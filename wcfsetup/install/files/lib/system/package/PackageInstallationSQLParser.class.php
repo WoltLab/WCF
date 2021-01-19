@@ -22,7 +22,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	
 	/**
 	 * activates the testing mode
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $test = false;
 	

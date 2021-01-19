@@ -181,7 +181,7 @@ class Option extends DatabaseObject {
 	/**
 	 * Returns true if option is visible
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isVisible() {
 		return !$this->hidden;

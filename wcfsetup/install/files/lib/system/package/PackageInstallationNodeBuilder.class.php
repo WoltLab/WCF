@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
 class PackageInstallationNodeBuilder {
 	/**
 	 * true if current node is empty
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $emptyNode = true;
 	

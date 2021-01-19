@@ -62,7 +62,7 @@ abstract class Database {
 	
 	/**
 	 * enables failsafe connection
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $failsafeTest = false;
 	
@@ -92,7 +92,7 @@ abstract class Database {
 	
 	/**
 	 * attempts to create the database after the connection has been established
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $tryToCreateDatabase = false;
 	
@@ -110,8 +110,8 @@ abstract class Database {
 	 * @param	string		$password		SQL database server password
 	 * @param	string		$database		SQL database server database name
 	 * @param	int		$port			SQL database server port
-	 * @param	boolean		$failsafeTest
-	 * @param	boolean		$tryToCreateDatabase
+	 * @param	bool		$failsafeTest
+	 * @param	bool		$tryToCreateDatabase
 	 * @param	array		$defaultDriverOptions
 	 */
 	public function __construct($host, $user, $password, $database, $port, $failsafeTest = false, $tryToCreateDatabase = false, $defaultDriverOptions = []) {
@@ -157,7 +157,7 @@ abstract class Database {
 	/**
 	 * Initiates a transaction.
 	 * 
-	 * @return	boolean		true on success
+	 * @return	bool		true on success
 	 * @throws	DatabaseTransactionException
 	 */
 	public function beginTransaction() {
@@ -184,7 +184,7 @@ abstract class Database {
 	/**
 	 * Commits a transaction and returns true if the transaction was successful.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 * @throws	DatabaseTransactionException
 	 */
 	public function commitTransaction() {
@@ -214,7 +214,7 @@ abstract class Database {
 	/**
 	 * Rolls back a transaction and returns true if the rollback was successful.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 * @throws	DatabaseTransactionException
 	 */
 	public function rollBackTransaction() {
@@ -411,7 +411,7 @@ abstract class Database {
 	/**
 	 * Returns true if this database type is supported.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isSupported() {
 		return false;

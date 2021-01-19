@@ -221,7 +221,7 @@ class AttachmentHandler implements \Countable {
 	/**
 	 * Returns true if the active user has the permission to upload attachments.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canUpload() {
 		return $this->processor->canUpload($this->objectID, $this->parentObjectID);

@@ -113,7 +113,7 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController {
 	 * 
 	 * @param	string		$bbcodeTag
 	 * @param	string[]	$allowedBBCodeTags
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isAllowedBBCode($bbcodeTag, array $allowedBBCodeTags) {
 		// check if bbcode is unknown or disabled
@@ -137,7 +137,7 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController {
 	/**
 	 * Returns true if this BBCode can be deleted.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canDelete() {
 		if ($this->originIsSystem) {

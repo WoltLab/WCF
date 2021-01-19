@@ -25,7 +25,7 @@ interface IPackageInstallationPlugin {
 	 * Returns true if the uninstallation of the given package should execute
 	 * this plugin.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasUninstall();
 	
@@ -49,7 +49,7 @@ interface IPackageInstallationPlugin {
 	 * 
 	 * @param	PackageArchive	$packageArchive
 	 * @param	string		$instruction
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isValid(PackageArchive $packageArchive, $instruction);
 }

@@ -164,8 +164,8 @@ class UserOption extends Option implements ITitledObject {
 	/**
 	 * Returns true iff this option is editable.
 	 *
-	 * @param	boolean		$inRegistration		True iff the user currently is in registration.
-	 * @return	boolean
+	 * @param	bool		$inRegistration		True iff the user currently is in registration.
+	 * @return	bool
 	 */
 	public function isEditable($inRegistration = false) {
 		// check admin permissions
@@ -192,7 +192,7 @@ class UserOption extends Option implements ITitledObject {
 	/**
 	 * Returns true iff this user option can be deleted.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canDelete() {
 		if ($this->originIsSystem) {

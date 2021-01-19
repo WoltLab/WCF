@@ -19,7 +19,7 @@ interface IMemoryAwareImageAdapter extends IImageAdapter {
 	 * @param	int		$width
 	 * @param	int		$height
 	 * @param	string		$mimeType
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function checkMemoryLimit($width, $height, $mimeType);
 }

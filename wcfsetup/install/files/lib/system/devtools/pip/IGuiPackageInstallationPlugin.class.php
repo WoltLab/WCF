@@ -109,7 +109,7 @@ interface IGuiPackageInstallationPlugin extends IIdempotentPackageInstallationPl
 	 * Returns `true` if this package installation plugin supports delete
 	 * instructions.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function supportsDeleteInstruction();
 }

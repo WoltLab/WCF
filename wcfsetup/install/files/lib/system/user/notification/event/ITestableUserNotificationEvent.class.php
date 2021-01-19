@@ -36,7 +36,7 @@ interface ITestableUserNotificationEvent extends IUserNotificationEvent {
 	public function setTestCaseDescription($description);
 	
 	/**
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function canBeTriggeredByGuests();
 	

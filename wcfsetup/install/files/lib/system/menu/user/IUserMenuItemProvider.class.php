@@ -14,7 +14,7 @@ interface IUserMenuItemProvider extends IDatabaseObjectProcessor {
 	/**
 	 * Returns true if the associated menu item should be visible for the active user.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isVisible();
 	

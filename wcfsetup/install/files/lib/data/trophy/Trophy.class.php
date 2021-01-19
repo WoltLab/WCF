@@ -85,7 +85,7 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
 	 * Renders a trophy. 
 	 * 
 	 * @param	int		$size
-	 * @param	boolean		$showTooltip
+	 * @param	bool		$showTooltip
 	 * @return 	string
 	 */
 	public function renderTrophy($size = self::DEFAULT_SIZE, $showTooltip = false) {
@@ -137,7 +137,7 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
 	/**
 	 * Returns true if the current trophy is disabled. Returns also true if the trophy category is disabled. 
 	 * 
-	 * @return 	boolean
+	 * @return 	bool
 	 */
 	public function isDisabled() {
 		if ($this->isDisabled) {

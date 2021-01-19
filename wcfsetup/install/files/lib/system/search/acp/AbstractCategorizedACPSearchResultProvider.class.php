@@ -129,7 +129,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
 	 * Returns true if given category is valid and accessible.
 	 * 
 	 * @param	string		$categoryName
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function isValid($categoryName) {
 		return isset($this->categories[$categoryName]);

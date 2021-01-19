@@ -39,7 +39,7 @@ trait TMessageQuickReplyGuestDialogAction {
 	 * Reads a string value and validates it.
 	 *
 	 * @param	string		$variableName
-	 * @param	boolean		$allowEmpty
+	 * @param	bool		$allowEmpty
 	 * @param	string		$arrayIndex
 	 * @see	AbstractDatabaseObjectAction::readString()
 	 */

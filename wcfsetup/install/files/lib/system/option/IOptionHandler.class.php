@@ -13,7 +13,7 @@ interface IOptionHandler {
 	/**
 	 * Creates a new option handler instance.
 	 * 
-	 * @param	boolean		$supportI18n
+	 * @param	bool		$supportI18n
 	 * @param	string		$languageItemPattern
 	 * @param	string		$categoryName
 	 */
@@ -46,7 +46,7 @@ interface IOptionHandler {
 	 * Returns a list with the options of a specific option category.
 	 * 
 	 * @param	string		$categoryName
-	 * @param	boolean		$inherit
+	 * @param	bool		$inherit
 	 * @return	array
 	 */
 	public function getCategoryOptions($categoryName = '', $inherit = true);

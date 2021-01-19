@@ -26,7 +26,7 @@ final class JSON {
 	 * Decodes a JSON string.
 	 * 
 	 * @param	string		$json
-	 * @param	boolean		$asArray
+	 * @param	bool		$asArray
 	 * @return	array
 	 * @throws	SystemException
 	 */

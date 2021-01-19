@@ -65,7 +65,7 @@ abstract class TreeMenu extends SingletonFactory {
 	 * Checks the options and permissions of given menu item.
 	 * 
 	 * @param	ITreeMenuItem	$item
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function checkMenuItem(ITreeMenuItem $item) {
 		// check the options of this item

@@ -350,7 +350,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 * @param	string		$filename
 	 * @param	int		$packageID
 	 * @param	StyleEditor	$style
-	 * @param	boolean		$skipFontDownload
+	 * @param	bool		$skipFontDownload
 	 * @return	StyleEditor
 	 */
 	public static function import($filename, $packageID = 1, StyleEditor $style = null, $skipFontDownload = false) {
@@ -762,8 +762,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	/**
 	 * Exports this style.
 	 * 
-	 * @param	boolean		$templates
-	 * @param	boolean		$images
+	 * @param	bool		$templates
+	 * @param	bool		$images
 	 * @param	string		$packageName
 	 */
 	public function export($templates = false, $images = false, $packageName = '') {

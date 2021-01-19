@@ -73,7 +73,7 @@ class DevtoolsSetup extends SingletonFactory {
 	 * Returns true if the suggested default paths for the Core and, if exists,
 	 * the bundled app should be used.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function useDefaultInstallPath() {
 		return (isset($this->configuration['setup']) && isset($this->configuration['setup']['useDefaultInstallPath']) && $this->configuration['setup']['useDefaultInstallPath'] === true);
@@ -83,7 +83,7 @@ class DevtoolsSetup extends SingletonFactory {
 	 * Returns true if a static cookie prefix should be used, instead of the randomized
 	 * value used for non-dev-mode installations.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function forceStaticCookiePrefix() {
 		return (isset($this->configuration['setup']) && isset($this->configuration['setup']['forceStaticCookiePrefix']) && $this->configuration['setup']['forceStaticCookiePrefix'] === true);

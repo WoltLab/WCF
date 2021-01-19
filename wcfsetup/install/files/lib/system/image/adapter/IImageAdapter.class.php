@@ -38,7 +38,7 @@ interface IImageAdapter {
 	 * 
 	 * @param	int		$maxWidth
 	 * @param	int		$maxHeight
-	 * @param	boolean		$preserveAspectRatio
+	 * @param	bool		$preserveAspectRatio
 	 * @return	mixed
 	 */
 	public function createThumbnail($maxWidth, $maxHeight, $preserveAspectRatio = true);
@@ -116,7 +116,7 @@ interface IImageAdapter {
 	 * @param	string		$font		path to TrueType font file
 	 * @param	int		$size		font size
 	 * @return	int
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function textFitsImage($text, $margin, $font, $size);
 	
@@ -144,7 +144,7 @@ interface IImageAdapter {
 	/**
 	 * Returns true if a color has been set.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasColor();
 	
@@ -231,7 +231,7 @@ interface IImageAdapter {
 	/**
 	 * Determines if an image adapter is supported.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isSupported();
 }

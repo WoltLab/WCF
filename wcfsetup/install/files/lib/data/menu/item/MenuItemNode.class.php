@@ -29,7 +29,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
 	
 	/**
 	 * true if item or one of its children is active
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $isActive = false;
 	
@@ -97,7 +97,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
 	/**
 	 * Returns true if this element is the last sibling.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isLastSibling() {
 		foreach ($this->parentNode as $key => $child) {
@@ -140,7 +140,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
 	/**
 	 * Returns true if this item (or one of its children) is marked as active.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isActiveNode() {
 		return $this->isActive;

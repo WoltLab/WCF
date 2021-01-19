@@ -106,7 +106,7 @@ class PollManager extends SingletonFactory {
 	 * @param	string		$objectType
 	 * @param	int		$objectID
 	 * @param	int		$pollID
-	 * @return	boolean
+	 * @return	bool
 	 * @throws	SystemException
 	 */
 	public function setObject($objectType, $objectID, $pollID = 0) {
@@ -362,7 +362,7 @@ class PollManager extends SingletonFactory {
 	/**
 	 * Returns true if current user can start a public poll.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canStartPublicPoll() {
 		$handler = $this->getHandler(null, $this->objectType);

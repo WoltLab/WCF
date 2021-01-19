@@ -23,7 +23,7 @@ interface IBoxController {
 	/**
 	 * Returns false if this box has no content.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasContent();
 	
@@ -46,7 +46,7 @@ interface IBoxController {
 	/**
 	 * Returns true if this box has a title link.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasLink();
 	

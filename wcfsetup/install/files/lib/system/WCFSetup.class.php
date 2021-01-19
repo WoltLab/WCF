@@ -82,7 +82,7 @@ class WCFSetup extends WCF {
 	
 	/**
 	 * indicates if developer mode is used to install
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected static $developerMode = 0;
 	
@@ -421,7 +421,7 @@ class WCFSetup extends WCF {
 	/**
 	 * Returns true if memory_limit is set to at least 128 MB
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function compareMemoryLimit() {
 		$memoryLimit = ini_get('memory_limit');

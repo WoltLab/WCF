@@ -35,7 +35,7 @@ class ExportMailAddressUserBulkProcessingAction extends AbstractUserBulkProcessi
 	
 	/**
 	 * indicates whether output was generated (i.e. executeAction was called)
-	 * @var	boolean
+	 * @var	bool
 	 */
 	private $executed = false;
 	

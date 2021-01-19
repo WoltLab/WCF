@@ -48,7 +48,7 @@ class DevtoolsPackageXmlWriter {
 	 * section or `false`, otherwise.
 	 * 
 	 * @param	string		$string
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function requiresCdata($string) {
 		return strpos($string, '<') !== false ||

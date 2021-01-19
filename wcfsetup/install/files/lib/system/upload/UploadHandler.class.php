@@ -73,7 +73,7 @@ class UploadHandler {
 	 * Validates the uploaded files. Returns true on success, otherwise false.
 	 * 
 	 * @param	IUploadFileValidationStrategy	$validationStrategy
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function validateFiles(IUploadFileValidationStrategy $validationStrategy) {
 		$result = true;

@@ -34,7 +34,7 @@ class LabelGroupAddForm extends AbstractForm {
 	
 	/**
 	 * force users to select a label
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $forceSelection = false;
 	

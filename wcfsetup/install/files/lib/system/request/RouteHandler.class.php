@@ -48,7 +48,7 @@ class RouteHandler extends SingletonFactory {
 	
 	/**
 	 * HTTP encryption
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected static $secure;
 	
@@ -60,13 +60,13 @@ class RouteHandler extends SingletonFactory {
 	
 	/**
 	 * true if the default controller is used (support for custom landing page)
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $isDefaultController = false;
 	
 	/**
 	 * true if the controller was renamed and has already been transformed
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $isRenamedController = false;
 	
@@ -123,7 +123,7 @@ class RouteHandler extends SingletonFactory {
 	 * first route that is able to consume all path components is used,
 	 * even if other routes may fit better. Route order is crucial!
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function matches() {
 		foreach ($this->routes as $route) {
@@ -153,7 +153,7 @@ class RouteHandler extends SingletonFactory {
 	/**
 	 * Returns true if route uses default controller.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isDefaultController() {
 		return $this->isDefaultController;
@@ -163,7 +163,7 @@ class RouteHandler extends SingletonFactory {
 	/**
 	 * Returns true if the controller was renamed and has already been transformed.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function isRenamedController() {
 		return $this->isRenamedController;
@@ -194,7 +194,7 @@ class RouteHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$application	application identifier
 	 * @param	array		$components
-	 * @param	boolean		$isACP
+	 * @param	bool		$isACP
 	 * @return	string
 	 * @throws	SystemException
 	 */
@@ -237,7 +237,7 @@ class RouteHandler extends SingletonFactory {
 	/**
 	 * Returns true if this is a secure connection.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function secureConnection() {
 		if (self::$secure === null) {

@@ -291,7 +291,7 @@ class ACLHandler extends SingletonFactory {
 	 * @param	int		$objectTypeID
 	 * @param	array		$objectIDs
 	 * @param	string		$categoryName
-	 * @param	boolean		$settingsView
+	 * @param	bool		$settingsView
 	 * @return	array
 	 */
 	public function getPermissions($objectTypeID, array $objectIDs, $categoryName = '', $settingsView = false) {
@@ -351,7 +351,7 @@ class ACLHandler extends SingletonFactory {
 	 * @param	string		$type
 	 * @param	array		$objectIDs
 	 * @param	array		$data
-	 * @param	boolean		$settingsView
+	 * @param	bool		$settingsView
 	 */
 	protected function getValues(ACLOptionList $optionList, $type, array $objectIDs, array &$data, $settingsView) {
 		$data[$type] = [];

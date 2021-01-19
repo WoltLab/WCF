@@ -35,7 +35,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * Refreshes the package database.
 	 * 
 	 * @param	int[]		$packageUpdateServerIDs
-	 * @param	boolean			$ignoreCache
+	 * @param	bool			$ignoreCache
 	 */
 	public function refreshPackageDatabase(array $packageUpdateServerIDs = [], $ignoreCache = false) {
 		// get update server data
@@ -139,7 +139,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * Fetches the package_update.xml from an update server.
 	 * 
 	 * @param	PackageUpdateServer	$updateServer
-	 * @param	boolean			$forceHTTP
+	 * @param	bool			$forceHTTP
 	 * @throws	PackageUpdateUnauthorizedException
 	 * @throws	SystemException
 	 */
@@ -705,8 +705,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	/**
 	 * Returns a list of available updates for installed packages.
 	 * 
-	 * @param	boolean		$removeRequirements
-	 * @param	boolean		$removeOlderMinorReleases
+	 * @param	bool		$removeRequirements
+	 * @param	bool		$removeOlderMinorReleases
 	 * @return	array
 	 * @throws      SystemException
 	 */

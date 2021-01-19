@@ -102,7 +102,7 @@ class UserActivityPointHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$objectType
 	 * @param	int[]	$itemsToUser
-	 * @param	boolean		$updateUsers
+	 * @param	bool		$updateUsers
 	 * @throws	InvalidObjectTypeException
 	 */
 	public function fireEvents($objectType, array $itemsToUser, $updateUsers = true) {

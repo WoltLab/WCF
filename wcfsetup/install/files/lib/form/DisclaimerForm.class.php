@@ -17,7 +17,7 @@ use wcf\util\HeaderUtil;
 class DisclaimerForm extends AbstractForm {
 	/**
 	 * true, if the user has accepted the disclaimer
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $accept = false;
 	

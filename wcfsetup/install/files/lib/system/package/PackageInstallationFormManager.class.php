@@ -52,7 +52,7 @@ abstract class PackageInstallationFormManager {
 	 * 
 	 * @param	PackageInstallationQueue	$queue
 	 * @param	string				$formName
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function findForm(PackageInstallationQueue $queue, $formName) {
 		$sql = "SELECT	COUNT(*)

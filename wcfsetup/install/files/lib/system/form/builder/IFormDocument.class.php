@@ -48,7 +48,7 @@ interface IFormDocument extends IFormParentNode {
 	/**
 	 * Sets whether the default button is added to the form during in the `build()` method.
 	 * 
-	 * @param	boolean		$addDefaultButton
+	 * @param	bool		$addDefaultButton
 	 * @return	static				this document
 	 * @throws	\BadMethodCallException		if the form has already been built
 	 */
@@ -58,7 +58,7 @@ interface IFormDocument extends IFormParentNode {
 	 * Sets whether this form is requested via an AJAX request or processes data via an AJAX
 	 * request and returns his document.
 	 * 
-	 * @param	boolean		$ajax
+	 * @param	bool		$ajax
 	 * @return	static		this document
 	 */
 	public function ajax($ajax = true);
@@ -79,7 +79,7 @@ interface IFormDocument extends IFormParentNode {
 	/**
 	 * Returns `true` if the form data has been read via `readData()` and `false` otherwise.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function didReadValues();
 	
@@ -233,7 +233,7 @@ interface IFormDocument extends IFormParentNode {
 	 * Returns `true` if a button with the given id exists and `false` otherwise.
 	 *
 	 * @param	string		$buttonId	id of checked button
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasButton($buttonId);
 	
@@ -244,7 +244,7 @@ interface IFormDocument extends IFormParentNode {
 	 * By default, the default button is added.
 	 * Each implementing class can define itself what it considers its default button.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasDefaultButton();
 	
@@ -265,7 +265,7 @@ interface IFormDocument extends IFormParentNode {
 	 * 
 	 * By default, this method returns `false`.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isAjax();
 	
@@ -275,14 +275,14 @@ interface IFormDocument extends IFormParentNode {
 	 * 
 	 * By default, the form document is not invalid.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isInvalid();
 	
 	/**
 	 * Sets if the form document is in invalid due to external factors.
 	 * 
-	 * @param	boolean		$invalid
+	 * @param	bool		$invalid
 	 * @return	static				this document
 	 */
 	public function invalid($invalid = true);
@@ -303,7 +303,7 @@ interface IFormDocument extends IFormParentNode {
 	 * This method automatically sets the form mode to `self::FORM_MODE_UPDATE`.
 	 * 
 	 * @param	IStorableObject		$object		updated object
-	 * @param	boolean			$loadValues	indicates if the object's values are loaded
+	 * @param	bool			$loadValues	indicates if the object's values are loaded
 	 * @return	static					this document
 	 */
 	public function updatedObject(IStorableObject $object, $loadValues = true);
@@ -361,7 +361,7 @@ interface IFormDocument extends IFormParentNode {
 	/**
 	 * Sets if the global form error message should be shown if the form has validation errors.
 	 * 
-	 * @param	boolean		$showErrorMessage
+	 * @param	bool		$showErrorMessage
 	 * @return	static					this document
 	 */
 	public function showErrorMessage($showErrorMessage = true);
@@ -369,7 +369,7 @@ interface IFormDocument extends IFormParentNode {
 	/**
 	 * Sets if the global form success message should be shown.
 	 * 
-	 * @param	boolean		$showSuccessMessage
+	 * @param	bool		$showSuccessMessage
 	 * @return	static					this document
 	 */
 	public function showSuccessMessage($showSuccessMessage = true);
@@ -380,7 +380,7 @@ interface IFormDocument extends IFormParentNode {
 	 * 
 	 * By default, the global form error message is shown.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function showsErrorMessage();
 	
@@ -389,7 +389,7 @@ interface IFormDocument extends IFormParentNode {
 	 * 
 	 * By default, the global form error message is not shown.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function showsSuccessMessage();
 	

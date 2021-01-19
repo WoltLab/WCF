@@ -41,7 +41,7 @@ interface IArchive {
 	 * 
 	 * @param	mixed		$index		index or name of the requested file
 	 * @param	string		$destination
-	 * @return	boolean		$success
+	 * @return	bool		$success
 	 */
 	public function extract($index, $destination);
 	

@@ -95,7 +95,7 @@ class Gravatar extends DefaultAvatar {
 	 * Checks a given email address for gravatar support.
 	 * 
 	 * @param	string		$email
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function test($email) {
 		$gravatarURL = sprintf(self::GRAVATAR_BASE, md5(mb_strtolower($email)), 80, GRAVATAR_DEFAULT_TYPE);

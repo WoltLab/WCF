@@ -31,7 +31,7 @@ class UploadField {
 	
 	/**
 	 * This flag indicates whether only images can uploaded via this field.
-	 * @var boolean
+	 * @var bool
 	 */
 	public $imageOnly = false;
 	
@@ -39,7 +39,7 @@ class UploadField {
 	 * This flag indicates whether only images can uploaded via this field.
 	 * <strong>Heads up:</strong> SVG images can contain bad code, therefore do not
 	 * use this option, outside the acp or check the file whether remote code is contained.
-	 * @var boolean
+	 * @var bool
 	 */
 	public $allowSvgImage = false;
 	
@@ -62,7 +62,7 @@ class UploadField {
 	/**
 	 * Indicates the support of multiple files.
 	 * 
-	 * @return boolean
+	 * @return bool
 	 */
 	public function supportMultipleFiles() {
 		return $this->maxFiles === null || $this->maxFiles > 1;
@@ -80,7 +80,7 @@ class UploadField {
 	/**
 	 * Returns `true` if only images can be uploaded via this field and returns `false` otherwise.
 	 * 
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isImageOnly() {
 		return $this->imageOnly;
@@ -89,7 +89,7 @@ class UploadField {
 	/**
 	 * Returns true, if the field can contain svg images in the image only mode.
 	 * 
-	 * @return boolean
+	 * @return bool
 	 */
 	public function svgImageAllowed() {
 		return $this->allowSvgImage;
@@ -129,7 +129,7 @@ class UploadField {
 	 * If set to `true` will also set the acceptable types to `image/*`. If set to
 	 * false it will clear the acceptable types if they are `image/*`.
 	 * 
-	 * @param       boolean       $imageOnly
+	 * @param       bool       $imageOnly
 	 */
 	public function setImageOnly($imageOnly) {
 		$this->imageOnly = $imageOnly;
@@ -155,7 +155,7 @@ class UploadField {
 	 * <strong>Heads up:</strong> SVG images can contain bad code, therefore do not
 	 * use this option, outside the acp or check the file whether remote code is contained.
 	 * 
-	 * @param       boolean       $allowSvgImage
+	 * @param       bool       $allowSvgImage
 	 * 
 	 * @throws      \BadMethodCallException         if the imageOnly flag isn't set to true
 	 */

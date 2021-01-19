@@ -27,7 +27,7 @@ class TagEngine extends SingletonFactory {
 	 * @param	int		$objectID
 	 * @param	array		$tags
 	 * @param	int		$languageID
-	 * @param	boolean		$replace
+	 * @param	bool		$replace
 	 */
 	public function addObjectTags($objectType, $objectID, array $tags, $languageID, $replace = true) {
 		$objectTypeID = $this->getObjectTypeID($objectType);

@@ -163,7 +163,7 @@ class LabelHandler extends SingletonFactory {
 	 * @param	int[]		$labelIDs
 	 * @param	int			$objectTypeID
 	 * @param	int			$objectID
-	 * @param	boolean			$validatePermissions
+	 * @param	bool			$validatePermissions
 	 */
 	public function setLabels(array $labelIDs, $objectTypeID, $objectID, $validatePermissions = true) {
 		// get accessible label ids to prevent inaccessible ones to be removed
@@ -254,7 +254,7 @@ class LabelHandler extends SingletonFactory {
 	 * 
 	 * @param	int		$objectTypeID
 	 * @param	int[]	$objectIDs
-	 * @param	boolean		$validatePermissions
+	 * @param	bool		$validatePermissions
 	 * @return	Label[][]
 	 */
 	public function getAssignedLabels($objectTypeID, array $objectIDs, $validatePermissions = true) {
@@ -321,7 +321,7 @@ class LabelHandler extends SingletonFactory {
 	 * Returns given label groups by id.
 	 * 
 	 * @param	int[]	$groupIDs
-	 * @param	boolean		$validatePermissions
+	 * @param	bool		$validatePermissions
 	 * @param	string		$permission
 	 * @return	ViewableLabelGroup[]
 	 * @throws	SystemException

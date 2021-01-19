@@ -115,7 +115,7 @@ class StyleAddForm extends AbstractForm {
 	
 	/**
 	 * tainted style
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $isTainted = true;
 	

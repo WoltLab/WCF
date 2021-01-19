@@ -41,7 +41,7 @@ abstract class AbstractVersionTrackerProvider extends AbstractObjectTypeProvider
 	
 	/**
 	 * true if content supports i18n
-	 * @var boolean
+	 * @var bool
 	 */
 	public $isI18n = false;
 	

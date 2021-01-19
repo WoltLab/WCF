@@ -87,7 +87,7 @@ class I18nValue {
 	 * Returns true if given flag is set.
 	 * 
 	 * @param       int         $flag
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function getFlag($flag) {
 		return (($this->flags & $flag) === $flag);

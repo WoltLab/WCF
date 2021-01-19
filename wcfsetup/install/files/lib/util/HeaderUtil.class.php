@@ -132,8 +132,8 @@ final class HeaderUtil {
 	 * Redirects the user agent to given location.
 	 * 
 	 * @param	string		$location
-	 * @param	boolean		$sendStatusCode
-	 * @param	boolean		$temporaryRedirect 
+	 * @param	bool		$sendStatusCode
+	 * @param	bool		$temporaryRedirect 
 	 */
 	public static function redirect($location, $sendStatusCode = false, $temporaryRedirect = true) {
 		// https://github.com/WoltLab/WCF/issues/2568

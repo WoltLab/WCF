@@ -66,7 +66,7 @@ class ContactForm extends AbstractCaptchaForm {
 	
 	/**
 	 * user has confirmed the privacy policy
-	 * @var boolean
+	 * @var bool
 	 */
 	public $privacyPolicyConfirmed = 0;
 	

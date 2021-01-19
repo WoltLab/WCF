@@ -17,7 +17,7 @@ use wcf\system\WCF;
 abstract class AbstractAction implements IAction {
 	/**
 	 * indicates if you need to be logged in to execute this action
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $loginRequired = false;
 	

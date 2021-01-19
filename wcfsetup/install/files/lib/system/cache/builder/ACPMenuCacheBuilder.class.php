@@ -104,7 +104,7 @@ class ACPMenuCacheBuilder extends AbstractCacheBuilder {
 	 * options.
 	 * 
 	 * @param	OptionCategory		$topCategory
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function containsOptions(OptionCategory $topCategory) {
 		// check if category directly contains options

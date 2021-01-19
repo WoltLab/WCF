@@ -54,7 +54,7 @@ class FileReader {
 	
 	/**
 	 * True if http range is invalid.
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $invalidRange = false;
 	

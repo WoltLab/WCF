@@ -219,7 +219,7 @@ class Zip extends File implements IArchive {
 	 * This does not change the position of the file-pointer.
 	 * 
 	 * @param	int		$offset		where to start reading
-	 * @return	boolean
+	 * @return	bool
 	 * @throws	SystemException
 	 */
 	public function isFile($offset = null) {

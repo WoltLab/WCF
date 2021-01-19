@@ -68,8 +68,8 @@ class PackageValidationManager extends SingletonFactory {
 	 * be performed afterwards.
 	 * 
 	 * @param	string		$archive
-	 * @param	boolean		$deepInspection
-	 * @return	boolean
+	 * @param	bool		$deepInspection
+	 * @return	bool
 	 */
 	public function validate($archive, $deepInspection) {
 		$this->virtualPackageList = [];
@@ -101,7 +101,7 @@ class PackageValidationManager extends SingletonFactory {
 	 * 
 	 * @param	string		$package
 	 * @param	string		$packageVersion
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function addVirtualPackage($package, $packageVersion) {
 		if (isset($this->virtualPackageList[$package])) {
@@ -179,7 +179,7 @@ class PackageValidationManager extends SingletonFactory {
 	 * @param	PackageArchive		$archive
 	 * @param	string			$pip
 	 * @param	string			$instruction
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function validatePackageInstallationPluginInstruction(PackageArchive $archive, $pip, $instruction) {
 		if (isset($this->packageInstallationPlugins[$pip])) {

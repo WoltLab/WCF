@@ -29,7 +29,7 @@ class ACPSession extends DatabaseObject {
 	/**
 	 * Returns true if this session type supports persistent logins.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function supportsPersistentLogins() {
 		return false;

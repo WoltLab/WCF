@@ -30,7 +30,7 @@ interface ISearchEngine {
 	 * 
 	 * @param	string					$objectTypeName
 	 * @param	string					$q
-	 * @param	boolean					$subjectOnly
+	 * @param	bool					$subjectOnly
 	 * @param	PreparedStatementConditionBuilder	$searchIndexCondition
 	 * @param	string					$orderBy
 	 * @param	int					$limit
@@ -50,7 +50,7 @@ interface ISearchEngine {
 	 * 
 	 * @param	string					$q
 	 * @param	array					$objectTypes
-	 * @param	boolean					$subjectOnly
+	 * @param	bool					$subjectOnly
 	 * @param	PreparedStatementConditionBuilder	$searchIndexCondition
 	 * @param	array					$additionalConditions
 	 * @param	string					$orderBy

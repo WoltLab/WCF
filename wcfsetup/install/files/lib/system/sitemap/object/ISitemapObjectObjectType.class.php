@@ -46,14 +46,14 @@ interface ISitemapObjectObjectType {
 	 * Returns the permission for a guest to view a certain object for this object type. 
 	 *
 	 * @param 	DatabaseObject 	$object
-	 * @return 	boolean
+	 * @return 	bool
 	 */
 	public function canView(DatabaseObject $object);
 	
 	/**
 	 * Checks the requirements (e.g. module options) for this object type.
 	 *
-	 * @return 	boolean
+	 * @return 	bool
 	 */
 	public function isAvailableType(); 
 }

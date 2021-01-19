@@ -20,7 +20,7 @@ class RebuildDataPage extends AbstractPage {
 	
 	/**
 	 * disallow any rebuild actions unless `wcfN_user_storage` uses `utf8mb4`
-	 * @var boolean
+	 * @var bool
 	 */
 	public $convertEncoding = false;
 	

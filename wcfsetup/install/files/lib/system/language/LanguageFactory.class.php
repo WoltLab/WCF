@@ -105,7 +105,7 @@ class LanguageFactory extends SingletonFactory {
 	 * Returns true if the language category with the given name exists.
 	 * 
 	 * @param	string		$categoryName
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isValidCategory($categoryName) {
 		return isset($this->cache['categories'][$categoryName]);
@@ -336,7 +336,7 @@ class LanguageFactory extends SingletonFactory {
 	/**
 	 * Returns true if multilingualism is enabled.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function multilingualismEnabled() {
 		return $this->cache['multilingualismEnabled'];

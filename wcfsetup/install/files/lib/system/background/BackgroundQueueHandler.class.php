@@ -85,7 +85,7 @@ class BackgroundQueueHandler extends SingletonFactory {
 	 * queue.
 	 * 
 	 * @param	AbstractBackgroundJob	$job	                        The job to perform.
-	 * @param       boolean                 $debugSynchronousExecution      Disables fail-safe mechanisms, errors will no longer be suppressed.
+	 * @param       bool                 $debugSynchronousExecution      Disables fail-safe mechanisms, errors will no longer be suppressed.
 	 * @throws	\Throwable
 	 */
 	public function performJob(AbstractBackgroundJob $job, $debugSynchronousExecution = false) {
@@ -132,7 +132,7 @@ class BackgroundQueueHandler extends SingletonFactory {
 	 * Performs the (single) job that is due next.
 	 * This method automatically handles requeuing in case of failure.
 	 * 
-	 * @return      boolean         true if this call attempted to execute a job regardless of its result
+	 * @return      bool         true if this call attempted to execute a job regardless of its result
 	 */
 	public function performNextJob() {
 		WCF::getDB()->beginTransaction();

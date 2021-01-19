@@ -30,7 +30,7 @@ class ApplicationHandler extends SingletonFactory {
 	
 	/**
 	 * true for multi-domain setups
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $isMultiDomain;
 	
@@ -194,7 +194,7 @@ class ApplicationHandler extends SingletonFactory {
 	 * Returns true if given $url is an internal URL.
 	 * 
 	 * @param	string		$url
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isInternalURL($url) {
 		$protocolRegex = new Regex('^https(?=://)');
@@ -222,7 +222,7 @@ class ApplicationHandler extends SingletonFactory {
 	/**
 	 * Returns true if this is a multi-domain setup.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 * @since       3.1
 	 */
 	public function isMultiDomainSetup() {

@@ -12,15 +12,15 @@ use wcf\util\StringUtil;
  * @package	WoltLabSuite\Core\System\Database
  * 
  * @method	int		del($key1, $key2 = null, $key3 = null)
- * @method	boolean		expire($key, $ttl)
+ * @method	bool		expire($key, $ttl)
  * @method	string|bool	get($key)
  * @method	int		hDel($key, $hashKey1, $hashKey2 = null, $hashKeyN = null)
  * @method	string		hGet($key, $hashKey)
  * @method	int		hSet($key, $hashKey, $value)
  * @method	int		incr($key)
  * @method	string		info($option = null)
- * @method	boolean		setex($key, $ttl, $value)
- * @method	boolean		setnx($key, $value)
+ * @method	bool		setex($key, $ttl, $value)
+ * @method	bool		setnx($key, $value)
  * @method	int		ttl($key)
  */
 class Redis {

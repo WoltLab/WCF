@@ -28,7 +28,7 @@ class ACPSessionAccessLog extends DatabaseObject {
 	/**
 	 * Returns true if the URI of this log entry is protected.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasProtectedURI() {
 		if ($this->requestMethod != 'GET' || !preg_match('/(\?|&)(page|form)=/', $this->requestURI)) {

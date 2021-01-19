@@ -78,7 +78,7 @@ class ModerationQueueManager extends SingletonFactory {
 	 * 
 	 * @param	string		$definitionName
 	 * @param	string		$objectType
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isValid($definitionName, $objectType) {
 		if (!isset($this->objectTypeNames[$definitionName])) {
@@ -243,7 +243,7 @@ class ModerationQueueManager extends SingletonFactory {
 	/**
 	 * Returns the count of unread moderation queue items.
 	 * 
-	 * @param	boolean		$skipCache
+	 * @param	bool		$skipCache
 	 * @return	int
 	 */
 	public function getUnreadModerationCount($skipCache = false) {
@@ -313,7 +313,7 @@ class ModerationQueueManager extends SingletonFactory {
 	/**
 	 * Saves moderation queue assignments.
 	 * 
-	 * @param	boolean[]	$assignments
+	 * @param	bool[]	$assignments
 	 */
 	public function setAssignment(array $assignments) {
 		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_moderation_queue_to_user

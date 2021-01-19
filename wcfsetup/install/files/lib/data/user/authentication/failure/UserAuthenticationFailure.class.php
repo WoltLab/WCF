@@ -34,7 +34,7 @@ class UserAuthenticationFailure extends DatabaseObject {
 	 * Returns the number of authentication failures caused by given ip address.
 	 * 
 	 * @param	string		$ipAddress
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function countIPFailures($ipAddress) {
 		$sql = "SELECT	COUNT(*)
@@ -51,7 +51,7 @@ class UserAuthenticationFailure extends DatabaseObject {
 	 * Returns the number of authentication failures for given user account.
 	 * 
 	 * @param	int		$userID
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function countUserFailures($userID) {
 		$sql = "SELECT	COUNT(*)

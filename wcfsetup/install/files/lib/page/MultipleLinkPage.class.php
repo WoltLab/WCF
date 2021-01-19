@@ -201,7 +201,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 	/**
 	 * Returns true if current page is the first page.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isFirstPage() {
 		return ($this->pageNo == 1);
@@ -210,7 +210,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 	/**
 	 * Returns true if current page is the last page.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isLastPage() {
 		return ($this->items == $this->endIndex);

@@ -62,10 +62,10 @@ class MessageParser extends BBCodeParser {
 	 * Parses a message.
 	 * 
 	 * @param	string		$message
-	 * @param	boolean		$enableSmilies
-	 * @param	boolean		$enableHtml
-	 * @param	boolean		$enableBBCodes
-	 * @param	boolean		$doKeywordHighlighting
+	 * @param	bool		$enableSmilies
+	 * @param	bool		$enableHtml
+	 * @param	bool		$enableBBCodes
+	 * @param	bool		$doKeywordHighlighting
 	 * @return	string		parsed message
 	 */
 	public function parse($message, $enableSmilies = true, $enableHtml = false, $enableBBCodes = true, $doKeywordHighlighting = true) {
@@ -130,7 +130,7 @@ class MessageParser extends BBCodeParser {
 	 * Parses smiley codes.
 	 * 
 	 * @param	string		$text
-	 * @param	boolean		$enableHtml
+	 * @param	bool		$enableHtml
 	 * @return	string
 	 */
 	protected function parseSmilies($text, $enableHtml = false) {

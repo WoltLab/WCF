@@ -23,7 +23,7 @@ use wcf\system\WCF;
  * @property-read	int		$comments		number of comments on the moderation queue entry
  * @property-read	int		$lastChangeTime		timestamp at which the moderation queue entry has been changed the last time
  * @property-read	array		$additionalData		array with additional data of the moderation queue entry
- * @property-read	boolean		$markAsJustified	true if the report was closed, but it was actually justified and other actions may have been taken
+ * @property-read	bool		$markAsJustified	true if the report was closed, but it was actually justified and other actions may have been taken
  */
 class ModerationQueue extends DatabaseObject {
 	// states of column 'status'
@@ -64,7 +64,7 @@ class ModerationQueue extends DatabaseObject {
 	/**
 	 * Returns true if current user can edit this moderation queue.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canEdit() {
 		$sql = "SELECT	isAffected
@@ -84,7 +84,7 @@ class ModerationQueue extends DatabaseObject {
 	/**
 	 * Returns true, if this queue is done.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isDone() {
 		return ($this->status == self::STATUS_DONE || $this->status == self::STATUS_CONFIRMED || $this->status == self::STATUS_REJECTED);

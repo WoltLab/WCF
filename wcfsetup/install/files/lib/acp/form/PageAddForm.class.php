@@ -52,7 +52,7 @@ class PageAddForm extends AbstractForm {
 	
 	/**
 	 * true if created page is multi-lingual
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $isMultilingual = 0;
 	
@@ -76,13 +76,13 @@ class PageAddForm extends AbstractForm {
 	
 	/**
 	 * true if page is disabled
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $isDisabled = 0;
 	
 	/**
 	 * true if page is landing page
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $isLandingPage = 0;
 	
@@ -159,19 +159,19 @@ class PageAddForm extends AbstractForm {
 	
 	/**
 	 * true if the page is available during offline mode
-	 * @var boolean
+	 * @var bool
 	 */
 	public $availableDuringOfflineMode = 0;
 	
 	/**
 	 * true if the page is accessible for search spiders
-	 * @var boolean
+	 * @var bool
 	 */
 	public $allowSpidersToIndex = 1;
 	
 	/**
 	 * true if page should be added to the main menu
-	 * @var boolean
+	 * @var bool
 	 */
 	public $addPageToMainMenu = 0;
 	

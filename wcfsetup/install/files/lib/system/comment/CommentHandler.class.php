@@ -104,7 +104,7 @@ class CommentHandler extends SingletonFactory {
 	 * @param	ICommentManager		$commentManager
 	 * @param	int			$objectTypeID
 	 * @param	int			$objectID
-	 * @param	boolean			$readObjects
+	 * @param	bool			$readObjects
 	 * @return	StructuredCommentList
 	 */
 	public function getCommentList(ICommentManager $commentManager, $objectTypeID, $objectID, $readObjects = true) {

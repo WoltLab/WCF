@@ -83,7 +83,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	 * Returns true, if label is known.
 	 * 
 	 * @param	int		$labelID
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isValid($labelID) {
 		return isset($this->labels[$labelID]);
@@ -95,7 +95,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	 *
 	 * @param	int		$optionID
 	 * @param	User		$user
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function getPermission($optionID, User $user = null) {
 		if ($user === null) $user = WCF::getUser();
@@ -237,7 +237,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	/**
 	 * Returns true if any permissions have been set for this label group.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasPermissions() {
 		return !empty($this->permissions['group']) || !empty($this->permissions['user']);

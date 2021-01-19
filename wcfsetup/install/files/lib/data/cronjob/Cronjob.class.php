@@ -98,7 +98,7 @@ class Cronjob extends DatabaseObject {
 	/**
 	 * Returns true if current user may edit this cronjob.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isEditable() {
 		return $this->canBeEdited;
@@ -107,7 +107,7 @@ class Cronjob extends DatabaseObject {
 	/**
 	 * Returns true if current user may delete this cronjob.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isDeletable() {
 		return $this->canBeEdited && $this->canBeDisabled;
@@ -116,7 +116,7 @@ class Cronjob extends DatabaseObject {
 	/**
 	 * Returns true if current user may enable or disable this cronjob.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canBeDisabled() {
 		return $this->canBeDisabled;

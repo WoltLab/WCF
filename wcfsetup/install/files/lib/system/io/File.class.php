@@ -21,8 +21,8 @@ use wcf\system\exception\SystemException;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Io
  * 
- * @method	boolean		close()
- * @method	boolean		eof()
+ * @method	bool		close()
+ * @method	bool		eof()
  * @method	int		filesize()
  * @method	string		gets($length = null)
  * @method	resource	open($mode, $use_include_path = false, $context = null)
@@ -31,7 +31,7 @@ use wcf\system\exception\SystemException;
  * @method	int		seek($offset, $whence = SEEK_SET)
  * @method	array		stat()
  * @method	int		tell()
- * @method	boolean		touch($time = 0, $atime = 0)		note: default value of `$time` actually is `time()`
+ * @method	bool		touch($time = 0, $atime = 0)		note: default value of `$time` actually is `time()`
  * @method	int		write($string, $length = null)
  */
 class File {

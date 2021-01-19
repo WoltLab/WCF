@@ -497,7 +497,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 	/**
 	 * Returns true if the message appears to be empty.
 	 *
-	 * @return      boolean         true if message appears to be empty
+	 * @return      bool         true if message appears to be empty
 	 */
 	public function appearsToBeEmpty() {
 		if ($this->getTextContent() !== '') {

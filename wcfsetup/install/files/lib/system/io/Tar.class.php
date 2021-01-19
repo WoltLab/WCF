@@ -34,13 +34,13 @@ class Tar implements IArchive {
 	
 	/**
 	 * indicates if tar file is opened
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $opened = false;
 	
 	/**
 	 * indicates if file content has been read
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $read = false;
 	
@@ -52,7 +52,7 @@ class Tar implements IArchive {
 	
 	/**
 	 * indicates if the tar file is (g)zipped
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $isZipped = false;
 	
@@ -281,7 +281,7 @@ class Tar implements IArchive {
 	 * Unpacks file header for one file entry.
 	 * 
 	 * @param	string		$binaryData
-	 * @return	array|boolean
+	 * @return	array|bool
 	 */
 	protected function readHeader($binaryData) {
 		if (strlen($binaryData) != 512) {
@@ -346,7 +346,7 @@ class Tar implements IArchive {
 	/**
 	 * Returns true if this tar is (g)zipped.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isZipped() {
 		return $this->isZipped;

@@ -43,7 +43,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	
 	/**
 	 * enables debug mode
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $inDebugMode = false;
 	

@@ -50,7 +50,7 @@ interface IOptionType {
 	/**
 	 * Returns true if options supports internationalization.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function supportI18n();
 	
@@ -71,7 +71,7 @@ interface IOptionType {
 	/**
 	 * Returns true if option's label is hidden in search form.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hideLabelInSearch();
 	

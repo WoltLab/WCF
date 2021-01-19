@@ -172,7 +172,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	 * Updates style variables for given style.
 	 * 
 	 * @param	Style		$style
-	 * @param	boolean		$removePreviousVariables
+	 * @param	bool		$removePreviousVariables
 	 */
 	protected function updateVariables(Style $style, $removePreviousVariables = false) {
 		if (!isset($this->parameters['variables']) || !is_array($this->parameters['variables'])) {

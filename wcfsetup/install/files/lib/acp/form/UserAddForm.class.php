@@ -100,7 +100,7 @@ class UserAddForm extends UserOptionListForm {
 	
 	/**
 	 * true to disable this signature
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $disableSignature = 0;
 	

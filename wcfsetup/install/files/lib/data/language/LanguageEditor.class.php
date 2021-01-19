@@ -120,7 +120,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * Exports this language.
 	 * 
 	 * @param	int[]	$packageIDArray
-	 * @param	boolean		$exportCustomValues
+	 * @param	bool		$exportCustomValues
 	 */
 	public function export($packageIDArray = [], $exportCustomValues = false) {
 		$conditions = new PreparedStatementConditionBuilder();
@@ -236,8 +236,8 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * 
 	 * @param	XML		$xml
 	 * @param	int		$packageID
-	 * @param	boolean		$updateFiles
-	 * @param	boolean		$updateExistingItems
+	 * @param	bool		$updateFiles
+	 * @param	bool		$updateExistingItems
 	 * @throws	\InvalidArgumentException	if given XML file is invalid
 	 */
 	public function updateFromXML(XML $xml, $packageID, $updateFiles = true, $updateExistingItems = true) {

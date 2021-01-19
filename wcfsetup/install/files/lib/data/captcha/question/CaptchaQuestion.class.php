@@ -33,7 +33,7 @@ class CaptchaQuestion extends DatabaseObject {
 	 * Returns true if the given user input is an answer to this question.
 	 * 
 	 * @param	string		$answer
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isAnswer($answer) {
 		$answers = explode("\n", StringUtil::unifyNewlines(WCF::getLanguage()->get($this->answers)));

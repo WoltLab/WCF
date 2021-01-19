@@ -19,7 +19,7 @@ interface IObjectCondition extends ICondition {
 	 * 
 	 * @param	DatabaseObject	$object
 	 * @param	array		$conditionData
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function checkObject(DatabaseObject $object, array $conditionData);
 }

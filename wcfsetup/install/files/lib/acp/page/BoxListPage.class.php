@@ -87,7 +87,7 @@ class BoxListPage extends SortablePage {
 	
 	/**
 	 * filters the list of boxes showing only custom boxes
-	 * @var boolean
+	 * @var bool
 	 */
 	public $originIsNotSystem = 0;
 	

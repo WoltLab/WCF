@@ -59,7 +59,7 @@ class GDImageAdapter implements IImageAdapter {
 	/**
 	 * Returns whether the given image is a valid GD resource / GD object
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isImage($image) {
 		return (is_resource($image) && get_resource_type($image) === 'gd') || (is_object($image) && $image instanceof \GdImage);
@@ -440,7 +440,7 @@ class GDImageAdapter implements IImageAdapter {
 	 * @param	int		$src_w		source width
 	 * @param	int		$src_h		source height
 	 * @param	int		$pct		opacity percent
-	 * @return	boolean
+	 * @return	bool
 	 */
 	private function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct) { // phpcs:ignore
 		if (!isset($pct)) {

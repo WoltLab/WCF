@@ -18,7 +18,7 @@ class TabMenuFormContainer extends FormContainer implements ITabMenuFormContaine
 	
 	/**
 	 * is `true` if the links in the tab menu have anchors
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $useAnchors = true;
 	
@@ -33,7 +33,7 @@ class TabMenuFormContainer extends FormContainer implements ITabMenuFormContaine
 	/**
 	 * Sets if the links in the tab menu have anchors and returns this form container.
 	 * 
-	 * @param	boolean		$useAnchors
+	 * @param	bool		$useAnchors
 	 * @return	TabMenuFormContainer		this form container
 	 */
 	public function useAnchors($useAnchors = true) {
@@ -47,7 +47,7 @@ class TabMenuFormContainer extends FormContainer implements ITabMenuFormContaine
 	 * 
 	 * By default, the links in the tab menu have anchors. 
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function usesAnchors() {
 		return $this->useAnchors;

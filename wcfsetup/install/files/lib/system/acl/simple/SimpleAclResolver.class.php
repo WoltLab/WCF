@@ -28,7 +28,7 @@ class SimpleAclResolver extends SingletonFactory {
 	 * @param       string          $objectType     object type name
 	 * @param       int         $objectID       object id
 	 * @param       User|null       $user           user object, if `null` uses current user
-	 * @return      boolean         false if user is not allowed
+	 * @return      bool         false if user is not allowed
 	 */
 	public function canAccess($objectType, $objectID, User $user = null) {
 		if ($user === null) $user = WCF::getUser();

@@ -319,9 +319,9 @@ final class StringUtil {
 	 * 
 	 * @param	string		$haystack	The string to be checked for starting with $needle
 	 * @param	string		$needle		The string to be found at the start of $haystack
-	 * @param	boolean		$ci		Case insensitive or not. Default = false.
+	 * @param	bool		$ci		Case insensitive or not. Default = false.
 	 * 
-	 * @return	boolean				True, if $haystack starts with $needle, false otherwise.
+	 * @return	bool				True, if $haystack starts with $needle, false otherwise.
 	 */
 	public static function startsWith($haystack, $needle, $ci = false) {
 		if ($ci) {
@@ -337,8 +337,8 @@ final class StringUtil {
 	 * 
 	 * @param	string		$haystack
 	 * @param	string		$needle
-	 * @param	boolean		$ci		case insensitive
-	 * @return	boolean
+	 * @param	bool		$ci		case insensitive
+	 * @return	bool
 	 */
 	public static function endsWith($haystack, $needle, $ci = false) {
 		if ($ci) {
@@ -447,7 +447,7 @@ final class StringUtil {
 	 * Returns true if the given string contains only ASCII characters.
 	 * 
 	 * @param	string		$string
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isASCII($string) {
 		return preg_match('/^[\x00-\x7F]*$/', $string);
@@ -458,7 +458,7 @@ final class StringUtil {
 	 * @see		http://www.w3.org/International/questions/qa-forms-utf-8
 	 * 
 	 * @param	string		$string
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isUTF8($string) {
 		return preg_match('/^(
@@ -514,7 +514,7 @@ final class StringUtil {
 	 * 
 	 * @param	string		$word
 	 * @param	string		$filter
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function executeWordFilter($word, $filter) {
 		$filter = self::trim($filter);
@@ -550,7 +550,7 @@ final class StringUtil {
 	 * @param	string		$string		string which shall be truncated
 	 * @param	int		$length		string length after truncating
 	 * @param	string		$etc		string to append when $string is truncated
-	 * @param	boolean		$breakWords	should words be broken in the middle
+	 * @param	bool		$breakWords	should words be broken in the middle
 	 * @return	string				truncated string
 	 */
 	public static function truncate($string, $length = 80, $etc = self::HELLIP, $breakWords = false) {
@@ -578,7 +578,7 @@ final class StringUtil {
 	 * @param	string		$string			string which shall be truncated
 	 * @param	int		$length			string length after truncating
 	 * @param	string		$etc			ending string which will be appended after truncating
-	 * @param	boolean		$breakWords		if false words will not be split and the return string might be shorter than $length
+	 * @param	bool		$breakWords		if false words will not be split and the return string might be shorter than $length
 	 * @return	string					truncated string
 	 */
 	public static function truncateHTML($string, $length = 500, $etc = self::HELLIP, $breakWords = false) {
@@ -667,8 +667,8 @@ final class StringUtil {
 	 * 
 	 * @param	string		$url
 	 * @param	string		$title
-	 * @param	boolean		$encodeTitle
-	 * @param       boolean         $isUgc          true to add rel=ugc to the anchor tag 
+	 * @param	bool		$encodeTitle
+	 * @param       bool         $isUgc          true to add rel=ugc to the anchor tag 
 	 * @return	string		anchor tag
 	 */
 	public static function getAnchorTag($url, $title = '', $encodeTitle = true, $isUgc = false) {
@@ -693,7 +693,7 @@ final class StringUtil {
 	 * Generates the attributes for an anchor tag from given URL.
 	 *
 	 * @param	string		$url
-	 * @param       boolean         $isUgc          true to add rel=ugc to the attributes
+	 * @param       bool         $isUgc          true to add rel=ugc to the attributes
 	 * @return	string		attributes
 	 * @since       5.3
 	 */

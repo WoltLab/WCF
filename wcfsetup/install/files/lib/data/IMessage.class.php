@@ -35,7 +35,7 @@ interface IMessage extends IUserContent {
 	/**
 	 * Returns true, if message is visible for current user.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isVisible();
 	

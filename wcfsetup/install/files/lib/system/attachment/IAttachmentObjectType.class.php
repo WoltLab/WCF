@@ -16,7 +16,7 @@ interface IAttachmentObjectType {
 	 * Returns true if the active user has the permission to download attachments.
 	 * 
 	 * @param	int		$objectID
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canDownload($objectID);
 	
@@ -25,7 +25,7 @@ interface IAttachmentObjectType {
 	 * previews (thumbnails).
 	 * 
 	 * @param	int		$objectID
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canViewPreview($objectID);
 	
@@ -34,7 +34,7 @@ interface IAttachmentObjectType {
 	 * 
 	 * @param	int		$objectID
 	 * @param	int		$parentObjectID
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canUpload($objectID, $parentObjectID = 0);
 	
@@ -42,7 +42,7 @@ interface IAttachmentObjectType {
 	 * Returns true if the active user has the permission to delete attachments.
 	 * 
 	 * @param	int		$objectID
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canDelete($objectID);
 	

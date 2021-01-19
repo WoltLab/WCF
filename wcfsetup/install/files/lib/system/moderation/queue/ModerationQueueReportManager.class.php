@@ -26,7 +26,7 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager {
 	 * 
 	 * @param	string		$objectType
 	 * @param	int		$objectID
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isAlreadyReported($objectType, $objectID) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
@@ -50,7 +50,7 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager {
 	 * 
 	 * @param	string		$objectType
 	 * @param	int		$objectID
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasPendingReport($objectType, $objectID) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
@@ -76,7 +76,7 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager {
 	 * 
 	 * @param	string		$objectType
 	 * @param	int		$objectID
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canReport($objectType, $objectID) {
 		return $this->getProcessor($objectType)->canReport($objectID);

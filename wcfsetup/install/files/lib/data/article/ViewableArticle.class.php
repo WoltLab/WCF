@@ -76,7 +76,7 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	 * Returns a specific article decorated as viewable article or `null` if it does not exist.
 	 *
 	 * @param	int		$articleID
-	 * @param       boolean         $enableContentLoading   Enables/disables the loading of article content objects
+	 * @param       bool         $enableContentLoading   Enables/disables the loading of article content objects
 	 * @return	ViewableArticle
 	 */
 	public static function getArticle($articleID, $enableContentLoading = true) {
@@ -171,7 +171,7 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	/**
 	 * Returns true if this article is new for the active user.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isNew() {
 		return $this->time > $this->getVisitTime();
@@ -198,7 +198,7 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	/**
 	 * Returns true if one or more labels are assigned to this article.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasLabels() {
 		return !empty($this->labels);
