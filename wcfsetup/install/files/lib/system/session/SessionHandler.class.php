@@ -1280,7 +1280,7 @@ final class SessionHandler extends SingletonFactory {
 		
 		$sessions = [];
 		while ($row = $statement->fetchArray()) {
-			$sessions[] = new Session($row, false);
+			$sessions[] = new Session($row);
 		}
 		
 		return $sessions;

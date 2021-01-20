@@ -19,11 +19,6 @@ final class Session {
 	private $data;
 	
 	/**
-	 * @var bool 
-	 */
-	private $isAcpSession;
-	
-	/**
 	 * @var UserAgent
 	 */
 	private $userAgent;
@@ -31,9 +26,8 @@ final class Session {
 	/**
 	 * Session constructor.
 	 */
-	public function __construct(array $data, bool $isAcpSession = false) {
+	public function __construct(array $data) {
 		$this->data = $data;
-		$this->isAcpSession = $isAcpSession;
 	}
 	
 	/**
@@ -56,13 +50,6 @@ final class Session {
 	 */
 	public function getLastActivityTime(): int {
 		return $this->data['lastActivityTime'];
-	}
-	
-	/**
-	 * Returns `true`, if the session is an acp session.
-	 */
-	public function isAcpSession(): bool {
-		return $this->isAcpSession;
 	}
 	
 	/**
