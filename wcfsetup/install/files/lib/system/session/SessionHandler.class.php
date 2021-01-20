@@ -126,7 +126,6 @@ final class SessionHandler extends SingletonFactory {
 	 */
 	private $xsrfToken;
 	
-	private const ACP_SESSION_LIFETIME = 2 * 3600;
 	private const GUEST_SESSION_LIFETIME = 2 * 3600;
 	private const USER_SESSION_LIFETIME = 14 * 86400;
 	
