@@ -242,7 +242,15 @@ class PackageInstallationDispatcher {
 						'acp_session',
 						// We do not use the cache-timing safe class Hex, because we run the 
 						// function during the setup.
-						CryptoUtil::createSignedString(\hex2bin(WCF::getSession()->sessionID))
+						CryptoUtil::createSignedString(
+							\pack(
+								'CA20CN',
+								1,
+								\hex2bin(WCF::getSession()->sessionID),
+								0,
+								WCF::getUser()->userID
+							)
+						)
 					);
 					
 					if (WCF::getSession()->getVar('__wcfSetup_developerMode')) {
