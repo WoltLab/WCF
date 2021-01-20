@@ -142,6 +142,7 @@ final class SessionHandler extends SingletonFactory {
 	private const REAUTHENTICATION_KEY = self::class."\0__reauthentication__";
 	private const REAUTHENTICATION_HARD_LIMIT = 12 * 3600;
 	private const REAUTHENTICATION_SOFT_LIMIT = 2 * 3600;
+	private const REAUTHENTICATION_SOFT_LIMIT_ACP = 2 * 3600;
 	private const REAUTHENTICATION_GRACE_PERIOD = 15 * 60;
 	
 	/**
@@ -998,9 +999,24 @@ final class SessionHandler extends SingletonFactory {
 			return true;
 		}
 		
+		$softLimit = self::REAUTHENTICATION_SOFT_LIMIT;
+		if ($this->isACP) {
+			$softLimit = self::REAUTHENTICATION_SOFT_LIMIT_ACP;
+			
+			// If both the debug mode and the developer tools are enabled the
+			// reauthentication soft limit within the ACP matches the hard limit.
+			//
+			// This allows for a continous access to the ACP and specifically the
+			// developer tools within a single workday without needing to re-login
+			// just because one spent 15 minutes within the IDE.
+			if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+				$softLimit = self::REAUTHENTICATION_HARD_LIMIT;
+			}
+		}
+		
 		// Request a new authentication if the soft limit since the last authentication
 		// is exceeded ...
-		if ($lastAuthentication < (TIME_NOW - self::REAUTHENTICATION_SOFT_LIMIT)) {
+		if ($lastAuthentication < (TIME_NOW - $softLimit)) {
 			// ... and the grace period since the last check is also exceeded.
 			if ($lastCheck < (TIME_NOW - self::REAUTHENTICATION_GRACE_PERIOD)) {
 				return true;
@@ -1009,7 +1025,7 @@ final class SessionHandler extends SingletonFactory {
 		
 		// If we reach this point we determined that a new authentication is not necessary.
 		\assert(
-			($lastAuthentication >= TIME_NOW - self::REAUTHENTICATION_SOFT_LIMIT) ||
+			($lastAuthentication >= TIME_NOW - $softLimit) ||
 			($lastAuthentication >= TIME_NOW - self::REAUTHENTICATION_HARD_LIMIT &&
 				$lastCheck >= TIME_NOW - self::REAUTHENTICATION_GRACE_PERIOD)
 		);
