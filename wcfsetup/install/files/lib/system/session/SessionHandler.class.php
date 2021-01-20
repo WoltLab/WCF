@@ -243,6 +243,7 @@ final class SessionHandler extends SingletonFactory {
 	 * If the `$isACP` parameter is `null` the current environment is assumed.
 	 * 
 	 * @see SessionHandler::parseCookie()
+	 * @since 5.4
 	 */
 	public function getParsedCookieData(?bool $isACP = null): ?array {
 		if ($isACP === null) {
@@ -806,6 +807,8 @@ final class SessionHandler extends SingletonFactory {
 	 * - `false` is returned.
 	 * 
 	 * If `true` is returned you should perform a redirect to `MultifactorAuthenticationForm`.
+	 * 
+	 * @since 5.4
 	 */
 	public function changeUserAfterMultifactorAuthentication(User $user): bool {
 		if ($user->multifactorActive) {
@@ -831,8 +834,10 @@ final class SessionHandler extends SingletonFactory {
 	 * As a safety check you must provide the `$expectedUser` as a parameter, it must match the
 	 * data stored within the session.
 	 *
+	 * @see SessionHandler::getPendingUserChange()
 	 * @throws \RuntimeException If the `$expectedUser` does not match.
 	 * @throws \BadMethodCallException If `getPendingUserChange()` returns `null`.
+	 * @since 5.4
 	 */
 	public function applyPendingUserChange(User $expectedUser): void {
 		$user = $this->getPendingUserChange();
@@ -850,7 +855,10 @@ final class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the pending user change initiated by changeUserAfterMultifactor().
+	 * Returns the pending user change initiated by `changeUserAfterMultifactorAuthentication()`.
+	 * 
+	 * @see SessionHandler::changeUserAfterMultifactorAuthentication()
+	 * @since 5.4
 	 */
 	public function getPendingUserChange(): ?User {
 		$data = $this->getVar(self::CHANGE_USER_AFTER_MULTIFACTOR_KEY);
@@ -875,7 +883,10 @@ final class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Clears a pending user change, reverses the effects of changeUserAfterMultifactor().
+	 * Clears a pending user change, reverses the effects of `changeUserAfterMultifactorAuthentication()`.
+	 * 
+	 * @see SessionHandler::changeUserAfterMultifactorAuthentication()
+	 * @since 5.4
 	 */
 	public function clearPendingUserChange(): void {
 		$this->unregister(self::CHANGE_USER_AFTER_MULTIFACTOR_KEY);
@@ -969,6 +980,7 @@ final class SessionHandler extends SingletonFactory {
 	 * otherwise the user is sufficiently authenticated and may proceed.
 	 *
 	 * @throws \BadMethodCallException If the current user is a guest.
+	 * @since 5.4
 	 */
 	public function needsReauthentication(): bool {
 		if (!$this->getUser()->userID) {
@@ -1029,7 +1041,9 @@ final class SessionHandler extends SingletonFactory {
 	 * This method should be considered to be semi-public and is intended to be used
 	 * by `ReAuthenticationForm` only.
 	 * 
+	 * @see SessionHandler::needsReauthentication()
 	 * @throws \BadMethodCallException If the current user is a guest.
+	 * @since 5.4
 	 */
 	public function registerReauthentication(): void {
 		if (!$this->getUser()->userID) {
