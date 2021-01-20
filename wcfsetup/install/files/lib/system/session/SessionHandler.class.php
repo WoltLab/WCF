@@ -502,7 +502,9 @@ final class SessionHandler extends SingletonFactory {
 	 * @param	mixed		$value
 	 */
 	public function register($key, $value) {
-		$this->variables[$key] = $value;
+		$scope = $this->isACP ? 'acp' : 'frontend';
+		
+		$this->variables[$scope][$key] = $value;
 		$this->variablesChanged = true;
 	}
 	
@@ -512,7 +514,9 @@ final class SessionHandler extends SingletonFactory {
 	 * @param	string		$key
 	 */
 	public function unregister($key) {
-		unset($this->variables[$key]);
+		$scope = $this->isACP ? 'acp' : 'frontend';
+		
+		unset($this->variables[$scope][$key]);
 		$this->variablesChanged = true;
 	}
 	
@@ -524,8 +528,10 @@ final class SessionHandler extends SingletonFactory {
 	 * @return	mixed
 	 */
 	public function getVar($key) {
-		if (isset($this->variables[$key])) {
-			return $this->variables[$key];
+		$scope = $this->isACP ? 'acp' : 'frontend';
+		
+		if (isset($this->variables[$scope][$key])) {
+			return $this->variables[$scope][$key];
 		}
 		
 		return null;
@@ -624,6 +630,11 @@ final class SessionHandler extends SingletonFactory {
 	protected function create() {
 		$this->sessionID = Hex::encode(\random_bytes(20));
 		
+		$variables = [
+			'frontend' => [],
+			'acp' => [],
+		];
+		
 		// Create new session.
 		$sql = "INSERT INTO     wcf".WCF_N."_user_session
 			                (sessionID, ipAddress, userAgent, lastActivityTime, sessionVariables)
@@ -634,10 +645,10 @@ final class SessionHandler extends SingletonFactory {
 			UserUtil::getIpAddress(),
 			UserUtil::getUserAgent(),
 			TIME_NOW,
-			\serialize([]),
+			\serialize($variables),
 		]);
 		
-		$this->variables = [];
+		$this->variables = $variables;
 		$this->user = new User(null);
 		$this->firstVisit = true;
 		
