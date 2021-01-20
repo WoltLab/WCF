@@ -18,6 +18,7 @@ use wcf\system\request\RouteHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\system\WCFACP;
 use wcf\util\CryptoUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\UserUtil;
@@ -56,6 +57,12 @@ final class SessionHandler extends SingletonFactory {
 	 * @var	mixed[][]
 	 */
 	protected $groupData = null;
+	
+	/**
+	 * true if within ACP or WCFSetup
+	 * @var bool
+	 */
+	protected $isACP = false;
 	
 	/**
 	 * language id for active user
@@ -178,6 +185,7 @@ final class SessionHandler extends SingletonFactory {
 	 * @inheritDoc
 	 */
 	protected function init() {
+		$this->isACP = (class_exists(WCFACP::class, false) || !PACKAGE_ID);
 		$this->usersOnlyPermissions = UserGroupOptionCacheBuilder::getInstance()->getData([], 'usersOnlyOptions');
 	}
 	
