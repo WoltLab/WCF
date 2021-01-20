@@ -34,10 +34,8 @@ class ACPSessionLog extends DatabaseObject {
 	 */
 	public function __construct($id, array $row = null, DatabaseObject $object = null) {
 		if ($id !== null) {
-			$sql = "SELECT		acp_session_log.*, user_table.username, acp_session.sessionID AS active
+			$sql = "SELECT		acp_session_log.*, user_table.username, 0 AS active
 				FROM		wcf".WCF_N."_acp_session_log acp_session_log
-				LEFT JOIN	wcf".WCF_N."_acp_session acp_session
-				ON		(acp_session.sessionID = acp_session_log.sessionID)
 				LEFT JOIN	wcf".WCF_N."_user user_table
 				ON		(user_table.userID = acp_session_log.userID)
 				WHERE		acp_session_log.sessionLogID = ?";
@@ -53,25 +51,17 @@ class ACPSessionLog extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns true if this session is active.
-	 * 
-	 * @return	bool
+	 * @deprecated 5.4 - This method always returns false.
 	 */
 	public function isActive() {
-		return $this->active ? true : false;
+		return false;
 	}
 	
 	/**
-	 * Returns true if this session is the active user session.
-	 * 
-	 * @return	bool
+	 * @deprecated 5.4 - This method always returns false.
 	 */
 	public function isActiveUserSession() {
-		if ($this->isActive() && $this->sessionID == WCF::getSession()->sessionID) {
-			return 1;
-		}
-		
-		return 0;
+		return false;
 	}
 	
 	/**
