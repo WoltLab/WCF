@@ -576,7 +576,9 @@ final class SessionHandler extends SingletonFactory {
 			($row['userID'] ? self::USER_SESSION_LIFETIME :
 			(                 self::GUEST_SESSION_LIFETIME)));
 		if ($row['lastActivityTime'] < (TIME_NOW - $lifetime)) {
-			return false;
+			if (!$this->isACP || !ENABLE_DEBUG_MODE || !ENABLE_DEVELOPER_TOOLS) {
+				return false;
+			}
 		}
 		
 		$variables = @\unserialize($row['sessionVariables']);
