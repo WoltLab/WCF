@@ -1110,16 +1110,6 @@ final class SessionHandler extends SingletonFactory {
 	 * Prunes expired sessions.
 	 */
 	public function prune() {
-		// Prevent the sessions from expiring while the development mode is active.
-		if (!ENABLE_DEBUG_MODE || !ENABLE_DEVELOPER_TOOLS) {
-			$sql = "DELETE FROM	wcf".WCF_N."_acp_session
-				WHERE		lastActivityTime < ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([
-				TIME_NOW - self::ACP_SESSION_LIFETIME,
-			]);
-		}
-		
 		$sql = "DELETE FROM	wcf".WCF_N."_user_session
 			WHERE		(lastActivityTime < ? AND userID IS NULL)
 				OR	(lastActivityTime < ? AND userID IS NOT NULL)";
