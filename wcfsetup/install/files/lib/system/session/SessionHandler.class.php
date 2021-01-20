@@ -1047,6 +1047,25 @@ final class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Clears that the user performed reauthentication successfully.
+	 * 
+	 * After this method is called `needsReauthentication()` will return true until
+	 * `registerReauthentication()` is called again.
+	 * 
+	 * @see SessionHandler::registerReauthentication()
+	 * @see SessionHandler::needsReauthentication()
+	 * @throws \BadMethodCallException If the current user is a guest.
+	 * @since 5.4
+	 */
+	public function clearReauthentication(): void {
+		if (!$this->getUser()->userID) {
+			throw new \BadMethodCallException('The current user is a guest.');
+		}
+		
+		$this->unregister(self::REAUTHENTICATION_KEY);
+	}
+	
+	/**
 	 * Updates user session on shutdown.
 	 */
 	public function update() {
