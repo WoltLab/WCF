@@ -115,13 +115,13 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             });
         }
         _markReactionAsActive() {
-            let reactionTypeID = 0;
+            let reactionTypeID = null;
             this._objects.get(this._popoverCurrentObjectId).forEach((element) => {
                 if (element.reactButton !== null) {
                     reactionTypeID = ~~element.reactButton.dataset.reactionTypeId;
                 }
             });
-            if (!reactionTypeID) {
+            if (reactionTypeID === null) {
                 throw new Error("Unable to find react button for current popover.");
             }
             //  Clear the old active state.
