@@ -60,7 +60,7 @@
 	vertical-align: middle;
 	
 	&::before {
-		content: ' × ';
+		content: '\202f×\202f';
 	}
 }
 
