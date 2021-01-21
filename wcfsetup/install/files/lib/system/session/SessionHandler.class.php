@@ -135,7 +135,7 @@ final class SessionHandler extends SingletonFactory {
 	
 	private const ACP_SESSION_LIFETIME = 2 * 3600;
 	private const GUEST_SESSION_LIFETIME = 2 * 3600;
-	private const USER_SESSION_LIFETIME = 14 * 86400;
+	private const USER_SESSION_LIFETIME = 60 * 86400;
 	
 	private const CHANGE_USER_AFTER_MULTIFACTOR_KEY = self::class."\0__changeUserAfterMultifactor__";
 	private const PENDING_USER_LIFETIME = 15 * 60;
@@ -292,9 +292,13 @@ final class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * Returns the current time step. The time step changes
-	 * every 6 hours.
+	 * every 24 hours.
 	 */
 	private function getCookieTimestep(): int {
+		$window = (24 * 3600);
+		
+		\assert((self::USER_SESSION_LIFETIME / $window) < 0xFF);
+		
 		return floor(TIME_NOW / (6 * 3600)) & 0xFF;
 	}
 	
