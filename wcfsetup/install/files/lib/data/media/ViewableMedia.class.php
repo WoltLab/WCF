@@ -184,10 +184,10 @@ class ViewableMedia extends DatabaseObjectDecorator
 
             if ($link !== null) {
                 return '<span style="display: inline-block; text-align: center; width: ' . $size . 'px; height: ' . $size . 'px;">
-						<img src="' . StringUtil::encodeHTML($link) . '" alt="' . StringUtil::encodeHTML($this->altText)
-                        . '" ' . ($this->title ? 'title="' . StringUtil::encodeHTML($this->title) . '" ' : '')
-                        . 'style="width: ' . $width . 'px; height: ' . $height . 'px; margin-top: ' . $marginTop . 'px;">
-					</span>';
+                            <img src="' . StringUtil::encodeHTML($link) . '" alt="' . StringUtil::encodeHTML($this->altText)
+                            . '" ' . ($this->title ? 'title="' . StringUtil::encodeHTML($this->title) . '" ' : '')
+                            . 'style="width: ' . $width . 'px; height: ' . $height . 'px; margin-top: ' . $marginTop . 'px;">
+                        </span>';
             }
         }
 
