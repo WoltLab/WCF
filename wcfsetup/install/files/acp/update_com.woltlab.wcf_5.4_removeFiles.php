@@ -1,10 +1,11 @@
 <?php
+
 use wcf\data\package\PackageCache;
 use wcf\system\WCF;
 
 $files = [
-	'lib/acp/form/UserGroupPromoteOwnerForm.class.php',
-	'lib/system/database/table/DatabaseTableUtil.class.php',
+    'lib/acp/form/UserGroupPromoteOwnerForm.class.php',
+    'lib/system/database/table/DatabaseTableUtil.class.php',
 ];
 
 $sql = "SELECT  packageID
@@ -20,18 +21,18 @@ $deletionStatement = WCF::getDB()->prepareStatement($sql);
 $packageID = $this->installation->getPackageID();
 
 foreach ($files as $file) {
-	$searchStatement->execute([$file]);
-	$filePackageID = $searchStatement->fetchSingleColumn();
-	if ($filePackageID !== false && $filePackageID != $packageID) {
-		throw new \UnexpectedValueException("File '{$file}' does not belong to package '{$this->installation->getPackage()->package}' but to package '" . PackageCache::getInstance()->getPackage($filePackageID)->package . "'.");
-	}
-	
-	if (file_exists(WCF_DIR . $file)) {
-		unlink(WCF_DIR . $file);
-	}
-	
-	$deletionStatement->execute([
-		$packageID,
-		$file,
-	]);
+    $searchStatement->execute([$file]);
+    $filePackageID = $searchStatement->fetchSingleColumn();
+    if ($filePackageID !== false && $filePackageID != $packageID) {
+        throw new \UnexpectedValueException("File '{$file}' does not belong to package '{$this->installation->getPackage()->package}' but to package '" . PackageCache::getInstance()->getPackage($filePackageID)->package . "'.");
+    }
+
+    if (\file_exists(WCF_DIR . $file)) {
+        \unlink(WCF_DIR . $file);
+    }
+
+    $deletionStatement->execute([
+        $packageID,
+        $file,
+    ]);
 }

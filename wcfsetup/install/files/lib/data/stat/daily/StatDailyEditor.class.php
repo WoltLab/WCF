@@ -1,22 +1,25 @@
 <?php
+
 namespace wcf\data\stat\daily;
+
 use wcf\data\DatabaseObjectEditor;
 
 /**
  * Provides functions to create, edit and delete a stat daily entry.
- * 
- * @author	Marcel Werk
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	WoltLabSuite\Core\Data\Stat\Daily
- * 
- * @method static	StatDaily	create(array $parameters = [])
- * @method		StatDaily	getDecoratedObject()
- * @mixin		StatDaily
+ *
+ * @author  Marcel Werk
+ * @copyright   2001-2019 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package WoltLabSuite\Core\Data\Stat\Daily
+ *
+ * @method static   StatDaily   create(array $parameters = [])
+ * @method      StatDaily   getDecoratedObject()
+ * @mixin       StatDaily
  */
-class StatDailyEditor extends DatabaseObjectEditor {
-	/**
-	 * @inheritDoc
-	 */
-	protected static $baseClass = StatDaily::class;
+class StatDailyEditor extends DatabaseObjectEditor
+{
+    /**
+     * @inheritDoc
+     */
+    protected static $baseClass = StatDaily::class;
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace wcf\system\form\builder\field;
 
 /**
@@ -11,18 +12,19 @@ namespace wcf\system\form\builder\field;
  * @see         https://html.spec.whatwg.org/multipage/input.html#attr-input-pattern
  * @since       5.4
  */
-interface IPatternFormField {
-	/**
-	 * Returns the `pattern` attribute of the form field.
-	 *
-	 * If `null` is returned, no `pattern` attribute will be set.
-	 */
-	public function getPattern(): ?string;
-	
-	/**
-	 * Sets the `pattern` attribute of the form field.
-	 *
-	 * If `null` is given, the attribute is unset.
-	 */
-	public function pattern(?string $pattern): self;
+interface IPatternFormField
+{
+    /**
+     * Returns the `pattern` attribute of the form field.
+     *
+     * If `null` is returned, no `pattern` attribute will be set.
+     */
+    public function getPattern(): ?string;
+
+    /**
+     * Sets the `pattern` attribute of the form field.
+     *
+     * If `null` is given, the attribute is unset.
+     */
+    public function pattern(?string $pattern): self;
 }

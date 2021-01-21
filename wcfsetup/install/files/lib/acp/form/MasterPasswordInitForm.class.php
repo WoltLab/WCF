@@ -1,5 +1,7 @@
 <?php
+
 namespace wcf\acp\form;
+
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
@@ -11,112 +13,120 @@ use wcf\util\PasswordUtil;
 
 /**
  * Shows the master password init form.
- * 
- * @author	Marcel Werk
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	WoltLabSuite\Core\Acp\Form
+ *
+ * @author  Marcel Werk
+ * @copyright   2001-2019 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package WoltLabSuite\Core\Acp\Form
  */
-class MasterPasswordInitForm extends MasterPasswordForm {
-	/**
-	 * master password confirm
-	 * @var	string
-	 */
-	public $confirmMasterPassword = '';
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function readParameters() {
-		AbstractForm::readParameters();
-		
-		if (file_exists(WCF_DIR.'acp/masterPassword.inc.php')) {
-			require_once(WCF_DIR.'acp/masterPassword.inc.php');
-			
-			if (defined('MASTER_PASSWORD')) {
-				throw new IllegalLinkException();
-			}
-		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function readFormParameters() {
-		parent::readFormParameters();
-		
-		if (isset($_POST['confirmMasterPassword'])) $this->confirmMasterPassword = $_POST['confirmMasterPassword'];
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function validate() {
-		AbstractForm::validate();
-		
-		if (empty($this->masterPassword)) {
-			throw new UserInputException('masterPassword');
-		}
-		
-		// check password security
-		if (mb_strlen($this->masterPassword) < 12) {
-			throw new UserInputException('masterPassword', 'notSecure');
-		}
-		// digits
-		if (!Regex::compile('\d')->match($this->masterPassword)) {
-			throw new UserInputException('masterPassword', 'notSecure');
-		}
-		// latin characters (lower-case)
-		if (!Regex::compile('[a-z]')->match($this->masterPassword)) {
-			throw new UserInputException('masterPassword', 'notSecure');
-		}
-		// latin characters (upper-case)
-		if (!Regex::compile('[A-Z]')->match($this->masterPassword)) {
-			throw new UserInputException('masterPassword', 'notSecure');
-		}
-		
-		// password equals username
-		if ($this->masterPassword == WCF::getUser()->username) {
-			throw new UserInputException('masterPassword', 'notSecure');
-		}
-		
-		// confirm master password
-		if (empty($this->confirmMasterPassword)) {
-			throw new UserInputException('confirmMasterPassword');
-		}
-		
-		if ($this->confirmMasterPassword != $this->masterPassword) {
-			throw new UserInputException('confirmMasterPassword', 'notEqual');
-		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function save() {
-		// write master password file
-		$file = new File(WCF_DIR.'acp/masterPassword.inc.php');
-		$file->write("<?php
+class MasterPasswordInitForm extends MasterPasswordForm
+{
+    /**
+     * master password confirm
+     * @var string
+     */
+    public $confirmMasterPassword = '';
+
+    /**
+     * @inheritDoc
+     */
+    public function readParameters()
+    {
+        AbstractForm::readParameters();
+
+        if (\file_exists(WCF_DIR . 'acp/masterPassword.inc.php')) {
+            require_once(WCF_DIR . 'acp/masterPassword.inc.php');
+
+            if (\defined('MASTER_PASSWORD')) {
+                throw new IllegalLinkException();
+            }
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function readFormParameters()
+    {
+        parent::readFormParameters();
+
+        if (isset($_POST['confirmMasterPassword'])) {
+            $this->confirmMasterPassword = $_POST['confirmMasterPassword'];
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function validate()
+    {
+        AbstractForm::validate();
+
+        if (empty($this->masterPassword)) {
+            throw new UserInputException('masterPassword');
+        }
+
+        // check password security
+        if (\mb_strlen($this->masterPassword) < 12) {
+            throw new UserInputException('masterPassword', 'notSecure');
+        }
+        // digits
+        if (!Regex::compile('\d')->match($this->masterPassword)) {
+            throw new UserInputException('masterPassword', 'notSecure');
+        }
+        // latin characters (lower-case)
+        if (!Regex::compile('[a-z]')->match($this->masterPassword)) {
+            throw new UserInputException('masterPassword', 'notSecure');
+        }
+        // latin characters (upper-case)
+        if (!Regex::compile('[A-Z]')->match($this->masterPassword)) {
+            throw new UserInputException('masterPassword', 'notSecure');
+        }
+
+        // password equals username
+        if ($this->masterPassword == WCF::getUser()->username) {
+            throw new UserInputException('masterPassword', 'notSecure');
+        }
+
+        // confirm master password
+        if (empty($this->confirmMasterPassword)) {
+            throw new UserInputException('confirmMasterPassword');
+        }
+
+        if ($this->confirmMasterPassword != $this->masterPassword) {
+            throw new UserInputException('confirmMasterPassword', 'notEqual');
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save()
+    {
+        // write master password file
+        $file = new File(WCF_DIR . 'acp/masterPassword.inc.php');
+        $file->write("<?php
 /** MASTER PASSWORD STORAGE
 DO NOT EDIT THIS FILE */
-define('MASTER_PASSWORD', '".PasswordUtil::getDoubleSaltedHash($this->masterPassword)."');
+define('MASTER_PASSWORD', '" . PasswordUtil::getDoubleSaltedHash($this->masterPassword) . "');
 ?>");
-		$file->close();
-		FileUtil::makeWritable(WCF_DIR.'acp/masterPassword.inc.php');
-		
-		parent::save();
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function assignVariables() {
-		parent::assignVariables();
-		
-		WCF::getTPL()->assign([
-			'confirmMasterPassword' => $this->confirmMasterPassword,
-			'exampleMasterPassword' => PasswordUtil::getRandomPassword(16),
-			'relativeWcfDir' => RELATIVE_WCF_DIR
-		]);
-	}
+        $file->close();
+        FileUtil::makeWritable(WCF_DIR . 'acp/masterPassword.inc.php');
+
+        parent::save();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function assignVariables()
+    {
+        parent::assignVariables();
+
+        WCF::getTPL()->assign([
+            'confirmMasterPassword' => $this->confirmMasterPassword,
+            'exampleMasterPassword' => PasswordUtil::getRandomPassword(16),
+            'relativeWcfDir' => RELATIVE_WCF_DIR,
+        ]);
+    }
 }

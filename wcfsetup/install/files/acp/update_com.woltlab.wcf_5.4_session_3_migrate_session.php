@@ -14,18 +14,18 @@ $property->setAccessible(true);
 $variables = $property->getValue(SessionHandler::getInstance());
 
 $variables[SessionHandler::class . "\0__reauthentication__"] = [
-	'lastAuthentication' => TIME_NOW,
-	'lastCheck' => TIME_NOW,
+    'lastAuthentication' => TIME_NOW,
+    'lastCheck' => TIME_NOW,
 ];
 
 $statement->execute([
-	SessionHandler::getInstance()->sessionID,
-	SessionHandler::getInstance()->userID,
-	SessionHandler::getInstance()->userAgent,
-	SessionHandler::getInstance()->ipAddress,
-	SessionHandler::getInstance()->lastActivityTime,
-	\serialize([
-		'acp' => $variables,
-		'frontend' => []
-	]),
+    SessionHandler::getInstance()->sessionID,
+    SessionHandler::getInstance()->userID,
+    SessionHandler::getInstance()->userAgent,
+    SessionHandler::getInstance()->ipAddress,
+    SessionHandler::getInstance()->lastActivityTime,
+    \serialize([
+        'acp' => $variables,
+        'frontend' => [],
+    ]),
 ]);

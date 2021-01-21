@@ -1,4 +1,5 @@
 <?php
+
 namespace wcf\system\form\builder\field;
 
 /**
@@ -16,47 +17,48 @@ namespace wcf\system\form\builder\field;
  * @package     WoltLabSuite\Core\System\Form\Builder\Field
  * @since       5.4
  */
-interface IAttributeFormField extends IFormField {
-	/**
-	 * Returns the value of the additional attribute of the actual field element with the given name.
-	 *
-	 * @throws      \InvalidArgumentException       if the given attribute is invalid or no such attribute exists
-	 */
-	public function getFieldAttribute(string $name): self;
-	
-	/**
-	 * Returns all additional attributes of the actual field element.
-	 */
-	public function getFieldAttributes(): array;
-	
-	/**
-	 * Adds the given additional attribute to the actual field element and returns this field.
-	 *
-	 * @throws      \InvalidArgumentException       if the given attribute is invalid
-	 */
-	public function fieldAttribute(string $name, string $value = null): self;
-	
-	/**
-	 * Returns `true` if an additional attribute of the actual field element with the given name exists and returns
-	 * false` otherwise.
-	 *
-	 * @throws      \InvalidArgumentException       if the given attribute is invalid
-	 */
-	public function hasFieldAttribute(string $name): bool;
-	
-	/**
-	 * Removes the given additional attribute of the actual field element and returns this field.
-	 *
-	 * If the actual field element does not have the given attribute, this method silently ignores that fact.
-	 *
-	 * @throws      \InvalidArgumentException       if the given attribute is invalid
-	 */
-	public function removeFieldAttribute(string $name): self;
-	
-	/**
-	 * Checks if the given name is a valid additional attribute name.
-	 *
-	 * @throws      \InvalidArgumentException       if the given additional attribute name is invalid
-	 */
-	public static function validateFieldAttribute(string $name);
+interface IAttributeFormField extends IFormField
+{
+    /**
+     * Returns the value of the additional attribute of the actual field element with the given name.
+     *
+     * @throws      \InvalidArgumentException       if the given attribute is invalid or no such attribute exists
+     */
+    public function getFieldAttribute(string $name): self;
+
+    /**
+     * Returns all additional attributes of the actual field element.
+     */
+    public function getFieldAttributes(): array;
+
+    /**
+     * Adds the given additional attribute to the actual field element and returns this field.
+     *
+     * @throws      \InvalidArgumentException       if the given attribute is invalid
+     */
+    public function fieldAttribute(string $name, ?string $value = null): self;
+
+    /**
+     * Returns `true` if an additional attribute of the actual field element with the given name exists and returns
+     * false` otherwise.
+     *
+     * @throws      \InvalidArgumentException       if the given attribute is invalid
+     */
+    public function hasFieldAttribute(string $name): bool;
+
+    /**
+     * Removes the given additional attribute of the actual field element and returns this field.
+     *
+     * If the actual field element does not have the given attribute, this method silently ignores that fact.
+     *
+     * @throws      \InvalidArgumentException       if the given attribute is invalid
+     */
+    public function removeFieldAttribute(string $name): self;
+
+    /**
+     * Checks if the given name is a valid additional attribute name.
+     *
+     * @throws      \InvalidArgumentException       if the given additional attribute name is invalid
+     */
+    public static function validateFieldAttribute(string $name);
 }

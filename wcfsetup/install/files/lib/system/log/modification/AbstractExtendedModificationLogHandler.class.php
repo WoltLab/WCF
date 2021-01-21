@@ -1,4 +1,5 @@
 <?php
+
 namespace wcf\system\log\modification;
 
 /**
@@ -6,16 +7,18 @@ namespace wcf\system\log\modification;
  * for the global modification log in the ACP.
  *
  * @author      Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright   2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Log\Modification
  * @since       5.2
  */
-abstract class AbstractExtendedModificationLogHandler extends AbstractModificationLogHandler implements IExtendedModificationLogHandler {
-	/**
-	 * @inheritDoc
-	 */
-	public function includeInLogList() {
-		return true;
-	}
+abstract class AbstractExtendedModificationLogHandler extends AbstractModificationLogHandler implements IExtendedModificationLogHandler
+{
+    /**
+     * @inheritDoc
+     */
+    public function includeInLogList()
+    {
+        return true;
+    }
 }

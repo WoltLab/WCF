@@ -6,5 +6,5 @@
 	<arg value="p"/>
 	<arg name="basepath" value="."/>
 
-	<rule ref="./CodeSniff/WCF/ruleset.xml"/>
+	<rule ref="PSR12"/>
 </ruleset>

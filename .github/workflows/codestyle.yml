@@ -10,11 +10,16 @@ on:
 
 jobs:
   php:
-    name: PHP CodeSniffer
+    name: PHP
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: chekalsky/phpcs-action@e269c2f264f400adcda7c6b24c8550302350d495
+    - name: phpcs
+      uses: chekalsky/phpcs-action@e269c2f264f400adcda7c6b24c8550302350d495
+    - name: php-cs-fixer
+      uses: docker://oskarstark/php-cs-fixer-ga
+      with:
+        args: --dry-run --diff-format udiff
   ts:
     name: TS Prettier
     runs-on: ubuntu-latest

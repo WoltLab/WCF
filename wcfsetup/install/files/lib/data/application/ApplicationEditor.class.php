@@ -1,31 +1,35 @@
 <?php
+
 namespace wcf\data\application;
+
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
 use wcf\system\cache\builder\ApplicationCacheBuilder;
 
 /**
  * Provides functions to edit applications.
- * 
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	WoltLabSuite\Core\Data\Application
- * 
- * @method static	Application	create(array $parameters = [])
- * @method		Application	getDecoratedObject()
- * @mixin		Application
+ *
+ * @author  Alexander Ebert
+ * @copyright   2001-2019 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package WoltLabSuite\Core\Data\Application
+ *
+ * @method static   Application create(array $parameters = [])
+ * @method      Application getDecoratedObject()
+ * @mixin       Application
  */
-class ApplicationEditor extends DatabaseObjectEditor implements IEditableCachedObject {
-	/**
-	 * @inheritDoc
-	 */
-	protected static $baseClass = Application::class;
-	
-	/**
-	 * @inheritDoc
-	 */
-	public static function resetCache() {
-		ApplicationCacheBuilder::getInstance()->reset();
-	}
+class ApplicationEditor extends DatabaseObjectEditor implements IEditableCachedObject
+{
+    /**
+     * @inheritDoc
+     */
+    protected static $baseClass = Application::class;
+
+    /**
+     * @inheritDoc
+     */
+    public static function resetCache()
+    {
+        ApplicationCacheBuilder::getInstance()->reset();
+    }
 }
