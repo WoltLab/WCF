@@ -56,6 +56,7 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 	acp/update_com.woltlab.wcf_5.4_checkOwnerGroup.php \
 	acp/update_com.woltlab.wcf_5.4_session_1_cookies.php \
 	acp/update_com.woltlab.wcf_5.4_session_2_user_session.php \
+	acp/update_com.woltlab.wcf_5.4_session_3_migrate_session.php \
 	lib/util/HeaderUtil.class.php \
 	lib/system/package/plugin/AbstractPackageInstallationPlugin.class.php \
 	lib/system/package/plugin/ScriptPackageInstallationPlugin.class.php \
@@ -69,7 +70,7 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 		<!-- Preparations for the new session system. -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_1_cookies.php</instruction>
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_2_user_session.php</instruction>
-		<!-- TODO: Copy the current ACP session into a frontend session. -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_3_migrate_session.php</instruction>
 		
 		<!-- New application code. -->
 		<instruction type="file" skipStyleUpdate="true" />
@@ -80,9 +81,9 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 		<instruction type="option" run="standalone" />
 		
 		<!-- Cleanup for the new session system. -->
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_3_drop_virtual.php</instruction>
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_4_drop_acp.php</instruction>
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_5_clean_session.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_4_drop_virtual.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_5_drop_acp.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_6_clean_session.php</instruction>
 		
 		<!-- Non-critical database adjustments. -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_db.php</instruction>
