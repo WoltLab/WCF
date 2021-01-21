@@ -306,7 +306,7 @@ final class PasswordUtil {
 			switch ($algorithm) {
 				case 'H':
 				case 'P':
-					$password = str_replace($settings, '', self::phpass_hash_crypt_private($password, $settings));
+					$password = str_replace($settings, '', self::phpassHashCryptPrivate($password, $settings));
 				break;
 				case '2a':
 				case '2y':
@@ -318,7 +318,7 @@ final class PasswordUtil {
 		return \hash_equals($dbHash, $password);
 	}
 	
-	private static function phpass_hash_crypt_private($password, $setting) {
+	private static function phpassHashCryptPrivate($password, $setting) {
 		static $itoa64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 		
 		$output = '*';
@@ -396,7 +396,7 @@ final class PasswordUtil {
 			return \hash_equals(md5($password), $dbHash);
 		}
 		
-		return \hash_equals(self::phpass_hash_crypt_private($password, $dbHash), $dbHash);
+		return \hash_equals(self::phpassHashCryptPrivate($password, $dbHash), $dbHash);
 	}
 	
 	/**
