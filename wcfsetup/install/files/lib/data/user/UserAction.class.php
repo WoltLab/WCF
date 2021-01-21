@@ -331,7 +331,6 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			if (array_key_exists('password', $this->parameters['data']) && $this->parameters['data']['password'] !== '') {
 				foreach ($this->getObjects() as $object) {
 					SessionHandler::getInstance()->deleteUserSessionsExcept($object->getDecoratedObject(), SessionHandler::getInstance()->sessionID);
-					SessionHandler::getInstance()->deleteAcpSessionsExcept($object->getDecoratedObject(), SessionHandler::getInstance()->sessionID);
 				}
 			}
 		}

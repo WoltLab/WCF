@@ -36,7 +36,6 @@
     "__pollOptionsFormField",
     "__radioButtonFormField",
     "__ratingFormField",
-    "__reauthenticationLoginAs",
     "__rowFormContainer",
     "__rowFormFieldContainer",
     "__singleMediaSelectionFormField",

@@ -92,18 +92,6 @@ CREATE TABLE wcf1_acp_search_provider (
 	UNIQUE KEY providerName (providerName, packageID)
 );
 
-DROP TABLE IF EXISTS wcf1_acp_session;
-CREATE TABLE wcf1_acp_session (
-	sessionID CHAR(40) NOT NULL PRIMARY KEY,
-	userID INT(10),
-	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
-	userAgent VARCHAR(255) NOT NULL DEFAULT '',
-	lastActivityTime INT(10) NOT NULL DEFAULT 0,
-	sessionVariables MEDIUMBLOB,
-	KEY (userID),
-	KEY (lastActivityTime)
-);
-
 DROP TABLE IF EXISTS wcf1_acp_session_access_log;
 CREATE TABLE wcf1_acp_session_access_log (
 	sessionAccessLogID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1931,8 +1919,6 @@ ALTER TABLE wcf1_acl_simple_to_group ADD FOREIGN KEY (groupID) REFERENCES wcf1_u
 ALTER TABLE wcf1_acp_menu_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_acp_search_provider ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
-
-ALTER TABLE wcf1_acp_session ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_acp_session_access_log ADD FOREIGN KEY (sessionLogID) REFERENCES wcf1_acp_session_log (sessionLogID) ON DELETE CASCADE;
 
