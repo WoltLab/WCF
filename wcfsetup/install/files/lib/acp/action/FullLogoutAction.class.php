@@ -6,32 +6,25 @@ use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 
 /**
- * Does the user logout in the admin control panel (clearing reauthentication).
+ * Does a full user logout in the admin control panel (deleting the session).
  * 
- * @author	Tim Duesterhus, Marcel Werk
+ * @author	Tim Duesterhus
  * @copyright	2001-2021 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Action
  */
-class LogoutAction extends AbstractSecureAction {
-	/**
-	 * @inheritDoc
-	 */
-	public $loginRequired = true;
-	
+class FullLogoutAction extends LogoutAction {
 	/**
 	 * @inheritDoc
 	 */
 	public function execute() {
-		parent::execute();
+		AbstractSecureAction::execute();
 		
-		WCF::getSession()->clearReauthentication();
+		WCF::getSession()->delete();
 		
 		$this->executed();
 		
-		HeaderUtil::redirect(LinkHandler::getInstance()->getLink(null, [
-			'forceFrontend' => true,
-		]));
+		HeaderUtil::redirect(LinkHandler::getInstance()->getLink());
 		exit;
 	}
 }
