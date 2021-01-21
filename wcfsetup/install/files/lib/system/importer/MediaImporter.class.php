@@ -108,9 +108,9 @@ class MediaImporter extends AbstractImporter
         }
 
         // save media content
-        $sql = "INSERT INTO	wcf" . WCF_N . "_media_content
-					(mediaID, languageID, title, caption, altText)
-			VALUES		(?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO wcf" . WCF_N . "_media_content
+                            (mediaID, languageID, title, caption, altText)
+                VALUES      (?, ?, ?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($contents as $languageID => $contentData) {
             $statement->execute([$media->mediaID, $languageID ?: null, $contentData['title'], $contentData['caption'], $contentData['altText']]);

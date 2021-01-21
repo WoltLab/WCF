@@ -41,10 +41,10 @@ class TagEngine extends SingletonFactory
 
         // remove tags prior to apply the new ones (prevents duplicate entries)
         if ($replace) {
-            $sql = "DELETE FROM	wcf" . WCF_N . "_tag_to_object
-				WHERE		objectTypeID = ?
-						AND objectID = ?
-						AND languageID = ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_tag_to_object
+                    WHERE       objectTypeID = ?
+                            AND objectID = ?
+                            AND languageID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 $objectTypeID,
@@ -87,9 +87,9 @@ class TagEngine extends SingletonFactory
         }
 
         // save tags
-        $sql = "INSERT INTO	wcf" . WCF_N . "_tag_to_object
-					(objectID, tagID, objectTypeID, languageID)
-			VALUES		(?, ?, ?, ?)";
+        $sql = "INSERT INTO wcf" . WCF_N . "_tag_to_object
+                            (objectID, tagID, objectTypeID, languageID)
+                VALUES      (?, ?, ?, ?)";
         WCF::getDB()->beginTransaction();
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($tagIDs as $tagID) {
@@ -109,10 +109,10 @@ class TagEngine extends SingletonFactory
     {
         $objectTypeID = $this->getObjectTypeID($objectType);
 
-        $sql = "DELETE FROM	wcf" . WCF_N . "_tag_to_object
-			WHERE		objectTypeID = ?
-					AND objectID = ?
-					" . ($languageID !== null ? "AND languageID = ?" : "");
+        $sql = "DELETE FROM wcf" . WCF_N . "_tag_to_object
+                WHERE       objectTypeID = ?
+                        AND objectID = ?
+                        " . ($languageID !== null ? "AND languageID = ?" : "");
         $statement = WCF::getDB()->prepareStatement($sql);
         $parameters = [
             $objectTypeID,
@@ -138,8 +138,8 @@ class TagEngine extends SingletonFactory
         $conditionsBuilder->add('objectTypeID = ?', [$objectTypeID]);
         $conditionsBuilder->add('objectID IN (?)', [$objectIDs]);
 
-        $sql = "DELETE FROM	wcf" . WCF_N . "_tag_to_object
-			" . $conditionsBuilder;
+        $sql = "DELETE FROM wcf" . WCF_N . "_tag_to_object
+                " . $conditionsBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionsBuilder->getParameters());
     }
@@ -194,11 +194,11 @@ class TagEngine extends SingletonFactory
             $conditions->add("tag_to_object.languageID IN (?)", [$languageIDs]);
         }
 
-        $sql = "SELECT		tag.*, tag_to_object.objectID
-			FROM		wcf" . WCF_N . "_tag_to_object tag_to_object
-			LEFT JOIN	wcf" . WCF_N . "_tag tag
-			ON		(tag.tagID = tag_to_object.tagID)
-			" . $conditions;
+        $sql = "SELECT      tag.*, tag_to_object.objectID
+                FROM        wcf" . WCF_N . "_tag_to_object tag_to_object
+                LEFT JOIN   wcf" . WCF_N . "_tag tag
+                ON          (tag.tagID = tag_to_object.tagID)
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
 
@@ -294,12 +294,12 @@ class TagEngine extends SingletonFactory
         }, $tags));
         $parameters[] = \count($tags);
 
-        $sql = "SELECT          objectID
-			FROM            wcf" . WCF_N . "_tag_to_object
-			WHERE           objectTypeID = ?
-					AND tagID IN (" . $tagIDs . ")
-			GROUP BY        objectID
-			HAVING          COUNT(objectID) = ?";
+        $sql = "SELECT      objectID
+                FROM        wcf" . WCF_N . "_tag_to_object
+                WHERE       objectTypeID = ?
+                        AND tagID IN (" . $tagIDs . ")
+                GROUP BY    objectID
+                HAVING  COUNT(objectID) = ?";
 
         return [
             'sql' => $sql,

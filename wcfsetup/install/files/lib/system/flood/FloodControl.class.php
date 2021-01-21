@@ -31,10 +31,10 @@ final class FloodControl extends SingletonFactory
     private function countContentByIdentifier(string $objectType, string $identifier, \DateInterval $interval, int $time): array
     {
         $sql = "SELECT  COUNT(*) AS count, MIN(time) AS earliestTime
-			FROM    wcf" . WCF_N . "_flood_control
-			WHERE   objectTypeID = ?
-			        AND identifier = ?
-			        AND (time > ? AND time <= ?)";
+                FROM    wcf" . WCF_N . "_flood_control
+                WHERE   objectTypeID = ?
+                        AND identifier = ?
+                        AND (time > ? AND time <= ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $this->getObjectTypeID($objectType),
@@ -111,9 +111,9 @@ final class FloodControl extends SingletonFactory
     private function getLastTimeByIdentifier(string $objectType, string $identifier): ?int
     {
         $sql = "SELECT  MAX(time)
-			FROM    wcf" . WCF_N . "_flood_control
-			WHERE   objectTypeID = ?
-				AND identifier = ?";
+                FROM    wcf" . WCF_N . "_flood_control
+                WHERE   objectTypeID = ?
+                    AND identifier = ?";
         $statement = WCF::getDB()->prepareStatement($sql, 1);
         $statement->execute([
             $this->getObjectTypeID($objectType),
@@ -197,8 +197,8 @@ final class FloodControl extends SingletonFactory
      */
     public function prune(): void
     {
-        $sql = "DELETE FROM     wcf" . WCF_N . "_flood_control
-			WHERE           time <= ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_flood_control
+                WHERE       time <= ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([static::PRUNE_TIME]);
     }
@@ -208,9 +208,9 @@ final class FloodControl extends SingletonFactory
      */
     private function registerContentByIdentifier(string $objectType, string $identifier, int $time): void
     {
-        $sql = "INSERT INTO     wcf" . WCF_N . "_flood_control
-			                (objectTypeID, identifier, time)
-			VALUES          (?, ?, ?)";
+        $sql = "INSERT INTO wcf" . WCF_N . "_flood_control
+                            (objectTypeID, identifier, time)
+                VALUES      (?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $this->getObjectTypeID($objectType),

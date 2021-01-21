@@ -80,9 +80,9 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
 
         // fetch data directly from database during framework installation
         if (!PACKAGE_ID) {
-            $sql = "SELECT	*
-				FROM	wcf" . WCF_N . "_language_category
-				WHERE	languageCategory = ?";
+            $sql = "SELECT  *
+                    FROM    wcf" . WCF_N . "_language_category
+                    WHERE   languageCategory = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute(['wcf.acp.cronjob']);
             $languageCategory = $statement->fetchObject(LanguageCategory::class);
@@ -96,10 +96,10 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
 
         // save new descriptions
         $sql = "INSERT INTO             wcf" . WCF_N . "_language_item
-						(languageID, languageItem, languageItemValue, languageCategoryID, packageID)
-			VALUES                  (?, ?, ?, ?, ?)
-			ON DUPLICATE KEY UPDATE languageItemValue = VALUES(languageItemValue),
-						languageCategoryID = VALUES(languageCategoryID)";
+                                        (languageID, languageItem, languageItemValue, languageCategoryID, packageID)
+                VALUES                  (?, ?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE languageItemValue = VALUES(languageItemValue),
+                                        languageCategoryID = VALUES(languageCategoryID)";
         $statement = WCF::getDB()->prepareStatement($sql);
 
         foreach ($languages as $language) {
@@ -151,8 +151,8 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
     {
         // delete language items
         if (!empty($objectIDs)) {
-            $sql = "DELETE FROM	wcf" . WCF_N . "_language_item
-				WHERE		languageItem = ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_language_item
+                    WHERE       languageItem = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
 
             WCF::getDB()->beginTransaction();

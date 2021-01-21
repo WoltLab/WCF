@@ -201,7 +201,8 @@ class TrophyEditForm extends TrophyAddForm
 
         // reset special trophies, if trophy is disabled
         if ($this->isDisabled) {
-            $sql = "DELETE FROM wcf" . WCF_N . "_user_special_trophy WHERE trophyID = ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_user_special_trophy
+                    WHERE       trophyID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->trophyID]);
 
@@ -212,10 +213,10 @@ class TrophyEditForm extends TrophyAddForm
             // update trophy points
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('trophyID = ?', [$this->trophyID]);
-            $sql = "SELECT		COUNT(*) as count, userID
-			FROM		wcf" . WCF_N . "_user_trophy
-			" . $conditionBuilder . "
-			GROUP BY	userID";
+            $sql = "SELECT      COUNT(*) as count, userID
+                    FROM        wcf" . WCF_N . "_user_trophy
+                    " . $conditionBuilder . "
+                    GROUP BY    userID";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditionBuilder->getParameters());
 

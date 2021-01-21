@@ -40,9 +40,9 @@ final class TotpMultifactorMethod implements IMultifactorMethod
      */
     public function getStatusText(Setup $setup): string
     {
-        $sql = "SELECT	COUNT(*) AS count, MAX(useTime) AS lastUsed
-			FROM	wcf" . WCF_N . "_user_multifactor_totp
-			WHERE	setupID = ?";
+        $sql = "SELECT  COUNT(*) AS count, MAX(useTime) AS lastUsed
+                FROM    wcf" . WCF_N . "_user_multifactor_totp
+                WHERE   setupID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$setup->getId()]);
 
@@ -110,10 +110,10 @@ final class TotpMultifactorMethod implements IMultifactorMethod
         // will implicitly press the first submit button. If this container comes first the submit
         // button will be a delete button.
         if ($setup) {
-            $sql = "SELECT		deviceID, deviceName, createTime, useTime
-				FROM		wcf" . WCF_N . "_user_multifactor_totp
-				WHERE		setupID = ?
-				ORDER BY	createTime";
+            $sql = "SELECT      deviceID, deviceName, createTime, useTime
+                    FROM        wcf" . WCF_N . "_user_multifactor_totp
+                    WHERE       setupID = ?
+                    ORDER BY    createTime";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$setup->getId()]);
             $devicesContainer = DevicesContainer::create('devices')
@@ -164,10 +164,10 @@ final class TotpMultifactorMethod implements IMultifactorMethod
 
         if (!empty($formData['delete'])) {
             // Fetch deviceName for success message.
-            $sql = "SELECT	deviceName
-				FROM	wcf" . WCF_N . "_user_multifactor_totp
-				WHERE		setupID = ?
-					AND	deviceID = ?";
+            $sql = "SELECT  deviceName
+                    FROM    wcf" . WCF_N . "_user_multifactor_totp
+                    WHERE   setupID = ?
+                        AND deviceID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 $setup->getId(),
@@ -176,9 +176,9 @@ final class TotpMultifactorMethod implements IMultifactorMethod
             $deviceName = $statement->fetchSingleColumn();
 
             // Remove the device.
-            $sql = "DELETE FROM	wcf" . WCF_N . "_user_multifactor_totp
-				WHERE		setupID = ?
-					AND	deviceID = ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_user_multifactor_totp
+                    WHERE       setupID = ?
+                            AND deviceID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 $setup->getId(),
@@ -186,9 +186,9 @@ final class TotpMultifactorMethod implements IMultifactorMethod
             ]);
 
             // Check the contract that the last device may not be removed.
-            $sql = "SELECT	COUNT(*)
-				FROM	wcf" . WCF_N . "_user_multifactor_totp
-				WHERE	setupID = ?";
+            $sql = "SELECT  COUNT(*)
+                    FROM    wcf" . WCF_N . "_user_multifactor_totp
+                    WHERE   setupID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 $setup->getId(),
@@ -207,9 +207,9 @@ final class TotpMultifactorMethod implements IMultifactorMethod
             if (!$deviceName) {
                 $defaultName = WCF::getLanguage()->getDynamicVariable('wcf.user.security.multifactor.totp.deviceName.placeholder');
 
-                $sql = "SELECT	deviceName
-					FROM	wcf" . WCF_N . "_user_multifactor_totp
-					WHERE	setupID = ?";
+                $sql = "SELECT  deviceName
+                        FROM    wcf" . WCF_N . "_user_multifactor_totp
+                        WHERE   setupID = ?";
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute([
                     $setup->getId(),
@@ -224,9 +224,9 @@ final class TotpMultifactorMethod implements IMultifactorMethod
                 }
             }
 
-            $sql = "INSERT INTO	wcf" . WCF_N . "_user_multifactor_totp
-						(setupID, deviceID, deviceName, secret, minCounter, createTime)
-				VALUES		(?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_user_multifactor_totp
+                                (setupID, deviceID, deviceName, secret, minCounter, createTime)
+                    VALUES      (?, ?, ?, ?, ?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 $setup->getId(),
@@ -251,10 +251,10 @@ final class TotpMultifactorMethod implements IMultifactorMethod
     {
         $form->markRequiredFields(false);
 
-        $sql = "SELECT		*
-			FROM		wcf" . WCF_N . "_user_multifactor_totp
-			WHERE		setupID = ?
-			ORDER BY	deviceName";
+        $sql = "SELECT      *
+                FROM        wcf" . WCF_N . "_user_multifactor_totp
+                WHERE       setupID = ?
+                ORDER BY    deviceName";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$setup->getId()]);
         $devices = $statement->fetchAll(\PDO::FETCH_ASSOC);
@@ -341,11 +341,11 @@ final class TotpMultifactorMethod implements IMultifactorMethod
     {
         $formData = $form->getData();
 
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_user_multifactor_totp
-			WHERE		setupID = ?
-				AND	deviceID = ?
-			FOR UPDATE";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_user_multifactor_totp
+                WHERE   setupID = ?
+                    AND deviceID = ?
+                FOR UPDATE";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $setup->getId(),
@@ -357,12 +357,12 @@ final class TotpMultifactorMethod implements IMultifactorMethod
             throw new \RuntimeException('Unable to find the device.');
         }
 
-        $sql = "UPDATE	wcf" . WCF_N . "_user_multifactor_totp
-			SET	useTime = ?,
-				minCounter = ?
-			WHERE		setupID = ?
-				AND	deviceID = ?
-				AND	minCounter < ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_user_multifactor_totp
+                SET     useTime = ?,
+                        minCounter = ?
+                WHERE   setupID = ?
+                    AND deviceID = ?
+                    AND minCounter < ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             \TIME_NOW,

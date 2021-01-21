@@ -67,9 +67,9 @@ class PackageAction extends AbstractDatabaseObjectAction
             $conditions->add("loginPassword <> ''");
 
             // check if user has already provided credentials
-            $sql = "SELECT	loginUsername, loginPassword
-				FROM	wcf" . WCF_N . "_package_update_server
-				" . $conditions;
+            $sql = "SELECT  loginUsername, loginPassword
+                    FROM    wcf" . WCF_N . "_package_update_server
+                    " . $conditions;
             $statement = WCF::getDB()->prepareStatement($sql, 1);
             $statement->execute($conditions->getParameters());
             $row = $statement->fetchArray();

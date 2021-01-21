@@ -90,9 +90,9 @@ class Notice extends DatabaseObject implements IRouteController
             if (WCF::getUser()->userID) {
                 $dismissedNotices = UserStorageHandler::getInstance()->getField('dismissedNotices');
                 if ($dismissedNotices === null) {
-                    $sql = "SELECT	noticeID
-						FROM	wcf" . WCF_N . "_notice_dismissed
-						WHERE	userID = ?";
+                    $sql = "SELECT  noticeID
+                            FROM    wcf" . WCF_N . "_notice_dismissed
+                            WHERE   userID = ?";
                     $statement = WCF::getDB()->prepareStatement($sql);
                     $statement->execute([
                         WCF::getUser()->userID,

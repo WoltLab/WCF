@@ -121,8 +121,8 @@ class BBCodeEditForm extends BBCodeAddForm
         $this->objectAction->executeAction();
 
         // clear existing attributes
-        $sql = "DELETE FROM	wcf" . WCF_N . "_bbcode_attribute
-			WHERE		bbcodeID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_bbcode_attribute
+                WHERE       bbcodeID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->bbcodeID]);
 

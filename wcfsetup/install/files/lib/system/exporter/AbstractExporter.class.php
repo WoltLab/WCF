@@ -204,8 +204,8 @@ abstract class AbstractExporter implements IExporter
      */
     protected function __getMaxID($tableName, $columnName)
     {
-        $sql = "SELECT	MAX(" . $columnName . ") AS maxID
-			FROM	" . $tableName;
+        $sql = "SELECT  MAX(" . $columnName . ") AS maxID
+                FROM    " . $tableName;
         $statement = $this->database->prepareStatement($sql);
         $statement->execute();
         $row = $statement->fetchArray();

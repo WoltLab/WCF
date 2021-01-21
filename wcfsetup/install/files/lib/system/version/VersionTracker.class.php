@@ -80,9 +80,9 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction
         $processor = $objectType->getProcessor();
         $data = $processor->getTrackedData($object);
 
-        $sql = "INSERT INTO     " . $this->getTableName($objectType) . "_version
-					(objectID, userID, username, time, data)
-			VALUES          (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO " . $this->getTableName($objectType) . "_version
+                            (objectID, userID, username, time, data)
+                VALUES      (?, ?, ?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $object->getObjectID(),
@@ -105,8 +105,8 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction
         $objectType = $this->getObjectType($objectTypeName);
 
         $sql = "SELECT  COUNT(*) as count
-			FROM    " . $this->getTableName($objectType) . "_version
-			WHERE   objectID = ?";
+                FROM    " . $this->getTableName($objectType) . "_version
+                WHERE   objectID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$objectID]);
 
@@ -124,10 +124,10 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction
     {
         $objectType = $this->getObjectType($objectTypeName);
 
-        $sql = "SELECT          *, '' as data
-			FROM            " . $this->getTableName($objectType) . "_version
-			WHERE           objectID = ?
-			ORDER BY        versionID DESC";
+        $sql = "SELECT      *, '' as data
+                FROM        " . $this->getTableName($objectType) . "_version
+                WHERE       objectID = ?
+                ORDER BY    versionID DESC";
         $statement = WCF::getDB()->prepareStatement($sql, 1);
         $statement->execute([$objectID]);
 
@@ -145,10 +145,10 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction
     {
         $objectType = $this->getObjectType($objectTypeName);
 
-        $sql = "SELECT          *, '' as data
-			FROM            " . $this->getTableName($objectType) . "_version
-			WHERE           objectID = ?
-			ORDER BY        versionID DESC";
+        $sql = "SELECT      *, '' as data
+                FROM        " . $this->getTableName($objectType) . "_version
+                WHERE       objectID = ?
+                ORDER BY    versionID DESC";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$objectID]);
         $versions = [];
@@ -170,9 +170,9 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction
     {
         $objectType = $this->getObjectType($objectTypeName);
 
-        $sql = "SELECT          *
-			FROM            " . $this->getTableName($objectType) . "_version
-			WHERE           versionID = ?";
+        $sql = "SELECT  *
+                FROM    " . $this->getTableName($objectType) . "_version
+                WHERE   versionID = ?";
         $statement = WCF::getDB()->prepareStatement($sql, 1);
         $statement->execute([$versionID]);
 
@@ -185,9 +185,9 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction
     public function createStorageTables()
     {
         // get definition id
-        $sql = "SELECT	definitionID
-			FROM	wcf" . WCF_N . "_object_type_definition
-			WHERE	definitionName = ?";
+        $sql = "SELECT  definitionID
+                FROM    wcf" . WCF_N . "_object_type_definition
+                WHERE   definitionName = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(['com.woltlab.wcf.versionTracker.objectType']);
         $row = $statement->fetchArray();
@@ -275,8 +275,8 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction
     {
         $objectType = $this->getObjectType($objectTypeName);
 
-        $sql = "DELETE FROM     " . $this->getTableName($objectType) . "_version
-			WHERE           objectID = ?";
+        $sql = "DELETE FROM " . $this->getTableName($objectType) . "_version
+                WHERE       objectID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$objectID]);
     }
@@ -293,9 +293,9 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction
         $tableName = $baseTableName . '_version';
 
         // check if table already exists
-        $sql = "SELECT	COUNT(*)
-			FROM	wcf" . WCF_N . "_package_installation_sql_log
-			WHERE	sqlTable = ?";
+        $sql = "SELECT  COUNT(*)
+                FROM    wcf" . WCF_N . "_package_installation_sql_log
+                WHERE   sqlTable = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$tableName]);
 
@@ -336,15 +336,15 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction
         );
 
         // add comment
-        $sql = "ALTER TABLE	" . $tableName . "
-			COMMENT		= 'Version tracking for " . $objectType->objectType . "'";
+        $sql = "ALTER TABLE " . $tableName . "
+                COMMENT     = 'Version tracking for " . $objectType->objectType . "'";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
 
         // log table
-        $sql = "INSERT INTO	wcf" . WCF_N . "_package_installation_sql_log
-					(packageID, sqlTable)
-			VALUES		(?, ?)";
+        $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_sql_log
+                            (packageID, sqlTable)
+                VALUES      (?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $objectType->packageID,

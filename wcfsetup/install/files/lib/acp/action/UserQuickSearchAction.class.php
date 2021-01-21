@@ -97,11 +97,11 @@ class UserQuickSearchAction extends AbstractAction
 
         switch ($this->mode) {
             case 'banned':
-                $sql = "SELECT		user_table.userID
-					FROM		wcf" . WCF_N . "_user user_table
-					LEFT JOIN	wcf" . WCF_N . "_user_option_value option_value
-					ON		(option_value.userID = user_table.userID)
-					WHERE		banned = ?";
+                $sql = "SELECT      user_table.userID
+                        FROM        wcf" . WCF_N . "_user user_table
+                        LEFT JOIN   wcf" . WCF_N . "_user_option_value option_value
+                        ON          (option_value.userID = user_table.userID)
+                        WHERE       banned = ?";
                 $statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
                 $statement->execute([1]);
                 $this->matches = $statement->fetchAll(\PDO::FETCH_COLUMN);
@@ -111,11 +111,11 @@ class UserQuickSearchAction extends AbstractAction
                 $this->maxResults = 100;
                 $this->sortField = 'registrationDate';
                 $this->sortOrder = 'DESC';
-                $sql = "SELECT		user_table.userID
-					FROM		wcf" . WCF_N . "_user user_table
-					LEFT JOIN	wcf" . WCF_N . "_user_option_value option_value
-					ON		(option_value.userID = user_table.userID)
-					ORDER BY	user_table.registrationDate DESC";
+                $sql = "SELECT      user_table.userID
+                        FROM        wcf" . WCF_N . "_user user_table
+                        LEFT JOIN   wcf" . WCF_N . "_user_option_value option_value
+                        ON          (option_value.userID = user_table.userID)
+                        ORDER BY    user_table.registrationDate DESC";
                 $statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
                 $statement->execute();
                 $this->matches = $statement->fetchAll(\PDO::FETCH_COLUMN);
@@ -124,12 +124,12 @@ class UserQuickSearchAction extends AbstractAction
             case 'disabled':
                 $this->sortField = 'registrationDate';
                 $this->sortOrder = 'DESC';
-                $sql = "SELECT		user_table.userID
-					FROM		wcf" . WCF_N . "_user user_table
-					LEFT JOIN	wcf" . WCF_N . "_user_option_value option_value
-					ON		(option_value.userID = user_table.userID)
-					WHERE		activationCode <> ?
-					ORDER BY	user_table.registrationDate DESC";
+                $sql = "SELECT      user_table.userID
+                        FROM        wcf" . WCF_N . "_user user_table
+                        LEFT JOIN   wcf" . WCF_N . "_user_option_value option_value
+                        ON          (option_value.userID = user_table.userID)
+                        WHERE       activationCode <> ?
+                        ORDER BY    user_table.registrationDate DESC";
                 $statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
                 $statement->execute([0]);
                 $this->matches = $statement->fetchAll(\PDO::FETCH_COLUMN);
@@ -144,34 +144,34 @@ class UserQuickSearchAction extends AbstractAction
 
                 $this->sortField = 'registrationDate';
                 $this->sortOrder = 'DESC';
-                $sql = "SELECT		user_table.userID
-					FROM		wcf" . WCF_N . "_user user_table
-					LEFT JOIN	wcf" . WCF_N . "_user_option_value option_value
-					ON		(option_value.userID = user_table.userID)
-					" . $conditionBuilder . "
-					ORDER BY	user_table.registrationDate DESC";
+                $sql = "SELECT      user_table.userID
+                        FROM        wcf" . WCF_N . "_user user_table
+                        LEFT JOIN   wcf" . WCF_N . "_user_option_value option_value
+                        ON          (option_value.userID = user_table.userID)
+                        " . $conditionBuilder . "
+                        ORDER BY    user_table.registrationDate DESC";
                 $statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
                 $statement->execute($conditionBuilder->getParameters());
                 $this->matches = $statement->fetchAll(\PDO::FETCH_COLUMN);
                 break;
 
             case 'disabledAvatars':
-                $sql = "SELECT		user_table.userID
-					FROM		wcf" . WCF_N . "_user user_table
-					LEFT JOIN	wcf" . WCF_N . "_user_option_value option_value
-					ON		(option_value.userID = user_table.userID)
-					WHERE		disableAvatar = ?";
+                $sql = "SELECT      user_table.userID
+                        FROM        wcf" . WCF_N . "_user user_table
+                        LEFT JOIN   wcf" . WCF_N . "_user_option_value option_value
+                        ON          (option_value.userID = user_table.userID)
+                        WHERE       disableAvatar = ?";
                 $statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
                 $statement->execute([1]);
                 $this->matches = $statement->fetchAll(\PDO::FETCH_COLUMN);
                 break;
 
             case 'disabledSignatures':
-                $sql = "SELECT		user_table.userID
-					FROM		wcf" . WCF_N . "_user user_table
-					LEFT JOIN	wcf" . WCF_N . "_user_option_value option_value
-					ON		(option_value.userID = user_table.userID)
-					WHERE		disableSignature = ?";
+                $sql = "SELECT      user_table.userID
+                        FROM        wcf" . WCF_N . "_user user_table
+                        LEFT JOIN   wcf" . WCF_N . "_user_option_value option_value
+                        ON          (option_value.userID = user_table.userID)
+                        WHERE       disableSignature = ?";
                 $statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
                 $statement->execute([1]);
                 $this->matches = $statement->fetchAll(\PDO::FETCH_COLUMN);

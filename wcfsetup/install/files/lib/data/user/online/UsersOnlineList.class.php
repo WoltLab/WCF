@@ -95,11 +95,11 @@ class UsersOnlineList extends SessionList
         $conditionBuilder = clone $this->getConditionBuilder();
         $conditionBuilder->add('session.spiderID IS NULL');
 
-        $sql = "SELECT		user_option_value.userOption" . User::getUserOptionID('canViewOnlineStatus') . " AS canViewOnlineStatus, session.userID
-			FROM		wcf" . WCF_N . "_session session
-			LEFT JOIN	wcf" . WCF_N . "_user_option_value user_option_value
-			ON		(user_option_value.userID = session.userID)
-			" . $conditionBuilder;
+        $sql = "SELECT      user_option_value.userOption" . User::getUserOptionID('canViewOnlineStatus') . " AS canViewOnlineStatus, session.userID
+                FROM        wcf" . WCF_N . "_session session
+                LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option_value
+                ON          (user_option_value.userID = session.userID)
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionBuilder->getParameters());
 

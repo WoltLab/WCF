@@ -72,10 +72,10 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
         $conditions->add("languageCategoryID IN (?)", [$languageCategoryIDs]);
 
         // get language items
-        $sql = "SELECT	languageItem, languageItemValue, languageCustomItemValue,
-				languageUseCustomValue, languageCategoryID
-			FROM	wcf" . WCF_N . "_language_item
-			" . $conditions;
+        $sql = "SELECT  languageItem, languageItemValue, languageCustomItemValue,
+                        languageUseCustomValue, languageCategoryID
+                FROM    wcf" . WCF_N . "_language_item
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         $items = [];
@@ -144,11 +144,13 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
             $conditions->add("language_item.packageID IN (?)", [$packageIDArray]);
         }
 
-        $sql = "SELECT		languageItem, " . ($exportCustomValues ? "CASE WHEN languageUseCustomValue > 0 THEN languageCustomItemValue ELSE languageItemValue END AS languageItemValue" : "languageItemValue") . ", languageCategory
-			FROM		wcf" . WCF_N . "_language_item language_item
-			LEFT JOIN	wcf" . WCF_N . "_language_category language_category
-			ON		(language_category.languageCategoryID = language_item.languageCategoryID)
-			" . $conditions;
+        $sql = "SELECT      languageItem,
+                            " . ($exportCustomValues ? "CASE WHEN languageUseCustomValue > 0 THEN languageCustomItemValue ELSE languageItemValue END AS languageItemValue" : "languageItemValue") . ",
+                            languageCategory
+                FROM        wcf" . WCF_N . "_language_item language_item
+                LEFT JOIN   wcf" . WCF_N . "_language_category language_category
+                ON          (language_category.languageCategoryID = language_item.languageCategoryID)
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         while ($row = $statement->fetchArray()) {
@@ -183,11 +185,11 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
             $conditions->add("page.packageID IN (?)", [$packageIDArray]);
         }
         $conditions->add("page.originIsSystem = ?", [1]);
-        $sql = "SELECT          page.identifier, page_content.title, page_content.content
-			FROM            wcf" . WCF_N . "_page page,
-					wcf" . WCF_N . "_page_content page_content
-			" . $conditions . "
-			ORDER BY        page.identifier";
+        $sql = "SELECT      page.identifier, page_content.title, page_content.content
+                FROM        wcf" . WCF_N . "_page page,
+                            wcf" . WCF_N . "_page_content page_content
+                " . $conditions . "
+                ORDER BY    page.identifier";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         while ($row = $statement->fetchArray()) {
@@ -218,11 +220,11 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
             $conditions->add("box.packageID IN (?)", [$packageIDArray]);
         }
         $conditions->add("box.originIsSystem = ?", [1]);
-        $sql = "SELECT          box.identifier, box_content.title, box_content.content
-			FROM            wcf" . WCF_N . "_box box,
-					wcf" . WCF_N . "_box_content box_content
-			" . $conditions . "
-			ORDER BY        box.identifier";
+        $sql = "SELECT      box.identifier, box_content.title, box_content.content
+                FROM        wcf" . WCF_N . "_box box,
+                            wcf" . WCF_N . "_box_content box_content
+                " . $conditions . "
+                ORDER BY    box.identifier";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         while ($row = $statement->fetchArray()) {
@@ -279,9 +281,9 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("languageCategory IN (?)", [\array_keys($usedCategories)]);
 
-        $sql = "SELECT	languageCategoryID, languageCategory
-			FROM	wcf" . WCF_N . "_language_category
-			" . $conditions;
+        $sql = "SELECT  languageCategoryID, languageCategory
+                FROM    wcf" . WCF_N . "_language_category
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         while ($row = $statement->fetchArray()) {
@@ -389,8 +391,8 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
                 $conditions->add("(languageUseCustomValue = ? OR isCustomLanguageItem = ?)", [1, 1]);
 
                 $sql = "SELECT  languageItemID, languageItem, languageItemValue, isCustomLanguageItem
-					FROM    wcf" . WCF_N . "_language_item
-					" . $conditions;
+                        FROM    wcf" . WCF_N . "_language_item
+                        " . $conditions;
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute($conditions->getParameters());
                 $updateValues = $customLanguageItemIDs = [];
@@ -407,10 +409,10 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 
                 if (!empty($updateValues)) {
                     $sql = "UPDATE  wcf" . WCF_N . "_language_item
-						SET     languageItemOldValue = languageItemValue,
-							languageCustomItemDisableTime = ?,
-							languageUseCustomValue = ?
-						WHERE   languageItemID = ?";
+                            SET     languageItemOldValue = languageItemValue,
+                                    languageCustomItemDisableTime = ?,
+                                    languageUseCustomValue = ?
+                            WHERE   languageItemID = ?";
                     $statement = WCF::getDB()->prepareStatement($sql);
 
                     WCF::getDB()->beginTransaction();
@@ -426,11 +428,11 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 
                 // make custom language items normal ones
                 if (!empty($customLanguageItemIDs)) {
-                    $sql = "UPDATE	wcf" . WCF_N . "_language_item
-						SET	isCustomLanguageItem = ?,
-							languageItemOriginIsSystem = ?,
-							packageID = ?
-						WHERE	languageItemID = ?";
+                    $sql = "UPDATE  wcf" . WCF_N . "_language_item
+                            SET     isCustomLanguageItem = ?,
+                                    languageItemOriginIsSystem = ?,
+                                    packageID = ?
+                            WHERE   languageItemID = ?";
                     $statement = WCF::getDB()->prepareStatement($sql);
 
                     WCF::getDB()->beginTransaction();
@@ -453,21 +455,21 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
                 $parameters = \array_slice($itemData, $i, 50 * $step);
                 $repeat = \count($parameters) / $step;
 
-                $sql = "INSERT" . (!$updateExistingItems ? " IGNORE" : "") . " INTO		wcf" . WCF_N . "_language_item
-								(languageID, languageItem, languageItemValue, languageCategoryID" . ($packageID ? ", packageID" : "") . ")
-					VALUES			" . \substr(\str_repeat('(?, ?, ?, ?' . ($packageID ? ', ?' : '') . '), ', $repeat), 0, -2);
+                $sql = "INSERT" . (!$updateExistingItems ? " IGNORE" : "") . " INTO wcf" . WCF_N . "_language_item
+                                    (languageID, languageItem, languageItemValue, languageCategoryID" . ($packageID ? ", packageID" : "") . ")
+                        VALUES      " . \substr(\str_repeat('(?, ?, ?, ?' . ($packageID ? ', ?' : '') . '), ', $repeat), 0, -2);
 
                 if ($updateExistingItems) {
                     if ($packageID > 0) {
                         // do not update anything if language item is owned by a different package
-                        $sql .= "	ON DUPLICATE KEY
-								UPDATE			languageItemValue = IF(packageID = " . $packageID . ", IF(languageItemOriginIsSystem = 0, languageItemValue, VALUES(languageItemValue)), languageItemValue),
-											languageCategoryID = IF(packageID = " . $packageID . ", VALUES(languageCategoryID), languageCategoryID)";
+                        $sql .= "
+                            ON DUPLICATE KEY UPDATE languageItemValue = IF(packageID = " . $packageID . ", IF(languageItemOriginIsSystem = 0, languageItemValue, VALUES(languageItemValue)), languageItemValue),
+                                                    languageCategoryID = IF(packageID = " . $packageID . ", VALUES(languageCategoryID), languageCategoryID)";
                     } else {
                         // skip package id check during WCFSetup (packageID = 0) or if using the ACP form (packageID = -1)
-                        $sql .= "	ON DUPLICATE KEY
-								UPDATE			languageItemValue = IF(languageItemOriginIsSystem = 0, languageItemValue, VALUES(languageItemValue)),
-											languageCategoryID = VALUES(languageCategoryID)";
+                        $sql .= "
+                            ON DUPLICATE KEY UPDATE languageItemValue = IF(languageItemOriginIsSystem = 0, languageItemValue, VALUES(languageItemValue)),
+                                                    languageCategoryID = VALUES(languageCategoryID)";
                     }
                 }
 
@@ -484,27 +486,27 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("identifier IN (?)", [\array_keys($pageContents)]);
             $sql = "SELECT  pageID, identifier
-				FROM    wcf" . WCF_N . "_page
-				" . $conditions;
+                    FROM    wcf" . WCF_N . "_page
+                    " . $conditions;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditions->getParameters());
             while ($row = $statement->fetchArray()) {
                 $pageIDs[$row['identifier']] = $row['pageID'];
             }
 
-            $sql = "INSERT IGNORE INTO      wcf" . WCF_N . "_page_content
-							(pageID, languageID)
-				VALUES                  (?, ?)";
+            $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_page_content
+                                        (pageID, languageID)
+                    VALUES              (?, ?)";
             $createLanguageVersionStatement = WCF::getDB()->prepareStatement($sql);
             $sql = "UPDATE  wcf" . WCF_N . "_page_content
-				SET     title = ?
-				WHERE   pageID = ?
-					AND languageID = ?";
+                    SET     title = ?
+                    WHERE   pageID = ?
+                        AND languageID = ?";
             $updateTitleStatement = WCF::getDB()->prepareStatement($sql);
             $sql = "UPDATE  wcf" . WCF_N . "_page_content
-				SET     content = ?
-				WHERE   pageID = ?
-					AND languageID = ?";
+                    SET     content = ?
+                    WHERE   pageID = ?
+                        AND languageID = ?";
             $updateContentStatement = WCF::getDB()->prepareStatement($sql);
 
             foreach ($pageContents as $identifier => $pageContent) {
@@ -529,27 +531,27 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("identifier IN (?)", [\array_keys($boxContents)]);
             $sql = "SELECT  boxID, identifier
-				FROM    wcf" . WCF_N . "_box
-				" . $conditions;
+                    FROM    wcf" . WCF_N . "_box
+                    " . $conditions;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditions->getParameters());
             while ($row = $statement->fetchArray()) {
                 $boxIDs[$row['identifier']] = $row['boxID'];
             }
 
-            $sql = "INSERT IGNORE INTO      wcf" . WCF_N . "_box_content
-							(boxID, languageID)
-				VALUES                  (?, ?)";
+            $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_box_content
+                                        (boxID, languageID)
+                    VALUES              (?, ?)";
             $createLanguageVersionStatement = WCF::getDB()->prepareStatement($sql);
             $sql = "UPDATE  wcf" . WCF_N . "_box_content
-				SET     title = ?
-				WHERE   boxID = ?
-					AND languageID = ?";
+                    SET     title = ?
+                    WHERE   boxID = ?
+                        AND languageID = ?";
             $updateTitleStatement = WCF::getDB()->prepareStatement($sql);
             $sql = "UPDATE  wcf" . WCF_N . "_box_content
-				SET     content = ?
-				WHERE   boxID = ?
-					AND languageID = ?";
+                    SET     content = ?
+                    WHERE   boxID = ?
+                        AND languageID = ?";
             $updateContentStatement = WCF::getDB()->prepareStatement($sql);
 
             foreach ($boxContents as $identifier => $boxContent) {
@@ -721,11 +723,11 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
      */
     public function copy(Language $destination)
     {
-        $sql = "INSERT INTO	wcf" . WCF_N . "_language_item
-					(languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
-			SELECT		?, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID
-			FROM		wcf" . WCF_N . "_language_item
-			WHERE		languageID = ?";
+        $sql = "INSERT INTO wcf" . WCF_N . "_language_item
+                            (languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
+                SELECT      ?, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID
+                FROM        wcf" . WCF_N . "_language_item
+                WHERE       languageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $destination->languageID,
@@ -767,9 +769,9 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
         // create remaining items
         if (!empty($items)) {
             // bypass LanguageItemEditor::create() for performance reasons
-            $sql = "INSERT INTO	wcf" . WCF_N . "_language_item
-				(languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
-				VALUES		(?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_language_item
+                                (languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
+                    VALUES      (?, ?, ?, ?, ?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
 
             foreach ($items as $itemName => $itemValue) {
@@ -797,8 +799,8 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
     public function setAsDefault()
     {
         // remove default flag from all languages
-        $sql = "UPDATE	wcf" . WCF_N . "_language
-			SET	isDefault = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_language
+                SET     isDefault = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([0]);
 
@@ -823,8 +825,8 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
      */
     public static function enableMultilingualism(array $languageIDs = [])
     {
-        $sql = "UPDATE	wcf" . WCF_N . "_language
-			SET	hasContent = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_language
+                SET     hasContent = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([0]);
 
@@ -839,9 +841,9 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
                 $statementParameters[] = $languageID;
             }
 
-            $sql = "UPDATE	wcf" . WCF_N . "_language
-				SET	hasContent = ?
-				WHERE	languageID IN (" . $sql . ")";
+            $sql = "UPDATE  wcf" . WCF_N . "_language
+                    SET     hasContent = ?
+                    WHERE   languageID IN (" . $sql . ")";
             $statement = WCF::getDB()->prepareStatement($sql);
             \array_unshift($statementParameters, 1);
             $statement->execute($statementParameters);
@@ -865,28 +867,32 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
     public static function copyLanguageContent($sourceLanguageID, $destinationLanguageID)
     {
         // article content
-        $sql = "INSERT IGNORE INTO      wcf" . WCF_N . "_article_content
-						(articleID, languageID, title, teaser, content, imageID, hasEmbeddedObjects)
-			SELECT                  articleID, ?, title, teaser, content, imageID, hasEmbeddedObjects
-			FROM                    wcf" . WCF_N . "_article_content
-			WHERE                   languageID = ?";
+        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_article_content
+                                    (articleID, languageID, title, teaser, content, imageID, hasEmbeddedObjects)
+                SELECT              articleID, ?, title, teaser, content, imageID, hasEmbeddedObjects
+                FROM                wcf" . WCF_N . "_article_content
+                WHERE               languageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$destinationLanguageID, $sourceLanguageID]);
 
         // box content
-        $sql = "INSERT IGNORE INTO      wcf" . WCF_N . "_box_content
-						(boxID, languageID, title, content, imageID, hasEmbeddedObjects)
-			SELECT                  boxID, ?, title, content, imageID, hasEmbeddedObjects
-			FROM                    wcf" . WCF_N . "_box_content
-			WHERE                   languageID = ?";
+        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_box_content
+                                    (boxID, languageID, title, content, imageID, hasEmbeddedObjects)
+                SELECT              boxID, ?, title, content, imageID, hasEmbeddedObjects
+                FROM                wcf" . WCF_N . "_box_content
+                WHERE               languageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$destinationLanguageID, $sourceLanguageID]);
 
         // create tpl files
         $sql = "SELECT  *
-			FROM    wcf" . WCF_N . "_box_content
-			WHERE   boxID IN (SELECT boxID FROM wcf" . WCF_N . "_box WHERE boxType = ?)
-				AND languageID = ?";
+                FROM    wcf" . WCF_N . "_box_content
+                WHERE   boxID IN (
+                            SELECT  boxID
+                            FROM    wcf" . WCF_N . "_box
+                            WHERE   boxType = ?
+                        )
+                    AND languageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(['tpl', $destinationLanguageID]);
         while ($row = $statement->fetchArray()) {
@@ -894,28 +900,32 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
         }
 
         // media content
-        $sql = "INSERT IGNORE INTO      wcf" . WCF_N . "_media_content
-						(mediaID, languageID, title, caption, altText)
-			SELECT                  mediaID, ?, title, caption, altText
-			FROM                    wcf" . WCF_N . "_media_content
-			WHERE                   languageID = ?";
+        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_media_content
+                                    (mediaID, languageID, title, caption, altText)
+                SELECT              mediaID, ?, title, caption, altText
+                FROM                wcf" . WCF_N . "_media_content
+                WHERE               languageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$destinationLanguageID, $sourceLanguageID]);
 
         // page content
-        $sql = "INSERT IGNORE INTO      wcf" . WCF_N . "_page_content
-						(pageID, languageID, title, content, metaDescription, customURL, hasEmbeddedObjects)
-			SELECT                  pageID, ?, title, content, metaDescription, CASE WHEN customURL <> '' THEN CONCAT(customURL, '_', ?) ELSE '' END, hasEmbeddedObjects
-			FROM                    wcf" . WCF_N . "_page_content
-			WHERE                   languageID = ?";
+        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_page_content
+                                    (pageID, languageID, title, content, metaDescription, customURL, hasEmbeddedObjects)
+                SELECT              pageID, ?, title, content, metaDescription, CASE WHEN customURL <> '' THEN CONCAT(customURL, '_', ?) ELSE '' END, hasEmbeddedObjects
+                FROM                wcf" . WCF_N . "_page_content
+                WHERE               languageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$destinationLanguageID, $destinationLanguageID, $sourceLanguageID]);
 
         // create tpl files
         $sql = "SELECT  *
-			FROM    wcf" . WCF_N . "_page_content
-			WHERE   pageID IN (SELECT pageID FROM wcf" . WCF_N . "_page WHERE pageType = ?)
-				AND languageID = ?";
+                FROM    wcf" . WCF_N . "_page_content
+                WHERE   pageID IN (
+                            SELECT  pageID
+                            FROM    wcf" . WCF_N . "_page
+                            WHERE   pageType = ?
+                        )
+                    AND languageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(['tpl', $destinationLanguageID]);
         while ($row = $statement->fetchArray()) {

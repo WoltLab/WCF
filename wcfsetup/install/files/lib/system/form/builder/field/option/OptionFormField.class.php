@@ -61,9 +61,9 @@ class OptionFormField extends ItemListFormField implements IPackagesFormField
                 $conditionBuilder->add('packageID IN (?)', [$this->getPackageIDs()]);
             }
 
-            $sql = "SELECT	optionName
-				FROM	wcf" . WCF_N . "_option
-				" . $conditionBuilder;
+            $sql = "SELECT  optionName
+                    FROM    wcf" . WCF_N . "_option
+                    " . $conditionBuilder;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditionBuilder->getParameters());
             $availableOptions = $statement->fetchAll(\PDO::FETCH_COLUMN);

@@ -28,14 +28,14 @@ class DailyCleanUpCronjob extends AbstractCronjob
         parent::execute($cronjob);
 
         // clean up search keywords
-        $sql = "SELECT	AVG(searches) AS searches
-			FROM	wcf" . WCF_N . "_search_keyword";
+        $sql = "SELECT  AVG(searches) AS searches
+                FROM    wcf" . WCF_N . "_search_keyword";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         if (($row = $statement->fetchArray()) !== false) {
-            $sql = "DELETE FROM	wcf" . WCF_N . "_search_keyword
-				WHERE		searches <= ?
-						AND lastSearchTime < ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_search_keyword
+                    WHERE       searches <= ?
+                            AND lastSearchTime < ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 \floor($row['searches'] / 4),
@@ -44,37 +44,37 @@ class DailyCleanUpCronjob extends AbstractCronjob
         }
 
         // clean up notifications
-        $sql = "DELETE FROM	wcf" . WCF_N . "_user_notification
-			WHERE		time < ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_user_notification
+                WHERE       time < ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             TIME_NOW - 86400 * USER_CLEANUP_NOTIFICATION_LIFETIME,
         ]);
 
         // clean up user activity events
-        $sql = "DELETE FROM	wcf" . WCF_N . "_user_activity_event
-			WHERE		time < ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_user_activity_event
+                WHERE       time < ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             TIME_NOW - 86400 * USER_CLEANUP_ACTIVITY_EVENT_LIFETIME,
         ]);
 
         // clean up profile visitors
-        $sql = "DELETE FROM	wcf" . WCF_N . "_user_profile_visitor
-			WHERE		time < ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_user_profile_visitor
+                WHERE       time < ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             TIME_NOW - 86400 * USER_CLEANUP_PROFILE_VISITOR_LIFETIME,
         ]);
 
         // tracked visits
-        $sql = "DELETE FROM	wcf" . WCF_N . "_tracked_visit
-			WHERE		objectTypeID = ?
-					AND visitTime < ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_tracked_visit
+                WHERE       objectTypeID = ?
+                        AND visitTime < ?";
         $statement1 = WCF::getDB()->prepareStatement($sql);
-        $sql = "DELETE FROM	wcf" . WCF_N . "_tracked_visit_type
-			WHERE		objectTypeID = ?
-					AND visitTime < ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_tracked_visit_type
+                WHERE       objectTypeID = ?
+                        AND visitTime < ?";
         $statement2 = WCF::getDB()->prepareStatement($sql);
 
         WCF::getDB()->beginTransaction();
@@ -95,36 +95,36 @@ class DailyCleanUpCronjob extends AbstractCronjob
         WCF::getDB()->commitTransaction();
 
         // clean up cronjob log
-        $sql = "DELETE FROM	wcf" . WCF_N . "_cronjob_log
-			WHERE		execTime < ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_cronjob_log
+                WHERE       execTime < ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             TIME_NOW - (86400 * 7),
         ]);
 
         // clean up session access log
-        $sql = "DELETE FROM	wcf" . WCF_N . "_acp_session_access_log
-			WHERE		sessionLogID IN (
-						SELECT	sessionLogID
-						FROM	wcf" . WCF_N . "_acp_session_log
-						WHERE	lastActivityTime < ?
-					)";
+        $sql = "DELETE FROM wcf" . WCF_N . "_acp_session_access_log
+                WHERE       sessionLogID IN (
+                                SELECT  sessionLogID
+                                FROM    wcf" . WCF_N . "_acp_session_log
+                                WHERE   lastActivityTime < ?
+                            )";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             TIME_NOW - (86400 * 30),
         ]);
 
         // clean up session log
-        $sql = "DELETE FROM	wcf" . WCF_N . "_acp_session_log
-			WHERE		lastActivityTime < ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_acp_session_log
+                WHERE       lastActivityTime < ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             TIME_NOW - (86400 * 30),
         ]);
 
         // clean up search data
-        $sql = "DELETE FROM	wcf" . WCF_N . "_search
-			WHERE		searchTime < ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_search
+                WHERE       searchTime < ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             TIME_NOW - 86400,
@@ -133,8 +133,8 @@ class DailyCleanUpCronjob extends AbstractCronjob
         // clean up expired edit history entries
         if (MODULE_EDIT_HISTORY) {
             if (EDIT_HISTORY_EXPIRATION) {
-                $sql = "DELETE FROM	wcf" . WCF_N . "_edit_history_entry
-					WHERE		obsoletedAt < ?";
+                $sql = "DELETE FROM wcf" . WCF_N . "_edit_history_entry
+                        WHERE       obsoletedAt < ?";
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute([
                     TIME_NOW - 86400 * EDIT_HISTORY_EXPIRATION,
@@ -142,15 +142,15 @@ class DailyCleanUpCronjob extends AbstractCronjob
             }
         } else {
             // edit history is disabled, prune old versions
-            $sql = "DELETE FROM	wcf" . WCF_N . "_edit_history_entry";
+            $sql = "DELETE FROM wcf" . WCF_N . "_edit_history_entry";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute();
         }
 
         // clean up user authentication failure log
         if (ENABLE_USER_AUTHENTICATION_FAILURE) {
-            $sql = "DELETE FROM	wcf" . WCF_N . "_user_authentication_failure
-				WHERE		time < ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_user_authentication_failure
+                    WHERE       time < ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 TIME_NOW - 86400 * USER_AUTHENTICATION_FAILURE_EXPIRATION,
@@ -158,8 +158,8 @@ class DailyCleanUpCronjob extends AbstractCronjob
         }
 
         if (MODIFICATION_LOG_EXPIRATION > 0) {
-            $sql = "DELETE FROM	wcf" . WCF_N . "_modification_log
-				WHERE		time < ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_modification_log
+                    WHERE       time < ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 TIME_NOW - 86400 * MODIFICATION_LOG_EXPIRATION,
@@ -213,15 +213,15 @@ class DailyCleanUpCronjob extends AbstractCronjob
         if (BLACKLIST_SFS_ENABLE) {
             $timeLimit = TIME_NOW - 31 * 86400;
 
-            $sql = "DELETE FROM     wcf" . WCF_N . "_blacklist_entry
-				WHERE           lastSeen < ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_blacklist_entry
+                    WHERE       lastSeen < ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 \gmdate('Y-m-d H:i:s', $timeLimit),
             ]);
 
-            $sql = "DELETE FROM     wcf" . WCF_N . "_blacklist_status
-				WHERE           date < ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_blacklist_status
+                    WHERE       date < ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 \gmdate('Y-m-d', $timeLimit),

@@ -71,10 +71,10 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
         }
 
         if (!empty($options)) {
-            $sql = "DELETE FROM	" . $this->application . WCF_N . "_" . $this->tableName . "
-				WHERE		optionName = ?
-						AND objectTypeID = ?
-						AND packageID = ?";
+            $sql = "DELETE FROM " . $this->application . WCF_N . "_" . $this->tableName . "
+                    WHERE       optionName = ?
+                            AND objectTypeID = ?
+                            AND packageID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
 
             foreach ($options as $option) {
@@ -100,10 +100,10 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 
         if (!empty($categories)) {
             // delete options for given categories
-            $sql = "DELETE FROM	" . $this->application . WCF_N . "_" . $this->tableName . "
-				WHERE		categoryName = ?
-						AND objectTypeID = ?
-						AND packageID = ?";
+            $sql = "DELETE FROM " . $this->application . WCF_N . "_" . $this->tableName . "
+                    WHERE       categoryName = ?
+                            AND objectTypeID = ?
+                            AND packageID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             foreach ($categories as $category) {
                 $statement->execute([
@@ -114,10 +114,10 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
             }
 
             // delete categories
-            $sql = "DELETE FROM	" . $this->application . WCF_N . "_" . $this->tableName . "_category
-				WHERE		categoryName = ?
-						AND objectTypeID = ?
-						AND packageID = ?";
+            $sql = "DELETE FROM " . $this->application . WCF_N . "_" . $this->tableName . "_category
+                    WHERE       categoryName = ?
+                            AND objectTypeID = ?
+                            AND packageID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
 
             foreach ($categories as $category) {
@@ -164,11 +164,11 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 
         if ($this->editedEntry === null) {
             // search existing category
-            $sql = "SELECT	categoryID
-				FROM	wcf" . WCF_N . "_" . $this->tableName . "_category
-				WHERE	categoryName = ?
-					AND objectTypeID = ?
-					AND packageID = ?";
+            $sql = "SELECT  categoryID
+                    FROM    wcf" . WCF_N . "_" . $this->tableName . "_category
+                    WHERE   categoryName = ?
+                        AND objectTypeID = ?
+                        AND packageID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 $category['categoryName'],
@@ -178,9 +178,9 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
             $row = $statement->fetchArray();
             if (!$row) {
                 // insert new category
-                $sql = "INSERT INTO	wcf" . WCF_N . "_" . $this->tableName . "_category
-							(packageID, objectTypeID, categoryName)
-					VALUES		(?, ?, ?)";
+                $sql = "INSERT INTO wcf" . WCF_N . "_" . $this->tableName . "_category
+                                    (packageID, objectTypeID, categoryName)
+                        VALUES      (?, ?, ?)";
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute([
                     $this->installation->getPackageID(),
@@ -191,11 +191,11 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
         } else {
             $editedData = $this->getElementData($this->editedEntry, true);
 
-            $sql = "SELECT	categoryID
-				FROM	wcf" . WCF_N . "_" . $this->tableName . "_category
-				WHERE	categoryName = ?
-					AND objectTypeID = ?
-					AND packageID = ?";
+            $sql = "SELECT  categoryID
+                    FROM    wcf" . WCF_N . "_" . $this->tableName . "_category
+                    WHERE   categoryName = ?
+                        AND objectTypeID = ?
+                        AND packageID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 $editedData['categoryName'],
@@ -237,10 +237,10 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 
             // validate category name
             if (isset($data['categoryname'])) {
-                $sql = "SELECT	COUNT(categoryID)
-					FROM	wcf" . WCF_N . "_" . $this->tableName . "_category
-					WHERE	categoryName = ?
-						AND objectTypeID = ?";
+                $sql = "SELECT  COUNT(categoryID)
+                        FROM    wcf" . WCF_N . "_" . $this->tableName . "_category
+                        WHERE   categoryName = ?
+                            AND objectTypeID = ?";
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute([
                     $data['categoryname'],
@@ -268,11 +268,11 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
     protected function saveOption($option, $categoryName, $existingOptionID = 0)
     {
         // check for option existence
-        $sql = "SELECT	optionID
-			FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE	optionName = ?
-				AND objectTypeID = ?
-				AND packageID = ?";
+        $sql = "SELECT  optionID
+                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE   optionName = ?
+                    AND objectTypeID = ?
+                    AND packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $option['optionName'],
@@ -281,9 +281,9 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
         ]);
         $row = $statement->fetchArray();
         if (!$row) {
-            $sql = "INSERT INTO	wcf" . WCF_N . "_" . $this->tableName . "
-						(packageID, objectTypeID, optionName, categoryName)
-				VALUES		(?, ?, ?, ?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_" . $this->tableName . "
+                                (packageID, objectTypeID, optionName, categoryName)
+                    VALUES      (?, ?, ?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 $this->installation->getPackageID(),
@@ -292,9 +292,9 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
                 $categoryName,
             ]);
         } else {
-            $sql = "UPDATE	wcf" . WCF_N . "_" . $this->tableName . "
-				SET	categoryName = ?
-				WHERE	optionID = ?";
+            $sql = "UPDATE  wcf" . WCF_N . "_" . $this->tableName . "
+                    SET     categoryName = ?
+                    WHERE   optionID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 $categoryName,
@@ -314,14 +314,14 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
     protected function getObjectTypeID($optionType)
     {
         if (!isset($this->optionTypeIDs[$optionType])) {
-            $sql = "SELECT	objectTypeID
-				FROM	wcf" . WCF_N . "_object_type
-				WHERE	objectType = ?
-					AND definitionID IN (
-						SELECT	definitionID
-						FROM	wcf" . WCF_N . "_object_type_definition
-						WHERE	definitionName = 'com.woltlab.wcf.acl'
-					)";
+            $sql = "SELECT  objectTypeID
+                    FROM    wcf" . WCF_N . "_object_type
+                    WHERE   objectType = ?
+                        AND definitionID IN (
+                                SELECT  definitionID
+                                FROM    wcf" . WCF_N . "_object_type_definition
+                                WHERE   definitionName = 'com.woltlab.wcf.acl'
+                            )";
             $statement = WCF::getDB()->prepareStatement($sql, 1);
             $statement->execute([$optionType]);
             $objectTypeID = $statement->fetchSingleColumn();
@@ -652,10 +652,10 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
         switch ($this->entryType) {
             case 'categories':
                 // also delete options
-                $sql = "DELETE FROM	" . $this->application . WCF_N . "_" . $this->tableName . "
-					WHERE		categoryName = ?
-							AND objectTypeID = ?
-							AND packageID = ?";
+                $sql = "DELETE FROM " . $this->application . WCF_N . "_" . $this->tableName . "
+                        WHERE       categoryName = ?
+                                AND objectTypeID = ?
+                                AND packageID = ?";
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute([
                     $name,
@@ -663,10 +663,10 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
                     $this->installation->getPackageID(),
                 ]);
 
-                $sql = "DELETE FROM	" . $this->application . WCF_N . "_" . $this->tableName . "_category
-					WHERE		categoryName = ?
-							AND objectTypeID = ?
-							AND packageID = ?";
+                $sql = "DELETE FROM " . $this->application . WCF_N . "_" . $this->tableName . "_category
+                        WHERE       categoryName = ?
+                                AND objectTypeID = ?
+                                AND packageID = ?";
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute([
                     $name,
@@ -677,10 +677,10 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
                 break;
 
             case 'options':
-                $sql = "DELETE FROM	" . $this->application . WCF_N . "_" . $this->tableName . "
-					WHERE		optionName = ?
-							AND objectTypeID = ?
-							AND packageID = ?";
+                $sql = "DELETE FROM " . $this->application . WCF_N . "_" . $this->tableName . "
+                        WHERE       optionName = ?
+                                AND objectTypeID = ?
+                                AND packageID = ?";
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute([
                     $name,

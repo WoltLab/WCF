@@ -139,7 +139,8 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
                 }
                 $conditionBuilder->add('userID = ?', [$userID]);
 
-                $sql = "DELETE FROM wcf" . WCF_N . "_user_special_trophy " . $conditionBuilder;
+                $sql = "DELETE FROM wcf" . WCF_N . "_user_special_trophy
+                        " . $conditionBuilder;
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute($conditionBuilder->getParameters());
 

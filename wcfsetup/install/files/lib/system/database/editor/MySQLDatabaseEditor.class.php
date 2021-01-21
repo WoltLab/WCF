@@ -104,10 +104,10 @@ class MySQLDatabaseEditor extends DatabaseEditor
      */
     public function getForeignKeys($tableName)
     {
-        $sql = "SELECT	CONSTRAINT_NAME, DELETE_RULE, UPDATE_RULE
-			FROM	INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS
-			WHERE	CONSTRAINT_SCHEMA = ?
-				AND TABLE_NAME = ?";
+        $sql = "SELECT  CONSTRAINT_NAME, DELETE_RULE, UPDATE_RULE
+                FROM    INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS
+                WHERE   CONSTRAINT_SCHEMA = ?
+                    AND TABLE_NAME = ?";
         $statement = $this->dbObj->prepareStatement($sql);
         $statement->execute([
             $this->dbObj->getDatabaseName(),
@@ -136,9 +136,9 @@ class MySQLDatabaseEditor extends DatabaseEditor
         $conditionBuilder->add('TABLE_SCHEMA = ?', [$this->dbObj->getDatabaseName()]);
         $conditionBuilder->add('TABLE_NAME = ?', [$tableName]);
 
-        $sql = "SELECT	CONSTRAINT_NAME, COLUMN_NAME, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME
-			FROM	INFORMATION_SCHEMA.KEY_COLUMN_USAGE
-			" . $conditionBuilder;
+        $sql = "SELECT  CONSTRAINT_NAME, COLUMN_NAME, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME
+                FROM    INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+                " . $conditionBuilder;
         $statement = $this->dbObj->prepareStatement($sql);
         $statement->execute($conditionBuilder->getParameters());
         $keyColumnUsage = $statement->fetchAll(\PDO::FETCH_ASSOC);
@@ -162,8 +162,8 @@ class MySQLDatabaseEditor extends DatabaseEditor
      */
     public function getIndexInformation($tableName)
     {
-        $sql = "SHOW	INDEX
-			FROM	`" . $tableName . "`";
+        $sql = "SHOW    INDEX
+                FROM    `" . $tableName . "`";
         $statement = $this->dbObj->prepareStatement($sql);
         $statement->execute();
         $indices = $statement->fetchAll(\PDO::FETCH_ASSOC);
@@ -233,10 +233,10 @@ class MySQLDatabaseEditor extends DatabaseEditor
 
         // create table
         $sql = "CREATE TABLE `" . $tableName . "` (
-				" . $columnDefinition . "
-				" . (!empty($indexDefinition) ? ',' : '') . "
-				" . $indexDefinition . "
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
+                " . $columnDefinition . "
+                " . (!empty($indexDefinition) ? ',' : '') . "
+                " . $indexDefinition . "
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
         $statement = $this->dbObj->prepareStatement($sql);
         $statement->execute();
     }

@@ -51,11 +51,11 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker
             UserActivityPointHandler::getInstance()->reset('com.woltlab.wcf.like.activityPointEvent.receivedLikes');
 
             // reset like object data
-            $sql = "UPDATE	wcf" . WCF_N . "_like_object
-				SET	likes = 0,
-					dislikes = 0,
-					cumulativeLikes = 0, 
-					cachedReactions = NULL";
+            $sql = "UPDATE  wcf" . WCF_N . "_like_object
+                    SET     likes = 0,
+                            dislikes = 0,
+                            cumulativeLikes = 0, 
+                            cachedReactions = NULL";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute();
         }
@@ -110,9 +110,9 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker
             $condition = new PreparedStatementConditionBuilder();
             $condition->add('objectTypeID = ?', [$objectTypeID]);
             $condition->add('objectID IN (?)', [\array_keys($objects)]);
-            $sql = "SELECT          objectTypeID, objectID, objectUserID, likes, dislikes, cumulativeLikes, cachedReactions
-				FROM            wcf" . WCF_N . "_like_object
-				" . $condition;
+            $sql = "SELECT  objectTypeID, objectID, objectUserID, likes, dislikes, cumulativeLikes, cachedReactions
+                    FROM    wcf" . WCF_N . "_like_object
+                    " . $condition;
             $objectStatement = WCF::getDB()->prepareStatement($sql);
             $objectStatement->execute($condition->getParameters());
             while ($row = $objectStatement->fetchArray()) {
@@ -120,19 +120,19 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker
             }
         }
 
-        $sql = "INSERT INTO		        wcf" . WCF_N . "_like_object
-							(objectTypeID, objectID, objectUserID, likes, dislikes, cumulativeLikes, cachedReactions)
-			VALUES				(?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO wcf" . WCF_N . "_like_object
+                            (objectTypeID, objectID, objectUserID, likes, dislikes, cumulativeLikes, cachedReactions)
+                VALUES      (?, ?, ?, ?, ?, ?, ?)";
         $insertStatement = WCF::getDB()->prepareStatement($sql);
 
-        $sql = "UPDATE          wcf" . WCF_N . "_like_object
-			SET             objectUserID = ?,
-					likes = ?,
-					dislikes = 0,
-					cumulativeLikes = ?, 
-					cachedReactions = ?
-			WHERE           objectTypeID = ?
-			AND             objectID = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_like_object
+                SET     objectUserID = ?,
+                        likes = ?,
+                        dislikes = 0,
+                        cumulativeLikes = ?, 
+                        cachedReactions = ?
+                WHERE   objectTypeID = ?
+                AND     objectID = ?";
         $updateStatement = WCF::getDB()->prepareStatement($sql);
 
         WCF::getDB()->beginTransaction();

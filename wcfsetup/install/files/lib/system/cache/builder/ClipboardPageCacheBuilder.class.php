@@ -19,8 +19,8 @@ class ClipboardPageCacheBuilder extends AbstractCacheBuilder
      */
     public function rebuild(array $parameters)
     {
-        $sql = "SELECT	pageClassName, actionID
-			FROM	wcf" . WCF_N . "_clipboard_page";
+        $sql = "SELECT  pageClassName, actionID
+                FROM    wcf" . WCF_N . "_clipboard_page";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
 

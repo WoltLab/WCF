@@ -39,10 +39,10 @@ class ArticleCategoryCache extends SingletonFactory
             $conditionBuilder->add('isDeleted = ?', [0]);
         }
 
-        $sql = "SELECT		COUNT(*) AS count, categoryID
-			FROM		wcf" . WCF_N . "_article
-			" . $conditionBuilder . "           
-			GROUP BY	categoryID";
+        $sql = "SELECT      COUNT(*) AS count, categoryID
+                FROM        wcf" . WCF_N . "_article
+                " . $conditionBuilder . "
+                GROUP BY    categoryID";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionBuilder->getParameters());
         $articles = $statement->fetchMap('categoryID', 'count');

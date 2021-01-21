@@ -39,9 +39,9 @@ class ProfileCommentListBoxController extends AbstractCommentListBoxController
                 $followers = UserProfileHandler::getInstance()->getFollowers();
                 if (empty($followers)) {
                     $commentList->getConditionBuilder()->add("(
-						user_option_value.userOption{$optionID} IN (?)
-						OR user_option_value.userID = ?
-					)", [
+                        user_option_value.userOption{$optionID} IN (?)
+                        OR user_option_value.userID = ?
+                    )", [
                         [
                             UserProfile::ACCESS_EVERYONE,
                             UserProfile::ACCESS_REGISTERED,
@@ -50,13 +50,13 @@ class ProfileCommentListBoxController extends AbstractCommentListBoxController
                     ]);
                 } else {
                     $commentList->getConditionBuilder()->add("(
-						user_option_value.userOption{$optionID} IN (?)
-						OR (
-							user_option_value.userOption{$optionID} = ?
-							AND comment.objectID IN (?)
-						)
-						OR user_option_value.userID = ?
-					)", [
+                        user_option_value.userOption{$optionID} IN (?)
+                        OR (
+                            user_option_value.userOption{$optionID} = ?
+                            AND comment.objectID IN (?)
+                        )
+                        OR user_option_value.userID = ?
+                    )", [
                         [
                             UserProfile::ACCESS_EVERYONE,
                             UserProfile::ACCESS_REGISTERED,

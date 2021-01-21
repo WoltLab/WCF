@@ -69,9 +69,9 @@ class TemplateGroupAction extends AbstractDatabaseObjectAction
         $this->templateGroupEditor = $this->getSingleObject();
 
         // validate name
-        $sql = "SELECT	COUNT(*)
-			FROM	wcf" . WCF_N . "_template_group
-			WHERE	templateGroupName = ?";
+        $sql = "SELECT  COUNT(*)
+                FROM    wcf" . WCF_N . "_template_group
+                WHERE   templateGroupName = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->parameters['templateGroupName']]);
 
@@ -84,9 +84,9 @@ class TemplateGroupAction extends AbstractDatabaseObjectAction
             throw new UserInputException('templateGroupFolderName', 'invalid');
         }
 
-        $sql = "SELECT	COUNT(*)
-			FROM	wcf" . WCF_N . "_template_group
-			WHERE	templateGroupFolderName = ?";
+        $sql = "SELECT  COUNT(*)
+                FROM    wcf" . WCF_N . "_template_group
+                WHERE   templateGroupFolderName = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->parameters['templateGroupFolderName']]);
 

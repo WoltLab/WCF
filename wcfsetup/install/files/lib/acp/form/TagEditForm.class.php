@@ -73,9 +73,9 @@ class TagEditForm extends TagAddForm
 
         if ($this->tagObj->synonymFor === null) {
             // remove synonyms first
-            $sql = "UPDATE	wcf" . WCF_N . "_tag
-				SET	synonymFor = ?
-				WHERE	synonymFor = ?";
+            $sql = "UPDATE  wcf" . WCF_N . "_tag
+                    SET     synonymFor = ?
+                    WHERE   synonymFor = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 null,

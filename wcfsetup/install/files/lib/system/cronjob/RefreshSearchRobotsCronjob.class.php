@@ -61,11 +61,11 @@ class RefreshSearchRobotsCronjob extends AbstractCronjob
             }
 
             if (!empty($statementParameters)) {
-                $sql = "INSERT INTO			wcf" . WCF_N . "_spider
-									(spiderIdentifier, spiderName, spiderURL)
-					VALUES				(?, ?, ?)
-					ON DUPLICATE KEY UPDATE		spiderName = VALUES(spiderName),
-									spiderURL = VALUES(spiderURL)";
+                $sql = "INSERT INTO             wcf" . WCF_N . "_spider
+                                                (spiderIdentifier, spiderName, spiderURL)
+                        VALUES                  (?, ?, ?)
+                        ON DUPLICATE KEY UPDATE spiderName = VALUES(spiderName),
+                                                spiderURL = VALUES(spiderURL)";
                 $statement = WCF::getDB()->prepareStatement($sql);
 
                 WCF::getDB()->beginTransaction();

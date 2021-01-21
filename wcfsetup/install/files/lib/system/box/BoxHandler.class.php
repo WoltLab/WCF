@@ -81,12 +81,12 @@ class BoxHandler extends SingletonFactory
     public function createBoxCondition($boxIdentifier, $conditionDefinition, $conditionObjectType, array $conditionData)
     {
         // do not rely on caches during package installation
-        $sql = "SELECT		objectTypeID
-			FROM		wcf" . WCF_N . "_object_type object_type
-			INNER JOIN	wcf" . WCF_N . "_object_type_definition object_type_definition
-			ON		(object_type.definitionID = object_type_definition.definitionID)
-			WHERE		objectType = ?
-					AND definitionName = ?";
+        $sql = "SELECT      objectTypeID
+                FROM        wcf" . WCF_N . "_object_type object_type
+                INNER JOIN  wcf" . WCF_N . "_object_type_definition object_type_definition
+                ON          (object_type.definitionID = object_type_definition.definitionID)
+                WHERE       objectType = ?
+                        AND definitionName = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$conditionObjectType, $conditionDefinition]);
         $objectTypeID = $statement->fetchSingleColumn();
@@ -178,16 +178,16 @@ class BoxHandler extends SingletonFactory
 
         if (($visible && $box->visibleEverywhere) || (!$visible && !$box->visibleEverywhere)) {
             $sql = "DELETE FROM     wcf" . WCF_N . "_box_to_page
-					WHERE           boxID = ?
-							AND pageID = ?";
+                    WHERE           boxID = ?
+                            AND pageID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             foreach ($pages as $page) {
                 $statement->execute([$box->boxID, $page->pageID]);
             }
         } else {
             $sql = "REPLACE INTO    wcf" . WCF_N . "_box_to_page
-							(boxID, pageID, visible)
-					VALUES          (?, ?, ?)";
+                                    (boxID, pageID, visible)
+                    VALUES          (?, ?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
             foreach ($pages as $page) {
                 $statement->execute([$box->boxID, $page->pageID, $visible ? 1 : 0]);
@@ -237,21 +237,21 @@ class BoxHandler extends SingletonFactory
         if ($pageID) {
             $boxList->getConditionBuilder()->add(
                 '
-				(
-					(box.visibleEverywhere = ?
-					AND boxID NOT IN (
-						SELECT	boxID
-						FROM	wcf' . WCF_N . '_box_to_page
-						WHERE	pageID = ?
-							AND visible = ?
-					)) OR
-					boxID IN (
-						SELECT	boxID
-						FROM	wcf' . WCF_N . '_box_to_page
-						WHERE	pageID = ?
-							AND visible = ?
-					)
-				)',
+                (
+                    (box.visibleEverywhere = ?
+                    AND boxID NOT IN (
+                        SELECT  boxID
+                        FROM    wcf' . WCF_N . '_box_to_page
+                        WHERE   pageID = ?
+                            AND visible = ?
+                    )) OR
+                    boxID IN (
+                        SELECT  boxID
+                        FROM    wcf' . WCF_N . '_box_to_page
+                        WHERE   pageID = ?
+                            AND visible = ?
+                    )
+                )',
                 [1, $pageID, 0, $pageID, 1]
             );
         } else {
@@ -267,8 +267,8 @@ class BoxHandler extends SingletonFactory
         $showOrders = [];
         if ($pageID) {
             $sql = "SELECT  boxID, showOrder
-				FROM    wcf" . WCF_N . "_page_box_order
-				WHERE   pageID = ?";
+                    FROM    wcf" . WCF_N . "_page_box_order
+                    WHERE   pageID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$pageID]);
             while ($row = $statement->fetchArray()) {
@@ -326,8 +326,8 @@ class BoxHandler extends SingletonFactory
     public static function hasCustomShowOrder($pageID)
     {
         $sql = "SELECT  COUNT(*) AS count
-			FROM    wcf" . WCF_N . "_page_box_order
-			WHERE   pageID = ?";
+                FROM    wcf" . WCF_N . "_page_box_order
+                WHERE   pageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$pageID]);
 

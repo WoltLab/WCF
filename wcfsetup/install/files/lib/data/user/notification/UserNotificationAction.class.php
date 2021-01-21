@@ -36,9 +36,9 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
         /** @var UserNotification $notification */
         $notification = parent::create();
 
-        $sql = "INSERT INTO	wcf" . WCF_N . "_user_notification_to_user
-					(notificationID, userID)
-			VALUES		(?, ?)";
+        $sql = "INSERT INTO wcf" . WCF_N . "_user_notification_to_user
+                            (notificationID, userID)
+                VALUES      (?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $notification->notificationID,
@@ -68,9 +68,9 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
         }
 
         // insert author
-        $sql = "INSERT INTO	wcf" . WCF_N . "_user_notification_author
-					(notificationID, authorID, time)
-			VALUES		(?, ?, ?)";
+        $sql = "INSERT INTO wcf" . WCF_N . "_user_notification_author
+                            (notificationID, authorID, time)
+                VALUES      (?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
 
         WCF::getDB()->beginTransaction();
@@ -133,16 +133,16 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
         });
 
         // insert author
-        $sql = "INSERT IGNORE INTO	wcf" . WCF_N . "_user_notification_author
-						(notificationID, authorID, time)
-			VALUES			(?, ?, ?)";
+        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_user_notification_author
+                                    (notificationID, authorID, time)
+                VALUES              (?, ?, ?)";
         $authorStatement = WCF::getDB()->prepareStatement($sql);
 
         // update trigger count
-        $sql = "UPDATE	wcf" . WCF_N . "_user_notification
-			SET	timesTriggered = timesTriggered + ?,
-				guestTimesTriggered = guestTimesTriggered + ?
-			WHERE	notificationID = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_user_notification
+                SET     timesTriggered = timesTriggered + ?,
+                        guestTimesTriggered = guestTimesTriggered + ?
+                WHERE   notificationID = ?";
         $triggerStatement = WCF::getDB()->prepareStatement($sql);
 
         WCF::getDB()->beginTransaction();
@@ -245,9 +245,9 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
     public function markAllAsConfirmed()
     {
         // remove notifications for this user
-        $sql = "UPDATE	wcf" . WCF_N . "_user_notification
-			SET	confirmTime = ?
-			WHERE	userID = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_user_notification
+                SET     confirmTime = ?
+                WHERE   userID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             TIME_NOW,
@@ -255,8 +255,8 @@ class UserNotificationAction extends AbstractDatabaseObjectAction
         ]);
 
         // delete notification_to_user assignments (mimic legacy notification system)
-        $sql = "DELETE FROM	wcf" . WCF_N . "_user_notification_to_user
-			WHERE		userID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_user_notification_to_user
+                WHERE       userID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([WCF::getUser()->userID]);
 

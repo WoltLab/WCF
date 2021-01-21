@@ -62,10 +62,10 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
      */
     protected function handleDelete(array $items)
     {
-        $sql = "DELETE FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE		packageID = ?
-					AND objectTypeID = ?
-					AND eventName = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE       packageID = ?
+                        AND objectTypeID = ?
+                        AND eventName = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($items as $item) {
             $statement->execute([
@@ -121,10 +121,10 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
             return;
         }
 
-        $sql = "INSERT IGNORE INTO	wcf" . WCF_N . "_user_notification_event_to_user
-						(userID, eventID, mailNotificationType)
-			SELECT			userID, ?, ?
-			FROM			wcf" . WCF_N . "_user";
+        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_user_notification_event_to_user
+                                    (userID, eventID, mailNotificationType)
+                SELECT              userID, ?, ?
+                FROM                wcf" . WCF_N . "_user";
         $statement = WCF::getDB()->prepareStatement($sql);
         WCF::getDB()->beginTransaction();
         foreach ($this->presetEventIDs as $eventID => $mailNotificationType) {
@@ -138,10 +138,10 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
      */
     protected function findExistingItem(array $data)
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE	objectTypeID = ?
-				AND eventName = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE   objectTypeID = ?
+                    AND eventName = ?";
         $parameters = [
             $data['objectTypeID'],
             $data['eventName'],
@@ -163,14 +163,14 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
     protected function getObjectTypeID($objectType)
     {
         // get object type id
-        $sql = "SELECT	object_type.objectTypeID
-			FROM	wcf" . WCF_N . "_object_type object_type
-			WHERE	object_type.objectType = ?
-				AND object_type.definitionID IN (
-					SELECT	definitionID
-					FROM	wcf" . WCF_N . "_object_type_definition
-					WHERE	definitionName = 'com.woltlab.wcf.notification.objectType'
-				)";
+        $sql = "SELECT  object_type.objectTypeID
+                FROM    wcf" . WCF_N . "_object_type object_type
+                WHERE   object_type.objectType = ?
+                    AND object_type.definitionID IN (
+                            SELECT  definitionID
+                            FROM    wcf" . WCF_N . "_object_type_definition
+                            WHERE   definitionName = 'com.woltlab.wcf.notification.objectType'
+                        )";
         $statement = WCF::getDB()->prepareStatement($sql, 1);
         $statement->execute([$objectType]);
         $row = $statement->fetchArray();

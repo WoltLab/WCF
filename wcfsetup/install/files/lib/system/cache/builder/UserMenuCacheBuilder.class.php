@@ -24,10 +24,10 @@ class UserMenuCacheBuilder extends AbstractCacheBuilder
         $data = [];
 
         // get all option categories
-        $sql = "SELECT		*
-			FROM		wcf" . WCF_N . "_user_option_category
-			WHERE		parentCategoryName = ?
-			ORDER BY	showOrder ASC";
+        $sql = "SELECT      *
+                FROM        wcf" . WCF_N . "_user_option_category
+                WHERE       parentCategoryName = ?
+                ORDER BY    showOrder ASC";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(['settings']);
         while ($row = $statement->fetchArray()) {
@@ -49,9 +49,9 @@ class UserMenuCacheBuilder extends AbstractCacheBuilder
         }
 
         // get all menu items
-        $sql = "SELECT		*
-			FROM		wcf" . WCF_N . "_user_menu_item
-			ORDER BY	showOrder ASC";
+        $sql = "SELECT      *
+                FROM        wcf" . WCF_N . "_user_menu_item
+                ORDER BY    showOrder ASC";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         while ($row = $statement->fetchArray()) {

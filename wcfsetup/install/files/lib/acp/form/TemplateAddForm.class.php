@@ -121,10 +121,10 @@ class TemplateAddForm extends AbstractForm
 
         // get package id for this template
         if (!$this->packageID) {
-            $sql = "SELECT	packageID
-				FROM	wcf" . WCF_N . "_template
-				WHERE	templateName = ?
-					AND templateGroupID IS NULL";
+            $sql = "SELECT  packageID
+                    FROM    wcf" . WCF_N . "_template
+                    WHERE   templateName = ?
+                        AND templateGroupID IS NULL";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->tplName]);
             $row = $statement->fetchArray();
@@ -168,9 +168,9 @@ class TemplateAddForm extends AbstractForm
             $conditionBuilder->add('packageID = ?', [$this->packageID]);
         }
 
-        $sql = "SELECT	COUNT(*)
-			FROM	wcf" . WCF_N . "_template
-			" . $conditionBuilder;
+        $sql = "SELECT  COUNT(*)
+                FROM    wcf" . WCF_N . "_template
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionBuilder->getParameters());
 

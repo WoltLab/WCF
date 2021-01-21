@@ -408,9 +408,9 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
         $indexName = \call_user_func([$this->className, 'getDatabaseTableIndexName']);
 
         // get objects
-        $sql = "SELECT	*
-			FROM	" . $tableName . "
-			WHERE	" . $indexName . " IN (" . \str_repeat('?,', \count($this->objectIDs) - 1) . "?)";
+        $sql = "SELECT  *
+                FROM    " . $tableName . "
+                WHERE   " . $indexName . " IN (" . \str_repeat('?,', \count($this->objectIDs) - 1) . "?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($this->objectIDs);
         while ($object = $statement->fetchObject($baseClass)) {

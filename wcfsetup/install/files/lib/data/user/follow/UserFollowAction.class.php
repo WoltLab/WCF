@@ -52,10 +52,10 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
         }
 
         // check if current user is ignored by target user
-        $sql = "SELECT	ignoreID
-			FROM	wcf" . WCF_N . "_user_ignore
-			WHERE	userID = ?
-				AND ignoreUserID = ?";
+        $sql = "SELECT  ignoreID
+                FROM    wcf" . WCF_N . "_user_ignore
+                WHERE   userID = ?
+                    AND ignoreUserID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $this->parameters['data']['userID'],
@@ -201,17 +201,17 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
     public function getGroupedUserList()
     {
         // resolve page count
-        $sql = "SELECT	COUNT(*)
-			FROM	wcf" . WCF_N . "_user_follow
-			WHERE	followUserID = ?";
+        $sql = "SELECT  COUNT(*)
+                FROM    wcf" . WCF_N . "_user_follow
+                WHERE   followUserID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->parameters['userID']]);
         $pageCount = \ceil($statement->fetchSingleColumn() / 20);
 
         // get user ids
-        $sql = "SELECT	userID
-			FROM	wcf" . WCF_N . "_user_follow
-			WHERE	followUserID = ?";
+        $sql = "SELECT  userID
+                FROM    wcf" . WCF_N . "_user_follow
+                WHERE   followUserID = ?";
         $statement = WCF::getDB()->prepareStatement($sql, 20, ($this->parameters['pageNo'] - 1) * 20);
         $statement->execute([$this->parameters['userID']]);
         $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);

@@ -67,9 +67,9 @@ class TemplateGroup extends DatabaseObject
         if (self::$templateGroupStructure === null) {
             self::$templateGroupStructure = [];
 
-            $sql = "SELECT		*
-				FROM		wcf" . WCF_N . "_template_group
-				ORDER BY	templateGroupName ASC";
+            $sql = "SELECT      *
+                    FROM        wcf" . WCF_N . "_template_group
+                    ORDER BY    templateGroupName ASC";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute();
             while ($row = $statement->fetchArray()) {

@@ -75,27 +75,29 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('user_table.userID IN (?)', [$userIDs]);
             $sql = "UPDATE  wcf" . WCF_N . "_user user_table
-				SET     articles = (
-						SELECT  COUNT(*)
-						FROM    wcf" . WCF_N . "_article
-						WHERE   userID = user_table.userID
-					)
-				" . $conditionBuilder;
+                    SET     articles = (
+                                SELECT  COUNT(*)
+                                FROM    wcf" . WCF_N . "_article
+                                WHERE   userID = user_table.userID
+                            )
+                    " . $conditionBuilder;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditionBuilder->getParameters());
 
             // update like counter
             if (MODULE_LIKE) {
-                $sql = "UPDATE	wcf" . WCF_N . "_user user_table SET";
+                $sql = "UPDATE  wcf" . WCF_N . "_user user_table
+                        SET";
 
                 $reactionTypeIDs = \array_keys(ReactionTypeCache::getInstance()->getReactionTypes());
                 if (!empty($reactionTypeIDs)) {
-                    $sql .= " likesReceived = (
-							SELECT	COUNT(*)
-							FROM	wcf" . WCF_N . "_like
-							WHERE	objectUserID = user_table.userID
-								AND reactionTypeID IN (" . \implode(',', $reactionTypeIDs) . ")
-						)";
+                    $sql .= "
+                        likesReceived = (
+                            SELECT  COUNT(*)
+                            FROM    wcf" . WCF_N . "_like
+                            WHERE   objectUserID = user_table.userID
+                                AND reactionTypeID IN (" . \implode(',', $reactionTypeIDs) . ")
+                        )";
                 } else {
                     $sql .= " likesReceived = 0";
                 }
@@ -107,25 +109,27 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
 
             // update trophy points
             if (MODULE_TROPHY) {
-                $sql = "UPDATE	wcf" . WCF_N . "_user user_table
-					SET	trophyPoints = (
-							SELECT		COUNT(*)
-							FROM		wcf" . WCF_N . "_user_trophy user_trophy
-							LEFT JOIN	wcf" . WCF_N . "_trophy trophy ON user_trophy.trophyID = trophy.trophyID
-							LEFT JOIN	wcf" . WCF_N . "_category trophy_category ON trophy.categoryID = trophy_category.categoryID
-							WHERE		user_trophy.userID = user_table.userID
-									AND trophy.isDisabled = 0
-									AND trophy_category.isDisabled = 0
-						)
-					" . $conditionBuilder;
+                $sql = "UPDATE  wcf" . WCF_N . "_user user_table
+                        SET     trophyPoints = (
+                                    SELECT      COUNT(*)
+                                    FROM        wcf" . WCF_N . "_user_trophy user_trophy
+                                    LEFT JOIN   wcf" . WCF_N . "_trophy trophy
+                                    ON          (user_trophy.trophyID = trophy.trophyID)
+                                    LEFT JOIN   wcf" . WCF_N . "_category trophy_category
+                                    ON          (trophy.categoryID = trophy_category.categoryID)
+                                    WHERE           user_trophy.userID = user_table.userID
+                                                AND trophy.isDisabled = 0
+                                                AND trophy_category.isDisabled = 0
+                                )
+                        " . $conditionBuilder;
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute($conditionBuilder->getParameters());
             }
 
             // update signatures and about me
             $sql = "UPDATE  wcf" . WCF_N . "_user_option_value
-				SET     userOption" . User::getUserOptionID('aboutMe') . " = ?
-				WHERE   userID = ?";
+                    SET     userOption" . User::getUserOptionID('aboutMe') . " = ?
+                    WHERE   userID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
 
             // retrieve permissions

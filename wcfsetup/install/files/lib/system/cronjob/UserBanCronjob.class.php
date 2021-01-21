@@ -23,12 +23,12 @@ class UserBanCronjob extends AbstractCronjob
         parent::execute($cronjob);
 
         // unban users
-        $sql = "UPDATE	wcf" . WCF_N . "_user
-			SET	banned = ?,
-				banExpires = ?
-			WHERE	banned = ?
-				AND banExpires <> ?
-				AND banExpires <= ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_user
+                SET     banned = ?,
+                        banExpires = ?
+                WHERE   banned = ?
+                    AND banExpires <> ?
+                    AND banExpires <= ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             0,
@@ -39,12 +39,12 @@ class UserBanCronjob extends AbstractCronjob
         ]);
 
         // enable avatars
-        $sql = "UPDATE	wcf" . WCF_N . "_user
-			SET	disableAvatar = ?,
-				disableAvatarExpires = ?
-			WHERE	disableAvatar = ?
-				AND disableAvatarExpires <> ?
-				AND disableAvatarExpires <= ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_user
+                SET     disableAvatar = ?,
+                        disableAvatarExpires = ?
+                WHERE   disableAvatar = ?
+                    AND disableAvatarExpires <> ?
+                    AND disableAvatarExpires <= ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             0,
@@ -55,12 +55,12 @@ class UserBanCronjob extends AbstractCronjob
         ]);
 
         // enable signatures
-        $sql = "UPDATE	wcf" . WCF_N . "_user
-			SET	disableSignature = ?,
-				disableSignatureExpires = ?
-			WHERE	disableSignature = ?
-				AND disableSignatureExpires <> ?
-				AND disableSignatureExpires <= ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_user
+                SET     disableSignature = ?,
+                        disableSignatureExpires = ?
+                WHERE   disableSignature = ?
+                    AND disableSignatureExpires <> ?
+                    AND disableSignatureExpires <= ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             0,
@@ -71,12 +71,12 @@ class UserBanCronjob extends AbstractCronjob
         ]);
 
         // enable cover photos
-        $sql = "UPDATE	wcf" . WCF_N . "_user
-			SET	disableCoverPhoto = ?,
-				disableCoverPhotoExpires = ?
-			WHERE	disableCoverPhoto = ?
-				AND disableCoverPhotoExpires <> ?
-				AND disableCoverPhotoExpires <= ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_user
+                SET     disableCoverPhoto = ?,
+                        disableCoverPhotoExpires = ?
+                WHERE   disableCoverPhoto = ?
+                    AND disableCoverPhotoExpires <> ?
+                    AND disableCoverPhotoExpires <= ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             0,

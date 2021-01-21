@@ -26,10 +26,10 @@ class SessionAccessLogListener implements IParameterizedEventListener
     {
         if (WCF::getUser()->userID && WCF::getSession()->getPermission('admin.general.canUseAcp') && !\defined(\get_class($eventObj) . '::DO_NOT_LOG')) {
             // try to find existing session log
-            $sql = "SELECT	sessionLogID
-				FROM	wcf" . WCF_N . "_acp_session_log
-				WHERE	sessionID = ?
-				AND	lastActivityTime > ?";
+            $sql = "SELECT  sessionLogID
+                    FROM    wcf" . WCF_N . "_acp_session_log
+                    WHERE   sessionID = ?
+                    AND     lastActivityTime > ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 WCF::getSession()->sessionID,

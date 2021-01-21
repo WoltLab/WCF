@@ -50,19 +50,18 @@ class MysqlSearchEngine extends AbstractSearchEngine
 
             $query = $objectType->getOuterSQLQuery($q, $searchIndexCondition, $additionalConditionsConditionBuilder);
             if (empty($query)) {
-                $query = "SELECT	" . $objectType->getIDFieldName() . " AS objectID,
-							" . $objectType->getSubjectFieldName() . " AS subject,
-							" . $objectType->getTimeFieldName() . " AS time,
-							" . $objectType->getUsernameFieldName() . " AS username,
-							'" . $objectTypeName . "' AS objectType
-							" . ($orderBy == 'relevance ASC' || $orderBy == 'relevance DESC' ? ',search_index.relevance' : '') . "
-					FROM		" . $objectType->getTableName() . "
-					INNER JOIN	(
-								{WCF_SEARCH_INNER_JOIN}
-							) search_index
-					ON		(" . $objectType->getIDFieldName() . " = search_index.objectID)
-					" . $objectType->getJoins() . "
-					" . ($additionalConditions[$objectTypeName] ?? '');
+                $query = "
+                    SELECT      " . $objectType->getIDFieldName() . " AS objectID,
+                                " . $objectType->getSubjectFieldName() . " AS subject,
+                                " . $objectType->getTimeFieldName() . " AS time,
+                                " . $objectType->getUsernameFieldName() . " AS username,
+                                '" . $objectTypeName . "' AS objectType
+                                " . ($orderBy == 'relevance ASC' || $orderBy == 'relevance DESC' ? ',search_index.relevance' : '') . "
+                    FROM        " . $objectType->getTableName() . "
+                    INNER JOIN  ({WCF_SEARCH_INNER_JOIN}) search_index
+                    ON          (" . $objectType->getIDFieldName() . " = search_index.objectID)
+                    " . $objectType->getJoins() . "
+                    " . ($additionalConditions[$objectTypeName] ?? '');
             }
 
             if (\mb_strpos($query, '{WCF_SEARCH_INNER_JOIN}')) {
@@ -123,13 +122,13 @@ class MysqlSearchEngine extends AbstractSearchEngine
             }
         }
 
-        $sql = "SELECT		objectID
-					" . ($relevanceCalc ? ',' . $relevanceCalc : ", '0' AS relevance") . "
-			FROM		" . SearchIndexManager::getTableName($objectTypeName) . "
-			WHERE		" . ($fulltextCondition !== null ? $fulltextCondition : '') . "
-					" . (($searchIndexCondition !== null && $searchIndexCondition->__toString()) ? ($fulltextCondition !== null ? "AND " : '') . $searchIndexCondition : '') . "
-			" . (!empty($orderBy) && $fulltextCondition === null ? 'ORDER BY ' . $orderBy : '') . "
-			LIMIT		" . ($limit == 1000 ? SearchEngine::INNER_SEARCH_LIMIT : $limit);
+        $sql = "SELECT  objectID
+                        " . ($relevanceCalc ? ',' . $relevanceCalc : ", '0' AS relevance") . "
+                FROM    " . SearchIndexManager::getTableName($objectTypeName) . "
+                WHERE   " . ($fulltextCondition !== null ? $fulltextCondition : '') . "
+                " . (($searchIndexCondition !== null && $searchIndexCondition->__toString()) ? ($fulltextCondition !== null ? "AND " : '') . $searchIndexCondition : '') . "
+                " . (!empty($orderBy) && $fulltextCondition === null ? 'ORDER BY ' . $orderBy : '') . "
+                LIMIT   " . ($limit == 1000 ? SearchEngine::INNER_SEARCH_LIMIT : $limit);
 
         return [
             'fulltextCondition' => $fulltextCondition,

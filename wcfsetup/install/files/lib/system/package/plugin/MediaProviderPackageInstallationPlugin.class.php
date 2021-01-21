@@ -49,9 +49,9 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
      */
     protected function handleDelete(array $items)
     {
-        $sql = "DELETE FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE		packageID = ?
-					AND name = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE       packageID = ?
+                        AND name = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($items as $item) {
             $statement->execute([
@@ -80,10 +80,10 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
      */
     protected function findExistingItem(array $data)
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE	packageID = ?
-				AND name = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE   packageID = ?
+                    AND name = ?";
         $parameters = [
             $this->installation->getPackageID(),
             $data['name'],

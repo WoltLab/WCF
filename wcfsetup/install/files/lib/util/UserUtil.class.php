@@ -54,9 +54,9 @@ final class UserUtil
      */
     public static function isAvailableUsername($name)
     {
-        $sql = "SELECT	COUNT(username)
-			FROM	wcf" . WCF_N . "_user
-			WHERE	username = ?";
+        $sql = "SELECT  COUNT(username)
+                FROM    wcf" . WCF_N . "_user
+                WHERE   username = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$name]);
 
@@ -99,9 +99,9 @@ final class UserUtil
      */
     public static function isAvailableEmail($email)
     {
-        $sql = "SELECT	COUNT(email)
-			FROM	wcf" . WCF_N . "_user
-			WHERE	email = ?";
+        $sql = "SELECT  COUNT(email)
+                FROM    wcf" . WCF_N . "_user
+                WHERE   email = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$email]);
 

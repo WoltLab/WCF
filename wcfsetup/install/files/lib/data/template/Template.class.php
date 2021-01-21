@@ -39,14 +39,14 @@ class Template extends DatabaseObject
     public function __construct($id, $row = null, ?DatabaseObject $object = null)
     {
         if ($id !== null) {
-            $sql = "SELECT		template.*, template_group.templateGroupFolderName,
-						package.package
-				FROM		wcf" . WCF_N . "_template template
-				LEFT JOIN	wcf" . WCF_N . "_template_group template_group
-				ON		(template_group.templateGroupID = template.templateGroupID)
-				LEFT JOIN	wcf" . WCF_N . "_package package
-				ON		(package.packageID = template.packageID)
-				WHERE		template.templateID = ?";
+            $sql = "SELECT      template.*, template_group.templateGroupFolderName,
+                                package.package
+                    FROM        wcf" . WCF_N . "_template template
+                    LEFT JOIN   wcf" . WCF_N . "_template_group template_group
+                    ON          (template_group.templateGroupID = template.templateGroupID)
+                    LEFT JOIN   wcf" . WCF_N . "_package package
+                    ON          (package.packageID = template.packageID)
+                    WHERE       template.templateID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$id]);
             $row = $statement->fetchArray();

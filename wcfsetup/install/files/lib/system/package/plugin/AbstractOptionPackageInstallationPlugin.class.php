@@ -118,9 +118,9 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
         }
 
         if (!empty($options)) {
-            $sql = "DELETE FROM	" . $this->application . WCF_N . "_" . $this->tableName . "
-				WHERE		optionName = ?
-				AND packageID = ?";
+            $sql = "DELETE FROM " . $this->application . WCF_N . "_" . $this->tableName . "
+                    WHERE       optionName = ?
+                            AND packageID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
 
             foreach ($options as $option) {
@@ -142,9 +142,9 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 
         if (!empty($categories)) {
             // delete options for given categories
-            $sql = "DELETE FROM	" . $this->application . WCF_N . "_" . $this->tableName . "
-				WHERE		categoryName = ?
-						AND packageID = ?";
+            $sql = "DELETE FROM " . $this->application . WCF_N . "_" . $this->tableName . "
+                    WHERE       categoryName = ?
+                            AND packageID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             foreach ($categories as $category) {
                 $statement->execute([
@@ -154,9 +154,9 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
             }
 
             // delete categories
-            $sql = "DELETE FROM	" . $this->application . WCF_N . "_" . $this->tableName . "_category
-				WHERE		categoryName = ?
-				AND		packageID = ?";
+            $sql = "DELETE FROM " . $this->application . WCF_N . "_" . $this->tableName . "_category
+                    WHERE       categoryName = ?
+                    AND         packageID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
 
             foreach ($categories as $category) {
@@ -204,9 +204,9 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 
             // validate parent
             if (!empty($data['parentCategoryName'])) {
-                $sql = "SELECT	COUNT(categoryID)
-					FROM	" . $this->application . WCF_N . "_" . $this->tableName . "_category
-					WHERE	categoryName = ?";
+                $sql = "SELECT  COUNT(categoryID)
+                        FROM    " . $this->application . WCF_N . "_" . $this->tableName . "_category
+                        WHERE   categoryName = ?";
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute([$data['parentCategoryName']]);
 
@@ -250,9 +250,9 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
     public function hasUninstall()
     {
         $hasUninstallOptions = parent::hasUninstall();
-        $sql = "SELECT	COUNT(categoryID)
-			FROM	" . $this->application . WCF_N . "_" . $this->tableName . "_category
-			WHERE	packageID = ?";
+        $sql = "SELECT  COUNT(categoryID)
+                FROM    " . $this->application . WCF_N . "_" . $this->tableName . "_category
+                WHERE   packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->installation->getPackageID()]);
 
@@ -268,8 +268,8 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
         parent::uninstall();
 
         // delete categories
-        $sql = "DELETE FROM	" . $this->application . WCF_N . "_" . $this->tableName . "_category
-			WHERE		packageID = ?";
+        $sql = "DELETE FROM " . $this->application . WCF_N . "_" . $this->tableName . "_category
+                WHERE       packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->installation->getPackageID()]);
     }
@@ -282,9 +282,9 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
      */
     protected function getExistingCategory($category)
     {
-        $sql = "SELECT	categoryID, packageID
-			FROM	" . $this->application . WCF_N . "_" . $this->tableName . "_category
-			WHERE	categoryName = ?";
+        $sql = "SELECT  categoryID, packageID
+                FROM    " . $this->application . WCF_N . "_" . $this->tableName . "_category
+                WHERE   categoryName = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $category,
@@ -305,10 +305,10 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
         $row = $this->getExistingCategory($category['categoryName']);
         if (empty($row['categoryID'])) {
             // insert new category
-            $sql = "INSERT INTO	" . $this->application . WCF_N . "_" . $this->tableName . "_category
-						(packageID, categoryName, parentCategoryName, permissions,
-						options" . ($category['showOrder'] !== null ? ",showOrder" : "") . ")
-				VALUES		(?, ?, ?, ?, ?" . ($category['showOrder'] !== null ? ", ?" : "") . ")";
+            $sql = "INSERT INTO " . $this->application . WCF_N . "_" . $this->tableName . "_category
+                                (packageID, categoryName, parentCategoryName, permissions,
+                                options" . ($category['showOrder'] !== null ? ",showOrder" : "") . ")
+                    VALUES      (?, ?, ?, ?, ?" . ($category['showOrder'] !== null ? ", ?" : "") . ")";
             $statement = WCF::getDB()->prepareStatement($sql);
 
             $data = [
@@ -329,12 +329,12 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
             }
 
             // update existing category
-            $sql = "UPDATE	" . $this->application . WCF_N . "_" . $this->tableName . "_category
-				SET	parentCategoryName = ?,
-					permissions = ?,
-					options = ?
-					" . (isset($category['showOrder']) ? ", showOrder = ?" : "") . "
-				WHERE	categoryID = ?";
+            $sql = "UPDATE  " . $this->application . WCF_N . "_" . $this->tableName . "_category
+                    SET     parentCategoryName = ?,
+                            permissions = ?,
+                            options = ?
+                            " . (isset($category['showOrder']) ? ", showOrder = ?" : "") . "
+                    WHERE   categoryID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
 
             $data = [
@@ -372,9 +372,9 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
         }
 
         // check if option already exists
-        $sql = "SELECT	*
-			FROM	" . $this->application . WCF_N . "_" . $this->tableName . "
-			WHERE	optionName = ?";
+        $sql = "SELECT  *
+                FROM    " . $this->application . WCF_N . "_" . $this->tableName . "
+                WHERE   optionName = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $data['name'],
@@ -1183,18 +1183,18 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
         switch ($this->entryType) {
             case 'categories':
                 // also delete options
-                $sql = "DELETE FROM	" . $this->application . WCF_N . "_" . $this->tableName . "
-					WHERE		categoryName = ?
-							AND packageID = ?";
+                $sql = "DELETE FROM " . $this->application . WCF_N . "_" . $this->tableName . "
+                        WHERE       categoryName = ?
+                                AND packageID = ?";
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute([
                     $name,
                     $this->installation->getPackageID(),
                 ]);
 
-                $sql = "DELETE FROM	" . $this->application . WCF_N . "_" . $this->tableName . "_category
-					WHERE		categoryName = ?
-							AND packageID = ?";
+                $sql = "DELETE FROM " . $this->application . WCF_N . "_" . $this->tableName . "_category
+                        WHERE       categoryName = ?
+                                AND packageID = ?";
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute([
                     $name,
@@ -1204,9 +1204,9 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                 break;
 
             case 'options':
-                $sql = "DELETE FROM	" . $this->application . WCF_N . "_" . $this->tableName . "
-					WHERE		optionName = ?
-							AND packageID = ?";
+                $sql = "DELETE FROM " . $this->application . WCF_N . "_" . $this->tableName . "
+                        WHERE       optionName = ?
+                                AND packageID = ?";
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute([
                     $name,

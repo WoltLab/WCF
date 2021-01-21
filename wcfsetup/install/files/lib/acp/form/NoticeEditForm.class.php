@@ -175,8 +175,8 @@ class NoticeEditForm extends NoticeAddForm
         ConditionHandler::getInstance()->updateConditions($this->notice->noticeID, $this->notice->getConditions(), $conditions);
 
         if ($this->resetIsDismissed) {
-            $sql = "DELETE FROM	wcf" . WCF_N . "_notice_dismissed
-				WHERE		noticeID = ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_notice_dismissed
+                    WHERE       noticeID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 $this->notice->noticeID,

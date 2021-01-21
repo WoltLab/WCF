@@ -49,18 +49,18 @@ class LikeUserRebuildDataWorker extends AbstractRebuildDataWorker
 
         if (!$this->loopCount) {
             // reset cached users
-            $sql = "UPDATE	wcf" . WCF_N . "_like_object
-				SET	cachedUsers = NULL";
+            $sql = "UPDATE  wcf" . WCF_N . "_like_object
+                    SET     cachedUsers = NULL";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute();
         }
 
-        $sql = "SELECT		userID
-			FROM		wcf" . WCF_N . "_like
-			WHERE		objectID = ?
-					AND objectTypeID = ?
-					AND likeValue = ?
-			ORDER BY	time DESC";
+        $sql = "SELECT      userID
+                FROM        wcf" . WCF_N . "_like
+                WHERE       objectID = ?
+                        AND objectTypeID = ?
+                        AND likeValue = ?
+                ORDER BY    time DESC";
         $statement = WCF::getDB()->prepareStatement($sql, 3);
         $userData = $userIDs = [];
         foreach ($this->objectList as $likeObject) {
@@ -84,17 +84,17 @@ class LikeUserRebuildDataWorker extends AbstractRebuildDataWorker
         // fetch usernames
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("userID IN (?)", [$userIDs]);
-        $sql = "SELECT	userID, username
-			FROM	wcf" . WCF_N . "_user
-			" . $conditions;
+        $sql = "SELECT  userID, username
+                FROM    wcf" . WCF_N . "_user
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         $usernames = $statement->fetchMap('userID', 'username');
 
         // update like objects
-        $sql = "UPDATE	wcf" . WCF_N . "_like_object
-			SET	cachedUsers = ?
-			WHERE	likeObjectID = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_like_object
+                SET     cachedUsers = ?
+                WHERE   likeObjectID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
 
         WCF::getDB()->beginTransaction();

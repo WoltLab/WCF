@@ -40,11 +40,11 @@ class DailyMailNotificationCronjob extends AbstractCronjob
         parent::execute($cronjob);
 
         // get user ids
-        $sql = "SELECT	DISTINCT userID
-			FROM	wcf" . WCF_N . "_user_notification
-			WHERE	mailNotified = ?
-				AND time < ?
-				AND confirmTime = ?";
+        $sql = "SELECT  DISTINCT userID
+                FROM    wcf" . WCF_N . "_user_notification
+                WHERE   mailNotified = ?
+                    AND time < ?
+                    AND confirmTime = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             0,
@@ -68,14 +68,14 @@ class DailyMailNotificationCronjob extends AbstractCronjob
         $conditions->add("notification.mailNotified = ?", [0]);
         $conditions->add("notification.confirmTime = ?", [0]);
 
-        $sql = "SELECT		notification.*, notification_event.eventID, object_type.objectType
-			FROM		wcf" . WCF_N . "_user_notification notification
-			LEFT JOIN	wcf" . WCF_N . "_user_notification_event notification_event
-			ON		(notification_event.eventID = notification.eventID)
-			LEFT JOIN	wcf" . WCF_N . "_object_type object_type
-			ON		(object_type.objectTypeID = notification_event.objectTypeID)
-			" . $conditions . "
-			ORDER BY	notification.time";
+        $sql = "SELECT      notification.*, notification_event.eventID, object_type.objectType
+                FROM        wcf" . WCF_N . "_user_notification notification
+                LEFT JOIN   wcf" . WCF_N . "_user_notification_event notification_event
+                ON          (notification_event.eventID = notification.eventID)
+                LEFT JOIN   wcf" . WCF_N . "_object_type object_type
+                ON          (object_type.objectTypeID = notification_event.objectTypeID)
+                " . $conditions . "
+                ORDER BY    notification.time";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
 
@@ -83,9 +83,9 @@ class DailyMailNotificationCronjob extends AbstractCronjob
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("userID IN (?)", [$userIDs]);
         $conditions->add("mailNotified = ?", [0]);
-        $sql = "UPDATE	wcf" . WCF_N . "_user_notification
-			SET	mailNotified = 1
-			" . $conditions;
+        $sql = "UPDATE  wcf" . WCF_N . "_user_notification
+                SET     mailNotified = 1
+                " . $conditions;
         $statement2 = WCF::getDB()->prepareStatement($sql);
         $statement2->execute($conditions->getParameters());
 
@@ -116,10 +116,10 @@ class DailyMailNotificationCronjob extends AbstractCronjob
         // load authors
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("notificationID IN (?)", [\array_keys($notificationObjects)]);
-        $sql = "SELECT		notificationID, authorID
-			FROM		wcf" . WCF_N . "_user_notification_author
-			" . $conditions . "
-			ORDER BY	time ASC";
+        $sql = "SELECT      notificationID, authorID
+                FROM        wcf" . WCF_N . "_user_notification_author
+                " . $conditions . "
+                ORDER BY    time ASC";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         $authorIDs = $authorToNotification = [];

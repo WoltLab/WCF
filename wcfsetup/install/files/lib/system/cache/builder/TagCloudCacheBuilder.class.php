@@ -89,20 +89,20 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('object.objectTypeID IN (?)', [$this->objectTypeIDs]);
             $conditionBuilder->add('object.languageID IN (?)', [$this->languageIDs]);
-            $sql = "SELECT		COUNT(*) AS counter, object.tagID
-				FROM		wcf" . WCF_N . "_tag_to_object object
-				" . $conditionBuilder . "
-				GROUP BY	object.tagID
-				ORDER BY	counter DESC";
+            $sql = "SELECT      COUNT(*) AS counter, object.tagID
+                    FROM        wcf" . WCF_N . "_tag_to_object object
+                    " . $conditionBuilder . "
+                    GROUP BY    object.tagID
+                    ORDER BY    counter DESC";
             $statement = WCF::getDB()->prepareStatement($sql, 500);
             $statement->execute($conditionBuilder->getParameters());
             $tagIDs = $statement->fetchMap('tagID', 'counter');
 
             // get tags
             if (!empty($tagIDs)) {
-                $sql = "SELECT	*
-					FROM	wcf" . WCF_N . "_tag
-					WHERE	tagID IN (?" . (\count($tagIDs) > 1 ? \str_repeat(',?', \count($tagIDs) - 1) : '') . ")";
+                $sql = "SELECT  *
+                        FROM    wcf" . WCF_N . "_tag
+                        WHERE   tagID IN (?" . (\count($tagIDs) > 1 ? \str_repeat(',?', \count($tagIDs) - 1) : '') . ")";
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute(\array_keys($tagIDs));
                 while ($row = $statement->fetchArray()) {

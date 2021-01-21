@@ -79,17 +79,17 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin
     public function uninstall()
     {
         // get logged sql tables/columns
-        $sql = "SELECT		wcf" . WCF_N . "_package_installation_sql_log.*,
-					CASE WHEN sqlIndex <> '' THEN 1 ELSE 0 END AS isIndex,
-					CASE WHEN sqlColumn <> '' THEN 1 ELSE 0 END AS isColumn,
-					CASE WHEN SUBSTRING(sqlIndex, -3) = '_fk' THEN 1 ELSE 0 END AS isForeignKey
-			FROM		wcf" . WCF_N . "_package_installation_sql_log
-			WHERE		packageID = ?
-			ORDER BY	isIndex DESC,
-					isForeignKey DESC,
-					sqlIndex,
-					isColumn DESC,
-					sqlColumn";
+        $sql = "SELECT      wcf" . WCF_N . "_package_installation_sql_log.*,
+                            CASE WHEN sqlIndex <> '' THEN 1 ELSE 0 END AS isIndex,
+                            CASE WHEN sqlColumn <> '' THEN 1 ELSE 0 END AS isColumn,
+                            CASE WHEN SUBSTRING(sqlIndex, -3) = '_fk' THEN 1 ELSE 0 END AS isForeignKey
+                FROM        wcf" . WCF_N . "_package_installation_sql_log
+                WHERE       packageID = ?
+                ORDER BY    isIndex DESC,
+                            isForeignKey DESC,
+                            sqlIndex,
+                            isColumn DESC,
+                            sqlColumn";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->installation->getPackageID()]);
         $entries = $statement->fetchAll(\PDO::FETCH_ASSOC);

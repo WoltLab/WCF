@@ -31,9 +31,9 @@ class FilesFileHandler extends PackageInstallationFileHandler
                 $conditions->add('filename IN (?)', [$files]);
                 $conditions->add('application = ?', [$this->application]);
 
-                $sql = "SELECT	filename, packageID
-					FROM	wcf" . WCF_N . "_package_installation_file_log
-					" . $conditions;
+                $sql = "SELECT  filename, packageID
+                        FROM    wcf" . WCF_N . "_package_installation_file_log
+                        " . $conditions;
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute($conditions->getParameters());
                 $lockedFiles = $statement->fetchMap('filename', 'packageID');
@@ -61,9 +61,9 @@ class FilesFileHandler extends PackageInstallationFileHandler
             return;
         }
 
-        $sql = "INSERT IGNORE INTO	wcf" . WCF_N . "_package_installation_file_log
-							(packageID, filename, application)
-				VALUES			(?, ?, ?)";
+        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_package_installation_file_log
+                                    (packageID, filename, application)
+                VALUES              (?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
 
         WCF::getDB()->beginTransaction();

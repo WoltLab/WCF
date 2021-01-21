@@ -40,12 +40,13 @@ trait TReactionUserNotificationEvent
         $conditionBuilder->add('like_table.userID IN (?)', [\array_keys($this->getAuthors())]);
         $conditionBuilder->add('like_table_join.likeID = ?', [$this->getUserNotificationObject()->getObjectID()]);
 
-        $sql = "SELECT          like_table.reactionTypeID, COUNT(like_table.reactionTypeID) as count 
-			FROM            wcf" . WCF_N . "_like like_table
-			LEFT JOIN       wcf" . WCF_N . "_like like_table_join
-			ON              like_table_join.objectTypeID = like_table.objectTypeID AND like_table_join.objectID = like_table.objectID 
-			" . $conditionBuilder . " 
-			GROUP BY        like_table.reactionTypeID";
+        $sql = "SELECT      like_table.reactionTypeID, COUNT(like_table.reactionTypeID) as count 
+                FROM        wcf" . WCF_N . "_like like_table
+                LEFT JOIN   wcf" . WCF_N . "_like like_table_join
+                ON          like_table_join.objectTypeID = like_table.objectTypeID
+                        AND like_table_join.objectID = like_table.objectID
+                " . $conditionBuilder . " 
+                GROUP BY    like_table.reactionTypeID";
 
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionBuilder->getParameters());

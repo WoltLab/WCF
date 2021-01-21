@@ -74,8 +74,8 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
             return;
         }
 
-        $sql = "DELETE FROM	wcf" . WCF_N . "_user_to_group
-			WHERE		groupID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_user_to_group
+                WHERE       groupID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($groupIDs as $groupID) {
             $statement->execute([$groupID]);
@@ -93,8 +93,8 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
             return;
         }
 
-        $sql = "DELETE FROM	wcf" . WCF_N . "_user_group_option_value
-			WHERE		groupID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_user_group_option_value
+                WHERE       groupID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($groupIDs as $groupID) {
             $statement->execute([$groupID]);
@@ -110,15 +110,15 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
     {
         WCF::getDB()->beginTransaction();
         // delete old group options
-        $sql = "DELETE FROM	wcf" . WCF_N . "_user_group_option_value
-			WHERE		groupID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_user_group_option_value
+                WHERE       groupID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->groupID]);
 
         // insert new options
-        $sql = "INSERT INTO	wcf" . WCF_N . "_user_group_option_value
-					(groupID, optionID, optionValue)
-			VALUES		(?, ?, ?)";
+        $sql = "INSERT INTO wcf" . WCF_N . "_user_group_option_value
+                            (groupID, optionID, optionValue)
+                VALUES      (?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($groupOptions as $id => $value) {
             $statement->execute([$this->groupID, $id, $value]);
@@ -135,9 +135,9 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
      */
     protected static function updateAccessibleGroups($groupID, $delete = false)
     {
-        $sql = "SELECT	optionID
-			FROM	wcf" . WCF_N . "_user_group_option
-			WHERE	optionName = ?";
+        $sql = "SELECT  optionID
+                FROM    wcf" . WCF_N . "_user_group_option
+                WHERE   optionName = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(['admin.user.accessibleGroups']);
         $optionID = $statement->fetchSingleColumn();
@@ -159,15 +159,15 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
             $groupIDs[] = $userGroup->groupID;
         }
 
-        $sql = "UPDATE	wcf" . WCF_N . "_user_group_option_value
-			SET	optionValue = ?
-			WHERE		groupID = ?
-				AND	optionID = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_user_group_option_value
+                SET     optionValue = ?
+                WHERE   groupID = ?
+                    AND optionID = ?";
         $updateStatement = WCF::getDB()->prepareStatement($sql);
 
-        $sql = "SELECT		groupID, optionValue
-			FROM		wcf" . WCF_N . "_user_group_option_value
-			WHERE		optionID = ?";
+        $sql = "SELECT  groupID, optionValue
+                FROM    wcf" . WCF_N . "_user_group_option_value
+                WHERE   optionID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$optionID]);
         while ($row = $statement->fetchArray()) {

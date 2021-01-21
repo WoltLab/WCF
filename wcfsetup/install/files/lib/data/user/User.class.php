@@ -125,11 +125,11 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     public function __construct($id, $row = null, ?DatabaseObject $object = null)
     {
         if ($id !== null) {
-            $sql = "SELECT		user_option_value.*, user_table.*
-				FROM		wcf" . WCF_N . "_user user_table
-				LEFT JOIN	wcf" . WCF_N . "_user_option_value user_option_value
-				ON		(user_option_value.userID = user_table.userID)
-				WHERE		user_table.userID = ?";
+            $sql = "SELECT      user_option_value.*, user_table.*
+                    FROM        wcf" . WCF_N . "_user user_table
+                    LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option_value
+                    ON          (user_option_value.userID = user_table.userID)
+                    WHERE       user_table.userID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$id]);
             $row = $statement->fetchArray();
@@ -214,9 +214,9 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 
                 // cache does not exist or is outdated
                 if ($data === null || $skipCache) {
-                    $sql = "SELECT	groupID
-						FROM	wcf" . WCF_N . "_user_to_group
-						WHERE	userID = ?";
+                    $sql = "SELECT  groupID
+                            FROM    wcf" . WCF_N . "_user_to_group
+                            WHERE   userID = ?";
                     $statement = WCF::getDB()->prepareStatement($sql);
                     $statement->execute([$this->userID]);
                     $this->groupIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
@@ -252,9 +252,9 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 
                 // cache does not exist or is outdated
                 if ($data === null) {
-                    $sql = "SELECT	languageID
-						FROM	wcf" . WCF_N . "_user_to_language
-						WHERE	userID = ?";
+                    $sql = "SELECT  languageID
+                            FROM    wcf" . WCF_N . "_user_to_language
+                            WHERE   userID = ?";
                     $statement = WCF::getDB()->prepareStatement($sql);
                     $statement->execute([$this->userID]);
                     $this->languageIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
@@ -344,11 +344,11 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      */
     public static function getUserByUsername($username)
     {
-        $sql = "SELECT		user_option_value.*, user_table.*
-			FROM		wcf" . WCF_N . "_user user_table
-			LEFT JOIN	wcf" . WCF_N . "_user_option_value user_option_value
-			ON		(user_option_value.userID = user_table.userID)
-			WHERE		user_table.username = ?";
+        $sql = "SELECT      user_option_value.*, user_table.*
+                FROM        wcf" . WCF_N . "_user user_table
+                LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option_value
+                ON          (user_option_value.userID = user_table.userID)
+                WHERE       user_table.username = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$username]);
         $row = $statement->fetchArray();
@@ -367,11 +367,11 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      */
     public static function getUserByEmail($email)
     {
-        $sql = "SELECT		user_option_value.*, user_table.*
-			FROM		wcf" . WCF_N . "_user user_table
-			LEFT JOIN	wcf" . WCF_N . "_user_option_value user_option_value
-			ON		(user_option_value.userID = user_table.userID)
-			WHERE		user_table.email = ?";
+        $sql = "SELECT      user_option_value.*, user_table.*
+                FROM        wcf" . WCF_N . "_user user_table
+                LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option_value
+                ON          (user_option_value.userID = user_table.userID)
+                WHERE       user_table.email = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$email]);
         $row = $statement->fetchArray();
@@ -390,11 +390,11 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      */
     public static function getUserByAuthData($authData)
     {
-        $sql = "SELECT		user_option_value.*, user_table.*
-			FROM		wcf" . WCF_N . "_user user_table
-			LEFT JOIN	wcf" . WCF_N . "_user_option_value user_option_value
-			ON		(user_option_value.userID = user_table.userID)
-			WHERE		user_table.authData = ?";
+        $sql = "SELECT      user_option_value.*, user_table.*
+                FROM        wcf" . WCF_N . "_user user_table
+                LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option_value
+                ON          (user_option_value.userID = user_table.userID)
+                WHERE       user_table.authData = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$authData]);
         $row = $statement->fetchArray();

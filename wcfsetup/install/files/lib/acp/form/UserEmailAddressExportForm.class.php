@@ -128,18 +128,18 @@ class UserEmailAddressExportForm extends AbstractForm
         $conditions->add("userID IN (?)", [$this->userIDs]);
 
         // count users
-        $sql = "SELECT	COUNT(*)
-			FROM	wcf" . WCF_N . "_user
-			" . $conditions;
+        $sql = "SELECT  COUNT(*)
+                FROM    wcf" . WCF_N . "_user
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         $count = $statement->fetchSingleColumn();
 
         // get users
-        $sql = "SELECT		email
-			FROM		wcf" . WCF_N . "_user
-			" . $conditions . "
-			ORDER BY	email";
+        $sql = "SELECT      email
+                FROM        wcf" . WCF_N . "_user
+                " . $conditions . "
+                ORDER BY    email";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
 

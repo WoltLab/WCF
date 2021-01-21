@@ -52,12 +52,12 @@ class UserActivityPointItemsRebuildDataWorker extends AbstractRebuildDataWorker
         $conditionBuilder->add('user_activity_point.objectTypeID = ?', [$reactionObjectType->objectTypeID]);
         $conditionBuilder->add('user_activity_point.userID IN (?)', [$this->getObjectList()->getObjectIDs()]);
 
-        $sql = "UPDATE		wcf" . WCF_N . "_user_activity_point user_activity_point
-			LEFT JOIN	wcf" . WCF_N . "_user user_table
-			ON		(user_table.userID = user_activity_point.userID)
-			SET		user_activity_point.items = user_table.likesReceived,
-					user_activity_point.activityPoints = user_activity_point.items * ?
-			" . $conditionBuilder;
+        $sql = "UPDATE      wcf" . WCF_N . "_user_activity_point user_activity_point
+                LEFT JOIN   wcf" . WCF_N . "_user user_table
+                ON          (user_table.userID = user_activity_point.userID)
+                SET         user_activity_point.items = user_table.likesReceived,
+                            user_activity_point.activityPoints = user_activity_point.items * ?
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(\array_merge(
             [$reactionObjectType->points],

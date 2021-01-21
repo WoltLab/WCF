@@ -1096,10 +1096,10 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
         // load last response time
         if ($comment->getDecoratedObject()->responses) {
-            $sql = "SELECT          time
-				FROM            wcf" . WCF_N . "_comment_response
-				WHERE           commentID = ?
-				ORDER BY        time";
+            $sql = "SELECT      time
+                    FROM        wcf" . WCF_N . "_comment_response
+                    WHERE       commentID = ?
+                    ORDER BY    time";
             $statement = WCF::getDB()->prepareStatement($sql, 1);
             $statement->execute([$comment->commentID]);
             $lastResponseTime = $statement->fetchSingleColumn();

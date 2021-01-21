@@ -70,9 +70,9 @@ class EditHistoryManager extends SingletonFactory
         }
 
         // save new entry
-        $sql = "INSERT INTO	wcf" . WCF_N . "_edit_history_entry
-					(objectTypeID, objectID, message, time, obsoletedAt, userID, username, editReason, obsoletedByUserID)
-			VALUES		(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO wcf" . WCF_N . "_edit_history_entry
+                            (objectTypeID, objectID, message, time, obsoletedAt, userID, username, editReason, obsoletedByUserID)
+                VALUES      (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->getObjectTypeID($objectType), $objectID, $message, $time, TIME_NOW, $userID, $username, $editReason, $obsoletedByUserID]);
     }
@@ -98,8 +98,8 @@ class EditHistoryManager extends SingletonFactory
             $conditionBuilder->add('objectTypeID = ?', [$objectTypeID]);
             $conditionBuilder->add('objectID IN (?)', [$batchObjectIDs]);
 
-            $sql = "DELETE FROM	wcf" . WCF_N . "_edit_history_entry
-				" . $conditionBuilder;
+            $sql = "DELETE FROM wcf" . WCF_N . "_edit_history_entry
+                    " . $conditionBuilder;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditionBuilder->getParameters());
         }
@@ -124,27 +124,29 @@ class EditHistoryManager extends SingletonFactory
         //    a) older than $timeframe days
         //    b) by a non offending user
         $userIDPlaceholders = '?' . \str_repeat(',?', \count($userIDs) - 1);
-        $sql = "SELECT	MAX(entryID)
-			FROM	wcf" . WCF_N . "_edit_history_entry revertTo
-			INNER JOIN(
-				SELECT	vandalizedEntries.objectID,
-					vandalizedEntries.objectTypeID
-				FROM	wcf" . WCF_N . "_edit_history_entry vandalizedEntries
-				INNER JOIN (
-					SELECT		MAX(newestEntries.entryID) AS entryID
-					FROM		wcf" . WCF_N . "_edit_history_entry newestEntries
-					WHERE		newestEntries.obsoletedAt > ?
-					GROUP BY	newestEntries.objectTypeID, newestEntries.objectID
-				) newestEntries2
-				WHERE		newestEntries2.entryID = vandalizedEntries.entryID
-					AND	vandalizedEntries.obsoletedByUserID IN (" . $userIDPlaceholders . ")
-			) AS vandalizedEntries2
-			WHERE		revertTo.objectID = vandalizedEntries2.objectID
-				AND	revertTo.objectTypeID = vandalizedEntries2.objectTypeID
-				AND	(	revertTo.obsoletedAt <= ?
-					OR	revertTo.time <= ?
-					OR	revertTo.userID NOT IN(" . $userIDPlaceholders . "))
-			GROUP BY revertTo.objectTypeID, revertTo.objectID";
+        $sql = "SELECT      MAX(entryID)
+                FROM        wcf" . WCF_N . "_edit_history_entry revertTo
+                INNER JOIN (
+                    SELECT      vandalizedEntries.objectID,
+                                vandalizedEntries.objectTypeID
+                    FROM        wcf" . WCF_N . "_edit_history_entry vandalizedEntries
+                    INNER JOIN (
+                        SELECT      MAX(newestEntries.entryID) AS entryID
+                        FROM        wcf" . WCF_N . "_edit_history_entry newestEntries
+                        WHERE       newestEntries.obsoletedAt > ?
+                        GROUP BY    newestEntries.objectTypeID, newestEntries.objectID
+                    ) newestEntries2
+                    WHERE       newestEntries2.entryID = vandalizedEntries.entryID
+                            AND vandalizedEntries.obsoletedByUserID IN (" . $userIDPlaceholders . ")
+                ) AS vandalizedEntries2
+                WHERE       revertTo.objectID = vandalizedEntries2.objectID
+                        AND revertTo.objectTypeID = vandalizedEntries2.objectTypeID
+                        AND (
+                                    revertTo.obsoletedAt <= ?
+                                 OR revertTo.time <= ?
+                                 OR revertTo.userID NOT IN(" . $userIDPlaceholders . ")
+                            )
+                GROUP BY    revertTo.objectTypeID, revertTo.objectID";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(\array_merge(
             [TIME_NOW - $timeframe],

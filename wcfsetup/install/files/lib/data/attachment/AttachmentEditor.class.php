@@ -30,8 +30,8 @@ class AttachmentEditor extends DatabaseObjectEditor
      */
     public function delete()
     {
-        $sql = "DELETE FROM	wcf" . WCF_N . "_attachment
-			WHERE		attachmentID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_attachment
+                WHERE       attachmentID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->attachmentID]);
 
@@ -47,9 +47,9 @@ class AttachmentEditor extends DatabaseObjectEditor
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add("attachmentID IN (?)", [$objectIDs]);
 
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_attachment
-			" . $conditionBuilder;
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_attachment
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionBuilder->getParameters());
         while ($attachment = $statement->fetchObject(static::$baseClass)) {

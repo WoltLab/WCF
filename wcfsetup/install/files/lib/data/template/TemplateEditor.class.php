@@ -80,9 +80,9 @@ class TemplateEditor extends DatabaseObjectEditor
         // get new path
         if ($templateGroupID != $this->templateGroupID) {
             // get folder name
-            $sql = "SELECT	templateGroupFolderName
-				FROM	wcf" . WCF_N . "_template_group
-				WHERE	templateGroupID = ?";
+            $sql = "SELECT  templateGroupFolderName
+                    FROM    wcf" . WCF_N . "_template_group
+                    WHERE   templateGroupID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$templateGroupID]);
             $row = $statement->fetchArray();
@@ -107,8 +107,8 @@ class TemplateEditor extends DatabaseObjectEditor
     {
         $this->deleteFile();
 
-        $sql = "DELETE FROM	wcf" . WCF_N . "_template
-			WHERE		templateID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_template
+                WHERE       templateID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->templateID]);
     }

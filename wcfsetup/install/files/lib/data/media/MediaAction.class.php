@@ -269,9 +269,9 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add('mediaID IN (?)', [$mediaList->getObjectIDs()]);
 
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_media_content
-			" . $conditionBuilder;
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_media_content
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionBuilder->getParameters());
 
@@ -437,14 +437,14 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
                 $isMultilingual = $this->parameters['data']['isMultilingual'];
             }
 
-            $sql = "DELETE FROM	wcf" . WCF_N . "_media_content
-				WHERE		mediaID = ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_media_content
+                    WHERE       mediaID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$media->mediaID]);
 
-            $sql = "INSERT INTO	wcf" . WCF_N . "_media_content
-						(mediaID, languageID, title, caption, altText)
-				VALUES		(?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_media_content
+                                (mediaID, languageID, title, caption, altText)
+                    VALUES      (?, ?, ?, ?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
 
             if (!$isMultilingual) {
@@ -702,9 +702,9 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add('mediaID IN (?)', [$this->objectIDs]);
 
-        $sql = "UPDATE	wcf" . WCF_N . "_media
-			SET	categoryID = ?
-			" . $conditionBuilder;
+        $sql = "UPDATE  wcf" . WCF_N . "_media
+                SET     categoryID = ?
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(\array_merge(
             [$this->parameters['categoryID'] ?: null],

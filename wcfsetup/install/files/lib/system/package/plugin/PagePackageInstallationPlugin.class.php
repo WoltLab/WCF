@@ -170,9 +170,9 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 
         $parentPageID = null;
         if (!empty($data['elements']['parent'])) {
-            $sql = "SELECT	pageID
-				FROM	wcf" . WCF_N . "_" . $this->tableName . "
-				WHERE	identifier = ?";
+            $sql = "SELECT  pageID
+                    FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                    WHERE   identifier = ?";
             $statement = WCF::getDB()->prepareStatement($sql, 1);
             $statement->execute([$data['elements']['parent']]);
             $row = $statement->fetchSingleRow();
@@ -277,10 +277,10 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
      */
     protected function findExistingItem(array $data)
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE	identifier = ?
-				AND packageID = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE   identifier = ?
+                    AND packageID = ?";
         $parameters = [
             $data['identifier'],
             $this->installation->getPackageID(),
@@ -348,14 +348,14 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
     {
         if (!empty($this->content)) {
             $sql = "SELECT  COUNT(*) AS count
-				FROM    wcf" . WCF_N . "_page_content
-				WHERE   pageID = ?
-					AND languageID IS NULL";
+                    FROM    wcf" . WCF_N . "_page_content
+                    WHERE   pageID = ?
+                        AND languageID IS NULL";
             $statement = WCF::getDB()->prepareStatement($sql);
 
-            $sql = "INSERT IGNORE INTO	wcf" . WCF_N . "_page_content
-							(pageID, languageID, title, content, metaDescription, customURL)
-				VALUES			(?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_page_content
+                                        (pageID, languageID, title, content, metaDescription, customURL)
+                    VALUES              (?, ?, ?, ?, ?, ?)";
             $insertStatement = WCF::getDB()->prepareStatement($sql);
 
             WCF::getDB()->beginTransaction();

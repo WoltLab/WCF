@@ -504,9 +504,9 @@ class BoxAddForm extends AbstractForm
         if (!empty($this->pageIDs)) {
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('pageID IN (?)', [$this->pageIDs]);
-            $sql = "SELECT	pageID
-				FROM	wcf" . WCF_N . "_page
-				" . $conditionBuilder;
+            $sql = "SELECT  pageID
+                    FROM    wcf" . WCF_N . "_page
+                    " . $conditionBuilder;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditionBuilder->getParameters());
             $this->pageIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);

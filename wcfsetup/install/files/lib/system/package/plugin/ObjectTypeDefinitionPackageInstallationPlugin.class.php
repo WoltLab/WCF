@@ -42,9 +42,9 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
      */
     protected function handleDelete(array $items)
     {
-        $sql = "DELETE FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE		definitionName = ?
-					AND packageID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE       definitionName = ?
+                        AND packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($items as $item) {
             $statement->execute([
@@ -71,9 +71,9 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
      */
     protected function findExistingItem(array $data)
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE	definitionName = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE   definitionName = ?";
         $parameters = [$data['definitionName']];
 
         return [

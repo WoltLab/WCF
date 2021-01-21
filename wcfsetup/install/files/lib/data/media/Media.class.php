@@ -198,9 +198,9 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
                 'title' => [],
             ];
 
-            $sql = "SELECT	*
-				FROM	wcf" . WCF_N . "_media_content
-				WHERE	mediaID = ?";
+            $sql = "SELECT  *
+                    FROM    wcf" . WCF_N . "_media_content
+                    WHERE   mediaID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->mediaID]);
 

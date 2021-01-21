@@ -184,9 +184,9 @@ class PackageInstallationDispatcher
             $this->logInstallationStep([], 'start cleanup');
 
             // update "last update time" option
-            $sql = "UPDATE	wcf" . WCF_N . "_option
-				SET	optionValue = ?
-				WHERE	optionName = ?";
+            $sql = "UPDATE  wcf" . WCF_N . "_option
+                    SET     optionValue = ?
+                    WHERE   optionName = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 TIME_NOW,
@@ -204,9 +204,9 @@ class PackageInstallationDispatcher
                 if (!PACKAGE_ID) {
                     CacheHandler::getInstance()->flushAll();
 
-                    $sql = "UPDATE	wcf" . WCF_N . "_option
-						SET	optionValue = ?
-						WHERE	optionName = ?";
+                    $sql = "UPDATE  wcf" . WCF_N . "_option
+                            SET     optionValue = ?
+                            WHERE   optionName = ?";
                     $statement = WCF::getDB()->prepareStatement($sql);
 
                     $statement->execute([
@@ -344,12 +344,12 @@ class PackageInstallationDispatcher
             UserStorageHandler::getInstance()->clear();
 
             // rebuild config files for affected applications
-            $sql = "SELECT		package.packageID
-				FROM		wcf" . WCF_N . "_package_installation_queue queue,
-						wcf" . WCF_N . "_package package
-				WHERE		queue.processNo = ?
-						AND package.packageID = queue.packageID
-						AND package.isApplication = ?";
+            $sql = "SELECT      package.packageID
+                    FROM        wcf" . WCF_N . "_package_installation_queue queue,
+                                wcf" . WCF_N . "_package package
+                    WHERE       queue.processNo = ?
+                            AND package.packageID = queue.packageID
+                            AND package.isApplication = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 $this->queue->processNo,
@@ -362,9 +362,9 @@ class PackageInstallationDispatcher
             EventHandler::getInstance()->fireAction($this, 'postInstall');
 
             // remove archives
-            $sql = "SELECT	archive
-				FROM	wcf" . WCF_N . "_package_installation_queue
-				WHERE	processNo = ?";
+            $sql = "SELECT  archive
+                    FROM    wcf" . WCF_N . "_package_installation_queue
+                    WHERE   processNo = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->queue->processNo]);
             while ($row = $statement->fetchArray()) {
@@ -372,8 +372,8 @@ class PackageInstallationDispatcher
             }
 
             // delete queues
-            $sql = "DELETE FROM	wcf" . WCF_N . "_package_installation_queue
-				WHERE		processNo = ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_package_installation_queue
+                    WHERE       processNo = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->queue->processNo]);
 
@@ -464,16 +464,16 @@ class PackageInstallationDispatcher
             foreach ($nodeData['requirements'] as $package => $requirementData) {
                 // get existing package
                 if ($requirementData['packageID']) {
-                    $sql = "SELECT	packageName, packageVersion
-						FROM	wcf" . WCF_N . "_package
-						WHERE	packageID = ?";
+                    $sql = "SELECT  packageName, packageVersion
+                            FROM    wcf" . WCF_N . "_package
+                            WHERE   packageID = ?";
                     $statement = WCF::getDB()->prepareStatement($sql);
                     $statement->execute([$requirementData['packageID']]);
                 } else {
                     // try to find matching package
-                    $sql = "SELECT	packageName, packageVersion
-						FROM	wcf" . WCF_N . "_package
-						WHERE	package = ?";
+                    $sql = "SELECT  packageName, packageVersion
+                            FROM    wcf" . WCF_N . "_package
+                            WHERE   package = ?";
                     $statement = WCF::getDB()->prepareStatement($sql);
                     $statement->execute([$package]);
                 }
@@ -507,20 +507,20 @@ class PackageInstallationDispatcher
             $packageEditor->update($nodeData);
 
             // delete old excluded packages
-            $sql = "DELETE FROM	wcf" . WCF_N . "_package_exclusion
-				WHERE		packageID = ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_package_exclusion
+                    WHERE       packageID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->queue->packageID]);
 
             // delete old compatibility versions
-            $sql = "DELETE FROM	wcf" . WCF_N . "_package_compatibility
-				WHERE		packageID = ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_package_compatibility
+                    WHERE       packageID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->queue->packageID]);
 
             // delete old requirements and dependencies
-            $sql = "DELETE FROM	wcf" . WCF_N . "_package_requirement
-				WHERE		packageID = ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_package_requirement
+                    WHERE       packageID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->queue->packageID]);
         } else {
@@ -551,9 +551,9 @@ class PackageInstallationDispatcher
 
         // save excluded packages
         if (\count($this->getArchive()->getExcludedPackages())) {
-            $sql = "INSERT INTO	wcf" . WCF_N . "_package_exclusion
-						(packageID, excludedPackage, excludedPackageVersion)
-				VALUES		(?, ?, ?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_package_exclusion
+                                (packageID, excludedPackage, excludedPackageVersion)
+                    VALUES      (?, ?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
 
             foreach ($this->getArchive()->getExcludedPackages() as $excludedPackage) {
@@ -567,9 +567,9 @@ class PackageInstallationDispatcher
 
         // save compatible versions
         if (!empty($this->getArchive()->getCompatibleVersions())) {
-            $sql = "INSERT INTO     wcf" . WCF_N . "_package_compatibility
-						(packageID, version)
-				VALUES          (?, ?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_package_compatibility
+                                (packageID, version)
+                    VALUES      (?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
 
             foreach ($this->getArchive()->getCompatibleVersions() as $version) {
@@ -583,9 +583,9 @@ class PackageInstallationDispatcher
         // insert requirements and dependencies
         $requirements = $this->getArchive()->getAllExistingRequirements();
         if (!empty($requirements)) {
-            $sql = "INSERT INTO	wcf" . WCF_N . "_package_requirement
-						(packageID, requirement)
-				VALUES		(?, ?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_package_requirement
+                                (packageID, requirement)
+                    VALUES      (?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
 
             foreach ($requirements as $identifier => $possibleRequirements) {
@@ -630,9 +630,9 @@ class PackageInstallationDispatcher
         $package = new Package($this->queue->packageID);
 
         // localize package information
-        $sql = "INSERT INTO	wcf" . WCF_N . "_language_item
-					(languageID, languageItem, languageItemValue, languageCategoryID, packageID)
-			VALUES		(?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO wcf" . WCF_N . "_language_item
+                            (languageID, languageItem, languageItemValue, languageCategoryID, packageID)
+                VALUES      (?, ?, ?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
 
         // get language list
@@ -641,9 +641,9 @@ class PackageInstallationDispatcher
 
         // workaround for WCFSetup
         if (!PACKAGE_ID) {
-            $sql = "SELECT	*
-				FROM	wcf" . WCF_N . "_language_category
-				WHERE	languageCategory = ?";
+            $sql = "SELECT  *
+                    FROM    wcf" . WCF_N . "_language_category
+                    WHERE   languageCategory = ?";
             $statement2 = WCF::getDB()->prepareStatement($sql);
             $statement2->execute(['wcf.acp.package']);
             $languageCategory = $statement2->fetchObject(LanguageCategory::class);
@@ -726,9 +726,9 @@ class PackageInstallationDispatcher
 
         // fetch all pips associated with current PACKAGE_ID and include pips
         // previously installed by current installation queue
-        $sql = "SELECT	pluginName, className
-			FROM	wcf" . WCF_N . "_package_installation_plugin
-			WHERE	pluginName = ?";
+        $sql = "SELECT  pluginName, className
+                FROM    wcf" . WCF_N . "_package_installation_plugin
+                WHERE   pluginName = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$nodeData['pip']]);
         $row = $statement->fetchArray();
@@ -891,8 +891,8 @@ class PackageInstallationDispatcher
             // check if there are packages installed in a parent
             // directory of WCF, or if packages are below it
             $sql = "SELECT  packageDir
-				FROM    wcf" . WCF_N . "_package
-				WHERE   packageDir <> ''";
+                    FROM    wcf" . WCF_N . "_package
+                    WHERE   packageDir <> ''";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute();
 
@@ -959,9 +959,9 @@ class PackageInstallationDispatcher
                 if (PACKAGE_ID) {
                     $wcfDomainPath = ApplicationHandler::getInstance()->getWCF()->domainPath;
                 } else {
-                    $sql = "SELECT	domainPath
-						FROM	wcf" . WCF_N . "_application
-						WHERE	packageID = ?";
+                    $sql = "SELECT  domainPath
+                            FROM    wcf" . WCF_N . "_application
+                            WHERE   packageID = ?";
                     $statement = WCF::getDB()->prepareStatement($sql);
                     $statement->execute([1]);
                     $row = $statement->fetchArray();
@@ -1081,10 +1081,10 @@ class PackageInstallationDispatcher
         }
         $conditions->add("done = ?", [0]);
 
-        $sql = "SELECT		*
-			FROM		wcf" . WCF_N . "_package_installation_queue
-			" . $conditions . "
-			ORDER BY	queueID ASC";
+        $sql = "SELECT      *
+                FROM        wcf" . WCF_N . "_package_installation_queue
+                " . $conditions . "
+                ORDER BY    queueID ASC";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         $packageInstallation = $statement->fetchArray();
@@ -1109,12 +1109,12 @@ class PackageInstallationDispatcher
      */
     public static function checkPackageInstallationQueue()
     {
-        $sql = "SELECT		queueID
-			FROM		wcf" . WCF_N . "_package_installation_queue
-			WHERE		userID = ?
-					AND parentQueueID = 0
-					AND done = 0
-			ORDER BY	queueID ASC";
+        $sql = "SELECT      queueID
+                FROM        wcf" . WCF_N . "_package_installation_queue
+                WHERE       userID = ?
+                        AND parentQueueID = 0
+                        AND done = 0
+                ORDER BY    queueID ASC";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([WCF::getUser()->userID]);
         $row = $statement->fetchArray();
@@ -1132,9 +1132,9 @@ class PackageInstallationDispatcher
     public function completeSetup()
     {
         // remove archives
-        $sql = "SELECT	archive
-			FROM	wcf" . WCF_N . "_package_installation_queue
-			WHERE	processNo = ?";
+        $sql = "SELECT  archive
+                FROM    wcf" . WCF_N . "_package_installation_queue
+                WHERE   processNo = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->queue->processNo]);
         while ($row = $statement->fetchArray()) {
@@ -1142,8 +1142,8 @@ class PackageInstallationDispatcher
         }
 
         // delete queues
-        $sql = "DELETE FROM	wcf" . WCF_N . "_package_installation_queue
-			WHERE		processNo = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_package_installation_queue
+                WHERE       processNo = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->queue->processNo]);
 

@@ -915,9 +915,9 @@ class WCFSetup extends WCF
         \preg_match_all("~CREATE\\s+TABLE\\s+(\\w+)~i", $sql, $matches);
 
         if (!empty($matches[1])) {
-            $sql = "INSERT INTO	wcf" . WCF_N . "_package_installation_sql_log
-						(sqlTable)
-				VALUES		(?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_sql_log
+                                (sqlTable)
+                    VALUES      (?)";
             $statement = self::getDB()->prepareStatement($sql);
             foreach ($matches[1] as $tableName) {
                 $statement->execute([$tableName]);
@@ -937,9 +937,9 @@ class WCFSetup extends WCF
              * Manually install PIPPackageInstallationPlugin since install.sql content is not escaped resulting
             * in different behaviour in MySQL and MSSQL. You SHOULD NOT move this into install.sql!
             */
-            $sql = "INSERT INTO	wcf" . WCF_N . "_package_installation_plugin
-						(pluginName, priority, className)
-				VALUES		(?, ?, ?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_plugin
+                                (pluginName, priority, className)
+                    VALUES      (?, ?, ?)";
             $statement = self::getDB()->prepareStatement($sql);
             $statement->execute([
                 'packageInstallationPlugin',
@@ -973,9 +973,9 @@ class WCFSetup extends WCF
 
         // save acp template log
         if (!empty($acpTemplateInserts)) {
-            $sql = "INSERT INTO	wcf" . WCF_N . "_acp_template
-						(templateName, application)
-				VALUES		(?, ?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_acp_template
+                                (templateName, application)
+                    VALUES      (?, ?)";
             $statement = self::getDB()->prepareStatement($sql);
 
             self::getDB()->beginTransaction();
@@ -987,9 +987,9 @@ class WCFSetup extends WCF
 
         // save file log
         if (!empty($fileInserts)) {
-            $sql = "INSERT INTO	wcf" . WCF_N . "_package_installation_file_log
-						(filename, application)
-				VALUES		(?, ?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_file_log
+                                (filename, application)
+                    VALUES      (?, ?)";
             $statement = self::getDB()->prepareStatement($sql);
 
             self::getDB()->beginTransaction();
@@ -1127,9 +1127,9 @@ class WCFSetup extends WCF
 
                 // get language id
                 $languageID = 0;
-                $sql = "SELECT	languageID
-					FROM	wcf" . WCF_N . "_language
-					WHERE	languageCode = ?";
+                $sql = "SELECT  languageID
+                        FROM    wcf" . WCF_N . "_language
+                        WHERE   languageCode = ?";
                 $statement = self::getDB()->prepareStatement($sql);
                 $statement->execute([self::$selectedLanguageCode]);
                 $row = $statement->fetchArray();
@@ -1242,17 +1242,17 @@ class WCFSetup extends WCF
 
         // register packages in queue
         // get new process id
-        $sql = "SELECT	MAX(processNo) AS processNo
-			FROM	wcf" . WCF_N . "_package_installation_queue";
+        $sql = "SELECT  MAX(processNo) AS processNo
+                FROM    wcf" . WCF_N . "_package_installation_queue";
         $statement = self::getDB()->prepareStatement($sql);
         $statement->execute();
         $result = $statement->fetchArray();
         $processNo = \intval($result['processNo']) + 1;
 
         // search existing wcf package
-        $sql = "SELECT	COUNT(*) AS count
-			FROM	wcf" . WCF_N . "_package
-			WHERE	package = 'com.woltlab.wcf'";
+        $sql = "SELECT  COUNT(*) AS count
+                FROM    wcf" . WCF_N . "_package
+                WHERE   package = 'com.woltlab.wcf'";
         $statement = self::getDB()->prepareStatement($sql);
         $statement->execute();
         if (!$statement->fetchSingleColumn()) {
@@ -1280,8 +1280,8 @@ class WCFSetup extends WCF
                 $archive->openArchive();
             } catch (\Exception $e) {
                 // we've encountered a broken archive, revert everything and then fail
-                $sql = "SELECT	queueID, parentQueueID
-					FROM	wcf" . WCF_N . "_package_installation_queue";
+                $sql = "SELECT  queueID, parentQueueID
+                        FROM    wcf" . WCF_N . "_package_installation_queue";
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute();
                 $queues = $statement->fetchMap('queueID', 'parentQueueID');
@@ -1297,8 +1297,8 @@ class WCFSetup extends WCF
 
                 // remove previously created queues
                 if (!empty($queueIDs)) {
-                    $sql = "DELETE FROM	wcf" . WCF_N . "_package_installation_queue
-						WHERE		queueID = ?";
+                    $sql = "DELETE FROM wcf" . WCF_N . "_package_installation_queue
+                            WHERE       queueID = ?";
                     $statement = WCF::getDB()->prepareStatement($sql);
                     WCF::getDB()->beginTransaction();
                     foreach ($queueIDs as $queueID) {

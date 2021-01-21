@@ -254,9 +254,9 @@ class SystemCheckPage extends AbstractPage
             }
         }
 
-        $sql = "SELECT                  COUNT(*)
-			FROM                    INFORMATION_SCHEMA.KEY_COLUMN_USAGE
-			" . $conditionBuilder;
+        $sql = "SELECT  COUNT(*)
+                FROM    INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionBuilder->getParameters());
 
@@ -272,9 +272,9 @@ class SystemCheckPage extends AbstractPage
         $conditionBuilder->add('TABLE_NAME IN (?)', [$tableNames]);
         $conditionBuilder->add('TABLE_SCHEMA = ?', [WCF::getDB()->getDatabaseName()]);
 
-        $sql = "SELECT          TABLE_NAME, ENGINE
-			FROM            INFORMATION_SCHEMA.TABLES
-			" . $conditionBuilder;
+        $sql = "SELECT  TABLE_NAME, ENGINE
+                FROM    INFORMATION_SCHEMA.TABLES
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionBuilder->getParameters());
 

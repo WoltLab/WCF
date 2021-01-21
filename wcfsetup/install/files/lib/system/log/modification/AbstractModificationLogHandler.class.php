@@ -113,8 +113,8 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
             $conditionBuilder->add('action NOT IN (?)', [$ignoredActions]);
         }
 
-        $sql = "DELETE FROM	wcf" . WCF_N . "_modification_log
-			" . $conditionBuilder;
+        $sql = "DELETE FROM wcf" . WCF_N . "_modification_log
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionBuilder->getParameters());
     }
@@ -134,8 +134,8 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
         $conditionBuilder->add('objectTypeID = ?', [$this->objectType->objectTypeID]);
         $conditionBuilder->add('parentObjectID IN (?)', [$parentObjectIDs]);
 
-        $sql = "DELETE FROM	wcf" . WCF_N . "_modification_log
-			" . $conditionBuilder;
+        $sql = "DELETE FROM wcf" . WCF_N . "_modification_log
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionBuilder->getParameters());
     }
@@ -172,9 +172,9 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
         $conditionBuilder->add('objectTypeID = ?', [$this->objectType->objectTypeID]);
         $conditionBuilder->add('objectID IN (?)', [$objectIDs]);
 
-        $sql = "UPDATE	wcf" . WCF_N . "_modification_log
-			SET	parentObjectID = ?
-			" . $conditionBuilder;
+        $sql = "UPDATE  wcf" . WCF_N . "_modification_log
+                SET     parentObjectID = ?
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(\array_merge([$newParentObjectID], $conditionBuilder->getParameters()));
     }

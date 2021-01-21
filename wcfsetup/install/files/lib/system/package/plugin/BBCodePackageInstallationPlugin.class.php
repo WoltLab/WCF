@@ -68,9 +68,9 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
      */
     protected function handleDelete(array $items)
     {
-        $sql = "DELETE FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE		bbcodeTag = ?
-					AND packageID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE       bbcodeTag = ?
+                        AND packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($items as $item) {
             $statement->execute([
@@ -153,9 +153,9 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
      */
     protected function findExistingItem(array $data)
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE	bbcodeTag = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE   bbcodeTag = ?";
         $parameters = [$data['bbcodeTag']];
 
         return [
@@ -198,8 +198,8 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         $condition->add('bbcodeID IN (?)', [\array_keys($this->attributes)]);
 
         // clear attributes
-        $sql = "DELETE FROM	wcf" . WCF_N . "_bbcode_attribute
-			" . $condition;
+        $sql = "DELETE FROM wcf" . WCF_N . "_bbcode_attribute
+                " . $condition;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($condition->getParameters());
 

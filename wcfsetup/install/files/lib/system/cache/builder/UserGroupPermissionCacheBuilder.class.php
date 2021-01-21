@@ -38,8 +38,8 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
             foreach ($parameters as $groupID) {
                 if (UserGroup::getGroupByID($groupID)->groupType == UserGroup::GUESTS) {
                     $sql = "SELECT  optionName, additionalData
-						FROM    wcf" . WCF_N . "_user_group_option
-						WHERE   optionType = 'boolean'";
+                            FROM    wcf" . WCF_N . "_user_group_option
+                            WHERE   optionType = 'boolean'";
                     $statement = WCF::getDB()->prepareStatement($sql);
                     $statement->execute();
                     while ($option = $statement->fetchObject(UserGroupOption::class)) {
@@ -58,11 +58,11 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
         $conditions->add("option_value.groupID IN (?)", [$parameters]);
 
         $optionData = [];
-        $sql = "SELECT		option_table.optionName, option_table.optionType, option_value.optionValue, option_value.groupID, option_table.enableOptions
-			FROM		wcf" . WCF_N . "_user_group_option_value option_value
-			LEFT JOIN	wcf" . WCF_N . "_user_group_option option_table
-			ON		(option_table.optionID = option_value.optionID)
-			" . $conditions;
+        $sql = "SELECT      option_table.optionName, option_table.optionType, option_value.optionValue, option_value.groupID, option_table.enableOptions
+                FROM        wcf" . WCF_N . "_user_group_option_value option_value
+                LEFT JOIN   wcf" . WCF_N . "_user_group_option option_table
+                ON          (option_table.optionID = option_value.optionID)
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         while ($row = $statement->fetchArray()) {

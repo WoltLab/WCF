@@ -232,11 +232,11 @@ class ModerationQueueManager extends SingletonFactory
             $conditions->add("moderation_queue_to_user.isAffected = ?", [1]);
             $conditions->add("moderation_queue.status IN (?)", [[ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING]]);
 
-            $sql = "SELECT		COUNT(*)
-				FROM		wcf" . WCF_N . "_moderation_queue_to_user moderation_queue_to_user
-				LEFT JOIN	wcf" . WCF_N . "_moderation_queue moderation_queue
-				ON		(moderation_queue.queueID = moderation_queue_to_user.queueID)
-				" . $conditions;
+            $sql = "SELECT      COUNT(*)
+                    FROM        wcf" . WCF_N . "_moderation_queue_to_user moderation_queue_to_user
+                    LEFT JOIN   wcf" . WCF_N . "_moderation_queue moderation_queue
+                    ON          (moderation_queue.queueID = moderation_queue_to_user.queueID)
+                    " . $conditions;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditions->getParameters());
             $count = $statement->fetchSingleColumn();
@@ -272,13 +272,17 @@ class ModerationQueueManager extends SingletonFactory
             $conditions->add("moderation_queue.time > ?", [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.moderation.queue')]);
             $conditions->add("(moderation_queue.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)");
 
-            $sql = "SELECT		COUNT(*)
-				FROM		wcf" . WCF_N . "_moderation_queue_to_user moderation_queue_to_user
-				LEFT JOIN	wcf" . WCF_N . "_moderation_queue moderation_queue
-				ON		(moderation_queue.queueID = moderation_queue_to_user.queueID)
-				LEFT JOIN	wcf" . WCF_N . "_tracked_visit tracked_visit
-				ON		(tracked_visit.objectTypeID = " . VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.moderation.queue') . " AND tracked_visit.objectID = moderation_queue.queueID AND tracked_visit.userID = " . WCF::getUser()->userID . ")
-				" . $conditions;
+            $sql = "SELECT      COUNT(*)
+                    FROM        wcf" . WCF_N . "_moderation_queue_to_user moderation_queue_to_user
+                    LEFT JOIN   wcf" . WCF_N . "_moderation_queue moderation_queue
+                    ON          (moderation_queue.queueID = moderation_queue_to_user.queueID)
+                    LEFT JOIN   wcf" . WCF_N . "_tracked_visit tracked_visit
+                    ON          (
+                                        tracked_visit.objectTypeID = " . VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.moderation.queue') . "
+                                    AND tracked_visit.objectID = moderation_queue.queueID
+                                    AND tracked_visit.userID = " . WCF::getUser()->userID . "
+                                )
+                    " . $conditions;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditions->getParameters());
             $count = $statement->fetchSingleColumn();
@@ -327,9 +331,9 @@ class ModerationQueueManager extends SingletonFactory
      */
     public function setAssignment(array $assignments)
     {
-        $sql = "INSERT IGNORE INTO	wcf" . WCF_N . "_moderation_queue_to_user
-						(queueID, userID, isAffected)
-			VALUES			(?, ?, ?)";
+        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_moderation_queue_to_user
+                                    (queueID, userID, isAffected)
+                VALUES              (?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
 
         WCF::getDB()->beginTransaction();
@@ -348,13 +352,13 @@ class ModerationQueueManager extends SingletonFactory
      */
     public function identifyOrphans()
     {
-        $sql = "SELECT		moderation_queue.queueID, moderation_queue.objectTypeID, moderation_queue.objectID
-			FROM		wcf" . WCF_N . "_moderation_queue_to_user moderation_queue_to_user
-			LEFT JOIN	wcf" . WCF_N . "_moderation_queue moderation_queue
-			ON		(moderation_queue.queueID = moderation_queue_to_user.queueID)
-			WHERE		moderation_queue_to_user.userID = ?
-					AND moderation_queue_to_user.isAffected = ?
-					AND moderation_queue.status <> ?";
+        $sql = "SELECT      moderation_queue.queueID, moderation_queue.objectTypeID, moderation_queue.objectID
+                FROM        wcf" . WCF_N . "_moderation_queue_to_user moderation_queue_to_user
+                LEFT JOIN   wcf" . WCF_N . "_moderation_queue moderation_queue
+                ON          (moderation_queue.queueID = moderation_queue_to_user.queueID)
+                WHERE       moderation_queue_to_user.userID = ?
+                        AND moderation_queue_to_user.isAffected = ?
+                        AND moderation_queue.status <> ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             WCF::getUser()->userID,
@@ -392,8 +396,8 @@ class ModerationQueueManager extends SingletonFactory
         if (!empty($queueIDs)) {
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("queueID IN (?)", [$queueIDs]);
-            $sql = "DELETE FROM	wcf" . WCF_N . "_moderation_queue
-				" . $conditions;
+            $sql = "DELETE FROM wcf" . WCF_N . "_moderation_queue
+                    " . $conditions;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditions->getParameters());
 

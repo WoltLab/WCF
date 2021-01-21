@@ -58,9 +58,9 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin
         // delete script
         if (!($result instanceof FormDocument) && @\unlink($path . $this->instruction['value'])) {
             // delete file log entry
-            $sql = "DELETE FROM	wcf" . WCF_N . "_package_installation_file_log
-				WHERE		packageID = ?
-						AND filename = ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_package_installation_file_log
+                    WHERE       packageID = ?
+                            AND filename = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 $this->installation->getPackageID(),

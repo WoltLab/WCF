@@ -298,9 +298,9 @@ class I18nHandler extends SingletonFactory
     public function save($elementID, $languageVariable, $languageCategory, $packageID = PACKAGE_ID)
     {
         // get language category id
-        $sql = "SELECT	languageCategoryID
-			FROM	wcf" . WCF_N . "_language_category
-			WHERE	languageCategory = ?";
+        $sql = "SELECT  languageCategoryID
+                FROM    wcf" . WCF_N . "_language_category
+                WHERE   languageCategory = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$languageCategory]);
         $row = $statement->fetchArray();
@@ -320,9 +320,9 @@ class I18nHandler extends SingletonFactory
         $conditions->add("languageID IN (?)", [$languageIDs]);
         $conditions->add("languageItem = ?", [$languageVariable]);
 
-        $sql = "SELECT	languageItemID, languageID
-			FROM	wcf" . WCF_N . "_language_item
-			" . $conditions;
+        $sql = "SELECT  languageItemID, languageID
+                FROM    wcf" . WCF_N . "_language_item
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         $languageItemIDs = $statement->fetchMap('languageID', 'languageItemID');
@@ -338,9 +338,9 @@ class I18nHandler extends SingletonFactory
 
         // insert language items
         if (!empty($insertLanguageIDs)) {
-            $sql = "INSERT INTO	wcf" . WCF_N . "_language_item
-						(languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
-				VALUES		(?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_language_item
+                                (languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
+                    VALUES      (?, ?, ?, ?, ?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
 
             foreach ($insertLanguageIDs as $languageID) {
@@ -365,10 +365,10 @@ class I18nHandler extends SingletonFactory
 
         // update language items
         if (!empty($updateLanguageIDs)) {
-            $sql = "UPDATE	wcf" . WCF_N . "_language_item
-				SET	languageItemValue = ?,
-					languageItemOriginIsSystem = ?
-				WHERE	languageItemID = ?";
+            $sql = "UPDATE  wcf" . WCF_N . "_language_item
+                    SET     languageItemValue = ?,
+                            languageItemOriginIsSystem = ?
+                    WHERE   languageItemID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
 
             foreach ($updateLanguageIDs as $languageID) {
@@ -399,8 +399,8 @@ class I18nHandler extends SingletonFactory
      */
     public function remove($languageVariable)
     {
-        $sql = "DELETE FROM	wcf" . WCF_N . "_language_item
-			WHERE		languageItem = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_language_item
+                WHERE       languageItem = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$languageVariable]);
 
@@ -464,9 +464,9 @@ class I18nHandler extends SingletonFactory
 
                 if ($isI18n) {
                     // use i18n values from language items
-                    $sql = "SELECT	languageID, languageItemValue
-						FROM	wcf" . WCF_N . "_language_item
-						WHERE	languageItem = ?";
+                    $sql = "SELECT  languageID, languageItemValue
+                            FROM    wcf" . WCF_N . "_language_item
+                            WHERE   languageItem = ?";
                     $statement = WCF::getDB()->prepareStatement($sql);
                     $statement->execute([
                         $this->elementOptions[$elementID]['value'],

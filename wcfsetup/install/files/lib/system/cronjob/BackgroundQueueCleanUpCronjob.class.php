@@ -29,12 +29,12 @@ class BackgroundQueueCleanUpCronjob extends AbstractCronjob
         /** @noinspection PhpUnusedLocalVariableInspection */
         $committed = false;
         try {
-            $sql = "SELECT		jobID, job
-				FROM		wcf" . WCF_N . "_background_job
-				WHERE		status = ?
-					AND	time <= ?
-				ORDER BY	time ASC, jobID ASC
-				FOR UPDATE";
+            $sql = "SELECT      jobID, job
+                    FROM        wcf" . WCF_N . "_background_job
+                    WHERE       status = ?
+                            AND time <= ?
+                    ORDER BY    time ASC, jobID ASC
+                    FOR UPDATE";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 'processing',
@@ -71,7 +71,8 @@ class BackgroundQueueCleanUpCronjob extends AbstractCronjob
             // delete jobs
             $condition = new PreparedStatementConditionBuilder();
             $condition->add('jobID IN (?)', [$jobIDs]);
-            $sql = "DELETE FROM	wcf" . WCF_N . "_background_job " . $condition;
+            $sql = "DELETE FROM wcf" . WCF_N . "_background_job
+                    " . $condition;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($condition->getParameters());
 

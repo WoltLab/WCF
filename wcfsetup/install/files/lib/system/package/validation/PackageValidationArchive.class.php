@@ -127,9 +127,9 @@ class PackageValidationArchive implements \RecursiveIterator
                     if ($virtualPackageVersion === null || Package::compareVersion($virtualPackageVersion, $requirement['minversion'], '<')) {
                         if (empty($requirement['file'])) {
                             // check if package is known
-                            $sql = "SELECT	*
-								FROM	wcf" . WCF_N . "_package
-								WHERE	package = ?";
+                            $sql = "SELECT  *
+                                    FROM    wcf" . WCF_N . "_package
+                                    WHERE   package = ?";
                             $statement = WCF::getDB()->prepareStatement($sql);
                             $statement->execute([$requirement['name']]);
                             $package = $statement->fetchObject(Package::class);
@@ -288,11 +288,11 @@ class PackageValidationArchive implements \RecursiveIterator
         $packageVersion = $this->archive->getPackageInfo('version');
 
         // excluding packages: installed -> current
-        $sql = "SELECT		package.*, package_exclusion.*
-			FROM		wcf" . WCF_N . "_package_exclusion package_exclusion
-			LEFT JOIN	wcf" . WCF_N . "_package package
-			ON		(package.packageID = package_exclusion.packageID)
-			WHERE		excludedPackage = ?";
+        $sql = "SELECT      package.*, package_exclusion.*
+                FROM        wcf" . WCF_N . "_package_exclusion package_exclusion
+                LEFT JOIN   wcf" . WCF_N . "_package package
+                ON          (package.packageID = package_exclusion.packageID)
+                WHERE       excludedPackage = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->getArchive()->getPackageInfo('name')]);
         $excludingPackages = [];
@@ -330,9 +330,9 @@ class PackageValidationArchive implements \RecursiveIterator
             // get installed packages
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("package IN (?)", [\array_keys(self::$excludedPackages[$package])]);
-            $sql = "SELECT	*
-				FROM	wcf" . WCF_N . "_package
-				" . $conditions;
+            $sql = "SELECT  *
+                    FROM    wcf" . WCF_N . "_package
+                    " . $conditions;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditions->getParameters());
             $packages = [];

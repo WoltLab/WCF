@@ -83,8 +83,8 @@ class IndexPage extends AbstractPage
                 $conditionBuilder->add('emailConfirmed IS NULL');
             }
 
-            $sql = "SELECT	COUNT(*)
-				FROM	wcf" . WCF_N . "_user "
+            $sql = "SELECT  COUNT(*)
+                    FROM    wcf" . WCF_N . "_user "
                 . $conditionBuilder;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditionBuilder->getParameters());
@@ -118,9 +118,9 @@ class IndexPage extends AbstractPage
         $conditionBuilder->add('TABLE_SCHEMA = ?', [WCF::getDB()->getDatabaseName()]);
         $conditionBuilder->add('ENGINE <> ?', ['InnoDB']);
 
-        $sql = "SELECT          COUNT(*)
-			FROM            INFORMATION_SCHEMA.TABLES
-			" . $conditionBuilder;
+        $sql = "SELECT  COUNT(*)
+                FROM    INFORMATION_SCHEMA.TABLES
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionBuilder->getParameters());
         $nonInnoDbSearch = $statement->fetchSingleColumn() > 0;

@@ -61,8 +61,8 @@ class BlacklistEntry extends DatabaseObject
         }
 
         $sql = "SELECT  type, occurrences
-			FROM    wcf" . WCF_N . "_blacklist_entry
-			" . $conditions;
+                FROM    wcf" . WCF_N . "_blacklist_entry
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         $matches = [];
@@ -115,17 +115,17 @@ class BlacklistEntry extends DatabaseObject
             $percentile[$type] = 99999;
 
             $sql = "SELECT  COUNT(*) AS count
-				FROM    wcf" . WCF_N . "_blacklist_entry
-				WHERE   type = ?";
+                    FROM    wcf" . WCF_N . "_blacklist_entry
+                    WHERE   type = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$type]);
             $count = $statement->fetchSingleColumn();
 
             if ($count > 0) {
-                $sql = "SELECT          occurrences
-					FROM            wcf" . WCF_N . "_blacklist_entry
-					WHERE           type = ?
-					ORDER BY        occurrences DESC";
+                $sql = "SELECT      occurrences
+                        FROM        wcf" . WCF_N . "_blacklist_entry
+                        WHERE       type = ?
+                        ORDER BY    occurrences DESC";
                 $statement = WCF::getDB()->prepareStatement($sql, 1, \round($count * 0.9));
                 $statement->execute([$type]);
 

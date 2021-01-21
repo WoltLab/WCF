@@ -33,9 +33,9 @@ class ArticleEditor extends DatabaseObjectEditor
      */
     public static function updateArticleCounter(array $users)
     {
-        $sql = "UPDATE	wcf" . WCF_N . "_user
-			SET	articles = articles + ?
-			WHERE	userID = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_user
+                SET     articles = articles + ?
+                WHERE   userID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($users as $userID => $articles) {
             $statement->execute([$articles, $userID]);

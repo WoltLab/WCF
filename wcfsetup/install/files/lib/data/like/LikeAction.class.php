@@ -72,11 +72,11 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
      */
     public function getLikeDetails()
     {
-        $sql = "SELECT		userID, likeValue
-			FROM		wcf" . WCF_N . "_like
-			WHERE		objectID = ?
-					AND objectTypeID = ?
-			ORDER BY	time DESC";
+        $sql = "SELECT      userID, likeValue
+                FROM        wcf" . WCF_N . "_like
+                WHERE       objectID = ?
+                        AND objectTypeID = ?
+                ORDER BY    time DESC";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $this->parameters['data']['objectID'],
@@ -240,10 +240,10 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
     public function getGroupedUserList()
     {
         // fetch number of pages
-        $sql = "SELECT	COUNT(*)
-			FROM	wcf" . WCF_N . "_like
-			WHERE	objectID = ?
-				AND objectTypeID = ?";
+        $sql = "SELECT  COUNT(*)
+                FROM    wcf" . WCF_N . "_like
+                WHERE   objectID = ?
+                    AND objectTypeID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $this->parameters['data']['objectID'],
@@ -251,11 +251,11 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         ]);
         $pageCount = \ceil($statement->fetchSingleColumn() / 20);
 
-        $sql = "SELECT		userID, likeValue
-			FROM		wcf" . WCF_N . "_like
-			WHERE		objectID = ?
-					AND objectTypeID = ?
-			ORDER BY	likeValue DESC, time DESC";
+        $sql = "SELECT      userID, likeValue
+                FROM        wcf" . WCF_N . "_like
+                WHERE       objectID = ?
+                        AND objectTypeID = ?
+                ORDER BY    likeValue DESC, time DESC";
         $statement = WCF::getDB()->prepareStatement($sql, 20, ($this->parameters['pageNo'] - 1) * 20);
         $statement->execute([
             $this->parameters['data']['objectID'],

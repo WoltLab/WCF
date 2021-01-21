@@ -183,9 +183,9 @@ class Box extends DatabaseObject
         if ($this->boxContents === null) {
             $this->boxContents = [];
 
-            $sql = "SELECT	*
-				FROM	wcf" . WCF_N . "_box_content
-				WHERE	boxID = ?";
+            $sql = "SELECT  *
+                    FROM    wcf" . WCF_N . "_box_content
+                    WHERE   boxID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->boxID]);
             while ($row = $statement->fetchArray()) {
@@ -497,9 +497,9 @@ class Box extends DatabaseObject
     public function getPageIDs()
     {
         if ($this->pageIDs === null) {
-            $sql = "SELECT	pageID
-				FROM	wcf" . WCF_N . "_box_to_page
-				WHERE	boxID = ?";
+            $sql = "SELECT  pageID
+                    FROM    wcf" . WCF_N . "_box_to_page
+                    WHERE   boxID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->boxID]);
 
@@ -572,9 +572,9 @@ class Box extends DatabaseObject
      */
     public static function getBoxByIdentifier($identifier)
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_box
-			WHERE	identifier = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_box
+                WHERE   identifier = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$identifier]);
 
@@ -589,9 +589,9 @@ class Box extends DatabaseObject
      */
     public static function getBoxByName($name)
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_box
-			WHERE	name = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_box
+                WHERE   name = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$name]);
 
@@ -606,9 +606,9 @@ class Box extends DatabaseObject
      */
     public static function getBoxByMenuID($menuID)
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_box
-			WHERE	menuID = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_box
+                WHERE   menuID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$menuID]);
 

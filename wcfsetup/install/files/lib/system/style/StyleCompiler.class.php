@@ -79,9 +79,9 @@ class StyleCompiler extends SingletonFactory
     {
         $variables = [];
 
-        $sql = "SELECT		variable.variableName, variable.defaultValue
-			FROM		wcf" . WCF_N . "_style_variable variable
-			ORDER BY	variable.variableID ASC";
+        $sql = "SELECT      variable.variableName, variable.defaultValue
+                FROM        wcf" . WCF_N . "_style_variable variable
+                ORDER BY    variable.variableID ASC";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         $variables = $statement->fetchMap('variableName', 'defaultValue');
@@ -180,11 +180,11 @@ class StyleCompiler extends SingletonFactory
             $files = $this->getCoreFiles();
 
             // read stylesheets in dependency order
-            $sql = "SELECT		filename, application
-				FROM		wcf" . WCF_N . "_package_installation_file_log
-				WHERE           CONVERT(filename using utf8) REGEXP ?
-						AND packageID <> ?
-				ORDER BY	packageID";
+            $sql = "SELECT      filename, application
+                    FROM        wcf" . WCF_N . "_package_installation_file_log
+                    WHERE       CONVERT(filename using utf8) REGEXP ?
+                            AND packageID <> ?
+                    ORDER BY    packageID";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 'style/([a-zA-Z0-9\-\.]+)\.scss',
@@ -281,9 +281,9 @@ class StyleCompiler extends SingletonFactory
         }
 
         // read default values
-        $sql = "SELECT		variableName, defaultValue
-			FROM		wcf" . WCF_N . "_style_variable
-			ORDER BY	variableID ASC";
+        $sql = "SELECT      variableName, defaultValue
+                FROM        wcf" . WCF_N . "_style_variable
+                ORDER BY    variableID ASC";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         $variables = [];

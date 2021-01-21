@@ -154,9 +154,9 @@ class UserClipboardAction extends AbstractClipboardAction
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("userID IN (?)", [$userIDs]);
 
-        $sql = "SELECT	userID, groupID
-			FROM	wcf" . WCF_N . "_user_to_group
-			" . $conditions;
+        $sql = "SELECT  userID, groupID
+                FROM    wcf" . WCF_N . "_user_to_group
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
 

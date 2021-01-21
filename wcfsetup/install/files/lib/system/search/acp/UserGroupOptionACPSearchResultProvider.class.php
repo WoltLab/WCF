@@ -37,10 +37,10 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
         $conditions->add("languageItem LIKE ?", ['wcf.acp.group.option.%']);
         $conditions->add("languageItemValue LIKE ?", ['%' . $query . '%']);
 
-        $sql = "SELECT		languageItem
-			FROM		wcf" . WCF_N . "_language_item
-			" . $conditions . "
-			ORDER BY	languageItemValue ASC";
+        $sql = "SELECT      languageItem
+                FROM        wcf" . WCF_N . "_language_item
+                " . $conditions . "
+                ORDER BY    languageItemValue ASC";
         $statement = WCF::getDB()->prepareStatement($sql); // don't use a limit here
         $statement->execute($conditions->getParameters());
         $languageItems = [];
@@ -66,9 +66,9 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
             $conditions->add('optionName LIKE ?', ['%' . $query . '%']);
         }
 
-        $sql = "SELECT	optionID, optionName, categoryName, permissions, options
-			FROM	wcf" . WCF_N . "_user_group_option
-			" . $conditions;
+        $sql = "SELECT  optionID, optionName, categoryName, permissions, options
+                FROM    wcf" . WCF_N . "_user_group_option
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql); // don't use a limit here
         $statement->execute($conditions->getParameters());
 

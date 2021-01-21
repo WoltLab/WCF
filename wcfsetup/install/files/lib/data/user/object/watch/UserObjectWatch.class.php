@@ -32,11 +32,11 @@ class UserObjectWatch extends DatabaseObject
      */
     public static function getUserObjectWatch($objectTypeID, $userID, $objectID)
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_user_object_watch
-			WHERE	objectTypeID = ?
-				AND userID = ?
-				AND objectID = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_user_object_watch
+                WHERE   objectTypeID = ?
+                    AND userID = ?
+                    AND objectID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$objectTypeID, $userID, $objectID]);
         $row = $statement->fetch();

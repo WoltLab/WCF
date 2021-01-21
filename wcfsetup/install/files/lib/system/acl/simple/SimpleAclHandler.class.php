@@ -70,9 +70,9 @@ class SimpleAclHandler extends SingletonFactory
         ];
 
         $sql = "SELECT  userID
-			FROM    wcf" . WCF_N . "_acl_simple_to_user
-			WHERE   objectTypeID = ?
-				AND objectID = ?";
+                FROM    wcf" . WCF_N . "_acl_simple_to_user
+                WHERE   objectTypeID = ?
+                    AND objectID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $objectTypeID,
@@ -81,9 +81,9 @@ class SimpleAclHandler extends SingletonFactory
         $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
         $sql = "SELECT  groupID
-			FROM    wcf" . WCF_N . "_acl_simple_to_group
-			WHERE   objectTypeID = ?
-				AND objectID = ?";
+                FROM    wcf" . WCF_N . "_acl_simple_to_group
+                WHERE   objectTypeID = ?
+                    AND objectID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $objectTypeID,
@@ -125,8 +125,8 @@ class SimpleAclHandler extends SingletonFactory
 
         // users
         $sql = "DELETE FROM     wcf" . WCF_N . "_acl_simple_to_user
-			WHERE           objectTypeID = ?
-					AND objectID = ?";
+                WHERE           objectTypeID = ?
+                            AND objectID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $objectTypeID,
@@ -136,9 +136,9 @@ class SimpleAclHandler extends SingletonFactory
         if ($values['allowAll'] == 0 && !empty($values['user'])) {
             $values['user'] = ArrayUtil::toIntegerArray($values['user']);
             if (!empty($values['user'])) {
-                $sql = "INSERT INTO     wcf" . WCF_N . "_acl_simple_to_user
-							(objectTypeID, objectID, userID)
-					VALUES          (?, ?, ?)";
+                $sql = "INSERT INTO wcf" . WCF_N . "_acl_simple_to_user
+                                    (objectTypeID, objectID, userID)
+                        VALUES      (?, ?, ?)";
                 $statement = WCF::getDB()->prepareStatement($sql);
 
                 WCF::getDB()->beginTransaction();
@@ -154,9 +154,9 @@ class SimpleAclHandler extends SingletonFactory
         }
 
         // groups
-        $sql = "DELETE FROM     wcf" . WCF_N . "_acl_simple_to_group
-			WHERE           objectTypeID = ?
-					AND objectID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_acl_simple_to_group
+                WHERE       objectTypeID = ?
+                        AND objectID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $objectTypeID,
@@ -166,9 +166,9 @@ class SimpleAclHandler extends SingletonFactory
         if ($values['allowAll'] == 0 && !empty($values['group'])) {
             $values['group'] = ArrayUtil::toIntegerArray($values['group']);
             if (!empty($values['group'])) {
-                $sql = "INSERT INTO     wcf" . WCF_N . "_acl_simple_to_group
-						(objectTypeID, objectID, groupID)
-				VALUES          (?, ?, ?)";
+                $sql = "INSERT INTO wcf" . WCF_N . "_acl_simple_to_group
+                                    (objectTypeID, objectID, groupID)
+                        VALUES      (?, ?, ?)";
                 $statement = WCF::getDB()->prepareStatement($sql);
 
                 WCF::getDB()->beginTransaction();

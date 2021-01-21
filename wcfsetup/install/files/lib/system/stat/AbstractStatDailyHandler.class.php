@@ -30,9 +30,9 @@ abstract class AbstractStatDailyHandler implements IStatDailyHandler
 
         $this->addConditions($conditionBuilder);
 
-        $sql = "SELECT	COUNT(*)
-			FROM	" . $tableName . "
-			" . $conditionBuilder;
+        $sql = "SELECT  COUNT(*)
+                FROM    " . $tableName . "
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionBuilder->getParameters());
 
@@ -54,9 +54,9 @@ abstract class AbstractStatDailyHandler implements IStatDailyHandler
 
         $this->addConditions($conditionBuilder);
 
-        $sql = "SELECT	COUNT(*)
-			FROM	" . $tableName . "
-			" . $conditionBuilder;
+        $sql = "SELECT  COUNT(*)
+                FROM    " . $tableName . "
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionBuilder->getParameters());
 

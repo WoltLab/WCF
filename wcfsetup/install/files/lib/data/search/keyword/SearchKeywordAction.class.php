@@ -51,10 +51,10 @@ class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearc
         $list = [];
 
         // find users
-        $sql = "SELECT		*
-			FROM		wcf" . WCF_N . "_search_keyword
-			WHERE		keyword LIKE ?
-			ORDER BY	searches DESC";
+        $sql = "SELECT      *
+                FROM        wcf" . WCF_N . "_search_keyword
+                WHERE       keyword LIKE ?
+                ORDER BY    searches DESC";
         $statement = WCF::getDB()->prepareStatement($sql, 10);
         $statement->execute([$this->parameters['data']['searchString'] . '%']);
         while ($row = $statement->fetchArray()) {
@@ -74,10 +74,10 @@ class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearc
     public function registerSearch()
     {
         $sql = "INSERT INTO             wcf" . WCF_N . "_search_keyword
-						(keyword, searches, lastSearchTime)
-			VALUES                  (?, ?, ?)
-			ON DUPLICATE KEY UPDATE searches = searches + VALUES(searches),
-						lastSearchTime = VALUES(lastSearchTime)";
+                                        (keyword, searches, lastSearchTime)
+                VALUES                  (?, ?, ?)
+                ON DUPLICATE KEY UPDATE searches = searches + VALUES(searches),
+                                        lastSearchTime = VALUES(lastSearchTime)";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             \mb_substr($this->parameters['data']['keyword'], 0, 191),

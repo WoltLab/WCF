@@ -29,15 +29,17 @@ class TaggedArticleList extends AccessibleArticleList
 
         $tagIDs = TagEngine::getInstance()->getTagIDs($tags);
         $this->getConditionBuilder()->add("article.articleID IN (
-			SELECT articleID FROM wcf" . WCF_N . "_article_content WHERE articleContentID IN (
-				SELECT          objectID
-				FROM            wcf" . WCF_N . "_tag_to_object
-				WHERE           objectTypeID = ?
-						AND tagID IN (?)
-				GROUP BY        objectID
-				HAVING          COUNT(objectID) = ?
-			)
-		)", [
+            SELECT  articleID
+            FROM    wcf" . WCF_N . "_article_content
+            WHERE   articleContentID IN (
+                SELECT      objectID
+                FROM        wcf" . WCF_N . "_tag_to_object
+                WHERE       objectTypeID = ?
+                        AND tagID IN (?)
+                GROUP BY    objectID
+                HAVING      COUNT(objectID) = ?
+            )
+        )", [
             TagEngine::getInstance()->getObjectTypeID('com.woltlab.wcf.article'),
             $tagIDs,
             \count($tagIDs),

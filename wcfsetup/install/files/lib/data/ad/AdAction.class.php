@@ -108,9 +108,9 @@ class AdAction extends AbstractDatabaseObjectAction implements ISortableAction, 
      */
     public function updatePosition()
     {
-        $sql = "UPDATE	wcf" . WCF_N . "_ad
-			SET	showOrder = ?
-			WHERE	adID = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_ad
+                SET     showOrder = ?
+                WHERE   adID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
 
         $showOrder = $this->parameters['data']['offset'];

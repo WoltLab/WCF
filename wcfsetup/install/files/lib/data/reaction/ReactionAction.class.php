@@ -291,10 +291,10 @@ class ReactionAction extends AbstractDatabaseObjectAction
         //
 
         // get like object
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_like_object
-			WHERE	objectTypeID = ?
-				AND objectID = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_like_object
+                WHERE   objectTypeID = ?
+                    AND objectID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $sourceObjectType->objectTypeID,
@@ -316,12 +316,12 @@ class ReactionAction extends AbstractDatabaseObjectAction
         // step 2) copy
         //
 
-        $sql = "INSERT INTO	wcf" . WCF_N . "_like
-					(objectID, objectTypeID, objectUserID, userID, time, likeValue, reactionTypeID)
-			SELECT		" . $this->parameters['targetObjectID'] . ", " . $targetObjectType->objectTypeID . ", objectUserID, userID, time, likeValue, reactionTypeID
-			FROM		wcf" . WCF_N . "_like
-			WHERE		objectTypeID = ?
-					AND objectID = ?";
+        $sql = "INSERT INTO wcf" . WCF_N . "_like
+                            (objectID, objectTypeID, objectUserID, userID, time, likeValue, reactionTypeID)
+                SELECT      " . $this->parameters['targetObjectID'] . ", " . $targetObjectType->objectTypeID . ", objectUserID, userID, time, likeValue, reactionTypeID
+                FROM        wcf" . WCF_N . "_like
+                WHERE       objectTypeID = ?
+                        AND objectID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $sourceObjectType->objectTypeID,
@@ -334,9 +334,9 @@ class ReactionAction extends AbstractDatabaseObjectAction
 
         if ($newLikeObject->objectUserID) {
             $sql = "SELECT  COUNT(*) as count
-				FROM    wcf" . WCF_N . "_like
-				WHERE   objectTypeID = ?
-					AND objectID = ?";
+                    FROM    wcf" . WCF_N . "_like
+                    WHERE   objectTypeID = ?
+                        AND objectID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 $targetObjectType->objectTypeID,

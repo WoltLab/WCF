@@ -55,13 +55,13 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      */
     protected function handleDelete(array $items)
     {
-        $sql = "DELETE FROM	wcf" . WCF_N . "_menu_item
-			WHERE		identifier = ?
-					AND packageID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_menu_item
+                WHERE       identifier = ?
+                        AND packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
 
-        $sql = "DELETE FROM	wcf" . WCF_N . "_language_item
-			WHERE		languageItem = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_language_item
+                WHERE       languageItem = ?";
         $languageItemStatement = WCF::getDB()->prepareStatement($sql);
 
         WCF::getDB()->beginTransaction();
@@ -123,9 +123,9 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
                 throw new SystemException("The menu item '" . $data['attributes']['identifier'] . "' can either have an associated menu or a parent menu item, but not both.");
             }
 
-            $sql = "SELECT	*
-				FROM	wcf" . WCF_N . "_menu_item
-				WHERE	identifier = ?";
+            $sql = "SELECT  *
+                    FROM    wcf" . WCF_N . "_menu_item
+                    WHERE   identifier = ?";
             $statement = WCF::getDB()->prepareStatement($sql, 1);
             $statement->execute([$data['elements']['parent']]);
 
@@ -181,9 +181,9 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      */
     protected function getMenuID($identifier)
     {
-        $sql = "SELECT	menuID
-			FROM	wcf" . WCF_N . "_menu
-			WHERE	identifier = ?";
+        $sql = "SELECT  menuID
+                FROM    wcf" . WCF_N . "_menu
+                WHERE   identifier = ?";
         $statement = WCF::getDB()->prepareStatement($sql, 1);
         $statement->execute([$identifier]);
 
@@ -199,9 +199,9 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      */
     protected function getPageID($identifier)
     {
-        $sql = "SELECT	pageID
-			FROM	wcf" . WCF_N . "_page
-			WHERE	identifier = ?";
+        $sql = "SELECT  pageID
+                FROM    wcf" . WCF_N . "_page
+                WHERE   identifier = ?";
         $statement = WCF::getDB()->prepareStatement($sql, 1);
         $statement->execute([$identifier]);
 
@@ -213,10 +213,10 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      */
     protected function findExistingItem(array $data)
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_menu_item
-			WHERE	identifier = ?
-				AND packageID = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_menu_item
+                WHERE   identifier = ?
+                    AND packageID = ?";
         $parameters = [
             $data['identifier'],
             $this->installation->getPackageID(),
@@ -252,9 +252,9 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      */
     protected function getItemOrder($menuID, $parentItemID = null)
     {
-        $sql = "SELECT	MAX(showOrder) AS showOrder
-			FROM	wcf" . WCF_N . "_menu_item
-			WHERE	" . ($parentItemID === null ? 'menuID' : 'parentItemID') . " = ?";
+        $sql = "SELECT  MAX(showOrder) AS showOrder
+                FROM    wcf" . WCF_N . "_menu_item
+                WHERE   " . ($parentItemID === null ? 'menuID' : 'parentItemID') . " = ?";
         $statement = WCF::getDB()->prepareStatement($sql, 1);
         $statement->execute([
             $parentItemID === null ? $menuID : $parentItemID,

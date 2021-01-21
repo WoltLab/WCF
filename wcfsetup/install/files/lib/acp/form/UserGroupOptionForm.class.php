@@ -222,9 +222,9 @@ class UserGroupOptionForm extends AbstractForm
             $conditions->add("groupID IN (?)", [\array_keys($this->groups)]);
             $conditions->add("optionID = ?", [$this->userGroupOption->optionID]);
 
-            $sql = "SELECT	groupID, optionValue
-				FROM	wcf" . WCF_N . "_user_group_option_value
-				" . $conditions;
+            $sql = "SELECT  groupID, optionValue
+                    FROM    wcf" . WCF_N . "_user_group_option_value
+                    " . $conditions;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditions->getParameters());
             $this->values = $statement->fetchMap('groupID', 'optionValue');

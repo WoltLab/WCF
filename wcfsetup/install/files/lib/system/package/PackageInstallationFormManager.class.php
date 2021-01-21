@@ -62,10 +62,10 @@ abstract class PackageInstallationFormManager
      */
     public static function findForm(PackageInstallationQueue $queue, $formName)
     {
-        $sql = "SELECT	COUNT(*)
-			FROM	wcf" . WCF_N . "_package_installation_form
-			WHERE	queueID = ?
-				AND formName = ?";
+        $sql = "SELECT  COUNT(*)
+                FROM    wcf" . WCF_N . "_package_installation_form
+                WHERE   queueID = ?
+                    AND formName = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $queue->queueID,
@@ -83,9 +83,9 @@ abstract class PackageInstallationFormManager
      */
     private static function insertForm(PackageInstallationQueue $queue, FormDocument $document)
     {
-        $sql = "INSERT INTO	wcf" . WCF_N . "_package_installation_form
-					(queueID, formName, document)
-			VALUES		(?, ?, ?)";
+        $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_form
+                            (queueID, formName, document)
+                VALUES      (?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $queue->queueID,
@@ -102,10 +102,10 @@ abstract class PackageInstallationFormManager
      */
     private static function updateForm(PackageInstallationQueue $queue, FormDocument $document)
     {
-        $sql = "UPDATE	wcf" . WCF_N . "_package_installation_form
-			SET	document = ?
-			WHERE	queueID = ?
-				AND formName = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_package_installation_form
+                SET     document = ?
+                WHERE   queueID = ?
+                    AND formName = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             \base64_encode(\serialize($document)),
@@ -121,8 +121,8 @@ abstract class PackageInstallationFormManager
      */
     public static function deleteForms(PackageInstallationQueue $queue)
     {
-        $sql = "DELETE FROM	wcf" . WCF_N . "_package_installation_form
-			WHERE		queueID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_package_installation_form
+                WHERE       queueID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$queue->queueID]);
     }
@@ -136,10 +136,10 @@ abstract class PackageInstallationFormManager
      */
     public static function getForm(PackageInstallationQueue $queue, $formName)
     {
-        $sql = "SELECT	document
-			FROM	wcf" . WCF_N . "_package_installation_form
-			WHERE	queueID = ?
-				AND formName = ?";
+        $sql = "SELECT  document
+                FROM    wcf" . WCF_N . "_package_installation_form
+                WHERE   queueID = ?
+                    AND formName = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $queue->queueID,

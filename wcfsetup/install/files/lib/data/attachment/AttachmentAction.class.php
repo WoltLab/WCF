@@ -276,9 +276,9 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
             $conditions->add("tmpHash = ?", [$this->parameters['tmpHash']]);
         }
 
-        $sql = "SELECT	attachmentID
-			FROM	wcf" . WCF_N . "_attachment
-			" . $conditions;
+        $sql = "SELECT  attachmentID
+                FROM    wcf" . WCF_N . "_attachment
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         $attachmentIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
@@ -295,9 +295,9 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
      */
     public function updatePosition()
     {
-        $sql = "UPDATE	wcf" . WCF_N . "_attachment
-			SET	showOrder = ?
-			WHERE	attachmentID = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_attachment
+                SET     showOrder = ?
+                WHERE   attachmentID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
 
         WCF::getDB()->beginTransaction();

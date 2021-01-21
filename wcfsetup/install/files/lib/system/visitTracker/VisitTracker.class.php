@@ -77,9 +77,9 @@ class VisitTracker extends SingletonFactory
 
                 // cache does not exist or is outdated
                 if ($data === null) {
-                    $sql = "SELECT	objectTypeID, visitTime
-						FROM	wcf" . WCF_N . "_tracked_visit_type
-						WHERE	userID = ?";
+                    $sql = "SELECT  objectTypeID, visitTime
+                            FROM    wcf" . WCF_N . "_tracked_visit_type
+                            WHERE   userID = ?";
                     $statement = WCF::getDB()->prepareStatement($sql);
                     $statement->execute([WCF::getUser()->userID]);
                     $this->userVisits = $statement->fetchMap('objectTypeID', 'visitTime');
@@ -123,11 +123,11 @@ class VisitTracker extends SingletonFactory
     public function getObjectVisitTime($objectType, $objectID)
     {
         if (WCF::getUser()->userID) {
-            $sql = "SELECT	visitTime
-				FROM	wcf" . WCF_N . "_tracked_visit
-				WHERE	objectTypeID = ?
-					AND objectID = ?
-					AND userID = ?";
+            $sql = "SELECT  visitTime
+                    FROM    wcf" . WCF_N . "_tracked_visit
+                    WHERE   objectTypeID = ?
+                        AND objectID = ?
+                        AND userID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->getObjectTypeID($objectType), $objectID, WCF::getUser()->userID]);
             $row = $statement->fetchArray();
@@ -151,9 +151,9 @@ class VisitTracker extends SingletonFactory
     public function deleteObjectVisits($objectType)
     {
         if (WCF::getUser()->userID) {
-            $sql = "DELETE FROM	wcf" . WCF_N . "_tracked_visit
-				WHERE		objectTypeID = ?
-						AND userID = ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_tracked_visit
+                    WHERE       objectTypeID = ?
+                            AND userID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->getObjectTypeID($objectType), WCF::getUser()->userID]);
         }
@@ -170,9 +170,9 @@ class VisitTracker extends SingletonFactory
     public function trackObjectVisitByUserIDs($objectType, $objectID, array $userIDs, $time = TIME_NOW)
     {
         // save visit
-        $sql = "REPLACE INTO wcf" . WCF_N . "_tracked_visit
-					(objectTypeID, objectID, userID, visitTime)
-			VALUES		(?, ?, ?, ?)";
+        $sql = "REPLACE INTO    wcf" . WCF_N . "_tracked_visit
+                                (objectTypeID, objectID, userID, visitTime)
+                VALUES          (?, ?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         $objectTypeID = $this->getObjectTypeID($objectType);
         WCF::getDB()->beginTransaction();
@@ -195,9 +195,9 @@ class VisitTracker extends SingletonFactory
     {
         if (WCF::getUser()->userID) {
             // save visit
-            $sql = "REPLACE INTO	wcf" . WCF_N . "_tracked_visit
-						(objectTypeID, objectID, userID, visitTime)
-				VALUES		(?, ?, ?, ?)";
+            $sql = "REPLACE INTO    wcf" . WCF_N . "_tracked_visit
+                                    (objectTypeID, objectID, userID, visitTime)
+                    VALUES          (?, ?, ?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->getObjectTypeID($objectType), $objectID, WCF::getUser()->userID, $time]);
         } elseif (WCF::getSession()->spiderID === null) {
@@ -215,17 +215,17 @@ class VisitTracker extends SingletonFactory
     {
         if (WCF::getUser()->userID) {
             // save visit
-            $sql = "REPLACE INTO	wcf" . WCF_N . "_tracked_visit_type
-						(objectTypeID, userID, visitTime)
-				VALUES		(?, ?, ?)";
+            $sql = "REPLACE INTO    wcf" . WCF_N . "_tracked_visit_type
+                                    (objectTypeID, userID, visitTime)
+                    VALUES          (?, ?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->getObjectTypeID($objectType), WCF::getUser()->userID, $time]);
 
             // delete obsolete object visits
-            $sql = "DELETE FROM	wcf" . WCF_N . "_tracked_visit
-				WHERE		objectTypeID = ?
-						AND userID = ?
-						AND visitTime <= ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_tracked_visit
+                    WHERE       objectTypeID = ?
+                            AND userID = ?
+                            AND visitTime <= ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->getObjectTypeID($objectType), WCF::getUser()->userID, $time]);
 

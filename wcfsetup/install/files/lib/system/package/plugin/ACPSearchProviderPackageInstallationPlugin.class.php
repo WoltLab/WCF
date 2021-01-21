@@ -41,9 +41,9 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
      */
     protected function handleDelete(array $items)
     {
-        $sql = "DELETE FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE		providerName = ?
-					AND packageID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE       providerName = ?
+                        AND packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
 
         WCF::getDB()->beginTransaction();
@@ -77,10 +77,10 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
      */
     protected function findExistingItem(array $data)
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE	providerName = ?
-				AND packageID = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE   providerName = ?
+                    AND packageID = ?";
         $parameters = [
             $data['providerName'],
             $this->installation->getPackageID(),

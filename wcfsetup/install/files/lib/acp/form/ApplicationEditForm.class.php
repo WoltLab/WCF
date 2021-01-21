@@ -176,11 +176,11 @@ class ApplicationEditForm extends AbstractForm
         $this->domainPath = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash($this->domainPath));
 
         // search for other applications with the same domain and path
-        $sql = "SELECT	packageID
-			FROM	wcf" . WCF_N . "_application
-			WHERE	domainName = ?
-				AND domainPath = ?
-				AND packageID <> ?";
+        $sql = "SELECT  packageID
+                FROM    wcf" . WCF_N . "_application
+                WHERE   domainName = ?
+                    AND domainPath = ?
+                    AND packageID <> ?";
         $statement = WCF::getDB()->prepareStatement($sql, 1);
         $statement->execute([
             $this->domainName,
@@ -226,8 +226,8 @@ class ApplicationEditForm extends AbstractForm
                 (new Page($this->landingPageID))->setAsLandingPage();
             } else {
                 $sql = "UPDATE  wcf" . WCF_N . "_page
-					SET     isLandingPage = ?
-					WHERE   isLandingPage = ?";
+                        SET     isLandingPage = ?
+                        WHERE   isLandingPage = ?";
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute([
                     0,

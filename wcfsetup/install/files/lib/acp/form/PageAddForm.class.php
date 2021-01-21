@@ -643,9 +643,9 @@ class PageAddForm extends AbstractForm
                 $conditionBuilder->add('parentItemID IS NULL');
             }
 
-            $sql = "SELECT	MAX(showOrder)
-				FROM	wcf" . WCF_N . "_menu_item
-				" . $conditionBuilder;
+            $sql = "SELECT  MAX(showOrder)
+                    FROM    wcf" . WCF_N . "_menu_item
+                    " . $conditionBuilder;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditionBuilder->getParameters());
             $maxShowOrder = $statement->fetchSingleColumn() ?? 0;

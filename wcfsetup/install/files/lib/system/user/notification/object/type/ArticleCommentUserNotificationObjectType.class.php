@@ -38,11 +38,11 @@ class ArticleCommentUserNotificationObjectType extends AbstractUserNotificationO
      */
     public function getOwnerID($objectID)
     {
-        $sql = "SELECT		article.userID
-			FROM		wcf" . WCF_N . "_comment comment
-			LEFT JOIN	wcf" . WCF_N . "_article article
-			ON		(article.articleID = comment.objectID)
-			WHERE		comment.commentID = ?";
+        $sql = "SELECT      article.userID
+                FROM        wcf" . WCF_N . "_comment comment
+                LEFT JOIN   wcf" . WCF_N . "_article article
+                ON          (article.articleID = comment.objectID)
+                WHERE       comment.commentID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$objectID]);
 

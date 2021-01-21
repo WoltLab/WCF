@@ -75,9 +75,9 @@ class UserStorageHandler extends SingletonFactory
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("userID IN (?)", [$tmp]);
 
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_user_storage
-			" . $conditions;
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_user_storage
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         while ($row = $statement->fetchArray()) {
@@ -249,8 +249,8 @@ class UserStorageHandler extends SingletonFactory
             return;
         }
 
-        $sql = "DELETE FROM	wcf" . WCF_N . "_user_storage
-			WHERE		field = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_user_storage
+                WHERE       field = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$field]);
 
@@ -289,10 +289,10 @@ class UserStorageHandler extends SingletonFactory
                     \ksort($fields);
 
                     // Lock the user.
-                    $sql = "SELECT	*
-						FROM	wcf" . WCF_N . "_user
-						WHERE	userID = ?
-						FOR UPDATE";
+                    $sql = "SELECT  *
+                            FROM    wcf" . WCF_N . "_user
+                            WHERE   userID = ?
+                            FOR UPDATE";
                     $statement = WCF::getDB()->prepareStatement($sql);
                     $statement->execute([$userID]);
 
@@ -301,15 +301,15 @@ class UserStorageHandler extends SingletonFactory
                     $conditions->add("userID = ?", [$userID]);
                     $conditions->add("field IN (?)", [\array_keys($fields)]);
 
-                    $sql = "DELETE FROM	wcf" . WCF_N . "_user_storage
-						" . $conditions;
+                    $sql = "DELETE FROM wcf" . WCF_N . "_user_storage
+                            " . $conditions;
                     $statement = WCF::getDB()->prepareStatement($sql);
                     $statement->execute($conditions->getParameters());
 
                     // Insert updated data.
-                    $sql = "INSERT INTO	wcf" . WCF_N . "_user_storage
-								(userID, field, fieldValue)
-						VALUES		(?, ?, ?)";
+                    $sql = "INSERT INTO wcf" . WCF_N . "_user_storage
+                                        (userID, field, fieldValue)
+                            VALUES      (?, ?, ?)";
                     $statement = WCF::getDB()->prepareStatement($sql);
                     foreach ($fields as $field => $fieldValue) {
                         if ($fieldValue === null) {
@@ -357,7 +357,7 @@ class UserStorageHandler extends SingletonFactory
 
         $this->cache = [];
 
-        $sql = "DELETE FROM	wcf" . WCF_N . "_user_storage";
+        $sql = "DELETE FROM wcf" . WCF_N . "_user_storage";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
 

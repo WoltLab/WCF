@@ -50,8 +50,8 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortab
     {
         if (isset($this->parameters['data']['showOrder']) && $this->parameters['data']['showOrder'] !== null) {
             $sql = "UPDATE  wcf" . WCF_N . "_reaction_type
-					SET	showOrder = showOrder + 1
-					WHERE	showOrder >= ?";
+                    SET     showOrder = showOrder + 1
+                    WHERE   showOrder >= ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 $this->parameters['data']['showOrder'],
@@ -157,9 +157,9 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortab
             // update show order
             if (isset($this->parameters['data']['showOrder']) && $this->parameters['data']['showOrder'] !== null) {
                 $sql = "UPDATE  wcf" . WCF_N . "_reaction_type
-					SET	showOrder = showOrder + 1
-					WHERE	showOrder >= ?
-					AND     reactionTypeID <> ?";
+                        SET     showOrder = showOrder + 1
+                        WHERE   showOrder >= ?
+                        AND     reactionTypeID <> ?";
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute([
                     $this->parameters['data']['showOrder'],
@@ -167,8 +167,8 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortab
                 ]);
 
                 $sql = "UPDATE  wcf" . WCF_N . "_reaction_type
-					SET	showOrder = showOrder - 1
-					WHERE	showOrder > ?";
+                        SET     showOrder = showOrder - 1
+                        WHERE   showOrder > ?";
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute([
                     $object->showOrder,
@@ -230,8 +230,8 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortab
         $returnValues = parent::delete();
 
         $sql = "UPDATE  wcf" . WCF_N . "_reaction_type
-				SET	showOrder = showOrder - 1
-				WHERE	showOrder > ?";
+                SET     showOrder = showOrder - 1
+                WHERE   showOrder > ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($this->getObjects() as $object) {
             $statement->execute([

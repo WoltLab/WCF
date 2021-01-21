@@ -80,8 +80,8 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
         }
 
         $sql = "SELECT  pageID, pageType, controller, controllerCustomURL, applicationPackageID, overrideApplicationPackageID
-			FROM    wcf" . WCF_N . "_page
-			WHERE   overrideApplicationPackageID IS NOT NULL";
+                FROM    wcf" . WCF_N . "_page
+                WHERE   overrideApplicationPackageID IS NOT NULL";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         while ($row = $statement->fetchArray()) {
@@ -231,19 +231,19 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
         }
 
         // fetch pages with a controller and a custom url
-        $sql = "SELECT	controller, controllerCustomURL, applicationPackageID
-			FROM	wcf" . WCF_N . "_page
-			WHERE	controller <> ''
-				AND controllerCustomURL <> ''";
+        $sql = "SELECT  controller, controllerCustomURL, applicationPackageID
+                FROM    wcf" . WCF_N . "_page
+                WHERE   controller <> ''
+                    AND controllerCustomURL <> ''";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         $rows = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
         // fetch content pages using the common page controller
-        $sql = "SELECT		page_content.customURL AS controllerCustomURL, page_content.pageID, page_content.languageID, page.applicationPackageID
-			FROM		wcf" . WCF_N . "_page_content page_content
-			LEFT JOIN	wcf" . WCF_N . "_page page
-			ON		(page.pageID = page_content.pageID)";
+        $sql = "SELECT      page_content.customURL AS controllerCustomURL, page_content.pageID, page_content.languageID, page.applicationPackageID
+                FROM        wcf" . WCF_N . "_page_content page_content
+                LEFT JOIN   wcf" . WCF_N . "_page page
+                ON          (page.pageID = page_content.pageID)";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         while ($row = $statement->fetchArray()) {

@@ -288,8 +288,8 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
     protected static function loadRequirements()
     {
         if (self::$requirements === null) {
-            $sql = "SELECT	packageID, requirement
-				FROM	wcf" . WCF_N . "_package_requirement";
+            $sql = "SELECT  packageID, requirement
+                    FROM    wcf" . WCF_N . "_package_requirement";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute();
 
@@ -317,9 +317,9 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
      */
     public static function isAlreadyInstalled($package)
     {
-        $sql = "SELECT	COUNT(*)
-			FROM	wcf" . WCF_N . "_package
-			WHERE	package = ?";
+        $sql = "SELECT  COUNT(*)
+                FROM    wcf" . WCF_N . "_package
+                WHERE   package = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$package]);
 

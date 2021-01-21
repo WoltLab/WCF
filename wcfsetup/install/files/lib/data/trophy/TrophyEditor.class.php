@@ -31,8 +31,8 @@ class TrophyEditor extends DatabaseObjectEditor implements IEditableCachedObject
      */
     public function setShowOrder($showOrder = 0)
     {
-        $sql = "SELECT	MAX(showOrder)
-			FROM	wcf" . WCF_N . "_trophy";
+        $sql = "SELECT  MAX(showOrder)
+                FROM    wcf" . WCF_N . "_trophy";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         $maxShowOrder = $statement->fetchSingleColumn();
@@ -44,9 +44,9 @@ class TrophyEditor extends DatabaseObjectEditor implements IEditableCachedObject
             $newShowOrder = $maxShowOrder + 1;
         } else {
             // shift other trophies
-            $sql = "UPDATE	wcf" . WCF_N . "_trophy
-				SET	showOrder = showOrder + 1
-				WHERE	showOrder >= ?";
+            $sql = "UPDATE  wcf" . WCF_N . "_trophy
+                    SET     showOrder = showOrder + 1
+                    WHERE   showOrder >= ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 $showOrder,

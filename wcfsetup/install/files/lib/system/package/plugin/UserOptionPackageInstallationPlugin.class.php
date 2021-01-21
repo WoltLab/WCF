@@ -162,10 +162,10 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
         }
 
         // get optionID if it was installed by this package already
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE	optionName = ?
-			AND	packageID = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE   optionName = ?
+                    AND packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $optionName,
@@ -219,9 +219,9 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
     public function uninstall()
     {
         // get optionsIDs from package
-        $sql = "SELECT	optionID
-			FROM	wcf" . WCF_N . "_user_option
-			WHERE	packageID = ?";
+        $sql = "SELECT  optionID
+                FROM    wcf" . WCF_N . "_user_option
+                WHERE   packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->installation->getPackageID()]);
         while ($row = $statement->fetchArray()) {

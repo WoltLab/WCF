@@ -163,10 +163,10 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
             return;
         }
 
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE	packageID = ?
-				AND cronjobName = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE   packageID = ?
+                    AND cronjobName = ?";
         $parameters = [
             $this->installation->getPackageID(),
             $data['cronjobName'],

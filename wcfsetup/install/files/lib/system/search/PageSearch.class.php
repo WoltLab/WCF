@@ -99,19 +99,29 @@ class PageSearch extends AbstractSearchableObjectType
 
         // acl
         $objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.acl.simple', 'com.woltlab.wcf.page');
-        $conditionBuilder->add('(	
-			wcf' . WCF_N . '_page_content.pageID NOT IN (
-				SELECT objectID FROM wcf' . WCF_N . '_acl_simple_to_group WHERE objectTypeID = ?
-				UNION
-				SELECT objectID FROM wcf' . WCF_N . '_acl_simple_to_user WHERE objectTypeID = ?
-			)
-			OR
-			wcf' . WCF_N . '_page_content.pageID IN (
-				SELECT objectID FROM wcf' . WCF_N . '_acl_simple_to_group WHERE objectTypeID = ? AND groupID IN (?)
-				UNION
-				SELECT objectID FROM wcf' . WCF_N . '_acl_simple_to_user WHERE objectTypeID = ? AND userID = ?
-			)
-		)', [$objectTypeID, $objectTypeID, $objectTypeID, WCF::getUser()->getGroupIDs(), $objectTypeID, WCF::getUser()->userID]);
+        $conditionBuilder->add('(
+            wcf' . WCF_N . '_page_content.pageID NOT IN (
+                SELECT  objectID
+                FROM    wcf' . WCF_N . '_acl_simple_to_group
+                WHERE   objectTypeID = ?
+                UNION
+                SELECT  objectID
+                FROM    wcf' . WCF_N . '_acl_simple_to_user
+                WHERE   objectTypeID = ?
+            )
+            OR
+            wcf' . WCF_N . '_page_content.pageID IN (
+                SELECT  objectID
+                FROM    wcf' . WCF_N . '_acl_simple_to_group
+                WHERE   objectTypeID = ?
+                    AND groupID IN (?)
+                UNION
+                SELECT  objectID
+                FROM    wcf' . WCF_N . '_acl_simple_to_user
+                WHERE   objectTypeID = ?
+                    AND userID = ?
+            )
+        )', [$objectTypeID, $objectTypeID, $objectTypeID, WCF::getUser()->getGroupIDs(), $objectTypeID, WCF::getUser()->userID]);
 
         return $conditionBuilder;
     }

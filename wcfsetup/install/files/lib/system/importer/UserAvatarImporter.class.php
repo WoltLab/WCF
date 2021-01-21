@@ -74,9 +74,9 @@ class UserAvatarImporter extends AbstractImporter
             }
 
             // update owner
-            $sql = "UPDATE	wcf" . WCF_N . "_user
-				SET	avatarID = ?
-				WHERE	userID = ?";
+            $sql = "UPDATE  wcf" . WCF_N . "_user
+                    SET     avatarID = ?
+                    WHERE   userID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$avatar->avatarID, $data['userID']]);
 

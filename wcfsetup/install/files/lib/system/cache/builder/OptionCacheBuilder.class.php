@@ -47,9 +47,9 @@ class OptionCacheBuilder extends AbstractCacheBuilder
         ];
 
         // option categories
-        $sql = "SELECT		*
-			FROM		" . $this->application . WCF_N . "_" . $this->tableName . "_category
-			ORDER BY	showOrder";
+        $sql = "SELECT      *
+                FROM        " . $this->application . WCF_N . "_" . $this->tableName . "_category
+                ORDER BY    showOrder";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         while ($category = $statement->fetchObject(OptionCategory::class)) {
@@ -62,9 +62,9 @@ class OptionCacheBuilder extends AbstractCacheBuilder
         }
 
         // options
-        $sql = "SELECT		*
-			FROM		" . $this->application . WCF_N . "_" . $this->tableName . "
-			ORDER BY	showOrder";
+        $sql = "SELECT      *
+                FROM        " . $this->application . WCF_N . "_" . $this->tableName . "
+                ORDER BY    showOrder";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
 

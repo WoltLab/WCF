@@ -25,8 +25,8 @@ class SimpleAclCacheBuilder extends AbstractCacheBuilder
         $objectTypeID = SimpleAclHandler::getInstance()->getObjectTypeID($parameters['objectType']);
 
         $sql = "SELECT  objectID, userID
-			FROM    wcf" . WCF_N . "_acl_simple_to_user
-			WHERE   objectTypeID = ?";
+                FROM    wcf" . WCF_N . "_acl_simple_to_user
+                WHERE   objectTypeID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$objectTypeID]);
         while ($row = $statement->fetchArray()) {
@@ -43,8 +43,8 @@ class SimpleAclCacheBuilder extends AbstractCacheBuilder
         }
 
         $sql = "SELECT  objectID, groupID
-			FROM    wcf" . WCF_N . "_acl_simple_to_group
-			WHERE   objectTypeID = ?";
+                FROM    wcf" . WCF_N . "_acl_simple_to_group
+                WHERE   objectTypeID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$objectTypeID]);
         while ($row = $statement->fetchArray()) {

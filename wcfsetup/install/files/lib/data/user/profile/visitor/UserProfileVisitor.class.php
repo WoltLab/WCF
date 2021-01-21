@@ -29,10 +29,10 @@ class UserProfileVisitor extends DatabaseObject
      */
     public static function getObject($ownerID, $userID)
     {
-        $sql = "SELECT	*
-			FROM	" . static::getDatabaseTableName() . "
-			WHERE	ownerID = ?
-				AND userID = ?";
+        $sql = "SELECT  *
+                FROM    " . static::getDatabaseTableName() . "
+                WHERE   ownerID = ?
+                    AND userID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$ownerID, $userID]);
         if ($row = $statement->fetchArray()) {

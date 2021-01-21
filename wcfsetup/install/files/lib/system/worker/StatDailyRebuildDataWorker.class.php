@@ -55,15 +55,15 @@ class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker
 
         if (!$this->loopCount) {
             // delete existing stat
-            $sql = "DELETE FROM	wcf" . WCF_N . "_stat_daily";
+            $sql = "DELETE FROM wcf" . WCF_N . "_stat_daily";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute();
         }
 
         // prepare insert statement
-        $sql = "INSERT IGNORE INTO	wcf" . WCF_N . "_stat_daily
-						(objectTypeID, date, counter, total)
-			VALUES			(?, ?, ?, ?)";
+        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_stat_daily
+                                    (objectTypeID, date, counter, total)
+                VALUES              (?, ?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
 
         $this->getStartDate();
@@ -97,8 +97,8 @@ class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker
             return;
         }
 
-        $sql = "SELECT	MIN(registrationDate)
-			FROM	wcf" . WCF_N . "_user";
+        $sql = "SELECT  MIN(registrationDate)
+                FROM    wcf" . WCF_N . "_user";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         $this->startDate = $statement->fetchSingleColumn();

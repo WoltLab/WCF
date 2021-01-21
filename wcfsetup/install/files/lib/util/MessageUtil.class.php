@@ -96,8 +96,8 @@ class MessageUtil
             }
 
             $sql = "SELECT  userID
-				FROM    wcf" . WCF_N . "_user_to_group
-				" . $conditions;
+                    FROM    wcf" . WCF_N . "_user_to_group
+                    " . $conditions;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditions->getParameters());
             while ($userID = $statement->fetchColumn()) {
@@ -156,11 +156,11 @@ class MessageUtil
                 $conditions->add('user_table.username NOT IN (?)', [$usernames]);
             }
 
-            $sql = "SELECT          user_table.username
-				FROM            wcf" . WCF_N . "_user_to_group user_to_group
-				LEFT JOIN       wcf" . WCF_N . "_user user_table
-				ON              (user_table.userID = user_to_group.userID)
-				" . $conditions;
+            $sql = "SELECT      user_table.username
+                    FROM        wcf" . WCF_N . "_user_to_group user_to_group
+                    LEFT JOIN   wcf" . WCF_N . "_user user_table
+                    ON          (user_table.userID = user_to_group.userID)
+                    " . $conditions;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditions->getParameters());
             while ($username = $statement->fetchColumn()) {

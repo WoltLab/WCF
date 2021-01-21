@@ -66,9 +66,9 @@ class AbstractLikeImporter extends AbstractImporter
             return 0;
         }
 
-        $sql = "INSERT IGNORE INTO	wcf" . WCF_N . "_like
-						(objectID, objectTypeID, objectUserID, userID, time, likeValue, reactionTypeID)
-			VALUES			(?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_like
+                                    (objectID, objectTypeID, objectUserID, userID, time, likeValue, reactionTypeID)
+                VALUES              (?, ?, ?, ?, ?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $data['objectID'],
@@ -102,8 +102,8 @@ class AbstractLikeImporter extends AbstractImporter
                 $reaction = ReactionTypeEditor::create(['iconFile' => 'thumbsDown.svg', 'showOrder' => $showOrder + 1]);
 
                 $sql = "SELECT  languageCategoryID
-					FROM    wcf" . WCF_N . "_language_category
-					WHERE   languageCategory = ?";
+                        FROM    wcf" . WCF_N . "_language_category
+                        WHERE   languageCategory = ?";
                 $statement = WCF::getDB()->prepareStatement($sql, 1);
                 $statement->execute(['wcf.reactionType']);
                 $languageCategoryID = $statement->fetchSingleColumn();

@@ -667,8 +667,8 @@ class StyleAddForm extends AbstractForm
         }
 
         // get available variables
-        $sql = "SELECT	variableName
-			FROM	wcf" . WCF_N . "_style_variable";
+        $sql = "SELECT  variableName
+                FROM    wcf" . WCF_N . "_style_variable";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         $variables = $statement->fetchAll(\PDO::FETCH_COLUMN);
@@ -824,8 +824,8 @@ class StyleAddForm extends AbstractForm
      */
     protected function readStyleVariables()
     {
-        $sql = "SELECT	variableName, defaultValue
-			FROM	wcf" . WCF_N . "_style_variable";
+        $sql = "SELECT  variableName, defaultValue
+                FROM    wcf" . WCF_N . "_style_variable";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         $this->variables = $statement->fetchMap('variableName', 'defaultValue');

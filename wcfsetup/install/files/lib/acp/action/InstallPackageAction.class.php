@@ -133,9 +133,9 @@ class InstallPackageAction extends AbstractDialogAction
     protected function getRedirectLink()
     {
         // get domain path
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_application
-			WHERE	packageID = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_application
+                WHERE   packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([1]);
 

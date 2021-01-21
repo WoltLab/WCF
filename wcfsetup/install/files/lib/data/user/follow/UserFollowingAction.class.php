@@ -42,17 +42,17 @@ class UserFollowingAction extends UserFollowAction
     public function getGroupedUserList()
     {
         // resolve page count
-        $sql = "SELECT	COUNT(*)
-			FROM	wcf" . WCF_N . "_user_follow
-			WHERE	userID = ?";
+        $sql = "SELECT  COUNT(*)
+                FROM    wcf" . WCF_N . "_user_follow
+                WHERE   userID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->parameters['userID']]);
         $pageCount = \ceil($statement->fetchSingleColumn() / 20);
 
         // get user ids
-        $sql = "SELECT	followUserID
-			FROM	wcf" . WCF_N . "_user_follow
-			WHERE	userID = ?";
+        $sql = "SELECT  followUserID
+                FROM    wcf" . WCF_N . "_user_follow
+                WHERE   userID = ?";
         $statement = WCF::getDB()->prepareStatement($sql, 20, ($this->parameters['pageNo'] - 1) * 20);
         $statement->execute([$this->parameters['userID']]);
         $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);

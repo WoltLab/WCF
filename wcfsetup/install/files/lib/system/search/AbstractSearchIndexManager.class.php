@@ -32,9 +32,9 @@ abstract class AbstractSearchIndexManager extends SingletonFactory implements IS
     public function createSearchIndices()
     {
         // get definition id
-        $sql = "SELECT	definitionID
-			FROM	wcf" . WCF_N . "_object_type_definition
-			WHERE	definitionName = ?";
+        $sql = "SELECT  definitionID
+                FROM    wcf" . WCF_N . "_object_type_definition
+                WHERE   definitionName = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(['com.woltlab.wcf.searchableObjectType']);
         $row = $statement->fetchArray();

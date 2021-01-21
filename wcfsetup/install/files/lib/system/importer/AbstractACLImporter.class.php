@@ -38,9 +38,9 @@ class AbstractACLImporter extends AbstractImporter
     public function __construct()
     {
         // get options
-        $sql = "SELECT	optionName, optionID
-			FROM	wcf" . WCF_N . "_acl_option
-			WHERE	objectTypeID = ?";
+        $sql = "SELECT  optionName, optionID
+                FROM    wcf" . WCF_N . "_acl_option
+                WHERE   objectTypeID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->objectTypeID]);
         $this->options = $statement->fetchMap('optionName', 'optionID');
@@ -67,9 +67,9 @@ class AbstractACLImporter extends AbstractImporter
                 return 0;
             }
 
-            $sql = "INSERT IGNORE INTO	wcf" . WCF_N . "_acl_option_to_group
-							(optionID, objectID, groupID, optionValue)
-				VALUES			(?, ?, ?, ?)";
+            $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_acl_option_to_group
+                                        (optionID, objectID, groupID, optionValue)
+                    VALUES              (?, ?, ?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$data['optionID'], $data['objectID'], $data['groupID'], $data['optionValue']]);
 
@@ -80,9 +80,9 @@ class AbstractACLImporter extends AbstractImporter
                 return 0;
             }
 
-            $sql = "INSERT IGNORE INTO	wcf" . WCF_N . "_acl_option_to_user
-							(optionID, objectID, userID, optionValue)
-				VALUES			(?, ?, ?, ?)";
+            $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_acl_option_to_user
+                                        (optionID, objectID, userID, optionValue)
+                    VALUES              (?, ?, ?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$data['optionID'], $data['objectID'], $data['userID'], $data['optionValue']]);
 

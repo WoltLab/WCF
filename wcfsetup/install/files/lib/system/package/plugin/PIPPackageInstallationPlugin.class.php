@@ -42,9 +42,9 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
      */
     protected function handleDelete(array $items)
     {
-        $sql = "DELETE FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE		pluginName = ?
-					AND packageID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE       pluginName = ?
+                        AND packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($items as $item) {
             $statement->execute([
@@ -80,10 +80,10 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
      */
     protected function findExistingItem(array $data)
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE	pluginName = ?
-				AND packageID = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE   pluginName = ?
+                    AND packageID = ?";
         $parameters = [
             $data['pluginName'],
             $this->installation->getPackageID(),

@@ -68,9 +68,9 @@ final class BackupMultifactorMethod implements IMultifactorMethod
      */
     public function getStatusText(Setup $setup): string
     {
-        $sql = "SELECT	COUNT(*) - COUNT(useTime) AS count, MAX(useTime) AS lastUsed
-			FROM	wcf" . WCF_N . "_user_multifactor_backup
-			WHERE	setupID = ?";
+        $sql = "SELECT  COUNT(*) - COUNT(useTime) AS count, MAX(useTime) AS lastUsed
+                FROM    wcf" . WCF_N . "_user_multifactor_backup
+                WHERE   setupID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$setup->getId()]);
 
@@ -89,9 +89,9 @@ final class BackupMultifactorMethod implements IMultifactorMethod
         $form->successMessage('wcf.user.security.multifactor.backup.success');
 
         if ($setup) {
-            $sql = "SELECT	*
-				FROM	wcf" . WCF_N . "_user_multifactor_backup
-				WHERE	setupID = ?";
+            $sql = "SELECT  *
+                    FROM    wcf" . WCF_N . "_user_multifactor_backup
+                    WHERE   setupID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$setup->getId()]);
 
@@ -195,16 +195,16 @@ final class BackupMultifactorMethod implements IMultifactorMethod
         $formData = $form->getData();
         \assert($formData['action'] === 'generateCodes' || $formData['action'] === 'regenerateCodes');
 
-        $sql = "DELETE FROM	wcf" . WCF_N . "_user_multifactor_backup
-			WHERE		setupID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_user_multifactor_backup
+                WHERE       setupID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$setup->getId()]);
 
         $codes = $this->generateCodes();
 
-        $sql = "INSERT INTO	wcf" . WCF_N . "_user_multifactor_backup
-					(setupID, identifier, code, createTime)
-			VALUES		(?, ?, ?, ?)";
+        $sql = "INSERT INTO wcf" . WCF_N . "_user_multifactor_backup
+                            (setupID, identifier, code, createTime)
+                VALUES      (?, ?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         $algorithmName = PasswordAlgorithmManager::getInstance()->getNameFromAlgorithm($this->algorithm);
         foreach ($codes as $identifier => $code) {
@@ -248,9 +248,9 @@ final class BackupMultifactorMethod implements IMultifactorMethod
     {
         $form->markRequiredFields(false);
 
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_user_multifactor_backup
-			WHERE	setupID = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_user_multifactor_backup
+                WHERE   setupID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$setup->getId()]);
         $codes = $statement->fetchAll(\PDO::FETCH_ASSOC);
@@ -295,10 +295,10 @@ final class BackupMultifactorMethod implements IMultifactorMethod
     {
         $userCode = \preg_replace('/\s+/', '', $form->getData()['data']['code']);
 
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_user_multifactor_backup
-			WHERE	setupID = ?
-			FOR UPDATE";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_user_multifactor_backup
+                WHERE   setupID = ?
+                FOR UPDATE";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$setup->getId()]);
         $codes = $statement->fetchAll(\PDO::FETCH_ASSOC);
@@ -309,11 +309,11 @@ final class BackupMultifactorMethod implements IMultifactorMethod
             throw new \RuntimeException('Unable to find a valid code.');
         }
 
-        $sql = "UPDATE	wcf" . WCF_N . "_user_multifactor_backup
-			SET	useTime = ?
-			WHERE		setupID = ?
-				AND	identifier = ?
-				AND	useTime IS NULL";
+        $sql = "UPDATE  wcf" . WCF_N . "_user_multifactor_backup
+                SET     useTime = ?
+                WHERE   setupID = ?
+                    AND identifier = ?
+                    AND useTime IS NULL";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             \TIME_NOW,
@@ -333,9 +333,9 @@ final class BackupMultifactorMethod implements IMultifactorMethod
      */
     private function sendAuthenticationEmail(Setup $setup, array $usedCode): void
     {
-        $sql = "SELECT	COUNT(*) - COUNT(useTime) AS count
-			FROM	wcf" . WCF_N . "_user_multifactor_backup
-			WHERE	setupID = ?";
+        $sql = "SELECT  COUNT(*) - COUNT(useTime) AS count
+                FROM    wcf" . WCF_N . "_user_multifactor_backup
+                WHERE   setupID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$setup->getId()]);
 

@@ -53,10 +53,10 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
      */
     protected function handleDelete(array $items)
     {
-        $sql = "DELETE FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE		actionName = ?
-					AND actionClassName = ?
-					AND packageID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE       actionName = ?
+                        AND actionClassName = ?
+                        AND packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($items as $item) {
             $statement->execute([
@@ -108,11 +108,11 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
      */
     protected function findExistingItem(array $data)
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE	actionName = ?
-				AND actionClassName = ?
-				AND packageID = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE   actionName = ?
+                    AND actionClassName = ?
+                    AND packageID = ?";
         $parameters = [
             $data['actionName'],
             $data['actionClassName'],
@@ -153,16 +153,16 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
         $conditionBuilder->add('actionID IN (?)', [\array_keys($this->pages)]);
 
         // clear pages
-        $sql = "DELETE FROM	wcf" . WCF_N . "_clipboard_page
-			" . $conditionBuilder;
+        $sql = "DELETE FROM wcf" . WCF_N . "_clipboard_page
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionBuilder->getParameters());
 
         if (!empty($this->pages)) {
             // insert pages
-            $sql = "INSERT INTO	wcf" . WCF_N . "_clipboard_page
-						(pageClassName, packageID, actionID)
-				VALUES		(?, ?, ?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_clipboard_page
+                                (pageClassName, packageID, actionID)
+                    VALUES      (?, ?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
             foreach ($this->pages as $actionID => $pages) {
                 foreach ($pages as $pageClassName) {

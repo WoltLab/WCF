@@ -377,11 +377,11 @@ class PackageUpdateServer extends DatabaseObject
 
         // reset servers into their original state
         $sql = "UPDATE  wcf" . WCF_N . "_package_update_server
-			SET     lastUpdateTime = ?,
-				status = ?,
-				errorMessage = ?,
-				apiVersion = ?,
-				metaData = ?";
+                SET     lastUpdateTime = ?,
+                        status = ?,
+                        errorMessage = ?,
+                        apiVersion = ?,
+                        metaData = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             0,

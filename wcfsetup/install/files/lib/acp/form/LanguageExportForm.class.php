@@ -171,9 +171,9 @@ class LanguageExportForm extends AbstractForm
      */
     protected function readPackages()
     {
-        $sql = "SELECT		*
-			FROM		wcf" . WCF_N . "_package
-			ORDER BY	packageName";
+        $sql = "SELECT      *
+                FROM        wcf" . WCF_N . "_package
+                ORDER BY    packageName";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         while ($row = $statement->fetchArray()) {

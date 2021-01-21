@@ -44,16 +44,16 @@ class MenuItemEditor extends DatabaseObjectEditor implements IEditableCachedObje
 
         if (\is_array($title)) {
             if (\count($title) > 1) {
-                $sql = "SELECT	languageCategoryID
-					FROM	wcf" . WCF_N . "_language_category
-					WHERE	languageCategory = ?";
+                $sql = "SELECT  languageCategoryID
+                        FROM    wcf" . WCF_N . "_language_category
+                        WHERE   languageCategory = ?";
                 $statement = WCF::getDB()->prepareStatement($sql, 1);
                 $statement->execute(['wcf.menu']);
                 $languageCategoryID = $statement->fetchSingleColumn();
 
-                $sql = "INSERT INTO	wcf" . WCF_N . "_language_item
-							(languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
-					VALUES		(?, ?, ?, ?, ?, ?)";
+                $sql = "INSERT INTO wcf" . WCF_N . "_language_item
+                                    (languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
+                        VALUES      (?, ?, ?, ?, ?, ?)";
                 $statement = WCF::getDB()->prepareStatement($sql);
 
                 WCF::getDB()->beginTransaction();
@@ -94,8 +94,8 @@ class MenuItemEditor extends DatabaseObjectEditor implements IEditableCachedObje
             $menuItemList->readObjects();
 
             if (\count($menuItemList)) {
-                $sql = "DELETE FROM	wcf" . WCF_N . "_language_item
-					WHERE		languageItem = ?";
+                $sql = "DELETE FROM wcf" . WCF_N . "_language_item
+                        WHERE       languageItem = ?";
                 $statement = WCF::getDB()->prepareStatement($sql);
 
                 WCF::getDB()->beginTransaction();

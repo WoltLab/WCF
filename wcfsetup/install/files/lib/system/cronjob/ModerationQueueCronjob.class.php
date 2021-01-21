@@ -26,10 +26,10 @@ class ModerationQueueCronjob extends AbstractCronjob
     {
         parent::execute($cronjob);
 
-        $sql = "SELECT	queueID
-			FROM	wcf" . WCF_N . "_moderation_queue
-			WHERE	status IN (?, ?, ?)
-				AND lastChangeTime < ?";
+        $sql = "SELECT  queueID
+                FROM    wcf" . WCF_N . "_moderation_queue
+                WHERE   status IN (?, ?, ?)
+                    AND lastChangeTime < ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             ModerationQueue::STATUS_DONE,
@@ -43,8 +43,8 @@ class ModerationQueueCronjob extends AbstractCronjob
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("queueID IN (?)", [$queueIDs]);
 
-            $sql = "DELETE FROM	wcf" . WCF_N . "_moderation_queue
-				" . $conditions;
+            $sql = "DELETE FROM wcf" . WCF_N . "_moderation_queue
+                    " . $conditions;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditions->getParameters());
 

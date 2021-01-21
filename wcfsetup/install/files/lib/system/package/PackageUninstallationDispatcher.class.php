@@ -149,8 +149,8 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
         PackageEditor::deleteAll([$this->queue->packageID]);
 
         // remove localized package info
-        $sql = "DELETE FROM	wcf" . WCF_N . "_language_item
-			WHERE		languageItem IN (?, ?)";
+        $sql = "DELETE FROM wcf" . WCF_N . "_language_item
+                WHERE       languageItem IN (?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             'wcf.acp.package.packageName.package' . $this->queue->packageID,
@@ -201,9 +201,9 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
         ];
 
         // insert queue entry (entries)
-        $sql = "INSERT INTO	wcf" . WCF_N . "_package_installation_queue
-					(processNo, userID, package, packageID, action)
-			VALUES		(?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_queue
+                            (processNo, userID, package, packageID, action)
+                VALUES      (?, ?, ?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($statementParameters as $parameter) {
             $statement->execute([

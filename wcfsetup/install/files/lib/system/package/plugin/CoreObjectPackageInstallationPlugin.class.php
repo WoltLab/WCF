@@ -38,9 +38,9 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
      */
     protected function handleDelete(array $items)
     {
-        $sql = "DELETE FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE		objectName = ?
-					AND packageID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE       objectName = ?
+                        AND packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($items as $item) {
             $statement->execute([
@@ -65,10 +65,10 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
      */
     protected function findExistingItem(array $data)
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE	objectName = ?
-				AND packageID = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE   objectName = ?
+                    AND packageID = ?";
         $parameters = [
             $data['objectName'],
             $this->installation->getPackageID(),

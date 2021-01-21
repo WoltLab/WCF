@@ -84,9 +84,9 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
         // call 'hasUninstall' event
         EventHandler::getInstance()->fireAction($this, 'hasUninstall');
 
-        $sql = "SELECT	COUNT(*)
-			FROM	" . $this->application . WCF_N . "_" . $this->tableName . "
-			WHERE	packageID = ?";
+        $sql = "SELECT  COUNT(*)
+                FROM    " . $this->application . WCF_N . "_" . $this->tableName . "
+                WHERE   packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->installation->getPackageID()]);
 
@@ -101,8 +101,8 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
         // call 'uninstall' event
         EventHandler::getInstance()->fireAction($this, 'uninstall');
 
-        $sql = "DELETE FROM	" . $this->application . WCF_N . "_" . $this->tableName . "
-			WHERE		packageID = ?";
+        $sql = "DELETE FROM " . $this->application . WCF_N . "_" . $this->tableName . "
+                WHERE       packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->installation->getPackageID()]);
     }

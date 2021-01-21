@@ -25,10 +25,10 @@ class AttachmentCleanUpCronjob extends AbstractCronjob
         parent::execute($cronjob);
 
         // delete orphaned attachments
-        $sql = "SELECT	attachmentID
-			FROM	wcf" . WCF_N . "_attachment
-			WHERE	objectID = ?
-				AND uploadTime < ?";
+        $sql = "SELECT  attachmentID
+                FROM    wcf" . WCF_N . "_attachment
+                WHERE   objectID = ?
+                    AND uploadTime < ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             0,
@@ -50,10 +50,10 @@ class AttachmentCleanUpCronjob extends AbstractCronjob
      */
     protected function getOldContactAttachmentIDs()
     {
-        $sql = "SELECT	attachmentID
-			FROM	wcf" . WCF_N . "_attachment
-			WHERE	objectTypeID = ?
-				AND uploadTime < ?";
+        $sql = "SELECT  attachmentID
+                FROM    wcf" . WCF_N . "_attachment
+                WHERE   objectTypeID = ?
+                    AND uploadTime < ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.attachment.objectType', 'com.woltlab.wcf.contact'),

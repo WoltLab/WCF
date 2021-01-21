@@ -40,10 +40,10 @@ class TemplateGroupEditor extends DatabaseObjectEditor implements IEditableCache
             @\rename(WCF_DIR . 'templates/' . $this->templateGroupFolderName, WCF_DIR . 'templates/' . $parameters['templateGroupFolderName']);
 
             // check template group folders in other applications
-            $sql = "SELECT	DISTINCT application
-				FROM	wcf" . WCF_N . "_template
-				WHERE	templateGroupID = ?
-					AND application <> ?";
+            $sql = "SELECT  DISTINCT application
+                    FROM    wcf" . WCF_N . "_template
+                    WHERE   templateGroupID = ?
+                        AND application <> ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->templateGroupID, 'wcf']);
             while ($row = $statement->fetchArray()) {
@@ -81,10 +81,10 @@ class TemplateGroupEditor extends DatabaseObjectEditor implements IEditableCache
         }
 
         // check template group folders in other applications
-        $sql = "SELECT	DISTINCT application
-			FROM	wcf" . WCF_N . "_template
-			WHERE	templateGroupID = ?
-				AND application <> ?";
+        $sql = "SELECT  DISTINCT application
+                FROM    wcf" . WCF_N . "_template
+                WHERE   templateGroupID = ?
+                    AND application <> ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->templateGroupID, 'wcf']);
         while ($row = $statement->fetchArray()) {

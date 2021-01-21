@@ -99,8 +99,8 @@ class PollManager extends SingletonFactory
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("pollID IN (?)", [$pollIDs]);
 
-        $sql = "DELETE FROM	wcf" . WCF_N . "_poll
-			" . $conditions;
+        $sql = "DELETE FROM wcf" . WCF_N . "_poll
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
     }
@@ -146,10 +146,10 @@ class PollManager extends SingletonFactory
             ];
 
             // load poll options
-            $sql = "SELECT		optionID, optionValue
-				FROM		wcf" . WCF_N . "_poll_option
-				WHERE		pollID = ?
-				ORDER BY	showOrder ASC";
+            $sql = "SELECT      optionID, optionValue
+                    FROM        wcf" . WCF_N . "_poll_option
+                    WHERE       pollID = ?
+                    ORDER BY    showOrder ASC";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->poll->pollID]);
             while ($row = $statement->fetchArray()) {

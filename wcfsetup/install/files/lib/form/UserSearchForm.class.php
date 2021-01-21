@@ -171,10 +171,10 @@ class UserSearchForm extends UserOptionListForm
     protected function search()
     {
         $this->matches = [];
-        $sql = "SELECT		user_table.userID
-			FROM		wcf" . WCF_N . "_user user_table
-			LEFT JOIN	wcf" . WCF_N . "_user_option_value option_value
-			ON		(option_value.userID = user_table.userID)";
+        $sql = "SELECT      user_table.userID
+                FROM        wcf" . WCF_N . "_user user_table
+                LEFT JOIN   wcf" . WCF_N . "_user_option_value option_value
+                ON          (option_value.userID = user_table.userID)";
 
         // build search condition
         $this->conditions = new PreparedStatementConditionBuilder();

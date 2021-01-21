@@ -23,14 +23,14 @@ trait TMultiRecipientPageCommentUserNotificationObjectType
     public function getRecipientIDs(Comment $comment)
     {
         // find all userIDs with the permission to manage pages
-        $sql = "SELECT  userID 
-			FROM    wcf" . WCF_N . "_user_to_group
-                        INNER JOIN      wcf" . WCF_N . "_user_group_option_value
-                                        ON      wcf" . WCF_N . "_user_to_group.groupID = wcf" . WCF_N . "_user_group_option_value.groupID  
-                                        AND     wcf" . WCF_N . "_user_group_option_value.optionValue = ? 
-                        INNER JOIN      wcf" . WCF_N . "_user_group_option
-                                        ON      wcf" . WCF_N . "_user_group_option_value.optionID = wcf" . WCF_N . "_user_group_option.optionID 
-                                        AND     wcf" . WCF_N . "_user_group_option.optionName = ?";
+        $sql = "SELECT      userID 
+                FROM        wcf" . WCF_N . "_user_to_group
+                INNER JOIN  wcf" . WCF_N . "_user_group_option_value
+                ON          wcf" . WCF_N . "_user_to_group.groupID = wcf" . WCF_N . "_user_group_option_value.groupID  
+                        AND wcf" . WCF_N . "_user_group_option_value.optionValue = ? 
+                INNER JOIN  wcf" . WCF_N . "_user_group_option
+                ON          wcf" . WCF_N . "_user_group_option_value.optionID = wcf" . WCF_N . "_user_group_option.optionID 
+                        AND wcf" . WCF_N . "_user_group_option.optionName = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             1,

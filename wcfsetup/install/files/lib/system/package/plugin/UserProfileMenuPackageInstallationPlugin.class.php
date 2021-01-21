@@ -52,9 +52,9 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
      */
     protected function handleDelete(array $items)
     {
-        $sql = "DELETE FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE		menuItem = ?
-					AND packageID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE       menuItem = ?
+                        AND packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($items as $item) {
             $statement->execute([
@@ -88,10 +88,10 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
      */
     protected function findExistingItem(array $data)
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE	menuItem = ?
-				AND packageID = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE   menuItem = ?
+                    AND packageID = ?";
         $parameters = [
             $data['menuItem'],
             $this->installation->getPackageID(),

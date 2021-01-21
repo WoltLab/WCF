@@ -27,9 +27,9 @@ class EmailTemplateEngine extends TemplateEngine
         static $initialized = false;
 
         if (!$initialized) {
-            $sql = "SELECT	templateGroupID
-				FROM	wcf" . WCF_N . "_template_group
-				WHERE	templateGroupFolderName = ?";
+            $sql = "SELECT  templateGroupID
+                    FROM    wcf" . WCF_N . "_template_group
+                    WHERE   templateGroupFolderName = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute(['_wcf_email/']);
 

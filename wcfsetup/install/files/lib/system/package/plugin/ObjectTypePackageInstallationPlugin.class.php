@@ -95,9 +95,9 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     protected function getDefinitionID($definitionName)
     {
         // get object type id
-        $sql = "SELECT	definitionID
-			FROM	wcf" . WCF_N . "_object_type_definition
-			WHERE	definitionName = ?";
+        $sql = "SELECT  definitionID
+                FROM    wcf" . WCF_N . "_object_type_definition
+                WHERE   definitionName = ?";
         $statement = WCF::getDB()->prepareStatement($sql, 1);
         $statement->execute([$definitionName]);
         $row = $statement->fetchArray();
@@ -113,10 +113,10 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
      */
     protected function handleDelete(array $items)
     {
-        $sql = "DELETE FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE		objectType = ?
-					AND definitionID = ?
-					AND packageID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE       objectType = ?
+                        AND definitionID = ?
+                        AND packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($items as $item) {
             $statement->execute([
@@ -152,11 +152,11 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
      */
     protected function findExistingItem(array $data)
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE	objectType = ?
-				AND definitionID = ?
-				AND packageID = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE   objectType = ?
+                    AND definitionID = ?
+                    AND packageID = ?";
         $parameters = [
             $data['objectType'],
             $data['definitionID'],
@@ -510,9 +510,9 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                             return;
                         }
 
-                        $sql = "SELECT	optionType
-							FROM	wcf" . WCF_N . "_user_group_option
-							WHERE	optionName = ?";
+                        $sql = "SELECT  optionType
+                                FROM    wcf" . WCF_N . "_user_group_option
+                                WHERE   optionName = ?";
                         $statement = WCF::getDB()->prepareStatement($sql);
                         $statement->execute([\reset($value)]);
                         if ($statement->fetchSingleColumn() !== 'BBCodeSelect') {

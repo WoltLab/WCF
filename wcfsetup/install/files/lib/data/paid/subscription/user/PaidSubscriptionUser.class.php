@@ -89,10 +89,10 @@ class PaidSubscriptionUser extends DatabaseObject
      */
     public static function getSubscriptionUser($subscriptionID, $userID)
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_paid_subscription_user
-			WHERE	subscriptionID = ?
-				AND userID = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_paid_subscription_user
+                WHERE   subscriptionID = ?
+                    AND userID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$subscriptionID, $userID]);
         $row = $statement->fetchArray();

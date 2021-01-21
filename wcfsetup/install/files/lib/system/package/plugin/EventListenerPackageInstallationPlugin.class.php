@@ -52,18 +52,18 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
      */
     protected function handleDelete(array $items)
     {
-        $sql = "DELETE FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE		packageID = ?
-					AND environment = ?
-					AND eventClassName = ?
-					AND eventName = ?
-					AND inherit = ?
-					AND listenerClassName = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE       packageID = ?
+                        AND environment = ?
+                        AND eventClassName = ?
+                        AND eventName = ?
+                        AND inherit = ?
+                        AND listenerClassName = ?";
         $legacyStatement = WCF::getDB()->prepareStatement($sql);
 
-        $sql = "DELETE FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE		packageID = ?
-					AND listenerName = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE       packageID = ?
+                        AND listenerName = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
 
         foreach ($items as $item) {
@@ -143,13 +143,13 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
     protected function findExistingItem(array $data)
     {
         if (!$data['listenerName']) {
-            $sql = "SELECT	*
-				FROM	wcf" . WCF_N . "_" . $this->tableName . "
-				WHERE	packageID = ?
-					AND environment = ?
-					AND eventClassName = ?
-					AND eventName = ?
-					AND listenerClassName = ?";
+            $sql = "SELECT  *
+                    FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                    WHERE   packageID = ?
+                        AND environment = ?
+                        AND eventClassName = ?
+                        AND eventName = ?
+                        AND listenerClassName = ?";
             $parameters = [
                 $this->installation->getPackageID(),
                 $data['environment'],
@@ -158,10 +158,10 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
                 $data['listenerClassName'],
             ];
         } else {
-            $sql = "SELECT	*
-				FROM	wcf" . WCF_N . "_" . $this->tableName . "
-				WHERE	packageID = ?
-					AND listenerName = ?";
+            $sql = "SELECT  *
+                    FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                    WHERE   packageID = ?
+                        AND listenerName = ?";
             $parameters = [
                 $this->installation->getPackageID(),
                 $data['listenerName'],

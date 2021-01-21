@@ -40,18 +40,18 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder
         }
 
         // fetch ordered pips
-        $sql = "SELECT		pluginName, className,
-					CASE pluginName WHEN 'packageinstallationplugin' THEN 1 WHEN 'file' THEN 2 ELSE 0 END AS pluginOrder
-			FROM		wcf" . WCF_N . "_package_installation_plugin
-			ORDER BY	pluginOrder, priority";
+        $sql = "SELECT      pluginName, className,
+                            CASE pluginName WHEN 'packageinstallationplugin' THEN 1 WHEN 'file' THEN 2 ELSE 0 END AS pluginOrder
+                FROM        wcf" . WCF_N . "_package_installation_plugin
+                ORDER BY    pluginOrder, priority";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         $pips = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
         // insert pips
-        $sql = "INSERT INTO	wcf" . WCF_N . "_package_installation_node
-					(queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData)
-			VALUES		(?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_node
+                            (queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData)
+                VALUES      (?, ?, ?, ?, ?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         $sequenceNo = 0;
 
@@ -81,9 +81,9 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder
         $this->parentNode = $this->node;
         $this->node = $this->getToken();
 
-        $sql = "INSERT INTO	wcf" . WCF_N . "_package_installation_node
-					(queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData)
-			VALUES		(?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO wcf" . WCF_N . "_package_installation_node
+                            (queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData)
+                VALUES      (?, ?, ?, ?, ?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $this->installation->queue->queueID,

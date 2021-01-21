@@ -29,14 +29,14 @@ class DatabaseCLICommandHistory extends MemoryHistory
     public function save($append = false)
     {
         if (!$append) {
-            $sql = "DELETE FROM	wcf" . WCF_N . "_cli_history
-				WHERE		userID = ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_cli_history
+                    WHERE       userID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([WCF::getUser()->userID]);
         }
 
-        $sql = "INSERT INTO	wcf" . WCF_N . "_cli_history (userID, command)
-			VALUES (?, ?)";
+        $sql = "INSERT INTO wcf" . WCF_N . "_cli_history (userID, command)
+                VALUES      (?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         WCF::getDB()->beginTransaction();
 
@@ -51,9 +51,9 @@ class DatabaseCLICommandHistory extends MemoryHistory
      */
     public function load()
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_cli_history
-			WHERE	userID = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_cli_history
+                WHERE   userID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([WCF::getUser()->userID]);
 

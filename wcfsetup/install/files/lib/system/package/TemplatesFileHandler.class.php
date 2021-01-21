@@ -40,19 +40,19 @@ class TemplatesFileHandler extends ACPTemplatesFileHandler
 
         // get existing templates
         $updateTemplateIDs = [];
-        $sql = "SELECT	templateName, templateID
-			FROM	wcf" . WCF_N . "_template
-			WHERE	packageID = ?
-				AND application = ?
-				AND templateGroupID IS NULL";
+        $sql = "SELECT  templateName, templateID
+                FROM    wcf" . WCF_N . "_template
+                WHERE   packageID = ?
+                    AND application = ?
+                    AND templateGroupID IS NULL";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$packageID, $this->application]);
         $existingTemplates = $statement->fetchMap('templateName', 'templateID');
 
         // save new templates
-        $sql = "INSERT INTO	wcf" . WCF_N . "_template
-					(packageID, templateName, lastModificationTime, application)
-			VALUES		(?, ?, ?, ?)";
+        $sql = "INSERT INTO wcf" . WCF_N . "_template
+                            (packageID, templateName, lastModificationTime, application)
+                VALUES      (?, ?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($files as $file) {
             if (isset($existingTemplates[$file])) {
@@ -73,9 +73,9 @@ class TemplatesFileHandler extends ACPTemplatesFileHandler
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('templateID IN (?)', [$updateTemplateIDs]);
 
-            $sql = "UPDATE	wcf" . WCF_N . "_template
-				SET	lastModificationTime = ?
-				" . $conditionBuilder;
+            $sql = "UPDATE  wcf" . WCF_N . "_template
+                    SET     lastModificationTime = ?
+                    " . $conditionBuilder;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute(\array_merge([TIME_NOW], $conditionBuilder->getParameters()));
         }

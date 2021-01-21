@@ -51,9 +51,9 @@ class UserGroupOptionFormField extends ItemListFormField implements IPackagesFor
                 $conditionBuilder->add('packageID IN (?)', [$this->getPackageIDs()]);
             }
 
-            $sql = "SELECT	optionName
-				FROM	wcf" . WCF_N . "_user_group_option
-				" . $conditionBuilder;
+            $sql = "SELECT  optionName
+                    FROM    wcf" . WCF_N . "_user_group_option
+                    " . $conditionBuilder;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditionBuilder->getParameters());
             $availableOptions = $statement->fetchAll(\PDO::FETCH_COLUMN);

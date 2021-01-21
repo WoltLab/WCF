@@ -127,10 +127,10 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
         }
 
         // check if the option exist already and was installed by this package
-        $sql = "SELECT	optionID
-			FROM	wcf" . WCF_N . "_user_group_option
-			WHERE	optionName = ?
-			AND	packageID = ?";
+        $sql = "SELECT  optionID
+                FROM    wcf" . WCF_N . "_user_group_option
+                WHERE   optionName = ?
+                    AND packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $optionName,
@@ -185,9 +185,9 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
             }
 
             // save values
-            $sql = "INSERT INTO	wcf" . WCF_N . "_user_group_option_value
-						(groupID, optionID, optionValue)
-				VALUES		(?, ?, ?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_user_group_option_value
+                                (groupID, optionID, optionValue)
+                    VALUES      (?, ?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
             WCF::getDB()->beginTransaction();
             foreach ($values as $groupID => $value) {
@@ -216,8 +216,8 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
                 'registered' => [],
             ];
 
-            $sql = "SELECT	groupID, groupType
-				FROM	wcf" . WCF_N . "_user_group";
+            $sql = "SELECT  groupID, groupType
+                    FROM    wcf" . WCF_N . "_user_group";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute();
             while ($row = $statement->fetchArray()) {

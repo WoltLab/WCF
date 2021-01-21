@@ -152,11 +152,11 @@ class Style extends DatabaseObject
             return;
         }
 
-        $sql = "SELECT		variable.variableName, variable.defaultValue, value.variableValue
-			FROM		wcf" . WCF_N . "_style_variable variable
-			LEFT JOIN	wcf" . WCF_N . "_style_variable_value value
-			ON		(value.variableID = variable.variableID AND value.styleID = ?)
-			ORDER BY	variable.variableID ASC";
+        $sql = "SELECT      variable.variableName, variable.defaultValue, value.variableValue
+                FROM        wcf" . WCF_N . "_style_variable variable
+                LEFT JOIN   wcf" . WCF_N . "_style_variable_value value
+                ON          (value.variableID = variable.variableID AND value.styleID = ?)
+                ORDER BY    variable.variableID ASC";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->styleID]);
         while ($row = $statement->fetchArray()) {

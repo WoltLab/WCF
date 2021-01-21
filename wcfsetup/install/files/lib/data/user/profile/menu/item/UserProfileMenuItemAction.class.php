@@ -96,7 +96,7 @@ class UserProfileMenuItemAction extends AbstractDatabaseObjectAction implements 
         }
 
         $sql = "SELECT  menuItemID
-			FROM    wcf" . WCF_N . "_user_profile_menu_item";
+                FROM    wcf" . WCF_N . "_user_profile_menu_item";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         $menuItemIDs = [];
@@ -124,8 +124,8 @@ class UserProfileMenuItemAction extends AbstractDatabaseObjectAction implements 
     public function updatePosition()
     {
         $sql = "UPDATE  wcf" . WCF_N . "_user_profile_menu_item
-			SET     showOrder = ?
-			WHERE   menuItemID = ?";
+                SET     showOrder = ?
+                WHERE   menuItemID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
 
         WCF::getDB()->beginTransaction();

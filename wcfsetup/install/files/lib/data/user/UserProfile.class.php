@@ -144,9 +144,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
 
                 // cache does not exist or is outdated
                 if ($data === null) {
-                    $sql = "SELECT	followUserID
-						FROM	wcf" . WCF_N . "_user_follow
-						WHERE	userID = ?";
+                    $sql = "SELECT  followUserID
+                            FROM    wcf" . WCF_N . "_user_follow
+                            WHERE   userID = ?";
                     $statement = WCF::getDB()->prepareStatement($sql);
                     $statement->execute([$this->userID]);
                     $this->followingUserIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
@@ -178,9 +178,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
 
                 // cache does not exist or is outdated
                 if ($data === null) {
-                    $sql = "SELECT	userID
-						FROM	wcf" . WCF_N . "_user_follow
-						WHERE	followUserID = ?";
+                    $sql = "SELECT  userID
+                            FROM    wcf" . WCF_N . "_user_follow
+                            WHERE   followUserID = ?";
                     $statement = WCF::getDB()->prepareStatement($sql);
                     $statement->execute([$this->userID]);
                     $this->followerUserIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
@@ -212,9 +212,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
 
                 // cache does not exist or is outdated
                 if ($data === null) {
-                    $sql = "SELECT	ignoreUserID
-						FROM	wcf" . WCF_N . "_user_ignore
-						WHERE	userID = ?";
+                    $sql = "SELECT  ignoreUserID
+                            FROM    wcf" . WCF_N . "_user_ignore
+                            WHERE   userID = ?";
                     $statement = WCF::getDB()->prepareStatement($sql);
                     $statement->execute([$this->userID]);
                     $this->ignoredUserIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
@@ -246,9 +246,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
 
                 // cache does not exist or is outdated
                 if ($data === null) {
-                    $sql = "SELECT	userID
-						FROM	wcf" . WCF_N . "_user_ignore
-						WHERE	ignoreUserID = ?";
+                    $sql = "SELECT  userID
+                            FROM    wcf" . WCF_N . "_user_ignore
+                            WHERE   ignoreUserID = ?";
                     $statement = WCF::getDB()->prepareStatement($sql);
                     $statement->execute([$this->userID]);
                     $this->ignoredByUserIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
@@ -460,7 +460,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
 
         if ($specialTrophies === null) {
             // load special trophies for the user
-            $sql = "SELECT trophyID FROM wcf" . WCF_N . "_user_special_trophy WHERE userID = ?";
+            $sql = "SELECT  trophyID
+                    FROM    wcf" . WCF_N . "_user_special_trophy
+                    WHERE   userID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->userID]);
             $specialTrophies = $statement->fetchAll(\PDO::FETCH_COLUMN);
@@ -483,7 +485,8 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
             $conditionBuilder->add('trophyID IN (?)', [$trophyDeleteIDs]);
 
             // reset the user special trophies
-            $sql = "DELETE FROM wcf" . WCF_N . "_user_special_trophy " . $conditionBuilder;
+            $sql = "DELETE FROM wcf" . WCF_N . "_user_special_trophy
+                    " . $conditionBuilder;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditionBuilder->getParameters());
 
@@ -531,7 +534,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('userID IN (?)', [$rebuildUserIDs]);
 
-            $sql = "SELECT userID, trophyID FROM wcf" . WCF_N . "_user_special_trophy " . $conditionBuilder;
+            $sql = "SELECT  userID, trophyID
+                    FROM    wcf" . WCF_N . "_user_special_trophy
+                    " . $conditionBuilder;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditionBuilder->getParameters());
 
@@ -551,7 +556,8 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
                 $conditionBuilder->add('(userID = ? AND trophyID IN (?))', [$userID, $trophyIDs]);
             }
 
-            $sql = "DELETE FROM wcf" . WCF_N . "_user_special_trophy " . $conditionBuilder;
+            $sql = "DELETE FROM wcf" . WCF_N . "_user_special_trophy
+                    " . $conditionBuilder;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditionBuilder->getParameters());
         }

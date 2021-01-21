@@ -121,9 +121,9 @@ class PackageCLICommand implements IArgumentedCLICommand
         }
 
         // try to find existing package
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_package
-			WHERE	package = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_package
+                WHERE   package = ?";
         $statement = CLIWCF::getDB()->prepareStatement($sql);
         $statement->execute([$archive->getPackageInfo('name')]);
         $row = $statement->fetchArray();
@@ -203,10 +203,10 @@ class PackageCLICommand implements IArgumentedCLICommand
         }
         $conditions->add("done = ?", [0]);
 
-        $sql = "SELECT		*
-			FROM		wcf" . WCF_N . "_package_installation_queue
-			" . $conditions . "
-			ORDER BY	queueID ASC";
+        $sql = "SELECT      *
+                FROM        wcf" . WCF_N . "_package_installation_queue
+                " . $conditions . "
+                ORDER BY    queueID ASC";
         $statement = CLIWCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         $packageInstallation = $statement->fetchArray();

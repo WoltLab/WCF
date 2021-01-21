@@ -124,9 +124,9 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
         ];
 
         // try to find an existing option for updating
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE	optionName = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE   optionName = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $optionName,

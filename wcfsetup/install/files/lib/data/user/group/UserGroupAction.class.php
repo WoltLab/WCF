@@ -112,14 +112,14 @@ class UserGroupAction extends AbstractDatabaseObjectAction
     {
         // fetch user group option values
         if ($this->parameters['copyUserGroupOptions']) {
-            $sql = "SELECT	optionID, optionValue
-				FROM	wcf" . WCF_N . "_user_group_option_value
-				WHERE	groupID = ?";
+            $sql = "SELECT  optionID, optionValue
+                    FROM    wcf" . WCF_N . "_user_group_option_value
+                    WHERE   groupID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->groupEditor->groupID]);
         } else {
-            $sql = "SELECT	optionID, defaultValue AS optionValue
-				FROM	wcf" . WCF_N . "_user_group_option";
+            $sql = "SELECT  optionID, defaultValue AS optionValue
+                    FROM    wcf" . WCF_N . "_user_group_option";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute();
         }
@@ -153,11 +153,11 @@ class UserGroupAction extends AbstractDatabaseObjectAction
             $groupName = 'wcf.acp.group.group' . $group->groupID;
 
             // create group name language item
-            $sql = "INSERT INTO	wcf" . WCF_N . "_language_item
-						(languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
-				SELECT		languageID, '" . $groupName . "', CONCAT(languageItemValue, ' (2)'), 0, languageCategoryID, packageID
-				FROM		wcf" . WCF_N . "_language_item
-				WHERE		languageItem = ?";
+            $sql = "INSERT INTO wcf" . WCF_N . "_language_item
+                                (languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
+                    SELECT      languageID, '" . $groupName . "', CONCAT(languageItemValue, ' (2)'), 0, languageCategoryID, packageID
+                    FROM        wcf" . WCF_N . "_language_item
+                    WHERE       languageItem = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->groupEditor->groupName]);
         } else {
@@ -170,11 +170,11 @@ class UserGroupAction extends AbstractDatabaseObjectAction
             $groupDescription = 'wcf.acp.group.groupDescription' . $group->groupID;
 
             // create group name language item
-            $sql = "INSERT INTO	wcf" . WCF_N . "_language_item
-						(languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
-				SELECT		languageID, '" . $groupDescription . "', languageItemValue, 0, languageCategoryID, packageID
-				FROM		wcf" . WCF_N . "_language_item
-				WHERE		languageItem = ?";
+            $sql = "INSERT INTO wcf" . WCF_N . "_language_item
+                                (languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
+                    SELECT      languageID, '" . $groupDescription . "', languageItemValue, 0, languageCategoryID, packageID
+                    FROM        wcf" . WCF_N . "_language_item
+                    WHERE       languageItem = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->groupEditor->groupDescription]);
         }
@@ -186,22 +186,22 @@ class UserGroupAction extends AbstractDatabaseObjectAction
 
         // copy members
         if ($this->parameters['copyMembers']) {
-            $sql = "INSERT INTO	wcf" . WCF_N . "_user_to_group
-						(userID, groupID)
-				SELECT		userID, " . $group->groupID . "
-				FROM		wcf" . WCF_N . "_user_to_group
-				WHERE		groupID = ?";
+            $sql = "INSERT INTO wcf" . WCF_N . "_user_to_group
+                                (userID, groupID)
+                    SELECT      userID, " . $group->groupID . "
+                    FROM        wcf" . WCF_N . "_user_to_group
+                    WHERE       groupID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->groupEditor->groupID]);
         }
 
         // copy acl options
         if ($this->parameters['copyACLOptions']) {
-            $sql = "INSERT INTO	wcf" . WCF_N . "_acl_option_to_group
-						(optionID, objectID, groupID, optionValue)
-				SELECT		optionID, objectID, " . $group->groupID . ", optionValue
-				FROM		wcf" . WCF_N . "_acl_option_to_group
-				WHERE		groupID = ?";
+            $sql = "INSERT INTO wcf" . WCF_N . "_acl_option_to_group
+                                (optionID, objectID, groupID, optionValue)
+                    SELECT      optionID, objectID, " . $group->groupID . ", optionValue
+                    FROM        wcf" . WCF_N . "_acl_option_to_group
+                    WHERE       groupID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->groupEditor->groupID]);
 

@@ -35,9 +35,9 @@ class UserFollowerImporter extends AbstractImporter
             $data['time'] = 0;
         }
 
-        $sql = "INSERT IGNORE INTO	wcf" . WCF_N . "_user_follow
-						(userID, followUserID, time)
-			VALUES			(?, ?, ?)";
+        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_user_follow
+                                    (userID, followUserID, time)
+                VALUES              (?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $data['userID'],

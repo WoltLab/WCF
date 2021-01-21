@@ -107,9 +107,9 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         }
 
         // get installed languages
-        $sql = "SELECT		*
-			FROM		wcf" . WCF_N . "_language
-			ORDER BY	isDefault DESC";
+        $sql = "SELECT      *
+                FROM        wcf" . WCF_N . "_language
+                ORDER BY    isDefault DESC";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         $installedLanguages = $statement->fetchAll(\PDO::FETCH_ASSOC);
@@ -181,9 +181,9 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         // delete language items
         // Get all items and their categories
         // which where installed from this package.
-        $sql = "SELECT	languageItemID, languageCategoryID, languageID
-			FROM	wcf" . WCF_N . "_language_item
-			WHERE	packageID = ?";
+        $sql = "SELECT  languageItemID, languageCategoryID, languageID
+                FROM    wcf" . WCF_N . "_language_item
+                WHERE   packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->installation->getPackageID()]);
         $itemIDs = [];
@@ -196,9 +196,9 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         }
 
         if (!empty($itemIDs)) {
-            $sql = "DELETE FROM	wcf" . WCF_N . "_" . $this->tableName . "
-				WHERE		languageItemID = ?
-						AND packageID = ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_" . $this->tableName . "
+                    WHERE       languageItemID = ?
+                            AND packageID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
 
             foreach ($itemIDs as $itemID) {
@@ -248,15 +248,15 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("language_category.languageCategoryID IN (?)", [$categoryIDs]);
 
-        $sql = "SELECT		COUNT(item.languageItemID) AS count,
-					language_category.languageCategoryID,
-					language_category.languageCategory
-			FROM		wcf" . WCF_N . "_language_category language_category
-			LEFT JOIN	wcf" . WCF_N . "_language_item item
-			ON		(item.languageCategoryID = language_category.languageCategoryID)
-			" . $conditions . "
-			GROUP BY	language_category.languageCategoryID ASC,
-					language_category.languageCategory ASC";
+        $sql = "SELECT      COUNT(item.languageItemID) AS count,
+                            language_category.languageCategoryID,
+                            language_category.languageCategory
+                FROM        wcf" . WCF_N . "_language_category language_category
+                LEFT JOIN   wcf" . WCF_N . "_language_item item
+                ON          (item.languageCategoryID = language_category.languageCategoryID)
+                " . $conditions . "
+                GROUP BY    language_category.languageCategoryID ASC,
+                            language_category.languageCategory ASC";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         $categoriesToDelete = [];
@@ -268,8 +268,8 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 
         // Delete categories from DB.
         if (!empty($categoriesToDelete)) {
-            $sql = "DELETE FROM	wcf" . WCF_N . "_language_category
-				WHERE		languageCategory = ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_language_category
+                    WHERE       languageCategory = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
 
             foreach ($categoriesToDelete as $category) {
@@ -698,10 +698,10 @@ XML;
 
         $existingRow = [];
         if ($oldElement !== null) {
-            $sql = "SELECT	*
-				FROM	wcf" . WCF_N . "_language_item
-				WHERE	languageItem = ?
-					AND languageID = ?";
+            $sql = "SELECT  *
+                    FROM    wcf" . WCF_N . "_language_item
+                    WHERE   languageItem = ?
+                        AND languageID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 $oldElement->getAttribute('name'),
@@ -864,9 +864,9 @@ XML;
      */
     protected function deleteObject(\DOMElement $element)
     {
-        $sql = "DELETE FROM	wcf" . WCF_N . "_language_item
-			WHERE		languageItem = ?
-					AND packageID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_language_item
+                WHERE       languageItem = ?
+                        AND packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $element->getAttribute('name'),

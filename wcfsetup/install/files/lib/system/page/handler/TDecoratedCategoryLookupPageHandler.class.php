@@ -102,11 +102,11 @@ trait TDecoratedCategoryLookupPageHandler
         /** @noinspection PhpUndefinedFieldInspection */
         $conditionBuilder->add('category.objectTypeID = ?', [ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.category', $className::OBJECT_TYPE_NAME)]);
         $conditionBuilder->add('(category.title LIKE ? OR language_item.languageItemValue LIKE ?)', ['%' . $searchString . '%', '%' . $searchString . '%']);
-        $sql = "SELECT		DISTINCT categoryID
-			FROM		wcf" . WCF_N . "_category category
-			LEFT JOIN	wcf" . WCF_N . "_language_item language_item
-			ON		(language_item.languageItem = category.title)
-			" . $conditionBuilder;
+        $sql = "SELECT      DISTINCT categoryID
+                FROM        wcf" . WCF_N . "_category category
+                LEFT JOIN   wcf" . WCF_N . "_language_item language_item
+                ON          (language_item.languageItem = category.title)
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql, 10);
         $statement->execute($conditionBuilder->getParameters());
         $results = [];

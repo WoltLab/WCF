@@ -245,8 +245,8 @@ class PackageUpdateDispatcher extends SingletonFactory
 
         if ($allNewPackages !== false) {
             // purge package list
-            $sql = "DELETE FROM	wcf" . WCF_N . "_package_update
-				WHERE		packageUpdateServerID = ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_package_update
+                    WHERE       packageUpdateServerID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$updateServer->packageUpdateServerID]);
 
@@ -498,9 +498,9 @@ class PackageUpdateDispatcher extends SingletonFactory
     protected function savePackageUpdates(array &$allNewPackages, $packageUpdateServerID)
     {
         $excludedPackagesParameters = $fromversionParameters = $insertParameters = $optionalInserts = $requirementInserts = $compatibilityInserts = [];
-        $sql = "INSERT INTO     wcf" . WCF_N . "_package_update
-					(packageUpdateServerID, package, packageName, packageDescription, author, authorURL, isApplication, pluginStoreFileID)
-			VALUES          (?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO wcf" . WCF_N . "_package_update
+                            (packageUpdateServerID, package, packageName, packageDescription, author, authorURL, isApplication, pluginStoreFileID)
+                VALUES      (?, ?, ?, ?, ?, ?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         WCF::getDB()->beginTransaction();
         foreach ($allNewPackages as $identifier => $packageData) {
@@ -518,15 +518,15 @@ class PackageUpdateDispatcher extends SingletonFactory
         WCF::getDB()->commitTransaction();
 
         $sql = "SELECT  packageUpdateID, package
-			FROM    wcf" . WCF_N . "_package_update
-			WHERE   packageUpdateServerID = ?";
+                FROM    wcf" . WCF_N . "_package_update
+                WHERE   packageUpdateServerID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$packageUpdateServerID]);
         $packageUpdateIDs = $statement->fetchMap('package', 'packageUpdateID');
 
-        $sql = "INSERT INTO     wcf" . WCF_N . "_package_update_version
-					(filename, license, licenseURL, isAccessible, packageDate, packageUpdateID, packageVersion)
-			VALUES          (?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO wcf" . WCF_N . "_package_update_version
+                            (filename, license, licenseURL, isAccessible, packageDate, packageUpdateID, packageVersion)
+                VALUES      (?, ?, ?, ?, ?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         WCF::getDB()->beginTransaction();
         foreach ($allNewPackages as $package => $packageData) {
@@ -547,8 +547,8 @@ class PackageUpdateDispatcher extends SingletonFactory
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add('packageUpdateID IN (?)', [\array_values($packageUpdateIDs)]);
         $sql = "SELECT  packageUpdateVersionID, packageUpdateID, packageVersion
-			FROM    wcf" . WCF_N . "_package_update_version
-			" . $conditions;
+                FROM    wcf" . WCF_N . "_package_update_version
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         $packageUpdateVersions = [];
@@ -644,9 +644,9 @@ class PackageUpdateDispatcher extends SingletonFactory
         }
 
         if (!empty($requirementInserts)) {
-            $sql = "INSERT INTO	wcf" . WCF_N . "_package_update_requirement
-						(packageUpdateVersionID, package, minversion)
-				VALUES		(?, ?, ?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_package_update_requirement
+                                (packageUpdateVersionID, package, minversion)
+                    VALUES      (?, ?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
             WCF::getDB()->beginTransaction();
             foreach ($requirementInserts as $requirement) {
@@ -660,9 +660,9 @@ class PackageUpdateDispatcher extends SingletonFactory
         }
 
         if (!empty($optionalInserts)) {
-            $sql = "INSERT INTO	wcf" . WCF_N . "_package_update_optional
-						(packageUpdateVersionID, package)
-				VALUES		(?, ?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_package_update_optional
+                                (packageUpdateVersionID, package)
+                    VALUES      (?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
             WCF::getDB()->beginTransaction();
             foreach ($optionalInserts as $requirement) {
@@ -675,9 +675,9 @@ class PackageUpdateDispatcher extends SingletonFactory
         }
 
         if (!empty($excludedPackagesParameters)) {
-            $sql = "INSERT INTO	wcf" . WCF_N . "_package_update_exclusion
-						(packageUpdateVersionID, excludedPackage, excludedPackageVersion)
-				VALUES		(?, ?, ?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_package_update_exclusion
+                                (packageUpdateVersionID, excludedPackage, excludedPackageVersion)
+                    VALUES      (?, ?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
             WCF::getDB()->beginTransaction();
             foreach ($excludedPackagesParameters as $excludedPackage) {
@@ -691,9 +691,9 @@ class PackageUpdateDispatcher extends SingletonFactory
         }
 
         if (!empty($fromversionInserts)) {
-            $sql = "INSERT INTO	wcf" . WCF_N . "_package_update_fromversion
-						(packageUpdateVersionID, fromversion)
-				VALUES		(?, ?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_package_update_fromversion
+                                (packageUpdateVersionID, fromversion)
+                    VALUES      (?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
             WCF::getDB()->beginTransaction();
             foreach ($fromversionInserts as $fromversion) {
@@ -707,9 +707,9 @@ class PackageUpdateDispatcher extends SingletonFactory
 
         // @deprecated 5.2
         if (!empty($compatibilityInserts)) {
-            $sql = "INSERT INTO     wcf" . WCF_N . "_package_update_compatibility
-						(packageUpdateVersionID, version)
-				VALUES          (?, ?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_package_update_compatibility
+                                (packageUpdateVersionID, version)
+                    VALUES      (?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
             WCF::getDB()->beginTransaction();
             foreach ($compatibilityInserts as $versionData) {
@@ -743,9 +743,9 @@ class PackageUpdateDispatcher extends SingletonFactory
 
         // get existing packages and their versions
         $existingPackages = [];
-        $sql = "SELECT	packageID, package, packageDescription, packageName,
-				packageVersion, packageDate, author, authorURL, isApplication
-			FROM	wcf" . WCF_N . "_package";
+        $sql = "SELECT  packageID, package, packageDescription, packageName,
+                        packageVersion, packageDate, author, authorURL, isApplication
+                FROM    wcf" . WCF_N . "_package";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         while ($row = $statement->fetchArray()) {
@@ -760,12 +760,12 @@ class PackageUpdateDispatcher extends SingletonFactory
         $conditions->add("pu.packageUpdateServerID IN (?)", [$packageUpdateServerIDs]);
         $conditions->add("package IN (SELECT DISTINCT package FROM wcf" . WCF_N . "_package)");
 
-        $sql = "SELECT		pu.packageUpdateID, pu.packageUpdateServerID, pu.package,
-					puv.packageUpdateVersionID, puv.packageDate, puv.filename, puv.packageVersion
-			FROM		wcf" . WCF_N . "_package_update pu
-			LEFT JOIN	wcf" . WCF_N . "_package_update_version puv
-			ON		(puv.packageUpdateID = pu.packageUpdateID AND puv.isAccessible = 1)
-			" . $conditions;
+        $sql = "SELECT      pu.packageUpdateID, pu.packageUpdateServerID, pu.package,
+                            puv.packageUpdateVersionID, puv.packageDate, puv.filename, puv.packageVersion
+                FROM        wcf" . WCF_N . "_package_update pu
+                LEFT JOIN   wcf" . WCF_N . "_package_update_version puv
+                ON          (puv.packageUpdateID = pu.packageUpdateID AND puv.isAccessible = 1)
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         while ($row = $statement->fetchArray()) {
@@ -862,11 +862,11 @@ class PackageUpdateDispatcher extends SingletonFactory
      */
     protected function removeUpdateRequirements(array $updates, $packageUpdateVersionID)
     {
-        $sql = "SELECT		pur.package, pur.minversion, p.packageID
-			FROM		wcf" . WCF_N . "_package_update_requirement pur
-			LEFT JOIN	wcf" . WCF_N . "_package p
-			ON		(p.package = pur.package)
-			WHERE		pur.packageUpdateVersionID = ?";
+        $sql = "SELECT      pur.package, pur.minversion, p.packageID
+                FROM        wcf" . WCF_N . "_package_update_requirement pur
+                LEFT JOIN   wcf" . WCF_N . "_package p
+                ON          (p.package = pur.package)
+                WHERE       pur.packageUpdateVersionID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$packageUpdateVersionID]);
         while ($row = $statement->fetchArray()) {
@@ -919,13 +919,13 @@ class PackageUpdateDispatcher extends SingletonFactory
         $conditions->add('puv.isAccessible = ?', [1]);
         $conditions->add('pus.packageUpdateServerID IN (?)', [$packageUpdateServerIDs]);
 
-        $sql = "SELECT		puv.*, pu.*, pus.serverURL, pus.loginUsername, pus.loginPassword
-			FROM		wcf" . WCF_N . "_package_update_version puv
-			LEFT JOIN	wcf" . WCF_N . "_package_update pu
-			ON		(pu.packageUpdateID = puv.packageUpdateID)
-			LEFT JOIN	wcf" . WCF_N . "_package_update_server pus
-			ON		(pus.packageUpdateServerID = pu.packageUpdateServerID)
-			" . $conditions;
+        $sql = "SELECT      puv.*, pu.*, pus.serverURL, pus.loginUsername, pus.loginPassword
+                FROM        wcf" . WCF_N . "_package_update_version puv
+                LEFT JOIN   wcf" . WCF_N . "_package_update pu
+                ON          (pu.packageUpdateID = puv.packageUpdateID)
+                LEFT JOIN   wcf" . WCF_N . "_package_update_server pus
+                ON          (pus.packageUpdateServerID = pu.packageUpdateServerID)
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         $versions = $statement->fetchAll(\PDO::FETCH_ASSOC);
@@ -947,13 +947,13 @@ class PackageUpdateDispatcher extends SingletonFactory
     {
         // get all versions
         $versions = [];
-        $sql = "SELECT	packageVersion
-			FROM	wcf" . WCF_N . "_package_update_version
-			WHERE	packageUpdateID IN (
-					SELECT	packageUpdateID
-					FROM	wcf" . WCF_N . "_package_update
-					WHERE	package = ?
-				)";
+        $sql = "SELECT  packageVersion
+                FROM    wcf" . WCF_N . "_package_update_version
+                WHERE   packageUpdateID IN (
+                            SELECT  packageUpdateID
+                            FROM    wcf" . WCF_N . "_package_update
+                            WHERE   package = ?
+                        )";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$package]);
         while ($row = $statement->fetchArray()) {

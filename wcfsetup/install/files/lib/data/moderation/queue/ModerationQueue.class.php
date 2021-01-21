@@ -77,10 +77,10 @@ class ModerationQueue extends DatabaseObject
      */
     public function canEdit()
     {
-        $sql = "SELECT	isAffected
-			FROM	wcf" . WCF_N . "_moderation_queue_to_user
-			WHERE	queueID = ?
-				AND userID = ?";
+        $sql = "SELECT  isAffected
+                FROM    wcf" . WCF_N . "_moderation_queue_to_user
+                WHERE   queueID = ?
+                    AND userID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $this->queueID,

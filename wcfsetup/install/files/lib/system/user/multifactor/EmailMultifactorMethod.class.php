@@ -140,10 +140,10 @@ final class EmailMultifactorMethod implements IMultifactorMethod
     {
         $form->markRequiredFields(false);
 
-        $sql = "SELECT	code, createTime
-			FROM	wcf" . WCF_N . "_user_multifactor_email
-			WHERE		setupID = ?
-				AND	createTime > ?";
+        $sql = "SELECT  code, createTime
+                FROM    wcf" . WCF_N . "_user_multifactor_email
+                WHERE   setupID = ?
+                    AND createTime > ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $setup->getId(),
@@ -163,9 +163,9 @@ final class EmailMultifactorMethod implements IMultifactorMethod
                 10 ** (self::LENGTH - 1),
                 (10 ** self::LENGTH) - 1
             );
-            $sql = "INSERT INTO	wcf" . WCF_N . "_user_multifactor_email
-						(setupID, code, createTime)
-				VALUES		(?, ?, ?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_user_multifactor_email
+                                (setupID, code, createTime)
+                    VALUES      (?, ?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 $setup->getId(),
@@ -224,11 +224,11 @@ final class EmailMultifactorMethod implements IMultifactorMethod
     {
         $userCode = $form->getData()['data']['code'];
 
-        $sql = "SELECT	code
-			FROM	wcf" . WCF_N . "_user_multifactor_email
-			WHERE		setupID = ?
-				AND	createTime > ?
-			FOR UPDATE";
+        $sql = "SELECT  code
+                FROM    wcf" . WCF_N . "_user_multifactor_email
+                WHERE   setupID = ?
+                    AND createTime > ?
+                FOR UPDATE";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $setup->getId(),
@@ -242,10 +242,10 @@ final class EmailMultifactorMethod implements IMultifactorMethod
             throw new \RuntimeException('Unable to find a valid code.');
         }
 
-        $sql = "DELETE FROM	wcf" . WCF_N . "_user_multifactor_email
-			WHERE		setupID = ?
-				AND	createTime > ?
-				AND	code = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_user_multifactor_email
+                WHERE       setupID = ?
+                        AND createTime > ?
+                        AND code = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $setup->getId(),
@@ -263,8 +263,8 @@ final class EmailMultifactorMethod implements IMultifactorMethod
      */
     public static function prune(): void
     {
-        $sql = "DELETE FROM	wcf" . WCF_N . "_user_multifactor_email
-			WHERE		createTime < ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_user_multifactor_email
+                WHERE       createTime < ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             (\TIME_NOW - self::LIFETIME),

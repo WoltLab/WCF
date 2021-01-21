@@ -42,11 +42,11 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
         }
 
         if ($parentCategoryID != $this->parentCategoryID) {
-            $sql = "UPDATE	" . static::getDatabaseTableName() . "
-				SET	showOrder = showOrder - 1
-				WHERE	showOrder > ?
-					AND parentCategoryID = ?
-					AND objectTypeID = ?";
+            $sql = "UPDATE  " . static::getDatabaseTableName() . "
+                    SET     showOrder = showOrder - 1
+                    WHERE   showOrder > ?
+                        AND parentCategoryID = ?
+                        AND objectTypeID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 $this->showOrder,
@@ -57,12 +57,12 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
             return static::getShowOrder($this->objectTypeID, $parentCategoryID, $showOrder);
         } else {
             if ($showOrder < $this->showOrder) {
-                $sql = "UPDATE	" . static::getDatabaseTableName() . "
-					SET	showOrder = showOrder + 1
-					WHERE	showOrder >= ?
-						AND showOrder < ?
-						AND parentCategoryID = ?
-						AND objectTypeID = ?";
+                $sql = "UPDATE  " . static::getDatabaseTableName() . "
+                        SET     showOrder = showOrder + 1
+                        WHERE   showOrder >= ?
+                            AND showOrder < ?
+                            AND parentCategoryID = ?
+                            AND objectTypeID = ?";
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute([
                     $showOrder,
@@ -71,10 +71,10 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
                     $this->objectTypeID,
                 ]);
             } elseif ($showOrder > $this->showOrder) {
-                $sql = "SELECT	MAX(showOrder) AS showOrder
-					FROM	" . static::getDatabaseTableName() . "
-					WHERE	objectTypeID = ?
-						AND parentCategoryID = ?";
+                $sql = "SELECT  MAX(showOrder) AS showOrder
+                        FROM    " . static::getDatabaseTableName() . "
+                        WHERE   objectTypeID = ?
+                            AND parentCategoryID = ?";
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute([
                     $this->objectTypeID,
@@ -90,11 +90,11 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
                     $showOrder = $maxShowOrder;
                 }
 
-                $sql = "UPDATE	" . static::getDatabaseTableName() . "
-					SET	showOrder = showOrder - 1
-					WHERE	showOrder <= ?
-						AND showOrder > ?
-						AND objectTypeID = ?";
+                $sql = "UPDATE  " . static::getDatabaseTableName() . "
+                        SET     showOrder = showOrder - 1
+                        WHERE   showOrder <= ?
+                            AND showOrder > ?
+                            AND objectTypeID = ?";
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute([
                     $showOrder,
@@ -136,10 +136,10 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
     public static function deleteAll(array $objectIDs = [])
     {
         // update positions
-        $sql = "UPDATE	" . static::getDatabaseTableName() . "
-			SET	showOrder = showOrder - 1
-			WHERE	parentCategoryID = ?
-				AND showOrder > ?";
+        $sql = "UPDATE  " . static::getDatabaseTableName() . "
+                SET     showOrder = showOrder - 1
+                WHERE   parentCategoryID = ?
+                    AND showOrder > ?";
         $statement = WCF::getDB()->prepareStatement($sql);
 
         foreach ($objectIDs as $categoryID) {
@@ -165,10 +165,10 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
             $showOrder = \PHP_INT_MAX;
         }
 
-        $sql = "SELECT	MAX(showOrder) AS showOrder
-			FROM	" . static::getDatabaseTableName() . "
-			WHERE	objectTypeID = ?
-				AND parentCategoryID = ?";
+        $sql = "SELECT  MAX(showOrder) AS showOrder
+                FROM    " . static::getDatabaseTableName() . "
+                WHERE   objectTypeID = ?
+                    AND parentCategoryID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $objectTypeID,
@@ -181,11 +181,11 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
         }
 
         if ($maxShowOrder && $showOrder <= $maxShowOrder) {
-            $sql = "UPDATE	" . static::getDatabaseTableName() . "
-				SET	showOrder = showOrder + 1
-				WHERE	objectTypeID = ?
-					AND showOrder >= ?
-					AND parentCategoryID = ?";
+            $sql = "UPDATE  " . static::getDatabaseTableName() . "
+                    SET     showOrder = showOrder + 1
+                    WHERE   objectTypeID = ?
+                        AND showOrder >= ?
+                        AND parentCategoryID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 $objectTypeID,

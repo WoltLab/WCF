@@ -71,11 +71,11 @@ class Like extends DatabaseObject
      */
     public static function getLike($objectTypeID, $objectID, $userID)
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_like
-			WHERE	objectTypeID = ?
-				AND objectID = ?
-				AND userID = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_like
+                WHERE   objectTypeID = ?
+                    AND objectID = ?
+                    AND userID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $objectTypeID,

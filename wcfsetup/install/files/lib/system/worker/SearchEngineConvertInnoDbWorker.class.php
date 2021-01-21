@@ -66,10 +66,10 @@ class SearchEngineConvertInnoDbWorker extends AbstractRebuildDataWorker
     {
         $tables = $this->getTables();
 
-        $sql = "SELECT          LOWER(ENGINE)
-			FROM            INFORMATION_SCHEMA.TABLES
-			WHERE           TABLE_NAME = ?
-				AND     TABLE_SCHEMA = ?";
+        $sql = "SELECT  LOWER(ENGINE)
+                FROM    INFORMATION_SCHEMA.TABLES
+                WHERE   TABLE_NAME = ?
+                    AND TABLE_SCHEMA = ?";
         $checkStatement = WCF::getDB()->prepareStatement($sql);
 
         $convertTables = \array_slice($tables, $this->limit * $this->loopCount, $this->limit);

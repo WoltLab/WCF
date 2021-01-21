@@ -65,10 +65,10 @@ class BlacklistEntryAction extends AbstractDatabaseObjectAction
             $data = JSON::decode($response['body']);
             if (\is_array($data)) {
                 $sql = "INSERT INTO             wcf" . WCF_N . "_blacklist_entry
-								(type, hash, lastSeen, occurrences)
-					VALUES                  (?, ?, ?, ?)
-					ON DUPLICATE KEY UPDATE lastSeen = VALUES(lastSeen),
-								occurrences = VALUES(occurrences)";
+                                                (type, hash, lastSeen, occurrences)
+                        VALUES                  (?, ?, ?, ?)
+                        ON DUPLICATE KEY UPDATE lastSeen = VALUES(lastSeen),
+                                                occurrences = VALUES(occurrences)";
                 $statement = WCF::getDB()->prepareStatement($sql);
 
                 $lastSeen = \preg_replace('~^(.+)T(.+)Z~', '$1 $2', $data['meta']['end']);

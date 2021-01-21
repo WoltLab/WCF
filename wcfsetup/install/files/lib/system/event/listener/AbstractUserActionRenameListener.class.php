@@ -52,9 +52,9 @@ abstract class AbstractUserActionRenameListener implements IParameterizedEventLi
                 $databaseTable['username'] = 'username';
             }
 
-            $sql = "UPDATE	" . \str_replace('{WCF_N}', WCF_N, $databaseTable['name']) . "
-				SET	" . $databaseTable['username'] . " = ?
-				WHERE	" . $databaseTable['userID'] . " = ?";
+            $sql = "UPDATE  " . \str_replace('{WCF_N}', WCF_N, $databaseTable['name']) . "
+                    SET     " . $databaseTable['username'] . " = ?
+                    WHERE   " . $databaseTable['userID'] . " = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$username, $userID]);
         }

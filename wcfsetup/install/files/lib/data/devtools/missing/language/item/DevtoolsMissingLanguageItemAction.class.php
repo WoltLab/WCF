@@ -40,12 +40,11 @@ class DevtoolsMissingLanguageItemAction extends AbstractDatabaseObjectAction imp
         \array_shift($stackTraceData);
         $stackTrace = JSON::encode($stackTraceData);
 
-        $sql = "INSERT INTO		wcf" . WCF_N . "_devtools_missing_language_item
-						(languageID, languageItem, lastTime, stackTrace)
-			VALUES			(?, ?, ?, ?)
-			ON DUPLICATE KEY
-			UPDATE			lastTime = ?,
-						stackTrace = ?";
+        $sql = "INSERT INTO             wcf" . WCF_N . "_devtools_missing_language_item
+                                        (languageID, languageItem, lastTime, stackTrace)
+                VALUES                  (?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE lastTime = ?,
+                                        stackTrace = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $this->parameters['language']->languageID,
@@ -87,7 +86,7 @@ class DevtoolsMissingLanguageItemAction extends AbstractDatabaseObjectAction imp
      */
     public function clearLog()
     {
-        $sql = "DELETE FROM	wcf" . WCF_N . "_devtools_missing_language_item";
+        $sql = "DELETE FROM wcf" . WCF_N . "_devtools_missing_language_item";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
     }

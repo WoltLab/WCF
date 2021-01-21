@@ -521,8 +521,8 @@ class UserEditForm extends UserAddForm
         }
 
         // remove assignments
-        $sql = "DELETE FROM	wcf" . WCF_N . "_moderation_queue_to_user
-			WHERE		userID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_moderation_queue_to_user
+                WHERE       userID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->user->userID]);
 

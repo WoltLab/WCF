@@ -60,9 +60,9 @@ class UserObjectWatchHandler extends SingletonFactory
         $conditionsBuilder = new PreparedStatementConditionBuilder();
         $conditionsBuilder->add('objectTypeID = ?', [$objectTypeObj->objectTypeID]);
         $conditionsBuilder->add('objectID IN (?)', [$objectIDs]);
-        $sql = "SELECT		userID
-			FROM		wcf" . WCF_N . "_user_object_watch
-			" . $conditionsBuilder;
+        $sql = "SELECT  userID
+                FROM    wcf" . WCF_N . "_user_object_watch
+                " . $conditionsBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionsBuilder->getParameters());
         $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
@@ -93,8 +93,8 @@ class UserObjectWatchHandler extends SingletonFactory
             $conditionsBuilder->add('userID IN (?)', [$userIDs]);
         }
 
-        $sql = "DELETE FROM	wcf" . WCF_N . "_user_object_watch
-			" . $conditionsBuilder;
+        $sql = "DELETE FROM wcf" . WCF_N . "_user_object_watch
+                " . $conditionsBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionsBuilder->getParameters());
     }
@@ -116,10 +116,10 @@ class UserObjectWatchHandler extends SingletonFactory
 
         // get subscriber
         $userIDs = $recipientIDs = [];
-        $sql = "SELECT		userID, notification
-			FROM		wcf" . WCF_N . "_user_object_watch
-			WHERE		objectTypeID = ?
-					AND objectID = ?";
+        $sql = "SELECT  userID, notification
+                FROM    wcf" . WCF_N . "_user_object_watch
+                WHERE   objectTypeID = ?
+                    AND objectID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$objectTypeObj->objectTypeID, $objectID]);
         while ($row = $statement->fetchArray()) {

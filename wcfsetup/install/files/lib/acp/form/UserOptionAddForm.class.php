@@ -306,9 +306,9 @@ class UserOptionAddForm extends AbstractForm
         if (empty($this->categoryName)) {
             throw new UserInputException('categoryName');
         }
-        $sql = "SELECT	categoryID
-			FROM	wcf" . WCF_N . "_user_option_category
-			WHERE	categoryName = ?";
+        $sql = "SELECT  categoryID
+                FROM    wcf" . WCF_N . "_user_option_category
+                WHERE   categoryName = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->categoryName]);
         if ($statement->fetchArray() === false) {

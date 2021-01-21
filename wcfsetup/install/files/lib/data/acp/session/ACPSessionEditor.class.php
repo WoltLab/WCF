@@ -61,8 +61,8 @@ class ACPSessionEditor extends DatabaseObjectEditor
             $conditionBuilder->add('userID IN (?)', [$userIDs]);
         }
 
-        $sql = "DELETE FROM	" . \call_user_func([static::$baseClass, 'getDatabaseTableName']) . "
-			" . $conditionBuilder;
+        $sql = "DELETE FROM " . \call_user_func([static::$baseClass, 'getDatabaseTableName']) . "
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionBuilder->getParameters());
     }

@@ -48,9 +48,9 @@ class ACPSession extends DatabaseObject
      */
     public static function getSessionByUserID($userID)
     {
-        $sql = "SELECT	*
-			FROM	" . static::getDatabaseTableName() . "
-			WHERE	userID = ?";
+        $sql = "SELECT  *
+                FROM    " . static::getDatabaseTableName() . "
+                WHERE   userID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$userID]);
 

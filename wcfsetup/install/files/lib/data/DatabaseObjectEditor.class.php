@@ -35,9 +35,9 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
         }
 
         // save object
-        $sql = "INSERT INTO	" . static::getDatabaseTableName() . "
-					(" . $keys . ")
-			VALUES		(" . $values . ")";
+        $sql = "INSERT INTO " . static::getDatabaseTableName() . "
+                            (" . $keys . ")
+                VALUES      (" . $values . ")";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($statementParameters);
 
@@ -71,9 +71,9 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
         }
         $statementParameters[] = $this->getObjectID();
 
-        $sql = "UPDATE	" . static::getDatabaseTableName() . "
-			SET	" . $updateSQL . "
-			WHERE	" . static::getDatabaseTableIndexName() . " = ?";
+        $sql = "UPDATE  " . static::getDatabaseTableName() . "
+                SET     " . $updateSQL . "
+                WHERE   " . static::getDatabaseTableIndexName() . " = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($statementParameters);
     }
@@ -98,9 +98,9 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
         }
         $statementParameters[] = $this->getObjectID();
 
-        $sql = "UPDATE	" . static::getDatabaseTableName() . "
-			SET	" . $updateSQL . "
-			WHERE	" . static::getDatabaseTableIndexName() . " = ?";
+        $sql = "UPDATE  " . static::getDatabaseTableName() . "
+                SET     " . $updateSQL . "
+                WHERE   " . static::getDatabaseTableIndexName() . " = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($statementParameters);
     }
@@ -130,8 +130,8 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add(static::getDatabaseTableIndexName() . ' IN (?)', [$batchObjectIDs]);
 
-            $sql = "DELETE FROM	" . static::getDatabaseTableName() . "
-				" . $conditionBuilder;
+            $sql = "DELETE FROM " . static::getDatabaseTableName() . "
+                    " . $conditionBuilder;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditionBuilder->getParameters());
             $affectedCount += $statement->getAffectedRows();

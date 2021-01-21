@@ -32,9 +32,9 @@ abstract class AbstractDiskUsageStatDailyHandler extends AbstractStatDailyHandle
 
         $this->addConditions($conditionBuilder);
 
-        $sql = "SELECT	CEIL(SUM(" . $this->columnName . ") / 1000)
-			FROM	" . $tableName . "
-			" . $conditionBuilder;
+        $sql = "SELECT  CEIL(SUM(" . $this->columnName . ") / 1000)
+                FROM    " . $tableName . "
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionBuilder->getParameters());
 
@@ -51,9 +51,9 @@ abstract class AbstractDiskUsageStatDailyHandler extends AbstractStatDailyHandle
 
         $this->addConditions($conditionBuilder);
 
-        $sql = "SELECT	CEIL(SUM(" . $this->columnName . ") / 1000)
-			FROM	" . $tableName . "
-			" . $conditionBuilder;
+        $sql = "SELECT  CEIL(SUM(" . $this->columnName . ") / 1000)
+                FROM    " . $tableName . "
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionBuilder->getParameters());
 

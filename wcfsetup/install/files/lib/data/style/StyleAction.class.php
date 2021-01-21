@@ -215,8 +215,8 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
             }
         }
 
-        $sql = "SELECT	variableID, variableName, defaultValue
-			FROM	wcf" . WCF_N . "_style_variable";
+        $sql = "SELECT  variableID, variableName, defaultValue
+                FROM    wcf" . WCF_N . "_style_variable";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         $variables = [];
@@ -235,17 +235,17 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
 
         // remove previously set variables
         if ($removePreviousVariables) {
-            $sql = "DELETE FROM	wcf" . WCF_N . "_style_variable_value
-				WHERE		styleID = ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_style_variable_value
+                    WHERE       styleID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$style->styleID]);
         }
 
         // insert variables that differ from default values
         if (!empty($variables)) {
-            $sql = "INSERT INTO	wcf" . WCF_N . "_style_variable_value
-						(styleID, variableID, variableValue)
-				VALUES		(?, ?, ?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_style_variable_value
+                                (styleID, variableID, variableValue)
+                    VALUES      (?, ?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
 
             WCF::getDB()->beginTransaction();
@@ -534,10 +534,10 @@ BROWSERCONFIG;
     public function copy()
     {
         // get unique style name
-        $sql = "SELECT	styleName
-			FROM	wcf" . WCF_N . "_style
-			WHERE	styleName LIKE ?
-				AND styleID <> ?";
+        $sql = "SELECT  styleName
+                FROM    wcf" . WCF_N . "_style
+                WHERE   styleName LIKE ?
+                    AND styleID <> ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $this->styleEditor->styleName . '%',
@@ -586,17 +586,17 @@ BROWSERCONFIG;
             $styleDescription = 'wcf.style.styleDescription' . $newStyle->styleID;
 
             // delete any phrases that were the result of an import
-            $sql = "DELETE FROM     wcf" . WCF_N . "_language_item
-				WHERE           languageItem = ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_language_item
+                    WHERE       languageItem = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$styleDescription]);
 
             // copy language items
-            $sql = "INSERT INTO	wcf" . WCF_N . "_language_item
-						(languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
-				SELECT		languageID, '" . $styleDescription . "', languageItemValue, 0, languageCategoryID, packageID
-				FROM		wcf" . WCF_N . "_language_item
-				WHERE		languageItem = ?";
+            $sql = "INSERT INTO wcf" . WCF_N . "_language_item
+                                (languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
+                    SELECT      languageID, '" . $styleDescription . "', languageItemValue, 0, languageCategoryID, packageID
+                    FROM        wcf" . WCF_N . "_language_item
+                    WHERE       languageItem = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$newStyle->styleDescription]);
 
@@ -609,12 +609,12 @@ BROWSERCONFIG;
         }
 
         // copy style variables
-        $sql = "INSERT INTO	wcf" . WCF_N . "_style_variable_value
-					(styleID, variableID, variableValue)
-			SELECT		" . $newStyle->styleID . " AS styleID, value.variableID, value.variableValue
-			FROM		wcf" . WCF_N . "_style_variable_value value
-			WHERE		value.styleID = ?";
-        $statement = WCF::getDB()->prepareStatement($sql);
+        $sql = "INSERT INTO wcf" . WCF_N . "_style_variable_value
+                            (styleID, variableID, variableValue)
+                SELECT      " . $newStyle->styleID . " AS styleID, value.variableID, value.variableValue
+                FROM        wcf" . WCF_N . "_style_variable_value value
+                WHERE       value.styleID = ?";
+            $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->styleEditor->styleID]);
 
         // copy preview image

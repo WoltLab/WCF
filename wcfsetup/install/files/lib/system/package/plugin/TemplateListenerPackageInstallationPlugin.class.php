@@ -51,12 +51,12 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
      */
     protected function handleDelete(array $items)
     {
-        $sql = "DELETE FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE		packageID = ?
-					AND environment = ?
-					AND eventName = ?
-					AND name = ?
-					AND templateName = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE       packageID = ?
+                        AND environment = ?
+                        AND eventName = ?
+                        AND name = ?
+                        AND templateName = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($items as $item) {
             $statement->execute([
@@ -98,13 +98,13 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
      */
     protected function findExistingItem(array $data)
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_" . $this->tableName . "
-			WHERE	packageID = ?
-				AND name = ?
-				AND templateName = ?
-				AND eventName = ?
-				AND environment = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_" . $this->tableName . "
+                WHERE   packageID = ?
+                    AND name = ?
+                    AND templateName = ?
+                    AND eventName = ?
+                    AND environment = ?";
         $parameters = [
             $this->installation->getPackageID(),
             $data['name'],

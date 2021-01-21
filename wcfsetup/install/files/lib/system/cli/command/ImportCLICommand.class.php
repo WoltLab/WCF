@@ -130,8 +130,8 @@ class ImportCLICommand implements ICLICommand
         }
 
         // step 1) previous import
-        $sql = "SELECT	COUNT(*)
-			FROM	wcf" . WCF_N . "_import_mapping";
+        $sql = "SELECT  COUNT(*)
+                FROM    wcf" . WCF_N . "_import_mapping";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         if ($statement->fetchSingleColumn()) {

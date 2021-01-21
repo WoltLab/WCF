@@ -70,9 +70,9 @@ class BackgroundQueueHandler extends SingletonFactory
         }
 
         WCF::getDB()->beginTransaction();
-        $sql = "INSERT INTO	wcf" . WCF_N . "_background_job
-					(job, time)
-			VALUES		(?, ?)";
+        $sql = "INSERT INTO wcf" . WCF_N . "_background_job
+                            (job, time)
+                VALUES      (?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($jobs as $job) {
             $statement->execute([
@@ -145,12 +145,12 @@ class BackgroundQueueHandler extends SingletonFactory
         WCF::getDB()->beginTransaction();
         $committed = false;
         try {
-            $sql = "SELECT		jobID, job
-				FROM		wcf" . WCF_N . "_background_job
-				WHERE		status = ?
-					AND	time <= ?
-				ORDER BY	time ASC, jobID ASC
-				FOR UPDATE";
+            $sql = "SELECT      jobID, job
+                    FROM        wcf" . WCF_N . "_background_job
+                    WHERE       status = ?
+                            AND time <= ?
+                    ORDER BY    time ASC, jobID ASC
+                    FOR UPDATE";
             $statement = WCF::getDB()->prepareStatement($sql, 1);
             $statement->execute([
                 'ready',
@@ -163,11 +163,11 @@ class BackgroundQueueHandler extends SingletonFactory
             }
 
             // lock job
-            $sql = "UPDATE	wcf" . WCF_N . "_background_job
-				SET	status = ?,
-					time = ?
-				WHERE		jobID = ?
-					AND	status = ?";
+            $sql = "UPDATE  wcf" . WCF_N . "_background_job
+                    SET     status = ?,
+                            time = ?
+                    WHERE   jobID = ?
+                        AND status = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 'processing',
@@ -201,8 +201,8 @@ class BackgroundQueueHandler extends SingletonFactory
             \wcf\functions\exception\logThrowable($e);
         } finally {
             // remove entry of processed job
-            $sql = "DELETE FROM	wcf" . WCF_N . "_background_job
-				WHERE		jobID = ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_background_job
+                    WHERE       jobID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$row['jobID']]);
         }
@@ -220,10 +220,10 @@ class BackgroundQueueHandler extends SingletonFactory
      */
     public function getRunnableCount()
     {
-        $sql = "SELECT	COUNT(*)
-			FROM	wcf" . WCF_N . "_background_job
-			WHERE		status = ?
-				AND	time <= ?";
+        $sql = "SELECT  COUNT(*)
+                FROM    wcf" . WCF_N . "_background_job
+                WHERE   status = ?
+                    AND time <= ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(['ready', TIME_NOW]);
 

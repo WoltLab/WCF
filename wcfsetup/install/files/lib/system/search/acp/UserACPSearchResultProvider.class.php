@@ -28,9 +28,9 @@ class UserACPSearchResultProvider implements IACPSearchResultProvider
 
         $results = [];
 
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_user
-			WHERE	username LIKE ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_user
+                WHERE   username LIKE ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$query . '%']);
 

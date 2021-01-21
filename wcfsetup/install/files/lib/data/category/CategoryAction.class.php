@@ -73,9 +73,9 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
                 $conditions = new PreparedStatementConditionBuilder();
                 $conditions->add('languageItem IN (?)', [$languageVariables]);
 
-                $sql = "SELECT	languageItemID
-					FROM	wcf" . WCF_N . "_language_item
-					" . $conditions;
+                $sql = "SELECT  languageItemID
+                        FROM    wcf" . WCF_N . "_language_item
+                        " . $conditions;
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute($conditions->getParameters());
                 $languageItemIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);

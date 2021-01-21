@@ -507,17 +507,17 @@ class RegisterForm extends UserAddForm
     protected function getRecipientsForNotificationEvent()
     {
         $sql = "SELECT  userID
-			FROM    wcf" . WCF_N . "_user_to_group
-			WHERE   groupID IN (
-					SELECT  groupID
-					FROM    wcf" . WCF_N . "_user_group_option_value
-					WHERE   optionID IN (
-							SELECT  optionID
-							FROM    wcf" . WCF_N . "_user_group_option
-							WHERE   optionName = ?
-						)
-						AND optionValue = ?
-				)";
+                FROM    wcf" . WCF_N . "_user_to_group
+                WHERE   groupID IN (
+                        SELECT  groupID
+                        FROM    wcf" . WCF_N . "_user_group_option_value
+                        WHERE   optionID IN (
+                                    SELECT  optionID
+                                    FROM    wcf" . WCF_N . "_user_group_option
+                                    WHERE   optionName = ?
+                                )
+                            AND optionValue = ?
+                    )";
         $statement = WCF::getDB()->prepareStatement($sql, 100);
         $statement->execute([
             'admin.user.canSearchUser',

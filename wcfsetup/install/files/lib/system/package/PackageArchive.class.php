@@ -531,9 +531,9 @@ class PackageArchive
      */
     public function isAlreadyInstalled()
     {
-        $sql = "SELECT	COUNT(*)
-			FROM	wcf" . WCF_N . "_package
-			WHERE	package = ?";
+        $sql = "SELECT  COUNT(*)
+                FROM    wcf" . WCF_N . "_package
+                WHERE   package = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->packageInfo['name']]);
 
@@ -551,10 +551,10 @@ class PackageArchive
             return true;
         }
 
-        $sql = "SELECT	COUNT(*)
-			FROM	wcf" . WCF_N . "_package
-			WHERE	isApplication = ?
-				AND package LIKE ?";
+        $sql = "SELECT  COUNT(*)
+                FROM    wcf" . WCF_N . "_package
+                WHERE   isApplication = ?
+                    AND package LIKE ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             1,
@@ -683,11 +683,11 @@ class PackageArchive
         $existingRequirements = [];
         $existingPackages = [];
         if ($this->package !== null) {
-            $sql = "SELECT		package.*
-				FROM		wcf" . WCF_N . "_package_requirement requirement
-				LEFT JOIN	wcf" . WCF_N . "_package package
-				ON		(package.packageID = requirement.requirement)
-				WHERE		requirement.packageID = ?";
+            $sql = "SELECT      package.*
+                    FROM        wcf" . WCF_N . "_package_requirement requirement
+                    LEFT JOIN   wcf" . WCF_N . "_package package
+                    ON          (package.packageID = requirement.requirement)
+                    WHERE       requirement.packageID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->package->packageID]);
             while ($row = $statement->fetchArray()) {
@@ -712,9 +712,9 @@ class PackageArchive
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("package.package IN (?)", [$packageNames]);
 
-            $sql = "SELECT	package.*
-				FROM	wcf" . WCF_N . "_package package
-				" . $conditions;
+            $sql = "SELECT  package.*
+                    FROM    wcf" . WCF_N . "_package package
+                    " . $conditions;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditions->getParameters());
             while ($row = $statement->fetchArray()) {
@@ -754,9 +754,9 @@ class PackageArchive
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("package IN (?)", [$packageNames]);
 
-            $sql = "SELECT	*
-				FROM	wcf" . WCF_N . "_package
-				" . $conditions;
+            $sql = "SELECT  *
+                    FROM    wcf" . WCF_N . "_package
+                    " . $conditions;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditions->getParameters());
             while ($row = $statement->fetchArray()) {
@@ -880,11 +880,11 @@ class PackageArchive
     public function getConflictedExcludingPackages()
     {
         $conflictedPackages = [];
-        $sql = "SELECT		package.*, package_exclusion.*
-			FROM		wcf" . WCF_N . "_package_exclusion package_exclusion
-			LEFT JOIN	wcf" . WCF_N . "_package package
-			ON		(package.packageID = package_exclusion.packageID)
-			WHERE		excludedPackage = ?";
+        $sql = "SELECT      package.*, package_exclusion.*
+                FROM        wcf" . WCF_N . "_package_exclusion package_exclusion
+                LEFT JOIN   wcf" . WCF_N . "_package package
+                ON          (package.packageID = package_exclusion.packageID)
+                WHERE       excludedPackage = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->packageInfo['name']]);
         while ($row = $statement->fetchArray()) {
@@ -917,9 +917,9 @@ class PackageArchive
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("package IN (?)", [\array_keys($excludedPackages)]);
 
-            $sql = "SELECT	*
-				FROM	wcf" . WCF_N . "_package
-				" . $conditions;
+            $sql = "SELECT  *
+                    FROM    wcf" . WCF_N . "_package
+                    " . $conditions;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditions->getParameters());
             while ($row = $statement->fetchArray()) {

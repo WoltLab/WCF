@@ -49,7 +49,16 @@ class TemplateGroupListPage extends SortablePage
     {
         parent::initObjectList();
 
-        $this->objectList->sqlSelects = "(SELECT COUNT(*) FROM wcf" . WCF_N . "_template WHERE templateGroupID = template_group.templateGroupID) AS templates,
-						 (SELECT COUNT(*) FROM wcf" . WCF_N . "_style WHERE templateGroupID = template_group.templateGroupID) AS styles";
+        $this->objectList->sqlSelects = "
+            (
+                SELECT  COUNT(*)
+                FROM    wcf" . WCF_N . "_template
+                WHERE   templateGroupID = template_group.templateGroupID
+            ) AS templates,
+            (
+                SELECT  COUNT(*)
+                FROM    wcf" . WCF_N . "_style
+                WHERE   templateGroupID = template_group.templateGroupID
+            ) AS styles";
     }
 }

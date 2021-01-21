@@ -99,16 +99,16 @@ class PageContent extends DatabaseObject implements ILinkableObject
     {
         if ($languageID !== null) {
             $sql = "SELECT  *
-				FROM    wcf" . WCF_N . "_page_content
-				WHERE   pageID = ?
-					AND languageID = ?";
+                    FROM    wcf" . WCF_N . "_page_content
+                    WHERE   pageID = ?
+                        AND languageID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$pageID, $languageID]);
         } else {
             $sql = "SELECT  *
-				FROM    wcf" . WCF_N . "_page_content
-				WHERE   pageID = ?
-					AND languageID IS NULL";
+                    FROM    wcf" . WCF_N . "_page_content
+                    WHERE   pageID = ?
+                        AND languageID IS NULL";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$pageID]);
         }

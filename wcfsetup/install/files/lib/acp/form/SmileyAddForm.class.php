@@ -345,9 +345,9 @@ class SmileyAddForm extends AbstractForm
         if (isset($this->smiley)) {
             $conditionBuilder->add('smileyID <> ?', [$this->smiley->smileyID]);
         }
-        $sql = "SELECT	smileyCode, aliases
-			FROM	wcf" . WCF_N . "_smiley
-			" . $conditionBuilder;
+        $sql = "SELECT  smileyCode, aliases
+                FROM    wcf" . WCF_N . "_smiley
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionBuilder->getParameters());
 

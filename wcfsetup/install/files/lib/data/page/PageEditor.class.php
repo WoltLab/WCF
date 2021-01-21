@@ -83,9 +83,9 @@ class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
         // check custom controller urls
         $sql = "SELECT  COUNT(*) AS count
-			FROM    wcf" . WCF_N . "_page
-			WHERE   controllerCustomURL = ?
-				AND applicationPackageID = ?";
+                FROM    wcf" . WCF_N . "_page
+                WHERE   controllerCustomURL = ?
+                    AND applicationPackageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$customURL, $packageID]);
         if ($statement->fetchSingleColumn()) {
@@ -94,13 +94,13 @@ class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
         // check custom urls
         $sql = "SELECT  COUNT(*) AS count
-			FROM    wcf" . WCF_N . "_page_content
-			WHERE   customURL = ?
-				AND pageID IN (
-					SELECT  pageID
-					FROM    wcf" . WCF_N . "_page
-					WHERE   applicationPackageID = ?
-				)";
+                FROM    wcf" . WCF_N . "_page_content
+                WHERE   customURL = ?
+                    AND pageID IN (
+                        SELECT  pageID
+                        FROM    wcf" . WCF_N . "_page
+                        WHERE   applicationPackageID = ?
+                    )";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$customURL, $packageID]);
         if ($statement->fetchSingleColumn()) {

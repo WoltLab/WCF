@@ -146,10 +146,10 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
      */
     public function countObjects()
     {
-        $sql = "SELECT	COUNT(*)
-			FROM	" . $this->getDatabaseTableName() . " " . $this->getDatabaseTableAlias() . "
-			" . $this->sqlConditionJoins . "
-			" . $this->getConditionBuilder();
+        $sql = "SELECT  COUNT(*)
+                FROM    " . $this->getDatabaseTableName() . " " . $this->getDatabaseTableAlias() . "
+                " . $this->sqlConditionJoins . "
+                " . $this->getConditionBuilder();
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($this->getConditionBuilder()->getParameters());
 
@@ -162,11 +162,11 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
     public function readObjectIDs()
     {
         $this->objectIDs = [];
-        $sql = "SELECT	" . $this->getDatabaseTableAlias() . "." . $this->getDatabaseTableIndexName() . " AS objectID
-			FROM	" . $this->getDatabaseTableName() . " " . $this->getDatabaseTableAlias() . "
-				" . $this->sqlConditionJoins . "
-				" . $this->getConditionBuilder() . "
-				" . (!empty($this->sqlOrderBy) ? "ORDER BY " . $this->sqlOrderBy : '');
+        $sql = "SELECT  " . $this->getDatabaseTableAlias() . "." . $this->getDatabaseTableIndexName() . " AS objectID
+                FROM    " . $this->getDatabaseTableName() . " " . $this->getDatabaseTableAlias() . "
+                " . $this->sqlConditionJoins . "
+                " . $this->getConditionBuilder() . "
+                " . (!empty($this->sqlOrderBy) ? "ORDER BY " . $this->sqlOrderBy : '');
         $statement = WCF::getDB()->prepareStatement($sql, $this->sqlLimit, $this->sqlOffset);
         $statement->execute($this->getConditionBuilder()->getParameters());
         $this->objectIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
@@ -181,22 +181,22 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
             if (empty($this->objectIDs)) {
                 return;
             }
-            $sql = "SELECT	" . (!empty($this->sqlSelects) ? $this->sqlSelects . ($this->useQualifiedShorthand ? ',' : '') : '') . "
-					" . ($this->useQualifiedShorthand ? $this->getDatabaseTableAlias() . '.*' : '') . "
-				FROM	" . $this->getDatabaseTableName() . " " . $this->getDatabaseTableAlias() . "
-					" . $this->sqlJoins . "
-				WHERE	" . $this->getDatabaseTableAlias() . "." . $this->getDatabaseTableIndexName() . " IN (?" . \str_repeat(',?', \count($this->objectIDs) - 1) . ")
-					" . (!empty($this->sqlOrderBy) ? "ORDER BY " . $this->sqlOrderBy : '');
+            $sql = "SELECT  " . (!empty($this->sqlSelects) ? $this->sqlSelects . ($this->useQualifiedShorthand ? ',' : '') : '') . "
+                            " . ($this->useQualifiedShorthand ? $this->getDatabaseTableAlias() . '.*' : '') . "
+                    FROM    " . $this->getDatabaseTableName() . " " . $this->getDatabaseTableAlias() . "
+                            " . $this->sqlJoins . "
+                    WHERE   " . $this->getDatabaseTableAlias() . "." . $this->getDatabaseTableIndexName() . " IN (?" . \str_repeat(',?', \count($this->objectIDs) - 1) . ")
+                            " . (!empty($this->sqlOrderBy) ? "ORDER BY " . $this->sqlOrderBy : '');
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($this->objectIDs);
             $this->objects = $statement->fetchObjects(($this->objectClassName ?: $this->className));
         } else {
-            $sql = "SELECT	" . (!empty($this->sqlSelects) ? $this->sqlSelects . ($this->useQualifiedShorthand ? ',' : '') : '') . "
-					" . ($this->useQualifiedShorthand ? $this->getDatabaseTableAlias() . '.*' : '') . "
-				FROM	" . $this->getDatabaseTableName() . " " . $this->getDatabaseTableAlias() . "
-					" . $this->sqlJoins . "
-					" . $this->getConditionBuilder() . "
-					" . (!empty($this->sqlOrderBy) ? "ORDER BY " . $this->sqlOrderBy : '');
+            $sql = "SELECT  " . (!empty($this->sqlSelects) ? $this->sqlSelects . ($this->useQualifiedShorthand ? ',' : '') : '') . "
+                            " . ($this->useQualifiedShorthand ? $this->getDatabaseTableAlias() . '.*' : '') . "
+                    FROM    " . $this->getDatabaseTableName() . " " . $this->getDatabaseTableAlias() . "
+                    " . $this->sqlJoins . "
+                    " . $this->getConditionBuilder() . "
+                    " . (!empty($this->sqlOrderBy) ? "ORDER BY " . $this->sqlOrderBy : '');
             $statement = WCF::getDB()->prepareStatement($sql, $this->sqlLimit, $this->sqlOffset);
             $statement->execute($this->getConditionBuilder()->getParameters());
             $this->objects = $statement->fetchObjects(($this->objectClassName ?: $this->className));

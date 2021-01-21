@@ -244,13 +244,15 @@ class ViewableArticle extends DatabaseObjectDecorator
                         $conditionBuilder->add('article.publicationStatus = ?', [Article::PUBLISHED]);
                         $conditionBuilder->add('(article.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)');
 
-                        $sql = "SELECT		COUNT(*)
-							FROM		wcf" . WCF_N . "_article article
-							LEFT JOIN	wcf" . WCF_N . "_tracked_visit tracked_visit
-							ON		(tracked_visit.objectTypeID = " . VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.article') . "
-									AND tracked_visit.objectID = article.articleID
-									AND tracked_visit.userID = " . WCF::getUser()->userID . ")
-							" . $conditionBuilder;
+                        $sql = "SELECT      COUNT(*)
+                                FROM        wcf" . WCF_N . "_article article
+                                LEFT JOIN   wcf" . WCF_N . "_tracked_visit tracked_visit
+                                ON          (
+                                                    tracked_visit.objectTypeID = " . VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.article') . "
+                                                AND tracked_visit.objectID = article.articleID
+                                                AND tracked_visit.userID = " . WCF::getUser()->userID . "
+                                            )
+                                " . $conditionBuilder;
                         $statement = WCF::getDB()->prepareStatement($sql);
                         $statement->execute($conditionBuilder->getParameters());
                         self::$unreadArticles = $statement->fetchSingleColumn();
@@ -351,13 +353,15 @@ class ViewableArticle extends DatabaseObjectDecorator
         $conditionBuilder->add('article.publicationStatus = ?', [Article::PUBLISHED]);
         $conditionBuilder->add('(article.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)');
 
-        $sql = "SELECT		COUNT(*)
-			FROM		wcf" . WCF_N . "_article article
-			LEFT JOIN	wcf" . WCF_N . "_tracked_visit tracked_visit
-			ON		(tracked_visit.objectTypeID = " . VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.article') . "
-					AND tracked_visit.objectID = article.articleID
-					AND tracked_visit.userID = " . WCF::getUser()->userID . ")
-					" . $conditionBuilder;
+        $sql = "SELECT      COUNT(*)
+                FROM        wcf" . WCF_N . "_article article
+                LEFT JOIN   wcf" . WCF_N . "_tracked_visit tracked_visit
+                ON          (
+                                    tracked_visit.objectTypeID = " . VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.article') . "
+                                AND tracked_visit.objectID = article.articleID
+                                AND tracked_visit.userID = " . WCF::getUser()->userID . "
+                            )
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionBuilder->getParameters());
 
@@ -389,13 +393,15 @@ class ViewableArticle extends DatabaseObjectDecorator
                         $conditionBuilder->add('article.publicationStatus = ?', [Article::PUBLISHED]);
                         $conditionBuilder->add('(article.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)');
 
-                        $sql = "SELECT		COUNT(*)
-							FROM		wcf" . WCF_N . "_article article
-							LEFT JOIN	wcf" . WCF_N . "_tracked_visit tracked_visit
-							ON		(tracked_visit.objectTypeID = " . VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.article') . "
-									AND tracked_visit.objectID = article.articleID
-									AND tracked_visit.userID = " . WCF::getUser()->userID . ")
-							" . $conditionBuilder;
+                        $sql = "SELECT      COUNT(*)
+                                FROM        wcf" . WCF_N . "_article article
+                                LEFT JOIN   wcf" . WCF_N . "_tracked_visit tracked_visit
+                                ON          (
+                                                    tracked_visit.objectTypeID = " . VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.article') . "
+                                                AND tracked_visit.objectID = article.articleID
+                                                AND tracked_visit.userID = " . WCF::getUser()->userID . "
+                                            )
+                                " . $conditionBuilder;
                         $statement = WCF::getDB()->prepareStatement($sql);
                         $statement->execute($conditionBuilder->getParameters());
                         self::$unreadWatchedArticles = $statement->fetchSingleColumn();

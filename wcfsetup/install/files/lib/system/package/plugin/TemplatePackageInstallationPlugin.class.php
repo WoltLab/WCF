@@ -60,12 +60,12 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
     public function uninstall()
     {
         // fetch templates from log
-        $sql = "SELECT		template.templateName, template.application,
-					template_group.templateGroupFolderName
-			FROM		wcf" . WCF_N . "_template template
-			LEFT JOIN	wcf" . WCF_N . "_template_group template_group
-			ON		(template_group.templateGroupID = template.templateGroupID)
-			WHERE		packageID = ?";
+        $sql = "SELECT      template.templateName, template.application,
+                            template_group.templateGroupFolderName
+                FROM        wcf" . WCF_N . "_template template
+                LEFT JOIN   wcf" . WCF_N . "_template_group template_group
+                ON          (template_group.templateGroupID = template.templateGroupID)
+                WHERE       packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->installation->getPackageID()]);
 

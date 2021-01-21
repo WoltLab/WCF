@@ -63,9 +63,9 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add($indexName . " IN (?)", [\array_keys($queues)]);
 
-        $sql = "SELECT	" . $indexName . "
-			FROM	" . $tableName . "
-			" . $conditions;
+        $sql = "SELECT  " . $indexName . "
+                FROM    " . $tableName . "
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         while ($row = $statement->fetchArray()) {
@@ -89,9 +89,9 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
         $conditions->add("objectTypeID = ?", [$objectTypeID]);
         $conditions->add("objectID IN (?)", [$objectIDs]);
 
-        $sql = "SELECT	queueID
-			FROM	wcf" . WCF_N . "_moderation_queue
-			" . $conditions;
+        $sql = "SELECT  queueID
+                FROM    wcf" . WCF_N . "_moderation_queue
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         $queueIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);

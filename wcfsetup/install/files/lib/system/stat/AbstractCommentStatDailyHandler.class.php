@@ -34,18 +34,18 @@ abstract class AbstractCommentStatDailyHandler extends AbstractStatDailyHandler
         }
 
         $sql = "SELECT (
-				SELECT	COUNT(*)
-				FROM	wcf" . WCF_N . "_comment
-				WHERE	objectTypeID = ?
-					AND time BETWEEN ? AND ?
-			) + (
-				SELECT		COUNT(*)
-				FROM		wcf" . WCF_N . "_comment_response comment_response
-				LEFT JOIN	wcf" . WCF_N . "_comment comment
-				ON		(comment.commentID = comment_response.commentID)
-				WHERE		comment.objectTypeID = ?
-						AND comment_response.time BETWEEN ? AND ?
-			)";
+                    SELECT  COUNT(*)
+                    FROM    wcf" . WCF_N . "_comment
+                    WHERE   objectTypeID = ?
+                        AND time BETWEEN ? AND ?
+                ) + (
+                    SELECT      COUNT(*)
+                    FROM        wcf" . WCF_N . "_comment_response comment_response
+                    LEFT JOIN   wcf" . WCF_N . "_comment comment
+                    ON          (comment.commentID = comment_response.commentID)
+                    WHERE       comment.objectTypeID = ?
+                            AND comment_response.time BETWEEN ? AND ?
+                )";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $objectTypeID,
@@ -58,18 +58,18 @@ abstract class AbstractCommentStatDailyHandler extends AbstractStatDailyHandler
         $counter = $statement->fetchSingleColumn();
 
         $sql = "SELECT (
-				SELECT	COUNT(*)
-				FROM	wcf" . WCF_N . "_comment
-				WHERE	objectTypeID = ?
-					AND time < ?
-			) + (
-				SELECT		COUNT(*)
-				FROM		wcf" . WCF_N . "_comment_response comment_response
-				LEFT JOIN	wcf" . WCF_N . "_comment comment
-				ON		(comment.commentID = comment_response.commentID)
-				WHERE		comment.objectTypeID = ?
-						AND comment_response.time < ?
-			)";
+                    SELECT  COUNT(*)
+                    FROM    wcf" . WCF_N . "_comment
+                    WHERE   objectTypeID = ?
+                        AND time < ?
+                ) + (
+                    SELECT      COUNT(*)
+                    FROM        wcf" . WCF_N . "_comment_response comment_response
+                    LEFT JOIN   wcf" . WCF_N . "_comment comment
+                    ON          (comment.commentID = comment_response.commentID)
+                    WHERE       comment.objectTypeID = ?
+                            AND comment_response.time < ?
+                )";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $objectTypeID,

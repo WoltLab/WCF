@@ -111,12 +111,12 @@ class CronjobScheduler extends SingletonFactory
         /** @noinspection PhpUnusedLocalVariableInspection */
         $committed = false;
         try {
-            $sql = "SELECT		*
-				FROM		wcf" . WCF_N . "_cronjob
-				WHERE		state <> ?
-					AND	isDisabled = ?
-					AND	afterNextExec <= ?
-				FOR UPDATE";
+            $sql = "SELECT      *
+                    FROM        wcf" . WCF_N . "_cronjob
+                    WHERE       state <> ?
+                            AND isDisabled = ?
+                            AND afterNextExec <= ?
+                    FOR UPDATE";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 Cronjob::READY,
@@ -204,13 +204,13 @@ class CronjobScheduler extends SingletonFactory
         /** @noinspection PhpUnusedLocalVariableInspection */
         $committed = false;
         try {
-            $sql = "SELECT	        *
-				FROM	        wcf" . WCF_N . "_cronjob
-				WHERE	        isDisabled = ?
-						AND state = ?
-						AND nextExec <= ?
-				ORDER BY        failCount ASC
-				FOR UPDATE";
+            $sql = "SELECT      *
+                    FROM        wcf" . WCF_N . "_cronjob
+                    WHERE       isDisabled = ?
+                            AND state = ?
+                            AND nextExec <= ?
+                    ORDER BY    failCount ASC
+                    FOR UPDATE";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 0,

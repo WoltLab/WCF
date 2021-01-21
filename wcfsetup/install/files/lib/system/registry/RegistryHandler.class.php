@@ -58,9 +58,9 @@ class RegistryHandler extends SingletonFactory
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("packageID IN (?)", [$tmp]);
 
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_registry
-			" . $conditions;
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_registry
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         while ($row = $statement->fetchArray()) {
@@ -189,17 +189,17 @@ class RegistryHandler extends SingletonFactory
                     $conditions->add("packageID IN (?)", [$packageIDs]);
                     $conditions->add("field = ?", [$field]);
 
-                    $sql = "DELETE FROM	wcf" . WCF_N . "_registry
-						" . $conditions;
+                    $sql = "DELETE FROM wcf" . WCF_N . "_registry
+                            " . $conditions;
                     $statement = WCF::getDB()->prepareStatement($sql);
                     $statement->execute($conditions->getParameters());
                 }
 
                 // insert data
                 if (!empty($this->updateFields)) {
-                    $sql = "INSERT INTO	wcf" . WCF_N . "_registry
-								(packageID, field, fieldValue)
-						VALUES		(?, ?, ?)";
+                    $sql = "INSERT INTO wcf" . WCF_N . "_registry
+                                        (packageID, field, fieldValue)
+                            VALUES      (?, ?, ?)";
                     $statement = WCF::getDB()->prepareStatement($sql);
 
                     foreach ($this->updateFields as $packageID => $fieldValues) {

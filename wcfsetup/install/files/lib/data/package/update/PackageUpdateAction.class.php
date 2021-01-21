@@ -86,12 +86,12 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         $conditions->add("package.packageID IS NULL");
 
         // find matching packages
-        $sql = "SELECT		package_update.packageUpdateID
-			FROM		wcf" . WCF_N . "_package_update package_update
-			LEFT JOIN	wcf" . WCF_N . "_package package
-			ON		(package.package = package_update.package)
-			" . $conditions . "
-			ORDER BY	package_update.packageName ASC";
+        $sql = "SELECT      package_update.packageUpdateID
+                FROM        wcf" . WCF_N . "_package_update package_update
+                LEFT JOIN   wcf" . WCF_N . "_package package
+                ON          (package.package = package_update.package)
+                " . $conditions . "
+                ORDER BY    package_update.packageName ASC";
         $statement = WCF::getDB()->prepareStatement($sql, 1000);
         $statement->execute($conditions->getParameters());
         $packageUpdateIDs = [];
@@ -111,16 +111,16 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         }
 
         // get installed packages
-        $sql = "SELECT	package, packageVersion
-			FROM	wcf" . WCF_N . "_package";
+        $sql = "SELECT  package, packageVersion
+                FROM    wcf" . WCF_N . "_package";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         $installedPackages = $statement->fetchMap('package', 'packageVersion');
 
         // get excluded packages (of installed packages)
         $excludedPackagesOfInstalledPackages = [];
-        $sql = "SELECT	excludedPackage, excludedPackageVersion
-			FROM	wcf" . WCF_N . "_package_exclusion";
+        $sql = "SELECT  excludedPackage, excludedPackageVersion
+                FROM    wcf" . WCF_N . "_package_exclusion";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         while ($row = $statement->fetchArray()) {
@@ -155,8 +155,8 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("packageUpdateID IN (?)", [\array_keys($packageUpdates)]);
         $sql = "SELECT  packageUpdateID, packageUpdateServerID, package
-			FROM    wcf" . WCF_N . "_package_update
-			" . $conditions;
+                FROM    wcf" . WCF_N . "_package_update
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         $possiblePackages = [];
@@ -201,8 +201,8 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
                 $conditions->add("packageUpdateVersionID IN (?)", [$packageUpdateVersionIDs]);
 
                 $sql = "SELECT  packageUpdateVersionID, packageUpdateID, packageVersion
-					FROM    wcf" . WCF_N . "_package_update_version
-					" . $conditions;
+                        FROM    wcf" . WCF_N . "_package_update_version
+                        " . $conditions;
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute($conditions->getParameters());
                 $packageVersions = [];
@@ -251,9 +251,9 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         // get excluded packages
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("packageUpdateVersionID IN (SELECT packageUpdateVersionID FROM wcf" . WCF_N . "_package_update_version WHERE packageUpdateID = ?)", [$packageUpdateID]);
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_package_update_exclusion
-			" . $conditions;
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_package_update_exclusion
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         $excludedPackages = [];
@@ -272,11 +272,11 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         // filter by version
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("puv.packageUpdateID IN (?)", [$packageUpdateID]);
-        $sql = "SELECT		pu.package, puv.packageUpdateVersionID, puv.packageUpdateID, puv.packageVersion, puv.isAccessible
-			FROM		wcf" . WCF_N . "_package_update_version puv
-			LEFT JOIN	wcf" . WCF_N . "_package_update pu
-			ON		(pu.packageUpdateID = puv.packageUpdateID)
-			" . $conditions;
+        $sql = "SELECT      pu.package, puv.packageUpdateVersionID, puv.packageUpdateID, puv.packageVersion, puv.isAccessible
+                FROM        wcf" . WCF_N . "_package_update_version puv
+                LEFT JOIN   wcf" . WCF_N . "_package_update pu
+                ON          (pu.packageUpdateID = puv.packageUpdateID)
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         $packageVersions = [];
@@ -381,8 +381,8 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         // validate dependencies
         foreach ($packageUpdates as $packageUpdateData) {
             $sql = "SELECT  package, minversion
-				FROM    wcf" . WCF_N . "_package_update_requirement
-				WHERE   packageUpdateVersionID = ?";
+                    FROM    wcf" . WCF_N . "_package_update_requirement
+                    WHERE   packageUpdateVersionID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$packageUpdateData['accessible']]);
             $requirements = [];
@@ -404,8 +404,8 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("package IN (?)", [\array_keys($requirements)]);
             $sql = "SELECT  packageUpdateID, package
-				FROM    wcf" . WCF_N . "_package_update
-				" . $conditions;
+                    FROM    wcf" . WCF_N . "_package_update
+                    " . $conditions;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditions->getParameters());
             while ($row = $statement->fetchArray()) {
@@ -442,9 +442,9 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("packageUpdateID IN (?)", [\array_keys($updateData)]);
 
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_package_update
-			" . $conditions;
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_package_update
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         $packageUpdates = $packageVersionIDs = [];
@@ -461,9 +461,9 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("packageUpdateVersionID IN (?)", [$packageVersionIDs]);
 
-        $sql = "SELECT	packageUpdateVersionID, packageVersion, packageDate, license, licenseURL
-			FROM	wcf" . WCF_N . "_package_update_version
-			" . $conditions;
+        $sql = "SELECT  packageUpdateVersionID, packageVersion, packageDate, license, licenseURL
+                FROM    wcf" . WCF_N . "_package_update_version
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
 

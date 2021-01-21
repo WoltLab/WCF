@@ -211,10 +211,10 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
                 if ($data === null) {
                     $objectTypeID = UserObjectWatchHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.article.category');
 
-                    $sql = "SELECT	objectID
-						FROM	wcf" . WCF_N . "_user_object_watch
-						WHERE	objectTypeID = ?
-							AND userID = ?";
+                    $sql = "SELECT  objectID
+                            FROM    wcf" . WCF_N . "_user_object_watch
+                            WHERE   objectTypeID = ?
+                                AND userID = ?";
                     $statement = WCF::getDB()->prepareStatement($sql);
                     $statement->execute([$objectTypeID, WCF::getUser()->userID]);
                     self::$subscribedCategories = $statement->fetchAll(\PDO::FETCH_COLUMN);

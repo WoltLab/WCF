@@ -152,9 +152,9 @@ class ContactOptionAction extends CustomOptionAction implements ISortableAction
      */
     public function updatePosition()
     {
-        $sql = "UPDATE	wcf" . WCF_N . "_contact_option
-			SET	showOrder = ?
-			WHERE	optionID = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_contact_option
+                SET     showOrder = ?
+                WHERE   optionID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
 
         $showOrder = 1;

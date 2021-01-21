@@ -43,9 +43,9 @@ class ApplicationAction extends AbstractDatabaseObjectAction
             $this->readObjects();
         }
 
-        $sql = "UPDATE	wcf" . WCF_N . "_application
-			SET	cookieDomain = ?
-			WHERE	packageID = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_application
+                SET     cookieDomain = ?
+                WHERE   packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
 
         // calculate cookie domain

@@ -298,12 +298,12 @@ class SearchForm extends AbstractCaptchaForm
                 $parameters[] = WCF::getUser()->userID;
             }
 
-            $sql = "SELECT	searchID
-				FROM	wcf" . WCF_N . "_search
-				WHERE	searchHash = ?
-					AND searchType = ?
-					AND searchTime > ?
-					" . (WCF::getUser()->userID ? 'AND userID = ?' : 'AND userID IS NULL');
+            $sql = "SELECT  searchID
+                    FROM    wcf" . WCF_N . "_search
+                    WHERE   searchHash = ?
+                        AND searchType = ?
+                        AND searchTime > ?
+                        " . (WCF::getUser()->userID ? 'AND userID = ?' : 'AND userID IS NULL');
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($parameters);
             $row = $statement->fetchArray();
@@ -533,9 +533,9 @@ class SearchForm extends AbstractCaptchaForm
 
         // username
         if (!empty($this->username)) {
-            $sql = "SELECT	userID
-				FROM	wcf" . WCF_N . "_user
-				WHERE	username " . ($this->nameExactly ? "= ?" : "LIKE ?");
+            $sql = "SELECT  userID
+                    FROM    wcf" . WCF_N . "_user
+                    WHERE   username " . ($this->nameExactly ? "= ?" : "LIKE ?");
             $statement = WCF::getDB()->prepareStatement($sql, 100);
             $statement->execute([$this->username . (!$this->nameExactly ? '%' : '')]);
             $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);

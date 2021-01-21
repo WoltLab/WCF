@@ -71,12 +71,11 @@ class UserActivityPointHandler extends SingletonFactory
         }
 
         // update user_activity_point
-        $sql = "INSERT INTO		wcf" . WCF_N . "_user_activity_point
-						(userID, objectTypeID, activityPoints, items)
-			VALUES			(?, ?, ?, 1)
-			ON DUPLICATE KEY
-			UPDATE			activityPoints = activityPoints + VALUES(activityPoints),
-						items = items + 1";
+        $sql = "INSERT INTO             wcf" . WCF_N . "_user_activity_point
+                                        (userID, objectTypeID, activityPoints, items)
+                VALUES                  (?, ?, ?, 1)
+                ON DUPLICATE KEY UPDATE activityPoints = activityPoints + VALUES(activityPoints),
+                                        items = items + 1";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $userID,
@@ -84,9 +83,9 @@ class UserActivityPointHandler extends SingletonFactory
             $objectTypeObj->points,
         ]);
 
-        $sql = "UPDATE	wcf" . WCF_N . "_user
-			SET	activityPoints = activityPoints + ?
-			WHERE	userID = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_user
+                SET     activityPoints = activityPoints + ?
+                WHERE   userID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $objectTypeObj->points,
@@ -141,12 +140,11 @@ class UserActivityPointHandler extends SingletonFactory
             $userIDs[] = $userID;
         }
 
-        $sql = "INSERT INTO		wcf" . WCF_N . "_user_activity_point
-						(userID, objectTypeID, activityPoints, items)
-			VALUES			" . $values . "
-			ON DUPLICATE KEY
-			UPDATE			activityPoints = activityPoints + VALUES(activityPoints),
-						items = items + VALUES(items)";
+        $sql = "INSERT INTO             wcf" . WCF_N . "_user_activity_point
+                                        (userID, objectTypeID, activityPoints, items)
+                VALUES                  " . $values . "
+                ON DUPLICATE KEY UPDATE activityPoints = activityPoints + VALUES(activityPoints),
+                                        items = items + VALUES(items)";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($parameters);
 
@@ -180,11 +178,11 @@ class UserActivityPointHandler extends SingletonFactory
         }
 
         // remove activity points
-        $sql = "UPDATE	wcf" . WCF_N . "_user_activity_point
-			SET	activityPoints = activityPoints - ?,
-				items = items - ?
-			WHERE	objectTypeID = ?
-				AND userID = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_user_activity_point
+                SET     activityPoints = activityPoints - ?,
+                        items = items - ?
+                WHERE   objectTypeID = ?
+                    AND userID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($userToItems as $userID => $items) {
             $statement->execute([
@@ -211,14 +209,14 @@ class UserActivityPointHandler extends SingletonFactory
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("userID IN (?)", [$userIDs]);
 
-        $sql = "UPDATE	wcf" . WCF_N . "_user user_table
-			SET	activityPoints = COALESCE((
-					SELECT		SUM(activityPoints) AS activityPoints
-					FROM		wcf" . WCF_N . "_user_activity_point
-					WHERE		userID = user_table.userID
-					GROUP BY	userID
-				), 0)
-			" . $conditions;
+        $sql = "UPDATE  wcf" . WCF_N . "_user user_table
+                SET     activityPoints = COALESCE((
+                            SELECT      SUM(activityPoints) AS activityPoints
+                            FROM        wcf" . WCF_N . "_user_activity_point
+                            WHERE       userID = user_table.userID
+                            GROUP BY    userID
+                        ), 0)
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
 
@@ -240,10 +238,10 @@ class UserActivityPointHandler extends SingletonFactory
             throw new InvalidObjectTypeException($objectType, 'com.woltlab.wcf.user.activityPointEvent');
         }
 
-        $sql = "UPDATE	wcf" . WCF_N . "_user_activity_point
-			SET	activityPoints = 0,
-				items = 0
-			WHERE	objectTypeID = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_user_activity_point
+                SET     activityPoints = 0,
+                        items = 0
+                WHERE   objectTypeID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$objectTypeObj->objectTypeID]);
     }

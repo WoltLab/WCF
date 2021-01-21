@@ -60,9 +60,9 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
     public function __construct($id, ?array $row = null, ?self $object = null)
     {
         if ($id !== null) {
-            $sql = "SELECT	*
-				FROM	" . static::getDatabaseTableName() . "
-				WHERE	" . static::getDatabaseTableIndexName() . " = ?";
+            $sql = "SELECT  *
+                    FROM    " . static::getDatabaseTableName() . "
+                    WHERE   " . static::getDatabaseTableIndexName() . " = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$id]);
             $row = $statement->fetchArray();

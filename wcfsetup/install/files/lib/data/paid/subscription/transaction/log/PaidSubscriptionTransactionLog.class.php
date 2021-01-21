@@ -99,10 +99,10 @@ class PaidSubscriptionTransactionLog extends DatabaseObject
      */
     public static function getLogByTransactionID($paymentMethodObjectTypeID, $transactionID)
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_paid_subscription_transaction_log
-			WHERE	paymentMethodObjectTypeID = ?
-				AND transactionID = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_paid_subscription_transaction_log
+                WHERE   paymentMethodObjectTypeID = ?
+                    AND transactionID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$paymentMethodObjectTypeID, $transactionID]);
         $row = $statement->fetchArray();

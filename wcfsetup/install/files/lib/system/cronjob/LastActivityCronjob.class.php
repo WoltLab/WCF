@@ -22,11 +22,11 @@ class LastActivityCronjob extends AbstractCronjob
     {
         parent::execute($cronjob);
 
-        $sql = "UPDATE	wcf" . WCF_N . "_user user_table,
-				wcf" . WCF_N . "_session session
-			SET	user_table.lastActivityTime = session.lastActivityTime
-			WHERE	user_table.userID = session.userID
-				AND session.userID <> 0";
+        $sql = "UPDATE  wcf" . WCF_N . "_user user_table,
+                        wcf" . WCF_N . "_session session
+                SET     user_table.lastActivityTime = session.lastActivityTime
+                WHERE   user_table.userID = session.userID
+                    AND session.userID <> 0";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
     }

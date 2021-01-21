@@ -74,8 +74,8 @@ class Option extends DatabaseObject
      */
     public static function getOptions()
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_option";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_option";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
 
@@ -96,9 +96,9 @@ class Option extends DatabaseObject
      */
     public static function getOptionByName($optionName)
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_option
-			WHERE	optionName = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_option
+                WHERE   optionName = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$optionName]);
 

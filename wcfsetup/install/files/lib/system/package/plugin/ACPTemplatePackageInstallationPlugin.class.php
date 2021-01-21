@@ -61,9 +61,9 @@ class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPl
     public function uninstall()
     {
         // fetch ACP templates from log
-        $sql = "SELECT	templateName, application
-			FROM	wcf" . WCF_N . "_acp_template
-			WHERE	packageID = ?";
+        $sql = "SELECT  templateName, application
+                FROM    wcf" . WCF_N . "_acp_template
+                WHERE   packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->installation->getPackageID()]);
 

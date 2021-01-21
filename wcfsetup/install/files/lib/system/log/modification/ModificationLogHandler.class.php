@@ -119,8 +119,8 @@ class ModificationLogHandler extends SingletonFactory
         $conditions->add("objectTypeID = ?", [$objectTypeObj->objectTypeID]);
         $conditions->add("objectID IN (?)", [$objectIDs]);
 
-        $sql = "DELETE FROM	wcf" . WCF_N . "_modification_log
-			" . $conditions;
+        $sql = "DELETE FROM wcf" . WCF_N . "_modification_log
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
     }

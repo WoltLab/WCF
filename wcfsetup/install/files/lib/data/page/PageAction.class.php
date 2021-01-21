@@ -124,9 +124,9 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 
         // save box to page assignments
         if (!empty($this->parameters['boxToPage'])) {
-            $sql = "INSERT INTO	wcf" . WCF_N . "_box_to_page
-						(boxID, pageID, visible)
-				VALUES		(?, ?, ?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_box_to_page
+                                (boxID, pageID, visible)
+                    VALUES      (?, ?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
 
             foreach ($this->parameters['boxToPage'] as $boxData) {
@@ -250,13 +250,13 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 
         // save box to page assignments
         if (isset($this->parameters['boxToPage'])) {
-            $sql = "DELETE FROM	wcf" . WCF_N . "_box_to_page
-				WHERE		pageID = ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_box_to_page
+                    WHERE       pageID = ?";
             $deleteStatement = WCF::getDB()->prepareStatement($sql);
 
-            $sql = "INSERT INTO	wcf" . WCF_N . "_box_to_page
-						(boxID, pageID, visible)
-				VALUES		(?, ?, ?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_box_to_page
+                                (boxID, pageID, visible)
+                    VALUES      (?, ?, ?)";
             $insertStatement = WCF::getDB()->prepareStatement($sql);
 
             foreach ($this->getObjects() as $page) {
@@ -340,11 +340,11 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
      */
     public function search()
     {
-        $sql = "SELECT          pageID
-			FROM            wcf" . WCF_N . "_page
-			WHERE           name LIKE ?
-					AND requireObjectID = ?
-			ORDER BY        name";
+        $sql = "SELECT      pageID
+                FROM        wcf" . WCF_N . "_page
+                WHERE       name LIKE ?
+                        AND requireObjectID = ?
+                ORDER BY    name";
         $statement = WCF::getDB()->prepareStatement($sql, 5);
         $statement->execute([
             '%' . $this->parameters['searchString'] . '%',
@@ -435,8 +435,8 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
         $conditions->add("boxID IN (?)", [$seenBoxIDs]);
 
         $sql = "SELECT  boxID
-			FROM    wcf" . WCF_N . "_box
-			" . $conditions;
+                FROM    wcf" . WCF_N . "_box
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());
         $validBoxIDs = [];
@@ -458,14 +458,14 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
     {
         $pageID = $this->pageEditor->getDecoratedObject()->pageID;
 
-        $sql = "DELETE FROM     wcf" . WCF_N . "_page_box_order
-			WHERE           pageID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_page_box_order
+                WHERE       pageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$pageID]);
 
-        $sql = "INSERT INTO     wcf" . WCF_N . "_page_box_order
-					(pageID, boxID, showOrder)
-			VALUES          (?, ?, ?)";
+        $sql = "INSERT INTO wcf" . WCF_N . "_page_box_order
+                            (pageID, boxID, showOrder)
+                VALUES      (?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
 
         WCF::getDB()->beginTransaction();
@@ -496,8 +496,8 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
      */
     public function resetPosition()
     {
-        $sql = "DELETE FROM     wcf" . WCF_N . "_page_box_order
-			WHERE           pageID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_page_box_order
+                WHERE       pageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->pageEditor->getDecoratedObject()->pageID]);
     }

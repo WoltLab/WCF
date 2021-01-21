@@ -252,9 +252,12 @@ class CommentHandler extends SingletonFactory
             $notificationList = new UserNotificationList();
             $notificationList->getConditionBuilder()->add('user_notification.eventID IN (?)', [\array_keys($commentEvents)]);
             $notificationList->getConditionBuilder()->add('user_notification.userID = ?', [WCF::getUser()->userID]);
-            $notificationList->sqlJoins .= "	LEFT JOIN	wcf" . WCF_N . "_comment comment
-								ON		(comment.commentID = user_notification.objectID
-										AND comment.objectTypeID = " . \intval($this->getObjectTypeID($objectType)) . ")";
+            $notificationList->sqlJoins .= "
+                LEFT JOIN   wcf" . WCF_N . "_comment comment
+                ON          (
+                                    comment.commentID = user_notification.objectID
+                                AND comment.objectTypeID = " . \intval($this->getObjectTypeID($objectType)) . "
+                            )";
             $notificationList->getConditionBuilder()->add('comment.objectID IN (?)', [$objectIDs]);
             $notificationList->getConditionBuilder()->add('comment.time <= ?', [$time]);
             $notificationList->readObjects();
@@ -297,9 +300,12 @@ class CommentHandler extends SingletonFactory
             $notificationList = new UserNotificationList();
             $notificationList->getConditionBuilder()->add('user_notification.eventID IN (?)', [\array_keys($reactionCommentEvents)]);
             $notificationList->getConditionBuilder()->add('user_notification.userID = ?', [WCF::getUser()->userID]);
-            $notificationList->sqlJoins .= "	LEFT JOIN	wcf" . WCF_N . "_comment comment
-								ON		(comment.commentID = user_notification.baseObjectID
-										AND comment.objectTypeID = " . \intval($this->getObjectTypeID($objectType)) . ")";
+            $notificationList->sqlJoins .= "
+                LEFT JOIN   wcf" . WCF_N . "_comment comment
+                ON          (
+                                    comment.commentID = user_notification.baseObjectID
+                                AND comment.objectTypeID = " . \intval($this->getObjectTypeID($objectType)) . "
+                            )";
             $notificationList->getConditionBuilder()->add('comment.objectID IN (?)', [$objectIDs]);
             $notificationList->getConditionBuilder()->add('comment.time <= ?', [$time]);
             $notificationList->readObjects();
@@ -342,10 +348,11 @@ class CommentHandler extends SingletonFactory
             $notificationList = new UserNotificationList();
             $notificationList->getConditionBuilder()->add('user_notification.eventID IN (?)', [\array_keys($responseEvents)]);
             $notificationList->getConditionBuilder()->add('user_notification.userID = ?', [WCF::getUser()->userID]);
-            $notificationList->sqlJoins .= "	LEFT JOIN	wcf" . WCF_N . "_comment_response comment_response
-								ON		(comment_response.responseID = user_notification.objectID)
-								LEFT JOIN	wcf" . WCF_N . "_comment comment
-								ON		(comment.commentID = comment_response.commentID)";
+            $notificationList->sqlJoins .= "
+                LEFT JOIN   wcf" . WCF_N . "_comment_response comment_response
+                ON          (comment_response.responseID = user_notification.objectID)
+                LEFT JOIN   wcf" . WCF_N . "_comment comment
+                ON          (comment.commentID = comment_response.commentID)";
             $notificationList->getConditionBuilder()->add('comment.objectTypeID IN (?)', [$this->getObjectTypeID($objectType)]);
             $notificationList->getConditionBuilder()->add('comment.objectID IN (?)', [$objectIDs]);
             $notificationList->getConditionBuilder()->add('comment_response.time <= ?', [$time]);
@@ -389,10 +396,11 @@ class CommentHandler extends SingletonFactory
             $notificationList = new UserNotificationList();
             $notificationList->getConditionBuilder()->add('user_notification.eventID IN (?)', [\array_keys($reactionResponseEvents)]);
             $notificationList->getConditionBuilder()->add('user_notification.userID = ?', [WCF::getUser()->userID]);
-            $notificationList->sqlJoins .= "	LEFT JOIN	wcf" . WCF_N . "_comment_response comment_response
-								ON		(comment_response.responseID = user_notification.baseObjectID)
-								LEFT JOIN	wcf" . WCF_N . "_comment comment
-								ON		(comment.commentID = comment_response.commentID)";
+            $notificationList->sqlJoins .= "
+                LEFT JOIN   wcf" . WCF_N . "_comment_response comment_response
+                ON          (comment_response.responseID = user_notification.baseObjectID)
+                LEFT JOIN   wcf" . WCF_N . "_comment comment
+                ON          (comment.commentID = comment_response.commentID)";
             $notificationList->getConditionBuilder()->add('comment.objectTypeID IN (?)', [$this->getObjectTypeID($objectType)]);
             $notificationList->getConditionBuilder()->add('comment.objectID IN (?)', [$objectIDs]);
             $notificationList->getConditionBuilder()->add('comment_response.time <= ?', [$time]);

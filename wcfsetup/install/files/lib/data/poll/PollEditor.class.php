@@ -30,24 +30,24 @@ class PollEditor extends DatabaseObjectEditor
     public function calculateVotes()
     {
         // update option votes
-        $sql = "UPDATE	wcf" . WCF_N . "_poll_option poll_option
-			SET	poll_option.votes = (
-					SELECT	COUNT(*)
-					FROM	wcf" . WCF_N . "_poll_option_vote
-					WHERE	optionID = poll_option.optionID
-				)
-			WHERE	poll_option.pollID = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_poll_option poll_option
+                SET     poll_option.votes = (
+                            SELECT  COUNT(*)
+                            FROM    wcf" . WCF_N . "_poll_option_vote
+                            WHERE   optionID = poll_option.optionID
+                        )
+                WHERE   poll_option.pollID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->pollID]);
 
         // update total count
-        $sql = "UPDATE	wcf" . WCF_N . "_poll poll
-			SET	poll.votes = (
-					SELECT	COUNT(DISTINCT userID)
-					FROM	wcf" . WCF_N . "_poll_option_vote
-					WHERE	pollID = poll.pollID
-				)
-			WHERE	poll.pollID = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_poll poll
+                SET     poll.votes = (
+                            SELECT  COUNT(DISTINCT userID)
+                            FROM    wcf" . WCF_N . "_poll_option_vote
+                            WHERE   pollID = poll.pollID
+                        )
+                WHERE   poll.pollID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->pollID]);
     }
@@ -57,9 +57,9 @@ class PollEditor extends DatabaseObjectEditor
      */
     public function increaseVotes()
     {
-        $sql = "UPDATE	wcf" . WCF_N . "_poll
-			SET	votes = votes + 1
-			WHERE	pollID = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_poll
+                SET     votes = votes + 1
+                WHERE   pollID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->pollID]);
     }

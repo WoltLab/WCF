@@ -126,9 +126,9 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
         if ($this->pageContents === null) {
             $this->pageContents = [];
 
-            $sql = "SELECT	*
-				FROM	wcf" . WCF_N . "_page_content
-				WHERE	pageID = ?";
+            $sql = "SELECT  *
+                    FROM    wcf" . WCF_N . "_page_content
+                    WHERE   pageID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->pageID]);
             while ($row = $statement->fetchArray()) {
@@ -157,8 +157,8 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
         }
 
         $sql = "SELECT  *
-			FROM	wcf" . WCF_N . "_page_content
-			" . $conditions;
+                FROM    wcf" . WCF_N . "_page_content
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql, 1);
         $statement->execute($conditions->getParameters());
         $row = $statement->fetchSingleRow();
@@ -280,26 +280,26 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
 
         WCF::getDB()->beginTransaction();
         // unmark existing landing page
-        $sql = "UPDATE	wcf" . WCF_N . "_page
-			SET	isLandingPage = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_page
+                SET     isLandingPage = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             0,
         ]);
 
         // set current page as landing page
-        $sql = "UPDATE	wcf" . WCF_N . "_page
-			SET	isLandingPage = ?
-			WHERE	pageID = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_page
+                SET     isLandingPage = ?
+                WHERE   pageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             1,
             $this->pageID,
         ]);
 
-        $sql = "UPDATE	wcf" . WCF_N . "_application
-			SET	landingPageID = ?
-			WHERE	packageID = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_application
+                SET     landingPageID = ?
+                WHERE   packageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $this->pageID,
@@ -330,9 +330,9 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
     public function getBoxIDs()
     {
         if ($this->boxIDs === null) {
-            $sql = "SELECT	boxID
-				FROM	wcf" . WCF_N . "_box_to_page
-				WHERE	pageID = ?";
+            $sql = "SELECT  boxID
+                    FROM    wcf" . WCF_N . "_box_to_page
+                    WHERE   pageID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->pageID]);
             $this->boxIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
@@ -382,8 +382,8 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
             $this->pageLanguages = [];
             if ($this->isMultilingual) {
                 $sql = "SELECT  languageID
-				FROM    wcf" . WCF_N . "_page_content
-				WHERE   pageID = ?";
+                        FROM    wcf" . WCF_N . "_page_content
+                        WHERE   pageID = ?";
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute([$this->pageID]);
                 while ($languageID = $statement->fetchColumn()) {
@@ -416,9 +416,9 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
      */
     public static function getPageByIdentifier($identifier)
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_page
-			WHERE	identifier = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_page
+                WHERE   identifier = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$identifier]);
 
@@ -433,9 +433,9 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
      */
     public static function getPageByName($name)
     {
-        $sql = "SELECT	*
-			FROM	wcf" . WCF_N . "_page
-			WHERE	name = ?";
+        $sql = "SELECT  *
+                FROM    wcf" . WCF_N . "_page
+                WHERE   name = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$name]);
 

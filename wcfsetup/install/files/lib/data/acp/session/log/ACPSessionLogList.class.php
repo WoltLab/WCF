@@ -32,11 +32,18 @@ class ACPSessionLogList extends DatabaseObjectList
         if (!empty($this->sqlSelects)) {
             $this->sqlSelects .= ',';
         }
-        $this->sqlSelects .= "	user_table.username,
-					0 AS active,
-					(SELECT COUNT(*) FROM wcf" . WCF_N . "_acp_session_access_log WHERE sessionLogID = " . $this->getDatabaseTableAlias() . ".sessionLogID) AS accesses";
+        $this->sqlSelects .= "
+            user_table.username,
+            0 AS active,
+            (
+                SELECT  COUNT(*)
+                FROM    wcf" . WCF_N . "_acp_session_access_log
+                WHERE   sessionLogID = " . $this->getDatabaseTableAlias() . ".sessionLogID
+            ) AS accesses";
 
-        $this->sqlJoins .= "	LEFT JOIN wcf" . WCF_N . "_user user_table ON (user_table.userID = " . $this->getDatabaseTableAlias() . ".userID)";
+        $this->sqlJoins .= "
+            LEFT JOIN wcf" . WCF_N . "_user user_table
+            ON  (user_table.userID = " . $this->getDatabaseTableAlias() . ".userID)";
 
         parent::readObjects();
     }

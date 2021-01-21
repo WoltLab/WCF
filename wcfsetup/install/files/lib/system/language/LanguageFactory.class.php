@@ -96,9 +96,9 @@ class LanguageFactory extends SingletonFactory
     {
         // called within WCFSetup
         if ($this->cache === false || empty($this->cache['codes'])) {
-            $sql = "SELECT	languageID
-				FROM	wcf" . WCF_N . "_language
-				WHERE	languageCode = ?";
+            $sql = "SELECT  languageID
+                    FROM    wcf" . WCF_N . "_language
+                    WHERE   languageCode = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$languageCode]);
             $row = $statement->fetchArray();
@@ -325,16 +325,16 @@ class LanguageFactory extends SingletonFactory
     public function makeDefault($languageID)
     {
         // remove old default language
-        $sql = "UPDATE	wcf" . WCF_N . "_language
-			SET	isDefault = 0
-			WHERE	isDefault = 1";
+        $sql = "UPDATE  wcf" . WCF_N . "_language
+                SET     isDefault = 0
+                WHERE   isDefault = 1";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
 
         // make this language to default
-        $sql = "UPDATE	wcf" . WCF_N . "_language
-			SET	isDefault = 1
-			WHERE	languageID = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_language
+                SET     isDefault = 1
+                WHERE   languageID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$languageID]);
 
@@ -373,8 +373,8 @@ class LanguageFactory extends SingletonFactory
     public function countRecentlyDisabledCustomValues()
     {
         $sql = "SELECT  COUNT(*) AS count
-			FROM    wcf" . WCF_N . "_language_item
-			WHERE   languageCustomItemDisableTime >= ?";
+                FROM    wcf" . WCF_N . "_language_item
+                WHERE   languageCustomItemDisableTime >= ?";
         $statement = WCF::getDB()->prepareStatement($sql, 1);
         $statement->execute([TIME_NOW - 86400 * 7]);
 

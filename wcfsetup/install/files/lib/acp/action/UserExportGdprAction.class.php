@@ -244,9 +244,9 @@ class UserExportGdprAction extends AbstractAction
     public function exportIpAddresses($databaseTable, $ipAddressColumn, $timeColumn, $userIDColumn)
     {
         $sql = "SELECT  {$ipAddressColumn}, {$timeColumn}
-			FROM    {$databaseTable}
-			WHERE   {$userIDColumn} = ?
-				AND {$ipAddressColumn} <> ''";
+                FROM    {$databaseTable}
+                WHERE   {$userIDColumn} = ?
+                    AND {$ipAddressColumn} <> ''";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->user->userID]);
 
@@ -256,8 +256,8 @@ class UserExportGdprAction extends AbstractAction
     protected function dumpTable($tableName, $userIDColumn)
     {
         $sql = "SELECT  *
-			FROM    {$tableName}
-			WHERE   {$userIDColumn} = ?";
+                FROM    {$tableName}
+                WHERE   {$userIDColumn} = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->user->userID]);
 

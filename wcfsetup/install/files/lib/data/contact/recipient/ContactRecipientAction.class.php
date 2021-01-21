@@ -104,9 +104,9 @@ class ContactRecipientAction extends AbstractDatabaseObjectAction implements ISo
      */
     public function updatePosition()
     {
-        $sql = "UPDATE	wcf" . WCF_N . "_contact_recipient
-			SET	showOrder = ?
-			WHERE	recipientID = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_contact_recipient
+                SET     showOrder = ?
+                WHERE   recipientID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
 
         $showOrder = $this->parameters['data']['offset'];

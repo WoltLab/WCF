@@ -187,9 +187,9 @@ class UserProfileAction extends UserAction implements IPopoverAction
         $conditionBuilder->add('userID = ?', [$this->userProfile->userID]);
         $conditionBuilder->add('objectTypeID IN (?)', [\array_keys($activityPointObjectTypes)]);
 
-        $sql = "SELECT	objectTypeID, activityPoints, items
-			FROM	wcf" . WCF_N . "_user_activity_point
-			" . $conditionBuilder;
+        $sql = "SELECT  objectTypeID, activityPoints, items
+                FROM    wcf" . WCF_N . "_user_activity_point
+                " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionBuilder->getParameters());
         while ($row = $statement->fetchArray()) {
@@ -375,12 +375,12 @@ class UserProfileAction extends UserAction implements IPopoverAction
                 $conditionBuilder->add('user_rank.requiredGender = ?', [0]);
             }
 
-            $sql = "SELECT		user_rank.rankID
-				FROM		wcf" . WCF_N . "_user_rank user_rank
-				LEFT JOIN	wcf" . WCF_N . "_user_group user_group
-				ON		(user_group.groupID = user_rank.groupID)
-				" . $conditionBuilder . "
-				ORDER BY	user_group.priority DESC, user_rank.requiredPoints DESC, user_rank.requiredGender DESC";
+            $sql = "SELECT      user_rank.rankID
+                    FROM        wcf" . WCF_N . "_user_rank user_rank
+                    LEFT JOIN   wcf" . WCF_N . "_user_group user_group
+                    ON          (user_group.groupID = user_rank.groupID)
+                    " . $conditionBuilder . "
+                    ORDER BY    user_group.priority DESC, user_rank.requiredPoints DESC, user_rank.requiredGender DESC";
             $statement = WCF::getDB()->prepareStatement($sql, 1);
             $statement->execute($conditionBuilder->getParameters());
             $row = $statement->fetchArray();
@@ -398,9 +398,9 @@ class UserProfileAction extends UserAction implements IPopoverAction
         }
 
         if (!empty($userToRank)) {
-            $sql = "UPDATE	wcf" . WCF_N . "_user
-				SET	rankID = ?
-				WHERE	userID = ?";
+            $sql = "UPDATE  wcf" . WCF_N . "_user
+                    SET     rankID = ?
+                    WHERE   userID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
 
             WCF::getDB()->beginTransaction();
@@ -457,10 +457,10 @@ class UserProfileAction extends UserAction implements IPopoverAction
             $conditionBuilder = new PreparedStatementConditionBuilder();
             $conditionBuilder->add('groupID IN (?)', [$groupIDs]);
 
-            $sql = "SELECT		groupID
-				FROM		wcf" . WCF_N . "_user_group
-				" . $conditionBuilder . "
-				ORDER BY	priority DESC";
+            $sql = "SELECT      groupID
+                    FROM        wcf" . WCF_N . "_user_group
+                    " . $conditionBuilder . "
+                    ORDER BY    priority DESC";
             $statement = WCF::getDB()->prepareStatement($sql, 1);
             $statement->execute($conditionBuilder->getParameters());
             $row = $statement->fetchArray();
@@ -471,9 +471,9 @@ class UserProfileAction extends UserAction implements IPopoverAction
 
         // add users to missing default user groups
         if (!empty($fixUserGroupIDs)) {
-            $sql = "INSERT INTO     wcf" . WCF_N . "_user_to_group
-						(userID, groupID)
-				VALUES          (?, ?)";
+            $sql = "INSERT INTO wcf" . WCF_N . "_user_to_group
+                                (userID, groupID)
+                    VALUES      (?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
 
             WCF::getDB()->beginTransaction();
@@ -488,9 +488,9 @@ class UserProfileAction extends UserAction implements IPopoverAction
         }
 
         if (!empty($userToGroup)) {
-            $sql = "UPDATE	wcf" . WCF_N . "_user
-				SET	userOnlineGroupID = ?
-				WHERE	userID = ?";
+            $sql = "UPDATE  wcf" . WCF_N . "_user
+                    SET     userOnlineGroupID = ?
+                    WHERE   userID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
 
             WCF::getDB()->beginTransaction();
@@ -513,10 +513,13 @@ class UserProfileAction extends UserAction implements IPopoverAction
             $this->readObjects();
         }
 
-        $sql = "DELETE FROM wcf" . WCF_N . "_user_special_trophy WHERE userID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_user_special_trophy
+                WHERE userID = ?";
         $deleteStatement = WCF::getDB()->prepareStatement($sql);
 
-        $sql = "INSERT INTO wcf" . WCF_N . "_user_special_trophy (userID, trophyID) VALUES (?, ?)";
+        $sql = "INSERT INTO wcf" . WCF_N . "_user_special_trophy
+                            (userID, trophyID)
+                VALUES      (?, ?)";
         $insertStatement = WCF::getDB()->prepareStatement($sql);
 
         foreach ($this->getObjects() as $user) {

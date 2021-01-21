@@ -66,9 +66,9 @@ class AdministrativeAttachmentList extends AttachmentList
     public function getAvailableFileTypes()
     {
         $fileTypes = [];
-        $sql = "SELECT	DISTINCT attachment.fileType
-			FROM	wcf" . WCF_N . "_attachment attachment
-			" . $this->getConditionBuilder();
+        $sql = "SELECT  DISTINCT attachment.fileType
+                FROM    wcf" . WCF_N . "_attachment attachment
+                " . $this->getConditionBuilder();
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($this->getConditionBuilder()->getParameters());
         while ($row = $statement->fetchArray()) {
@@ -89,11 +89,11 @@ class AdministrativeAttachmentList extends AttachmentList
      */
     public function getStats()
     {
-        $sql = "SELECT	COUNT(*) AS count,
-				COALESCE(SUM(attachment.filesize), 0) AS size,
-				COALESCE(SUM(downloads), 0) AS downloads
-			FROM	wcf" . WCF_N . "_attachment attachment
-			" . $this->getConditionBuilder();
+        $sql = "SELECT  COUNT(*) AS count,
+                        COALESCE(SUM(attachment.filesize), 0) AS size,
+                        COALESCE(SUM(downloads), 0) AS downloads
+                FROM    wcf" . WCF_N . "_attachment attachment
+                " . $this->getConditionBuilder();
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($this->getConditionBuilder()->getParameters());
 

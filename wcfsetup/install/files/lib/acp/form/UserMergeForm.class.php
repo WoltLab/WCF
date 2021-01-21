@@ -120,27 +120,27 @@ class UserMergeForm extends AbstractForm
         // poll_option_vote
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("userID IN (?)", [$this->mergedUserIDs]);
-        $sql = "UPDATE IGNORE	wcf" . WCF_N . "_poll_option_vote
-			SET		userID = ?
-			" . $conditions;
+        $sql = "UPDATE IGNORE   wcf" . WCF_N . "_poll_option_vote
+                SET             userID = ?
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(\array_merge([$this->destinationUserID], $conditions->getParameters()));
 
         // comment
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("userID IN (?)", [$this->mergedUserIDs]);
-        $sql = "UPDATE	wcf" . WCF_N . "_comment
-			SET	userID = ?
-			" . $conditions;
+        $sql = "UPDATE  wcf" . WCF_N . "_comment
+                SET     userID = ?
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(\array_merge([$this->destinationUserID], $conditions->getParameters()));
 
         // comment_response
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("userID IN (?)", [$this->mergedUserIDs]);
-        $sql = "UPDATE	wcf" . WCF_N . "_comment_response
-			SET	userID = ?
-			" . $conditions;
+        $sql = "UPDATE  wcf" . WCF_N . "_comment_response
+                SET     userID = ?
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(\array_merge([$this->destinationUserID], $conditions->getParameters()));
 
@@ -149,35 +149,35 @@ class UserMergeForm extends AbstractForm
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("objectTypeID = ?", [$objectType->objectTypeID]);
         $conditions->add("objectID IN (?)", [$this->mergedUserIDs]);
-        $sql = "UPDATE	wcf" . WCF_N . "_comment
-			SET	objectID = ?
-			" . $conditions;
+        $sql = "UPDATE  wcf" . WCF_N . "_comment
+                SET     objectID = ?
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(\array_merge([$this->destinationUserID], $conditions->getParameters()));
 
         // like (userID)
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("userID IN (?)", [$this->mergedUserIDs]);
-        $sql = "UPDATE IGNORE	wcf" . WCF_N . "_like
-			SET		userID = ?
-			" . $conditions;
+        $sql = "UPDATE IGNORE   wcf" . WCF_N . "_like
+                SET             userID = ?
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(\array_merge([$this->destinationUserID], $conditions->getParameters()));
         // like (objectUserID)
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("objectUserID IN (?)", [$this->mergedUserIDs]);
-        $sql = "UPDATE	wcf" . WCF_N . "_like
-			SET	objectUserID = ?
-			" . $conditions;
+        $sql = "UPDATE  wcf" . WCF_N . "_like
+                SET     objectUserID = ?
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(\array_merge([$this->destinationUserID], $conditions->getParameters()));
 
         // like_object
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("objectUserID IN (?)", [$this->mergedUserIDs]);
-        $sql = "UPDATE	wcf" . WCF_N . "_like_object
-			SET	objectUserID = ?
-			" . $conditions;
+        $sql = "UPDATE  wcf" . WCF_N . "_like_object
+                SET     objectUserID = ?
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(\array_merge([$this->destinationUserID], $conditions->getParameters()));
 
@@ -185,18 +185,18 @@ class UserMergeForm extends AbstractForm
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("userID IN (?)", [$this->mergedUserIDs]);
         $conditions->add("followUserID <> ?", [$this->destinationUserID]);
-        $sql = "UPDATE IGNORE	wcf" . WCF_N . "_user_follow
-			SET		userID = ?
-			" . $conditions;
+        $sql = "UPDATE IGNORE   wcf" . WCF_N . "_user_follow
+                SET             userID = ?
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(\array_merge([$this->destinationUserID], $conditions->getParameters()));
         // user_follow (followUserID)
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("followUserID IN (?)", [$this->mergedUserIDs]);
         $conditions->add("userID <> ?", [$this->destinationUserID]);
-        $sql = "UPDATE IGNORE	wcf" . WCF_N . "_user_follow
-			SET		followUserID = ?
-			" . $conditions;
+        $sql = "UPDATE IGNORE   wcf" . WCF_N . "_user_follow
+                SET             followUserID = ?
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(\array_merge([$this->destinationUserID], $conditions->getParameters()));
 
@@ -204,63 +204,63 @@ class UserMergeForm extends AbstractForm
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("userID IN (?)", [$this->mergedUserIDs]);
         $conditions->add("ignoreUserID <> ?", [$this->destinationUserID]);
-        $sql = "UPDATE IGNORE	wcf" . WCF_N . "_user_ignore
-			SET		userID = ?
-			" . $conditions;
+        $sql = "UPDATE IGNORE   wcf" . WCF_N . "_user_ignore
+                SET             userID = ?
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(\array_merge([$this->destinationUserID], $conditions->getParameters()));
         // user_ignore (ignoreUserID)
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("ignoreUserID IN (?)", [$this->mergedUserIDs]);
         $conditions->add("userID <> ?", [$this->destinationUserID]);
-        $sql = "UPDATE IGNORE	wcf" . WCF_N . "_user_ignore
-			SET		ignoreUserID = ?
-			" . $conditions;
+        $sql = "UPDATE IGNORE   wcf" . WCF_N . "_user_ignore
+                SET             ignoreUserID = ?
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(\array_merge([$this->destinationUserID], $conditions->getParameters()));
 
         // user_object_watch
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("userID IN (?)", [$this->mergedUserIDs]);
-        $sql = "UPDATE IGNORE	wcf" . WCF_N . "_user_object_watch
-			SET		userID = ?
-			" . $conditions;
+        $sql = "UPDATE IGNORE   wcf" . WCF_N . "_user_object_watch
+                SET             userID = ?
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(\array_merge([$this->destinationUserID], $conditions->getParameters()));
 
         // user_activity_event
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("userID IN (?)", [$this->mergedUserIDs]);
-        $sql = "UPDATE	wcf" . WCF_N . "_user_activity_event
-			SET	userID = ?
-			" . $conditions;
+        $sql = "UPDATE  wcf" . WCF_N . "_user_activity_event
+                SET     userID = ?
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(\array_merge([$this->destinationUserID], $conditions->getParameters()));
 
         // attachments
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("userID IN (?)", [$this->mergedUserIDs]);
-        $sql = "UPDATE	wcf" . WCF_N . "_attachment
-			SET	userID = ?
-			" . $conditions;
+        $sql = "UPDATE  wcf" . WCF_N . "_attachment
+                SET     userID = ?
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(\array_merge([$this->destinationUserID], $conditions->getParameters()));
 
         // modification_log
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("userID IN (?)", [$this->mergedUserIDs]);
-        $sql = "UPDATE	wcf" . WCF_N . "_modification_log
-			SET	userID = ?
-			" . $conditions;
+        $sql = "UPDATE  wcf" . WCF_N . "_modification_log
+                SET     userID = ?
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(\array_merge([$this->destinationUserID], $conditions->getParameters()));
 
         // user notifications
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("authorID IN (?)", [$this->mergedUserIDs]);
-        $sql = "UPDATE IGNORE	wcf" . WCF_N . "_user_notification_author
-			SET	        authorID = ?
-			" . $conditions;
+        $sql = "UPDATE IGNORE   wcf" . WCF_N . "_user_notification_author
+                SET             authorID = ?
+                " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute(\array_merge([$this->destinationUserID], $conditions->getParameters()));
 

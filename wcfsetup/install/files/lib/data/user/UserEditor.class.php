@@ -125,8 +125,8 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
         if (self::$userOptionDefaultValues === null) {
             self::$userOptionDefaultValues = [];
 
-            $sql = "SELECT	optionID, defaultValue
-				FROM	wcf" . WCF_N . "_user_option";
+            $sql = "SELECT  optionID, defaultValue
+                    FROM    wcf" . WCF_N . "_user_option";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute();
             while ($row = $statement->fetchArray()) {
@@ -145,9 +145,9 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
             $statementParameters[] = $optionValue;
         }
 
-        $sql = "INSERT INTO	wcf" . WCF_N . "_user_option_value
-					(userID" . $keys . ")
-			VALUES		(?" . $values . ")";
+        $sql = "INSERT INTO wcf" . WCF_N . "_user_option_value
+                            (userID" . $keys . ")
+                VALUES      (?" . $values . ")";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($statementParameters);
     }
@@ -172,9 +172,9 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
         $statementParameters[] = $this->userID;
 
         if (!empty($updateSQL)) {
-            $sql = "UPDATE	wcf" . WCF_N . "_user_option_value
-				SET	" . $updateSQL . "
-				WHERE	userID = ?";
+            $sql = "UPDATE  wcf" . WCF_N . "_user_option_value
+                    SET     " . $updateSQL . "
+                    WHERE   userID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($statementParameters);
         }
@@ -197,17 +197,17 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
         // remove old groups
         if ($deleteOldGroups) {
-            $sql = "DELETE FROM	wcf" . WCF_N . "_user_to_group
-				WHERE		userID = ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_user_to_group
+                    WHERE       userID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->userID]);
         }
 
         // insert new groups
         if (!empty($groupIDs)) {
-            $sql = "INSERT IGNORE INTO	wcf" . WCF_N . "_user_to_group
-							(userID, groupID)
-				VALUES			(?, ?)";
+            $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_user_to_group
+                                        (userID, groupID)
+                    VALUES              (?, ?)";
             $statement = WCF::getDB()->prepareStatement($sql);
             foreach ($groupIDs as $groupID) {
                 $statement->execute([$this->userID, $groupID]);
@@ -222,9 +222,9 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
      */
     public function addToGroup($groupID)
     {
-        $sql = "INSERT IGNORE INTO	wcf" . WCF_N . "_user_to_group
-						(userID, groupID)
-			VALUES			(?, ?)";
+        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_user_to_group
+                                    (userID, groupID)
+                VALUES              (?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->userID, $groupID]);
     }
@@ -236,9 +236,9 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
      */
     public function removeFromGroup($groupID)
     {
-        $sql = "DELETE FROM	wcf" . WCF_N . "_user_to_group
-			WHERE		userID = ?
-					AND groupID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_user_to_group
+                WHERE       userID = ?
+                        AND groupID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->userID, $groupID]);
     }
@@ -250,9 +250,9 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
      */
     public function removeFromGroups(array $groupIDs)
     {
-        $sql = "DELETE FROM	wcf" . WCF_N . "_user_to_group
-			WHERE		userID = ?
-					AND groupID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_user_to_group
+                WHERE       userID = ?
+                        AND groupID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($groupIDs as $groupID) {
             $statement->execute([
@@ -272,16 +272,16 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
     {
         // remove previous languages
         if ($deleteOldLanguages) {
-            $sql = "DELETE FROM	wcf" . WCF_N . "_user_to_language
-				WHERE		userID = ?";
+            $sql = "DELETE FROM wcf" . WCF_N . "_user_to_language
+                    WHERE       userID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->userID]);
         }
 
         // insert language ids
-        $sql = "INSERT IGNORE INTO	wcf" . WCF_N . "_user_to_language
-						(userID, languageID)
-			VALUES			(?, ?)";
+        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_user_to_language
+                                    (userID, languageID)
+                VALUES              (?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
 
         if (!empty($languageIDs)) {

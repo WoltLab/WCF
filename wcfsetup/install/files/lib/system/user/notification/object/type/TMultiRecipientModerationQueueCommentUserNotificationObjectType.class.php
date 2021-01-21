@@ -36,27 +36,23 @@ trait TMultiRecipientModerationQueueCommentUserNotificationObjectType
         // 2. fetch users who commented on the moderation queue entry
         // 3. fetch users who responded to a comment on the moderation queue entry
         $sql = "(
-				SELECT	assignedUserID
-				FROM	wcf" . WCF_N . "_moderation_queue
-				WHERE	queueID = ?
-					AND assignedUserID IS NOT NULL
-			)
-			UNION
-			(
-				SELECT		DISTINCT userID
-				FROM		wcf" . WCF_N . "_comment
-				WHERE		objectID = ?
-						AND objectTypeID = ?
-			)
-			UNION
-			(
-				SELECT		DISTINCT comment_response.userID
-				FROM		wcf" . WCF_N . "_comment_response comment_response
-				INNER JOIN	wcf" . WCF_N . "_comment comment
-				ON		(comment.commentID = comment_response.commentID)
-				WHERE		comment.objectID = ?
-						AND comment.objectTypeID = ?
-			)";
+            SELECT  assignedUserID
+            FROM    wcf" . WCF_N . "_moderation_queue
+            WHERE   queueID = ?
+                AND assignedUserID IS NOT NULL
+        ) UNION (
+            SELECT  DISTINCT userID
+            FROM    wcf" . WCF_N . "_comment
+            WHERE   objectID = ?
+                AND objectTypeID = ?
+        ) UNION (
+            SELECT      DISTINCT comment_response.userID
+            FROM        wcf" . WCF_N . "_comment_response comment_response
+            INNER JOIN  wcf" . WCF_N . "_comment comment
+            ON          (comment.commentID = comment_response.commentID)
+            WHERE       comment.objectID = ?
+                    AND comment.objectTypeID = ?
+        )";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $comment->objectID,
@@ -73,9 +69,9 @@ trait TMultiRecipientModerationQueueCommentUserNotificationObjectType
             $conditionBuilder->add('userID IN (?)', [$recipientIDs]);
             $conditionBuilder->add('queueID = ?', [$comment->objectID]);
             $conditionBuilder->add('isAffected = ?', [1]);
-            $sql = "SELECT		userID
-				FROM		wcf" . WCF_N . "_moderation_queue_to_user
-				" . $conditionBuilder;
+            $sql = "SELECT  userID
+                    FROM    wcf" . WCF_N . "_moderation_queue_to_user
+                    " . $conditionBuilder;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditionBuilder->getParameters());
             $recipientIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);

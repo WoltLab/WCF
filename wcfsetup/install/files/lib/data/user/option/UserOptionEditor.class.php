@@ -39,8 +39,8 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
 
         // add the default value to this column
         if (isset($parameters['defaultValue']) && $parameters['defaultValue'] !== null) {
-            $sql = "UPDATE	wcf" . WCF_N . "_user_option_value
-				SET	userOption" . $userOption->optionID . " = ?";
+            $sql = "UPDATE  wcf" . WCF_N . "_user_option_value
+                    SET     userOption" . $userOption->optionID . " = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$parameters['defaultValue']]);
         }
@@ -71,8 +71,8 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
      */
     public function delete()
     {
-        $sql = "DELETE FROM	wcf" . WCF_N . "_user_option
-			WHERE		optionID = ?";
+        $sql = "DELETE FROM wcf" . WCF_N . "_user_option
+                WHERE       optionID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->optionID]);
 
@@ -110,9 +110,9 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
     {
         $value = \intval(!$enable);
 
-        $sql = "UPDATE	wcf" . WCF_N . "_user_option
-			SET	isDisabled = ?
-			WHERE	optionID = ?";
+        $sql = "UPDATE  wcf" . WCF_N . "_user_option
+                SET     isDisabled = ?
+                WHERE   optionID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$value, $this->optionID]);
     }

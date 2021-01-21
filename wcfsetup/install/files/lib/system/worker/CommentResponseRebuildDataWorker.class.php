@@ -36,8 +36,8 @@ class CommentResponseRebuildDataWorker extends AbstractRebuildDataWorker
     {
         if ($this->count === null) {
             $this->count = 0;
-            $sql = "SELECT	MAX(responseID) AS responseID
-				FROM	wcf" . WCF_N . "_comment_response";
+            $sql = "SELECT  MAX(responseID) AS responseID
+                    FROM    wcf" . WCF_N . "_comment_response";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute();
             $row = $statement->fetchArray();

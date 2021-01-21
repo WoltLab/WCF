@@ -47,9 +47,9 @@ class UserImporter extends AbstractImporter
     public function __construct()
     {
         // get default notification events
-        $sql = "SELECT	eventID
-			FROM	wcf" . WCF_N . "_user_notification_event
-			WHERE	preset = ?";
+        $sql = "SELECT  eventID
+                FROM    wcf" . WCF_N . "_user_notification_event
+                WHERE   preset = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([1]);
         $this->eventIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
@@ -213,9 +213,9 @@ class UserImporter extends AbstractImporter
         }
 
         $groupIDs = \array_merge($groupIDs, $defaultGroupIDs);
-        $sql = "INSERT IGNORE INTO	wcf" . WCF_N . "_user_to_group
-						(userID, groupID)
-			VALUES			(?, ?)";
+        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_user_to_group
+                                    (userID, groupID)
+                VALUES              (?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         WCF::getDB()->beginTransaction();
         foreach ($groupIDs as $groupID) {
@@ -227,9 +227,9 @@ class UserImporter extends AbstractImporter
         WCF::getDB()->commitTransaction();
 
         // save languages
-        $sql = "INSERT IGNORE INTO	wcf" . WCF_N . "_user_to_language
-						(userID, languageID)
-			VALUES			(?, ?)";
+        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_user_to_language
+                                    (userID, languageID)
+                VALUES              (?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($languageIDs as $languageID) {
             $statement->execute([
@@ -239,9 +239,9 @@ class UserImporter extends AbstractImporter
         }
 
         // save default user events
-        $sql = "INSERT IGNORE INTO	wcf" . WCF_N . "_user_notification_event_to_user
-						(userID, eventID)
-			VALUES			(?, ?)";
+        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_user_notification_event_to_user
+                                    (userID, eventID)
+                VALUES              (?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         WCF::getDB()->beginTransaction();
         foreach ($this->eventIDs as $eventID) {
@@ -271,9 +271,9 @@ class UserImporter extends AbstractImporter
             $i++;
             $newUsername = 'Duplicate' . ($i > 1 ? $i : '') . ' ' . $username;
             // try username
-            $sql = "SELECT	userID
-				FROM	wcf" . WCF_N . "_user
-				WHERE	username = ?";
+            $sql = "SELECT  userID
+                    FROM    wcf" . WCF_N . "_user
+                    WHERE   username = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$newUsername]);
             $row = $statement->fetchArray();

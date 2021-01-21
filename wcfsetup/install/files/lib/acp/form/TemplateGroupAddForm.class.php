@@ -100,9 +100,9 @@ class TemplateGroupAddForm extends AbstractForm
             throw new UserInputException('templateGroupName');
         }
 
-        $sql = "SELECT	COUNT(*)
-			FROM	wcf" . WCF_N . "_template_group
-			WHERE	templateGroupName = ?";
+        $sql = "SELECT  COUNT(*)
+                FROM    wcf" . WCF_N . "_template_group
+                WHERE   templateGroupName = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->templateGroupName]);
 
@@ -124,9 +124,9 @@ class TemplateGroupAddForm extends AbstractForm
             throw new UserInputException('templateGroupFolderName', 'invalid');
         }
 
-        $sql = "SELECT	COUNT(*)
-			FROM	wcf" . WCF_N . "_template_group
-			WHERE	templateGroupFolderName = ?";
+        $sql = "SELECT  COUNT(*)
+                FROM    wcf" . WCF_N . "_template_group
+                WHERE   templateGroupFolderName = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->templateGroupFolderName]);
 
