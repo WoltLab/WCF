@@ -173,6 +173,7 @@ final class HTTPRequest {
 				'track_redirects' => true,
 				'on_redirect' => $redirectHandler,
 			],
+			'stream' => true,
 		];
 		if (isset($this->options['auth'])) {
 			$options['auth'] = [
