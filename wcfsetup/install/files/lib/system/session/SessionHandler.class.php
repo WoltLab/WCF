@@ -133,7 +133,6 @@ final class SessionHandler extends SingletonFactory {
 	 */
 	private $xsrfToken;
 	
-	private const ACP_SESSION_LIFETIME = 2 * 3600;
 	private const GUEST_SESSION_LIFETIME = 2 * 3600;
 	private const USER_SESSION_LIFETIME = 60 * 86400;
 	
@@ -143,6 +142,7 @@ final class SessionHandler extends SingletonFactory {
 	private const REAUTHENTICATION_KEY = self::class."\0__reauthentication__";
 	private const REAUTHENTICATION_HARD_LIMIT = 12 * 3600;
 	private const REAUTHENTICATION_SOFT_LIMIT = 2 * 3600;
+	private const REAUTHENTICATION_SOFT_LIMIT_ACP = 2 * 3600;
 	private const REAUTHENTICATION_GRACE_PERIOD = 15 * 60;
 	
 	/**
@@ -223,13 +223,13 @@ final class SessionHandler extends SingletonFactory {
 		}
 		
 		if ($version === 1) {
-			if ($length !== 26) {
+			if ($length !== 22) {
 				throw new \InvalidArgumentException(\sprintf(
-					'Expected exactly 26 Bytes, %d given.',
+					'Expected exactly 22 Bytes, %d given.',
 					$length
 				));
 			}
-			$data = \unpack('Cversion/A20sessionId/Ctimestep/NuserId', $value);
+			$data = \unpack('Cversion/A20sessionId/Ctimestep', $value);
 			$data['sessionId'] = Hex::encode($data['sessionId']);
 			
 			return $data;
@@ -239,18 +239,13 @@ final class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Extracts the data from the cookie identified by the `$isACP` parameter.
-	 * If the `$isACP` parameter is `null` the current environment is assumed.
+	 * Extracts the data from the session cookie.
 	 * 
 	 * @see SessionHandler::parseCookie()
 	 * @since 5.4
 	 */
-	public function getParsedCookieData(?bool $isACP = null): ?array {
-		if ($isACP === null) {
-			$isACP = $this->isACP;
-		}
-		
-		$cookieName = COOKIE_PREFIX.($isACP ? 'acp' : 'user')."_session";
+	private function getParsedCookieData(): ?array {
+		$cookieName = COOKIE_PREFIX."user_session";
 		
 		if (!empty($_COOKIE[$cookieName])) {
 			if (!PACKAGE_ID) {
@@ -311,11 +306,10 @@ final class SessionHandler extends SingletonFactory {
 		}
 		
 		return CryptoUtil::createSignedString(\pack(
-			'CA20CN',
+			'CA20C',
 			1,
 			Hex::decode($this->sessionID),
-			$this->getCookieTimestep(),
-			$this->user->userID ?: 0
+			$this->getCookieTimestep()
 		));
 	}
 	
@@ -366,24 +360,19 @@ final class SessionHandler extends SingletonFactory {
 	 * Refreshes the session cookie, extending the expiry.
 	 */
 	private function maybeRefreshCookie(): void {
-		// Guests and ACP use short-lived sessions with an actual
-		// session cookie.
+		// Guests use short-lived sessions with an actual session cookie.
 		if (!$this->user->userID) return;
-		if ($this->isACP) return;
 		
 		$cookieData = $this->getParsedCookieData();
 		
-		// No refresh is needed if userId and timestep match up.
-		if (
-			$cookieData['userId'] === $this->user->userID &&
-			$cookieData['timestep'] === $this->getCookieTimestep()
-		) {
+		// No refresh is needed if the timestep matches up.
+		if ($cookieData['timestep'] === $this->getCookieTimestep()) {
 			return;
 		}
 		
 		// Refresh the cookie.
 		HeaderUtil::setCookie(
-			($this->isACP ? 'acp' : 'user') . '_session',
+			'user_session',
 			$this->getCookieValue(),
 			TIME_NOW + (self::USER_SESSION_LIFETIME * 2)
 		);
@@ -518,7 +507,9 @@ final class SessionHandler extends SingletonFactory {
 	 * @param	mixed		$value
 	 */
 	public function register($key, $value) {
-		$this->variables[$key] = $value;
+		$scope = $this->isACP ? 'acp' : 'frontend';
+		
+		$this->variables[$scope][$key] = $value;
 		$this->variablesChanged = true;
 	}
 	
@@ -528,7 +519,9 @@ final class SessionHandler extends SingletonFactory {
 	 * @param	string		$key
 	 */
 	public function unregister($key) {
-		unset($this->variables[$key]);
+		$scope = $this->isACP ? 'acp' : 'frontend';
+		
+		unset($this->variables[$scope][$key]);
 		$this->variablesChanged = true;
 	}
 	
@@ -540,8 +533,10 @@ final class SessionHandler extends SingletonFactory {
 	 * @return	mixed
 	 */
 	public function getVar($key) {
-		if (isset($this->variables[$key])) {
-			return $this->variables[$key];
+		$scope = $this->isACP ? 'acp' : 'frontend';
+		
+		if (isset($this->variables[$scope][$key])) {
+			return $this->variables[$scope][$key];
 		}
 		
 		return null;
@@ -562,7 +557,7 @@ final class SessionHandler extends SingletonFactory {
 	 */
 	protected function getExistingSession(string $sessionID): bool {
 		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_".($this->isACP ? 'acp' : 'user')."_session
+			FROM	wcf".WCF_N."_user_session
 			WHERE	sessionID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
@@ -575,14 +570,9 @@ final class SessionHandler extends SingletonFactory {
 		}
 		
 		// Check whether the session technically already expired.
-		$lifetime =
-			($this->isACP   ? self::ACP_SESSION_LIFETIME  :
-			($row['userID'] ? self::USER_SESSION_LIFETIME :
-			(                 self::GUEST_SESSION_LIFETIME)));
+		$lifetime = ($row['userID'] ? self::USER_SESSION_LIFETIME : self::GUEST_SESSION_LIFETIME);
 		if ($row['lastActivityTime'] < (TIME_NOW - $lifetime)) {
-			if (!$this->isACP || !ENABLE_DEBUG_MODE || !ENABLE_DEVELOPER_TOOLS) {
-				return false;
-			}
+			return false;
 		}
 		
 		$variables = @\unserialize($row['sessionVariables']);
@@ -595,7 +585,7 @@ final class SessionHandler extends SingletonFactory {
 		$this->user = new User($row['userID']);
 		$this->variables = $variables;
 		
-		$sql = "UPDATE	wcf".WCF_N."_".($this->isACP ? 'acp' : 'user')."_session
+		$sql = "UPDATE	wcf".WCF_N."_user_session
 			SET	ipAddress = ?,
 				userAgent = ?,
 				lastActivityTime = ?
@@ -609,33 +599,31 @@ final class SessionHandler extends SingletonFactory {
 		]);
 		
 		// Fetch legacy session.
-		if (!$this->isACP) {
-			$condition = new PreparedStatementConditionBuilder();
-			
-			if ($row['userID']) {
-				// The `userID IS NOT NULL` condition technically is redundant, but is added for
-				// clarity and consistency with the guest case below.
-				$condition->add('userID IS NOT NULL');
-				$condition->add('userID = ?', [$row['userID']]);
-			}
-			else {
-				$condition->add('userID IS NULL');
-				$condition->add('(sessionID = ? OR spiderID = ?)', [
-					$row['sessionID'],
-					$this->getSpiderID(UserUtil::getUserAgent()),
-				]);
-			}
-			
-			$sql = "SELECT	*
-				FROM	wcf".WCF_N."_session
-				".$condition;
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute($condition->getParameters());
-			$this->legacySession = $statement->fetchSingleObject(LegacySession::class);
-			
-			if (!$this->legacySession) {
-				$this->createLegacySession();
-			}
+		$condition = new PreparedStatementConditionBuilder();
+		
+		if ($row['userID']) {
+			// The `userID IS NOT NULL` condition technically is redundant, but is added for
+			// clarity and consistency with the guest case below.
+			$condition->add('userID IS NOT NULL');
+			$condition->add('userID = ?', [$row['userID']]);
+		}
+		else {
+			$condition->add('userID IS NULL');
+			$condition->add('(sessionID = ? OR spiderID = ?)', [
+				$row['sessionID'],
+				$this->getSpiderID(UserUtil::getUserAgent()),
+			]);
+		}
+		
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_session
+			".$condition;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($condition->getParameters());
+		$this->legacySession = $statement->fetchSingleObject(LegacySession::class);
+		
+		if (!$this->legacySession) {
+			$this->createLegacySession();
 		}
 		
 		return true;
@@ -647,8 +635,13 @@ final class SessionHandler extends SingletonFactory {
 	protected function create() {
 		$this->sessionID = Hex::encode(\random_bytes(20));
 		
+		$variables = [
+			'frontend' => [],
+			'acp' => [],
+		];
+		
 		// Create new session.
-		$sql = "INSERT INTO     wcf".WCF_N."_".($this->isACP ? 'acp' : 'user')."_session
+		$sql = "INSERT INTO     wcf".WCF_N."_user_session
 			                (sessionID, ipAddress, userAgent, lastActivityTime, sessionVariables)
 			VALUES          (?, ?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -657,22 +650,20 @@ final class SessionHandler extends SingletonFactory {
 			UserUtil::getIpAddress(),
 			UserUtil::getUserAgent(),
 			TIME_NOW,
-			\serialize([]),
+			\serialize($variables),
 		]);
 		
-		$this->variables = [];
+		$this->variables = $variables;
 		$this->user = new User(null);
 		$this->firstVisit = true;
 		
 		HeaderUtil::setCookie(
-			($this->isACP ? 'acp' : 'user')."_session",
+			"user_session",
 			$this->getCookieValue()
 		);
 		
 		// Maintain legacy session table for users online list.
-		if (!$this->isACP) {
-			$this->createLegacySession();
-		}
+		$this->createLegacySession();
 	}
 	
 	private function createLegacySession() {
@@ -952,15 +943,13 @@ final class SessionHandler extends SingletonFactory {
 			$this->create();
 			
 			// ... delete the newly created legacy session ...
-			if (!$this->isACP) {
-				$sql = "DELETE FROM wcf".WCF_N."_session
-					WHERE	sessionID = ?";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute([$this->sessionID]);
-			}
+			$sql = "DELETE FROM wcf".WCF_N."_session
+				WHERE	sessionID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([$this->sessionID]);
 			
 			// ... perform the login ...
-			$sql = "UPDATE	wcf".WCF_N."_".($this->isACP ? 'acp' : 'user')."_session
+			$sql = "UPDATE	wcf".WCF_N."_user_session
 				SET	userID = ?
 				WHERE	sessionID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -1014,9 +1003,24 @@ final class SessionHandler extends SingletonFactory {
 			return true;
 		}
 		
+		$softLimit = self::REAUTHENTICATION_SOFT_LIMIT;
+		if ($this->isACP) {
+			$softLimit = self::REAUTHENTICATION_SOFT_LIMIT_ACP;
+			
+			// If both the debug mode and the developer tools are enabled the
+			// reauthentication soft limit within the ACP matches the hard limit.
+			//
+			// This allows for a continous access to the ACP and specifically the
+			// developer tools within a single workday without needing to re-login
+			// just because one spent 15 minutes within the IDE.
+			if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+				$softLimit = self::REAUTHENTICATION_HARD_LIMIT;
+			}
+		}
+		
 		// Request a new authentication if the soft limit since the last authentication
 		// is exceeded ...
-		if ($lastAuthentication < (TIME_NOW - self::REAUTHENTICATION_SOFT_LIMIT)) {
+		if ($lastAuthentication < (TIME_NOW - $softLimit)) {
 			// ... and the grace period since the last check is also exceeded.
 			if ($lastCheck < (TIME_NOW - self::REAUTHENTICATION_GRACE_PERIOD)) {
 				return true;
@@ -1025,7 +1029,7 @@ final class SessionHandler extends SingletonFactory {
 		
 		// If we reach this point we determined that a new authentication is not necessary.
 		\assert(
-			($lastAuthentication >= TIME_NOW - self::REAUTHENTICATION_SOFT_LIMIT) ||
+			($lastAuthentication >= TIME_NOW - $softLimit) ||
 			($lastAuthentication >= TIME_NOW - self::REAUTHENTICATION_HARD_LIMIT &&
 				$lastCheck >= TIME_NOW - self::REAUTHENTICATION_GRACE_PERIOD)
 		);
@@ -1063,13 +1067,32 @@ final class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Clears that the user performed reauthentication successfully.
+	 * 
+	 * After this method is called `needsReauthentication()` will return true until
+	 * `registerReauthentication()` is called again.
+	 * 
+	 * @see SessionHandler::registerReauthentication()
+	 * @see SessionHandler::needsReauthentication()
+	 * @throws \BadMethodCallException If the current user is a guest.
+	 * @since 5.4
+	 */
+	public function clearReauthentication(): void {
+		if (!$this->getUser()->userID) {
+			throw new \BadMethodCallException('The current user is a guest.');
+		}
+		
+		$this->unregister(self::REAUTHENTICATION_KEY);
+	}
+	
+	/**
 	 * Updates user session on shutdown.
 	 */
 	public function update() {
 		if ($this->doNotUpdate) return;
 		
 		if ($this->variablesChanged) {
-			$sql = "UPDATE	wcf".WCF_N."_".($this->isACP ? 'acp' : 'user')."_session
+			$sql = "UPDATE	wcf".WCF_N."_user_session
 				SET	sessionVariables = ?
 				WHERE	sessionID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -1082,38 +1105,36 @@ final class SessionHandler extends SingletonFactory {
 			$this->variablesChanged = false;
 		}
 		
-		if (!$this->isACP) {
-			$data = [
-				'ipAddress' => $this->ipAddress,
-				'userAgent' => $this->userAgent,
-				'requestURI' => $this->requestURI,
-				'requestMethod' => $this->requestMethod,
-				'lastActivityTime' => TIME_NOW,
-				'userID' => $this->user->userID,
-				'sessionID' => $this->sessionID,
-			];
-			if (!\class_exists('wcf\system\CLIWCF', false) && !$this->disableTracking) {
-				$pageLocations = PageLocationManager::getInstance()->getLocations();
-				if (isset($pageLocations[0])) {
-					$data['pageID'] = $pageLocations[0]['pageID'];
-					$data['pageObjectID'] = ($pageLocations[0]['pageObjectID'] ?: null);
-					$data['parentPageID'] = null;
-					$data['parentPageObjectID'] = null;
-					
-					for ($i = 1, $length = count($pageLocations); $i < $length; $i++) {
-						if (!empty($pageLocations[$i]['useAsParentLocation'])) {
-							$data['parentPageID'] = $pageLocations[$i]['pageID'];
-							$data['parentPageObjectID'] = ($pageLocations[$i]['pageObjectID'] ?: null);
-							break;
-						}
+		$data = [
+			'ipAddress' => $this->ipAddress,
+			'userAgent' => $this->userAgent,
+			'requestURI' => $this->requestURI,
+			'requestMethod' => $this->requestMethod,
+			'lastActivityTime' => TIME_NOW,
+			'userID' => $this->user->userID,
+			'sessionID' => $this->sessionID,
+		];
+		if (!\class_exists('wcf\system\CLIWCF', false) && !$this->disableTracking) {
+			$pageLocations = PageLocationManager::getInstance()->getLocations();
+			if (isset($pageLocations[0])) {
+				$data['pageID'] = $pageLocations[0]['pageID'];
+				$data['pageObjectID'] = ($pageLocations[0]['pageObjectID'] ?: null);
+				$data['parentPageID'] = null;
+				$data['parentPageObjectID'] = null;
+				
+				for ($i = 1, $length = count($pageLocations); $i < $length; $i++) {
+					if (!empty($pageLocations[$i]['useAsParentLocation'])) {
+						$data['parentPageID'] = $pageLocations[$i]['pageID'];
+						$data['parentPageObjectID'] = ($pageLocations[$i]['pageObjectID'] ?: null);
+						break;
 					}
 				}
 			}
-			
-			if ($this->legacySession) {
-				$sessionEditor = new SessionEditor($this->legacySession);
-				$sessionEditor->update($data);
-			}
+		}
+		
+		if ($this->legacySession) {
+			$sessionEditor = new SessionEditor($this->legacySession);
+			$sessionEditor->update($data);
 		}
 	}
 	
@@ -1131,34 +1152,17 @@ final class SessionHandler extends SingletonFactory {
 			self::resetSessions([$this->user->userID]);
 			
 			// update last activity time
-			if (!$this->isACP) {
-				$editor = new UserEditor($this->user);
-				$editor->update(['lastActivityTime' => TIME_NOW]);
-			}
+			$editor = new UserEditor($this->user);
+			$editor->update(['lastActivityTime' => TIME_NOW]);
 		}
 		
-		if ($this->isACP) {
-			$this->deleteAcpSession($this->sessionID);
-		}
-		else {
-			$this->deleteUserSession($this->sessionID);
-		}
+		$this->deleteUserSession($this->sessionID);
 	}
 	
 	/**
 	 * Prunes expired sessions.
 	 */
 	public function prune() {
-		// Prevent the sessions from expiring while the development mode is active.
-		if (!ENABLE_DEBUG_MODE || !ENABLE_DEVELOPER_TOOLS) {
-			$sql = "DELETE FROM	wcf".WCF_N."_acp_session
-				WHERE		lastActivityTime < ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([
-				TIME_NOW - self::ACP_SESSION_LIFETIME,
-			]);
-		}
-		
 		$sql = "DELETE FROM	wcf".WCF_N."_user_session
 			WHERE		(lastActivityTime < ? AND userID IS NULL)
 				OR	(lastActivityTime < ? AND userID IS NOT NULL)";
@@ -1306,20 +1310,20 @@ final class SessionHandler extends SingletonFactory {
 	 * @throws      \InvalidArgumentException if the given user is a guest.
 	 * @since       5.4
 	 */
-	private function getSessions(User $user, bool $isAcp): array {
+	private function getSessions(User $user): array {
 		if (!$user->userID) {
 			throw new \InvalidArgumentException("The given user is a guest.");
 		}
 		
 		$sql = "SELECT          *
-			FROM            wcf".WCF_N."_". ($isAcp ? 'acp' : 'user') ."_session
+			FROM            wcf".WCF_N."_user_session
 			WHERE           userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$user->userID]);
 		
 		$sessions = [];
 		while ($row = $statement->fetchArray()) {
-			$sessions[] = new Session($row, $isAcp);
+			$sessions[] = new Session($row);
 		}
 		
 		return $sessions;
@@ -1334,30 +1338,6 @@ final class SessionHandler extends SingletonFactory {
 	 * @since       5.4
 	 */
 	public function deleteUserSessionsExcept(User $user, ?string $sessionID = null): void {
-		$this->deleteSessionsExcept($user, $sessionID, false);
-	}
-	
-	/**
-	 * Deletes the acp sessions for a specific user, except the session with the given session id.
-	 * 
-	 * If the given session id is `null` or unknown, all acp sessions of the user will be deleted.
-	 * 
-	 * @throws      \InvalidArgumentException if the given user is a guest.
-	 * @since       5.4
-	 */
-	public function deleteAcpSessionsExcept(User $user, ?string $sessionID = null): void {
-		$this->deleteSessionsExcept($user, $sessionID, true);
-	}
-	
-	/**
-	 * Deletes the sessions for a specific user, except the session with the given session id.
-	 *
-	 * If the given session id is `null` or unknown, all acp sessions of the user will be deleted.
-	 *
-	 * @throws      \InvalidArgumentException if the given user is a guest.
-	 * @since       5.4
-	 */
-	private function deleteSessionsExcept(User $user, ?string $sessionID, bool $isAcp): void {
 		if (!$user->userID) {
 			throw new \InvalidArgumentException("The given user is a guest.");
 		}
@@ -1369,18 +1349,16 @@ final class SessionHandler extends SingletonFactory {
 			$conditionBuilder->add('sessionID <> ?', [$sessionID]);
 		}
 		
-		$sql = "DELETE FROM     wcf".WCF_N."_". ($isAcp ? 'acp' : 'user') ."_session
+		$sql = "DELETE FROM     wcf".WCF_N."_user_session
 			". $conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditionBuilder->getParameters());
 		
-		if (!$isAcp) {
-			// Delete legacy session.
-			$sql = "DELETE FROM     wcf".WCF_N."_session
-			". $conditionBuilder;
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute($conditionBuilder->getParameters());
-		}
+		// Delete legacy session.
+		$sql = "DELETE FROM     wcf".WCF_N."_session
+		". $conditionBuilder;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditionBuilder->getParameters());
 	}
 	
 	/**
@@ -1389,35 +1367,15 @@ final class SessionHandler extends SingletonFactory {
 	 * @since       5.4
 	 */
 	public function deleteUserSession(string $sessionID): void {
-		$this->deleteSession($sessionID, false);
-	}
-	
-	/**
-	 * Deletes an acp session with the given session ID.
-	 * 
-	 * @since       5.4
-	 */
-	public function deleteAcpSession(string $sessionID): void {
-		$this->deleteSession($sessionID, true);
-	}
-	
-	/**
-	 * Deletes a session with the given session ID.
-	 *
-	 * @since       5.4
-	 */
-	private function deleteSession(string $sessionID, bool $isAcp): void {
-		$sql = "DELETE FROM     wcf".WCF_N."_". ($isAcp ? 'acp' : 'user') ."_session
+		$sql = "DELETE FROM     wcf".WCF_N."_user_session
 			WHERE	        sessionID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$sessionID]);
 		
-		if (!$isAcp) {
-			// Delete legacy session.
-			$sql = "DELETE FROM     wcf".WCF_N."_session
-				WHERE	        sessionID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([$sessionID]);
-		}   
+		// Delete legacy session.
+		$sql = "DELETE FROM     wcf".WCF_N."_session
+			WHERE	        sessionID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$sessionID]);
 	}
 }

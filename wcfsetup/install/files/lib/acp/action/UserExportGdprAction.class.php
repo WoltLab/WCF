@@ -273,13 +273,10 @@ class UserExportGdprAction extends AbstractAction {
 	protected function exportSessionIpAddresses() {
 		$data = [
 			'session' => [],
-			'acpSession' => [],
 			'acpSessionLog' => []
 		];
 		
 		$data['session'] = $this->exportIpAddresses('wcf' . WCF_N . '_user_session', 'ipAddress', 'lastActivityTime', 'userID');
-		
-		$data['acpSession'] = $this->exportIpAddresses('wcf' . WCF_N . '_acp_session', 'ipAddress', 'lastActivityTime', 'userID');
 		
 		// we can ignore the wcfN_acp_session_access_log table because it is directly related
 		// to the wcfN_acp_session_log table and ACP sessions are bound to the ip address 
