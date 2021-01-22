@@ -152,7 +152,7 @@ class TableMetacodeConverter extends AbstractMetacodeConverter {
 	 * with nested tables handled in the wrong order.
 	 *
 	 * @param       \DOMNode        $node           target node
-	 * @return      boolean         true if provided node is within another table
+	 * @return      bool         true if provided node is within another table
 	 */
 	protected function isInsideTable(\DOMNode $node) {
 		/** @var \DOMElement $parent */

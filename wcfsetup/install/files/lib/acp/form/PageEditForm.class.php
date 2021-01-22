@@ -34,7 +34,7 @@ class PageEditForm extends PageAddForm {
 	
 	/**
 	 * page id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $pageID = 0;
 	

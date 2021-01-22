@@ -34,7 +34,7 @@ class UserContentRevertChangesForm extends AbstractForm {
 	
 	/**
 	 * ids of the relevant users
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $userIDs = [];
 	
@@ -46,13 +46,13 @@ class UserContentRevertChangesForm extends AbstractForm {
 	
 	/**
 	 * timeframe to consider
-	 * @var	integer
+	 * @var	int
 	 */
 	public $timeframe = 7;
 	
 	/**
 	 * id of the user clipboard item object type
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $objectTypeID = null;
 	

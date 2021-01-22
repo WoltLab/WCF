@@ -13,7 +13,7 @@ interface IPaymentType {
 	/**
 	 * Processes the given transaction.
 	 * 
-	 * @param	integer		$paymentMethodObjectTypeID
+	 * @param	int		$paymentMethodObjectTypeID
 	 * @param	string		$token
 	 * @param	float		$amount
 	 * @param	string		$currency

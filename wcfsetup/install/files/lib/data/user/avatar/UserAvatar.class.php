@@ -13,40 +13,40 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Avatar
  * 
- * @property-read	integer		$avatarID		unique id of the user avatar
+ * @property-read	int		$avatarID		unique id of the user avatar
  * @property-read	string		$avatarName		name of the original avatar file
  * @property-read	string		$avatarExtension	extension of the avatar file
- * @property-read	integer		$width			width of the user avatar image
- * @property-read	integer		$height			height of the user avatar image
- * @property-read	integer|null	$userID			id of the user to which the user avatar belongs or null
+ * @property-read	int		$width			width of the user avatar image
+ * @property-read	int		$height			height of the user avatar image
+ * @property-read	int|null	$userID			id of the user to which the user avatar belongs or null
  * @property-read	string		$fileHash		SHA1 hash of the original avatar file
  * @property-read	integer		$hasWebP		`1` if there is a WebP variant, else `0`
  */
 class UserAvatar extends DatabaseObject implements IUserAvatar {
 	/**
 	 * needed avatar thumbnail sizes
-	 * @var	integer[]
+	 * @var	int[]
 	 * @deprecated 3.0
 	 */
 	public static $avatarThumbnailSizes = [32, 96, 128, 256];
 	
 	/**
 	 * maximum thumbnail size
-	 * @var	integer
+	 * @var	int
 	 * @deprecated 3.0
 	 */
 	public static $maxThumbnailSize = 128;
 	
 	/**
 	 * minimum height and width of an uploaded avatar
-	 * @var	integer
+	 * @var	int
 	 * @deprecated 3.0
 	 */
 	const MIN_AVATAR_SIZE = 96;
 	
 	/**
 	 * minimum height and width of an uploaded avatar
-	 * @var	integer
+	 * @var	int
 	 */
 	const AVATAR_SIZE = 128;
 	

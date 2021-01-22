@@ -21,7 +21,7 @@ final class UserRegistrationUtil {
 	 * Returns true if the given name is a valid username.
 	 * 
 	 * @param	string		$name		username
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isValidUsername($name) {
 		if (!UserUtil::isValidUsername($name)) return false;
@@ -42,7 +42,7 @@ final class UserRegistrationUtil {
 	 * Returns true if the given e-mail is a valid address.
 	 * 
 	 * @param	string		$email
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isValidEmail($email) {
 		return (UserUtil::isValidEmail($email) && self::checkForbiddenEmails($email));
@@ -52,7 +52,7 @@ final class UserRegistrationUtil {
 	 * Returns false if the given name is a forbidden username.
 	 * 
 	 * @param	string		$name
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function checkForbiddenUsernames($name) {
 		return StringUtil::executeWordFilter($name, REGISTER_FORBIDDEN_USERNAMES);
@@ -62,7 +62,7 @@ final class UserRegistrationUtil {
 	 * Returns false if the given email is a forbidden email.
 	 * 
 	 * @param	string		$email
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function checkForbiddenEmails($email) {
 		return (StringUtil::executeWordFilter($email, REGISTER_FORBIDDEN_EMAILS) && (!StringUtil::trim(REGISTER_ALLOWED_EMAILS) || !StringUtil::executeWordFilter($email, REGISTER_ALLOWED_EMAILS)));
@@ -91,8 +91,8 @@ final class UserRegistrationUtil {
 	 * Generates a random activation code with the given length.
 	 * Warning: A length greater than 9 is out of integer range.
 	 * 
-	 * @param	integer		$length
-	 * @return	integer
+	 * @param	int		$length
+	 * @return	int
 	 */
 	public static function getActivationCode($length = 9) {
 		return random_int(pow(10, $length - 1), pow(10, $length) - 1);

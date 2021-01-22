@@ -42,7 +42,7 @@ class PageBoxOrderPage extends AbstractPage {
 	
 	/**
 	 * page id
-	 * @var integer
+	 * @var int
 	 */
 	public $pageID = 0;
 	

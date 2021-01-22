@@ -109,13 +109,13 @@ class DataImportForm extends AbstractForm {
 	
 	/**
 	 * display notice for existing import mappings
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $showMappingNotice = false;
 	
 	/**
 	 * user merge mode
-	 * @var	integer
+	 * @var	int
 	 */
 	public $userMergeMode = UserImporter::MERGE_MODE_EMAIL;
 	

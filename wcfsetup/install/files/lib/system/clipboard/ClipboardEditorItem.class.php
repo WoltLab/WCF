@@ -135,7 +135,7 @@ final class ClipboardEditorItem {
 	/**
 	 * Returns number of affected items.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getCount() {
 		if (isset($this->parameters['objectIDs'])) {

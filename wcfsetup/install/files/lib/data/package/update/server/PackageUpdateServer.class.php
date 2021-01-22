@@ -16,12 +16,12 @@ use wcf\util\Url;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Package\Update\Server
  *
- * @property-read	integer		$packageUpdateServerID		unique id of the package update server
+ * @property-read	int		$packageUpdateServerID		unique id of the package update server
  * @property-read	string		$serverURL			url of the package update server
  * @property-read	string		$loginUsername			username used to login on the package update server
  * @property-read	string		$loginPassword			password used to login on the package update server
- * @property-read	integer		$isDisabled			is `1` if the package update server is disabled and thus not considered for package updates, otherwise `0`
- * @property-read	integer		$lastUpdateTime			timestamp at which the data of the package update server has been fetched the last time
+ * @property-read	int		$isDisabled			is `1` if the package update server is disabled and thus not considered for package updates, otherwise `0`
+ * @property-read	int		$lastUpdateTime			timestamp at which the data of the package update server has been fetched the last time
  * @property-read	string		$status				status of the package update server (`online` or `offline`)
  * @property-read	string		$errorMessage			error message if the package update server if offline or empty otherwise 
  * @property-read	string		$apiVersion			version of the supported package update server api (`2.0`, `2.1`)
@@ -68,7 +68,7 @@ class PackageUpdateServer extends DatabaseObject {
 	/**
 	 * Returns all active update package servers sorted by hostname.
 	 * 
-	 * @param	integer[]	$packageUpdateServerIDs
+	 * @param	int[]	$packageUpdateServerIDs
 	 * @return	PackageUpdateServer[]
 	 */
 	public static final function getActiveUpdateServers(array $packageUpdateServerIDs = []) {
@@ -122,7 +122,7 @@ class PackageUpdateServer extends DatabaseObject {
 	 * Returns true if the given server url is valid.
 	 * 
 	 * @param	string		$serverURL
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isValidServerURL($serverURL) {
 		$parsedURL = Url::parse($serverURL);
@@ -167,10 +167,10 @@ class PackageUpdateServer extends DatabaseObject {
 	/**
 	 * Stores auth data for a package update server.
 	 * 
-	 * @param	integer		$packageUpdateServerID
+	 * @param	int		$packageUpdateServerID
 	 * @param	string		$username
 	 * @param	string		$password
-	 * @param	boolean		$saveCredentials
+	 * @param	bool		$saveCredentials
 	 */
 	public static function storeAuthData($packageUpdateServerID, $username, $password, $saveCredentials = false) {
 		$packageUpdateAuthData = @unserialize(WCF::getSession()->getVar('packageUpdateAuthData'));
@@ -197,7 +197,7 @@ class PackageUpdateServer extends DatabaseObject {
 	/**
 	 * Returns true if update server requires license data instead of username/password.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public final function requiresLicense() {
 		return Regex::compile('^https?://update.woltlab.com/')->match($this->serverURL);
@@ -216,7 +216,7 @@ class PackageUpdateServer extends DatabaseObject {
 	/**
 	 * Returns the list endpoint for package servers.
 	 * 
-	 * @param	boolean		$forceHTTP
+	 * @param	bool		$forceHTTP
 	 * @return	string
 	 */
 	public function getListURL($forceHTTP = false) {
@@ -264,7 +264,7 @@ class PackageUpdateServer extends DatabaseObject {
 	/**
 	 * Returns true if a request to this server would make use of a secure connection.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function attemptSecureConnection() {
 		if ($this->apiVersion == '2.0') {
@@ -282,7 +282,7 @@ class PackageUpdateServer extends DatabaseObject {
 	/**
 	 * Returns whether the current user may delete this update server.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 * @since       5.3
 	 */
 	public final function canDelete() {
@@ -292,7 +292,7 @@ class PackageUpdateServer extends DatabaseObject {
 	/**
 	 * Returns whether the current user may disable this update server.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 * @since       5.3
 	 */
 	public final function canDisable() {
@@ -302,7 +302,7 @@ class PackageUpdateServer extends DatabaseObject {
 	/**
 	 * Returns true if the host is `update.woltlab.com`.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public final function isWoltLabUpdateServer() {
 		return Url::parse($this->serverURL)['host'] === 'update.woltlab.com';
@@ -311,7 +311,7 @@ class PackageUpdateServer extends DatabaseObject {
 	/**
 	 * Returns true if the host is `store.woltlab.com`.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public final function isWoltLabStoreServer() {
 		return Url::parse($this->serverURL)['host'] === 'store.woltlab.com';
@@ -328,7 +328,7 @@ class PackageUpdateServer extends DatabaseObject {
 	 * Example:
 	 *   define('UPDATE_SERVER_TRUSTED_MIRROR', 'mirror.example.com');
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public final function isTrustedServer() {
 		$host = Url::parse($this->serverURL)['host'];

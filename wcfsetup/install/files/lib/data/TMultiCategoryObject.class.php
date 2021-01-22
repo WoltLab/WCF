@@ -29,7 +29,7 @@ trait TMultiCategoryObject {
 	
 	/**
 	 * ids of the object's categories
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $categoryIDs = [];
 	
@@ -42,7 +42,7 @@ trait TMultiCategoryObject {
 	/**
 	 * Returns the list of category ids.
 	 *
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function getCategoryIDs() {
 		return $this->categoryIDs;
@@ -117,7 +117,7 @@ trait TMultiCategoryObject {
 	/**
 	 * Sets a category id.
 	 *
-	 * @param	integer		$categoryID
+	 * @param	int		$categoryID
 	 */
 	public function setCategoryID($categoryID) {
 		$this->categoryIDs[] = $categoryID;
@@ -126,7 +126,7 @@ trait TMultiCategoryObject {
 	/**
 	 * Sets a category ids.
 	 *
-	 * @param	integer[]	$categoryIDs
+	 * @param	int[]	$categoryIDs
 	 */
 	public function setCategoryIDs(array $categoryIDs) {
 		$this->categoryIDs = $categoryIDs;

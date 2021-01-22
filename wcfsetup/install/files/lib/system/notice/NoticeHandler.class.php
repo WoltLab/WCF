@@ -21,7 +21,7 @@ class NoticeHandler extends SingletonFactory {
 	
 	/**
 	 * suppresses display of notices
-	 * @var boolean
+	 * @var bool
 	 */
 	protected static $disableNotices = false;
 	

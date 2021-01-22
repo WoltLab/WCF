@@ -26,24 +26,24 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\Data\Page
  * @since	3.0
  * 
- * @property-read	integer		$pageID			        unique id of the page
- * @property-read	integer|null	$parentPageID		        id of the page's parent page or `null` if it has no parent page
+ * @property-read	int		$pageID			        unique id of the page
+ * @property-read	int|null	$parentPageID		        id of the page's parent page or `null` if it has no parent page
  * @property-read	string		$identifier		        unique textual identifier of the page
  * @property-read	string		$name			        monolingual name of the page shown in the ACP
  * @property-read	string		$pageType		        type of the page, default types: `text`, `html`, `tpl` `system`
- * @property-read	integer		$isDisabled		        is `1` if the page is disabled and thus cannot be accessed, otherwise `0`
- * @property-read	integer		$isLandingPage		        is `1` if the page is the landing page, otherwise `0`
- * @property-read	integer		$isMultilingual		        is `1` if the page is available in different languages, otherwise `0`
- * @property-read	integer		$originIsSystem		        is `1` if the page has been delivered by a package, otherwise `0` (i.e. the page has been created in the ACP)
- * @property-read	integer		$packageID		        id of the package the which delivers the page or `1` if it has been created in the ACP
- * @property-read	integer		$applicationPackageID	        id of the package of the application the pages belongs to
- * @property-read	integer		$overrideApplicationPackageID	id of the package of the application that the page virtually belongs to
+ * @property-read	int		$isDisabled		        is `1` if the page is disabled and thus cannot be accessed, otherwise `0`
+ * @property-read	int		$isLandingPage		        is `1` if the page is the landing page, otherwise `0`
+ * @property-read	int		$isMultilingual		        is `1` if the page is available in different languages, otherwise `0`
+ * @property-read	int		$originIsSystem		        is `1` if the page has been delivered by a package, otherwise `0` (i.e. the page has been created in the ACP)
+ * @property-read	int		$packageID		        id of the package the which delivers the page or `1` if it has been created in the ACP
+ * @property-read	int		$applicationPackageID	        id of the package of the application the pages belongs to
+ * @property-read	int		$overrideApplicationPackageID	id of the package of the application that the page virtually belongs to
  * @property-read	string		$controller		        name of the page controller class
  * @property-read	string		$handler		        name of the page handler class for `system` pages or empty 
  * @property-read	string		$controllerCustomURL	        custom url of the page
- * @property-read	integer		$requireObjectID	        is `1` if the page requires an object id parameter, otherwise `0`
- * @property-read	integer		$hasFixedParent		        is `1` if the page's parent page cannot be changed, otherwise `0`
- * @property-read	integer		$lastUpdateTime		        timestamp at which the page has been updated the last time
+ * @property-read	int		$requireObjectID	        is `1` if the page requires an object id parameter, otherwise `0`
+ * @property-read	int		$hasFixedParent		        is `1` if the page's parent page cannot be changed, otherwise `0`
+ * @property-read	int		$lastUpdateTime		        timestamp at which the page has been updated the last time
  * @property-read	string		$cssClassName		        css class name(s) of the page
  * @property-read	string		$availableDuringOfflineMode     is `1` if the page is available during offline mode, otherwise `0`
  * @property-read	string		$allowSpidersToIndex            is `1` if the page is accessible for search spiders, otherwise `0`
@@ -69,7 +69,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	
 	/**
 	 * box to page assignments
-	 * @var integer[]
+	 * @var int[]
 	 */
 	protected $boxIDs;
 	
@@ -88,7 +88,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	/**
 	 * Returns true if the active user can delete this page.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canDelete() {
 		if (WCF::getSession()->getPermission('admin.content.cms.canManagePage') && !$this->originIsSystem && !$this->isLandingPage) {
@@ -101,7 +101,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	/**
 	 * Returns true if the active user can disable this page.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canDisable() {
 		if (WCF::getSession()->getPermission('admin.content.cms.canManagePage') && (!$this->originIsSystem || $this->pageType != 'system') && !$this->isLandingPage) {
@@ -137,7 +137,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	 * Returns content for a single language, passing `null` for `$languageID` is undefined
 	 * for multilingual pages.
 	 * 
-	 * @param	integer		$languageID	language id or `null` if there are no localized versions
+	 * @param	int		$languageID	language id or `null` if there are no localized versions
 	 * @return	PageContent|null        	page content data
 	 */
 	public function getPageContentByLanguage($languageID = null) {
@@ -228,7 +228,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	 * Returns false if this page should be hidden from menus, but does not control the accessibility
 	 * of the page itself.
 	 *
-	 * @return	boolean		false if the page should be hidden from menus
+	 * @return	bool		false if the page should be hidden from menus
 	 */
 	public function isVisible() {
 		if ($this->isDisabled) return false;
@@ -241,7 +241,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	/**
 	 * Returns true if this page is accessible by current user.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isAccessible() {
 		return SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.page', $this->pageID);
@@ -303,7 +303,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	/**
 	 * Returns box to page assignments.
 	 *
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function getBoxIDs() {
 		if ($this->boxIDs === null) {
@@ -331,7 +331,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	/**
 	 * Returns the template name of this page.
 	 * 
-	 * @param	integer		$languageID
+	 * @param	int		$languageID
 	 * @return	string
 	 */
 	public function getTplName($languageID = null) {

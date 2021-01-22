@@ -13,15 +13,13 @@ use wcf\data\article\ViewableArticle;
  * @since	3.1
  */
 class ArticleListPageHandler extends AbstractMenuPageHandler {
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */
-	public function getOutstandingItemCount(/** @noinspection PhpUnusedParameterInspection */$objectID = null) {
+	public function getOutstandingItemCount($objectID = null) {
 		return ARTICLE_ENABLE_VISIT_TRACKING ? ViewableArticle::getUnreadArticles() : 0;
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 * @since	5.2

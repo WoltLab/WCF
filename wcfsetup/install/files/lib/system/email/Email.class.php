@@ -81,7 +81,7 @@ class Email {
 	
 	/**
 	 * Whether the listUnsubscribe URI has One-Click support
-	 * @var	boolean
+	 * @var	bool
 	 * @since 5.3
 	 */
 	protected $listUnsubscribeOneClick = false;
@@ -323,7 +323,7 @@ class Email {
 	 * with the value 'List-Unsubscribe=One-Click' is added.
 	 * 
 	 * @param	string		$uri
-	 * @param	boolean		$supportsOneClick
+	 * @param	bool		$supportsOneClick
 	 * @since 5.3
 	 */
 	public function setListUnsubscribe($uri, $supportsOneClick = false) {
@@ -699,7 +699,6 @@ class Email {
 			// must treat the content as if the header did not appear in first place, this
 			// also overrules the gzip header if present
 			@header('Content-Encoding: identity');
-			HeaderUtil::exceptionDisableGzip();
 		}
 		
 		$dumpBody = function ($body, $depth) use (&$dumpBody) {

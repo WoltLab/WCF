@@ -23,7 +23,7 @@ class UserOptionEditForm extends UserOptionAddForm {
 	
 	/**
 	 * user option id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $optionID = 0;
 	

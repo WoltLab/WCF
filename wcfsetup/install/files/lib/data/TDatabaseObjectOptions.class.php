@@ -14,7 +14,7 @@ trait TDatabaseObjectOptions {
 	/**
 	 * Returns true if at least one of the options required by this object is set.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function validateOptions() {
 		if ($this->options) {

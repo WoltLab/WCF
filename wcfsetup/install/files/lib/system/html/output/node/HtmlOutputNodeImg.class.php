@@ -228,7 +228,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 	 * and whitelisted ones with wildcard support.
 	 * 
 	 * @param       string          $hostname
-	 * @return      boolean
+	 * @return      bool
 	 */
 	protected function bypassProxy($hostname) {
 		static $matcher = null;

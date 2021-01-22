@@ -42,7 +42,7 @@ class UserEditForm extends UserAddForm {
 	
 	/**
 	 * user id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $userID = 0;
 	
@@ -54,7 +54,7 @@ class UserEditForm extends UserAddForm {
 	
 	/**
 	 * ban status
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $banned = 0;
 	
@@ -66,7 +66,7 @@ class UserEditForm extends UserAddForm {
 	
 	/**
 	 * date when the ban expires
-	 * @var	integer
+	 * @var	int
 	 */
 	public $banExpires = 0;
 	
@@ -84,7 +84,7 @@ class UserEditForm extends UserAddForm {
 	
 	/**
 	 * true to disable this avatar
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $disableAvatar = 0;
 	
@@ -96,7 +96,7 @@ class UserEditForm extends UserAddForm {
 	
 	/**
 	 * date when the avatar will be enabled again
-	 * @var	integer
+	 * @var	int
 	 */
 	public $disableAvatarExpires = 0;
 	
@@ -108,7 +108,7 @@ class UserEditForm extends UserAddForm {
 	
 	/**
 	 * true to disable this cover photo
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $disableCoverPhoto = 0;
 	
@@ -120,25 +120,25 @@ class UserEditForm extends UserAddForm {
 	
 	/**
 	 * date when the cover photo will be enabled again
-	 * @var	integer
+	 * @var	int
 	 */
 	public $disableCoverPhotoExpires = 0;
 	
 	/**
 	 * true to delete the current cover photo
-	 * @var boolean
+	 * @var bool
 	 */
 	public $deleteCoverPhoto = 0;
 	
 	/**
 	 * true to delete the current auth data
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $disconnect3rdParty = 0;
 	
 	/**
 	 * true to disable multifactor authentication
-	 * @var boolean
+	 * @var bool
 	 */
 	public $multifactorDisable = 0;
 	

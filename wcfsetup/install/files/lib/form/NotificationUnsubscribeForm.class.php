@@ -31,7 +31,7 @@ class NotificationUnsubscribeForm extends AbstractForm {
 	public $token = '';
 	
 	/**
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $isOneClick = false;
 	

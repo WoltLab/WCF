@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
 class DefaultAvatar implements IUserAvatar {
 	/**
 	 * image size
-	 * @var	integer
+	 * @var	int
 	 */
 	public $size = UserAvatar::AVATAR_SIZE;
 	
@@ -113,9 +113,9 @@ SVG;
 	/**
 	 * Returns the perceived luminance of the given color.
 	 * 
-	 * @param       integer         $r
-	 * @param       integer         $g
-	 * @param       integer         $b
+	 * @param       int         $r
+	 * @param       int         $g
+	 * @param       int         $b
 	 * @return      float           luminance expressed in a float in the range of 0 and 1
 	 */
 	protected function getPerceptiveLuminance($r, $g, $b) {

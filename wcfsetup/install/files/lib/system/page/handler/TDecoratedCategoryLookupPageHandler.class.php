@@ -32,7 +32,7 @@ trait TDecoratedCategoryLookupPageHandler {
 	/**
 	 * Returns the link for a page with an object id.
 	 * 
-	 * @param	integer		$objectID	page object id
+	 * @param	int		$objectID	page object id
 	 * @return	string		page url
 	 * @see	ILookupPageHandler::getLink()
 	 */
@@ -53,8 +53,8 @@ trait TDecoratedCategoryLookupPageHandler {
 	/**
 	 * Returns true if provided object id exists and is valid.
 	 * 
-	 * @param	integer		$objectID	page object id
-	 * @return	boolean		true if object id is valid
+	 * @param	int		$objectID	page object id
+	 * @return	bool		true if object id is valid
 	 * @see	ILookupPageHandler::isValid()
 	 */
 	public function isValid($objectID = null) {

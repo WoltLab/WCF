@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\form\builder\field;
-use wcf\system\form\builder\TFormNode;
 
 /**
  * Provides default implementations of `ICssClassFormField` methods.

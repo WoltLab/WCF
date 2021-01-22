@@ -19,7 +19,7 @@ use wcf\util\DateUtil;
 class PaidSubscriptionUserEditForm extends PaidSubscriptionUserAddForm {
 	/**
 	 * subscription user id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $subscriptionUserID = 0;
 	

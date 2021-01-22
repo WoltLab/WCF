@@ -1,6 +1,5 @@
 <?php
 namespace wcf\util;
-use wcf\system\event\EventHandler;
 use wcf\system\WCF;
 
 /**
@@ -16,7 +15,7 @@ final class UserUtil {
 	 * Returns true if the given name is a valid username.
 	 * 
 	 * @param	string		$name
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isValidUsername($name) {
 		// minimum length is 3 characters, maximum length is 100 characters
@@ -47,7 +46,7 @@ final class UserUtil {
 	 * Returns true if the given username is available.
 	 * 
 	 * @param	string		$name
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isAvailableUsername($name) {
 		$sql = "SELECT	COUNT(username)
@@ -64,7 +63,7 @@ final class UserUtil {
 	 * @see	http://www.faqs.org/rfcs/rfc821.html
 	 * 
 	 * @param	string		$email
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isValidEmail($email) {
 		if (mb_strlen($email) > 191) {
@@ -90,7 +89,7 @@ final class UserUtil {
 	 * Returns true if the given email address is available.
 	 * 
 	 * @param	string		$email
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isAvailableEmail($email) {
 		$sql = "SELECT	COUNT(email)
@@ -123,7 +122,7 @@ final class UserUtil {
 	 * Returns true if the active user uses a mobile browser.
 	 * @see	http://detectmobilebrowser.com
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function usesMobileBrowser() {
 		return (new UserAgent(self::getUserAgent()))->isMobileBrowser();

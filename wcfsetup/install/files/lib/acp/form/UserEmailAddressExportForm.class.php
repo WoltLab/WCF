@@ -36,7 +36,7 @@ class UserEmailAddressExportForm extends AbstractForm {
 	
 	/**
 	 * ids of the users whose email addresses are exported
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $userIDs = [];
 	
@@ -60,7 +60,7 @@ class UserEmailAddressExportForm extends AbstractForm {
 	
 	/**
 	 * clipboard item type id
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $objectTypeID = null;
 	

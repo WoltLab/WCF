@@ -49,13 +49,13 @@ class MenuAddForm extends AbstractForm {
 	
 	/**
 	 * show order
-	 * @var	integer
+	 * @var	int
 	 */
 	public $showOrder = 0;
 	
 	/**
 	 * true if created box is visible everywhere
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $visibleEverywhere = 1;
 	
@@ -67,13 +67,13 @@ class MenuAddForm extends AbstractForm {
 	
 	/**
 	 * true if box header is visible
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $showHeader = 1;
 	
 	/**
 	 * page ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $pageIDs = [];
 	

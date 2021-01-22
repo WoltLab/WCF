@@ -52,7 +52,7 @@ class PageAddForm extends AbstractForm {
 	
 	/**
 	 * true if created page is multi-lingual
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $isMultilingual = 0;
 	
@@ -64,7 +64,7 @@ class PageAddForm extends AbstractForm {
 	
 	/**
 	 * parent page id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $parentPageID = 0;
 	
@@ -76,19 +76,19 @@ class PageAddForm extends AbstractForm {
 	
 	/**
 	 * true if page is disabled
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $isDisabled = 0;
 	
 	/**
 	 * true if page is landing page
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $isLandingPage = 0;
 	
 	/**
 	 * application id of the page
-	 * @var	integer
+	 * @var	int
 	 */
 	public $applicationPackageID = 1;
 	
@@ -136,7 +136,7 @@ class PageAddForm extends AbstractForm {
 	
 	/**
 	 * list of box ids
-	 * @var integer[]
+	 * @var int[]
 	 */
 	public $boxIDs = [];
 	
@@ -159,25 +159,25 @@ class PageAddForm extends AbstractForm {
 	
 	/**
 	 * true if the page is available during offline mode
-	 * @var boolean
+	 * @var bool
 	 */
 	public $availableDuringOfflineMode = 0;
 	
 	/**
 	 * true if the page is accessible for search spiders
-	 * @var boolean
+	 * @var bool
 	 */
 	public $allowSpidersToIndex = 1;
 	
 	/**
 	 * true if page should be added to the main menu
-	 * @var boolean
+	 * @var bool
 	 */
 	public $addPageToMainMenu = 0;
 	
 	/**
 	 * parent menu item id
-	 * @var integer
+	 * @var int
 	 */
 	public $parentMenuItemID;
 	
@@ -411,7 +411,7 @@ class PageAddForm extends AbstractForm {
 	/**
 	 * Validates given custom url.
 	 * 
-	 * @param       integer                 $languageID
+	 * @param       int                 $languageID
 	 * @param       string                  $customURL
 	 *
 	 * @throws	UserInputException
@@ -696,7 +696,7 @@ class PageAddForm extends AbstractForm {
 	/**
 	 * Returns the list of box ids that are enabled by default.
 	 * 
-	 * @return      integer[]
+	 * @return      int[]
 	 */
 	protected function getDefaultBoxIDs() {
 		$boxIDs = [];

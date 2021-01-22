@@ -23,7 +23,7 @@ trait TFormParentNode {
 	
 	/**
 	 * current iterator index
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $index = 0;
 	

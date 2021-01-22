@@ -82,7 +82,6 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
 		]);
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */
@@ -97,7 +96,6 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
 		return ViewableArticleRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID)->getLink();
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */
@@ -105,7 +103,6 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
 		return false;
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */
@@ -113,7 +110,6 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
 		return sha1($this->eventID . '-' . $this->additionalData['objectID']);
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */

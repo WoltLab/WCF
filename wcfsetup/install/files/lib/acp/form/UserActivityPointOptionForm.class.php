@@ -29,7 +29,7 @@ class UserActivityPointOptionForm extends AbstractForm {
 	
 	/**
 	 * points to objectType
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $points = [];
 	

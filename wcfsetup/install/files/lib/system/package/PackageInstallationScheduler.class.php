@@ -59,7 +59,7 @@ class PackageInstallationScheduler {
 	/**
 	 * Builds the stack of package installations / updates.
 	 * 
-	 * @param	boolean		$validateInstallInstructions
+	 * @param	bool		$validateInstallInstructions
 	 */
 	public function buildPackageInstallationStack($validateInstallInstructions = false) {
 		foreach ($this->selectedPackages as $package => $version) {
@@ -72,8 +72,8 @@ class PackageInstallationScheduler {
 	 * 
 	 * @param	string		$package		package identifier
 	 * @param	string		$minversion		preferred package version
-	 * @param	boolean		$installOldVersion	true, if you want to install the package in the given minversion and not in the newest version
-	 * @param	boolean		$validateInstallInstructions
+	 * @param	bool		$installOldVersion	true, if you want to install the package in the given minversion and not in the newest version
+	 * @param	bool		$validateInstallInstructions
 	 */
 	protected function tryToInstallPackage($package, $minversion = '', $installOldVersion = false, $validateInstallInstructions = false) {
 		// check virtual package version
@@ -113,8 +113,8 @@ class PackageInstallationScheduler {
 	 * 
 	 * @param	string		$package	package identifier
 	 * @param	string		$version	package version
-	 * @param	integer		$stackPosition
-	 * @param	boolean		$validateInstallInstructions
+	 * @param	int		$stackPosition
+	 * @param	bool		$validateInstallInstructions
 	 */
 	protected function installPackage($package, $version = '', $stackPosition = -1, $validateInstallInstructions = false) {
 		// get package update versions
@@ -146,7 +146,7 @@ class PackageInstallationScheduler {
 	 * Resolves the package requirements of an package update.
 	 * Starts the installation or update to higher version of required packages.
 	 * 
-	 * @param	integer		$packageUpdateVersionID
+	 * @param	int		$packageUpdateVersionID
 	 */
 	protected function resolveRequirements($packageUpdateVersionID) {
 		// resolve requirements
@@ -207,7 +207,7 @@ class PackageInstallationScheduler {
 	 * 
 	 * @param	string		$package		package identifier
 	 * @param	array		$packageUpdateVersions	package update versions
-	 * @param	boolean		$validateInstallInstructions
+	 * @param	bool		$validateInstallInstructions
 	 * @return	string		tmp filename of a downloaded package
 	 * @throws	PackageUpdateUnauthorizedException
 	 * @throws	SystemException
@@ -443,7 +443,7 @@ class PackageInstallationScheduler {
 	/**
 	 * Updates an existing package.
 	 * 
-	 * @param	integer		$packageID
+	 * @param	int		$packageID
 	 * @param	string		$version
 	 */
 	protected function updatePackage($packageID, $version) {
@@ -618,7 +618,7 @@ class PackageInstallationScheduler {
 	 * 
 	 * @param	array		$updateThreadListA
 	 * @param	array		$updateThreadListB
-	 * @return	integer
+	 * @return	int
 	 */
 	protected function compareUpdateThreadLists($updateThreadListA, $updateThreadListB) {
 		$countA = count($updateThreadListA);
@@ -635,7 +635,7 @@ class PackageInstallationScheduler {
 	 * 
 	 * @param	string		$package	package identifier
 	 * @param	string		$version	package version
-	 * @return	string|boolean
+	 * @return	string|bool
 	 */
 	protected function getCachedDownload($package, $version) {
 		$cachedDownloads = WCF::getSession()->getVar('cachedPackageUpdateDownloads');

@@ -24,7 +24,7 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Even
      * Hides the given node because of its own dependencies.
      */
     function _hide(node) {
-        node.style.display = "none";
+        Util_1.default.hide(node);
         _dependencyHiddenNodes.add(node);
         // also hide tab menu entry
         if (node.classList.contains("tabMenuContent")) {
@@ -33,7 +33,7 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Even
                 .querySelectorAll("li")
                 .forEach((tabLink) => {
                 if (tabLink.dataset.name === node.dataset.name) {
-                    tabLink.style.display = "none";
+                    Util_1.default.hide(tabLink);
                 }
             });
         }
@@ -65,7 +65,7 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Even
      * Shows the given node because of its own dependencies.
      */
     function _show(node) {
-        node.style.display = "block";
+        Util_1.default.show(node);
         _dependencyHiddenNodes.delete(node);
         // also show tab menu entry
         if (node.classList.contains("tabMenuContent")) {
@@ -74,7 +74,7 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Even
                 .querySelectorAll("li")
                 .forEach((tabLink) => {
                 if (tabLink.dataset.name === node.dataset.name) {
-                    tabLink.style.display = "block";
+                    Util_1.default.show(tabLink);
                 }
             });
         }
@@ -82,7 +82,7 @@ define(["require", "exports", "tslib", "../../../../Dom/Util", "../../../../Even
             // if a container is shown, ignore all fields that
             // have a hidden parent element within the container
             let parentNode = validatedField.parentNode;
-            while (parentNode !== node && parentNode.style.getPropertyValue("display") !== "none") {
+            while (parentNode !== node && !Util_1.default.isHidden(parentNode)) {
                 parentNode = parentNode.parentNode;
             }
             if (parentNode === node && _validatedFieldProperties.has(validatedField)) {

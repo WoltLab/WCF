@@ -54,19 +54,19 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm {
 	
 	/**
 	 * field is required
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $required = 0;
 	
 	/**
 	 * show order
-	 * @var	integer
+	 * @var	int
 	 */
 	public $showOrder = 0;
 	
 	/**
 	 * 1 if the option is disabled
-	 * @var	boolean
+	 * @var	bool
 	 * @since	5.2
 	 */
 	public $isDisabled = 0;
@@ -97,7 +97,7 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm {
 	
 	/**
 	 * object id
-	 * @var integer
+	 * @var int
 	 */
 	public $optionID;
 	

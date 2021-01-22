@@ -30,7 +30,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	
 	/**
 	 * id of the edited user group
-	 * @var	integer
+	 * @var	int
 	 */
 	public $groupID = 0;
 	

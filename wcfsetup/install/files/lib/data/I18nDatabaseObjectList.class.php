@@ -28,7 +28,7 @@ abstract class I18nDatabaseObjectList extends DatabaseObjectList {
 	
 	/**
 	 * @inheritDoc
-	 * @param integer $languageID id of the language that should be used
+	 * @param int $languageID id of the language that should be used
 	 * @throws \DomainException
 	 */
 	public function __construct($languageID = null) {

@@ -18,41 +18,41 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Attachment
  *
- * @property-read	integer		$attachmentID		unique id of the attachment
- * @property-read	integer		$objectTypeID		id of the `com.woltlab.wcf.attachment.objectType` object type
- * @property-read	integer|null	$objectID		id of the attachment container object the attachment belongs to
- * @property-read	integer|null	$userID			id of the user who uploaded the attachment or `null` if the user does not exist anymore or if the attachment has been uploaded by a guest
+ * @property-read	int		$attachmentID		unique id of the attachment
+ * @property-read	int		$objectTypeID		id of the `com.woltlab.wcf.attachment.objectType` object type
+ * @property-read	int|null	$objectID		id of the attachment container object the attachment belongs to
+ * @property-read	int|null	$userID			id of the user who uploaded the attachment or `null` if the user does not exist anymore or if the attachment has been uploaded by a guest
  * @property-read	string		$tmpHash		temporary hash used to identify uploaded attachments but not associated with an object yet or empty if the attachment has been associated with an object
  * @property-read	string		$filename		name of the physical attachment file
- * @property-read	integer		$filesize		size of the physical attachment file
+ * @property-read	int		$filesize		size of the physical attachment file
  * @property-read	string		$fileType		type of the physical attachment file
  * @property-read	string		$fileHash		hash of the physical attachment file
- * @property-read	integer		$isImage		is `1` if the attachment is an image, otherwise `0`
- * @property-read	integer		$width			width of the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read	integer		$height			height of the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read	int		$isImage		is `1` if the attachment is an image, otherwise `0`
+ * @property-read	int		$width			width of the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read	int		$height			height of the attachment if `$isImage` is `1`, otherwise `0`
  * @property-read	string		$tinyThumbnailType	type of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise empty
- * @property-read	integer		$tinyThumbnailSize	size of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read	integer		$tinyThumbnailWidth	width of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read	integer		$tinyThumbnailHeight	height of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read	int		$tinyThumbnailSize	size of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read	int		$tinyThumbnailWidth	width of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read	int		$tinyThumbnailHeight	height of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
  * @property-read	string		$thumbnailType	type of the thumbnail file for the attachment if `$isImage` is `1`, otherwise empty
- * @property-read	integer		$thumbnailSize	size of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read	integer		$thumbnailWidth	width of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read	integer		$thumbnailHeight	height of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read	integer		$downloads		number of times the attachment has been downloaded
- * @property-read	integer		$lastDownloadTime	timestamp at which the attachment has been downloaded the last time
- * @property-read	integer		$uploadTime		timestamp at which the attachment has been uploaded
- * @property-read	integer		$showOrder		position of the attachment in relation to the other attachment to the same message
+ * @property-read	int		$thumbnailSize	size of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read	int		$thumbnailWidth	width of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read	int		$thumbnailHeight	height of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read	int		$downloads		number of times the attachment has been downloaded
+ * @property-read	int		$lastDownloadTime	timestamp at which the attachment has been downloaded the last time
+ * @property-read	int		$uploadTime		timestamp at which the attachment has been uploaded
+ * @property-read	int		$showOrder		position of the attachment in relation to the other attachment to the same message
  */
 class Attachment extends DatabaseObject implements ILinkableObject, IRouteController, IThumbnailFile {
 	/**
 	 * indicates if the attachment is embedded
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $embedded = false;
 	
 	/**
 	 * user permissions for attachment access
-	 * @var	boolean[]
+	 * @var	bool[]
 	 */
 	protected $permissions = [];
 	
@@ -70,7 +70,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 	/**
 	 * Returns true if a user has the permission to download this attachment.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canDownload() {
 		return $this->getPermission('canDownload');
@@ -80,7 +80,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 	 * Returns true if a user has the permission to view the preview of this
 	 * attachment.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canViewPreview() {
 		return $this->getPermission('canViewPreview');
@@ -90,7 +90,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 	 * Returns true if a user has the permission to delete the preview of this
 	 * attachment.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canDelete() {
 		return $this->getPermission('canDelete');
@@ -100,7 +100,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 	 * Checks permissions.
 	 * 
 	 * @param	string		$permission
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function getPermission($permission) {
 		if (!isset($this->permissions[$permission])) {
@@ -126,7 +126,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 	/**
 	 * Sets the permissions for attachment access.
 	 * 
-	 * @param	boolean[]		$permissions
+	 * @param	bool[]		$permissions
 	 */
 	public function setPermissions(array $permissions) {
 		$this->permissions = $permissions;
@@ -233,7 +233,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 	/**
 	 * Returns true if this attachment is embedded.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isEmbedded() {
 		return $this->embedded;
@@ -242,7 +242,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 	/**
 	 * Returns true if this attachment should be shown as an image.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function showAsImage() {
 		if ($this->isImage) {
@@ -259,7 +259,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 	/**
 	 * Returns true if this attachment has a thumbnail.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasThumbnail() {
 		return ($this->thumbnailType ? true : false);
@@ -268,7 +268,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 	/**
 	 * Returns true if this attachment should be shown as a file.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function showAsFile() {
 		return !$this->showAsImage();

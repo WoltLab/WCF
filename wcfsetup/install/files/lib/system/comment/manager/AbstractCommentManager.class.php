@@ -18,7 +18,7 @@ use wcf\system\WCF;
 abstract class AbstractCommentManager extends SingletonFactory implements ICommentManager {
 	/**
 	 * display comments per page
-	 * @var	integer
+	 * @var	int
 	 */
 	public $commentsPerPage = 30;
 	
@@ -150,8 +150,8 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 	/**
 	 * Returns true if the current user may edit a comment/response.
 	 * 
-	 * @param	boolean		$isOwner
-	 * @return	boolean
+	 * @param	bool		$isOwner
+	 * @return	bool
 	 */
 	protected function canEdit($isOwner) {
 		// disallow guests
@@ -175,8 +175,8 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 	/**
 	 * Returns true if the current user may delete a comment/response.
 	 * 
-	 * @param	boolean		$isOwner
-	 * @return	boolean
+	 * @param	bool		$isOwner
+	 * @return	bool
 	 */
 	protected function canDelete($isOwner) {
 		// disallow guests
@@ -243,7 +243,7 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 	/**
 	 * Returns the object ID for the given Comment or CommentResponse.
 	 * 
-	 * @return integer
+	 * @return int
 	 */
 	protected final function getObjectID($commentOrResponse) {
 		if ($commentOrResponse instanceof CommentResponse || ($commentOrResponse instanceof DatabaseObjectDecorator && $commentOrResponse->getDecoratedObject() instanceof CommentResponse)) {

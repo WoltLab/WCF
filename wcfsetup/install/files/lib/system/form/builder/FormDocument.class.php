@@ -40,14 +40,14 @@ class FormDocument implements IFormDocument {
 	
 	/**
 	 * `true` if the default button is added and `false` otherwise
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $addDefaultButton = true;
 	
 	/**
 	 * `true` if form is requested via an AJAX request or processes data via an AJAX request
 	 * and `false` otherwise
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $ajax = false;
 	
@@ -65,7 +65,7 @@ class FormDocument implements IFormDocument {
 	
 	/**
 	 * indicates if the form data has been read via `readData()`
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $didReadValues = false;
 	
@@ -89,7 +89,7 @@ class FormDocument implements IFormDocument {
 	
 	/**
 	 * is `true` if form document is in invalid due to external factors and is `false` otherwise
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $invalid = false;
 	
@@ -126,13 +126,13 @@ class FormDocument implements IFormDocument {
 	/**
 	 * is `true` if global form error message will be shown if there are validation errors and
 	 * is `false` otherwise
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $showErrorMessage = true;
 	
 	/**
 	 * is `true` if global form success message will be shown and is `false` otherwise
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $showSuccessMessage = false;
 	

@@ -34,7 +34,7 @@ class UploadFile {
 	
 	/**
 	 * Indicator, whether the file is already processed.
-	 * @var boolean 
+	 * @var bool 
 	 */
 	private $processed;
 	
@@ -46,13 +46,13 @@ class UploadFile {
 	
 	/**
 	 * Indicator, whether the file is an image.
-	 * @var boolean 
+	 * @var bool 
 	 */
 	private $isImage;
 	
 	/**
 	 * Indicator, whether the file can be displayed as an image.
-	 * @var boolean
+	 * @var bool
 	 */
 	public $viewableImage;
 	
@@ -73,9 +73,9 @@ class UploadFile {
 	 *
 	 * @param       string          $location
 	 * @param       string          $filename
-	 * @param       boolean         $viewableImage
-	 * @param       boolean         $processed
-	 * @param       boolean         $detectSvgAsImage
+	 * @param       bool         $viewableImage
+	 * @param       bool         $processed
+	 * @param       bool         $detectSvgAsImage
 	 */
 	public function __construct($location, $filename, $viewableImage = true, $processed = false, $detectSvgAsImage = false) {
 		if (!file_exists($location)) {
@@ -101,7 +101,7 @@ class UploadFile {
 	/**
 	 * Returns true, whether this file is an image.
 	 * 
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isImage() {
 		return $this->isImage;
@@ -198,7 +198,7 @@ class UploadFile {
 	/**
 	 * Returns true, if the file is already processed. 
 	 * 
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isProcessed() {
 		return $this->processed;

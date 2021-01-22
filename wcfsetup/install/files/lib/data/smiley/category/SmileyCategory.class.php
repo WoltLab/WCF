@@ -24,13 +24,13 @@ use wcf\system\WCF;
 class SmileyCategory extends AbstractDecoratedCategory implements \Countable, ITraversableObject {
 	/**
 	 * current iterator index
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $index = 0;
 	
 	/**
 	 * list of index to object relation
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $indexToObject = null;
 	

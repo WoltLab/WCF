@@ -23,7 +23,7 @@ interface IRequestRoute {
 	 * Returns true if current route can handle the build request.
 	 *
 	 * @param	array		$components
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canHandle(array $components);
 	
@@ -37,7 +37,7 @@ interface IRequestRoute {
 	/**
 	 * Returns true if route applies for ACP.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isACP();
 	
@@ -45,14 +45,14 @@ interface IRequestRoute {
 	 * Returns true if given request url matches this route.
 	 *
 	 * @param	string		$requestURL
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function matches($requestURL);
 	
 	/**
 	 * Configures this route to handle either ACP or frontend requests.
 	 *
-	 * @param	boolean		$isACP		true if route handles ACP requests
+	 * @param	bool		$isACP		true if route handles ACP requests
 	 */
 	public function setIsACP($isACP);
 }

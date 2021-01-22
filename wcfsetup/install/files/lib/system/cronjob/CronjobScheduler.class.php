@@ -21,7 +21,7 @@ use function wcf\functions\exception\logThrowable;
 class CronjobScheduler extends SingletonFactory {
 	/**
 	 * cached times of the next and after next cronjob execution
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $cache = [];
 	
@@ -92,7 +92,7 @@ class CronjobScheduler extends SingletonFactory {
 	/**
 	 * Returns the next execution time.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getNextExec() {
 		return $this->cache['nextExec'];

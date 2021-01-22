@@ -27,20 +27,20 @@ class ImagickImageAdapter implements IImageAdapter {
 	
 	/**
 	 * image height
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $height = 0;
 	
 	/**
 	 * image width
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $width = 0;
 	
 	/**
 	 * is true if the used configuration can write animated GIF files if the
 	 * PHP Imagick API version is 3.1.0 RC 1
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $supportsWritingAnimatedGIF = true;
 	

@@ -36,13 +36,13 @@ class TemplateGroupAddForm extends AbstractForm {
 	
 	/**
 	 * template group folder
-	 * @var	integer
+	 * @var	int
 	 */
 	public $templateGroupFolderName = '';
 	
 	/**
 	 * parent template group id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $parentTemplateGroupID = 0;
 	

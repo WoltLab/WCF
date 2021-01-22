@@ -203,6 +203,9 @@ class LoginForm extends AbstractCaptchaForm {
 		
 		// change user
 		$needsMultifactor = WCF::getSession()->changeUserAfterMultifactorAuthentication($this->user);
+		if (!$needsMultifactor) {
+			WCF::getSession()->registerReauthentication();
+		}
 		$this->saved();
 		
 		$this->performRedirect($needsMultifactor);
@@ -233,24 +236,6 @@ class LoginForm extends AbstractCaptchaForm {
 			HeaderUtil::redirect($path);
 		}
 		exit;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function readData() {
-		parent::readData();
-		
-		// get preferred username
-		if (empty($_POST)) {
-			$cookieData = SessionHandler::getInstance()->getParsedCookieData(false);
-			if (isset($cookieData['userId'])) {
-				$user = new User($cookieData['userId']);
-				if ($user->userID) {
-					$this->username = $user->username;
-				}
-			}
-		}
 	}
 	
 	/**

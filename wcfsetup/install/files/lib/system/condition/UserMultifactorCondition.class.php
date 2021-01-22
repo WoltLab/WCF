@@ -27,13 +27,13 @@ class UserMultifactorCondition extends AbstractSingleFieldCondition implements I
 	
 	/**
 	 * 1 if multifactor active checkbox is checked
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $multifactorActive = 0;
 	
 	/**
 	 * 1 if multifactor not active checkbox is checked
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $multifactorNotActive = 0;
 	

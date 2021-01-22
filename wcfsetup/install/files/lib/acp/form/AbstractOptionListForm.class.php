@@ -49,7 +49,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	
 	/**
 	 * true if option supports i18n
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $supportI18n = true;
 	

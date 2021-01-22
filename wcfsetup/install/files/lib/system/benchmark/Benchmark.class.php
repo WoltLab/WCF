@@ -36,7 +36,7 @@ class Benchmark extends SingletonFactory {
 	
 	/**
 	 * number of executed sql queries
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $queryCount = 0;
 	
@@ -58,8 +58,8 @@ class Benchmark extends SingletonFactory {
 	 * Starts a benchmark.
 	 * 
 	 * @param	string		$text
-	 * @param	integer		$type
-	 * @return	integer		index
+	 * @param	int		$type
+	 * @return	int		index
 	 */
 	public function start($text, $type = self::TYPE_OTHER) {
 		$newIndex = count($this->items);
@@ -75,7 +75,7 @@ class Benchmark extends SingletonFactory {
 	 * Stops the benchmark with the given index. If no index is given, the
 	 * latest benchmark is stopped.
 	 * 
-	 * @param	integer		$index
+	 * @param	int		$index
 	 */
 	public function stop($index = null) {
 		if ($index === null) {
@@ -134,7 +134,7 @@ class Benchmark extends SingletonFactory {
 	/**
 	 * Returns the number of executed sql queries.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getQueryCount() {
 		return $this->queryCount;

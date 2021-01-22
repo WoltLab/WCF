@@ -21,31 +21,31 @@ use wcf\util\StringUtil;
  * @package	WoltLabSuite\Core\Data\Trophy
  * @since	3.1
  *
- * @property-read	integer		$trophyID			unique id for the trophy
+ * @property-read	int		$trophyID			unique id for the trophy
  * @property-read	string		$title				the trophy title
  * @property-read	string		$description			the trophy description
- * @property-read	integer		$categoryID			the categoryID of the trophy
- * @property-read	integer		$type				the trophy type
+ * @property-read	int		$categoryID			the categoryID of the trophy
+ * @property-read	int		$type				the trophy type
  * @property-read	string		$iconFile			the file location of the icon
  * @property-read	string		$iconName			the icon name
  * @property-read	string		$iconColor			the icon color
  * @property-read	string		$badgeColor			the icon badge color
- * @property-read	integer		$isDisabled			`1` if the trophy is disabled
- * @property-read	integer		$awardAutomatically		`1` if the trophy is awarded automatically
- * @property-read	integer		$revokeAutomatically		`1` if the trophy should be automatically revoked once the conditions are no longer met.
- * @property-read	integer		$trophyUseHtml		        `1` if the trophy use a html description
- * @property-read	integer		$showOrder		        position of the trophy in relation to the other trophies at the same location
+ * @property-read	int		$isDisabled			`1` if the trophy is disabled
+ * @property-read	int		$awardAutomatically		`1` if the trophy is awarded automatically
+ * @property-read	int		$revokeAutomatically		`1` if the trophy should be automatically revoked once the conditions are no longer met.
+ * @property-read	int		$trophyUseHtml		        `1` if the trophy use a html description
+ * @property-read	int		$showOrder		        position of the trophy in relation to the other trophies at the same location
  */
 class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteController {
 	/**
 	 * The type value, if this trophy is an image trophy.
-	 * @var	integer
+	 * @var	int
 	 */
 	const TYPE_IMAGE = 1;
 	
 	/**
 	 * The type value, if this trophy is a badge trophy (based on CSS icons).
-	 * @var	integer
+	 * @var	int
 	 */
 	const TYPE_BADGE = 2;
 	
@@ -84,8 +84,8 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
 	/**
 	 * Renders a trophy. 
 	 * 
-	 * @param	integer		$size
-	 * @param	boolean		$showTooltip
+	 * @param	int		$size
+	 * @param	bool		$showTooltip
 	 * @return 	string
 	 */
 	public function renderTrophy($size = self::DEFAULT_SIZE, $showTooltip = false) {
@@ -137,7 +137,7 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
 	/**
 	 * Returns true if the current trophy is disabled. Returns also true if the trophy category is disabled. 
 	 * 
-	 * @return 	boolean
+	 * @return 	bool
 	 */
 	public function isDisabled() {
 		if ($this->isDisabled) {

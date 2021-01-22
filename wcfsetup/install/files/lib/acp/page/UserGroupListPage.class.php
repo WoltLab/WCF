@@ -42,7 +42,7 @@ class UserGroupListPage extends SortablePage {
 	
 	/**
 	 * indicates if a group has just been deleted
-	 * @var	integer
+	 * @var	int
 	 */
 	public $deletedGroups = 0;
 	

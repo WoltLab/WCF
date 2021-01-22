@@ -109,7 +109,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
 	 * Inserts default options.
 	 * 
-	 * @param	integer		$userID
+	 * @param	int		$userID
 	 */
 	protected static function createUserOptions($userID) {
 		// fetch default values
@@ -172,8 +172,8 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	 * Adds a user to the groups he should be in.
 	 * 
 	 * @param	array		$groupIDs
-	 * @param	boolean		$deleteOldGroups
-	 * @param	boolean		$addDefaultGroups
+	 * @param	bool		$deleteOldGroups
+	 * @param	bool		$addDefaultGroups
 	 */
 	public function addToGroups(array $groupIDs, $deleteOldGroups = true, $addDefaultGroups = true) {
 		// add default groups
@@ -205,7 +205,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
 	 * Adds a user to a user group.
 	 * 
-	 * @param	integer	$groupID
+	 * @param	int	$groupID
 	 */
 	public function addToGroup($groupID) {
 		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_to_group
@@ -218,7 +218,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
 	 * Removes a user from a user group.
 	 * 
-	 * @param	integer		$groupID
+	 * @param	int		$groupID
 	 */
 	public function removeFromGroup($groupID) {
 		$sql = "DELETE FROM	wcf".WCF_N."_user_to_group
@@ -250,7 +250,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	 * Saves the visible languages of a user.
 	 * 
 	 * @param	array		$languageIDs
-	 * @param	boolean		$deleteOldLanguages
+	 * @param	bool		$deleteOldLanguages
 	 */
 	public function addToLanguages(array $languageIDs, $deleteOldLanguages = true) {
 		// remove previous languages

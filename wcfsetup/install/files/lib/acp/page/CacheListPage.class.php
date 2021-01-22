@@ -29,7 +29,7 @@ class CacheListPage extends AbstractPage {
 	
 	/**
 	 * indicates if cache was cleared
-	 * @var	integer
+	 * @var	int
 	 */
 	public $cleared = 0;
 	

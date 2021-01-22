@@ -34,7 +34,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 	
 	/**
 	 * enables keyword highlighting
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $keywordHighlighting = true;
 	
@@ -205,7 +205,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 	/**
 	 * Enables the keyword highlighting.
 	 * 
-	 * @param       boolean         $enable
+	 * @param       bool         $enable
 	 */
 	public function enableKeywordHighlighting($enable = true) {
 		$this->keywordHighlighting = $enable;
@@ -263,7 +263,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 	 * auto-detection of content.
 	 *
 	 * @param       \DOMText        $text           text node
-	 * @return      boolean         true if text node is inside a code element
+	 * @return      bool         true if text node is inside a code element
 	 */
 	protected function hasCodeParent(\DOMText $text) {
 		$parent = $text;

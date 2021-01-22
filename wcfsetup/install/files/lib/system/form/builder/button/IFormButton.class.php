@@ -36,14 +36,14 @@ interface IFormButton extends IFormChildNode, IFormElement {
 	 * Returns `true` this button is an `input[type=submit]` element and `false` if it is a `button`
 	 * element.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isSubmit();
 	
 	/**
 	 * Sets whether this button is an `input[type=submit]` element or a `button` element. 
 	 * 
-	 * @param	boolean		$submitButton
+	 * @param	bool		$submitButton
 	 * @return	static				this form button
 	 */
 	public function submit($submitButton = true);

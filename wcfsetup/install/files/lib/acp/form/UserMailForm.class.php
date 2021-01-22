@@ -23,7 +23,7 @@ use wcf\util\StringUtil;
 class UserMailForm extends AbstractForm {
 	/**
 	 * enable html for message body
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $enableHTML = false;
 	
@@ -41,7 +41,7 @@ class UserMailForm extends AbstractForm {
 	
 	/**
 	 * list of group ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $groupIDs = [];
 	
@@ -70,13 +70,13 @@ class UserMailForm extends AbstractForm {
 	
 	/**
 	 * single user id
-	 * @var integer
+	 * @var int
 	 */
 	public $userID = 0;
 	
 	/**
 	 * list of user ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $userIDs = [];
 	

@@ -99,7 +99,7 @@ class ReactionHandler extends SingletonFactory {
 	/**
 	 * Returns a reaction type by id.
 	 *
-	 * @param       integer                 $reactionID
+	 * @param       int                 $reactionID
 	 * @return      ReactionType|null
 	 */
 	public function getReactionTypeByID($reactionID) {
@@ -110,7 +110,7 @@ class ReactionHandler extends SingletonFactory {
 	 * Builds the data attributes for the object container.
 	 *
 	 * @param       string          $objectTypeName
-	 * @param       integer         $objectID
+	 * @param       int         $objectID
 	 * @return      string
 	 */
 	public function getDataAttributes($objectTypeName, $objectID) {
@@ -145,7 +145,7 @@ class ReactionHandler extends SingletonFactory {
 	 * Cache likeable objects.
 	 *
 	 * @param       string          $objectTypeName
-	 * @param       integer[]       $objectIDs
+	 * @param       int[]       $objectIDs
 	 */
 	public function cacheLikeableObjects($objectTypeName, array $objectIDs) {
 		$objectType = $this->getObjectType($objectTypeName);
@@ -171,7 +171,7 @@ class ReactionHandler extends SingletonFactory {
 	 * Get an likeable object from the internal cache.
 	 *
 	 * @param       string          $objectTypeName
-	 * @param       integer         $objectID
+	 * @param       int         $objectID
 	 * @return      ILikeObject
 	 */
 	public function getLikeableObject($objectTypeName, $objectID) {
@@ -208,7 +208,7 @@ class ReactionHandler extends SingletonFactory {
 	 * Returns a like object.
 	 *
 	 * @param	ObjectType	$objectType
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @return	LikeObject|null
 	 */
 	public function getLikeObject(ObjectType $objectType, $objectID) {
@@ -239,7 +239,7 @@ class ReactionHandler extends SingletonFactory {
 	 *
 	 * @param	ObjectType	$objectType
 	 * @param	array		$objectIDs
-	 * @return	integer
+	 * @return	int
 	 */
 	public function loadLikeObjects(ObjectType $objectType, array $objectIDs) {
 		if (empty($objectIDs)) {
@@ -289,8 +289,8 @@ class ReactionHandler extends SingletonFactory {
 	 *
 	 * @param	ILikeObject	$likeable
 	 * @param	User		$user
-	 * @param	integer		$reactionTypeID
-	 * @param 	integer		$time
+	 * @param	int		$reactionTypeID
+	 * @param 	int		$time
 	 * @return	array
 	 * @throws	DatabaseQueryException
 	 */
@@ -608,7 +608,7 @@ class ReactionHandler extends SingletonFactory {
 	 * Removes all reactions for given objects.
 	 *
 	 * @param	string		$objectType
-	 * @param	integer[]	$objectIDs
+	 * @param	int[]	$objectIDs
 	 * @param	string[]	$notificationObjectTypes
 	 */
 	public function removeReactions($objectType, array $objectIDs, array $notificationObjectTypes = []) {

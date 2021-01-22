@@ -19,7 +19,7 @@ use wcf\system\WCF;
 class ClipboardItemAction extends AbstractDatabaseObjectAction {
 	/**
 	 * object type id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $objectTypeID = 0;
 	

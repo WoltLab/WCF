@@ -25,7 +25,7 @@ use wcf\util\StringUtil;
 class ACLHandler extends SingletonFactory {
 	/**
 	 * indicates if assignment of variables is disabled
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $assignVariablesDisabled = false;
 	
@@ -52,7 +52,7 @@ class ACLHandler extends SingletonFactory {
 	/**
 	 * Assigns the acl values to the template.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 */
 	public function assignVariables($objectTypeID) {
 		if (WCF::getTPL()->get('aclValues') === null) {
@@ -132,7 +132,7 @@ class ACLHandler extends SingletonFactory {
 	 * Note: This method primarily only exists for form builder. If you are not
 	 * using form builder, you do not need this method.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 * @param	array|null	$valuesSource	array used to read the values from (if `null`, `$_POST['aclValues']` is used)
 	 * @since	5.2
 	 */
@@ -170,7 +170,7 @@ class ACLHandler extends SingletonFactory {
 	 * Note: This method primarily only exists for form builder. If you are not
 	 * using form builder, you do not need this method.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 * @since	5.2
 	 */
 	public function resetValues($objectTypeID) {
@@ -189,7 +189,7 @@ class ACLHandler extends SingletonFactory {
 	 * Returns the id of the given acl object type.
 	 * 
 	 * @param	string		$objectType
-	 * @return	integer
+	 * @return	int
 	 * @throws	SystemException
 	 */
 	public function getObjectTypeID($objectType) {
@@ -204,7 +204,7 @@ class ACLHandler extends SingletonFactory {
 	 * Returns the acl option category with the given object type id and name
 	 * or `null` if no such category exists.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 * @param	string		$categoryName
 	 * @return	ACLOptionCategory|null
 	 */
@@ -219,8 +219,8 @@ class ACLHandler extends SingletonFactory {
 	/**
 	 * Saves acl for a given object.
 	 * 
-	 * @param	integer		$objectID
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectID
+	 * @param	int		$objectTypeID
 	 */
 	public function save($objectID, $objectTypeID) {
 		// get options
@@ -235,7 +235,7 @@ class ACLHandler extends SingletonFactory {
 	 * 
 	 * @param	ACLOptionList	$optionList
 	 * @param	string		$type
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 */
 	protected function replaceValues(ACLOptionList $optionList, $type, $objectID) {
 		$options = $optionList->getObjects();
@@ -288,10 +288,10 @@ class ACLHandler extends SingletonFactory {
 	/**
 	 * Returns a list of permissions by object type id.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 * @param	array		$objectIDs
 	 * @param	string		$categoryName
-	 * @param	boolean		$settingsView
+	 * @param	bool		$settingsView
 	 * @return	array
 	 */
 	public function getPermissions($objectTypeID, array $objectIDs, $categoryName = '', $settingsView = false) {
@@ -351,7 +351,7 @@ class ACLHandler extends SingletonFactory {
 	 * @param	string		$type
 	 * @param	array		$objectIDs
 	 * @param	array		$data
-	 * @param	boolean		$settingsView
+	 * @param	bool		$settingsView
 	 */
 	protected function getValues(ACLOptionList $optionList, $type, array $objectIDs, array &$data, $settingsView) {
 		$data[$type] = [];
@@ -431,7 +431,7 @@ class ACLHandler extends SingletonFactory {
 	/**
 	 * Returns a list of options by object type id.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 * @param	string		$categoryName
 	 * @return	ACLOptionList
 	 */
@@ -455,8 +455,8 @@ class ACLHandler extends SingletonFactory {
 	/**
 	 * Removes ACL values from database.
 	 * 
-	 * @param	integer			$objectTypeID
-	 * @param	integer[]		$objectIDs
+	 * @param	int			$objectTypeID
+	 * @param	int[]		$objectIDs
 	 * @param	ACLOptionCategory	$category
 	 */
 	public function removeValues($objectTypeID, array $objectIDs, ACLOptionCategory $category = null) {

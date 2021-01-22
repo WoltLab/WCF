@@ -29,7 +29,7 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\System\User\Multifactor
  * @since	5.4
  */
-class TotpMultifactorMethod implements IMultifactorMethod {
+final class TotpMultifactorMethod implements IMultifactorMethod {
 	private const USER_ATTEMPTS_PER_TEN_MINUTES = 5;
 	
 	/**

@@ -206,7 +206,6 @@ window.addEventListener('pageshow', function(event) {
 
 <script data-relocate="true">
 	$(function() {
-		WCF.System.PageNavigation.init('.pagination');
 		WCF.User.Profile.ActivityPointList.init();
 		
 		{if MODULE_TROPHY && $__wcf->session->getPermission('user.profile.trophy.canSeeTrophies')}

@@ -18,7 +18,7 @@ use wcf\system\WCF;
 class LanguageEditForm extends LanguageAddForm {
 	/**
 	 * language id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $languageID = 0;
 	

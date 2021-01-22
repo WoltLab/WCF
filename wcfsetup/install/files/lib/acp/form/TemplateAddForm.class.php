@@ -40,7 +40,7 @@ class TemplateAddForm extends AbstractForm {
 	
 	/**
 	 * template group id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $templateGroupID = 0;
 	
@@ -58,13 +58,13 @@ class TemplateAddForm extends AbstractForm {
 	
 	/**
 	 * template's package id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $packageID = 1;
 	
 	/**
 	 * id of copied template
-	 * @var	integer
+	 * @var	int
 	 */
 	public $copy = 0;
 	

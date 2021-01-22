@@ -44,7 +44,7 @@ class ACPSessionLogPage extends SortablePage {
 	
 	/**
 	 * session log id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $sessionLogID = 0;
 	

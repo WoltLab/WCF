@@ -32,7 +32,7 @@ final class HeaderUtil {
 	 * 
 	 * @param	string		$name
 	 * @param	string		$value
-	 * @param	integer		$expire
+	 * @param	int		$expire
 	 */
 	public static function setCookie($name, $value = '', $expire = 0) {
 		$cookieDomain = self::getCookieDomain();
@@ -132,8 +132,8 @@ final class HeaderUtil {
 	 * Redirects the user agent to given location.
 	 * 
 	 * @param	string		$location
-	 * @param	boolean		$sendStatusCode
-	 * @param	boolean		$temporaryRedirect 
+	 * @param	bool		$sendStatusCode
+	 * @param	bool		$temporaryRedirect 
 	 */
 	public static function redirect($location, $sendStatusCode = false, $temporaryRedirect = true) {
 		// https://github.com/WoltLab/WCF/issues/2568
@@ -154,7 +154,7 @@ final class HeaderUtil {
 	 * 
 	 * @param	string		$location
 	 * @param	string		$message
-	 * @param	integer		$delay
+	 * @param	int		$delay
 	 * @param	string		$status
 	 */
 	public static function delayedRedirect($location, $message, $delay = 5, $status = 'success') {

@@ -21,7 +21,7 @@ use wcf\util\HeaderUtil;
 class ModerationListPage extends SortablePage {
 	/**
 	 * assigned user id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $assignedUserID = -1;
 	
@@ -43,7 +43,7 @@ class ModerationListPage extends SortablePage {
 	
 	/**
 	 * definition id for filtering
-	 * @var	integer
+	 * @var	int
 	 */
 	public $definitionID = 0;
 	
@@ -64,7 +64,7 @@ class ModerationListPage extends SortablePage {
 	
 	/**
 	 * status bit
-	 * @var	integer
+	 * @var	int
 	 */
 	public $status = -1;
 	

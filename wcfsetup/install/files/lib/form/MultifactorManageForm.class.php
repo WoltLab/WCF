@@ -3,7 +3,6 @@ namespace wcf\form;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserEditor;
-use wcf\form\AbstractFormBuilderForm;
 use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\email\SimpleEmail;
 use wcf\system\exception\IllegalLinkException;
@@ -88,6 +87,13 @@ class MultifactorManageForm extends AbstractFormBuilderForm {
 		$this->method = $objectType;
 		$this->processor = $this->method->getProcessor();
 		$this->setup = Setup::find($this->method, WCF::getUser());
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function checkPermissions() {
+		parent::checkPermissions();
 		
 		$this->requestReauthentication(LinkHandler::getInstance()->getControllerLink(static::class, [
 			'object' => $this->method,

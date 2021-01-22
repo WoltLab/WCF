@@ -12,18 +12,18 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Moderation\Queue
  *
- * @property-read	integer		$queueID		unique id of the moderation queue entry
- * @property-read	integer		$objectTypeID		id of the `com.woltlab.wcf.moderation.type` object type
- * @property-read	integer		$objectID		id of the object of the object type with id `$objectTypeID` to which the moderation queue entry belongs to
- * @property-read	integer		$containerID		id of the object's container object to which the modification log entry belongs to or `0` if no such container object exists or is logged
- * @property-read	integer|null	$userID			id of the user who created the moderation queue entry or `null` if the user does not exist anymore or if the moderation queue entry has been created by a guest
- * @property-read	integer		$time			timestamp at which the moderation queue entry has been created
- * @property-read	integer|null	$assignedUserID		id of the user to which the moderation queue entry is assigned or `null` if it is not assigned to any user
- * @property-read	integer		$status			status of the moderation queue entry (see `ModerationQueue::STATUS_*` constants)
- * @property-read	integer		$comments		number of comments on the moderation queue entry
- * @property-read	integer		$lastChangeTime		timestamp at which the moderation queue entry has been changed the last time
+ * @property-read	int		$queueID		unique id of the moderation queue entry
+ * @property-read	int		$objectTypeID		id of the `com.woltlab.wcf.moderation.type` object type
+ * @property-read	int		$objectID		id of the object of the object type with id `$objectTypeID` to which the moderation queue entry belongs to
+ * @property-read	int		$containerID		id of the object's container object to which the modification log entry belongs to or `0` if no such container object exists or is logged
+ * @property-read	int|null	$userID			id of the user who created the moderation queue entry or `null` if the user does not exist anymore or if the moderation queue entry has been created by a guest
+ * @property-read	int		$time			timestamp at which the moderation queue entry has been created
+ * @property-read	int|null	$assignedUserID		id of the user to which the moderation queue entry is assigned or `null` if it is not assigned to any user
+ * @property-read	int		$status			status of the moderation queue entry (see `ModerationQueue::STATUS_*` constants)
+ * @property-read	int		$comments		number of comments on the moderation queue entry
+ * @property-read	int		$lastChangeTime		timestamp at which the moderation queue entry has been changed the last time
  * @property-read	array		$additionalData		array with additional data of the moderation queue entry
- * @property-read	boolean		$markAsJustified	true if the report was closed, but it was actually justified and other actions may have been taken
+ * @property-read	bool		$markAsJustified	true if the report was closed, but it was actually justified and other actions may have been taken
  */
 class ModerationQueue extends DatabaseObject {
 	// states of column 'status'
@@ -64,7 +64,7 @@ class ModerationQueue extends DatabaseObject {
 	/**
 	 * Returns true if current user can edit this moderation queue.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canEdit() {
 		$sql = "SELECT	isAffected
@@ -84,7 +84,7 @@ class ModerationQueue extends DatabaseObject {
 	/**
 	 * Returns true, if this queue is done.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isDone() {
 		return ($this->status == self::STATUS_DONE || $this->status == self::STATUS_CONFIRMED || $this->status == self::STATUS_REJECTED);
@@ -93,7 +93,7 @@ class ModerationQueue extends DatabaseObject {
 	/**
 	 * Returns status text.
 	 * 
-	 * @param	integer		$status
+	 * @param	int		$status
 	 * @return	string
 	 */
 	public function getStatus($status = null) {

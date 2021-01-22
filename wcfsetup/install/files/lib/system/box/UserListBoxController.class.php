@@ -47,7 +47,7 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController {
 	
 	/**
 	 * ids of the shown users loaded from cache
-	 * @var	integer[]|null
+	 * @var	int[]|null
 	 */
 	public $userIDs;
 	

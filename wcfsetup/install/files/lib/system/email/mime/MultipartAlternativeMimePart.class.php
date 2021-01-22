@@ -42,7 +42,7 @@ class MultipartAlternativeMimePart extends AbstractMultipartMimePart {
 	 * mime part will be further down the email (see RFC 2046, 5.1.4).
 	 * 
 	 * @param	AbstractMimePart	$part
-	 * @param	integer			$data	The priority.
+	 * @param	int			$data	The priority.
 	 * @throws	\InvalidArgumentException
 	 * @throws	\DomainException
 	 */

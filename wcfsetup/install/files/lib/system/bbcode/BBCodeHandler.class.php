@@ -55,7 +55,7 @@ class BBCodeHandler extends SingletonFactory {
 	 * Returns true if the BBCode with the given tag is available in the WYSIWYG editor.
 	 * 
 	 * @param	string		$bbCodeTag
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isAvailableBBCode($bbCodeTag) {
 		return !in_array($bbCodeTag, $this->disallowedBBCodes);
@@ -73,7 +73,7 @@ class BBCodeHandler extends SingletonFactory {
 	/**
 	 * Returns a list of BBCodes displayed as buttons.
 	 * 
-	 * @param       boolean         $excludeCoreBBCodes     do not return bbcodes that are available by default
+	 * @param       bool         $excludeCoreBBCodes     do not return bbcodes that are available by default
 	 * @return	BBCode[]
 	 */
 	public function getButtonBBCodes($excludeCoreBBCodes = false) {

@@ -9,11 +9,12 @@
  * @see module:WoltLabSuite/Core/Form/Builder/Field/Dependency/Abstract
  * @since 5.2
  */
-define(["require", "exports", "tslib", "./Abstract", "../../../../../Core", "../Manager"], function (require, exports, tslib_1, Abstract_1, Core, DependencyManager) {
+define(["require", "exports", "tslib", "./Abstract", "../../../../../Core", "../Manager", "../../../../../Dom/Util"], function (require, exports, tslib_1, Abstract_1, Core, DependencyManager, Util_1) {
     "use strict";
     Abstract_1 = tslib_1.__importDefault(Abstract_1);
     Core = tslib_1.__importStar(Core);
     DependencyManager = tslib_1.__importStar(DependencyManager);
+    Util_1 = tslib_1.__importDefault(Util_1);
     class Default extends Abstract_1.default {
         checkContainer() {
             if (Core.stringToBool(this._container.dataset.ignoreDependencies || "")) {
@@ -23,20 +24,20 @@ define(["require", "exports", "tslib", "./Abstract", "../../../../../Core", "../
             if (DependencyManager.isHiddenByDependencies(this._container)) {
                 return;
             }
-            const containerIsVisible = this._container.style.display !== "none";
+            const containerIsVisible = !Util_1.default.isHidden(this._container);
             const containerShouldBeVisible = Array.from(this._container.children).some((child, index) => {
                 // ignore container header for visibility considerations
                 if (index === 0 && (child.tagName === "H2" || child.tagName === "HEADER")) {
                     return false;
                 }
-                return child.style.display !== "none";
+                return !Util_1.default.isHidden(child);
             });
             if (containerIsVisible !== containerShouldBeVisible) {
                 if (containerShouldBeVisible) {
-                    this._container.style.display = "block";
+                    Util_1.default.show(this._container);
                 }
                 else {
-                    this._container.style.display = "none";
+                    Util_1.default.hide(this._container);
                 }
                 // check containers again to make sure parent containers can react to
                 // changing the visibility of this container

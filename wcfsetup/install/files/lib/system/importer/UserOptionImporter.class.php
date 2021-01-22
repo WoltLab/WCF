@@ -25,7 +25,7 @@ class UserOptionImporter extends AbstractImporter {
 	
 	/**
 	 * language category id
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $languageCategoryID = null;
 	

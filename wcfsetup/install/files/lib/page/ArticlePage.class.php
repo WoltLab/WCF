@@ -35,7 +35,7 @@ class ArticlePage extends AbstractArticlePage {
 	
 	/**
 	 * comment object type id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $commentObjectTypeID = 0;
 	

@@ -73,8 +73,8 @@ class SimpleMessageParser extends SingletonFactory {
 	 * Parses the given message and returns the parsed message.
 	 * 
 	 * @param	string		$message
-	 * @param	boolean		$parseURLs
-	 * @param	boolean		$parseSmilies
+	 * @param	bool		$parseURLs
+	 * @param	bool		$parseSmilies
 	 * @return	string
 	 */
 	public function parse($message, $parseURLs = true, $parseSmilies = true) {

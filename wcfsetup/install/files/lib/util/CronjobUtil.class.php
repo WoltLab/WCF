@@ -19,32 +19,32 @@ use wcf\system\exception\SystemException;
 final class CronjobUtil {
 	/**
 	 * indicates if day of month is restricted (not '*')
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected static $domRestricted = false;
 	
 	/**
 	 * indicates if day of week is restricted (not '*')
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected static $dowRestricted = false;
 	
 	/**
 	 * result date
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected static $result = [];
 	
 	/**
 	 * time base used as reference for finding the next execution time
-	 * @var	integer
+	 * @var	int
 	 */
 	protected static $timeBase = 0;
 	
 	/**
 	 * valid ranges for each known field (range for 'day of month' is missing
 	 * since it varies from month to month)
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public static $ranges = [
 		'minute' => [0, 59],
@@ -62,8 +62,8 @@ final class CronjobUtil {
 	 * @param	string		$dom
 	 * @param	string		$month
 	 * @param	string		$dow
-	 * @param	integer		$timeBase
-	 * @return	integer
+	 * @param	int		$timeBase
+	 * @return	int
 	 */
 	public static function calculateNextExec($minute, $hour, $dom, $month, $dow, $timeBase = TIME_NOW) {
 		// using the native `date()` and `mktime()` functions is dangerous
@@ -162,8 +162,8 @@ final class CronjobUtil {
 	/**
 	 * Calculates the next month and year to match given criteria.
 	 * 
-	 * @param	integer		$month
-	 * @param	integer		$year
+	 * @param	int		$month
+	 * @param	int		$year
 	 * @param	array		$values
 	 * @return      array
 	 */
@@ -271,10 +271,10 @@ final class CronjobUtil {
 	/**
 	 * Calculates the date of next execution based upon a given set for day of week.
 	 * 
-	 * @param	integer		$month
-	 * @param	integer		$year
+	 * @param	int		$month
+	 * @param	int		$year
 	 * @param	array		$values
-	 * @param	integer		$day
+	 * @param	int		$day
 	 * @return	array
 	 */
 	protected static function calculateDow($month, $year, array &$values, $day = 1) {
@@ -301,10 +301,10 @@ final class CronjobUtil {
 	/**
 	 * Calculates the date of next execution based upon a given set for day of month.
 	 * 
-	 * @param	integer		$month
-	 * @param	integer		$year
+	 * @param	int		$month
+	 * @param	int		$year
 	 * @param	array		$values
-	 * @param	integer		$day
+	 * @param	int		$day
 	 * @return	array
 	 */
 	protected static function calculateDom($month, $year, array &$values, $day = 1) {
@@ -330,8 +330,8 @@ final class CronjobUtil {
 	 * had been added in order to match expression for hour and minutes.
 	 * 
 	 * @param	array		$values
-	 * @param	integer		$timeBase
-	 * @return	integer
+	 * @param	int		$timeBase
+	 * @return	int
 	 */
 	protected static function calculateHour(array &$values, &$timeBase) {
 		$addAnDay = false;
@@ -370,9 +370,9 @@ final class CronjobUtil {
 	 * is past the current hour, thus requires to add at least one hour.
 	 * 
 	 * @param	array		$values
-	 * @param	integer		$timeBase
-	 * @param	boolean		$addAnDay
-	 * @return	boolean
+	 * @param	int		$timeBase
+	 * @param	bool		$addAnDay
+	 * @return	bool
 	 */
 	protected static function calculateMinute(array &$values, &$timeBase, $addAnDay) {
 		$returnValue = false;
@@ -403,9 +403,9 @@ final class CronjobUtil {
 	 * needle. If $continue is not set to false and foreach-loop is out of bounds,
 	 * then the array-index '0' is returned, referring the first item.
 	 * 
-	 * @param	integer		$needle
+	 * @param	int		$needle
 	 * @param	array		$haystack
-	 * @param	boolean		$continue
+	 * @param	bool		$continue
 	 * @return	mixed
 	 */
 	protected static function findKey($needle, array &$haystack, $continue = true) {
@@ -506,9 +506,9 @@ final class CronjobUtil {
 	/**
 	 * Calculates all values for a given range.
 	 * 
-	 * @param	integer		$startValue
-	 * @param	integer		$endValue
-	 * @param	integer		$step
+	 * @param	int		$startValue
+	 * @param	int		$endValue
+	 * @param	int		$step
 	 * @return	array
 	 */
 	protected static function calculateRange($startValue, $endValue, $step = 1) {

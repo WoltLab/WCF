@@ -19,7 +19,7 @@ abstract class DatabaseObject implements IIDObject, IStorableObject {
 	
 	/**
 	 * indicates if database table index is an identity column
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected static $databaseTableIndexIsIdentity = true;
 	
@@ -102,7 +102,7 @@ abstract class DatabaseObject implements IIDObject, IStorableObject {
 	/**
 	 * Returns the id of the object.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getObjectID() {
 		return $this->data[static::getDatabaseTableIndexName()];
@@ -190,7 +190,7 @@ abstract class DatabaseObject implements IIDObject, IStorableObject {
 	 * @param	DatabaseObject[]	$objects
 	 * @param	mixed			$sortBy
 	 * @param	string			$sortOrder
-	 * @param	boolean			$maintainIndexAssociation
+	 * @param	bool			$maintainIndexAssociation
 	 */
 	public static function sort(&$objects, $sortBy, $sortOrder = 'ASC', $maintainIndexAssociation = true) {
 		$sortArray = $objects2 = [];

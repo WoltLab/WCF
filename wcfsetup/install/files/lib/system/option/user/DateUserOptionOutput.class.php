@@ -33,7 +33,7 @@ class DateUserOptionOutput implements IUserOptionOutput {
 	 * Splits the given dashed date into its components.
 	 * 
 	 * @param	string		$value
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	protected static function splitDate($value) {
 		$year = $month = $day = 0;

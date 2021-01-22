@@ -25,7 +25,7 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\System\User\Multifactor
  * @since	5.4
  */
-class BackupMultifactorMethod implements IMultifactorMethod {
+final class BackupMultifactorMethod implements IMultifactorMethod {
 	/**
 	 * @var IPasswordAlgorithm
 	 */

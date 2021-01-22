@@ -115,8 +115,7 @@ final class Setup implements IIDObject {
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_user_multifactor
 			WHERE	userID = ?
-				AND objectTypeID = ?
-			FOR UPDATE";
+				AND objectTypeID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
 			$user->userID,
@@ -139,8 +138,7 @@ final class Setup implements IIDObject {
 	public static function getAllForUser(User $user): array {
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_user_multifactor
-			WHERE	userID = ?
-			FOR UPDATE";
+			WHERE	userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$user->userID]);
 		

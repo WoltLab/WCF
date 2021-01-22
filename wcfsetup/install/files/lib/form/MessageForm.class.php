@@ -31,7 +31,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	
 	/**
 	 * object id for attachments
-	 * @var	integer
+	 * @var	int
 	 */
 	public $attachmentObjectID = 0;
 	
@@ -43,7 +43,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	
 	/**
 	 * parent object id for attachments
-	 * @var	integer
+	 * @var	int
 	 */
 	public $attachmentParentObjectID = 0;
 	
@@ -67,7 +67,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	
 	/**
 	 * enables multilingualism
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $enableMultilingualism = false;
 	
@@ -78,13 +78,13 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	
 	/**
 	 * content language id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $languageID;
 	
 	/**
 	 * maximum text length
-	 * @var	integer
+	 * @var	int
 	 */
 	public $maxTextLength = 0;
 	

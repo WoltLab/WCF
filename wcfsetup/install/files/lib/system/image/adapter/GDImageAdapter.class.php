@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
 class GDImageAdapter implements IImageAdapter {
 	/**
 	 * active color
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $color = null;
 	
@@ -26,7 +26,7 @@ class GDImageAdapter implements IImageAdapter {
 	
 	/**
 	 * image height
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $height = 0;
 	
@@ -38,13 +38,13 @@ class GDImageAdapter implements IImageAdapter {
 	
 	/**
 	 * image type
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $type = 0;
 	
 	/**
 	 * image width
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $width = 0;
 	
@@ -59,7 +59,7 @@ class GDImageAdapter implements IImageAdapter {
 	/**
 	 * Returns whether the given image is a valid GD resource / GD object
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isImage($image) {
 		return (is_resource($image) && get_resource_type($image) === 'gd') || (is_object($image) && $image instanceof \GdImage);
@@ -433,14 +433,14 @@ class GDImageAdapter implements IImageAdapter {
 	 * 
 	 * @param	resource	$dst_im		destination image resource
 	 * @param	resource	$src_im		source image resource
-	 * @param	integer		$dst_x		x-coordinate of destination point
-	 * @param	integer		$dst_y		y-coordinate of destination point
-	 * @param	integer		$src_x		x-coordinate of source point
-	 * @param	integer		$src_y		y-coordinate of source point
-	 * @param	integer		$src_w		source width
-	 * @param	integer		$src_h		source height
-	 * @param	integer		$pct		opacity percent
-	 * @return	boolean
+	 * @param	int		$dst_x		x-coordinate of destination point
+	 * @param	int		$dst_y		y-coordinate of destination point
+	 * @param	int		$src_x		x-coordinate of source point
+	 * @param	int		$src_y		y-coordinate of source point
+	 * @param	int		$src_w		source width
+	 * @param	int		$src_h		source height
+	 * @param	int		$pct		opacity percent
+	 * @return	bool
 	 */
 	private function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct) { // phpcs:ignore
 		if (!isset($pct)) {
@@ -530,7 +530,7 @@ class GDImageAdapter implements IImageAdapter {
 				break;
 			
 			default:
-				throw new \InvalidArgumentException("Unreachable");
+				throw new \LogicException("Unreachable");
 		}
 		
 		$stream = ob_get_contents();

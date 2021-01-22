@@ -30,7 +30,7 @@ interface ISearchableConditionUserOption extends ISearchableUserOption {
 	 * @param	User		$user
 	 * @param	Option		$option
 	 * @param	mixed		$value
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function checkUser(User $user, Option $option, $value);
 	

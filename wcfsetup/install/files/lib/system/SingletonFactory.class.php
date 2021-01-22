@@ -66,7 +66,7 @@ abstract class SingletonFactory {
 	/**
 	 * Returns whether this singleton is already initialized.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static final function isInitialized() {
 		$className = get_called_class();

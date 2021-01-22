@@ -14,7 +14,7 @@ interface IUploadFileValidationStrategy {
 	 * Validates the given file and returns true on success, otherwise false.
 	 * 
 	 * @param	UploadFile		$uploadFile
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function validate(UploadFile $uploadFile);
 }

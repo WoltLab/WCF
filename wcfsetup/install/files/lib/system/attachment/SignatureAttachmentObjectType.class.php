@@ -34,7 +34,6 @@ class SignatureAttachmentObjectType extends AbstractAttachmentObjectType {
 		return false;
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */
@@ -100,7 +99,6 @@ class SignatureAttachmentObjectType extends AbstractAttachmentObjectType {
 		return WCF::getSession()->getPermission('user.signature.attachment.maxCount');
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */

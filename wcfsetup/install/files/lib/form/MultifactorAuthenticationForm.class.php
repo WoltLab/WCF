@@ -2,7 +2,6 @@
 namespace wcf\form;
 use wcf\data\object\type\ObjectType;
 use wcf\data\user\User;
-use wcf\form\AbstractFormBuilderForm;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
@@ -139,6 +138,7 @@ class MultifactorAuthenticationForm extends AbstractFormBuilderForm {
 		WCF::getDB()->commitTransaction();
 		
 		WCF::getSession()->applyPendingUserChange($this->user);
+		WCF::getSession()->registerReauthentication();
 		
 		$this->saved();
 	}

@@ -14,7 +14,7 @@ use wcf\system\request\ControllerMap;
 class StaticRequestRoute extends DynamicRequestRoute {
 	/**
 	 * controller must be present and match the static controller
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $matchController = false;
 	
@@ -42,7 +42,7 @@ class StaticRequestRoute extends DynamicRequestRoute {
 	 * Controller must be part of the url and match the static controller, useful
 	 * for controllers requiring a custom set of additional parameters.
 	 * 
-	 * @param       boolean         $matchController
+	 * @param       bool         $matchController
 	 */
 	public function setMatchController($matchController) {
 		$this->matchController = $matchController;

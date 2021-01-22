@@ -40,7 +40,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 	
 	/**
 	 * true if the moderation queue is already loaded
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $moderationQueueLoaded = false;
 	

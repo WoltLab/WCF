@@ -25,7 +25,7 @@ class FormButton implements IFormButton {
 	
 	/**
 	 * `true` this button is an `input[type=submit]` element and `false` if it is a `button` element
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $submit = false;
 	

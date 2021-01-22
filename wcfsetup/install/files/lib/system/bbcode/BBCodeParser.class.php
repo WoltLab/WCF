@@ -208,7 +208,7 @@ class BBCodeParser extends SingletonFactory {
 	 * Validates the attributes of a tag.
 	 * 
 	 * @param	array		$tag
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function isValidTag(array $tag) {
 		if (isset($tag['attributes']) && count($tag['attributes']) > count($this->bbcodes[$tag['name']]->getAttributes())) {
@@ -250,7 +250,7 @@ class BBCodeParser extends SingletonFactory {
 	 * 
 	 * @param	array			$tagAttributes
 	 * @param	BBCodeAttribute		$definedTagAttribute
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function isValidTagAttribute(array $tagAttributes, BBCodeAttribute $definedTagAttribute) {
 		if ($definedTagAttribute->validationPattern && isset($tagAttributes[$definedTagAttribute->attributeNo])) {
@@ -271,7 +271,7 @@ class BBCodeParser extends SingletonFactory {
 	 * Returns true if the text inside the given text needs to be buffered.
 	 * 
 	 * @param	array		$tag
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function needBuffering(array $tag) {
 		// check for special bbcode class
@@ -338,8 +338,8 @@ class BBCodeParser extends SingletonFactory {
 	 * 
 	 * @param	array		$openTags
 	 * @param	string		$tag
-	 * @param	boolean		$closing
-	 * @return	boolean
+	 * @param	bool		$closing
+	 * @return	bool
 	 */
 	protected function isAllowed(array $openTags, $tag, $closing = false) {
 		foreach ($openTags as $openTag) {
@@ -449,7 +449,7 @@ class BBCodeParser extends SingletonFactory {
 	/**
 	 * Builds the tag array from the given text.
 	 * 
-	 * @param	boolean		$ignoreSourceCodes
+	 * @param	bool		$ignoreSourceCodes
 	 */
 	public function buildTagArray($ignoreSourceCodes = true) {
 		// build tag pattern

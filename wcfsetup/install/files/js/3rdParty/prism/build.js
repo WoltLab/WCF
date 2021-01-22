@@ -52,5 +52,5 @@ export type PrismMeta = Record<LanguageIdentifier, LanguageData>;
 	)} /*!END*/
 export default metadata;
 `;
-	fs.writeFileSync("../../../ts/WoltLabSuite/Core/prism-meta.ts", contents, "utf8");
+	fs.writeFileSync("../../../../../../ts/WoltLabSuite/Core/prism-meta.ts", contents, "utf8");
 }

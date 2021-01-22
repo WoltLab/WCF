@@ -15,10 +15,10 @@ abstract class AbstractStatDailyHandler implements IStatDailyHandler {
 	/**
 	 * Counts the number of rows for a single day.
 	 * 
-	 * @param	integer		$date
+	 * @param	int		$date
 	 * @param	string		$tableName
 	 * @param	string		$dateColumnName
-	 * @return	integer
+	 * @return	int
 	 */
 	protected function getCounter($date, $tableName, $dateColumnName) {
 		$conditionBuilder = new PreparedStatementConditionBuilder();
@@ -38,10 +38,10 @@ abstract class AbstractStatDailyHandler implements IStatDailyHandler {
 	/**
 	 * Counts the total number of rows.
 	 * 
-	 * @param	integer		$date
+	 * @param	int		$date
 	 * @param	string		$tableName
 	 * @param	string		$dateColumnName
-	 * @return	integer
+	 * @return	int
 	 */
 	protected function getTotal($date, $tableName, $dateColumnName) {
 		$conditionBuilder = new PreparedStatementConditionBuilder();

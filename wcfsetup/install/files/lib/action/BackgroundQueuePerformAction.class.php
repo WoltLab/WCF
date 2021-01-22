@@ -15,7 +15,7 @@ use wcf\system\WCF;
 class BackgroundQueuePerformAction extends AbstractAction {
 	/**
 	 * number of jobs that will be processed per invocation
-	 * @var integer
+	 * @var int
 	 */
 	public static $jobsPerRun = 5;
 	

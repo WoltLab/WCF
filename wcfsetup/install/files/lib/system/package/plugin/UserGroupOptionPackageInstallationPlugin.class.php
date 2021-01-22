@@ -34,7 +34,7 @@ use wcf\util\StringUtil;
 class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin implements IGuiPackageInstallationPlugin {
 	/**
 	 * list of group ids by type
-	 * @var	integer[][]
+	 * @var	int[][]
 	 */
 	protected $groupIDs = null;
 	
@@ -175,7 +175,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	/**
 	 * Returns a list of group ids by type.
 	 * 
-	 * @return	integer[][]
+	 * @return	int[][]
 	 */
 	protected function getGroupIDs() {
 		if ($this->groupIDs === null) {

@@ -69,7 +69,7 @@ class MediaClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the media files which can be deleted.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function validateDelete() {
 		if (!WCF::getSession()->getPermission('admin.content.cms.canManageMedia')) {
@@ -95,7 +95,7 @@ class MediaClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the media files which can be inserted.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function validateInsert() {
 		return array_keys($this->objects);
@@ -104,7 +104,7 @@ class MediaClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the media files whose category can be set.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function validateSetCategory() {
 		if (!WCF::getSession()->getPermission('admin.content.cms.canManageMedia')) {

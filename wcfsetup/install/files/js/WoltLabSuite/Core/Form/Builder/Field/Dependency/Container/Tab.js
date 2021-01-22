@@ -22,10 +22,8 @@ define(["require", "exports", "tslib", "./Abstract", "../Manager", "../../../../
             if (DependencyManager.isHiddenByDependencies(this._container)) {
                 return;
             }
-            const containerIsVisible = this._container.style.display !== "none";
-            const containerShouldBeVisible = Array.from(this._container.children).some((child) => {
-                return child.style.display !== "none";
-            });
+            const containerIsVisible = !DomUtil.isHidden(this._container);
+            const containerShouldBeVisible = Array.from(this._container.children).some((child) => !DomUtil.isHidden(child));
             if (containerIsVisible !== containerShouldBeVisible) {
                 const tabMenuListItem = this._container.parentNode.parentNode.querySelector("#" +
                     DomUtil.identify(this._container.parentNode) +
@@ -36,12 +34,12 @@ define(["require", "exports", "tslib", "./Abstract", "../Manager", "../../../../
                     throw new Error("Cannot find tab menu entry for tab '" + this._container.id + "'.");
                 }
                 if (containerShouldBeVisible) {
-                    this._container.style.display = "block";
-                    tabMenuListItem.style.display = "block";
+                    DomUtil.show(this._container);
+                    DomUtil.show(tabMenuListItem);
                 }
                 else {
-                    this._container.style.display = "none";
-                    tabMenuListItem.style.display = "none";
+                    DomUtil.hide(this._container);
+                    DomUtil.hide(tabMenuListItem);
                     const tabMenu = UiTabMenu.getTabMenu(DomUtil.identify(tabMenuListItem.closest(".tabMenuContainer")));
                     // check if currently active tab will be hidden
                     if (tabMenu.getActiveTab() === tabMenuListItem) {

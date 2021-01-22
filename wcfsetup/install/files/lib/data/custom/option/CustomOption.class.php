@@ -20,17 +20,17 @@ use wcf\util\StringUtil;
  * @package	WoltLabSuite\Core\Data\Custom\Option
  * @since	3.1
  * 
- * @property-read	integer		$optionID		unique id of the option
+ * @property-read	int		$optionID		unique id of the option
  * @property-read	string		$optionTitle		title of the option or name of language item which contains the title
  * @property-read	string		$optionDescription	description of the option or name of language item which contains the description
  * @property-read	string		$optionType		type of the option which determines its input and output
  * @property-read	string		$defaultValue		default value of the option
  * @property-read	string		$validationPattern	regular expression used to validate the value of the option
  * @property-read	string		$selectOptions		possible values of the option separated by newlines
- * @property-read	integer		$required		is `1` if the option has to be filled out, otherwise `0`
- * @property-read	integer		$showOrder		position of the option in relation to the other options
- * @property-read	integer		$isDisabled		is `1` if the option is disabled, otherwise `0`
- * @property-read	integer		$originIsSystem		is `1` if the option has been delivered by a package, otherwise `0` (i.e. the option has been created in the ACP)
+ * @property-read	int		$required		is `1` if the option has to be filled out, otherwise `0`
+ * @property-read	int		$showOrder		position of the option in relation to the other options
+ * @property-read	int		$isDisabled		is `1` if the option is disabled, otherwise `0`
+ * @property-read	int		$originIsSystem		is `1` if the option has been delivered by a package, otherwise `0` (i.e. the option has been created in the ACP)
  */
 abstract class CustomOption extends Option implements ITitledObject {
 	/**
@@ -73,7 +73,7 @@ abstract class CustomOption extends Option implements ITitledObject {
 	/**
 	 * Returns true if the option is visible
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isVisible() {
 		return !$this->isDisabled;
@@ -121,7 +121,7 @@ abstract class CustomOption extends Option implements ITitledObject {
 	/**
 	 * Returns the formatted value of this option.
 	 * 
-	 * @param       boolean         $forcePlaintext
+	 * @param       bool         $forcePlaintext
 	 * @return	string
 	 */
 	public function getFormattedOptionValue($forcePlaintext = false) {
@@ -190,7 +190,7 @@ abstract class CustomOption extends Option implements ITitledObject {
 	 * Returns true if this option can be deleted, defaults to false for
 	 * options created through the package system.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function canDelete() {
 		return !$this->originIsSystem;
@@ -199,7 +199,7 @@ abstract class CustomOption extends Option implements ITitledObject {
 	/**
 	 * Returns true if this option represents a message-type value.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function isMessage() {
 		return ($this->optionType === 'textarea' || $this->optionType === 'message');

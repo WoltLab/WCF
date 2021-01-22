@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
 class MysqlSearchEngine extends AbstractSearchEngine {
 	/**
 	 * MySQL's minimum word length for fulltext indices
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $ftMinWordLen = null;
 	

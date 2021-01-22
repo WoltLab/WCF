@@ -21,15 +21,15 @@ use wcf\util\StringUtil;
  * @package	WoltLabSuite\Core\Data\Article\Content
  * @since	3.0
  *
- * @property-read	integer		$articleContentID	unique id of the article content
- * @property-read	integer		$articleID		id of the article the article content belongs to
- * @property-read	integer		$languageID		id of the article content's language
+ * @property-read	int		$articleContentID	unique id of the article content
+ * @property-read	int		$articleID		id of the article the article content belongs to
+ * @property-read	int		$languageID		id of the article content's language
  * @property-read	string		$title			title of the article in the associated language
  * @property-read	string		$content		actual content of the article in the associated language
  * @property-read	string		$teaser			teaser of the article in the associated language or empty if no teaser exists
- * @property-read	integer|null	$imageID		id of the (image) media object used as article image for the associated language or `null` if no image is used
- * @property-read	integer|null	$teaserImageID          id of the (image) media object used as article teaser image for the associated language or `null` if no image is used                                      
- * @property-read	integer		$hasEmbeddedObjects	is `1` if there are embedded objects in the article content, otherwise `0`
+ * @property-read	int|null	$imageID		id of the (image) media object used as article image for the associated language or `null` if no image is used
+ * @property-read	int|null	$teaserImageID          id of the (image) media object used as article teaser image for the associated language or `null` if no image is used                                      
+ * @property-read	int		$hasEmbeddedObjects	is `1` if there are embedded objects in the article content, otherwise `0`
  * @property-read       string          $metaTitle              title of the article used in the title tag
  * @property-read       string          $metaDescription        meta description of the article
  */
@@ -174,8 +174,8 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 	/**
 	 * Returns a certain article content or `null` if it does not exist.
 	 * 
-	 * @param       integer         $articleID
-	 * @param       integer         $languageID
+	 * @param       int         $articleID
+	 * @param       int         $languageID
 	 * @return      ArticleContent|null
 	 */
 	public static function getArticleContent($articleID, $languageID) {

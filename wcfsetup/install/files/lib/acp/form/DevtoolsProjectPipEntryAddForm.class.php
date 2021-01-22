@@ -56,7 +56,7 @@ class DevtoolsProjectPipEntryAddForm extends AbstractFormBuilderForm {
 	
 	/**
 	 * project id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $projectID = 0;
 	

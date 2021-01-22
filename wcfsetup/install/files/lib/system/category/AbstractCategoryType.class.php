@@ -16,13 +16,13 @@ use wcf\system\WCF;
 abstract class AbstractCategoryType extends SingletonFactory implements ICategoryType {
 	/**
 	 * indicates if categories of this type may have no empty description
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $forceDescription = true;
 	
 	/**
 	 * indicates if categories of this type have descriptions
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $hasDescription = true;
 	
@@ -46,7 +46,7 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	
 	/**
 	 * maximum category nesting label
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $maximumNestingLevel = -1;
 	

@@ -76,7 +76,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Traverse", "../Languag
             if (element.nodeName === "TEXTAREA") {
                 const inputElement = document.createElement("input");
                 inputElement.type = "text";
-                parentElement.insertBefore(inputElement, element);
+                element.parentNode.insertBefore(inputElement, element);
                 inputElement.id = element.id;
                 element.remove();
                 element = inputElement;

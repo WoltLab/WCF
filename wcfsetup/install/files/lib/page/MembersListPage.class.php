@@ -69,7 +69,7 @@ class MembersListPage extends SortablePage {
 	
 	/**
 	 * id of a user search
-	 * @var	integer
+	 * @var	int
 	 */
 	public $searchID = 0;
 	

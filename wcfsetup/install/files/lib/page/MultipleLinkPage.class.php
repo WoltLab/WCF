@@ -18,37 +18,37 @@ use wcf\system\WCF;
 abstract class MultipleLinkPage extends AbstractPage {
 	/**
 	 * current page number
-	 * @var	integer
+	 * @var	int
 	 */
 	public $pageNo = 0;
 	
 	/**
 	 * number of all pages
-	 * @var	integer
+	 * @var	int
 	 */
 	public $pages = 0;
 	
 	/**
 	 * number of items shown per page
-	 * @var	integer
+	 * @var	int
 	 */
 	public $itemsPerPage = 20;
 	
 	/**
 	 * number of all items
-	 * @var	integer
+	 * @var	int
 	 */
 	public $items = 0;
 	
 	/**
 	 * indicates the range of the listed items
-	 * @var	integer
+	 * @var	int
 	 */
 	public $startIndex = 0;
 	
 	/**
 	 * indicates the range of the listed items.
-	 * @var	integer
+	 * @var	int
 	 */
 	public $endIndex = 0;
 	
@@ -189,7 +189,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 	/**
 	 * Counts the displayed items.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function countItems() {
 		// call countItems event
@@ -201,7 +201,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 	/**
 	 * Returns true if current page is the first page.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isFirstPage() {
 		return ($this->pageNo == 1);
@@ -210,7 +210,7 @@ abstract class MultipleLinkPage extends AbstractPage {
 	/**
 	 * Returns true if current page is the last page.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isLastPage() {
 		return ($this->items == $this->endIndex);

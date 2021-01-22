@@ -78,7 +78,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	/**
 	 * Validates accessible groups.
 	 * 
-	 * @param	boolean		$ignoreOwnUser
+	 * @param	bool		$ignoreOwnUser
 	 * @throws	PermissionDeniedException
 	 * @throws	UserInputException
 	 */
@@ -331,7 +331,6 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			if (array_key_exists('password', $this->parameters['data']) && $this->parameters['data']['password'] !== '') {
 				foreach ($this->getObjects() as $object) {
 					SessionHandler::getInstance()->deleteUserSessionsExcept($object->getDecoratedObject(), SessionHandler::getInstance()->sessionID);
-					SessionHandler::getInstance()->deleteAcpSessionsExcept($object->getDecoratedObject(), SessionHandler::getInstance()->sessionID);
 				}
 			}
 		}
@@ -599,7 +598,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	/**
 	 * Unmarks users.
 	 * 
-	 * @param	integer[]	$userIDs
+	 * @param	int[]	$userIDs
 	 */
 	protected function unmarkItems(array $userIDs = []) {
 		if (empty($userIDs)) {

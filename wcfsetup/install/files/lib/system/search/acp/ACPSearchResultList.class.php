@@ -13,7 +13,7 @@ use wcf\system\WCF;
 class ACPSearchResultList implements \Countable, \Iterator {
 	/**
 	 * current iterator index
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $index = 0;
 	
@@ -51,7 +51,7 @@ class ACPSearchResultList implements \Countable, \Iterator {
 	 * Reduces the result collection by given count. If the count is higher
 	 * than the actual amount of results, the results will be cleared.
 	 * 
-	 * @param	integer		$count
+	 * @param	int		$count
 	 */
 	public function reduceResults($count) {
 		// more results than available should be wiped, just set it to 0
@@ -72,7 +72,7 @@ class ACPSearchResultList implements \Countable, \Iterator {
 	/**
 	 * Reduces the result collection to specified size.
 	 * 
-	 * @param	integer		$size
+	 * @param	int		$size
 	 */
 	public function reduceResultsTo($size) {
 		$count = count($this->results);

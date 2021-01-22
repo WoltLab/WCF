@@ -606,7 +606,7 @@ EXPLANATION;
 	 * information removed.
 	 * 
 	 * @param	\Throwable|\Exception	$e
-	 * @param	boolean			$ignorePaths	If set to `true`: Don't call `sanitizePath`.
+	 * @param	bool			$ignorePaths	If set to `true`: Don't call `sanitizePath`.
 	 * @return	mixed[]
 	 */
 	function sanitizeStacktrace($e, $ignorePaths = false) {

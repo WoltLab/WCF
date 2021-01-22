@@ -24,7 +24,7 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
 	 * 
 	 * @param	HtmlInputNodeProcessor		$processor
 	 * @param	Regex				$regex
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	protected function getObjectIDs(HtmlInputNodeProcessor $processor, Regex $regex) {
 		$objectIDs = [];

@@ -50,7 +50,7 @@ interface IOptionType {
 	/**
 	 * Returns true if options supports internationalization.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function supportI18n();
 	
@@ -64,14 +64,14 @@ interface IOptionType {
 	 * 
 	 * @param	mixed		$value1
 	 * @param	mixed		$value2
-	 * @return	integer
+	 * @return	int
 	 */
 	public function compare($value1, $value2);
 	
 	/**
 	 * Returns true if option's label is hidden in search form.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hideLabelInSearch();
 	

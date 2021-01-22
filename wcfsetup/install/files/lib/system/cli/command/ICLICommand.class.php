@@ -20,7 +20,7 @@ interface ICLICommand {
 	/**
 	 * Returns true if the user is allowed to use this command.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canAccess();
 }

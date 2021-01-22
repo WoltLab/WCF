@@ -24,7 +24,7 @@ class WorkerProxyAction extends AJAXInvokeAction {
 	
 	/**
 	 * loop counter
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $loopCount = -1;
 	
@@ -100,7 +100,7 @@ class WorkerProxyAction extends AJAXInvokeAction {
 	/**
 	 * Sends a JSON-encoded response.
 	 * 
-	 * @param	integer		$progress
+	 * @param	int		$progress
 	 * @param	array		$parameters
 	 * @param	string		$proceedURL
 	 */

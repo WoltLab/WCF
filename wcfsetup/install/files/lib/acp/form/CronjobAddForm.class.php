@@ -39,7 +39,7 @@ class CronjobAddForm extends AbstractForm {
 	
 	/**
 	 * cronjob package id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $packageID = PACKAGE_ID;
 	

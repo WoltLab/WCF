@@ -40,19 +40,19 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	
 	/**
 	 * ids of result objects
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $objectIDs = null;
 	
 	/**
 	 * sql offset
-	 * @var	integer
+	 * @var	int
 	 */
 	public $sqlOffset = 0;
 	
 	/**
 	 * sql limit
-	 * @var	integer
+	 * @var	int
 	 */
 	public $sqlLimit = 0;
 	
@@ -82,7 +82,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	
 	/**
 	 * enables the automatic usage of the qualified shorthand
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $useQualifiedShorthand = true;
 	
@@ -94,13 +94,13 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	
 	/**
 	 * current iterator index
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $index = 0;
 	
 	/**
 	 * list of index to object relation
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $indexToObject = null;
 	
@@ -138,7 +138,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	/**
 	 * Counts the number of objects.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function countObjects() {
 		$sql = "SELECT	COUNT(*)
@@ -219,7 +219,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	/**
 	 * Returns the object ids of the list.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function getObjectIDs() {
 		return $this->objectIDs;
@@ -228,7 +228,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	/**
 	 * Sets the object ids.
 	 * 
-	 * @param	integer[]	$objectIDs
+	 * @param	int[]	$objectIDs
 	 */
 	public function setObjectIDs(array $objectIDs) {
 		$this->objectIDs = array_merge($objectIDs);

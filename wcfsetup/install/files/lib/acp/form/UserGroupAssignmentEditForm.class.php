@@ -29,7 +29,7 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm {
 	
 	/**
 	 * id of the edited automatic user group assignment
-	 * @var	integer
+	 * @var	int
 	 */
 	public $assignmentID = 0;
 	

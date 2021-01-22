@@ -18,7 +18,7 @@ abstract class AbstractACPSearchResultProvider {
 	 * @param	DatabaseObject		$object
 	 * @param	string			$optionsColumnName
 	 * @param	string			$permissionsColumnName
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function validate(DatabaseObject $object, $optionsColumnName = 'options', $permissionsColumnName = 'permissions') {
 		// check the options of this item

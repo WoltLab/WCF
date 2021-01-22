@@ -29,25 +29,25 @@ class StructuredCommentList extends CommentList {
 	
 	/**
 	 * minimum comment time
-	 * @var	integer
+	 * @var	int
 	 */
 	public $minCommentTime = 0;
 	
 	/**
 	 * object type id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $objectTypeID = 0;
 	
 	/**
 	 * object id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $objectID = 0;
 	
 	/**
 	 * ids of the responses of the comments in the list
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $responseIDs = [];
 	
@@ -68,7 +68,7 @@ class StructuredCommentList extends CommentList {
 	
 	/**
 	 * enables/disables the loading of responses
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $responseLoading = true;
 	
@@ -76,8 +76,8 @@ class StructuredCommentList extends CommentList {
 	 * Creates a new structured comment list.
 	 * 
 	 * @param	ICommentManager		$commentManager
-	 * @param	integer			$objectTypeID
-	 * @param	integer			$objectID
+	 * @param	int			$objectTypeID
+	 * @param	int			$objectID
 	 */
 	public function __construct(ICommentManager $commentManager, $objectTypeID, $objectID) {
 		parent::__construct();
@@ -181,7 +181,7 @@ class StructuredCommentList extends CommentList {
 	/**
 	 * Returns minimum comment time.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getMinCommentTime() {
 		return $this->minCommentTime;

@@ -12,7 +12,7 @@ namespace wcf\system\database\util;
 class ConditionBuilder {
 	/**
 	 * must be true to add the 'WHERE' keyword automatically
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $addWhereKeyword = true;
 	
@@ -31,7 +31,7 @@ class ConditionBuilder {
 	/**
 	 * Creates a new ConditionBuilder object.
 	 * 
-	 * @param	boolean		$addWhereKeyword
+	 * @param	bool		$addWhereKeyword
 	 * @param	string		$concat
 	 */
 	public function __construct($addWhereKeyword = true, $concat = 'AND') {
@@ -65,7 +65,7 @@ class ConditionBuilder {
 	/**
 	 * Enables / disables the where keyword.
 	 * 
-	 * @param	boolean		$enable
+	 * @param	bool		$enable
 	 */
 	public function enableWhereKeyword($enable = true) {
 		$this->addWhereKeyword = $enable;

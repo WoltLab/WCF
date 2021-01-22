@@ -44,7 +44,7 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 	/**
 	 * Returns true if the PIP class can be found.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function classExists() {
 		return class_exists($this->getDecoratedObject()->className);
@@ -53,7 +53,7 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 	/**
 	 * Returns true if the PIP is expected to be idempotent.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function isIdempotent() {
 		return is_subclass_of($this->getDecoratedObject()->className, IIdempotentPackageInstallationPlugin::class);
@@ -75,7 +75,7 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 	/**
 	 * Returns true if the PIP exists, has a default filename and is idempotent.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function isSupported() {
 		return $this->classExists() && $this->getDefaultFilename() && $this->isIdempotent();
@@ -84,7 +84,7 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 	/**
 	 * Returns `true` if this pip supports adding and editing entries via a gui.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 * @since	5.2
 	 */
 	public function supportsGui() {

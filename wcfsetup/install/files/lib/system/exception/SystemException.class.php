@@ -32,7 +32,7 @@ class SystemException extends LoggedException {
 	 * Creates a new SystemException.
 	 * 
 	 * @param	string		$message	error message
-	 * @param	integer		$code		error code
+	 * @param	int		$code		error code
 	 * @param	string		$description	description of the error
 	 * @param	\Exception	$previous	repacked Exception
 	 */

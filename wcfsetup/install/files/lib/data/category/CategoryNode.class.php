@@ -27,7 +27,7 @@ class CategoryNode extends DatabaseObjectDecorator implements IObjectTreeNode {
 	 * Returns true if this category is visible in a nested menu item list.
 	 *
 	 * @param       AbstractDecoratedCategory        $activeCategory
-	 * @return	boolean
+	 * @return	bool
 	 * @since       5.2
 	 */
 	public function isVisibleInNestedList(AbstractDecoratedCategory $activeCategory = null) {

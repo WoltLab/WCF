@@ -18,7 +18,7 @@ class UploadFile {
 	
 	/**
 	 * internal file id
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $internalFileID = 0;
 	
@@ -30,13 +30,13 @@ class UploadFile {
 	
 	/**
 	 * file size
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $filesize = 0;
 	
 	/**
 	 * file upload error code
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $errorCode = 0;
 	
@@ -63,8 +63,8 @@ class UploadFile {
 	 * 
 	 * @param	string		$filename
 	 * @param	string		$location
-	 * @param	integer		$filesize
-	 * @param	integer		$errorCode
+	 * @param	int		$filesize
+	 * @param	int		$errorCode
 	 * @param	string		$mimeType
 	 * 
 	 * @throws	\Exception	if an error occurred during upload and debug mode is enabled
@@ -119,7 +119,7 @@ class UploadFile {
 	/**
 	 * Returns internal file id.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getInternalFileID() {
 		return $this->internalFileID;
@@ -150,7 +150,7 @@ class UploadFile {
 	/**
 	 * Returns the file size.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getFilesize() {
 		return $this->filesize;
@@ -168,7 +168,7 @@ class UploadFile {
 	/**
 	 * Returns the error code.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getErrorCode() {
 		return $this->errorCode;

@@ -26,7 +26,7 @@ class BoxList extends DatabaseObjectList {
 	
 	/**
 	 * enables/disables the loading of box content objects
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $contentLoading = false;
 	
@@ -62,7 +62,7 @@ class BoxList extends DatabaseObjectList {
 	/**
 	 * Enables/disables the loading of box content objects.
 	 *
-	 * @param	boolean		$enable
+	 * @param	bool		$enable
 	 */
 	public function enableContentLoading($enable = true) {
 		$this->contentLoading = $enable;

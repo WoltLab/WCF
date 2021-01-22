@@ -14,7 +14,7 @@ use wcf\data\user\UserList;
 abstract class AbstractSortedUserCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * default limit value if no limit parameter is provided
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $defaultLimit = 5;
 	
@@ -31,7 +31,7 @@ abstract class AbstractSortedUserCacheBuilder extends AbstractCacheBuilder {
 	
 	/**
 	 * if `true`, only positive values of the database column will be considered
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $positiveValuesOnly = false;
 	

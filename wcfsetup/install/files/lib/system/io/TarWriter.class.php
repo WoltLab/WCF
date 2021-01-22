@@ -29,7 +29,7 @@ class TarWriter extends Tar {
 	 * Creates a new TarWriter object.
 	 * 
 	 * @param	string		$archiveName
-	 * @param	boolean		$compress	enables gzip compression
+	 * @param	bool		$compress	enables gzip compression
 	 */
 	public function __construct($archiveName, $compress = false) {
 		$this->archiveName = $archiveName;
@@ -58,7 +58,7 @@ class TarWriter extends Tar {
 	 * 
 	 * @param	string		$filename
 	 * @param	string		$string		file content
-	 * @return	boolean		result
+	 * @return	bool		result
 	 */
 	public function addString($filename, $string) {
 		if (empty($filename)) return false;
@@ -83,7 +83,7 @@ class TarWriter extends Tar {
 	 * @param	mixed		$files
 	 * @param	string		$addDir
 	 * @param	string		$removeDir
-	 * @return	boolean		result
+	 * @return	bool		result
 	 * @throws	SystemException
 	 */
 	public function add($files, $addDir = '', $removeDir = '') {
@@ -138,7 +138,7 @@ class TarWriter extends Tar {
 	 * @param	string		$filename
 	 * @param	string		$addDir
 	 * @param	string		$removeDir
-	 * @return	boolean		result
+	 * @return	bool		result
 	 */
 	protected function addFile($filename, $addDir, $removeDir) {
 		$filename = FileUtil::unifyDirSeparator($filename);
@@ -178,7 +178,7 @@ class TarWriter extends Tar {
 	 * 
 	 * @param	string		$filename
 	 * @param	string		$storedFilename
-	 * @return	boolean		result
+	 * @return	bool		result
 	 */
 	protected function writeFileHeader($filename, $storedFilename) {
 		$fileInfo = stat($filename);
@@ -201,13 +201,13 @@ class TarWriter extends Tar {
 	 * Writes header block.
 	 * 
 	 * @param	string		$filename
-	 * @param	integer		$size
-	 * @param	integer		$mtime
-	 * @param	integer		$permissions
+	 * @param	int		$size
+	 * @param	int		$mtime
+	 * @param	int		$permissions
 	 * @param	string		$typeFlag
-	 * @param	integer		$uid
-	 * @param	integer		$gid
-	 * @return	boolean
+	 * @param	int		$uid
+	 * @param	int		$gid
+	 * @return	bool
 	 */
 	public function writeHeaderBlock($filename, $size, $mtime = 0, $permissions = 0, $typeFlag = '', $uid = 0, $gid = 0) {
 		if (strlen($filename) > 99) {
@@ -254,7 +254,7 @@ class TarWriter extends Tar {
 	 * Writes a long header block.
 	 * 
 	 * @param	string		$filename
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function writeLongHeaderBlock($filename) {
 		$size = sprintf("%11s ", decoct(strlen($filename)));

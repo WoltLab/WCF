@@ -33,7 +33,7 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements ICon
 	
 	/**
 	 * ids of the selected user groups the user has to be member of
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $groupIDs = [];
 	
@@ -47,7 +47,7 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements ICon
 	
 	/**
 	 * ids of the selected user groups the user may not be member of
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $notGroupIDs = [];
 	

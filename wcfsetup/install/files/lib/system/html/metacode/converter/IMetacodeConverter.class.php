@@ -28,7 +28,7 @@ interface IMetacodeConverter {
 	 * Validates attributes before any DOM modification occurs.
 	 * 
 	 * @param	array		$attributes	list of attributes
-	 * @return	boolean		false if attributes did not match the converter's expectation
+	 * @return	bool		false if attributes did not match the converter's expectation
 	 */
 	public function validateAttributes(array $attributes);
 }

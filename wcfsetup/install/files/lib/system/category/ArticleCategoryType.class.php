@@ -32,7 +32,6 @@ class ArticleCategoryType extends AbstractCategoryType {
 	 */
 	protected $objectTypes = ['com.woltlab.wcf.acl' => 'com.woltlab.wcf.article.category'];
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */
@@ -40,7 +39,6 @@ class ArticleCategoryType extends AbstractCategoryType {
 		return $this->canEditCategory();
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */
@@ -48,7 +46,6 @@ class ArticleCategoryType extends AbstractCategoryType {
 		return $this->canEditCategory();
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */

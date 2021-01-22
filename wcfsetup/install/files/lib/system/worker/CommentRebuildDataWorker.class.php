@@ -26,7 +26,6 @@ class CommentRebuildDataWorker extends AbstractRebuildDataWorker {
 	 */
 	protected $htmlInputProcessor;
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */
@@ -42,7 +41,6 @@ class CommentRebuildDataWorker extends AbstractRebuildDataWorker {
 		}
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */

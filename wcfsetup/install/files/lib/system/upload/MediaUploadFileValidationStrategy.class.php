@@ -13,14 +13,14 @@ namespace wcf\system\upload;
 class MediaUploadFileValidationStrategy implements IUploadFileValidationStrategy {
 	/**
 	 * if `true`, only images are valid
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $imagesOnly = false;
 	
 	/**
 	 * Creates a new instance of MediaUploadFileValidationStrategy.
 	 * 
-	 * @param	boolean		$imagesOnly
+	 * @param	bool		$imagesOnly
 	 */
 	public function __construct($imagesOnly) {
 		$this->imagesOnly = $imagesOnly;

@@ -13,7 +13,7 @@ interface IPollObject {
 	/**
 	 * Returns true if user can vote in polls.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canVote();
 }

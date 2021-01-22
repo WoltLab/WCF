@@ -78,7 +78,7 @@ if (!defined('NO_IMPORTS')) {
 class WCF {
 	/**
 	 * list of supported legacy API versions
-	 * @var integer[]
+	 * @var int[]
 	 * @deprecated 5.2
 	 */
 	private static $supportedLegacyApiVersions = [2017, 2018];
@@ -127,7 +127,7 @@ class WCF {
 	
 	/**
 	 * overrides disabled debug mode
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected static $overrideDebugMode = false;
 	
@@ -145,13 +145,13 @@ class WCF {
 	
 	/**
 	 * true if Zend Opcache is loaded and enabled
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected static $zendOpcacheEnabled;
 	
 	/**
 	 * force logout during destructor call
-	 * @var boolean
+	 * @var bool
 	 */
 	protected static $forceLogout = false;
 	
@@ -302,10 +302,10 @@ class WCF {
 	/**
 	 * Turns PHP errors into an ErrorException.
 	 * 
-	 * @param	integer		$severity
+	 * @param	int		$severity
 	 * @param	string		$message
 	 * @param	string		$file
-	 * @param	integer		$line
+	 * @param	int		$line
 	 * @throws	ErrorException
 	 */
 	public static final function handleError($severity, $message, $file, $line) {
@@ -587,7 +587,7 @@ class WCF {
 	 * Loads an application.
 	 * 
 	 * @param	Application		$application
-	 * @param	boolean			$isDependentApplication
+	 * @param	bool			$isDependentApplication
 	 * @return	IApplication
 	 * @throws	SystemException
 	 */
@@ -705,7 +705,7 @@ class WCF {
 	/**
 	 * Loads an application on runtime, do not use this outside the package installation.
 	 * 
-	 * @param	integer		$packageID
+	 * @param	int		$packageID
 	 */
 	public static function loadRuntimeApplication($packageID) {
 		$package = new Package($packageID);
@@ -783,7 +783,7 @@ class WCF {
 	/**
 	 * Returns true if current application (WCF) is treated as active and was invoked directly.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isActiveApplication() {
 		return (ApplicationHandler::getInstance()->getActiveApplication()->packageID == 1);
@@ -792,7 +792,7 @@ class WCF {
 	/**
 	 * Changes the active language.
 	 * 
-	 * @param	integer		$languageID
+	 * @param	int		$languageID
 	 */
 	public static final function setLanguage($languageID) {
 		if (!$languageID || LanguageFactory::getInstance()->getLanguage($languageID) === null) {
@@ -891,8 +891,8 @@ class WCF {
 	/**
 	 * Returns true if the debug mode is enabled, otherwise false.
 	 * 
-	 * @param	boolean		$ignoreACP
-	 * @return	boolean
+	 * @param	bool		$ignoreACP
+	 * @return	bool
 	 */
 	public static function debugModeIsEnabled($ignoreACP = false) {
 		// ACP override
@@ -909,7 +909,7 @@ class WCF {
 	/**
 	 * Returns true if benchmarking is enabled, otherwise false.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function benchmarkIsEnabled() {
 		// benchmarking is enabled by default
@@ -1051,7 +1051,7 @@ class WCF {
 	/**
 	 * Returns number of available updates.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getAvailableUpdates() {
 		$data = PackageUpdateCacheBuilder::getInstance()->getData();
@@ -1091,7 +1091,7 @@ class WCF {
 	/**
 	 * Returns true if the desktop notifications should be enabled.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function useDesktopNotifications() {
 		if (!ENABLE_DESKTOP_NOTIFICATIONS) {
@@ -1115,7 +1115,7 @@ class WCF {
 	/**
 	 * Returns true if currently active request represents the landing page.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isLandingPage() {
 		if (self::getActiveRequest() === null) {
@@ -1128,8 +1128,8 @@ class WCF {
 	/**
 	 * Returns true if the given API version is currently supported.
 	 * 
-	 * @param       integer         $apiVersion
-	 * @return      boolean
+	 * @param       int         $apiVersion
+	 * @return      bool
 	 * @deprecated 5.2
 	 */
 	public static function isSupportedApiVersion($apiVersion) {
@@ -1139,7 +1139,7 @@ class WCF {
 	/**
 	 * Returns the list of supported legacy API versions.
 	 * 
-	 * @return      integer[]
+	 * @return      int[]
 	 * @deprecated 5.2
 	 */
 	public static function getSupportedLegacyApiVersions() {

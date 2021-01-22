@@ -14,7 +14,7 @@ interface IPollContainer extends IIDObject, IPollObject {
 	/**
 	 * Returns the id of the poll that belongs to this object or `null` if there is no such poll.
 	 *
-	 * @return	null|integer
+	 * @return	null|int
 	 */
 	public function getPollID();
 }

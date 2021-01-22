@@ -13,13 +13,13 @@ use wcf\system\exception\SystemException;
 class XMLWriter {
 	/**
 	 * true, if a document is still processed
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $activeDocument = false;
 	
 	/**
 	 * number of open elements
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $openElements = 0;
 	

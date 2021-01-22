@@ -35,7 +35,7 @@ class UserSearchForm extends UserOptionListForm {
 	
 	/**
 	 * matches
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $matches = [];
 	
@@ -47,13 +47,13 @@ class UserSearchForm extends UserOptionListForm {
 	
 	/**
 	 * search id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $searchID = 0;
 	
 	/**
 	 * number of results
-	 * @var	integer
+	 * @var	int
 	 */
 	public $maxResults = 1000;
 	

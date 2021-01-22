@@ -39,7 +39,7 @@ interface IBulkProcessingAction {
 	/**
 	 * Returns true if the action is available for the active user.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isAvailable();
 	

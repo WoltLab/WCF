@@ -31,13 +31,13 @@ class AttachmentHandler implements \Countable {
 	
 	/**
 	 * object id
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $objectID = 0;
 	
 	/**
 	 * parent object id
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $parentObjectID = 0;
 	
@@ -57,9 +57,9 @@ class AttachmentHandler implements \Countable {
 	 * Creates a new AttachmentHandler object.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @param	string		$tmpHash
-	 * @param	integer		$parentObjectID
+	 * @param	int		$parentObjectID
 	 * @throws	SystemException
 	 */
 	public function __construct($objectType, $objectID, $tmpHash = '', $parentObjectID = 0) {
@@ -112,7 +112,7 @@ class AttachmentHandler implements \Countable {
 	/**
 	 * Sets the object id of temporary saved attachments.
 	 * 
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 */
 	public function updateObjectID($objectID) {
 		$conditions = new PreparedStatementConditionBuilder();
@@ -136,8 +136,8 @@ class AttachmentHandler implements \Countable {
 	 * Transfers attachments to a different object id of the same type (e.g. merging content)
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer		$newObjectID
-	 * @param	integer[]	$oldObjectIDs
+	 * @param	int		$newObjectID
+	 * @param	int[]	$oldObjectIDs
 	 */
 	public static function transferAttachments($objectType, $newObjectID, array $oldObjectIDs) {
 		$conditions = new PreparedStatementConditionBuilder();
@@ -157,7 +157,7 @@ class AttachmentHandler implements \Countable {
 	 * Removes all attachments for given object ids by type.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer[]	$objectIDs
+	 * @param	int[]	$objectIDs
 	 */
 	public static function removeAttachments($objectType, array $objectIDs) {
 		$attachmentList = new AttachmentList();
@@ -221,7 +221,7 @@ class AttachmentHandler implements \Countable {
 	/**
 	 * Returns true if the active user has the permission to upload attachments.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canUpload() {
 		return $this->processor->canUpload($this->objectID, $this->parentObjectID);
@@ -270,7 +270,7 @@ class AttachmentHandler implements \Countable {
 	 * Returns the id of the object the handled attachments belong to. If the object does not
 	 * exist (yet), `0` is returned.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 * @since	5.2
 	 */
 	public function getObjectID() {
@@ -281,7 +281,7 @@ class AttachmentHandler implements \Countable {
 	 * Returns the id of the parent object of the object the handled attachments belong to.
 	 * If no such parent object exists, `0` is returned.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 * @since	5.2
 	 */
 	public function getParentObjectID() {

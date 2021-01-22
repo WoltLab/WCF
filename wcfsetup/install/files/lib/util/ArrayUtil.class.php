@@ -15,7 +15,7 @@ final class ArrayUtil {
 	 * Applies StringUtil::trim() to all elements of the given array.
 	 * 
 	 * @param	array|string	$array
-	 * @param	boolean		$removeEmptyElements
+	 * @param	bool		$removeEmptyElements
 	 * @return	array|string
 	 */
 	public static function trim($array, $removeEmptyElements = true) {
@@ -146,7 +146,7 @@ final class ArrayUtil {
 	 * @param	array		$array1
 	 * @param	array		$array2
 	 * @param	callable	$callback
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function compare(array $array1, array $array2, callable $callback = null) {
 		return static::compareHelper('value', $array1, $array2, $callback);
@@ -158,7 +158,7 @@ final class ArrayUtil {
 	 * @param	array		$array1
 	 * @param	array		$array2
 	 * @param	callable	$callback
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function compareKey(array $array1, array $array2, callable $callback = null) {
 		return static::compareHelper('key', $array1, $array2, $callback);
@@ -170,7 +170,7 @@ final class ArrayUtil {
 	 * @param	array		$array1
 	 * @param	array		$array2
 	 * @param	callable	$callback
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function compareAssoc(array $array1, array $array2, callable $callback = null) {
 		return static::compareHelper('assoc', $array1, $array2, $callback);
@@ -183,7 +183,7 @@ final class ArrayUtil {
 	 * @param	array		$array1
 	 * @param	array		$array2
 	 * @param	callable	$callback
-	 * @return	boolean
+	 * @return	bool
 	 * @throws	SystemException
 	 */
 	protected static function compareHelper($method, array $array1, array $array2, callable $callback = null) {

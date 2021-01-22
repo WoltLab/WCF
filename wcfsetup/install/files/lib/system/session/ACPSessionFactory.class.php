@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\session;
 use wcf\data\acp\session\ACPSessionEditor;
-use wcf\data\session\Session;
 use wcf\system\event\EventHandler;
 
 /**

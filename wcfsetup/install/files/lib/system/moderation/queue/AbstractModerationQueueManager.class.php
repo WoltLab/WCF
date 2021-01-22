@@ -74,9 +74,9 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
 	/**
 	 * Adds an entry to moderation queue.
 	 * 
-	 * @param	integer		$objectTypeID
-	 * @param	integer		$objectID
-	 * @param	integer		$containerID
+	 * @param	int		$objectTypeID
+	 * @param	int		$objectID
+	 * @param	int		$containerID
 	 * @param	array		$additionalData
 	 */
 	protected function addEntry($objectTypeID, $objectID, $containerID = 0, array $additionalData = []) {
@@ -129,9 +129,9 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
 	 *
 	 * This method is intended for bulk processing.
 	 * 
-	 * @param	integer		$objectTypeID
-	 * @param	integer[]	$objectIDs
-	 * @param	integer[]	$containerIDs		format: `objectID => containerID`
+	 * @param	int		$objectTypeID
+	 * @param	int[]	$objectIDs
+	 * @param	int[]	$containerIDs		format: `objectID => containerID`
 	 * @param 	array		$additionalData
 	 */
 	protected function addEntries($objectTypeID, array $objectIDs, array $containerIDs, array $additionalData = []) {
@@ -232,8 +232,8 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
 	/**
 	 * Marks a list of moderation queue entries as done.
 	 * 
-	 * @param	integer		$objectTypeID
-	 * @param	integer[]	$objectIDs
+	 * @param	int		$objectTypeID
+	 * @param	int[]	$objectIDs
 	 */
 	protected function removeEntries($objectTypeID, array $objectIDs) {
 		$queueList = new ModerationQueueList();

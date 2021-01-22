@@ -142,7 +142,7 @@ class PackageAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Renders the authentication dialog.
 	 * 
-	 * @param	boolean		$rejected
+	 * @param	bool		$rejected
 	 * @return	string
 	 */
 	protected function renderAuthorizationDialog($rejected) {

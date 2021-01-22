@@ -13,56 +13,56 @@ final class ExifUtil {
 	/**
 	 * orientation value for the original orientation
 	 * @see	http://jpegclub.org/exif_orientation.html
-	 * @var	integer
+	 * @var	int
 	 */
 	const ORIENTATION_ORIGINAL = 1;
 	
 	/**
 	 * orientation value of a horizontal flip
 	 * @see	http://jpegclub.org/exif_orientation.html
-	 * @var	integer
+	 * @var	int
 	 */
 	const ORIENTATION_HORIZONTAL_FLIP = 2;
 	
 	/**
 	 * orientation value of a 180 degree rotation
 	 * @see	http://jpegclub.org/exif_orientation.html
-	 * @var	integer
+	 * @var	int
 	 */
 	const ORIENTATION_180_ROTATE = 3;
 	
 	/**
 	 * orientation value of a vertical flip
 	 * @see	http://jpegclub.org/exif_orientation.html
-	 * @var	integer
+	 * @var	int
 	 */
 	const ORIENTATION_VERTICAL_FLIP = 4;
 	
 	/**
 	 * orientation value of a vertical flip and a 270 degree rotation
 	 * @see	http://jpegclub.org/exif_orientation.html
-	 * @var	integer
+	 * @var	int
 	 */
 	const ORIENTATION_VERTICAL_FLIP_270_ROTATE = 5;
 	
 	/**
 	 * orientation value of a 90 degree rotation
 	 * @see	http://jpegclub.org/exif_orientation.html
-	 * @var	integer
+	 * @var	int
 	 */
 	const ORIENTATION_90_ROTATE = 6;
 	
 	/**
 	 * orientation value of a horizontal flip and a 270 degree rotation
 	 * @see	http://jpegclub.org/exif_orientation.html
-	 * @var	integer
+	 * @var	int
 	 */
 	const ORIENTATION_HORIZONTAL_FLIP_270_ROTATE = 7;
 	
 	/**
 	 * orientation value of a 270 degree rotation
 	 * @see	http://jpegclub.org/exif_orientation.html
-	 * @var	integer
+	 * @var	int
 	 */
 	const ORIENTATION_270_ROTATE = 8;
 	
@@ -226,7 +226,7 @@ final class ExifUtil {
 	 * Returns the orientation of the image based on the given exif data.
 	 * 
 	 * @param	array		$exifData
-	 * @return	integer
+	 * @return	int
 	 */
 	public static function getOrientation(array $exifData) {
 		$orientation = self::ORIENTATION_ORIGINAL;

@@ -1,7 +1,6 @@
 <?php
 namespace wcf\acp\page;
 use wcf\data\package\update\server\PackageUpdateServer;
-use wcf\data\package\update\server\PackageUpdateServerList;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\page\AbstractPage;

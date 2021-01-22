@@ -26,38 +26,38 @@ class UserStateCondition extends AbstractSingleFieldCondition implements IConten
 	
 	/**
 	 * true if the the user has to be banned
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $userIsBanned = 0;
 	
 	/**
 	 * true if the user has to be disabled
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $userIsDisabled = 0;
 	
 	/**
 	 * true if the user has to be enabled
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $userIsEnabled = 0;
 	
 	/**
 	 * true if the the user may not be banned
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $userIsNotBanned = 0;
 	
 	/**
 	 * true if the the user has confirmed their email address
 	 *
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $userIsEmailConfirmed = 0;
 	
 	/**
 	 * true if the the user has not confirmed their email address
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $userIsNotEmailConfirmed = 0;
 	

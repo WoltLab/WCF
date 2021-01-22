@@ -26,7 +26,7 @@ use wcf\system\WCF;
  * @method	        Article					getDecoratedObject()
  * @method	        ArticleContent|ViewableArticleContent	getArticleContent()
  * @mixin	        Article
- * @property-read 	integer|null	                        $visitTime	last time the active user has visited the time or `null` if object has not been fetched via `ViewableArticleList` or if the active user is a guest
+ * @property-read 	int|null	                        $visitTime	last time the active user has visited the time or `null` if object has not been fetched via `ViewableArticleList` or if the active user is a guest
  */
 class ViewableArticle extends DatabaseObjectDecorator {
 	/**
@@ -42,26 +42,26 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	
 	/**
 	 * effective visit time
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $effectiveVisitTime;
 	
 	/**
 	 * number of unread articles
-	 * @var	integer
+	 * @var	int
 	 */
 	protected static $unreadArticles;
 	
 	/**
 	 * number of unread articles in watched categories
-	 * @var	integer
+	 * @var	int
 	 * @since	5.2
 	 */
 	protected static $unreadWatchedArticles;
 	
 	/**
 	 * number of unread articles ordered by categories
-	 * @var	integer
+	 * @var	int
 	 * @since	5.2
 	 */
 	protected static $unreadArticlesByCategory;
@@ -75,8 +75,8 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	/**
 	 * Returns a specific article decorated as viewable article or `null` if it does not exist.
 	 *
-	 * @param	integer		$articleID
-	 * @param       boolean         $enableContentLoading   Enables/disables the loading of article content objects
+	 * @param	int		$articleID
+	 * @param       bool         $enableContentLoading   Enables/disables the loading of article content objects
 	 * @return	ViewableArticle
 	 */
 	public static function getArticle($articleID, $enableContentLoading = true) {
@@ -150,7 +150,7 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	/**
 	 * Returns the effective visit time.
 	 *
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getVisitTime() {
 		if ($this->effectiveVisitTime === null) {
@@ -171,7 +171,7 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	/**
 	 * Returns true if this article is new for the active user.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isNew() {
 		return $this->time > $this->getVisitTime();
@@ -198,7 +198,7 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	/**
 	 * Returns true if one or more labels are assigned to this article.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasLabels() {
 		return !empty($this->labels);
@@ -215,7 +215,7 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	/**
 	 * Returns the number of unread articles.
 	 *
-	 * @return	integer
+	 * @return	int
 	 */
 	public static function getUnreadArticles() {
 		if (self::$unreadArticles === null) {
@@ -262,8 +262,8 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	/**
 	 * Returns the number of unread articles for a specific category.
 	 *
-	 * @param       integer         $articleCategoryID
-	 * @return	integer
+	 * @param       int         $articleCategoryID
+	 * @return	int
 	 * @since       5.2
 	 */
 	public static function getUnreadArticlesForCategory($articleCategoryID) {
@@ -316,8 +316,8 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	/**
 	 * Returns the unread article count for a specific category. 
 	 * 
-	 * @param       integer         $articleCategoryID
-	 * @return      integer
+	 * @param       int         $articleCategoryID
+	 * @return      int
 	 * @since       5.2
 	 */
 	private static function fetchUnreadArticlesForCategory($articleCategoryID) {
@@ -362,7 +362,7 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	/**
 	 * Returns the number of unread articles in watched categories.
 	 *
-	 * @return	integer
+	 * @return	int
 	 * @since       5.2
 	 */
 	public static function getWatchedUnreadArticles() {

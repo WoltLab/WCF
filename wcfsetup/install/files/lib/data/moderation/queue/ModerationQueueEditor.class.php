@@ -47,7 +47,7 @@ class ModerationQueueEditor extends DatabaseObjectEditor {
 	/**
 	 * Marks this entry as rejected, e.g. report was unjustified or content approval was denied.
 	 * 
-	 * @param       boolean         $markAsJustified
+	 * @param       bool         $markAsJustified
 	 */
 	public function markAsRejected($markAsJustified = false) {
 		$data = ['status' => ModerationQueue::STATUS_REJECTED];

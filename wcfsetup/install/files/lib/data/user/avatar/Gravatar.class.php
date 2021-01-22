@@ -30,13 +30,13 @@ class Gravatar extends DefaultAvatar {
 	
 	/**
 	 * gravatar expire time (days)
-	 * @var	integer
+	 * @var	int
 	 */
 	const GRAVATAR_CACHE_EXPIRE = 7;
 	
 	/**
 	 * user id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $userID = 0;
 	
@@ -61,7 +61,7 @@ class Gravatar extends DefaultAvatar {
 	/**
 	 * Creates a new Gravatar object.
 	 * 
-	 * @param	integer		$userID
+	 * @param	int		$userID
 	 * @param	string		$gravatar
 	 * @param	string		$fileExtension
 	 */
@@ -95,7 +95,7 @@ class Gravatar extends DefaultAvatar {
 	 * Checks a given email address for gravatar support.
 	 * 
 	 * @param	string		$email
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function test($email) {
 		$gravatarURL = sprintf(self::GRAVATAR_BASE, md5(mb_strtolower($email)), 80, GRAVATAR_DEFAULT_TYPE);

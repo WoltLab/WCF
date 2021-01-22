@@ -82,7 +82,7 @@ class WCFSetup extends WCF {
 	
 	/**
 	 * indicates if developer mode is used to install
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected static $developerMode = 0;
 	
@@ -208,7 +208,7 @@ class WCFSetup extends WCF {
 	/**
 	 * Calculates the current state of the progress bar.
 	 * 
-	 * @param	integer		$currentStep
+	 * @param	int		$currentStep
 	 */
 	protected function calcProgress($currentStep) {
 		// calculate progress
@@ -421,7 +421,7 @@ class WCFSetup extends WCF {
 	/**
 	 * Returns true if memory_limit is set to at least 128 MB
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function compareMemoryLimit() {
 		$memoryLimit = ini_get('memory_limit');
@@ -820,7 +820,7 @@ class WCFSetup extends WCF {
 	 * which will be created in the next step.
 	 * 
 	 * @param	\wcf\system\database\Database	$db
-	 * @param	integer				$dbNumber
+	 * @param	int				$dbNumber
 	 * @return	string[]	list of already existing tables
 	 */
 	protected function getConflictedTables($db, $dbNumber) {

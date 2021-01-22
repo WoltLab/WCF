@@ -13,14 +13,14 @@ interface IUserContent extends ITitledLinkObject {
 	/**
 	 * Returns message creation timestamp.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getTime();
 	
 	/**
 	 * Returns author's user id.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getUserID();
 	

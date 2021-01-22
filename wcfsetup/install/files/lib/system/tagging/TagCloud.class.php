@@ -15,14 +15,14 @@ use wcf\system\language\LanguageFactory;
 class TagCloud {
 	/**
 	 * max font size
-	 * @var	integer
+	 * @var	int
 	 * @deprecated 3.0
 	 */
 	const MAX_FONT_SIZE = 170;
 	
 	/**
 	 * min font size
-	 * @var	integer
+	 * @var	int
 	 * @deprecated 3.0
 	 */
 	const MIN_FONT_SIZE = 85;
@@ -35,26 +35,26 @@ class TagCloud {
 	
 	/**
 	 * max value of tag counter
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $maxCounter = 0;
 	
 	/**
 	 * min value of tag counter
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $minCounter = 4294967295;
 	
 	/**
 	 * active language ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $languageIDs = [];
 	
 	/**
 	 * Constructs a new TagCloud object.
 	 * 
-	 * @param	integer[]	$languageIDs
+	 * @param	int[]	$languageIDs
 	 */
 	public function __construct(array $languageIDs = []) {
 		$this->languageIDs = $languageIDs;
@@ -76,7 +76,7 @@ class TagCloud {
 	/**
 	 * Returns a list of weighted tags.
 	 * 
-	 * @param	integer		$slice
+	 * @param	int		$slice
 	 * @return	TagCloudTag[]	the tags to get
 	 */
 	public function getTags($slice = 50) {
@@ -105,7 +105,7 @@ class TagCloud {
 	/**
 	 * Calculates the weight of the tag based on the given tag count.
 	 * 
-	 * @param	integer		$counter
+	 * @param	int		$counter
 	 * @return	float|int
 	 */
 	private function calculateWeight($counter) {

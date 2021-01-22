@@ -76,7 +76,7 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Returns the author id for this notification event.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getAuthorID();
 	
@@ -97,7 +97,7 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Returns true if this notification event is visible for the active user.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isVisible();
 	
@@ -135,14 +135,14 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Returns true if this notification event supports stacking.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isStackable();
 	
 	/**
 	 * Returns true if this notification event supports email notifications.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function supportsEmailNotification();
 	
@@ -150,7 +150,7 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	 * Validates if the related object is still accessible, in case this check fails
 	 * the event should take the appropriate actions to resolve this.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function checkAccess();
 	
@@ -158,14 +158,14 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	 * Returns true if a notification should be deleted if the related object
 	 * is not accessible.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function deleteNoAccessNotification();
 	
 	/**
 	 * Returns true if the underlying notification has been marked as confirmed.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isConfirmed();
 	

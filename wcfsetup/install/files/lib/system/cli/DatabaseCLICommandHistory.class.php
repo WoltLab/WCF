@@ -14,14 +14,14 @@ use wcf\system\WCF;
 class DatabaseCLICommandHistory extends MemoryHistory {
 	/**
 	 * should the history automatically be saved
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $autoSave = true;
 	
 	/**
 	 * Saves the history.
 	 * 
-	 * @param	boolean		$append
+	 * @param	bool		$append
 	 */
 	public function save($append = false) {
 		if (!$append) {

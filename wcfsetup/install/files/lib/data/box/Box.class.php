@@ -27,29 +27,29 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\Data\Box
  * @since	3.0
  * 
- * @property-read	integer		$boxID			unique id of the box
- * @property-read	integer|null	$objectTypeID		id of the box controller object type
+ * @property-read	int		$boxID			unique id of the box
+ * @property-read	int|null	$objectTypeID		id of the box controller object type
  * @property-read	string		$identifier		unique textual identifier of the box
  * @property-read	string		$name			monolingual name of the box shown in the ACP
  * @property-read	string		$boxType		type of the box which determines the method of outputting its content (default box types are `text`, `html`, `tpl`, `system`)
  * @property-read	string		$position		name of the position on the page at which the box is shown 
- * @property-read	integer		$showOrder		position of the box in relation to its siblings
- * @property-read	integer		$visibleEverywhere	is `1` if the box is visible on every page, otherwise `0`
- * @property-read	integer		$isMultilingual		is `1` if the box content is available in multiple languages, otherwise `0`
- * @property-read	integer		$lastUpdateTime		timestamp at which the box has been updated the last time
+ * @property-read	int		$showOrder		position of the box in relation to its siblings
+ * @property-read	int		$visibleEverywhere	is `1` if the box is visible on every page, otherwise `0`
+ * @property-read	int		$isMultilingual		is `1` if the box content is available in multiple languages, otherwise `0`
+ * @property-read	int		$lastUpdateTime		timestamp at which the box has been updated the last time
  * @property-read	string		$cssClassName		css class name(s) of the box
- * @property-read	integer		$showHeader		is `1` if the box header will be shown, otherwise `0`
- * @property-read	integer		$originIsSystem		is `1` if the box has been delivered by a package, otherwise `0` (i.e. the box has been created in the ACP)
- * @property-read	integer		$packageID		id of the package which delivers the box or `1` if it has been created in the ACP
- * @property-read	integer|null	$menuID			id of the menu whose menu items are shown in the contents if `$boxType = menu`, otherwise `null`
- * @property-read	integer|null	$linkPageID		id of the (internal) page the box image and box title are linking to or `null` if no internal page is linked
- * @property-read	integer		$linkPageObjectID	id of the object the (internal) page links refers to or `0` if no internal link is used or no specific object is linked 
+ * @property-read	int		$showHeader		is `1` if the box header will be shown, otherwise `0`
+ * @property-read	int		$originIsSystem		is `1` if the box has been delivered by a package, otherwise `0` (i.e. the box has been created in the ACP)
+ * @property-read	int		$packageID		id of the package which delivers the box or `1` if it has been created in the ACP
+ * @property-read	int|null	$menuID			id of the menu whose menu items are shown in the contents if `$boxType = menu`, otherwise `null`
+ * @property-read	int|null	$linkPageID		id of the (internal) page the box image and box title are linking to or `null` if no internal page is linked
+ * @property-read	int		$linkPageObjectID	id of the object the (internal) page links refers to or `0` if no internal link is used or no specific object is linked 
  * @property-read	string		$externalURL		external link used to for the box image and box title or empty if no external link is set
  * @property-read	array		$additionalData		array with additional data of the box
- * @property-read	integer|null	$limit			number of objects shown in the box for `AbstractDatabaseObjectListBoxController` controllers or `null` otherwise
+ * @property-read	int|null	$limit			number of objects shown in the box for `AbstractDatabaseObjectListBoxController` controllers or `null` otherwise
  * @property-read	string|null	$sortField		sort field of the objects shown in the box for `AbstractDatabaseObjectListBoxController` controllers or `null` otherwise
  * @property-read	string|null	$sortOrder		sort order of the objects shown in the box for `AbstractDatabaseObjectListBoxController` controllers or `null` otherwise
- * @property-read	integer		$isDisabled		is `1` if the box is disabled and thus is not displayed, otherwise `0`
+ * @property-read	int		$isDisabled		is `1` if the box is disabled and thus is not displayed, otherwise `0`
  */
 class Box extends DatabaseObject {
 	/**
@@ -84,7 +84,7 @@ class Box extends DatabaseObject {
 	
 	/**
 	 * box to page assignments
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $pageIDs;
 	
@@ -113,7 +113,7 @@ class Box extends DatabaseObject {
 	
 	/**
 	 * virtual show order of this box
-	 * @var integer
+	 * @var int
 	 */
 	public $virtualShowOrder = -1;
 	
@@ -158,7 +158,7 @@ class Box extends DatabaseObject {
 	/**
 	 * Returns true if the active user can delete this box.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canDelete() {
 		if (WCF::getSession()->getPermission('admin.content.cms.canManageBox') && !$this->originIsSystem) {
@@ -288,7 +288,7 @@ class Box extends DatabaseObject {
 	/**
 	 * Returns false if this box has no content.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasContent() {
 		if ($this->boxType == 'system') {
@@ -404,7 +404,7 @@ class Box extends DatabaseObject {
 	/**
 	 * Returns true if this box has a link.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasLink() {
 		if ($this->boxType == 'system') {
@@ -454,7 +454,7 @@ class Box extends DatabaseObject {
 	/**
 	 * Returns the template name of this box.
 	 *
-	 * @param	integer		$languageID
+	 * @param	int		$languageID
 	 * @return	string
 	 */
 	public function getTplName($languageID = null) {
@@ -472,7 +472,7 @@ class Box extends DatabaseObject {
 	/**
 	 * Returns box to page assignments.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function getPageIDs() {
 		if ($this->pageIDs === null) {
@@ -506,7 +506,7 @@ class Box extends DatabaseObject {
 	/**
 	 * Returns true if this box is accessible by current user.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isAccessible() {
 		return SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.box', $this->boxID);
@@ -515,7 +515,7 @@ class Box extends DatabaseObject {
 	/**
 	 * Sets the virtual show order of this box.
 	 * 
-	 * @param       integer         $virtualShowOrder
+	 * @param       int         $virtualShowOrder
 	 */
 	public function setVirtualShowOrder($virtualShowOrder) {
 		$this->virtualShowOrder = $virtualShowOrder;
@@ -524,7 +524,7 @@ class Box extends DatabaseObject {
 	/**
 	 * Returns true if an edit button should be displayed for this box.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 * @since       5.2
 	 */
 	public function showEditButton() {

@@ -22,7 +22,7 @@ interface ICacheBuilder {
 	/**
 	 * Returns maximum lifetime for cache resource.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getMaxLifetime();
 	

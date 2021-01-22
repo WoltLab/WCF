@@ -56,7 +56,7 @@ class UserContentClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the users whose edits can be reverted.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	protected function validateRevertContentChanges() {
 		if (!MODULE_EDIT_HISTORY) {

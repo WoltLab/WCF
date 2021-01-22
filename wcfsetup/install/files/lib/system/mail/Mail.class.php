@@ -58,7 +58,7 @@ class Mail {
 	 * @param	string		$cc
 	 * @param	string		$bcc
 	 * @param	array		$attachments
-	 * @param	integer|string	$priority
+	 * @param	int|string	$priority
 	 * @param	string		$header
 	 */
 	public function __construct($to = '', $subject = '', $message = '', $from = '', $cc = '', $bcc = '', $attachments = [], $priority = '', $header = '') {
@@ -312,7 +312,7 @@ class Mail {
 	/**
 	 * Sets the priority of the mail.
 	 * 
-	 * @param	integer		$priority
+	 * @param	int		$priority
 	 */
 	public function setPriority($priority) {
 		$this->email->addHeader('x-priority', $priority);

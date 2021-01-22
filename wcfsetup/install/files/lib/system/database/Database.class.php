@@ -38,7 +38,7 @@ abstract class Database {
 	
 	/**
 	 * sql server post
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $port = 0;
 	
@@ -62,13 +62,13 @@ abstract class Database {
 	
 	/**
 	 * enables failsafe connection
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $failsafeTest = false;
 	
 	/**
 	 * number of executed queries
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $queryCount = 0;
 	
@@ -86,13 +86,13 @@ abstract class Database {
 	
 	/**
 	 * amount of active transactions
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $activeTransactions = 0;
 	
 	/**
 	 * attempts to create the database after the connection has been established
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $tryToCreateDatabase = false;
 	
@@ -109,9 +109,9 @@ abstract class Database {
 	 * @param	string		$user			SQL database server username
 	 * @param	string		$password		SQL database server password
 	 * @param	string		$database		SQL database server database name
-	 * @param	integer		$port			SQL database server port
-	 * @param	boolean		$failsafeTest
-	 * @param	boolean		$tryToCreateDatabase
+	 * @param	int		$port			SQL database server port
+	 * @param	bool		$failsafeTest
+	 * @param	bool		$tryToCreateDatabase
 	 * @param	array		$defaultDriverOptions
 	 */
 	public function __construct($host, $user, $password, $database, $port, $failsafeTest = false, $tryToCreateDatabase = false, $defaultDriverOptions = []) {
@@ -142,7 +142,7 @@ abstract class Database {
 	 * 
 	 * @param	string		$table
 	 * @param	string		$field
-	 * @return	integer
+	 * @return	int
 	 * @throws	DatabaseException
 	 */
 	public function getInsertID($table, $field) {
@@ -157,7 +157,7 @@ abstract class Database {
 	/**
 	 * Initiates a transaction.
 	 * 
-	 * @return	boolean		true on success
+	 * @return	bool		true on success
 	 * @throws	DatabaseTransactionException
 	 */
 	public function beginTransaction() {
@@ -184,7 +184,7 @@ abstract class Database {
 	/**
 	 * Commits a transaction and returns true if the transaction was successful.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 * @throws	DatabaseTransactionException
 	 */
 	public function commitTransaction() {
@@ -214,7 +214,7 @@ abstract class Database {
 	/**
 	 * Rolls back a transaction and returns true if the rollback was successful.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 * @throws	DatabaseTransactionException
 	 */
 	public function rollBackTransaction() {
@@ -244,8 +244,8 @@ abstract class Database {
 	 * Prepares a statement for execution and returns a statement object.
 	 * 
 	 * @param	string			$statement
-	 * @param	integer			$limit
-	 * @param	integer			$offset
+	 * @param	int			$limit
+	 * @param	int			$offset
 	 * @return	PreparedStatement
 	 * @throws	DatabaseQueryException
 	 */
@@ -291,8 +291,8 @@ abstract class Database {
 	 * Other database implementations should override this function. 
 	 * 
 	 * @param	string		$query
-	 * @param	integer		$limit
-	 * @param	integer		$offset
+	 * @param	int		$limit
+	 * @param	int		$offset
 	 * @return	string
 	 */
 	public function handleLimitParameter($query, $limit = 0, $offset = 0) {
@@ -306,7 +306,7 @@ abstract class Database {
 	/**
 	 * Returns the number of the last error.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getErrorNumber() {
 		if ($this->pdo !== null) return $this->pdo->errorCode();
@@ -382,7 +382,7 @@ abstract class Database {
 	/**
 	 * Returns the amount of executed sql queries.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getQueryCount() {
 		return $this->queryCount;
@@ -411,7 +411,7 @@ abstract class Database {
 	/**
 	 * Returns true if this database type is supported.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isSupported() {
 		return false;

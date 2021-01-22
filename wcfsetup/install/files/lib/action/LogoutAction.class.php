@@ -21,7 +21,6 @@ class LogoutAction extends \wcf\acp\action\LogoutAction {
 	public function execute() {
 		AbstractSecureAction::execute();
 		
-		// do logout
 		WCF::getSession()->delete();
 		
 		// remove cookies

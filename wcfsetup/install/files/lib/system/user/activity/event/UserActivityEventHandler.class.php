@@ -39,7 +39,7 @@ class UserActivityEventHandler extends SingletonFactory {
 	/**
 	 * Returns an object type by id.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 * @return	ObjectType
 	 */
 	public function getObjectType($objectTypeID) {
@@ -54,7 +54,7 @@ class UserActivityEventHandler extends SingletonFactory {
 	 * Returns an object type id by object type name.
 	 * 
 	 * @param	string		$objectType
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getObjectTypeID($objectType) {
 		if (isset($this->objectTypes['names'][$objectType])) {
@@ -68,10 +68,10 @@ class UserActivityEventHandler extends SingletonFactory {
 	 * Fires a new activity event.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer		$objectID
-	 * @param	integer		$languageID
-	 * @param	integer		$userID
-	 * @param	integer		$time
+	 * @param	int		$objectID
+	 * @param	int		$languageID
+	 * @param	int		$userID
+	 * @param	int		$time
 	 * @param	array		$additionalData
 	 * @return	\wcf\data\user\activity\event\UserActivityEvent
 	 * @throws	SystemException
@@ -145,9 +145,9 @@ class UserActivityEventHandler extends SingletonFactory {
 	/**
 	 * Removes an activity event.
 	 * 
-	 * @param	integer		$objectType
-	 * @param	integer		$objectID
-	 * @param	integer		$userID
+	 * @param	int		$objectType
+	 * @param	int		$objectID
+	 * @param	int		$userID
 	 * @throws	SystemException
 	 */
 	public function removeEvent($objectType, $objectID, $userID = null) {
@@ -174,7 +174,7 @@ class UserActivityEventHandler extends SingletonFactory {
 	 * Removes activity events.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer[]	$objectIDs
+	 * @param	int[]	$objectIDs
 	 * @throws	SystemException
 	 */
 	public function removeEvents($objectType, array $objectIDs) {

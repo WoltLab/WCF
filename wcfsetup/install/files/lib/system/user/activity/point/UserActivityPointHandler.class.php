@@ -46,8 +46,8 @@ class UserActivityPointHandler extends SingletonFactory {
 	 * Adds a new user activity point event.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer		$objectID
-	 * @param	integer		$userID
+	 * @param	int		$objectID
+	 * @param	int		$userID
 	 * @param	mixed[]		$additionalData
 	 * @throws	InvalidObjectTypeException
 	 * @throws	SystemException
@@ -101,8 +101,8 @@ class UserActivityPointHandler extends SingletonFactory {
 	 * )
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer[]	$itemsToUser
-	 * @param	boolean		$updateUsers
+	 * @param	int[]	$itemsToUser
+	 * @param	bool		$updateUsers
 	 * @throws	InvalidObjectTypeException
 	 */
 	public function fireEvents($objectType, array $itemsToUser, $updateUsers = true) {
@@ -152,7 +152,7 @@ class UserActivityPointHandler extends SingletonFactory {
 	 * Removes activity point events.
 	 * 
 	 * @param	string			$objectType
-	 * @param	integer[]		$userToItems
+	 * @param	int[]		$userToItems
 	 * @throws	InvalidObjectTypeException
 	 */
 	public function removeEvents($objectType, array $userToItems) {
@@ -188,7 +188,7 @@ class UserActivityPointHandler extends SingletonFactory {
 	/**
 	 * Updates total activity points and ranks for given user ids.
 	 * 
-	 * @param	integer[]		$userIDs
+	 * @param	int[]		$userIDs
 	 */
 	public function updateUsers(array $userIDs) {
 		$userIDs = array_unique($userIDs);
@@ -235,7 +235,7 @@ class UserActivityPointHandler extends SingletonFactory {
 	 * Returns the user activity point event object type with the given id or
 	 * null if no such object type exists.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 * @return	ObjectType
 	 */
 	public function getObjectType($objectTypeID) {
@@ -264,7 +264,7 @@ class UserActivityPointHandler extends SingletonFactory {
 	/**
 	 * Updates the user ranks for the given users.
 	 * 
-	 * @param	integer[]		$userIDs
+	 * @param	int[]		$userIDs
 	 */
 	protected function updateUserRanks(array $userIDs) {
 		$action = new UserProfileAction($userIDs, 'updateUserRank');

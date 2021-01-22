@@ -104,7 +104,7 @@ class AbstractCommentResponseModerationQueueHandler extends AbstractCommentComme
 	/**
 	 * Returns a comment response object by response id or null if response id is invalid.
 	 *
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @return	CommentResponse|null
 	 */
 	protected function getResponse($objectID) {

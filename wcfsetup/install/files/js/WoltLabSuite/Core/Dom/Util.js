@@ -401,6 +401,22 @@ define(["require", "exports", "tslib", "../StringUtil"], function (require, expo
             }
             return innerError;
         },
+        /**
+         * Finds the closest element that matches the provided selector. This is a helper
+         * function because `closest()` does exist on elements only, for example, it is
+         * missing on text nodes.
+         */
+        closest(node, selector) {
+            const element = node instanceof HTMLElement ? node : node.parentElement;
+            return element.closest(selector);
+        },
+        /**
+         * Returns the `node` if it is an element or its parent. This is useful when working
+         * with the range of a text selection.
+         */
+        getClosestElement(node) {
+            return node instanceof HTMLElement ? node : node.parentElement;
+        },
     };
     // expose on window object for backward compatibility
     window.bc_wcfDomUtil = DomUtil;

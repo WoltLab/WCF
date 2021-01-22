@@ -27,13 +27,13 @@ abstract class AbstractCaptchaForm extends AbstractForm {
 	
 	/**
 	 * true if captcha is used
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $useCaptcha = true;
 	
 	/**
 	 * true to force captcha usage
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $forceCaptcha = false;
 	

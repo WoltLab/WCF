@@ -24,14 +24,14 @@ interface IObjectTreeNode extends \Countable, IIDObject, \RecursiveIterator {
 	 * 
 	 * The minimum depth is `1`.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getDepth();
 	
 	/**
 	 * Returns the number of open parent nodes.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getOpenParentNodes();
 	
@@ -45,7 +45,7 @@ interface IObjectTreeNode extends \Countable, IIDObject, \RecursiveIterator {
 	/**
 	 * Returns `true` if this node is the last sibling and `false` otherwise.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isLastSibling();
 	

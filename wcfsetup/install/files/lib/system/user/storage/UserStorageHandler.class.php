@@ -46,7 +46,7 @@ class UserStorageHandler extends SingletonFactory {
 	/**
 	 * Loads storage for a given set of users.
 	 * 
-	 * @param	integer[]	$userIDs
+	 * @param	int[]	$userIDs
 	 */
 	public function loadStorage(array $userIDs) {
 		$this->validateUserIDs($userIDs);
@@ -95,7 +95,7 @@ class UserStorageHandler extends SingletonFactory {
 	/**
 	 * Returns stored data for given users.
 	 * 
-	 * @param	integer[]	$userIDs
+	 * @param	int[]	$userIDs
 	 * @param	string		$field
 	 * @return	mixed[]
 	 */
@@ -134,7 +134,7 @@ class UserStorageHandler extends SingletonFactory {
 	 * data for the user has been loaded yet!
 	 * 
 	 * @param	string		$field
-	 * @param	integer		$userID
+	 * @param	int		$userID
 	 * @return	mixed
 	 */
 	public function getField($field, $userID = null) {
@@ -167,7 +167,7 @@ class UserStorageHandler extends SingletonFactory {
 	/**
 	 * Inserts new data records into database.
 	 * 
-	 * @param	integer		$userID
+	 * @param	int		$userID
 	 * @param	string		$field
 	 * @param	string		$fieldValue
 	 */
@@ -194,7 +194,7 @@ class UserStorageHandler extends SingletonFactory {
 	/**
 	 * Removes a data record from database.
 	 * 
-	 * @param	integer[]	$userIDs
+	 * @param	int[]	$userIDs
 	 * @param	string		$field
 	 */
 	public function reset(array $userIDs, $field) {

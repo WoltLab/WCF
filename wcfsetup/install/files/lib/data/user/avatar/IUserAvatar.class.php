@@ -13,7 +13,7 @@ interface IUserAvatar {
 	/**
 	 * Returns true if this avatar can be cropped.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 * @deprecated  3.0
 	 */
 	public function canCrop();
@@ -21,7 +21,7 @@ interface IUserAvatar {
 	/**
 	 * Returns the url to this avatar.
 	 * 
-	 * @param	integer		$size
+	 * @param	int		$size
 	 * @return	string
 	 */
 	public function getURL($size = null);
@@ -29,7 +29,7 @@ interface IUserAvatar {
 	/**
 	 * Returns the html code to display this avatar.
 	 * 
-	 * @param	integer		$size
+	 * @param	int		$size
 	 * @return	string
 	 */
 	public function getImageTag($size = null);
@@ -37,7 +37,7 @@ interface IUserAvatar {
 	/**
 	 * Returns the image tag used for cropping.
 	 * 
-	 * @param	integer		$size
+	 * @param	int		$size
 	 * @return	string
 	 * @deprecated  3.0
 	 */
@@ -46,14 +46,14 @@ interface IUserAvatar {
 	/**
 	 * Returns the width of this avatar.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getWidth();
 	
 	/**
 	 * Returns the height of this avatar.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getHeight();
 }

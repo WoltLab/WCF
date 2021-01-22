@@ -70,7 +70,7 @@ class PageListPage extends SortablePage {
 	
 	/**
 	 * application id of the page
-	 * @var integer
+	 * @var int
 	 */
 	public $applicationPackageID = 0;
 	
@@ -88,19 +88,19 @@ class PageListPage extends SortablePage {
 	
 	/**
 	 * display 'Add Page' dialog on load
-	 * @var boolean
+	 * @var bool
 	 */
 	public $showPageAddDialog = 0;
 	
 	/**
 	 * filters the list of pages showing only custom pages
-	 * @var boolean
+	 * @var bool
 	 */
 	public $originIsNotSystem = 0;
 	
 	/**
 	 * filters the list of pages showing only pages with custom urls
-	 * @var boolean
+	 * @var bool
 	 */
 	public $controllerCustomURL = 0;
 	

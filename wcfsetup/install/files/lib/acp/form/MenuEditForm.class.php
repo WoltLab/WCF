@@ -27,7 +27,7 @@ class MenuEditForm extends MenuAddForm {
 	
 	/**
 	 * menu id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $menuID = 0;
 	

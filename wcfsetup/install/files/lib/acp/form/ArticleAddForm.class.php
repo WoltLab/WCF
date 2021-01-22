@@ -50,13 +50,13 @@ class ArticleAddForm extends AbstractForm {
 	
 	/**
 	 * true if created article is multi-lingual
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $isMultilingual = 0;
 	
 	/**
 	 * category id
-	 * @var integer
+	 * @var int
 	 */
 	public $categoryID = 0;
 	
@@ -86,7 +86,7 @@ class ArticleAddForm extends AbstractForm {
 	
 	/**
 	 * publication status
-	 * @var integer
+	 * @var int
 	 */
 	public $publicationStatus = Article::PUBLISHED;
 	
@@ -104,7 +104,7 @@ class ArticleAddForm extends AbstractForm {
 	
 	/**
 	 * enables the comment function
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $enableComments = ARTICLE_ENABLE_COMMENTS_DEFAULT_VALUE;
 	
@@ -151,13 +151,13 @@ class ArticleAddForm extends AbstractForm {
 	
 	/**
 	 * image ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $imageID = [];
 	
 	/**
 	 * thumbnail image ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $teaserImageID = [];
 	
@@ -187,7 +187,7 @@ class ArticleAddForm extends AbstractForm {
 	
 	/**
 	 * list of label ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $labelIDs = [];
 	

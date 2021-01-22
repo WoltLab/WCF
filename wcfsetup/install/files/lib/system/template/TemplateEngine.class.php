@@ -28,7 +28,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * active language id used to identify specific language versions of compiled templates
-	 * @var	integer
+	 * @var	int
 	 */
 	public $languageID = 0;
 	
@@ -52,7 +52,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * forces the template engine to recompile all included templates
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $forceCompile = false;
 	
@@ -70,7 +70,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * active template group id
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $templateGroupID = 0;
 	
@@ -107,7 +107,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * true, if template listener code was already loaded
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $templateListenersLoaded = false;
 	
@@ -142,7 +142,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Sets active language id.
 	 * 
-	 * @param	integer		$languageID
+	 * @param	int		$languageID
 	 */
 	public function setLanguageID($languageID) {
 		$this->languageID = $languageID;
@@ -303,7 +303,7 @@ class TemplateEngine extends SingletonFactory {
 	 * 
 	 * @param	string		$templateName
 	 * @param	string		$application
-	 * @param	boolean		$sendHeaders
+	 * @param	bool		$sendHeaders
 	 */
 	public function display($templateName, $application = 'wcf', $sendHeaders = true) {
 		if ($sendHeaders) {
@@ -426,7 +426,7 @@ class TemplateEngine extends SingletonFactory {
 	 * @param	string		$compiledFilename
 	 * @param	string		$application
 	 * @param	array		$metaData
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function isCompiled($templateName, $sourceFilename, $compiledFilename, $application, array $metaData) {
 		if ($this->forceCompile || !file_exists($compiledFilename)) {
@@ -542,7 +542,7 @@ class TemplateEngine extends SingletonFactory {
 	 * @param	string		$templateName
 	 * @param	string		$application
 	 * @param	array		$variables
-	 * @param	boolean		$sandbox	enables execution in sandbox
+	 * @param	bool		$sandbox	enables execution in sandbox
 	 * @return	string
 	 */
 	public function fetch($templateName, $application = 'wcf', array $variables = [], $sandbox = false) {
@@ -579,7 +579,7 @@ class TemplateEngine extends SingletonFactory {
 	 * 
 	 * @param	string		$compiledSource
 	 * @param	array		$variables
-	 * @param	boolean		$sandbox	enables execution in sandbox
+	 * @param	bool		$sandbox	enables execution in sandbox
 	 * @return	string
 	 */
 	public function fetchString($compiledSource, array $variables = [], $sandbox = true) {
@@ -631,7 +631,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Returns the active template group id.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getTemplateGroupID() {
 		return $this->templateGroupID;
@@ -640,7 +640,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Sets the active template group id.
 	 * 
-	 * @param	integer		$templateGroupID
+	 * @param	int		$templateGroupID
 	 */
 	public function setTemplateGroupID($templateGroupID) {
 		if ($templateGroupID && !isset($this->templateGroupCache[$templateGroupID])) {
@@ -697,7 +697,7 @@ class TemplateEngine extends SingletonFactory {
 	 * @param	string		$templateName
 	 * @param	string		$application
 	 * @param	array		$variables
-	 * @param	boolean		$sandbox	enables execution in sandbox
+	 * @param	bool		$sandbox	enables execution in sandbox
 	 */
 	protected function includeTemplate($templateName, $application, array $variables = [], $sandbox = true) {
 		// enable sandbox

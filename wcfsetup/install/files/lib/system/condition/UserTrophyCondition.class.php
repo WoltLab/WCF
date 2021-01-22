@@ -42,13 +42,13 @@ class UserTrophyCondition extends AbstractMultipleFieldsCondition implements ICo
 	
 	/**
 	 * ids of the selected trophies the user has earned
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $userTrophyIDs = [];
 	
 	/**
 	 * ids of the selected trophies the user has not earned
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $notUserTrophyIDs = [];
 	

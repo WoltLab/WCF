@@ -50,7 +50,6 @@ class ContactAttachmentObjectType extends AbstractAttachmentObjectType {
 		return true;
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */

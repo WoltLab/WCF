@@ -21,7 +21,7 @@ abstract class AbstractCacheBuilder extends SingletonFactory implements ICacheBu
 	
 	/**
 	 * maximum cache lifetime in seconds, '0' equals infinite
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $maxLifetime = 0;
 	

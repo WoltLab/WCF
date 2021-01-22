@@ -35,7 +35,7 @@ class TaggedPage extends MultipleLinkPage {
 	
 	/**
 	 * tag id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $tagID = 0;
 	

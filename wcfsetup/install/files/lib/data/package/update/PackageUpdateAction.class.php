@@ -235,7 +235,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	 * Validates dependencies and exclusions of a package,
 	 * optionally limited by a minimum version number.
 	 * 
-	 * @param       integer         $packageUpdateID
+	 * @param       int         $packageUpdateID
 	 * @param       string|null     $minVersion
 	 * @param       string[]        $installedPackages
 	 * @param       string[]        $excludedPackagesOfInstalledPackages

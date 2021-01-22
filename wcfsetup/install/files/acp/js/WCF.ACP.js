@@ -1789,12 +1789,20 @@ WCF.ACP.User.SendNewPasswordHandler = {
 	 */
 	_clipboardAction: function(actionData) {
 		if (actionData.data.actionName === 'com.woltlab.wcf.user.sendNewPassword') {
-			WCF.System.Confirmation.show(actionData.data.parameters.confirmMessage, function(action) {
-				if (action === 'confirm') {
-					new WCF.ACP.Worker('sendingNewPasswords', 'wcf\\system\\worker\\SendNewPasswordWorker', WCF.Language.get('wcf.acp.user.sendNewPassword.workerTitle'), {
-						userIDs: actionData.data.parameters.objectIDs
-					});
-				}
+			require(['Language', 'Ui/Confirmation', 'WoltLabSuite/Core/Acp/Ui/Worker'], function(Language, UiConfirmation, AcpUiWorker) {
+				UiConfirmation.show({
+					confirm: () => {
+						new AcpUiWorker({
+							dialogId: 'sendingNewPasswords',
+							dialogTitle: Language.get('wcf.acp.user.sendNewPassword.workerTitle'),
+							className: 'wcf\\system\\worker\\SendNewPasswordWorker',
+							parameters: {
+								userIDs: actionData.data.parameters.objectIDs
+							},
+						});
+					},
+					message: actionData.data.parameters.confirmMessage,
+				})
 			});
 		}
 	}

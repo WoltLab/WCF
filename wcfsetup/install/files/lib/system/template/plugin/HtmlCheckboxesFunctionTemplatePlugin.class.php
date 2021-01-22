@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
 class HtmlCheckboxesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	/**
 	 * indicates if encoding is disabled
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $disableEncoding = false;
 	

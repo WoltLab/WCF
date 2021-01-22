@@ -15,13 +15,13 @@ use wcf\system\request\RequestHandler;
 class MenuItemNodeTree {
 	/**
 	 * if `false`, individual menu item visibility will not be checked
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $checkVisibility;
 	
 	/**
 	 * menu id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $menuID;
 	
@@ -45,16 +45,16 @@ class MenuItemNodeTree {
 	
 	/**
 	 * number of visible items
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $visibleItemCount = 0;
 	
 	/**
 	 * Creates a new MenuItemNodeTree object.
 	 * 
-	 * @param	integer		$menuID			menu id
+	 * @param	int		$menuID			menu id
 	 * @param	MenuItemList	$menuItemList		optional object to be provided when building the tree from cache
-	 * @param	boolean		$checkVisibility	if `false`, individual menu item visibility will not be checked
+	 * @param	bool		$checkVisibility	if `false`, individual menu item visibility will not be checked
 	 */
 	public function __construct($menuID, MenuItemList $menuItemList = null, $checkVisibility = true) {
 		$this->menuID = $menuID;
@@ -124,7 +124,7 @@ class MenuItemNodeTree {
 	/**
 	 * Generates the node tree recursively.
 	 * 
-	 * @param	integer			$parentID	parent menu item id
+	 * @param	int			$parentID	parent menu item id
 	 * @param	MenuItemNode		$parentNode	parent menu item object
 	 * @return	MenuItemNode[]		nested menu item tree
 	 */
@@ -173,7 +173,7 @@ class MenuItemNodeTree {
 	/**
 	 * Returns the number of visible items.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getVisibleItemCount() {
 		return $this->visibleItemCount;

@@ -28,7 +28,7 @@ class SmileyEditForm extends SmileyAddForm {
 	
 	/**
 	 * smiley id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $smileyID = 0;
 	

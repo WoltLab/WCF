@@ -21,7 +21,7 @@ class AbstractAttachmentImporter extends AbstractImporter {
 	
 	/**
 	 * object type id for attachments
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $objectTypeID = 0;
 	
@@ -96,9 +96,9 @@ class AbstractAttachmentImporter extends AbstractImporter {
 	 * Replaces old attachment BBCodes with BBCodes with the new attachment id.
 	 * 
 	 * @param	string		$message
-	 * @param	integer		$oldID
-	 * @param	integer		$newID
-	 * @return	string|boolean
+	 * @param	int		$oldID
+	 * @param	int		$newID
+	 * @return	string|bool
 	 */
 	protected function fixEmbeddedAttachments($message, $oldID, $newID) {
 		if (mb_strripos($message, '[attach]'.$oldID.'[/attach]') !== false || mb_strripos($message, '[attach='.$oldID.']') !== false || mb_strripos($message, '[attach='.$oldID.',') !== false) {

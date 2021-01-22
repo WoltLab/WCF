@@ -115,7 +115,7 @@ class StyleAddForm extends AbstractForm {
 	
 	/**
 	 * tainted style
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $isTainted = true;
 	
@@ -180,7 +180,7 @@ class StyleAddForm extends AbstractForm {
 	
 	/**
 	 * template group id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $templateGroupID = 0;
 	
@@ -209,7 +209,7 @@ class StyleAddForm extends AbstractForm {
 	
 	/**
 	 * current scroll offsets before submitting the form
-	 * @var integer[]
+	 * @var int[]
 	 */
 	public $scrollOffsets = [];
 	

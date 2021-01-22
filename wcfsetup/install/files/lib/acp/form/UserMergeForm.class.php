@@ -32,7 +32,7 @@ class UserMergeForm extends AbstractForm {
 	
 	/**
 	 * ids of the relevant users
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $userIDs = [];
 	
@@ -44,19 +44,19 @@ class UserMergeForm extends AbstractForm {
 	
 	/**
 	 * destination user id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $destinationUserID = 0;
 	
 	/**
 	 * ids of merge users (without destination user)
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $mergedUserIDs = [];
 	
 	/**
 	 * id of the user clipboard item object type
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $objectTypeID = null;
 	

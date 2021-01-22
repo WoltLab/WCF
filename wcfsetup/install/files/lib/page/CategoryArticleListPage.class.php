@@ -2,7 +2,6 @@
 namespace wcf\page;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\CategoryArticleList;
-use wcf\data\label\group\ViewableLabelGroup;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\page\PageLocationManager;
@@ -27,7 +26,7 @@ class CategoryArticleListPage extends ArticleListPage {
 	
 	/**
 	 * id of the category the listed articles belong to
-	 * @var	integer
+	 * @var	int
 	 */
 	public $categoryID = 0;
 	
@@ -82,7 +81,6 @@ class CategoryArticleListPage extends ArticleListPage {
 		}
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */

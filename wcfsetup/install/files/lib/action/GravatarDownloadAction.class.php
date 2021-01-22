@@ -20,7 +20,7 @@ use wcf\util\HTTPRequest;
 class GravatarDownloadAction extends AbstractAction {
 	/**
 	 * user id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $userID = 0;
 	
@@ -32,7 +32,7 @@ class GravatarDownloadAction extends AbstractAction {
 	
 	/**
 	 * avatar size
-	 * @var	integer
+	 * @var	int
 	 */
 	public $size = UserAvatar::AVATAR_SIZE;
 	

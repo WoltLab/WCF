@@ -13,7 +13,7 @@ interface IFeedEntry extends IMessage {
 	/**
 	 * Returns the number of comments.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getComments();
 	

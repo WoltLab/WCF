@@ -49,7 +49,7 @@ class BoxAddForm extends AbstractForm {
 	
 	/**
 	 * true if created box is multi-lingual
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $isMultilingual = 0;
 	
@@ -67,13 +67,13 @@ class BoxAddForm extends AbstractForm {
 	
 	/**
 	 * show order
-	 * @var	integer
+	 * @var	int
 	 */
 	public $showOrder = 0;
 	
 	/**
 	 * true if created box is visible everywhere 
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $visibleEverywhere = 1;
 	
@@ -85,7 +85,7 @@ class BoxAddForm extends AbstractForm {
 	
 	/**
 	 * true if box header is visible
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $showHeader = 1;
 	
@@ -109,7 +109,7 @@ class BoxAddForm extends AbstractForm {
 	
 	/**
 	 * image ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $imageID = [];
 	
@@ -121,13 +121,13 @@ class BoxAddForm extends AbstractForm {
 	
 	/**
 	 * page ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $pageIDs = [];
 	
 	/**
 	 * object type id of the selected box controller
-	 * @var	integer
+	 * @var	int
 	 */
 	public $boxControllerID = 0;
 	

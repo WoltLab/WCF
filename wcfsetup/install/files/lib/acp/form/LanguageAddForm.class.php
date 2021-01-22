@@ -66,7 +66,7 @@ class LanguageAddForm extends AbstractForm {
 	
 	/**
 	 * source language id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $sourceLanguageID = 0;
 	

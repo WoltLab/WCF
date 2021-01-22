@@ -32,7 +32,7 @@ class DevtoolsProjectSyncPage extends AbstractPage {
 	
 	/**
 	 * project id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $objectID = 0;
 	

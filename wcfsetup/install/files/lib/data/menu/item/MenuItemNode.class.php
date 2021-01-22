@@ -23,13 +23,13 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
 	
 	/**
 	 * node depth
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $depth = 0;
 	
 	/**
 	 * true if item or one of its children is active
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $isActive = false;
 	
@@ -41,7 +41,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
 	
 	/**
 	 * iterator position
-	 * @var	integer
+	 * @var	int
 	 */
 	private $position = 0;
 	
@@ -55,7 +55,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
 	 * 
 	 * @param	MenuItemNode		$parentNode
 	 * @param	MenuItem		$menuItem
-	 * @param	integer			$depth
+	 * @param	int			$depth
 	 */
 	public function __construct($parentNode = null, MenuItem $menuItem = null, $depth = 0) {
 		if ($menuItem === null) {
@@ -88,7 +88,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
 	/**
 	 * Returns the number of children.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function count() {
 		return count($this->children);
@@ -97,7 +97,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
 	/**
 	 * Returns true if this element is the last sibling.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isLastSibling() {
 		foreach ($this->parentNode as $key => $child) {
@@ -111,7 +111,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
 	/**
 	 * Returns the number of open parent nodes.
 	 *
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getOpenParentNodes() {
 		$element = $this;
@@ -140,7 +140,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
 	/**
 	 * Returns true if this item (or one of its children) is marked as active.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isActiveNode() {
 		return $this->isActive;
@@ -198,7 +198,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
 	/**
 	 * Returns node depth.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getDepth() {
 		return $this->depth;

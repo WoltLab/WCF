@@ -17,7 +17,7 @@ use wcf\system\SingletonFactory;
 class SearchEngine extends SingletonFactory implements ISearchEngine {
 	/**
 	 * limit for inner search limits
-	 * @var	integer
+	 * @var	int
 	 */
 	const INNER_SEARCH_LIMIT = 2500;
 	

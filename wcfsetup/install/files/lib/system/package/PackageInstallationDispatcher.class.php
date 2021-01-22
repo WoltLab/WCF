@@ -242,7 +242,14 @@ class PackageInstallationDispatcher {
 						'acp_session',
 						// We do not use the cache-timing safe class Hex, because we run the 
 						// function during the setup.
-						CryptoUtil::createSignedString(\hex2bin(WCF::getSession()->sessionID))
+						CryptoUtil::createSignedString(
+							\pack(
+								'CA20C',
+								1,
+								\hex2bin(WCF::getSession()->sessionID),
+								0
+							)
+						)
 					);
 					
 					if (WCF::getSession()->getVar('__wcfSetup_developerMode')) {
@@ -1021,7 +1028,7 @@ class PackageInstallationDispatcher {
 	/**
 	 * Returns current package id.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getPackageID() {
 		return $this->queue->packageID;
@@ -1050,8 +1057,8 @@ class PackageInstallationDispatcher {
 	 * Opens the package installation queue and
 	 * starts the installation, update or uninstallation of the first entry.
 	 * 
-	 * @param	integer		$parentQueueID
-	 * @param	integer		$processNo
+	 * @param	int		$parentQueueID
+	 * @param	int		$processNo
 	 */
 	public static function openQueue($parentQueueID = 0, $processNo = 0) {
 		$conditions = new PreparedStatementConditionBuilder();
@@ -1083,7 +1090,7 @@ class PackageInstallationDispatcher {
 	/**
 	 * Checks the package installation queue for outstanding entries.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public static function checkPackageInstallationQueue() {
 		$sql = "SELECT		queueID
@@ -1241,7 +1248,7 @@ class PackageInstallationDispatcher {
 	 * Validates if an function exists and is not blacklisted by suhosin extension.
 	 * 
 	 * @param	string		$function
-	 * @return	boolean
+	 * @return	bool
 	 * @see		http://de.php.net/manual/en/function.function-exists.php#77980
 	 */
 	protected static function functionExists($function) {
@@ -1268,7 +1275,7 @@ class PackageInstallationDispatcher {
 	 * @param	string		$setting
 	 * @param	string		$value
 	 * @param	mixed		$compareValue
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected static function compareSetting($setting, $value, $compareValue) {
 		if ($compareValue === false) return false;
@@ -1297,7 +1304,7 @@ class PackageInstallationDispatcher {
 	 * Converts shorthand byte values into an integer representing bytes.
 	 * 
 	 * @param	string		$value
-	 * @return	integer
+	 * @return	int
 	 * @see		http://www.php.net/manual/en/faq.using.php#faq.using.shorthandbytes
 	 */
 	protected static function convertShorthandByteValue($value) {

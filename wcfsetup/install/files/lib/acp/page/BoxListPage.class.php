@@ -81,13 +81,13 @@ class BoxListPage extends SortablePage {
 	
 	/**
 	 * display 'Add Box' dialog on load
-	 * @var integer
+	 * @var int
 	 */
 	public $showBoxAddDialog = 0;
 	
 	/**
 	 * filters the list of boxes showing only custom boxes
-	 * @var boolean
+	 * @var bool
 	 */
 	public $originIsNotSystem = 0;
 	

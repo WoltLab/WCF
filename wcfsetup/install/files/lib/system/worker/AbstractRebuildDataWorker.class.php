@@ -108,7 +108,7 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 	 * Returns the value of the permissions for the provided user ids. The special index `0` is
 	 * automatically added and represents a guest user.
 	 * 
-	 * @param       integer[]       $userIDs
+	 * @param       int[]       $userIDs
 	 * @param       string[]        $permissions
 	 * @return      mixed[]         permission value per user id
 	 */
@@ -156,7 +156,7 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 	 * with the return value of `getBulkUserPermissions()`.
 	 * 
 	 * @param       mixed[]         $userPermissions
-	 * @param       integer         $userID
+	 * @param       int         $userID
 	 * @param       string          $permission
 	 * @return      mixed
 	 */

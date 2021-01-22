@@ -48,7 +48,7 @@ class UserSearchForm extends UserOptionListForm {
 	
 	/**
 	 * search id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $searchID = 0;
 	
@@ -66,7 +66,7 @@ class UserSearchForm extends UserOptionListForm {
 	
 	/**
 	 * results per page
-	 * @var	integer
+	 * @var	int
 	 */
 	public $itemsPerPage = 50;
 	
@@ -78,14 +78,14 @@ class UserSearchForm extends UserOptionListForm {
 	
 	/**
 	 * number of results
-	 * @var	integer
+	 * @var	int
 	 */
 	public $maxResults = 2000;
 	
 	/**
 	 * id of the group the users have to belong to
 	 * is used on the user group list to show all users of a user group
-	 * @var	integer
+	 * @var	int
 	 */
 	public $groupID = 0;
 	

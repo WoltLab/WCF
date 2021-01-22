@@ -25,7 +25,7 @@ class UserCoverPhoto implements IUserCoverPhoto {
 	
 	/**
 	 * user id
-	 * @var integer
+	 * @var int
 	 */
 	protected $userID;
 	
@@ -37,7 +37,7 @@ class UserCoverPhoto implements IUserCoverPhoto {
 	/**
 	 * UserCoverPhoto constructor.
 	 * 
-	 * @param       integer         $userID
+	 * @param       int         $userID
 	 * @param       string          $coverPhotoHash
 	 * @param       string          $coverPhotoExtension
 	 */

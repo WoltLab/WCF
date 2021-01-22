@@ -20,7 +20,7 @@ use wcf\util\JSON;
 class HtmlInputNodeImg extends AbstractHtmlInputNode {
 	/**
 	 * number of found smilies
-	 * @var integer
+	 * @var int
 	 */
 	protected $smiliesFound = 0;
 	
@@ -80,7 +80,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode {
 	/**
 	 * Returns the number of smilies found within the message.
 	 * 
-	 * @return      integer
+	 * @return      int
 	 */
 	public function getSmileyCount() {
 		return $this->smiliesFound;

@@ -13,11 +13,11 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\Data\Reaction\Type
  * @since	5.2
  *
- * @property-read	integer		$reactionTypeID		unique id of the reaction type
+ * @property-read	int		$reactionTypeID		unique id of the reaction type
  * @property-read	string		$title
- * @property-read	integer		$showOrder		position of the reaction type in relation to the other reaction types
+ * @property-read	int		$showOrder		position of the reaction type in relation to the other reaction types
  * @property-read	string		$iconFile		the file location of the icon
- * @property-read	boolean		$isAssignable 		`1`, if the reaction can be assigned
+ * @property-read	bool		$isAssignable 		`1`, if the reaction can be assigned
  */
 class ReactionType extends DatabaseObject implements ITitledObject {
 	/**

@@ -163,9 +163,9 @@ class Censorship extends SingletonFactory {
 	/**
 	 * Looks behind in the word list.
 	 * 
-	 * @param	integer		$index
+	 * @param	int		$index
 	 * @param	string		$search
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function lookBehind($index, $search) {
 		if (isset($this->words[$index])) {
@@ -183,7 +183,7 @@ class Censorship extends SingletonFactory {
 	/**
 	 * Looks ahead in the word list.
 	 * 
-	 * @param	integer		$index
+	 * @param	int		$index
 	 * @param	string		$search
 	 * @return	mixed
 	 */

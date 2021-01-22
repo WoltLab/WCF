@@ -219,7 +219,7 @@ class RegistryHandler extends SingletonFactory {
 	 * Returns the package id of the provided package.
 	 * 
 	 * @param       string          $package
-	 * @return      integer
+	 * @return      int
 	 */
 	protected function getPackageID($package) {
 		$packageObj = PackageCache::getInstance()->getPackageByIdentifier($package);

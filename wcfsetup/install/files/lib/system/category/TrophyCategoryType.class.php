@@ -30,7 +30,6 @@ class TrophyCategoryType extends AbstractCategoryType {
 	 */
 	protected $forceDescription = false;
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */
@@ -38,7 +37,6 @@ class TrophyCategoryType extends AbstractCategoryType {
 		return $this->canEditCategory();
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */
@@ -46,7 +44,6 @@ class TrophyCategoryType extends AbstractCategoryType {
 		return $this->canEditCategory();
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */

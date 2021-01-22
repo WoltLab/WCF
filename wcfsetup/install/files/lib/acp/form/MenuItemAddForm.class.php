@@ -38,7 +38,7 @@ class MenuItemAddForm extends AbstractForm {
 	
 	/**
 	 * menu id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $menuID = 0;
 	
@@ -50,13 +50,13 @@ class MenuItemAddForm extends AbstractForm {
 	
 	/**
 	 * activation state
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $isDisabled = false;
 	
 	/**
 	 * internal link
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $isInternalLink = true;
 	
@@ -68,13 +68,13 @@ class MenuItemAddForm extends AbstractForm {
 	
 	/**
 	 * page id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $pageID = null;
 	
 	/**
 	 * page object id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $pageObjectID = null;
 	
@@ -92,13 +92,13 @@ class MenuItemAddForm extends AbstractForm {
 	
 	/**
 	 * id of the parent menu item
-	 * @var	integer
+	 * @var	int
 	 */
 	public $parentItemID = null;
 	
 	/**
 	 * show order
-	 * @var	integer
+	 * @var	int
 	 */
 	public $showOrder = 0;
 	

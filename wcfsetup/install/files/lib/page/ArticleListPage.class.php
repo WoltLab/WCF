@@ -49,7 +49,7 @@ class ArticleListPage extends SortablePage {
 	
 	/**
 	 * label filter
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $labelIDs = [];
 	
@@ -94,7 +94,7 @@ class ArticleListPage extends SortablePage {
 	
 	/**
 	 * display 'Add Article' dialog on load
-	 * @var integer
+	 * @var int
 	 */
 	public $showArticleAddDialog = 0;
 	

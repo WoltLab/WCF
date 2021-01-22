@@ -229,7 +229,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Marks all notifications of current user as confirmed.
 	 * 
-	 * @return	boolean[]
+	 * @return	bool[]
 	 */
 	public function markAllAsConfirmed() {
 		// remove notifications for this user

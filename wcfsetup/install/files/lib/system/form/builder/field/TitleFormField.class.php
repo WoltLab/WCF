@@ -17,6 +17,8 @@ class TitleFormField extends TextFormField {
 	 * Creates a new instance of `TitleFormField`.
 	 */
 	public function __construct() {
+		parent::__construct();
+		
 		$this->label('wcf.global.title');
 	}
 	

@@ -46,7 +46,7 @@ class UserTrophyAddForm extends AbstractAcpForm {
 	
 	/**
 	 * List of user ids which earn the trophy. 
-	 * @var integer[]
+	 * @var int[]
 	 */
 	public $userIDs = [];
 	
@@ -69,7 +69,7 @@ class UserTrophyAddForm extends AbstractAcpForm {
 	public $trophyUseHtml = 0;
 	
 	/**
-	 * @var integer
+	 * @var int
 	 */
 	public $trophyID = 0;
 	

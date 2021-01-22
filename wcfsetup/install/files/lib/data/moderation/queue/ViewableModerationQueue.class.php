@@ -38,7 +38,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
 	
 	/**
 	 * true, if associated object was deleted
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $isOrphaned = false;
 	
@@ -126,7 +126,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
 	/**
 	 * Returns true if associated object was removed.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isOrphaned() {
 		return $this->isOrphaned;
@@ -149,7 +149,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
 	/**
 	 * Returns a viewable moderation queue entry.
 	 * 
-	 * @param	integer		$queueID
+	 * @param	int		$queueID
 	 * @return	ViewableModerationQueue
 	 */
 	public static function getViewableModerationQueue($queueID) {
@@ -182,7 +182,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
 	/**
 	 * Returns true if this queue item is new for the active user.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isNew() {
 		if ($this->time > max(VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.moderation.queue'), VisitTracker::getInstance()->getObjectVisitTime('com.woltlab.wcf.moderation.queue', $this->queueID))) return true;

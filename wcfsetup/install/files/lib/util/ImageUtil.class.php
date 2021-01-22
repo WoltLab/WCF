@@ -23,7 +23,7 @@ final class ImageUtil {
 	 * and returns false if any bad stuff was found.
 	 * 
 	 * @param	string		$file
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function checkImageContent($file) {
 		// get file content
@@ -103,9 +103,9 @@ final class ImageUtil {
 	 * Enforces dimensions for given image.
 	 *
 	 * @param	string		$filename
-	 * @param       integer         $maxWidth
-	 * @param       integer         $maxHeight
-	 * @param	boolean		$obtainDimensions
+	 * @param       int         $maxWidth
+	 * @param       int         $maxHeight
+	 * @param	bool		$obtainDimensions
 	 * @return	string          new filename if file was changed, otherwise old filename
 	 * @since       5.2
 	 */

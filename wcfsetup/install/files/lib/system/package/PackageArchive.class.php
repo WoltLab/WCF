@@ -71,7 +71,7 @@ class PackageArchive {
 	
 	/**
 	 * list of compatible API versions
-	 * @var integer[]
+	 * @var int[]
 	 * @deprecated 5.2
 	 */
 	protected $compatibility = [];
@@ -461,7 +461,7 @@ class PackageArchive {
 	/**
 	 * Returns true if the package archive supports a new installation.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isValidInstall() {
 		return !empty($this->instructions['install']);
@@ -472,7 +472,7 @@ class PackageArchive {
 	 * the package that is about to be updated.
 	 * 
 	 * @param	Package		$package
-	 * @return	boolean		isValidUpdate
+	 * @return	bool		isValidUpdate
 	 */
 	public function isValidUpdate(Package $package = null) {
 		if ($this->package === null && $package !== null) {
@@ -506,7 +506,7 @@ class PackageArchive {
 	 * possible to install non-applications multiple times within the
 	 * same environment.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isAlreadyInstalled() {
 		$sql = "SELECT	COUNT(*)
@@ -521,7 +521,7 @@ class PackageArchive {
 	/**
 	 * Returns true if the package is an application and has an unique abbreviation.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasUniqueAbbreviation() {
 		if (!$this->packageInfo['isApplication']) {
@@ -614,7 +614,7 @@ class PackageArchive {
 	/**
 	 * Returns the list of compatible API versions.
 	 * 
-	 * @return      integer[]
+	 * @return      int[]
 	 * @deprecated 5.2
 	 */
 	public function getCompatibleVersions() {

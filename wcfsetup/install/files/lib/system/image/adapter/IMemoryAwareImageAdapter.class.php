@@ -16,10 +16,10 @@ interface IMemoryAwareImageAdapter extends IImageAdapter {
 	 * Returns whether it is believed that sufficient memory
 	 * is available to process an image with the given properties.
 	 * 
-	 * @param	integer		$width
-	 * @param	integer		$height
+	 * @param	int		$width
+	 * @param	int		$height
 	 * @param	string		$mimeType
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function checkMemoryLimit($width, $height, $mimeType);
 }

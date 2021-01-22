@@ -122,13 +122,13 @@ class OptionHandler implements IOptionHandler {
 	
 	/**
 	 * true, if options support i18n
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $supportI18n = false;
 	
 	/**
 	 * cache initialization state
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $didInit = false;
 	
@@ -521,7 +521,7 @@ class OptionHandler implements IOptionHandler {
 	 * Checks the required permissions and options of a category.
 	 * 
 	 * @param	OptionCategory		$category
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function checkCategory(OptionCategory $category) {
 		if (!$category->validateOptions() || !$category->validatePermissions()) {
@@ -539,7 +539,7 @@ class OptionHandler implements IOptionHandler {
 	 * Checks the required permissions and options of an option.
 	 * 
 	 * @param	Option		$option
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function checkOption(Option $option) {
 		return $option->validateOptions() && $option->validatePermissions() && $this->checkVisibility($option);
@@ -549,7 +549,7 @@ class OptionHandler implements IOptionHandler {
 	 * Checks visibility of an option.
 	 * 
 	 * @param	Option		$option
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function checkVisibility(Option $option) {
 		if (!$option->isVisible()) {

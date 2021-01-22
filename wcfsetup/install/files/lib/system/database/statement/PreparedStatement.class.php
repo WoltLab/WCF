@@ -109,7 +109,7 @@ class PreparedStatement {
 	/**
 	 * Fetches the next row from a result set in an array.
 	 * 
-	 * @param	integer		$type		fetch type
+	 * @param	int		$type		fetch type
 	 * @return	mixed
 	 */
 	public function fetchArray($type = null) {
@@ -126,7 +126,7 @@ class PreparedStatement {
 	 * Note: It is not possible to fetch further rows after calling
 	 * this method!
 	 * 
-	 * @param	integer		$type		fetch type
+	 * @param	int		$type		fetch type
 	 * @return	mixed
 	 * @see		\wcf\system\database\statement\PreparedStatement::fetchArray()
 	 */
@@ -144,7 +144,7 @@ class PreparedStatement {
 	 * Note: It is not possible to fetch further rows after calling
 	 * this method!
 	 * 
-	 * @param	integer		$columnNumber
+	 * @param	int		$columnNumber
 	 * @return	mixed
 	 * @see		\PDOStatement::fetchColumn()
 	 */
@@ -216,7 +216,7 @@ class PreparedStatement {
 	 * 
 	 * @param	string		$keyColumn	name of the key column
 	 * @param	string		$valueColumn	name of the value column
-	 * @param	boolean		$uniqueKey	if `true`, a one-dimensional array is returned, otherwise, for each key an array of fetched values is returned 
+	 * @param	bool		$uniqueKey	if `true`, a one-dimensional array is returned, otherwise, for each key an array of fetched values is returned 
 	 * @return	string[]|string[][]
 	 */
 	public function fetchMap($keyColumn, $valueColumn, $uniqueKey = true) {
@@ -261,7 +261,7 @@ class PreparedStatement {
 	/**
 	 * Counts number of affected rows by the last sql statement (INSERT, UPDATE or DELETE).
 	 * 
-	 * @return	integer		number of affected rows
+	 * @return	int		number of affected rows
 	 * @throws	DatabaseQueryException
 	 */
 	public function getAffectedRows() {
@@ -276,7 +276,7 @@ class PreparedStatement {
 	/**
 	 * Returns the number of the last error.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getErrorNumber() {
 		if ($this->pdoStatement !== null) return $this->pdoStatement->errorCode();

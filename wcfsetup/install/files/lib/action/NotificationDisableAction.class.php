@@ -17,13 +17,13 @@ use wcf\util\StringUtil;
 class NotificationDisableAction extends AbstractAction {
 	/**
 	 * event id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $eventID = 0;
 	
 	/**
 	 * user id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $userID = 0;
 	

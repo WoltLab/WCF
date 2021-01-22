@@ -52,7 +52,7 @@ class ModerationQueueActivationManager extends AbstractModerationQueueManager {
 	 * Adds an entry for moderated content.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @param	array		$additionalData
 	 * @throws	InvalidObjectTypeException
 	 */
@@ -79,8 +79,8 @@ class ModerationQueueActivationManager extends AbstractModerationQueueManager {
 	 * This method is intended for bulk processing.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer[]	$objectID
-	 * @poram	integer[]	$containerIDs		format: `objectID => containerID`
+	 * @param	int[]	$objectID
+	 * @poram	int[]	$containerIDs		format: `objectID => containerID`
 	 * @param	array		$additionalData
 	 * @throws	InvalidObjectTypeException
 	 */
@@ -101,7 +101,7 @@ class ModerationQueueActivationManager extends AbstractModerationQueueManager {
 	 * Marks entries from moderation queue as done.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer[]	$objectIDs
+	 * @param	int[]	$objectIDs
 	 * @throws	InvalidObjectTypeException
 	 */
 	public function removeModeratedContent($objectType, array $objectIDs) {

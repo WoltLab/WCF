@@ -13,13 +13,13 @@ use wcf\util\StringUtil;
 class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 	/**
 	 * current iterator index
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $index = 0;
 	
 	/**
 	 * list of index to object relation
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $indexToObject = [];
 	
@@ -54,7 +54,7 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 	 * @param	string		$identifier
 	 * @param	string		$name
 	 * @param	string		$value
-	 * @param	boolean		$isProperty
+	 * @param	bool		$isProperty
 	 */
 	public function addTag($identifier, $name, $value, $isProperty = false) {
 		if (!isset($this->objects[$identifier])) {

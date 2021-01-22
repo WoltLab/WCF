@@ -31,13 +31,13 @@ class NoticeEditForm extends NoticeAddForm {
 	
 	/**
 	 * id of the edited notice object
-	 * @var	integer
+	 * @var	int
 	 */
 	public $noticeID = 0;
 	
 	/**
 	 * 1 if the notice will be displayed for all users again
-	 * @var	integer
+	 * @var	int
 	 */
 	public $resetIsDismissed = 0;
 	

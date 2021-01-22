@@ -27,7 +27,7 @@ interface IUserCondition extends ICondition {
 	 * 
 	 * @param	Condition	$condition
 	 * @param	User		$user
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function checkUser(Condition $condition, User $user);
 }

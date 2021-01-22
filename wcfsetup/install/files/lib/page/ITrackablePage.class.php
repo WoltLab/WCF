@@ -14,7 +14,7 @@ interface ITrackablePage {
 	/**
 	 * Returns true if this page should be tracked.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isTracked();
 	
@@ -35,7 +35,7 @@ interface ITrackablePage {
 	/**
 	 * Returns the parent object id.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getParentObjectID();
 	
@@ -49,7 +49,7 @@ interface ITrackablePage {
 	/**
 	 * Returns the object id.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getObjectID();
 }

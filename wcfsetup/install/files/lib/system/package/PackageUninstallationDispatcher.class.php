@@ -27,7 +27,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	/**
 	 * is true if the package's uninstall script has been executed or if no
 	 * such script exists
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $didExecuteUninstallScript = false;
 	
@@ -157,8 +157,8 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	 * 
 	 * @param	string		$targetDir
 	 * @param	string[]	$files
-	 * @param	boolean		$deleteEmptyDirectories
-	 * @param	boolean		$deleteEmptyTargetDir
+	 * @param	bool		$deleteEmptyDirectories
+	 * @param	bool		$deleteEmptyTargetDir
 	 */
 	public function deleteFiles($targetDir, $files, $deleteEmptyTargetDir = false, $deleteEmptyDirectories = true) {
 		new Uninstaller($targetDir, $files, $deleteEmptyTargetDir, $deleteEmptyDirectories);

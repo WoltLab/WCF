@@ -61,7 +61,7 @@ class WysiwygFormContainer extends FormContainer {
 	
 	/**
 	 * id of the edited object
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $objectId;
 	
@@ -115,19 +115,19 @@ class WysiwygFormContainer extends FormContainer {
 	
 	/**
 	 * is `true` if the wysiwyg form field will support mentions, otherwise `false`
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $supportMentions = false;
 	
 	/**
 	 * is `true` if quotes are supported for this container, otherwise `false`
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $supportQuotes = false;
 	
 	/**
 	 * is `true` if smilies are supported for this container, otherwise `false`
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $supportSmilies = true;
 	
@@ -187,7 +187,7 @@ class WysiwygFormContainer extends FormContainer {
 	 * By default, no attachment data is set.
 	 * 
 	 * @param	null|string	$objectType		name of attachment object type or `null` to unset previous attachment data
-	 * @param	integer		$parentObjectID		id of the parent of the object the attachments belong to or `0` if no such parent exists
+	 * @param	int		$parentObjectID		id of the parent of the object the attachments belong to or `0` if no such parent exists
 	 * @return	WysiwygFormContainer			this form container
 	 * @throws	\BadMethodCallException			if the attachment form field has already been initialized
 	 */
@@ -250,7 +250,7 @@ class WysiwygFormContainer extends FormContainer {
 	/**
 	 * Returns the id of the edited object or `0` if no object is edited.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getObjectId() {
 		return $this->objectId;
@@ -574,7 +574,7 @@ class WysiwygFormContainer extends FormContainer {
 	 * 
 	 * By default, mentions are not supported.
 	 * 
-	 * @param	boolean		$supportMentions
+	 * @param	bool		$supportMentions
 	 * @return	WysiwygFormContainer		this form container
 	 */
 	public function supportMentions($supportMentions = true) {
@@ -593,7 +593,7 @@ class WysiwygFormContainer extends FormContainer {
 	 * 
 	 * By default, quotes are not supported.
 	 * 
-	 * @param	boolean		$supportQuotes
+	 * @param	bool		$supportQuotes
 	 * @return	WysiwygFormContainer		this form container
 	 */
 	public function supportQuotes($supportQuotes = true) {
@@ -612,7 +612,7 @@ class WysiwygFormContainer extends FormContainer {
 	 * 
 	 * By default, smilies are supported.
 	 * 
-	 * @param	boolean		$supportSmilies
+	 * @param	bool		$supportSmilies
 	 * @return	WysiwygFormContainer		this form container
 	 */
 	public function supportSmilies($supportSmilies = true) {

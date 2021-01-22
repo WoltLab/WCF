@@ -22,13 +22,13 @@ use wcf\util\UserUtil;
 class EmailActivationForm extends AbstractForm {
 	/**
 	 * user id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $userID = null;
 	
 	/**
 	 * activation code
-	 * @var	integer
+	 * @var	int
 	 */
 	public $activationCode = '';
 	

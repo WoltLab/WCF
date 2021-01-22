@@ -29,7 +29,7 @@ class RecaptchaHandler implements ICaptchaHandler {
 	
 	/**
 	 * ACP option override
-	 * @var boolean
+	 * @var bool
 	 */
 	public static $forceIsAvailable = false;
 	

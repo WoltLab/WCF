@@ -37,7 +37,7 @@ class ContactRecipientEditForm extends ContactRecipientAddForm {
 	public $recipient;
 	
 	/**
-	 * @var integer
+	 * @var int
 	 */
 	public $recipientID = 0;
 	

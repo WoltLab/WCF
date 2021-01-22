@@ -33,7 +33,7 @@ class SmtpEmailTransport implements IEmailTransport {
 	
 	/**
 	 * port to use
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $port;
 	
@@ -78,7 +78,7 @@ class SmtpEmailTransport implements IEmailTransport {
 	 * Creates a new SmtpEmailTransport using the given host.
 	 * 
 	 * @param	string	$host		host of the smtp server to use
-	 * @param	integer	$port		port to use
+	 * @param	int	$port		port to use
 	 * @param	string	$username	username to use for authentication
 	 * @param	string	$password	corresponding password
 	 * @param	string	$starttls	one of 'none', 'may' and 'encrypt'
@@ -157,7 +157,7 @@ class SmtpEmailTransport implements IEmailTransport {
 	 * Reads a server reply and validates it against the given expected status codes.
 	 * Returns a tuple [ status code, reply text ].
 	 * 
-	 * @param	integer[]	$expectedCodes
+	 * @param	int[]	$expectedCodes
 	 * @return	array
 	 * @throws	PermanentFailure
 	 * @throws	TransientFailure
@@ -227,7 +227,7 @@ class SmtpEmailTransport implements IEmailTransport {
 	 * Connects to the server and enables STARTTLS if available. Bails
 	 * out if STARTTLS is not available and connection is set to 'encrypt'.
 	 * 
-	 * @param       integer         $overrideTimeout
+	 * @param       int         $overrideTimeout
 	 * @throws	PermanentFailure
 	 */
 	protected function connect($overrideTimeout = null) {

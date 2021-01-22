@@ -25,7 +25,7 @@ abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition
 	/**
 	 * is true if the entered value should be split by commas to search for
 	 * multiple values
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $supportsMultipleValues = false;
 	

@@ -18,7 +18,7 @@ class Request {
 	protected $className = '';
 	
 	/**
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $isLandingPage = false;
 	
@@ -30,7 +30,7 @@ class Request {
 	
 	/**
 	 * current page id
-	 * @var integer
+	 * @var int
 	 */
 	protected $pageID;
 	
@@ -87,7 +87,7 @@ class Request {
 	/**
 	 * Returns true if this request has already been executed.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isExecuted() {
 		return ($this->requestObject !== null);
@@ -96,7 +96,7 @@ class Request {
 	/**
 	 * Returns true if this request represents the landing page.
 	 * 
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isLandingPage() {
 		return $this->isLandingPage;
@@ -151,7 +151,7 @@ class Request {
 	/**
 	 * Returns true if the requested page is available during the offline mode.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isAvailableDuringOfflineMode() {
 		if (defined($this->className . '::AVAILABLE_DURING_OFFLINE_MODE') && constant($this->className . '::AVAILABLE_DURING_OFFLINE_MODE')) {
@@ -168,7 +168,7 @@ class Request {
 	/**
 	 * Returns the current page id.
 	 * 
-	 * @return	integer		current page id or `0` if unknown
+	 * @return	int		current page id or `0` if unknown
 	 */
 	public function getPageID() {
 		if ($this->pageID === null) {

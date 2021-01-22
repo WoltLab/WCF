@@ -29,7 +29,7 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
 	
 	/**
 	 * enables the display of the user online record
-	 * @var boolean
+	 * @var bool
 	 */
 	public $showRecord = true;
 	

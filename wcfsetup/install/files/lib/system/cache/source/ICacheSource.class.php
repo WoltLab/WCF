@@ -14,7 +14,7 @@ interface ICacheSource {
 	 * Flushes a specific cache, optionally removing caches which share the same name.
 	 * 
 	 * @param	string		$cacheName
-	 * @param	boolean		$useWildcard
+	 * @param	bool		$useWildcard
 	 */
 	public function flush($cacheName, $useWildcard);
 	
@@ -27,7 +27,7 @@ interface ICacheSource {
 	 * Returns a cached variable.
 	 * 
 	 * @param	string		$cacheName
-	 * @param	integer		$maxLifetime
+	 * @param	int		$maxLifetime
 	 * @return	mixed
 	 */
 	public function get($cacheName, $maxLifetime);
@@ -37,7 +37,7 @@ interface ICacheSource {
 	 * 
 	 * @param	string		$cacheName
 	 * @param	mixed		$value
-	 * @param	integer		$maxLifetime
+	 * @param	int		$maxLifetime
 	 */
 	public function set($cacheName, $value, $maxLifetime);
 }

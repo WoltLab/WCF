@@ -11,7 +11,7 @@ use wcf\system\html\input\HtmlInputProcessor;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Message\Embedded\Object
  * 
- * @property-read	integer		$objectTypeID	id of the embedded object type
+ * @property-read	int		$objectTypeID	id of the embedded object type
  */
 interface IMessageEmbeddedObjectHandler {
 	/**
@@ -21,7 +21,7 @@ interface IMessageEmbeddedObjectHandler {
 	 * 
 	 * @param       HtmlInputProcessor      $htmlInputProcessor     html input processor holding the current document
 	 * @param       mixed[]                 $embeddedData           list of found embedded data with attributes
-	 * @return      integer[]               ids of found embedded objects
+	 * @return      int[]               ids of found embedded objects
 	 */
 	public function parse(HtmlInputProcessor $htmlInputProcessor, array $embeddedData);
 	

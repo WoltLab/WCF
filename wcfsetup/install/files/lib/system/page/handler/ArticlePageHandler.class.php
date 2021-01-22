@@ -33,7 +33,6 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
 		return ViewableArticleRuntimeCache::getInstance()->getObject($objectID) !== null;
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */
@@ -87,7 +86,7 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
 	/**
 	 * @inheritDoc
 	 */
-	public function prepareOnlineLocation(/** @noinspection PhpUnusedParameterInspection */Page $page, UserOnline $user) {
+	public function prepareOnlineLocation(Page $page, UserOnline $user) {
 		if ($user->pageObjectID !== null) {
 			ViewableArticleContentRuntimeCache::getInstance()->cacheObjectID($user->pageObjectID);
 		}

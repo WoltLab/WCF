@@ -22,7 +22,7 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 	
 	/**
 	 * update server id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $packageUpdateServerID = 0;
 	

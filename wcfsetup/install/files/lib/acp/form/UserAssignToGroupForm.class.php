@@ -11,7 +11,6 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
-use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 
@@ -36,13 +35,13 @@ class UserAssignToGroupForm extends AbstractForm {
 	
 	/**
 	 * ids of the relevant users
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $userIDs = [];
 	
 	/**
 	 * ids of the assigned user groups
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $groupIDs = [];
 	
@@ -60,7 +59,7 @@ class UserAssignToGroupForm extends AbstractForm {
 	
 	/**
 	 * id of the user clipboard item object type
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $objectTypeID = null;
 	

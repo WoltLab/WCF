@@ -29,7 +29,7 @@ class TagEditForm extends TagAddForm {
 	
 	/**
 	 * tag id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $tagID = 0;
 	

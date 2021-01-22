@@ -17,8 +17,8 @@ class CategoryArticleList extends AccessibleArticleList {
 	/**
 	 * Creates a new CategoryArticleList object.
 	 *
-	 * @param	integer|integer[]       $categoryID
-	 * @param       boolean                 $includeChildCategories
+	 * @param	int|int[]       $categoryID
+	 * @param       bool                 $includeChildCategories
 	 * @throws      \InvalidArgumentException
 	 */
 	public function __construct($categoryID, $includeChildCategories = false) {

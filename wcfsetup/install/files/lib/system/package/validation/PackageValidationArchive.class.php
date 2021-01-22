@@ -35,7 +35,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	
 	/**
 	 * nesting depth
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $depth = 0;
 	
@@ -59,7 +59,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	
 	/**
 	 * children pointer
-	 * @var	integer
+	 * @var	int
 	 */
 	private $position = 0;
 	
@@ -68,7 +68,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	 * 
 	 * @param	string				$archive
 	 * @param	PackageValidationArchive	$parent
-	 * @param	integer				$depth
+	 * @param	int				$depth
 	 */
 	public function __construct($archive, PackageValidationArchive $parent = null, $depth = 0) {
 		$this->archive = new PackageArchive($archive);
@@ -80,9 +80,9 @@ class PackageValidationArchive implements \RecursiveIterator {
 	 * Validates this package and optionally it's delivered requirements. The set validation
 	 * mode will toggle between different checks. 
 	 * 
-	 * @param	integer		$validationMode
+	 * @param	int		$validationMode
 	 * @param	string		$requiredVersion
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function validate($validationMode, $requiredVersion = '') {
 		if ($validationMode !== PackageValidationManager::VALIDATION_EXCLUSION) {
@@ -183,7 +183,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	 * Validates if the package has suitable install or update instructions
 	 * 
 	 * @param	string		$requiredVersion
-	 * @param	integer		$validationMode
+	 * @param	int		$validationMode
 	 * @throws	PackageValidationException
 	 */
 	protected function validateInstructions($requiredVersion, $validationMode) {
@@ -431,7 +431,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	/**
 	 * Returns nesting depth.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getDepth() {
 		return $this->depth;

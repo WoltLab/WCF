@@ -27,7 +27,7 @@ abstract class AbstractHtmlProcessor implements IHtmlProcessor {
 	 * Sets the message context data.
 	 * 
 	 * @param       string          $objectType     object type identifier
-	 * @param       integer         $objectID       object id
+	 * @param       int         $objectID       object id
 	 * @throws      InvalidObjectTypeException
 	 */
 	public function setContext($objectType, $objectID) {

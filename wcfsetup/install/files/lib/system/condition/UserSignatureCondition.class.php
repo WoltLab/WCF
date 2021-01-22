@@ -31,13 +31,13 @@ class UserSignatureCondition extends AbstractSelectCondition implements IContent
 	
 	/**
 	 * value of the "user has no signature" option
-	 * @var	integer
+	 * @var	int
 	 */
 	const NO_SIGNATURE = 0;
 	
 	/**
 	 * value of the "user has a signature" option
-	 * @var	integer
+	 * @var	int
 	 */
 	const SIGNATURE = 1;
 	

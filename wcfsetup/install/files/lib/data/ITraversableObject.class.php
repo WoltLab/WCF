@@ -13,7 +13,7 @@ interface ITraversableObject extends \SeekableIterator {
 	/**
 	 * Sets internal iterator pointer based upon related object id.
 	 * 
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 */
 	public function seekTo($objectID);
 	
@@ -21,7 +21,7 @@ interface ITraversableObject extends \SeekableIterator {
 	 * Searches a specific object by object id and setting internal iterator
 	 * pointer to found item. Returns `null` if object id is not found.
 	 * 
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @return	DatabaseObject|null
 	 */
 	public function search($objectID);

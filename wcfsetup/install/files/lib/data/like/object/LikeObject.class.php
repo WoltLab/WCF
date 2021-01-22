@@ -15,13 +15,13 @@ use wcf\util\JSON;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Like\Object
  *
- * @property-read	integer		$likeObjectID		unique id of the liked object
- * @property-read	integer		$objectTypeID		id of the `com.woltlab.wcf.like.likeableObject` object type
- * @property-read	integer		$objectID		id of the liked object
- * @property-read	integer|null	$objectUserID		id of the user who created the liked object or null if user has been deleted or object was created by guest
- * @property-read	integer		$likes			number of likes of the liked object
- * @property-read	integer		$dislikes		legacy column, not used anymore
- * @property-read	integer		$cumulativeLikes	number of likes of the liked object
+ * @property-read	int		$likeObjectID		unique id of the liked object
+ * @property-read	int		$objectTypeID		id of the `com.woltlab.wcf.like.likeableObject` object type
+ * @property-read	int		$objectID		id of the liked object
+ * @property-read	int|null	$objectUserID		id of the user who created the liked object or null if user has been deleted or object was created by guest
+ * @property-read	int		$likes			number of likes of the liked object
+ * @property-read	int		$dislikes		legacy column, not used anymore
+ * @property-read	int		$cumulativeLikes	number of likes of the liked object
  * @property-read	string		$cachedUsers		serialized array with the ids and names of the three users who liked (+1) the object last
  * @property-read	string		$cachedReactions	serialized array with the reactionTypeIDs and the count of the reactions
  */
@@ -45,13 +45,13 @@ class LikeObject extends DatabaseObject {
 	
 	/**
 	 * A list with all reaction counts. 
-	 * @var integer[] 
+	 * @var int[] 
 	 */
 	protected $reactions = [];
 	
 	/**
 	 * The reputation for the current object. 
-	 * @var integer
+	 * @var int
 	 */
 	protected $reputation = null;
 	
@@ -142,7 +142,7 @@ class LikeObject extends DatabaseObject {
 	 * Returns all reaction counts for this object. Reactions without any count won't be saved in the array. 
 	 * So this method returns an empty array, if this object has no reactions.
 	 * 
-	 * @return      integer[]
+	 * @return      int[]
 	 * @since	5.2
 	 */
 	public function getReactions() {
@@ -161,8 +161,8 @@ class LikeObject extends DatabaseObject {
 	/**
 	 * Returns the like object with the given type and object id.
 	 * 
-	 * @param	integer		$objectTypeID
-	 * @param	integer		$objectID
+	 * @param	int		$objectTypeID
+	 * @param	int		$objectID
 	 * @return	LikeObject
 	 */
 	public static function getLikeObject($objectTypeID, $objectID) {

@@ -40,7 +40,7 @@ class HtmlInputNodeTextParser {
 	
 	/**
 	 * number of found smilies
-	 * @var integer
+	 * @var int
 	 */
 	protected $smileyCount = 0;
 	
@@ -83,7 +83,7 @@ class HtmlInputNodeTextParser {
 	 * HtmlInputNodeTextParser constructor.
 	 * 
 	 * @param HtmlInputNodeProcessor $htmlInputNodeProcessor
-	 * @param integer $smileyCount
+	 * @param int $smileyCount
 	 */
 	public function __construct(HtmlInputNodeProcessor $htmlInputNodeProcessor, $smileyCount = 0) {
 		$this->htmlInputNodeProcessor = $htmlInputNodeProcessor;
@@ -403,8 +403,8 @@ class HtmlInputNodeTextParser {
 	 * 
 	 * @param       \DOMText        $text           text node
 	 * @param       string          $value          node value
-	 * @param       boolean         $allowURL       url bbcode is allowed
-	 * @param       boolean         $allowMedia     media bbcode is allowed
+	 * @param       bool         $allowURL       url bbcode is allowed
+	 * @param       bool         $allowMedia     media bbcode is allowed
 	 * @return      string          modified node value with replacement placeholders
 	 */
 	protected function parseURL(\DOMText $text, $value, $allowURL, $allowMedia) {
@@ -647,7 +647,7 @@ class HtmlInputNodeTextParser {
 	 * auto-detection of content.
 	 * 
 	 * @param       \DOMText        $text           text node
-	 * @return      boolean         true if text node is inside a code element
+	 * @return      bool         true if text node is inside a code element
 	 */
 	protected function hasCodeParent(\DOMText $text) {
 		$parent = $text;
@@ -670,7 +670,7 @@ class HtmlInputNodeTextParser {
 	 * being recognized as a link again.
 	 * 
 	 * @param       \DOMText        $text           text node
-	 * @return      boolean         true if text node is inside a link
+	 * @return      bool         true if text node is inside a link
 	 */
 	protected function hasLinkParent(\DOMText $text) {
 		$parent = $text;
@@ -726,7 +726,7 @@ class HtmlInputNodeTextParser {
 	 * colons, that have been incorrectly matched.
 	 * 
 	 * @param	string		$match                                  matched username
-	 * @param       boolean         $trimTrailingSpecialCharacters          true to strip special characters found at the end of the match
+	 * @param       bool         $trimTrailingSpecialCharacters          true to strip special characters found at the end of the match
 	 * @return	string          sanitized username
 	 */
 	public function getUsername($match, $trimTrailingSpecialCharacters = true) {

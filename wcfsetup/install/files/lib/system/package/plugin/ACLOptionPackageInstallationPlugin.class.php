@@ -36,7 +36,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	
 	/**
 	 * list of loaded acl object type ids sorted by their option type name
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $optionTypeIDs = [];
 	
@@ -304,7 +304,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	 * or throws a SystemException if no such option type exists.
 	 * 
 	 * @param	string		$optionType
-	 * @return	integer
+	 * @return	int
 	 * @throws	SystemException
 	 */
 	protected function getObjectTypeID($optionType) {

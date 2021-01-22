@@ -108,7 +108,6 @@ class TrophyEditForm extends TrophyAddForm {
 		}
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */

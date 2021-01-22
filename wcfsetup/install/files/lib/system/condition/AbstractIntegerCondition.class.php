@@ -15,7 +15,7 @@ use wcf\system\WCF;
 abstract class AbstractIntegerCondition extends AbstractSingleFieldCondition {
 	/**
 	 * property value has to be greater than the given value
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $greaterThan = null;
 	
@@ -27,19 +27,19 @@ abstract class AbstractIntegerCondition extends AbstractSingleFieldCondition {
 	
 	/**
 	 * property value has to be less than the given value
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $lessThan = null;
 	
 	/**
 	 * maximum value the property can have
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $maxValue = null;
 	
 	/**
 	 * minimum value the property can have
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $minValue = null;
 	
@@ -136,7 +136,7 @@ HTML;
 	 * Returns the maximum value the property can have or `null` if there is no
 	 * such maximum.
 	 * 
-	 * @return	integer|null
+	 * @return	int|null
 	 */
 	protected function getMaxValue() {
 		if ($this->getDecoratedObject()->maxvalue !== null) {
@@ -172,7 +172,7 @@ HTML;
 	 * Returns the minimum value the property can have or `null` if there is no
 	 * such minimum.
 	 * 
-	 * @return	integer|null
+	 * @return	int|null
 	 */
 	protected function getMinValue() {
 		if ($this->getDecoratedObject()->minvalue !== null) {

@@ -26,7 +26,7 @@ define(["require", "exports", "tslib", "./Field", "../../../Core"], function (re
             };
         }
         _readField() {
-            this._fields = Array.from(document.querySelectorAll("input[name=" + this._fieldId + "]"));
+            this._fields = Array.from(document.querySelectorAll(`input[name="${this._fieldId}[]"]`));
         }
     }
     Core.enableLegacyInheritance(Checkboxes);

@@ -182,8 +182,6 @@
 		$(function() {
 			if (jQuery.browser.touch) $('html').addClass('touch');
 			
-			WCF.System.PageNavigation.init('.pagination');
-			
 			{if $__wcf->user->userID}
 				new WCF.ACP.Search();
 			{/if}

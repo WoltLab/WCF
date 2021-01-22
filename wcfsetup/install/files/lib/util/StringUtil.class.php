@@ -180,7 +180,7 @@ final class StringUtil {
 	/**
 	 * Formats an integer.
 	 * 
-	 * @param	integer		$integer
+	 * @param	int		$integer
 	 * @return	string
 	 */
 	public static function formatInteger($integer) {
@@ -196,7 +196,7 @@ final class StringUtil {
 	 * Formats a double.
 	 * 
 	 * @param	double		$double
-	 * @param	integer		$maxDecimals
+	 * @param	int		$maxDecimals
 	 * @return	string
 	 */
 	public static function formatDouble($double, $maxDecimals = 0) {
@@ -286,7 +286,7 @@ final class StringUtil {
 	 * @param	string		$search
 	 * @param	string		$replace
 	 * @param	string		$subject
-	 * @param	integer		$count
+	 * @param	int		$count
 	 * @return	string
 	 */
 	public static function replaceIgnoreCase($search, $replace, $subject, &$count = 0) {
@@ -303,7 +303,7 @@ final class StringUtil {
 	 * Alias to php str_split() function with multibyte support.
 	 * 
 	 * @param	string		$string
-	 * @param	integer		$length
+	 * @param	int		$length
 	 * @return	string[]
 	 */
 	public static function split($string, $length = 1) {
@@ -319,9 +319,9 @@ final class StringUtil {
 	 * 
 	 * @param	string		$haystack	The string to be checked for starting with $needle
 	 * @param	string		$needle		The string to be found at the start of $haystack
-	 * @param	boolean		$ci		Case insensitive or not. Default = false.
+	 * @param	bool		$ci		Case insensitive or not. Default = false.
 	 * 
-	 * @return	boolean				True, if $haystack starts with $needle, false otherwise.
+	 * @return	bool				True, if $haystack starts with $needle, false otherwise.
 	 */
 	public static function startsWith($haystack, $needle, $ci = false) {
 		if ($ci) {
@@ -337,8 +337,8 @@ final class StringUtil {
 	 * 
 	 * @param	string		$haystack
 	 * @param	string		$needle
-	 * @param	boolean		$ci		case insensitive
-	 * @return	boolean
+	 * @param	bool		$ci		case insensitive
+	 * @return	bool
 	 */
 	public static function endsWith($haystack, $needle, $ci = false) {
 		if ($ci) {
@@ -354,9 +354,9 @@ final class StringUtil {
 	 * Alias to php str_pad function with multibyte support.
 	 * 
 	 * @param	string		$input
-	 * @param	integer		$padLength
+	 * @param	int		$padLength
 	 * @param	string		$padString
-	 * @param	integer		$padType
+	 * @param	int		$padType
 	 * @return	string
 	 */
 	public static function pad($input, $padLength, $padString = ' ', $padType = STR_PAD_RIGHT) {
@@ -382,7 +382,7 @@ final class StringUtil {
 	/**
 	 * Takes a numeric HTML entity value and returns the appropriate UTF-8 bytes.
 	 * 
-	 * @param	integer		$dec		html entity value
+	 * @param	int		$dec		html entity value
 	 * @return	string				utf-8 bytes
 	 */
 	public static function getCharacter($dec) {
@@ -406,7 +406,7 @@ final class StringUtil {
 	 * @see		http://www1.tip.nl/~t876506/utf8tbl.html
 	 * 
 	 * @param	string		$c
-	 * @return	integer
+	 * @return	int
 	 */
 	public static function getCharValue($c) {
 		$ud = 0;
@@ -447,7 +447,7 @@ final class StringUtil {
 	 * Returns true if the given string contains only ASCII characters.
 	 * 
 	 * @param	string		$string
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isASCII($string) {
 		return preg_match('/^[\x00-\x7F]*$/', $string);
@@ -458,7 +458,7 @@ final class StringUtil {
 	 * @see		http://www.w3.org/International/questions/qa-forms-utf-8
 	 * 
 	 * @param	string		$string
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isUTF8($string) {
 		return preg_match('/^(
@@ -514,7 +514,7 @@ final class StringUtil {
 	 * 
 	 * @param	string		$word
 	 * @param	string		$filter
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function executeWordFilter($word, $filter) {
 		$filter = self::trim($filter);
@@ -548,9 +548,9 @@ final class StringUtil {
 	 * Truncates the given string to a certain number of characters.
 	 * 
 	 * @param	string		$string		string which shall be truncated
-	 * @param	integer		$length		string length after truncating
+	 * @param	int		$length		string length after truncating
 	 * @param	string		$etc		string to append when $string is truncated
-	 * @param	boolean		$breakWords	should words be broken in the middle
+	 * @param	bool		$breakWords	should words be broken in the middle
 	 * @return	string				truncated string
 	 */
 	public static function truncate($string, $length = 80, $etc = self::HELLIP, $breakWords = false) {
@@ -576,9 +576,9 @@ final class StringUtil {
 	 * Truncates a string containing HTML code and keeps the HTML syntax intact.
 	 * 
 	 * @param	string		$string			string which shall be truncated
-	 * @param	integer		$length			string length after truncating
+	 * @param	int		$length			string length after truncating
 	 * @param	string		$etc			ending string which will be appended after truncating
-	 * @param	boolean		$breakWords		if false words will not be split and the return string might be shorter than $length
+	 * @param	bool		$breakWords		if false words will not be split and the return string might be shorter than $length
 	 * @return	string					truncated string
 	 */
 	public static function truncateHTML($string, $length = 500, $etc = self::HELLIP, $breakWords = false) {
@@ -667,8 +667,8 @@ final class StringUtil {
 	 * 
 	 * @param	string		$url
 	 * @param	string		$title
-	 * @param	boolean		$encodeTitle
-	 * @param       boolean         $isUgc          true to add rel=ugc to the anchor tag 
+	 * @param	bool		$encodeTitle
+	 * @param       bool         $isUgc          true to add rel=ugc to the anchor tag 
 	 * @return	string		anchor tag
 	 */
 	public static function getAnchorTag($url, $title = '', $encodeTitle = true, $isUgc = false) {
@@ -693,7 +693,7 @@ final class StringUtil {
 	 * Generates the attributes for an anchor tag from given URL.
 	 *
 	 * @param	string		$url
-	 * @param       boolean         $isUgc          true to add rel=ugc to the attributes
+	 * @param       bool         $isUgc          true to add rel=ugc to the attributes
 	 * @return	string		attributes
 	 * @since       5.3
 	 */
@@ -726,7 +726,7 @@ final class StringUtil {
 	 * Splits given string into smaller chunks.
 	 * 
 	 * @param	string		$string
-	 * @param	integer		$length
+	 * @param	int		$length
 	 * @param	string		$break
 	 * @return	string
 	 */
@@ -738,7 +738,7 @@ final class StringUtil {
 	 * Simple multi-byte safe wordwrap() function.
 	 * 
 	 * @param	string		$string
-	 * @param	integer		$width
+	 * @param	int		$width
 	 * @param	string		$break
 	 * @return	string
 	 */
@@ -769,7 +769,7 @@ final class StringUtil {
 	/**
 	 * Shortens numbers larger than 1000 by using unit suffixes.
 	 * 
-	 * @param       integer         $number
+	 * @param       int         $number
 	 * @return      string
 	 */
 	public static function getShortUnit($number) {

@@ -186,7 +186,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 	/**
 	 * Enforces the maximum depth of nested quotes.
 	 * 
-	 * @param	integer		$depth
+	 * @param	int		$depth
 	 */
 	public function enforceQuoteDepth($depth) {
 		$quotes = [];
@@ -497,7 +497,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 	/**
 	 * Returns true if the message appears to be empty.
 	 *
-	 * @return      boolean         true if message appears to be empty
+	 * @return      bool         true if message appears to be empty
 	 */
 	public function appearsToBeEmpty() {
 		if ($this->getTextContent() !== '') {

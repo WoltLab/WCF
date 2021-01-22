@@ -18,7 +18,7 @@ final class ClassUtil {
 	 * 
 	 * @param	object		$a
 	 * @param	object		$b
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function equals($a, $b) {
 		if (!is_object($a)) return false;
@@ -32,7 +32,7 @@ final class ClassUtil {
 	 * 
 	 * @param	string		$className
 	 * @param	string		$targetClass
-	 * @return	boolean
+	 * @return	bool
 	 * @throws	SystemException
 	 * 
 	 * @deprecated	use is_subclass_of() instead

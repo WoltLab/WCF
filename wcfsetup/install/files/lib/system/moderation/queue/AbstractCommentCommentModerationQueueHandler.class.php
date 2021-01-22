@@ -91,7 +91,7 @@ class AbstractCommentCommentModerationQueueHandler extends AbstractModerationQue
 	/**
 	 * Returns a comment object by comment id or null if comment id is invalid.
 	 * 
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @return	Comment|null
 	 */
 	protected function getComment($objectID) {

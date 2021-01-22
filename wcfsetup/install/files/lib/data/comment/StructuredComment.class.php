@@ -30,19 +30,19 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
 	
 	/**
 	 * deletable by current user
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $deletable = false;
 	
 	/**
 	 * editable by current user
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $editable = false;
 	
 	/**
 	 * iterator index
-	 * @var	integer
+	 * @var	int
 	 */
 	private $position = 0;
 	
@@ -73,7 +73,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
 	/**
 	 * Returns timestamp of oldest response loaded.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getLastResponseTime() {
 		$lastResponseTime = 0;
@@ -119,7 +119,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
 	/**
 	 * Sets deletable state.
 	 * 
-	 * @param	boolean		$deletable
+	 * @param	bool		$deletable
 	 */
 	public function setIsDeletable($deletable) {
 		$this->deletable = $deletable;
@@ -128,7 +128,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
 	/**
 	 * Sets editable state.
 	 * 
-	 * @param	boolean		$editable
+	 * @param	bool		$editable
 	 */
 	public function setIsEditable($editable) {
 		$this->editable = $editable;
@@ -137,7 +137,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
 	/**
 	 * Returns true if the comment is deletable by current user.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isDeletable() {
 		return $this->deletable;
@@ -146,7 +146,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
 	/**
 	 * Returns true if the comment is editable by current user.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isEditable() {
 		return $this->editable;

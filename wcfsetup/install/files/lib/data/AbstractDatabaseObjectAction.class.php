@@ -33,7 +33,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	
 	/**
 	 * list of object ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $objectIDs = [];
 	
@@ -424,7 +424,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * Reads an integer value and validates it.
 	 * 
 	 * @param	string		$variableName
-	 * @param	boolean		$allowEmpty
+	 * @param	bool		$allowEmpty
 	 * @param	string		$arrayIndex
 	 */
 	protected function readInteger($variableName, $allowEmpty = false, $arrayIndex = '') {
@@ -435,7 +435,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * Reads an integer array and validates it.
 	 * 
 	 * @param	string		$variableName
-	 * @param	boolean		$allowEmpty
+	 * @param	bool		$allowEmpty
 	 * @param	string		$arrayIndex
 	 * @since	3.0
 	 */
@@ -447,7 +447,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * Reads a string value and validates it.
 	 * 
 	 * @param	string		$variableName
-	 * @param	boolean		$allowEmpty
+	 * @param	bool		$allowEmpty
 	 * @param	string		$arrayIndex
 	 */
 	protected function readString($variableName, $allowEmpty = false, $arrayIndex = '') {
@@ -458,7 +458,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * Reads a string array and validates it.
 	 * 
 	 * @param	string		$variableName
-	 * @param	boolean		$allowEmpty
+	 * @param	bool		$allowEmpty
 	 * @param	string		$arrayIndex
 	 * @since	3.0
 	 */
@@ -470,7 +470,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * Reads a boolean value and validates it.
 	 * 
 	 * @param	string		$variableName
-	 * @param	boolean		$allowEmpty
+	 * @param	bool		$allowEmpty
 	 * @param	string		$arrayIndex
 	 */
 	protected function readBoolean($variableName, $allowEmpty = false, $arrayIndex = '') {
@@ -481,7 +481,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * Reads a json-encoded value and validates it.
 	 * 
 	 * @param	string		$variableName
-	 * @param	boolean		$allowEmpty
+	 * @param	bool		$allowEmpty
 	 * @param	string		$arrayIndex
 	 */
 	protected function readJSON($variableName, $allowEmpty = false, $arrayIndex = '') {
@@ -490,14 +490,14 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	
 	/**
 	 * Reads a value and validates it. If you set $allowEmpty to true, no exception will
-	 * be thrown if the variable evaluates to 0 (integer) or '' (string). Furthermore the
+	 * be thrown if the variable evaluates to 0 (int) or '' (string). Furthermore the
 	 * variable will be always created with a sane value if it does not exist.
 	 * 
 	 * @param	string		$variableName
-	 * @param	boolean		$allowEmpty
+	 * @param	bool		$allowEmpty
 	 * @param	string		$arrayIndex
-	 * @param	integer		$type
-	 * @param	integer		$structure
+	 * @param	int		$type
+	 * @param	int		$structure
 	 * @throws	SystemException
 	 * @throws	UserInputException
 	 */

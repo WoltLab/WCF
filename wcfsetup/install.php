@@ -62,7 +62,7 @@ class SystemException extends \Exception implements IPrintableException {
 	 * Creates a new SystemException.
 	 *
 	 * @param	string		$message	error message
-	 * @param	integer		$code		error code
+	 * @param	int		$code		error code
 	 * @param	string		$description	description of the error
 	 * @param	\Exception	$previous	repacked Exception
 	 */
@@ -508,10 +508,10 @@ function handleException($e) {
 /**
  * Catches php errors and throws instead a system exception.
  *
- * @param	integer		$errorNo
+ * @param	int		$errorNo
  * @param	string		$message
  * @param	string		$filename
- * @param	integer		$lineNo
+ * @param	int		$lineNo
  * @throws	SystemException
  */
 function handleError($errorNo, $message, $filename, $lineNo) {
@@ -541,7 +541,7 @@ if (!function_exists('is_countable')) {
 class BasicFileUtil {
 	/**
 	 * chmod mode
-	 * @var	integer
+	 * @var	int
 	 */
 	protected static $mode = null;
 	
@@ -720,7 +720,7 @@ class BasicFileUtil {
 	 * necessary.
 	 * 
 	 * @param	string		$path
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function makePath($path) {
 		// directory already exists, abort
@@ -783,13 +783,13 @@ class Tar {
 	
 	/**
 	 * indicates if tar file is opened
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $opened = false;
 	
 	/**
 	 * indicates if file content has been read
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $read = false;
 	
@@ -801,7 +801,7 @@ class Tar {
 	
 	/**
 	 * indicates if the tar file is (g)zipped
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $isZipped = false;
 	
@@ -813,7 +813,7 @@ class Tar {
 	
 	/**
 	 * chunk size for extracting
-	 * @var	integer
+	 * @var	int
 	 */
 	const CHUNK_SIZE = 8192;
 	
@@ -1030,7 +1030,7 @@ class Tar {
 	 * Unpacks file header for one file entry.
 	 * 
 	 * @param	string		$binaryData
-	 * @return	array|boolean
+	 * @return	array|bool
 	 */
 	protected function readHeader($binaryData) {
 		if (strlen($binaryData) != 512) {
@@ -1095,7 +1095,7 @@ class Tar {
 	/**
 	 * Returns true if this tar is (g)zipped.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isZipped() {
 		return $this->isZipped;
@@ -1172,7 +1172,7 @@ class GZipFile extends File {
 	/**
 	 * checks if gz*64 functions are available instead of gz*
 	 * https://bugs.php.net/bug.php?id=53829
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected static $gzopen64 = null;
 	
@@ -1226,7 +1226,7 @@ class GZipFile extends File {
 	/**
 	 * Returns the filesize of the unzipped file.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getFileSize() {
 		$byteBlock = 1<<14;

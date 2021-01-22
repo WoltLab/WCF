@@ -22,25 +22,25 @@ class StyleExportForm extends AbstractForm {
 	
 	/**
 	 * true, if style has custom images
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $canExportImages = false;
 	
 	/**
 	 * true, if style has custom templates
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $canExportTemplates = false;
 	
 	/**
 	 * export style as installable package
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $exportAsPackage = false;
 	
 	/**
 	 * true, if templates should be exported
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $exportTemplates = false;
 	
@@ -57,7 +57,7 @@ class StyleExportForm extends AbstractForm {
 	
 	/**
 	 * style id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $styleID = 0;
 	

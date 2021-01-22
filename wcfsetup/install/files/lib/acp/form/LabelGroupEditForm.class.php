@@ -29,7 +29,7 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 	
 	/**
 	 * group id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $groupID = 0;
 	

@@ -23,7 +23,7 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 	
 	/**
 	 * language ids
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $languageIDs = [];
 	
@@ -34,7 +34,7 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 	
 	/**
 	 * object type ids
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $objectTypeIDs = [];
 	
@@ -59,8 +59,8 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * Parses a list of language ids. If one given language id evaluates to '0' all ids will be discarded.
 	 * 
-	 * @param	integer[]		$parameters
-	 * @return	integer[]
+	 * @param	int[]		$parameters
+	 * @return	int[]
 	 */
 	protected function parseLanguageIDs(array $parameters) {
 		// handle special '0' value
@@ -115,7 +115,7 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 	 * 
 	 * @param	TagCloudTag	$tagA
 	 * @param	TagCloudTag	$tagB
-	 * @return	integer
+	 * @return	int
 	 */
 	protected static function compareTags($tagA, $tagB) {
 		if ($tagA->counter > $tagB->counter) return -1;

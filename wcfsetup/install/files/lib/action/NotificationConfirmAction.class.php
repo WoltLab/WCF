@@ -34,7 +34,7 @@ class NotificationConfirmAction extends AbstractAction {
 	
 	/**
 	 * user notification id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $notificationID = 0;
 	

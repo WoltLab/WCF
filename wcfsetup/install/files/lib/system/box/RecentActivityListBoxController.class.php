@@ -22,7 +22,7 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 	/**
 	 * is true if the list of recent activity can be filtered to only include
 	 * activities by followed users
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $canFilterByFollowedUsers = false;
 	
@@ -34,13 +34,13 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 	/**
 	 * is true if the list of recent activity is filtered to only include
 	 * activities by followed users
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $filteredByFollowedUsers = false;
 	
 	/**
 	 * is true if filtering by followed users yielded no results
-	 * @var boolean
+	 * @var bool
 	 */
 	public $filteredByFollowedUsersOverride = false;
 	

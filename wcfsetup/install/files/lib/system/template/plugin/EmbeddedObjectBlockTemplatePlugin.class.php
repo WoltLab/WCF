@@ -17,7 +17,7 @@ use wcf\system\template\TemplateEngine;
 class EmbeddedObjectBlockTemplatePlugin implements IBlockTemplatePlugin {
 	/**
 	 * internal loop counter
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $counter = 0;
 	

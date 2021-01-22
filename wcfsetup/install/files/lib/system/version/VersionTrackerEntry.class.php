@@ -10,11 +10,11 @@ namespace wcf\system\version;
  * @package	WoltLabSuite\Core\System\Version
  * @since	3.1
  * 
- * @property-read	integer		$versionID		unique id of the tracked version entry
- * @property-read	integer		$objectID		id of the edited object
- * @property-read	integer|null	$userID			id of the user who has created the previous version of the object or `null` if the user does not exist anymore or if the previous version has been created by a guest
+ * @property-read	int		$versionID		unique id of the tracked version entry
+ * @property-read	int		$objectID		id of the edited object
+ * @property-read	int|null	$userID			id of the user who has created the previous version of the object or `null` if the user does not exist anymore or if the previous version has been created by a guest
  * @property-read	string		$username		name of the user who has created the previous version of the object
- * @property-read	integer		$time			timestamp at which the original version has been created
+ * @property-read	int		$time			timestamp at which the original version has been created
  */
 class VersionTrackerEntry {
 	/**
@@ -32,7 +32,7 @@ class VersionTrackerEntry {
 	/**
 	 * VersionTrackerEntry constructor.
 	 *
-	 * @param       integer         $id             id
+	 * @param       int         $id             id
 	 * @param       array           $data           version data
 	 */
 	public function __construct($id, array $data) {
@@ -73,7 +73,7 @@ class VersionTrackerEntry {
 	 * is not NULL.
 	 *
 	 * @param	string		$name
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function __isset($name) {
 		return isset($this->data[$name]);
@@ -83,7 +83,7 @@ class VersionTrackerEntry {
 	 * Returns the stored value of a property or null if unknown.
 	 * 
 	 * @param       string          $property       property name
-	 * @param       integer         $languageID     language id
+	 * @param       int         $languageID     language id
 	 * @return      string
 	 */
 	public function getPayload($property, $languageID) {
@@ -99,7 +99,7 @@ class VersionTrackerEntry {
 	 * properties will be set to an empty string.
 	 * 
 	 * @param       string[]        $properties     list of property names
-	 * @param       integer         $languageID     language id
+	 * @param       int         $languageID     language id
 	 * @return      string[]
 	 */
 	public function getPayloadForProperties(array $properties, $languageID) {
@@ -118,7 +118,7 @@ class VersionTrackerEntry {
 	/**
 	 * Returns the list of language ids.
 	 * 
-	 * @return      integer[]
+	 * @return      int[]
 	 */
 	public function getLanguageIDs() {
 		return array_keys($this->payload);

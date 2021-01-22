@@ -52,7 +52,7 @@
 			
 			new AcpUiUserList();
 			
-			new AcpUserContentRemoveClipboard();
+			new AcpUserContentRemoveClipboard.default();
 		});
 		
 		{event name='javascriptInit'}

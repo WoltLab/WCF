@@ -15,37 +15,37 @@ use wcf\util\JSON;
 class AJAXException extends LoggedException {
 	/**
 	 * missing parameters
-	 * @var	integer
+	 * @var	int
 	 */
 	const MISSING_PARAMETERS = 400;
 	
 	/**
 	 * session expired
-	 * @var	integer
+	 * @var	int
 	 */
 	const SESSION_EXPIRED = 401;
 	
 	/**
 	 * insufficient permissions
-	 * @var	integer
+	 * @var	int
 	 */
 	const INSUFFICIENT_PERMISSIONS = 403;
 	
 	/**
 	 * illegal link
-	 * @var	integer
+	 * @var	int
 	 */
 	const ILLEGAL_LINK = 404;
 	
 	/**
 	 * bad parameters
-	 * @var	integer
+	 * @var	int
 	 */
 	const BAD_PARAMETERS = 412;
 	
 	/**
 	 * internal server error
-	 * @var	integer
+	 * @var	int
 	 */
 	const INTERNAL_ERROR = 503;
 	
@@ -53,7 +53,7 @@ class AJAXException extends LoggedException {
 	 * Throws a JSON-encoded error message
 	 * 
 	 * @param	string		$message
-	 * @param	integer		$errorType
+	 * @param	int		$errorType
 	 * @param	string		$stacktrace
 	 * @param	mixed[]		$returnValues
 	 * @param	string		$exceptionID

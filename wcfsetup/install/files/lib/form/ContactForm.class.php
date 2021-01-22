@@ -55,7 +55,7 @@ class ContactForm extends AbstractCaptchaForm {
 	
 	/**
 	 * recipient id
-	 * @var integer
+	 * @var int
 	 */
 	public $recipientID = 0;
 	
@@ -66,7 +66,7 @@ class ContactForm extends AbstractCaptchaForm {
 	
 	/**
 	 * user has confirmed the privacy policy
-	 * @var boolean
+	 * @var bool
 	 */
 	public $privacyPolicyConfirmed = 0;
 	

@@ -32,13 +32,13 @@ class UserQuickSearchAction extends AbstractAction {
 	
 	/**
 	 * matches
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $matches = [];
 	
 	/**
 	 * results per page
-	 * @var	integer
+	 * @var	int
 	 */
 	public $itemsPerPage = 50;
 	
@@ -62,7 +62,7 @@ class UserQuickSearchAction extends AbstractAction {
 	
 	/**
 	 * number of results
-	 * @var	integer
+	 * @var	int
 	 */
 	public $maxResults = 2000;
 	

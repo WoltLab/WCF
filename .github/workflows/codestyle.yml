@@ -24,7 +24,7 @@ jobs:
     - name: Run prettier
       run: |
         shopt -s globstar
-        npx prettier -w wcfsetup/install/files/ts/**/*.ts
+        npx prettier -w ts/**/*.ts
     - run: echo "::add-matcher::.github/diff.json"
     - name: Show diff
       run: |

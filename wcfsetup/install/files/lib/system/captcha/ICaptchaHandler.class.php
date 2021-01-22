@@ -20,7 +20,7 @@ interface ICaptchaHandler {
 	/**
 	 * Returns true if this kind of captcha is available.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isAvailable();
 	

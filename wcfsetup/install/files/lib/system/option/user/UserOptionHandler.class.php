@@ -34,25 +34,25 @@ class UserOptionHandler extends OptionHandler {
 	
 	/**
 	 * true if within registration process
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $inRegistration = false;
 	
 	/**
 	 * true if within edit mode
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $editMode = true;
 	
 	/**
 	 * true if within search mode
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $searchMode = false;
 	
 	/**
 	 * true if empty options should be removed
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $removeEmptyOptions = false;
 	
@@ -64,14 +64,14 @@ class UserOptionHandler extends OptionHandler {
 	
 	/**
 	 * true if the condition mode during search mode is enabled
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $conditionMode = false;
 	
 	/**
 	 * Shows empty options.
 	 * 
-	 * @param	boolean		$show
+	 * @param	bool		$show
 	 */
 	public function showEmptyOptions($show = true) {
 		$this->removeEmptyOptions = !$show;
@@ -80,7 +80,7 @@ class UserOptionHandler extends OptionHandler {
 	/**
 	 * Sets registration mode.
 	 * 
-	 * @param	boolean		$inRegistration
+	 * @param	bool		$inRegistration
 	 */
 	public function setInRegistration($inRegistration = true) {
 		$this->inRegistration = $inRegistration;
@@ -90,7 +90,7 @@ class UserOptionHandler extends OptionHandler {
 	/**
 	 * Enables edit mode.
 	 * 
-	 * @param	boolean		$enable
+	 * @param	bool		$enable
 	 */
 	public function enableEditMode($enable = true) {
 		$this->editMode = $enable;
@@ -99,7 +99,7 @@ class UserOptionHandler extends OptionHandler {
 	/**
 	 * Enables search mode.
 	 * 
-	 * @param	boolean		$enable
+	 * @param	bool		$enable
 	 */
 	public function enableSearchMode($enable = true) {
 		$this->searchMode = $enable;
@@ -140,7 +140,7 @@ class UserOptionHandler extends OptionHandler {
 	 * are considered. Furthermore, the visibility setting of the option is disregarded to ensure that
 	 * during automatic cronjob execution (always done as a guest), the conditions are properly set. 
 	 * 
-	 * @param	boolean		$enable
+	 * @param	bool		$enable
 	 */
 	public function enableConditionMode($enable = true) {
 		if (!$this->searchMode) {

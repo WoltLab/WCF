@@ -42,19 +42,19 @@ class FileReader {
 	
 	/**
 	 * start byte
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $startByte = 0;
 	
 	/**
 	 * end byte
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $endByte = 0;
 	
 	/**
 	 * True if http range is invalid.
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $invalidRange = false;
 	

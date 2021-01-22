@@ -65,7 +65,7 @@ abstract class TreeMenu extends SingletonFactory {
 	 * Checks the options and permissions of given menu item.
 	 * 
 	 * @param	ITreeMenuItem	$item
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function checkMenuItem(ITreeMenuItem $item) {
 		// check the options of this item
@@ -182,7 +182,7 @@ abstract class TreeMenu extends SingletonFactory {
 	/**
 	 * Returns the active menu item.
 	 * 
-	 * @param	integer		$level
+	 * @param	int		$level
 	 * @return	string
 	 */
 	public function getActiveMenuItem($level = 0) {

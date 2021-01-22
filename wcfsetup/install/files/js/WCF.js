@@ -4667,6 +4667,8 @@ WCF.System.Dependency = { };
 
 /**
  * JavaScript Dependency Manager.
+ * 
+ * @deprecated	5.4 - use `WoltLabSuite/Core/Event/Handler`
  */
 WCF.System.Dependency.Manager = {
 	/**

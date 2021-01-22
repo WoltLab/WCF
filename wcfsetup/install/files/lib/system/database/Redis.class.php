@@ -11,17 +11,17 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Database
  * 
- * @method	integer		del($key1, $key2 = null, $key3 = null)
- * @method	boolean		expire($key, $ttl)
+ * @method	int		del($key1, $key2 = null, $key3 = null)
+ * @method	bool		expire($key, $ttl)
  * @method	string|bool	get($key)
- * @method	integer		hDel($key, $hashKey1, $hashKey2 = null, $hashKeyN = null)
+ * @method	int		hDel($key, $hashKey1, $hashKey2 = null, $hashKeyN = null)
  * @method	string		hGet($key, $hashKey)
- * @method	integer		hSet($key, $hashKey, $value)
- * @method	integer		incr($key)
+ * @method	int		hSet($key, $hashKey, $value)
+ * @method	int		incr($key)
  * @method	string		info($option = null)
- * @method	boolean		setex($key, $ttl, $value)
- * @method	boolean		setnx($key, $value)
- * @method	integer		ttl($key)
+ * @method	bool		setex($key, $ttl, $value)
+ * @method	bool		setnx($key, $value)
+ * @method	int		ttl($key)
  */
 class Redis {
 	/**

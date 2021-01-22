@@ -19,7 +19,7 @@ use wcf\system\WCF;
 class PageLocationManager extends SingletonFactory {
 	/**
 	 * true if all parents of the highest page have been added
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $addedParentLocations = false;
 	
@@ -72,9 +72,9 @@ class PageLocationManager extends SingletonFactory {
 	 * is its assumed priority when matching suitable menu items.
 	 * 
 	 * @param	string			$identifier		internal page identifier
-	 * @param	integer			$pageObjectID		page object id
+	 * @param	int			$pageObjectID		page object id
 	 * @param	ITitledLinkObject	$locationObject		optional label for breadcrumbs usage
-	 * @param       boolean                 $useAsParentLocation
+	 * @param       bool                 $useAsParentLocation
 	 * @throws	SystemException
 	 */
 	public function addParentLocation($identifier, $pageObjectID = 0, ITitledLinkObject $locationObject = null, $useAsParentLocation = false) {

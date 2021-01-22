@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
 class LinkBlockTemplatePlugin implements IBlockTemplatePlugin {
 	/**
 	 * internal loop counter
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $counter = 0;
 	

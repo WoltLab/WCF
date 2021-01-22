@@ -15,7 +15,7 @@ final class JSON {
 	 * Returns the JSON representation of a value.
 	 * 
 	 * @param	mixed		$data
-	 * @param	integer		$options
+	 * @param	int		$options
 	 * @return	string
 	 */
 	public static function encode($data, $options = 0) {
@@ -26,7 +26,7 @@ final class JSON {
 	 * Decodes a JSON string.
 	 * 
 	 * @param	string		$json
-	 * @param	boolean		$asArray
+	 * @param	bool		$asArray
 	 * @return	array
 	 * @throws	SystemException
 	 */
@@ -44,7 +44,7 @@ final class JSON {
 	/**
 	 * Returns the last error occurred.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public static function getLastError() {
 		return json_last_error();

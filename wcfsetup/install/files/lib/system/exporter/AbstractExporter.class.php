@@ -69,13 +69,13 @@ abstract class AbstractExporter implements IExporter {
 	
 	/**
 	 * limits for items per run
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $limits = [];
 	
 	/**
 	 * default limit for items per run
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $defaultLimit = 1000;
 	
@@ -185,7 +185,7 @@ abstract class AbstractExporter implements IExporter {
 	 * 
 	 * @param	string		$tableName
 	 * @param	string		$columnName
-	 * @return	integer
+	 * @return	int
 	 */
 	protected function __getMaxID($tableName, $columnName) {
 		$sql = "SELECT	MAX(".$columnName.") AS maxID

@@ -71,6 +71,13 @@ class MultifactorDisableForm extends AbstractFormBuilderForm {
 		$this->setup = $this->setups[$_GET['id']];
 		$this->method = $this->setup->getObjectType();
 		\assert($this->method->getDefinition()->definitionName === 'com.woltlab.wcf.multifactor');
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function checkPermissions() {
+		parent::checkPermissions();
 		
 		$this->requestReauthentication(LinkHandler::getInstance()->getControllerLink(static::class, [
 			'object' => $this->setup,

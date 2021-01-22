@@ -23,7 +23,7 @@ use wcf\system\WCF;
 abstract class AbstractModerationForm extends AbstractForm {
 	/**
 	 * id of the assigned user
-	 * @var	integer
+	 * @var	int
 	 */
 	public $assignedUserID = 0;
 	
@@ -51,13 +51,13 @@ abstract class AbstractModerationForm extends AbstractForm {
 	
 	/**
 	 * queue id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $queueID = 0;
 	
 	/**
 	 * comment object type id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $commentObjectTypeID = 0;
 	

@@ -17,7 +17,7 @@ use wcf\util\Url;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Bbcode\Media\Provider
  *
- * @property-read	integer		$providerID	unique id of the bbcode media provider
+ * @property-read	int		$providerID	unique id of the bbcode media provider
  * @property-read	string		$title		title of the bbcode media provider (shown in acp)
  * @property-read	string		$regex		regular expression to recognize media elements/element urls
  * @property-read	string		$html		html code used to render media elements
@@ -58,7 +58,7 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController {
 	 * Returns true if given URL is a media URL.
 	 * 
 	 * @param	string		$url
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function isMediaURL($url) {
 		foreach (static::getCache() as $provider) {
@@ -74,7 +74,7 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController {
 	 * Checks whether this provider matches the given URL.
 	 * 
 	 * @param	string		$url
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function matches($url) {
 		$lines = explode("\n", StringUtil::unifyNewlines($this->regex));

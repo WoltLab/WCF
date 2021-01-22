@@ -22,7 +22,7 @@ class ZipWriter {
 	 * Adds a folder to the Zip archive.
 	 * 
 	 * @param	string		$name		dirname
-	 * @param	integer		$date
+	 * @param	int		$date
 	 */
 	public function addDir($name, $date = TIME_NOW) {
 		// replace backward slashes with forward slashes in the dirname
@@ -82,7 +82,7 @@ class ZipWriter {
 	 * 
 	 * @param	string		$data		content of the file
 	 * @param	string		$name		filename
-	 * @param	integer		$date		file creation time as unix timestamp
+	 * @param	int		$date		file creation time as unix timestamp
 	 */
 	public function addFile($data, $name, $date = TIME_NOW) {		
 		// replace backward slashes with forward slashes in the filename
@@ -188,7 +188,7 @@ class ZipWriter {
 	/**
 	 * Converts an unix timestamp to Zip file time.
 	 * 
-	 * @param	integer		$date		unix timestamp
+	 * @param	int		$date		unix timestamp
 	 * @return	string
 	 */
 	protected static function getDosDatetime($date) {

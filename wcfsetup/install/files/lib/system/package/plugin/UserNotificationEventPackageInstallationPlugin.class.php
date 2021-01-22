@@ -50,7 +50,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * preset event ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $presetEventIDs = [];
 	
@@ -147,7 +147,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	 * Gets the id of given object type id.
 	 *
 	 * @param       string          $objectType
-	 * @return      integer
+	 * @return      int
 	 * @throws      SystemException
 	 */
 	protected function getObjectTypeID($objectType) {

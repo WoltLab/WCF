@@ -41,7 +41,7 @@ use wcf\util\UserUtil;
 class RegisterForm extends UserAddForm {
 	/**
 	 * true if external authentication is used
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $isExternalAuthentication = false;
 	
@@ -71,7 +71,7 @@ class RegisterForm extends UserAddForm {
 	
 	/**
 	 * true if captcha is used
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $useCaptcha = REGISTER_USE_CAPTCHA;
 	
@@ -90,7 +90,7 @@ class RegisterForm extends UserAddForm {
 	
 	/**
 	 * min number of seconds between form request and submit
-	 * @var	integer
+	 * @var	int
 	 */
 	public static $minRegistrationTime = 10;
 	
@@ -475,7 +475,7 @@ class RegisterForm extends UserAddForm {
 	}
 	
 	/**
-	 * @return      integer[]
+	 * @return      int[]
 	 * @since       5.2
 	 */
 	protected function getRecipientsForNotificationEvent() {

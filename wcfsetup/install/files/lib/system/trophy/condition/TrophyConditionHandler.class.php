@@ -59,7 +59,7 @@ class TrophyConditionHandler extends SingletonFactory {
 	/**
 	 * Assign trophies based on rules. 
 	 * 
-	 * @param 	integer		$maxAssigns
+	 * @param 	int		$maxAssigns
 	 */
 	public function assignTrophies($maxAssigns = 500) {
 		$trophyList = new TrophyList();
@@ -88,7 +88,7 @@ class TrophyConditionHandler extends SingletonFactory {
 	/**
 	 * Revoke user trophies which are not longer fulfills the conditions. 
 	 * 
-	 * @param 	integer		$maxRevokes
+	 * @param 	int		$maxRevokes
 	 * @since       5.2
 	 */
 	public function revokeTrophies($maxRevokes = 500) {
@@ -114,7 +114,7 @@ class TrophyConditionHandler extends SingletonFactory {
 	 * Returns the users who fulfill all conditions of the given trophy.
 	 *
 	 * @param	Trophy		$trophy
-	 * @return	integer[]
+	 * @return	int[]
 	 * @since       5.2
 	 */
 	private function getUserIDs(Trophy $trophy) {
@@ -137,8 +137,8 @@ class TrophyConditionHandler extends SingletonFactory {
 	 * Returns the userTrophyIDs of the users, which no longer fulfills the trophy conditions. 
 	 * 
 	 * @param       Trophy          $trophy
-	 * @param       integer         $maxTrophyIDs		maximum number of trophies that are processed
-	 * @return      integer[]
+	 * @param       int         $maxTrophyIDs		maximum number of trophies that are processed
+	 * @return      int[]
 	 * @since       5.2
 	 */
 	private function getRevocableUserTrophyIDs(Trophy $trophy, $maxTrophyIDs) {

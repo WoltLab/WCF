@@ -45,25 +45,25 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	
 	/**
 	 * list of ignored user ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $ignoredUserIDs;
 	
 	/**
 	 * list of user ids that are ignoring this user
-	 * @var integer[]
+	 * @var int[]
 	 */
 	protected $ignoredByUserIDs;
 	
 	/**
 	 * list of follower user ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $followerUserIDs;
 	
 	/**
 	 * list of following user ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $followingUserIDs;
 	
@@ -81,7 +81,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	
 	/**
 	 * age of this user
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $__age;
 	
@@ -122,7 +122,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns a list of all user ids being followed by current user.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function getFollowingUsers() {
 		if ($this->followingUserIDs === null) {
@@ -156,7 +156,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns a list of user ids following current user.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function getFollowers() {
 		if ($this->followerUserIDs === null) {
@@ -190,7 +190,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns a list of ignored user ids.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function getIgnoredUsers() {
 		if ($this->ignoredUserIDs === null) {
@@ -224,7 +224,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns a list of user ids that are ignoring this user.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function getIgnoredByUsers() {
 		if ($this->ignoredByUserIDs === null) {
@@ -258,8 +258,8 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns true if current user is following given user id.
 	 * 
-	 * @param	integer		$userID
-	 * @return	boolean
+	 * @param	int		$userID
+	 * @return	bool
 	 */
 	public function isFollowing($userID) {
 		return in_array($userID, $this->getFollowingUsers());
@@ -268,8 +268,8 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns true if given user ids follows current user.
 	 * 
-	 * @param	integer		$userID
-	 * @return	boolean
+	 * @param	int		$userID
+	 * @return	bool
 	 */
 	public function isFollower($userID) {
 		return in_array($userID, $this->getFollowers());
@@ -278,8 +278,8 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns true if given user is ignored.
 	 *
-	 * @param	integer		$userID
-	 * @return	boolean
+	 * @param	int		$userID
+	 * @return	bool
 	 */
 	public function isIgnoredUser($userID) {
 		return in_array($userID, $this->getIgnoredUsers());
@@ -288,8 +288,8 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns true if the given user ignores the current user.
 	 * 
-	 * @param	integer		$userID
-	 * @return	boolean
+	 * @param	int		$userID
+	 * @return	bool
 	 */
 	public function isIgnoredByUser($userID) {
 		return in_array($userID, $this->getIgnoredByUsers());
@@ -349,7 +349,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns true if the active user can view the avatar of this user.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canSeeAvatar() {
 		return (
@@ -362,7 +362,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns the user's cover photo.
 	 * 
-	 * @param       boolean         $isACP          override ban on cover photo
+	 * @param       bool         $isACP          override ban on cover photo
 	 * @return      IUserCoverPhoto
 	 */
 	public function getCoverPhoto($isACP = false) {
@@ -387,7 +387,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns true if the active user can view the cover photo of this user.
 	 *
-	 * @return      boolean
+	 * @return      bool
 	 */
 	public function canSeeCoverPhoto() {
 		return (WCF::getUser()->userID == $this->userID || WCF::getSession()->getPermission('user.profile.coverPhoto.canSeeCoverPhotos'));
@@ -396,7 +396,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns true if this user is currently online.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isOnline() {
 		if ($this->getLastActivityTime() > (TIME_NOW - USER_ONLINE_TIMEOUT) && $this->canViewOnlineStatus()) {
@@ -408,7 +408,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns true if the active user can view the online status of this user.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canViewOnlineStatus() {
 		return WCF::getUser()->userID == $this->userID
@@ -544,7 +544,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns the last activity time.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getLastActivityTime() {
 		return max($this->lastActivityTime, $this->sessionLastActivityTime);
@@ -553,7 +553,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns a new user profile object.
 	 * 
-	 * @param	integer				$userID
+	 * @param	int				$userID
 	 * @return	UserProfile
 	 * @deprecated	3.0, use UserProfileRuntimeCache::getObject()
 	 */
@@ -564,7 +564,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns a list of user profiles.
 	 * 
-	 * @param	integer[]		$userIDs
+	 * @param	int[]		$userIDs
 	 * @return	UserProfile[]
 	 * @deprecated	3.0, use UserProfileRuntimeCache::getObjects()
 	 */
@@ -654,7 +654,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * Returns true if current user fulfills the required permissions.
 	 * 
 	 * @param	string		$name
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isAccessible($name) {
 		/** @noinspection PhpVariableVariableInspection */
@@ -696,7 +696,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns true if current user profile is protected.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isProtected() {
 		return (!WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions') && !$this->isAccessible('canViewProfile') && $this->userID != WCF::getUser()->userID);
@@ -705,8 +705,8 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns the age of this user.
 	 * 
-	 * @param	integer		$year
-	 * @return	integer
+	 * @param	int		$year
+	 * @return	int
 	 */
 	public function getAge($year = null) {
 		$showYear = $this->birthdayShowYear || WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions');
@@ -740,7 +740,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns the formatted birthday of this user.
 	 * 
-	 * @param	integer		$year
+	 * @param	int		$year
 	 * @return	string
 	 */
 	public function getBirthday($year = null) {
@@ -774,7 +774,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns the age of user account in days.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getProfileAge() {
 		return (TIME_NOW - $this->registrationDate) / 86400;
@@ -798,7 +798,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * compatibility, while preventing ACLs from overruling a 'Never' setting.
 	 * 
 	 * @param       string          $permission
-	 * @return      boolean
+	 * @return      bool
 	 */
 	 public function getNeverPermission($permission) {
 		$this->loadGroupData();
@@ -886,7 +886,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns true if this user can edit his profile.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canEditOwnProfile() {
 		if ($this->pendingActivation() || !$this->getPermission('user.profile.canEditUserProfile')) {
@@ -908,7 +908,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns true if the current user is connected with Facebook.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isConnectedWithFacebook() {
 		return StringUtil::startsWith($this->authData, 'facebook:');
@@ -917,7 +917,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns true if the current user is connected with GitHub.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isConnectedWithGithub() {
 		return StringUtil::startsWith($this->authData, 'github:');
@@ -926,7 +926,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns true if the current user is connected with Google Plus.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isConnectedWithGoogle() {
 		return StringUtil::startsWith($this->authData, 'google:');
@@ -935,7 +935,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Returns true if the current user is connected with Twitter.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isConnectedWithTwitter() {
 		return StringUtil::startsWith($this->authData, 'twitter:');
@@ -953,7 +953,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Return true if the user's signature is visible.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function showSignature() {
 		if (!MODULE_USER_SIGNATURE) return false;
@@ -995,7 +995,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * Returns true, if the active user has access to the user option with the given name.
 	 * 
 	 * @param	string		$name
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isVisibleOption($name) {
 		$option = ViewableUserOption::getUserOption($name);
@@ -1046,7 +1046,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	/**
 	 * Sets the session-based last activity time.
 	 * 
-	 * @param       integer         $timestamp
+	 * @param       int         $timestamp
 	 */
 	public function setSessionLastActivityTime($timestamp) {
 		$this->object->data['sessionLastActivityTime'] = $timestamp;

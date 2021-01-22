@@ -6,10 +6,10 @@ use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 
 /**
- * Does the user logout in the admin control panel.
+ * Does the user logout in the admin control panel (clearing reauthentication).
  * 
- * @author	Marcel Werk
- * @copyright	2001-2019 WoltLab GmbH
+ * @author	Tim Duesterhus, Marcel Werk
+ * @copyright	2001-2021 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Action
  */
@@ -25,14 +25,13 @@ class LogoutAction extends AbstractSecureAction {
 	public function execute() {
 		parent::execute();
 		
-		// do logout
-		WCF::getSession()->delete();
+		WCF::getSession()->clearReauthentication();
 		
 		$this->executed();
 		
-		// forward to index page
-		// warning: if doLogout() writes a cookie this is buggy in MS IIS
-		HeaderUtil::redirect(LinkHandler::getInstance()->getLink('Login'));
+		HeaderUtil::redirect(LinkHandler::getInstance()->getLink(null, [
+			'forceFrontend' => true,
+		]));
 		exit;
 	}
 }

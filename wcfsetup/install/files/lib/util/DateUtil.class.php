@@ -28,19 +28,19 @@ final class DateUtil {
 	
 	/**
 	 * format the interval to be used as a standalone phrase
-	 * @var	integer
+	 * @var	int
 	 */
 	const FORMAT_DEFAULT = 1;
 	
 	/**
 	 * format the interval to be used as a phrase in a sentence
-	 * @var	integer
+	 * @var	int
 	 */
 	const FORMAT_SENTENCE = 2;
 	
 	/**
 	 * format the interval without direction
-	 * @var	integer
+	 * @var	int
 	 */
 	const FORMAT_PLAIN = 3; 
 	
@@ -150,7 +150,7 @@ final class DateUtil {
 	 * first day of the week
 	 * 0=sunday
 	 * 1=monday
-	 * @var	integer
+	 * @var	int
 	 */
 	private static $firstDayOfTheWeek = null;
 	
@@ -198,8 +198,8 @@ final class DateUtil {
 	 * Returns a formatted date interval.
 	 * 
 	 * @param	\DateInterval	$interval	interval to be formatted
-	 * @param	boolean		$fullInterval	if `true`, the complete interval is returned, otherwise a rounded interval is used
-	 * @param	integer		$formatType	format type for the interval, use the class constant FORMAT_DEFAULT, FORMAT_SENTENCE or FORMAT_PLAIN
+	 * @param	bool		$fullInterval	if `true`, the complete interval is returned, otherwise a rounded interval is used
+	 * @param	int		$formatType	format type for the interval, use the class constant FORMAT_DEFAULT, FORMAT_SENTENCE or FORMAT_PLAIN
 	 * @return	string
 	 */
 	public static function formatInterval(\DateInterval $interval, $fullInterval = false, $formatType = self::FORMAT_DEFAULT) {
@@ -364,7 +364,7 @@ final class DateUtil {
 	/**
 	 * Creates a DateTime object with the given unix timestamp.
 	 * 
-	 * @param	integer		$timestamp
+	 * @param	int		$timestamp
 	 * @return	\DateTime
 	 */
 	public static function getDateTimeByTimestamp($timestamp) {
@@ -384,7 +384,7 @@ final class DateUtil {
 	 * Calculates the age of a given date.
 	 * 
 	 * @param	string		$date		format YYYY-MM-DD
-	 * @return	integer
+	 * @return	int
 	 */
 	public static function getAge($date) {
 		// split date
@@ -425,7 +425,7 @@ final class DateUtil {
 	/**
 	 * Returns the first day of the week.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public static function getFirstDayOfTheWeek() {
 		if (self::$firstDayOfTheWeek === null) {
@@ -507,8 +507,8 @@ final class DateUtil {
 	/**
 	 * Returns the number of weeks in the given year.
 	 * 
-	 * @param	integer		$year
-	 * @return	integer
+	 * @param	int		$year
+	 * @return	int
 	 */
 	public static function getWeeksInYear($year) {
 		$date = new \DateTime();
@@ -521,10 +521,10 @@ final class DateUtil {
 	 * through JavaScript.
 	 * 
 	 * @param	\DateTime	$dateTimeObject		target date object
-	 * @param	integer		$timestamp		target timestamp
+	 * @param	int		$timestamp		target timestamp
 	 * @param	string		$date			localized date
 	 * @param	string		$time			localized time
-	 * @param	boolean		$isFutureDate		true if timestamp is in the future
+	 * @param	bool		$isFutureDate		true if timestamp is in the future
 	 * @return	string		relative time
 	 */
 	public static function getRelativeTime(\DateTime $dateTimeObject, $timestamp, $date, $time, $isFutureDate) {

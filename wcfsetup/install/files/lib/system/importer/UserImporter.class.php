@@ -24,7 +24,7 @@ class UserImporter extends AbstractImporter {
 	
 	/**
 	 * ids of default notification events
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	protected $eventIDs = [];
 	

@@ -21,7 +21,7 @@ class ObjectTypeCache extends SingletonFactory {
 	
 	/**
 	 * object type definition ids grouped by category name
-	 * @var	integer[][]
+	 * @var	int[][]
 	 */
 	protected $definitionsByCategory = [];
 	
@@ -63,7 +63,7 @@ class ObjectTypeCache extends SingletonFactory {
 	 * Returns the object type definition with the given id or null if no such
 	 * object type definition exists.
 	 * 
-	 * @param	integer		$definitionID
+	 * @param	int		$definitionID
 	 * @return	ObjectTypeDefinition
 	 */
 	public function getDefinition($definitionID) {
@@ -113,7 +113,7 @@ class ObjectTypeCache extends SingletonFactory {
 	 * Returns the object type with the given id or null if no such object type
 	 * exists.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 * @return	ObjectType
 	 */
 	public function getObjectType($objectTypeID) {
@@ -159,7 +159,7 @@ class ObjectTypeCache extends SingletonFactory {
 	 * 
 	 * @param	string		$definitionName
 	 * @param	string		$objectTypeName
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getObjectTypeIDByName($definitionName, $objectTypeName) {
 		$objectType = $this->getObjectTypeByName($definitionName, $objectTypeName);

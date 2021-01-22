@@ -11,10 +11,10 @@ use wcf\util\UserUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Acp\Session\Access\Log
  *
- * @property-read	integer		$sessionAccessLogID	unique id of the acp session access log entry
- * @property-read	integer		$sessionLogID		id of the acp session log entry the access log entry belongs to
+ * @property-read	int		$sessionAccessLogID	unique id of the acp session access log entry
+ * @property-read	int		$sessionLogID		id of the acp session log entry the access log entry belongs to
  * @property-read	string		$ipAddress		ip address of the user who has caused the acp session access log entry
- * @property-read	integer		$time			timestamp at which the acp session access log entry has been created
+ * @property-read	int		$time			timestamp at which the acp session access log entry has been created
  * @property-read	string		$requestURI		uri of the logged request
  * @property-read	string		$requestMethod		used request method (`GET`, `POST`)
  * @property-read	string		$className		name of the PHP controller class
@@ -28,7 +28,7 @@ class ACPSessionAccessLog extends DatabaseObject {
 	/**
 	 * Returns true if the URI of this log entry is protected.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function hasProtectedURI() {
 		if ($this->requestMethod != 'GET' || !preg_match('/(\?|&)(page|form)=/', $this->requestURI)) {

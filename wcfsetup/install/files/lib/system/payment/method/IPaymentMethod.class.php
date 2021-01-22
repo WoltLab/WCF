@@ -13,7 +13,7 @@ interface IPaymentMethod {
 	/**
 	 * Returns true, if this payment method supports recurring payments.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function supportsRecurringPayments();
 	
@@ -33,8 +33,8 @@ interface IPaymentMethod {
 	 * @param	string		$token		custom token
 	 * @param	string		$returnURL
 	 * @param	string		$cancelReturnURL
-	 * @param	boolean		$isRecurring
-	 * @param	integer		$subscriptionLength
+	 * @param	bool		$isRecurring
+	 * @param	int		$subscriptionLength
 	 * @param	string		$subscriptionLengthUnit
 	 * 
 	 * @return	string

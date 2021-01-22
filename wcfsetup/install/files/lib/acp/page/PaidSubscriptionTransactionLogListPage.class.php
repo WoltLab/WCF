@@ -66,7 +66,7 @@ class PaidSubscriptionTransactionLogListPage extends SortablePage {
 	
 	/**
 	 * subscription id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $subscriptionID = 0;
 	

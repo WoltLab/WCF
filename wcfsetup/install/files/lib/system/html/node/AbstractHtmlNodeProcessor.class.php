@@ -190,7 +190,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 	 * 
 	 * @param       \DOMElement     $element        target element
 	 * @param       string          $text           text used to replace target 
-	 * @param       boolean         $isBlockElement true if element is a block element
+	 * @param       bool         $isBlockElement true if element is a block element
 	 */
 	public function replaceElementWithText(\DOMElement $element, $text, $isBlockElement) {
 		$textNode = $element->ownerDocument->createTextNode($text);

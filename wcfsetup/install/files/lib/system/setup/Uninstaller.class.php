@@ -24,13 +24,13 @@ class Uninstaller {
 	
 	/**
 	 * indicates if target directory will be deleted if empty
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $deleteEmptyTargetDir;
 	
 	/**
 	 * indicates if sub directory will be deleted if empty
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $deleteEmptyDirectories;
 	
@@ -39,8 +39,8 @@ class Uninstaller {
 	 * 
 	 * @param	string		$targetDir
 	 * @param	string[]	$files
-	 * @param	boolean		$deleteEmptyTargetDir
-	 * @param	boolean		$deleteEmptyDirectories
+	 * @param	bool		$deleteEmptyTargetDir
+	 * @param	bool		$deleteEmptyDirectories
 	 */
 	public function __construct($targetDir, $files, $deleteEmptyTargetDir, $deleteEmptyDirectories) {
 		$this->targetDir = $targetDir;
@@ -61,7 +61,7 @@ class Uninstaller {
 	 * Returns true if a directory is emtpy.
 	 * 
 	 * @param	string		$dir
-	 * @return	boolean
+	 * @return	bool
 	 */
 	protected function isEmpty($dir) {
 		if (is_dir($dir)) {

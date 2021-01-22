@@ -36,20 +36,20 @@ class PackageInstallationConfirmPage extends AbstractPage {
 	
 	/**
 	 * queue id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $queueID = 0;
 	
 	/**
 	 * package validation result
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $validationPassed = false;
 	
 	/**
 	 * true if the package to be installed was uploaded via the import style
 	 * form
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $installingImportedStyle = false;
 	

@@ -14,14 +14,14 @@ interface IPollHandler {
 	/**
 	 * Returns true if current user may start a public poll.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canStartPublicPoll();
 	
 	/**
 	 * Returns true if current user may vote.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canVote();
 	

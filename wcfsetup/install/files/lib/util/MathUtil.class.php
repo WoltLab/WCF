@@ -13,9 +13,9 @@ final class MathUtil {
 	/**
 	 * Generates a random value.
 	 * 
-	 * @param	integer		$min
-	 * @param	integer		$max
-	 * @return	integer
+	 * @param	int		$min
+	 * @param	int		$max
+	 * @return	int
 	 */
 	public static function getRandomValue($min = null, $max = null) {
 		// generate random value

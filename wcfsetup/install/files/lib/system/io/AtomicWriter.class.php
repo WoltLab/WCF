@@ -27,7 +27,7 @@ class AtomicWriter extends File {
 	
 	/**
 	 * AtomicWriter will be unusable, once this flag is true.
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $isFlushed = false;
 	

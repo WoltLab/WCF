@@ -32,7 +32,7 @@ final class DOMUtil {
 	 * 
 	 * @param	\DOMNode	$ancestor	ancestor node
 	 * @param	\DOMNode	$node		node
-	 * @return	boolean		true if `$ancestor` contains the node `$node`
+	 * @return	bool		true if `$ancestor` contains the node `$node`
 	 */
 	public static function contains(\DOMNode $ancestor, \DOMNode $node) {
 		// nodes cannot contain themselves
@@ -157,7 +157,7 @@ final class DOMUtil {
 	 * Returns all ancestors nodes for given node.
 	 * 
 	 * @param	\DOMNode	$node		node
-	 * @param	boolean		$reverseOrder	reversing the order causes the most top ancestor to appear first
+	 * @param	bool		$reverseOrder	reversing the order causes the most top ancestor to appear first
 	 * @return	\DOMElement[]	list of ancestor nodes
 	 */
 	public static function getParents(\DOMNode $node, $reverseOrder = false) {
@@ -238,7 +238,7 @@ final class DOMUtil {
 	 * 
 	 * @param       \DOMElement     $element        start element
 	 * @param       string          $tagName        tag name to match
-	 * @return      boolean         
+	 * @return      bool         
 	 */
 	public static function hasParent(\DOMElement $element, $tagName) {
 		while ($element = $element->parentNode) {
@@ -279,7 +279,7 @@ final class DOMUtil {
 	 * Returns true if this node is empty.
 	 * 
 	 * @param	\DOMNode	$node		node
-	 * @return	boolean		true if node is empty
+	 * @return	bool		true if node is empty
 	 */
 	public static function isEmpty(\DOMNode $node) {
 		if ($node->nodeType === XML_TEXT_NODE) {
@@ -309,7 +309,7 @@ final class DOMUtil {
 	 * 
 	 * @param	\DOMNode	$node		node
 	 * @param	\DOMElement	$ancestor	ancestor element
-	 * @return	boolean		true if `$node` is the first node of its given ancestor
+	 * @return	bool		true if `$node` is the first node of its given ancestor
 	 */
 	public static function isFirstNode(\DOMNode $node, \DOMElement $ancestor) {
 		if ($node->previousSibling === null) {
@@ -332,7 +332,7 @@ final class DOMUtil {
 	 * 
 	 * @param	\DOMNode	$node		node
 	 * @param	\DOMElement	$ancestor	ancestor element
-	 * @return	boolean		true if `$node` is the last node of its given ancestor
+	 * @return	bool		true if `$node` is the last node of its given ancestor
 	 */
 	public static function isLastNode(\DOMNode $node, \DOMElement $ancestor) {
 		if ($node->nextSibling === null) {
@@ -359,7 +359,7 @@ final class DOMUtil {
 	 * body is gone, including the `nodeType` attribute.
 	 * 
 	 * @param       \DOMNode        $node           node
-	 * @return      boolean         true if node has been destroyed
+	 * @return      bool         true if node has been destroyed
 	 */
 	public static function isRemoved(\DOMNode $node) {
 		return !isset($node->nodeType);
@@ -370,7 +370,7 @@ final class DOMUtil {
 	 * that neither contain content nor have a closing tag, such as `<br>`.
 	 * 
 	 * @param	\DOMElement	$element	element
-	 * @return	boolean	true if provided element is a void element
+	 * @return	bool	true if provided element is a void element
 	 */
 	public static function isVoidElement(\DOMElement $element) {
 		if (preg_match('~^(area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$~', $element->nodeName)) {
@@ -475,7 +475,7 @@ final class DOMUtil {
 	 * Removes a node, optionally preserves the child nodes if `$node` is an element.
 	 * 
 	 * @param	\DOMNode	$node			target node
-	 * @param	boolean		$preserveChildNodes	preserve child nodes, only supported for elements
+	 * @param	bool		$preserveChildNodes	preserve child nodes, only supported for elements
 	 */
 	public static function removeNode(\DOMNode $node, $preserveChildNodes = false) {
 		if ($preserveChildNodes) {
@@ -496,7 +496,7 @@ final class DOMUtil {
 	 * 
 	 * @param	\DOMElement	$oldElement		old element
 	 * @param	\DOMElement	$newElement		new element
-	 * @param	boolean		$preserveChildNodes	true if child nodes should be moved, otherwise they'll be implicitly removed
+	 * @param	bool		$preserveChildNodes	true if child nodes should be moved, otherwise they'll be implicitly removed
 	 */
 	public static function replaceElement(\DOMElement $oldElement, \DOMElement $newElement, $preserveChildNodes = true) {
 		self::insertBefore($newElement, $oldElement);
@@ -520,7 +520,7 @@ final class DOMUtil {
 	 * 
 	 * @param	\DOMNode	$node		reference node
 	 * @param	\DOMElement	$ancestor	ancestor element that should not be split
-	 * @param	boolean		$splitBefore	true if nodes before `$node` should be moved into a new node, false to split nodes after `$node`
+	 * @param	bool		$splitBefore	true if nodes before `$node` should be moved into a new node, false to split nodes after `$node`
 	 * @return	\DOMNode	parent node containing `$node`, direct child of `$ancestor`
 	 */
 	public static function splitParentsUntil(\DOMNode $node, \DOMElement $ancestor, $splitBefore = true) {

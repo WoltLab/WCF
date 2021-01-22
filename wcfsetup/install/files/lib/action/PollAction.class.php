@@ -26,7 +26,7 @@ class PollAction extends AJAXProxyAction {
 	
 	/**
 	 * list of option ids
-	 * @var	integer[]
+	 * @var	int[]
 	 */
 	public $optionIDs = [];
 	
@@ -38,7 +38,7 @@ class PollAction extends AJAXProxyAction {
 	
 	/**
 	 * poll id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $pollID = 0;
 	

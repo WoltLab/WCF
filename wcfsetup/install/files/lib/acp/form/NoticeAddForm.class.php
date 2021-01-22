@@ -60,13 +60,13 @@ class NoticeAddForm extends AbstractForm {
 	
 	/**
 	 * 1 if the notice is disabled
-	 * @var	integer
+	 * @var	int
 	 */
 	public $isDisabled = 0;
 	
 	/**
 	 * 1 if the notice is dismissible
-	 * @var	integer
+	 * @var	int
 	 */
 	public $isDismissible = 0;
 	
@@ -83,13 +83,13 @@ class NoticeAddForm extends AbstractForm {
 	
 	/**
 	 * 1 if html is used in the notice text
-	 * @var	integer
+	 * @var	int
 	 */
 	public $noticeUseHtml = 0;
 	
 	/**
 	 * order used to the show the notices
-	 * @var	integer
+	 * @var	int
 	 */
 	public $showOrder = 0;
 	

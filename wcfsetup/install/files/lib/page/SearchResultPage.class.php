@@ -41,7 +41,7 @@ class SearchResultPage extends MultipleLinkPage {
 	
 	/**
 	 * search id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $searchID = 0;
 	

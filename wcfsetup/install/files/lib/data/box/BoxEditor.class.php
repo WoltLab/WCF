@@ -24,7 +24,7 @@ class BoxEditor extends DatabaseObjectEditor {
 	/**
 	 * Creates the template file for "tpl"-type boxes.
 	 * 
-	 * @param       integer         $languageID
+	 * @param       int         $languageID
 	 * @param       string          $content
 	 */
 	public function writeTemplate($languageID, $content) {

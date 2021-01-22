@@ -204,7 +204,7 @@ class MessageUtil {
 	 * Truncates a formatted message and keeps the HTML syntax intact.
 	 * 
 	 * @param	string		$message		string which shall be truncated
-	 * @param	integer		$maxLength		string length after truncating
+	 * @param	int		$maxLength		string length after truncating
 	 * @return	string					truncated string
 	 */
 	public static function truncateFormattedMessage($message, $maxLength = 1000) {

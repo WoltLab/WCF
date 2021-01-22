@@ -29,7 +29,7 @@ class AdministrativeAttachment extends DatabaseObjectDecorator {
 	
 	/**
 	 * true if container object has been loaded
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $containerObjectLoaded = false;
 	

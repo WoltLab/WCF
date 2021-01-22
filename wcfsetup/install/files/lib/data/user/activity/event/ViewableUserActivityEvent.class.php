@@ -30,13 +30,13 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator {
 	
 	/**
 	 * accessible by current user
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $isAccessible = false;
 	
 	/**
 	 * associated object was removed
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $isOrphaned = false;
 	
@@ -54,7 +54,7 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator {
 	
 	/**
 	 * true if event description contains raw html
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $isRawHtml = false;
 	
@@ -68,7 +68,7 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator {
 	/**
 	 * Returns true if event is accessible by current user.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isAccessible() {
 		return $this->isAccessible;
@@ -84,7 +84,7 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator {
 	/**
 	 * Returns true if event is orphaned (associated object removed).
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isOrphaned() {
 		return $this->isOrphaned;
@@ -117,7 +117,7 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator {
 	 * Sets event text.
 	 * 
 	 * @param	string		$description
-	 * @param       boolean         $isRawHtml
+	 * @param       bool         $isRawHtml
 	 */
 	public function setDescription($description, $isRawHtml = false) {
 		$this->description = $description;
@@ -163,7 +163,7 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator {
 	/**
 	 * Returns true if event description contains raw html.
 	 * 
-	 * @return      boolean
+	 * @return      bool
 	 * @since       3.1
 	 */
 	public function isRawHtml() {

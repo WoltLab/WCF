@@ -13,7 +13,7 @@ use wcf\data\DatabaseObjectDecorator;
  * @method	Tag	getDecoratedObject()
  * @mixin	Tag
  * 
- * @property-read	integer|null	$counter	number of the times the tag has been used for a certain object type or `null`
+ * @property-read	int|null	$counter	number of the times the tag has been used for a certain object type or `null`
  */
 class TagCloudTag extends DatabaseObjectDecorator {
 	/**
@@ -23,7 +23,7 @@ class TagCloudTag extends DatabaseObjectDecorator {
 	
 	/**
 	 * weight of the tag in a weighted list
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $weight = 1;
 	
@@ -39,7 +39,7 @@ class TagCloudTag extends DatabaseObjectDecorator {
 	/**
 	 * Returns the weight of the tag.
 	 *
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getWeight() {
 		return $this->weight;

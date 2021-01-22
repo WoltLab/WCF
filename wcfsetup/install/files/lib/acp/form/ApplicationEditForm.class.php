@@ -57,7 +57,7 @@ class ApplicationEditForm extends AbstractForm {
 	
 	/**
 	 * landing page id
-	 * @var integer
+	 * @var int
 	 */
 	public $landingPageID = 0;
 	
@@ -68,7 +68,7 @@ class ApplicationEditForm extends AbstractForm {
 	
 	/**
 	 * application package id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $packageID = 0;
 	

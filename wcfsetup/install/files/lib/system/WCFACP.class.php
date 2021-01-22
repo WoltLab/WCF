@@ -4,7 +4,6 @@ use wcf\acp\form\MasterPasswordForm;
 use wcf\acp\form\MasterPasswordInitForm;
 use wcf\data\menu\Menu;
 use wcf\data\menu\MenuCache;
-use wcf\data\user\group\UserGroup;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
 use wcf\system\event\EventHandler;
@@ -30,7 +29,7 @@ use wcf\util\HeaderUtil;
 class WCFACP extends WCF {
 	/**
 	 * rescue mode
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected static $inRescueMode;
 	
@@ -85,7 +84,7 @@ class WCFACP extends WCF {
 	/**
 	 * Returns true if ACP is currently in rescue mode.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public static function inRescueMode() {
 		if (self::$inRescueMode === null) {
@@ -139,7 +138,7 @@ class WCFACP extends WCF {
 				exit;
 			}
 		}
-		else if (empty($pathInfo) || !preg_match('~^/?(login|logout|multifactor-authentication)/~i', $pathInfo)) {
+		else if (empty($pathInfo) || !preg_match('~^/?(login|(full-)?logout|multifactor-authentication|reauthentication)/~i', $pathInfo)) {
 			if (WCF::getUser()->userID == 0) {
 				// work-around for AJAX-requests within ACP
 				if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
@@ -171,6 +170,13 @@ class WCFACP extends WCF {
 				}
 				else {
 					WCF::getSession()->checkPermissions(['admin.general.canUseAcp']);
+				}
+				
+				if (WCF::getSession()->needsReauthentication()) {
+					HeaderUtil::redirect(LinkHandler::getInstance()->getLink('Reauthentication', [
+						'url' => RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . WCF::getSession()->requestURI
+					]));
+					exit;
 				}
 				
 				// force debug mode if in ACP and authenticated

@@ -13,13 +13,13 @@ use wcf\system\WCF;
 class AbstractACLImporter extends AbstractImporter {
 	/**
 	 * object type id for options
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $objectTypeID = 0;
 	
 	/**
 	 * object type name
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $objectTypeName = '';
 	

@@ -36,7 +36,7 @@ class EditHistoryPage extends AbstractPage {
 	
 	/**
 	 * left / old version id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $oldID = 0;
 	
@@ -48,7 +48,7 @@ class EditHistoryPage extends AbstractPage {
 	
 	/**
 	 * right / new version id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $newID = 0;
 	
@@ -72,7 +72,7 @@ class EditHistoryPage extends AbstractPage {
 	
 	/**
 	 * id of the requested object
-	 * @var	integer
+	 * @var	int
 	 */
 	public $objectID = 0;
 	

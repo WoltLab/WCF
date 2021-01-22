@@ -17,7 +17,7 @@ interface IAccessibleObject {
 	 * Returns `true` if the given user can access the object.
 	 * 
 	 * @param	User	$user	checked user, if `null` active user is used instead
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isAccessible(User $user = null);
 }

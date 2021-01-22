@@ -52,11 +52,11 @@ class ModificationLogHandler extends SingletonFactory {
 	 * Adds a new entry to modification log.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @param	string		$action
 	 * @param	array		$additionalData
-	 * @param	integer		$time
-	 * @param	integer		$userID
+	 * @param	int		$time
+	 * @param	int		$userID
 	 * @param	string		$username
 	 * @return	ModificationLog
 	 * @throws	SystemException
@@ -99,7 +99,7 @@ class ModificationLogHandler extends SingletonFactory {
 	 * Removes log entries.
 	 * 
 	 * @param	string		$objectType
-	 * @param	integer[]	$objectIDs
+	 * @param	int[]	$objectIDs
 	 * @throws	SystemException
 	 */
 	protected function _remove($objectType, array $objectIDs) {

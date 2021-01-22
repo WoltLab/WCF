@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
 class PackageInstallationNodeBuilder {
 	/**
 	 * true if current node is empty
-	 * @var	boolean
+	 * @var	bool
 	 */
 	public $emptyNode = true;
 	
@@ -49,7 +49,7 @@ class PackageInstallationNodeBuilder {
 	
 	/**
 	 * current sequence number within one node
-	 * @var	integer
+	 * @var	int
 	 */
 	public $sequenceNo = 0;
 	
@@ -136,7 +136,7 @@ class PackageInstallationNodeBuilder {
 	/**
 	 * Returns package name associated with given queue id.
 	 * 
-	 * @param	integer		$queueID
+	 * @param	int		$queueID
 	 * @return	string
 	 */
 	public function getPackageNameByQueue($queueID) {
@@ -157,7 +157,7 @@ class PackageInstallationNodeBuilder {
 	/**
 	 * Returns installation type by queue id.
 	 * 
-	 * @param	integer		$queueID
+	 * @param	int		$queueID
 	 * @return	string
 	 */
 	public function getInstallationTypeByQueue($queueID) {
@@ -234,7 +234,7 @@ class PackageInstallationNodeBuilder {
 	 * Calculates current setup process.
 	 * 
 	 * @param	string		$node
-	 * @return	integer
+	 * @return	int
 	 */
 	public function calculateProgress($node) {
 		$progress = [
@@ -274,7 +274,7 @@ class PackageInstallationNodeBuilder {
 	 * Duplicates a node by re-inserting it and moving all descendants into a new tree.
 	 * 
 	 * @param	string		$node
-	 * @param	integer		$sequenceNo
+	 * @param	int		$sequenceNo
 	 */
 	public function cloneNode($node, $sequenceNo) {
 		$newNode = $this->getToken();
@@ -747,9 +747,9 @@ class PackageInstallationNodeBuilder {
 	/**
 	 * Returns queue id based upon current node.
 	 * 
-	 * @param	integer		$processNo
+	 * @param	int		$processNo
 	 * @param	string		$node
-	 * @return	integer|null
+	 * @return	int|null
 	 */
 	public function getQueueByNode($processNo, $node) {
 		$sql = "SELECT	queueID

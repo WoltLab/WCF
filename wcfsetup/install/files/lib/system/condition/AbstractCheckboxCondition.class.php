@@ -23,7 +23,7 @@ abstract class AbstractCheckboxCondition extends AbstractSingleFieldCondition {
 	
 	/**
 	 * is `1` if the checkbox is checked
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $fieldValue = 0;
 	

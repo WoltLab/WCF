@@ -14,7 +14,7 @@ interface IDeleteAction {
 	/**
 	 * Deletes the relevant objects and returns the number of deleted objects.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function delete();
 	

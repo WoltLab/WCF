@@ -17,7 +17,7 @@ interface IRestrictedLikeObjectTypeProvider extends ILikeObjectTypeProvider {
 	 * Returns true if the active user can like the provided object.
 	 * 
 	 * @param	ILikeObject	$object
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canLike(ILikeObject $object);
 	
@@ -25,7 +25,7 @@ interface IRestrictedLikeObjectTypeProvider extends ILikeObjectTypeProvider {
 	 * Returns true if the active user can view the likes of to the provided object.
 	 * 
 	 * @param	ILikeObject	$object
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function canViewLikes(ILikeObject $object);
 }

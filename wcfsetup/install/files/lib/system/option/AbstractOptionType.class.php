@@ -13,7 +13,7 @@ use wcf\data\option\Option;
 abstract class AbstractOptionType implements IOptionType {
 	/**
 	 * internationalization support
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $supportI18n = false;
 	

@@ -21,7 +21,7 @@ class DynamicRequestRoute implements IRequestRoute {
 	
 	/**
 	 * route is restricted to ACP
-	 * @var	boolean
+	 * @var	bool
 	 */
 	protected $isACP = false;
 	
@@ -158,7 +158,7 @@ class DynamicRequestRoute implements IRequestRoute {
 	 *
 	 * @param	string[]	$components
 	 * @param	string		$application
-	 * @param	boolean		$useBuildSchema
+	 * @param	bool		$useBuildSchema
 	 * @return	string
 	 */
 	protected function buildRoute(array $components, $application, $useBuildSchema) {

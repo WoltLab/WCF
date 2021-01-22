@@ -27,7 +27,7 @@ class BBCodeMediaProviderEditForm extends BBCodeMediaProviderAddForm {
 	
 	/**
 	 * id of the edited media provider
-	 * @var	integer
+	 * @var	int
 	 */
 	public $providerID = 0;
 	

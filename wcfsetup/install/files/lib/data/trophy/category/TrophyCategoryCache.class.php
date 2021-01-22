@@ -46,7 +46,7 @@ class TrophyCategoryCache extends SingletonFactory {
 	/**
 	 * Returns the trophy category with the given id.
 	 *
-	 * @param 	integer		$categoryID
+	 * @param 	int		$categoryID
 	 * @return 	TrophyCategory|null
 	 */
 	public function getCategoryByID($categoryID) {
@@ -60,7 +60,7 @@ class TrophyCategoryCache extends SingletonFactory {
 	/**
 	 * Returns the categories with the given id.
 	 *
-	 * @param 	integer[]	$categoryIDs
+	 * @param 	int[]	$categoryIDs
 	 * @return 	TrophyCategory[]
 	 */
 	public function getCategoriesByID(array $categoryIDs) {

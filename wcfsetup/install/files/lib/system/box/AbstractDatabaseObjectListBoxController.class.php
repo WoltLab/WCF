@@ -43,7 +43,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 	/**
 	 * default limit value for the maximum number of shown database objects
 	 * if this property is null, setting a limit is disabled
-	 * @var	integer
+	 * @var	int
 	 */
 	public $defaultLimit;
 	
@@ -61,19 +61,19 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 	
 	/**
 	 * limit value for the maximum number of shown database objects
-	 * @var	integer
+	 * @var	int
 	 */
 	public $limit;
 	
 	/**
 	 * maximum limit value, if `null` no maximum is set
-	 * @var	integer
+	 * @var	int
 	 */
 	public $maximumLimit;
 	
 	/**
 	 * minimum limit value
-	 * @var	integer
+	 * @var	int
 	 */
 	public $minimumLimit = 1;
 	
@@ -374,7 +374,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 	 * with the box conditions.
 	 * 
 	 * @param	Box		$box			box object
-	 * @param	boolean		$setConditionData	if true, the condition object types are populated with the box conditions' data
+	 * @param	bool		$setConditionData	if true, the condition object types are populated with the box conditions' data
 	 */
 	public function setBox(Box $box, $setConditionData = true) {
 		parent::setBox($box);

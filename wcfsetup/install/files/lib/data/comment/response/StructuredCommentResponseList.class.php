@@ -34,7 +34,7 @@ class StructuredCommentResponseList extends CommentResponseList {
 	
 	/**
 	 * minimum response time
-	 * @var	integer
+	 * @var	int
 	 */
 	public $minResponseTime = 0;
 	
@@ -104,7 +104,7 @@ class StructuredCommentResponseList extends CommentResponseList {
 	/**
 	 * Returns minimum response time.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getMinResponseTime() {
 		return $this->minResponseTime;

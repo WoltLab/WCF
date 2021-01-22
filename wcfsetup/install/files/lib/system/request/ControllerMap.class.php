@@ -62,8 +62,8 @@ class ControllerMap extends SingletonFactory {
 	 * 
 	 * @param	string		$application	application identifier
 	 * @param	string		$controller	url controller
-	 * @param	boolean		$isAcpRequest	true if this is an ACP request
-	 * @param       boolean         $skipCustomUrls true if custom url resolution should be suppressed, is always true for ACP requests
+	 * @param	bool		$isAcpRequest	true if this is an ACP request
+	 * @param       bool         $skipCustomUrls true if custom url resolution should be suppressed, is always true for ACP requests
 	 * @return	mixed		array containing className, controller and pageType or a string containing the controller name for aliased controllers
 	 * @throws	SystemException
 	 */
@@ -173,7 +173,7 @@ class ControllerMap extends SingletonFactory {
 	 * 
 	 * @param	string		$application	application identifier
 	 * @param	string		$controller	controller class, e.g. 'MembersList'
-	 * @param       boolean         $forceFrontend  force transformation for frontend
+	 * @param       bool         $forceFrontend  force transformation for frontend
 	 * @return	string		url representation of controller, e.g. 'members-list'
 	 */
 	public function lookup($application, $controller, $forceFrontend = null) {
@@ -203,8 +203,8 @@ class ControllerMap extends SingletonFactory {
 	 * Looks up a cms page URL, returns an array containing the application identifier
 	 * and url controller name or null if there was no match.
 	 * 
-	 * @param	integer		$pageID		page id
-	 * @param	integer		$languageID	content language id
+	 * @param	int		$pageID		page id
+	 * @param	int		$languageID	content language id
 	 * @return	string[]|null
 	 */
 	public function lookupCmsPage($pageID, $languageID) {
@@ -278,7 +278,7 @@ class ControllerMap extends SingletonFactory {
 	 * 
 	 * @param	string		$application	application identifier
 	 * @param	string		$controller	url controller name
-	 * @return	boolean		true if controller is the application's default
+	 * @return	bool		true if controller is the application's default
 	 */
 	public function isDefaultController($application, $controller) {
 		// lookup custom urls first
@@ -315,7 +315,7 @@ class ControllerMap extends SingletonFactory {
 	 * 
 	 * @param	string[]	$classData
 	 * @param	array		$metaData
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isLandingPage(array $classData, array $metaData) {
 		if ($classData['className'] !== $this->landingPages['wcf'][2]) {
@@ -353,7 +353,7 @@ class ControllerMap extends SingletonFactory {
 	 * 
 	 * @param       string          $application    application identifier
 	 * @param       string          $controller     controller name
-	 * @param       boolean         $isAcpRequest   true if this is an ACP request
+	 * @param       bool         $isAcpRequest   true if this is an ACP request
 	 * @return      string[]|null   className, controller and pageType, or null if this is not a legacy controller name
 	 */
 	protected function getLegacyClassData($application, $controller, $isAcpRequest) {
@@ -379,7 +379,7 @@ class ControllerMap extends SingletonFactory {
 	 *
 	 * @param	string		$application	application identifier
 	 * @param	string		$controller	controller name
-	 * @param	boolean		$isAcpRequest	true if this is an ACP request
+	 * @param	bool		$isAcpRequest	true if this is an ACP request
 	 * @param	string		$pageType	page type, e.g. 'form' or 'action'
 	 * @return	string[]|null	className, controller and pageType
 	 */

@@ -19,20 +19,20 @@ class LabelObjectTypeContainer implements \Countable, \Iterator {
 	
 	/**
 	 * object type id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $objectTypeID = 0;
 	
 	/**
 	 * iterator position
-	 * @var	integer
+	 * @var	int
 	 */
 	private $position = 0;
 	
 	/**
 	 * Creates a new LabelObjectTypeContainer object.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 */
 	public function __construct($objectTypeID) {
 		$this->objectTypeID = $objectTypeID;
@@ -50,7 +50,7 @@ class LabelObjectTypeContainer implements \Countable, \Iterator {
 	/**
 	 * Returns the object type id.
 	 * 
-	 * @return	integer
+	 * @return	int
 	 */
 	public function getObjectTypeID() {
 		return $this->objectTypeID;

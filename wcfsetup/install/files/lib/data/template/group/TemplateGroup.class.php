@@ -12,8 +12,8 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Template\Group
  *
- * @property-read	integer		$templateGroupID		unique id of the template group
- * @property-read	integer|null	$parentTemplateGroupID		id of the template group's parent template group or `null` if the template group has no parent template group
+ * @property-read	int		$templateGroupID		unique id of the template group
+ * @property-read	int|null	$parentTemplateGroupID		id of the template group's parent template group or `null` if the template group has no parent template group
  * @property-read	string		$templateGroupName		name of the template group
  * @property-read	string		$templateGroupFolderName	name of the folder containing the modified templates (relative to the normal template folder)
  */
@@ -33,7 +33,7 @@ class TemplateGroup extends DatabaseObject {
 	 * Returns whether the template group is immutable (i.e. whether it's the email
 	 * template group).
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isImmutable() {
 		return $this->templateGroupFolderName === '_wcf_email/';
@@ -51,9 +51,9 @@ class TemplateGroup extends DatabaseObject {
 	/**
 	 * Creates a select list of all template groups.
 	 * 
-	 * @param	integer[]	$ignore		Array of template group ids that should be excluded with all of their children.
+	 * @param	int[]	$ignore		Array of template group ids that should be excluded with all of their children.
 	 * 						-1 denotes that all immutable groups should be ignored.
-	 * @param	integer		$initialDepth	Specifies the initial indentation depth of the list
+	 * @param	int		$initialDepth	Specifies the initial indentation depth of the list
 	 * @return	array
 	 */
 	public static function getSelectList($ignore = [], $initialDepth = 0) {
@@ -79,8 +79,8 @@ class TemplateGroup extends DatabaseObject {
 	/**
 	 * Generates the select list.
 	 * 
-	 * @param	integer		$parentID		id of the parent template group
-	 * @param	integer		$depth			current list depth
+	 * @param	int		$parentID		id of the parent template group
+	 * @param	int		$depth			current list depth
 	 * @param	array		$ignore			list of template group ids to ignore in result
 	 */
 	protected static function makeSelectList($parentID = 0, $depth = 0, $ignore = []) {

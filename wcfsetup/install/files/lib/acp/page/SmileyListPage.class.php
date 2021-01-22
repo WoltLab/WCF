@@ -51,7 +51,7 @@ class SmileyListPage extends MultipleLinkPage {
 	
 	/**
 	 * category id
-	 * @var	integer
+	 * @var	int
 	 */
 	public $categoryID = 0;
 	

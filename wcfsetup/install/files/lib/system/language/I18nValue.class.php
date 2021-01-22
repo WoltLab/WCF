@@ -20,7 +20,7 @@ class I18nValue {
 	
 	/**
 	 * bit-mask to alter validation rules
-	 * @var integer
+	 * @var int
 	 */
 	protected $flags = 0;
 	
@@ -77,7 +77,7 @@ class I18nValue {
 	/**
 	 * Sets bit flags.
 	 * 
-	 * @param       integer         $flags
+	 * @param       int         $flags
 	 */
 	public function setFlags($flags) {
 		$this->flags = $flags;
@@ -86,8 +86,8 @@ class I18nValue {
 	/**
 	 * Returns true if given flag is set.
 	 * 
-	 * @param       integer         $flag
-	 * @return      boolean
+	 * @param       int         $flag
+	 * @return      bool
 	 */
 	public function getFlag($flag) {
 		return (($this->flags & $flag) === $flag);

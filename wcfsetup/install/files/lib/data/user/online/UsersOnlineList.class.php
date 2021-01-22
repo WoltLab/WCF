@@ -6,7 +6,6 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\system\event\EventHandler;
-use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -72,8 +71,6 @@ class UsersOnlineList extends SessionList {
 		$objects = $this->objects;
 		$this->indexToObject = $this->objects = [];
 		
-		UserStorageHandler::getInstance()->loadStorage($this->objectIDs);
-		
 		foreach ($objects as $object) {
 			$object = new UserOnline(new User(null, null, $object));
 			if (!$object->userID || self::isVisibleUser($object)) {
@@ -114,8 +111,6 @@ class UsersOnlineList extends SessionList {
 				$this->stats['guests']++;
 			}
 		}
-		
-		UserStorageHandler::getInstance()->loadStorage($userIDs);
 		
 		foreach ($users as $user) {
 			if ($user->canViewOnlineStatus && !self::isVisibleUser($user)) {
@@ -166,9 +161,9 @@ class UsersOnlineList extends SessionList {
 	/**
 	 * Checks the 'canViewOnlineStatus' setting.
 	 * 
-	 * @param	integer		$userID
-	 * @param	integer		$canViewOnlineStatus
-	 * @return	boolean
+	 * @param	int		$userID
+	 * @param	int		$canViewOnlineStatus
+	 * @return	bool
 	 * @deprecated  5.3             Use `isVisibleUser` instead
 	 */
 	public static function isVisible($userID, $canViewOnlineStatus) {
@@ -206,7 +201,7 @@ class UsersOnlineList extends SessionList {
 	 * Checks the 'canViewOnlineStatus' setting for the given user.
 	 * 
 	 * @param       UserOnline      $userOnline
-	 * @return      boolean
+	 * @return      bool
 	 * @since       5.3
 	 */
 	public static function isVisibleUser(UserOnline $userOnline) {
@@ -219,24 +214,19 @@ class UsersOnlineList extends SessionList {
 			'userOnline' => $userOnline,
 		];
 		
-		if ($userOnline->getPermission('user.profile.canHideOnlineStatus')) {
-			switch ($userOnline->canViewOnlineStatus) {
-				case UserProfile::ACCESS_EVERYONE:
-					$data['result'] = true;
-					break;
-				
-				case UserProfile::ACCESS_REGISTERED:
-					if (WCF::getUser()->userID) $data['result'] = true;
-					break;
-				
-				case UserProfile::ACCESS_FOLLOWING:
-					/** @noinspection PhpUndefinedMethodInspection */
-					if (WCF::getUserProfileHandler()->isFollower($userOnline->userID)) $data['result'] = true;
-					break;
-			}
-		}
-		else {
-			$data['result'] = true;
+		switch ($userOnline->canViewOnlineStatus) {
+			case UserProfile::ACCESS_EVERYONE:
+				$data['result'] = true;
+				break;
+			
+			case UserProfile::ACCESS_REGISTERED:
+				if (WCF::getUser()->userID) $data['result'] = true;
+				break;
+			
+			case UserProfile::ACCESS_FOLLOWING:
+				/** @noinspection PhpUndefinedMethodInspection */
+				if (WCF::getUserProfileHandler()->isFollower($userOnline->userID)) $data['result'] = true;
+				break;
 		}
 		
 		EventHandler::getInstance()->fireAction(get_called_class(), 'isVisibleUser', $data);

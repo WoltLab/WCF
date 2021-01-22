@@ -30,19 +30,19 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	
 	/**
 	 * object type of the active message
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $activeMessageObjectTypeID;
 	
 	/**
 	 * id of the active message
-	 * @var	integer
+	 * @var	int
 	 */
 	protected $activeMessageID;
 	
 	/**
 	 * language id of the active message
-	 * @var integer
+	 * @var int
 	 */
 	protected $activeMessageLanguageID;
 	
@@ -54,7 +54,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	
 	/**
 	 * content language id
-	 * @var integer
+	 * @var int
 	 */
 	protected $contentLanguageID;
 	
@@ -71,8 +71,8 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 * Registers the embedded objects found in given message.
 	 * 
 	 * @param       HtmlInputProcessor      $htmlInputProcessor     html input processor instance holding embedded object data
-	 * @param       boolean                 $isBulk                 true for bulk operations
-	 * @return      boolean                 true if at least one embedded object was found
+	 * @param       bool                 $isBulk                 true for bulk operations
+	 * @return      bool                 true if at least one embedded object was found
 	 */
 	public function registerObjects(HtmlInputProcessor $htmlInputProcessor, $isBulk = false) {
 		$context = $htmlInputProcessor->getContext();
@@ -165,9 +165,9 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 * Registers the embedded objects found in a message using the simplified syntax.
 	 * 
 	 * @param       string          $messageObjectType      object type identifier
-	 * @param       integer         $messageID              object id
-	 * @param       integer[][]     $embeddedContent        list of object ids for embedded objects by object type id
-	 * @return      boolean         true if at least one embedded object was found
+	 * @param       int         $messageID              object id
+	 * @param       int[][]     $embeddedContent        list of object ids for embedded objects by object type id
+	 * @return      bool         true if at least one embedded object was found
 	 */
 	public function registerSimpleObjects($messageObjectType, $messageID, array $embeddedContent) {
 		$messageObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType);
@@ -201,7 +201,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 * Removes embedded object assignments for given messages.
 	 * 
 	 * @param	string			$messageObjectType
-	 * @param	integer[]		$messageIDs
+	 * @param	int[]		$messageIDs
 	 */
 	public function removeObjects($messageObjectType, array $messageIDs) {
 		$conditionBuilder = new PreparedStatementConditionBuilder();
@@ -218,8 +218,8 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 * Loads the embedded objects for given messages.
 	 * 
 	 * @param	string		$messageObjectType
-	 * @param	integer[]	$messageIDs
-	 * @param       integer         $contentLanguageID
+	 * @param	int[]	$messageIDs
+	 * @param       int         $contentLanguageID
 	 * @throws	InvalidObjectTypeException
 	 */
 	public function loadObjects($messageObjectType, array $messageIDs, $contentLanguageID = null) {
@@ -269,7 +269,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	/**
 	 * Returns the content language id or null.
 	 * 
-	 * @return      integer
+	 * @return      int
 	 */
 	public function getContentLanguageID() {
 		return $this->contentLanguageID;
@@ -279,8 +279,8 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 * Sets active message information.
 	 * 
 	 * @param	string		$messageObjectType
-	 * @param	integer		$messageID
-	 * @param	integer		$languageID
+	 * @param	int		$messageID
+	 * @param	int		$languageID
 	 */
 	public function setActiveMessage($messageObjectType, $messageID, $languageID = null) {
 		$this->activeMessageObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType);
@@ -291,7 +291,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	/**
 	 * Returns the language id of the active message.
 	 * 
-	 * @return      integer
+	 * @return      int
 	 */
 	public function getActiveMessageLanguageID() {
 		return $this->activeMessageLanguageID;
@@ -321,7 +321,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 * Returns a specific embedded object.
 	 * 
 	 * @param	string		$embeddedObjectType
-	 * @param	integer		$objectID
+	 * @param	int		$objectID
 	 * @return	\wcf\data\DatabaseObject
 	 */
 	public function getObject($embeddedObjectType, $objectID) {
@@ -401,7 +401,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	/**
 	 * Returns a specific embedded object handler.
 	 * 
-	 * @param	integer		$objectTypeID
+	 * @param	int		$objectTypeID
 	 * @return	IMessageEmbeddedObjectHandler
 	 */
 	protected function getEmbeddedObjectHandler($objectTypeID) {

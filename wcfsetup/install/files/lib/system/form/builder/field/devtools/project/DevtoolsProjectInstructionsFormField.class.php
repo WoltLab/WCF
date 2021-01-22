@@ -8,6 +8,7 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\TDefaultIdFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\WCF;
 
 /**
  * Form field implementation for the instructions of a devtools project.
@@ -79,11 +80,23 @@ class DevtoolsProjectInstructionsFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function getHtmlVariables() {
-		return [
-			'apps' => $this->getApplications(),
-			'packageInstallationPlugins' => $this->getPackageInstallationPlugins()
-		];
+	public function getHtml() {
+		if ($this->requiresLabel() && $this->getLabel() === null) {
+			throw new \UnexpectedValueException("Form field '{$this->getPrefixedId()}' requires a label.");
+		}
+		
+		$this->removeClass('formError');
+		
+		return WCF::getTPL()->fetch(
+			$this->templateName,
+			'wcf',
+			[
+				'apps' => $this->getApplications(),
+				'field' => $this,
+				'packageInstallationPlugins' => $this->getPackageInstallationPlugins(),
+			],
+			true
+		);
 	}
 	
 	/**

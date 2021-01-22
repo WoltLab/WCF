@@ -25,7 +25,7 @@ use wcf\util\StringUtil;
 class ViewableMedia extends DatabaseObjectDecorator {
 	/**
 	 * force localized content by language id
-	 * @var integer
+	 * @var int
 	 */
 	protected $forceLanguageID;
 	
@@ -49,7 +49,7 @@ class ViewableMedia extends DatabaseObjectDecorator {
 	/**
 	 * Registers localized content by language id.
 	 * 
-	 * @param       integer         $languageID
+	 * @param       int         $languageID
 	 * @param       string[]        $content
 	 */
 	public function setLocalizedContent($languageID, array $content) {
@@ -59,7 +59,7 @@ class ViewableMedia extends DatabaseObjectDecorator {
 	/**
 	 * Returns an instance of this class with localized versions.
 	 * 
-	 * @param       integer         $languageID
+	 * @param       int         $languageID
 	 * @return      ViewableMedia
 	 */
 	public function getLocalizedVersion($languageID) {
@@ -76,7 +76,7 @@ class ViewableMedia extends DatabaseObjectDecorator {
 	/**
 	 * Forces the localized values by language id.
 	 * 
-	 * @param       integer         $languageID
+	 * @param       int         $languageID
 	 */
 	protected function forceLanguageID($languageID) {
 		$this->forceLanguageID = $languageID;
@@ -242,7 +242,7 @@ class ViewableMedia extends DatabaseObjectDecorator {
 	/**
 	 * Returns the viewable media file with the given id.
 	 * 
-	 * @param	integer		$mediaID
+	 * @param	int		$mediaID
 	 * @return	ViewableMedia|null
 	 */
 	public static function getMedia($mediaID) {

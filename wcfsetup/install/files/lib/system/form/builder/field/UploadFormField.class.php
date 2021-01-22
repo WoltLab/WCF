@@ -33,13 +33,13 @@ class UploadFormField extends AbstractFormField {
 	 * This flag indicates whether only images can uploaded via this field.
 	 * <strong>Heads up:</strong> SVG images can contain bad code, therefore do not
 	 * use this option, outside the acp or check the file whether remote code is contained.
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $imageOnly = false;
 	
 	/**
 	 * This flag indicates whether SVG images are treated as image in the image only mode.
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $allowSvgImage = false;
 	
@@ -126,7 +126,7 @@ class UploadFormField extends AbstractFormField {
 	/**
 	 * Returns true, iff the current field is already registered. 
 	 * 
-	 * @return boolean
+	 * @return bool
 	 */
 	private function isRegistered() {
 		return $this->isPopulated;
@@ -610,7 +610,7 @@ class UploadFormField extends AbstractFormField {
 	 * If set to `true` will also set the acceptable types to `image/*`. If set to
 	 * false it will clear the acceptable types if they are `image/*`.
 	 * 
-	 * @param	boolean	        $imageOnly
+	 * @param	bool	        $imageOnly
 	 * @return	static				this field
 	 * 
 	 * @throws       \InvalidArgumentException         if the field is not set to images only and a minimum/maximum width/height is set
@@ -658,7 +658,7 @@ class UploadFormField extends AbstractFormField {
 	 * <strong>Heads up:</strong> SVG images can contain bad code, therefore do not
 	 * use this option, outside the acp or check the file whether remote code is contained.
 	 *
-	 * @param	boolean	        $allowSvgImages
+	 * @param	bool	        $allowSvgImages
 	 * @return	static				this field
 	 * 
 	 * @throws      \BadMethodCallException         if the imageOnly flag isn't set to true
@@ -676,7 +676,7 @@ class UploadFormField extends AbstractFormField {
 	/**
 	 * Returns `true` if only images can be uploaded via this field and returns `false` otherwise.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isImageOnly() {
 		return $this->imageOnly;
@@ -685,7 +685,7 @@ class UploadFormField extends AbstractFormField {
 	/**
 	 * Returns true, if the field can contain svg images in the image only mode.
 	 *
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function svgImageAllowed() {
 		return $this->allowSvgImage;

@@ -24,7 +24,7 @@ class FeedEnclosure {
 	
 	/**
 	 * size of the enclosure in bytes
-	 * @var integer
+	 * @var int
 	 */
 	protected $length = 0;
 	
@@ -33,7 +33,7 @@ class FeedEnclosure {
 	 *
 	 * @param       string          $url            url to the enclosure
 	 * @param       string          $type           enclosure's MIME type
-	 * @param       integer         $length         size of the enclosure in bytes
+	 * @param       int         $length         size of the enclosure in bytes
 	 */
 	public function __construct($url, $type, $length) {
 		$this->url = $url;
@@ -62,7 +62,7 @@ class FeedEnclosure {
 	/**
 	 * Returns the size of the enclosure in bytes.
 	 * 
-	 * @return integer
+	 * @return int
 	 */
 	public function getLength() {
 		return $this->length;

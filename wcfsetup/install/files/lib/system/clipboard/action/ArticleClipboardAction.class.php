@@ -90,7 +90,7 @@ class ArticleClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the articles that can be deleted.
 	 *
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function validateDelete() {
 		$objectIDs = [];
@@ -108,7 +108,7 @@ class ArticleClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the articles that can be published.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function validatePublish() {
 		$objectIDs = [];
@@ -126,7 +126,7 @@ class ArticleClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the articles that can be restored.
 	 *
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function validateRestore() {
 		return $this->validateDelete();
@@ -135,7 +135,7 @@ class ArticleClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the articles whose category can be set.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function validateSetCategory() {
 		if (!WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
@@ -148,7 +148,7 @@ class ArticleClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the articles that can be trashed.
 	 * 
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function validateTrash() {
 		$objectIDs = [];
@@ -166,7 +166,7 @@ class ArticleClipboardAction extends AbstractClipboardAction {
 	/**
 	 * Returns the ids of the articles that can be unpublished.
 	 *
-	 * @return	integer[]
+	 * @return	int[]
 	 */
 	public function validateUnpublish() {
 		$objectIDs = [];

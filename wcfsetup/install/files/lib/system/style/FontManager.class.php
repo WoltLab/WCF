@@ -49,7 +49,7 @@ class FontManager extends SingletonFactory {
 	 * Returns whether the family's CSS file exists, implying that
 	 * the family is available.
 	 * 
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function isFamilyDownloaded($family) {
 		return is_readable($this->getCssFilename($family));

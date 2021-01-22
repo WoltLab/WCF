@@ -30,7 +30,7 @@ interface IDatabaseObjectProcessor {
 	 * object.
 	 * 
 	 * @param	string		$name
-	 * @return	boolean
+	 * @return	bool
 	 */
 	public function __isset($name);
 	

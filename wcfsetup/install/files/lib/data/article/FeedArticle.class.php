@@ -22,7 +22,6 @@ class FeedArticle extends ViewableArticle implements IFeedEntryWithEnclosure {
 	 */
 	protected $enclosure;
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */
@@ -88,7 +87,6 @@ class FeedArticle extends ViewableArticle implements IFeedEntryWithEnclosure {
 		return $categories;
 	}
 	
-	/** @noinspection PhpMissingParentCallCommonInspection */
 	/**
 	 * @inheritDoc
 	 */

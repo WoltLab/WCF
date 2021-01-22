@@ -60,7 +60,7 @@ class UserTrophyListPage extends SortablePage {
 	
 	/**
 	 * The filter value for the trophy id.
-	 * @var integer
+	 * @var int
 	 */
 	public $trophyID = 0;
 	
