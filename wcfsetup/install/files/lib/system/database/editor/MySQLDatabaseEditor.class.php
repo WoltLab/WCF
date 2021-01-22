@@ -276,9 +276,9 @@ class MySQLDatabaseEditor extends DatabaseEditor
     public function alterColumn($tableName, $oldColumnName, $newColumnName, $newColumnData)
     {
         $sql = "ALTER TABLE `" . $tableName . "` CHANGE COLUMN `" . $oldColumnName . "` " . $this->buildColumnDefinition(
-                $newColumnName,
-                $newColumnData
-            );
+            $newColumnName,
+            $newColumnData
+        );
         $statement = $this->dbObj->prepareStatement($sql);
         $statement->execute();
     }

@@ -148,20 +148,20 @@ class AttachmentBBCode extends AbstractBBCode
 
                     if ($parser instanceof HtmlBBCodeParser && $parser->getIsGoogleAmp()) {
                         $result = '<amp-img src="' . StringUtil::encodeHTML(LinkHandler::getInstance()->getLink(
-                                'Attachment',
-                                $linkParameters
-                            )) . '"' . ($imageClasses ? ' class="' . $imageClasses . '"' : '') . ' width="' . ($attachment->hasThumbnail() ? $attachment->thumbnailWidth : $attachment->width) . '" height="' . ($attachment->hasThumbnail() ? $attachment->thumbnailHeight : $attachment->height) . '" layout="flex-item" alt="">';
+                            'Attachment',
+                            $linkParameters
+                        )) . '"' . ($imageClasses ? ' class="' . $imageClasses . '"' : '') . ' width="' . ($attachment->hasThumbnail() ? $attachment->thumbnailWidth : $attachment->width) . '" height="' . ($attachment->hasThumbnail() ? $attachment->thumbnailHeight : $attachment->height) . '" layout="flex-item" alt="">';
                     } else {
                         $result = '<img src="' . StringUtil::encodeHTML(LinkHandler::getInstance()->getLink(
-                                'Attachment',
-                                $linkParameters
-                            )) . '"' . ($imageClasses ? ' class="' . $imageClasses . '"' : '') . ' style="width: ' . ($attachment->hasThumbnail() ? $attachment->thumbnailWidth : $attachment->width) . 'px; height: ' . ($attachment->hasThumbnail() ? $attachment->thumbnailHeight : $attachment->height) . 'px;" alt="">';
+                            'Attachment',
+                            $linkParameters
+                        )) . '"' . ($imageClasses ? ' class="' . $imageClasses . '"' : '') . ' style="width: ' . ($attachment->hasThumbnail() ? $attachment->thumbnailWidth : $attachment->width) . 'px; height: ' . ($attachment->hasThumbnail() ? $attachment->thumbnailHeight : $attachment->height) . 'px;" alt="">';
                     }
                     if (!$hasParentLink && $attachment->hasThumbnail() && $attachment->canDownload()) {
                         $result = '<a href="' . StringUtil::encodeHTML(LinkHandler::getInstance()->getLink(
-                                'Attachment',
-                                ['object' => $attachment]
-                            )) . '" title="' . StringUtil::encodeHTML($attachment->filename) . '" class="embeddedAttachmentLink jsImageViewer' . ($class ? ' ' . $class : '') . '">' . $result . '</a>';
+                            'Attachment',
+                            ['object' => $attachment]
+                        )) . '" title="' . StringUtil::encodeHTML($attachment->filename) . '" class="embeddedAttachmentLink jsImageViewer' . ($class ? ' ' . $class : '') . '">' . $result . '</a>';
                     }
                 }
 

@@ -84,11 +84,11 @@ class UserOptionsCondition extends AbstractMultipleFieldsCondition implements
             if (isset($optionValues[$option->optionName])) {
                 /** @noinspection PhpUndefinedMethodInspection */
                 if (
-                !$this->optionHandler->getTypeObject($option->optionType)->checkUser(
-                    $user,
-                    $option,
-                    $optionValues[$option->optionName]
-                )
+                    !$this->optionHandler->getTypeObject($option->optionType)->checkUser(
+                        $user,
+                        $option,
+                        $optionValues[$option->optionName]
+                    )
                 ) {
                     $checkSuccess = false;
                     break;

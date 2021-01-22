@@ -371,9 +371,9 @@ class RouteHandler extends SingletonFactory
                 $parts = \array_map('strtolower', $parts);
 
                 self::$pathInfo = \implode('-', $parts) . \mb_substr(
-                        self::$pathInfo,
-                        \mb_strlen($matches['controller'])
-                    );
+                    self::$pathInfo,
+                    \mb_strlen($matches['controller'])
+                );
             }
         }
 

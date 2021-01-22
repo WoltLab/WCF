@@ -751,11 +751,11 @@ class StyleAddForm extends AbstractForm
         // parse global (unit) variables
         foreach ($this->globals as $variableName) {
             if (
-            \preg_match(
-                '/(.*?)(' . \implode('|', $this->availableUnits) . ')$/',
-                $this->variables[$variableName],
-                $match
-            )
+                \preg_match(
+                    '/(.*?)(' . \implode('|', $this->availableUnits) . ')$/',
+                    $this->variables[$variableName],
+                    $match
+                )
             ) {
                 $this->variables[$variableName] = $match[1];
                 $this->variables[$variableName . '_unit'] = $match[2];

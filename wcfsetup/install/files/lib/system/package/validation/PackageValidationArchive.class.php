@@ -153,10 +153,10 @@ class PackageValidationArchive implements \RecursiveIterator
                         $index = \count($this->children);
                         $this->children[$index] = new self($archive, $this, $this->depth + 1);
                         if (
-                        !$this->children[$index]->validate(
-                            PackageValidationManager::VALIDATION_RECURSIVE,
-                            $requirement['minversion']
-                        )
+                            !$this->children[$index]->validate(
+                                PackageValidationManager::VALIDATION_RECURSIVE,
+                                $requirement['minversion']
+                            )
                         ) {
                             return false;
                         }
@@ -284,11 +284,11 @@ class PackageValidationArchive implements \RecursiveIterator
         for ($i = 0, $length = \count($instructions); $i < $length; $i++) {
             $instruction = $instructions[$i];
             if (
-            !PackageValidationManager::getInstance()->validatePackageInstallationPluginInstruction(
-                $this->archive,
-                $instruction['pip'],
-                $instruction['value']
-            )
+                !PackageValidationManager::getInstance()->validatePackageInstallationPluginInstruction(
+                    $this->archive,
+                    $instruction['pip'],
+                    $instruction['value']
+                )
             ) {
                 $defaultFilename = PackageValidationManager::getInstance()
                     ->getDefaultFilenameForPackageInstallationPlugin($instruction['pip']);
@@ -329,11 +329,11 @@ class PackageValidationArchive implements \RecursiveIterator
                 if (isset(self::$excludedPackages[$excludingPackage][$package])) {
                     for ($i = 0, $count = \count(self::$excludedPackages[$excludingPackage][$package]); $i < $count; $i++) {
                         if (
-                        Package::compareVersion(
-                            $packageVersion,
-                            self::$excludedPackages[$excludingPackage][$package][$i],
-                            '<'
-                        )
+                            Package::compareVersion(
+                                $packageVersion,
+                                self::$excludedPackages[$excludingPackage][$package][$i],
+                                '<'
+                            )
                         ) {
                             continue;
                         }
@@ -383,11 +383,11 @@ class PackageValidationArchive implements \RecursiveIterator
 
                 for ($i = 0, $count = \count(self::$excludedPackages[$package][$excludedPackage]); $i < $count; $i++) {
                     if (
-                    Package::compareVersion(
-                        $version,
-                        self::$excludedPackages[$package][$excludedPackage][$i],
-                        '<'
-                    )
+                        Package::compareVersion(
+                            $version,
+                            self::$excludedPackages[$package][$excludedPackage][$i],
+                            '<'
+                        )
                     ) {
                         continue;
                     }

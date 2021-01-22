@@ -457,16 +457,16 @@ class SmtpEmailTransport implements IEmailTransport
         $this->write('DATA');
         $this->read([354]);
         $this->connection->write(\implode("\r\n", \array_map(static function ($item) {
-                // 4.5.2 Transparency
-                // o  Before sending a line of mail text, the SMTP client checks the
-                //    first character of the line.  If it is a period, one additional
-                //    period is inserted at the beginning of the line.
-                if (StringUtil::startsWith($item, '.')) {
-                    return '.' . $item;
-                }
+            // 4.5.2 Transparency
+            // o  Before sending a line of mail text, the SMTP client checks the
+            //    first character of the line.  If it is a period, one additional
+            //    period is inserted at the beginning of the line.
+            if (StringUtil::startsWith($item, '.')) {
+                return '.' . $item;
+            }
 
-                return $item;
-            }, \explode("\r\n", $email->getEmail()))) . "\r\n");
+            return $item;
+        }, \explode("\r\n", $email->getEmail()))) . "\r\n");
         $this->write(".");
         $this->read([250]);
     }

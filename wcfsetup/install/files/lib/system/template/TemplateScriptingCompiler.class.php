@@ -1471,9 +1471,9 @@ class TemplateScriptingCompiler
     {
         if (isset($data['className'])) {
             return "\$this->pluginObjects['" . $data['className'] . "']->execute([" . \implode(
-                    ',',
-                    $data['parameter']
-                ) . "], \$this)";
+                ',',
+                $data['parameter']
+            ) . "], \$this)";
         } else {
             return $data['name'] . '(' . \implode(',', $data['parameter']) . ')';
         }

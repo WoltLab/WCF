@@ -456,9 +456,9 @@ class PackageInstallationNodeBuilder
             if (!isset($package['file'])) {
                 if (
                     isset(self::$pendingPackages[$packageName]) && (!isset($package['minversion']) || Package::compareVersion(
-                            self::$pendingPackages[$packageName],
-                            $package['minversion']
-                        ) >= 0)
+                        self::$pendingPackages[$packageName],
+                        $package['minversion']
+                    ) >= 0)
                 ) {
                     // the package will already be installed and no
                     // minversion is given or the package which will be

@@ -81,12 +81,12 @@ final class UserRegistrationUtil
     public static function checkForbiddenEmails($email)
     {
         return StringUtil::executeWordFilter(
-                $email,
-                REGISTER_FORBIDDEN_EMAILS
-            ) && (!StringUtil::trim(REGISTER_ALLOWED_EMAILS) || !StringUtil::executeWordFilter(
-                    $email,
-                    REGISTER_ALLOWED_EMAILS
-                ));
+            $email,
+            REGISTER_FORBIDDEN_EMAILS
+        ) && (!StringUtil::trim(REGISTER_ALLOWED_EMAILS) || !StringUtil::executeWordFilter(
+            $email,
+            REGISTER_ALLOWED_EMAILS
+        ));
     }
 
     /**

@@ -43,12 +43,12 @@ abstract class AbstractMultiCategoryCondition extends AbstractMultiSelectConditi
         /** @var CategoryNode $categoryNode */
         foreach ($categoryTree as $categoryNode) {
             $fieldElement .= "<option value=\"{$categoryNode->categoryID}\"" . (\in_array(
-                    $categoryNode->categoryID,
-                    $this->fieldValue
-                ) ? ' selected' : '') . ">" . \str_repeat(
-                    "&nbsp;&nbsp;&nbsp;&nbsp;",
-                    $categoryNode->getDepth() - 1
-                ) . StringUtil::encodeHTML($categoryNode->getTitle()) . "</option>";
+                $categoryNode->categoryID,
+                $this->fieldValue
+            ) ? ' selected' : '') . ">" . \str_repeat(
+                "&nbsp;&nbsp;&nbsp;&nbsp;",
+                $categoryNode->getDepth() - 1
+            ) . StringUtil::encodeHTML($categoryNode->getTitle()) . "</option>";
         }
         $fieldElement .= '</select>';
 

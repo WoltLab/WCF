@@ -54,9 +54,9 @@ class HtmlHighlighter extends XmlHighlighter
 
             /** @noinspection PhpUndefinedMethodInspection */
             return $openingTag . StringStack::pushToStringStack(
-                    '<span class="' . $type . 'Highlighter">' . $class::getInstance()->highlight($content) . '</span>',
-                    'htmlHighlighter' . \ucfirst($type)
-                ) . $closingTag;
+                '<span class="' . $type . 'Highlighter">' . $class::getInstance()->highlight($content) . '</span>',
+                'htmlHighlighter' . \ucfirst($type)
+            ) . $closingTag;
         });
     }
 

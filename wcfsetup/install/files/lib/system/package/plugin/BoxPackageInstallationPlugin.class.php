@@ -175,18 +175,18 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
         $position = $data['elements']['position'];
 
         if (
-        !\in_array($position, [
-            'bottom',
-            'contentBottom',
-            'contentTop',
-            'footer',
-            'footerBoxes',
-            'headerBoxes',
-            'hero',
-            'sidebarLeft',
-            'sidebarRight',
-            'top',
-        ])
+            !\in_array($position, [
+                'bottom',
+                'contentBottom',
+                'contentTop',
+                'footer',
+                'footerBoxes',
+                'headerBoxes',
+                'hero',
+                'sidebarLeft',
+                'sidebarRight',
+                'top',
+            ])
         ) {
             throw new SystemException("Unknown box position '{$position}' for box '{$identifier}'");
         }

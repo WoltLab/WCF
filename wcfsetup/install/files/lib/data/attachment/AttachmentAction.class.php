@@ -115,10 +115,10 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 
         // check upload permissions
         if (
-        !$processor->canUpload(
-            (!empty($this->parameters['objectID']) ? \intval($this->parameters['objectID']) : 0),
-            (!empty($this->parameters['parentObjectID']) ? \intval($this->parameters['parentObjectID']) : 0)
-        )
+            !$processor->canUpload(
+                (!empty($this->parameters['objectID']) ? \intval($this->parameters['objectID']) : 0),
+                (!empty($this->parameters['parentObjectID']) ? \intval($this->parameters['parentObjectID']) : 0)
+            )
         ) {
             throw new PermissionDeniedException();
         }

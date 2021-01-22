@@ -71,10 +71,10 @@ class UserAvatar extends DatabaseObject implements IUserAvatar
     public function getFilename($size = null)
     {
         return \substr(
-                $this->fileHash,
-                0,
-                2
-            ) . '/' . $this->avatarID . '-' . $this->fileHash . ($size !== null ? ('-' . $size) : '') . '.' . $this->avatarExtension;
+            $this->fileHash,
+            0,
+            2
+        ) . '/' . $this->avatarID . '-' . $this->fileHash . ($size !== null ? ('-' . $size) : '') . '.' . $this->avatarExtension;
     }
 
     /**

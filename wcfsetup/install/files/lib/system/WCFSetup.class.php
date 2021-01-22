@@ -251,10 +251,10 @@ class WCFSetup extends WCF
         }
 
         \header('set-cookie: wcfsetup_cookietest=' . TMP_FILE_PREFIX . '; domain=' . \str_replace(
-                RouteHandler::getProtocol(),
-                '',
-                RouteHandler::getHost()
-            ) . (RouteHandler::secureConnection() ? '; secure' : ''));
+            RouteHandler::getProtocol(),
+            '',
+            RouteHandler::getHost()
+        ) . (RouteHandler::secureConnection() ? '; secure' : ''));
 
         // execute current step
         switch ($step) {
@@ -1252,16 +1252,16 @@ class WCFSetup extends WCF
                         $wcfPackageFile = $packageFile;
                     } else {
                         $isStrato = (!empty($_SERVER['DOCUMENT_ROOT']) && (\strpos(
-                                    $_SERVER['DOCUMENT_ROOT'],
-                                    'strato'
-                                ) !== false));
+                            $_SERVER['DOCUMENT_ROOT'],
+                            'strato'
+                        ) !== false));
                         if (!$isStrato && \preg_match('!\.(tar\.gz|tgz)$!', $packageFile)) {
                             // try to unzip zipped package files
                             if (
-                            FileUtil::uncompressFile(
-                                TMP_DIR . 'install/packages/' . $packageFile,
-                                TMP_DIR . 'install/packages/' . $packageName . '.tar'
-                            )
+                                FileUtil::uncompressFile(
+                                    TMP_DIR . 'install/packages/' . $packageFile,
+                                    TMP_DIR . 'install/packages/' . $packageName . '.tar'
+                                )
                             ) {
                                 @\unlink(TMP_DIR . 'install/packages/' . $packageFile);
                                 $packageFile = $packageName . '.tar';

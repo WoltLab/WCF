@@ -168,9 +168,9 @@ class CLIWCF extends WCF
                 echo $help . \PHP_EOL;
             } else {
                 echo WCF::getLanguage()->getDynamicVariable(
-                        'wcf.cli.help.noLongHelp',
-                        ['topic' => self::getArgvParser()->help]
-                    ) . \PHP_EOL;
+                    'wcf.cli.help.noLongHelp',
+                    ['topic' => self::getArgvParser()->help]
+                ) . \PHP_EOL;
             }
 
             exit;
@@ -186,9 +186,9 @@ class CLIWCF extends WCF
             $language = LanguageFactory::getInstance()->getLanguageByCode(self::getArgvParser()->language);
             if ($language === null) {
                 echo WCF::getLanguage()->getDynamicVariable(
-                        'wcf.cli.error.language.notFound',
-                        ['languageCode' => self::getArgvParser()->language]
-                    ) . \PHP_EOL;
+                    'wcf.cli.error.language.notFound',
+                    ['languageCode' => self::getArgvParser()->language]
+                ) . \PHP_EOL;
 
                 exit;
             }

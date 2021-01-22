@@ -217,7 +217,7 @@ final class TotpMultifactorMethod implements IMultifactorMethod
                 ]);
                 $deviceNames = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
-                for ($i = 1; ; $i++) {
+                for ($i = 1;; $i++) {
                     $deviceName = $defaultName . ($i > 1 ? " ({$i})" : '');
                     if (!\in_array($deviceName, $deviceNames)) {
                         break;

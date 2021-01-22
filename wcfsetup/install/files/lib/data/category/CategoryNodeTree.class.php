@@ -197,8 +197,8 @@ class CategoryNodeTree implements \IteratorAggregate
     protected function isIncluded(CategoryNode $categoryNode)
     {
         return (!$categoryNode->isDisabled || $this->includeDisabledCategories) && !\in_array(
-                $categoryNode->categoryID,
-                $this->excludedCategoryIDs
-            );
+            $categoryNode->categoryID,
+            $this->excludedCategoryIDs
+        );
     }
 }

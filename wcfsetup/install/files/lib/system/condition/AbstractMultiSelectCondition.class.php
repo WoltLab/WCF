@@ -41,9 +41,9 @@ abstract class AbstractMultiSelectCondition extends AbstractSelectCondition
         $options = $this->getOptions();
 
         $fieldElement = '<select name="' . $this->fieldName . '[]" id="' . $this->fieldName . '" multiple size="' . (\count(
-                $options,
-                \COUNT_RECURSIVE
-            ) > 10 ? 10 : \count($options, \COUNT_RECURSIVE)) . '">';
+            $options,
+            \COUNT_RECURSIVE
+        ) > 10 ? 10 : \count($options, \COUNT_RECURSIVE)) . '">';
         foreach ($options as $key => $value) {
             if (\is_array($value)) {
                 $fieldElement .= $this->getOptGroupCode($key, $value);
@@ -62,9 +62,9 @@ abstract class AbstractMultiSelectCondition extends AbstractSelectCondition
     protected function getOptionCode($value, $label)
     {
         return '<option value="' . $value . '"' . (\in_array(
-                $value,
-                $this->fieldValue
-            ) ? ' selected' : '') . '>' . StringUtil::encodeHTML(WCF::getLanguage()->get($label)) . '</option>';
+            $value,
+            $this->fieldValue
+        ) ? ' selected' : '') . '>' . StringUtil::encodeHTML(WCF::getLanguage()->get($label)) . '</option>';
     }
 
     /**

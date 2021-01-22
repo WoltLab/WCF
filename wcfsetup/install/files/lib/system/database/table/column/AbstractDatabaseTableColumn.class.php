@@ -66,10 +66,10 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
     {
         $data = [
             'default' => $this->getDefaultValue() !== null ? "'" . \str_replace(
-                    ["'", '\\'],
-                    ["''", '\\\\'],
-                    $this->getDefaultValue()
-                ) . "'" : null,
+                ["'", '\\'],
+                ["''", '\\\\'],
+                $this->getDefaultValue()
+            ) . "'" : null,
             'notNull' => $this->isNotNull() ? 1 : 0,
             'type' => $this->getType(),
         ];

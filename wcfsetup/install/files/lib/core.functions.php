@@ -8,7 +8,6 @@
  */
 
 namespace {
-
     use wcf\system\WCF;
 
     // set exception handler
@@ -121,7 +120,6 @@ namespace {
 // @codingStandardsIgnoreStart
 
 namespace wcf {
-
     function getRequestId()
     {
         if (!\defined('WCF_REQUEST_ID_HEADER') || !WCF_REQUEST_ID_HEADER) {
@@ -222,36 +220,36 @@ function logThrowable($e, &$logFile = null)
  */
 function printThrowable($e)
 {
-$exceptionID = logThrowable($e, $logFile);
-if (\wcf\getRequestId()) {
-    $exceptionID .= '/' . \wcf\getRequestId();
-}
-
-$exceptionTitle = $exceptionSubtitle = $exceptionExplanation = '';
-$logFile = sanitizePath($logFile);
-try {
-    if (WCF::getLanguage() !== null) {
-        $exceptionTitle = WCF::getLanguage()->get('wcf.global.exception.title', true);
-        $exceptionSubtitle = \str_replace(
-            '{$exceptionID}',
-            $exceptionID,
-            WCF::getLanguage()->get('wcf.global.exception.subtitle', true)
-        );
-        $exceptionExplanation = \str_replace(
-            '{$logFile}',
-            $logFile,
-            WCF::getLanguage()->get('wcf.global.exception.explanation', true)
-        );
+    $exceptionID = logThrowable($e, $logFile);
+    if (\wcf\getRequestId()) {
+        $exceptionID .= '/' . \wcf\getRequestId();
     }
-} catch (\Throwable $e) {
-    // ignore
-}
 
-if (!$exceptionTitle || !$exceptionSubtitle || !$exceptionExplanation) {
-    // one or more failed, fallback to english
-    $exceptionTitle = 'An error has occurred';
-    $exceptionSubtitle = 'Internal error code: <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">' . $exceptionID . '</span></span>';
-    $exceptionExplanation = <<<EXPLANATION
+    $exceptionTitle = $exceptionSubtitle = $exceptionExplanation = '';
+    $logFile = sanitizePath($logFile);
+    try {
+        if (WCF::getLanguage() !== null) {
+            $exceptionTitle = WCF::getLanguage()->get('wcf.global.exception.title', true);
+            $exceptionSubtitle = \str_replace(
+                '{$exceptionID}',
+                $exceptionID,
+                WCF::getLanguage()->get('wcf.global.exception.subtitle', true)
+            );
+            $exceptionExplanation = \str_replace(
+                '{$logFile}',
+                $logFile,
+                WCF::getLanguage()->get('wcf.global.exception.explanation', true)
+            );
+        }
+    } catch (\Throwable $e) {
+        // ignore
+    }
+
+    if (!$exceptionTitle || !$exceptionSubtitle || !$exceptionExplanation) {
+        // one or more failed, fallback to english
+        $exceptionTitle = 'An error has occurred';
+        $exceptionSubtitle = 'Internal error code: <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">' . $exceptionID . '</span></span>';
+        $exceptionExplanation = <<<EXPLANATION
 <p class="exceptionSubtitle">What happened?</p>
 <p class="exceptionText">An error has occured while trying to handle your request and execution has been terminated. Please forward the above error code to the site administrator.</p>
 <p class="exceptionText">&nbsp;</p> <!-- required to ensure spacing after copy & paste -->
@@ -262,20 +260,20 @@ if (!$exceptionTitle || !$exceptionSubtitle || !$exceptionExplanation) {
 <p class="exceptionText">&nbsp;</p> <!-- required to ensure spacing after copy & paste -->
 <p class="exceptionText">Notice: The error code was randomly generated and has no use beyond looking up the full message.</p>
 EXPLANATION;
-}
+    }
 
-/*
- * A notice on the HTML used below:
- *
- * It might appear a bit weird to use <p> all over the place where semantically
- * other elements would fit in way better. The reason behind this is that we avoid
- * inheriting unwanted styles (e.g. exception displayed in an overlay) and that
- * the output needs to be properly readable when copied & pasted somewhere.
- *
- * Besides the visual appearance, the output was built to provide a maximum of
- * compatibility and readability when pasted somewhere else, e.g. a WYSIWYG editor
- * without the potential of messing up the formatting and thus harming the readability.
- */ ?><!DOCTYPE html>
+    /*
+     * A notice on the HTML used below:
+     *
+     * It might appear a bit weird to use <p> all over the place where semantically
+     * other elements would fit in way better. The reason behind this is that we avoid
+     * inheriting unwanted styles (e.g. exception displayed in an overlay) and that
+     * the output needs to be properly readable when copied & pasted somewhere.
+     *
+     * Besides the visual appearance, the output was built to provide a maximum of
+     * compatibility and readability when pasted somewhere else, e.g. a WYSIWYG editor
+     * without the potential of messing up the formatting and thus harming the readability.
+     */ ?><!DOCTYPE html>
 <html>
 <head>
     <?php if (!\defined('EXCEPTION_PRIVACY') || EXCEPTION_PRIVACY !== 'private') { ?>
@@ -494,10 +492,10 @@ EXPLANATION;
 		<div class="exceptionBoundary">
 			<p class="exceptionTitle"><?php echo $exceptionTitle; ?></p>
 			<p class="exceptionErrorCode"><?php echo \str_replace(
-                                '{$exceptionID}',
-                                $exceptionID,
-                                $exceptionSubtitle
-                            ); ?></p>
+        '{$exceptionID}',
+        $exceptionID,
+        $exceptionSubtitle
+    ); ?></p>
 		</div>
 	</div>
 
@@ -521,9 +519,9 @@ EXPLANATION;
 				    <p class="exceptionFieldTitle">Peak Memory Usage<span
 						    class="exceptionColon">:</span></p>
 				    <p class="exceptionFieldValue"><?php echo \round(
-                                            \memory_get_peak_usage() / 1024 / 1024,
-                                            3
-                                        ); ?>/<?php echo \round(FileUtil::getMemoryLimit() / 1024 / 1024, 3); ?>
+                                \memory_get_peak_usage() / 1024 / 1024,
+                                3
+                            ); ?>/<?php echo \round(FileUtil::getMemoryLimit() / 1024 / 1024, 3); ?>
 					    MiB</p>
 			    </li>
 			    <li class="exceptionSystemInformation2">
@@ -562,10 +560,10 @@ EXPLANATION;
             ?>
 		<div class="exceptionBoundary">
 			<p class="exceptionSubtitle"><?php if (!empty($exceptions) && $first) {
-                                echo "Original ";
-                            } elseif (empty($exceptions) && !$first) {
-                                echo "Final ";
-                            } ?>Error</p>
+                echo "Original ";
+            } elseif (empty($exceptions) && !$first) {
+                echo "Final ";
+            } ?>Error</p>
                     <?php if ($e instanceof SystemException && $e->getDescription()) { ?>
 			    <p class="exceptionText"><?php echo $e->getDescription(); ?></p>
                     <?php } ?>
@@ -607,33 +605,33 @@ EXPLANATION;
                                     throw new \Exception("Using the 'information' property of SystemException is not supported any more.");
                                 }
                             }
-                            if ($e instanceof IExtraInformationException) {
-                                foreach ($e->getExtraInformation() as [$key, $value]) {
-                                    ?>
+            if ($e instanceof IExtraInformationException) {
+                foreach ($e->getExtraInformation() as [$key, $value]) {
+                    ?>
 					<li>
 						<p class="exceptionFieldTitle"><?php echo StringUtil::encodeHTML($key); ?>
 							<span class="exceptionColon">:</span></p>
 						<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML($value); ?></p>
 					</li>
                                     <?php
-                                }
-                            } ?>
+                }
+            } ?>
 				<li>
 					<p class="exceptionFieldTitle">Stack Trace<span class="exceptionColon">:</span>
 					</p>
 					<ul class="exceptionStacktrace">
                                             <?php
                                             $trace = sanitizeStacktrace($e);
-                                            for ($i = 0, $max = \count($trace);
+            for ($i = 0, $max = \count($trace);
                                             $i < $max;
                                             $i++) {
-                                            ?>
+                ?>
 						<li class="exceptionStacktraceFile"><?php echo '#' . $i . ' ' . StringUtil::encodeHTML($trace[$i]['file']) . ' (' . $trace[$i]['line'] . ')' . ':'; ?></li>
 						<li class="exceptionStacktraceCall">
                                                     <?php
                                                     echo $trace[$i]['class'] . $trace[$i]['type'] . $trace[$i]['function'] . '(';
-                                                    echo \implode(', ', \array_map(static function ($item) {
-                                                        switch (\gettype($item)) {
+                echo \implode(', ', \array_map(static function ($item) {
+                    switch (\gettype($item)) {
                                                             case 'integer':
                                                             case 'double':
                                                                 return $item;
@@ -641,9 +639,9 @@ EXPLANATION;
                                                                 return 'null';
                                                             case 'string':
                                                                 return "'" . \addcslashes(
-                                                                        StringUtil::encodeHTML($item),
-                                                                        "\\'"
-                                                                    ) . "'";
+                                                                    StringUtil::encodeHTML($item),
+                                                                    "\\'"
+                                                                ) . "'";
                                                             case 'boolean':
                                                                 return $item ? 'true' : 'false';
                                                             case 'array':
@@ -653,11 +651,11 @@ EXPLANATION;
                                                                 }
 
                                                                 return '[ ' . \implode(
-                                                                        ', ',
-                                                                        \array_map(static function ($item) {
+                                                                    ', ',
+                                                                    \array_map(static function ($item) {
                                                                             return $item . ' => ';
                                                                         }, $keys)
-                                                                    ) . ']';
+                                                                ) . ']';
                                                             case 'object':
                                                                 return \get_class($item);
                                                             case 'resource':
@@ -666,10 +664,10 @@ EXPLANATION;
                                                                 return 'resource (closed)';
                                                         }
 
-                                                        throw new \LogicException('Unreachable');
-                                                    }, $trace[$i]['args']));
-                                                    echo ')</li>';
-                                                    } ?>
+                    throw new \LogicException('Unreachable');
+                }, $trace[$i]['args']));
+                echo ')</li>';
+            } ?>
 					</ul>
 				</li>
 			</ul>
@@ -716,9 +714,9 @@ function sanitizeStacktrace($e, $ignorePaths = false)
 
         // strip database credentials
         if (\preg_match(
-                '~\\\\?wcf\\\\system\\\\database\\\\[a-zA-Z]*Database~',
-                $item['class']
-            ) || $item['class'] === 'PDO') {
+            '~\\\\?wcf\\\\system\\\\database\\\\[a-zA-Z]*Database~',
+            $item['class']
+        ) || $item['class'] === 'PDO') {
             if ($item['function'] === '__construct') {
                 $item['args'] = \array_map(static function () {
                     return '[redacted]';
@@ -733,9 +731,9 @@ function sanitizeStacktrace($e, $ignorePaths = false)
                 }
 
                 if (\preg_match('~^(' . \preg_quote($_SERVER['DOCUMENT_ROOT'], '~') . '|' . \preg_quote(
-                        WCF_DIR,
-                        '~'
-                    ) . ')~', $item)) {
+                    WCF_DIR,
+                    '~'
+                ) . ')~', $item)) {
                     $item = sanitizePath($item);
                 }
 

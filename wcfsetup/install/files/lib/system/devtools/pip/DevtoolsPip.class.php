@@ -98,9 +98,9 @@ class DevtoolsPip extends DatabaseObjectDecorator
     public function supportsGui()
     {
         return $this->isSupported() && \is_subclass_of(
-                $this->getDecoratedObject()->className,
-                IGuiPackageInstallationPlugin::class
-            );
+            $this->getDecoratedObject()->className,
+            IGuiPackageInstallationPlugin::class
+        );
     }
 
     public function getSyncDependencies($toJson = true)
@@ -147,7 +147,7 @@ class DevtoolsPip extends DatabaseObjectDecorator
 
             $this->pip = new $className(
                 new DevtoolsPackageInstallationDispatcher($this->getProject())
-            // no target
+                // no target
             );
         }
 

@@ -56,9 +56,9 @@ class EventHandler extends SingletonFactory
     protected function loadActions()
     {
         $environment = ((\class_exists('wcf\system\WCFACP', false) || \class_exists(
-                'wcf\system\CLIWCF',
-                false
-            )) ? 'admin' : 'user');
+            'wcf\system\CLIWCF',
+            false
+        )) ? 'admin' : 'user');
         $cache = EventListenerCacheBuilder::getInstance()->getData();
 
         if (isset($cache['actions'][$environment])) {
@@ -122,17 +122,17 @@ class EventHandler extends SingletonFactory
                                         throw new SystemException("Unable to find class '" . $eventListener->listenerClassName . "'");
                                     }
                                     if (
-                                    !\is_subclass_of(
-                                        $eventListener->listenerClassName,
-                                        IParameterizedEventListener::class
-                                    )
+                                        !\is_subclass_of(
+                                            $eventListener->listenerClassName,
+                                            IParameterizedEventListener::class
+                                        )
                                     ) {
                                         // legacy event listeners
                                         if (
-                                        !\is_subclass_of(
-                                            $eventListener->listenerClassName,
-                                            IEventListener::class
-                                        )
+                                            !\is_subclass_of(
+                                                $eventListener->listenerClassName,
+                                                IEventListener::class
+                                            )
                                         ) {
                                             throw new ImplementationException(
                                                 $eventListener->listenerClassName,

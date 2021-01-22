@@ -68,9 +68,9 @@ class DevtoolsPipEntryList implements IDevtoolsPipEntryList
 
                 if (!empty($unknownFilters)) {
                     throw new \InvalidArgumentException("Unknown filter" . (\count($unknownFilters) > 1 ? 's' : '') . " '" . \implode(
-                            ', ',
-                            $unknownFilters
-                        ) . "'.");
+                        ', ',
+                        $unknownFilters
+                    ) . "'.");
                 }
 
                 $filteredEntries = [];

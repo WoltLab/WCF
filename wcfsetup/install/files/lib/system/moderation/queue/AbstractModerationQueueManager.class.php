@@ -189,9 +189,9 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
             $sql = "INSERT INTO wcf" . WCF_N . "_moderation_queue
                                 (objectTypeID, objectID, containerID, userID, time, lastChangeTime, additionalData)
                     VALUES      (?, ?, ?, ?, ?, ?, ?)" . \str_repeat(
-                    ', (?, ?, ?, ?, ?, ?, ?)',
-                    \count($batchObjectIDs) - 1
-                );
+                ', (?, ?, ?, ?, ?, ?, ?)',
+                \count($batchObjectIDs) - 1
+            );
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($parameters);
         }

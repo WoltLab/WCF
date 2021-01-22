@@ -174,10 +174,10 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
         }
 
         return self::getStorage() . \substr(
-                $this->fileHash,
-                0,
-                2
-            ) . '/' . $this->mediaID . '-' . $size . '-' . $this->fileHash;
+            $this->fileHash,
+            0,
+            2
+        ) . '/' . $this->mediaID . '-' . $size . '-' . $this->fileHash;
     }
 
     /**

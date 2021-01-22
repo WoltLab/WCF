@@ -92,11 +92,11 @@ abstract class AbstractAcpForm extends AbstractForm
 
         foreach ($this->i18nValues as $fieldName => $value) {
             if (
-            !I18nHandler::getInstance()->validateValue(
-                $fieldName,
-                $value->getFlag(I18nValue::REQUIRE_I18N),
-                $value->getFlag(I18nValue::ALLOW_EMPTY)
-            )
+                !I18nHandler::getInstance()->validateValue(
+                    $fieldName,
+                    $value->getFlag(I18nValue::REQUIRE_I18N),
+                    $value->getFlag(I18nValue::ALLOW_EMPTY)
+                )
             ) {
                 throw new UserInputException(
                     $fieldName,

@@ -122,10 +122,10 @@ class AnchorFunctionTemplatePlugin implements IFunctionTemplatePlugin
             }
 
             $additionalParameters .= ' ' . \strtolower(\preg_replace(
-                    '~([A-Z])~',
-                    '-$1',
-                    $name
-                )) . '="' . StringUtil::encodeHTML($value) . '"';
+                '~([A-Z])~',
+                '-$1',
+                $name
+            )) . '="' . StringUtil::encodeHTML($value) . '"';
         }
 
         if (

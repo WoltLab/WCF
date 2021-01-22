@@ -319,11 +319,11 @@ final class StringUtil
             $count++;
 
             return \mb_substr($subject, 0, $startPos) . $replace . self::replaceIgnoreCase(
-                    $search,
-                    $replace,
-                    \mb_substr($subject, $endPos),
-                    $count
-                );
+                $search,
+                $replace,
+                \mb_substr($subject, $endPos),
+                $count
+            );
         }
     }
 
@@ -656,10 +656,10 @@ final class StringUtil
         foreach ($tags as $tag) {
             // ignore void elements
             if (
-            !\preg_match(
-                '/^(area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$/s',
-                $tag[2]
-            )
+                !\preg_match(
+                    '/^(area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$/s',
+                    $tag[2]
+                )
             ) {
                 // look for opening tags
                 if (\preg_match('/<[\w]+[^>]*>/s', $tag[0])) {
@@ -693,12 +693,12 @@ final class StringUtil
                 $left = $length - $totalLength;
                 $entitiesLength = 0;
                 if (
-                \preg_match_all(
-                    '/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6};/i',
-                    $tag[3],
-                    $entities,
-                    \PREG_OFFSET_CAPTURE
-                )
+                    \preg_match_all(
+                        '/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6};/i',
+                        $tag[3],
+                        $entities,
+                        \PREG_OFFSET_CAPTURE
+                    )
                 ) {
                     foreach ($entities[0] as $entity) {
                         if ($entity[1] + 1 - $entitiesLength <= $left) {
@@ -759,9 +759,9 @@ final class StringUtil
         }
 
         return '<a ' . self::getAnchorTagAttributes(
-                $url,
-                $isUgc
-            ) . '>' . ($encodeTitle ? self::encodeHTML($title) : $title) . '</a>';
+            $url,
+            $isUgc
+        ) . '>' . ($encodeTitle ? self::encodeHTML($title) : $title) . '</a>';
     }
 
     /**

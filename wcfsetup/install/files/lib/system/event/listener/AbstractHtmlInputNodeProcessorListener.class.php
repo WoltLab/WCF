@@ -54,10 +54,10 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
     protected function getRegexFromLink($link, $defaultAnchor = '')
     {
         return new Regex('^(' . \preg_replace(
-                '~^https?~',
-                'https?',
-                \preg_quote($link)
-            ) . '(\d+)-[^#]*?)' . ($defaultAnchor ? '(?:#' . $defaultAnchor . ')?' : '') . '$');
+            '~^https?~',
+            'https?',
+            \preg_quote($link)
+        ) . '(\d+)-[^#]*?)' . ($defaultAnchor ? '(?:#' . $defaultAnchor . ')?' : '') . '$');
     }
 
     /**

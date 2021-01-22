@@ -100,11 +100,11 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
                     }
                 } elseif ($box->boxType == 'html' || $box->boxType == 'tpl') {
                     if (
-                    HtmlSimpleParser::getInstance()->parse(
-                        'com.woltlab.wcf.box.content',
-                        $boxContent->boxContentID,
-                        $boxContent->content
-                    )
+                        HtmlSimpleParser::getInstance()->parse(
+                            'com.woltlab.wcf.box.content',
+                            $boxContent->boxContentID,
+                            $boxContent->content
+                        )
                     ) {
                         $boxContentEditor->update(['hasEmbeddedObjects' => 1]);
                     }

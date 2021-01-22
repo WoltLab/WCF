@@ -460,9 +460,9 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
         $content .= "if (!defined('{$prefix}_DIR')) define('{$prefix}_DIR', __DIR__.'/');\n";
         $content .= "if (!defined('PACKAGE_ID')) define('PACKAGE_ID', {$packageID});\n";
         $content .= "if (!defined('PACKAGE_NAME')) define('PACKAGE_NAME', '" . \addcslashes(
-                $package->getName(),
-                "'"
-            ) . "');\n";
+            $package->getName(),
+            "'"
+        ) . "');\n";
         $content .= "if (!defined('PACKAGE_VERSION')) define('PACKAGE_VERSION', '{$package->packageVersion}');\n";
 
         if ($packageID != 1) {
@@ -470,9 +470,9 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
             $content .= "// helper constants for applications\n";
             $content .= "if (!defined('RELATIVE_{$prefix}_DIR')) define('RELATIVE_{$prefix}_DIR', '');\n";
             $content .= "if (!defined('RELATIVE_WCF_DIR')) define('RELATIVE_WCF_DIR', RELATIVE_{$prefix}_DIR.'" . FileUtil::getRelativePath(
-                    $packageDir,
-                    WCF_DIR
-                ) . "');\n";
+                $packageDir,
+                WCF_DIR
+            ) . "');\n";
         }
 
         \file_put_contents($packageDir . PackageInstallationDispatcher::CONFIG_FILE, $content);

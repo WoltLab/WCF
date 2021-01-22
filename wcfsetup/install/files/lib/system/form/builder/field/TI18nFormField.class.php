@@ -423,11 +423,11 @@ trait TI18nFormField
         // empty, that is no error
         if ($this->isI18n() && (!empty(ArrayUtil::trim($this->getValue()))) || $this->isRequired()) {
             if (
-            !I18nHandler::getInstance()->validateValue(
-                $this->getPrefixedId(),
-                $this->isI18nRequired(),
-                !$this->isRequired()
-            )
+                !I18nHandler::getInstance()->validateValue(
+                    $this->getPrefixedId(),
+                    $this->isI18nRequired(),
+                    !$this->isRequired()
+                )
             ) {
                 if ($this->hasPlainValue()) {
                     $this->addValidationError(new FormFieldValidationError('empty'));

@@ -900,11 +900,11 @@ class PackageUpdateDispatcher extends SingletonFactory
                     $updates[$row['packageID']]['version']['servers'][0]['packageUpdateVersionID']
                 );
                 if (
-                Package::compareVersion(
-                    $row['minversion'],
-                    $updates[$row['packageID']]['version']['packageVersion'],
-                    '>='
-                )
+                    Package::compareVersion(
+                        $row['minversion'],
+                        $updates[$row['packageID']]['version']['packageVersion'],
+                        '>='
+                    )
                 ) {
                     unset($updates[$row['packageID']]);
                 }
