@@ -135,7 +135,9 @@ class ACPSearchHandler extends SingletonFactory
             $this->abbreviations[] = 'wcf';
 
             // get running application
-            $this->abbreviations[] = ApplicationHandler::getInstance()->getAbbreviation(ApplicationHandler::getInstance()->getActiveApplication()->packageID);
+            $this->abbreviations[] = ApplicationHandler::getInstance()->getAbbreviation(
+                ApplicationHandler::getInstance()->getActiveApplication()->packageID
+            );
 
             // get dependent applications
             foreach (ApplicationHandler::getInstance()->getDependentApplications() as $application) {

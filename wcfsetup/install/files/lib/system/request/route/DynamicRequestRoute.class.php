@@ -99,7 +99,12 @@ class DynamicRequestRoute implements IRequestRoute
         $this->buildSchema = [];
 
         $buildSchema = \ltrim($buildSchema, '/');
-        $components = \preg_split('~({(?:[a-z]+)})~', $buildSchema, -1, \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY);
+        $components = \preg_split(
+            '~({(?:[a-z]+)})~',
+            $buildSchema,
+            -1,
+            \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY
+        );
 
         foreach ($components as $component) {
             $type = 'component';
@@ -149,7 +154,10 @@ class DynamicRequestRoute implements IRequestRoute
         // handle default values for controller
         $useBuildSchema = true;
         if (\count($components) == 1 && isset($components['controller'])) {
-            if (!RequestHandler::getInstance()->isACPRequest() && ControllerMap::getInstance()->isDefaultController($application, $components['controller'])) {
+            if (
+                !RequestHandler::getInstance()->isACPRequest()
+                && ControllerMap::getInstance()->isDefaultController($application, $components['controller'])
+            ) {
                 // drops controller from route
                 $useBuildSchema = false;
 

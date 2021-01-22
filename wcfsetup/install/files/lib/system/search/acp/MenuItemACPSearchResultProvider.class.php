@@ -80,9 +80,14 @@ class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider im
 
                 $parentMenuItem = $menuItems[$parentMenuItem]->parentMenuItem;
             }
-            $results[] = new ACPSearchResult($languageItems[$menuItem->menuItem], $menuItem->getLink(), WCF::getLanguage()->getDynamicVariable('wcf.acp.search.result.subtitle', [
-                'pieces' => $parentMenuItems,
-            ]));
+            $results[] = new ACPSearchResult(
+                $languageItems[$menuItem->menuItem],
+                $menuItem->getLink(),
+                WCF::getLanguage()->getDynamicVariable(
+                    'wcf.acp.search.result.subtitle',
+                    ['pieces' => $parentMenuItems]
+                )
+            );
         }
 
         return $results;

@@ -23,8 +23,15 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType
     /**
      * @inheritDoc
      */
-    public function processTransaction($paymentMethodObjectTypeID, $token, $amount, $currency, $transactionID, $status, $transactionDetails)
-    {
+    public function processTransaction(
+        $paymentMethodObjectTypeID,
+        $token,
+        $amount,
+        $currency,
+        $transactionID,
+        $status,
+        $transactionDetails
+    ) {
         $userSubscription = $user = $subscription = null;
         try {
             $tokenParts = \explode(':', $token);
@@ -46,10 +53,16 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType
             }
 
             // search for existing subscription
-            $userSubscription = PaidSubscriptionUser::getSubscriptionUser($subscription->subscriptionID, $user->userID);
+            $userSubscription = PaidSubscriptionUser::getSubscriptionUser(
+                $subscription->subscriptionID,
+                $user->userID
+            );
 
             // search log for transaction id
-            $logEntry = PaidSubscriptionTransactionLog::getLogByTransactionID($paymentMethodObjectTypeID, $transactionID);
+            $logEntry = PaidSubscriptionTransactionLog::getLogByTransactionID(
+                $paymentMethodObjectTypeID,
+                $transactionID
+            );
             if ($logEntry !== null) {
                 throw new SystemException('transaction already processed');
             }

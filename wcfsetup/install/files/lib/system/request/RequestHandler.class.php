@@ -338,7 +338,11 @@ class RequestHandler extends SingletonFactory
             if ($application !== $override) {
                 HeaderUtil::redirect(
                     LinkHandler::getInstance()->getLink(
-                        ControllerMap::getInstance()->resolve($data['application'], $data['controller'], false)['controller'],
+                        ControllerMap::getInstance()->resolve(
+                            $data['application'],
+                            $data['controller'],
+                            false
+                        )['controller'],
                         ['application' => $data['application']]
                     ),
                     true,

@@ -272,7 +272,10 @@ class PackageInstallationSQLParser extends SQLParser
     {
         if ($this->test) {
             if (\in_array($tableName, $this->existingTables)) {
-                if (isset($this->knownTables[$tableName]) && $this->knownTables[$tableName] != $this->package->packageID) {
+                if (
+                    isset($this->knownTables[$tableName])
+                    && $this->knownTables[$tableName] != $this->package->packageID
+                ) {
                     throw new SystemException("Cannot recreate table '" . $tableName . "'. A package can only overwrite own tables.");
                 } else {
                     if (!isset($this->conflicts['CREATE TABLE'])) {

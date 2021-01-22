@@ -23,5 +23,13 @@ interface IPaymentType
      * @param   string      $status
      * @param   array       $transactionDetails
      */
-    public function processTransaction($paymentMethodObjectTypeID, $token, $amount, $currency, $transactionID, $status, $transactionDetails);
+    public function processTransaction(
+        $paymentMethodObjectTypeID,
+        $token,
+        $amount,
+        $currency,
+        $transactionID,
+        $status,
+        $transactionDetails
+    );
 }

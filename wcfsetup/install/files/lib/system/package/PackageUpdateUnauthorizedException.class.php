@@ -42,8 +42,11 @@ class PackageUpdateUnauthorizedException extends UserException
      * @param   PackageUpdateServer $updateServer
      * @param   array           $packageUpdateVersion
      */
-    public function __construct(HTTPRequest $request, PackageUpdateServer $updateServer, array $packageUpdateVersion = [])
-    {
+    public function __construct(
+        HTTPRequest $request,
+        PackageUpdateServer $updateServer,
+        array $packageUpdateVersion = []
+    ) {
         $this->request = $request;
         $this->updateServer = $updateServer;
         $this->packageUpdateVersion = $packageUpdateVersion;

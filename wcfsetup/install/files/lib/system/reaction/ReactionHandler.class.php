@@ -159,7 +159,9 @@ class ReactionHandler extends SingletonFactory
     {
         $objectType = $this->getObjectType($objectTypeName);
         if ($objectType === null) {
-            throw new \InvalidArgumentException("ObjectName '{$objectTypeName}' is unknown for definition 'com.woltlab.wcf.like.likeableObject'.");
+            throw new \InvalidArgumentException(
+                "ObjectName '{$objectTypeName}' is unknown for definition 'com.woltlab.wcf.like.likeableObject'."
+            );
         }
 
         /** @var ILikeObjectTypeProvider $objectTypeProcessor */

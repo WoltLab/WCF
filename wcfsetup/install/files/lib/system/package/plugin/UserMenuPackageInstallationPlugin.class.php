@@ -22,7 +22,8 @@ use wcf\system\menu\user\IUserMenuItemProvider;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Package\Plugin
  */
-class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPlugin implements IGuiPackageInstallationPlugin
+class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPlugin implements
+    IGuiPackageInstallationPlugin
 {
     /**
      * @inheritDoc
@@ -52,7 +53,10 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
         }
 
         // FontAwesome icon name
-        if (!empty($data['elements']['iconclassname']) && \preg_match('~^fa\-[a-z\-]+$~', $data['elements']['iconclassname'])) {
+        if (
+            !empty($data['elements']['iconclassname'])
+            && \preg_match('~^fa\-[a-z\-]+$~', $data['elements']['iconclassname'])
+        ) {
             $result['iconClassName'] = $data['elements']['iconclassname'];
         }
 

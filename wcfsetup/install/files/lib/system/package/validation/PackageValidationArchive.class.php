@@ -108,7 +108,10 @@ class PackageValidationArchive implements \RecursiveIterator
 
         if ($validationMode === PackageValidationManager::VALIDATION_RECURSIVE) {
             try {
-                PackageValidationManager::getInstance()->addVirtualPackage($package, $this->archive->getPackageInfo('version'));
+                PackageValidationManager::getInstance()->addVirtualPackage(
+                    $package,
+                    $this->archive->getPackageInfo('version')
+                );
 
                 // cache excluded packages
                 self::$excludedPackages[$package] = [];
@@ -123,8 +126,12 @@ class PackageValidationArchive implements \RecursiveIterator
 
                 // traverse open requirements
                 foreach ($this->archive->getOpenRequirements() as $requirement) {
-                    $virtualPackageVersion = PackageValidationManager::getInstance()->getVirtualPackage($requirement['name']);
-                    if ($virtualPackageVersion === null || Package::compareVersion($virtualPackageVersion, $requirement['minversion'], '<')) {
+                    $virtualPackageVersion = PackageValidationManager::getInstance()
+                        ->getVirtualPackage($requirement['name']);
+                    if (
+                        $virtualPackageVersion === null
+                        || Package::compareVersion($virtualPackageVersion, $requirement['minversion'], '<')
+                    ) {
                         if (empty($requirement['file'])) {
                             // check if package is known
                             $sql = "SELECT  *
@@ -213,7 +220,10 @@ class PackageValidationArchive implements \RecursiveIterator
             }
 
             if (!$isCompatible) {
-                throw new PackageValidationException(PackageValidationException::INCOMPATIBLE_API_VERSION, ['isOlderVersion' => $isOlderVersion]);
+                throw new PackageValidationException(
+                    PackageValidationException::INCOMPATIBLE_API_VERSION,
+                    ['isOlderVersion' => $isOlderVersion]
+                );
             }
         }
         // Missing details on API compatibility are no longer an error.
@@ -222,7 +232,10 @@ class PackageValidationArchive implements \RecursiveIterator
         if ($package === null) {
             $instructions = $this->archive->getInstallInstructions();
             if (empty($instructions)) {
-                throw new PackageValidationException(PackageValidationException::NO_INSTALL_PATH, ['packageName' => $this->archive->getPackageInfo('name')]);
+                throw new PackageValidationException(
+                    PackageValidationException::NO_INSTALL_PATH,
+                    ['packageName' => $this->archive->getPackageInfo('name')]
+                );
             }
 
             if ($validationMode == PackageValidationManager::VALIDATION_RECURSIVE) {
@@ -266,7 +279,8 @@ class PackageValidationArchive implements \RecursiveIterator
         for ($i = 0, $length = \count($instructions); $i < $length; $i++) {
             $instruction = $instructions[$i];
             if (!PackageValidationManager::getInstance()->validatePackageInstallationPluginInstruction($this->archive, $instruction['pip'], $instruction['value'])) {
-                $defaultFilename = PackageValidationManager::getInstance()->getDefaultFilenameForPackageInstallationPlugin($instruction['pip']);
+                $defaultFilename = PackageValidationManager::getInstance()
+                    ->getDefaultFilenameForPackageInstallationPlugin($instruction['pip']);
 
                 throw new PackageValidationException(PackageValidationException::MISSING_INSTRUCTION_FILE, [
                     'pip' => $instruction['pip'],
@@ -322,7 +336,10 @@ class PackageValidationArchive implements \RecursiveIterator
         }
 
         if (!empty($excludingPackages)) {
-            throw new PackageValidationException(PackageValidationException::EXCLUDING_PACKAGES, ['packages' => $excludingPackages]);
+            throw new PackageValidationException(
+                PackageValidationException::EXCLUDING_PACKAGES,
+                ['packages' => $excludingPackages]
+            );
         }
 
         // excluded packages: current -> installed
@@ -357,7 +374,10 @@ class PackageValidationArchive implements \RecursiveIterator
             }
 
             if (!empty($excludedPackages)) {
-                throw new PackageValidationException(PackageValidationException::EXCLUDED_PACKAGES, ['packages' => $excludedPackages]);
+                throw new PackageValidationException(
+                    PackageValidationException::EXCLUDED_PACKAGES,
+                    ['packages' => $excludedPackages]
+                );
             }
         }
     }

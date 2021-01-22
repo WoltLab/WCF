@@ -36,7 +36,11 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin
             $queries = ApplicationHandler::insertRealDatabaseTableNames($queries, true);
 
             // check queries
-            $parser = new PackageInstallationSQLParser($queries, $this->installation->getPackage(), $this->installation->getAction());
+            $parser = new PackageInstallationSQLParser(
+                $queries,
+                $this->installation->getPackage(),
+                $this->installation->getAction()
+            );
             $conflicts = $parser->test();
             if (!empty($conflicts) && (isset($conflicts['CREATE TABLE']) || isset($conflicts['DROP TABLE']))) {
                 $unknownCreateTable = $conflicts['CREATE TABLE'] ?? [];
@@ -103,7 +107,11 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin
             if (!empty($entry['sqlColumn'])/* || !empty($entry['sqlIndex'])*/) {
                 $isDropped = false;
                 foreach ($entries as $entry2) {
-                    if ($entry['sqlTable'] == $entry2['sqlTable'] && empty($entry2['sqlColumn']) && empty($entry2['sqlIndex'])) {
+                    if (
+                        $entry['sqlTable'] == $entry2['sqlTable']
+                        && empty($entry2['sqlColumn'])
+                        && empty($entry2['sqlIndex'])
+                    ) {
                         $isDropped = true;
                     }
                 }

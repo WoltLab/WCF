@@ -18,7 +18,8 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Package\Plugin
  */
-class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin
+class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugin implements
+    IIdempotentPackageInstallationPlugin
 {
     /**
      * @inheritDoc
@@ -80,7 +81,12 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
 
         foreach ($templates as $application => $templateNames) {
             /** @noinspection PhpUndefinedMethodInspection */
-            $this->installation->deleteFiles(Application::getDirectory($application), $templateNames, false, $this->installation->getPackage()->isApplication);
+            $this->installation->deleteFiles(
+                Application::getDirectory($application),
+                $templateNames,
+                false,
+                $this->installation->getPackage()->isApplication
+            );
 
             // delete log entries
             parent::uninstall();

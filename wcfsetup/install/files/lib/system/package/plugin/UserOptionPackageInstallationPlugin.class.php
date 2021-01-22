@@ -36,7 +36,8 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Package\Plugin
  */
-class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin implements IGuiPackageInstallationPlugin
+class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin implements
+    IGuiPackageInstallationPlugin
 {
     /**
      * @inheritDoc
@@ -225,7 +226,10 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->installation->getPackageID()]);
         while ($row = $statement->fetchArray()) {
-            WCF::getDB()->getEditor()->dropColumn('wcf' . WCF_N . '_user_option_value', 'userOption' . $row['optionID']);
+            WCF::getDB()->getEditor()->dropColumn(
+                'wcf' . WCF_N . '_user_option_value',
+                'userOption' . $row['optionID']
+            );
         }
 
         // uninstall options and categories
@@ -362,13 +366,16 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
             ]);
 
             // ensure proper normalization of select options
-            $form->getDataHandler()->addProcessor(new CustomFormDataProcessor('selectOptions', static function (IFormDocument $document, array $parameters) {
-                if (isset($parameters['data']['selectoptions'])) {
-                    $parameters['data']['selectoptions'] = StringUtil::unifyNewlines($parameters['data']['selectoptions']);
-                }
+            $form->getDataHandler()->addProcessor(new CustomFormDataProcessor(
+                'selectOptions',
+                static function (IFormDocument $document, array $parameters) {
+                    if (isset($parameters['data']['selectoptions'])) {
+                        $parameters['data']['selectoptions'] = StringUtil::unifyNewlines($parameters['data']['selectoptions']);
+                    }
 
-                return $parameters;
-            }));
+                    return $parameters;
+                }
+            ));
         }
     }
 

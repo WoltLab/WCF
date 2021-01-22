@@ -55,7 +55,10 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
     {
         $articleList = new ViewableArticleList();
         $articleList->sqlSelects = "(SELECT title FROM wcf" . WCF_N . "_article_content WHERE articleID = article.articleID AND (languageID IS NULL OR languageID = " . WCF::getLanguage()->languageID . ") LIMIT 1) AS title";
-        $articleList->getConditionBuilder()->add('article.articleID IN (SELECT articleID FROM wcf' . WCF_N . '_article_content WHERE title LIKE ?)', ['%' . $searchString . '%']);
+        $articleList->getConditionBuilder()->add(
+            'article.articleID IN (SELECT articleID FROM wcf' . WCF_N . '_article_content WHERE title LIKE ?)',
+            ['%' . $searchString . '%']
+        );
         $articleList->sqlLimit = 10;
         $articleList->sqlOrderBy = 'title';
         $articleList->readObjects();
@@ -88,7 +91,10 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
             return '';
         }
 
-        return WCF::getLanguage()->getDynamicVariable('wcf.page.onlineLocation.' . $page->identifier, ['article' => $content->getArticle()]);
+        return WCF::getLanguage()->getDynamicVariable(
+            'wcf.page.onlineLocation.' . $page->identifier,
+            ['article' => $content->getArticle()]
+        );
     }
 
     /**

@@ -43,7 +43,10 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin
         }
 
         $flushCache = true;
-        if (isset($this->instruction['attributes']['flushCache']) && $this->instruction['attributes']['flushCache'] === 'false') {
+        if (
+            isset($this->instruction['attributes']['flushCache'])
+            && $this->instruction['attributes']['flushCache'] === 'false'
+        ) {
             $flushCache = false;
         }
 

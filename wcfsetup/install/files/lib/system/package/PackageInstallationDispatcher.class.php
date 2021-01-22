@@ -133,7 +133,9 @@ class PackageInstallationDispatcher
             // guard against possible issues with empty instruction blocks, including
             // these blocks that contain no valid instructions at all (e.g. typo from
             // copy & paste)
-            throw new SystemException("Failed to retrieve nodes for identifier '" . $node . "', the query returned no results.");
+            throw new SystemException(
+                "Failed to retrieve nodes for identifier '{$node}', the query returned no results."
+            );
         }
 
         // invoke node-specific actions

@@ -60,8 +60,17 @@ class PaypalPaymentMethod extends AbstractPaymentMethod
     /**
      * @inheritDoc
      */
-    public function getPurchaseButton($cost, $currency, $name, $token, $returnURL, $cancelReturnURL, $isRecurring = false, $subscriptionLength = 0, $subscriptionLengthUnit = '')
-    {
+    public function getPurchaseButton(
+        $cost,
+        $currency,
+        $name,
+        $token,
+        $returnURL,
+        $cancelReturnURL,
+        $isRecurring = false,
+        $subscriptionLength = 0,
+        $subscriptionLengthUnit = ''
+    ) {
         if ($isRecurring) {
             // subscribe button
             return '<form method="post" action="https://www.' . (ENABLE_DEBUG_MODE ? 'sandbox.' : '') . 'paypal.com/cgi-bin/webscr">

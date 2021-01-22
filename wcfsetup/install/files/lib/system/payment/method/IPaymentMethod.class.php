@@ -41,5 +41,15 @@ interface IPaymentMethod
      *
      * @return  string
      */
-    public function getPurchaseButton($cost, $currency, $name, $token, $returnURL, $cancelReturnURL, $isRecurring = false, $subscriptionLength = 0, $subscriptionLengthUnit = '');
+    public function getPurchaseButton(
+        $cost,
+        $currency,
+        $name,
+        $token,
+        $returnURL,
+        $cancelReturnURL,
+        $isRecurring = false,
+        $subscriptionLength = 0,
+        $subscriptionLengthUnit = ''
+    );
 }
