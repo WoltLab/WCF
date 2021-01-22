@@ -6,5 +6,11 @@
 	<arg value="p"/>
 	<arg name="basepath" value="."/>
 
-	<rule ref="./CodeSniff/WCF/ruleset.xml"/>
+	<rule ref="PSR12">
+		<!-- https://github.com/squizlabs/PHP_CodeSniffer/issues/3200 -->
+		<exclude name="PSR12.Classes.AnonClassDeclaration.SpaceAfterKeyword"/>
+		
+		<!-- We have a large number of comments between the closing brace of an `if` and the `else`. -->
+		<exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace"/>
+	</rule>
 </ruleset>

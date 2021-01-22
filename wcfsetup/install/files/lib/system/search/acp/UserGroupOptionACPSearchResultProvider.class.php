@@ -1,5 +1,7 @@
 <?php
+
 namespace wcf\system\search\acp;
+
 use wcf\data\user\group\option\category\UserGroupOptionCategoryList;
 use wcf\data\user\group\option\UserGroupOption;
 use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
@@ -9,101 +11,109 @@ use wcf\system\WCF;
 
 /**
  * ACP search provider implementation for user group options.
- * 
- * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	WoltLabSuite\Core\System\Search\Acp
+ *
+ * @author  Alexander Ebert
+ * @copyright   2001-2019 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package WoltLabSuite\Core\System\Search\Acp
  */
-class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultProvider implements IACPSearchResultProvider {
-	/**
-	 * @inheritDoc
-	 */
-	protected $listClassName = UserGroupOptionCategoryList::class;
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function search($query) {
-		$results = [];
-		
-		// search by language item
-		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("languageID = ?", [WCF::getLanguage()->languageID]);
-		$conditions->add("languageItem LIKE ?", ['wcf.acp.group.option.%']);
-		$conditions->add("languageItemValue LIKE ?", ['%'.$query.'%']);
-		
-		$sql = "SELECT		languageItem
-			FROM		wcf".WCF_N."_language_item
-			".$conditions."
-			ORDER BY	languageItemValue ASC";
-		$statement = WCF::getDB()->prepareStatement($sql); // don't use a limit here
-		$statement->execute($conditions->getParameters());
-		$languageItems = [];
-		while ($languageItem = $statement->fetchColumn()) {
-			// ignore descriptions
-			if (substr($languageItem, -12) == '.description') {
-				continue;
-			}
-			
-			$itemName = preg_replace('~^([a-z]+)\.acp\.group\.option\.~', '', $languageItem);
-			$languageItems[$itemName] = $languageItem;
-		}
-		
-		if (empty($languageItems) && !(ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS)) {
-			return [];
-		}
-		
-		$conditions = new PreparedStatementConditionBuilder(true, 'OR');
-		if (!empty($languageItems)) {
-			$conditions->add("optionName IN (?)", [array_keys($languageItems)]);
-		}
-		if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
-			$conditions->add('optionName LIKE ?', ['%'.$query.'%']);
-		}
-		
-		$sql = "SELECT	optionID, optionName, categoryName, permissions, options
-			FROM	wcf".WCF_N."_user_group_option
-			".$conditions;
-		$statement = WCF::getDB()->prepareStatement($sql); // don't use a limit here
-		$statement->execute($conditions->getParameters());
-		
-		$optionCategories = UserGroupOptionCacheBuilder::getInstance()->getData([], 'categories');
-		
-		while ($userGroupOption = $statement->fetchObject(UserGroupOption::class)) {
-			// category is not accessible
-			if (!$this->isValid($userGroupOption->categoryName)) {
-				continue;
-			}
-			
-			// option is not accessible
-			if (!$this->validate($userGroupOption)) {
-				continue;
-			}
-			
-			$link = LinkHandler::getInstance()->getLink('UserGroupOption', ['id' => $userGroupOption->optionID]);
-			$categoryName = $userGroupOption->categoryName;
-			$parentCategories = [];
-			while (isset($optionCategories[$categoryName])) {
-				array_unshift($parentCategories, 'wcf.acp.group.option.category.'.$optionCategories[$categoryName]->categoryName);
-				
-				$categoryName = $optionCategories[$categoryName]->parentCategoryName;
-			}
-			
-			if (isset($languageItems[$userGroupOption->optionName])) {
-				$languageItem = $languageItems[$userGroupOption->optionName];
-			}
-			else {
-				$languageItem = 'wcf.acp.group.option.' . $userGroupOption->optionName;
-			}
-			
-			$results[] = new ACPSearchResult(
-				WCF::getLanguage()->getDynamicVariable($languageItem),
-				$link,
-				WCF::getLanguage()->getDynamicVariable('wcf.acp.search.result.subtitle', ['pieces' => $parentCategories])
-			);
-		}
-		
-		return $results;
-	}
+class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultProvider implements
+    IACPSearchResultProvider
+{
+    /**
+     * @inheritDoc
+     */
+    protected $listClassName = UserGroupOptionCategoryList::class;
+
+    /**
+     * @inheritDoc
+     */
+    public function search($query)
+    {
+        $results = [];
+
+        // search by language item
+        $conditions = new PreparedStatementConditionBuilder();
+        $conditions->add("languageID = ?", [WCF::getLanguage()->languageID]);
+        $conditions->add("languageItem LIKE ?", ['wcf.acp.group.option.%']);
+        $conditions->add("languageItemValue LIKE ?", ['%' . $query . '%']);
+
+        $sql = "SELECT      languageItem
+                FROM        wcf" . WCF_N . "_language_item
+                " . $conditions . "
+                ORDER BY    languageItemValue ASC";
+        $statement = WCF::getDB()->prepareStatement($sql); // don't use a limit here
+        $statement->execute($conditions->getParameters());
+        $languageItems = [];
+        while ($languageItem = $statement->fetchColumn()) {
+            // ignore descriptions
+            if (\substr($languageItem, -12) == '.description') {
+                continue;
+            }
+
+            $itemName = \preg_replace('~^([a-z]+)\.acp\.group\.option\.~', '', $languageItem);
+            $languageItems[$itemName] = $languageItem;
+        }
+
+        if (empty($languageItems) && !(ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS)) {
+            return [];
+        }
+
+        $conditions = new PreparedStatementConditionBuilder(true, 'OR');
+        if (!empty($languageItems)) {
+            $conditions->add("optionName IN (?)", [\array_keys($languageItems)]);
+        }
+        if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+            $conditions->add('optionName LIKE ?', ['%' . $query . '%']);
+        }
+
+        $sql = "SELECT  optionID, optionName, categoryName, permissions, options
+                FROM    wcf" . WCF_N . "_user_group_option
+                " . $conditions;
+        $statement = WCF::getDB()->prepareStatement($sql); // don't use a limit here
+        $statement->execute($conditions->getParameters());
+
+        $optionCategories = UserGroupOptionCacheBuilder::getInstance()->getData([], 'categories');
+
+        while ($userGroupOption = $statement->fetchObject(UserGroupOption::class)) {
+            // category is not accessible
+            if (!$this->isValid($userGroupOption->categoryName)) {
+                continue;
+            }
+
+            // option is not accessible
+            if (!$this->validate($userGroupOption)) {
+                continue;
+            }
+
+            $link = LinkHandler::getInstance()->getLink('UserGroupOption', ['id' => $userGroupOption->optionID]);
+            $categoryName = $userGroupOption->categoryName;
+            $parentCategories = [];
+            while (isset($optionCategories[$categoryName])) {
+                \array_unshift(
+                    $parentCategories,
+                    'wcf.acp.group.option.category.' . $optionCategories[$categoryName]->categoryName
+                );
+
+                $categoryName = $optionCategories[$categoryName]->parentCategoryName;
+            }
+
+            if (isset($languageItems[$userGroupOption->optionName])) {
+                $languageItem = $languageItems[$userGroupOption->optionName];
+            } else {
+                $languageItem = 'wcf.acp.group.option.' . $userGroupOption->optionName;
+            }
+
+            $results[] = new ACPSearchResult(
+                WCF::getLanguage()->getDynamicVariable($languageItem),
+                $link,
+                WCF::getLanguage()->getDynamicVariable(
+                    'wcf.acp.search.result.subtitle',
+                    ['pieces' => $parentCategories]
+                )
+            );
+        }
+
+        return $results;
+    }
 }

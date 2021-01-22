@@ -1,4 +1,5 @@
 <?php
+
 namespace wcf\system\form\builder\field;
 
 /**
@@ -10,24 +11,26 @@ namespace wcf\system\form\builder\field;
  * @package     WoltLabSuite\Core\System\Form\Builder\Field
  * @since       5.4
  */
-trait TInputAttributeFormField {
-	use TAttributeFormField {
-		getReservedFieldAttributes as private defaultGetReservedFieldAttributes;
-	}
-	
-	/**
-	 * Returns a list of attributes that are not accessible via the field attribute methods.
-	 * 
-	 * @return      string[]
-	 */
-	protected static function getReservedFieldAttributes(): array {
-		return array_merge(
-			static::defaultGetReservedFieldAttributes(),
-			[
-				'name',
-				'type',
-				'value',
-			]
-		);
-	}
+trait TInputAttributeFormField
+{
+    use TAttributeFormField {
+        getReservedFieldAttributes as private defaultGetReservedFieldAttributes;
+    }
+
+    /**
+     * Returns a list of attributes that are not accessible via the field attribute methods.
+     *
+     * @return      string[]
+     */
+    protected static function getReservedFieldAttributes(): array
+    {
+        return \array_merge(
+            static::defaultGetReservedFieldAttributes(),
+            [
+                'name',
+                'type',
+                'value',
+            ]
+        );
+    }
 }

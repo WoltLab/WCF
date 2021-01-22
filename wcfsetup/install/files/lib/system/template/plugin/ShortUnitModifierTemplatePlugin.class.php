@@ -1,5 +1,7 @@
 <?php
+
 namespace wcf\system\template\plugin;
+
 use wcf\system\template\TemplateEngine;
 use wcf\util\StringUtil;
 
@@ -7,18 +9,20 @@ use wcf\util\StringUtil;
  * Shortens numbers larger than 1000 by using unit suffixes.
  *
  * Usage:
- * 	{12345|shortUnit}
+ *  {12345|shortUnit}
  *
- * @author	Marcel Werk
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	WoltLabSuite\Core\System\Template\Plugin
+ * @author  Marcel Werk
+ * @copyright   2001-2019 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package WoltLabSuite\Core\System\Template\Plugin
  */
-class ShortUnitModifierTemplatePlugin implements IModifierTemplatePlugin {
-	/**
-	 * @inheritDoc
-	 */
-	public function execute($tagArgs, TemplateEngine $tplObj) {
-		return StringUtil::getShortUnit($tagArgs[0]);
-	}
+class ShortUnitModifierTemplatePlugin implements IModifierTemplatePlugin
+{
+    /**
+     * @inheritDoc
+     */
+    public function execute($tagArgs, TemplateEngine $tplObj)
+    {
+        return StringUtil::getShortUnit($tagArgs[0]);
+    }
 }

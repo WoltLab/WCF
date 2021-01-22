@@ -1,5 +1,7 @@
 <?php
+
 namespace wcf\data\modification\log;
+
 use wcf\data\ITitledLinkObject;
 
 /**
@@ -7,18 +9,19 @@ use wcf\data\ITitledLinkObject;
  * display in the global modification log.
  *
  * @author      Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright   2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Log\Modification
  * @since       5.2
  */
-interface IViewableModificationLog {
-	/**
-	 * Returns the title of the affected object. If the object does not exist
-	 * anymore, this method should return an empty string instead. (nullable
-	 * requires PHP 7.1)
-	 * 
-	 * @return ITitledLinkObject|null
-	 */
-	public function getAffectedObject();
+interface IViewableModificationLog
+{
+    /**
+     * Returns the title of the affected object. If the object does not exist
+     * anymore, this method should return an empty string instead. (nullable
+     * requires PHP 7.1)
+     *
+     * @return ITitledLinkObject|null
+     */
+    public function getAffectedObject();
 }

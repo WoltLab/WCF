@@ -1,5 +1,7 @@
 <?php
+
 namespace wcf\system\html\input\node;
+
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\util\DOMUtil;
@@ -13,40 +15,43 @@ use wcf\util\DOMUtil;
  * @package     WoltLabSuite\Core\System\Html\Input\Node
  * @since       5.3
  */
-class HtmlInputNodeSmall extends AbstractHtmlInputNode {
-	/**
-	 * @inheritDoc
-	 */
-	protected $tagName = 'small';
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function isAllowed(AbstractHtmlNodeProcessor $htmlNodeProcessor) {
-		if (BBCodeHandler::getInstance()->isAvailableBBCode('size')) {
-			return [];
-		}
-		
-		return ['size'];
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor) {
-		/** @var \DOMElement $element */
-		foreach ($elements as $element) {
-			if (DOMUtil::isRemoved($element) || !$element->parentNode) {
-				continue;
-			}
-			
-			$span = $element->ownerDocument->createElement('span');
-			$span->setAttribute('style', "font-size: 10pt");
-			
-			$element->parentNode->insertBefore($span, $element);
-			$span->appendChild($element);
-			
-			DOMUtil::removeNode($element, true);
-		}
-	}
+class HtmlInputNodeSmall extends AbstractHtmlInputNode
+{
+    /**
+     * @inheritDoc
+     */
+    protected $tagName = 'small';
+
+    /**
+     * @inheritDoc
+     */
+    public function isAllowed(AbstractHtmlNodeProcessor $htmlNodeProcessor)
+    {
+        if (BBCodeHandler::getInstance()->isAvailableBBCode('size')) {
+            return [];
+        }
+
+        return ['size'];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor)
+    {
+        /** @var \DOMElement $element */
+        foreach ($elements as $element) {
+            if (DOMUtil::isRemoved($element) || !$element->parentNode) {
+                continue;
+            }
+
+            $span = $element->ownerDocument->createElement('span');
+            $span->setAttribute('style', "font-size: 10pt");
+
+            $element->parentNode->insertBefore($span, $element);
+            $span->appendChild($element);
+
+            DOMUtil::removeNode($element, true);
+        }
+    }
 }

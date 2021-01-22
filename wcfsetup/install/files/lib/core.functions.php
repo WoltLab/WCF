@@ -1,4 +1,4 @@
-<?php
+<?php // @codingStandardsIgnoreFile
 /**
  * @author	Marcel Werk
  * @copyright	2001-2019 WoltLab GmbH
@@ -106,7 +106,6 @@ namespace {
 	}
 }
 
-// @codingStandardsIgnoreStart
 namespace wcf {
 	function getRequestId() {
 		if (!defined('WCF_REQUEST_ID_HEADER') || !WCF_REQUEST_ID_HEADER) return '';
@@ -661,4 +660,3 @@ EXPLANATION;
 		return '*/'.FileUtil::removeTrailingSlash(FileUtil::getRelativePath(WCF_DIR, $path));
 	}
 }
-// @codingStandardsIgnoreEnd

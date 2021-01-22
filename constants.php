@@ -1,11 +1,11 @@
 <?php
 /**
- * Defines constants for autocompletion in IDEs. This file is not meant to be actively used anywhere! 
- * 
- * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	WoltLabSuite\Core
+ * Defines constants for autocompletion in IDEs. This file is not meant to be actively used anywhere!
+ *
+ * @author    Matthias Schmidt
+ * @copyright    2001-2019 WoltLab GmbH
+ * @license    GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package    WoltLabSuite\Core
  */
 
 // automatically defined constants/constants defined with classes

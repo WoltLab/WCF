@@ -1,4 +1,5 @@
 <?php
+
 namespace wcf\system\html\output\node;
 
 /**
@@ -10,5 +11,6 @@ namespace wcf\system\html\output\node;
  * @package     WoltLabSuite\Core\System\Html\Output\Node
  * @since       5.2
  */
-class AmpHtmlOutputNodeProcessor extends HtmlOutputNodeProcessor {
+class AmpHtmlOutputNodeProcessor extends HtmlOutputNodeProcessor
+{
 }

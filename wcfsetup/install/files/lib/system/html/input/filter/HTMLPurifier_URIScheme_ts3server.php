@@ -1,5 +1,6 @@
 <?php
 // @codingStandardsIgnoreFile
+
 /**
  * Teamspeak 3 direct join protocol
  */
@@ -14,7 +15,7 @@ class HTMLPurifier_URIScheme_ts3server extends HTMLPurifier_URIScheme
     public function doValidate(&$uri, $config, $context)
     {
         $uri->userinfo = null;
-        
+
         return true;
     }
 }
