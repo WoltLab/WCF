@@ -46,7 +46,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             if (element === undefined) {
                 throw new Error(`Unknown object id '${objectId}' for selector '${this._options.selector}'`);
             }
-            return Core.stringToBool(element.dataset[permission] || "");
+            return Core.stringToBool(element.dataset[StringUtil.toCamelCase(permission)] || "");
         }
         getPropertyValue(objectId, propertyName, asBool) {
             const element = this._elements.get(objectId);

@@ -65,7 +65,7 @@ class UiMessageManager implements AjaxCallbackObject {
       throw new Error(`Unknown object id '${objectId}' for selector '${this._options.selector}'`);
     }
 
-    return Core.stringToBool(element.dataset[permission] || "");
+    return Core.stringToBool(element.dataset[StringUtil.toCamelCase(permission)] || "");
   }
 
   /**
