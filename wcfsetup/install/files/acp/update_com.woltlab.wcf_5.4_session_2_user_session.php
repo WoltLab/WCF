@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Creates the user_session table.
+ *
+ * @author  Tim Duesterhus
+ * @copyright   2001-2020 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package WoltLabSuite\Core
+ */
+
 use wcf\system\database\table\column\CharDatabaseTableColumn;
 use wcf\system\database\table\column\IntDatabaseTableColumn;
 use wcf\system\database\table\column\MediumblobDatabaseTableColumn;
@@ -11,15 +20,6 @@ use wcf\system\database\table\DatabaseTableChangeProcessor;
 use wcf\system\database\table\index\DatabaseTableForeignKey;
 use wcf\system\database\table\index\DatabaseTableIndex;
 use wcf\system\WCF;
-
-/**
- * Creates the user_session table.
- *
- * @author  Tim Duesterhus
- * @copyright   2001-2020 WoltLab GmbH
- * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package WoltLabSuite\Core
- */
 
 $tables = [
     DatabaseTable::create('wcf1_user_session')

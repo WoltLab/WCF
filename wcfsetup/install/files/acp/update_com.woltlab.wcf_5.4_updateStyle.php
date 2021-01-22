@@ -1,7 +1,5 @@
 <?php
 
-use wcf\util\StyleUtil;
-
 /**
  * Runs the skipped style update.
  *
@@ -10,5 +8,7 @@ use wcf\util\StyleUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core
  */
+
+use wcf\util\StyleUtil;
 
 StyleUtil::updateStyleFile();

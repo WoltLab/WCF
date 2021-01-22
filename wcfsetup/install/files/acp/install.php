@@ -1,15 +1,15 @@
 <?php
 
-use wcf\system\user\storage\UserStorageHandler;
-use wcf\system\WCF;
-use wcf\util\DateUtil;
-
 /**
  * @author  Marcel Werk
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core
  */
+
+use wcf\system\user\storage\UserStorageHandler;
+use wcf\system\WCF;
+use wcf\util\DateUtil;
 
 // change the priority of the PIPs to "1"
 $sql = "UPDATE	wcf" . WCF_N . "_package_installation_plugin

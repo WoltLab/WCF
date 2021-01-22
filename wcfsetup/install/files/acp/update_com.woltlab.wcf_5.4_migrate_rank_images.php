@@ -1,12 +1,5 @@
 <?php
 
-use wcf\data\user\rank\UserRank;
-use wcf\data\user\rank\UserRankEditor;
-use wcf\data\user\rank\UserRankList;
-use wcf\system\background\BackgroundQueueHandler;
-use wcf\system\background\job\DownloadRankImageJob;
-use wcf\util\Url;
-
 /**
  * Downloads the rank image files to the new internal upload system.
  *
@@ -15,6 +8,13 @@ use wcf\util\Url;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core
  */
+
+use wcf\data\user\rank\UserRank;
+use wcf\data\user\rank\UserRankEditor;
+use wcf\data\user\rank\UserRankList;
+use wcf\system\background\BackgroundQueueHandler;
+use wcf\system\background\job\DownloadRankImageJob;
+use wcf\util\Url;
 
 $rankList = new UserRankList();
 $rankList->readObjects();

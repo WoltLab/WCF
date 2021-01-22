@@ -1,9 +1,5 @@
 <?php
 
-use wcf\system\database\table\DatabaseTableChangeProcessor;
-use wcf\system\database\table\PartialDatabaseTable;
-use wcf\system\WCF;
-
 /**
  * Removes the wcf1_acp_session table.
  *
@@ -12,6 +8,10 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core
  */
+
+use wcf\system\database\table\DatabaseTableChangeProcessor;
+use wcf\system\database\table\PartialDatabaseTable;
+use wcf\system\WCF;
 
 $tables = [
     PartialDatabaseTable::create('wcf1_acp_session')
