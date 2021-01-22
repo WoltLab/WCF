@@ -6,5 +6,8 @@
 	<arg value="p"/>
 	<arg name="basepath" value="."/>
 
-	<rule ref="PSR12"/>
+	<rule ref="PSR12">
+		<!-- https://github.com/squizlabs/PHP_CodeSniffer/issues/3200 -->
+		<exclude name="PSR12.Classes.AnonClassDeclaration.SpaceAfterKeyword"/>
+	</rule>
 </ruleset>

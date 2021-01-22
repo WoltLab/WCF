@@ -532,8 +532,11 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                             };
 
                             $options = [];
-                            /** @var OptionCategory $category */
+
+                            // https://github.com/squizlabs/PHP_CodeSniffer/issues/3199
+                            // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
                             foreach ($categories as $category) {
+                                /** @var OptionCategory $category */
                                 $options[] = [
                                     'depth' => $getDepth($category),
                                     'label' => $category->categoryName,
