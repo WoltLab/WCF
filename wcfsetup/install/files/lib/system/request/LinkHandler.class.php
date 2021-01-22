@@ -179,7 +179,8 @@ class LinkHandler extends SingletonFactory
 
                     $landingPage = PageCache::getInstance()->getPage($application->landingPageID);
                     if ($landingPage === null) {
-                        $landingPage = PageCache::getInstance()->getPageByController(WCF::getApplicationObject($application)->getPrimaryController());
+                        $landingPage = PageCache::getInstance()
+                            ->getPageByController(WCF::getApplicationObject($application)->getPrimaryController());
                     }
 
                     if ($landingPage !== null) {
@@ -193,7 +194,11 @@ class LinkHandler extends SingletonFactory
 
         // handle object
         if (isset($parameters['object'])) {
-            if (!($parameters['object'] instanceof IRouteController) && $parameters['object'] instanceof DatabaseObjectDecorator && $parameters['object']->getDecoratedObject() instanceof IRouteController) {
+            if (
+                !($parameters['object'] instanceof IRouteController)
+                && $parameters['object'] instanceof DatabaseObjectDecorator
+                && $parameters['object']->getDecoratedObject() instanceof IRouteController
+            ) {
                 $parameters['object'] = $parameters['object']->getDecoratedObject();
             }
 
@@ -288,7 +293,8 @@ class LinkHandler extends SingletonFactory
             if ($data === null) {
                 // attempt to use the default language instead
                 if (LanguageFactory::getInstance()->getDefaultLanguageID() != WCF::getLanguage()->languageID) {
-                    $data = ControllerMap::getInstance()->lookupCmsPage($pageID, LanguageFactory::getInstance()->getDefaultLanguageID());
+                    $data = ControllerMap::getInstance()
+                        ->lookupCmsPage($pageID, LanguageFactory::getInstance()->getDefaultLanguageID());
                 }
 
                 // no result, possibly this is a non-multilingual page

@@ -29,7 +29,8 @@ class UserObjectWatchHandler extends SingletonFactory
      */
     public function getObjectTypeID($objectTypeName)
     {
-        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $objectTypeName);
+        $objectType = ObjectTypeCache::getInstance()
+            ->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $objectTypeName);
         if ($objectType === null) {
             throw new SystemException("unknown object type '" . $objectTypeName . "'");
         }
@@ -54,7 +55,8 @@ class UserObjectWatchHandler extends SingletonFactory
     public function resetObjects($objectType, array $objectIDs)
     {
         // get object type id
-        $objectTypeObj = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $objectType);
+        $objectTypeObj = ObjectTypeCache::getInstance()
+            ->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $objectType);
 
         // get subscriber
         $conditionsBuilder = new PreparedStatementConditionBuilder();
@@ -83,7 +85,8 @@ class UserObjectWatchHandler extends SingletonFactory
     public function deleteObjects($objectType, array $objectIDs, array $userIDs = [])
     {
         // get object type id
-        $objectTypeObj = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $objectType);
+        $objectTypeObj = ObjectTypeCache::getInstance()
+            ->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $objectType);
 
         // delete objects
         $conditionsBuilder = new PreparedStatementConditionBuilder();
@@ -109,10 +112,17 @@ class UserObjectWatchHandler extends SingletonFactory
      * @param   IUserNotificationObject     $notificationObject
      * @param   array               $additionalData
      */
-    public function updateObject($objectType, $objectID, $notificationEventName, $notificationObjectType, IUserNotificationObject $notificationObject, array $additionalData = [])
-    {
+    public function updateObject(
+        $objectType,
+        $objectID,
+        $notificationEventName,
+        $notificationObjectType,
+        IUserNotificationObject $notificationObject,
+        array $additionalData = []
+    ) {
         // get object type id
-        $objectTypeObj = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $objectType);
+        $objectTypeObj = ObjectTypeCache::getInstance()
+            ->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $objectType);
 
         // get subscriber
         $userIDs = $recipientIDs = [];

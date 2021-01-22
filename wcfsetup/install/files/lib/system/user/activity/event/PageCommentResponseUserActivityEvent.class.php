@@ -31,7 +31,10 @@ class PageCommentResponseUserActivityEvent extends SingletonFactory implements I
             if (isset($this->responses[$event->objectID])) {
                 $response = $this->responses[$event->objectID];
                 $comment = $this->comments[$response->commentID];
-                if (PageCache::getInstance()->getPage($comment->objectID) && isset($this->commentAuthors[$comment->userID])) {
+                if (
+                    PageCache::getInstance()->getPage($comment->objectID)
+                    && isset($this->commentAuthors[$comment->userID])
+                ) {
                     $page = PageCache::getInstance()->getPage($comment->objectID);
 
                     // check permissions

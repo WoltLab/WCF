@@ -98,7 +98,10 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
                     self::prepareSitemapObject($sitemapObject);
                     $processor = $sitemapObject->getProcessor();
 
-                    if ($processor->isAvailableType() && ($sitemapObject->isDisabled === null || !$sitemapObject->isDisabled)) {
+                    if (
+                        $processor->isAvailableType()
+                        && ($sitemapObject->isDisabled === null || !$sitemapObject->isDisabled)
+                    ) {
                         $this->sitemapObjects[] = $sitemapObject;
 
                         $list = $processor->getObjectList();
@@ -244,7 +247,11 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
     protected function checkCache()
     {
         $object = (isset($this->sitemapObjects[$this->workerData['sitemap']])) ? $this->sitemapObjects[$this->workerData['sitemap']] : false;
-        while ($object && \file_exists(self::getSitemapPath() . $object->objectType . '.xml') && \filectime(self::getSitemapPath() . $object->objectType . '.xml') > TIME_NOW - (($object->rebuildTime !== null) ? $object->rebuildTime : 60 * 60 * 24 * 7)) {
+        while (
+            $object
+            && \file_exists(self::getSitemapPath() . $object->objectType . '.xml')
+            && \filectime(self::getSitemapPath() . $object->objectType . '.xml') > TIME_NOW - (($object->rebuildTime !== null) ? $object->rebuildTime : 60 * 60 * 24 * 7)
+        ) {
             foreach (\array_merge(\glob(self::getSitemapPath() . $object->objectType . '_*'), [self::getSitemapPath() . $object->objectType . '.xml']) as $filename) {
                 $this->workerData['sitemaps'][] = self::getSitemapURL() . \basename($filename);
             }

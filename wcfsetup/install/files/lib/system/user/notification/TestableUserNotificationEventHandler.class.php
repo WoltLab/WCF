@@ -191,8 +191,12 @@ class TestableUserNotificationEventHandler extends SingletonFactory
      * @param   array       $additionalData
      * @return  UserNotification
      */
-    protected function getUserNotification(UserProfile $author, $timesTriggered, $guestTimesTriggered, array $additionalData)
-    {
+    protected function getUserNotification(
+        UserProfile $author,
+        $timesTriggered,
+        $guestTimesTriggered,
+        array $additionalData
+    ) {
         return new UserNotification(null, [
             'additionalData' => \serialize($additionalData),
             'authorID' => $author->userID,
@@ -259,15 +263,23 @@ class TestableUserNotificationEventHandler extends SingletonFactory
 
                         $additionalData = $className::getTestAdditionalData($object);
 
-                        $event->setTestCaseDescription(WCF::getLanguage()->getDynamicVariable('wcf.acp.devtools.notificationTest.testCase', [
-                            'canBeTriggeredByGuests' => $className::canBeTriggeredByGuests(),
-                            'guestsTriggered' => $guestCount,
-                            'language' => $language,
-                            'timesTriggered' => $authorCount,
-                        ]));
+                        $event->setTestCaseDescription(WCF::getLanguage()->getDynamicVariable(
+                            'wcf.acp.devtools.notificationTest.testCase',
+                            [
+                                'canBeTriggeredByGuests' => $className::canBeTriggeredByGuests(),
+                                'guestsTriggered' => $guestCount,
+                                'language' => $language,
+                                'timesTriggered' => $authorCount,
+                            ]
+                        ));
 
                         $event->setObject(
-                            $this->getUserNotification($firstAuthor, $authorCount + $guestCount, $guestCount, $additionalData),
+                            $this->getUserNotification(
+                                $firstAuthor,
+                                $authorCount + $guestCount,
+                                $guestCount,
+                                $additionalData
+                            ),
                             $object,
                             $authorCount ? $firstAuthor : $unknownAuthor,
                             $additionalData

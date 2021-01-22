@@ -17,7 +17,8 @@ use wcf\system\user\notification\object\CommentUserNotificationObject;
  *
  * @method  CommentUserNotificationObject   getUserNotificationObject()
  */
-class UserProfileCommentUserNotificationEvent extends AbstractSharedUserNotificationEvent implements ITestableUserNotificationEvent
+class UserProfileCommentUserNotificationEvent extends AbstractSharedUserNotificationEvent implements
+    ITestableUserNotificationEvent
 {
     use TTestableCommentUserNotificationEvent;
 

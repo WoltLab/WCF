@@ -88,9 +88,18 @@ class RequestHandler extends SingletonFactory
 
             // handle offline mode
             if (!$isACPRequest && \defined('OFFLINE') && OFFLINE) {
-                if (!WCF::getSession()->getPermission('admin.general.canViewPageDuringOfflineMode') && !$this->activeRequest->isAvailableDuringOfflineMode()) {
-                    if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
-                        throw new AJAXException(WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
+                if (
+                    !WCF::getSession()->getPermission('admin.general.canViewPageDuringOfflineMode')
+                    && !$this->activeRequest->isAvailableDuringOfflineMode()
+                ) {
+                    if (
+                        isset($_SERVER['HTTP_X_REQUESTED_WITH'])
+                        && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')
+                    ) {
+                        throw new AJAXException(
+                            WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
+                            AJAXException::INSUFFICIENT_PERMISSIONS
+                        );
                     } else {
                         @\header('HTTP/1.1 503 Service Unavailable');
                         BoxHandler::disablePageLayout();
@@ -137,7 +146,9 @@ class RequestHandler extends SingletonFactory
                     $applicationObject = ApplicationHandler::getInstance()->getApplication($application);
                     if ($applicationObject->domainName != $_SERVER['HTTP_HOST']) {
                         // build URL, e.g. http://example.net/forum/
-                        $url = FileUtil::addTrailingSlash(RouteHandler::getProtocol() . $applicationObject->domainName . RouteHandler::getPath());
+                        $url = FileUtil::addTrailingSlash(
+                            RouteHandler::getProtocol() . $applicationObject->domainName . RouteHandler::getPath()
+                        );
 
                         // query string, e.g. ?foo=bar
                         if (!empty($_SERVER['QUERY_STRING'])) {
@@ -166,7 +177,11 @@ class RequestHandler extends SingletonFactory
                 unset($routeData['controller']);
                 unset($routeData['pageType']);
             } else {
-                if ($this->isACPRequest() && ($controller === 'login' || $controller === 'index') && $application !== 'wcf') {
+                if (
+                    $this->isACPRequest()
+                    && ($controller === 'login' || $controller === 'index')
+                    && $application !== 'wcf'
+                ) {
                     HeaderUtil::redirect(
                         LinkHandler::getInstance()->getLink(\ucfirst($controller)),
                         true,
@@ -177,11 +192,20 @@ class RequestHandler extends SingletonFactory
                 }
 
                 $classApplication = $application;
-                if (!empty($routeData['isDefaultController']) && !empty($routeData['application']) && $routeData['application'] !== $application) {
+                if (
+                    !empty($routeData['isDefaultController'])
+                    && !empty($routeData['application'])
+                    && $routeData['application'] !== $application
+                ) {
                     $classApplication = $routeData['application'];
                 }
 
-                $classData = ControllerMap::getInstance()->resolve($classApplication, $controller, $this->isACPRequest(), RouteHandler::getInstance()->isRenamedController());
+                $classData = ControllerMap::getInstance()->resolve(
+                    $classApplication,
+                    $controller,
+                    $this->isACPRequest(),
+                    RouteHandler::getInstance()->isRenamedController()
+                );
                 if (\is_string($classData)) {
                     $this->redirect($routeData, $application, $classData);
                 }
@@ -195,7 +219,10 @@ class RequestHandler extends SingletonFactory
                     'languageID' => $routeData['cmsPageLanguageID'],
                 ];
 
-                if ($routeData['cmsPageLanguageID'] && $routeData['cmsPageLanguageID'] != WCF::getLanguage()->languageID) {
+                if (
+                    $routeData['cmsPageLanguageID']
+                    && $routeData['cmsPageLanguageID'] != WCF::getLanguage()->languageID
+                ) {
                     WCF::setLanguage($routeData['cmsPageLanguageID']);
                 }
 
@@ -203,7 +230,12 @@ class RequestHandler extends SingletonFactory
                 unset($routeData['cmsPageLanguageID']);
             }
 
-            $this->activeRequest = new Request($classData['className'], $classData['controller'], $classData['pageType'], $metaData);
+            $this->activeRequest = new Request(
+                $classData['className'],
+                $classData['controller'],
+                $classData['pageType'],
+                $metaData
+            );
 
             // check if the controller matches an app that has an expired evaluation date
             $abbreviation = \mb_substr($classData['className'], 0, \mb_strpos($classData['className'], '\\'));
@@ -219,11 +251,14 @@ class RequestHandler extends SingletonFactory
                         $isWoltLab = true;
                     }
 
-                    throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.acp.package.evaluation.expired', [
-                        'packageName' => $package->getName(),
-                        'pluginStoreFileID' => $pluginStoreFileID,
-                        'isWoltLab' => $isWoltLab,
-                    ]));
+                    throw new NamedUserException(WCF::getLanguage()->getDynamicVariable(
+                        'wcf.acp.package.evaluation.expired',
+                        [
+                            'packageName' => $package->getName(),
+                            'pluginStoreFileID' => $pluginStoreFileID,
+                            'isWoltLab' => $isWoltLab,
+                        ]
+                    ));
                 }
             }
 
@@ -236,7 +271,12 @@ class RequestHandler extends SingletonFactory
 
             ApplicationHandler::getInstance()->rebuildActiveApplication();
         } catch (SystemException $e) {
-            if (\defined('ENABLE_DEBUG_MODE') && ENABLE_DEBUG_MODE && \defined('ENABLE_DEVELOPER_TOOLS') && ENABLE_DEVELOPER_TOOLS) {
+            if (
+                \defined('ENABLE_DEBUG_MODE')
+                && ENABLE_DEBUG_MODE
+                && \defined('ENABLE_DEVELOPER_TOOLS')
+                && ENABLE_DEVELOPER_TOOLS
+            ) {
                 throw $e;
             }
 

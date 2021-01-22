@@ -36,7 +36,10 @@ class UserBirthdayCache extends SingletonFactory
     protected function loadMonth($month)
     {
         if (!isset($this->monthsLoaded[$month])) {
-            $this->birthdays = \array_merge($this->birthdays, UserBirthdayCacheBuilder::getInstance()->getData(['month' => $month]));
+            $this->birthdays = \array_merge(
+                $this->birthdays,
+                UserBirthdayCacheBuilder::getInstance()->getData(['month' => $month])
+            );
             $this->monthsLoaded[$month] = true;
 
             $data = [

@@ -89,7 +89,10 @@ class SendNewPasswordWorker extends AbstractWorker
 
         if ($progress == 100) {
             // unmark users
-            ClipboardHandler::getInstance()->unmark($this->parameters['userIDs'], ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
+            ClipboardHandler::getInstance()->unmark(
+                $this->parameters['userIDs'],
+                ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user')
+            );
         }
 
         return $progress;
@@ -141,7 +144,11 @@ class SendNewPasswordWorker extends AbstractWorker
     {
         WCF::getSession()->checkPermissions(['admin.user.canEditPassword']);
 
-        if (!isset($this->parameters['userIDs']) || !\is_array($this->parameters['userIDs']) || empty($this->parameters['userIDs'])) {
+        if (
+            !isset($this->parameters['userIDs'])
+            || !\is_array($this->parameters['userIDs'])
+            || empty($this->parameters['userIDs'])
+        ) {
             throw new SystemException("'userIDs' parameter is missing or invalid");
         }
     }

@@ -35,7 +35,11 @@ class HascontentPrefilterTemplatePlugin implements IPrefilterTemplatePlugin
         $ldq = \preg_quote($compiler->getLeftDelimiter(), '~');
         $rdq = \preg_quote($compiler->getRightDelimiter(), '~');
 
-        return \preg_replace_callback("~{$ldq}hascontent( assign='(?P<assign>.*)')?{$rdq}(?P<before>.*){$ldq}content{$rdq}(?P<content>.*){$ldq}\\/content{$rdq}(?P<after>.*)({$ldq}hascontentelse{$rdq}(?P<else>.*))?{$ldq}\\/hascontent{$rdq}~sU", ['self', 'replaceContentCallback'], $sourceContent);
+        return \preg_replace_callback(
+            "~{$ldq}hascontent( assign='(?P<assign>.*)')?{$rdq}(?P<before>.*){$ldq}content{$rdq}(?P<content>.*){$ldq}\\/content{$rdq}(?P<after>.*)({$ldq}hascontentelse{$rdq}(?P<else>.*))?{$ldq}\\/hascontent{$rdq}~sU",
+            ['self', 'replaceContentCallback'],
+            $sourceContent
+        );
     }
 
     /**

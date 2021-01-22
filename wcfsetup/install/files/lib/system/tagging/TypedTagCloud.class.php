@@ -29,7 +29,8 @@ class TypedTagCloud extends TagCloud
      */
     public function __construct($objectType, array $languageIDs = [])
     {
-        $objectTypeObj = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.tagging.taggableObject', $objectType);
+        $objectTypeObj = ObjectTypeCache::getInstance()
+            ->getObjectTypeByName('com.woltlab.wcf.tagging.taggableObject', $objectType);
         $this->objectTypeIDs[] = $objectTypeObj->objectTypeID;
 
         parent::__construct($languageIDs);

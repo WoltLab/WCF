@@ -126,7 +126,11 @@ interface ISearchableObjectType
      * @param   PreparedStatementConditionBuilder   $additionalConditions
      * @return  string
      */
-    public function getOuterSQLQuery($q, ?PreparedStatementConditionBuilder &$searchIndexConditions = null, ?PreparedStatementConditionBuilder &$additionalConditions = null);
+    public function getOuterSQLQuery(
+        $q,
+        ?PreparedStatementConditionBuilder &$searchIndexConditions = null,
+        ?PreparedStatementConditionBuilder &$additionalConditions = null
+    );
 
     /**
      * Sets the location in menu/breadcrumbs.

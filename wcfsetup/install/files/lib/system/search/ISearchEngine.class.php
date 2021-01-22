@@ -39,7 +39,14 @@ interface ISearchEngine
      * @param   int                 $limit
      * @return  array
      */
-    public function getInnerJoin($objectTypeName, $q, $subjectOnly = false, ?PreparedStatementConditionBuilder $searchIndexCondition = null, $orderBy = 'time DESC', $limit = 1000);
+    public function getInnerJoin(
+        $objectTypeName,
+        $q,
+        $subjectOnly = false,
+        ?PreparedStatementConditionBuilder $searchIndexCondition = null,
+        $orderBy = 'time DESC',
+        $limit = 1000
+    );
 
     /**
      * Removes engine-specific special characters from a string.
@@ -60,5 +67,13 @@ interface ISearchEngine
      * @param   int                 $limit
      * @return  array
      */
-    public function search($q, array $objectTypes, $subjectOnly = false, ?PreparedStatementConditionBuilder $searchIndexCondition = null, array $additionalConditions = [], $orderBy = 'time DESC', $limit = 1000);
+    public function search(
+        $q,
+        array $objectTypes,
+        $subjectOnly = false,
+        ?PreparedStatementConditionBuilder $searchIndexCondition = null,
+        array $additionalConditions = [],
+        $orderBy = 'time DESC',
+        $limit = 1000
+    );
 }

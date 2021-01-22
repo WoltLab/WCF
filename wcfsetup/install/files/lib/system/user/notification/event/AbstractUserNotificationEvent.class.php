@@ -24,7 +24,9 @@ use wcf\util\StringUtil;
  * @method  UserNotificationEvent   getDecoratedObject()
  * @mixin   UserNotificationEvent
  */
-abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator implements IUserNotificationEvent, IFeedEntry
+abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator implements
+    IUserNotificationEvent,
+    IFeedEntry
 {
     /**
      * @inheritDoc
@@ -105,8 +107,12 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
     /**
      * @inheritDoc
      */
-    public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = [])
-    {
+    public function setObject(
+        UserNotification $notification,
+        IUserNotificationObject $object,
+        UserProfile $author,
+        array $additionalData = []
+    ) {
         $this->notification = $notification;
         $this->userNotificationObject = $object;
         $this->author = $author;

@@ -19,8 +19,12 @@ abstract class AbstractSharedUserNotificationEvent extends AbstractUserNotificat
     /**
      * @inheritDoc
      */
-    public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = [])
-    {
+    public function setObject(
+        UserNotification $notification,
+        IUserNotificationObject $object,
+        UserProfile $author,
+        array $additionalData = []
+    ) {
         parent::setObject($notification, $object, $author, $additionalData);
 
         $this->prepare();

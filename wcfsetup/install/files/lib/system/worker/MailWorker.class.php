@@ -74,7 +74,10 @@ class MailWorker extends AbstractWorker
             $this->conditions->add("user.banned = ?", [0]);
 
             if ($this->mailData['action'] == 'group') {
-                $this->conditions->add("user.userID IN (SELECT userID FROM wcf" . WCF_N . "_user_to_group WHERE groupID IN (?))", [$this->mailData['groupIDs']]);
+                $this->conditions->add(
+                    "user.userID IN (SELECT userID FROM wcf" . WCF_N . "_user_to_group WHERE groupID IN (?))",
+                    [$this->mailData['groupIDs']]
+                );
             }
         }
 
@@ -115,7 +118,10 @@ class MailWorker extends AbstractWorker
     {
         $email = new Email();
         $email->setSubject($this->mailData['subject']);
-        $from = new Mailbox($this->mailData['from'], (!empty($this->mailData['fromName']) ? $this->mailData['fromName'] : null));
+        $from = new Mailbox(
+            $this->mailData['from'],
+            (!empty($this->mailData['fromName']) ? $this->mailData['fromName'] : null)
+        );
         $email->setSender($from);
         $email->setReplyTo($from);
         $variables = [

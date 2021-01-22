@@ -249,7 +249,10 @@ class XML
      */
     public function write($fileLocation, $cdata = false)
     {
-        $schemaParts = \explode(' ', $this->document->documentElement->getAttributeNS($this->document->documentElement->lookupNamespaceUri('xsi'), 'schemaLocation'));
+        $schemaParts = \explode(' ', $this->document->documentElement->getAttributeNS(
+            $this->document->documentElement->lookupNamespaceUri('xsi'),
+            'schemaLocation'
+        ));
 
         $writer = new XMLWriter();
         $writer->beginDocument(

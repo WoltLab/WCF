@@ -21,8 +21,17 @@ abstract class AbstractSearchIndexManager extends SingletonFactory implements IS
     /**
      * @inheritDoc
      */
-    public function set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '')
-    {
+    public function set(
+        $objectType,
+        $objectID,
+        $message,
+        $subject,
+        $time,
+        $userID,
+        $username,
+        $languageID = null,
+        $metaData = ''
+    ) {
         $this->add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
     }
 

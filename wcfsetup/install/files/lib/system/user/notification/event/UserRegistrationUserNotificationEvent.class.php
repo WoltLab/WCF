@@ -17,7 +17,8 @@ use wcf\system\user\notification\object\UserRegistrationUserNotificationObject;
  *
  * @method  UserRegistrationUserNotificationObject  getUserNotificationObject()
  */
-class UserRegistrationUserNotificationEvent extends AbstractUserNotificationEvent implements ITestableUserNotificationEvent
+class UserRegistrationUserNotificationEvent extends AbstractUserNotificationEvent implements
+    ITestableUserNotificationEvent
 {
     use TTestableUserNotificationEvent;
 
@@ -33,7 +34,10 @@ class UserRegistrationUserNotificationEvent extends AbstractUserNotificationEven
     {
         $count = \count($this->getAuthors());
         if ($count > 1) {
-            return $this->getLanguage()->getDynamicVariable('wcf.user.notification.userRegistration.title.stacked', ['count' => $count]);
+            return $this->getLanguage()->getDynamicVariable(
+                'wcf.user.notification.userRegistration.title.stacked',
+                ['count' => $count]
+            );
         }
 
         return $this->getLanguage()->get('wcf.user.notification.userRegistration.title');
@@ -56,7 +60,10 @@ class UserRegistrationUserNotificationEvent extends AbstractUserNotificationEven
             ]);
         }
 
-        return $this->getLanguage()->getDynamicVariable('wcf.user.notification.userRegistration.message', ['author' => $this->author]);
+        return $this->getLanguage()->getDynamicVariable(
+            'wcf.user.notification.userRegistration.message',
+            ['author' => $this->author]
+        );
     }
 
     /**

@@ -23,7 +23,8 @@ use wcf\system\WCF;
  *
  * @method  PaidSubscriptionUserUserNotificationObject  getUserNotificationObject()
  */
-class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNotificationEvent implements ITestableUserNotificationEvent
+class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNotificationEvent implements
+    ITestableUserNotificationEvent
 {
     use TTestableUserNotificationEvent;
 
@@ -40,11 +41,14 @@ class ExpiringPaidSubscriptionUserUserNotificationEvent extends AbstractUserNoti
      */
     public function getMessage()
     {
-        return $this->getLanguage()->getDynamicVariable('wcf.paidSubscription.expiringSubscription.notification.message', [
-            'author' => $this->author,
-            'notification' => $this->notification,
-            'userNotificationObject' => $this->getUserNotificationObject(),
-        ]);
+        return $this->getLanguage()->getDynamicVariable(
+            'wcf.paidSubscription.expiringSubscription.notification.message',
+            [
+                'author' => $this->author,
+                'notification' => $this->notification,
+                'userNotificationObject' => $this->getUserNotificationObject(),
+            ]
+        );
     }
 
     /**

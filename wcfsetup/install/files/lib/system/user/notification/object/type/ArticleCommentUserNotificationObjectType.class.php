@@ -16,7 +16,8 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Core\System\User\Notification\Object\Type
  * @since       5.2
  */
-class ArticleCommentUserNotificationObjectType extends AbstractUserNotificationObjectType implements ICommentUserNotificationObjectType
+class ArticleCommentUserNotificationObjectType extends AbstractUserNotificationObjectType implements
+    ICommentUserNotificationObjectType
 {
     /**
      * @inheritDoc

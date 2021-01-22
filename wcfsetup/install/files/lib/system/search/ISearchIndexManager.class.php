@@ -25,7 +25,17 @@ interface ISearchIndexManager
      * @param   int     $languageID
      * @param   string      $metaData
      */
-    public function set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '');
+    public function set(
+        $objectType,
+        $objectID,
+        $message,
+        $subject,
+        $time,
+        $userID,
+        $username,
+        $languageID = null,
+        $metaData = ''
+    );
 
     /**
      * Adds a new entry.
@@ -41,7 +51,17 @@ interface ISearchIndexManager
      * @param   string      $metaData
      * @deprecated  3.0 - please use `set()` instead
      */
-    public function add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '');
+    public function add(
+        $objectType,
+        $objectID,
+        $message,
+        $subject,
+        $time,
+        $userID,
+        $username,
+        $languageID = null,
+        $metaData = ''
+    );
 
     /**
      * Updates the search index.
@@ -57,7 +77,17 @@ interface ISearchIndexManager
      * @param   string      $metaData
      * @deprecated  3.0 - please use `set() instead`
      */
-    public function update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '');
+    public function update(
+        $objectType,
+        $objectID,
+        $message,
+        $subject,
+        $time,
+        $userID,
+        $username,
+        $languageID = null,
+        $metaData = ''
+    );
 
     /**
      * Deletes search index entries.

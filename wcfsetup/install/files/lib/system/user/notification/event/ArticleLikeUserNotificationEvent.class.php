@@ -21,7 +21,8 @@ use wcf\system\WCF;
  *
  * @method  LikeUserNotificationObject  getUserNotificationObject()
  */
-class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEvent implements ITestableUserNotificationEvent
+class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEvent implements
+    ITestableUserNotificationEvent
 {
     use TTestableLikeUserNotificationEvent {
         TTestableLikeUserNotificationEvent::canBeTriggeredByGuests insteadof TTestableUserNotificationEvent;
@@ -101,7 +102,9 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
      */
     public function getLink()
     {
-        return ViewableArticleRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID)->getLink();
+        return ViewableArticleRuntimeCache::getInstance()
+            ->getObject($this->getUserNotificationObject()->objectID)
+            ->getLink();
     }
 
     /**
@@ -154,7 +157,9 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
      */
     protected static function createTestLikeObject(UserProfile $recipient, UserProfile $author)
     {
-        return new LikeableArticle(self::getTestArticle(self::createTestCategory(ArticleCategory::OBJECT_TYPE_NAME), $author));
+        return new LikeableArticle(
+            self::getTestArticle(self::createTestCategory(ArticleCategory::OBJECT_TYPE_NAME), $author)
+        );
     }
 
     /**

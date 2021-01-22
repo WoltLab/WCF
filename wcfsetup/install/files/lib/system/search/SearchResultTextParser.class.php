@@ -195,7 +195,10 @@ class SearchResultTextParser extends SingletonFactory
     public function parse($text)
     {
         // remove nonessentials
-        $text = Regex::compile('<!-- begin:parser_nonessential -->.*?<!-- end:parser_nonessential -->', Regex::DOT_ALL)->replace($text, '');
+        $text = Regex::compile(
+            '<!-- begin:parser_nonessential -->.*?<!-- end:parser_nonessential -->',
+            Regex::DOT_ALL
+        )->replace($text, '');
 
         // Convert `<br>` into spaces to prevent sentences being "glued" together.
         $text = \str_replace("<br>", " ", $text);

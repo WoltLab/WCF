@@ -61,7 +61,10 @@ class CommentResponseRebuildDataWorker extends AbstractRebuildDataWorker
      */
     public function execute()
     {
-        $this->objectList->getConditionBuilder()->add('comment_response.responseID BETWEEN ? AND ?', [$this->limit * $this->loopCount + 1, $this->limit * $this->loopCount + $this->limit]);
+        $this->objectList->getConditionBuilder()->add(
+            'comment_response.responseID BETWEEN ? AND ?',
+            [$this->limit * $this->loopCount + 1, $this->limit * $this->loopCount + $this->limit]
+        );
 
         parent::execute();
 
@@ -81,18 +84,30 @@ class CommentResponseRebuildDataWorker extends AbstractRebuildDataWorker
         foreach ($this->objectList as $response) {
             $responseEditor = new CommentResponseEditor($response);
 
-            BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(',', $this->getBulkUserPermissionValue($userPermissions, $response->userID, 'user.comment.disallowedBBCodes')));
+            BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
+                ',',
+                $this->getBulkUserPermissionValue($userPermissions, $response->userID, 'user.comment.disallowedBBCodes')
+            ));
 
             // update message
             if (!$response->enableHtml) {
-                $this->getHtmlInputProcessor()->process($response->message, 'com.woltlab.wcf.comment.response', $response->responseID, true);
+                $this->getHtmlInputProcessor()->process(
+                    $response->message,
+                    'com.woltlab.wcf.comment.response',
+                    $response->responseID,
+                    true
+                );
 
                 $responseEditor->update([
                     'message' => $this->getHtmlInputProcessor()->getHtml(),
                     'enableHtml' => 1,
                 ]);
             } else {
-                $this->getHtmlInputProcessor()->reprocess($response->message, 'com.woltlab.wcf.comment.response', $response->responseID);
+                $this->getHtmlInputProcessor()->reprocess(
+                    $response->message,
+                    'com.woltlab.wcf.comment.response',
+                    $response->responseID
+                );
                 $responseEditor->update(['message' => $this->getHtmlInputProcessor()->getHtml()]);
             }
         }

@@ -78,8 +78,14 @@ class UserActivityEventHandler extends SingletonFactory
      * @return  \wcf\data\user\activity\event\UserActivityEvent
      * @throws  SystemException
      */
-    public function fireEvent($objectType, $objectID, $languageID = null, $userID = null, $time = TIME_NOW, $additionalData = [])
-    {
+    public function fireEvent(
+        $objectType,
+        $objectID,
+        $languageID = null,
+        $userID = null,
+        $time = TIME_NOW,
+        $additionalData = []
+    ) {
         $objectTypeID = $this->getObjectTypeID($objectType);
         if ($objectTypeID === null) {
             throw new SystemException("Unknown recent activity event '" . $objectType . "'");

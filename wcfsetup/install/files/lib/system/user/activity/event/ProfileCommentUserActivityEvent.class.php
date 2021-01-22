@@ -56,10 +56,13 @@ class ProfileCommentUserActivityEvent extends SingletonFactory implements IUserA
                         $event->setIsAccessible();
 
                         $user = $users[$comment->objectID];
-                        $text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.recentActivity.profileComment', [
-                            'commentID' => $comment->commentID,
-                            'user' => $user,
-                        ]);
+                        $text = WCF::getLanguage()->getDynamicVariable(
+                            'wcf.user.profile.recentActivity.profileComment',
+                            [
+                                'commentID' => $comment->commentID,
+                                'user' => $user,
+                            ]
+                        );
                         $event->setTitle($text);
 
                         // output

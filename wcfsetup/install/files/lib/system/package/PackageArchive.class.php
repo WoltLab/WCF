@@ -150,7 +150,10 @@ class PackageArchive
     {
         // check whether archive exists and is a TAR archive
         if (!\file_exists($this->archive)) {
-            throw new PackageValidationException(PackageValidationException::FILE_NOT_FOUND, ['archive' => $this->archive]);
+            throw new PackageValidationException(
+                PackageValidationException::FILE_NOT_FOUND,
+                ['archive' => $this->archive]
+            );
         }
 
         // open archive and read package information
@@ -166,7 +169,10 @@ class PackageArchive
         // search package.xml in package archive
         // throw error message if not found
         if ($this->tar->getIndexByFilename(self::INFO_FILE) === false) {
-            throw new PackageValidationException(PackageValidationException::MISSING_PACKAGE_XML, ['archive' => $this->archive]);
+            throw new PackageValidationException(
+                PackageValidationException::MISSING_PACKAGE_XML,
+                ['archive' => $this->archive]
+            );
         }
 
         // extract package.xml, parse XML
@@ -187,7 +193,10 @@ class PackageArchive
         $packageName = $package->getAttribute('name');
         if (!Package::isValidPackageName($packageName)) {
             // package name is not a valid package identifier
-            throw new PackageValidationException(PackageValidationException::INVALID_PACKAGE_NAME, ['packageName' => $packageName]);
+            throw new PackageValidationException(
+                PackageValidationException::INVALID_PACKAGE_NAME,
+                ['packageName' => $packageName]
+            );
         }
 
         $this->packageInfo['name'] = $packageName;
@@ -238,7 +247,10 @@ class PackageArchive
 
                 case 'version':
                     if (!Package::isValidVersion($element->nodeValue)) {
-                        throw new PackageValidationException(PackageValidationException::INVALID_PACKAGE_VERSION, ['packageVersion' => $element->nodeValue]);
+                        throw new PackageValidationException(
+                            PackageValidationException::INVALID_PACKAGE_VERSION,
+                            ['packageVersion' => $element->nodeValue]
+                        );
                     }
 
                     $this->packageInfo['version'] = $element->nodeValue;
@@ -264,7 +276,10 @@ class PackageArchive
         $elements = $xpath->query('child::ns:requiredpackages/ns:requiredpackage', $package);
         foreach ($elements as $element) {
             if (!Package::isValidPackageName($element->nodeValue)) {
-                throw new PackageValidationException(PackageValidationException::INVALID_PACKAGE_NAME, ['packageName' => $element->nodeValue]);
+                throw new PackageValidationException(
+                    PackageValidationException::INVALID_PACKAGE_NAME,
+                    ['packageName' => $element->nodeValue]
+                );
             }
 
             // read attributes
@@ -281,7 +296,10 @@ class PackageArchive
         $elements = $xpath->query('child::ns:optionalpackages/ns:optionalpackage', $package);
         foreach ($elements as $element) {
             if (!Package::isValidPackageName($element->nodeValue)) {
-                throw new PackageValidationException(PackageValidationException::INVALID_PACKAGE_NAME, ['packageName' => $element->nodeValue]);
+                throw new PackageValidationException(
+                    PackageValidationException::INVALID_PACKAGE_NAME,
+                    ['packageName' => $element->nodeValue]
+                );
             }
 
             // read attributes
@@ -298,7 +316,10 @@ class PackageArchive
         $elements = $xpath->query('child::ns:excludedpackages/ns:excludedpackage', $package);
         foreach ($elements as $element) {
             if (!Package::isValidPackageName($element->nodeValue)) {
-                throw new PackageValidationException(PackageValidationException::INVALID_PACKAGE_NAME, ['packageName' => $element->nodeValue]);
+                throw new PackageValidationException(
+                    PackageValidationException::INVALID_PACKAGE_NAME,
+                    ['packageName' => $element->nodeValue]
+                );
             }
 
             // read attributes
@@ -320,7 +341,10 @@ class PackageArchive
 
             $version = $element->getAttribute('version');
             if (!\preg_match('~^(?:201[7-9]|20[2-9][0-9])$~', $version)) {
-                throw new PackageValidationException(PackageValidationException::INVALID_API_VERSION, ['version' => $version]);
+                throw new PackageValidationException(
+                    PackageValidationException::INVALID_API_VERSION,
+                    ['version' => $version]
+                );
             }
 
             $this->compatibility[] = $version;
@@ -719,7 +743,10 @@ class PackageArchive
             $statement->execute($conditions->getParameters());
             while ($row = $statement->fetchArray()) {
                 // check required package version
-                if (isset($requirements[$row['package']]['minversion']) && Package::compareVersion($row['packageVersion'], $requirements[$row['package']]['minversion']) == -1) {
+                if (
+                    isset($requirements[$row['package']]['minversion'])
+                    && Package::compareVersion($row['packageVersion'], $requirements[$row['package']]['minversion']) == -1
+                ) {
                     continue;
                 }
 
@@ -844,7 +871,10 @@ class PackageArchive
 
         // requested tar archive was found
         $fileInfo = $this->tar->getFileInfo($fileIndex);
-        $filename = FileUtil::getTemporaryFilename($tempPrefix, \preg_replace('!^.*?(\.(?:tar\.gz|tgz|tar))$!i', '\\1', $fileInfo['filename']));
+        $filename = FileUtil::getTemporaryFilename(
+            $tempPrefix,
+            \preg_replace('!^.*?(\.(?:tar\.gz|tgz|tar))$!i', '\\1', $fileInfo['filename'])
+        );
         $this->tar->extract($fileIndex, $filename);
 
         return $filename;

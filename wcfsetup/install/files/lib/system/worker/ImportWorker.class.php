@@ -48,10 +48,20 @@ class ImportWorker extends AbstractWorker
         }
 
         // get exporter
-        $this->exporter = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.exporter', $this->importData['exporterName'])->getProcessor();
+        $this->exporter = ObjectTypeCache::getInstance()
+            ->getObjectTypeByName('com.woltlab.wcf.exporter', $this->importData['exporterName'])
+            ->getProcessor();
 
         // set data
-        $this->exporter->setData($this->importData['dbHost'], $this->importData['dbUser'], $this->importData['dbPassword'], $this->importData['dbName'], $this->importData['dbPrefix'], $this->importData['fileSystemPath'], $this->importData['additionalData']);
+        $this->exporter->setData(
+            $this->importData['dbHost'],
+            $this->importData['dbUser'],
+            $this->importData['dbPassword'],
+            $this->importData['dbName'],
+            $this->importData['dbPrefix'],
+            $this->importData['fileSystemPath'],
+            $this->importData['additionalData']
+        );
         $this->exporter->init();
 
         // set user merge mode

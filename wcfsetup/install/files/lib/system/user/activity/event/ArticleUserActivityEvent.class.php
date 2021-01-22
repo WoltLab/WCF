@@ -35,7 +35,10 @@ class ArticleUserActivityEvent extends SingletonFactory implements IUserActivity
                 if ($article->canRead()) {
                     $event->setIsAccessible();
 
-                    $text = WCF::getLanguage()->getDynamicVariable('wcf.article.recentActivity', ['article' => $article]);
+                    $text = WCF::getLanguage()->getDynamicVariable(
+                        'wcf.article.recentActivity',
+                        ['article' => $article]
+                    );
                     $event->setTitle($text);
                     $event->setDescription($article->getFormattedTeaser());
                 }

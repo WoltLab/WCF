@@ -43,7 +43,10 @@ class TrophyReceivedUserActivityEvent extends SingletonFactory implements IUserA
 
                 $event->setIsAccessible();
 
-                $event->setTitle(WCF::getLanguage()->getDynamicVariable('wcf.user.trophy.recentActivity.received', ['userTrophy' => $trophies[$event->objectID]]));
+                $event->setTitle(WCF::getLanguage()->getDynamicVariable(
+                    'wcf.user.trophy.recentActivity.received',
+                    ['userTrophy' => $trophies[$event->objectID]]
+                ));
                 $event->setDescription($trophies[$event->objectID]->getDescription());
             } else {
                 $event->setIsOrphaned();

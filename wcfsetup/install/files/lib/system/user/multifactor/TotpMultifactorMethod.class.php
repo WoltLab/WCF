@@ -205,7 +205,8 @@ final class TotpMultifactorMethod implements IMultifactorMethod
         } else {
             $deviceName = $formData['data']['deviceName'];
             if (!$deviceName) {
-                $defaultName = WCF::getLanguage()->getDynamicVariable('wcf.user.security.multifactor.totp.deviceName.placeholder');
+                $defaultName = WCF::getLanguage()
+                    ->getDynamicVariable('wcf.user.security.multifactor.totp.deviceName.placeholder');
 
                 $sql = "SELECT  deviceName
                         FROM    wcf" . WCF_N . "_user_multifactor_totp
@@ -292,45 +293,55 @@ final class TotpMultifactorMethod implements IMultifactorMethod
                 ->description('wcf.user.security.multifactor.totp.code.description')
                 ->autoFocus()
                 ->required()
-                ->addValidator(new FormFieldValidator('code', static function (CodeFormField $field) use ($devices, $setup) {
-                    FloodControl::getInstance()->registerUserContent('com.woltlab.wcf.multifactor.totp', $setup->getId());
-                    $attempts = FloodControl::getInstance()->countUserContent('com.woltlab.wcf.multifactor.totp', $setup->getId(), new \DateInterval('PT10M'));
-                    if ($attempts['count'] > self::USER_ATTEMPTS_PER_TEN_MINUTES) {
-                        $field->value('');
-                        $field->addValidationError(new FormFieldValidationError(
-                            'flood',
-                            'wcf.user.security.multifactor.totp.error.flood',
-                            $attempts
-                        ));
+                ->addValidator(new FormFieldValidator(
+                    'code',
+                    static function (CodeFormField $field) use ($devices, $setup) {
+                        FloodControl::getInstance()->registerUserContent(
+                            'com.woltlab.wcf.multifactor.totp',
+                            $setup->getId()
+                        );
+                        $attempts = FloodControl::getInstance()->countUserContent(
+                            'com.woltlab.wcf.multifactor.totp',
+                            $setup->getId(),
+                            new \DateInterval('PT10M')
+                        );
+                        if ($attempts['count'] > self::USER_ATTEMPTS_PER_TEN_MINUTES) {
+                            $field->value('');
+                            $field->addValidationError(new FormFieldValidationError(
+                                'flood',
+                                'wcf.user.security.multifactor.totp.error.flood',
+                                $attempts
+                            ));
 
-                        return;
-                    }
-
-                    /** @var IFormField $deviceField */
-                    $deviceField = $field->getDocument()->getNodeById('device');
-
-                    $selectedDevice = null;
-                    foreach ($devices as $device) {
-                        if ($device['deviceID'] === $deviceField->getValue()) {
-                            $selectedDevice = $device;
+                            return;
                         }
-                    }
-                    if ($selectedDevice === null) {
-                        // This should never happen.
-                        $field->addValidationError(new FormFieldValidationError('unreachable'));
-                    }
 
-                    $totp = new Totp($selectedDevice['secret']);
-                    $minCounter = $selectedDevice['minCounter'];
-                    if (!$totp->validateTotpCode($field->getValue(), $minCounter, new \DateTime())) {
-                        $field->value('');
-                        $field->addValidationError(new FormFieldValidationError(
-                            'invalidCode',
-                            'wcf.user.security.multifactor.error.invalidCode'
-                        ));
+                        /** @var IFormField $deviceField */
+                        $deviceField = $field->getDocument()->getNodeById('device');
+
+                        $selectedDevice = null;
+                        foreach ($devices as $device) {
+                            if ($device['deviceID'] === $deviceField->getValue()) {
+                                $selectedDevice = $device;
+                            }
+                        }
+                        if ($selectedDevice === null) {
+                            // This should never happen.
+                            $field->addValidationError(new FormFieldValidationError('unreachable'));
+                        }
+
+                        $totp = new Totp($selectedDevice['secret']);
+                        $minCounter = $selectedDevice['minCounter'];
+                        if (!$totp->validateTotpCode($field->getValue(), $minCounter, new \DateTime())) {
+                            $field->value('');
+                            $field->addValidationError(new FormFieldValidationError(
+                                'invalidCode',
+                                'wcf.user.security.multifactor.error.invalidCode'
+                            ));
+                        }
+                        $field->minCounter($minCounter);
                     }
-                    $field->minCounter($minCounter);
-                })),
+                )),
         ]);
     }
 

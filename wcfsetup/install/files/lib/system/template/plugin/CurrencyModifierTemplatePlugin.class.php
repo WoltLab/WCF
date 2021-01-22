@@ -23,6 +23,11 @@ class CurrencyModifierTemplatePlugin implements IModifierTemplatePlugin
      */
     public function execute($tagArgs, TemplateEngine $tplObj)
     {
-        return \number_format(\round($tagArgs[0], 2), 2, WCF::getLanguage()->get('wcf.global.decimalPoint'), WCF::getLanguage()->get('wcf.global.thousandsSeparator'));
+        return \number_format(
+            \round($tagArgs[0], 2),
+            2,
+            WCF::getLanguage()->get('wcf.global.decimalPoint'),
+            WCF::getLanguage()->get('wcf.global.thousandsSeparator')
+        );
     }
 }

@@ -35,8 +35,15 @@ class MysqlSearchEngine extends AbstractSearchEngine
     /**
      * @inheritDoc
      */
-    public function search($q, array $objectTypes, $subjectOnly = false, ?PreparedStatementConditionBuilder $searchIndexCondition = null, array $additionalConditions = [], $orderBy = 'time DESC', $limit = 1000)
-    {
+    public function search(
+        $q,
+        array $objectTypes,
+        $subjectOnly = false,
+        ?PreparedStatementConditionBuilder $searchIndexCondition = null,
+        array $additionalConditions = [],
+        $orderBy = 'time DESC',
+        $limit = 1000
+    ) {
         // build search query
         $sql = '';
         $parameters = [];
@@ -65,7 +72,14 @@ class MysqlSearchEngine extends AbstractSearchEngine
             }
 
             if (\mb_strpos($query, '{WCF_SEARCH_INNER_JOIN}')) {
-                $innerJoin = $this->getInnerJoin($objectTypeName, $q, $subjectOnly, $searchIndexCondition, $orderBy, $limit);
+                $innerJoin = $this->getInnerJoin(
+                    $objectTypeName,
+                    $q,
+                    $subjectOnly,
+                    $searchIndexCondition,
+                    $orderBy,
+                    $limit
+                );
 
                 $query = \str_replace('{WCF_SEARCH_INNER_JOIN}', $innerJoin['sql'], $query);
                 if ($innerJoin['fulltextCondition'] !== null) {
@@ -107,8 +121,14 @@ class MysqlSearchEngine extends AbstractSearchEngine
     /**
      * @inheritDoc
      */
-    public function getInnerJoin($objectTypeName, $q, $subjectOnly = false, ?PreparedStatementConditionBuilder $searchIndexCondition = null, $orderBy = 'time DESC', $limit = 1000)
-    {
+    public function getInnerJoin(
+        $objectTypeName,
+        $q,
+        $subjectOnly = false,
+        ?PreparedStatementConditionBuilder $searchIndexCondition = null,
+        $orderBy = 'time DESC',
+        $limit = 1000
+    ) {
         $fulltextCondition = null;
         $relevanceCalc = '';
         if (!empty($q)) {

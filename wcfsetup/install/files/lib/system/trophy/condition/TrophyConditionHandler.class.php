@@ -141,7 +141,10 @@ class TrophyConditionHandler extends SingletonFactory
         }
 
         // prevent multiple awards from a trophy for a user
-        $userList->getConditionBuilder()->add('user_table.userID NOT IN (SELECT userID FROM wcf' . WCF_N . '_user_trophy WHERE trophyID IN (?))', [$trophy->trophyID]);
+        $userList->getConditionBuilder()->add(
+            'user_table.userID NOT IN (SELECT userID FROM wcf' . WCF_N . '_user_trophy WHERE trophyID IN (?))',
+            [$trophy->trophyID]
+        );
         $userList->readObjectIDs();
 
         return $userList->getObjectIDs();
@@ -200,11 +203,17 @@ class TrophyConditionHandler extends SingletonFactory
         // Now we transfer the old conditions to our new object. To avoid having two WHERE keywords,
         // we deactivate it in the pseudo-object.
         $pseudoUserList->getConditionBuilder()->enableWhereKeyword(false);
-        $userList->getConditionBuilder()->add('NOT(' . $pseudoUserList->getConditionBuilder() . ')', $pseudoUserList->getConditionBuilder()->getParameters());
+        $userList->getConditionBuilder()->add(
+            'NOT(' . $pseudoUserList->getConditionBuilder() . ')',
+            $pseudoUserList->getConditionBuilder()->getParameters()
+        );
 
         // In order not to get all users who do not fulfill the conditions (in case of
         // doubt there can be many), we filter for users who have received the trophy.
-        $userList->getConditionBuilder()->add('user_table.userID IN (SELECT userID FROM wcf' . WCF_N . '_user_trophy WHERE trophyID IN (?))', [$trophy->trophyID]);
+        $userList->getConditionBuilder()->add(
+            'user_table.userID IN (SELECT userID FROM wcf' . WCF_N . '_user_trophy WHERE trophyID IN (?))',
+            [$trophy->trophyID]
+        );
 
         // Prevents us from getting faulty UserTrophyIDs.
         $userList->getConditionBuilder()->add('user_trophy.trophyID = ?', [$trophy->trophyID]);

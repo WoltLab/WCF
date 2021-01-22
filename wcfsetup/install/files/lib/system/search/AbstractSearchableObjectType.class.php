@@ -98,8 +98,11 @@ abstract class AbstractSearchableObjectType extends AbstractObjectTypeProcessor 
     /**
      * @inheritDoc
      */
-    public function getOuterSQLQuery($q, ?PreparedStatementConditionBuilder &$searchIndexConditions = null, ?PreparedStatementConditionBuilder &$additionalConditions = null)
-    {
+    public function getOuterSQLQuery(
+        $q,
+        ?PreparedStatementConditionBuilder &$searchIndexConditions = null,
+        ?PreparedStatementConditionBuilder &$additionalConditions = null
+    ) {
         return '';
     }
 

@@ -21,7 +21,8 @@ use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
  *
  * @method  CommentResponseUserNotificationObject   getUserNotificationObject()
  */
-class ArticleCommentResponseUserNotificationEvent extends AbstractSharedUserNotificationEvent implements ITestableUserNotificationEvent
+class ArticleCommentResponseUserNotificationEvent extends AbstractSharedUserNotificationEvent implements
+    ITestableUserNotificationEvent
 {
     use TTestableCommentResponseUserNotificationEvent;
     use TTestableArticleUserNotificationEvent;
@@ -47,10 +48,13 @@ class ArticleCommentResponseUserNotificationEvent extends AbstractSharedUserNoti
     {
         $count = \count($this->getAuthors());
         if ($count > 1) {
-            return $this->getLanguage()->getDynamicVariable('wcf.user.notification.articleComment.response.title.stacked', [
-                'count' => $count,
-                'timesTriggered' => $this->notification->timesTriggered,
-            ]);
+            return $this->getLanguage()->getDynamicVariable(
+                'wcf.user.notification.articleComment.response.title.stacked',
+                [
+                    'count' => $count,
+                    'timesTriggered' => $this->notification->timesTriggered,
+                ]
+            );
         }
 
         return $this->getLanguage()->get('wcf.user.notification.articleComment.response.title');
@@ -68,22 +72,27 @@ class ArticleCommentResponseUserNotificationEvent extends AbstractSharedUserNoti
             }
             $count = \count($authors);
 
-            return $this->getLanguage()->getDynamicVariable('wcf.user.notification.articleComment.response.message.stacked', [
-                'author' => $this->author,
-                'authors' => \array_values($authors),
-                'commentID' => $this->getUserNotificationObject()->commentID,
-                'article' => ViewableArticleContentRuntimeCache::getInstance()->getObject($this->additionalData['objectID']),
-                'count' => $count,
-                'others' => $count - 1,
-                'guestTimesTriggered' => $this->notification->guestTimesTriggered,
-                'responseID' => $this->getUserNotificationObject()->responseID,
-            ]);
+            return $this->getLanguage()->getDynamicVariable(
+                'wcf.user.notification.articleComment.response.message.stacked',
+                [
+                    'author' => $this->author,
+                    'authors' => \array_values($authors),
+                    'commentID' => $this->getUserNotificationObject()->commentID,
+                    'article' => ViewableArticleContentRuntimeCache::getInstance()
+                        ->getObject($this->additionalData['objectID']),
+                    'count' => $count,
+                    'others' => $count - 1,
+                    'guestTimesTriggered' => $this->notification->guestTimesTriggered,
+                    'responseID' => $this->getUserNotificationObject()->responseID,
+                ]
+            );
         }
 
         return $this->getLanguage()->getDynamicVariable('wcf.user.notification.articleComment.response.message', [
             'author' => $this->author,
             'commentID' => $this->getUserNotificationObject()->commentID,
-            'article' => ViewableArticleContentRuntimeCache::getInstance()->getObject($this->additionalData['objectID']),
+            'article' => ViewableArticleContentRuntimeCache::getInstance()
+                ->getObject($this->additionalData['objectID']),
             'responseID' => $this->getUserNotificationObject()->responseID,
         ]);
     }
@@ -102,7 +111,8 @@ class ArticleCommentResponseUserNotificationEvent extends AbstractSharedUserNoti
             'application' => 'wcf',
             'variables' => [
                 'commentID' => $this->getUserNotificationObject()->commentID,
-                'article' => ViewableArticleContentRuntimeCache::getInstance()->getObject($this->additionalData['objectID']),
+                'article' => ViewableArticleContentRuntimeCache::getInstance()
+                    ->getObject($this->additionalData['objectID']),
                 'languageVariablePrefix' => 'wcf.user.notification.articleComment.response',
                 'responseID' => $this->getUserNotificationObject()->responseID,
             ],
@@ -131,7 +141,9 @@ class ArticleCommentResponseUserNotificationEvent extends AbstractSharedUserNoti
     protected static function getTestCommentObjectData(UserProfile $recipient, UserProfile $author)
     {
         return [
-            'objectID' => self::getTestArticle(self::createTestCategory(ArticleCategory::OBJECT_TYPE_NAME), $author)->getArticleContent()->articleContentID,
+            'objectID' => self::getTestArticle(self::createTestCategory(ArticleCategory::OBJECT_TYPE_NAME), $author)
+                ->getArticleContent()
+                ->articleContentID,
             'objectTypeID' => CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.articleComment'),
         ];
     }

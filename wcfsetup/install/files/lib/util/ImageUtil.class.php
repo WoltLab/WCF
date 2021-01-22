@@ -38,7 +38,11 @@ final class ImageUtil
         $content = \str_replace('description', '', $content);
 
         // search for javascript
-        if (\strpos($content, 'script') !== false || \strpos($content, 'javascript') !== false || \strpos($content, 'expression(') !== false) {
+        if (
+            \strpos($content, 'script') !== false
+            || \strpos($content, 'javascript') !== false
+            || \strpos($content, 'expression(') !== false
+        ) {
             return false;
         }
 
@@ -66,7 +70,10 @@ final class ImageUtil
                 return true;
             }
         } elseif ($handleSvgAsValidImage) {
-            if (\in_array(FileUtil::getMimeType($location), ['image/svg', 'image/svg+xml']) && \mb_strtolower(\pathinfo($filename, \PATHINFO_EXTENSION)) === 'svg') {
+            if (
+                \in_array(FileUtil::getMimeType($location), ['image/svg', 'image/svg+xml'])
+                && \mb_strtolower(\pathinfo($filename, \PATHINFO_EXTENSION)) === 'svg'
+            ) {
                 return true;
             }
         }

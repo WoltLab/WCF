@@ -18,7 +18,8 @@ use wcf\system\WCF;
  *
  * @method  LikeUserNotificationObject  getUserNotificationObject()
  */
-class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractSharedUserNotificationEvent implements ITestableUserNotificationEvent
+class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractSharedUserNotificationEvent implements
+    ITestableUserNotificationEvent
 {
     use TTestableCommentResponseLikeUserNotificationEvent;
     use TReactionUserNotificationEvent;
@@ -44,10 +45,13 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
     {
         $count = \count($this->getAuthors());
         if ($count > 1) {
-            return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.like.title.stacked', [
-                'count' => $count,
-                'timesTriggered' => $this->notification->timesTriggered,
-            ]);
+            return $this->getLanguage()->getDynamicVariable(
+                'wcf.user.notification.commentResponse.like.title.stacked',
+                [
+                    'count' => $count,
+                    'timesTriggered' => $this->notification->timesTriggered,
+                ]
+            );
         }
 
         return $this->getLanguage()->get('wcf.user.notification.commentResponse.like.title');
@@ -69,27 +73,33 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
         }
 
         if ($count > 1) {
-            return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.like.message.stacked', [
-                'author' => $this->author,
-                'authors' => $authors,
-                'commentID' => $this->additionalData['commentID'],
-                'commentUser' => $commentUser,
-                'count' => $count,
-                'others' => $count - 1,
-                'owner' => $owner,
-                'responseID' => $this->getResponseID(),
-                'reactions' => $this->getReactionsForAuthors(),
-            ]);
+            return $this->getLanguage()->getDynamicVariable(
+                'wcf.user.notification.commentResponse.like.message.stacked',
+                [
+                    'author' => $this->author,
+                    'authors' => $authors,
+                    'commentID' => $this->additionalData['commentID'],
+                    'commentUser' => $commentUser,
+                    'count' => $count,
+                    'others' => $count - 1,
+                    'owner' => $owner,
+                    'responseID' => $this->getResponseID(),
+                    'reactions' => $this->getReactionsForAuthors(),
+                ]
+            );
         }
 
-        return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.like.message', [
-            'author' => $this->author,
-            'commentID' => $this->additionalData['commentID'],
-            'owner' => $owner,
-            'responseID' => $this->getResponseID(),
-            'userNotificationObject' => $this->getUserNotificationObject(),
-            'reactions' => $this->getReactionsForAuthors(),
-        ]);
+        return $this->getLanguage()->getDynamicVariable(
+            'wcf.user.notification.commentResponse.like.message',
+            [
+                'author' => $this->author,
+                'commentID' => $this->additionalData['commentID'],
+                'owner' => $owner,
+                'responseID' => $this->getResponseID(),
+                'userNotificationObject' => $this->getUserNotificationObject(),
+                'reactions' => $this->getReactionsForAuthors(),
+            ]
+        );
     }
 
     /**

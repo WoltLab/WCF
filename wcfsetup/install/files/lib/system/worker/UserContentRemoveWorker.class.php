@@ -58,7 +58,11 @@ class UserContentRemoveWorker extends AbstractWorker
             $this->parameters['userIDs'] = [$this->parameters['userID']];
         }
 
-        if (isset($this->parameters['userIDs']) && \is_array($this->parameters['userIDs']) && !empty($this->parameters['userIDs'])) {
+        if (
+            isset($this->parameters['userIDs'])
+            && \is_array($this->parameters['userIDs'])
+            && !empty($this->parameters['userIDs'])
+        ) {
             $userList = new UserList();
             $userList->setObjectIDs($this->parameters['userIDs']);
             $userList->readObjects();
@@ -87,7 +91,10 @@ class UserContentRemoveWorker extends AbstractWorker
                 throw new \InvalidArgumentException('The parameter `contentProvider` must be an array.');
             }
 
-            $unknownContentProvider = \array_diff($this->parameters['contentProvider'], \array_column(ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.content.userContentProvider'), 'objectType'));
+            $unknownContentProvider = \array_diff(
+                $this->parameters['contentProvider'],
+                \array_column(ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.content.userContentProvider'), 'objectType')
+            );
             if (!empty($unknownContentProvider)) {
                 throw new \InvalidArgumentException('The parameter `contentProvider` contains unknown objectTypes (' . \implode(', ', $unknownContentProvider) . ').');
             }
@@ -124,14 +131,16 @@ class UserContentRemoveWorker extends AbstractWorker
         // add the required object types for the select content provider
         if (\is_array($this->contentProviders)) {
             foreach ($this->contentProviders as $contentProvider) {
-                $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.content.userContentProvider', $contentProvider);
+                $objectType = ObjectTypeCache::getInstance()
+                    ->getObjectTypeByName('com.woltlab.wcf.content.userContentProvider', $contentProvider);
                 $contentProviders[] = $objectType;
 
                 if ($objectType->requiredobjecttype !== null) {
                     $objectTypeNames = \explode(',', $objectType->requiredobjecttype);
 
                     foreach ($objectTypeNames as $objectTypeName) {
-                        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.content.userContentProvider', $objectTypeName);
+                        $objectType = ObjectTypeCache::getInstance()
+                            ->getObjectTypeByName('com.woltlab.wcf.content.userContentProvider', $objectTypeName);
 
                         if ($objectType === null) {
                             throw new \RuntimeException('Unknown required object type "' . $objectTypeName . '" for object type "' . $contentProvider . '" given.');
@@ -143,7 +152,8 @@ class UserContentRemoveWorker extends AbstractWorker
                 }
             }
         } else {
-            $contentProviders = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.content.userContentProvider');
+            $contentProviders = ObjectTypeCache::getInstance()
+                ->getObjectTypes('com.woltlab.wcf.content.userContentProvider');
         }
 
         // sort object types
@@ -228,7 +238,10 @@ class UserContentRemoveWorker extends AbstractWorker
 
         WCF::getSession()->register(self::USER_CONTENT_REMOVE_WORKER_SESSION_NAME, $dataArray);
 
-        ClipboardHandler::getInstance()->unmark(\array_column($this->users, 'userID'), ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
+        ClipboardHandler::getInstance()->unmark(
+            \array_column($this->users, 'userID'),
+            ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user')
+        );
     }
 
     /**

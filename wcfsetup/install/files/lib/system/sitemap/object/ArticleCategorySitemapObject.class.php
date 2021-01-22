@@ -34,7 +34,10 @@ class ArticleCategorySitemapObject extends AbstractSitemapObjectObjectType
     {
         $categoryList = new CategoryList();
         $categoryList->decoratorClassName = ArticleCategory::class;
-        $categoryList->getConditionBuilder()->add('objectTypeID = ?', [ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.category', ArticleCategory::OBJECT_TYPE_NAME)]);
+        $categoryList->getConditionBuilder()->add('objectTypeID = ?', [
+            ObjectTypeCache::getInstance()
+                ->getObjectTypeIDByName('com.woltlab.wcf.category', ArticleCategory::OBJECT_TYPE_NAME),
+        ]);
 
         return $categoryList;
     }

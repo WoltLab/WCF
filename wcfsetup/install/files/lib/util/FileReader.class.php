@@ -179,7 +179,10 @@ class FileReader
             if ($this->options['filesize'] > 0) {
                 if ($this->startByte > 0 || $this->endByte < $this->options['filesize'] - 1) {
                     $this->addHeader('', 'HTTP/1.1 206 Partial Content');
-                    $this->addHeader('Content-Range', 'bytes ' . $this->startByte . '-' . $this->endByte . '/' . $this->options['filesize']);
+                    $this->addHeader(
+                        'Content-Range',
+                        'bytes ' . $this->startByte . '-' . $this->endByte . '/' . $this->options['filesize']
+                    );
                 }
                 if ($this->options['enableRangeSupport']) {
                     $this->addHeader('Accept-Ranges', 'bytes');
@@ -197,7 +200,10 @@ class FileReader
                 $this->addHeader('Expires', \gmdate('D, d M Y H:i:s', $this->options['expirationDate']) . ' GMT');
             }
             if ($this->options['lastModificationTime']) {
-                $this->addHeader('Last-Modified', \gmdate('D, d M Y H:i:s', $this->options['lastModificationTime']) . ' GMT');
+                $this->addHeader(
+                    'Last-Modified',
+                    \gmdate('D, d M Y H:i:s', $this->options['lastModificationTime']) . ' GMT'
+                );
             }
         }
     }

@@ -128,10 +128,16 @@ class ControllerMap extends SingletonFactory
                 // handle controllers with a custom url
                 $controller = $classData['controller'];
 
-                if (isset($this->customUrls['reverse'][$application]) && isset($this->customUrls['reverse'][$application][$controller])) {
+                if (
+                    isset($this->customUrls['reverse'][$application])
+                    && isset($this->customUrls['reverse'][$application][$controller])
+                ) {
                     return $this->customUrls['reverse'][$application][$controller];
                 } elseif ($application !== 'wcf') {
-                    if (isset($this->customUrls['reverse']['wcf']) && isset($this->customUrls['reverse']['wcf'][$controller])) {
+                    if (
+                        isset($this->customUrls['reverse']['wcf'])
+                        && isset($this->customUrls['reverse']['wcf'][$controller])
+                    ) {
                         return $this->customUrls['reverse']['wcf'][$controller];
                     }
                 }
@@ -157,7 +163,10 @@ class ControllerMap extends SingletonFactory
             $application = $this->applicationOverrides['lookup'][$application][$controller];
         }
 
-        if (isset($this->customUrls['lookup'][$application]) && isset($this->customUrls['lookup'][$application][$controller])) {
+        if (
+            isset($this->customUrls['lookup'][$application])
+            && isset($this->customUrls['lookup'][$application][$controller])
+        ) {
             $data = $this->customUrls['lookup'][$application][$controller];
             if (\preg_match('~^__WCF_CMS__(?P<pageID>\d+)-(?P<languageID>\d+)$~', $data, $matches)) {
                 return [
@@ -205,7 +214,11 @@ class ControllerMap extends SingletonFactory
             return $this->lookupCache[$lookupKey];
         }
 
-        if ($forceFrontend && isset($this->customUrls['reverse'][$application]) && isset($this->customUrls['reverse'][$application][$controller])) {
+        if (
+            $forceFrontend
+            && isset($this->customUrls['reverse'][$application])
+            && isset($this->customUrls['reverse'][$application][$controller])
+        ) {
             $urlController = $this->customUrls['reverse'][$application][$controller];
         } else {
             $urlController = self::transformController($controller);
@@ -259,7 +272,11 @@ class ControllerMap extends SingletonFactory
 
                 $languageID = null;
                 // use a reverse search to find the page
-                if (isset($this->customUrls['lookup']['wcf']) && isset($this->customUrls['lookup']['wcf']['']) && \preg_match('~^__WCF_CMS__\d+\-(?P<languageID>\d+)$~', $this->customUrls['lookup']['wcf'][''], $match)) {
+                if (
+                    isset($this->customUrls['lookup']['wcf'])
+                    && isset($this->customUrls['lookup']['wcf'][''])
+                    && \preg_match('~^__WCF_CMS__\d+\-(?P<languageID>\d+)$~', $this->customUrls['lookup']['wcf'][''], $match)
+                ) {
                     $languageID = $match['languageID'];
                 }
 
@@ -275,7 +292,10 @@ class ControllerMap extends SingletonFactory
             }
 
             // different application, redirect instead
-            if ($cmsPageData['application'] !== $application && $this->getApplicationOverride($application, $cmsPageData['controller']) !== $application) {
+            if (
+                $cmsPageData['application'] !== $application
+                && $this->getApplicationOverride($application, $cmsPageData['controller']) !== $application
+            ) {
                 return ['redirect' => LinkHandler::getInstance()->getCmsLink($matches['pageID'])];
             } else {
                 return $this->resolveCustomController($cmsPageData['application'], $cmsPageData['controller']);
@@ -301,10 +321,17 @@ class ControllerMap extends SingletonFactory
         if (isset($this->customUrls['lookup'][$application], $this->customUrls['lookup'][$application][$controller])) {
             $controller = $this->customUrls['lookup'][$application][$controller];
             if (\preg_match('~^(?P<controller>__WCF_CMS__\d+)(?:-(?P<languageID>\d+))?$~', $controller, $matches)) {
-                if ($matches['languageID'] && $matches['languageID'] != LanguageFactory::getInstance()->getDefaultLanguageID()) {
+                if (
+                    $matches['languageID']
+                    && $matches['languageID'] != LanguageFactory::getInstance()->getDefaultLanguageID()
+                ) {
                     return false;
                 } else {
-                    if ($matches['controller'] == $this->landingPages[$application][0] && isset($this->customUrls['lookup'][$application]['']) && $this->customUrls['lookup'][$application][''] !== $controller) {
+                    if (
+                        $matches['controller'] == $this->landingPages[$application][0]
+                        && isset($this->customUrls['lookup'][$application][''])
+                        && $this->customUrls['lookup'][$application][''] !== $controller
+                    ) {
                         return false;
                     }
 
@@ -437,7 +464,12 @@ class ControllerMap extends SingletonFactory
     {
         // work-around for broken controllers that violate the strict naming rules
         if (\preg_match('~[A-Z]{2,}~', $controller)) {
-            $parts = \preg_split('~([A-Z][a-z0-9]+)~', $controller, -1, \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY);
+            $parts = \preg_split(
+                '~([A-Z][a-z0-9]+)~',
+                $controller,
+                -1,
+                \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY
+            );
 
             // fix for invalid pages that would cause single character fragments
             $sanitizedParts = [];
@@ -456,7 +488,12 @@ class ControllerMap extends SingletonFactory
             }
             $parts = $sanitizedParts;
         } else {
-            $parts = \preg_split('~([A-Z][a-z0-9]+)~', $controller, -1, \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY);
+            $parts = \preg_split(
+                '~([A-Z][a-z0-9]+)~',
+                $controller,
+                -1,
+                \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY
+            );
         }
 
         $parts = \array_map('strtolower', $parts);

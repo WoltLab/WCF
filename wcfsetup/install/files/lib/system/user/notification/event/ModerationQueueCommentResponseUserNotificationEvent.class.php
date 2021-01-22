@@ -24,7 +24,8 @@ use wcf\system\WCF;
  *
  * @method  CommentResponseUserNotificationObject   getUserNotificationObject()
  */
-class ModerationQueueCommentResponseUserNotificationEvent extends AbstractSharedUserNotificationEvent implements ITestableUserNotificationEvent
+class ModerationQueueCommentResponseUserNotificationEvent extends AbstractSharedUserNotificationEvent implements
+    ITestableUserNotificationEvent
 {
     use TTestableCommentResponseUserNotificationEvent;
     use TTestableModerationQueueUserNotificationEvent;
@@ -122,13 +123,16 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
             }
             $count = \count($authors);
 
-            return $this->getLanguage()->getDynamicVariable($this->getLanguageItemPrefix() . '.commentResponse.message.stacked', [
-                'authors' => \array_values($authors),
-                'commentID' => $this->getUserNotificationObject()->commentID,
-                'count' => $count,
-                'others' => $count - 1,
-                'moderationQueue' => $this->getModerationQueue(),
-            ]);
+            return $this->getLanguage()->getDynamicVariable(
+                $this->getLanguageItemPrefix() . '.commentResponse.message.stacked',
+                [
+                    'authors' => \array_values($authors),
+                    'commentID' => $this->getUserNotificationObject()->commentID,
+                    'count' => $count,
+                    'others' => $count - 1,
+                    'moderationQueue' => $this->getModerationQueue(),
+                ]
+            );
         }
 
         $comment = CommentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->commentID);
@@ -174,7 +178,9 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
     {
         if ($this->languageItemPrefix === null) {
             /** @var IModerationQueueReportHandler $moderationHandler */
-            $moderationHandler = ObjectTypeCache::getInstance()->getObjectType($this->getModerationQueue()->objectTypeID)->getProcessor();
+            $moderationHandler = ObjectTypeCache::getInstance()
+                ->getObjectType($this->getModerationQueue()->objectTypeID)
+                ->getProcessor();
             $this->languageItemPrefix = $moderationHandler->getCommentNotificationLanguageItemPrefix();
         }
 
@@ -188,10 +194,13 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
     {
         $count = \count($this->getAuthors());
         if ($count > 1) {
-            return $this->getLanguage()->getDynamicVariable($this->getLanguageItemPrefix() . '.commentResponse.title.stacked', [
-                'count' => $count,
-                'timesTriggered' => $this->notification->timesTriggered,
-            ]);
+            return $this->getLanguage()->getDynamicVariable(
+                $this->getLanguageItemPrefix() . '.commentResponse.title.stacked',
+                [
+                    'count' => $count,
+                    'timesTriggered' => $this->notification->timesTriggered,
+                ]
+            );
         }
 
         return $this->getLanguage()->get($this->getLanguageItemPrefix() . '.commentResponse.title');

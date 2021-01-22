@@ -23,8 +23,11 @@ abstract class AbstractACPSearchResultProvider
      * @param   string          $permissionsColumnName
      * @return  bool
      */
-    protected function validate(DatabaseObject $object, $optionsColumnName = 'options', $permissionsColumnName = 'permissions')
-    {
+    protected function validate(
+        DatabaseObject $object,
+        $optionsColumnName = 'options',
+        $permissionsColumnName = 'permissions'
+    ) {
         // check the options of this item
         $hasEnabledOption = true;
         /** @noinspection PhpVariableVariableInspection */

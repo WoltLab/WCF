@@ -47,7 +47,7 @@ class SimplePageSitemapObject extends AbstractSitemapObjectObjectType
      */
     public function canView(DatabaseObject $object)
     {
-        /** @var $object Page */
+        /** @var Page $object */
         if ($object->isDisabled) {
             return false;
         }

@@ -178,8 +178,12 @@ final class DateUtil
      * @param   User        $user
      * @return  string
      */
-    public static function format(?\DateTime $time = null, $format = null, ?Language $language = null, ?User $user = null)
-    {
+    public static function format(
+        ?\DateTime $time = null,
+        $format = null,
+        ?Language $language = null,
+        ?User $user = null
+    ) {
         // get default values
         if ($time === null) {
             $time = new \DateTime();
@@ -212,8 +216,11 @@ final class DateUtil
      * @param   int     $formatType format type for the interval, use the class constant FORMAT_DEFAULT, FORMAT_SENTENCE or FORMAT_PLAIN
      * @return  string
      */
-    public static function formatInterval(\DateInterval $interval, $fullInterval = false, $formatType = self::FORMAT_DEFAULT)
-    {
+    public static function formatInterval(
+        \DateInterval $interval,
+        $fullInterval = false,
+        $formatType = self::FORMAT_DEFAULT
+    ) {
         $years = $interval->format('%y');
         $months = $interval->format('%m');
         $days = $interval->format('%d');
@@ -560,7 +567,11 @@ final class DateUtil
     public static function getRelativeTime(\DateTime $dateTimeObject, $timestamp, $date, $time, $isFutureDate)
     {
         if ($isFutureDate) {
-            return \str_replace('%time%', $time, \str_replace('%date%', $date, WCF::getLanguage()->get('wcf.date.dateTimeFormat')));
+            return \str_replace(
+                '%time%',
+                $time,
+                \str_replace('%date%', $date, WCF::getLanguage()->get('wcf.date.dateTimeFormat'))
+            );
         }
 
         // timestamp is less than 60 seconds ago

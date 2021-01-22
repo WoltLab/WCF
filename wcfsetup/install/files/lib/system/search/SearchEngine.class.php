@@ -42,7 +42,8 @@ class SearchEngine extends SingletonFactory implements ISearchEngine
     protected function init()
     {
         // get available object types
-        $this->availableObjectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.searchableObjectType');
+        $this->availableObjectTypes = ObjectTypeCache::getInstance()
+            ->getObjectTypes('com.woltlab.wcf.searchableObjectType');
 
         // get processors
         foreach ($this->availableObjectTypes as &$objectType) {
@@ -103,22 +104,37 @@ class SearchEngine extends SingletonFactory implements ISearchEngine
     /**
      * @inheritDoc
      */
-    public function search($q, array $objectTypes, $subjectOnly = false, ?PreparedStatementConditionBuilder $searchIndexCondition = null, array $additionalConditions = [], $orderBy = 'time DESC', $limit = 1000)
-    {
-        return $this->getSearchEngine()->search($q, $objectTypes, $subjectOnly, $searchIndexCondition, $additionalConditions, $orderBy, $limit);
+    public function search(
+        $q,
+        array $objectTypes,
+        $subjectOnly = false,
+        ?PreparedStatementConditionBuilder $searchIndexCondition = null,
+        array $additionalConditions = [],
+        $orderBy = 'time DESC',
+        $limit = 1000
+    ) {
+        return $this->getSearchEngine()
+            ->search($q, $objectTypes, $subjectOnly, $searchIndexCondition, $additionalConditions, $orderBy, $limit);
     }
 
     /**
      * @inheritDoc
      */
-    public function getInnerJoin($objectTypeName, $q, $subjectOnly = false, ?PreparedStatementConditionBuilder $searchIndexCondition = null, $orderBy = 'time DESC', $limit = 1000)
-    {
+    public function getInnerJoin(
+        $objectTypeName,
+        $q,
+        $subjectOnly = false,
+        ?PreparedStatementConditionBuilder $searchIndexCondition = null,
+        $orderBy = 'time DESC',
+        $limit = 1000
+    ) {
         $conditionBuilderClassName = $this->getConditionBuilderClassName();
         if ($searchIndexCondition !== null && !($searchIndexCondition instanceof $conditionBuilderClassName)) {
             throw new SystemException("Search engine '" . SEARCH_ENGINE . "' requires a different condition builder, please use 'SearchEngine::getInstance()->getConditionBuilderClassName()'!");
         }
 
-        return $this->getSearchEngine()->getInnerJoin($objectTypeName, $q, $subjectOnly, $searchIndexCondition, $orderBy, $limit);
+        return $this->getSearchEngine()
+            ->getInnerJoin($objectTypeName, $q, $subjectOnly, $searchIndexCondition, $orderBy, $limit);
     }
 
     /**

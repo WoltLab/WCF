@@ -126,7 +126,10 @@ class BoxVersionTrackerProvider extends AbstractVersionTrackerProvider
         $properties = $this->getTrackedProperties();
         $content = [];
         foreach ($object->getBoxContents() as $boxContent) {
-            $content[$boxContent->languageID ?: 0] = $entry->getPayloadForProperties($properties, $boxContent->languageID ?: 0);
+            $content[$boxContent->languageID ?: 0] = $entry->getPayloadForProperties(
+                $properties,
+                $boxContent->languageID ?: 0
+            );
         }
 
         $action = new BoxAction([$object->getDecoratedObject()], 'update', ['content' => $content, 'isRevert' => true]);

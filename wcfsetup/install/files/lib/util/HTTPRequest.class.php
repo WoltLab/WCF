@@ -121,7 +121,10 @@ final class HTTPRequest
 
                 // source of the iterators: http://stackoverflow.com/a/7623716/782822
                 if (!empty($this->postParameters)) {
-                    $iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($this->postParameters), \RecursiveIteratorIterator::SELF_FIRST);
+                    $iterator = new \RecursiveIteratorIterator(
+                        new \RecursiveArrayIterator($this->postParameters),
+                        \RecursiveIteratorIterator::SELF_FIRST
+                    );
                     foreach ($iterator as $k => $v) {
                         /** @noinspection PhpUndefinedMethodInspection */
                         if (!$iterator->hasChildren()) {
@@ -141,7 +144,10 @@ final class HTTPRequest
                     }
                 }
 
-                $iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($this->files), \RecursiveIteratorIterator::SELF_FIRST);
+                $iterator = new \RecursiveIteratorIterator(
+                    new \RecursiveArrayIterator($this->files),
+                    \RecursiveIteratorIterator::SELF_FIRST
+                );
                 foreach ($iterator as $k => $v) {
                     /** @noinspection PhpUndefinedMethodInspection */
                     if (!$iterator->hasChildren()) {

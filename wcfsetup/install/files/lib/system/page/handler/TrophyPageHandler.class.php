@@ -51,7 +51,10 @@ class TrophyPageHandler extends AbstractLookupPageHandler
             $trophyList->sqlJoins .= ', ';
         }
         $trophyList->sqlJoins = "LEFT JOIN wcf" . WCF_N . "_language_item language_item ON (language_item.languageItem = trophy.title)";
-        $trophyList->getConditionBuilder()->add('(trophy.title LIKE ? OR language_item.languageItemValue LIKE ?)', ['%' . $searchString . '%', '%' . $searchString . '%']);
+        $trophyList->getConditionBuilder()->add(
+            '(trophy.title LIKE ? OR language_item.languageItemValue LIKE ?)',
+            ['%' . $searchString . '%', '%' . $searchString . '%']
+        );
         $trophyList->sqlLimit = 10;
         $trophyList->sqlOrderBy = 'title';
         $trophyList->readObjects();

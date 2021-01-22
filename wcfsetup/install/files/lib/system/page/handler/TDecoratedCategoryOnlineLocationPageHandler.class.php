@@ -59,6 +59,9 @@ trait TDecoratedCategoryOnlineLocationPageHandler
             return;
         }
 
-        return WCF::getLanguage()->getDynamicVariable('wcf.page.onlineLocation.' . $page->identifier, ['category' => $category]);
+        return WCF::getLanguage()->getDynamicVariable(
+            'wcf.page.onlineLocation.' . $page->identifier,
+            ['category' => $category]
+        );
     }
 }

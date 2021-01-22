@@ -127,10 +127,17 @@ class ArticleVersionTrackerProvider extends AbstractVersionTrackerProvider
         $properties = $this->getTrackedProperties();
         $content = [];
         foreach ($object->getArticleContents() as $articleContent) {
-            $content[$articleContent->languageID ?: 0] = $entry->getPayloadForProperties($properties, $articleContent->languageID ?: 0);
+            $content[$articleContent->languageID ?: 0] = $entry->getPayloadForProperties(
+                $properties,
+                $articleContent->languageID ?: 0
+            );
         }
 
-        $action = new ArticleAction([$object->getDecoratedObject()], 'update', ['content' => $content, 'isRevert' => true]);
+        $action = new ArticleAction(
+            [$object->getDecoratedObject()],
+            'update',
+            ['content' => $content, 'isRevert' => true]
+        );
         $action->executeAction();
     }
 }

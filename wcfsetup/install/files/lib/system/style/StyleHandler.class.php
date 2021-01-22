@@ -103,7 +103,10 @@ class StyleHandler extends SingletonFactory
         // check permission
         if (!$ignorePermissions) {
             if (isset($this->cache['styles'][$styleID])) {
-                if ($this->cache['styles'][$styleID]->isDisabled && !WCF::getSession()->getPermission('admin.style.canUseDisabledStyle')) {
+                if (
+                    $this->cache['styles'][$styleID]->isDisabled
+                    && !WCF::getSession()->getPermission('admin.style.canUseDisabledStyle')
+                ) {
                     $styleID = 0;
                 }
             }

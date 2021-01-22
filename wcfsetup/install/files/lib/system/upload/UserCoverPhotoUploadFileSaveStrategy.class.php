@@ -70,7 +70,11 @@ class UserCoverPhotoUploadFileSaveStrategy implements IUploadFileSaveStrategy
 
             // shrink cover photo if necessary
             try {
-                $newFileLocation = ImageUtil::enforceDimensions($fileLocation, UserCoverPhoto::MAX_WIDTH, UserCoverPhoto::MAX_HEIGHT);
+                $newFileLocation = ImageUtil::enforceDimensions(
+                    $fileLocation,
+                    UserCoverPhoto::MAX_WIDTH,
+                    UserCoverPhoto::MAX_HEIGHT
+                );
             }
             /** @noinspection PhpRedundantCatchClauseInspection */
             catch (SystemException $e) {

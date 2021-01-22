@@ -60,7 +60,11 @@ class LinkBlockTemplatePlugin implements IBlockTemplatePlugin
             }
         }
 
-        return StringUtil::encodeHTML(LinkHandler::getInstance()->getLink($tagArgs['controller'], $tagArgs, $blockContent));
+        return StringUtil::encodeHTML(LinkHandler::getInstance()->getLink(
+            $tagArgs['controller'],
+            $tagArgs,
+            $blockContent
+        ));
     }
 
     /**

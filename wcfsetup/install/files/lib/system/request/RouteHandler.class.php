@@ -259,7 +259,11 @@ class RouteHandler extends SingletonFactory
         if (self::$secure === null) {
             self::$secure = false;
 
-            if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443 || (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) {
+            if (
+                (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
+                || $_SERVER['SERVER_PORT'] == 443
+                || (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
+            ) {
                 self::$secure = true;
             }
         }
@@ -358,7 +362,12 @@ class RouteHandler extends SingletonFactory
 
             // translate legacy controller names
             if (\preg_match('~^(?P<controller>(?:[A-Z]+[a-z0-9]+)+)(?:/|$)~', self::$pathInfo, $matches)) {
-                $parts = \preg_split('~([A-Z]+[a-z0-9]+)~', $matches['controller'], -1, \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY);
+                $parts = \preg_split(
+                    '~([A-Z]+[a-z0-9]+)~',
+                    $matches['controller'],
+                    -1,
+                    \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY
+                );
                 $parts = \array_map('strtolower', $parts);
 
                 self::$pathInfo = \implode('-', $parts) . \mb_substr(self::$pathInfo, \mb_strlen($matches['controller']));

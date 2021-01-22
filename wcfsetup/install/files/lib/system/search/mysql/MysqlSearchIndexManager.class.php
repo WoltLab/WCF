@@ -22,8 +22,17 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager
     /**
      * @inheritDoc
      */
-    public function add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '')
-    {
+    public function add(
+        $objectType,
+        $objectID,
+        $message,
+        $subject,
+        $time,
+        $userID,
+        $username,
+        $languageID = null,
+        $metaData = ''
+    ) {
         if ($languageID === null) {
             $languageID = 0;
         }
@@ -39,8 +48,17 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager
     /**
      * @inheritDoc
      */
-    public function update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '')
-    {
+    public function update(
+        $objectType,
+        $objectID,
+        $message,
+        $subject,
+        $time,
+        $userID,
+        $username,
+        $languageID = null,
+        $metaData = ''
+    ) {
         // delete existing entry
         $this->delete($objectType, [$objectID]);
 

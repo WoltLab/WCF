@@ -425,7 +425,10 @@ class PackageInstallationDispatcher
     {
         if ($this->archive === null) {
             // check if we're doing an iterative update of the same package
-            if ($this->previousPackageData !== null && $this->getPackage()->package == $this->previousPackageData['package']) {
+            if (
+                $this->previousPackageData !== null
+                && $this->getPackage()->package == $this->previousPackageData['package']
+            ) {
                 if (Package::compareVersion($this->getPackage()->packageVersion, $this->previousPackageData['packageVersion'], '<')) {
                     // fake package to simulate the package version required by current archive
                     $this->getPackage()->setPackageVersion($this->previousPackageData['packageVersion']);
@@ -598,7 +601,12 @@ class PackageInstallationDispatcher
             }
         }
 
-        if ($this->getPackage()->isApplication && $this->getPackage()->package != 'com.woltlab.wcf' && $this->getAction() == 'install' && empty($this->getPackage()->packageDir)) {
+        if (
+            $this->getPackage()->isApplication
+            && $this->getPackage()->package != 'com.woltlab.wcf'
+            && $this->getAction() == 'install'
+            && empty($this->getPackage()->packageDir)
+        ) {
             $document = $this->promptPackageDir($applicationDirectory);
             if ($document !== null && $document instanceof FormDocument) {
                 $installationStep->setDocument($document);
@@ -674,8 +682,13 @@ class PackageInstallationDispatcher
      * @param   Package         $package
      * @param   string          $infoName
      */
-    protected function saveLocalizedPackageInfo(PreparedStatement $statement, $languageList, LanguageCategory $languageCategory, Package $package, $infoName)
-    {
+    protected function saveLocalizedPackageInfo(
+        PreparedStatement $statement,
+        $languageList,
+        LanguageCategory $languageCategory,
+        Package $package,
+        $infoName
+    ) {
         $infoValues = $this->getArchive()->getPackageInfo($infoName);
 
         // get default value for languages without specified information
@@ -878,7 +891,11 @@ class PackageInstallationDispatcher
         $abbreviation = Package::getAbbreviation($this->getPackage()->package);
         if ($directory !== null) {
             $directory = $directory[$abbreviation] ?? null;
-        } elseif (ENABLE_ENTERPRISE_MODE && \defined('ENTERPRISE_MODE_APP_DIRECTORIES') && \is_array(ENTERPRISE_MODE_APP_DIRECTORIES)) {
+        } elseif (
+            ENABLE_ENTERPRISE_MODE
+            && \defined('ENTERPRISE_MODE_APP_DIRECTORIES')
+            && \is_array(ENTERPRISE_MODE_APP_DIRECTORIES)
+        ) {
             $directory = ENTERPRISE_MODE_APP_DIRECTORIES[$abbreviation] ?? null;
         }
 
@@ -934,7 +951,9 @@ class PackageInstallationDispatcher
             } else {
                 $document = PackageInstallationFormManager::getForm($this->queue, 'packageDir');
                 $document->handleRequest();
-                $packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(FileUtil::unifyDirSeparator($document->getValue('packageDir'))));
+                $packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(FileUtil::unifyDirSeparator(
+                    $document->getValue('packageDir')
+                )));
                 if ($packageDir === '/') {
                     $packageDir = '';
                 }
@@ -943,7 +962,10 @@ class PackageInstallationDispatcher
             if ($packageDir !== null) {
                 // validate package dir
                 if ($document !== null && \file_exists($packageDir . 'global.php')) {
-                    $document->setError('packageDir', WCF::getLanguage()->get('wcf.acp.package.packageDir.notAvailable'));
+                    $document->setError(
+                        'packageDir',
+                        WCF::getLanguage()->get('wcf.acp.package.packageDir.notAvailable')
+                    );
 
                     return $document;
                 }
@@ -969,7 +991,11 @@ class PackageInstallationDispatcher
                     $wcfDomainPath = $row['domainPath'];
                 }
 
-                $documentRoot = \substr(FileUtil::unifyDirSeparator(WCF_DIR), 0, -\strlen(FileUtil::unifyDirSeparator($wcfDomainPath)));
+                $documentRoot = \substr(
+                    FileUtil::unifyDirSeparator(WCF_DIR),
+                    0,
+                    -\strlen(FileUtil::unifyDirSeparator($wcfDomainPath))
+                );
                 $domainPath = FileUtil::getRelativePath($documentRoot, $packageDir);
                 if ($domainPath === './') {
                     // `FileUtil::getRelativePath()` returns `./` if both paths lead to the same directory
@@ -1013,7 +1039,9 @@ class PackageInstallationDispatcher
                 $optionalPackage->setValue($package['package']);
                 $optionalPackage->setDescription($package['packageDescription']);
                 if (!$package['isInstallable']) {
-                    $optionalPackage->setDisabledMessage(WCF::getLanguage()->get('wcf.acp.package.install.optionalPackage.missingRequirements'));
+                    $optionalPackage->setDisabledMessage(
+                        WCF::getLanguage()->get('wcf.acp.package.install.optionalPackage.missingRequirements')
+                    );
                 }
 
                 $container->appendChild($optionalPackage);
@@ -1095,7 +1123,11 @@ class PackageInstallationDispatcher
 
             exit;
         } else {
-            $url = LinkHandler::getInstance()->getLink('PackageInstallationConfirm', [], 'queueID=' . $packageInstallation['queueID']);
+            $url = LinkHandler::getInstance()->getLink(
+                'PackageInstallationConfirm',
+                [],
+                'queueID=' . $packageInstallation['queueID']
+            );
             HeaderUtil::redirect($url);
 
             exit;

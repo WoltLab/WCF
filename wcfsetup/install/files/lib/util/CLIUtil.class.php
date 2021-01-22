@@ -46,7 +46,12 @@ final class CLIUtil
             $result .= "|";
             $i = 0;
             foreach ($row as $column) {
-                $paddedString = StringUtil::pad(AnsiUtil::stripAnsi($column), $columnSize[$i], ' ', (\is_numeric($column) ? \STR_PAD_LEFT : \STR_PAD_RIGHT));
+                $paddedString = StringUtil::pad(
+                    AnsiUtil::stripAnsi($column),
+                    $columnSize[$i],
+                    ' ',
+                    (\is_numeric($column) ? \STR_PAD_LEFT : \STR_PAD_RIGHT)
+                );
                 $result .= ' ' . \str_replace(AnsiUtil::stripAnsi($column), $column, $paddedString) . ' |';
                 $i++;
             }
@@ -90,7 +95,11 @@ final class CLIUtil
         $date = DateUtil::format($dateTimeObject, DateUtil::DATE_FORMAT);
         $time = DateUtil::format($dateTimeObject, DateUtil::TIME_FORMAT);
 
-        return \str_replace('%time%', $time, \str_replace('%date%', $date, CLIWCF::getLanguage()->get('wcf.date.dateTimeFormat')));
+        return \str_replace(
+            '%time%',
+            $time,
+            \str_replace('%date%', $date, CLIWCF::getLanguage()->get('wcf.date.dateTimeFormat'))
+        );
     }
 
     /**

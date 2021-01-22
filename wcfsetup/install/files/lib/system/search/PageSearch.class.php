@@ -95,10 +95,14 @@ class PageSearch extends AbstractSearchableObjectType
     public function getConditions(?IForm $form = null)
     {
         $conditionBuilder = new PreparedStatementConditionBuilder();
-        $conditionBuilder->add('wcf' . WCF_N . '_page.pageType IN (?) AND wcf' . WCF_N . '_page.isDisabled = ?', [['text', 'html'], 0]);
+        $conditionBuilder->add(
+            'wcf' . WCF_N . '_page.pageType IN (?) AND wcf' . WCF_N . '_page.isDisabled = ?',
+            [['text', 'html'], 0]
+        );
 
         // acl
-        $objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.acl.simple', 'com.woltlab.wcf.page');
+        $objectTypeID = ObjectTypeCache::getInstance()
+            ->getObjectTypeIDByName('com.woltlab.wcf.acl.simple', 'com.woltlab.wcf.page');
         $conditionBuilder->add('(
             wcf' . WCF_N . '_page_content.pageID NOT IN (
                 SELECT  objectID
@@ -121,7 +125,14 @@ class PageSearch extends AbstractSearchableObjectType
                 WHERE   objectTypeID = ?
                     AND userID = ?
             )
-        )', [$objectTypeID, $objectTypeID, $objectTypeID, WCF::getUser()->getGroupIDs(), $objectTypeID, WCF::getUser()->userID]);
+        )', [
+            $objectTypeID,
+            $objectTypeID,
+            $objectTypeID,
+            WCF::getUser()->getGroupIDs(),
+            $objectTypeID,
+            WCF::getUser()->userID,
+        ]);
 
         return $conditionBuilder;
     }

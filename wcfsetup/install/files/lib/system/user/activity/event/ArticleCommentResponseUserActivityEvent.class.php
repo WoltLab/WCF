@@ -30,7 +30,10 @@ class ArticleCommentResponseUserActivityEvent extends SingletonFactory implement
         $articles = $articleContentToArticle = [];
         if (!empty($this->commentObjectIDs)) {
             $articleList = new ViewableArticleList();
-            $articleList->getConditionBuilder()->add("article.articleID IN (SELECT articleID FROM wcf" . WCF_N . "_article_content WHERE articleContentID IN (?))", [$this->commentObjectIDs]);
+            $articleList->getConditionBuilder()->add(
+                "article.articleID IN (SELECT articleID FROM wcf" . WCF_N . "_article_content WHERE articleContentID IN (?))",
+                [$this->commentObjectIDs]
+            );
             $articleList->readObjects();
             foreach ($articleList as $article) {
                 $articles[$article->articleID] = $article;
@@ -44,7 +47,10 @@ class ArticleCommentResponseUserActivityEvent extends SingletonFactory implement
             if (isset($this->responses[$event->objectID])) {
                 $response = $this->responses[$event->objectID];
                 $comment = $this->comments[$response->commentID];
-                if (isset($articleContentToArticle[$comment->objectID]) && isset($this->commentAuthors[$comment->userID])) {
+                if (
+                    isset($articleContentToArticle[$comment->objectID])
+                    && isset($this->commentAuthors[$comment->userID])
+                ) {
                     $article = $articles[$articleContentToArticle[$comment->objectID]];
 
                     // check permissions
@@ -54,12 +60,15 @@ class ArticleCommentResponseUserActivityEvent extends SingletonFactory implement
                     $event->setIsAccessible();
 
                     // title
-                    $text = WCF::getLanguage()->getDynamicVariable('wcf.article.recentActivity.articleCommentResponse', [
-                        'commentAuthor' => $this->commentAuthors[$comment->userID],
-                        'commentID' => $comment->commentID,
-                        'responseID' => $response->responseID,
-                        'article' => $article,
-                    ]);
+                    $text = WCF::getLanguage()->getDynamicVariable(
+                        'wcf.article.recentActivity.articleCommentResponse',
+                        [
+                            'commentAuthor' => $this->commentAuthors[$comment->userID],
+                            'commentID' => $comment->commentID,
+                            'responseID' => $response->responseID,
+                            'article' => $article,
+                        ]
+                    );
                     $event->setTitle($text);
 
                     // description

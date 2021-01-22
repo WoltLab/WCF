@@ -19,7 +19,8 @@ use wcf\system\user\notification\object\CommentUserNotificationObject;
  *
  * @method  CommentUserNotificationObject   getUserNotificationObject()
  */
-class ArticleCommentUserNotificationEvent extends AbstractSharedUserNotificationEvent implements ITestableUserNotificationEvent
+class ArticleCommentUserNotificationEvent extends AbstractSharedUserNotificationEvent implements
+    ITestableUserNotificationEvent
 {
     use TTestableCommentUserNotificationEvent;
     use TTestableArticleUserNotificationEvent;
@@ -70,7 +71,8 @@ class ArticleCommentUserNotificationEvent extends AbstractSharedUserNotification
                 'author' => $this->author,
                 'authors' => \array_values($authors),
                 'commentID' => $this->getUserNotificationObject()->commentID,
-                'article' => ViewableArticleContentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID),
+                'article' => ViewableArticleContentRuntimeCache::getInstance()
+                    ->getObject($this->getUserNotificationObject()->objectID),
                 'count' => $count,
                 'others' => $count - 1,
                 'guestTimesTriggered' => $this->notification->guestTimesTriggered,
@@ -80,7 +82,8 @@ class ArticleCommentUserNotificationEvent extends AbstractSharedUserNotification
         return $this->getLanguage()->getDynamicVariable('wcf.user.notification.articleComment.message', [
             'author' => $this->author,
             'commentID' => $this->getUserNotificationObject()->commentID,
-            'article' => ViewableArticleContentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID),
+            'article' => ViewableArticleContentRuntimeCache::getInstance()
+                ->getObject($this->getUserNotificationObject()->objectID),
         ]);
     }
 

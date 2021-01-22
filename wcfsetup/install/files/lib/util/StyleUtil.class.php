@@ -41,7 +41,11 @@ final class StyleUtil
         $contents = \str_replace('wcf-left:', 'right:', $contents);
 
         // border-width
-        $contents = \preg_replace('/border-width:\s*([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)/', 'border-width:\\1 \\4 \\3 \\2', $contents);
+        $contents = \preg_replace(
+            '/border-width:\s*([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)/',
+            'border-width:\\1 \\4 \\3 \\2',
+            $contents
+        );
 
         // (border-left-width, border-right-width)
         $contents = \str_replace('border-left-width:', 'wcf-border-left-width:', $contents);
@@ -49,7 +53,11 @@ final class StyleUtil
         $contents = \str_replace('wcf-border-left-width:', 'border-right-width:', $contents);
 
         // border-style
-        $contents = \preg_replace('/border-style:\s*([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)/', 'border-style:\\1 \\4 \\3 \\2', $contents);
+        $contents = \preg_replace(
+            '/border-style:\s*([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)/',
+            'border-style:\\1 \\4 \\3 \\2',
+            $contents
+        );
 
         // (border-left-style, border-right-style)
         $contents = \str_replace('border-left-style:', 'wcf-border-left-style:', $contents);
@@ -66,9 +74,13 @@ final class StyleUtil
         $contents = \str_replace('wcf-border-left-color:', 'border-right-color:', $contents);
 
         // box-shadow
-        $contents = \preg_replace_callback('~box-shadow:\s*(?P<inset>inset)?\s*(?P<negate>-)?(?P<number>\d+)~', static function ($matches) {
-            return 'box-shadow: ' . $matches['inset'] . ' ' . ($matches['negate'] ? '' : '-') . $matches['number'];
-        }, $contents);
+        $contents = \preg_replace_callback(
+            '~box-shadow:\s*(?P<inset>inset)?\s*(?P<negate>-)?(?P<number>\d+)~',
+            static function ($matches) {
+                return 'box-shadow: ' . $matches['inset'] . ' ' . ($matches['negate'] ? '' : '-') . $matches['number'];
+            },
+            $contents
+        );
 
         // clear
         $contents = \preg_replace('/clear:\s*left/', 'wcf-clear:left', $contents);
@@ -81,10 +93,18 @@ final class StyleUtil
         $contents = \str_replace('wcf-float:left', 'float:right', $contents);
 
         // margin
-        $contents = \preg_replace('/margin:\s*([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)/', 'margin:\\1 \\4 \\3 \\2', $contents);
+        $contents = \preg_replace(
+            '/margin:\s*([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)/',
+            'margin:\\1 \\4 \\3 \\2',
+            $contents
+        );
 
         // padding
-        $contents = \preg_replace('/padding:\s*([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)/', 'padding:\\1 \\4 \\3 \\2', $contents);
+        $contents = \preg_replace(
+            '/padding:\s*([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)/',
+            'padding:\\1 \\4 \\3 \\2',
+            $contents
+        );
 
         // text-align
         $contents = \preg_replace('/text-align:\s*left/', 'wcf-text-align:left', $contents);
@@ -95,7 +115,11 @@ final class StyleUtil
         $contents = \preg_replace('/text-shadow:\s*(\d)/', 'text-shadow:-\\1', $contents);
 
         // border-radius
-        $contents = \preg_replace('/border-radius:\s*([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)/', 'border-radius:\\2 \\1 \\4 \\3', $contents);
+        $contents = \preg_replace(
+            '/border-radius:\s*([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)/',
+            'border-radius:\\2 \\1 \\4 \\3',
+            $contents
+        );
         $contents = \str_replace('border-top-left-radius:', 'wcf-border-top-left-radius:', $contents);
         $contents = \str_replace('border-top-right-radius:', 'border-top-left-radius:', $contents);
         $contents = \str_replace('wcf-border-top-left-radius:', 'border-top-right-radius:', $contents);
@@ -104,9 +128,13 @@ final class StyleUtil
         $contents = \str_replace('wcf-border-bottom-left-radius:', 'border-bottom-right-radius:', $contents);
 
         // transform: translateX
-        $contents = \preg_replace_callback('/transform:\s*translateX\((?P<negate>-)?(?P<number>\d+)(?P<unit>[^\s\)]+)\)/', static function ($matches) {
-            return 'transform: translateX(' . ($matches['negate'] ? '' : '-') . $matches['number'] . $matches['unit'] . ')';
-        }, $contents);
+        $contents = \preg_replace_callback(
+            '/transform:\s*translateX\((?P<negate>-)?(?P<number>\d+)(?P<unit>[^\s\)]+)\)/',
+            static function ($matches) {
+                return 'transform: translateX(' . ($matches['negate'] ? '' : '-') . $matches['number'] . $matches['unit'] . ')';
+            },
+            $contents
+        );
 
         return $contents;
     }

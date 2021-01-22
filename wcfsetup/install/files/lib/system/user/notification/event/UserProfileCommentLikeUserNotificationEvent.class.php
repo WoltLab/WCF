@@ -18,7 +18,8 @@ use wcf\system\WCF;
  *
  * @method  LikeUserNotificationObject  getUserNotificationObject()
  */
-class UserProfileCommentLikeUserNotificationEvent extends AbstractSharedUserNotificationEvent implements ITestableUserNotificationEvent
+class UserProfileCommentLikeUserNotificationEvent extends AbstractSharedUserNotificationEvent implements
+    ITestableUserNotificationEvent
 {
     use TTestableCommentLikeUserNotificationEvent;
     use TReactionUserNotificationEvent;

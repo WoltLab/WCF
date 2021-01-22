@@ -99,7 +99,11 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker
         }
 
         // update activity points
-        UserActivityPointHandler::getInstance()->fireEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $itemsToUser, false);
+        UserActivityPointHandler::getInstance()->fireEvents(
+            'com.woltlab.wcf.like.activityPointEvent.receivedLikes',
+            $itemsToUser,
+            false
+        );
 
         $rows = [];
         foreach ($likeObjectData as $objectTypeID => $objects) {

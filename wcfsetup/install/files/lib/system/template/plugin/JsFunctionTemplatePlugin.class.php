@@ -66,7 +66,11 @@ class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin
         }
 
         $isJquery = false;
-        if (isset($tagArgs['lib']) && ($tagArgs['lib'] === 'jquery' || $tagArgs['lib'] === 'jquery-ui') && empty($tagArgs['file'])) {
+        if (
+            isset($tagArgs['lib'])
+            && ($tagArgs['lib'] === 'jquery' || $tagArgs['lib'] === 'jquery-ui')
+            && empty($tagArgs['file'])
+        ) {
             $tagArgs['bundle'] = '';
             $isJquery = true;
         }
@@ -93,7 +97,12 @@ class JsFunctionTemplatePlugin implements IFunctionTemplatePlugin
 
         $this->includedFiles[$src] = true;
         if (!ENABLE_DEBUG_MODE) {
-            if (\defined('VISITOR_USE_TINY_BUILD') && VISITOR_USE_TINY_BUILD && !WCF::getUser()->userID && !empty($tagArgs['hasTiny'])) {
+            if (
+                \defined('VISITOR_USE_TINY_BUILD')
+                && VISITOR_USE_TINY_BUILD
+                && !WCF::getUser()->userID
+                && !empty($tagArgs['hasTiny'])
+            ) {
                 $src .= '.tiny';
             }
 

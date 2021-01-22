@@ -24,7 +24,8 @@ use wcf\system\WCF;
  *
  * @method  CommentUserNotificationObject   getUserNotificationObject()
  */
-class ModerationQueueCommentUserNotificationEvent extends AbstractUserNotificationEvent implements ITestableUserNotificationEvent
+class ModerationQueueCommentUserNotificationEvent extends AbstractUserNotificationEvent implements
+    ITestableUserNotificationEvent
 {
     use TTestableCommentUserNotificationEvent;
     use TTestableModerationQueueUserNotificationEvent;
@@ -140,16 +141,24 @@ class ModerationQueueCommentUserNotificationEvent extends AbstractUserNotificati
     /**
      * @inheritDoc
      */
-    public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = [])
-    {
+    public function setObject(
+        UserNotification $notification,
+        IUserNotificationObject $object,
+        UserProfile $author,
+        array $additionalData = []
+    ) {
         parent::setObject($notification, $object, $author, $additionalData);
 
         // if the active user has no access, $this->moderationQueue is null
-        $this->moderationQueue = ViewableModerationQueue::getViewableModerationQueue($this->getUserNotificationObject()->objectID);
+        $this->moderationQueue = ViewableModerationQueue::getViewableModerationQueue(
+            $this->getUserNotificationObject()->objectID
+        );
 
         if ($this->moderationQueue) {
             /** @var IModerationQueueHandler $moderationHandler */
-            $moderationHandler = ObjectTypeCache::getInstance()->getObjectType($this->moderationQueue->objectTypeID)->getProcessor();
+            $moderationHandler = ObjectTypeCache::getInstance()
+                ->getObjectType($this->moderationQueue->objectTypeID)
+                ->getProcessor();
             $this->languageItemPrefix = $moderationHandler->getCommentNotificationLanguageItemPrefix();
         }
     }

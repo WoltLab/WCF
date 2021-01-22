@@ -18,7 +18,8 @@ use wcf\system\user\notification\object\UserFollowUserNotificationObject;
  *
  * @method  UserFollowUserNotificationObject    getUserNotificationObject()
  */
-class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationEvent implements ITestableUserNotificationEvent
+class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationEvent implements
+    ITestableUserNotificationEvent
 {
     use TTestableUserNotificationEvent;
 
@@ -34,7 +35,10 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
     {
         $count = \count($this->getAuthors());
         if ($count > 1) {
-            return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.title.stacked', ['count' => $count]);
+            return $this->getLanguage()->getDynamicVariable(
+                'wcf.user.notification.follow.title.stacked',
+                ['count' => $count]
+            );
         }
 
         return $this->getLanguage()->get('wcf.user.notification.follow.title');
@@ -57,7 +61,10 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
             ]);
         }
 
-        return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.message', ['author' => $this->author]);
+        return $this->getLanguage()->getDynamicVariable(
+            'wcf.user.notification.follow.message',
+            ['author' => $this->author]
+        );
     }
 
     /**

@@ -154,7 +154,8 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
         }
 
         // add guest user
-        $data = UserGroupPermissionCacheBuilder::getInstance()->getData(UserGroup::getGroupIDsByType([UserGroup::GUESTS, UserGroup::EVERYONE]));
+        $data = UserGroupPermissionCacheBuilder::getInstance()
+            ->getData(UserGroup::getGroupIDsByType([UserGroup::GUESTS, UserGroup::EVERYONE]));
         $userPermissions[0] = [];
         foreach ($permissions as $permission) {
             $userPermissions[0][$permission] = (isset($data[$permission])) ? $data[$permission] : false;

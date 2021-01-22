@@ -15,7 +15,8 @@ use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
  * @package WoltLabSuite\Core\System\User\Notification\Object\Type
  * @since       5.2
  */
-class PageCommentResponseUserNotificationObjectType extends AbstractUserNotificationObjectType implements IMultiRecipientCommentUserNotificationObjectType
+class PageCommentResponseUserNotificationObjectType extends AbstractUserNotificationObjectType implements
+    IMultiRecipientCommentUserNotificationObjectType
 {
     use TMultiRecipientPageCommentUserNotificationObjectType;
 

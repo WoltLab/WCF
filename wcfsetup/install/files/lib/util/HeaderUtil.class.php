@@ -118,22 +118,30 @@ final class HeaderUtil
 
         // move script tags to the bottom of the page
         $javascript = [];
-        self::$output = \preg_replace_callback('~(?P<conditionBefore><!--\[IF [^<]+\s*)?<script data-relocate="true"(?P<script>.*?</script>\s*)(?P<conditionAfter><!\[ENDIF]-->\s*)?~s', static function ($matches) use (&$javascript) {
-            $match = '';
-            if (isset($matches['conditionBefore'])) {
-                $match .= $matches['conditionBefore'];
-            }
-            $match .= '<script' . $matches['script'];
-            if (isset($matches['conditionAfter'])) {
-                $match .= $matches['conditionAfter'];
-            }
+        self::$output = \preg_replace_callback(
+            '~(?P<conditionBefore><!--\[IF [^<]+\s*)?<script data-relocate="true"(?P<script>.*?</script>\s*)(?P<conditionAfter><!\[ENDIF]-->\s*)?~s',
+            static function ($matches) use (&$javascript) {
+                $match = '';
+                if (isset($matches['conditionBefore'])) {
+                    $match .= $matches['conditionBefore'];
+                }
+                $match .= '<script' . $matches['script'];
+                if (isset($matches['conditionAfter'])) {
+                    $match .= $matches['conditionAfter'];
+                }
 
-            $javascript[] = $match;
+                $javascript[] = $match;
 
-            return '';
-        }, self::$output);
+                return '';
+            },
+            self::$output
+        );
 
-        self::$output = \str_replace('<!-- JAVASCRIPT_RELOCATE_POSITION -->', \implode("\n", $javascript), self::$output);
+        self::$output = \str_replace(
+            '<!-- JAVASCRIPT_RELOCATE_POSITION -->',
+            \implode("\n", $javascript),
+            self::$output
+        );
 
         // 3rd party plugins may differ the actual output before it is sent to the browser
         // please be aware, that $eventObj is not available here due to this being a static

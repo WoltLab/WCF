@@ -46,7 +46,8 @@ class UserActivityPointItemsRebuildDataWorker extends AbstractRebuildDataWorker
         }
 
         // update activity points for positive reactions
-        $reactionObjectType = UserActivityPointHandler::getInstance()->getObjectTypeByName('com.woltlab.wcf.like.activityPointEvent.receivedLikes');
+        $reactionObjectType = UserActivityPointHandler::getInstance()
+            ->getObjectTypeByName('com.woltlab.wcf.like.activityPointEvent.receivedLikes');
 
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add('user_activity_point.objectTypeID = ?', [$reactionObjectType->objectTypeID]);

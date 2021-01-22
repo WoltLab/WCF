@@ -81,7 +81,10 @@ final class ExceptionLogUtil
                 $item['information'] = null;
             } else {
                 try {
-                    $item['information'] = \unserialize(\base64_decode($item['information']), ['allowed_classes' => false]);
+                    $item['information'] = \unserialize(
+                        \base64_decode($item['information']),
+                        ['allowed_classes' => false]
+                    );
                 } catch (SystemException $e) {
                     throw new \InvalidArgumentException('The additional information section of the given entry is malformed.', 0, $e);
                 }

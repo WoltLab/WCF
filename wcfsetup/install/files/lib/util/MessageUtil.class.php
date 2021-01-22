@@ -56,7 +56,10 @@ class MessageUtil
         $userIDs = [];
         $groups = [];
 
-        $elements = $htmlInputProcessor->getHtmlInputNodeProcessor()->getDocument()->getElementsByTagName('woltlab-metacode');
+        $elements = $htmlInputProcessor
+            ->getHtmlInputNodeProcessor()
+            ->getDocument()
+            ->getElementsByTagName('woltlab-metacode');
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
             $type = $element->getAttribute('data-name');
@@ -120,7 +123,10 @@ class MessageUtil
         $usernames = [];
         $groups = [];
 
-        $elements = $htmlInputProcessor->getHtmlInputNodeProcessor()->getDocument()->getElementsByTagName('woltlab-metacode');
+        $elements = $htmlInputProcessor
+            ->getHtmlInputNodeProcessor()
+            ->getDocument()
+            ->getElementsByTagName('woltlab-metacode');
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
             $type = $element->getAttribute('data-name');
@@ -191,7 +197,10 @@ class MessageUtil
 
         $usernames = [];
 
-        $elements = $htmlInputProcessor->getHtmlInputNodeProcessor()->getDocument()->getElementsByTagName('woltlab-quote');
+        $elements = $htmlInputProcessor
+            ->getHtmlInputNodeProcessor()
+            ->getDocument()
+            ->getElementsByTagName('woltlab-quote');
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
             $username = $element->getAttribute('data-author');
@@ -220,7 +229,10 @@ class MessageUtil
      */
     public static function truncateFormattedMessage($message, $maxLength = 1000)
     {
-        $message = Regex::compile('<!-- begin:parser_nonessential -->.*?<!-- end:parser_nonessential -->', Regex::DOT_ALL)->replace($message, '');
+        $message = Regex::compile(
+            '<!-- begin:parser_nonessential -->.*?<!-- end:parser_nonessential -->',
+            Regex::DOT_ALL
+        )->replace($message, '');
 
         return StringUtil::truncateHTML($message, $maxLength);
     }

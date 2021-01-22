@@ -49,7 +49,12 @@ class ReactionUserContentProvider extends AbstractDatabaseUserContentProvider
             $likeableObject = $processor->getObjectByID($like->objectID);
             $likeableObject->setObjectType($objectType);
 
-            ReactionHandler::getInstance()->revertReact($like, $likeableObject, LikeObject::getLikeObject($objectType->objectTypeID, $like->objectID), UserRuntimeCache::getInstance()->getObject($like->userID));
+            ReactionHandler::getInstance()->revertReact(
+                $like,
+                $likeableObject,
+                LikeObject::getLikeObject($objectType->objectTypeID, $like->objectID),
+                UserRuntimeCache::getInstance()->getObject($like->userID)
+            );
         }
     }
 }

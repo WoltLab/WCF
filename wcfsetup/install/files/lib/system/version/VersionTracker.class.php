@@ -63,7 +63,8 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction
     protected function init()
     {
         // get available object types
-        $this->availableObjectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.versionTracker.objectType');
+        $this->availableObjectTypes = ObjectTypeCache::getInstance()
+            ->getObjectTypes('com.woltlab.wcf.versionTracker.objectType');
     }
 
     /**

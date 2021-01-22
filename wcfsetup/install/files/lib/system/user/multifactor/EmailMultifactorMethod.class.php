@@ -191,8 +191,15 @@ final class EmailMultifactorMethod implements IMultifactorMethod
                 ->autoFocus()
                 ->required()
                 ->addValidator(new FormFieldValidator('code', function (TextFormField $field) use ($codes, $setup) {
-                    FloodControl::getInstance()->registerUserContent('com.woltlab.wcf.multifactor.email', $setup->getId());
-                    $attempts = FloodControl::getInstance()->countUserContent('com.woltlab.wcf.multifactor.email', $setup->getId(), new \DateInterval('PT10M'));
+                    FloodControl::getInstance()->registerUserContent(
+                        'com.woltlab.wcf.multifactor.email',
+                        $setup->getId()
+                    );
+                    $attempts = FloodControl::getInstance()->countUserContent(
+                        'com.woltlab.wcf.multifactor.email',
+                        $setup->getId(),
+                        new \DateInterval('PT10M')
+                    );
                     if ($attempts['count'] > self::USER_ATTEMPTS_PER_TEN_MINUTES) {
                         $field->value('');
                         $field->addValidationError(new FormFieldValidationError(

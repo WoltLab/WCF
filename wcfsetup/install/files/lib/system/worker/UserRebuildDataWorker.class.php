@@ -137,16 +137,27 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
             foreach ($users as $user) {
                 $userIDs[] = $user->userID;
             }
-            $userPermissions = $this->getBulkUserPermissions($userIDs, ['user.message.disallowedBBCodes', 'user.signature.disallowedBBCodes']);
+            $userPermissions = $this->getBulkUserPermissions(
+                $userIDs,
+                ['user.message.disallowedBBCodes', 'user.signature.disallowedBBCodes']
+            );
 
             $htmlInputProcessor = new HtmlInputProcessor();
             WCF::getDB()->beginTransaction();
             /** @var UserEditor $user */
             foreach ($users as $user) {
-                BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(',', $this->getBulkUserPermissionValue($userPermissions, $user->userID, 'user.signature.disallowedBBCodes')));
+                BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
+                    ',',
+                    $this->getBulkUserPermissionValue($userPermissions, $user->userID, 'user.signature.disallowedBBCodes')
+                ));
 
                 if (!$user->signatureEnableHtml) {
-                    $htmlInputProcessor->process($user->signature, 'com.woltlab.wcf.user.signature', $user->userID, true);
+                    $htmlInputProcessor->process(
+                        $user->signature,
+                        'com.woltlab.wcf.user.signature',
+                        $user->userID,
+                        true
+                    );
 
                     $user->update([
                         'signature' => $htmlInputProcessor->getHtml(),
@@ -158,10 +169,18 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
                 }
 
                 if ($user->aboutMe) {
-                    BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(',', $this->getBulkUserPermissionValue($userPermissions, $user->userID, 'user.message.disallowedBBCodes')));
+                    BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
+                        ',',
+                        $this->getBulkUserPermissionValue($userPermissions, $user->userID, 'user.message.disallowedBBCodes')
+                    ));
 
                     if (!$user->signatureEnableHtml) {
-                        $htmlInputProcessor->process($user->aboutMe, 'com.woltlab.wcf.user.aboutMe', $user->userID, true);
+                        $htmlInputProcessor->process(
+                            $user->aboutMe,
+                            'com.woltlab.wcf.user.aboutMe',
+                            $user->userID,
+                            true
+                        );
                     } else {
                         $htmlInputProcessor->reprocess($user->aboutMe, 'com.woltlab.wcf.user.aboutMe', $user->userID);
                     }
@@ -183,7 +202,10 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
             // update old/imported avatars
             $avatarList = new UserAvatarList();
             $avatarList->getConditionBuilder()->add('user_avatar.userID IN (?)', [$userIDs]);
-            $avatarList->getConditionBuilder()->add('(user_avatar.width <> ? OR user_avatar.height <> ?)', [UserAvatar::AVATAR_SIZE, UserAvatar::AVATAR_SIZE]);
+            $avatarList->getConditionBuilder()->add(
+                '(user_avatar.width <> ? OR user_avatar.height <> ?)',
+                [UserAvatar::AVATAR_SIZE, UserAvatar::AVATAR_SIZE]
+            );
             $avatarList->readObjects();
             foreach ($avatarList as $avatar) {
                 $editor = new UserAvatarEditor($avatar);

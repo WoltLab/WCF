@@ -68,7 +68,8 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker
         }
         $articles = $this->objectList->getObjects();
 
-        $commentObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.comment.commentableContent', 'com.woltlab.wcf.articleComment');
+        $commentObjectType = ObjectTypeCache::getInstance()
+            ->getObjectTypeByName('com.woltlab.wcf.comment.commentableContent', 'com.woltlab.wcf.articleComment');
         $sql = "SELECT  COUNT(*) AS comments, SUM(responses) AS responses
                 FROM    wcf" . WCF_N . "_comment
                 WHERE   objectTypeID = ?
@@ -78,7 +79,10 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker
 
         // update article content
         $articleContentList = new ArticleContentList();
-        $articleContentList->getConditionBuilder()->add('article_content.articleID IN (?)', [$this->objectList->getObjectIDs()]);
+        $articleContentList->getConditionBuilder()->add(
+            'article_content.articleID IN (?)',
+            [$this->objectList->getObjectIDs()]
+        );
         $articleContentList->readObjects();
         foreach ($articleContentList as $articleContent) {
             // count comments
@@ -103,7 +107,11 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker
             );
 
             // update embedded objects
-            $this->getHtmlInputProcessor()->processEmbeddedContent($articleContent->content, 'com.woltlab.wcf.article.content', $articleContent->articleContentID);
+            $this->getHtmlInputProcessor()->processEmbeddedContent(
+                $articleContent->content,
+                'com.woltlab.wcf.article.content',
+                $articleContent->articleContentID
+            );
 
             $hasEmbeddedObjects = 0;
             if (MessageEmbeddedObjectManager::getInstance()->registerObjects($this->getHtmlInputProcessor())) {
@@ -118,7 +126,10 @@ class ArticleRebuildDataWorker extends AbstractRebuildDataWorker
 
         // fetch cumulative likes
         $conditions = new PreparedStatementConditionBuilder();
-        $conditions->add("objectTypeID = ?", [ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.like.likeableObject', 'com.woltlab.wcf.likeableArticle')]);
+        $conditions->add("objectTypeID = ?", [
+            ObjectTypeCache::getInstance()
+                ->getObjectTypeIDByName('com.woltlab.wcf.like.likeableObject', 'com.woltlab.wcf.likeableArticle'),
+        ]);
         $conditions->add("objectID IN (?)", [$this->objectList->getObjectIDs()]);
 
         $sql = "SELECT  objectID, cumulativeLikes

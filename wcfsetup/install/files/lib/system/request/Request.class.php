@@ -168,7 +168,10 @@ class Request
      */
     public function isAvailableDuringOfflineMode()
     {
-        if (\defined($this->className . '::AVAILABLE_DURING_OFFLINE_MODE') && \constant($this->className . '::AVAILABLE_DURING_OFFLINE_MODE')) {
+        if (
+            \defined($this->className . '::AVAILABLE_DURING_OFFLINE_MODE')
+            && \constant($this->className . '::AVAILABLE_DURING_OFFLINE_MODE')
+        ) {
             return true;
         }
 

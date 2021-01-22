@@ -27,17 +27,21 @@ class JslangPrefilterTemplatePlugin implements IPrefilterTemplatePlugin
     {
         $ldq = \preg_quote($compiler->getLeftDelimiter(), '~');
         $rdq = \preg_quote($compiler->getRightDelimiter(), '~');
-        $sourceContent = \preg_replace_callback("~{$ldq}jslang{$rdq}([\\w\\.]+){$ldq}/jslang{$rdq}~", static function ($match) {
-            $value = WCF::getLanguage()->get($match[1]);
-            if (\strpos($value, '{') !== false) {
-                $variableName = '__jslang_capture_' . \substr(StringUtil::getRandomID(), 0, 8);
-                $value = "{capture assign='" . $variableName . "'}" . $value . "{/capture}{@$" . $variableName . "|encodeJS}";
-            } else {
-                $value = StringUtil::encodeJS($value);
-            }
+        $sourceContent = \preg_replace_callback(
+            "~{$ldq}jslang{$rdq}([\\w\\.]+){$ldq}/jslang{$rdq}~",
+            static function ($match) {
+                $value = WCF::getLanguage()->get($match[1]);
+                if (\strpos($value, '{') !== false) {
+                    $variableName = '__jslang_capture_' . \substr(StringUtil::getRandomID(), 0, 8);
+                    $value = "{capture assign='" . $variableName . "'}" . $value . "{/capture}{@$" . $variableName . "|encodeJS}";
+                } else {
+                    $value = StringUtil::encodeJS($value);
+                }
 
-            return $value;
-        }, $sourceContent);
+                return $value;
+            },
+            $sourceContent
+        );
 
         return $sourceContent;
     }

@@ -134,11 +134,16 @@ final class BackupMultifactorMethod implements IMultifactorMethod
                         ->buttonLabel('wcf.user.security.multifactor.backup.regenerateCodes')
                         ->objectProperty('action')
                         ->value('regenerateCodes')
-                        ->addValidator(new FormFieldValidator('regenerateCodes', static function (ButtonFormField $field) {
-                            if ($field->getValue() === null) {
-                                $field->addValidationError(new FormFieldValidationError('unreachable', 'unreachable'));
+                        ->addValidator(new FormFieldValidator(
+                            'regenerateCodes',
+                            static function (ButtonFormField $field) {
+                                if ($field->getValue() === null) {
+                                    $field->addValidationError(
+                                        new FormFieldValidationError('unreachable', 'unreachable')
+                                    );
+                                }
                             }
-                        })),
+                        )),
                 ]);
             $form->appendChild($regenerateContainer);
         } else {
@@ -151,11 +156,16 @@ final class BackupMultifactorMethod implements IMultifactorMethod
                         ->buttonLabel('wcf.user.security.multifactor.backup.generateCodes')
                         ->objectProperty('action')
                         ->value('generateCodes')
-                        ->addValidator(new FormFieldValidator('generateCodes', static function (ButtonFormField $field) {
-                            if ($field->getValue() === null) {
-                                $field->addValidationError(new FormFieldValidationError('unreachable', 'unreachable'));
+                        ->addValidator(new FormFieldValidator(
+                            'generateCodes',
+                            static function (ButtonFormField $field) {
+                                if ($field->getValue() === null) {
+                                    $field->addValidationError(
+                                        new FormFieldValidationError('unreachable', 'unreachable')
+                                    );
+                                }
                             }
-                        })),
+                        )),
                 ]);
             $form->appendChild($generateContainer);
         }
@@ -261,30 +271,40 @@ final class BackupMultifactorMethod implements IMultifactorMethod
                 ->description('wcf.user.security.multifactor.backup.code.description')
                 ->autoFocus()
                 ->required()
-                ->addValidator(new FormFieldValidator('code', function (TextFormField $field) use ($codes, $setup) {
-                    FloodControl::getInstance()->registerUserContent('com.woltlab.wcf.multifactor.backup', $setup->getId());
-                    $attempts = FloodControl::getInstance()->countUserContent('com.woltlab.wcf.multifactor.backup', $setup->getId(), new \DateInterval('PT1H'));
-                    if ($attempts['count'] > self::USER_ATTEMPTS_PER_HOUR) {
-                        $field->value('');
-                        $field->addValidationError(new FormFieldValidationError(
-                            'flood',
-                            'wcf.user.security.multifactor.backup.error.flood',
-                            $attempts
-                        ));
+                ->addValidator(new FormFieldValidator(
+                    'code',
+                    function (TextFormField $field) use ($codes, $setup) {
+                        FloodControl::getInstance()->registerUserContent(
+                            'com.woltlab.wcf.multifactor.backup',
+                            $setup->getId()
+                        );
+                        $attempts = FloodControl::getInstance()->countUserContent(
+                            'com.woltlab.wcf.multifactor.backup',
+                            $setup->getId(),
+                            new \DateInterval('PT1H')
+                        );
+                        if ($attempts['count'] > self::USER_ATTEMPTS_PER_HOUR) {
+                            $field->value('');
+                            $field->addValidationError(new FormFieldValidationError(
+                                'flood',
+                                'wcf.user.security.multifactor.backup.error.flood',
+                                $attempts
+                            ));
 
-                        return;
+                            return;
+                        }
+
+                        $userCode = \preg_replace('/\s+/', '', $field->getValue());
+
+                        if ($this->findValidCode($userCode, $codes) === null) {
+                            $field->value('');
+                            $field->addValidationError(new FormFieldValidationError(
+                                'invalidCode',
+                                'wcf.user.security.multifactor.error.invalidCode'
+                            ));
+                        }
                     }
-
-                    $userCode = \preg_replace('/\s+/', '', $field->getValue());
-
-                    if ($this->findValidCode($userCode, $codes) === null) {
-                        $field->value('');
-                        $field->addValidationError(new FormFieldValidationError(
-                            'invalidCode',
-                            'wcf.user.security.multifactor.error.invalidCode'
-                        ));
-                    }
-                })),
+                )),
         ]);
     }
 
@@ -345,25 +365,34 @@ final class BackupMultifactorMethod implements IMultifactorMethod
         $email->setRecipient($setup->getUser());
 
         $email->setSubject(
-            WCF::getLanguage()->getDynamicVariable('wcf.user.security.multifactor.backup.authenticationEmail.subject', [
-                'remaining' => $remaining,
-                'usedCode' => $usedCode,
-                'setup' => $setup,
-            ])
+            WCF::getLanguage()->getDynamicVariable(
+                'wcf.user.security.multifactor.backup.authenticationEmail.subject',
+                [
+                    'remaining' => $remaining,
+                    'usedCode' => $usedCode,
+                    'setup' => $setup,
+                ]
+            )
         );
         $email->setHtmlMessage(
-            WCF::getLanguage()->getDynamicVariable('wcf.user.security.multifactor.backup.authenticationEmail.body.html', [
-                'remaining' => $remaining,
-                'usedCode' => $usedCode,
-                'setup' => $setup,
-            ])
+            WCF::getLanguage()->getDynamicVariable(
+                'wcf.user.security.multifactor.backup.authenticationEmail.body.html',
+                [
+                    'remaining' => $remaining,
+                    'usedCode' => $usedCode,
+                    'setup' => $setup,
+                ]
+            )
         );
         $email->setMessage(
-            WCF::getLanguage()->getDynamicVariable('wcf.user.security.multifactor.backup.authenticationEmail.body.plain', [
-                'remaining' => $remaining,
-                'usedCode' => $usedCode,
-                'setup' => $setup,
-            ])
+            WCF::getLanguage()->getDynamicVariable(
+                'wcf.user.security.multifactor.backup.authenticationEmail.body.plain',
+                [
+                    'remaining' => $remaining,
+                    'usedCode' => $usedCode,
+                    'setup' => $setup,
+                ]
+            )
         );
 
         $email->send();

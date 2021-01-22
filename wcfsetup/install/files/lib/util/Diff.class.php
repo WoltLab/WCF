@@ -88,10 +88,18 @@ class Diff
         // skip all items at the beginning and the end that are the same
         // this reduces the size of the table and improves performance
         $offsetStart = $offsetEnd = 0;
-        while ($offsetStart < $this->sizeA && $offsetStart < $this->sizeB && $this->a[$offsetStart] === $this->b[$offsetStart]) {
+        while (
+            $offsetStart < $this->sizeA
+            && $offsetStart < $this->sizeB
+            && $this->a[$offsetStart] === $this->b[$offsetStart]
+        ) {
             $offsetStart++;
         }
-        while ($offsetEnd < ($this->sizeA - $offsetStart) && $offsetEnd < ($this->sizeB - $offsetStart) && $this->a[$this->sizeA - 1 - $offsetEnd] === $this->b[$this->sizeB - 1 - $offsetEnd]) {
+        while (
+            $offsetEnd < ($this->sizeA - $offsetStart)
+            && $offsetEnd < ($this->sizeB - $offsetStart)
+            && $this->a[$this->sizeA - 1 - $offsetEnd] === $this->b[$this->sizeB - 1 - $offsetEnd]
+        ) {
             $offsetEnd++;
         }
 

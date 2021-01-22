@@ -19,7 +19,8 @@ use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
  *
  * @method  CommentResponseUserNotificationObject   getUserNotificationObject()
  */
-class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractSharedUserNotificationEvent implements ITestableUserNotificationEvent
+class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractSharedUserNotificationEvent implements
+    ITestableUserNotificationEvent
 {
     use TTestableCommentResponseUserNotificationEvent;
 
@@ -47,10 +48,13 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
     {
         $count = \count($this->getAuthors());
         if ($count > 1) {
-            return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponseOwner.title.stacked', [
-                'count' => $count,
-                'timesTriggered' => $this->notification->timesTriggered,
-            ]);
+            return $this->getLanguage()->getDynamicVariable(
+                'wcf.user.notification.commentResponseOwner.title.stacked',
+                [
+                    'count' => $count,
+                    'timesTriggered' => $this->notification->timesTriggered,
+                ]
+            );
         }
 
         return $this->getLanguage()->get('wcf.user.notification.commentResponseOwner.title');
@@ -75,14 +79,17 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
             }
             $count = \count($authors);
 
-            return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponseOwner.message.stacked', [
-                'author' => $commentAuthor,
-                'authors' => \array_values($authors),
-                'count' => $count,
-                'others' => $count - 1,
-                'guestTimesTriggered' => $this->notification->guestTimesTriggered,
-                'commentID' => $this->getUserNotificationObject()->commentID,
-            ]);
+            return $this->getLanguage()->getDynamicVariable(
+                'wcf.user.notification.commentResponseOwner.message.stacked',
+                [
+                    'author' => $commentAuthor,
+                    'authors' => \array_values($authors),
+                    'count' => $count,
+                    'others' => $count - 1,
+                    'guestTimesTriggered' => $this->notification->guestTimesTriggered,
+                    'commentID' => $this->getUserNotificationObject()->commentID,
+                ]
+            );
         }
 
         return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponseOwner.message', [

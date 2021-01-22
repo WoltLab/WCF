@@ -617,7 +617,10 @@ final class CronjobUtil
         else {
             $testArr = \explode(',', $value);
             foreach ($testArr as $testField) {
-                if ($pattern && \preg_match('/^(((' . $pattern . ')-(' . $pattern . '))(\/' . $step . ')?)+$/', $testField)) {
+                if (
+                    $pattern
+                    && \preg_match('/^(((' . $pattern . ')-(' . $pattern . '))(\/' . $step . ')?)+$/', $testField)
+                ) {
                     $compare = \explode('-', $testField);
                     $compareSlash = \explode('/', $compare['1']);
                     if (\count($compareSlash) == 2) {

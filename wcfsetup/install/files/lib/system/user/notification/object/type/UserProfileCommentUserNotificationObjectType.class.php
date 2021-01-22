@@ -15,7 +15,8 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\User\Notification\Object\Type
  */
-class UserProfileCommentUserNotificationObjectType extends AbstractUserNotificationObjectType implements ICommentUserNotificationObjectType
+class UserProfileCommentUserNotificationObjectType extends AbstractUserNotificationObjectType implements
+    ICommentUserNotificationObjectType
 {
     /**
      * @inheritDoc

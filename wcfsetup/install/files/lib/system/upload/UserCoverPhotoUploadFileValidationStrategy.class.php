@@ -63,7 +63,9 @@ class UserCoverPhotoUploadFileValidationStrategy implements IUploadFileValidatio
         // estimate if there is enough memory for a resize, if there is,
         // we do not need to mark an image which is too high or too wide
         // as invalid
-        $sufficientMemory = ImageHandler::getInstance()->getAdapter()->checkMemoryLimit($width, $height, $imageData['mimeType']);
+        $sufficientMemory = ImageHandler::getInstance()
+            ->getAdapter()
+            ->checkMemoryLimit($width, $height, $imageData['mimeType']);
 
         // check width
         if ($width < UserCoverPhoto::MIN_WIDTH) {

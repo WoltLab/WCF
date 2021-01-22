@@ -456,7 +456,9 @@ final class DOMUtil
                 $lastTextNode = $childNode;
             } else {
                 // merge with last text node
-                $newTextNode = $childNode->ownerDocument->createTextNode($lastTextNode->textContent . $childNode->textContent);
+                $newTextNode = $childNode
+                    ->ownerDocument
+                    ->createTextNode($lastTextNode->textContent . $childNode->textContent);
                 $element->insertBefore($newTextNode, $lastTextNode);
 
                 $element->removeChild($lastTextNode);

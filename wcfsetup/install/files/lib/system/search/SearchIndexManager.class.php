@@ -45,7 +45,8 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
     protected function init()
     {
         // get available object types
-        $this->availableObjectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.searchableObjectType');
+        $this->availableObjectTypes = ObjectTypeCache::getInstance()
+            ->getObjectTypes('com.woltlab.wcf.searchableObjectType');
     }
 
     /**
@@ -110,20 +111,39 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
     /**
      * @inheritDoc
      */
-    public function set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '')
-    {
+    public function set(
+        $objectType,
+        $objectID,
+        $message,
+        $subject,
+        $time,
+        $userID,
+        $username,
+        $languageID = null,
+        $metaData = ''
+    ) {
         // strip html; remove whitespace from beginning and end of the message
         $message = StringUtil::trim(StringUtil::stripHTML($message));
 
-        $this->getSearchIndexManager()->set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
+        $this->getSearchIndexManager()
+            ->set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
     }
 
     /**
      * @inheritDoc
      * @deprecated  3.0 - please use `set() instead`
      */
-    public function add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '')
-    {
+    public function add(
+        $objectType,
+        $objectID,
+        $message,
+        $subject,
+        $time,
+        $userID,
+        $username,
+        $languageID = null,
+        $metaData = ''
+    ) {
         $this->set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
     }
 
@@ -131,8 +151,17 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
      * @inheritDoc
      * @deprecated  3.0 - please use `set() instead`
      */
-    public function update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '')
-    {
+    public function update(
+        $objectType,
+        $objectID,
+        $message,
+        $subject,
+        $time,
+        $userID,
+        $username,
+        $languageID = null,
+        $metaData = ''
+    ) {
         $this->set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
     }
 
