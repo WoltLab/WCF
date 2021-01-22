@@ -16,7 +16,7 @@ interface IObjectTreeNode extends \Countable, IIDObject, \RecursiveIterator
     /**
      * Adds the given node as child node and sets the child node's parent node to this node.
      *
-     * @param   IObjectTreeNode     $child      added child node
+     * @param IObjectTreeNode $child added child node
      * @throws  \InvalidArgumentException       if given object is no (deocrated) instance of this class
      */
     public function addChild(self $child);
@@ -54,7 +54,7 @@ interface IObjectTreeNode extends \Countable, IIDObject, \RecursiveIterator
     /**
      * Sets the parent node of this node.
      *
-     * @param   IObjectTreeNode     $parentNode parent node
+     * @param IObjectTreeNode $parentNode parent node
      * @throws  \InvalidArgumentException       if given object is no (deocrated) instance of this class
      */
     public function setParentNode(self $parentNode);

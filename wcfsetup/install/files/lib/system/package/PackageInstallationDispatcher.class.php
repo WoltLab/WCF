@@ -99,7 +99,7 @@ class PackageInstallationDispatcher
     /**
      * Creates a new instance of PackageInstallationDispatcher.
      *
-     * @param   PackageInstallationQueue    $queue
+     * @param PackageInstallationQueue $queue
      */
     public function __construct(PackageInstallationQueue $queue)
     {
@@ -112,7 +112,7 @@ class PackageInstallationDispatcher
     /**
      * Sets data of previous package in queue.
      *
-     * @param   string[]    $packageData
+     * @param string[] $packageData
      */
     public function setPreviousPackage(array $packageData)
     {
@@ -122,7 +122,7 @@ class PackageInstallationDispatcher
     /**
      * Installs node components and returns next node.
      *
-     * @param   string      $node
+     * @param string $node
      * @return  PackageInstallationStep
      * @throws      SystemException
      */
@@ -159,7 +159,7 @@ class PackageInstallationDispatcher
 
                 default:
                     exit("Unknown node type: '" . $data['nodeType'] . "'");
-                break;
+                    break;
             }
 
             if ($step->splitNode()) {
@@ -388,8 +388,8 @@ class PackageInstallationDispatcher
     /**
      * Logs an installation step.
      *
-     * @param   array       $node   data of the executed node
-     * @param   string      $log    optional additional log text
+     * @param array $node data of the executed node
+     * @param string $log optional additional log text
      */
     protected function logInstallationStep(array $node = [], $log = '')
     {
@@ -431,7 +431,8 @@ class PackageInstallationDispatcher
                 $this->previousPackageData !== null
                 && $this->getPackage()->package == $this->previousPackageData['package']
             ) {
-                if (Package::compareVersion($this->getPackage()->packageVersion, $this->previousPackageData['packageVersion'], '<')) {
+                if (Package::compareVersion($this->getPackage()->packageVersion,
+                    $this->previousPackageData['packageVersion'], '<')) {
                     // fake package to simulate the package version required by current archive
                     $this->getPackage()->setPackageVersion($this->previousPackageData['packageVersion']);
                 }
@@ -456,7 +457,7 @@ class PackageInstallationDispatcher
     /**
      * Installs current package.
      *
-     * @param   mixed[]     $nodeData
+     * @param mixed[] $nodeData
      * @return  PackageInstallationStep
      * @throws  SystemException
      */
@@ -623,7 +624,7 @@ class PackageInstallationDispatcher
     /**
      * Creates a new package based on the given data and returns it.
      *
-     * @param   array   $packageData
+     * @param array $packageData
      * @return  Package
      * @since   5.2
      */
@@ -678,11 +679,11 @@ class PackageInstallationDispatcher
     /**
      * Saves a localized package info.
      *
-     * @param   PreparedStatement   $statement
-     * @param   LanguageList        $languageList
-     * @param   LanguageCategory    $languageCategory
-     * @param   Package         $package
-     * @param   string          $infoName
+     * @param PreparedStatement $statement
+     * @param LanguageList $languageList
+     * @param LanguageCategory $languageCategory
+     * @param Package $package
+     * @param string $infoName
      */
     protected function saveLocalizedPackageInfo(
         PreparedStatement $statement,
@@ -727,7 +728,7 @@ class PackageInstallationDispatcher
     /**
      * Executes a package installation plugin.
      *
-     * @param   mixed[]     $nodeData
+     * @param mixed[] $nodeData
      * @return  PackageInstallationStep
      * @throws  SystemException
      */
@@ -792,8 +793,8 @@ class PackageInstallationDispatcher
     /**
      * Displays a list to select optional packages or installs selection.
      *
-     * @param   string      $currentNode
-     * @param   array       $nodeData
+     * @param string $currentNode
+     * @param array $nodeData
      * @return  PackageInstallationStep
      */
     protected function selectOptionalPackages($currentNode, array $nodeData)
@@ -804,8 +805,7 @@ class PackageInstallationDispatcher
         if ($document !== null && $document instanceof FormDocument) {
             $installationStep->setDocument($document);
             $installationStep->setSplitNode();
-        }
-        // insert new nodes for each package
+        } // insert new nodes for each package
         elseif (\is_array($document)) {
             // get target child node
             $node = $currentNode;
@@ -856,9 +856,9 @@ class PackageInstallationDispatcher
     /**
      * Extracts files from .tar(.gz) archive and installs them
      *
-     * @param   string      $targetDir
-     * @param   string      $sourceArchive
-     * @param   IFileHandler    $fileHandler
+     * @param string $targetDir
+     * @param string $sourceArchive
+     * @param IFileHandler $fileHandler
      * @return  Installer
      */
     public function extractFiles($targetDir, $sourceArchive, $fileHandler = null)
@@ -883,7 +883,7 @@ class PackageInstallationDispatcher
     /**
      * Prompts for a text input for package directory (applies for applications only)
      *
-     * @param       string          $applicationDirectory
+     * @param string $applicationDirectory
      * @return  FormDocument
      */
     protected function promptPackageDir($applicationDirectory)
@@ -1023,7 +1023,7 @@ class PackageInstallationDispatcher
     /**
      * Prompts a selection of optional packages.
      *
-     * @param   string[][]  $packages
+     * @param string[][] $packages
      * @return  mixed
      */
     protected function promptOptionalPackages(array $packages)
@@ -1098,8 +1098,8 @@ class PackageInstallationDispatcher
      * Opens the package installation queue and
      * starts the installation, update or uninstallation of the first entry.
      *
-     * @param   int     $parentQueueID
-     * @param   int     $processNo
+     * @param int $parentQueueID
+     * @param int $processNo
      */
     public static function openQueue($parentQueueID = 0, $processNo = 0)
     {
@@ -1207,7 +1207,7 @@ class PackageInstallationDispatcher
     /**
      * Validates specific php requirements.
      *
-     * @param   array       $requirements
+     * @param array $requirements
      * @return  mixed[][]
      */
     public static function validatePHPRequirements(array $requirements)
@@ -1300,7 +1300,7 @@ class PackageInstallationDispatcher
     /**
      * Validates if an function exists and is not blacklisted by suhosin extension.
      *
-     * @param   string      $function
+     * @param string $function
      * @return  bool
      * @see     http://de.php.net/manual/en/function.function-exists.php#77980
      */
@@ -1326,9 +1326,9 @@ class PackageInstallationDispatcher
     /**
      * Compares settings, converting values into compareable ones.
      *
-     * @param   string      $setting
-     * @param   string      $value
-     * @param   mixed       $compareValue
+     * @param string $setting
+     * @param string $value
+     * @param mixed $compareValue
      * @return  bool
      */
     protected static function compareSetting($setting, $value, $compareValue)
@@ -1344,8 +1344,7 @@ class PackageInstallationDispatcher
         // handle values considered as 'true'
         if (\in_array($value, $trueValues)) {
             return $compareValue ? true : false;
-        }
-        // handle values considered as 'false'
+        } // handle values considered as 'false'
         elseif (\in_array($value, $falseValues)) {
             return (!$compareValue) ? true : false;
         } elseif (!\is_numeric($value)) {
@@ -1359,7 +1358,7 @@ class PackageInstallationDispatcher
     /**
      * Converts shorthand byte values into an integer representing bytes.
      *
-     * @param   string      $value
+     * @param string $value
      * @return  int
      * @see     http://www.php.net/manual/en/faq.using.php#faq.using.shorthandbytes
      */
@@ -1371,21 +1370,21 @@ class PackageInstallationDispatcher
             // gigabytes
             case 'g':
                 return (int)$value * 1073741824;
-            break;
+                break;
 
             // megabytes
             case 'm':
                 return (int)$value * 1048576;
-            break;
+                break;
 
             // kilobytes
             case 'k':
                 return (int)$value * 1024;
-            break;
+                break;
 
             default:
                 return $value;
-            break;
+                break;
         }
     }
 }

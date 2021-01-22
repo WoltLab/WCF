@@ -50,14 +50,14 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
     /**
      * Creates a modification log entry.
      *
-     * @param   string      $action
-     * @param   int     $objectID
-     * @param   int|null    $parentObjectID
-     * @param   array       $additionalData
-     * @param   int     $time
-     * @param   int|null    $userID
-     * @param   string|null $username
-     * @param   int     $hidden
+     * @param string $action
+     * @param int $objectID
+     * @param int|null $parentObjectID
+     * @param array $additionalData
+     * @param int $time
+     * @param int|null $userID
+     * @param string|null $username
+     * @param int $hidden
      * @return  ModificationLog
      */
     public function createLog(
@@ -106,8 +106,8 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
     /**
      * Deletes modification log entries.
      *
-     * @param   int[]   $objectIDs
-     * @param   string[]    $ignoredActions     names of actions whose log entries will not be deleted
+     * @param int[] $objectIDs
+     * @param string[] $ignoredActions names of actions whose log entries will not be deleted
      */
     public function deleteLogs(array $objectIDs, array $ignoredActions = [])
     {
@@ -131,7 +131,7 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
     /**
      * Deletes modification log entries by the id of the parent object.
      *
-     * @param   int[]   $parentObjectIDs
+     * @param int[] $parentObjectIDs
      */
     public function deleteLogsByParentIDs(array $parentObjectIDs)
     {
@@ -152,7 +152,7 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
     /**
      * Returns the modifiable content object type.
      *
-     * @param   string      $objectType name of the modifiable content object type, deprecated parameter
+     * @param string $objectType name of the modifiable content object type, deprecated parameter
      * @return  ObjectType
      */
     public function getObjectType($objectType = null)
@@ -169,8 +169,8 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
     /**
      * Updates the parent object id of modification log entries.
      *
-     * @param   int[]   $objectIDs
-     * @param   int     $newParentObjectID
+     * @param int[] $objectIDs
+     * @param int $newParentObjectID
      */
     public function updateParentObjectID(array $objectIDs, $newParentObjectID)
     {

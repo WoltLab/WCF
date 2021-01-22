@@ -147,7 +147,8 @@ class PaidSubscriptionAddForm extends AbstractForm
         I18nHandler::getInstance()->register('title');
 
         // get available user groups
-        $this->availableUserGroups = UserGroup::getSortedAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]);
+        $this->availableUserGroups = UserGroup::getSortedAccessibleGroups([],
+            [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]);
 
         if (!\count(PaymentMethodHandler::getInstance()->getPaymentMethods())) {
             throw new NamedUserException(WCF::getLanguage()->get('wcf.acp.paidSubscription.error.noPaymentMethods'));
@@ -155,7 +156,8 @@ class PaidSubscriptionAddForm extends AbstractForm
 
         // get available currencies
         foreach (PaymentMethodHandler::getInstance()->getPaymentMethods() as $paymentMethod) {
-            $this->availableCurrencies = \array_merge($this->availableCurrencies, $paymentMethod->getSupportedCurrencies());
+            $this->availableCurrencies = \array_merge($this->availableCurrencies,
+                $paymentMethod->getSupportedCurrencies());
         }
         $this->availableCurrencies = \array_unique($this->availableCurrencies);
         \sort($this->availableCurrencies);
@@ -291,19 +293,21 @@ class PaidSubscriptionAddForm extends AbstractForm
         parent::save();
 
         // save subscription
-        $this->objectAction = new PaidSubscriptionAction([], 'create', ['data' => \array_merge($this->additionalFields, [
-            'title' => $this->title,
-            'description' => $this->description,
-            'isDisabled' => $this->isDisabled,
-            'showOrder' => $this->showOrder,
-            'cost' => $this->cost,
-            'currency' => $this->currency,
-            'subscriptionLength' => $this->subscriptionLength,
-            'subscriptionLengthUnit' => $this->subscriptionLengthUnit,
-            'isRecurring' => $this->isRecurring,
-            'groupIDs' => \implode(',', $this->groupIDs),
-            'excludedSubscriptionIDs' => \implode(',', $this->excludedSubscriptionIDs),
-        ])]);
+        $this->objectAction = new PaidSubscriptionAction([], 'create', [
+            'data' => \array_merge($this->additionalFields, [
+                'title' => $this->title,
+                'description' => $this->description,
+                'isDisabled' => $this->isDisabled,
+                'showOrder' => $this->showOrder,
+                'cost' => $this->cost,
+                'currency' => $this->currency,
+                'subscriptionLength' => $this->subscriptionLength,
+                'subscriptionLengthUnit' => $this->subscriptionLengthUnit,
+                'isRecurring' => $this->isRecurring,
+                'groupIDs' => \implode(',', $this->groupIDs),
+                'excludedSubscriptionIDs' => \implode(',', $this->excludedSubscriptionIDs),
+            ]),
+        ]);
         $returnValues = $this->objectAction->executeAction();
 
         // save i18n values
@@ -321,20 +325,23 @@ class PaidSubscriptionAddForm extends AbstractForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(PaidSubscriptionEditForm::class, ['id' => $returnValues['returnValues']->subscriptionID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(PaidSubscriptionEditForm::class,
+                ['id' => $returnValues['returnValues']->subscriptionID]),
         ]);
     }
 
     /**
      * Saves i18n values.
      *
-     * @param   PaidSubscription    $subscription
-     * @param   string          $columnName
+     * @param PaidSubscription $subscription
+     * @param string $columnName
      */
     public function saveI18nValue(PaidSubscription $subscription, $columnName)
     {
         if (!I18nHandler::getInstance()->isPlainValue($columnName)) {
-            I18nHandler::getInstance()->save($columnName, 'wcf.paidSubscription.subscription' . $subscription->subscriptionID . ($columnName == 'description' ? '.description' : ''), 'wcf.paidSubscription', 1);
+            I18nHandler::getInstance()->save($columnName,
+                'wcf.paidSubscription.subscription' . $subscription->subscriptionID . ($columnName == 'description' ? '.description' : ''),
+                'wcf.paidSubscription', 1);
 
             // update database
             $editor = new PaidSubscriptionEditor($subscription);

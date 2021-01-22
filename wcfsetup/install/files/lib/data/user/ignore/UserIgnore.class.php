@@ -13,17 +13,17 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\User\Ignore
  *
- * @property-read   int     $ignoreID       unique id of the ignore relation
- * @property-read   int     $userID         id of the ignoring user
- * @property-read   int     $ignoreUserID       id of the ignored user
- * @property-read   int     $time           time at which ignore relation has been established
+ * @property-read   int $ignoreID       unique id of the ignore relation
+ * @property-read   int $userID         id of the ignoring user
+ * @property-read   int $ignoreUserID       id of the ignored user
+ * @property-read   int $time           time at which ignore relation has been established
  */
 class UserIgnore extends DatabaseObject
 {
     /**
      * Returns a UserIgnore object for given ignored user id.
      *
-     * @param   int     $ignoreUserID
+     * @param int $ignoreUserID
      * @return  UserIgnore
      */
     public static function getIgnore($ignoreUserID)

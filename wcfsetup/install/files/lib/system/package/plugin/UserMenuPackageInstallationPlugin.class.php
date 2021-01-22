@@ -92,7 +92,7 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
             ->description('wcf.acp.pip.userMenu.iconClassName.description')
             ->required()
             ->addDependency(
-                // only first level menu items support icons
+            // only first level menu items support icons
                 ValueFormFieldDependency::create('parentMenuItem')
                     ->field($parentMenuItemFormField)
                     ->values([''])

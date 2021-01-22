@@ -55,7 +55,10 @@ class PackageAction extends AbstractDatabaseObjectAction
      */
     public function validateSearchForPurchasedItems()
     {
-        WCF::getSession()->checkPermissions(['admin.configuration.package.canInstallPackage', 'admin.configuration.package.canUpdatePackage']);
+        WCF::getSession()->checkPermissions([
+            'admin.configuration.package.canInstallPackage',
+            'admin.configuration.package.canUpdatePackage',
+        ]);
 
         $this->readString('password', true);
         $this->readString('username', true);
@@ -134,19 +137,20 @@ class PackageAction extends AbstractDatabaseObjectAction
                 return [
                     'template' => $this->renderAuthorizationDialog(true),
                 ];
-            break;
+                break;
 
             // any other kind of errors
             default:
-                throw new SystemException(WCF::getLanguage()->getDynamicVariable('wcf.acp.pluginStore.api.error', ['status' => $code]));
-            break;
+                throw new SystemException(WCF::getLanguage()->getDynamicVariable('wcf.acp.pluginStore.api.error',
+                    ['status' => $code]));
+                break;
         }
     }
 
     /**
      * Renders the authentication dialog.
      *
-     * @param   bool        $rejected
+     * @param bool $rejected
      * @return  string
      */
     protected function renderAuthorizationDialog($rejected)

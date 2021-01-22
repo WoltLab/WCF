@@ -76,7 +76,8 @@ class TwitterAuthAction extends AbstractAction
                     'oauth_verifier' => $_GET['oauth_verifier'],
                 ];
 
-                $signature = $this->createSignature('https://api.twitter.com/oauth/access_token', \array_merge($oauthHeader, $postData));
+                $signature = $this->createSignature('https://api.twitter.com/oauth/access_token',
+                    \array_merge($oauthHeader, $postData));
                 $oauthHeader['oauth_signature'] = $signature;
 
                 $request = new HTTPRequest('https://api.twitter.com/oauth/access_token', [], $postData);
@@ -98,8 +99,7 @@ class TwitterAuthAction extends AbstractAction
                 // a user is already connected, but we are logged in, break
                 if (WCF::getUser()->userID) {
                     throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.3rdparty.twitter.connect.error.inuse'));
-                }
-                // perform login
+                } // perform login
                 else {
                     WCF::getSession()->changeUser($user);
                     WCF::getSession()->update();
@@ -113,8 +113,7 @@ class TwitterAuthAction extends AbstractAction
                     WCF::getSession()->register('__twitterData', $data);
 
                     HeaderUtil::redirect(LinkHandler::getInstance()->getLink('AccountManagement') . '#3rdParty');
-                }
-                // save data and redirect to registration
+                } // save data and redirect to registration
                 else {
                     // fetch user data
                     $twitterData = null;
@@ -131,7 +130,8 @@ class TwitterAuthAction extends AbstractAction
                             'include_email' => 'true',
                             'skip_status' => 'true',
                         ];
-                        $signature = $this->createSignature('https://api.twitter.com/1.1/account/verify_credentials.json', \array_merge($oauthHeader, $getData), $data['oauth_token_secret'], 'GET');
+                        $signature = $this->createSignature('https://api.twitter.com/1.1/account/verify_credentials.json',
+                            \array_merge($oauthHeader, $getData), $data['oauth_token_secret'], 'GET');
                         $oauthHeader['oauth_signature'] = $signature;
 
                         $request = new HTTPRequest('https://api.twitter.com/1.1/account/verify_credentials.json?skip_status=true&include_email=true');
@@ -217,7 +217,7 @@ class TwitterAuthAction extends AbstractAction
     /**
      * Builds the OAuth authorization header.
      *
-     * @param   array       $parameters
+     * @param array $parameters
      * @return  string
      */
     public function buildOAuthHeader(array $parameters)
@@ -236,10 +236,10 @@ class TwitterAuthAction extends AbstractAction
     /**
      * Creates an OAuth 1 signature.
      *
-     * @param   string      $url
-     * @param   array       $parameters
-     * @param   string      $tokenSecret
-     * @param   string      $method
+     * @param string $url
+     * @param array $parameters
+     * @param string $tokenSecret
+     * @param string $method
      * @return  string
      */
     public function createSignature($url, array $parameters, $tokenSecret = '', $method = 'POST')

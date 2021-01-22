@@ -28,7 +28,7 @@ class DebugFolderEmailTransport implements IEmailTransport
     /**
      * Creates a new DebugFolderTransport using the given folder as target.
      *
-     * @param   string  $folder folder or null for default folder
+     * @param string $folder folder or null for default folder
      */
     public function __construct($folder = null)
     {
@@ -48,9 +48,9 @@ class DebugFolderEmailTransport implements IEmailTransport
     /**
      * Writes the given $email into the folder.
      *
-     * @param   Email       $email
-     * @param   Mailbox     $envelopeFrom
-     * @param   Mailbox     $envelopeTo
+     * @param Email $email
+     * @param Mailbox $envelopeFrom
+     * @param Mailbox $envelopeTo
      */
     public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo)
     {

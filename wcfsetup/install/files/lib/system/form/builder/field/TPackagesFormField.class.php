@@ -36,7 +36,7 @@ trait TPackagesFormField
      * Sets the ids of the packages considered for this field. If an empty
      * array is given, all packages will be considered.
      *
-     * @param   int[]       $packageIDs
+     * @param int[] $packageIDs
      * @return  static
      *
      * @throws  \InvalidArgumentException   if the given package ids are invalid

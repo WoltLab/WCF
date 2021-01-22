@@ -19,8 +19,8 @@ interface IOnlineLocationPageHandler
     /**
      * Returns the textual description if a user is currently online viewing this page.
      *
-     * @param   Page        $page       visited page
-     * @param   UserOnline  $user       user online object with request data
+     * @param Page $page visited page
+     * @param UserOnline $user user online object with request data
      * @return  string
      */
     public function getOnlineLocation(Page $page, UserOnline $user);
@@ -29,8 +29,8 @@ interface IOnlineLocationPageHandler
      * Prepares fetching all necessary data for the textual description if a user is currently online
      * viewing this page.
      *
-     * @param   Page        $page       visited page
-     * @param   UserOnline  $user       user online object with request data
+     * @param Page $page visited page
+     * @param UserOnline $user user online object with request data
      */
     public function prepareOnlineLocation(Page $page, UserOnline $user);
 }

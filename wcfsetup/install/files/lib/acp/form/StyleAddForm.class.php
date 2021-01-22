@@ -369,7 +369,8 @@ class StyleAddForm extends AbstractForm
         // read variables with units, e.g. 13px
         foreach ($this->globals as $variableName) {
             if (isset($_POST[$variableName]) && \is_numeric($_POST[$variableName])) {
-                if (isset($_POST[$variableName . '_unit']) && \in_array($_POST[$variableName . '_unit'], $this->availableUnits)) {
+                if (isset($_POST[$variableName . '_unit']) && \in_array($_POST[$variableName . '_unit'],
+                        $this->availableUnits)) {
                     $this->variables[$variableName] = \abs($_POST[$variableName]) . $_POST[$variableName . '_unit'];
                 }
             } else {
@@ -382,7 +383,8 @@ class StyleAddForm extends AbstractForm
         $integerValues = ['pageLogoHeight', 'pageLogoWidth'];
         foreach ($this->specialVariables as $variableName) {
             if (isset($_POST[$variableName])) {
-                $this->variables[$variableName] = (\in_array($variableName, $integerValues)) ? \abs(\intval($_POST[$variableName])) : StringUtil::trim($_POST[$variableName]);
+                $this->variables[$variableName] = (\in_array($variableName,
+                    $integerValues)) ? \abs(\intval($_POST[$variableName])) : StringUtil::trim($_POST[$variableName]);
             }
         }
         $this->variables['useFluidLayout'] = isset($_POST['useFluidLayout']) ? 1 : 0;
@@ -458,7 +460,8 @@ class StyleAddForm extends AbstractForm
                 try {
                     $fontManager->downloadFamily($family);
                 } catch (FontDownloadFailed $e) {
-                    throw new UserInputException('wcfFontFamilyGoogle', 'downloadFailed' . ($e->getReason() ? '.' . $e->getReason() : ''));
+                    throw new UserInputException('wcfFontFamilyGoogle',
+                        'downloadFailed' . ($e->getReason() ? '.' . $e->getReason() : ''));
                 }
             }
         }
@@ -538,7 +541,8 @@ class StyleAddForm extends AbstractForm
         $this->styleTestFileDir = FileUtil::getTemporaryFilename('style_');
         FileUtil::makePath($this->styleTestFileDir);
 
-        $result = StyleCompiler::getInstance()->testStyle($this->styleTestFileDir, $this->styleName, $this->apiVersion, false, $variables);
+        $result = StyleCompiler::getInstance()->testStyle($this->styleTestFileDir, $this->styleName, $this->apiVersion,
+            false, $variables);
 
         if ($result !== null) {
             \rmdir($this->styleTestFileDir);
@@ -651,7 +655,7 @@ class StyleAddForm extends AbstractForm
      * If an override is invalid, unknown or matches a variable covered by
      * the style editor itself, it will be silently discarded.
      *
-     * @param       string          $variableName
+     * @param string $variableName
      * @throws      UserInputException
      */
     protected function parseOverrides($variableName = 'overrideScss')
@@ -689,7 +693,8 @@ class StyleAddForm extends AbstractForm
                 $matches = $regEx->getMatches();
 
                 // cannot override variables covered by style editor
-                if (\in_array($matches[1], $colorNames) || \in_array($matches[1], $this->globals) || \in_array($matches[1], $this->specialVariables)) {
+                if (\in_array($matches[1], $colorNames) || \in_array($matches[1],
+                        $this->globals) || \in_array($matches[1], $this->specialVariables)) {
                     $errors[] = [
                         'error' => 'predefined',
                         'text' => $matches[1],
@@ -728,7 +733,8 @@ class StyleAddForm extends AbstractForm
 
         // parse global (unit) variables
         foreach ($this->globals as $variableName) {
-            if (\preg_match('/(.*?)(' . \implode('|', $this->availableUnits) . ')$/', $this->variables[$variableName], $match)) {
+            if (\preg_match('/(.*?)(' . \implode('|', $this->availableUnits) . ')$/', $this->variables[$variableName],
+                $match)) {
                 $this->variables[$variableName] = $match[1];
                 $this->variables[$variableName . '_unit'] = $match[2];
             }
@@ -761,7 +767,14 @@ class StyleAddForm extends AbstractForm
 
         $this->colors = [
             'wcfHeader' => ['background', 'text', 'link', 'linkActive'],
-            'wcfHeaderSearchBox' => ['background', 'text', 'placeholder', 'placeholderActive', 'backgroundActive', 'textActive'],
+            'wcfHeaderSearchBox' => [
+                'background',
+                'text',
+                'placeholder',
+                'placeholderActive',
+                'backgroundActive',
+                'textActive',
+            ],
             'wcfHeaderMenu' => ['background', 'linkBackground', 'linkBackgroundActive', 'link', 'linkActive'],
             'wcfHeaderMenuDropdown' => ['background', 'link', 'backgroundActive', 'linkActive'],
             'wcfNavigation' => ['background', 'text', 'link', 'linkActive'],
@@ -773,7 +786,17 @@ class StyleAddForm extends AbstractForm
             'wcfContentDimmed' => ['text', 'link', 'linkActive'],
             'wcfContentHeadline' => ['border', 'text', 'link', 'linkActive'],
             'wcfTabularBox' => ['borderInner', 'headline', 'backgroundActive', 'headlineActive'],
-            'wcfInput' => ['label', 'background', 'border', 'text', 'placeholder', 'placeholderActive', 'backgroundActive', 'borderActive', 'textActive'],
+            'wcfInput' => [
+                'label',
+                'background',
+                'border',
+                'text',
+                'placeholder',
+                'placeholderActive',
+                'backgroundActive',
+                'borderActive',
+                'textActive',
+            ],
             'wcfInputDisabled' => ['background', 'border', 'text'],
             'wcfButton' => ['background', 'text', 'backgroundActive', 'textActive'],
             'wcfButtonPrimary' => ['background', 'text', 'backgroundActive', 'textActive'],
@@ -867,7 +890,8 @@ class StyleAddForm extends AbstractForm
         $style = $returnValues['returnValues'];
 
         // save style description
-        I18nHandler::getInstance()->save('styleDescription', 'wcf.style.styleDescription' . $style->styleID, 'wcf.style');
+        I18nHandler::getInstance()->save('styleDescription', 'wcf.style.styleDescription' . $style->styleID,
+            'wcf.style');
 
         $styleEditor = new StyleEditor($style);
         $styleEditor->update([
@@ -901,7 +925,8 @@ class StyleAddForm extends AbstractForm
 
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(StyleEditForm::class, ['id' => $style->styleID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(StyleEditForm::class,
+                ['id' => $style->styleID]),
         ]);
     }
 

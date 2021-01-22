@@ -13,11 +13,11 @@ use wcf\data\poll\Poll;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Poll\Poll
  *
- * @property-read   int     $optionID   unique id of the poll option
- * @property-read   int     $pollID     id of the poll the option belongs to
- * @property-read   string      $optionValue    text of the poll option
- * @property-read   int     $votes      number of votes for the poll option
- * @property-read   int     $showOrder  position of the poll option in relation to the other options of the poll
+ * @property-read   int $optionID   unique id of the poll option
+ * @property-read   int $pollID     id of the poll the option belongs to
+ * @property-read   string $optionValue    text of the poll option
+ * @property-read   int $votes      number of votes for the poll option
+ * @property-read   int $showOrder  position of the poll option in relation to the other options of the poll
  */
 class PollOption extends DatabaseObject
 {
@@ -30,7 +30,7 @@ class PollOption extends DatabaseObject
     /**
      * Returns relative amount of votes for this option.
      *
-     * @param   Poll    $poll
+     * @param Poll $poll
      * @return  int
      */
     public function getRelativeVotes(Poll $poll)

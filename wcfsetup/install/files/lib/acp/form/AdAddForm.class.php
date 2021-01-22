@@ -235,7 +235,8 @@ class AdAddForm extends AbstractForm
 
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(AdEditForm::class, ['id' => $returnValues['returnValues']->adID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(AdEditForm::class,
+                ['id' => $returnValues['returnValues']->adID]),
         ]);
     }
 

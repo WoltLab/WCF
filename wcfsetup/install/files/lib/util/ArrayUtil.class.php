@@ -17,8 +17,8 @@ final class ArrayUtil
     /**
      * Applies StringUtil::trim() to all elements of the given array.
      *
-     * @param   array|string    $array
-     * @param   bool        $removeEmptyElements
+     * @param array|string $array
+     * @param bool $removeEmptyElements
      * @return  array|string
      */
     public static function trim($array, $removeEmptyElements = true)
@@ -42,7 +42,7 @@ final class ArrayUtil
     /**
      * Applies intval() to all elements of the given array.
      *
-     * @param   array|string    $array
+     * @param array|string $array
      * @return  array|string
      */
     public static function toIntegerArray($array)
@@ -61,7 +61,7 @@ final class ArrayUtil
     /**
      * Converts html special characters in the given array.
      *
-     * @param   array|string    $array
+     * @param array|string $array
      * @return  array|string
      */
     public static function encodeHTML($array)
@@ -80,7 +80,7 @@ final class ArrayUtil
     /**
      * Applies stripslashes on all elements of the given array.
      *
-     * @param   array       $array
+     * @param array $array
      * @return  array
      */
     public static function stripslashes($array)
@@ -99,8 +99,8 @@ final class ArrayUtil
     /**
      * Appends a suffix to all elements of the given array.
      *
-     * @param   array       $array
-     * @param   string      $suffix
+     * @param array $array
+     * @param string $suffix
      * @return  array
      */
     public static function appendSuffix($array, $suffix)
@@ -115,7 +115,7 @@ final class ArrayUtil
     /**
      * Converts dos to unix newlines.
      *
-     * @param   array|string    $array
+     * @param array|string $array
      * @return  array|string
      */
     public static function unifyNewlines($array)
@@ -133,12 +133,12 @@ final class ArrayUtil
 
     /**
      * Converts a array of strings to requested character encoding.
+     * @param string $inCharset
+     * @param string $outCharset
+     * @param array|string $array
+     * @return  array|string
      * @see mb_convert_encoding()
      *
-     * @param   string      $inCharset
-     * @param   string      $outCharset
-     * @param   array|string    $array
-     * @return  array|string
      */
     public static function convertEncoding($inCharset, $outCharset, $array)
     {
@@ -156,9 +156,9 @@ final class ArrayUtil
     /**
      * Returns true when array1 has the same values as array2.
      *
-     * @param   array       $array1
-     * @param   array       $array2
-     * @param   callable    $callback
+     * @param array $array1
+     * @param array $array2
+     * @param callable $callback
      * @return  bool
      */
     public static function compare(array $array1, array $array2, ?callable $callback = null)
@@ -169,9 +169,9 @@ final class ArrayUtil
     /**
      * Returns true when array1 has the same keys as array2.
      *
-     * @param   array       $array1
-     * @param   array       $array2
-     * @param   callable    $callback
+     * @param array $array1
+     * @param array $array2
+     * @param callable $callback
      * @return  bool
      */
     public static function compareKey(array $array1, array $array2, ?callable $callback = null)
@@ -182,9 +182,9 @@ final class ArrayUtil
     /**
      * Compares array1 with array2 and returns true when they are identical.
      *
-     * @param   array       $array1
-     * @param   array       $array2
-     * @param   callable    $callback
+     * @param array $array1
+     * @param array $array2
+     * @param callable $callback
      * @return  bool
      */
     public static function compareAssoc(array $array1, array $array2, ?callable $callback = null)
@@ -195,10 +195,10 @@ final class ArrayUtil
     /**
      * Does the actual comparison of the above compare methods.
      *
-     * @param   string      $method
-     * @param   array       $array1
-     * @param   array       $array2
-     * @param   callable    $callback
+     * @param string $method
+     * @param array $array1
+     * @param array $array2
+     * @param callable $callback
      * @return  bool
      * @throws  SystemException
      */
@@ -228,7 +228,8 @@ final class ArrayUtil
         }
 
         // compare the arrays
-        return (\count(\call_user_func_array($function, $params1)) === 0) && (\count(\call_user_func_array($function, $params2)) === 0);
+        return (\count(\call_user_func_array($function, $params1)) === 0) && (\count(\call_user_func_array($function,
+                    $params2)) === 0);
     }
 
     /**

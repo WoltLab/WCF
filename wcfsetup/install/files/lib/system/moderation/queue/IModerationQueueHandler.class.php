@@ -18,14 +18,14 @@ interface IModerationQueueHandler
     /**
      * Creates queue assignments for matching object ids.
      *
-     * @param   ModerationQueue[]   $queues
+     * @param ModerationQueue[] $queues
      */
     public function assignQueues(array $queues);
 
     /**
      * Returns the container id for current object id, may return 0.
      *
-     * @param   int     $objectID
+     * @param int $objectID
      * @return  int
      */
     public function getContainerID($objectID);
@@ -33,7 +33,7 @@ interface IModerationQueueHandler
     /**
      * Validates object ids and returns orphaned queue ids.
      *
-     * @param   int[]       $queues
+     * @param int[] $queues
      * @return  int[]
      */
     public function identifyOrphans(array $queues);
@@ -41,7 +41,7 @@ interface IModerationQueueHandler
     /**
      * Returns true if given object id is valid.
      *
-     * @param   int     $objectID
+     * @param int $objectID
      * @return  bool
      */
     public function isValid($objectID);
@@ -49,7 +49,7 @@ interface IModerationQueueHandler
     /**
      * Populates object properties for viewing.
      *
-     * @param   ViewableModerationQueue[]   $queues
+     * @param ViewableModerationQueue[] $queues
      */
     public function populate(array $queues);
 
@@ -57,15 +57,15 @@ interface IModerationQueueHandler
      * Removes affected content. It is up to the processing class to either
      * soft-delete the content or remove it permanently.
      *
-     * @param   ModerationQueue     $queue
-     * @param   string          $message
+     * @param ModerationQueue $queue
+     * @param string $message
      */
     public function removeContent(ModerationQueue $queue, $message);
 
     /**
      * Returns true if the affected content may be removed.
      *
-     * @param   ModerationQueue     $queue
+     * @param ModerationQueue $queue
      * @return  bool
      */
     public function canRemoveContent(ModerationQueue $queue);
@@ -74,15 +74,15 @@ interface IModerationQueueHandler
      * Removes queses from database, should only be called if the referenced
      * object is permanently deleted.
      *
-     * @param   int[]       $objectIDs
+     * @param int[] $objectIDs
      */
     public function removeQueues(array $objectIDs);
 
     /**
      * Returns true, if given user is affected by given queue entry.
      *
-     * @param   ModerationQueue     $queue
-     * @param   int         $userID
+     * @param ModerationQueue $queue
+     * @param int $userID
      * @return  bool
      */
     public function isAffectedUser(ModerationQueue $queue, $userID);

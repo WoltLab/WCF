@@ -13,7 +13,7 @@ use wcf\page\SortablePage;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Page
  *
- * @property    ACPSessionLogList   $objectList
+ * @property    ACPSessionLogList $objectList
  */
 class ACPSessionLogListPage extends SortablePage
 {
@@ -45,7 +45,15 @@ class ACPSessionLogListPage extends SortablePage
     /**
      * @inheritDoc
      */
-    public $validSortFields = ['sessionLogID', 'username', 'ipAddress', 'userAgent', 'time', 'lastActivityTime', 'accesses'];
+    public $validSortFields = [
+        'sessionLogID',
+        'username',
+        'ipAddress',
+        'userAgent',
+        'time',
+        'lastActivityTime',
+        'accesses',
+    ];
 
     /**
      * @inheritDoc

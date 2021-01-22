@@ -19,7 +19,7 @@ interface IHistorySavingObjectTypeProvider extends IObjectTypeProvider
      * Checks the permissions to review the edit history and to revert to an
      * older version of the given IHistorySavingObject.
      *
-     * @param   IHistorySavingObject    $object
+     * @param IHistorySavingObject $object
      * @throws  PermissionDeniedException   if access is denied
      * @throws  \InvalidArgumentException   if given object has not be provided by this provider and thus cannot be checked by this method
      */

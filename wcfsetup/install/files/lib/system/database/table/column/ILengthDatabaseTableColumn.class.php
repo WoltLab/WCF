@@ -24,7 +24,7 @@ interface ILengthDatabaseTableColumn extends IDatabaseTableColumn
     /**
      * Sets the (maximum) length of the column's values.
      *
-     * @param   null|int    $length     (maximum) column value length or `null` to unset previously set value
+     * @param null|int $length (maximum) column value length or `null` to unset previously set value
      * @return  $this               this column
      * @throws  \InvalidArgumentException   if given length is invalid
      */

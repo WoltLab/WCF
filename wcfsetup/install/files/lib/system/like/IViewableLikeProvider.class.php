@@ -17,7 +17,7 @@ interface IViewableLikeProvider
     /**
      * Prepares a list of likes for output.
      *
-     * @param   ViewableLike[]      $likes
+     * @param ViewableLike[] $likes
      */
     public function prepare(array $likes);
 }

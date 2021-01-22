@@ -284,7 +284,7 @@ class WCF
     /**
      * Calls the show method on the given exception.
      *
-     * @param   \Exception  $e
+     * @param \Exception $e
      */
     final public static function handleException($e)
     {
@@ -322,10 +322,10 @@ class WCF
     /**
      * Turns PHP errors into an ErrorException.
      *
-     * @param   int     $severity
-     * @param   string      $message
-     * @param   string      $file
-     * @param   int     $line
+     * @param int $severity
+     * @param string $message
+     * @param string $file
+     * @param int $line
      * @throws  ErrorException
      */
     final public static function handleError($severity, $message, $file, $line)
@@ -514,7 +514,8 @@ class WCF
         $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
 
         if (\defined('BLACKLIST_IP_ADDRESSES') && BLACKLIST_IP_ADDRESSES != '') {
-            if (!StringUtil::executeWordFilter(UserUtil::convertIPv6To4(UserUtil::getIpAddress()), BLACKLIST_IP_ADDRESSES)) {
+            if (!StringUtil::executeWordFilter(UserUtil::convertIPv6To4(UserUtil::getIpAddress()),
+                BLACKLIST_IP_ADDRESSES)) {
                 if ($isAjax) {
                     throw new AJAXException(
                         self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
@@ -636,8 +637,8 @@ class WCF
     /**
      * Loads an application.
      *
-     * @param   Application     $application
-     * @param   bool            $isDependentApplication
+     * @param Application $application
+     * @param bool $isDependentApplication
      * @return  IApplication
      * @throws  SystemException
      */
@@ -731,7 +732,7 @@ class WCF
     /**
      * Returns the corresponding application object. Does not support the 'wcf' pseudo application.
      *
-     * @param   Application $application
+     * @param Application $application
      * @return  IApplication
      */
     public static function getApplicationObject(Application $application)
@@ -755,7 +756,7 @@ class WCF
     /**
      * Loads an application on runtime, do not use this outside the package installation.
      *
-     * @param   int     $packageID
+     * @param int $packageID
      */
     public static function loadRuntimeApplication($packageID)
     {
@@ -820,7 +821,7 @@ class WCF
     /**
      * Wrapper for the getter methods of this class.
      *
-     * @param   string      $name
+     * @param string $name
      * @return  mixed       value
      * @throws  SystemException
      */
@@ -847,7 +848,7 @@ class WCF
     /**
      * Changes the active language.
      *
-     * @param   int     $languageID
+     * @param int $languageID
      */
     final public static function setLanguage($languageID)
     {
@@ -868,7 +869,7 @@ class WCF
     /**
      * Includes the required util or exception classes automatically.
      *
-     * @param   string      $className
+     * @param string $className
      * @see     spl_autoload_register()
      */
     final public static function autoload($className)
@@ -905,8 +906,8 @@ class WCF
     /**
      * Returns dynamically loaded core objects.
      *
-     * @param   string      $name
-     * @param   array       $arguments
+     * @param string $name
+     * @param array $arguments
      * @return  object
      * @throws  SystemException
      */
@@ -937,7 +938,7 @@ class WCF
     /**
      * Searches for cached core object definition.
      *
-     * @param   string      $className
+     * @param string $className
      * @return  string
      */
     final protected static function getCoreObject($className)
@@ -950,7 +951,7 @@ class WCF
     /**
      * Returns true if the debug mode is enabled, otherwise false.
      *
-     * @param   bool        $ignoreACP
+     * @param bool $ignoreACP
      * @return  bool
      */
     public static function debugModeIsEnabled($ignoreACP = false)
@@ -983,7 +984,7 @@ class WCF
     /**
      * Returns domain path for given application.
      *
-     * @param   string      $abbreviation
+     * @param string $abbreviation
      * @return  string
      */
     public static function getPath($abbreviation = 'wcf')
@@ -1022,7 +1023,7 @@ class WCF
     /**
      * Returns a fully qualified anchor for current page.
      *
-     * @param   string      $fragment
+     * @param string $fragment
      * @return  string
      */
     public function getAnchor($fragment)
@@ -1070,13 +1071,14 @@ class WCF
      */
     public static function getRequestURI()
     {
-        return \preg_replace('~^(https?://[^/]+)(?:/.*)?$~', '$1', self::getTPL()->get('baseHref')) . $_SERVER['REQUEST_URI'];
+        return \preg_replace('~^(https?://[^/]+)(?:/.*)?$~', '$1',
+                self::getTPL()->get('baseHref')) . $_SERVER['REQUEST_URI'];
     }
 
     /**
      * Resets Zend Opcache cache if installed and enabled.
      *
-     * @param   string      $script
+     * @param string $script
      */
     public static function resetZendOpcache($script = '')
     {
@@ -1205,7 +1207,7 @@ class WCF
     /**
      * Returns true if the given API version is currently supported.
      *
-     * @param       int         $apiVersion
+     * @param int $apiVersion
      * @return      bool
      * @deprecated 5.2
      */
@@ -1273,7 +1275,8 @@ class WCF
                             );
                         }
                     } elseif (!\is_writable($fileInfo->getRealPath())) {
-                        $nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $fileInfo->getPath()) . $fileInfo->getFilename();
+                        $nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'],
+                                $fileInfo->getPath()) . $fileInfo->getFilename();
                     }
                 });
         }
@@ -1307,14 +1310,17 @@ class WCF
                             );
                         }
                     } elseif (!\is_writable($fileInfo->getRealPath())) {
-                        $nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $fileInfo->getPath()) . $fileInfo->getFilename();
+                        $nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'],
+                                $fileInfo->getPath()) . $fileInfo->getFilename();
                     }
                 });
         }
 
         if (!empty($nonWritablePaths)) {
             $maxPaths = 10;
-            throw new \RuntimeException('The following paths are not writable: ' . \implode(',', \array_slice($nonWritablePaths, 0, $maxPaths)) . (\count($nonWritablePaths) > $maxPaths ? ',' . StringUtil::HELLIP : ''));
+            throw new \RuntimeException('The following paths are not writable: ' . \implode(',',
+                    \array_slice($nonWritablePaths, 0,
+                        $maxPaths)) . (\count($nonWritablePaths) > $maxPaths ? ',' . StringUtil::HELLIP : ''));
         }
     }
 }

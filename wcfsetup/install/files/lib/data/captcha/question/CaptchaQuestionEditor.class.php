@@ -14,7 +14,7 @@ use wcf\system\cache\builder\CaptchaQuestionCacheBuilder;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Captcha\Question
  *
- * @method static   CaptchaQuestion     create(array $parameters = [])
+ * @method static CaptchaQuestion     create(array $parameters = [])
  * @method      CaptchaQuestion     getDecoratedObject()
  * @mixin       CaptchaQuestion
  */

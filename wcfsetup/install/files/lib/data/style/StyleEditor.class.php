@@ -176,7 +176,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Reads the data of a style exchange format file.
      *
-     * @param   Tar $tar
+     * @param Tar $tar
      * @return  array
      * @throws  SystemException
      */
@@ -194,9 +194,24 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
         $xpath = $xml->xpath();
 
         $data = [
-            'name' => '', 'description' => [], 'version' => '', 'image' => '', 'image2x' => '', 'copyright' => '', 'default' => false,
-            'license' => '', 'authorName' => '', 'authorURL' => '', 'templates' => '', 'images' => '', 'coverPhoto' => '',
-            'variables' => '', 'date' => '0000-00-00', 'imagesPath' => '', 'packageName' => '', 'apiVersion' => '3.0',
+            'name' => '',
+            'description' => [],
+            'version' => '',
+            'image' => '',
+            'image2x' => '',
+            'copyright' => '',
+            'default' => false,
+            'license' => '',
+            'authorName' => '',
+            'authorURL' => '',
+            'templates' => '',
+            'images' => '',
+            'coverPhoto' => '',
+            'variables' => '',
+            'date' => '0000-00-00',
+            'imagesPath' => '',
+            'packageName' => '',
+            'apiVersion' => '3.0',
         ];
 
         $categories = $xpath->query('/ns:style/*');
@@ -310,8 +325,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Reads the data of a variables.xml file.
      *
-     * @param   string      $filename
-     * @param   string      $content
+     * @param string $filename
+     * @param string $content
      * @return  array
      */
     public static function readVariablesData($filename, $content)
@@ -334,7 +349,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Returns the data of a style exchange format file.
      *
-     * @param   string      $filename
+     * @param string $filename
      * @return  array
      */
     public static function getStyleData($filename)
@@ -363,10 +378,10 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Imports a style.
      *
-     * @param   string      $filename
-     * @param   int     $packageID
-     * @param   StyleEditor $style
-     * @param   bool        $skipFontDownload
+     * @param string $filename
+     * @param int $packageID
+     * @param StyleEditor $style
+     * @param bool $skipFontDownload
      * @return  StyleEditor
      */
     public static function import($filename, $packageID = 1, ?self $style = null, $skipFontDownload = false)
@@ -472,7 +487,10 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
                         if (!isset($packageToTemplates[$packageName])) {
                             $packageToTemplates[$packageName] = [];
                         }
-                        $packageToTemplates[$packageName][] = ['index' => $val['index'], 'filename' => \implode('/', $folders)];
+                        $packageToTemplates[$packageName][] = [
+                            'index' => $val['index'],
+                            'filename' => \implode('/', $folders),
+                        ];
                     }
                 }
 
@@ -568,11 +586,13 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
             }
 
             $individualScss = Style::splitLessVariables($variables['individualScss']);
-            $variables['individualScss'] = Style::joinLessVariables($styleData['variables']['individualScss'], $individualScss['custom']);
+            $variables['individualScss'] = Style::joinLessVariables($styleData['variables']['individualScss'],
+                $individualScss['custom']);
             unset($styleData['variables']['individualScss']);
 
             $overrideScss = Style::splitLessVariables($variables['overrideScss']);
-            $variables['overrideScss'] = Style::joinLessVariables($styleData['variables']['overrideScss'], $overrideScss['custom']);
+            $variables['overrideScss'] = Style::joinLessVariables($styleData['variables']['overrideScss'],
+                $overrideScss['custom']);
             unset($styleData['variables']['overrideScss']);
 
             // import variables that have not been explicitly defined before
@@ -710,8 +730,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Saves localized style descriptions.
      *
-     * @param   StyleEditor $styleEditor
-     * @param   string[]    $descriptions
+     * @param StyleEditor $styleEditor
+     * @param string[] $descriptions
      */
     protected static function saveLocalizedDescriptions(self $styleEditor, array $descriptions)
     {
@@ -757,7 +777,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Returns available location path.
      *
-     * @param   string      $location
+     * @param string $location
      * @return  string
      */
     protected static function getFileLocation($location)
@@ -785,9 +805,9 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Exports this style.
      *
-     * @param   bool        $templates
-     * @param   bool        $images
-     * @param   string      $packageName
+     * @param bool $templates
+     * @param bool $images
+     * @param string $packageName
      */
     public function export($templates = false, $images = false, $packageName = '')
     {
@@ -797,10 +817,12 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
         // append style preview image
         if ($this->image && @\file_exists(WCF_DIR . 'images/' . $this->image)) {
-            $styleTar->add(WCF_DIR . 'images/' . $this->image, '', FileUtil::addTrailingSlash(\dirname(WCF_DIR . 'images/' . $this->image)));
+            $styleTar->add(WCF_DIR . 'images/' . $this->image, '',
+                FileUtil::addTrailingSlash(\dirname(WCF_DIR . 'images/' . $this->image)));
         }
         if ($this->image2x && @\file_exists(WCF_DIR . 'images/' . $this->image2x)) {
-            $styleTar->add(WCF_DIR . 'images/' . $this->image2x, '', FileUtil::addTrailingSlash(\dirname(WCF_DIR . 'images/' . $this->image2x)));
+            $styleTar->add(WCF_DIR . 'images/' . $this->image2x, '',
+                FileUtil::addTrailingSlash(\dirname(WCF_DIR . 'images/' . $this->image2x)));
         }
 
         // append cover photo
@@ -821,7 +843,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
         // create style info file
         $xml = new XMLWriter();
-        $xml->beginDocument('style', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/' . WSC_API_VERSION . '/style.xsd');
+        $xml->beginDocument('style', 'http://www.woltlab.com',
+            'http://www.woltlab.com/XSD/' . WSC_API_VERSION . '/style.xsd');
 
         // general block
         $xml->startElement('general');
@@ -876,7 +899,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
         $styleTar->addString(self::INFO_FILE, $xml->endDocument());
 
         // create variable list
-        $xml->beginDocument('variables', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/' . WSC_API_VERSION . '/styleVariables.xsd');
+        $xml->beginDocument('variables', 'http://www.woltlab.com',
+            'http://www.woltlab.com/XSD/' . WSC_API_VERSION . '/styleVariables.xsd');
 
         // get variables
         $sql = "SELECT      variable.variableName, value.variableValue
@@ -986,7 +1010,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
             $packageTar->add($styleTarName, '', FileUtil::addTrailingSlash(\dirname($styleTarName)));
 
             // create package.xml
-            $xml->beginDocument('package', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/' . WSC_API_VERSION . '/package.xsd', ['name' => $packageName]);
+            $xml->beginDocument('package', 'http://www.woltlab.com',
+                'http://www.woltlab.com/XSD/' . WSC_API_VERSION . '/package.xsd', ['name' => $packageName]);
 
             $xml->startElement('packageinformation');
             $xml->writeElement('packagename', $this->styleName);
@@ -1008,7 +1033,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
             $xml->endElement();
 
             $xml->startElement('requiredpackages');
-            $xml->writeElement('requiredpackage', 'com.woltlab.wcf', ['minversion' => PackageCache::getInstance()->getPackageByIdentifier('com.woltlab.wcf')->packageVersion]);
+            $xml->writeElement('requiredpackage', 'com.woltlab.wcf',
+                ['minversion' => PackageCache::getInstance()->getPackageByIdentifier('com.woltlab.wcf')->packageVersion]);
             $xml->endElement();
 
             $xml->startElement('excludedpackages');
@@ -1040,7 +1066,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Sets the variables of a style.
      *
-     * @param   string[]        $variables
+     * @param string[] $variables
      */
     public function setVariables(array $variables = [])
     {

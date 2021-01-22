@@ -80,10 +80,10 @@ final class HTTPRequest
     /**
      * Constructs a new instance of HTTPRequest.
      *
-     * @param   string      $url        URL to connect to
-     * @param   array       $options
-     * @param   mixed       $postParameters Parameters to send via POST
-     * @param   array       $files      Files to attach to the request
+     * @param string $url URL to connect to
+     * @param array $options
+     * @param mixed $postParameters Parameters to send via POST
+     * @param array $files Files to attach to the request
      */
     public function __construct($url, array $options = [], $postParameters = [], array $files = [])
     {
@@ -96,7 +96,8 @@ final class HTTPRequest
 
         // set default headers
         $language = WCF::getLanguage();
-        $this->addHeader('user-agent', "HTTP.PHP (HTTPRequest.class.php; WoltLab Suite/" . WCF_VERSION . "; " . ($language ? $language->languageCode : 'en') . ")");
+        $this->addHeader('user-agent',
+            "HTTP.PHP (HTTPRequest.class.php; WoltLab Suite/" . WCF_VERSION . "; " . ($language ? $language->languageCode : 'en') . ")");
         $this->addHeader('accept', '*/*');
         if ($language) {
             $this->addHeader('accept-language', $language->getFixedLanguageCode());
@@ -330,7 +331,7 @@ final class HTTPRequest
     /**
      * Sets options and applies default values when an option is omitted.
      *
-     * @param   array       $options
+     * @param array $options
      * @throws  \InvalidArgumentException
      */
     private function setOptions(array $options)
@@ -364,9 +365,9 @@ final class HTTPRequest
      * When an empty value is given existing headers of this name will be removed. When append
      * is set to false existing values will be overwritten.
      *
-     * @param   string      $name
-     * @param   string      $value
-     * @param   bool        $append
+     * @param string $name
+     * @param string $value
+     * @param bool $append
      */
     public function addHeader($name, $value, $append = false)
     {

@@ -35,7 +35,7 @@ abstract class AbstractAcpForm extends AbstractForm
     /**
      * Registers a new i18n value.
      *
-     * @param       I18nValue       $value
+     * @param I18nValue $value
      */
     public function registerI18nValue(I18nValue $value)
     {
@@ -55,7 +55,7 @@ abstract class AbstractAcpForm extends AbstractForm
     /**
      * Retrieves an i18n value object.
      *
-     * @param       string          $fieldName
+     * @param string $fieldName
      * @return      I18nValue|null
      */
     public function getI18nValue($fieldName)
@@ -91,7 +91,8 @@ abstract class AbstractAcpForm extends AbstractForm
         parent::validate();
 
         foreach ($this->i18nValues as $fieldName => $value) {
-            if (!I18nHandler::getInstance()->validateValue($fieldName, $value->getFlag(I18nValue::REQUIRE_I18N), $value->getFlag(I18nValue::ALLOW_EMPTY))) {
+            if (!I18nHandler::getInstance()->validateValue($fieldName, $value->getFlag(I18nValue::REQUIRE_I18N),
+                $value->getFlag(I18nValue::ALLOW_EMPTY))) {
                 throw new UserInputException(
                     $fieldName,
                     (I18nHandler::getInstance()->isPlainValue($fieldName)) ? 'empty' : 'multilingual'
@@ -103,7 +104,7 @@ abstract class AbstractAcpForm extends AbstractForm
     /**
      * Reads the i18n data for the given object.
      *
-     * @param   DatabaseObject      $databaseObject
+     * @param DatabaseObject $databaseObject
      */
     public function readDataI18n(DatabaseObject $databaseObject)
     {
@@ -123,7 +124,7 @@ abstract class AbstractAcpForm extends AbstractForm
      * Saves the i18n data for the given database object befor the changes of
      * the given database object are saved.
      *
-     * @param   DatabaseObject  $databaseObject
+     * @param DatabaseObject $databaseObject
      * @return  string[]
      */
     public function beforeSaveI18n(DatabaseObject $databaseObject)
@@ -156,8 +157,8 @@ abstract class AbstractAcpForm extends AbstractForm
      * Saves the i18n data for the given database object after the given database
      * object has been created.
      *
-     * @param   DatabaseObject  $databaseObject
-     * @param   string      $editorClass
+     * @param DatabaseObject $databaseObject
+     * @param string $editorClass
      */
     public function saveI18n(DatabaseObject $databaseObject, $editorClass)
     {

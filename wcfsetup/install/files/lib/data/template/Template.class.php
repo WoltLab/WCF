@@ -16,12 +16,12 @@ use wcf\util\FileUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Template
  *
- * @property-read   int     $templateID     unique id of the template
- * @property-read   int     $packageID      id of the package which delivers the template
- * @property-read   string      $templateName       name of the template
- * @property-read   string      $application        abbreviation of the application to which the template belongs
- * @property-read   int|null    $templateGroupID    id of the template group to which the template belongs or `null` if the template belongs to no template group
- * @property-read   int     $lastModificationTime   timestamp at which the template has been edited the last time
+ * @property-read   int $templateID     unique id of the template
+ * @property-read   int $packageID      id of the package which delivers the template
+ * @property-read   string $templateName       name of the template
+ * @property-read   string $application        abbreviation of the application to which the template belongs
+ * @property-read   int|null $templateGroupID    id of the template group to which the template belongs or `null` if the template belongs to no template group
+ * @property-read   int $lastModificationTime   timestamp at which the template has been edited the last time
  */
 class Template extends DatabaseObject
 {
@@ -112,7 +112,7 @@ class Template extends DatabaseObject
      * Returns true if current template is considered system critical and
      * may not be customized at any point.
      *
-     * @param       string          $templateName
+     * @param string $templateName
      * @return      bool
      */
     public static function isSystemCritical($templateName)

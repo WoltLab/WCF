@@ -27,7 +27,7 @@ class CustomFormNode implements IFormChildNode
     /**
      * Sets the content of this form node and returns this form node.
      *
-     * @param   string      $content
+     * @param string $content
      * @return  static      this form node
      */
     public function content($content)

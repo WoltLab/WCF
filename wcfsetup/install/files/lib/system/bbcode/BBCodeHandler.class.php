@@ -58,7 +58,7 @@ class BBCodeHandler extends SingletonFactory
     /**
      * Returns true if the BBCode with the given tag is available in the WYSIWYG editor.
      *
-     * @param   string      $bbCodeTag
+     * @param string $bbCodeTag
      * @return  bool
      */
     public function isAvailableBBCode($bbCodeTag)
@@ -79,13 +79,28 @@ class BBCodeHandler extends SingletonFactory
     /**
      * Returns a list of BBCodes displayed as buttons.
      *
-     * @param       bool         $excludeCoreBBCodes     do not return bbcodes that are available by default
+     * @param bool $excludeCoreBBCodes do not return bbcodes that are available by default
      * @return  BBCode[]
      */
     public function getButtonBBCodes($excludeCoreBBCodes = false)
     {
         $buttons = [];
-        $coreBBCodes = ['align', 'b', 'color', 'i', 'img', 'list', 's', 'size', 'sub', 'sup', 'quote', 'table', 'u', 'url'];
+        $coreBBCodes = [
+            'align',
+            'b',
+            'color',
+            'i',
+            'img',
+            'list',
+            's',
+            'size',
+            'sub',
+            'sup',
+            'quote',
+            'table',
+            'u',
+            'url',
+        ];
         foreach ($this->buttonBBCodes as $bbcode) {
             if ($excludeCoreBBCodes && \in_array($bbcode->bbcodeTag, $coreBBCodes)) {
                 continue;
@@ -111,7 +126,7 @@ class BBCodeHandler extends SingletonFactory
     /**
      * Sets the disallowed BBCodes.
      *
-     * @param   string[]    $bbCodes
+     * @param string[] $bbCodes
      */
     public function setDisallowedBBCodes(array $bbCodes)
     {
@@ -137,7 +152,8 @@ class BBCodeHandler extends SingletonFactory
     public function getHighlighterMeta()
     {
         if ($this->highlighterMeta === null) {
-            $this->highlighterMeta = JSON::decode(\preg_replace('/.*\/\*!START\*\/\s*const\s*metadata\s*=\s*(.*)\s*;\s*\/\*!END\*\/.*/s', '\\1', \file_get_contents(WCF_DIR . '/js/WoltLabSuite/Core/prism-meta.js')));
+            $this->highlighterMeta = JSON::decode(\preg_replace('/.*\/\*!START\*\/\s*const\s*metadata\s*=\s*(.*)\s*;\s*\/\*!END\*\/.*/s',
+                '\\1', \file_get_contents(WCF_DIR . '/js/WoltLabSuite/Core/prism-meta.js')));
         }
 
         return $this->highlighterMeta;

@@ -24,7 +24,7 @@ class UserMailbox extends Mailbox
     /**
      * Creates a new Mailbox.
      *
-     * @param   User    $user   User object belonging to this Mailbox
+     * @param User $user User object belonging to this Mailbox
      */
     public function __construct(User $user)
     {

@@ -280,11 +280,13 @@ abstract class AbstractCategoryAddForm extends AbstractForm
             $updateData = [];
             if ($this->objectType->getProcessor()->hasDescription() && !I18nHandler::getInstance()->isPlainValue('description')) {
                 $updateData['description'] = $this->objectType->getProcessor()->getI18nLangVarPrefix() . '.description.category' . $categoryID;
-                I18nHandler::getInstance()->save('description', $updateData['description'], $this->objectType->getProcessor()->getDescriptionLangVarCategory(), $this->packageID);
+                I18nHandler::getInstance()->save('description', $updateData['description'],
+                    $this->objectType->getProcessor()->getDescriptionLangVarCategory(), $this->packageID);
             }
             if (!I18nHandler::getInstance()->isPlainValue('title')) {
                 $updateData['title'] = $this->objectType->getProcessor()->getI18nLangVarPrefix() . '.title.category' . $categoryID;
-                I18nHandler::getInstance()->save('title', $updateData['title'], $this->objectType->getProcessor()->getTitleLangVarCategory(), $this->packageID);
+                I18nHandler::getInstance()->save('title', $updateData['title'],
+                    $this->objectType->getProcessor()->getTitleLangVarCategory(), $this->packageID);
             }
 
             // update description/title
@@ -334,7 +336,8 @@ abstract class AbstractCategoryAddForm extends AbstractForm
             }
         }
 
-        if ($this->objectType->getProcessor()->hasDescription() && !I18nHandler::getInstance()->validateValue('description', false, !$this->objectType->getProcessor()->forceDescription())) {
+        if ($this->objectType->getProcessor()->hasDescription() && !I18nHandler::getInstance()->validateValue('description',
+                false, !$this->objectType->getProcessor()->forceDescription())) {
             if (I18nHandler::getInstance()->isPlainValue('description')) {
                 throw new UserInputException('description');
             } else {

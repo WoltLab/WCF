@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Page
  *
- * @property    TemplateList    $objectList
+ * @property    TemplateList $objectList
  */
 class TemplateListPage extends SortablePage
 {
@@ -115,7 +115,8 @@ class TemplateListPage extends SortablePage
         }
 
         if ($this->searchTemplateName) {
-            $this->objectList->getConditionBuilder()->add('templateName LIKE ?', ['%' . $this->searchTemplateName . '%']);
+            $this->objectList->getConditionBuilder()->add('templateName LIKE ?',
+                ['%' . $this->searchTemplateName . '%']);
         }
         if ($this->application) {
             $this->objectList->getConditionBuilder()->add('application = ?', [$this->application]);

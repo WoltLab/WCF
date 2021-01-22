@@ -43,9 +43,9 @@ class UserCoverPhoto implements IUserCoverPhoto
     /**
      * UserCoverPhoto constructor.
      *
-     * @param       int         $userID
-     * @param       string          $coverPhotoHash
-     * @param       string          $coverPhotoExtension
+     * @param int $userID
+     * @param string $coverPhotoHash
+     * @param string $coverPhotoExtension
      */
     public function __construct($userID, $coverPhotoHash, $coverPhotoExtension)
     {
@@ -85,7 +85,8 @@ class UserCoverPhoto implements IUserCoverPhoto
      */
     public function getFilename()
     {
-        return \substr($this->coverPhotoHash, 0, 2) . '/' . $this->userID . '-' . $this->coverPhotoHash . '.' . $this->coverPhotoExtension;
+        return \substr($this->coverPhotoHash, 0,
+                2) . '/' . $this->userID . '-' . $this->coverPhotoHash . '.' . $this->coverPhotoExtension;
     }
 
     /**

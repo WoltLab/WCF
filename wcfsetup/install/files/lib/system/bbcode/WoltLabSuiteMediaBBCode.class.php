@@ -75,7 +75,8 @@ class WoltLabSuiteMediaBBCode extends AbstractBBCode
                     return WCF::getTPL()->fetch('mediaBBCodeTag', 'wcf', [
                         'mediaLink' => $this->getLink($media),
                         'removeLinks' => $removeLinks,
-                        'thumbnailLink' => $thumbnailSize !== 'original' ? $this->getThumbnailLink($media, $thumbnailSize) : '',
+                        'thumbnailLink' => $thumbnailSize !== 'original' ? $this->getThumbnailLink($media,
+                            $thumbnailSize) : '',
                     ]);
                 }
 
@@ -93,7 +94,7 @@ class WoltLabSuiteMediaBBCode extends AbstractBBCode
     /**
      * Returns the link to the given media file (while considering the value of `$forceFrontendLinks`).
      *
-     * @param   ViewableMedia   $media      linked media file
+     * @param ViewableMedia $media linked media file
      * @return  string              link to media file
      */
     protected function getLink(ViewableMedia $media)
@@ -111,8 +112,8 @@ class WoltLabSuiteMediaBBCode extends AbstractBBCode
     /**
      * Returns the thumbnail link to the given media file (while considering the value of `$forceFrontendLinks`).
      *
-     * @param   ViewableMedia   $media      linked media file
-     * @param   string  $thumbnailSize      thumbnail size
+     * @param ViewableMedia $media linked media file
+     * @param string $thumbnailSize thumbnail size
      * @return  string              link to media thumbnail
      */
     protected function getThumbnailLink(ViewableMedia $media, $thumbnailSize)

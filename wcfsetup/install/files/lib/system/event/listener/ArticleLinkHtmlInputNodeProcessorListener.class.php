@@ -33,7 +33,8 @@ class ArticleLinkHtmlInputNodeProcessorListener extends AbstractHtmlInputNodePro
         if (!empty($articleContentIDs)) {
             // read linked article contents
             $articleContentList = new ArticleContentList();
-            $articleContentList->getConditionBuilder()->add('article_content.articleContentID IN (?)', [$articleContentIDs]);
+            $articleContentList->getConditionBuilder()->add('article_content.articleContentID IN (?)',
+                [$articleContentIDs]);
             $articleContentList->readObjects();
 
             // collect ids of the articles

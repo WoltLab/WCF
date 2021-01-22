@@ -25,7 +25,7 @@ interface IFormChildNode extends IFormNode
     /**
      * Sets the parent node of this node and returns this node.
      *
-     * @param   IFormParentNode     $parentNode new parent node of this node
+     * @param IFormParentNode $parentNode new parent node of this node
      * @return  static                  this node
      *
      * @throws  \BadMethodCallException         if the parent node has already been set

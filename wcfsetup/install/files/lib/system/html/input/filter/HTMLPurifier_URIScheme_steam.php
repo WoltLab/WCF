@@ -1,5 +1,6 @@
 <?php
 // @codingStandardsIgnoreFile
+
 /**
  * Steam direct join protocol
  */
@@ -14,7 +15,7 @@ class HTMLPurifier_URIScheme_steam extends HTMLPurifier_URIScheme
     public function doValidate(&$uri, $config, $context)
     {
         $uri->userinfo = null;
-        
+
         return true;
     }
 }

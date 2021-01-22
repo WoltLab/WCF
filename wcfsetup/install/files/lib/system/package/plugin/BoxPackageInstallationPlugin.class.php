@@ -68,7 +68,17 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
      * list of element names which are not considered as additional data
      * @var string[]
      */
-    public static $reservedTags = ['boxType', 'content', 'cssClassName', 'name', 'objectType', 'position', 'showHeader', 'visibilityExceptions', 'visibleEverywhere'];
+    public static $reservedTags = [
+        'boxType',
+        'content',
+        'cssClassName',
+        'name',
+        'objectType',
+        'position',
+        'showHeader',
+        'visibilityExceptions',
+        'visibleEverywhere',
+    ];
 
     /**
      * @inheritDoc
@@ -164,7 +174,18 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
         $isMultilingual = false;
         $position = $data['elements']['position'];
 
-        if (!\in_array($position, ['bottom', 'contentBottom', 'contentTop', 'footer', 'footerBoxes', 'headerBoxes', 'hero', 'sidebarLeft', 'sidebarRight', 'top'])) {
+        if (!\in_array($position, [
+            'bottom',
+            'contentBottom',
+            'contentTop',
+            'footer',
+            'footerBoxes',
+            'headerBoxes',
+            'hero',
+            'sidebarLeft',
+            'sidebarRight',
+            'top',
+        ])) {
             throw new SystemException("Unknown box position '{$position}' for box '{$identifier}'");
         }
 
@@ -203,9 +224,9 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 
                 $isMultilingual = true;
 
-                // fallthrough
+            // fallthrough
 
-                // no break
+            // no break
             case 'html':
             case 'text':
             case 'tpl':
@@ -290,7 +311,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
      * Returns the show order for a new item that will append it to the current
      * menu or parent item.
      *
-     * @param   string      $position   box position
+     * @param string $position box position
      * @return  int
      */
     protected function getItemOrder($position)
@@ -449,7 +470,11 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 
             // save page ids
             foreach ($pageIDs as $pageID) {
-                $insertStatement->execute([$boxes[$boxIdentifier]->boxID, $pageID, $boxes[$boxIdentifier]->visibleEverywhere ? 0 : 1]);
+                $insertStatement->execute([
+                    $boxes[$boxIdentifier]->boxID,
+                    $pageID,
+                    $boxes[$boxIdentifier]->visibleEverywhere ? 0 : 1,
+                ]);
             }
         }
     }
@@ -699,8 +724,10 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 
         $objectTypeData = null;
         if (isset($data['objectType'])) {
-            $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.boxController', $data['objectType']);
-            if ($objectType !== null && \is_subclass_of($objectType->className, AbstractDatabaseObjectListBoxController::class)) {
+            $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.boxController',
+                $data['objectType']);
+            if ($objectType !== null && \is_subclass_of($objectType->className,
+                    AbstractDatabaseObjectListBoxController::class)) {
                 /** @var AbstractDatabaseObjectListBoxController $boxController */
                 $boxController = new $objectType->className();
 
@@ -821,7 +848,8 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 
         foreach ($formData['name_i18n'] as $languageID => $name) {
             $nameElement = $document->createElement('name', $this->getAutoCdataValue($name));
-            $nameElement->setAttribute('language', LanguageFactory::getInstance()->getLanguage($languageID)->languageCode);
+            $nameElement->setAttribute('language',
+                LanguageFactory::getInstance()->getLanguage($languageID)->languageCode);
 
             $box->appendChild($nameElement);
         }
@@ -890,8 +918,10 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
         }
 
         if (isset($data['objectType'])) {
-            $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.boxController', $data['objectType']);
-            if ($objectType !== null && \is_subclass_of($objectType->className, AbstractDatabaseObjectListBoxController::class)) {
+            $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.boxController',
+                $data['objectType']);
+            if ($objectType !== null && \is_subclass_of($objectType->className,
+                    AbstractDatabaseObjectListBoxController::class)) {
                 /** @var AbstractDatabaseObjectListBoxController $boxController */
                 $boxController = new $objectType->className();
 

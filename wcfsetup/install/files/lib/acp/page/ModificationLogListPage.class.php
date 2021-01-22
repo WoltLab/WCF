@@ -226,14 +226,17 @@ class ModificationLogListPage extends SortablePage
                         }
                     }
 
-                    $this->objectList->getConditionBuilder()->add('modification_log.objectTypeID IN (?)', [$objectTypeIDs]);
+                    $this->objectList->getConditionBuilder()->add('modification_log.objectTypeID IN (?)',
+                        [$objectTypeIDs]);
                 } else {
-                    $this->objectList->getConditionBuilder()->add('modification_log.objectTypeID IN (?)', [$this->availableObjectTypeIDs]);
+                    $this->objectList->getConditionBuilder()->add('modification_log.objectTypeID IN (?)',
+                        [$this->availableObjectTypeIDs]);
                 }
             }
 
             if (!empty($this->username)) {
-                $this->objectList->getConditionBuilder()->add('modification_log.username LIKE ?', [\addcslashes($this->username, '%') . '%']);
+                $this->objectList->getConditionBuilder()->add('modification_log.username LIKE ?',
+                    [\addcslashes($this->username, '%') . '%']);
             }
 
             $afterDate = $beforeDate = 0;
@@ -286,7 +289,8 @@ class ModificationLogListPage extends SortablePage
                 }
 
                 if (isset($itemsPerType[$objectType->objectTypeID])) {
-                    $this->logItems = \array_merge($this->logItems, $processor->processItems($itemsPerType[$objectType->objectTypeID]));
+                    $this->logItems = \array_merge($this->logItems,
+                        $processor->processItems($itemsPerType[$objectType->objectTypeID]));
                 }
             }
         }

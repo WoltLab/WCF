@@ -56,7 +56,24 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
      * list of names of tags which aren't considered as additional data
      * @var string[]
      */
-    public static $reservedTags = ['name', 'optiontype', 'defaultvalue', 'admindefaultvalue', 'userdefaultvalue', 'moddefaultvalue', 'validationpattern', 'showorder', 'categoryname', 'selectoptions', 'enableoptions', 'permissions', 'options', 'attrs', 'cdata', 'usersonly'];
+    public static $reservedTags = [
+        'name',
+        'optiontype',
+        'defaultvalue',
+        'admindefaultvalue',
+        'userdefaultvalue',
+        'moddefaultvalue',
+        'validationpattern',
+        'showorder',
+        'categoryname',
+        'selectoptions',
+        'enableoptions',
+        'permissions',
+        'options',
+        'attrs',
+        'cdata',
+        'usersonly',
+    ];
 
     /**
      * @inheritDoc
@@ -306,7 +323,16 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 
         switch ($this->entryType) {
             case 'options':
-                foreach (['adminDefaultValue', 'modDefaultValue', 'userDefaultValue', 'usersOnly', 'excludedInTinyBuild', 'wildcard'] as $optionalPropertyName) {
+                foreach (
+                    [
+                        'adminDefaultValue',
+                        'modDefaultValue',
+                        'userDefaultValue',
+                        'usersOnly',
+                        'excludedInTinyBuild',
+                        'wildcard',
+                    ] as $optionalPropertyName
+                ) {
                     $elementName = \strtolower($optionalPropertyName);
                     if ($optionalPropertyName === 'excludedInTinyBuild') {
                         $elementName = 'excludedInTinyBuild';
@@ -421,11 +447,13 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
                     $unqualifiedClassname = \str_replace('.class.php', '', $fileObject->getFilename());
                     $classname = $application->getAbbreviation() . '\\system\\option\\user\\group\\' . $unqualifiedClassname;
 
-                    if (!\is_subclass_of($classname, IOptionType::class) || !(new \ReflectionClass($classname))->isInstantiable()) {
+                    if (!\is_subclass_of($classname,
+                            IOptionType::class) || !(new \ReflectionClass($classname))->isInstantiable()) {
                         continue;
                     }
 
-                    $optionType = \str_replace($optionTypePrefix . 'UserGroupOptionType.class.php', '', $fileObject->getFilename());
+                    $optionType = \str_replace($optionTypePrefix . 'UserGroupOptionType.class.php', '',
+                        $fileObject->getFilename());
 
                     // only make first letter lowercase if the first two letters are not uppercase
                     // relevant cases: `URL` and the `WBB` prefix

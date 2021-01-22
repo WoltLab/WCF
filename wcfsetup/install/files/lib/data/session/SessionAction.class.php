@@ -106,7 +106,8 @@ class SessionAction extends AbstractDatabaseObjectAction
             $pollData['notification'] = UserNotificationHandler::getInstance()->getLatestNotification($lastRequestTime);
 
             if (!empty($pollData['notification'])) {
-                UserStorageHandler::getInstance()->update(WCF::getUser()->userID, '__notification_lastRequestTime', TIME_NOW);
+                UserStorageHandler::getInstance()->update(WCF::getUser()->userID, '__notification_lastRequestTime',
+                    TIME_NOW);
             }
         }
 

@@ -44,7 +44,7 @@ interface ICondition extends IDatabaseObjectProcessor
      * Extracts all needed data from the given condition to pre-fill the output
      * for editing the given condition.
      *
-     * @param   Condition   $condition
+     * @param Condition $condition
      */
     public function setData(Condition $condition);
 

@@ -16,7 +16,7 @@ class PlainTextMimePart extends RecipientAwareTextMimePart
     /**
      * Creates a new PlainTextMimePart.
      *
-     * @param   string  $content    Content of this text part.
+     * @param string $content Content of this text part.
      */
     public function __construct($content)
     {

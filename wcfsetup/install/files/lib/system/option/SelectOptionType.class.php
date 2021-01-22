@@ -59,7 +59,7 @@ class SelectOptionType extends RadioButtonOptionType
     /**
      * Prepares JSON-encoded values for disabling or enabling dependent options.
      *
-     * @param   Option      $option
+     * @param Option $option
      * @return  array
      */
     protected function parseEnableOptions(Option $option)

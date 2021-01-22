@@ -17,10 +17,10 @@ trait TLegacyUserPropertyAccess
     /**
      * Returns the value of a object data variable with the given name.
      *
+     * @param string $name
+     * @return  mixed
      * @see \wcf\data\IStorableObject::__get()
      *
-     * @param   string      $name
-     * @return  mixed
      */
     public function __get($name)
     {

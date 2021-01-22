@@ -49,10 +49,10 @@ class RemoteFile extends File
     /**
      * Opens a new connection to a remote host.
      *
-     * @param   string      $host
-     * @param   int     $port
-     * @param   int     $timeout
-     * @param   array       $options
+     * @param string $host
+     * @param int $port
+     * @param int $timeout
+     * @param array $options
      * @throws  SystemException
      */
     public function __construct($host, $port, $timeout = 30, $options = [])
@@ -108,7 +108,7 @@ class RemoteFile extends File
      * Switches TLS support for this connection.
      * Usually used in combination with 'STARTTLS'
      *
-     * @param   bool    $enable     Whether TLS support should be enabled
+     * @param bool $enable Whether TLS support should be enabled
      * @return  bool            True on success, false otherwise
      */
     public function setTLS($enable)

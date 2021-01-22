@@ -62,9 +62,9 @@ class ArticleCategoryCache extends SingletonFactory
     /**
      * Counts the articles contained in this category and its children.
      *
-     * @param       int[]       $categoryToParent
-     * @param       int[]       $articles
-     * @param       int         $categoryID
+     * @param int[] $categoryToParent
+     * @param int[] $articles
+     * @param int $categoryID
      * @return      int
      */
     protected function countArticles(array &$categoryToParent, array &$articles, $categoryID)
@@ -87,7 +87,7 @@ class ArticleCategoryCache extends SingletonFactory
     /**
      * Returns the number of articles in the category with the given id.
      *
-     * @param   int     $categoryID
+     * @param int $categoryID
      * @return  int
      */
     public function getArticles($categoryID)

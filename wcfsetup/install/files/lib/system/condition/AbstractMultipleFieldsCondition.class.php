@@ -35,7 +35,7 @@ abstract class AbstractMultipleFieldsCondition extends AbstractCondition
     /**
      * Returns the description element for the HTML output.
      *
-     * @param   string      $identifier
+     * @param string $identifier
      * @return  string
      */
     protected function getDescriptionElement($identifier)
@@ -50,7 +50,7 @@ abstract class AbstractMultipleFieldsCondition extends AbstractCondition
     /**
      * Returns the error class for the definition list element.
      *
-     * @param   string      $identifier
+     * @param string $identifier
      * @return  string
      */
     public function getErrorClass($identifier)
@@ -65,7 +65,7 @@ abstract class AbstractMultipleFieldsCondition extends AbstractCondition
     /**
      * Returns the error message element for the HTML output.
      *
-     * @param   string      $identifier
+     * @param string $identifier
      * @return  string
      */
     protected function getErrorMessageElement($identifier)
@@ -80,7 +80,7 @@ abstract class AbstractMultipleFieldsCondition extends AbstractCondition
     /**
      * Returns the label of the input element.
      *
-     * @param   string      $identifier
+     * @param string $identifier
      * @return  string
      */
     protected function getLabel($identifier)

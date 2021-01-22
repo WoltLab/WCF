@@ -20,15 +20,15 @@ interface IGuiPackageInstallationPlugin extends IIdempotentPackageInstallationPl
      * Adds a new entry of this pip based on the data provided by the given
      * form.
      *
-     * @param   IFormDocument       $form
+     * @param IFormDocument $form
      */
     public function addEntry(IFormDocument $form);
 
     /**
      * Deletes an existing pip entry and removes it from database.
      *
-     * @param   string      $identifier     identifier of deleted entry
-     * @param   bool        $addDeleteInstruction   if `true`, an explicit delete instruction is added
+     * @param string $identifier identifier of deleted entry
+     * @param bool $addDeleteInstruction if `true`, an explicit delete instruction is added
      *
      * @throws  \InvalidArgumentException   if no such entry exists or delete instruction should be added but is not supported
      */
@@ -39,8 +39,8 @@ interface IGuiPackageInstallationPlugin extends IIdempotentPackageInstallationPl
      * provided by the given form and returns the new identifier of the entry
      * (or the old identifier if it has not changed).
      *
-     * @param   IFormDocument       $form
-     * @param   string          $identifier
+     * @param IFormDocument $form
+     * @param string $identifier
      * @return  string          new identifier
      */
     public function editEntry(IFormDocument $form, $identifier);
@@ -63,7 +63,7 @@ interface IGuiPackageInstallationPlugin extends IIdempotentPackageInstallationPl
      * Informs the pip of the identifier of the edited entry if the form to
      * edit that entry has been submitted.
      *
-     * @param   string      $identifier
+     * @param string $identifier
      *
      * @throws  \InvalidArgumentException   if no such entry exists
      */
@@ -74,8 +74,8 @@ interface IGuiPackageInstallationPlugin extends IIdempotentPackageInstallationPl
      * given form and returns `true`. If no entry with the given identifier
      * exists, `false` is returned.
      *
-     * @param   string          $identifier
-     * @param   IFormDocument       $document
+     * @param string $identifier
+     * @param IFormDocument $document
      * @return  bool
      */
     public function setEntryData($identifier, IFormDocument $document);
@@ -95,14 +95,14 @@ interface IGuiPackageInstallationPlugin extends IIdempotentPackageInstallationPl
      * Populates the given form to be used for adding and editing entries
      * managed by this PIP.
      *
-     * @param   IFormDocument       $form
+     * @param IFormDocument $form
      */
     public function populateForm(IFormDocument $form);
 
     /**
      * Sets the type of the currently handled pip entries.
      *
-     * @param   string      $entryType  currently handled pip entry type
+     * @param string $entryType currently handled pip entry type
      *
      * @throws  \InvalidArgumentException   if the given entry type is invalid (see `getEntryTypes()` method)
      */

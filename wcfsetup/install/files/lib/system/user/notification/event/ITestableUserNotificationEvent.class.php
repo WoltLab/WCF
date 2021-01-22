@@ -34,7 +34,7 @@ interface ITestableUserNotificationEvent extends IUserNotificationEvent
     /**
      * Sets the description of the covered test case.
      *
-     * @param   string      $description
+     * @param string $description
      */
     public function setTestCaseDescription($description);
 
@@ -47,7 +47,7 @@ interface ITestableUserNotificationEvent extends IUserNotificationEvent
      * Returns additional data for given user notification object.
      * The test data has to be the same data given when an actual event is fired.
      *
-     * @param   IUserNotificationObject     $object
+     * @param IUserNotificationObject $object
      * @return  array
      */
     public static function getTestAdditionalData(IUserNotificationObject $object);
@@ -56,8 +56,8 @@ interface ITestableUserNotificationEvent extends IUserNotificationEvent
      * Returns a test user notification object for the given recipient and
      * caused by the given author.
      *
-     * @param   UserProfile $recipient
-     * @param   UserProfile $author
+     * @param UserProfile $recipient
+     * @param UserProfile $author
      * @return  IUserNotificationObject[]
      */
     public static function getTestObjects(UserProfile $recipient, UserProfile $author);

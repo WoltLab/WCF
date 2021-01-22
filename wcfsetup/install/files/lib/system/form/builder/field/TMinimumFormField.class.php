@@ -34,7 +34,7 @@ trait TMinimumFormField
      * Sets the minimum of the values of this field. If `null` is passed, the
      * minimum is removed.
      *
-     * @param   null|number $minimum    minimum field value
+     * @param null|number $minimum minimum field value
      * @return  static              this field
      *
      * @throws  \InvalidArgumentException   if the given minimum is no number or otherwise invalid

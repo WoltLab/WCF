@@ -23,8 +23,8 @@ class PreparedStatementConditionBuilder extends ConditionBuilder
     /**
      * Adds a new condition. The parameters array has to be a numbered array.
      *
-     * @param   string      $condition
-     * @param   array       $parameters
+     * @param string $condition
+     * @param array $parameters
      */
     public function add($condition, array $parameters = [])
     {

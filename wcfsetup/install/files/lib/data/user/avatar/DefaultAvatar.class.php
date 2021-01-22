@@ -30,7 +30,7 @@ class DefaultAvatar implements IUserAvatar
     /**
      * DefaultAvatar constructor.
      *
-     * @param       string          $username       username for use with the 'initials' avatar type
+     * @param string $username username for use with the 'initials' avatar type
      */
     public function __construct($username = '')
     {
@@ -123,9 +123,9 @@ SVG;
     /**
      * Returns the perceived luminance of the given color.
      *
-     * @param       int         $r
-     * @param       int         $g
-     * @param       int         $b
+     * @param int $r
+     * @param int $g
+     * @param int $b
      * @return      float           luminance expressed in a float in the range of 0 and 1
      */
     protected function getPerceptiveLuminance($r, $g, $b)

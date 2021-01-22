@@ -76,10 +76,10 @@ class PageLocationManager extends SingletonFactory
      * Appends a parent location to the stack, the later it is added the lower
      * is its assumed priority when matching suitable menu items.
      *
-     * @param   string          $identifier     internal page identifier
-     * @param   int         $pageObjectID       page object id
-     * @param   ITitledLinkObject   $locationObject     optional label for breadcrumbs usage
-     * @param       bool                 $useAsParentLocation
+     * @param string $identifier internal page identifier
+     * @param int $pageObjectID page object id
+     * @param ITitledLinkObject $locationObject optional label for breadcrumbs usage
+     * @param bool $useAsParentLocation
      * @throws  SystemException
      */
     public function addParentLocation(

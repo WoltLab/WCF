@@ -20,7 +20,7 @@ use wcf\util\FileUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Option
  *
- * @method static   Option      create(array $parameters = [])
+ * @method static Option      create(array $parameters = [])
  * @method      Option      getDecoratedObject()
  * @mixin       Option
  */
@@ -40,7 +40,7 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Imports the given options.
      *
-     * @param   array       $options    name to value
+     * @param array $options name to value
      */
     public static function import(array $options)
     {
@@ -64,7 +64,7 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Updates the values of the given options.
      *
-     * @param   array       $options    id to value
+     * @param array $options id to value
      */
     public static function updateAll(array $options)
     {
@@ -148,8 +148,10 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
         // Secret options cannot be enabled through the regular options, they need to be manually
         // defined in the Core's `config.inc.php` to be activated.
-        $attachmentStorage = new Option(null, ['optionName' => 'attachment_storage', 'optionType' => 'text', 'optionValue' => null]);
-        $enableEnterpriseMode = new Option(null, ['optionName' => 'enable_enterprise_mode', 'optionType' => 'integer', 'optionValue' => 0]);
+        $attachmentStorage = new Option(null,
+            ['optionName' => 'attachment_storage', 'optionType' => 'text', 'optionValue' => null]);
+        $enableEnterpriseMode = new Option(null,
+            ['optionName' => 'enable_enterprise_mode', 'optionType' => 'integer', 'optionValue' => 0]);
         $secretOptions = [
             $attachmentStorage->getConstantName() => $attachmentStorage,
             $enableEnterpriseMode->getConstantName() => $enableEnterpriseMode,

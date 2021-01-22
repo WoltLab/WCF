@@ -61,7 +61,8 @@ class LoginForm extends \wcf\acp\form\LoginForm
      */
     protected function performRedirect(bool $needsMultifactor = false)
     {
-        if (empty($this->url) || \mb_stripos($this->url, '?login/') !== false || \mb_stripos($this->url, '/login/') !== false) {
+        if (empty($this->url) || \mb_stripos($this->url, '?login/') !== false || \mb_stripos($this->url,
+                '/login/') !== false) {
             $this->url = LinkHandler::getInstance()->getLink();
         }
 

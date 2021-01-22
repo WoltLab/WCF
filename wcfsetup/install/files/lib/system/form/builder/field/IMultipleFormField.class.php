@@ -51,7 +51,7 @@ interface IMultipleFormField extends IFormField
      * Sets the maximum number of values that can be selected or set and returns
      * this field. To unset the maximum number, pass `IMultipleFormField::NO_MAXIMUM_MULTIPLES`.
      *
-     * @param   int     $maximum    maximum number of values
+     * @param int $maximum maximum number of values
      * @return  static              this field
      *
      * @throws  \InvalidArgumentException   if the given maximum number of values is invalid
@@ -62,7 +62,7 @@ interface IMultipleFormField extends IFormField
      * Sets the minimum number of values that can be selected or set and returns
      * this field.
      *
-     * @param   int     $minimum    maximum number of values
+     * @param int $minimum maximum number of values
      * @return  static              this field
      *
      * @throws  \InvalidArgumentException   if the given minimum number of values is invalid
@@ -72,7 +72,7 @@ interface IMultipleFormField extends IFormField
     /**
      * Sets whether multiple values can be selected or set and returns this field.
      *
-     * @param   bool        $multiple   determines if multiple values can be selected/set
+     * @param bool $multiple determines if multiple values can be selected/set
      * @return  static              this field
      */
     public function multiple($multiple = true);

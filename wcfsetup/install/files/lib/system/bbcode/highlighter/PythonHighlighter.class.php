@@ -16,7 +16,16 @@ class PythonHighlighter extends Highlighter
     /**
      * @inheritDoc
      */
-    protected $separators = ['(', ')', /* from __future__ import braces '{', '}', */'[', ']', ';', '.', ',', ':'];
+    protected $separators = [
+        '(',
+        ')', /* from __future__ import braces '{', '}', */
+        '[',
+        ']',
+        ';',
+        '.',
+        ',',
+        ':',
+    ];
 
     /**
      * @inheritDoc
@@ -36,8 +45,39 @@ class PythonHighlighter extends Highlighter
     /**
      * @inheritDoc
      */
-    protected $operators = ['+=', '-=', '**=', '*=', '//=', '/=', '%=', '~=', '+', '-', '**', '*', '//', '/', '%',
-        '&=', '<<=', '>>=', '^=', '~', '&', '^', '|', '<<', '>>', '=', '!=', '<', '>', '<=', '>=', ];
+    protected $operators = [
+        '+=',
+        '-=',
+        '**=',
+        '*=',
+        '//=',
+        '/=',
+        '%=',
+        '~=',
+        '+',
+        '-',
+        '**',
+        '*',
+        '//',
+        '/',
+        '%',
+        '&=',
+        '<<=',
+        '>>=',
+        '^=',
+        '~',
+        '&',
+        '^',
+        '|',
+        '<<',
+        '>>',
+        '=',
+        '!=',
+        '<',
+        '>',
+        '<=',
+        '>=',
+    ];
 
     /**
      * @inheritDoc

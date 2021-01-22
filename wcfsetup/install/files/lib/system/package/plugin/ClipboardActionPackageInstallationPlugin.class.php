@@ -28,7 +28,8 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Package\Plugin
  */
-class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin
+class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
+    IGuiPackageInstallationPlugin
 {
     use TXmlGuiPackageInstallationPlugin;
 
@@ -228,8 +229,10 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
                         )
                     ) {
                         $clipboardActionList = new ClipboardActionList();
-                        $clipboardActionList->getConditionBuilder()->add('actionName = ?', [$actionNameFormField->getSaveValue()]);
-                        $clipboardActionList->getConditionBuilder()->add('actionClassName = ?', [$formField->getSaveValue()]);
+                        $clipboardActionList->getConditionBuilder()->add('actionName = ?',
+                            [$actionNameFormField->getSaveValue()]);
+                        $clipboardActionList->getConditionBuilder()->add('actionClassName = ?',
+                            [$formField->getSaveValue()]);
 
                         if ($clipboardActionList->countObjects() > 0) {
                             $actionNameFormField->addValidationError(
@@ -372,9 +375,11 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
     {
         $actionClassName = $element->getElementsByTagName('actionclassname')->item(0)->nodeValue;
 
-        $this->handleDelete([[
-            'attributes' => ['name' => $element->getAttribute('name')],
-            'elements' => ['actionclassname' => $actionClassName],
-        ]]);
+        $this->handleDelete([
+            [
+                'attributes' => ['name' => $element->getAttribute('name')],
+                'elements' => ['actionclassname' => $actionClassName],
+            ],
+        ]);
     }
 }

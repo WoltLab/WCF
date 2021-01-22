@@ -67,7 +67,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction
     /**
      * Returns a data importer.
      *
-     * @param   string      $type
+     * @param string $type
      * @return  IImporter
      * @throws  SystemException
      */
@@ -87,8 +87,8 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction
     /**
      * Returns a new id from id mapping.
      *
-     * @param   string      $type
-     * @param   mixed       $oldID
+     * @param string $type
+     * @param mixed $oldID
      * @return  int     $newID
      */
     public function getNewID($type, $oldID)
@@ -131,9 +131,9 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction
     /**
      * Saves an id mapping.
      *
-     * @param   string      $type
-     * @param   int     $oldID
-     * @param   int     $newID
+     * @param string $type
+     * @param int $oldID
+     * @param int $newID
      */
     public function saveNewID($type, $oldID, $newID)
     {
@@ -175,7 +175,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction
     /**
      * Sets the user merge mode.
      *
-     * @param   int     $mode
+     * @param int $mode
      */
     public function setUserMergeMode($mode)
     {
@@ -195,7 +195,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction
     /**
      * Sets the import hash.
      *
-     * @param   string      $hash
+     * @param string $hash
      */
     public function setImportHash($hash)
     {

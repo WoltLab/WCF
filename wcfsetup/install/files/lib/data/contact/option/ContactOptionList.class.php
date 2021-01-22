@@ -16,7 +16,7 @@ use wcf\data\custom\option\CustomOptionList;
  * @method  ContactOption       current()
  * @method  ContactOption[]     getObjects()
  * @method  ContactOption|null  search($objectID)
- * @property    ContactOption[]     $objects
+ * @property    ContactOption[] $objects
  */
 class ContactOptionList extends CustomOptionList
 {

@@ -25,7 +25,7 @@ interface IMaximumFormField extends IFormField
      * Sets the maximum of the values of this field. If `null` is passed, the
      * maximum is removed.
      *
-     * @param   null|number $maximum    maximum field value
+     * @param null|number $maximum maximum field value
      * @return  static              this field
      *
      * @throws  \InvalidArgumentException   if the given maximum is no number or otherwise invalid

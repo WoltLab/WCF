@@ -31,7 +31,10 @@ class PackagePage extends AbstractPage
     /**
      * @inheritDoc
      */
-    public $neededPermissions = ['admin.configuration.package.canUpdatePackage', 'admin.configuration.package.canUninstallPackage'];
+    public $neededPermissions = [
+        'admin.configuration.package.canUpdatePackage',
+        'admin.configuration.package.canUninstallPackage',
+    ];
 
     /**
      * id of the package

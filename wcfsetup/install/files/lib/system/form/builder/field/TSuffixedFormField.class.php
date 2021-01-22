@@ -35,8 +35,8 @@ trait TSuffixedFormField
      * Sets the suffix of this field using the given language item and returns
      * this element. If `null` is passed, the suffix is removed.
      *
-     * @param   null|string $languageItem   language item containing the suffix or `null` to unset suffix
-     * @param   array       $variables  additional variables used when resolving the language item
+     * @param null|string $languageItem language item containing the suffix or `null` to unset suffix
+     * @param array $variables additional variables used when resolving the language item
      * @return  static              this field
      *
      * @throws  \InvalidArgumentException   if the given language item is no or otherwise invalid

@@ -37,8 +37,8 @@ class BackgroundQueueHandler extends SingletonFactory
      * Enqueues the given job(s) for execution in the specified number of
      * seconds. Defaults to "as soon as possible" (0 seconds).
      *
-     * @param   mixed   $jobs   Either an instance of \wcf\system\background\job\AbstractBackgroundJob or an array of these
-     * @param   int $time   Minimum number of seconds to wait before performing the job.
+     * @param mixed $jobs Either an instance of \wcf\system\background\job\AbstractBackgroundJob or an array of these
+     * @param int $time Minimum number of seconds to wait before performing the job.
      * @see \wcf\system\background\BackgroundQueueHandler::enqueueAt()
      */
     public function enqueueIn($jobs, $time = 0)
@@ -51,8 +51,8 @@ class BackgroundQueueHandler extends SingletonFactory
      * Note: The time is a minimum time. Depending on the size of
      * the queue the job can be performed later as well!
      *
-     * @param   mixed   $jobs   Either an instance of \wcf\system\background\job\AbstractBackgroundJob or an array of these
-     * @param   int $time   Earliest time to consider the job for execution.
+     * @param mixed $jobs Either an instance of \wcf\system\background\job\AbstractBackgroundJob or an array of these
+     * @param int $time Earliest time to consider the job for execution.
      * @throws  \InvalidArgumentException
      */
     public function enqueueAt($jobs, $time)
@@ -92,8 +92,8 @@ class BackgroundQueueHandler extends SingletonFactory
      * don't want to miss the automated error handling mechanism of the
      * queue.
      *
-     * @param   AbstractBackgroundJob   $job                            The job to perform.
-     * @param       bool                 $debugSynchronousExecution      Disables fail-safe mechanisms, errors will no longer be suppressed.
+     * @param AbstractBackgroundJob $job The job to perform.
+     * @param bool $debugSynchronousExecution Disables fail-safe mechanisms, errors will no longer be suppressed.
      * @throws  \Throwable
      */
     public function performJob(AbstractBackgroundJob $job, $debugSynchronousExecution = false)

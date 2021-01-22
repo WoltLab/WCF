@@ -147,8 +147,8 @@ class CronjobScheduler extends SingletonFactory
                                 $data['failCount'] = Cronjob::MAX_FAIL_COUNT - 1;
                             }
                         }
-                        // fall through
-                        // no break
+                    // fall through
+                    // no break
                     case Cronjob::PENDING:
                         // The cronjob spent two periods in the PENDING state.
                         // We must assume a previous cronjob in the same request hosed
@@ -252,8 +252,8 @@ class CronjobScheduler extends SingletonFactory
     /**
      * Executes a cronjob.
      *
-     * @param   CronjobEditor       $cronjobEditor
-     * @param   CronjobLogEditor    $logEditor
+     * @param CronjobEditor $cronjobEditor
+     * @param CronjobLogEditor $logEditor
      * @throws  SystemException
      */
     protected function executeCronjob(CronjobEditor $cronjobEditor, CronjobLogEditor $logEditor)
@@ -279,8 +279,8 @@ class CronjobScheduler extends SingletonFactory
     /**
      * Logs cronjob exec success or failure.
      *
-     * @param   CronjobLogEditor    $logEditor
-     * @param   \Throwable      $exception
+     * @param CronjobLogEditor $logEditor
+     * @param \Throwable $exception
      */
     protected function logResult(CronjobLogEditor $logEditor, $exception = null)
     {

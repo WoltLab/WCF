@@ -98,12 +98,12 @@ class StyleCompiler extends SingletonFactory
      * Test a style with the given apiVersion, imagePath and variables. If the style is valid and does not throw an
      * error, null is returned. Otherwise the exception is returned (!).
      *
-     * @param       string                  $testFileDir
-     * @param       string                  $styleName
-     * @param       string                  $apiVersion
-     * @param       string                  $imagePath
-     * @param       string[]                $variables
-     * @param       string|null             $customCustomSCSSFile
+     * @param string $testFileDir
+     * @param string $styleName
+     * @param string $apiVersion
+     * @param string $imagePath
+     * @param string[] $variables
+     * @param string|null $customCustomSCSSFile
      * @return      null|\Exception
      * @since       5.3
      */
@@ -166,7 +166,8 @@ class StyleCompiler extends SingletonFactory
                 static function ($content) use ($styleName) {
                     $header = "/* stylesheet for '" . $styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT */";
 
-                    return '@charset "UTF-8";' . "\n\n{$header}\n\n" . \preg_replace('~^@charset "UTF-8";\r?\n~', '', $content);
+                    return '@charset "UTF-8";' . "\n\n{$header}\n\n" . \preg_replace('~^@charset "UTF-8";\r?\n~', '',
+                            $content);
                 }
             );
         } catch (\Exception $e) {
@@ -219,7 +220,7 @@ class StyleCompiler extends SingletonFactory
     /**
      * Compiles SCSS stylesheets.
      *
-     * @param   Style   $style
+     * @param Style $style
      */
     public function compile(Style $style)
     {
@@ -264,7 +265,8 @@ class StyleCompiler extends SingletonFactory
             static function ($content) use ($style) {
                 $header = "/* stylesheet for '" . $style->styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT */";
 
-                return '@charset "UTF-8";' . "\n\n{$header}\n\n" . \preg_replace('~^@charset "UTF-8";\r?\n~', '', $content);
+                return '@charset "UTF-8";' . "\n\n{$header}\n\n" . \preg_replace('~^@charset "UTF-8";\r?\n~', '',
+                        $content);
             }
         );
     }
@@ -322,7 +324,8 @@ class StyleCompiler extends SingletonFactory
 
                 $header = "/* stylesheet for the admin panel, generated on " . \gmdate('r') . " -- DO NOT EDIT */";
 
-                return '@charset "UTF-8";' . "\n\n{$header}\n\n" . \preg_replace('~^@charset "UTF-8";\r?\n~', '', $content);
+                return '@charset "UTF-8";' . "\n\n{$header}\n\n" . \preg_replace('~^@charset "UTF-8";\r?\n~', '',
+                        $content);
             }
         );
     }
@@ -371,7 +374,7 @@ class StyleCompiler extends SingletonFactory
     /**
      * Returns the list of SCSS stylesheets of an application.
      *
-     * @param       Application     $application
+     * @param Application $application
      * @return      string[]
      */
     protected function getAcpStylesheets(Application $application)
@@ -396,7 +399,7 @@ class StyleCompiler extends SingletonFactory
     /**
      * Prepares the style compiler by adding variables to environment.
      *
-     * @param   string[]        $variables
+     * @param string[] $variables
      * @return  string
      */
     protected function bootstrap(array $variables)
@@ -450,7 +453,7 @@ EOT;
     /**
      * Prepares a SCSS stylesheet for importing.
      *
-     * @param   string      $filename
+     * @param string $filename
      * @return  string
      * @throws  SystemException
      */
@@ -470,11 +473,11 @@ EOT;
      * Compiles SCSS stylesheets into one CSS-stylesheet and writes them
      * to filesystem. Please be aware not to append '.css' within $filename!
      *
-     * @param   string      $filename
-     * @param   string[]    $files
-     * @param   string[]    $variables
-     * @param   string      $individualScss
-     * @param   callable    $callback
+     * @param string $filename
+     * @param string[] $files
+     * @param string[] $variables
+     * @param string $individualScss
+     * @param callable $callback
      */
     protected function compileStylesheet($filename, array $files, array $variables, $individualScss, callable $callback)
     {
@@ -560,7 +563,7 @@ EOT;
     /**
      * Returns the name of the CSS file for a specific style.
      *
-     * @param       Style           $style
+     * @param Style $style
      * @return      string
      * @since       5.3
      */

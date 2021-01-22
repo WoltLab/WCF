@@ -72,10 +72,10 @@ class BoxHandler extends SingletonFactory
      *
      * Note: The primary use of this method is to be used during package installation.
      *
-     * @param   string      $boxIdentifier
-     * @param   string      $conditionDefinition
-     * @param   string      $conditionObjectType
-     * @param   array       $conditionData
+     * @param string $boxIdentifier
+     * @param string $conditionDefinition
+     * @param string $conditionObjectType
+     * @param array $conditionData
      * @throws  \InvalidArgumentException
      */
     public function createBoxCondition($boxIdentifier, $conditionDefinition, $conditionObjectType, array $conditionData)
@@ -112,7 +112,7 @@ class BoxHandler extends SingletonFactory
     /**
      * Returns the box with the given id or `null` if it does not exist.
      *
-     * @param   int     $boxID
+     * @param int $boxID
      * @return  Box|null
      */
     public function getBox($boxID)
@@ -125,7 +125,7 @@ class BoxHandler extends SingletonFactory
     /**
      * Returns boxes for the given position.
      *
-     * @param   string      $position
+     * @param string $position
      * @return  Box[]
      */
     public function getBoxes($position)
@@ -140,7 +140,7 @@ class BoxHandler extends SingletonFactory
     /**
      * Returns the box with given identifier or `null` if there is no such box.
      *
-     * @param   string      $identifier
+     * @param string $identifier
      * @return  Box|null
      */
     public function getBoxByIdentifier($identifier)
@@ -155,9 +155,9 @@ class BoxHandler extends SingletonFactory
      *
      * Note: The primary use of this method is to be used during package installation.
      *
-     * @param   string      $boxIdentifier
-     * @param   string[]    $pageIdentifiers
-     * @param   bool        $visible
+     * @param string $boxIdentifier
+     * @param string[] $pageIdentifiers
+     * @param bool $visible
      * @throws  \InvalidArgumentException
      */
     public function addBoxToPageAssignments($boxIdentifier, array $pageIdentifiers, $visible = true)
@@ -223,8 +223,8 @@ class BoxHandler extends SingletonFactory
     /**
      * Returns the list of boxes sorted by their global and page-local show order.
      *
-     * @param       int         $pageID         page id
-     * @param       bool         $forDisplay     enables content loading and removes inaccessible boxes from view
+     * @param int $pageID page id
+     * @param bool $forDisplay enables content loading and removes inaccessible boxes from view
      * @return      Box[][]
      */
     public static function loadBoxes($pageID, $forDisplay)
@@ -320,7 +320,7 @@ class BoxHandler extends SingletonFactory
     /**
      * Returns true if provided page id uses a custom box show order.
      *
-     * @param       int         $pageID         page id
+     * @param int $pageID page id
      * @return      bool         true if there is a custom show order for boxes
      */
     public static function hasCustomShowOrder($pageID)

@@ -31,12 +31,12 @@ interface ISearchEngine
      *  'sql' => $sql
      * );
      *
-     * @param   string                  $objectTypeName
-     * @param   string                  $q
-     * @param   bool                    $subjectOnly
-     * @param   PreparedStatementConditionBuilder   $searchIndexCondition
-     * @param   string                  $orderBy
-     * @param   int                 $limit
+     * @param string $objectTypeName
+     * @param string $q
+     * @param bool $subjectOnly
+     * @param PreparedStatementConditionBuilder $searchIndexCondition
+     * @param string $orderBy
+     * @param int $limit
      * @return  array
      */
     public function getInnerJoin(
@@ -51,20 +51,20 @@ interface ISearchEngine
     /**
      * Removes engine-specific special characters from a string.
      *
-     * @param   string      $string
+     * @param string $string
      */
     public function removeSpecialCharacters($string);
 
     /**
      * Searches for the given string and returns the data of the found messages.
      *
-     * @param   string                  $q
-     * @param   array                   $objectTypes
-     * @param   bool                    $subjectOnly
-     * @param   PreparedStatementConditionBuilder   $searchIndexCondition
-     * @param   array                   $additionalConditions
-     * @param   string                  $orderBy
-     * @param   int                 $limit
+     * @param string $q
+     * @param array $objectTypes
+     * @param bool $subjectOnly
+     * @param PreparedStatementConditionBuilder $searchIndexCondition
+     * @param array $additionalConditions
+     * @param string $orderBy
+     * @param int $limit
      * @return  array
      */
     public function search(

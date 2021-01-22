@@ -79,11 +79,14 @@ class TemplateEditForm extends TemplateAddForm
     {
         AbstractForm::save();
 
-        $this->objectAction = new TemplateAction([$this->template], 'update', ['data' => \array_merge($this->additionalFields, [
-            'templateName' => $this->tplName,
-            'templateGroupID' => $this->templateGroupID,
-            'lastModificationTime' => TIME_NOW,
-        ]), 'source' => $this->templateSource]);
+        $this->objectAction = new TemplateAction([$this->template], 'update', [
+            'data' => \array_merge($this->additionalFields, [
+                'templateName' => $this->tplName,
+                'templateGroupID' => $this->templateGroupID,
+                'lastModificationTime' => TIME_NOW,
+            ]),
+            'source' => $this->templateSource,
+        ]);
         $this->objectAction->executeAction();
         $this->saved();
 

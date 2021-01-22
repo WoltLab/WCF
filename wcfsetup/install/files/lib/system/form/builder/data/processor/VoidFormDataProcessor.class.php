@@ -30,8 +30,8 @@ class VoidFormDataProcessor extends AbstractFormDataProcessor
     /**
      * Initializes a new CustomFormFieldDataProcessor object.
      *
-     * @param   string  $property       name of the voided property
-     * @param   bool    $isDataProperty     is `true` if the property is stored in the `data` array
+     * @param string $property name of the voided property
+     * @param bool $isDataProperty is `true` if the property is stored in the `data` array
      */
     public function __construct($property, $isDataProperty = true)
     {

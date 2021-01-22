@@ -18,9 +18,9 @@ interface IFormFieldValidationError
      *
      * If no language item is given, `wcf.global.form.error.{$type}` is used.
      *
-     * @param   string      $type       error type
-     * @param   null|string $languageItem   language item containing the error message
-     * @param   array       $information    additional error information, also used to resolve error message from language item
+     * @param string $type error type
+     * @param null|string $languageItem language item containing the error message
+     * @param array $information additional error information, also used to resolve error message from language item
      *
      * @throws  \InvalidArgumentException   if the given error type is invalid
      */

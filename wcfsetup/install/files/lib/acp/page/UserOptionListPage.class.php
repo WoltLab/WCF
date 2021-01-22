@@ -13,7 +13,7 @@ use wcf\page\SortablePage;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Page
  *
- * @property    UserOptionList      $objectList
+ * @property    UserOptionList $objectList
  */
 class UserOptionListPage extends SortablePage
 {
@@ -49,6 +49,7 @@ class UserOptionListPage extends SortablePage
     {
         parent::initObjectList();
 
-        $this->objectList->getConditionBuilder()->add("option_table.categoryName IN (SELECT categoryName FROM wcf" . WCF_N . "_user_option_category WHERE parentCategoryName = ?)", ['profile']);
+        $this->objectList->getConditionBuilder()->add("option_table.categoryName IN (SELECT categoryName FROM wcf" . WCF_N . "_user_option_category WHERE parentCategoryName = ?)",
+            ['profile']);
     }
 }

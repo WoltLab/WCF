@@ -17,7 +17,7 @@ interface IThumbnailFile extends IFile
     /**
      * Returns the link to the thumbnail file with the given size.
      *
-     * @param   string      $size
+     * @param string $size
      * @return  string
      */
     public function getThumbnailLink($size);
@@ -25,7 +25,7 @@ interface IThumbnailFile extends IFile
     /**
      * Returns the physical location of the thumbnail file with the given size.
      *
-     * @param   string      $size
+     * @param string $size
      * @return  string
      */
     public function getThumbnailLocation($size);

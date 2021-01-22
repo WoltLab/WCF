@@ -37,8 +37,8 @@ class UserProfileHandler extends SingletonFactory
     /**
      * Delegates method calls to the user profile object.
      *
-     * @param   string      $name
-     * @param   array       $arguments
+     * @param string $name
+     * @param array $arguments
      * @return  mixed
      */
     public function __call($name, $arguments)
@@ -49,7 +49,7 @@ class UserProfileHandler extends SingletonFactory
     /**
      * Delegates property accesses to user profile object.
      *
-     * @param   string      $name
+     * @param string $name
      * @return  mixed
      */
     public function __get($name)

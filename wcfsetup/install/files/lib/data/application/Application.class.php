@@ -19,12 +19,12 @@ use wcf\util\FileUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Application
  *
- * @property-read   int     $packageID  id of the package which delivers the application
- * @property-read   string      $domainName domain used to access the application (may not contain path components, see `$domainPath`)
- * @property-read   string      $domainPath path used to access the application
- * @property-read   string      $cookieDomain   domain used to set cookies (corresponds to `domain` cookie property; may not contain path components)
- * @property-read   int     $isTainted  is `1` if the application is being uninstalled and thus should not be loaded during uninstallation, otherwise `0`
- * @property-read       int         $landingPageID  id of the page that is used as initial page when app is accessed without a controller name
+ * @property-read   int $packageID  id of the package which delivers the application
+ * @property-read   string $domainName domain used to access the application (may not contain path components, see `$domainPath`)
+ * @property-read   string $domainPath path used to access the application
+ * @property-read   string $cookieDomain   domain used to set cookies (corresponds to `domain` cookie property; may not contain path components)
+ * @property-read   int $isTainted  is `1` if the application is being uninstalled and thus should not be loaded during uninstallation, otherwise `0`
+ * @property-read       int $landingPageID  id of the page that is used as initial page when app is accessed without a controller name
  */
 class Application extends DatabaseObject
 {
@@ -137,7 +137,7 @@ class Application extends DatabaseObject
     /**
      * Returns the directory of the application with the given abbreviation.
      *
-     * @param   string      $abbreviation
+     * @param string $abbreviation
      * @return  string
      * @throws  SystemException
      */

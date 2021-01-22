@@ -67,7 +67,7 @@ class ObjectTypeCache extends SingletonFactory
      * Returns the object type definition with the given id or null if no such
      * object type definition exists.
      *
-     * @param   int     $definitionID
+     * @param int $definitionID
      * @return  ObjectTypeDefinition
      */
     public function getDefinition($definitionID)
@@ -81,7 +81,7 @@ class ObjectTypeCache extends SingletonFactory
      * Returns the object type definition with the given name or null if no
      * such object type definition exists.
      *
-     * @param   string      $definitionName
+     * @param string $definitionName
      * @return  ObjectTypeDefinition
      */
     public function getDefinitionByName($definitionName)
@@ -95,7 +95,7 @@ class ObjectTypeCache extends SingletonFactory
      * Returns a list of definitions by category name or 'null' if the given
      * category name is invalid.
      *
-     * @param   string      $categoryName
+     * @param string $categoryName
      * @return  ObjectTypeDefinition[]
      */
     public function getDefinitionsByCategory($categoryName)
@@ -114,7 +114,7 @@ class ObjectTypeCache extends SingletonFactory
      * Returns the object type with the given id or null if no such object type
      * exists.
      *
-     * @param   int     $objectTypeID
+     * @param int $objectTypeID
      * @return  ObjectType
      */
     public function getObjectType($objectTypeID)
@@ -127,7 +127,7 @@ class ObjectTypeCache extends SingletonFactory
     /**
      * Returns the list of object type with the given definition name.
      *
-     * @param   string      $definitionName
+     * @param string $definitionName
      * @return  ObjectType[]
      */
     public function getObjectTypes($definitionName)
@@ -143,8 +143,8 @@ class ObjectTypeCache extends SingletonFactory
      * Returns the object type with the given definition name and given name
      * or null of no such object type exists.
      *
-     * @param   string      $definitionName
-     * @param   string      $objectTypeName
+     * @param string $definitionName
+     * @param string $objectTypeName
      * @return  ObjectType
      */
     public function getObjectTypeByName($definitionName, $objectTypeName)
@@ -160,8 +160,8 @@ class ObjectTypeCache extends SingletonFactory
     /**
      * Returns the object type id with the given definition name and given name.
      *
-     * @param   string      $definitionName
-     * @param   string      $objectTypeName
+     * @param string $definitionName
+     * @param string $objectTypeName
      * @return  int
      */
     public function getObjectTypeIDByName($definitionName, $objectTypeName)

@@ -15,7 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method  PackageInstallationQueue        current()
  * @method  PackageInstallationQueue[]      getObjects()
  * @method  PackageInstallationQueue|null       search($objectID)
- * @property    PackageInstallationQueue[]      $objects
+ * @property    PackageInstallationQueue[] $objects
  */
 class PackageInstallationQueueList extends DatabaseObjectList
 {

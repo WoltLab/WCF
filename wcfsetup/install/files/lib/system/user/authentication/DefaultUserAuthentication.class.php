@@ -61,7 +61,7 @@ class DefaultUserAuthentication extends AbstractUserAuthentication
     /**
      * Returns a user object by given login name.
      *
-     * @param   string      $login
+     * @param string $login
      * @return  User
      */
     protected function getUserByLogin($login)

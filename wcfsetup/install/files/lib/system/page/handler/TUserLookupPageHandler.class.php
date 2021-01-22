@@ -19,7 +19,7 @@ trait TUserLookupPageHandler
     /**
      * Returns true if provided object id exists and is valid.
      *
-     * @param   int     $objectID   page object id
+     * @param int $objectID page object id
      * @return  bool        true if object id is valid
      * @see ILookupPageHandler::isValid()
      */
@@ -32,7 +32,7 @@ trait TUserLookupPageHandler
      * Performs a search for pages using a query string, returning an array containing
      * an `objectID => title` relation.
      *
-     * @param   string      $searchString   search string
+     * @param string $searchString search string
      * @return  string[]
      * @see ILookupPageHandler::lookup()
      */

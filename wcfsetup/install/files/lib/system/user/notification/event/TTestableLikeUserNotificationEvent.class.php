@@ -40,7 +40,7 @@ trait TTestableLikeUserNotificationEvent
     /**
      * Returns the like object for the given user notification object.
      *
-     * @param   IUserNotificationObject     $object
+     * @param IUserNotificationObject $object
      * @return  ILikeObject
      */
     protected static function getTestLikeObject(IUserNotificationObject $object)

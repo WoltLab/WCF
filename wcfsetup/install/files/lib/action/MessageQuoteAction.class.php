@@ -106,7 +106,7 @@ class MessageQuoteAction extends AJAXProxyAction
 
             default:
                 throw new SystemException("Unknown action '" . $this->actionName . "'");
-            break;
+                break;
         }
 
         if (\is_array($returnValues) && $this->_getFullQuoteObjectIDs) {

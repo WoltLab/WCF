@@ -44,7 +44,7 @@ class ViewablePackageUpdate extends DatabaseObjectDecorator
     /**
      * Sets latest accessible package update version object.
      *
-     * @param   PackageUpdateVersion    $latestVersion
+     * @param PackageUpdateVersion $latestVersion
      */
     public function setAccessibleVersion(PackageUpdateVersion $latestVersion)
     {
@@ -54,7 +54,7 @@ class ViewablePackageUpdate extends DatabaseObjectDecorator
     /**
      * Sets latest package update version object.
      *
-     * @param   PackageUpdateVersion    $latestVersion
+     * @param PackageUpdateVersion $latestVersion
      */
     public function setLatestVersion(PackageUpdateVersion $latestVersion)
     {

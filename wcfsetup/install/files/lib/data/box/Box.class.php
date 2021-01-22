@@ -29,29 +29,29 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Core\Data\Box
  * @since   3.0
  *
- * @property-read   int     $boxID          unique id of the box
- * @property-read   int|null    $objectTypeID       id of the box controller object type
- * @property-read   string      $identifier     unique textual identifier of the box
- * @property-read   string      $name           monolingual name of the box shown in the ACP
- * @property-read   string      $boxType        type of the box which determines the method of outputting its content (default box types are `text`, `html`, `tpl`, `system`)
- * @property-read   string      $position       name of the position on the page at which the box is shown
- * @property-read   int     $showOrder      position of the box in relation to its siblings
- * @property-read   int     $visibleEverywhere  is `1` if the box is visible on every page, otherwise `0`
- * @property-read   int     $isMultilingual     is `1` if the box content is available in multiple languages, otherwise `0`
- * @property-read   int     $lastUpdateTime     timestamp at which the box has been updated the last time
- * @property-read   string      $cssClassName       css class name(s) of the box
- * @property-read   int     $showHeader     is `1` if the box header will be shown, otherwise `0`
- * @property-read   int     $originIsSystem     is `1` if the box has been delivered by a package, otherwise `0` (i.e. the box has been created in the ACP)
- * @property-read   int     $packageID      id of the package which delivers the box or `1` if it has been created in the ACP
- * @property-read   int|null    $menuID         id of the menu whose menu items are shown in the contents if `$boxType = menu`, otherwise `null`
- * @property-read   int|null    $linkPageID     id of the (internal) page the box image and box title are linking to or `null` if no internal page is linked
- * @property-read   int     $linkPageObjectID   id of the object the (internal) page links refers to or `0` if no internal link is used or no specific object is linked
- * @property-read   string      $externalURL        external link used to for the box image and box title or empty if no external link is set
- * @property-read   array       $additionalData     array with additional data of the box
- * @property-read   int|null    $limit          number of objects shown in the box for `AbstractDatabaseObjectListBoxController` controllers or `null` otherwise
+ * @property-read   int $boxID          unique id of the box
+ * @property-read   int|null $objectTypeID       id of the box controller object type
+ * @property-read   string $identifier     unique textual identifier of the box
+ * @property-read   string $name           monolingual name of the box shown in the ACP
+ * @property-read   string $boxType        type of the box which determines the method of outputting its content (default box types are `text`, `html`, `tpl`, `system`)
+ * @property-read   string $position       name of the position on the page at which the box is shown
+ * @property-read   int $showOrder      position of the box in relation to its siblings
+ * @property-read   int $visibleEverywhere  is `1` if the box is visible on every page, otherwise `0`
+ * @property-read   int $isMultilingual     is `1` if the box content is available in multiple languages, otherwise `0`
+ * @property-read   int $lastUpdateTime     timestamp at which the box has been updated the last time
+ * @property-read   string $cssClassName       css class name(s) of the box
+ * @property-read   int $showHeader     is `1` if the box header will be shown, otherwise `0`
+ * @property-read   int $originIsSystem     is `1` if the box has been delivered by a package, otherwise `0` (i.e. the box has been created in the ACP)
+ * @property-read   int $packageID      id of the package which delivers the box or `1` if it has been created in the ACP
+ * @property-read   int|null $menuID         id of the menu whose menu items are shown in the contents if `$boxType = menu`, otherwise `null`
+ * @property-read   int|null $linkPageID     id of the (internal) page the box image and box title are linking to or `null` if no internal page is linked
+ * @property-read   int $linkPageObjectID   id of the object the (internal) page links refers to or `0` if no internal link is used or no specific object is linked
+ * @property-read   string $externalURL        external link used to for the box image and box title or empty if no external link is set
+ * @property-read   array $additionalData     array with additional data of the box
+ * @property-read   int|null $limit          number of objects shown in the box for `AbstractDatabaseObjectListBoxController` controllers or `null` otherwise
  * @property-read   string|null $sortField      sort field of the objects shown in the box for `AbstractDatabaseObjectListBoxController` controllers or `null` otherwise
  * @property-read   string|null $sortOrder      sort order of the objects shown in the box for `AbstractDatabaseObjectListBoxController` controllers or `null` otherwise
- * @property-read   int     $isDisabled     is `1` if the box is disabled and thus is not displayed, otherwise `0`
+ * @property-read   int $isDisabled     is `1` if the box is disabled and thus is not displayed, otherwise `0`
  */
 class Box extends DatabaseObject
 {
@@ -71,7 +71,18 @@ class Box extends DatabaseObject
      * available box positions
      * @var string[]
      */
-    public static $availablePositions = ['hero', 'headerBoxes', 'top', 'sidebarLeft', 'contentTop', 'sidebarRight', 'contentBottom', 'bottom', 'footerBoxes', 'footer'];
+    public static $availablePositions = [
+        'hero',
+        'headerBoxes',
+        'top',
+        'sidebarLeft',
+        'contentTop',
+        'sidebarRight',
+        'contentBottom',
+        'bottom',
+        'footerBoxes',
+        'footer',
+    ];
 
     /**
      * available menu positions
@@ -124,7 +135,15 @@ class Box extends DatabaseObject
      * list of positions that support the edit button
      * @var string[]
      */
-    public $editButtonPositions = ['headerBoxes', 'sidebarLeft', 'contentTop', 'sidebarRight', 'contentBottom', 'footerBoxes', 'footer'];
+    public $editButtonPositions = [
+        'headerBoxes',
+        'sidebarLeft',
+        'contentTop',
+        'sidebarRight',
+        'contentBottom',
+        'footerBoxes',
+        'footer',
+    ];
 
     /**
      * @inheritDoc
@@ -199,7 +218,7 @@ class Box extends DatabaseObject
     /**
      * Sets the box's content.
      *
-     * @param       BoxContent[]    $boxContents
+     * @param BoxContent[] $boxContents
      */
     public function setBoxContents($boxContents)
     {
@@ -473,7 +492,7 @@ class Box extends DatabaseObject
     /**
      * Returns the template name of this box.
      *
-     * @param   int     $languageID
+     * @param int $languageID
      * @return  string
      */
     public function getTplName($languageID = null)
@@ -519,7 +538,8 @@ class Box extends DatabaseObject
         /** @noinspection PhpUndefinedMethodInspection */
         if ($this->boxType === 'system' && $this->getController() instanceof IConditionBoxController && $this->getController()->getConditionDefinition()) {
             /** @noinspection PhpUndefinedMethodInspection */
-            return ConditionHandler::getInstance()->getConditions($this->getController()->getConditionDefinition(), $this->boxID);
+            return ConditionHandler::getInstance()->getConditions($this->getController()->getConditionDefinition(),
+                $this->boxID);
         }
 
         return [];
@@ -538,7 +558,7 @@ class Box extends DatabaseObject
     /**
      * Sets the virtual show order of this box.
      *
-     * @param       int         $virtualShowOrder
+     * @param int $virtualShowOrder
      */
     public function setVirtualShowOrder($virtualShowOrder)
     {
@@ -567,7 +587,7 @@ class Box extends DatabaseObject
     /**
      * Returns the box with the given identifier.
      *
-     * @param   string      $identifier
+     * @param string $identifier
      * @return  Box
      */
     public static function getBoxByIdentifier($identifier)
@@ -584,7 +604,7 @@ class Box extends DatabaseObject
     /**
      * Returns the box with the given name.
      *
-     * @param   string      $name
+     * @param string $name
      * @return  Box
      */
     public static function getBoxByName($name)
@@ -601,7 +621,7 @@ class Box extends DatabaseObject
     /**
      * Returns the box with the menu id.
      *
-     * @param   int $menuID
+     * @param int $menuID
      * @return  Box
      */
     public static function getBoxByMenuID($menuID)

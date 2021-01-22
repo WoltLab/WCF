@@ -78,7 +78,7 @@ class ViewableLike extends DatabaseObjectDecorator
     /**
      * Sets user profile.
      *
-     * @param   UserProfile $userProfile
+     * @param UserProfile $userProfile
      * @deprecated  3.0
      */
     public function setUserProfile(UserProfile $userProfile)
@@ -103,7 +103,7 @@ class ViewableLike extends DatabaseObjectDecorator
     /**
      * Sets like description.
      *
-     * @param   string      $description
+     * @param string $description
      */
     public function setDescription($description)
     {
@@ -123,7 +123,7 @@ class ViewableLike extends DatabaseObjectDecorator
     /**
      * Sets like title.
      *
-     * @param   string      $title
+     * @param string $title
      */
     public function setTitle($title)
     {
@@ -153,7 +153,7 @@ class ViewableLike extends DatabaseObjectDecorator
     /**
      * Sets the description of the object type displayed in the list of likes.
      *
-     * @param   string      $name
+     * @param string $name
      * @since   3.1
      */
     public function setObjectTypeDescription($name)

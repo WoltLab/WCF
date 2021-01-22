@@ -78,9 +78,9 @@ class SimpleMessageParser extends SingletonFactory
     /**
      * Parses the given message and returns the parsed message.
      *
-     * @param   string      $message
-     * @param   bool        $parseURLs
-     * @param   bool        $parseSmilies
+     * @param string $message
+     * @param bool $parseURLs
+     * @param bool $parseSmilies
      * @return  string
      */
     public function parse($message, $parseURLs = true, $parseSmilies = true)
@@ -126,7 +126,7 @@ class SimpleMessageParser extends SingletonFactory
     /**
      * Parses urls.
      *
-     * @param   string      $text
+     * @param string $text
      * @return  string      text
      */
     public function parseURLs($text)
@@ -173,7 +173,7 @@ class SimpleMessageParser extends SingletonFactory
     /**
      * Returns the hash for an matched URL in the message.
      *
-     * @param   array       $matches
+     * @param array $matches
      * @return  string
      */
     protected function cacheURLsCallback($matches)
@@ -187,7 +187,7 @@ class SimpleMessageParser extends SingletonFactory
     /**
      * Returns the hash for an matched e-mail in the message.
      *
-     * @param   array       $matches
+     * @param array $matches
      * @return  string
      */
     protected function cacheEmailsCallback($matches)
@@ -201,7 +201,7 @@ class SimpleMessageParser extends SingletonFactory
     /**
      * Reinserts cached URLs and e-mails.
      *
-     * @param   string      $text
+     * @param string $text
      * @return  string
      */
     protected function insertCachedURLs($text)
@@ -227,14 +227,15 @@ class SimpleMessageParser extends SingletonFactory
     /**
      * Parses smiley codes.
      *
-     * @param   string      $text
+     * @param string $text
      * @return  string      text
      */
     public function parseSmilies($text)
     {
         $smileyCount = 0;
         foreach ($this->smilies as $code => $html) {
-            $text = \preg_replace_callback('~(?<=^|\s)' . \preg_quote(StringUtil::encodeHTML($code), '~') . '(?=$|\s|<br />|<br>)~', static function () use ($code, $html, &$smileyCount) {
+            $text = \preg_replace_callback('~(?<=^|\s)' . \preg_quote(StringUtil::encodeHTML($code),
+                    '~') . '(?=$|\s|<br />|<br>)~', static function () use ($code, $html, &$smileyCount) {
                 if ($smileyCount === 50) {
                     return $code;
                 }

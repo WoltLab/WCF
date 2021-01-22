@@ -92,15 +92,17 @@ class MenuItemEditForm extends MenuItemAddForm
         }
 
         // update menu
-        $this->objectAction = new MenuItemAction([$this->itemID], 'update', ['data' => \array_merge($this->additionalFields, [
-            'isDisabled' => $this->isDisabled ? 1 : 0,
-            'title' => $this->title,
-            'pageID' => $this->pageID,
-            'pageObjectID' => $this->pageObjectID ?: 0,
-            'externalURL' => $this->externalURL,
-            'parentItemID' => $this->parentItemID,
-            'showOrder' => $this->showOrder,
-        ])]);
+        $this->objectAction = new MenuItemAction([$this->itemID], 'update', [
+            'data' => \array_merge($this->additionalFields, [
+                'isDisabled' => $this->isDisabled ? 1 : 0,
+                'title' => $this->title,
+                'pageID' => $this->pageID,
+                'pageObjectID' => $this->pageObjectID ?: 0,
+                'externalURL' => $this->externalURL,
+                'parentItemID' => $this->parentItemID,
+                'showOrder' => $this->showOrder,
+            ]),
+        ]);
         $this->objectAction->executeAction();
         $this->saved();
 
@@ -116,8 +118,10 @@ class MenuItemEditForm extends MenuItemAddForm
         parent::readData();
 
         if (empty($_POST)) {
-            I18nHandler::getInstance()->setOptions('title', 1, $this->menuItem->title, 'wcf.menu.item.' . $this->menuItem->identifier);
-            I18nHandler::getInstance()->setOptions('externalURL', 1, $this->menuItem->externalURL, 'wcf.menu.item.externalURL\d+');
+            I18nHandler::getInstance()->setOptions('title', 1, $this->menuItem->title,
+                'wcf.menu.item.' . $this->menuItem->identifier);
+            I18nHandler::getInstance()->setOptions('externalURL', 1, $this->menuItem->externalURL,
+                'wcf.menu.item.externalURL\d+');
 
             $this->parentItemID = $this->menuItem->parentItemID;
             $this->title = $this->menuItem->title;

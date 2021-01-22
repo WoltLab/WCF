@@ -64,10 +64,10 @@ class ControllerMap extends SingletonFactory
      *
      * URL -> Controller
      *
-     * @param   string      $application    application identifier
-     * @param   string      $controller url controller
-     * @param   bool        $isAcpRequest   true if this is an ACP request
-     * @param       bool         $skipCustomUrls true if custom url resolution should be suppressed, is always true for ACP requests
+     * @param string $application application identifier
+     * @param string $controller url controller
+     * @param bool $isAcpRequest true if this is an ACP request
+     * @param bool $skipCustomUrls true if custom url resolution should be suppressed, is always true for ACP requests
      * @return  mixed       array containing className, controller and pageType or a string containing the controller name for aliased controllers
      * @throws  SystemException
      */
@@ -153,8 +153,8 @@ class ControllerMap extends SingletonFactory
      *
      * URL -> Controller
      *
-     * @param   string      $application    application identifier
-     * @param   string      $controller url controller
+     * @param string $application application identifier
+     * @param string $controller url controller
      * @return  array       empty array if there is no exact match
      */
     public function resolveCustomController($application, $controller)
@@ -197,9 +197,9 @@ class ControllerMap extends SingletonFactory
      *
      * Controller -> URL
      *
-     * @param   string      $application    application identifier
-     * @param   string      $controller controller class, e.g. 'MembersList'
-     * @param       bool         $forceFrontend  force transformation for frontend
+     * @param string $application application identifier
+     * @param string $controller controller class, e.g. 'MembersList'
+     * @param bool $forceFrontend force transformation for frontend
      * @return  string      url representation of controller, e.g. 'members-list'
      */
     public function lookup($application, $controller, $forceFrontend = null)
@@ -233,8 +233,8 @@ class ControllerMap extends SingletonFactory
      * Looks up a cms page URL, returns an array containing the application identifier
      * and url controller name or null if there was no match.
      *
-     * @param   int     $pageID     page id
-     * @param   int     $languageID content language id
+     * @param int $pageID page id
+     * @param int $languageID content language id
      * @return  string[]|null
      */
     public function lookupCmsPage($pageID, $languageID)
@@ -253,7 +253,7 @@ class ControllerMap extends SingletonFactory
     /**
      * Lookups default controller for given application.
      *
-     * @param   string      $application    application identifier
+     * @param string $application application identifier
      * @return  null|string[]   default controller
      * @throws  SystemException
      */
@@ -315,8 +315,8 @@ class ControllerMap extends SingletonFactory
     /**
      * Returns true if given controller is the application's default.
      *
-     * @param   string      $application    application identifier
-     * @param   string      $controller url controller name
+     * @param string $application application identifier
+     * @param string $controller url controller name
      * @return  bool        true if controller is the application's default
      */
     public function isDefaultController($application, $controller)
@@ -359,8 +359,8 @@ class ControllerMap extends SingletonFactory
     /**
      * Returns true if currently active request represents the landing page.
      *
-     * @param   string[]    $classData
-     * @param   array       $metaData
+     * @param string[] $classData
+     * @param array $metaData
      * @return  bool
      */
     public function isLandingPage(array $classData, array $metaData)
@@ -399,9 +399,9 @@ class ControllerMap extends SingletonFactory
      * Lookups the list of legacy controller names that violate the name
      * schema, e.g. are named 'BBCodeList' instead of `BbCodeList`.
      *
-     * @param       string          $application    application identifier
-     * @param       string          $controller     controller name
-     * @param       bool         $isAcpRequest   true if this is an ACP request
+     * @param string $application application identifier
+     * @param string $controller controller name
+     * @param bool $isAcpRequest true if this is an ACP request
      * @return      string[]|null   className, controller and pageType, or null if this is not a legacy controller name
      */
     protected function getLegacyClassData($application, $controller, $isAcpRequest)
@@ -424,10 +424,10 @@ class ControllerMap extends SingletonFactory
      * Returns the class data for the active request or `null` if no proper class exists
      * for the given configuration.
      *
-     * @param   string      $application    application identifier
-     * @param   string      $controller controller name
-     * @param   bool        $isAcpRequest   true if this is an ACP request
-     * @param   string      $pageType   page type, e.g. 'form' or 'action'
+     * @param string $application application identifier
+     * @param string $controller controller name
+     * @param bool $isAcpRequest true if this is an ACP request
+     * @param string $pageType page type, e.g. 'form' or 'action'
      * @return  string[]|null   className, controller and pageType
      */
     protected function getClassData($application, $controller, $isAcpRequest, $pageType)
@@ -461,7 +461,7 @@ class ControllerMap extends SingletonFactory
     /**
      * Transforms a controller into its URL representation.
      *
-     * @param   string      $controller controller, e.g. 'BoardList'
+     * @param string $controller controller, e.g. 'BoardList'
      * @return  string      url representation, e.g. 'board-list'
      */
     public static function transformController($controller)

@@ -29,7 +29,7 @@ class UserProfileRuntimeCache extends AbstractRuntimeCache
      * Adds a user profile to the cache. This is an internal method that should
      * not be used on a regular basis.
      *
-     * @param       UserProfile     $profile
+     * @param UserProfile $profile
      * @since       3.1
      */
     public function addUserProfile(UserProfile $profile)

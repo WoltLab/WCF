@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Page
  *
- * @property    TagList     $objectList
+ * @property    TagList $objectList
  */
 class TagListPage extends SortablePage
 {

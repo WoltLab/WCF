@@ -67,7 +67,7 @@ class DatabaseTableForeignKey
     /**
      * Creates a new `DatabaseTableForeignKey` object.
      *
-     * @param   string      $name       column name
+     * @param string $name column name
      */
     protected function __construct($name)
     {
@@ -77,7 +77,7 @@ class DatabaseTableForeignKey
     /**
      * Sets the columns affected by the foreign key and returns the foreign key.
      *
-     * @param   string[]    $columns    columns affected by foreign key
+     * @param string[] $columns columns affected by foreign key
      * @return  $this               this foreign key
      */
     public function columns(array $columns)
@@ -206,7 +206,7 @@ class DatabaseTableForeignKey
     /**
      * Sets the name of the foreign key.
      *
-     * @param   string      $name       index name
+     * @param string $name index name
      * @return  $this               this index
      */
     public function name($name)
@@ -220,7 +220,7 @@ class DatabaseTableForeignKey
      * Sets the action executed in referenced table if row is deleted and returns the foreign
      * key.
      *
-     * @param   string      $onDelete   action executed in referenced table if row is deleted
+     * @param string $onDelete action executed in referenced table if row is deleted
      * @return  $this               this foreign key
      * @throws  \InvalidArgumentException   if given action is invalid
      */
@@ -239,7 +239,7 @@ class DatabaseTableForeignKey
      * Sets the action executed in referenced table if row is updated and returns the foreign
      * key.
      *
-     * @param   string      $onUpdate   action executed in referenced table if row is updated
+     * @param string $onUpdate action executed in referenced table if row is updated
      * @return  $this               this foreign key
      * @throws  \InvalidArgumentException   if given action is invalid
      */
@@ -257,7 +257,7 @@ class DatabaseTableForeignKey
     /**
      * Sets the relevant columns of the referenced table and returns the foreign key.
      *
-     * @param   string[]    $referencedColumns  columns of referenced table
+     * @param string[] $referencedColumns columns of referenced table
      * @return  $this                   this foreign key
      */
     public function referencedColumns(array $referencedColumns)
@@ -270,7 +270,7 @@ class DatabaseTableForeignKey
     /**
      * Sets the name of the referenced table and returns the foreign key.
      *
-     * @param   string      $referencedTable    name of referenced table
+     * @param string $referencedTable name of referenced table
      * @return  $this                   this foreign key
      */
     public function referencedTable($referencedTable)
@@ -300,7 +300,7 @@ class DatabaseTableForeignKey
     /**
      * Returns a `DatabaseTableForeignKey` object with the given name.
      *
-     * @param   string      $name
+     * @param string $name
      * @return  static
      */
     public static function create($name = '')
@@ -311,8 +311,8 @@ class DatabaseTableForeignKey
     /**
      * Returns a `DatabaseTableForeignKey` object with the given name and data.
      *
-     * @param   string      $name
-     * @param   array       $data       data returned by `DatabaseEditor::getForeignKeys()`
+     * @param string $name
+     * @param array $data data returned by `DatabaseEditor::getForeignKeys()`
      * @return  static
      */
     public static function createFromData($name, $data)

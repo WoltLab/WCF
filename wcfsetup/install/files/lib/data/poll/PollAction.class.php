@@ -310,8 +310,10 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
      */
     public function copy()
     {
-        $sourceObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.poll', $this->parameters['sourceObjectType']);
-        $targetObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.poll', $this->parameters['targetObjectType']);
+        $sourceObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.poll',
+            $this->parameters['sourceObjectType']);
+        $targetObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.poll',
+            $this->parameters['targetObjectType']);
 
         //
         // step 1) get data

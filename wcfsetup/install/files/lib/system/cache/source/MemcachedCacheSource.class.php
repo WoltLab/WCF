@@ -159,7 +159,7 @@ class MemcachedCacheSource implements ICacheSource
     /**
      * Returns time to live in seconds, defaults to 3 days.
      *
-     * @param   int     $maxLifetime
+     * @param int $maxLifetime
      * @return  int
      */
     protected function getTTL($maxLifetime = 0)
@@ -176,7 +176,7 @@ class MemcachedCacheSource implements ICacheSource
     /**
      * Returns the name for the given cache name in respect to flush count.
      *
-     * @param   string      $cacheName
+     * @param string $cacheName
      * @return  string
      */
     protected function getCacheName($cacheName)

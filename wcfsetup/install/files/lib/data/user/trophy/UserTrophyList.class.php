@@ -16,15 +16,15 @@ use wcf\data\DatabaseObjectList;
  * @method  UserTrophy      current()
  * @method  UserTrophy[]        getObjects()
  * @method  UserTrophy|null     search($objectID)
- * @property    UserTrophy[]        $objects
+ * @property    UserTrophy[] $objects
  */
 class UserTrophyList extends DatabaseObjectList
 {
     /**
      * Returns a user trophy list for a certain users.
      *
-     * @param   int[]   $userIDs
-     * @param   bool        $includeDisabled
+     * @param int[] $userIDs
+     * @param bool $includeDisabled
      * @return  UserTrophy[][]
      */
     public static function getUserTrophies(array $userIDs, $includeDisabled = false)

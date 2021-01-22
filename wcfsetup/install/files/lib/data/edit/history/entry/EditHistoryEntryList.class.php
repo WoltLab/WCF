@@ -15,7 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method  EditHistoryEntry        current()
  * @method  EditHistoryEntry[]      getObjects()
  * @method  EditHistoryEntry|null       search($objectID)
- * @property    EditHistoryEntry[]      $objects
+ * @property    EditHistoryEntry[] $objects
  */
 class EditHistoryEntryList extends DatabaseObjectList
 {

@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Page
  *
- * @property    LanguageList    $objectList
+ * @property    LanguageList $objectList
  */
 class LanguageListPage extends SortablePage
 {

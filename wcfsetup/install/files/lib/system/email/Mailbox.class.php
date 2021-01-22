@@ -39,9 +39,9 @@ class Mailbox
     /**
      * Creates a new Mailbox.
      *
-     * @param   string      $address    email address of this mailbox
-     * @param   string      $name       human readable name of this mailbox (or null)
-     * @param   Language    $language   Language to use for localization (or null for the default language)
+     * @param string $address email address of this mailbox
+     * @param string $name human readable name of this mailbox (or null)
+     * @param Language $language Language to use for localization (or null for the default language)
      * @throws  \DomainException
      */
     public function __construct($address, $name = null, ?Language $language = null)

@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  * @package WoltLabSuite\Core\Acp\Page
  * @since   3.0
  *
- * @property    ViewableMediaList   $objectList
+ * @property    ViewableMediaList $objectList
  */
 class MediaListPage extends SortablePage
 {
@@ -124,7 +124,8 @@ class MediaListPage extends SortablePage
             $this->objectList->addSearchConditions($this->query);
         }
         if ($this->username) {
-            $this->objectList->getConditionBuilder()->add('media.username LIKE ?', ['%' . \addcslashes($this->username, '_%') . '%']);
+            $this->objectList->getConditionBuilder()->add('media.username LIKE ?',
+                ['%' . \addcslashes($this->username, '_%') . '%']);
         }
     }
 

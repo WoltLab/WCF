@@ -191,7 +191,7 @@ trait TI18nFormField
     /**
      * Sets whether this field is supports i18n input and returns this field.
      *
-     * @param   bool        $i18n       determines if field supports i18n input
+     * @param bool $i18n determines if field supports i18n input
      * @return  II18nFormField          this field
      */
     public function i18n($i18n = true)
@@ -216,7 +216,7 @@ trait TI18nFormField
      * If this method sets that the field's value must be i18n input, it also must
      * ensure that i18n support is enabled.
      *
-     * @param   bool        $i18nRequired       determines if field value must be i18n input
+     * @param bool $i18nRequired determines if field value must be i18n input
      * @return  static                  this field
      */
     public function i18nRequired($i18nRequired = true)
@@ -253,7 +253,7 @@ trait TI18nFormField
      * Sets the pattern for the language item used to save the i18n values
      * and returns this field.
      *
-     * @param   string      $pattern    language item pattern
+     * @param string $pattern language item pattern
      * @return  II18nFormField          this field
      *
      * @throws  \BadMethodCallException     if i18n is disabled for this field
@@ -358,7 +358,7 @@ trait TI18nFormField
      * the relevant language items are loaded and their values are used as
      * field values.
      *
-     * @param   string      $value      set value
+     * @param string $value set value
      */
     protected function setStringValue($value)
     {
@@ -381,7 +381,7 @@ trait TI18nFormField
     /**
      * Sets the value of this field and returns this field.
      *
-     * @param   string|string[]     $value      new field value
+     * @param string|string[] $value new field value
      * @return  static                  this field
      *
      * @throws  \InvalidArgumentException       if the given value is of an invalid type or otherwise is invalid
@@ -422,7 +422,8 @@ trait TI18nFormField
         // if i18n is required for a non-required field and the field is
         // empty, that is no error
         if ($this->isI18n() && (!empty(ArrayUtil::trim($this->getValue()))) || $this->isRequired()) {
-            if (!I18nHandler::getInstance()->validateValue($this->getPrefixedId(), $this->isI18nRequired(), !$this->isRequired())) {
+            if (!I18nHandler::getInstance()->validateValue($this->getPrefixedId(), $this->isI18nRequired(),
+                !$this->isRequired())) {
                 if ($this->hasPlainValue()) {
                     $this->addValidationError(new FormFieldValidationError('empty'));
                 } else {

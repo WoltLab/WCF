@@ -101,9 +101,9 @@ class AbstractAttachmentImporter extends AbstractImporter
     /**
      * Replaces old attachment BBCodes with BBCodes with the new attachment id.
      *
-     * @param   string      $message
-     * @param   int     $oldID
-     * @param   int     $newID
+     * @param string $message
+     * @param int $oldID
+     * @param int $newID
      * @return  string|bool
      */
     protected function fixEmbeddedAttachments($message, $oldID, $newID)

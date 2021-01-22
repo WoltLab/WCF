@@ -33,7 +33,7 @@ class ACPTemplateEngine extends TemplateEngine
     /**
      * Deletes all compiled acp templates.
      *
-     * @param   string      $compileDir
+     * @param string $compileDir
      */
     public static function deleteCompiledACPTemplates($compileDir = '')
     {
@@ -60,7 +60,7 @@ class ACPTemplateEngine extends TemplateEngine
     /**
      * This method always throws, because changing the template group is not supported.
      *
-     * @param   int     $templateGroupID
+     * @param int $templateGroupID
      * @throws  \BadMethodCallException
      */
     public function setTemplateGroupID($templateGroupID)

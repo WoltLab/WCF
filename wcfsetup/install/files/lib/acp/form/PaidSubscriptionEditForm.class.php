@@ -70,8 +70,10 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm
         parent::readData();
 
         if (empty($_POST)) {
-            I18nHandler::getInstance()->setOptions('description', 1, $this->subscription->description, 'wcf.paidSubscription.subscription\d+.description');
-            I18nHandler::getInstance()->setOptions('title', 1, $this->subscription->title, 'wcf.paidSubscription.subscription\d+');
+            I18nHandler::getInstance()->setOptions('description', 1, $this->subscription->description,
+                'wcf.paidSubscription.subscription\d+.description');
+            I18nHandler::getInstance()->setOptions('title', 1, $this->subscription->title,
+                'wcf.paidSubscription.subscription\d+');
 
             $this->isDisabled = $this->subscription->isDisabled;
             $this->showOrder = $this->subscription->showOrder;
@@ -111,19 +113,21 @@ class PaidSubscriptionEditForm extends PaidSubscriptionAddForm
         }
 
         // save subscription
-        $this->objectAction = new PaidSubscriptionAction([$this->subscription], 'update', ['data' => \array_merge($this->additionalFields, [
-            'title' => $this->title,
-            'description' => $this->description,
-            'isDisabled' => $this->isDisabled,
-            'showOrder' => $this->showOrder,
-            'cost' => $this->cost,
-            'currency' => $this->currency,
-            'subscriptionLength' => $this->subscriptionLength,
-            'subscriptionLengthUnit' => $this->subscriptionLengthUnit,
-            'isRecurring' => $this->isRecurring,
-            'groupIDs' => \implode(',', $this->groupIDs),
-            'excludedSubscriptionIDs' => \implode(',', $this->excludedSubscriptionIDs),
-        ])]);
+        $this->objectAction = new PaidSubscriptionAction([$this->subscription], 'update', [
+            'data' => \array_merge($this->additionalFields, [
+                'title' => $this->title,
+                'description' => $this->description,
+                'isDisabled' => $this->isDisabled,
+                'showOrder' => $this->showOrder,
+                'cost' => $this->cost,
+                'currency' => $this->currency,
+                'subscriptionLength' => $this->subscriptionLength,
+                'subscriptionLengthUnit' => $this->subscriptionLengthUnit,
+                'isRecurring' => $this->isRecurring,
+                'groupIDs' => \implode(',', $this->groupIDs),
+                'excludedSubscriptionIDs' => \implode(',', $this->excludedSubscriptionIDs),
+            ]),
+        ]);
         $this->objectAction->executeAction();
         $this->saved();
 

@@ -44,7 +44,7 @@ class PageCache extends SingletonFactory
     /**
      * Returns a page by page id or null.
      *
-     * @param   int     $pageID     page id
+     * @param int $pageID page id
      * @return  Page|null
      */
     public function getPage($pageID)
@@ -57,7 +57,7 @@ class PageCache extends SingletonFactory
     /**
      * Returns a page by controller or null.
      *
-     * @param   string      $controller controller class name
+     * @param string $controller controller class name
      * @return  Page|null
      */
     public function getPageByController($controller)
@@ -70,7 +70,7 @@ class PageCache extends SingletonFactory
     /**
      * Returns a page by its internal identifier or null.
      *
-     * @param   string      $identifier internal identifier
+     * @param string $identifier internal identifier
      * @return  Page|null
      */
     public function getPageByIdentifier($identifier)
@@ -84,8 +84,8 @@ class PageCache extends SingletonFactory
      * Returns the localized page title by page id, optionally retrieving the title
      * for given language id if it is a multilingual page.
      *
-     * @param   int     $pageID     page id
-     * @param   int     $languageID specific value by language id
+     * @param int $pageID page id
+     * @param int $languageID specific value by language id
      * @return  string  localized page title
      */
     public function getPageTitle($pageID, $languageID = null)

@@ -13,7 +13,7 @@ use wcf\system\user\notification\UserNotificationHandler;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\User\Notification
  *
- * @method static   UserNotification    create(array $parameters = [])
+ * @method static UserNotification    create(array $parameters = [])
  * @method      UserNotification    getDecoratedObject()
  * @mixin       UserNotification
  */

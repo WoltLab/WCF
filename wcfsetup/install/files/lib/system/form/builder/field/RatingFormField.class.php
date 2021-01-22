@@ -76,7 +76,7 @@ class RatingFormField extends AbstractFormField implements
     /**
      * Sets the CSS classes for the active state of the rating elements.
      *
-     * @param   string[]    $cssClasses active state CSS classes
+     * @param string[] $cssClasses active state CSS classes
      * @return  static              this form field
      * @throws  \InvalidArgumentException   if no or invalid CSS classes are given
      */
@@ -98,7 +98,7 @@ class RatingFormField extends AbstractFormField implements
     /**
      * Sets the CSS classes for the default state of the rating elements.
      *
-     * @param   string[]    $cssClasses default state CSS classes
+     * @param string[] $cssClasses default state CSS classes
      * @return  static              this form field
      * @throws  \InvalidArgumentException   if no or invalid CSS classes are given
      */

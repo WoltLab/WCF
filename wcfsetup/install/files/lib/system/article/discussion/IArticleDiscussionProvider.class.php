@@ -48,7 +48,7 @@ interface IArticleDiscussionProvider
     /**
      * Sets the content object required for the separate discussions per article language.
      *
-     * @param       ArticleContent          $articleContent
+     * @param ArticleContent $articleContent
      */
     public function setArticleContent(ArticleContent $articleContent);
 
@@ -56,7 +56,7 @@ interface IArticleDiscussionProvider
      * Returning true will assign this provider to the article, otherwise the next
      * possible provider is being evaluated.
      *
-     * @param       Article         $article
+     * @param Article $article
      * @return      bool
      */
     public static function isResponsible(Article $article);

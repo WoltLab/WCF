@@ -67,15 +67,20 @@ class MessageParser extends BBCodeParser
     /**
      * Parses a message.
      *
-     * @param   string      $message
-     * @param   bool        $enableSmilies
-     * @param   bool        $enableHtml
-     * @param   bool        $enableBBCodes
-     * @param   bool        $doKeywordHighlighting
+     * @param string $message
+     * @param bool $enableSmilies
+     * @param bool $enableHtml
+     * @param bool $enableBBCodes
+     * @param bool $doKeywordHighlighting
      * @return  string      parsed message
      */
-    public function parse($message, $enableSmilies = true, $enableHtml = false, $enableBBCodes = true, $doKeywordHighlighting = true)
-    {
+    public function parse(
+        $message,
+        $enableSmilies = true,
+        $enableHtml = false,
+        $enableBBCodes = true,
+        $doKeywordHighlighting = true
+    ) {
         $this->cachedCodes = [];
         $this->message = $message;
 
@@ -135,15 +140,16 @@ class MessageParser extends BBCodeParser
     /**
      * Parses smiley codes.
      *
-     * @param   string      $text
-     * @param   bool        $enableHtml
+     * @param string $text
+     * @param bool $enableHtml
      * @return  string
      */
     protected function parseSmilies($text, $enableHtml = false)
     {
         foreach ($this->smilies as $code => $html) {
             //$text = preg_replace('~(?<!&\w{2}|&\w{3}|&\w{4}|&\w{5}|&\w{6}|&#\d{2}|&#\d{3}|&#\d{4}|&#\d{5})'.preg_quote((!$enableHtml ? StringUtil::encodeHTML($code) : $code), '~').'(?![^<]*>)~', $html, $text);
-            $text = \preg_replace('~(?<=^|\s|<li>)' . \preg_quote((!$enableHtml ? StringUtil::encodeHTML($code) : $code), '~') . '(?=$|\s|</li>' . (!$enableHtml ? '|<br />|<br>' : '') . ')~', $html, $text);
+            $text = \preg_replace('~(?<=^|\s|<li>)' . \preg_quote((!$enableHtml ? StringUtil::encodeHTML($code) : $code),
+                    '~') . '(?=$|\s|</li>' . (!$enableHtml ? '|<br />|<br>' : '') . ')~', $html, $text);
         }
 
         return $text;
@@ -152,7 +158,7 @@ class MessageParser extends BBCodeParser
     /**
      * Caches code bbcodes to avoid parsing of smileys and other bbcodes inside them.
      *
-     * @param   string      $text
+     * @param string $text
      * @return  string
      */
     protected function cacheCodes($text)
@@ -173,7 +179,7 @@ class MessageParser extends BBCodeParser
     /**
      * Returns the hash for an matched code bbcode in the message.
      *
-     * @param   array       $matches
+     * @param array $matches
      * @return  string
      */
     protected function cacheCodesCallback($matches)
@@ -194,7 +200,7 @@ class MessageParser extends BBCodeParser
     /**
      * Reinserts cached code bbcodes.
      *
-     * @param   string      $text
+     * @param string $text
      * @return  string
      */
     protected function insertCachedCodes($text)
@@ -202,7 +208,8 @@ class MessageParser extends BBCodeParser
         foreach ($this->cachedCodes as $hash => $tag) {
             // build code and insert
             if ($this->bbcodes[$tag['name']]->className) {
-                $replacement = $this->bbcodes[$tag['name']]->getProcessor()->getParsedTag($tag, $tag['content'], $tag, $this);
+                $replacement = $this->bbcodes[$tag['name']]->getProcessor()->getParsedTag($tag, $tag['content'], $tag,
+                    $this);
             } else {
                 $replacement = $this->buildOpeningTag($tag) . StringUtil::encodeHTML($tag['content']) . $this->buildClosingTag($tag);
             }
@@ -223,7 +230,8 @@ class MessageParser extends BBCodeParser
         }
 
         // check for cached codes
-        if (isset($tagAttributes[$definedTagAttribute->attributeNo]) && \preg_match('/@@[a-f0-9]{40}@@/', $tagAttributes[$definedTagAttribute->attributeNo])) {
+        if (isset($tagAttributes[$definedTagAttribute->attributeNo]) && \preg_match('/@@[a-f0-9]{40}@@/',
+                $tagAttributes[$definedTagAttribute->attributeNo])) {
             return false;
         }
 
@@ -233,7 +241,7 @@ class MessageParser extends BBCodeParser
     /**
      * Returns a text-only version of given message.
      *
-     * @param   string      $message
+     * @param string $message
      * @return  string
      */
     public function stripHTML($message)

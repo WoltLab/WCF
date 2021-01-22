@@ -230,7 +230,7 @@ class SearchForm extends AbstractCaptchaForm
                     break;
                 }
 
-                // no break
+            // no break
             default:
                 if (!$this->submit || !empty($this->query)) {
                     $this->sortField = 'relevance';
@@ -289,7 +289,15 @@ class SearchForm extends AbstractCaptchaForm
         }
 
         // build search hash
-        $this->searchHash = StringUtil::getHash(\serialize([$this->query, $this->selectedObjectTypes, !$this->subjectOnly, $this->searchIndexCondition, $this->additionalConditions, $this->sortField . ' ' . $this->sortOrder, PACKAGE_ID]));
+        $this->searchHash = StringUtil::getHash(\serialize([
+            $this->query,
+            $this->selectedObjectTypes,
+            !$this->subjectOnly,
+            $this->searchIndexCondition,
+            $this->additionalConditions,
+            $this->sortField . ' ' . $this->sortOrder,
+            PACKAGE_ID,
+        ]));
 
         // check search hash
         if (!empty($this->query)) {
@@ -308,14 +316,17 @@ class SearchForm extends AbstractCaptchaForm
             $statement->execute($parameters);
             $row = $statement->fetchArray();
             if ($row !== false) {
-                HeaderUtil::redirect(LinkHandler::getInstance()->getLink('SearchResult', ['id' => $row['searchID']], 'highlight=' . \urlencode($this->query)));
+                HeaderUtil::redirect(LinkHandler::getInstance()->getLink('SearchResult', ['id' => $row['searchID']],
+                    'highlight=' . \urlencode($this->query)));
 
                 exit;
             }
         }
 
         // do search
-        $this->results = SearchEngine::getInstance()->search($this->query, $this->selectedObjectTypes, $this->subjectOnly, $this->searchIndexCondition, $this->additionalConditions, $this->sortField . ' ' . $this->sortOrder);
+        $this->results = SearchEngine::getInstance()->search($this->query, $this->selectedObjectTypes,
+            $this->subjectOnly, $this->searchIndexCondition, $this->additionalConditions,
+            $this->sortField . ' ' . $this->sortOrder);
 
         // result is empty
         if (empty($this->results)) {
@@ -333,7 +344,8 @@ class SearchForm extends AbstractCaptchaForm
         if (empty($this->query)) {
             throw new NamedUserException(WCF::getLanguage()->get('wcf.search.error.user.noMatches'));
         } else {
-            throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.search.error.noMatches', ['query' => $this->query]));
+            throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.search.error.noMatches',
+                ['query' => $this->query]));
         }
     }
 
@@ -382,34 +394,41 @@ class SearchForm extends AbstractCaptchaForm
             'alterable' => !$this->userID ? 1 : 0,
         ];
         if ($this->modifySearchID) {
-            $this->objectAction = new SearchAction([$this->modifySearchID], 'update', ['data' => [
-                'searchData' => \serialize($this->searchData),
-                'searchTime' => TIME_NOW,
-                'searchType' => 'messages',
-                'searchHash' => $this->searchHash,
-            ]]);
+            $this->objectAction = new SearchAction([$this->modifySearchID], 'update', [
+                'data' => [
+                    'searchData' => \serialize($this->searchData),
+                    'searchTime' => TIME_NOW,
+                    'searchType' => 'messages',
+                    'searchHash' => $this->searchHash,
+                ],
+            ]);
             $this->objectAction->executeAction();
         } else {
-            $this->objectAction = new SearchAction([], 'create', ['data' => [
-                'userID' => WCF::getUser()->userID ?: null,
-                'searchData' => \serialize($this->searchData),
-                'searchTime' => TIME_NOW,
-                'searchType' => 'messages',
-                'searchHash' => $this->searchHash,
-            ]]);
+            $this->objectAction = new SearchAction([], 'create', [
+                'data' => [
+                    'userID' => WCF::getUser()->userID ?: null,
+                    'searchData' => \serialize($this->searchData),
+                    'searchTime' => TIME_NOW,
+                    'searchType' => 'messages',
+                    'searchHash' => $this->searchHash,
+                ],
+            ]);
             $resultValues = $this->objectAction->executeAction();
             $this->searchID = $resultValues['returnValues']->searchID;
         }
         // save keyword
         if (!empty($this->query)) {
-            (new SearchKeywordAction([], 'registerSearch', ['data' => [
-                'keyword' => $this->query,
-            ]]))->executeAction();
+            (new SearchKeywordAction([], 'registerSearch', [
+                'data' => [
+                    'keyword' => $this->query,
+                ],
+            ]))->executeAction();
         }
         $this->saved();
 
         // forward to result page
-        HeaderUtil::redirect(LinkHandler::getInstance()->getLink('SearchResult', ['id' => $this->searchID], 'highlight=' . \urlencode($this->query)));
+        HeaderUtil::redirect(LinkHandler::getInstance()->getLink('SearchResult', ['id' => $this->searchID],
+            'highlight=' . \urlencode($this->query)));
 
         exit;
     }
@@ -493,7 +512,8 @@ class SearchForm extends AbstractCaptchaForm
 
         // language
         if (!empty($this->query) && LanguageFactory::getInstance()->multilingualismEnabled() && \count(WCF::getUser()->getLanguageIDs())) {
-            $this->searchIndexCondition->add('(languageID IN (?) OR languageID = 0)', [WCF::getUser()->getLanguageIDs()]);
+            $this->searchIndexCondition->add('(languageID IN (?) OR languageID = 0)',
+                [WCF::getUser()->getLanguageIDs()]);
         }
 
         foreach ($this->selectedObjectTypes as $key => $objectTypeName) {

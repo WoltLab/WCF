@@ -15,7 +15,7 @@ interface IAttachmentMessageQuickReplyAction extends IExtendedMessageQuickReplyA
     /**
      * Returns an attachment handler object.
      *
-     * @param   DatabaseObject  $container
+     * @param DatabaseObject $container
      */
     public function getAttachmentHandler(DatabaseObject $container);
 }

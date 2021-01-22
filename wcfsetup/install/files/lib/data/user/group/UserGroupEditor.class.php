@@ -66,7 +66,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
     /**
      * Removes user to group assignments.
      *
-     * @param   array       $groupIDs
+     * @param array $groupIDs
      */
     protected static function removeGroupAssignments(array $groupIDs)
     {
@@ -85,7 +85,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
     /**
      * Removes group option values.
      *
-     * @param   array       $groupIDs
+     * @param array $groupIDs
      */
     protected static function removeOptionValues(array $groupIDs)
     {
@@ -104,7 +104,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
     /**
      * Updates group options.
      *
-     * @param   array       $groupOptions
+     * @param array $groupOptions
      */
     public function updateGroupOptions(array $groupOptions = [])
     {
@@ -129,8 +129,8 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
     /**
      * Updates the value from the accessiblegroups option.
      *
-     * @param   int     $groupID    this group is added or deleted in the value
-     * @param   bool        $delete     flag for group deletion
+     * @param int $groupID this group is added or deleted in the value
+     * @param bool $delete flag for group deletion
      * @throws  SystemException
      */
     protected static function updateAccessibleGroups($groupID, $delete = false)
@@ -171,9 +171,10 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$optionID]);
         while ($row = $statement->fetchArray()) {
-            $valueIDs = \array_filter(\explode(',', $row['optionValue']), static function ($groupID) use ($ownerGroupID) {
-                return $groupID != $ownerGroupID;
-            });
+            $valueIDs = \array_filter(\explode(',', $row['optionValue']),
+                static function ($groupID) use ($ownerGroupID) {
+                    return $groupID != $ownerGroupID;
+                });
 
             if ($delete) {
                 $valueIDs = \array_filter($valueIDs, static function ($item) use ($groupID) {

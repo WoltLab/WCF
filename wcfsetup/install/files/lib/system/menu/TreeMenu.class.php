@@ -69,7 +69,7 @@ abstract class TreeMenu extends SingletonFactory
     /**
      * Checks the options and permissions of given menu item.
      *
-     * @param   ITreeMenuItem   $item
+     * @param ITreeMenuItem $item
      * @return  bool
      */
     protected function checkMenuItem(ITreeMenuItem $item)
@@ -112,7 +112,7 @@ abstract class TreeMenu extends SingletonFactory
     /**
      * Checks the options and permissions of the menu items.
      *
-     * @param   string      $parentMenuItem
+     * @param string $parentMenuItem
      */
     protected function checkMenuItems($parentMenuItem = '')
     {
@@ -134,7 +134,7 @@ abstract class TreeMenu extends SingletonFactory
     /**
      * Removes items without children.
      *
-     * @param   string      $parentMenuItem
+     * @param string $parentMenuItem
      */
     protected function removeEmptyItems($parentMenuItem = '')
     {
@@ -158,7 +158,7 @@ abstract class TreeMenu extends SingletonFactory
     /**
      * Builds a plain menu item list.
      *
-     * @param   string      $parentMenuItem
+     * @param string $parentMenuItem
      */
     protected function buildMenuItemList($parentMenuItem = '')
     {
@@ -178,7 +178,7 @@ abstract class TreeMenu extends SingletonFactory
      *
      * This function should be used in each script which uses a template that includes the menu.tpl.
      *
-     * @param   string      $menuItem   name of the active menu item
+     * @param string $menuItem name of the active menu item
      */
     public function setActiveMenuItem($menuItem)
     {
@@ -210,7 +210,7 @@ abstract class TreeMenu extends SingletonFactory
     /**
      * Returns the active menu item.
      *
-     * @param   int     $level
+     * @param int $level
      * @return  string
      */
     public function getActiveMenuItem($level = 0)
@@ -223,7 +223,7 @@ abstract class TreeMenu extends SingletonFactory
     /**
      * Returns the list of menu items.
      *
-     * @param   string      $parentMenuItem
+     * @param string $parentMenuItem
      * @return  array
      */
     public function getMenuItems($parentMenuItem = null)

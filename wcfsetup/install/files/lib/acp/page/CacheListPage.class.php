@@ -97,19 +97,22 @@ class CacheListPage extends AbstractPage
         }
 
         $this->readCacheFiles('language', FileUtil::unifyDirSeparator(WCF_DIR . 'language'));
-        $this->readCacheFiles('template', FileUtil::unifyDirSeparator(WCF_DIR . 'templates/compiled'), new Regex('\.meta\.php$'));
-        $this->readCacheFiles('template', FileUtil::unifyDirSeparator(WCF_DIR . 'acp/templates/compiled'), new Regex('\.meta\.php$'));
+        $this->readCacheFiles('template', FileUtil::unifyDirSeparator(WCF_DIR . 'templates/compiled'),
+            new Regex('\.meta\.php$'));
+        $this->readCacheFiles('template', FileUtil::unifyDirSeparator(WCF_DIR . 'acp/templates/compiled'),
+            new Regex('\.meta\.php$'));
         $this->readCacheFiles('style', FileUtil::unifyDirSeparator(WCF_DIR . 'style'), null, 'css');
-        $this->readCacheFiles('style', FileUtil::unifyDirSeparator(WCF_DIR . 'acp/style'), new Regex('WCFSetup.css$'), 'css');
+        $this->readCacheFiles('style', FileUtil::unifyDirSeparator(WCF_DIR . 'acp/style'), new Regex('WCFSetup.css$'),
+            'css');
     }
 
     /**
      * Reads the information of cached files
      *
-     * @param   string      $cacheType
-     * @param   string      $cacheDir
-     * @param   Regex       $ignore
-     * @param   string      $extension
+     * @param string $cacheType
+     * @param string $cacheDir
+     * @param Regex $ignore
+     * @param string $extension
      */
     protected function readCacheFiles($cacheType, $cacheDir, ?Regex $ignore = null, $extension = 'php')
     {

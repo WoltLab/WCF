@@ -49,9 +49,9 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob
     /**
      * Creates the job using the given the email and the destination mailbox.
      *
-     * @param   Email       $email
-     * @param   Mailbox     $envelopeFrom
-     * @param   Mailbox     $envelopeTo
+     * @param Email $email
+     * @param Mailbox $envelopeFrom
+     * @param Mailbox $envelopeTo
      * @see     \wcf\system\email\transport\IEmailTransport
      */
     public function __construct(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo)

@@ -88,26 +88,32 @@ class MenuEditForm extends MenuAddForm
         }
 
         // update menu
-        $this->objectAction = new MenuAction([$this->menuID], 'update', ['data' => \array_merge($this->additionalFields, [
-            'title' => $this->title,
-        ])]);
+        $this->objectAction = new MenuAction([$this->menuID], 'update', [
+            'data' => \array_merge($this->additionalFields, [
+                'title' => $this->title,
+            ]),
+        ]);
         $this->objectAction->executeAction();
 
         // update box
         if ($this->menu->identifier != 'com.woltlab.wcf.MainMenu') {
-            $boxAction = new BoxAction([$this->menu->getBox()->boxID], 'update', ['data' => \array_merge($this->additionalFields, [
-                'position' => $this->position,
-                'visibleEverywhere' => $this->visibleEverywhere ? 1 : 0,
-                'showHeader' => $this->showHeader ? 1 : 0,
-                'showOrder' => $this->showOrder,
-                'cssClassName' => $this->cssClassName,
-                'name' => $boxName,
-            ]), 'pageIDs' => $this->pageIDs]);
+            $boxAction = new BoxAction([$this->menu->getBox()->boxID], 'update', [
+                'data' => \array_merge($this->additionalFields, [
+                    'position' => $this->position,
+                    'visibleEverywhere' => $this->visibleEverywhere ? 1 : 0,
+                    'showHeader' => $this->showHeader ? 1 : 0,
+                    'showOrder' => $this->showOrder,
+                    'cssClassName' => $this->cssClassName,
+                    'name' => $boxName,
+                ]),
+                'pageIDs' => $this->pageIDs,
+            ]);
             $boxAction->executeAction();
         }
 
         if ($this->menu->identifier !== 'com.woltlab.wcf.MainMenu') {
-            SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.box', $this->menu->getBox()->boxID, $this->aclValues);
+            SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.box', $this->menu->getBox()->boxID,
+                $this->aclValues);
         }
 
         $this->saved();
@@ -124,7 +130,8 @@ class MenuEditForm extends MenuAddForm
         parent::readData();
 
         if (empty($_POST)) {
-            I18nHandler::getInstance()->setOptions('title', 1, $this->menu->title, 'wcf.menu.' . $this->menu->identifier);
+            I18nHandler::getInstance()->setOptions('title', 1, $this->menu->title,
+                'wcf.menu.' . $this->menu->identifier);
 
             $this->title = $this->menu->title;
             $this->position = $this->menu->getBox()->position;
@@ -134,7 +141,8 @@ class MenuEditForm extends MenuAddForm
             $this->pageIDs = $this->menu->getBox()->getPageIDs();
             $this->showHeader = $this->menu->getBox()->showHeader;
 
-            $this->aclValues = SimpleAclHandler::getInstance()->getValues('com.woltlab.wcf.box', $this->menu->getBox()->boxID);
+            $this->aclValues = SimpleAclHandler::getInstance()->getValues('com.woltlab.wcf.box',
+                $this->menu->getBox()->boxID);
         }
     }
 

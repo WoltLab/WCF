@@ -18,14 +18,14 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Notice
  *
- * @property-read   int     $noticeID       unique id of the notice
- * @property-read   string      $noticeName     name of the notice shown in ACP
- * @property-read   string      $notice         text of the notice or name of language item which contains the text
- * @property-read   int     $noticeUseHtml      is `1` if the notice text will be rendered as HTML, otherwise `0`
- * @property-read   string      $cssClassName       css class name(s) used for the notice HTML element
- * @property-read   int     $showOrder      position of the notice in relation to the other notices
- * @property-read   int     $isDisabled     is `1` if the notice is disabled and thus not shown, otherwise `0`
- * @property-read   int     $isDismissible      is `1` if the notice can be dismissed by users, otherwise `0`
+ * @property-read   int $noticeID       unique id of the notice
+ * @property-read   string $noticeName     name of the notice shown in ACP
+ * @property-read   string $notice         text of the notice or name of language item which contains the text
+ * @property-read   int $noticeUseHtml      is `1` if the notice text will be rendered as HTML, otherwise `0`
+ * @property-read   string $cssClassName       css class name(s) used for the notice HTML element
+ * @property-read   int $showOrder      position of the notice in relation to the other notices
+ * @property-read   int $isDisabled     is `1` if the notice is disabled and thus not shown, otherwise `0`
+ * @property-read   int $isDismissible      is `1` if the notice can be dismissed by users, otherwise `0`
  */
 class Notice extends DatabaseObject implements IRouteController
 {
@@ -107,7 +107,8 @@ class Notice extends DatabaseObject implements IRouteController
                         }
                     }
 
-                    UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'dismissedNotices', \serialize($noticeIDs));
+                    UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'dismissedNotices',
+                        \serialize($noticeIDs));
                 } else {
                     $dismissedNoticeIDs = @\unserialize($dismissedNotices);
                     $this->isDismissed = \in_array($this->noticeID, $dismissedNoticeIDs);

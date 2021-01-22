@@ -16,7 +16,7 @@ class HtmlTextMimePart extends RecipientAwareTextMimePart
     /**
      * Creates a new HtmlTextMimePart.
      *
-     * @param   string  $content    Content of this text part.
+     * @param string $content Content of this text part.
      */
     public function __construct($content)
     {

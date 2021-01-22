@@ -94,8 +94,8 @@ class ClipboardHandler extends SingletonFactory
     /**
      * Marks objects as marked.
      *
-     * @param   array       $objectIDs
-     * @param   int     $objectTypeID
+     * @param array $objectIDs
+     * @param int $objectTypeID
      */
     public function mark(array $objectIDs, $objectTypeID)
     {
@@ -118,8 +118,8 @@ class ClipboardHandler extends SingletonFactory
     /**
      * Removes an object marking.
      *
-     * @param   array       $objectIDs
-     * @param   int     $objectTypeID
+     * @param array $objectIDs
+     * @param int $objectTypeID
      */
     public function unmark(array $objectIDs, $objectTypeID)
     {
@@ -137,7 +137,7 @@ class ClipboardHandler extends SingletonFactory
     /**
      * Unmarks all items of given type.
      *
-     * @param   int     $objectTypeID
+     * @param int $objectTypeID
      */
     public function unmarkAll($objectTypeID)
     {
@@ -155,7 +155,7 @@ class ClipboardHandler extends SingletonFactory
      * Returns the id of the clipboard object type with the given name or `null` if no such
      * clipboard object type exists.
      *
-     * @param   string      $typeName
+     * @param string $typeName
      * @return  int|null
      */
     public function getObjectTypeID($typeName)
@@ -169,7 +169,7 @@ class ClipboardHandler extends SingletonFactory
      * Returns the clipboard object type with the given id or `null` if no such
      * clipboard object type exists.
      *
-     * @param   int     $objectTypeID
+     * @param int $objectTypeID
      * @return  ObjectType|null
      */
     public function getObjectType($objectTypeID)
@@ -183,7 +183,7 @@ class ClipboardHandler extends SingletonFactory
      * Returns the id of the clipboard object type with the given name or `null` if no such
      * clipboard object type exists.
      *
-     * @param   string      $objectType
+     * @param string $objectType
      * @return  int|null
      */
     public function getObjectTypeByName($objectType)
@@ -198,7 +198,7 @@ class ClipboardHandler extends SingletonFactory
     /**
      * Loads a list of marked items grouped by type name.
      *
-     * @param   int     $objectTypeID
+     * @param int $objectTypeID
      * @throws  SystemException
      */
     protected function loadMarkedItems($objectTypeID = null)
@@ -292,7 +292,7 @@ class ClipboardHandler extends SingletonFactory
     /**
      * Loads a list of marked items grouped by type name.
      *
-     * @param   int     $objectTypeID
+     * @param int $objectTypeID
      * @return  array
      */
     public function getMarkedItems($objectTypeID = null)
@@ -316,8 +316,8 @@ class ClipboardHandler extends SingletonFactory
     /**
      * Returns the data of the items for clipboard editor or `null` if no items are marked.
      *
-     * @param   string|string[]     $page
-     * @param   int         $pageObjectID
+     * @param string|string[] $page
+     * @param int $pageObjectID
      * @return  array|null
      * @throws  ImplementationException
      */
@@ -408,7 +408,7 @@ class ClipboardHandler extends SingletonFactory
     /**
      * Removes items from clipboard.
      *
-     * @param   int     $typeID
+     * @param int $typeID
      */
     public function removeItems($typeID = null)
     {
@@ -427,7 +427,7 @@ class ClipboardHandler extends SingletonFactory
     /**
      * Returns true (1) if at least one item (of the given object type) is marked.
      *
-     * @param   int     $objectTypeID
+     * @param int $objectTypeID
      * @return  int
      */
     public function hasMarkedItems($objectTypeID = null)

@@ -49,9 +49,9 @@ class PreparedStatement
     /**
      * Creates a new PreparedStatement object.
      *
-     * @param   Database    $database
-     * @param   \PDOStatement   $pdoStatement
-     * @param   string      $query      SQL query
+     * @param Database $database
+     * @param \PDOStatement $pdoStatement
+     * @param string $query SQL query
      */
     public function __construct(Database $database, \PDOStatement $pdoStatement, $query = '')
     {
@@ -63,8 +63,8 @@ class PreparedStatement
     /**
      * Delegates inaccessible methods calls to the decorated object.
      *
-     * @param   string      $name
-     * @param   array       $arguments
+     * @param string $name
+     * @param array $arguments
      * @return  mixed
      * @throws  SystemException
      */
@@ -84,7 +84,7 @@ class PreparedStatement
     /**
      * Executes a prepared statement.
      *
-     * @param   array       $parameters
+     * @param array $parameters
      * @throws  DatabaseQueryExecutionException
      */
     public function execute(array $parameters = [])
@@ -126,7 +126,7 @@ class PreparedStatement
     /**
      * Fetches the next row from a result set in an array.
      *
-     * @param   int     $type       fetch type
+     * @param int $type fetch type
      * @return  mixed
      */
     public function fetchArray($type = null)
@@ -146,7 +146,7 @@ class PreparedStatement
      * Note: It is not possible to fetch further rows after calling
      * this method!
      *
-     * @param   int     $type       fetch type
+     * @param int $type fetch type
      * @return  mixed
      * @see     \wcf\system\database\statement\PreparedStatement::fetchArray()
      */
@@ -165,7 +165,7 @@ class PreparedStatement
      * Note: It is not possible to fetch further rows after calling
      * this method!
      *
-     * @param   int     $columnNumber
+     * @param int $columnNumber
      * @return  mixed
      * @see     \PDOStatement::fetchColumn()
      */
@@ -180,7 +180,7 @@ class PreparedStatement
     /**
      * Fetches the next row from a result set in a database object.
      *
-     * @param   string          $className
+     * @param string $className
      * @return  DatabaseObject
      */
     public function fetchObject($className)
@@ -198,7 +198,7 @@ class PreparedStatement
      * Note: It is not possible to fetch further rows after calling
      * this method!
      *
-     * @param   string          $className
+     * @param string $className
      * @return  DatabaseObject|null
      * @since       5.3
      */
@@ -213,8 +213,8 @@ class PreparedStatement
     /**
      * Fetches the all rows from a result set into database objects.
      *
-     * @param   string      $className
-     * @param   string|null $keyProperty
+     * @param string $className
+     * @param string|null $keyProperty
      * @return  DatabaseObject[]
      */
     public function fetchObjects($className, $keyProperty = null)
@@ -234,9 +234,9 @@ class PreparedStatement
     /**
      * Returns a map of all fetched rows using one column as key and another column as value.
      *
-     * @param   string      $keyColumn  name of the key column
-     * @param   string      $valueColumn    name of the value column
-     * @param   bool        $uniqueKey  if `true`, a one-dimensional array is returned, otherwise, for each key an array of fetched values is returned
+     * @param string $keyColumn name of the key column
+     * @param string $valueColumn name of the value column
+     * @param bool $uniqueKey if `true`, a one-dimensional array is returned, otherwise, for each key an array of fetched values is returned
      * @return  string[]|string[][]
      */
     public function fetchMap($keyColumn, $valueColumn, $uniqueKey = true)

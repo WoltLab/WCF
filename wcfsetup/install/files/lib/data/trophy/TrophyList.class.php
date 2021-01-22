@@ -16,7 +16,7 @@ use wcf\data\DatabaseObjectList;
  * @method  Trophy      current()
  * @method  Trophy[]    getObjects()
  * @method  Trophy|null search($objectID)
- * @property    Trophy[]    $objects
+ * @property    Trophy[] $objects
  */
 class TrophyList extends DatabaseObjectList
 {

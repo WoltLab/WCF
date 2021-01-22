@@ -97,7 +97,8 @@ class DevtoolsPip extends DatabaseObjectDecorator
      */
     public function supportsGui()
     {
-        return $this->isSupported() && \is_subclass_of($this->getDecoratedObject()->className, IGuiPackageInstallationPlugin::class);
+        return $this->isSupported() && \is_subclass_of($this->getDecoratedObject()->className,
+                IGuiPackageInstallationPlugin::class);
     }
 
     public function getSyncDependencies($toJson = true)
@@ -121,7 +122,7 @@ class DevtoolsPip extends DatabaseObjectDecorator
     /**
      * Sets the project this object belongs to.
      *
-     * @param   DevtoolsProject     $project
+     * @param DevtoolsProject $project
      * @since   5.2
      */
     public function setProject(DevtoolsProject $project)
@@ -144,7 +145,7 @@ class DevtoolsPip extends DatabaseObjectDecorator
 
             $this->pip = new $className(
                 new DevtoolsPackageInstallationDispatcher($this->getProject())
-                // no target
+            // no target
             );
         }
 
@@ -175,7 +176,7 @@ class DevtoolsPip extends DatabaseObjectDecorator
     /**
      * Returns the list of valid targets for this pip.
      *
-     * @param       DevtoolsProject         $project
+     * @param DevtoolsProject $project
      * @return      string[]
      */
     public function getTargets(DevtoolsProject $project)
@@ -254,8 +255,8 @@ class DevtoolsPip extends DatabaseObjectDecorator
     /**
      * Computes and prepares the instructions for the provided target file.
      *
-     * @param       DevtoolsProject         $project
-     * @param       string                  $target
+     * @param DevtoolsProject $project
+     * @param string $target
      * @return      string[]
      */
     public function getInstructions(DevtoolsProject $project, $target)
@@ -316,7 +317,8 @@ class DevtoolsPip extends DatabaseObjectDecorator
                             }
 
                             $tar->registerFile(
-                                FileUtil::getRelativePath($project->path . $path, $item->getPath()) . $item->getFilename(),
+                                FileUtil::getRelativePath($project->path . $path,
+                                    $item->getPath()) . $item->getFilename(),
                                 $itemPath
                             );
                         }
@@ -385,7 +387,8 @@ class DevtoolsPip extends DatabaseObjectDecorator
                             }
 
                             $tar->registerFile(
-                                FileUtil::getRelativePath($project->path . $path, $item->getPath()) . $item->getFilename(),
+                                FileUtil::getRelativePath($project->path . $path,
+                                    $item->getPath()) . $item->getFilename(),
                                 $itemPath
                             );
                         }

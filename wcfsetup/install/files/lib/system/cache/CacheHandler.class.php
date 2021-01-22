@@ -51,8 +51,8 @@ class CacheHandler extends SingletonFactory
     /**
      * Flush cache for given resource.
      *
-     * @param   ICacheBuilder   $cacheBuilder
-     * @param   array       $parameters
+     * @param ICacheBuilder $cacheBuilder
+     * @param array $parameters
      */
     public function flush(ICacheBuilder $cacheBuilder, array $parameters)
     {
@@ -70,8 +70,8 @@ class CacheHandler extends SingletonFactory
     /**
      * Returns cached value for given resource, false if no cache exists.
      *
-     * @param   ICacheBuilder   $cacheBuilder
-     * @param   array       $parameters
+     * @param ICacheBuilder $cacheBuilder
+     * @param array $parameters
      * @return  mixed
      */
     public function get(ICacheBuilder $cacheBuilder, array $parameters)
@@ -85,9 +85,9 @@ class CacheHandler extends SingletonFactory
     /**
      * Caches a value for given resource,
      *
-     * @param   ICacheBuilder   $cacheBuilder
-     * @param   array       $parameters
-     * @param   array       $data
+     * @param ICacheBuilder $cacheBuilder
+     * @param array $parameters
+     * @param array $data
      */
     public function set(ICacheBuilder $cacheBuilder, array $parameters, array $data)
     {
@@ -101,7 +101,7 @@ class CacheHandler extends SingletonFactory
     /**
      * Returns cache index hash.
      *
-     * @param   array       $parameters
+     * @param array $parameters
      * @return  string
      */
     public function getCacheIndex(array $parameters)
@@ -112,8 +112,8 @@ class CacheHandler extends SingletonFactory
     /**
      * Builds cache name.
      *
-     * @param   ICacheBuilder   $cacheBuilder
-     * @param   array       $parameters
+     * @param ICacheBuilder $cacheBuilder
+     * @param array $parameters
      * @return  string
      */
     protected function getCacheName(ICacheBuilder $cacheBuilder, array $parameters = [])
@@ -141,7 +141,7 @@ class CacheHandler extends SingletonFactory
     /**
      * Unifies parameter order, numeric indices will be discarded.
      *
-     * @param   array       $parameters
+     * @param array $parameters
      * @return  array
      */
     protected function orderParameters($parameters)

@@ -108,29 +108,33 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType
             }
 
             // log success
-            $action = new PaidSubscriptionTransactionLogAction([], 'create', ['data' => [
-                'subscriptionUserID' => $userSubscription->subscriptionUserID,
-                'userID' => $user->userID,
-                'subscriptionID' => $subscription->subscriptionID,
-                'paymentMethodObjectTypeID' => $paymentMethodObjectTypeID,
-                'logTime' => TIME_NOW,
-                'transactionID' => $transactionID,
-                'logMessage' => $logMessage,
-                'transactionDetails' => \serialize($transactionDetails),
-            ]]);
+            $action = new PaidSubscriptionTransactionLogAction([], 'create', [
+                'data' => [
+                    'subscriptionUserID' => $userSubscription->subscriptionUserID,
+                    'userID' => $user->userID,
+                    'subscriptionID' => $subscription->subscriptionID,
+                    'paymentMethodObjectTypeID' => $paymentMethodObjectTypeID,
+                    'logTime' => TIME_NOW,
+                    'transactionID' => $transactionID,
+                    'logMessage' => $logMessage,
+                    'transactionDetails' => \serialize($transactionDetails),
+                ],
+            ]);
             $action->executeAction();
         } catch (SystemException $e) {
             // log failure
-            $action = new PaidSubscriptionTransactionLogAction([], 'create', ['data' => [
-                'subscriptionUserID' => $userSubscription !== null ? $userSubscription->subscriptionUserID : null,
-                'userID' => $user !== null ? $user->userID : null,
-                'subscriptionID' => $subscription !== null ? $subscription->subscriptionID : null,
-                'paymentMethodObjectTypeID' => $paymentMethodObjectTypeID,
-                'logTime' => TIME_NOW,
-                'transactionID' => $transactionID,
-                'logMessage' => $e->getMessage(),
-                'transactionDetails' => \serialize($transactionDetails),
-            ]]);
+            $action = new PaidSubscriptionTransactionLogAction([], 'create', [
+                'data' => [
+                    'subscriptionUserID' => $userSubscription !== null ? $userSubscription->subscriptionUserID : null,
+                    'userID' => $user !== null ? $user->userID : null,
+                    'subscriptionID' => $subscription !== null ? $subscription->subscriptionID : null,
+                    'paymentMethodObjectTypeID' => $paymentMethodObjectTypeID,
+                    'logTime' => TIME_NOW,
+                    'transactionID' => $transactionID,
+                    'logMessage' => $e->getMessage(),
+                    'transactionDetails' => \serialize($transactionDetails),
+                ],
+            ]);
             $action->executeAction();
             throw $e;
         }

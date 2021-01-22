@@ -32,7 +32,7 @@ class Team extends DatabaseObjectDecorator
     /**
      * Adds a new member.
      *
-     * @param   UserProfile $user
+     * @param UserProfile $user
      */
     public function addMember(UserProfile $user)
     {

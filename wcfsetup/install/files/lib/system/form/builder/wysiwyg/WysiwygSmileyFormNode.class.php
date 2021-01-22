@@ -70,7 +70,7 @@ class WysiwygSmileyFormNode implements IFormChildNode
     /**
      * Sets the list of available smilies.
      *
-     * @param   Smiley[]    $smilies    available smilies
+     * @param Smiley[] $smilies available smilies
      * @return  WysiwygSmileyFormNode       this form field
      */
     public function smilies(array $smilies)

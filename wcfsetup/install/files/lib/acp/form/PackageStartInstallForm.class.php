@@ -122,7 +122,7 @@ class PackageStartInstallForm extends AbstractForm
     /**
      * Validates the upload package input.
      *
-     * @param   string      $filename
+     * @param string $filename
      * @throws  UserInputException
      */
     protected function validateUploadPackage($filename = '')
@@ -139,7 +139,8 @@ class PackageStartInstallForm extends AbstractForm
             }
 
             // get filename
-            $this->uploadPackage['name'] = FileUtil::getTemporaryFilename('package_', \preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', \basename($this->uploadPackage['name'])));
+            $this->uploadPackage['name'] = FileUtil::getTemporaryFilename('package_',
+                \preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', \basename($this->uploadPackage['name'])));
 
             if (!@\move_uploaded_file($this->uploadPackage['tmp_name'], $this->uploadPackage['name'])) {
                 throw new UserInputException('uploadPackage', 'uploadFailed');
@@ -155,7 +156,7 @@ class PackageStartInstallForm extends AbstractForm
                     case PackageValidationException::INVALID_PACKAGE_NAME:
                     case PackageValidationException::MISSING_PACKAGE_XML:
                         throw new UserInputException('uploadPackage', 'noValidPackage');
-                    break;
+                        break;
                 }
             }
         }

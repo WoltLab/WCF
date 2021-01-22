@@ -45,7 +45,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
     /**
      * Returns a level 1 or 2 category id for given category name.
      *
-     * @param   string      $categoryName
+     * @param string $categoryName
      * @return  int
      */
     protected function getCategoryID($categoryName)
@@ -56,7 +56,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
     /**
      * Returns a level 1 or 2 category name for given category name.
      *
-     * @param   string      $categoryName
+     * @param string $categoryName
      * @return  string
      */
     protected function getCategoryName($categoryName)
@@ -67,7 +67,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
     /**
      * Returns a level 1 or 2 category for given category name.
      *
-     * @param   string          $categoryName
+     * @param string $categoryName
      * @return  DatabaseObject
      * @throws  SystemException
      */
@@ -135,7 +135,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
     /**
      * Returns true if given category is valid and accessible.
      *
-     * @param   string      $categoryName
+     * @param string $categoryName
      * @return  bool
      */
     protected function isValid($categoryName)

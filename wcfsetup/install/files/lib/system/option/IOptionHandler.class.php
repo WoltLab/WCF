@@ -15,16 +15,16 @@ interface IOptionHandler
     /**
      * Creates a new option handler instance.
      *
-     * @param   bool        $supportI18n
-     * @param   string      $languageItemPattern
-     * @param   string      $categoryName
+     * @param bool $supportI18n
+     * @param string $languageItemPattern
+     * @param string $categoryName
      */
     public function __construct($supportI18n, $languageItemPattern = '', $categoryName = '');
 
     /**
      * Reads user input from given source array.
      *
-     * @param   array       $source
+     * @param array $source
      */
     public function readUserInput(array &$source);
 
@@ -38,8 +38,8 @@ interface IOptionHandler
     /**
      * Returns the tree of options.
      *
-     * @param   string      $parentCategoryName
-     * @param   int     $level
+     * @param string $parentCategoryName
+     * @param int $level
      * @return  array
      */
     public function getOptionTree($parentCategoryName = '', $level = 0);
@@ -47,8 +47,8 @@ interface IOptionHandler
     /**
      * Returns a list with the options of a specific option category.
      *
-     * @param   string      $categoryName
-     * @param   bool        $inherit
+     * @param string $categoryName
+     * @param bool $inherit
      * @return  array
      */
     public function getCategoryOptions($categoryName = '', $inherit = true);
@@ -61,8 +61,8 @@ interface IOptionHandler
     /**
      * Saves i18n variables and returns the updated option values.
      *
-     * @param   string      $categoryName
-     * @param   string      $optionPrefix
+     * @param string $categoryName
+     * @param string $optionPrefix
      * @return  array
      */
     public function save($categoryName = null, $optionPrefix = null);

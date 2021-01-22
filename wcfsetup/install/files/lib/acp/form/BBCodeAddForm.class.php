@@ -253,28 +253,32 @@ class BBCodeAddForm extends AbstractForm
         parent::save();
 
         // save bbcode
-        $this->objectAction = new BBCodeAction([], 'create', ['data' => \array_merge($this->additionalFields, [
-            'bbcodeTag' => $this->bbcodeTag,
-            'buttonLabel' => $this->buttonLabel,
-            'className' => $this->className,
-            'htmlOpen' => $this->htmlOpen,
-            'htmlClose' => $this->htmlClose,
-            'isBlockElement' => $this->isBlockElement ? 1 : 0,
-            'isSourceCode' => $this->isSourceCode ? 1 : 0,
-            'packageID' => 1,
-            'showButton' => $this->showButton ? 1 : 0,
-            'wysiwygIcon' => $this->wysiwygIcon,
-        ])]);
+        $this->objectAction = new BBCodeAction([], 'create', [
+            'data' => \array_merge($this->additionalFields, [
+                'bbcodeTag' => $this->bbcodeTag,
+                'buttonLabel' => $this->buttonLabel,
+                'className' => $this->className,
+                'htmlOpen' => $this->htmlOpen,
+                'htmlClose' => $this->htmlClose,
+                'isBlockElement' => $this->isBlockElement ? 1 : 0,
+                'isSourceCode' => $this->isSourceCode ? 1 : 0,
+                'packageID' => 1,
+                'showButton' => $this->showButton ? 1 : 0,
+                'wysiwygIcon' => $this->wysiwygIcon,
+            ]),
+        ]);
         $returnValues = $this->objectAction->executeAction();
         foreach ($this->attributes as $attribute) {
-            $attributeAction = new BBCodeAttributeAction([], 'create', ['data' => [
-                'bbcodeID' => $returnValues['returnValues']->bbcodeID,
-                'attributeNo' => $attribute->attributeNo,
-                'attributeHtml' => $attribute->attributeHtml,
-                'validationPattern' => $attribute->validationPattern,
-                'required' => $attribute->required,
-                'useText' => $attribute->useText,
-            ]]);
+            $attributeAction = new BBCodeAttributeAction([], 'create', [
+                'data' => [
+                    'bbcodeID' => $returnValues['returnValues']->bbcodeID,
+                    'attributeNo' => $attribute->attributeNo,
+                    'attributeHtml' => $attribute->attributeHtml,
+                    'validationPattern' => $attribute->validationPattern,
+                    'required' => $attribute->required,
+                    'useText' => $attribute->useText,
+                ],
+            ]);
             $attributeAction->executeAction();
         }
 

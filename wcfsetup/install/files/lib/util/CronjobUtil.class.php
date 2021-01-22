@@ -60,12 +60,12 @@ final class CronjobUtil
     /**
      * Calculates timestamp for next execution based on cron-like expressions and a given time base.
      *
-     * @param   string      $minute
-     * @param   string      $hour
-     * @param   string      $dom
-     * @param   string      $month
-     * @param   string      $dow
-     * @param   int     $timeBase
+     * @param string $minute
+     * @param string $hour
+     * @param string $dom
+     * @param string $month
+     * @param string $dow
+     * @param int $timeBase
      * @return  int
      */
     public static function calculateNextExec($minute, $hour, $dom, $month, $dow, $timeBase = TIME_NOW)
@@ -157,7 +157,7 @@ final class CronjobUtil
     /**
      * Calculates the date of next execution.
      *
-     * @param   array       $values
+     * @param array $values
      */
     protected static function calculateTime(array &$values)
     {
@@ -167,9 +167,9 @@ final class CronjobUtil
     /**
      * Calculates the next month and year to match given criteria.
      *
-     * @param   int     $month
-     * @param   int     $year
-     * @param   array       $values
+     * @param int $month
+     * @param int $year
+     * @param array $values
      * @return      array
      */
     protected static function calculateMonth($month, $year, array &$values)
@@ -194,7 +194,7 @@ final class CronjobUtil
      * of month, and day of week. If both fields are restricted , that is not '*', the
      * command will be run when either field matches the current time. -- crontab(5)
      *
-     * @param   array       $values
+     * @param array $values
      * @see     \wcf\util\CronjobUtil::getDom()
      */
     protected static function calculateDay(array &$values)
@@ -253,8 +253,7 @@ final class CronjobUtil
                 self::$result['day'] = $dateDow['day'];
                 self::$result['month'] = $dateDow['month'];
                 self::$result['year'] = $dateDow['year'];
-            }
-            // neither dom nor dow are restricted, thus pick the date given by time base
+            } // neither dom nor dow are restricted, thus pick the date given by time base
             else {
                 self::$result['day'] = $day;
                 self::$result['month'] = $month;
@@ -274,10 +273,10 @@ final class CronjobUtil
     /**
      * Calculates the date of next execution based upon a given set for day of week.
      *
-     * @param   int     $month
-     * @param   int     $year
-     * @param   array       $values
-     * @param   int     $day
+     * @param int $month
+     * @param int $year
+     * @param array $values
+     * @param int $day
      * @return  array
      */
     protected static function calculateDow($month, $year, array &$values, $day = 1)
@@ -306,10 +305,10 @@ final class CronjobUtil
     /**
      * Calculates the date of next execution based upon a given set for day of month.
      *
-     * @param   int     $month
-     * @param   int     $year
-     * @param   array       $values
-     * @param   int     $day
+     * @param int $month
+     * @param int $year
+     * @param array $values
+     * @param int $day
      * @return  array
      */
     protected static function calculateDom($month, $year, array &$values, $day = 1)
@@ -336,8 +335,8 @@ final class CronjobUtil
      * Calculates hour of next execution. Returns number of days which
      * had been added in order to match expression for hour and minutes.
      *
-     * @param   array       $values
-     * @param   int     $timeBase
+     * @param array $values
+     * @param int $timeBase
      * @return  int
      */
     protected static function calculateHour(array &$values, &$timeBase)
@@ -377,9 +376,9 @@ final class CronjobUtil
      * Calculates minutes of next execution. Returns false if minute-declaration
      * is past the current hour, thus requires to add at least one hour.
      *
-     * @param   array       $values
-     * @param   int     $timeBase
-     * @param   bool        $addAnDay
+     * @param array $values
+     * @param int $timeBase
+     * @param bool $addAnDay
      * @return  bool
      */
     protected static function calculateMinute(array &$values, &$timeBase, $addAnDay)
@@ -411,9 +410,9 @@ final class CronjobUtil
      * needle. If $continue is not set to false and foreach-loop is out of bounds,
      * then the array-index '0' is returned, referring the first item.
      *
-     * @param   int     $needle
-     * @param   array       $haystack
-     * @param   bool        $continue
+     * @param int $needle
+     * @param array $haystack
+     * @param bool $continue
      * @return  mixed
      */
     protected static function findKey($needle, array &$haystack, $continue = true)
@@ -439,8 +438,8 @@ final class CronjobUtil
     /**
      * Calculates all values matching possible expressions.
      *
-     * @param   string      $fieldName
-     * @param   string      $fieldValue
+     * @param string $fieldName
+     * @param string $fieldValue
      * @return  array
      */
     protected static function calculateValue($fieldName, $fieldValue)
@@ -457,8 +456,7 @@ final class CronjobUtil
             foreach ($items as $item) {
                 $values = \array_merge($values, self::getRanges($item));
             }
-        }
-        // asterisk may be followed by a step value
+        } // asterisk may be followed by a step value
         elseif ($char == '*') {
             $step = 1;
 
@@ -478,7 +476,7 @@ final class CronjobUtil
     /**
      * Tries to parse list items separated by a comma.
      *
-     * @param   string      $fieldValue
+     * @param string $fieldValue
      * @return  array
      */
     protected static function getListItems($fieldValue)
@@ -493,7 +491,7 @@ final class CronjobUtil
     /**
      * Parses a possible range of values including a step value.
      *
-     * @param   string      $value
+     * @param string $value
      * @return  array
      */
     protected static function getRanges($value)
@@ -518,9 +516,9 @@ final class CronjobUtil
     /**
      * Calculates all values for a given range.
      *
-     * @param   int     $startValue
-     * @param   int     $endValue
-     * @param   int     $step
+     * @param int $startValue
+     * @param int $endValue
+     * @param int $step
      * @return  array
      */
     protected static function calculateRange($startValue, $endValue, $step = 1)
@@ -537,11 +535,11 @@ final class CronjobUtil
     /**
      * Validates all cronjob attributes.
      *
-     * @param   string      $startMinute
-     * @param   string      $startHour
-     * @param   string      $startDom
-     * @param   string      $startMonth
-     * @param   string      $startDow
+     * @param string $startMinute
+     * @param string $startHour
+     * @param string $startDom
+     * @param string $startMonth
+     * @param string $startDow
      */
     public static function validate($startMinute, $startHour, $startDom, $startMonth, $startDow)
     {
@@ -555,8 +553,8 @@ final class CronjobUtil
     /**
      * Validates a cronjob attribute.
      *
-     * @param   string      $name
-     * @param   string      $value
+     * @param string $name
+     * @param string $value
      * @throws  SystemException
      */
     public static function validateAttribute($name, $value)
@@ -612,8 +610,7 @@ final class CronjobUtil
 
         if ($value != '*' && !\preg_match($longPattern, $value)) {
             throw new SystemException("invalid value '" . $value . "' given for cronjob attribute '" . $name . "'");
-        }
-        // test whether the user provided a meaningful order inside a range.
+        } // test whether the user provided a meaningful order inside a range.
         else {
             $testArr = \explode(',', $value);
             foreach ($testArr as $testField) {

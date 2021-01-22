@@ -112,9 +112,9 @@ class WorkerProxyAction extends AJAXInvokeAction
     /**
      * Sends a JSON-encoded response.
      *
-     * @param   int     $progress
-     * @param   array       $parameters
-     * @param   string      $proceedURL
+     * @param int $progress
+     * @param array $parameters
+     * @param string $proceedURL
      */
     protected function sendResponse($progress = 0, ?array $parameters = null, $proceedURL = '')
     {

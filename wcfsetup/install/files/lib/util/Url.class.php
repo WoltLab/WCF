@@ -44,7 +44,7 @@ final class Url implements \ArrayAccess
      *
      * This method is a wrapper around filter_var with FILTER_VALIDATE_URL.
      *
-     * @param       string          $url
+     * @param string $url
      * @return      bool
      */
     public static function is($url)
@@ -57,7 +57,7 @@ final class Url implements \ArrayAccess
      * components, even those not originally present, but in that case set to am
      * 'empty' value.
      *
-     * @param       string          $url
+     * @param string $url
      * @return      Url
      */
     public static function parse($url)
@@ -83,8 +83,8 @@ final class Url implements \ArrayAccess
      * Returns true if the provided url contains all listed components and
      * that they're non-empty.
      *
-     * @param       string          $url
-     * @param       int[]       $components
+     * @param string $url
+     * @param int[] $components
      * @return      bool
      */
     public static function contains($url, array $components)
@@ -102,7 +102,7 @@ final class Url implements \ArrayAccess
     /**
      * Url constructor, object creation is only allowed through `Url::parse()`.
      *
-     * @param       string[]        $components
+     * @param string[] $components
      */
     private function __construct(array $components)
     {
@@ -154,7 +154,7 @@ final class Url implements \ArrayAccess
      * component indices. Will throw an exception if the property is unknown,
      * making it easier to spot typos.
      *
-     * @param       mixed   $property
+     * @param mixed $property
      * @return      int
      * @throws      \RuntimeException
      */

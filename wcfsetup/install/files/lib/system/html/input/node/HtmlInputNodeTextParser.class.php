@@ -229,9 +229,9 @@ class HtmlInputNodeTextParser
     /**
      * Detects mentions in text nodes.
      *
-     * @param       \DOMText        $text           text node
-     * @param       string          $value          node value
-     * @param       string[]        $usernames      list of already found usernames
+     * @param \DOMText $text text node
+     * @param string $value node value
+     * @param string[] $usernames list of already found usernames
      */
     protected function detectMention(\DOMText $text, $value, array &$usernames)
     {
@@ -263,7 +263,7 @@ class HtmlInputNodeTextParser
     /**
      * Matches the found usernames against the user table.
      *
-     * @param       string[]        $usernames      list of found usernames
+     * @param string[] $usernames list of found usernames
      * @return      string[]        list of valid usernames
      */
     protected function lookupUsernames(array $usernames)
@@ -355,10 +355,10 @@ class HtmlInputNodeTextParser
     /**
      * Parses text nodes and searches for mentions.
      *
-     * @param       \DOMText        $text           text node
-     * @param       string          $value          node value
-     * @param       string[]        $users          list of usernames by user id
-     * @param       string[]        $groups         list of group names by group id
+     * @param \DOMText $text text node
+     * @param string $value node value
+     * @param string[] $users list of usernames by user id
+     * @param string[] $groups list of group names by group id
      * @return      string          modified node value with replacement placeholders
      */
     protected function parseMention(\DOMText $text, $value, array $users, array $groups)
@@ -411,10 +411,10 @@ class HtmlInputNodeTextParser
     /**
      * Parses regular links and media links contained in text nodes.
      *
-     * @param       \DOMText        $text           text node
-     * @param       string          $value          node value
-     * @param       bool         $allowURL       url bbcode is allowed
-     * @param       bool         $allowMedia     media bbcode is allowed
+     * @param \DOMText $text text node
+     * @param string $value node value
+     * @param bool $allowURL url bbcode is allowed
+     * @param bool $allowMedia media bbcode is allowed
      * @return      string          modified node value with replacement placeholders
      */
     protected function parseURL(\DOMText $text, $value, $allowURL, $allowMedia)
@@ -467,8 +467,8 @@ class HtmlInputNodeTextParser
     /**
      * Parses text nodes and replaces email addresses.
      *
-     * @param       \DOMText        $text           text node
-     * @param       string          $value          node value
+     * @param \DOMText $text text node
+     * @param string $value node value
      * @return      string          modified node value with replacement placeholders
      */
     protected function parseEmail(\DOMText $text, $value)
@@ -501,8 +501,8 @@ class HtmlInputNodeTextParser
     /**
      * Parses text nodes and replaces smilies.
      *
-     * @param       \DOMText        $text           text node
-     * @param       string          $value          node value
+     * @param \DOMText $text text node
+     * @param string $value node value
      * @return      string          modified node value with replacement placeholders
      */
     protected function parseSmiley(\DOMText $text, $value)
@@ -627,8 +627,8 @@ class HtmlInputNodeTextParser
     /**
      * Replaces all found occurrences of special text with their new value.
      *
-     * @param       \DOMText        $text           text node
-     * @param       \DOMElement[]   $elements       elements to be inserted
+     * @param \DOMText $text text node
+     * @param \DOMElement[] $elements elements to be inserted
      */
     protected function replaceMatches(\DOMText $text, array $elements)
     {
@@ -665,7 +665,7 @@ class HtmlInputNodeTextParser
      * Returns true if text node is inside a code element, suppresing any
      * auto-detection of content.
      *
-     * @param       \DOMText        $text           text node
+     * @param \DOMText $text text node
      * @return      bool         true if text node is inside a code element
      */
     protected function hasCodeParent(\DOMText $text)
@@ -691,7 +691,7 @@ class HtmlInputNodeTextParser
      * Returns true if text node is inside a link, preventing the link content
      * being recognized as a link again.
      *
-     * @param       \DOMText        $text           text node
+     * @param \DOMText $text text node
      * @return      bool         true if text node is inside a link
      */
     protected function hasLinkParent(\DOMText $text)
@@ -715,8 +715,8 @@ class HtmlInputNodeTextParser
      * Immediately replacing matches would potentially cause a lot of DOM modifications
      * and moving of nodes especially if there are multiple matches per text node.
      *
-     * @param       \DOMText        $text           text node
-     * @param       \DOMElement     $element        element queued for insertion
+     * @param \DOMText $text text node
+     * @param \DOMElement $element element queued for insertion
      * @return      string          replacement marker
      */
     public function addReplacement(\DOMText $text, \DOMElement $element)
@@ -750,8 +750,8 @@ class HtmlInputNodeTextParser
      * of any quotes outside the username and certain special characters, such as
      * colons, that have been incorrectly matched.
      *
-     * @param   string      $match                                  matched username
-     * @param       bool         $trimTrailingSpecialCharacters          true to strip special characters found at the end of the match
+     * @param string $match matched username
+     * @param bool $trimTrailingSpecialCharacters true to strip special characters found at the end of the match
      * @return  string          sanitized username
      */
     public function getUsername($match, $trimTrailingSpecialCharacters = true)
@@ -776,7 +776,7 @@ class HtmlInputNodeTextParser
      * Returns an array containing the sanitized username and the variant with a
      * trailing special character.
      *
-     * @param       string          $match          matched username
+     * @param string $match matched username
      * @return      string[]        [sanitizedUsername, usernameWithTrailingSpecialChar]
      */
     public function getUsernameVariants($match)

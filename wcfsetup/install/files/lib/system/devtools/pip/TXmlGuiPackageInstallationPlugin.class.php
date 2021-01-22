@@ -48,7 +48,7 @@ trait TXmlGuiPackageInstallationPlugin
      * Adds a delete element to the xml file based on the given installation
      * element.
      *
-     * @param   \DOMElement $element    installation element
+     * @param \DOMElement $element installation element
      */
     protected function addDeleteElement(\DOMElement $element)
     {
@@ -69,7 +69,7 @@ trait TXmlGuiPackageInstallationPlugin
      * Adds a new entry of this pip based on the data provided by the given
      * form.
      *
-     * @param   IFormDocument       $form
+     * @param IFormDocument $form
      */
     public function addEntry(IFormDocument $form)
     {
@@ -87,7 +87,7 @@ trait TXmlGuiPackageInstallationPlugin
     /**
      * Adds all fields to the given form to add or edit an entry.
      *
-     * @param   IFormDocument       $form
+     * @param IFormDocument $form
      */
     abstract protected function addFormFields(IFormDocument $form);
 
@@ -95,9 +95,9 @@ trait TXmlGuiPackageInstallationPlugin
      * Adds optional child elements to the given elements based on the given
      * child data and form.
      *
-     * @param   \DOMElement $element        element to which the child elements are added
-     * @param   array       $children
-     * @param   IFormDocument   $form           form containing the children's data
+     * @param \DOMElement $element element to which the child elements are added
+     * @param array $children
+     * @param IFormDocument $form form containing the children's data
      */
     protected function appendElementChildren(\DOMElement $element, array $children, IFormDocument $form)
     {
@@ -144,8 +144,8 @@ trait TXmlGuiPackageInstallationPlugin
      * Creates a new XML element for the given document using the data provided
      * by the given form and return the new dom element.
      *
-     * @param   \DOMDocument        $document
-     * @param   IFormDocument       $form
+     * @param \DOMDocument $document
+     * @param IFormDocument $form
      * @return  \DOMElement
      */
     abstract protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form);
@@ -156,8 +156,8 @@ trait TXmlGuiPackageInstallationPlugin
      *
      * This method internally calls `prepareXmlElement()` and fires an event.
      *
-     * @param   \DOMDocument        $document
-     * @param   IFormDocument       $form
+     * @param \DOMDocument $document
+     * @param IFormDocument $form
      * @return  \DOMElement
      */
     protected function createXmlElement(\DOMDocument $document, IFormDocument $form)
@@ -183,8 +183,8 @@ trait TXmlGuiPackageInstallationPlugin
      * Deletes the entry of this pip with the given identifier and, based
      * on the value of `$addDeleteInstruction`, adds a delete instruction.
      *
-     * @param   string      $identifier
-     * @param   bool        $addDeleteInstruction
+     * @param string $identifier
+     * @param bool $addDeleteInstruction
      */
     public function deleteEntry($identifier, $addDeleteInstruction)
     {
@@ -230,7 +230,7 @@ trait TXmlGuiPackageInstallationPlugin
      * empty parent elements and returns `true` if the xml file should be deleted
      * because there is no content left.
      *
-     * @param   \DOMDocument    $document   sanitized document
+     * @param \DOMDocument $document sanitized document
      * @return  bool
      */
     protected function sanitizeXmlFileAfterDeleteEntry(\DOMDocument $document)
@@ -254,7 +254,7 @@ trait TXmlGuiPackageInstallationPlugin
     /**
      * Deletes the given element from database.
      *
-     * @param   \DOMElement $element
+     * @param \DOMElement $element
      */
     protected function deleteObject(\DOMElement $element)
     {
@@ -276,8 +276,8 @@ trait TXmlGuiPackageInstallationPlugin
      * provided by the given form and returns the new identifier of the entry
      * (or the old identifier if it has not changed).
      *
-     * @param   IFormDocument       $form
-     * @param   string          $identifier
+     * @param IFormDocument $form
+     * @param string $identifier
      * @return  string          new identifier
      */
     public function editEntry(IFormDocument $form, $identifier)
@@ -313,7 +313,7 @@ trait TXmlGuiPackageInstallationPlugin
      * Checks if the given string needs to be encapsuled by cdata and does so
      * if required.
      *
-     * @param   string      $value
+     * @param string $value
      * @return  string
      */
     protected function getAutoCdataValue($value)
@@ -328,8 +328,8 @@ trait TXmlGuiPackageInstallationPlugin
     /**
      * Returns the `import` element with the given identifier.
      *
-     * @param   XML $xml
-     * @param   string  $identifier
+     * @param XML $xml
+     * @param string $identifier
      * @return  \DOMElement|null
      */
     protected function getElementByIdentifier(XML $xml, $identifier)
@@ -344,8 +344,8 @@ trait TXmlGuiPackageInstallationPlugin
     /**
      * Extracts the PIP object data from the given XML element.
      *
-     * @param   \DOMElement $element    element whose data is returned
-     * @param   bool        $saveData   is `true` if data is intended to be saved and otherwise `false`
+     * @param \DOMElement $element element whose data is returned
+     * @param bool $saveData is `true` if data is intended to be saved and otherwise `false`
      * @return  array
      */
     abstract protected function fetchElementData(\DOMElement $element, $saveData);
@@ -354,8 +354,8 @@ trait TXmlGuiPackageInstallationPlugin
      * Extracts the PIP object data from the given XML element by calling
      * `fetchElementData` and firing an event.
      *
-     * @param   \DOMElement $element    element whose data is returned
-     * @param   bool        $saveData   is `true` if data is intended to be saved and otherwise `false`
+     * @param \DOMElement $element element whose data is returned
+     * @param bool $saveData is `true` if data is intended to be saved and otherwise `false`
      * @return  array
      */
     protected function getElementData(\DOMElement $element, $saveData = false)
@@ -380,7 +380,7 @@ trait TXmlGuiPackageInstallationPlugin
     /**
      * Returns the identifier of the given `import` element.
      *
-     * @param   \DOMElement $element
+     * @param \DOMElement $element
      * @return  string
      */
     abstract protected function getElementIdentifier(\DOMElement $element);
@@ -510,8 +510,8 @@ XML;
     /**
      * Inserts the give new element into the given XML document.
      *
-     * @param   XML     $xml        XML document to which the element is added
-     * @param   \DOMElement $newElement added new element
+     * @param XML $xml XML document to which the element is added
+     * @param \DOMElement $newElement added new element
      */
     protected function insertNewXmlElement(XML $xml, \DOMElement $newElement)
     {
@@ -529,7 +529,7 @@ XML;
      * Populates the given form to be used for adding and editing entries
      * managed by this PIP.
      *
-     * @param   IFormDocument       $form
+     * @param IFormDocument $form
      */
     public function populateForm(IFormDocument $form)
     {
@@ -553,7 +553,7 @@ XML;
     /**
      * Returns a delete xml element based on the given import element.
      *
-     * @param   \DOMElement $element
+     * @param \DOMElement $element
      * @return  \DOMElement
      */
     protected function prepareDeleteXmlElement(\DOMElement $element)
@@ -586,8 +586,8 @@ XML;
      * creating a new element (if `$oldElement = null`) or updating an existing
      * element.
      *
-     * @param   \DOMElement     $newElement XML element with new data
-     * @param   \DOMElement|null    $oldElement XML element with old data
+     * @param \DOMElement $newElement XML element with new data
+     * @param \DOMElement|null $oldElement XML element with old data
      */
     protected function saveObject(\DOMElement $newElement, ?\DOMElement $oldElement = null)
     {
@@ -622,7 +622,7 @@ XML;
      * Informs the pip of the identifier of the edited entry if the form to
      * edit that entry has been submitted.
      *
-     * @param   string      $identifier
+     * @param string $identifier
      *
      * @throws  \InvalidArgumentException   if no such entry exists
      */
@@ -640,8 +640,8 @@ XML;
      * given form and returns `true`. If no entry with the given identifier
      * exists, `false` is returned.
      *
-     * @param   string          $identifier
-     * @param   IFormDocument       $document
+     * @param string $identifier
+     * @param IFormDocument $document
      * @return  bool
      */
     public function setEntryData($identifier, IFormDocument $document)
@@ -685,14 +685,14 @@ XML;
     /**
      * Sets the keys of the given (empty) entry list.
      *
-     * @param   IDevtoolsPipEntryList   $entryList
+     * @param IDevtoolsPipEntryList $entryList
      */
     abstract protected function setEntryListKeys(IDevtoolsPipEntryList $entryList);
 
     /**
      * Sets the type of the currently handled pip entries.
      *
-     * @param   string      $entryType  currently handled pip entry type
+     * @param string $entryType currently handled pip entry type
      *
      * @throws  \InvalidArgumentException   if the given entry type is invalid (see `getEntryTypes()` method)
      */

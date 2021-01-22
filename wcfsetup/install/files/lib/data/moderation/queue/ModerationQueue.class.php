@@ -14,18 +14,18 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Moderation\Queue
  *
- * @property-read   int     $queueID        unique id of the moderation queue entry
- * @property-read   int     $objectTypeID       id of the `com.woltlab.wcf.moderation.type` object type
- * @property-read   int     $objectID       id of the object of the object type with id `$objectTypeID` to which the moderation queue entry belongs to
- * @property-read   int     $containerID        id of the object's container object to which the modification log entry belongs to or `0` if no such container object exists or is logged
- * @property-read   int|null    $userID         id of the user who created the moderation queue entry or `null` if the user does not exist anymore or if the moderation queue entry has been created by a guest
- * @property-read   int     $time           timestamp at which the moderation queue entry has been created
- * @property-read   int|null    $assignedUserID     id of the user to which the moderation queue entry is assigned or `null` if it is not assigned to any user
- * @property-read   int     $status         status of the moderation queue entry (see `ModerationQueue::STATUS_*` constants)
- * @property-read   int     $comments       number of comments on the moderation queue entry
- * @property-read   int     $lastChangeTime     timestamp at which the moderation queue entry has been changed the last time
- * @property-read   array       $additionalData     array with additional data of the moderation queue entry
- * @property-read   bool        $markAsJustified    true if the report was closed, but it was actually justified and other actions may have been taken
+ * @property-read   int $queueID        unique id of the moderation queue entry
+ * @property-read   int $objectTypeID       id of the `com.woltlab.wcf.moderation.type` object type
+ * @property-read   int $objectID       id of the object of the object type with id `$objectTypeID` to which the moderation queue entry belongs to
+ * @property-read   int $containerID        id of the object's container object to which the modification log entry belongs to or `0` if no such container object exists or is logged
+ * @property-read   int|null $userID         id of the user who created the moderation queue entry or `null` if the user does not exist anymore or if the moderation queue entry has been created by a guest
+ * @property-read   int $time           timestamp at which the moderation queue entry has been created
+ * @property-read   int|null $assignedUserID     id of the user to which the moderation queue entry is assigned or `null` if it is not assigned to any user
+ * @property-read   int $status         status of the moderation queue entry (see `ModerationQueue::STATUS_*` constants)
+ * @property-read   int $comments       number of comments on the moderation queue entry
+ * @property-read   int $lastChangeTime     timestamp at which the moderation queue entry has been changed the last time
+ * @property-read   array $additionalData     array with additional data of the moderation queue entry
+ * @property-read   bool $markAsJustified    true if the report was closed, but it was actually justified and other actions may have been taken
  */
 class ModerationQueue extends DatabaseObject
 {
@@ -104,7 +104,7 @@ class ModerationQueue extends DatabaseObject
     /**
      * Returns status text.
      *
-     * @param   int     $status
+     * @param int $status
      * @return  string
      */
     public function getStatus($status = null)
@@ -113,15 +113,15 @@ class ModerationQueue extends DatabaseObject
         switch ($status) {
             case self::STATUS_OUTSTANDING:
                 return WCF::getLanguage()->get('wcf.moderation.status.outstanding');
-            break;
+                break;
 
             case self::STATUS_PROCESSING:
                 return WCF::getLanguage()->get('wcf.moderation.status.processing');
-            break;
+                break;
 
             case self::STATUS_DONE:
                 return WCF::getLanguage()->get('wcf.moderation.status.done');
-            break;
+                break;
 
             case self::STATUS_REJECTED:
             case self::STATUS_CONFIRMED:
@@ -134,7 +134,7 @@ class ModerationQueue extends DatabaseObject
                 }
 
                 return WCF::getLanguage()->get('wcf.moderation.status.' . $phrase . '.' . $definition->definitionName);
-            break;
+                break;
         }
     }
 }

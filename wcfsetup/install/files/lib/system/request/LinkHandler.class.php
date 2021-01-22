@@ -80,9 +80,9 @@ class LinkHandler extends SingletonFactory
      * Important: The controller class is not checked if it actually exists.
      * That check happens during the runtime.
      *
-     * @param   string      $controllerClass
-     * @param   array       $parameters
-     * @param   string      $url
+     * @param string $controllerClass
+     * @param array $parameters
+     * @param string $url
      * @return  string
      *
      * @throws  \InvalidArgumentException   if the passed string is no controller class name
@@ -107,9 +107,9 @@ class LinkHandler extends SingletonFactory
     /**
      * Returns a relative link.
      *
-     * @param   string      $controller
-     * @param   array       $parameters
-     * @param   string      $url
+     * @param string $controller
+     * @param array $parameters
+     * @param string $url
      * @return  string
      */
     public function getLink($controller = null, array $parameters = [], $url = '')
@@ -283,8 +283,8 @@ class LinkHandler extends SingletonFactory
      * Passing in an illegal page id will cause this method to fail silently, returning an
      * empty string.
      *
-     * @param   int     $pageID     page id
-     * @param   int     $languageID language id, optional
+     * @param int $pageID page id
+     * @param int $languageID language id, optional
      * @return  string      full URL of empty string if `$pageID` is invalid
      * @since   3.0
      */

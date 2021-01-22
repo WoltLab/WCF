@@ -13,7 +13,7 @@ use wcf\page\MultipleLinkPage;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Page
  *
- * @property    ReactionTypeList    $objectList
+ * @property    ReactionTypeList $objectList
  */
 class ReactionTypeListPage extends MultipleLinkPage
 {

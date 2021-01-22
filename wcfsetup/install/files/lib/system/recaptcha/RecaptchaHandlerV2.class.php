@@ -23,8 +23,8 @@ class RecaptchaHandlerV2 extends SingletonFactory
     /**
      * Validates response.
      *
-     * @param   string      $response
-     * @param   string      $type
+     * @param string $response
+     * @param string $type
      * @throws  UserInputException
      */
     public function validate($response, $type = 'v2')

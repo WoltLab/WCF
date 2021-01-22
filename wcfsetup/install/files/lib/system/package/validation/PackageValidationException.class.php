@@ -136,8 +136,8 @@ class PackageValidationException extends SystemException
     /**
      * Creates a new PackageArchiveValidationException.
      *
-     * @param   int     $code
-     * @param   string[]    $details
+     * @param int $code
+     * @param string[] $details
      */
     public function __construct($code, array $details = [])
     {
@@ -159,7 +159,7 @@ class PackageValidationException extends SystemException
     /**
      * Returns the readable error message.
      *
-     * @param   int     $code
+     * @param int $code
      * @return  string
      */
     public function getErrorMessage($code = null)
@@ -177,7 +177,7 @@ class PackageValidationException extends SystemException
     /**
      * Returns legacy error messages to mimic WCF 2.0.x PackageArchive's exceptions.
      *
-     * @param   int     $code
+     * @param int $code
      * @return  string
      */
     protected function getLegacyMessage($code)
@@ -189,23 +189,23 @@ class PackageValidationException extends SystemException
                 }
 
                 return "unable to find package file '" . $this->details['archive'] . "'";
-            break;
+                break;
 
             case self::MISSING_PACKAGE_XML:
                 return "package information file '" . PackageArchive::INFO_FILE . "' not found in '" . $this->details['archive'] . "'";
-            break;
+                break;
 
             case self::INVALID_PACKAGE_NAME:
                 return "'" . $this->details['packageName'] . "' is not a valid package name.";
-            break;
+                break;
 
             case self::INVALID_PACKAGE_VERSION:
                 return "package version '" . $this->details['packageVersion'] . "' is invalid";
-            break;
+                break;
 
             default:
                 return $this->getErrorMessage($code);
-            break;
+                break;
         }
     }
 

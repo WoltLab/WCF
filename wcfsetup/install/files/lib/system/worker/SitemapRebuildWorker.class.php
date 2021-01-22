@@ -188,7 +188,8 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
                 }
 
                 $link = $object->getLink();
-                $lastModifiedTime = ($sitemapObject->getLastModifiedColumn() === null) ? null : \date('c', $object->{$sitemapObject->getLastModifiedColumn()});
+                $lastModifiedTime = ($sitemapObject->getLastModifiedColumn() === null) ? null : \date('c',
+                    $object->{$sitemapObject->getLastModifiedColumn()});
 
                 if ($sitemapObject->canView($object)) {
                     $this->file->write(WCF::getTPL()->fetch('sitemapEntry', 'wcf', [
@@ -281,7 +282,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
     /**
      * Writes the sitemap.xml index file and links all sitemaps.
      *
-     * @param       bool         $closeFile      Close a previously opened handle.
+     * @param bool $closeFile Close a previously opened handle.
      */
     protected function writeIndexFile($closeFile = true)
     {
@@ -306,7 +307,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
     /**
      * Generates a new temporary file and appends the sitemap start.
      *
-     * @param       bool         $closeFile      Close a previously opened handle.
+     * @param bool $closeFile Close a previously opened handle.
      */
     protected function generateTmpFile($closeFile = true)
     {
@@ -347,7 +348,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
      * Writes the current temporary file in a finished sitemap file. The param
      * $filename defines the sitemap filename.
      *
-     * @param   string $filename
+     * @param string $filename
      */
     protected function finishSitemap($filename)
     {
@@ -430,7 +431,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
     /**
      * Unlink the sitemap files for a given object type name.
      *
-     * @param   string      $objectTypeName
+     * @param string $objectTypeName
      */
     private function deleteSitemaps($objectTypeName)
     {
@@ -468,7 +469,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
      * Reads the columns changed by the user for this sitemap object from the registry and
      * modifies the object accordingly.
      *
-     * @param       ObjectType      $object
+     * @param ObjectType $object
      * @since       5.3
      */
     public static function prepareSitemapObject(ObjectType $object)

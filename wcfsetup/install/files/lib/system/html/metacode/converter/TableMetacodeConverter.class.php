@@ -69,7 +69,7 @@ class TableMetacodeConverter extends AbstractMetacodeConverter
     /**
      * Processes the rows of the table.
      *
-     * @param   \DOMElement $row
+     * @param \DOMElement $row
      */
     protected function handleRow(\DOMElement $row)
     {
@@ -154,7 +154,7 @@ class TableMetacodeConverter extends AbstractMetacodeConverter
      * Returns true if provided node is within another table, prevents issues
      * with nested tables handled in the wrong order.
      *
-     * @param       \DOMNode        $node           target node
+     * @param \DOMNode $node target node
      * @return      bool         true if provided node is within another table
      */
     protected function isInsideTable(\DOMNode $node)

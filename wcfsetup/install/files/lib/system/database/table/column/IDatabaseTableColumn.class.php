@@ -16,7 +16,7 @@ interface IDatabaseTableColumn
     /**
      * Sets the default value of the column and returns the column.
      *
-     * @param   mixed   $defaultValue
+     * @param mixed $defaultValue
      * @return  $this
      */
     public function defaultValue($defaultValue);
@@ -73,7 +73,7 @@ interface IDatabaseTableColumn
     /**
      * Sets the name of the column and returns the column.
      *
-     * @param   string      $name
+     * @param string $name
      * @return  $this
      */
     public function name($name);
@@ -81,7 +81,7 @@ interface IDatabaseTableColumn
     /**
      * Sets if the values of the column cannot be `null`.
      *
-     * @param   bool    $notNull
+     * @param bool $notNull
      * @return  $this
      */
     public function notNull($notNull = true);
@@ -103,7 +103,7 @@ interface IDatabaseTableColumn
     /**
      * Returns a `DatabaseTableColumn` object with the given name.
      *
-     * @param   string      $name
+     * @param string $name
      * @return  $this
      */
     public static function create($name);
@@ -111,8 +111,8 @@ interface IDatabaseTableColumn
     /**
      * Returns a `DatabaseTableColumn` object with the given name and data.
      *
-     * @param   string      $name
-     * @param   array       $data       data returned by `DatabaseEditor::getColumns()`
+     * @param string $name
+     * @param array $data data returned by `DatabaseEditor::getColumns()`
      * @return  $this
      */
     public static function createFromData($name, array $data);

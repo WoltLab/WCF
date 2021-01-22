@@ -49,7 +49,7 @@ class LanguageFactory extends SingletonFactory
     /**
      * Returns a Language object for the language with the given id.
      *
-     * @param   int     $languageID
+     * @param int $languageID
      * @return  Language
      */
     public function getLanguage($languageID)
@@ -68,7 +68,7 @@ class LanguageFactory extends SingletonFactory
     /**
      * Returns the preferred language of the current user.
      *
-     * @param   int     $languageID
+     * @param int $languageID
      * @return  Language
      */
     public function getUserLanguage($languageID = 0)
@@ -89,7 +89,7 @@ class LanguageFactory extends SingletonFactory
      * Returns the language with the given language code or null if no such
      * language exists.
      *
-     * @param   string      $languageCode
+     * @param string $languageCode
      * @return  Language
      */
     public function getLanguageByCode($languageCode)
@@ -113,7 +113,7 @@ class LanguageFactory extends SingletonFactory
     /**
      * Returns true if the language category with the given name exists.
      *
-     * @param   string      $categoryName
+     * @param string $categoryName
      * @return  bool
      */
     public function isValidCategory($categoryName)
@@ -124,7 +124,7 @@ class LanguageFactory extends SingletonFactory
     /**
      * Returns the language category with the given name.
      *
-     * @param   string      $categoryName
+     * @param string $categoryName
      * @return  LanguageCategory
      */
     public function getCategory($categoryName)
@@ -137,7 +137,7 @@ class LanguageFactory extends SingletonFactory
     /**
      * Returns language category by id.
      *
-     * @param   int     $languageCategoryID
+     * @param int $languageCategoryID
      * @return  LanguageCategory
      */
     public function getCategoryByID($languageCategoryID)
@@ -185,8 +185,8 @@ class LanguageFactory extends SingletonFactory
     /**
      * Determines the preferred language of the current user.
      *
-     * @param   array       $availableLanguageCodes
-     * @param   string      $defaultLanguageCode
+     * @param array $availableLanguageCodes
+     * @param string $defaultLanguageCode
      * @return  string
      */
     public static function getPreferredLanguage($availableLanguageCodes, $defaultLanguageCode)
@@ -246,7 +246,7 @@ class LanguageFactory extends SingletonFactory
      * Removes additional language identifier from given language code.
      * Converts e.g. 'de-informal' to 'de'.
      *
-     * @param   string      $languageCode
+     * @param string $languageCode
      * @return  string      $languageCode
      */
     public static function fixLanguageCode($languageCode)
@@ -323,7 +323,7 @@ class LanguageFactory extends SingletonFactory
     /**
      * Makes given language the default language.
      *
-     * @param   int     $languageID
+     * @param int $languageID
      */
     public function makeDefault($languageID)
     {

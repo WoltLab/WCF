@@ -25,7 +25,7 @@ trait TDecimalsDatabaseTableColumn
      * Sets the number of decimals the database table column supports or unsets the previously
      * set value if `null` is passed and returns this column.
      *
-     * @param   null|int    $decimals
+     * @param null|int $decimals
      * @return  $this
      */
     public function decimals($decimals)

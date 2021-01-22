@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Page
  *
- * @property    PaidSubscriptionUserList    $objectList
+ * @property    PaidSubscriptionUserList $objectList
  */
 class PaidSubscriptionUserListPage extends SortablePage
 {
@@ -85,10 +85,12 @@ class PaidSubscriptionUserListPage extends SortablePage
         parent::initObjectList();
 
         if ($this->username) {
-            $this->objectList->getConditionBuilder()->add('paid_subscription_user.userID IN (SELECT userID FROM wcf' . WCF_N . '_user WHERE username LIKE ?)', ['%' . $this->username . '%']);
+            $this->objectList->getConditionBuilder()->add('paid_subscription_user.userID IN (SELECT userID FROM wcf' . WCF_N . '_user WHERE username LIKE ?)',
+                ['%' . $this->username . '%']);
         }
         if ($this->subscriptionID) {
-            $this->objectList->getConditionBuilder()->add('paid_subscription_user.subscriptionID = ?', [$this->subscriptionID]);
+            $this->objectList->getConditionBuilder()->add('paid_subscription_user.subscriptionID = ?',
+                [$this->subscriptionID]);
         }
 
         $this->objectList->getConditionBuilder()->add('paid_subscription_user.isActive = ?', [1]);

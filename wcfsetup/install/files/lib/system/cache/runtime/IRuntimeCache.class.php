@@ -19,7 +19,7 @@ interface IRuntimeCache
      * Caches the given object id so that during the next object fetch, the object with
      * this id will also be fetched.
      *
-     * @param   int     $objectID
+     * @param int $objectID
      */
     public function cacheObjectID($objectID);
 
@@ -27,7 +27,7 @@ interface IRuntimeCache
      * Caches the given object ids so that during the next object fetch, the objects with
      * these ids will also be fetched.
      *
-     * @param   int[]   $objectIDs
+     * @param int[] $objectIDs
      */
     public function cacheObjectIDs(array $objectIDs);
 
@@ -43,7 +43,7 @@ interface IRuntimeCache
      * If the given object id should not have been cached before, it will be cached
      * during this method call and the object, if existing, will be returned.
      *
-     * @param   int     $objectID
+     * @param int $objectID
      * @return  DatabaseObject|null
      */
     public function getObject($objectID);
@@ -54,7 +54,7 @@ interface IRuntimeCache
      * If the given object ids should not have been cached before, they will be cached
      * during this method call and the objects, if existing, will be returned.
      *
-     * @param   int[]   $objectIDs
+     * @param int[] $objectIDs
      * @return  DatabaseObject[]
      */
     public function getObjects(array $objectIDs);
@@ -62,14 +62,14 @@ interface IRuntimeCache
     /**
      * Removes the object with the given id from the runtime cache if it has already been loaded.
      *
-     * @param   int     $objectID
+     * @param int $objectID
      */
     public function removeObject($objectID);
 
     /**
      * Removes the objects with the given ids from the runtime cache if they have already been loaded.
      *
-     * @param   int[]   $objectIDs
+     * @param int[] $objectIDs
      */
     public function removeObjects(array $objectIDs);
 }

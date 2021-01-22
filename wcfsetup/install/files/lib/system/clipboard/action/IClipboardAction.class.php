@@ -27,8 +27,8 @@ interface IClipboardAction
      * Returns the editor item for the clipboard action with the given name or `null`
      * if the action is not applicable to the given objects.
      *
-     * @param   DatabaseObject[]    $objects
-     * @param   ClipboardAction     $action
+     * @param DatabaseObject[] $objects
+     * @param ClipboardAction $action
      * @return  ClipboardEditorItem|null
      */
     public function execute(array $objects, ClipboardAction $action);
@@ -43,7 +43,7 @@ interface IClipboardAction
     /**
      * Returns label for item editor.
      *
-     * @param   array       $objects
+     * @param array $objects
      * @return  string
      */
     public function getEditorLabel(array $objects);

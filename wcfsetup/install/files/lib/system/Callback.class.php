@@ -24,7 +24,7 @@ final class Callback
     /**
      * Creates new instance of Callback.
      *
-     * @param   callback    $callback
+     * @param callback $callback
      * @throws  SystemException
      */
     public function __construct($callback)

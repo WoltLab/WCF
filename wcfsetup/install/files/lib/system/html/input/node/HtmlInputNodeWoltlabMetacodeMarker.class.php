@@ -93,8 +93,8 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
     /**
      * Filters groups by reverting metacode markers for invalid bbcodes.
      *
-     * @param       array                           $groups                 grouped list of bbcode marker pairs
-     * @param       AbstractHtmlNodeProcessor       $htmlNodeProcessor      node processor instance
+     * @param array $groups grouped list of bbcode marker pairs
+     * @param AbstractHtmlNodeProcessor $htmlNodeProcessor node processor instance
      * @return      array                           filtered groups
      */
     protected function filterGroups(array $groups, AbstractHtmlNodeProcessor $htmlNodeProcessor)
@@ -124,8 +124,8 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
     /**
      * Transforms bbcode markers inside source code elements into their plain bbcode representation.
      *
-     * @param   array                       $groups     grouped list of bbcode marker pairs
-     * @param       AbstractHtmlNodeProcessor       $htmlNodeProcessor      node processor instance
+     * @param array $groups grouped list of bbcode marker pairs
+     * @param AbstractHtmlNodeProcessor $htmlNodeProcessor node processor instance
      * @return      array                           filtered groups without source bbcodes
      */
     protected function revertMarkerInsideCodeBlocks(array $groups, AbstractHtmlNodeProcessor $htmlNodeProcessor)
@@ -159,7 +159,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
     /**
      * Returns `true` if the given element is inside a code element.
      *
-     * @param   \DOMElement $element
+     * @param \DOMElement $element
      * @return  bool
      */
     protected function isInsideCode(\DOMElement $element)
@@ -184,7 +184,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
     /**
      * Builds the list of paired bbcode markers.
      *
-     * @param   \DOMElement[]   $elements   list of marker elements
+     * @param \DOMElement[] $elements list of marker elements
      * @return  array       list of paired bbcode markers
      */
     protected function buildPairs(array $elements)
@@ -224,7 +224,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
     /**
      * Validates bbcode marker pairs to include both an opening and closing element.
      *
-     * @param   array       $pairs      list of paired bbcode markers
+     * @param array $pairs list of paired bbcode markers
      * @return  array       filtered list of paired bbcode markers
      */
     protected function validatePairs(array $pairs)
@@ -247,7 +247,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
     /**
      * Groups bbcode marker pairs by their common bbcode identifier.
      *
-     * @param   array       $pairs      list of paired bbcode markers
+     * @param array $pairs list of paired bbcode markers
      * @return  array       grouped list of bbcode marker pairs
      */
     protected function groupPairsByName(array $pairs)
@@ -276,7 +276,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
     /**
      * Converts source bbcode groups.
      *
-     * @param   array       $groups     grouped list of bbcode marker pairs
+     * @param array $groups grouped list of bbcode marker pairs
      * @return      array           filtered groups without source bbcodes
      */
     protected function convertSourceGroups(array $groups)
@@ -314,7 +314,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
     /**
      * Converts bbcode marker pairs into block- or inline-elements.
      *
-     * @param   array       $groups     grouped list of bbcode marker pairs
+     * @param array $groups grouped list of bbcode marker pairs
      */
     protected function convertGroups(array $groups)
     {
@@ -341,10 +341,10 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
     /**
      * Converts a block-level bbcode marker pair.
      *
-     * @param   string      $name       bbcode identifier
-     * @param   \DOMElement $start      start node
-     * @param   \DOMElement $end        end node
-     * @param   string      $attributes encoded attribute string
+     * @param string $name bbcode identifier
+     * @param \DOMElement $start start node
+     * @param \DOMElement $end end node
+     * @param string $attributes encoded attribute string
      */
     protected function convertBlockElement($name, $start, $end, $attributes)
     {
@@ -410,10 +410,10 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
     /**
      * Converts an inline bbcode marker pair.
      *
-     * @param   string      $name       bbcode identifier
-     * @param   \DOMElement $start      start node
-     * @param   \DOMElement $end        end node
-     * @param   string      $attributes encoded attribute string
+     * @param string $name bbcode identifier
+     * @param \DOMElement $start start node
+     * @param \DOMElement $end end node
+     * @param string $attributes encoded attribute string
      */
     protected function convertInlineElement($name, $start, $end, $attributes)
     {
@@ -465,10 +465,10 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
      * node and all previous siblings will be added to the element. The reverse takes place if
      * `$endNode` is `null`.
      *
-     * @param   string          $name       element tag name
-     * @param   string          $attributes encoded attribute string
-     * @param   \DOMElement|null    $startNode  first node to wrap
-     * @param   \DOMElement|null    $endNode    last node to wrap
+     * @param string $name element tag name
+     * @param string $attributes encoded attribute string
+     * @param \DOMElement|null $startNode first node to wrap
+     * @param \DOMElement|null $endNode last node to wrap
      * @return  \DOMElement     newly created element
      */
     protected function wrapContent($name, $attributes, $startNode, $endNode)
@@ -516,7 +516,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
     /**
      * Returns true if provided node is a block element.
      *
-     * @param   \DOMNode    $node       node
+     * @param \DOMNode $node node
      * @return  bool        true for certain block elements
      */
     protected function isBlockElement(\DOMNode $node)
@@ -545,8 +545,8 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
      * Converts a bbcode marker pair into their plain bbcode representation. This method is used
      * to convert markers inside source code elements.
      *
-     * @param       string          $name           bbcode name
-     * @param   array       $pair       bbcode marker pair
+     * @param string $name bbcode name
+     * @param array $pair bbcode marker pair
      */
     protected function convertToBBCode($name, array $pair)
     {
@@ -561,7 +561,8 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
             $content = \array_splice($attributes, $pair['useText'])[0];
         }
 
-        $textNode = $start->ownerDocument->createTextNode(($pair['openSource'] ?: HtmlBBCodeParser::getInstance()->buildBBCodeTag($name, $attributes, true)) . $content);
+        $textNode = $start->ownerDocument->createTextNode(($pair['openSource'] ?: HtmlBBCodeParser::getInstance()->buildBBCodeTag($name,
+                $attributes, true)) . $content);
         DOMUtil::insertBefore($textNode, $start);
         DOMUtil::removeNode($start);
 

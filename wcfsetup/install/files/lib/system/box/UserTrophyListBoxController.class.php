@@ -17,7 +17,7 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Core\System\Box
  * @since   3.1
  *
- * @property    UserTrophyList         $objectList
+ * @property    UserTrophyList $objectList
  */
 class UserTrophyListBoxController extends AbstractDatabaseObjectListBoxController
 {
@@ -39,7 +39,14 @@ class UserTrophyListBoxController extends AbstractDatabaseObjectListBoxControlle
     /**
      * @inheritDoc
      */
-    protected static $supportedPositions = ['sidebarLeft', 'sidebarRight', 'contentTop', 'contentBottom', 'top', 'bottom'];
+    protected static $supportedPositions = [
+        'sidebarLeft',
+        'sidebarRight',
+        'contentTop',
+        'contentBottom',
+        'top',
+        'bottom',
+    ];
 
     /**
      * @inheritDoc
@@ -87,8 +94,10 @@ class UserTrophyListBoxController extends AbstractDatabaseObjectListBoxControlle
 
             $friendshipConditionBuilder = new PreparedStatementConditionBuilder(false);
             $friendshipConditionBuilder->add('user_trophy.userID IN (SELECT userID FROM wcf' . WCF_N . '_user_option_value WHERE userOption' . UserOptionCacheBuilder::getInstance()->getData()['options']['canViewTrophies']->optionID . ' = 2)');
-            $friendshipConditionBuilder->add('user_trophy.userID IN (SELECT userID FROM wcf' . WCF_N . '_user_follow WHERE followUserID = ?)', [WCF::getUser()->userID]);
-            $conditionBuilder->add('(' . $friendshipConditionBuilder . ')', $friendshipConditionBuilder->getParameters());
+            $friendshipConditionBuilder->add('user_trophy.userID IN (SELECT userID FROM wcf' . WCF_N . '_user_follow WHERE followUserID = ?)',
+                [WCF::getUser()->userID]);
+            $conditionBuilder->add('(' . $friendshipConditionBuilder . ')',
+                $friendshipConditionBuilder->getParameters());
             $conditionBuilder->add('user_trophy.userID = ?', [WCF::getUser()->userID]);
 
             $list->getConditionBuilder()->add('(' . $conditionBuilder . ')', $conditionBuilder->getParameters());

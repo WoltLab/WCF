@@ -229,7 +229,7 @@ class WCFSetup extends WCF
     /**
      * Calculates the current state of the progress bar.
      *
-     * @param   int     $currentStep
+     * @param int $currentStep
      */
     protected function calcProgress($currentStep)
     {
@@ -250,7 +250,8 @@ class WCFSetup extends WCF
             $step = 'selectSetupLanguage';
         }
 
-        \header('set-cookie: wcfsetup_cookietest=' . TMP_FILE_PREFIX . '; domain=' . \str_replace(RouteHandler::getProtocol(), '', RouteHandler::getHost()) . (RouteHandler::secureConnection() ? '; secure' : ''));
+        \header('set-cookie: wcfsetup_cookietest=' . TMP_FILE_PREFIX . '; domain=' . \str_replace(RouteHandler::getProtocol(),
+                '', RouteHandler::getHost()) . (RouteHandler::secureConnection() ? '; secure' : ''));
 
         // execute current step
         switch ($step) {
@@ -280,7 +281,7 @@ class WCFSetup extends WCF
                     break;
                 }
 
-                // no break
+            // no break
             case 'configureDirectories':
                 $this->calcProgress(3);
                 $this->configureDirectories();
@@ -478,15 +479,15 @@ class WCFSetup extends WCF
                     $memoryLimit = $matches[1] * 1024;
 
                     return $memoryLimit >= 128;
-                break;
+                    break;
 
                 case 'M':
                     return $matches[1] >= 128;
-                break;
+                    break;
 
                 case 'G':
                     return $matches[1] >= 1;
-                break;
+                    break;
             }
         }
 
@@ -624,8 +625,7 @@ class WCFSetup extends WCF
             throw new SystemException(
                 'Target directory seems to be an existing installation of WCF, unable to continue.'
             );
-        }
-        // WCF not yet installed, install files first
+        } // WCF not yet installed, install files first
         else {
             static::installFiles();
 
@@ -863,8 +863,7 @@ class WCFSetup extends WCF
                     $this->gotoNextStep('createDB');
 
                     exit;
-                }
-                // show configure template again
+                } // show configure template again
                 else {
                     WCF::getTPL()->assign(['conflictedTables' => $conflictedTables]);
                 }
@@ -887,8 +886,8 @@ class WCFSetup extends WCF
      * Checks if in the chosen database are tables in conflict with the wcf tables
      * which will be created in the next step.
      *
-     * @param   \wcf\system\database\Database   $db
-     * @param   int             $dbNumber
+     * @param \wcf\system\database\Database $db
+     * @param int $dbNumber
      * @return  string[]    list of already existing tables
      */
     protected function getConflictedTables($db, $dbNumber)
@@ -1037,7 +1036,7 @@ class WCFSetup extends WCF
     /**
      * Scans the given dir for installed files.
      *
-     * @param   string      $dir
+     * @param string $dir
      * @throws      SystemException
      */
     protected function getInstalledFiles($dir)
@@ -1078,7 +1077,8 @@ class WCFSetup extends WCF
 
         // set default language
         $language = LanguageFactory::getInstance()->getLanguageByCode(
-            \in_array(self::$selectedLanguageCode, self::$selectedLanguages) ? self::$selectedLanguageCode : self::$selectedLanguages[0]
+            \in_array(self::$selectedLanguageCode,
+                self::$selectedLanguages) ? self::$selectedLanguageCode : self::$selectedLanguages[0]
         );
         LanguageFactory::getInstance()->makeDefault($language->languageID);
 
@@ -1246,10 +1246,12 @@ class WCFSetup extends WCF
                     if ($packageName == 'com.woltlab.wcf') {
                         $wcfPackageFile = $packageFile;
                     } else {
-                        $isStrato = (!empty($_SERVER['DOCUMENT_ROOT']) && (\strpos($_SERVER['DOCUMENT_ROOT'], 'strato') !== false));
+                        $isStrato = (!empty($_SERVER['DOCUMENT_ROOT']) && (\strpos($_SERVER['DOCUMENT_ROOT'],
+                                    'strato') !== false));
                         if (!$isStrato && \preg_match('!\.(tar\.gz|tgz)$!', $packageFile)) {
                             // try to unzip zipped package files
-                            if (FileUtil::uncompressFile(TMP_DIR . 'install/packages/' . $packageFile, TMP_DIR . 'install/packages/' . $packageName . '.tar')) {
+                            if (FileUtil::uncompressFile(TMP_DIR . 'install/packages/' . $packageFile,
+                                TMP_DIR . 'install/packages/' . $packageName . '.tar')) {
                                 @\unlink(TMP_DIR . 'install/packages/' . $packageFile);
                                 $packageFile = $packageName . '.tar';
                             }
@@ -1416,7 +1418,7 @@ class WCFSetup extends WCF
     /**
      * Goes to the next step.
      *
-     * @param   string      $nextStep
+     * @param string $nextStep
      */
     protected function gotoNextStep($nextStep)
     {

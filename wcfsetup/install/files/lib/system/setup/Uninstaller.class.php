@@ -39,10 +39,10 @@ class Uninstaller
     /**
      * Creates a new Uninstaller object.
      *
-     * @param   string      $targetDir
-     * @param   string[]    $files
-     * @param   bool        $deleteEmptyTargetDir
-     * @param   bool        $deleteEmptyDirectories
+     * @param string $targetDir
+     * @param string[] $files
+     * @param bool $deleteEmptyTargetDir
+     * @param bool $deleteEmptyDirectories
      */
     public function __construct($targetDir, $files, $deleteEmptyTargetDir, $deleteEmptyDirectories)
     {
@@ -64,7 +64,7 @@ class Uninstaller
     /**
      * Returns true if a directory is emtpy.
      *
-     * @param   string      $dir
+     * @param string $dir
      * @return  bool
      */
     protected function isEmpty($dir)
@@ -80,7 +80,7 @@ class Uninstaller
     /**
      * Deletes a file.
      *
-     * @param   string      $file
+     * @param string $file
      */
     protected function deleteFile($file)
     {
@@ -90,7 +90,7 @@ class Uninstaller
     /**
      * Deletes a directory.
      *
-     * @param   string      $dir
+     * @param string $dir
      */
     protected function deleteDir($dir)
     {

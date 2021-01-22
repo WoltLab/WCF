@@ -36,7 +36,7 @@ class SuffixFormFieldContainer extends FormContainer
     /**
      * Sets the form field to which the suffix selection is added and returns this field.
      *
-     * @param   IFormField  $formField
+     * @param IFormField $formField
      * @return  $this
      */
     public function field(IFormField $formField)
@@ -146,7 +146,7 @@ class SuffixFormFieldContainer extends FormContainer
     /**
      * Sets the selection form field containing the suffix options.
      *
-     * @param   ISelectionFormField $formField
+     * @param ISelectionFormField $formField
      * @return  $this
      * @throws  \BadMethodCallException     if no suffix field is set
      */

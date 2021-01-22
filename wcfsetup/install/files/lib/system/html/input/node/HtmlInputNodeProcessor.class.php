@@ -31,10 +31,13 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
         'h4' => ['text-center', 'text-justify', 'text-right'],
         'img' => [
             // float left/right
-            'messageFloatObjectLeft', 'messageFloatObjectRight',
+            'messageFloatObjectLeft',
+            'messageFloatObjectRight',
 
             // built-in
-            'smiley', 'woltlabAttachment', 'woltlabSuiteMedia',
+            'smiley',
+            'woltlabAttachment',
+            'woltlabSuiteMedia',
         ],
         'li' => ['text-center', 'text-justify', 'text-right'],
         'p' => ['text-center', 'text-justify', 'text-right'],
@@ -63,19 +66,41 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
      */
     public static $emptyTags = [
         // typical wrappers
-        'div', 'p', 'span',
+        'div',
+        'p',
+        'span',
 
         // headlines
-        'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+        'h1',
+        'h2',
+        'h3',
+        'h4',
+        'h5',
+        'h6',
 
         // tables
-        'table', 'tbody', 'thead', 'tr', 'th', 'td', 'colgroup', 'col',
+        'table',
+        'tbody',
+        'thead',
+        'tr',
+        'th',
+        'td',
+        'colgroup',
+        'col',
 
         // lists
-        'ul', 'ol', 'li',
+        'ul',
+        'ol',
+        'li',
 
         // other
-        'a', 'kbd', 'woltlab-quote', 'woltlab-spoiler', 'pre', 'sub', 'sup',
+        'a',
+        'kbd',
+        'woltlab-quote',
+        'woltlab-spoiler',
+        'pre',
+        'sub',
+        'sup',
     ];
 
     /**
@@ -83,12 +108,61 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
      * @var string[]
      */
     public static $inlineElements = [
-        'a', 'abbr', 'acronym', 'audio', 'b', 'bdi', 'bdo', 'big', 'br', 'button',
-        'canvas', 'cite', 'code', 'data', 'datalist', 'del', 'dfn', 'em', 'embed',
-        'i', 'iframe', 'img', 'input', 'ins', 'kbd', 'label', 'map', 'mark', 'meter',
-        'noscript', 'object', 'output', 'picture', 'progress', 'q', 'ruby', 's',
-        'samp', 'script', 'select', 'slot', 'small', 'span', 'strong', 'sub', 'sup',
-        'svg', 'template', 'textarea', 'time', 'u', 'tt', 'var', 'video', 'wbr',
+        'a',
+        'abbr',
+        'acronym',
+        'audio',
+        'b',
+        'bdi',
+        'bdo',
+        'big',
+        'br',
+        'button',
+        'canvas',
+        'cite',
+        'code',
+        'data',
+        'datalist',
+        'del',
+        'dfn',
+        'em',
+        'embed',
+        'i',
+        'iframe',
+        'img',
+        'input',
+        'ins',
+        'kbd',
+        'label',
+        'map',
+        'mark',
+        'meter',
+        'noscript',
+        'object',
+        'output',
+        'picture',
+        'progress',
+        'q',
+        'ruby',
+        's',
+        'samp',
+        'script',
+        'select',
+        'slot',
+        'small',
+        'span',
+        'strong',
+        'sub',
+        'sup',
+        'svg',
+        'template',
+        'textarea',
+        'time',
+        'u',
+        'tt',
+        'var',
+        'video',
+        'wbr',
     ];
 
     /**
@@ -190,7 +264,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
     /**
      * Enforces the maximum depth of nested quotes.
      *
-     * @param   int     $depth
+     * @param int $depth
      */
     public function enforceQuoteDepth($depth)
     {
@@ -544,8 +618,8 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
     /**
      * Add embedded content for provided type.
      *
-     * @param       string  $type   type name
-     * @param       array   $data   embedded content
+     * @param string $type type name
+     * @param array $data embedded content
      */
     public function addEmbeddedContent($type, array $data)
     {
@@ -585,9 +659,9 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
      * Creates a new `<woltlab-metacode>` element contained in the same document
      * as the provided `$node`.
      *
-     * @param       \DOMNode        $node           reference node used to extract the owner document
-     * @param       string          $name           metacode name
-     * @param       mixed[]         $attributes     list of attributes
+     * @param \DOMNode $node reference node used to extract the owner document
+     * @param string $name metacode name
+     * @param mixed[] $attributes list of attributes
      * @return      \DOMElement     new metacode element
      */
     public function createMetacodeElement(\DOMNode $node, $name, array $attributes)

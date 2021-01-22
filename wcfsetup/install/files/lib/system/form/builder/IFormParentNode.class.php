@@ -16,7 +16,7 @@ interface IFormParentNode extends \Countable, IFormNode, \RecursiveIterator
     /**
      * Appends the given node to this node and returns this node.
      *
-     * @param   IFormChildNode      $child      appended child
+     * @param IFormChildNode $child appended child
      * @return  static                  this node
      *
      * @throws  \BadMethodCallException     if method is called with multiple `IFormChildNode` as parameter (if mistakenly used instead of `appendChildren()`)
@@ -26,7 +26,7 @@ interface IFormParentNode extends \Countable, IFormNode, \RecursiveIterator
     /**
      * Appends the given children to this node and returns this node.
      *
-     * @param   IFormChildNode[]    $children   appended children
+     * @param IFormChildNode[] $children appended children
      * @return  static                  this node
      */
     public function appendChildren(array $children);
@@ -42,7 +42,7 @@ interface IFormParentNode extends \Countable, IFormNode, \RecursiveIterator
      * Returns `true` if this node (or any of the child nodes) contains the node
      * with the given id and returns `false` otherwise.
      *
-     * @param   string      $nodeId     id of searched node
+     * @param string $nodeId id of searched node
      * @return  bool
      */
     public function contains($nodeId);
@@ -62,7 +62,7 @@ interface IFormParentNode extends \Countable, IFormNode, \RecursiveIterator
      * All descendants, not only the direct child nodes, are checked to find the
      * requested node.
      *
-     * @param   string      $nodeId     id of the requested node
+     * @param string $nodeId id of the requested node
      * @return  null|IFormNode          requested node
      *
      * @throws  \InvalidArgumentException   if the given id is invalid
@@ -80,8 +80,8 @@ interface IFormParentNode extends \Countable, IFormNode, \RecursiveIterator
     /**
      * Inserts the given node after the node with the given id and returns this node.
      *
-     * @param   IFormChildNode      $child          inserted child node
-     * @param   string          $referenceNodeId    id of the node after which the given node is inserted
+     * @param IFormChildNode $child inserted child node
+     * @param string $referenceNodeId id of the node after which the given node is inserted
      * @return  static                      this node
      *
      * @throws  \InvalidArgumentException           if given node cannot be inserted or reference node id is invalid
@@ -91,8 +91,8 @@ interface IFormParentNode extends \Countable, IFormNode, \RecursiveIterator
     /**
      * Inserts the given node before the node with the given id and returns this node.
      *
-     * @param   IFormChildNode      $child          inserted child node
-     * @param   string          $referenceNodeId    id of the node before which the given node is inserted
+     * @param IFormChildNode $child inserted child node
+     * @param string $referenceNodeId id of the node before which the given node is inserted
      * @return  static                      this node
      *
      * @throws  \InvalidArgumentException           if given node cannot be inserted or reference node id is invalid
@@ -110,7 +110,7 @@ interface IFormParentNode extends \Countable, IFormNode, \RecursiveIterator
     /**
      * Checks if the given node is a valid child for this node.
      *
-     * @param   IFormChildNode      $child      validated child node
+     * @param IFormChildNode $child validated child node
      *
      * @throws  \InvalidArgumentException       if given node cannot is an invalid child
      */

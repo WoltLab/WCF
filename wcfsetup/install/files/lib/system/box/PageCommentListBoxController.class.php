@@ -29,7 +29,8 @@ class PageCommentListBoxController extends AbstractDatabaseObjectListBoxControll
         $commentObjectTypeID = CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.page');
         $commentManager = CommentHandler::getInstance()->getObjectType($commentObjectTypeID)->getProcessor();
 
-        return CommentHandler::getInstance()->getCommentList($commentManager, $commentObjectTypeID, RequestHandler::getInstance()->getActiveRequest()->getPageID(), false);
+        return CommentHandler::getInstance()->getCommentList($commentManager, $commentObjectTypeID,
+            RequestHandler::getInstance()->getActiveRequest()->getPageID(), false);
     }
 
     /**

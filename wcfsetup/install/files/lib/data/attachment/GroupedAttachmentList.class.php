@@ -39,19 +39,22 @@ class GroupedAttachmentList extends AttachmentList
     /**
      * Creates a new GroupedAttachmentList object.
      *
-     * @param   string      $objectType
+     * @param string $objectType
      */
     public function __construct($objectType)
     {
         parent::__construct();
 
-        $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', $objectType);
+        $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType',
+            $objectType);
         $this->getConditionBuilder()->add('attachment.objectTypeID = ?', [$this->objectType->objectTypeID]);
 
-        $this->getConditionBuilder()->add('(SELECT embeddedObjectID FROM wcf' . WCF_N . '_message_embedded_object WHERE messageObjectTypeID = ? AND messageID = attachment.objectID AND embeddedObjectTypeID = ? AND embeddedObjectID = attachment.attachmentID) IS NULL', [
-            ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $objectType),
-            ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message.embeddedObject', 'com.woltlab.wcf.attachment'),
-        ]);
+        $this->getConditionBuilder()->add('(SELECT embeddedObjectID FROM wcf' . WCF_N . '_message_embedded_object WHERE messageObjectTypeID = ? AND messageID = attachment.objectID AND embeddedObjectTypeID = ? AND embeddedObjectID = attachment.attachmentID) IS NULL',
+            [
+                ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $objectType),
+                ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message.embeddedObject',
+                    'com.woltlab.wcf.attachment'),
+            ]);
     }
 
     /**
@@ -74,7 +77,7 @@ class GroupedAttachmentList extends AttachmentList
     /**
      * Sets the permissions for attachment access.
      *
-     * @param   bool[]  $permissions
+     * @param bool[] $permissions
      */
     public function setPermissions(array $permissions)
     {
@@ -86,7 +89,7 @@ class GroupedAttachmentList extends AttachmentList
     /**
      * Returns the objects of the list.
      *
-     * @param   int     $objectID
+     * @param int $objectID
      * @return  Attachment[]
      */
     public function getGroupedObjects($objectID)

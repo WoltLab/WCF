@@ -15,14 +15,14 @@ interface IFileHandler
     /**
      * Checks the overwriting rights of the given files.
      *
-     * @param   array       $files
+     * @param array $files
      */
     public function checkFiles(array $files);
 
     /**
      * Logs the given list of files.
      *
-     * @param   array       $files
+     * @param array $files
      */
     public function logFiles(array $files);
 }

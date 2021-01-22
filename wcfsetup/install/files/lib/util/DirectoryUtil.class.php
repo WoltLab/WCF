@@ -68,8 +68,8 @@ final class DirectoryUtil
     /**
      * Creates a new instance of DirectoryUtil.
      *
-     * @param   string      $directory  directory path
-     * @param   bool        $recursive  created a recursive directory iterator
+     * @param string $directory directory path
+     * @param bool $recursive created a recursive directory iterator
      * @see     \wcf\util\DirectoryUtil::getInstance()
      */
     public function __construct($directory, $recursive = true)
@@ -88,8 +88,8 @@ final class DirectoryUtil
     /**
      * Returns an instance of DirectoryUtil (or child).
      *
-     * @param   string      $tmpDirectory   path
-     * @param   bool        $recursive  walk through sub-directories too
+     * @param string $tmpDirectory path
+     * @param bool $recursive walk through sub-directories too
      * @return  DirectoryUtil
      * @throws  SystemException
      */
@@ -122,9 +122,9 @@ final class DirectoryUtil
     /**
      * Returns a sorted list of files.
      *
-     * @param   int     $order          sort-order
-     * @param   Regex       $pattern        pattern to match
-     * @param   bool        $negativeMatch      true if the pattern should be inversed
+     * @param int $order sort-order
+     * @param Regex $pattern pattern to match
+     * @param bool $negativeMatch true if the pattern should be inversed
      * @return  string[]
      * @throws  SystemException
      */
@@ -159,9 +159,9 @@ final class DirectoryUtil
     /**
      * Returns a sorted list of files, with DirectoryIterator object as value
      *
-     * @param   int     $order          sort order
-     * @param   Regex       $pattern        pattern to match
-     * @param   bool        $negativeMatch      should the pattern be inversed
+     * @param int $order sort order
+     * @param Regex $pattern pattern to match
+     * @param bool $negativeMatch should the pattern be inversed
      * @return  \DirectoryIterator[]
      * @throws  SystemException
      */
@@ -270,8 +270,8 @@ final class DirectoryUtil
     /**
      * Executes a callback on each file and returns false if callback is invalid.
      *
-     * @param   callable    $callback
-     * @param   Regex       $pattern    callback is only applied to files matching the given pattern
+     * @param callable $callback
+     * @param Regex $pattern callback is only applied to files matching the given pattern
      * @return  bool
      */
     public function executeCallback(callable $callback, ?Regex $pattern = null)
@@ -303,8 +303,8 @@ final class DirectoryUtil
     /**
      * Removes all files that match the given pattern.
      *
-     * @param   Regex       $pattern        pattern to match
-     * @param   bool        $negativeMatch      should the pattern be inversed
+     * @param Regex $pattern pattern to match
+     * @param bool $negativeMatch should the pattern be inversed
      * @throws  SystemException
      */
     public function removePattern(Regex $pattern, $negativeMatch = false)

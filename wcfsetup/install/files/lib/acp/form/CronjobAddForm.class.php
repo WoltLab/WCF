@@ -150,7 +150,8 @@ class CronjobAddForm extends AbstractForm
         }
 
         try {
-            CronjobUtil::validate($this->startMinute, $this->startHour, $this->startDom, $this->startMonth, $this->startDow);
+            CronjobUtil::validate($this->startMinute, $this->startHour, $this->startDom, $this->startMonth,
+                $this->startDow);
         } catch (SystemException $e) {
             // extract field name
             $fieldName = '';
@@ -191,7 +192,8 @@ class CronjobAddForm extends AbstractForm
         $data = ['cronjobName' => 'com.woltlab.wcf.cronjob' . $cronjobID];
 
         if (!I18nHandler::getInstance()->isPlainValue('description')) {
-            I18nHandler::getInstance()->save('description', 'wcf.acp.cronjob.description.cronjob' . $cronjobID, 'wcf.acp.cronjob', $this->packageID);
+            I18nHandler::getInstance()->save('description', 'wcf.acp.cronjob.description.cronjob' . $cronjobID,
+                'wcf.acp.cronjob', $this->packageID);
 
             // update group name
             $data['description'] = 'wcf.acp.cronjob.description.cronjob' . $cronjobID;
@@ -210,7 +212,8 @@ class CronjobAddForm extends AbstractForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(CronjobEditForm::class, ['id' => $cronjobID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(CronjobEditForm::class,
+                ['id' => $cronjobID]),
         ]);
     }
 

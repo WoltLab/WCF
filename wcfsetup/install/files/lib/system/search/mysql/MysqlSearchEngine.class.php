@@ -296,10 +296,10 @@ class MysqlSearchEngine extends AbstractSearchEngine
             if ($state === 'beforePrefix') {
                 // Skip Whitespace.
                 if (
-                    \in_array($char, [
-                        ' ',
-                        "\t",
-                    ])
+                \in_array($char, [
+                    ' ',
+                    "\t",
+                ])
                 ) {
                     $i++;
                     continue;
@@ -323,13 +323,13 @@ class MysqlSearchEngine extends AbstractSearchEngine
                 continue;
             } elseif ($state === 'prefix') {
                 if (
-                    \in_array($char, [
-                        '-',
-                        '+',
-                        '~',
-                        '<',
-                        '>',
-                    ])
+                \in_array($char, [
+                    '-',
+                    '+',
+                    '~',
+                    '<',
+                    '>',
+                ])
                 ) {
                     // The last prefix character wins.
                     $prefix = $char;

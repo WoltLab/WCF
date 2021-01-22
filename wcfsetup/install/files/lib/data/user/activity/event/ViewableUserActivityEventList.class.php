@@ -18,7 +18,7 @@ use wcf\system\WCF;
  * @method  ViewableUserActivityEvent       current()
  * @method  ViewableUserActivityEvent[]     getObjects()
  * @method  ViewableUserActivityEvent|null      search($objectID)
- * @property    ViewableUserActivityEvent[]     $objects
+ * @property    ViewableUserActivityEvent[] $objects
  */
 class ViewableUserActivityEventList extends UserActivityEventList
 {
@@ -50,7 +50,8 @@ class ViewableUserActivityEventList extends UserActivityEventList
         parent::__construct();
 
         if (LanguageFactory::getInstance()->multilingualismEnabled() && \count(WCF::getUser()->getLanguageIDs())) {
-            $this->getConditionBuilder()->add('(user_activity_event.languageID IN (?) OR user_activity_event.languageID IS NULL)', [WCF::getUser()->getLanguageIDs()]);
+            $this->getConditionBuilder()->add('(user_activity_event.languageID IN (?) OR user_activity_event.languageID IS NULL)',
+                [WCF::getUser()->getLanguageIDs()]);
         }
     }
 
@@ -133,7 +134,7 @@ class ViewableUserActivityEventList extends UserActivityEventList
     /**
      * Truncates the items in object list to given number of items.
      *
-     * @param       int         $limit
+     * @param int $limit
      */
     public function truncate($limit)
     {

@@ -44,7 +44,7 @@ class CaptchaHandler extends SingletonFactory
      * Returns the captcha object type with the given id or `null` if no such
      * object type exists.
      *
-     * @param   int     $objectTypeID
+     * @param int $objectTypeID
      * @return  ObjectType|null
      */
     public function getObjectType($objectTypeID)
@@ -58,7 +58,7 @@ class CaptchaHandler extends SingletonFactory
      * Returns the captcha object type with the given name or null if no such
      * object type exists.
      *
-     * @param   string      $objectType
+     * @param string $objectType
      * @return  ObjectType|null
      */
     public function getObjectTypeByName($objectType)

@@ -17,7 +17,7 @@ final class StyleUtil
     /**
      * Converts css code from LTR to RTL.
      *
-     * @param   string      $contents
+     * @param string $contents
      * @return  string
      */
     public static function convertCSSToRTL($contents)
@@ -142,7 +142,7 @@ final class StyleUtil
     /**
      * Compresses css code.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      */
     public static function compressCSS($string)

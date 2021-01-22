@@ -48,7 +48,7 @@ class UserGroupOptionHandler extends OptionHandler
     /**
      * Sets current user group.
      *
-     * @param   UserGroup   $group
+     * @param UserGroup $group
      */
     public function setUserGroup(UserGroup $group)
     {
@@ -171,7 +171,8 @@ class UserGroupOptionHandler extends OptionHandler
         }
 
         $typeObj = $this->getTypeObject($option->optionType);
-        if ($typeObj->compare($this->optionValues[$option->optionName], WCF::getSession()->getPermission($option->optionName)) == 1) {
+        if ($typeObj->compare($this->optionValues[$option->optionName],
+                WCF::getSession()->getPermission($option->optionName)) == 1) {
             throw new UserInputException($option->optionName, 'exceedsOwnPermission');
         }
     }

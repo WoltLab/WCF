@@ -23,7 +23,7 @@ trait TEnumDatabaseTableColumn
      * Sets the predetermined set of valid values for the database table column and returns this
      * column.
      *
-     * @param   array       $values
+     * @param array $values
      * @return  $this
      */
     public function enumValues(array $values)

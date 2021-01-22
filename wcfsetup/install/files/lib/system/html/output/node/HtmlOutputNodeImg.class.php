@@ -165,9 +165,9 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
     /**
      * Replaces images embedded from external sources that are not handled by the image proxy.
      *
-     * @param       \DOMElement     $element
-     * @param       string          $src
-     * @param       bool            $isUgc
+     * @param \DOMElement $element
+     * @param string $src
+     * @param bool $isUgc
      */
     protected function replaceExternalSource(\DOMElement $element, $src, $isUgc = false)
     {
@@ -198,7 +198,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
      * Returns a function that matches hosts against the given whitelist.
      * The whitelist supports wildcards using using `*.` prefix.
      *
-     * @param       string[]        $whitelist
+     * @param string[] $whitelist
      * @return      callable
      */
     protected function getHostMatcher(array $whitelist)
@@ -251,7 +251,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
      * Validates the domain name against the list of own domains
      * and whitelisted ones with wildcard support.
      *
-     * @param       string          $hostname
+     * @param string $hostname
      * @return      bool
      */
     protected function bypassProxy($hostname)
@@ -275,7 +275,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
     /**
      * Returns the link to fetch the image using the image proxy.
      *
-     * @param   string      $link
+     * @param string $link
      * @return  string
      * @since   3.0
      */

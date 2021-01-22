@@ -191,7 +191,7 @@ class AJAXInvokeAction extends AbstractSecureAction
      *  )
      * )
      *
-     * @param   array       $data
+     * @param array $data
      * @return  AJAXInvokeAction
      * @throws  SystemException
      */

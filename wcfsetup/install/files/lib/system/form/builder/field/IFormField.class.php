@@ -22,7 +22,7 @@ interface IFormField extends IFormChildNode, IFormElement
     /**
      * Adds the given validation error to this field and returns this field.
      *
-     * @param   IFormFieldValidationError   $error  validation error
+     * @param IFormFieldValidationError $error validation error
      * @return  static                  this field
      */
     public function addValidationError(IFormFieldValidationError $error);
@@ -30,7 +30,7 @@ interface IFormField extends IFormChildNode, IFormElement
     /**
      * Adds the given validation error to this field and returns this field.
      *
-     * @param   IFormFieldValidator $validator
+     * @param IFormFieldValidator $validator
      * @return  static          this field
      */
     public function addValidator(IFormFieldValidator $validator);
@@ -98,7 +98,7 @@ interface IFormField extends IFormChildNode, IFormElement
      * Returns `true` if this field has a validator with the given id and
      * returns `false` otherwise.
      *
-     * @param   string      $validatorId    id of the checked validator
+     * @param string $validatorId id of the checked validator
      * @return  bool
      *
      * @throws  \InvalidArgumentException   if the given id is invalid
@@ -133,9 +133,9 @@ interface IFormField extends IFormChildNode, IFormElement
      * It is important to extract the value from the `$data` array instead of getting it directly
      * from the object as the entries of `$data` have been processed by the data processors.
      *
-     * @param   array           $data       object data
-     * @param   IStorableObject     $object     updated object
-     * @param   bool            $loadValues indicates if object data is loaded
+     * @param array $data object data
+     * @param IStorableObject $object updated object
+     * @param bool $loadValues indicates if object data is loaded
      * @return  static                  this field
      */
     public function updatedObject(array $data, IStorableObject $object, $loadValues = true);
@@ -150,7 +150,7 @@ interface IFormField extends IFormChildNode, IFormElement
      * to define different fields for each value of the other field and to use form
      * field dependencies to only show the appropriate field.
      *
-     * @param   string      $objectProperty     object property this field represents
+     * @param string $objectProperty object property this field represents
      * @return  IFormField
      *
      * @throws  \InvalidArgumentException   if the passed object property is no valid id
@@ -167,7 +167,7 @@ interface IFormField extends IFormChildNode, IFormElement
     /**
      * Removes the field value validator with the given id and returns this field.
      *
-     * @param   string      $validatorId    id of the removed validator
+     * @param string $validatorId id of the removed validator
      * @return  static              this field
      *
      * @throws  \InvalidArgumentException   if the given id is invalid or no such validator exists
@@ -177,7 +177,7 @@ interface IFormField extends IFormChildNode, IFormElement
     /**
      * Sets whether it is required to fill out this field and returns this field.
      *
-     * @param   bool        $required   determines if field has to be filled out
+     * @param bool $required determines if field has to be filled out
      * @return  static              this field
      */
     public function required($required = true);
@@ -185,7 +185,7 @@ interface IFormField extends IFormChildNode, IFormElement
     /**
      * Sets the value of this field and returns this field.
      *
-     * @param   mixed       $value      new field value
+     * @param mixed $value new field value
      * @return  static              this field
      *
      * @throws  \InvalidArgumentException   if the given value is of an invalid type or otherwise is invalid

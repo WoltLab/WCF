@@ -22,17 +22,17 @@ use wcf\util\StringUtil;
  * @package WoltLabSuite\Core\Data\Custom\Option
  * @since   3.1
  *
- * @property-read   int     $optionID       unique id of the option
- * @property-read   string      $optionTitle        title of the option or name of language item which contains the title
- * @property-read   string      $optionDescription  description of the option or name of language item which contains the description
- * @property-read   string      $optionType     type of the option which determines its input and output
- * @property-read   string      $defaultValue       default value of the option
- * @property-read   string      $validationPattern  regular expression used to validate the value of the option
- * @property-read   string      $selectOptions      possible values of the option separated by newlines
- * @property-read   int     $required       is `1` if the option has to be filled out, otherwise `0`
- * @property-read   int     $showOrder      position of the option in relation to the other options
- * @property-read   int     $isDisabled     is `1` if the option is disabled, otherwise `0`
- * @property-read   int     $originIsSystem     is `1` if the option has been delivered by a package, otherwise `0` (i.e. the option has been created in the ACP)
+ * @property-read   int $optionID       unique id of the option
+ * @property-read   string $optionTitle        title of the option or name of language item which contains the title
+ * @property-read   string $optionDescription  description of the option or name of language item which contains the description
+ * @property-read   string $optionType     type of the option which determines its input and output
+ * @property-read   string $defaultValue       default value of the option
+ * @property-read   string $validationPattern  regular expression used to validate the value of the option
+ * @property-read   string $selectOptions      possible values of the option separated by newlines
+ * @property-read   int $required       is `1` if the option has to be filled out, otherwise `0`
+ * @property-read   int $showOrder      position of the option in relation to the other options
+ * @property-read   int $isDisabled     is `1` if the option is disabled, otherwise `0`
+ * @property-read   int $originIsSystem     is `1` if the option has been delivered by a package, otherwise `0` (i.e. the option has been created in the ACP)
  */
 abstract class CustomOption extends Option implements ITitledObject
 {
@@ -107,7 +107,7 @@ abstract class CustomOption extends Option implements ITitledObject
     /**
      * Sets the value of this option.
      *
-     * @param   string      $value
+     * @param string $value
      */
     public function setOptionValue($value)
     {
@@ -117,7 +117,7 @@ abstract class CustomOption extends Option implements ITitledObject
     /**
      * Attempts to return the localized option name.
      *
-     * @param       Language        $language
+     * @param Language $language
      * @return      string
      */
     public function getLocalizedName(Language $language)
@@ -132,7 +132,7 @@ abstract class CustomOption extends Option implements ITitledObject
     /**
      * Returns the formatted value of this option.
      *
-     * @param       bool         $forcePlaintext
+     * @param bool $forcePlaintext
      * @return  string
      */
     public function getFormattedOptionValue($forcePlaintext = false)
@@ -154,7 +154,8 @@ abstract class CustomOption extends Option implements ITitledObject
                     $day = \intval($optionValue[2]);
                 }
 
-                return DateUtil::format(DateUtil::getDateTimeByTimestamp(\gmmktime(12, 1, 1, $month, $day, $year)), DateUtil::DATE_FORMAT);
+                return DateUtil::format(DateUtil::getDateTimeByTimestamp(\gmmktime(12, 1, 1, $month, $day, $year)),
+                    DateUtil::DATE_FORMAT);
 
             case 'float':
                 return StringUtil::formatDouble(\intval($this->optionValue));
@@ -196,7 +197,7 @@ abstract class CustomOption extends Option implements ITitledObject
                 if (!$forcePlaintext) {
                     return SimpleMessageParser::getInstance()->parse($this->optionValue);
                 }
-                // fallthrough
+            // fallthrough
 
             /** @noinspection PhpMissingBreakStatementInspection */
             // no break
@@ -204,7 +205,7 @@ abstract class CustomOption extends Option implements ITitledObject
                 if (!$forcePlaintext) {
                     return MessageParser::getInstance()->parse($this->optionValue);
                 }
-                // fallthrough
+            // fallthrough
 
             /** @noinspection PhpMissingBreakStatementInspection */
             // no break
@@ -212,9 +213,9 @@ abstract class CustomOption extends Option implements ITitledObject
                 if (!$forcePlaintext) {
                     return StringUtil::getAnchorTag($this->optionValue, '', true, true);
                 }
-                // fallthrough
+            // fallthrough
 
-                // no break
+            // no break
             default:
                 if (!$forcePlaintext) {
                     return StringUtil::encodeHTML($this->optionValue);

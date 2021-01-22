@@ -66,9 +66,11 @@ class TagEditForm extends TagAddForm
         AbstractForm::save();
 
         // update tag
-        $this->objectAction = new TagAction([$this->tagID], 'update', ['data' => \array_merge($this->additionalFields, [
-            'name' => $this->name,
-        ])]);
+        $this->objectAction = new TagAction([$this->tagID], 'update', [
+            'data' => \array_merge($this->additionalFields, [
+                'name' => $this->name,
+            ]),
+        ]);
         $this->objectAction->executeAction();
 
         if ($this->tagObj->synonymFor === null) {
@@ -91,11 +93,13 @@ class TagEditForm extends TagAddForm
                 // find existing tag
                 $synonymObj = Tag::getTag($synonym, $this->tagObj->languageID);
                 if ($synonymObj === null) {
-                    $synonymAction = new TagAction([], 'create', ['data' => [
-                        'name' => $synonym,
-                        'languageID' => $this->tagObj->languageID,
-                        'synonymFor' => $this->tagID,
-                    ]]);
+                    $synonymAction = new TagAction([], 'create', [
+                        'data' => [
+                            'name' => $synonym,
+                            'languageID' => $this->tagObj->languageID,
+                            'synonymFor' => $this->tagID,
+                        ],
+                    ]);
                     $synonymAction->executeAction();
                 } else {
                     $editor->addSynonym($synonymObj);

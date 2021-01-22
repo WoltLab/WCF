@@ -28,9 +28,9 @@ class SimpleAclResolver extends SingletonFactory
      * Returns true if there are no ACL settings, the user is allowed or
      * one of its group is allowed.
      *
-     * @param       string          $objectType     object type name
-     * @param       int         $objectID       object id
-     * @param       User|null       $user           user object, if `null` uses current user
+     * @param string $objectType object type name
+     * @param int $objectID object id
+     * @param User|null $user user object, if `null` uses current user
      * @return      bool         false if user is not allowed
      */
     public function canAccess($objectType, $objectID, ?User $user = null)
@@ -68,7 +68,7 @@ class SimpleAclResolver extends SingletonFactory
     /**
      * Resets the cache for provided object type.
      *
-     * @param       string          $objectType     object type name
+     * @param string $objectType object type name
      */
     public function resetCache($objectType)
     {
@@ -78,7 +78,7 @@ class SimpleAclResolver extends SingletonFactory
     /**
      * Attempts to load the cache for provided object type.
      *
-     * @param       string          $objectType     object type name
+     * @param string $objectType object type name
      */
     protected function loadCache($objectType)
     {

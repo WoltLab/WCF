@@ -58,7 +58,7 @@ class WysiwygAttachmentFormField extends AbstractFormField
      * AJAX requests or by creating a new one. If the temporary hashes are read from session,
      * the session variable will be unregistered afterwards.
      *
-     * @param   null|AttachmentHandler      $attachmentHandler
+     * @param null|AttachmentHandler $attachmentHandler
      * @return  WysiwygAttachmentFormField
      */
     public function attachmentHandler(?AttachmentHandler $attachmentHandler = null)

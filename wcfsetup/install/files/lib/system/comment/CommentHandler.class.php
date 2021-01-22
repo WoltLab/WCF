@@ -60,7 +60,7 @@ class CommentHandler extends SingletonFactory
      * Returns the id of the comment object type with the given name or `null` if no
      * such object type exists.
      *
-     * @param   string      $objectType
+     * @param string $objectType
      * @return  int|null
      */
     public function getObjectTypeID($objectType)
@@ -74,7 +74,7 @@ class CommentHandler extends SingletonFactory
      * Returns the comment object type with the given name or `null` if no such
      * object type exists.
      *
-     * @param   int     $objectTypeID
+     * @param int $objectTypeID
      * @return  ObjectType|null
      */
     public function getObjectType($objectTypeID)
@@ -87,7 +87,7 @@ class CommentHandler extends SingletonFactory
     /**
      * Returns comment manager object for given object type.
      *
-     * @param   string      $objectType
+     * @param string $objectType
      * @return  ICommentManager
      * @throws  SystemException
      */
@@ -104,10 +104,10 @@ class CommentHandler extends SingletonFactory
     /**
      * Returns a comment list for a given object type and object id.
      *
-     * @param   ICommentManager     $commentManager
-     * @param   int         $objectTypeID
-     * @param   int         $objectID
-     * @param   bool            $readObjects
+     * @param ICommentManager $commentManager
+     * @param int $objectTypeID
+     * @param int $objectID
+     * @param bool $readObjects
      * @return  StructuredCommentList
      */
     public function getCommentList(ICommentManager $commentManager, $objectTypeID, $objectID, $readObjects = true)
@@ -123,8 +123,8 @@ class CommentHandler extends SingletonFactory
     /**
      * Removes all comments for given objects.
      *
-     * @param   string      $objectType
-     * @param   int[]   $objectIDs
+     * @param string $objectType
+     * @param int[] $objectIDs
      */
     public function deleteObjects($objectType, array $objectIDs)
     {
@@ -155,7 +155,8 @@ class CommentHandler extends SingletonFactory
             $notificationObjectTypes[] = $objectTypeObj->objectType . '.like.notification';
         }
 
-        ReactionHandler::getInstance()->removeReactions('com.woltlab.wcf.comment', $commentIDs, $notificationObjectTypes);
+        ReactionHandler::getInstance()->removeReactions('com.woltlab.wcf.comment', $commentIDs,
+            $notificationObjectTypes);
 
         // delete activity events
         if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.recentActivityEvent')) {
@@ -222,9 +223,9 @@ class CommentHandler extends SingletonFactory
      * Marks all comment-related notifications for objects of the given object type and with
      * the given ids as confirmed for the active user.
      *
-     * @param   string      $objectType comment object type name
-     * @param   int[]   $objectIDs  ids of the objects whose comment-related notifications will be marked as confirmed
-     * @param   int     $time       only notifications older than the given timestamp will be marked as confirmed
+     * @param string $objectType comment object type name
+     * @param int[] $objectIDs ids of the objects whose comment-related notifications will be marked as confirmed
+     * @param int $time only notifications older than the given timestamp will be marked as confirmed
      * @throws  \InvalidArgumentException   if invalid comment object type name is given
      * @since   5.2
      */
@@ -458,8 +459,8 @@ class CommentHandler extends SingletonFactory
      * Marks all comment-related notifications for objects of the given object type in the
      * given comment list as confirmed for the active user.
      *
-     * @param   string          $objectType comment object type name
-     * @param   StructuredComment[] $comments   comments whose notifications will be marked as read
+     * @param string $objectType comment object type name
+     * @param StructuredComment[] $comments comments whose notifications will be marked as read
      * @throws  \InvalidArgumentException       if invalid comment object type name is given
      * @since   5.2
      */
@@ -639,8 +640,8 @@ class CommentHandler extends SingletonFactory
      * Marks all comment response-related notifications for objects of the given object type in
      * the given comment response list as confirmed for the active user.
      *
-     * @param   string          $objectType comment object type name
-     * @param   CommentResponse[]   $responses  comment responses whose notifications will be marked as read
+     * @param string $objectType comment object type name
+     * @param CommentResponse[] $responses comment responses whose notifications will be marked as read
      *
      * @throws  \InvalidArgumentException       if invalid comment object type name is given
      * @since   5.2
@@ -734,7 +735,7 @@ class CommentHandler extends SingletonFactory
     /**
      * Enforces the censorship.
      *
-     * @param   string      $text
+     * @param string $text
      * @throws  UserInputException
      */
     public static function enforceCensorship($text)

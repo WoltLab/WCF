@@ -60,7 +60,8 @@ abstract class AbstractCommentListBoxController extends AbstractDatabaseObjectLi
      */
     public function __construct()
     {
-        $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.comment.commentableContent', $this->objectTypeName);
+        $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.comment.commentableContent',
+            $this->objectTypeName);
         if ($this->objectType === null) {
             throw new InvalidObjectTypeException($this->objectTypeName, 'com.woltlab.wcf.comment.commentableContent');
         }
@@ -75,7 +76,7 @@ abstract class AbstractCommentListBoxController extends AbstractDatabaseObjectLi
     /**
      * Applies object type-specific filters to the comments.
      *
-     * @param   ViewableCommentList $commentList
+     * @param ViewableCommentList $commentList
      */
     abstract protected function applyObjectTypeFilters(ViewableCommentList $commentList);
 
@@ -91,7 +92,8 @@ abstract class AbstractCommentListBoxController extends AbstractDatabaseObjectLi
         $this->applyObjectTypeFilters($commentList);
 
         if (!empty(UserProfileHandler::getInstance()->getIgnoredUsers())) {
-            $commentList->getConditionBuilder()->add("(comment.userID IS NULL OR comment.userID NOT IN (?))", [UserProfileHandler::getInstance()->getIgnoredUsers()]);
+            $commentList->getConditionBuilder()->add("(comment.userID IS NULL OR comment.userID NOT IN (?))",
+                [UserProfileHandler::getInstance()->getIgnoredUsers()]);
         }
 
         return $commentList;

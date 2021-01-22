@@ -56,7 +56,7 @@ class ApplicationHandler extends SingletonFactory
      * primary application if the abbreviation is `wcf` or `null` if no such
      * application exists.
      *
-     * @param   string      $abbreviation   package abbreviation, e.g. `wbb` for `com.woltlab.wbb`
+     * @param string $abbreviation package abbreviation, e.g. `wbb` for `com.woltlab.wbb`
      * @return  Application|null
      */
     public function getApplication($abbreviation)
@@ -74,7 +74,7 @@ class ApplicationHandler extends SingletonFactory
      * Returns an application delivered by the package with the given id or `null`
      * if no such application exists.
      *
-     * @param   int         $packageID  package id
+     * @param int $packageID package id
      * @return  Application|null    application object
      * @since   3.0
      */
@@ -119,7 +119,8 @@ class ApplicationHandler extends SingletonFactory
                 $_POST['directories'] = ['wcf' => $documentRoot . FileUtil::removeLeadingSlash(RouteHandler::getPath(['acp']))];
             }
 
-            $path = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator(FileUtil::getRelativePath($documentRoot, $_POST['directories']['wcf']))));
+            $path = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator(FileUtil::getRelativePath($documentRoot,
+                $_POST['directories']['wcf']))));
 
             return new Application(null, [
                 'domainName' => $host,
@@ -173,7 +174,7 @@ class ApplicationHandler extends SingletonFactory
     /**
      * Returns abbreviation for a given package id or `null` if application is unknown.
      *
-     * @param   int     $packageID  unique package id
+     * @param int $packageID unique package id
      * @return  string|null
      */
     public function getAbbreviation($packageID)
@@ -199,7 +200,7 @@ class ApplicationHandler extends SingletonFactory
     /**
      * Returns true if given $url is an internal URL.
      *
-     * @param   string      $url
+     * @param string $url
      * @return  bool
      */
     public function isInternalURL($url)
@@ -207,7 +208,8 @@ class ApplicationHandler extends SingletonFactory
         $protocolRegex = new Regex('^https(?=://)');
         if (empty($this->pageURLs)) {
             foreach ($this->getApplications() as $application) {
-                $this->pageURLs[] = \preg_replace('~/$~', '', $protocolRegex->replace(RouteHandler::getProtocol() . $application->domainName, 'http'));
+                $this->pageURLs[] = \preg_replace('~/$~', '',
+                    $protocolRegex->replace(RouteHandler::getProtocol() . $application->domainName, 'http'));
             }
             $this->pageURLs = \array_unique($this->pageURLs);
         }
@@ -286,8 +288,8 @@ class ApplicationHandler extends SingletonFactory
      * This method can either be used for database table names directly or for
      * queries, for example.
      *
-     * @param   string      $string     string to be processed
-     * @param   bool        $skipCache  if `true`, no caches will be used and relevant application packages will be read from database directly
+     * @param string $string string to be processed
+     * @param bool $skipCache if `true`, no caches will be used and relevant application packages will be read from database directly
      * @return  string              processed string
      * @since   5.2
      */

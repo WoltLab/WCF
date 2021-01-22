@@ -172,10 +172,10 @@ final class DateUtil
     /**
      * Returns a formatted date.
      *
-     * @param   \DateTime   $time
-     * @param   string      $format
-     * @param   Language    $language
-     * @param   User        $user
+     * @param \DateTime $time
+     * @param string $format
+     * @param Language $language
+     * @param User $user
      * @return  string
      */
     public static function format(
@@ -211,9 +211,9 @@ final class DateUtil
     /**
      * Returns a formatted date interval.
      *
-     * @param   \DateInterval   $interval   interval to be formatted
-     * @param   bool        $fullInterval   if `true`, the complete interval is returned, otherwise a rounded interval is used
-     * @param   int     $formatType format type for the interval, use the class constant FORMAT_DEFAULT, FORMAT_SENTENCE or FORMAT_PLAIN
+     * @param \DateInterval $interval interval to be formatted
+     * @param bool $fullInterval if `true`, the complete interval is returned, otherwise a rounded interval is used
+     * @param int $formatType format type for the interval, use the class constant FORMAT_DEFAULT, FORMAT_SENTENCE or FORMAT_PLAIN
      * @return  string
      */
     public static function formatInterval(
@@ -306,9 +306,9 @@ final class DateUtil
     /**
      * Returns a localized date output.
      *
-     * @param   string      $date
-     * @param   string      $format
-     * @param   Language    $language
+     * @param string $date
+     * @param string $format
+     * @param Language $language
      * @return  string
      */
     public static function localizeDate($date, $format, Language $language)
@@ -342,7 +342,20 @@ final class DateUtil
 
             // full textual representation of a month (F)
             if (\strpos($format, 'F') !== false) {
-                $date = \str_replace(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'], [
+                $date = \str_replace([
+                    'January',
+                    'February',
+                    'March',
+                    'April',
+                    'May',
+                    'June',
+                    'July',
+                    'August',
+                    'September',
+                    'October',
+                    'November',
+                    'December',
+                ], [
                     $language->get('wcf.date.month.january'),
                     $language->get('wcf.date.month.february'),
                     $language->get('wcf.date.month.march'),
@@ -360,7 +373,20 @@ final class DateUtil
 
             // short textual representation of a month (M)
             if (\strpos($format, 'M') !== false) {
-                $date = \str_replace(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], [
+                $date = \str_replace([
+                    'Jan',
+                    'Feb',
+                    'Mar',
+                    'Apr',
+                    'May',
+                    'Jun',
+                    'Jul',
+                    'Aug',
+                    'Sep',
+                    'Oct',
+                    'Nov',
+                    'Dec',
+                ], [
                     $language->get('wcf.date.month.short.jan'),
                     $language->get('wcf.date.month.short.feb'),
                     $language->get('wcf.date.month.short.mar'),
@@ -383,7 +409,7 @@ final class DateUtil
     /**
      * Creates a DateTime object with the given unix timestamp.
      *
-     * @param   int     $timestamp
+     * @param int $timestamp
      * @return  \DateTime
      */
     public static function getDateTimeByTimestamp($timestamp)
@@ -404,7 +430,7 @@ final class DateUtil
     /**
      * Calculates the age of a given date.
      *
-     * @param   string      $date       format YYYY-MM-DD
+     * @param string $date format YYYY-MM-DD
      * @return  int
      */
     public static function getAge($date)
@@ -440,7 +466,7 @@ final class DateUtil
     /**
      * Validates if given date is valid ISO-8601.
      *
-     * @param   string      $date
+     * @param string $date
      * @throws  SystemException
      */
     public static function validateDate($date)
@@ -542,7 +568,7 @@ final class DateUtil
     /**
      * Returns the number of weeks in the given year.
      *
-     * @param   int     $year
+     * @param int $year
      * @return  int
      */
     public static function getWeeksInYear($year)
@@ -557,11 +583,11 @@ final class DateUtil
      * Returns the relative date time identical to the relative time generated
      * through JavaScript.
      *
-     * @param   \DateTime   $dateTimeObject     target date object
-     * @param   int     $timestamp      target timestamp
-     * @param   string      $date           localized date
-     * @param   string      $time           localized time
-     * @param   bool        $isFutureDate       true if timestamp is in the future
+     * @param \DateTime $dateTimeObject target date object
+     * @param int $timestamp target timestamp
+     * @param string $date localized date
+     * @param string $time localized time
+     * @param bool $isFutureDate true if timestamp is in the future
      * @return  string      relative time
      */
     public static function getRelativeTime(\DateTime $dateTimeObject, $timestamp, $date, $time, $isFutureDate)
@@ -577,20 +603,17 @@ final class DateUtil
         // timestamp is less than 60 seconds ago
         if ($timestamp >= TIME_NOW || TIME_NOW < ($timestamp + 60)) {
             return WCF::getLanguage()->get('wcf.date.relative.now');
-        }
-        // timestamp is less than 60 minutes ago (display 1 hour ago rather than 60 minutes ago)
+        } // timestamp is less than 60 minutes ago (display 1 hour ago rather than 60 minutes ago)
         elseif (TIME_NOW < ($timestamp + 3540)) {
             $minutes = \max(\round((TIME_NOW - $timestamp) / 60), 1);
 
             return WCF::getLanguage()->getDynamicVariable('wcf.date.relative.minutes', ['minutes' => $minutes]);
-        }
-        // timestamp is less than 24 hours ago
+        } // timestamp is less than 24 hours ago
         elseif (TIME_NOW < ($timestamp + 86400)) {
             $hours = \round((TIME_NOW - $timestamp) / 3600);
 
             return WCF::getLanguage()->getDynamicVariable('wcf.date.relative.hours', ['hours' => $hours]);
-        }
-        // timestamp is less than 6 days ago
+        } // timestamp is less than 6 days ago
         elseif (TIME_NOW < ($timestamp + 518400)) {
             $dtoNoTime = clone $dateTimeObject;
             $dtoNoTime->setTime(0, 0, 0);

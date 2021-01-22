@@ -42,21 +42,21 @@ interface ILikeObject extends IDatabaseObjectProcessor, IIDObject, ITitledObject
     /**
      * Updates the cumulative likes for this object.
      *
-     * @param   int     $cumulativeLikes
+     * @param int $cumulativeLikes
      */
     public function updateLikeCounter($cumulativeLikes);
 
     /**
      * Sets the likable object type.
      *
-     * @param   ObjectType  $objectType
+     * @param ObjectType $objectType
      */
     public function setObjectType(ObjectType $objectType);
 
     /**
      * Sends a notification for this like.
      *
-     * @param   Like    $like
+     * @param Like $like
      */
     public function sendNotification(Like $like);
 

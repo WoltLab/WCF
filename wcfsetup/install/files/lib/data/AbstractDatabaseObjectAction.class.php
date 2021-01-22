@@ -110,9 +110,9 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
     /**
      * Initialize a new DatabaseObject-related action.
      *
-     * @param   mixed[]     $objects
-     * @param   string      $action
-     * @param   array       $parameters
+     * @param mixed[] $objects
+     * @param string $action
+     * @param array $parameters
      * @throws  SystemException
      */
     public function __construct(array $objects, $action, array $parameters = [])
@@ -160,8 +160,8 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
      * This function can be overridden in children to perform custom initialization
      * of a DBOAction before the 'initializeAction' event is fired.
      *
-     * @param   string      $baseClass
-     * @param   string      $indexName
+     * @param string $baseClass
+     * @param string $indexName
      */
     protected function __init($baseClass, $indexName)
     {
@@ -176,7 +176,8 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
         // validate if user is logged in
         if (!WCF::getUser()->userID && !\in_array($this->getActionName(), $this->allowGuestAccess)) {
             throw new PermissionDeniedException();
-        } elseif (!RequestHandler::getInstance()->isACPRequest() && \in_array($this->getActionName(), $this->requireACP)) {
+        } elseif (!RequestHandler::getInstance()->isACPRequest() && \in_array($this->getActionName(),
+                $this->requireACP)) {
             // attempt to invoke method, but origin is not the ACP
             throw new PermissionDeniedException();
         }
@@ -250,7 +251,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
     /**
      * Sets the database objects.
      *
-     * @param   DatabaseObject[]    $objects
+     * @param DatabaseObject[] $objects
      */
     public function setObjects(array $objects)
     {
@@ -442,9 +443,9 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
     /**
      * Reads an integer value and validates it.
      *
-     * @param   string      $variableName
-     * @param   bool        $allowEmpty
-     * @param   string      $arrayIndex
+     * @param string $variableName
+     * @param bool $allowEmpty
+     * @param string $arrayIndex
      */
     protected function readInteger($variableName, $allowEmpty = false, $arrayIndex = '')
     {
@@ -454,9 +455,9 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
     /**
      * Reads an integer array and validates it.
      *
-     * @param   string      $variableName
-     * @param   bool        $allowEmpty
-     * @param   string      $arrayIndex
+     * @param string $variableName
+     * @param bool $allowEmpty
+     * @param string $arrayIndex
      * @since   3.0
      */
     protected function readIntegerArray($variableName, $allowEmpty = false, $arrayIndex = '')
@@ -467,9 +468,9 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
     /**
      * Reads a string value and validates it.
      *
-     * @param   string      $variableName
-     * @param   bool        $allowEmpty
-     * @param   string      $arrayIndex
+     * @param string $variableName
+     * @param bool $allowEmpty
+     * @param string $arrayIndex
      */
     protected function readString($variableName, $allowEmpty = false, $arrayIndex = '')
     {
@@ -479,9 +480,9 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
     /**
      * Reads a string array and validates it.
      *
-     * @param   string      $variableName
-     * @param   bool        $allowEmpty
-     * @param   string      $arrayIndex
+     * @param string $variableName
+     * @param bool $allowEmpty
+     * @param string $arrayIndex
      * @since   3.0
      */
     protected function readStringArray($variableName, $allowEmpty = false, $arrayIndex = '')
@@ -492,9 +493,9 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
     /**
      * Reads a boolean value and validates it.
      *
-     * @param   string      $variableName
-     * @param   bool        $allowEmpty
-     * @param   string      $arrayIndex
+     * @param string $variableName
+     * @param bool $allowEmpty
+     * @param string $arrayIndex
      */
     protected function readBoolean($variableName, $allowEmpty = false, $arrayIndex = '')
     {
@@ -504,9 +505,9 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
     /**
      * Reads a json-encoded value and validates it.
      *
-     * @param   string      $variableName
-     * @param   bool        $allowEmpty
-     * @param   string      $arrayIndex
+     * @param string $variableName
+     * @param bool $allowEmpty
+     * @param string $arrayIndex
      */
     protected function readJSON($variableName, $allowEmpty = false, $arrayIndex = '')
     {
@@ -518,11 +519,11 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
      * be thrown if the variable evaluates to 0 (int) or '' (string). Furthermore the
      * variable will be always created with a sane value if it does not exist.
      *
-     * @param   string      $variableName
-     * @param   bool        $allowEmpty
-     * @param   string      $arrayIndex
-     * @param   int     $type
-     * @param   int     $structure
+     * @param string $variableName
+     * @param bool $allowEmpty
+     * @param string $arrayIndex
+     * @param int $type
+     * @param int $structure
      * @throws  SystemException
      * @throws  UserInputException
      */

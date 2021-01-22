@@ -13,7 +13,7 @@ use wcf\data\DatabaseObjectEditor;
  * @package WoltLabSuite\Core\Data\Custom\Option
  * @since   3.1
  *
- * @method static   CustomOption    create(array $parameters = [])
+ * @method static CustomOption    create(array $parameters = [])
  * @method      CustomOption    getDecoratedObject()
  * @mixin       CustomOption
  */

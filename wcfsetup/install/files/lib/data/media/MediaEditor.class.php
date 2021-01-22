@@ -13,7 +13,7 @@ use wcf\data\DatabaseObjectEditor;
  * @package WoltLabSuite\Core\Data\Media
  * @since   3.0
  *
- * @method static   Media   create(array $parameters = [])
+ * @method static Media   create(array $parameters = [])
  * @method      Media   getDecoratedObject()
  * @mixin       Media
  */

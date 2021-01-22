@@ -12,7 +12,7 @@ use wcf\data\DatabaseObjectEditor;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Style\Variable
  *
- * @method static   StyleVariable   create(array $parameters = [])
+ * @method static StyleVariable   create(array $parameters = [])
  * @method      StyleVariable   getDecoratedObject()
  * @mixin       StyleVariable
  */

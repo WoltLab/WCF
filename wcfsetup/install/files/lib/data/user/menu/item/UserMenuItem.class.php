@@ -19,17 +19,17 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\User\Menu\Item
  *
- * @property-read   int     $menuItemID     unique id of the user menu item
- * @property-read   int     $packageID      id of the package the which delivers the user menu item
- * @property-read   string      $menuItem       textual identifier of the user menu item
- * @property-read   string      $parentMenuItem     textual identifier of the menu item's parent menu item or empty if it has no parent menu item
- * @property-read   string      $menuItemController class name of the user menu item's controller used to generate menu item link
- * @property-read   string      $menuItemLink       additional part of the user menu item link if `$menuItemController` is set or external link
- * @property-read   int     $showOrder      position of the user menu item in relation to its siblings
- * @property-read   string      $permissions        comma separated list of user group permissions of which the active user needs to have at least one to see the user menu item
- * @property-read   string      $options        comma separated list of options of which at least one needs to be enabled for the user menu item to be shown
- * @property-read   string      $className      name of the class implementing the user menu item provider interface or empty if there is no specific user menu item provider
- * @property-read   string      $iconClassName      FontAwesome CSS class name for user menu items on the first level
+ * @property-read   int $menuItemID     unique id of the user menu item
+ * @property-read   int $packageID      id of the package the which delivers the user menu item
+ * @property-read   string $menuItem       textual identifier of the user menu item
+ * @property-read   string $parentMenuItem     textual identifier of the menu item's parent menu item or empty if it has no parent menu item
+ * @property-read   string $menuItemController class name of the user menu item's controller used to generate menu item link
+ * @property-read   string $menuItemLink       additional part of the user menu item link if `$menuItemController` is set or external link
+ * @property-read   int $showOrder      position of the user menu item in relation to its siblings
+ * @property-read   string $permissions        comma separated list of user group permissions of which the active user needs to have at least one to see the user menu item
+ * @property-read   string $options        comma separated list of options of which at least one needs to be enabled for the user menu item to be shown
+ * @property-read   string $className      name of the class implementing the user menu item provider interface or empty if there is no specific user menu item provider
+ * @property-read   string $iconClassName      FontAwesome CSS class name for user menu items on the first level
  */
 class UserMenuItem extends ProcessibleDatabaseObject implements ITitledObject, ITreeMenuItem
 {
@@ -79,7 +79,8 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITitledObject, I
 
         $this->parseController();
 
-        return LinkHandler::getInstance()->getLink($this->controller, ['application' => $this->application], $this->menuItemLink);
+        return LinkHandler::getInstance()->getLink($this->controller, ['application' => $this->application],
+            $this->menuItemLink);
     }
 
     /**

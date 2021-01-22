@@ -30,9 +30,9 @@ use wcf\system\WCF;
  * @method      ArticleCategory[]   getAllChildCategories()
  * @method      ArticleCategory     getParentCategory()
  * @method      ArticleCategory[]   getParentCategories()
- * @method static   ArticleCategory|null    getCategory($categoryID)
- * @property-read       string                  $sortField
- * @property-read       string                  $sortOrder
+ * @method static ArticleCategory|null    getCategory($categoryID)
+ * @property-read       string $sortField
+ * @property-read       string $sortOrder
  */
 class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleObject, ITitledLinkObject
 {
@@ -78,7 +78,8 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
         }
 
         if (!isset($this->userPermissions[$user->userID])) {
-            $this->userPermissions[$user->userID] = CategoryPermissionHandler::getInstance()->getPermissions($this->getDecoratedObject(), $user);
+            $this->userPermissions[$user->userID] = CategoryPermissionHandler::getInstance()->getPermissions($this->getDecoratedObject(),
+                $user);
         }
 
         if (isset($this->userPermissions[$user->userID][$permission])) {
@@ -120,7 +121,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
     /**
      * Returns a list with ids of accessible categories.
      *
-     * @param   string[]    $permissions
+     * @param string[] $permissions
      * @return  int[]
      */
     public static function getAccessibleCategoryIDs(array $permissions = ['canReadArticle'])
@@ -144,7 +145,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
     /**
      * Returns the label groups for all accessible categories.
      *
-     * @param   string          $permission
+     * @param string $permission
      * @return  ViewableLabelGroup[]
      */
     public static function getAccessibleLabelGroups($permission = 'canSetLabel')
@@ -176,7 +177,8 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
         $labelGroupsToCategories = ArticleCategoryLabelCacheBuilder::getInstance()->getData();
 
         if (isset($labelGroupsToCategories[$this->categoryID])) {
-            return LabelHandler::getInstance()->getLabelGroups($labelGroupsToCategories[$this->categoryID], true, $permission);
+            return LabelHandler::getInstance()->getLabelGroups($labelGroupsToCategories[$this->categoryID], true,
+                $permission);
         }
 
         return [];
@@ -220,7 +222,8 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
                     self::$subscribedCategories = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
                     // update storage data
-                    UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'articleSubscribedCategories', \serialize(self::$subscribedCategories));
+                    UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'articleSubscribedCategories',
+                        \serialize(self::$subscribedCategories));
                 } else {
                     self::$subscribedCategories = \unserialize($data);
                 }

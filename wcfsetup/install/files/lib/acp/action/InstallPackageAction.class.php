@@ -80,7 +80,8 @@ class InstallPackageAction extends AbstractDialogAction
     protected function stepInstall()
     {
         $step = $this->installation->install($this->node);
-        $queueID = $this->installation->nodeBuilder->getQueueByNode($this->installation->queue->processNo, $step->getNode());
+        $queueID = $this->installation->nodeBuilder->getQueueByNode($this->installation->queue->processNo,
+            $step->getNode());
 
         if ($step->hasDocument()) {
             $this->data = [
@@ -213,14 +214,14 @@ class InstallPackageAction extends AbstractDialogAction
 
             default:
                 throw new IllegalLinkException();
-            break;
+                break;
         }
     }
 
     /**
      * Returns current action by queue id.
      *
-     * @param   int     $queueID
+     * @param int $queueID
      * @return  string
      */
     protected function getCurrentAction($queueID)
@@ -232,7 +233,8 @@ class InstallPackageAction extends AbstractDialogAction
             // build package name
             $packageName = $this->installation->nodeBuilder->getPackageNameByQueue($queueID);
             $installationType = $this->installation->nodeBuilder->getInstallationTypeByQueue($queueID);
-            $currentAction = WCF::getLanguage()->getDynamicVariable('wcf.acp.package.installation.step.' . $installationType, ['packageName' => $packageName]);
+            $currentAction = WCF::getLanguage()->getDynamicVariable('wcf.acp.package.installation.step.' . $installationType,
+                ['packageName' => $packageName]);
         }
 
         return $currentAction;

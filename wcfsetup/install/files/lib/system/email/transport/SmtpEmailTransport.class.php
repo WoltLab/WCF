@@ -80,11 +80,11 @@ class SmtpEmailTransport implements IEmailTransport
     /**
      * Creates a new SmtpEmailTransport using the given host.
      *
-     * @param   string  $host       host of the smtp server to use
-     * @param   int $port       port to use
-     * @param   string  $username   username to use for authentication
-     * @param   string  $password   corresponding password
-     * @param   string  $starttls   one of 'none', 'may' and 'encrypt'
+     * @param string $host host of the smtp server to use
+     * @param int $port port to use
+     * @param string $username username to use for authentication
+     * @param string $password corresponding password
+     * @param string $starttls one of 'none', 'may' and 'encrypt'
      * @throws  \InvalidArgumentException
      */
     public function __construct(
@@ -165,7 +165,7 @@ class SmtpEmailTransport implements IEmailTransport
      * Reads a server reply and validates it against the given expected status codes.
      * Returns a tuple [ status code, reply text ].
      *
-     * @param   int[]   $expectedCodes
+     * @param int[] $expectedCodes
      * @return  array
      * @throws  PermanentFailure
      * @throws  TransientFailure
@@ -229,7 +229,7 @@ class SmtpEmailTransport implements IEmailTransport
     /**
      * Writes the given line to the server.
      *
-     * @param   string  $data
+     * @param string $data
      */
     protected function write($data)
     {
@@ -241,7 +241,7 @@ class SmtpEmailTransport implements IEmailTransport
      * Connects to the server and enables STARTTLS if available. Bails
      * out if STARTTLS is not available and connection is set to 'encrypt'.
      *
-     * @param       int         $overrideTimeout
+     * @param int $overrideTimeout
      * @throws  PermanentFailure
      */
     protected function connect($overrideTimeout = null)
@@ -366,7 +366,7 @@ class SmtpEmailTransport implements IEmailTransport
 
                                 // Authentication was successful.
                                 return;
-                            break;
+                                break;
                             case 'plain':
                                 // RFC 4616
                                 try {
@@ -420,9 +420,9 @@ class SmtpEmailTransport implements IEmailTransport
     /**
      * Delivers the given email using SMTP.
      *
-     * @param   Email       $email
-     * @param   Mailbox     $envelopeFrom
-     * @param   Mailbox     $envelopeTo
+     * @param Email $email
+     * @param Mailbox $envelopeFrom
+     * @param Mailbox $envelopeTo
      * @throws  \Exception
      * @throws  PermanentFailure
      */
@@ -457,16 +457,16 @@ class SmtpEmailTransport implements IEmailTransport
         $this->write('DATA');
         $this->read([354]);
         $this->connection->write(\implode("\r\n", \array_map(static function ($item) {
-            // 4.5.2 Transparency
-            // o  Before sending a line of mail text, the SMTP client checks the
-            //    first character of the line.  If it is a period, one additional
-            //    period is inserted at the beginning of the line.
-            if (StringUtil::startsWith($item, '.')) {
-                return '.' . $item;
-            }
+                // 4.5.2 Transparency
+                // o  Before sending a line of mail text, the SMTP client checks the
+                //    first character of the line.  If it is a period, one additional
+                //    period is inserted at the beginning of the line.
+                if (StringUtil::startsWith($item, '.')) {
+                    return '.' . $item;
+                }
 
-            return $item;
-        }, \explode("\r\n", $email->getEmail()))) . "\r\n");
+                return $item;
+            }, \explode("\r\n", $email->getEmail()))) . "\r\n");
         $this->write(".");
         $this->read([250]);
     }

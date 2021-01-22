@@ -22,7 +22,14 @@ class TrophyCategoriesBoxController extends AbstractBoxController
     /**
      * @inheritDoc
      */
-    protected static $supportedPositions = ['footerBoxes', 'sidebarLeft', 'sidebarRight', 'contentTop', 'contentBottom', 'footer'];
+    protected static $supportedPositions = [
+        'footerBoxes',
+        'sidebarLeft',
+        'sidebarRight',
+        'contentTop',
+        'contentBottom',
+        'footer',
+    ];
 
     /**
      * @inheritDoc
@@ -42,7 +49,8 @@ class TrophyCategoriesBoxController extends AbstractBoxController
                 }
             }
 
-            $this->content = WCF::getTPL()->fetch('boxTrophyCategories', 'wcf', ['categories' => $categories, 'activeCategory' => $activeCategory], true);
+            $this->content = WCF::getTPL()->fetch('boxTrophyCategories', 'wcf',
+                ['categories' => $categories, 'activeCategory' => $activeCategory], true);
         }
     }
 }

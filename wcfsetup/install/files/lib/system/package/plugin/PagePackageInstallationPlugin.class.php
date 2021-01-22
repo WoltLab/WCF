@@ -512,11 +512,13 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
                 ->options(function () {
                     $pageNodeList = (new PageNodeTree())->getNodeList();
 
-                    $nestedOptions = [[
-                        'depth' => 0,
-                        'label' => 'wcf.global.noSelection',
-                        'value' => '',
-                    ]];
+                    $nestedOptions = [
+                        [
+                            'depth' => 0,
+                            'label' => 'wcf.global.noSelection',
+                            'value' => '',
+                        ],
+                    ];
 
                     $packageIDs = \array_merge(
                         [$this->installation->getPackage()->packageID],
@@ -536,19 +538,20 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 
                     return $nestedOptions;
                 }, true)
-                ->addValidator(new FormFieldValidator('selfParent', static function (SingleSelectionFormField $formField) {
-                    /** @var TextFormField $identifier */
-                    $identifier = $formField->getDocument()->getNodeById('identifier');
+                ->addValidator(new FormFieldValidator('selfParent',
+                    static function (SingleSelectionFormField $formField) {
+                        /** @var TextFormField $identifier */
+                        $identifier = $formField->getDocument()->getNodeById('identifier');
 
-                    if ($identifier->getSaveValue() === $formField->getValue()) {
-                        $formField->addValidationError(
-                            new FormFieldValidationError(
-                                'selfParent',
-                                'wcf.acp.pip.page.parent.error.selfParent'
-                            )
-                        );
-                    }
-                })),
+                        if ($identifier->getSaveValue() === $formField->getValue()) {
+                            $formField->addValidationError(
+                                new FormFieldValidationError(
+                                    'selfParent',
+                                    'wcf.acp.pip.page.parent.error.selfParent'
+                                )
+                            );
+                        }
+                    })),
 
             BooleanFormField::create('hasFixedParent')
                 ->label('wcf.acp.pip.page.hasFixedParent')
@@ -658,9 +661,17 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
         }
 
         $optionalElements = [
-            'controller', 'handler', 'hasFixedParent',
-            'parent', 'options', 'permissions', 'cssClassName', 'allowSpidersToIndex',
-            'excludeFromLandingPage', 'availableDuringOfflineMode', 'requireObjectID',
+            'controller',
+            'handler',
+            'hasFixedParent',
+            'parent',
+            'options',
+            'permissions',
+            'cssClassName',
+            'allowSpidersToIndex',
+            'excludeFromLandingPage',
+            'availableDuringOfflineMode',
+            'requireObjectID',
         ];
 
         $zeroDefaultOptions = [

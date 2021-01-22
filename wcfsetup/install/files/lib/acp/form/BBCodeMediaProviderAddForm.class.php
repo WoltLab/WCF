@@ -129,14 +129,16 @@ class BBCodeMediaProviderAddForm extends AbstractForm
         $name = 'placeholder_' . StringUtil::getRandomID();
 
         // save media provider
-        $this->objectAction = new BBCodeMediaProviderAction([], 'create', ['data' => \array_merge($this->additionalFields, [
-            'title' => $this->title,
-            'regex' => $this->regex,
-            'html' => $this->html,
-            'className' => $this->className,
-            'packageID' => $this->packageID,
-            'name' => $name,
-        ])]);
+        $this->objectAction = new BBCodeMediaProviderAction([], 'create', [
+            'data' => \array_merge($this->additionalFields, [
+                'title' => $this->title,
+                'regex' => $this->regex,
+                'html' => $this->html,
+                'className' => $this->className,
+                'packageID' => $this->packageID,
+                'name' => $name,
+            ]),
+        ]);
         $returnValues = $this->objectAction->executeAction();
         $this->saved();
 
@@ -152,7 +154,8 @@ class BBCodeMediaProviderAddForm extends AbstractForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(BBCodeMediaProviderEditForm::class, ['id' => $provider->providerID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(BBCodeMediaProviderEditForm::class,
+                ['id' => $provider->providerID]),
         ]);
     }
 

@@ -92,7 +92,7 @@ abstract class AbstractMessageQuoteHandler extends SingletonFactory implements I
     /**
      * Overrides the full quote flag for given message.
      *
-     * @param       QuotedMessage[]         $messages
+     * @param QuotedMessage[] $messages
      */
     protected function overrideIsFullQuote(array $messages)
     {
@@ -107,7 +107,7 @@ abstract class AbstractMessageQuoteHandler extends SingletonFactory implements I
     /**
      * Returns a list of QuotedMessage objects.
      *
-     * @param   mixed[][]   $data
+     * @param mixed[][] $data
      * @return  QuotedMessage[]
      */
     abstract protected function getMessages(array $data);

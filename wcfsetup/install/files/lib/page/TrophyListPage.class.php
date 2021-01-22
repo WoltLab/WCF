@@ -17,7 +17,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Page
  *
- * @property    TrophyList  $objectList
+ * @property    TrophyList $objectList
  */
 class TrophyListPage extends MultipleLinkPage
 {
@@ -74,7 +74,8 @@ class TrophyListPage extends MultipleLinkPage
     {
         parent::readParameters();
 
-        $this->canonicalURL = LinkHandler::getInstance()->getLink('TrophyList', [], ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : ''));
+        $this->canonicalURL = LinkHandler::getInstance()->getLink('TrophyList', [],
+            ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : ''));
 
         if (!\count(TrophyCategoryCache::getInstance()->getEnabledCategories())) {
             throw new IllegalLinkException();
@@ -90,9 +91,11 @@ class TrophyListPage extends MultipleLinkPage
 
         $this->objectList->sqlSelects = '(SELECT COUNT(*) FROM wcf' . WCF_N . '_user_trophy WHERE trophyID = trophy.trophyID) AS awarded';
         $this->objectList->getConditionBuilder()->add('isDisabled = ?', [0]);
-        $this->objectList->getConditionBuilder()->add('categoryID IN (?)', [\array_map(static function ($category) {
-            return $category->categoryID;
-        }, TrophyCategoryCache::getInstance()->getEnabledCategories())]);
+        $this->objectList->getConditionBuilder()->add('categoryID IN (?)', [
+            \array_map(static function ($category) {
+                return $category->categoryID;
+            }, TrophyCategoryCache::getInstance()->getEnabledCategories()),
+        ]);
     }
 
     /**

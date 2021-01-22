@@ -39,7 +39,7 @@ class ModificationLogHandler extends SingletonFactory
     /**
      * Returns object type by object type name.
      *
-     * @param   string      $objectType
+     * @param string $objectType
      * @return  ObjectType
      */
     public function getObjectType($objectType)
@@ -54,13 +54,13 @@ class ModificationLogHandler extends SingletonFactory
     /**
      * Adds a new entry to modification log.
      *
-     * @param   string      $objectType
-     * @param   int     $objectID
-     * @param   string      $action
-     * @param   array       $additionalData
-     * @param   int     $time
-     * @param   int     $userID
-     * @param   string      $username
+     * @param string $objectType
+     * @param int $objectID
+     * @param string $action
+     * @param array $additionalData
+     * @param int $time
+     * @param int $userID
+     * @param string $username
      * @return  ModificationLog
      * @throws  SystemException
      */
@@ -114,8 +114,8 @@ class ModificationLogHandler extends SingletonFactory
     /**
      * Removes log entries.
      *
-     * @param   string      $objectType
-     * @param   int[]   $objectIDs
+     * @param string $objectType
+     * @param int[] $objectIDs
      * @throws  SystemException
      */
     // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore

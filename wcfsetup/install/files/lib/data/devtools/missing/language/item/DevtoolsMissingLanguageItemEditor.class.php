@@ -13,7 +13,7 @@ use wcf\data\DatabaseObjectEditor;
  * @package WoltLabSuite\Core\Devtools\Missing\Language\Item
  * @since   5.3
  *
- * @method static   DevtoolsMissingLanguageItem create(array $parameters = [])
+ * @method static DevtoolsMissingLanguageItem create(array $parameters = [])
  * @method      DevtoolsMissingLanguageItem getDecoratedObject()
  * @mixin       DevtoolsMissingLanguageItem
  */

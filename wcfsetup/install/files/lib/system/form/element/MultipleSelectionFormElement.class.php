@@ -38,7 +38,7 @@ class MultipleSelectionFormElement extends AbstractNamedFormElement
     /**
      * Sets message displayed if input should be disabled.
      *
-     * @param   string      $message
+     * @param string $message
      */
     public function setDisabledMessage($message)
     {

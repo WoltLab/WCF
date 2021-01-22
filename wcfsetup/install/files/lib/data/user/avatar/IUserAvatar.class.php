@@ -23,7 +23,7 @@ interface IUserAvatar
     /**
      * Returns the url to this avatar.
      *
-     * @param   int     $size
+     * @param int $size
      * @return  string
      */
     public function getURL($size = null);
@@ -31,7 +31,7 @@ interface IUserAvatar
     /**
      * Returns the html code to display this avatar.
      *
-     * @param   int     $size
+     * @param int $size
      * @return  string
      */
     public function getImageTag($size = null);
@@ -39,7 +39,7 @@ interface IUserAvatar
     /**
      * Returns the image tag used for cropping.
      *
-     * @param   int     $size
+     * @param int $size
      * @return  string
      * @deprecated  3.0
      */

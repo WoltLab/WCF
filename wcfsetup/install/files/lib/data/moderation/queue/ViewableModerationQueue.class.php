@@ -54,7 +54,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
     /**
      * Sets link for viewing/editing.
      *
-     * @param   IUserContent        $object
+     * @param IUserContent $object
      */
     public function setAffectedObject(IUserContent $object)
     {
@@ -90,7 +90,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
     /**
      * Sets associated user profile object.
      *
-     * @param   UserProfile $userProfile
+     * @param UserProfile $userProfile
      * @deprecated  3.0
      */
     public function setUserProfile(UserProfile $userProfile)
@@ -159,7 +159,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
     /**
      * Returns a viewable moderation queue entry.
      *
-     * @param   int     $queueID
+     * @param int $queueID
      * @return  ViewableModerationQueue
      */
     public static function getViewableModerationQueue($queueID)
@@ -199,7 +199,8 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
      */
     public function isNew()
     {
-        if ($this->time > \max(VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.moderation.queue'), VisitTracker::getInstance()->getObjectVisitTime('com.woltlab.wcf.moderation.queue', $this->queueID))) {
+        if ($this->time > \max(VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.moderation.queue'),
+                VisitTracker::getInstance()->getObjectVisitTime('com.woltlab.wcf.moderation.queue', $this->queueID))) {
             return true;
         }
 

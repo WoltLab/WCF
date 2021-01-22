@@ -42,7 +42,7 @@ class AvatarUploadFileSaveStrategy implements IUploadFileSaveStrategy
     /**
      * Creates a new instance of AvatarUploadFileSaveStrategy.
      *
-     * @param   int     $userID
+     * @param int $userID
      */
     public function __construct($userID = null)
     {
@@ -76,8 +76,7 @@ class AvatarUploadFileSaveStrategy implements IUploadFileSaveStrategy
                     UserAvatar::AVATAR_SIZE,
                     false
                 );
-            }
-            /** @noinspection PhpRedundantCatchClauseInspection */
+            } /** @noinspection PhpRedundantCatchClauseInspection */
             catch (SystemException $e) {
                 $uploadFile->setValidationErrorType('tooLarge');
 

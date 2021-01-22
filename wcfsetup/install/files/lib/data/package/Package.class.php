@@ -19,19 +19,19 @@ use wcf\util\FileUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Package
  *
- * @property-read   int     $packageID      unique id of the package
- * @property-read   string      $package        unique textual identifier of the package
- * @property-read   string      $packageDir     relative directory to Core in which the application is installed or empty if package is no application or Core
- * @property-read   string      $packageName        name of the package or name of language item which contains the name
- * @property-read   string      $packageDescription description of the package or name of language item which contains the description
- * @property-read   string      $packageVersion     installed version of package
- * @property-read   int     $packageDate        timestamp at which the installed package version has been released
- * @property-read   int     $installDate        timestamp at which the package has been installed
- * @property-read   int     $updateDate     timestamp at which the package has been updated or installed if it has not been updated yet
- * @property-read   string      $packageURL     external url to website with more information about the package
- * @property-read   int     $isApplication      is `1` if the package delivers an application, otherwise `0`
- * @property-read   string      $author         author of the package
- * @property-read   string      $authorURL      external url to the website of the package author
+ * @property-read   int $packageID      unique id of the package
+ * @property-read   string $package        unique textual identifier of the package
+ * @property-read   string $packageDir     relative directory to Core in which the application is installed or empty if package is no application or Core
+ * @property-read   string $packageName        name of the package or name of language item which contains the name
+ * @property-read   string $packageDescription description of the package or name of language item which contains the description
+ * @property-read   string $packageVersion     installed version of package
+ * @property-read   int $packageDate        timestamp at which the installed package version has been released
+ * @property-read   int $installDate        timestamp at which the package has been installed
+ * @property-read   int $updateDate     timestamp at which the package has been updated or installed if it has not been updated yet
+ * @property-read   string $packageURL     external url to website with more information about the package
+ * @property-read   int $isApplication      is `1` if the package delivers an application, otherwise `0`
+ * @property-read   string $author         author of the package
+ * @property-read   string $authorURL      external url to the website of the package author
  */
 class Package extends DatabaseObject implements ILinkableObject, IRouteController
 {
@@ -154,7 +154,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
     /**
      * Returns the abbreviation of the package name.
      *
-     * @param   string      $package
+     * @param string $package
      * @return  string
      */
     public static function getAbbreviation($package)
@@ -264,7 +264,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
      *
      * DO NOT call this method outside the package installation!
      *
-     * @param   string      $packageVersion
+     * @param string $packageVersion
      */
     public function setPackageVersion($packageVersion)
     {
@@ -312,7 +312,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
     /**
      * Returns true if package identified by $package is already installed.
      *
-     * @param   string      $package
+     * @param string $package
      * @return  bool
      */
     public static function isAlreadyInstalled($package)
@@ -341,7 +341,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
      * of the 'package' tag noted in the 'package.xml' file delivered inside
      * the respective package.
      *
-     * @param   string      $packageName
+     * @param string $packageName
      * @return  bool        isValid
      */
     public static function isValidPackageName($packageName)
@@ -361,7 +361,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
      *  4.0.0 Alpha 1
      *  3.1.7 rC 4
      *
-     * @param   string      $version
+     * @param string $version
      * @return  bool
      */
     public static function isValidVersion($version)
@@ -380,8 +380,8 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
      * version 1.2.0, all releases from 1.1.0 to 1.1.9 may be updated using
      * this package.
      *
-     * @param   string      $currentVersion
-     * @param   string      $fromVersion
+     * @param string $currentVersion
+     * @param string $fromVersion
      * @return  bool
      */
     public static function checkFromversion($currentVersion, $fromVersion)
@@ -405,9 +405,9 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
     /**
      * Compares two version number strings.
      *
-     * @param   string      $version1
-     * @param   string      $version2
-     * @param   string      $operator
+     * @param string $version1
+     * @param string $version2
+     * @param string $operator
      * @return  bool        result
      * @see http://www.php.net/manual/en/function.version-compare.php
      */
@@ -425,7 +425,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
     /**
      * Formats a package version string for comparing.
      *
-     * @param   string      $version
+     * @param string $version
      * @return  string      formatted version
      * @see     http://www.php.net/manual/en/function.version-compare.php
      */
@@ -446,7 +446,7 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
     /**
      * Writes the config.inc.php for an application.
      *
-     * @param   int     $packageID
+     * @param int $packageID
      */
     public static function writeConfigFile($packageID)
     {
@@ -459,14 +459,16 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
         $content .= "// {$package->package} (packageID {$packageID})\n";
         $content .= "if (!defined('{$prefix}_DIR')) define('{$prefix}_DIR', __DIR__.'/');\n";
         $content .= "if (!defined('PACKAGE_ID')) define('PACKAGE_ID', {$packageID});\n";
-        $content .= "if (!defined('PACKAGE_NAME')) define('PACKAGE_NAME', '" . \addcslashes($package->getName(), "'") . "');\n";
+        $content .= "if (!defined('PACKAGE_NAME')) define('PACKAGE_NAME', '" . \addcslashes($package->getName(),
+                "'") . "');\n";
         $content .= "if (!defined('PACKAGE_VERSION')) define('PACKAGE_VERSION', '{$package->packageVersion}');\n";
 
         if ($packageID != 1) {
             $content .= "\n";
             $content .= "// helper constants for applications\n";
             $content .= "if (!defined('RELATIVE_{$prefix}_DIR')) define('RELATIVE_{$prefix}_DIR', '');\n";
-            $content .= "if (!defined('RELATIVE_WCF_DIR')) define('RELATIVE_WCF_DIR', RELATIVE_{$prefix}_DIR.'" . FileUtil::getRelativePath($packageDir, WCF_DIR) . "');\n";
+            $content .= "if (!defined('RELATIVE_WCF_DIR')) define('RELATIVE_WCF_DIR', RELATIVE_{$prefix}_DIR.'" . FileUtil::getRelativePath($packageDir,
+                    WCF_DIR) . "');\n";
         }
 
         \file_put_contents($packageDir . PackageInstallationDispatcher::CONFIG_FILE, $content);
@@ -474,7 +476,8 @@ class Package extends DatabaseObject implements ILinkableObject, IRouteControlle
         // add legacy config.inc.php file for backwards compatibility
         if ($packageID != 1) {
             // force overwriting the `config.inc.php` unless it is the core itself
-            \file_put_contents($packageDir . 'config.inc.php', "<?php" . "\n" . "require_once(__DIR__ . '/" . PackageInstallationDispatcher::CONFIG_FILE . "');\n");
+            \file_put_contents($packageDir . 'config.inc.php',
+                "<?php" . "\n" . "require_once(__DIR__ . '/" . PackageInstallationDispatcher::CONFIG_FILE . "');\n");
         }
     }
 }

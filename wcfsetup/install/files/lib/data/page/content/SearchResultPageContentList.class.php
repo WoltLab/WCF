@@ -14,7 +14,7 @@ namespace wcf\data\page\content;
  * @method  SearchResultPageContent             current()
  * @method  SearchResultPageContent[]       getObjects()
  * @method  SearchResultPageContent|null        search($objectID)
- * @property    SearchResultPageContent[]       $objects
+ * @property    SearchResultPageContent[] $objects
  */
 class SearchResultPageContentList extends PageContentList
 {

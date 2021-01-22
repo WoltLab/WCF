@@ -17,7 +17,7 @@ interface IObjectTypeProvider
     /**
      * Returns an object by its ID.
      *
-     * @param   int     $objectID
+     * @param int $objectID
      * @return  DatabaseObject
      */
     public function getObjectByID($objectID);
@@ -25,7 +25,7 @@ interface IObjectTypeProvider
     /**
      * Returns objects by their IDs.
      *
-     * @param   int[]       $objectIDs
+     * @param int[] $objectIDs
      * @return  DatabaseObject[]
      */
     public function getObjectsByIDs(array $objectIDs);

@@ -15,7 +15,7 @@ interface IEditableObject extends IStorableObject
     /**
      * Creates a new object.
      *
-     * @param   array   $parameters
+     * @param array $parameters
      * @return  IStorableObject
      */
     public static function create(array $parameters = []);
@@ -23,14 +23,14 @@ interface IEditableObject extends IStorableObject
     /**
      * Updates this object.
      *
-     * @param   array   $parameters
+     * @param array $parameters
      */
     public function update(array $parameters = []);
 
     /**
      * Updates the counters of this object.
      *
-     * @param   array   $counters
+     * @param array $counters
      */
     public function updateCounters(array $counters = []);
 
@@ -43,7 +43,7 @@ interface IEditableObject extends IStorableObject
      * Deletes all objects with the given ids and returns the number of deleted
      * objects.
      *
-     * @param   array   $objectIDs
+     * @param array $objectIDs
      * @return  int
      */
     public static function deleteAll(array $objectIDs = []);

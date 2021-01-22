@@ -88,7 +88,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
     /**
      * Deletes items.
      *
-     * @param   \DOMXPath   $xpath
+     * @param \DOMXPath $xpath
      */
     protected function deleteItems(\DOMXPath $xpath)
     {
@@ -123,7 +123,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
     }
 
     /**
-     * @param   \DOMXPath   $xpath
+     * @param \DOMXPath $xpath
      * @return  \DOMNodeList
      */
     protected function getImportElements(\DOMXPath $xpath)
@@ -134,7 +134,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
     /**
      * Imports or updates items.
      *
-     * @param   \DOMXPath   $xpath
+     * @param \DOMXPath $xpath
      */
     protected function importItems(\DOMXPath $xpath)
     {
@@ -196,9 +196,9 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
     /**
      * Sets element value from XPath.
      *
-     * @param   \DOMXPath   $xpath
-     * @param   array       $elements
-     * @param   \DOMElement $element
+     * @param \DOMXPath $xpath
+     * @param array $elements
+     * @param \DOMElement $element
      */
     protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element)
     {
@@ -209,8 +209,8 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
      * Returns i18n values by validating each value against the list of installed
      * languages, optionally returning only the best matching value.
      *
-     * @param   string[]    $values         list of values by language code
-     * @param   bool        $singleValueOnly    true to return only the best matching value
+     * @param string[] $values list of values by language code
+     * @param bool $singleValueOnly true to return only the best matching value
      * @return  string[]|string matching i18n values controller by `$singleValueOnly`
      * @since   3.0
      */
@@ -264,8 +264,8 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
     /**
      * Inserts or updates new items.
      *
-     * @param   array       $row
-     * @param   array       $data
+     * @param array $row
+     * @param array $data
      * @return  \wcf\data\IStorableObject
      */
     protected function import(array $row, array $data)
@@ -298,7 +298,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
     /**
      * Deletes the given items.
      *
-     * @param   array   $items
+     * @param array $items
      */
     abstract protected function handleDelete(array $items);
 
@@ -306,7 +306,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
      * Prepares import, use this to map xml tags and attributes
      * to their corresponding database fields.
      *
-     * @param   array   $data
+     * @param array $data
      * @return  array
      */
     abstract protected function prepareImport(array $data);
@@ -315,7 +315,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
      * Validates given item, e.g. checking for invalid values. If validation
      * fails you should throw an exception.
      *
-     * @param   array   $data
+     * @param array $data
      */
     protected function validateImport(array $data)
     {
@@ -325,7 +325,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
      * Returns an array with a sql query and its parameters to find an existing item for updating
      * or `null` if updates are not supported.
      *
-     * @param   array       $data
+     * @param array $data
      * @return  array|null
      */
     abstract protected function findExistingItem(array $data);
@@ -336,7 +336,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
      *
      * Attention: $data is passed by reference
      *
-     * @param   array   $data
+     * @param array $data
      */
     protected function prepareCreate(array &$data)
     {
@@ -353,7 +353,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
     /**
      * Loads the xml file into a string and returns this string.
      *
-     * @param   string      $filename
+     * @param string $filename
      * @return  XML     $xml
      * @throws  SystemException
      */
@@ -395,10 +395,10 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
     /**
      * Returns the show order value.
      *
-     * @param   null|int    $showOrder
-     * @param   string      $parentName
-     * @param   string      $columnName
-     * @param   string      $tableNameExtension
+     * @param null|int $showOrder
+     * @param string $parentName
+     * @param string $columnName
+     * @param string $tableNameExtension
      * @return  int
      */
     protected function getShowOrder($showOrder, $parentName = null, $columnName = null, $tableNameExtension = '')

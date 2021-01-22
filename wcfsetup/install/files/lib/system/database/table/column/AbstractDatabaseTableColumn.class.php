@@ -65,7 +65,8 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
     public function getData()
     {
         $data = [
-            'default' => $this->getDefaultValue() !== null ? "'" . \str_replace(["'", '\\'], ["''", '\\\\'], $this->getDefaultValue()) . "'" : null,
+            'default' => $this->getDefaultValue() !== null ? "'" . \str_replace(["'", '\\'], ["''", '\\\\'],
+                    $this->getDefaultValue()) . "'" : null,
             'notNull' => $this->isNotNull() ? 1 : 0,
             'type' => $this->getType(),
         ];
@@ -192,7 +193,7 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
     /**
      * Checks if the given default value is valid.
      *
-     * @param   mixed       $defaultValue   validated default value
+     * @param mixed $defaultValue validated default value
      * @throws  \InvalidArgumentException   if given default value is invalid
      */
     protected function validateDefaultValue($defaultValue)

@@ -20,7 +20,7 @@ abstract class PackageInstallationFormManager
     /**
      * Handles a POST or GET request.
      *
-     * @param   PackageInstallationQueue    $queue
+     * @param PackageInstallationQueue $queue
      */
     public static function handleRequest(PackageInstallationQueue $queue)
     {
@@ -41,8 +41,8 @@ abstract class PackageInstallationFormManager
     /**
      * Registers a form document.
      *
-     * @param   PackageInstallationQueue    $queue
-     * @param   FormDocument            $document
+     * @param PackageInstallationQueue $queue
+     * @param FormDocument $document
      */
     public static function registerForm(PackageInstallationQueue $queue, FormDocument $document)
     {
@@ -56,8 +56,8 @@ abstract class PackageInstallationFormManager
     /**
      * Searches for an existing form document associated with given queue.
      *
-     * @param   PackageInstallationQueue    $queue
-     * @param   string              $formName
+     * @param PackageInstallationQueue $queue
+     * @param string $formName
      * @return  bool
      */
     public static function findForm(PackageInstallationQueue $queue, $formName)
@@ -78,8 +78,8 @@ abstract class PackageInstallationFormManager
     /**
      * Inserts a form document into database.
      *
-     * @param   PackageInstallationQueue    $queue
-     * @param   FormDocument            $document
+     * @param PackageInstallationQueue $queue
+     * @param FormDocument $document
      */
     private static function insertForm(PackageInstallationQueue $queue, FormDocument $document)
     {
@@ -97,8 +97,8 @@ abstract class PackageInstallationFormManager
     /**
      * Updates a form document database entry.
      *
-     * @param   PackageInstallationQueue    $queue
-     * @param   FormDocument            $document
+     * @param PackageInstallationQueue $queue
+     * @param FormDocument $document
      */
     private static function updateForm(PackageInstallationQueue $queue, FormDocument $document)
     {
@@ -117,7 +117,7 @@ abstract class PackageInstallationFormManager
     /**
      * Deletes form documents associated with given queue.
      *
-     * @param   PackageInstallationQueue    $queue
+     * @param PackageInstallationQueue $queue
      */
     public static function deleteForms(PackageInstallationQueue $queue)
     {
@@ -130,8 +130,8 @@ abstract class PackageInstallationFormManager
     /**
      * Returns a form document from database.
      *
-     * @param   PackageInstallationQueue    $queue
-     * @param   string              $formName
+     * @param PackageInstallationQueue $queue
+     * @param string $formName
      * @return  FormDocument
      */
     public static function getForm(PackageInstallationQueue $queue, $formName)

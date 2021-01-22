@@ -189,7 +189,7 @@ class ExceptionLogViewPage extends MultipleLinkPage
     /**
      * Switches to the page containing the exception with the given ID.
      *
-     * @param   string  $exceptionID
+     * @param string $exceptionID
      */
     public function searchPage($exceptionID)
     {

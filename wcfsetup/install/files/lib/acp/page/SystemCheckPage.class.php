@@ -216,12 +216,15 @@ class SystemCheckPage extends AbstractPage
         if (\stripos($sqlVersion, 'MariaDB') !== false) {
             $this->results['mysql']['mariadb'] = true;
 
-            $this->results['mysql']['result'] = (\version_compare($compareSQLVersion, $this->mysqlVersions['mariadb']['10']) >= 0);
+            $this->results['mysql']['result'] = (\version_compare($compareSQLVersion,
+                    $this->mysqlVersions['mariadb']['10']) >= 0);
         } else {
             if ($compareSQLVersion[0] === '5') {
-                $this->results['mysql']['result'] = (\version_compare($compareSQLVersion, $this->mysqlVersions['mysql']['5']) >= 0);
+                $this->results['mysql']['result'] = (\version_compare($compareSQLVersion,
+                        $this->mysqlVersions['mysql']['5']) >= 0);
             } else {
-                $this->results['mysql']['result'] = (\version_compare($compareSQLVersion, $this->mysqlVersions['mysql']['8']) >= 0);
+                $this->results['mysql']['result'] = (\version_compare($compareSQLVersion,
+                        $this->mysqlVersions['mysql']['8']) >= 0);
             }
         }
 

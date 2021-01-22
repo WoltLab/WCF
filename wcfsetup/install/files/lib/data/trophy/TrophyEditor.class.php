@@ -27,7 +27,7 @@ class TrophyEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Sets the show order of the trophy.
      *
-     * @param   int     $showOrder
+     * @param int $showOrder
      */
     public function setShowOrder($showOrder = 0)
     {

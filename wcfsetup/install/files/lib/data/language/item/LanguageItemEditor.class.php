@@ -12,7 +12,7 @@ use wcf\data\DatabaseObjectEditor;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Language\Item
  *
- * @method static   LanguageItem    create(array $parameters = [])
+ * @method static LanguageItem    create(array $parameters = [])
  * @method      LanguageItem    getDecoratedObject()
  * @mixin       LanguageItem
  */

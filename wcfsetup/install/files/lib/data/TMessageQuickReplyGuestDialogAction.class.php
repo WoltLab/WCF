@@ -41,9 +41,9 @@ trait TMessageQuickReplyGuestDialogAction
     /**
      * Reads a string value and validates it.
      *
-     * @param   string      $variableName
-     * @param   bool        $allowEmpty
-     * @param   string      $arrayIndex
+     * @param string $variableName
+     * @param bool $allowEmpty
+     * @param string $arrayIndex
      * @see AbstractDatabaseObjectAction::readString()
      */
     abstract protected function readString($variableName, $allowEmpty = false, $arrayIndex = '');

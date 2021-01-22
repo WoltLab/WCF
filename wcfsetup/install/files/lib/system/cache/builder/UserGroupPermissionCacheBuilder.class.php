@@ -165,7 +165,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
     /**
      * Returns an object of the requested group option type.
      *
-     * @param   string      $type
+     * @param string $type
      * @return  IUserGroupOptionType
      * @throws  SystemException
      */

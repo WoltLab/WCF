@@ -99,7 +99,8 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
                         $boxContentEditor->update(['hasEmbeddedObjects' => 1]);
                     }
                 } elseif ($box->boxType == 'html' || $box->boxType == 'tpl') {
-                    if (HtmlSimpleParser::getInstance()->parse('com.woltlab.wcf.box.content', $boxContent->boxContentID, $boxContent->content)) {
+                    if (HtmlSimpleParser::getInstance()->parse('com.woltlab.wcf.box.content', $boxContent->boxContentID,
+                        $boxContent->content)) {
                         $boxContentEditor->update(['hasEmbeddedObjects' => 1]);
                     }
                 }
@@ -126,7 +127,8 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
         if ($box->boxType == 'tpl') {
             if (!empty($this->parameters['content'])) {
                 foreach ($this->parameters['content'] as $languageID => $content) {
-                    \file_put_contents(WCF_DIR . 'templates/' . $box->getTplName(($languageID ?: null)) . '.tpl', $content['content']);
+                    \file_put_contents(WCF_DIR . 'templates/' . $box->getTplName(($languageID ?: null)) . '.tpl',
+                        $content['content']);
                 }
             }
         }
@@ -195,7 +197,8 @@ class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction
                             $boxContentEditor->update(['hasEmbeddedObjects' => $boxContent->hasEmbeddedObjects ? 0 : 1]);
                         }
                     } elseif ($box->boxType == 'html' || $box->boxType == 'tpl') {
-                        if ($boxContent->hasEmbeddedObjects != HtmlSimpleParser::getInstance()->parse('com.woltlab.wcf.box.content', $boxContent->boxContentID, $boxContent->content)) {
+                        if ($boxContent->hasEmbeddedObjects != HtmlSimpleParser::getInstance()->parse('com.woltlab.wcf.box.content',
+                                $boxContent->boxContentID, $boxContent->content)) {
                             $boxContentEditor->update(['hasEmbeddedObjects' => $boxContent->hasEmbeddedObjects ? 0 : 1]);
                         }
                     }

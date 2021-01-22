@@ -36,7 +36,7 @@ interface ISearchResultObject
     /**
      * Returns the link to this object.
      *
-     * @param   string      $query      search query
+     * @param string $query search query
      * @return  string
      */
     public function getLink($query = '');

@@ -23,7 +23,7 @@ class MessageHtmlInputFilter implements IHtmlInputFilter
     /**
      * Applies HTMLPurifier's filter on provided HTML.
      *
-     * @param       string  $html   unsafe HTML
+     * @param string $html unsafe HTML
      * @return      string  sanitized HTML
      */
     public function apply($html)
@@ -80,7 +80,7 @@ class MessageHtmlInputFilter implements IHtmlInputFilter
     /**
      * Sets required configuration data for HTML filter.
      *
-     * @param       \HTMLPurifier_Config    $config         HTMLPurifier configuration
+     * @param \HTMLPurifier_Config $config HTMLPurifier configuration
      */
     protected function setAttributeDefinitions(\HTMLPurifier_Config $config)
     {

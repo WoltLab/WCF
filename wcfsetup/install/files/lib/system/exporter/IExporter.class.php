@@ -15,13 +15,13 @@ interface IExporter
     /**
      * Sets database access data.
      *
-     * @param   string      $databaseHost
-     * @param   string      $databaseUser
-     * @param   string      $databasePassword
-     * @param   string      $databaseName
-     * @param   string      $databasePrefix
-     * @param   string      $fileSystemPath
-     * @param   array       $additionalData
+     * @param string $databaseHost
+     * @param string $databaseUser
+     * @param string $databasePassword
+     * @param string $databaseName
+     * @param string $databasePrefix
+     * @param string $fileSystemPath
+     * @param array $additionalData
      */
     public function setData(
         $databaseHost,
@@ -41,7 +41,7 @@ interface IExporter
     /**
      * Counts the number of required loops for given type.
      *
-     * @param   string      $objectType
+     * @param string $objectType
      * @return  int
      */
     public function countLoops($objectType);
@@ -49,8 +49,8 @@ interface IExporter
     /**
      * Runs the data export.
      *
-     * @param   string      $objectType
-     * @param   int     $loopCount
+     * @param string $objectType
+     * @param int $loopCount
      */
     public function exportData($objectType, $loopCount = 0);
 
@@ -71,7 +71,7 @@ interface IExporter
     /**
      * Validates the selected data types. Returns false on failure.
      *
-     * @param   array       $selectedData
+     * @param array $selectedData
      * @return  bool
      */
     public function validateSelectedData(array $selectedData);

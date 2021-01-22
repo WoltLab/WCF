@@ -17,8 +17,8 @@ final class JSON
     /**
      * Returns the JSON representation of a value.
      *
-     * @param   mixed       $data
-     * @param   int     $options
+     * @param mixed $data
+     * @param int $options
      * @return  string
      */
     public static function encode($data, $options = 0)
@@ -29,8 +29,8 @@ final class JSON
     /**
      * Decodes a JSON string.
      *
-     * @param   string      $json
-     * @param   bool        $asArray
+     * @param string $json
+     * @param bool $asArray
      * @return  array
      * @throws  SystemException
      */

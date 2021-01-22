@@ -92,7 +92,7 @@ class DynamicRequestRoute implements IRequestRoute
     /**
      * Sets the build schema used to build outgoing links.
      *
-     * @param   string      $buildSchema
+     * @param string $buildSchema
      */
     public function setBuildSchema($buildSchema)
     {
@@ -124,7 +124,7 @@ class DynamicRequestRoute implements IRequestRoute
     /**
      * Sets the route pattern used to evaluate an incoming request.
      *
-     * @param   string      $pattern
+     * @param string $pattern
      */
     public function setPattern($pattern)
     {
@@ -134,7 +134,7 @@ class DynamicRequestRoute implements IRequestRoute
     /**
      * Sets the list of required components.
      *
-     * @param   string[]    $requiredComponents
+     * @param string[] $requiredComponents
      */
     public function setRequiredComponents(array $requiredComponents)
     {
@@ -173,9 +173,9 @@ class DynamicRequestRoute implements IRequestRoute
      * Builds the actual link, the parameter $useBuildSchema can be set to false for
      * empty routes, e.g. for the default page.
      *
-     * @param   string[]    $components
-     * @param   string      $application
-     * @param   bool        $useBuildSchema
+     * @param string[] $components
+     * @param string $application
+     * @param bool $useBuildSchema
      * @return  string
      */
     protected function buildRoute(array $components, $application, $useBuildSchema)
@@ -303,8 +303,8 @@ class DynamicRequestRoute implements IRequestRoute
     /**
      * Returns the transformed controller name.
      *
-     * @param   string      $application
-     * @param   string      $controller
+     * @param string $application
+     * @param string $controller
      * @return  string
      */
     protected function getControllerName($application, $controller)

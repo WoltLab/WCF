@@ -21,13 +21,13 @@ use wcf\util\StringUtil;
  * @package WoltLabSuite\Core\Data\User\Trophy
  * @since   3.1
  *
- * @property-read   int     $userTrophyID           unique id of the user trophy
- * @property-read   int     $trophyID           trophy id
- * @property-read   int     $userID             user id
- * @property-read   int     $time               the time when the trophy was rewarded
- * @property-read   string      $description            the custom trophy description
- * @property-read   string      $useCustomDescription       `1`, if the trophy use a custom description
- * @property-read   int     $trophyUseHtml              `1`, if the trophy use a html description
+ * @property-read   int $userTrophyID           unique id of the user trophy
+ * @property-read   int $trophyID           trophy id
+ * @property-read   int $userID             user id
+ * @property-read   int $time               the time when the trophy was rewarded
+ * @property-read   string $description            the custom trophy description
+ * @property-read   string $useCustomDescription       `1`, if the trophy use a custom description
+ * @property-read   int $trophyUseHtml              `1`, if the trophy use a html description
  */
 class UserTrophy extends DatabaseObject
 {
@@ -89,7 +89,7 @@ class UserTrophy extends DatabaseObject
     /**
      * Returns true, if the given user can see this user trophy.
      *
-     * @param   User    $user
+     * @param User $user
      * @return  bool
      */
     public function canSee(?User $user = null)

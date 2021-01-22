@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Core\Data\Article
  * @since   3.0
  *
- * @method static   Article     create(array $parameters = [])
+ * @method static Article     create(array $parameters = [])
  * @method      Article     getDecoratedObject()
  * @mixin       Article
  */
@@ -28,7 +28,7 @@ class ArticleEditor extends DatabaseObjectEditor
     /**
      * Updates the article counter of the given user ids.
      *
-     * @param       int[]   $users  user id => article counter increase/decrease
+     * @param int[] $users user id => article counter increase/decrease
      * @since       5.2
      */
     public static function updateArticleCounter(array $users)

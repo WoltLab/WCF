@@ -38,9 +38,9 @@ class PackageUpdateUnauthorizedException extends UserException
     /**
      * Creates a new PackageUpdateUnauthorizedException object.
      *
-     * @param   HTTPRequest     $request
-     * @param   PackageUpdateServer $updateServer
-     * @param   array           $packageUpdateVersion
+     * @param HTTPRequest $request
+     * @param PackageUpdateServer $updateServer
+     * @param array $packageUpdateVersion
      */
     public function __construct(
         HTTPRequest $request,

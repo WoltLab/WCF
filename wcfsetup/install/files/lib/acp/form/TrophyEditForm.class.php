@@ -168,17 +168,19 @@ class TrophyEditForm extends TrophyAddForm
             $data['iconFile'] = '';
         }
 
-        $this->objectAction = new TrophyAction([$this->trophy], 'update', ['data' => \array_merge($this->additionalFields, $data, [
-            'title' => $this->title,
-            'description' => $this->description,
-            'categoryID' => $this->categoryID,
-            'type' => $this->type,
-            'isDisabled' => $this->isDisabled,
-            'awardAutomatically' => $this->awardAutomatically,
-            'revokeAutomatically' => $this->revokeAutomatically,
-            'trophyUseHtml' => $this->trophyUseHtml,
-            'showOrder' => $this->showOrder,
-        ])]);
+        $this->objectAction = new TrophyAction([$this->trophy], 'update', [
+            'data' => \array_merge($this->additionalFields, $data, [
+                'title' => $this->title,
+                'description' => $this->description,
+                'categoryID' => $this->categoryID,
+                'type' => $this->type,
+                'isDisabled' => $this->isDisabled,
+                'awardAutomatically' => $this->awardAutomatically,
+                'revokeAutomatically' => $this->revokeAutomatically,
+                'trophyUseHtml' => $this->trophyUseHtml,
+                'showOrder' => $this->showOrder,
+            ]),
+        ]);
         $this->objectAction->executeAction();
 
         // transform conditions array into one-dimensional array
@@ -194,9 +196,11 @@ class TrophyEditForm extends TrophyAddForm
         }
 
         if ($this->awardAutomatically) {
-            ConditionHandler::getInstance()->updateConditions($this->trophy->trophyID, $this->trophy->getConditions(), $conditions);
+            ConditionHandler::getInstance()->updateConditions($this->trophy->trophyID, $this->trophy->getConditions(),
+                $conditions);
         } else {
-            ConditionHandler::getInstance()->deleteConditions(TrophyConditionHandler::CONDITION_DEFINITION_NAME, [$this->trophy->trophyID]);
+            ConditionHandler::getInstance()->deleteConditions(TrophyConditionHandler::CONDITION_DEFINITION_NAME,
+                [$this->trophy->trophyID]);
         }
 
         // reset special trophies, if trophy is disabled

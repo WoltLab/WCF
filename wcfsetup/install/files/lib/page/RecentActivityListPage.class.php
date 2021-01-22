@@ -45,7 +45,8 @@ class RecentActivityListPage extends AbstractPage
         $this->eventList = new ViewableUserActivityEventList();
 
         if (!empty(UserProfileHandler::getInstance()->getIgnoredUsers())) {
-            $this->eventList->getConditionBuilder()->add("user_activity_event.userID NOT IN (?)", [UserProfileHandler::getInstance()->getIgnoredUsers()]);
+            $this->eventList->getConditionBuilder()->add("user_activity_event.userID NOT IN (?)",
+                [UserProfileHandler::getInstance()->getIgnoredUsers()]);
         }
 
         // load more items than necessary to avoid empty list if some items are invisible for current user

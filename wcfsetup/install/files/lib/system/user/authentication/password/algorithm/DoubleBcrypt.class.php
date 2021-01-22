@@ -65,8 +65,8 @@ final class DoubleBcrypt implements IPasswordAlgorithm
     /**
      * Returns a double salted bcrypt hash.
      *
-     * @param   string      $password
-     * @param   string      $salt
+     * @param string $password
+     * @param string $salt
      * @return  string
      */
     private static function getDoubleSaltedHash($password, $salt = null)
@@ -81,8 +81,8 @@ final class DoubleBcrypt implements IPasswordAlgorithm
     /**
      * Returns a simple salted bcrypt hash.
      *
-     * @param   string      $password
-     * @param   string      $salt
+     * @param string $password
+     * @param string $salt
      * @return  string
      */
     private static function getSaltedHash($password, $salt = null)
@@ -113,7 +113,7 @@ final class DoubleBcrypt implements IPasswordAlgorithm
     /**
      * Returns a blowfish salt, e.g. $2a$07$usesomesillystringforsalt$
      *
-     * @param   string      $salt
+     * @param string $salt
      * @return  string
      */
     private static function getSalt($salt)
@@ -126,7 +126,7 @@ final class DoubleBcrypt implements IPasswordAlgorithm
     /**
      * Returns true if given bcrypt hash uses a different cost factor and should be re-computed.
      *
-     * @param   string      $hash
+     * @param string $hash
      * @return  bool
      */
     private static function isDifferentBlowfish($hash)

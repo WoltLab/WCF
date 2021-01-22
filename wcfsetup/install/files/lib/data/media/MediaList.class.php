@@ -17,7 +17,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  * @method  Media       current()
  * @method  Media[]     getObjects()
  * @method  Media|null  search($objectID)
- * @property    Media[]     $objects
+ * @property    Media[] $objects
  */
 class MediaList extends DatabaseObjectList
 {
@@ -29,7 +29,7 @@ class MediaList extends DatabaseObjectList
     /**
      * Adds conditions to search the media files by a certain search string.
      *
-     * @param   string      $searchString
+     * @param string $searchString
      */
     public function addSearchConditions($searchString)
     {

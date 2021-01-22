@@ -17,22 +17,22 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Option
  *
- * @property-read   int     $optionID       unique id of the option
- * @property-read   int     $packageID      id of the package the which delivers the option
- * @property-read   string      $optionName     name and textual identifier of the option
- * @property-read   string      $categoryName       name of the option category the option belongs to
- * @property-read   string      $optionType     textual identifier of the option (corresponds to a class implementing `wcf\system\option\IOptionType`)
- * @property-read   string      $optionValue        value of the option
- * @property-read   string      $validationPattern  regular expression used to validate the option's value or empty if no such regular expression exists
- * @property-read   string      $selectOptions      newline-separated list of selectable options for a selectable option type (line pattern: `{value}:{language item name}`)
- * @property-read   string      $enableOptions      list of options that are enabled based on the option's value (simple comma-separated list of boolean options, otherwise newline-separated list with line pattern: `{select value}:{comma-separated list}`)
- * @property-read   int     $showOrder      position of the option in relation to the other option in the option category
- * @property-read   int     $hidden         is `1` if the option is hidden and thus cannot be explicitly set by in the acp, otherwise `0`
- * @property-read   string      $permissions        comma separated list of user group permissions of which the active user needs to have at least one to set the option value
- * @property-read   string      $options        comma separated list of options of which at least one needs to be enabled for the option to be editable
- * @property-read   int     $supportI18n        is `1` if the option supports different values for all available languages, otherwise `0`
- * @property-read   int     $requireI18n        is `1` if `$supportI18n = 1` and the option's value has to explicitly set for all values so that the `monolingual` option is not available, otherwise `0`
- * @property-read   array       $additionalData     array with additional data of the option
+ * @property-read   int $optionID       unique id of the option
+ * @property-read   int $packageID      id of the package the which delivers the option
+ * @property-read   string $optionName     name and textual identifier of the option
+ * @property-read   string $categoryName       name of the option category the option belongs to
+ * @property-read   string $optionType     textual identifier of the option (corresponds to a class implementing `wcf\system\option\IOptionType`)
+ * @property-read   string $optionValue        value of the option
+ * @property-read   string $validationPattern  regular expression used to validate the option's value or empty if no such regular expression exists
+ * @property-read   string $selectOptions      newline-separated list of selectable options for a selectable option type (line pattern: `{value}:{language item name}`)
+ * @property-read   string $enableOptions      list of options that are enabled based on the option's value (simple comma-separated list of boolean options, otherwise newline-separated list with line pattern: `{select value}:{comma-separated list}`)
+ * @property-read   int $showOrder      position of the option in relation to the other option in the option category
+ * @property-read   int $hidden         is `1` if the option is hidden and thus cannot be explicitly set by in the acp, otherwise `0`
+ * @property-read   string $permissions        comma separated list of user group permissions of which the active user needs to have at least one to set the option value
+ * @property-read   string $options        comma separated list of options of which at least one needs to be enabled for the option to be editable
+ * @property-read   int $supportI18n        is `1` if the option supports different values for all available languages, otherwise `0`
+ * @property-read   int $requireI18n        is `1` if `$supportI18n = 1` and the option's value has to explicitly set for all values so that the `monolingual` option is not available, otherwise `0`
+ * @property-read   array $additionalData     array with additional data of the option
  */
 class Option extends DatabaseObject
 {
@@ -91,7 +91,7 @@ class Option extends DatabaseObject
     /**
      * Returns the option with the given name or `null` if no such option exists.
      *
-     * @param   string      $optionName name of the requested option
+     * @param string $optionName name of the requested option
      * @return  Option|null requested option
      */
     public static function getOptionByName($optionName)
@@ -108,7 +108,7 @@ class Option extends DatabaseObject
     /**
      * Parses enableOptions.
      *
-     * @param   string      $optionData
+     * @param string $optionData
      * @return  array
      */
     public static function parseEnableOptions($optionData)
@@ -221,7 +221,7 @@ class Option extends DatabaseObject
     /**
      * Allows modifications of select options.
      *
-     * @param   string      $selectOptions
+     * @param string $selectOptions
      */
     public function modifySelectOptions($selectOptions)
     {
@@ -231,7 +231,7 @@ class Option extends DatabaseObject
     /**
      * Allows modifications of enable options.
      *
-     * @param   string      $enableOptions
+     * @param string $enableOptions
      */
     public function modifyEnableOptions($enableOptions)
     {
@@ -241,7 +241,7 @@ class Option extends DatabaseObject
     /**
      * Allows modifications of hidden option.
      *
-     * @param   string      $hiddenOption
+     * @param string $hiddenOption
      */
     public function modifyHiddenOption($hiddenOption)
     {

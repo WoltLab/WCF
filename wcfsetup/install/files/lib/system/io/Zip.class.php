@@ -73,7 +73,7 @@ class Zip extends File implements IArchive
      * Extracts all files to the given destination.
      * The directory-structure inside the .zip is preserved.
      *
-     * @param   string  $destination    where to extract
+     * @param string $destination where to extract
      */
     public function extractAll($destination)
     {
@@ -160,7 +160,8 @@ class Zip extends File implements IArchive
 
         do {
             if ($this->read(4) === self::EOF_SIGNATURE) {
-                $eof = \unpack('vdiskNo/vdiskWithCentralDirectory/vdiskEntries/vtotalEntries/VcentralDirectorySize/VcentralDirectoryOffset/vcommentLength', $this->read(18));
+                $eof = \unpack('vdiskNo/vdiskWithCentralDirectory/vdiskEntries/vtotalEntries/VcentralDirectorySize/VcentralDirectoryOffset/vcommentLength',
+                    $this->read(18));
                 if ($eof['commentLength'] + $this->tell() === $lastOffset) {
                     $this->seek($eof['centralDirectoryOffset']);
                     break;
@@ -209,7 +210,8 @@ class Zip extends File implements IArchive
             $year = (($data['mdate'] >> 9) & ((1 << 7) - 1)) + 1980;
             $data['mtime'] = \gmmktime($hour, $minute, $second, $month, $day, $year);
 
-            $data += \unpack('Vcrc32/VcompressedSize/Vsize/vfilenameLength/vextraFieldLength/vfileCommentLength/vdiskNo/vinternalAttr/vexternalAttr', $this->read(26));
+            $data += \unpack('Vcrc32/VcompressedSize/Vsize/vfilenameLength/vextraFieldLength/vfileCommentLength/vdiskNo/vinternalAttr/vexternalAttr',
+                $this->read(26));
             $data['offset'] = $this->readAndUnpack(4, 'V');
             $data['filename'] = $this->read($data['filenameLength']);
             if (\substr($data['filename'], -1) == '/') {
@@ -240,7 +242,8 @@ class Zip extends File implements IArchive
             throw new SystemException('Could not find the end of Central Directory');
         }
 
-        $eof = \unpack('vdiskNo/vdiskWithCentralDirectory/vdiskEntries/vtotalEntries/VcentralDirectorySize', $this->read(12));
+        $eof = \unpack('vdiskNo/vdiskWithCentralDirectory/vdiskEntries/vtotalEntries/VcentralDirectorySize',
+            $this->read(12));
         // check size of Central Directory
         if ($size !== $eof['centralDirectorySize']) {
             throw new SystemException('Central Directory size does not match');
@@ -261,7 +264,7 @@ class Zip extends File implements IArchive
      * Checks whether the next record is a file.
      * This does not change the position of the file-pointer.
      *
-     * @param   int     $offset     where to start reading
+     * @param int $offset where to start reading
      * @return  bool
      * @throws  SystemException
      */
@@ -287,7 +290,7 @@ class Zip extends File implements IArchive
     /**
      * Reads a file and returns it.
      *
-     * @param   int     $offset     where to start reading
+     * @param int $offset where to start reading
      * @return  array
      * @throws  SystemException
      */
@@ -386,8 +389,8 @@ class Zip extends File implements IArchive
     /**
      * Reads in the specified number of bytes and unpacks them.
      *
-     * @param   int     $length     Number of bytes to read
-     * @param   string      $type       Which type are the bytes of
+     * @param int $length Number of bytes to read
+     * @param string $type Which type are the bytes of
      * @return  mixed
      */
     protected function readAndUnpack($length, $type)

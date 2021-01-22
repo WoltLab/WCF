@@ -50,8 +50,8 @@ class QuickReplyManager extends SingletonFactory
     /**
      * Returns a stored message from session.
      *
-     * @param   string      $type
-     * @param   int     $objectID
+     * @param string $type
+     * @param int $objectID
      * @return  string
      */
     public function getMessage($type, $objectID)
@@ -70,9 +70,9 @@ class QuickReplyManager extends SingletonFactory
     /**
      * Stores a message in session.
      *
-     * @param   string      $type
-     * @param   int     $objectID
-     * @param   string      $message
+     * @param string $type
+     * @param int $objectID
+     * @param string $message
      */
     public function setMessage($type, $objectID, $message)
     {
@@ -82,8 +82,8 @@ class QuickReplyManager extends SingletonFactory
     /**
      * Removes a stored message from session.
      *
-     * @param   string      $type
-     * @param   int     $objectID
+     * @param string $type
+     * @param int $objectID
      */
     public function removeMessage($type, $objectID)
     {
@@ -93,7 +93,7 @@ class QuickReplyManager extends SingletonFactory
     /**
      * Sets the disallowed bbcodes.
      *
-     * @param   string[]        $disallowedBBCodes
+     * @param string[] $disallowedBBCodes
      */
     public function setDisallowedBBCodes(array $disallowedBBCodes)
     {
@@ -103,10 +103,10 @@ class QuickReplyManager extends SingletonFactory
     /**
      * Validates parameters for current request.
      *
-     * @param   IMessageQuickReplyAction    $object
-     * @param   mixed[][]           $parameters
-     * @param   string              $containerClassName
-     * @param   string              $containerDecoratorClassName
+     * @param IMessageQuickReplyAction $object
+     * @param mixed[][] $parameters
+     * @param string $containerClassName
+     * @param string $containerDecoratorClassName
      * @throws  ParentClassException
      * @throws  UserInputException
      */
@@ -201,13 +201,13 @@ class QuickReplyManager extends SingletonFactory
     /**
      * Creates a new message and returns the parsed template.
      *
-     * @param   IMessageQuickReplyAction    $object
-     * @param   array               $parameters
-     * @param   string              $containerActionClassName
-     * @param   string              $sortOrder
-     * @param   string              $templateName
-     * @param   string              $application
-     * @param   callable                $callbackCreatedMessage
+     * @param IMessageQuickReplyAction $object
+     * @param array $parameters
+     * @param string $containerActionClassName
+     * @param string $sortOrder
+     * @param string $templateName
+     * @param string $application
+     * @param callable $callbackCreatedMessage
      * @return  array
      */
     public function createMessage(
@@ -315,7 +315,7 @@ class QuickReplyManager extends SingletonFactory
     /**
      * Stores tmpHash in current session, used in combination with the extended form.
      *
-     * @param   string      $tmpHash
+     * @param string $tmpHash
      */
     public function setTmpHash($tmpHash)
     {

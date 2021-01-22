@@ -31,7 +31,7 @@ class HtmlHighlighter extends XmlHighlighter
     /**
      * Caches scripts and styles in the given string.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      */
     protected function cacheScriptsAndStyles($string)
@@ -53,7 +53,8 @@ class HtmlHighlighter extends XmlHighlighter
             $class = '\wcf\system\bbcode\highlighter\\' . \ucfirst($type) . 'Highlighter';
 
             /** @noinspection PhpUndefinedMethodInspection */
-            return $openingTag . StringStack::pushToStringStack('<span class="' . $type . 'Highlighter">' . $class::getInstance()->highlight($content) . '</span>', 'htmlHighlighter' . \ucfirst($type)) . $closingTag;
+            return $openingTag . StringStack::pushToStringStack('<span class="' . $type . 'Highlighter">' . $class::getInstance()->highlight($content) . '</span>',
+                    'htmlHighlighter' . \ucfirst($type)) . $closingTag;
         });
     }
 

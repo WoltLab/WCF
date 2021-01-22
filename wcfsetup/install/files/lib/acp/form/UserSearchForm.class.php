@@ -229,7 +229,8 @@ class UserSearchForm extends UserOptionListForm
         AbstractForm::validate();
 
         // remove email column for non-authorized users
-        if (!WCF::getSession()->getPermission('admin.user.canEditMailAddress') && ($key = \array_search('email', $this->columns)) !== false) {
+        if (!WCF::getSession()->getPermission('admin.user.canEditMailAddress') && ($key = \array_search('email',
+                $this->columns)) !== false) {
             unset($this->columns[$key]);
         }
 

@@ -151,7 +151,8 @@ class ImageProxyAction extends AbstractAction
                 } catch (\DomainException $e) {
                     // save a dummy image in case the server sent us junk, otherwise we might try to download the file over and over and over again.
                     // taken from the public domain gif at https://commons.wikimedia.org/wiki/File%3aBlank.gif
-                    \file_put_contents($tmp, "\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\xFF\xFF\xFF\x00\x00\x00\x21\xF9\x04\x00\x00\x00\x00\x00\x2C\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3B");
+                    \file_put_contents($tmp,
+                        "\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\xFF\xFF\xFF\x00\x00\x00\x21\xF9\x04\x00\x00\x00\x00\x00\x2C\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3B");
                     $extension = 'gif';
                 }
 

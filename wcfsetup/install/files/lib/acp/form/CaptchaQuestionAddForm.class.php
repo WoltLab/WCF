@@ -105,12 +105,14 @@ class CaptchaQuestionAddForm extends AbstractForm
         // set i18n values
         $questionUpdates = [];
         if (!I18nHandler::getInstance()->isPlainValue('question')) {
-            I18nHandler::getInstance()->save('question', 'wcf.captcha.question.question.question' . $questionID, 'wcf.captcha.question', 1);
+            I18nHandler::getInstance()->save('question', 'wcf.captcha.question.question.question' . $questionID,
+                'wcf.captcha.question', 1);
 
             $questionUpdates['question'] = 'wcf.captcha.question.question.question' . $questionID;
         }
         if (!I18nHandler::getInstance()->isPlainValue('answers')) {
-            I18nHandler::getInstance()->save('answers', 'wcf.captcha.question.answers.question' . $questionID, 'wcf.captcha.question', 1);
+            I18nHandler::getInstance()->save('answers', 'wcf.captcha.question.answers.question' . $questionID,
+                'wcf.captcha.question', 1);
 
             $questionUpdates['answers'] = 'wcf.captcha.question.answers.question' . $questionID;
         }
@@ -129,7 +131,8 @@ class CaptchaQuestionAddForm extends AbstractForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(CaptchaQuestionEditForm::class, ['id' => $questionID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(CaptchaQuestionEditForm::class,
+                ['id' => $questionID]),
         ]);
     }
 

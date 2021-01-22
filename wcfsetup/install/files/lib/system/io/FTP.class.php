@@ -23,9 +23,9 @@ class FTP
     /**
      * Opens a new ftp connection to given host.
      *
-     * @param   string      $host
-     * @param   int     $port
-     * @param   int     $timeout
+     * @param string $host
+     * @param int $port
+     * @param int $timeout
      * @throws  SystemException
      */
     public function __construct($host = 'localhost', $port = 21, $timeout = 30)
@@ -39,8 +39,8 @@ class FTP
     /**
      * Calls the specified function on the open ftp connection.
      *
-     * @param   string      $function
-     * @param   array       $arguments
+     * @param string $function
+     * @param array $arguments
      * @return  mixed
      * @throws  SystemException
      */

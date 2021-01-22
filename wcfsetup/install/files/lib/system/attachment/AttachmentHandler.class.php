@@ -59,10 +59,10 @@ class AttachmentHandler implements \Countable
     /**
      * Creates a new AttachmentHandler object.
      *
-     * @param   string      $objectType
-     * @param   int     $objectID
-     * @param   string      $tmpHash
-     * @param   int     $parentObjectID
+     * @param string $objectType
+     * @param int $objectID
+     * @param string $tmpHash
+     * @param int $parentObjectID
      * @throws  SystemException
      */
     public function __construct($objectType, $objectID, $tmpHash = '', $parentObjectID = 0)
@@ -71,7 +71,8 @@ class AttachmentHandler implements \Countable
             throw new SystemException('objectID and tmpHash cannot be empty at the same time');
         }
 
-        $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', $objectType);
+        $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType',
+            $objectType);
         $this->processor = $this->objectType->getProcessor();
         $this->objectID = $objectID;
         $this->parentObjectID = $parentObjectID;
@@ -116,7 +117,7 @@ class AttachmentHandler implements \Countable
     /**
      * Sets the object id of temporary saved attachments.
      *
-     * @param   int     $objectID
+     * @param int $objectID
      */
     public function updateObjectID($objectID)
     {
@@ -140,14 +141,17 @@ class AttachmentHandler implements \Countable
     /**
      * Transfers attachments to a different object id of the same type (e.g. merging content)
      *
-     * @param   string      $objectType
-     * @param   int     $newObjectID
-     * @param   int[]   $oldObjectIDs
+     * @param string $objectType
+     * @param int $newObjectID
+     * @param int[] $oldObjectIDs
      */
     public static function transferAttachments($objectType, $newObjectID, array $oldObjectIDs)
     {
         $conditions = new PreparedStatementConditionBuilder();
-        $conditions->add("objectTypeID = ?", [ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', $objectType)->objectTypeID]);
+        $conditions->add("objectTypeID = ?", [
+            ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType',
+                $objectType)->objectTypeID,
+        ]);
         $conditions->add("objectID IN (?)", [$oldObjectIDs]);
         $parameters = $conditions->getParameters();
         \array_unshift($parameters, $newObjectID);
@@ -162,13 +166,16 @@ class AttachmentHandler implements \Countable
     /**
      * Removes all attachments for given object ids by type.
      *
-     * @param   string      $objectType
-     * @param   int[]   $objectIDs
+     * @param string $objectType
+     * @param int[] $objectIDs
      */
     public static function removeAttachments($objectType, array $objectIDs)
     {
         $attachmentList = new AttachmentList();
-        $attachmentList->getConditionBuilder()->add("objectTypeID = ?", [ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', $objectType)->objectTypeID]);
+        $attachmentList->getConditionBuilder()->add("objectTypeID = ?", [
+            ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType',
+                $objectType)->objectTypeID,
+        ]);
         $attachmentList->getConditionBuilder()->add("objectID IN (?)", [$objectIDs]);
         $attachmentList->readObjects();
 
@@ -210,7 +217,8 @@ class AttachmentHandler implements \Countable
         for ($i = 0, $j = \count($extensions); $i < $j; $i++) {
             if (\strpos($extensions[$i], '*') !== false) {
                 for ($k = $j - 1; $k > $i; $k--) {
-                    if (\preg_match('/^' . \str_replace('\*', '.*', \preg_quote($extensions[$i], '/')) . '$/i', $extensions[$k])) {
+                    if (\preg_match('/^' . \str_replace('\*', '.*', \preg_quote($extensions[$i], '/')) . '$/i',
+                        $extensions[$k])) {
                         \array_splice($extensions, $k, 1);
                         $j--;
                     }
@@ -263,7 +271,7 @@ class AttachmentHandler implements \Countable
     /**
      * Sets the temporary hashes used to identify the relevant uploaded attachments.
      *
-     * @param   string[]    $tmpHash
+     * @param string[] $tmpHash
      * @since   5.2
      */
     public function setTmpHashes(array $tmpHash)

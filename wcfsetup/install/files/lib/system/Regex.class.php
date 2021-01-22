@@ -125,8 +125,8 @@ final class Regex
     /**
      * Creates a regex.
      *
-     * @param   string      $regex
-     * @param   int     $modifier
+     * @param string $regex
+     * @param int $modifier
      */
     public function __construct($regex, $modifier = self::MODIFIER_NONE)
     {
@@ -198,10 +198,10 @@ final class Regex
     /**
      * Checks whether the regex matches the given string.
      *
-     * @param	string		$string		string to match
-     * @param	bool		$all		indicates if all matches are collected
-     * @param	int		$flags		match flags
-     * @return	int				return value of preg_match(_all)
+     * @param string $string string to match
+     * @param bool $all indicates if all matches are collected
+     * @param int $flags match flags
+     * @return    int                return value of preg_match(_all)
      */
     public function match($string, $all = false, $flags = self::FLAGS_DEFAULT)
     {
@@ -209,7 +209,7 @@ final class Regex
         if ($flags & self::CAPTURE_OFFSET) {
             $matchFlags |= \PREG_OFFSET_CAPTURE;
         }
-        
+
         if ($all) {
             if ($flags & self::FLAGS_DEFAULT) {
                 $matchFlags |= \PREG_PATTERN_ORDER;
@@ -220,35 +220,35 @@ final class Regex
             if (($flags & self::ORDER_MATCH_BY_SET) && !($flags & self::ORDER_MATCH_BY_PATTERN)) {
                 $matchFlags |= \PREG_SET_ORDER;
             }
-            
+
             return $this->checkResult(\preg_match_all($this->regex, $string, $this->matches, $matchFlags), 'match');
         }
-        
+
         return $this->checkResult(\preg_match($this->regex, $string, $this->matches, $matchFlags), 'match');
     }
-    
+
     /**
      * Replaces part of the string with the regex.
      *
-     * @param	string		$string
-     * @param	mixed		$replacement	replacement-string or closure
-     * @return	string
+     * @param string $string
+     * @param mixed $replacement replacement-string or closure
+     * @return    string
      */
     public function replace($string, $replacement)
     {
         if ($replacement instanceof Callback || $replacement instanceof \Closure) {
             return $this->checkResult(\preg_replace_callback($this->regex, $replacement, $string), 'replace');
         }
-        
+
         return $this->checkResult(\preg_replace($this->regex, $replacement, $string), 'replace');
     }
-    
+
     /**
      * Splits the string with the regex.
      *
-     * @param	string		$string
-     * @param	int		$flags
-     * @return	string[]
+     * @param string $string
+     * @param int $flags
+     * @return    string[]
      */
     public function split($string, $flags = self::FLAGS_DEFAULT)
     {
@@ -262,7 +262,7 @@ final class Regex
         if ($flags & self::CAPTURE_SPLIT_DELIMITER) {
             $splitFlags |= \PREG_SPLIT_DELIM_CAPTURE;
         }
-        
+
         return $this->checkResult(\preg_split($this->regex, $string, -1, $splitFlags), 'split');
     }
 
@@ -271,8 +271,8 @@ final class Regex
     /**
      * Checks whether there was success.
      *
-     * @param   mixed       $result
-     * @param   string      $method
+     * @param mixed $result
+     * @param string $method
      * @return  mixed
      * @throws  SystemException
      */
@@ -294,7 +294,7 @@ final class Regex
                     break;
                 case \PREG_NO_ERROR:
                     return $result;
-                break;
+                    break;
                 default:
                     $error = 'Unknown error';
                     break;

@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Comment
  *
- * @method static   Comment     create(array $parameters = [])
+ * @method static Comment     create(array $parameters = [])
  * @method      Comment     getDecoratedObject()
  * @mixin       Comment
  */

@@ -12,7 +12,7 @@ use wcf\data\DatabaseObjectEditor;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Acp\Session\Access\Log
  *
- * @method static   ACPSessionAccessLog create(array $parameters = [])
+ * @method static ACPSessionAccessLog create(array $parameters = [])
  * @method      ACPSessionAccessLog getDecoratedObject()
  * @mixin       ACPSessionAccessLog
  */

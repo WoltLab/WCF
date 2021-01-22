@@ -116,7 +116,9 @@ class ArticleAction extends AbstractDatabaseObjectAction
 
                 // save tags
                 if (!empty($content['tags'])) {
-                    TagEngine::getInstance()->addObjectTags('com.woltlab.wcf.article', $articleContent->articleContentID, $content['tags'], ($languageID ?: LanguageFactory::getInstance()->getDefaultLanguageID()));
+                    TagEngine::getInstance()->addObjectTags('com.woltlab.wcf.article',
+                        $articleContent->articleContentID, $content['tags'],
+                        ($languageID ?: LanguageFactory::getInstance()->getDefaultLanguageID()));
                 }
 
                 // update search index
@@ -161,7 +163,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
                 new ArticleUserNotificationObject($article)
             );
 
-            UserActivityEventHandler::getInstance()->fireEvent('com.woltlab.wcf.article.recentActivityEvent', $article->articleID, null, $article->userID, $article->time);
+            UserActivityEventHandler::getInstance()->fireEvent('com.woltlab.wcf.article.recentActivityEvent',
+                $article->articleID, null, $article->userID, $article->time);
         }
 
         return $article;
@@ -210,7 +213,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
 
                         // delete tags
                         if (!$isRevert && empty($content['tags'])) {
-                            TagEngine::getInstance()->deleteObjectTags('com.woltlab.wcf.article', $articleContent->articleContentID, ($languageID ?: null));
+                            TagEngine::getInstance()->deleteObjectTags('com.woltlab.wcf.article',
+                                $articleContent->articleContentID, ($languageID ?: null));
                         }
                     } else {
                         /** @var ArticleContent $articleContent */
@@ -233,7 +237,9 @@ class ArticleAction extends AbstractDatabaseObjectAction
 
                     // save tags
                     if (!$isRevert && !empty($content['tags'])) {
-                        TagEngine::getInstance()->addObjectTags('com.woltlab.wcf.article', $articleContent->articleContentID, $content['tags'], ($languageID ?: LanguageFactory::getInstance()->getDefaultLanguageID()));
+                        TagEngine::getInstance()->addObjectTags('com.woltlab.wcf.article',
+                            $articleContent->articleContentID, $content['tags'],
+                            ($languageID ?: LanguageFactory::getInstance()->getDefaultLanguageID()));
                     }
 
                     // update search index
@@ -298,7 +304,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
                             new ArticleUserNotificationObject($articleEditor->getDecoratedObject())
                         );
 
-                        UserActivityEventHandler::getInstance()->fireEvent('com.woltlab.wcf.article.recentActivityEvent', $articleEditor->articleID, null, $articleEditor->userID, $articleEditor->time);
+                        UserActivityEventHandler::getInstance()->fireEvent('com.woltlab.wcf.article.recentActivityEvent',
+                            $articleEditor->articleID, null, $articleEditor->userID, $articleEditor->time);
                     } else {
                         $resetArticleIDs[] = $articleEditor->articleID;
                     }
@@ -307,9 +314,11 @@ class ArticleAction extends AbstractDatabaseObjectAction
 
             if (!empty($resetArticleIDs)) {
                 // delete user notifications
-                UserNotificationHandler::getInstance()->removeNotifications('com.woltlab.wcf.article.notification', $resetArticleIDs);
+                UserNotificationHandler::getInstance()->removeNotifications('com.woltlab.wcf.article.notification',
+                    $resetArticleIDs);
                 // delete recent activity events
-                UserActivityEventHandler::getInstance()->removeEvents('com.woltlab.wcf.article.recentActivityEvent', $resetArticleIDs);
+                UserActivityEventHandler::getInstance()->removeEvents('com.woltlab.wcf.article.recentActivityEvent',
+                    $resetArticleIDs);
             }
 
             if (!empty($usersToArticles)) {
@@ -397,11 +406,14 @@ class ArticleAction extends AbstractDatabaseObjectAction
             // delete entry from search index
             SearchIndexManager::getInstance()->delete('com.woltlab.wcf.article', $articleContentIDs);
             // delete user notifications
-            UserNotificationHandler::getInstance()->removeNotifications('com.woltlab.wcf.article.notification', $articleIDs);
+            UserNotificationHandler::getInstance()->removeNotifications('com.woltlab.wcf.article.notification',
+                $articleIDs);
             // delete recent activity events
-            UserActivityEventHandler::getInstance()->removeEvents('com.woltlab.wcf.article.recentActivityEvent', $articleIDs);
+            UserActivityEventHandler::getInstance()->removeEvents('com.woltlab.wcf.article.recentActivityEvent',
+                $articleIDs);
             // delete embedded object references
-            MessageEmbeddedObjectManager::getInstance()->removeObjects('com.woltlab.wcf.article.content', $articleContentIDs);
+            MessageEmbeddedObjectManager::getInstance()->removeObjects('com.woltlab.wcf.article.content',
+                $articleContentIDs);
             // update wcf1_user.articles
             ArticleEditor::updateArticleCounter($usersToArticles);
         }
@@ -561,7 +573,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
         }
 
         // flush edit history
-        VersionTracker::getInstance()->reset('com.woltlab.wcf.article', $this->articleEditor->getDecoratedObject()->articleID);
+        VersionTracker::getInstance()->reset('com.woltlab.wcf.article',
+            $this->articleEditor->getDecoratedObject()->articleID);
 
         // update article's i18n state
         $this->articleEditor->update([
@@ -583,7 +596,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
         }
 
         foreach ($this->getObjects() as $article) {
-            VisitTracker::getInstance()->trackObjectVisit('com.woltlab.wcf.article', $article->articleID, $this->parameters['visitTime']);
+            VisitTracker::getInstance()->trackObjectVisit('com.woltlab.wcf.article', $article->articleID,
+                $this->parameters['visitTime']);
         }
 
         // reset storage
@@ -713,7 +727,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
                 new ArticleUserNotificationObject($articleEditor->getDecoratedObject())
             );
 
-            UserActivityEventHandler::getInstance()->fireEvent('com.woltlab.wcf.article.recentActivityEvent', $articleEditor->articleID, null, $articleEditor->userID, TIME_NOW);
+            UserActivityEventHandler::getInstance()->fireEvent('com.woltlab.wcf.article.recentActivityEvent',
+                $articleEditor->articleID, null, $articleEditor->userID, TIME_NOW);
         }
 
         ArticleEditor::updateArticleCounter($usersToArticles);
@@ -774,10 +789,12 @@ class ArticleAction extends AbstractDatabaseObjectAction
         }
 
         // delete user notifications
-        UserNotificationHandler::getInstance()->removeNotifications('com.woltlab.wcf.article.notification', $articleIDs);
+        UserNotificationHandler::getInstance()->removeNotifications('com.woltlab.wcf.article.notification',
+            $articleIDs);
 
         // delete recent activity events
-        UserActivityEventHandler::getInstance()->removeEvents('com.woltlab.wcf.article.recentActivityEvent', $articleIDs);
+        UserActivityEventHandler::getInstance()->removeEvents('com.woltlab.wcf.article.recentActivityEvent',
+            $articleIDs);
 
         ArticleEditor::updateArticleCounter($usersToArticles);
 
@@ -837,7 +854,7 @@ class ArticleAction extends AbstractDatabaseObjectAction
     /**
      * Unmarks articles.
      *
-     * @param   int[]   $articleIDs
+     * @param int[] $articleIDs
      */
     protected function unmarkItems(array $articleIDs = [])
     {
@@ -848,7 +865,8 @@ class ArticleAction extends AbstractDatabaseObjectAction
         }
 
         if (!empty($articleIDs)) {
-            ClipboardHandler::getInstance()->unmark($articleIDs, ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.article'));
+            ClipboardHandler::getInstance()->unmark($articleIDs,
+                ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.article'));
         }
     }
 }

@@ -100,8 +100,8 @@ class TestableUserNotificationEventHandler extends SingletonFactory
     /**
      * Returns the email body for a user notification email.
      *
-     * @param   ITestableUserNotificationEvent  $event
-     * @param   string              $notificationType
+     * @param ITestableUserNotificationEvent $event
+     * @param string $notificationType
      * @return  string
      */
     public function getEmailBody(ITestableUserNotificationEvent $event, $notificationType)
@@ -161,7 +161,7 @@ class TestableUserNotificationEventHandler extends SingletonFactory
     /**
      * Returns the recipient of the notifications who is the active user.
      *
-     * @param   Language|null   $language
+     * @param Language|null $language
      * @return  UserProfile
      */
     public function getRecipient(?Language $language = null)
@@ -185,10 +185,10 @@ class TestableUserNotificationEventHandler extends SingletonFactory
     /**
      * Returns a new user notification object based on the given data.
      *
-     * @param   UserProfile $author
-     * @param   int     $timesTriggered
-     * @param   int     $guestTimesTriggered
-     * @param   array       $additionalData
+     * @param UserProfile $author
+     * @param int $timesTriggered
+     * @param int $guestTimesTriggered
+     * @param array $additionalData
      * @return  UserNotification
      */
     protected function getUserNotification(
@@ -214,7 +214,7 @@ class TestableUserNotificationEventHandler extends SingletonFactory
      * Returns the test user notification events based on the given user notification
      * event.
      *
-     * @param   UserNotificationEvent   $userNotificationEvent
+     * @param UserNotificationEvent $userNotificationEvent
      * @return  ITestableUserNotificationEvent[]
      */
     public function getUserNotificationEvents(UserNotificationEvent $userNotificationEvent)
@@ -305,7 +305,7 @@ class TestableUserNotificationEventHandler extends SingletonFactory
      * data within the same request. This is crucial as during testing, objects
      * are created and used within the same request.
      *
-     * @param   ICacheBuilder   $cacheBuilder
+     * @param ICacheBuilder $cacheBuilder
      */
     public function resetCacheBuilder(ICacheBuilder $cacheBuilder)
     {

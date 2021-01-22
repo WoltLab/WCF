@@ -17,8 +17,8 @@ interface IUserGroupOptionType extends IOptionType
     /**
      * Returns the value which results by merging or null if nothing should be saved.
      *
-     * @param   mixed       $defaultValue
-     * @param   mixed       $groupValue
+     * @param mixed $defaultValue
+     * @param mixed $groupValue
      * @return  mixed
      */
     public function merge($defaultValue, $groupValue);

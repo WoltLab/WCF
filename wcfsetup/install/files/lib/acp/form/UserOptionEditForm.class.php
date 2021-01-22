@@ -80,30 +80,34 @@ class UserOptionEditForm extends UserOptionAddForm
     {
         AbstractForm::save();
 
-        I18nHandler::getInstance()->save('optionName', 'wcf.user.option.' . $this->userOption->optionName, 'wcf.user.option');
-        I18nHandler::getInstance()->save('optionDescription', 'wcf.user.option.' . $this->userOption->optionName . '.description', 'wcf.user.option');
+        I18nHandler::getInstance()->save('optionName', 'wcf.user.option.' . $this->userOption->optionName,
+            'wcf.user.option');
+        I18nHandler::getInstance()->save('optionDescription',
+            'wcf.user.option.' . $this->userOption->optionName . '.description', 'wcf.user.option');
 
         $additionalData = \is_array($this->userOption->additionalData) ? $this->userOption->additionalData : [];
         if ($this->optionType === 'message' && !isset($additionalData['messageObjectType'])) {
             $additionalData['messageObjectType'] = 'com.woltlab.wcf.user.option.generic';
         }
 
-        $this->objectAction = new UserOptionAction([$this->userOption], 'update', ['data' => \array_merge($this->additionalFields, [
-            'categoryName' => $this->categoryName,
-            'optionType' => $this->optionType,
-            'defaultValue' => $this->defaultValue,
-            'showOrder' => $this->showOrder,
-            'outputClass' => $this->outputClass,
-            'validationPattern' => $this->validationPattern,
-            'selectOptions' => $this->selectOptions,
-            'required' => $this->required,
-            'askDuringRegistration' => $this->askDuringRegistration,
-            'searchable' => $this->searchable,
-            'editable' => $this->editable,
-            'visible' => $this->visible,
-            'additionalData' => !empty($additionalData) ? \serialize($additionalData) : '',
-            'labeledUrl' => $this->labeledUrl,
-        ])]);
+        $this->objectAction = new UserOptionAction([$this->userOption], 'update', [
+            'data' => \array_merge($this->additionalFields, [
+                'categoryName' => $this->categoryName,
+                'optionType' => $this->optionType,
+                'defaultValue' => $this->defaultValue,
+                'showOrder' => $this->showOrder,
+                'outputClass' => $this->outputClass,
+                'validationPattern' => $this->validationPattern,
+                'selectOptions' => $this->selectOptions,
+                'required' => $this->required,
+                'askDuringRegistration' => $this->askDuringRegistration,
+                'searchable' => $this->searchable,
+                'editable' => $this->editable,
+                'visible' => $this->visible,
+                'additionalData' => !empty($additionalData) ? \serialize($additionalData) : '',
+                'labeledUrl' => $this->labeledUrl,
+            ]),
+        ]);
         $this->objectAction->executeAction();
         $this->saved();
 
@@ -117,8 +121,11 @@ class UserOptionEditForm extends UserOptionAddForm
     {
         parent::readData();
 
-        I18nHandler::getInstance()->setOptions('optionName', 1, 'wcf.user.option.' . $this->userOption->optionName, 'wcf.user.option.option\d+');
-        I18nHandler::getInstance()->setOptions('optionDescription', 1, 'wcf.user.option.' . $this->userOption->optionName . '.description', 'wcf.user.option.option\d+.description');
+        I18nHandler::getInstance()->setOptions('optionName', 1, 'wcf.user.option.' . $this->userOption->optionName,
+            'wcf.user.option.option\d+');
+        I18nHandler::getInstance()->setOptions('optionDescription', 1,
+            'wcf.user.option.' . $this->userOption->optionName . '.description',
+            'wcf.user.option.option\d+.description');
 
         if (empty($_POST)) {
             $this->categoryName = $this->userOption->categoryName;

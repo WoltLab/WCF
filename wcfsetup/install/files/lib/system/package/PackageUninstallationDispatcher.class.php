@@ -39,7 +39,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
     /**
      * Creates a new instance of PackageUninstallationDispatcher.
      *
-     * @param   PackageInstallationQueue    $queue
+     * @param PackageInstallationQueue $queue
      */
     public function __construct(PackageInstallationQueue $queue)
     {
@@ -52,7 +52,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
     /**
      * Uninstalls node components and returns next node.
      *
-     * @param   string      $node
+     * @param string $node
      * @return  string
      */
     public function uninstall($node)
@@ -142,7 +142,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
     /**
      * Uninstalls current package.
      *
-     * @param   array       $nodeData
+     * @param array $nodeData
      */
     protected function uninstallPackage(array $nodeData)
     {
@@ -164,10 +164,10 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
     /**
      * Deletes the given list of files from the target dir.
      *
-     * @param   string      $targetDir
-     * @param   string[]    $files
-     * @param   bool        $deleteEmptyDirectories
-     * @param   bool        $deleteEmptyTargetDir
+     * @param string $targetDir
+     * @param string[] $files
+     * @param bool $deleteEmptyDirectories
+     * @param bool $deleteEmptyTargetDir
      */
     public function deleteFiles($targetDir, $files, $deleteEmptyTargetDir = false, $deleteEmptyDirectories = true)
     {
@@ -177,8 +177,8 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher
     /**
      * Adds an uninstall entry to the package installation queue.
      *
-     * @param   Package     $package
-     * @param   array       $packages
+     * @param Package $package
+     * @param array $packages
      */
     public static function addQueueEntries(Package $package, $packages = [])
     {

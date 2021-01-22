@@ -47,7 +47,7 @@ class SimpleEmail
     /**
      * Sets the email's 'Subject'.
      *
-     * @param   string  $subject
+     * @param string $subject
      * @see Email::setSubject()
      */
     public function setSubject($subject)
@@ -60,7 +60,7 @@ class SimpleEmail
      * This method clears any previous recipient of
      * the email.
      *
-     * @param   User        $user
+     * @param User $user
      */
     public function setRecipient(User $user)
     {
@@ -80,7 +80,7 @@ class SimpleEmail
      * Sets the text/plain version of this message.
      * An empty string clears this version (not recommended!).
      *
-     * @param   string  $message
+     * @param string $message
      * @see     PlainTextMimePart
      */
     public function setMessage($message)
@@ -94,7 +94,7 @@ class SimpleEmail
      * Sets the text/html version of this message.
      * An empty string clears this version.
      *
-     * @param   string  $message
+     * @param string $message
      * @see     HtmlTextMimePart
      */
     public function setHtmlMessage($message)

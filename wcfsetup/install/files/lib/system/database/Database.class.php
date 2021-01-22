@@ -108,14 +108,14 @@ abstract class Database
     /**
      * Creates a Database Object.
      *
-     * @param   string      $host           SQL database server host address
-     * @param   string      $user           SQL database server username
-     * @param   string      $password       SQL database server password
-     * @param   string      $database       SQL database server database name
-     * @param   int     $port           SQL database server port
-     * @param   bool        $failsafeTest
-     * @param   bool        $tryToCreateDatabase
-     * @param   array       $defaultDriverOptions
+     * @param string $host SQL database server host address
+     * @param string $user SQL database server username
+     * @param string $password SQL database server password
+     * @param string $database SQL database server database name
+     * @param int $port SQL database server port
+     * @param bool $failsafeTest
+     * @param bool $tryToCreateDatabase
+     * @param array $defaultDriverOptions
      */
     public function __construct(
         $host,
@@ -153,8 +153,8 @@ abstract class Database
     /**
      * Returns ID from last insert.
      *
-     * @param   string      $table
-     * @param   string      $field
+     * @param string $table
+     * @param string $field
      * @return  int
      * @throws  DatabaseException
      */
@@ -284,9 +284,9 @@ abstract class Database
     /**
      * Prepares a statement for execution and returns a statement object.
      *
-     * @param   string          $statement
-     * @param   int         $limit
-     * @param   int         $offset
+     * @param string $statement
+     * @param int $limit
+     * @param int $offset
      * @return  PreparedStatement
      * @throws  DatabaseQueryException
      */
@@ -337,9 +337,9 @@ abstract class Database
      * This is a default implementation compatible to MySQL and PostgreSQL.
      * Other database implementations should override this function.
      *
-     * @param   string      $query
-     * @param   int     $limit
-     * @param   int     $offset
+     * @param string $query
+     * @param int $limit
+     * @param int $offset
      * @return  string
      */
     public function handleLimitParameter($query, $limit = 0, $offset = 0)
@@ -400,7 +400,7 @@ abstract class Database
     /**
      * Escapes a string for use in sql query.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      */
     public function escapeString($string)

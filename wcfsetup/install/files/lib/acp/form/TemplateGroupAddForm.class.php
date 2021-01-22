@@ -142,11 +142,13 @@ class TemplateGroupAddForm extends AbstractForm
     {
         parent::save();
 
-        $this->objectAction = new TemplateGroupAction([], 'create', ['data' => \array_merge($this->additionalFields, [
-            'templateGroupName' => $this->templateGroupName,
-            'templateGroupFolderName' => $this->templateGroupFolderName,
-            'parentTemplateGroupID' => $this->parentTemplateGroupID ?: null,
-        ])]);
+        $this->objectAction = new TemplateGroupAction([], 'create', [
+            'data' => \array_merge($this->additionalFields, [
+                'templateGroupName' => $this->templateGroupName,
+                'templateGroupFolderName' => $this->templateGroupFolderName,
+                'parentTemplateGroupID' => $this->parentTemplateGroupID ?: null,
+            ]),
+        ]);
         $returnValues = $this->objectAction->executeAction();
         $this->saved();
 
@@ -157,7 +159,8 @@ class TemplateGroupAddForm extends AbstractForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(TemplateGroupEditForm::class, ['id' => $returnValues['returnValues']->templateGroupID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(TemplateGroupEditForm::class,
+                ['id' => $returnValues['returnValues']->templateGroupID]),
         ]);
     }
 

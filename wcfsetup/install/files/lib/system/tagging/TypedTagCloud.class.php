@@ -24,8 +24,8 @@ class TypedTagCloud extends TagCloud
     /**
      * Constructs a new TypedTagCloud object.
      *
-     * @param   string      $objectType
-     * @param   int[]   $languageIDs
+     * @param string $objectType
+     * @param int[] $languageIDs
      */
     public function __construct($objectType, array $languageIDs = [])
     {

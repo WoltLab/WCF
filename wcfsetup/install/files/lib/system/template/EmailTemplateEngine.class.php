@@ -43,7 +43,7 @@ class EmailTemplateEngine extends TemplateEngine
     /**
      * This method always throws, because changing the template group is not supported.
      *
-     * @param   int     $templateGroupID
+     * @param int $templateGroupID
      * @throws  \BadMethodCallException
      */
     public function setTemplateGroupID($templateGroupID)

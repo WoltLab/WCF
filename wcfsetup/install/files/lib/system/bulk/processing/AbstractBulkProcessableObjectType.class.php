@@ -14,7 +14,8 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Core\System\Bulk\Processing
  * @since   3.0
  */
-abstract class AbstractBulkProcessableObjectType extends AbstractObjectTypeProcessor implements IBulkProcessableObjectType
+abstract class AbstractBulkProcessableObjectType extends AbstractObjectTypeProcessor implements
+    IBulkProcessableObjectType
 {
     /**
      * name of the object type definition for the bulk actions

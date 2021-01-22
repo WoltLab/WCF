@@ -37,7 +37,7 @@ class SignatureCache extends SingletonFactory
     /**
      * Returns a parsed user signature.
      *
-     * @param   User            $user           user object
+     * @param User $user user object
      * @return  string          parsed signature
      */
     public function getSignature(User $user)
@@ -62,7 +62,7 @@ class SignatureCache extends SingletonFactory
     /**
      * Loads the embedded objects for the given users.
      *
-     * @param       int[]       $userIDs
+     * @param int[] $userIDs
      * @since       5.2
      */
     public function cacheUserSignature(array $userIDs)

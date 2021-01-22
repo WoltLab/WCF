@@ -29,8 +29,8 @@ class TextMimePart extends AbstractMimePart
     /**
      * Creates a new Text.
      *
-     * @param   string  $content    Content of this text part.
-     * @param   string  $mimeType   Mime type to provide in the email. You *must* not provide a charset. UTF-8 will be used automatically.
+     * @param string $content Content of this text part.
+     * @param string $mimeType Mime type to provide in the email. You *must* not provide a charset. UTF-8 will be used automatically.
      */
     public function __construct($content, $mimeType)
     {

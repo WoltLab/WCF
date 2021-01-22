@@ -22,20 +22,20 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Core\Data\Article
  * @since   3.0
  *
- * @property-read   int     $articleID      unique id of the article
- * @property-read   int|null    $userID         id of the user the article belongs to or `null` if the user does not exist anymore
- * @property-read   string      $username       name of the user the article belongs to
- * @property-read   int     $time           timestamp at which the comment has been written
- * @property-read   int     $categoryID     id of the category the article belongs to
- * @property-read   int     $isMultilingual     is `1` if the article is available in multiple languages, otherwise `0`
- * @property-read   int     $publicationStatus  publication status of the article (see `Article::UNPUBLISHED`, `Article::PUBLISHED` and `Article::DELAYED_PUBLICATION`)
- * @property-read   int     $publicationDate    timestamp at which the article will be automatically published or `0` if it has already been published
- * @property-read   int     $enableComments     is `1` if comments are enabled for the article, otherwise `0`
- * @property-read   int     $comments       number of comments on the article
- * @property-read   int     $views          number of times the article has been viewed
- * @property-read   int     $cumulativeLikes    cumulative result of likes (counting `+1`) and dislikes (counting `-1`) for the article
- * @property-read   int     $isDeleted      is 1 if the article is in trash bin, otherwise 0
- * @property-read   int     $hasLabels      is `1` if labels are assigned to the article
+ * @property-read   int $articleID      unique id of the article
+ * @property-read   int|null $userID         id of the user the article belongs to or `null` if the user does not exist anymore
+ * @property-read   string $username       name of the user the article belongs to
+ * @property-read   int $time           timestamp at which the comment has been written
+ * @property-read   int $categoryID     id of the category the article belongs to
+ * @property-read   int $isMultilingual     is `1` if the article is available in multiple languages, otherwise `0`
+ * @property-read   int $publicationStatus  publication status of the article (see `Article::UNPUBLISHED`, `Article::PUBLISHED` and `Article::DELAYED_PUBLICATION`)
+ * @property-read   int $publicationDate    timestamp at which the article will be automatically published or `0` if it has already been published
+ * @property-read   int $enableComments     is `1` if comments are enabled for the article, otherwise `0`
+ * @property-read   int $comments       number of comments on the article
+ * @property-read   int $views          number of times the article has been viewed
+ * @property-read   int $cumulativeLikes    cumulative result of likes (counting `+1`) and dislikes (counting `-1`) for the article
+ * @property-read   int $isDeleted      is 1 if the article is in trash bin, otherwise 0
+ * @property-read   int $hasLabels      is `1` if labels are assigned to the article
  */
 class Article extends DatabaseObject implements ILinkableObject, IUserContent
 {
@@ -314,7 +314,7 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent
     /**
      * Sets the discussion provider for this article.
      *
-     * @param       IArticleDiscussionProvider      $discussionProvider
+     * @param IArticleDiscussionProvider $discussionProvider
      * @since       5.2
      */
     public function setDiscussionProvider(IArticleDiscussionProvider $discussionProvider)

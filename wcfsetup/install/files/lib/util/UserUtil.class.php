@@ -17,7 +17,7 @@ final class UserUtil
     /**
      * Returns true if the given name is a valid username.
      *
-     * @param   string      $name
+     * @param string $name
      * @return  bool
      */
     public static function isValidUsername($name)
@@ -49,7 +49,7 @@ final class UserUtil
     /**
      * Returns true if the given username is available.
      *
-     * @param   string      $name
+     * @param string $name
      * @return  bool
      */
     public static function isAvailableUsername($name)
@@ -67,7 +67,7 @@ final class UserUtil
      * Returns true if the given e-mail is a valid address.
      * @see http://www.faqs.org/rfcs/rfc821.html
      *
-     * @param   string      $email
+     * @param string $email
      * @return  bool
      */
     public static function isValidEmail($email)
@@ -94,7 +94,7 @@ final class UserUtil
     /**
      * Returns true if the given email address is available.
      *
-     * @param   string      $email
+     * @param string $email
      * @return  bool
      */
     public static function isAvailableEmail($email)
@@ -163,7 +163,7 @@ final class UserUtil
     /**
      * Converts given ipv4 to ipv6.
      *
-     * @param   string      $ip
+     * @param string $ip
      * @return  string
      */
     public static function convertIPv4To6($ip)
@@ -191,7 +191,7 @@ final class UserUtil
     /**
      * Converts IPv6 embedded IPv4 address into IPv4 or returns input if true IPv6.
      *
-     * @param   string      $ip
+     * @param string $ip
      * @return  string
      */
     public static function convertIPv6To4($ip)

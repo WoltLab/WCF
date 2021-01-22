@@ -74,9 +74,9 @@ class PackageInstallationSQLParser extends SQLParser
     /**
      * Creates a new PackageInstallationSQLParser object.
      *
-     * @param   string      $queries
-     * @param   Package     $package
-     * @param   string      $action
+     * @param string $queries
+     * @param Package $package
+     * @param string $action
      */
     public function __construct($queries, Package $package, $action = 'install')
     {
@@ -212,8 +212,8 @@ class PackageInstallationSQLParser extends SQLParser
     /**
      * Returns the owner of a specific database table column.
      *
-     * @param   string      $tableName
-     * @param   string      $columnName
+     * @param string $tableName
+     * @param string $columnName
      * @return  int     package id
      */
     protected function getColumnOwnerID($tableName, $columnName)
@@ -240,8 +240,8 @@ class PackageInstallationSQLParser extends SQLParser
     /**
      * Returns the owner of a specific database index.
      *
-     * @param   string      $tableName
-     * @param   string      $indexName
+     * @param string $tableName
+     * @param string $indexName
      * @return  int     package id
      */
     protected function getIndexOwnerID($tableName, $indexName)
@@ -286,7 +286,11 @@ class PackageInstallationSQLParser extends SQLParser
             }
         } else {
             // log
-            $this->tableLog[] = ['tableName' => $tableName, 'packageID' => $this->package->packageID, 'action' => 'insert'];
+            $this->tableLog[] = [
+                'tableName' => $tableName,
+                'packageID' => $this->package->packageID,
+                'action' => 'insert',
+            ];
 
             // execute
             parent::executeCreateTableStatement($tableName, $columns, $indices);
@@ -304,7 +308,12 @@ class PackageInstallationSQLParser extends SQLParser
             }
         } else {
             // log
-            $this->columnLog[] = ['tableName' => $tableName, 'columnName' => $columnName, 'packageID' => $this->package->packageID, 'action' => 'insert'];
+            $this->columnLog[] = [
+                'tableName' => $tableName,
+                'columnName' => $columnName,
+                'packageID' => $this->package->packageID,
+                'action' => 'insert',
+            ];
 
             // execute
             parent::executeAddColumnStatement($tableName, $columnName, $columnData);
@@ -325,8 +334,18 @@ class PackageInstallationSQLParser extends SQLParser
         } else {
             // log
             if ($oldColumnName != $newColumnName) {
-                $this->columnLog[] = ['tableName' => $tableName, 'columnName' => $oldColumnName, 'packageID' => $this->package->packageID, 'action' => 'delete'];
-                $this->columnLog[] = ['tableName' => $tableName, 'columnName' => $newColumnName, 'packageID' => $this->package->packageID, 'action' => 'insert'];
+                $this->columnLog[] = [
+                    'tableName' => $tableName,
+                    'columnName' => $oldColumnName,
+                    'packageID' => $this->package->packageID,
+                    'action' => 'delete',
+                ];
+                $this->columnLog[] = [
+                    'tableName' => $tableName,
+                    'columnName' => $newColumnName,
+                    'packageID' => $this->package->packageID,
+                    'action' => 'insert',
+                ];
             }
 
             // execute
@@ -341,7 +360,12 @@ class PackageInstallationSQLParser extends SQLParser
     {
         if (!$this->test) {
             // log
-            $this->indexLog[] = ['tableName' => $tableName, 'indexName' => $indexName, 'packageID' => $this->package->packageID, 'action' => 'insert'];
+            $this->indexLog[] = [
+                'tableName' => $tableName,
+                'indexName' => $indexName,
+                'packageID' => $this->package->packageID,
+                'action' => 'insert',
+            ];
 
             // execute
             parent::executeAddIndexStatement($tableName, $indexName, $indexData);
@@ -355,7 +379,12 @@ class PackageInstallationSQLParser extends SQLParser
     {
         if (!$this->test) {
             // log
-            $this->indexLog[] = ['tableName' => $tableName, 'indexName' => $indexName, 'packageID' => $this->package->packageID, 'action' => 'insert'];
+            $this->indexLog[] = [
+                'tableName' => $tableName,
+                'indexName' => $indexName,
+                'packageID' => $this->package->packageID,
+                'action' => 'insert',
+            ];
 
             // execute
             parent::executeAddForeignKeyStatement($tableName, $indexName, $indexData);
@@ -375,7 +404,12 @@ class PackageInstallationSQLParser extends SQLParser
             }
         } else {
             // log
-            $this->columnLog[] = ['tableName' => $tableName, 'columnName' => $columnName, 'packageID' => $this->package->packageID, 'action' => 'delete'];
+            $this->columnLog[] = [
+                'tableName' => $tableName,
+                'columnName' => $columnName,
+                'packageID' => $this->package->packageID,
+                'action' => 'delete',
+            ];
 
             // execute
             parent::executeDropColumnStatement($tableName, $columnName);
@@ -395,7 +429,12 @@ class PackageInstallationSQLParser extends SQLParser
             }
         } else {
             // log
-            $this->indexLog[] = ['tableName' => $tableName, 'indexName' => $indexName, 'packageID' => $this->package->packageID, 'action' => 'delete'];
+            $this->indexLog[] = [
+                'tableName' => $tableName,
+                'indexName' => $indexName,
+                'packageID' => $this->package->packageID,
+                'action' => 'delete',
+            ];
 
             // execute
             parent::executeDropIndexStatement($tableName, $indexName);
@@ -435,7 +474,12 @@ class PackageInstallationSQLParser extends SQLParser
             }
         } else {
             // log
-            $this->indexLog[] = ['tableName' => $tableName, 'indexName' => $indexName, 'packageID' => $this->package->packageID, 'action' => 'delete'];
+            $this->indexLog[] = [
+                'tableName' => $tableName,
+                'indexName' => $indexName,
+                'packageID' => $this->package->packageID,
+                'action' => 'delete',
+            ];
 
             // execute
             parent::executeDropForeignKeyStatement($tableName, $indexName);
@@ -455,7 +499,11 @@ class PackageInstallationSQLParser extends SQLParser
             }
         } else {
             // log
-            $this->tableLog[] = ['tableName' => $tableName, 'packageID' => $this->package->packageID, 'action' => 'delete'];
+            $this->tableLog[] = [
+                'tableName' => $tableName,
+                'packageID' => $this->package->packageID,
+                'action' => 'delete',
+            ];
 
             // execute
             parent::executeDropTableStatement($tableName);

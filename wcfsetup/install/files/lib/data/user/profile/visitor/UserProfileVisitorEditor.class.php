@@ -12,7 +12,7 @@ use wcf\data\DatabaseObjectEditor;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\User\Profile\Visitor
  *
- * @method static   UserProfileVisitor  create(array $parameters = [])
+ * @method static UserProfileVisitor  create(array $parameters = [])
  * @method      UserProfileVisitor  getDecoratedObject()
  * @mixin       UserProfileVisitor
  */

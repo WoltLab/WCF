@@ -106,8 +106,8 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
     /**
      * Makes the HTML for an option group.
      *
-     * @param   string      $key
-     * @param   array       $values
+     * @param string $key
+     * @param array $values
      * @return  string
      */
     protected function makeOptionGroup($key, $values)
@@ -141,14 +141,15 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
     /**
      * Makes the HTML code for an option.
      *
-     * @param   string      $key
-     * @param   string      $value
+     * @param string $key
+     * @param string $value
      * @return  string
      */
     protected function makeOption($key, $value)
     {
         $value = $this->encodeHTML($value);
 
-        return '<option label="' . $value . '" value="' . $this->encodeHTML($key) . '"' . (\in_array($key, $this->selected) ? ' selected' : '') . '>' . $value . "</option>\n";
+        return '<option label="' . $value . '" value="' . $this->encodeHTML($key) . '"' . (\in_array($key,
+                $this->selected) ? ' selected' : '') . '>' . $value . "</option>\n";
     }
 }

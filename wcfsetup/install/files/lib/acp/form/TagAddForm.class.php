@@ -160,10 +160,12 @@ class TagAddForm extends AbstractForm
         parent::save();
 
         // save tag
-        $this->objectAction = new TagAction([], 'create', ['data' => \array_merge($this->additionalFields, [
-            'name' => $this->name,
-            'languageID' => $this->languageID,
-        ])]);
+        $this->objectAction = new TagAction([], 'create', [
+            'data' => \array_merge($this->additionalFields, [
+                'name' => $this->name,
+                'languageID' => $this->languageID,
+            ]),
+        ]);
         $this->objectAction->executeAction();
         $returnValues = $this->objectAction->getReturnValues();
         $editor = new TagEditor($returnValues['returnValues']);
@@ -176,11 +178,13 @@ class TagAddForm extends AbstractForm
             // find existing tag
             $synonymObj = Tag::getTag($synonym, $this->languageID);
             if ($synonymObj === null) {
-                $synonymAction = new TagAction([], 'create', ['data' => [
-                    'name' => $synonym,
-                    'languageID' => $this->languageID,
-                    'synonymFor' => $editor->tagID,
-                ]]);
+                $synonymAction = new TagAction([], 'create', [
+                    'data' => [
+                        'name' => $synonym,
+                        'languageID' => $this->languageID,
+                        'synonymFor' => $editor->tagID,
+                    ],
+                ]);
                 $synonymAction->executeAction();
             } else {
                 $editor->addSynonym($synonymObj);

@@ -156,8 +156,8 @@ class UserClipboardAction extends AbstractClipboardAction
     /**
      * Validates accessible groups.
      *
-     * @param   int[]   $userIDs
-     * @param   bool        $ignoreOwnUser
+     * @param int[] $userIDs
+     * @param bool $ignoreOwnUser
      * @return  int[]
      */
     protected function __validateAccessibleGroups(array $userIDs, $ignoreOwnUser = true)

@@ -33,9 +33,9 @@ class ACPSearchResult
     /**
      * Creates a new ACP search result.
      *
-     * @param   string      $title
-     * @param   string      $link
-     * @param   string      $subtitle
+     * @param string $title
+     * @param string $link
+     * @param string $subtitle
      */
     public function __construct($title, $link, $subtitle = '')
     {

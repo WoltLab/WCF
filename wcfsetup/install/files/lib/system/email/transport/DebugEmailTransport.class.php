@@ -28,7 +28,7 @@ class DebugEmailTransport implements IEmailTransport
     /**
      * Creates a new DebugTransport using the given mbox as target.
      *
-     * @param   string  $mbox   mbox location or null for default location
+     * @param string $mbox mbox location or null for default location
      */
     public function __construct($mbox = null)
     {
@@ -42,9 +42,9 @@ class DebugEmailTransport implements IEmailTransport
     /**
      * Writes the given $email into the mbox.
      *
-     * @param   Email       $email
-     * @param   Mailbox     $envelopeFrom
-     * @param   Mailbox     $envelopeTo
+     * @param Email $email
+     * @param Mailbox $envelopeFrom
+     * @param Mailbox $envelopeTo
      */
     public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo)
     {

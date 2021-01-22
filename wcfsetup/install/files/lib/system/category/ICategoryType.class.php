@@ -17,14 +17,14 @@ interface ICategoryType
     /**
      * Is called right after the given category is deleted.
      *
-     * @param   CategoryEditor  $categoryEditor
+     * @param CategoryEditor $categoryEditor
      */
     public function afterDeletion(CategoryEditor $categoryEditor);
 
     /**
      * Is called before the given category is deleted.
      *
-     * @param   CategoryEditor  $categoryEditor
+     * @param CategoryEditor $categoryEditor
      * @since   3.1
      */
     public function beforeDeletion(CategoryEditor $categoryEditor);
@@ -65,7 +65,7 @@ interface ICategoryType
      *  ],
      * ]
      *
-     * @param   array       $categoryData
+     * @param array $categoryData
      */
     public function changedParentCategories(array $categoryData);
 
@@ -87,7 +87,7 @@ interface ICategoryType
      * Returns the name of the object type of the definition with the given
      * name for categories of this type or `null` if no such object type exists.
      *
-     * @param   string      $definitionName
+     * @param string $definitionName
      * @return  string|null
      */
     public function getObjectTypeName($definitionName);
@@ -116,8 +116,8 @@ interface ICategoryType
      * a fallback to the default variables (in this example "wcf.category.list")
      * is used.
      *
-     * @param   string      $name
-     * @param   bool        $optional
+     * @param string $name
+     * @param bool $optional
      * @return  string
      */
     public function getLanguageVariable($name, $optional = false);

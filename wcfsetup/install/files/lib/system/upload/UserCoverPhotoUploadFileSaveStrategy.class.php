@@ -42,7 +42,7 @@ class UserCoverPhotoUploadFileSaveStrategy implements IUploadFileSaveStrategy
     /**
      * Creates a new instance of UserCoverPhotoUploadFileSaveStrategy.
      *
-     * @param   int     $userID
+     * @param int $userID
      */
     public function __construct($userID = null)
     {
@@ -75,8 +75,7 @@ class UserCoverPhotoUploadFileSaveStrategy implements IUploadFileSaveStrategy
                     UserCoverPhoto::MAX_WIDTH,
                     UserCoverPhoto::MAX_HEIGHT
                 );
-            }
-            /** @noinspection PhpRedundantCatchClauseInspection */
+            } /** @noinspection PhpRedundantCatchClauseInspection */
             catch (SystemException $e) {
                 $uploadFile->setValidationErrorType('maxSize');
 

@@ -176,16 +176,19 @@ class LabelGroupAddForm extends AbstractForm
         parent::save();
 
         // save label
-        $this->objectAction = new LabelGroupAction([], 'create', ['data' => \array_merge($this->additionalFields, [
-            'forceSelection' => $this->forceSelection ? 1 : 0,
-            'groupName' => $this->groupName,
-            'groupDescription' => $this->groupDescription,
-            'showOrder' => $this->showOrder,
-        ])]);
+        $this->objectAction = new LabelGroupAction([], 'create', [
+            'data' => \array_merge($this->additionalFields, [
+                'forceSelection' => $this->forceSelection ? 1 : 0,
+                'groupName' => $this->groupName,
+                'groupDescription' => $this->groupDescription,
+                'showOrder' => $this->showOrder,
+            ]),
+        ]);
         $returnValues = $this->objectAction->executeAction();
 
         if (!I18nHandler::getInstance()->isPlainValue('groupName')) {
-            I18nHandler::getInstance()->save('groupName', 'wcf.acp.label.group' . $returnValues['returnValues']->groupID, 'wcf.acp.label', 1);
+            I18nHandler::getInstance()->save('groupName',
+                'wcf.acp.label.group' . $returnValues['returnValues']->groupID, 'wcf.acp.label', 1);
 
             // update group name
             $groupEditor = new LabelGroupEditor($returnValues['returnValues']);
@@ -217,7 +220,8 @@ class LabelGroupAddForm extends AbstractForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(LabelGroupEditForm::class, ['id' => $returnValues['returnValues']->groupID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(LabelGroupEditForm::class,
+                ['id' => $returnValues['returnValues']->groupID]),
         ]);
 
         I18nHandler::getInstance()->reset();
@@ -247,7 +251,7 @@ class LabelGroupAddForm extends AbstractForm
     /**
      * Saves label group to object relations.
      *
-     * @param   int     $groupID
+     * @param int $groupID
      */
     protected function saveObjectTypeRelations($groupID)
     {
@@ -290,7 +294,7 @@ class LabelGroupAddForm extends AbstractForm
     /**
      * Sets object type relations.
      *
-     * @param   array|null  $data
+     * @param array|null $data
      */
     protected function setObjectTypeRelations($data = null)
     {

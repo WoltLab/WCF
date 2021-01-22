@@ -185,7 +185,8 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
                             " . ($this->useQualifiedShorthand ? $this->getDatabaseTableAlias() . '.*' : '') . "
                     FROM    " . $this->getDatabaseTableName() . " " . $this->getDatabaseTableAlias() . "
                             " . $this->sqlJoins . "
-                    WHERE   " . $this->getDatabaseTableAlias() . "." . $this->getDatabaseTableIndexName() . " IN (?" . \str_repeat(',?', \count($this->objectIDs) - 1) . ")
+                    WHERE   " . $this->getDatabaseTableAlias() . "." . $this->getDatabaseTableIndexName() . " IN (?" . \str_repeat(',?',
+                    \count($this->objectIDs) - 1) . ")
                             " . (!empty($this->sqlOrderBy) ? "ORDER BY " . $this->sqlOrderBy : '');
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($this->objectIDs);
@@ -235,7 +236,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
     /**
      * Sets the object ids.
      *
-     * @param   int[]   $objectIDs
+     * @param int[] $objectIDs
      */
     public function setObjectIDs(array $objectIDs)
     {
@@ -265,7 +266,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
     /**
      * Sets the condition builder dynamically.
      *
-     * @param   PreparedStatementConditionBuilder $conditionBuilder
+     * @param PreparedStatementConditionBuilder $conditionBuilder
      * @since   5.3
      */
     public function setConditionBuilder(PreparedStatementConditionBuilder $conditionBuilder)

@@ -24,7 +24,12 @@ class PhpHighlighter extends Highlighter
     {
         parent::init();
 
-        $types = ['default' => 'hlKeywords1', 'keyword' => 'hlKeywords2', 'comment' => 'hlComments', 'string' => 'hlQuotes'];
+        $types = [
+            'default' => 'hlKeywords1',
+            'keyword' => 'hlKeywords2',
+            'comment' => 'hlComments',
+            'string' => 'hlQuotes',
+        ];
 
         self::$colorToClass['<span style="color: ' . \ini_get('highlight.html') . '">'] = '<span>';
         foreach ($types as $type => $class) {

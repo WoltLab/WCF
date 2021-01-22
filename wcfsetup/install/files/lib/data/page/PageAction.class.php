@@ -65,7 +65,15 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
     /**
      * @inheritDoc
      */
-    protected $requireACP = ['create', 'delete', 'getSearchResultList', 'resetPosition', 'toggle', 'update', 'updatePosition'];
+    protected $requireACP = [
+        'create',
+        'delete',
+        'getSearchResultList',
+        'resetPosition',
+        'toggle',
+        'update',
+        'updatePosition',
+    ];
 
     /**
      * @inheritDoc
@@ -117,7 +125,8 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
                         $pageContentEditor->update(['hasEmbeddedObjects' => 1]);
                     }
                 } elseif ($page->pageType == 'html' || $page->pageType == 'tpl') {
-                    HtmlSimpleParser::getInstance()->parse('com.woltlab.wcf.page.content', $pageContent->pageContentID, $pageContent->content);
+                    HtmlSimpleParser::getInstance()->parse('com.woltlab.wcf.page.content', $pageContent->pageContentID,
+                        $pageContent->content);
                 }
             }
         }
@@ -229,7 +238,8 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
                             $pageContentEditor->update(['hasEmbeddedObjects' => $pageContent->hasEmbeddedObjects ? 0 : 1]);
                         }
                     } elseif ($page->pageType == 'html' || $page->pageType == 'tpl') {
-                        HtmlSimpleParser::getInstance()->parse('com.woltlab.wcf.page.content', $pageContent->pageContentID, $pageContent->content);
+                        HtmlSimpleParser::getInstance()->parse('com.woltlab.wcf.page.content',
+                            $pageContent->pageContentID, $pageContent->content);
                     }
                 }
 

@@ -58,7 +58,7 @@ class I18nValue
     /**
      * I18nValue constructor.
      *
-     * @param       string          $fieldName
+     * @param string $fieldName
      */
     public function __construct($fieldName)
     {
@@ -68,9 +68,9 @@ class I18nValue
     /**
      * Sets the language item configuration.
      *
-     * @param       string          $item
-     * @param       string          $category
-     * @param       string          $package
+     * @param string $item
+     * @param string $category
+     * @param string $package
      */
     public function setLanguageItem($item, $category, $package)
     {
@@ -82,7 +82,7 @@ class I18nValue
     /**
      * Sets bit flags.
      *
-     * @param       int         $flags
+     * @param int $flags
      */
     public function setFlags($flags)
     {
@@ -92,7 +92,7 @@ class I18nValue
     /**
      * Returns true if given flag is set.
      *
-     * @param       int         $flag
+     * @param int $flag
      * @return      bool
      */
     public function getFlag($flag)

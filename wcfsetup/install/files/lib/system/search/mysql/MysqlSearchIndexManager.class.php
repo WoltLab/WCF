@@ -126,7 +126,10 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager
             ['name' => 'metaData', 'data' => ['type' => 'mediumtext']],
             ['name' => 'time', 'data' => ['default' => 0, 'length' => 10, 'notNull' => true, 'type' => 'int']],
             ['name' => 'userID', 'data' => ['default' => '', 'length' => 10, 'type' => 'int']],
-            ['name' => 'username', 'data' => ['default' => '', 'length' => 255, 'notNull' => true, 'type' => 'varchar']],
+            [
+                'name' => 'username',
+                'data' => ['default' => '', 'length' => 255, 'notNull' => true, 'type' => 'varchar'],
+            ],
             ['name' => 'languageID', 'data' => ['default' => 0, 'length' => 10, 'notNull' => true, 'type' => 'int']],
         ];
 

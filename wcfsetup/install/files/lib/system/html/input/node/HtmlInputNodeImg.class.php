@@ -93,8 +93,8 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
     /**
      * Replaces image element with attachment metacode element.
      *
-     * @param   \DOMElement $element
-     * @param   string      $class
+     * @param \DOMElement $element
+     * @param string $class
      */
     protected function handleAttachment(\DOMElement $element, $class)
     {
@@ -129,8 +129,8 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
     /**
      * Replaces image element with media metacode element.
      *
-     * @param   \DOMElement $element
-     * @param   string      $class
+     * @param \DOMElement $element
+     * @param string $class
      */
     protected function handleMedium(\DOMElement $element, $class)
     {
@@ -142,7 +142,8 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
         $float = 'none';
         $thumbnail = 'original';
 
-        if (\preg_match('~thumbnail=(?P<thumbnail>tiny|small|large|medium)\b~', $element->getAttribute('src'), $matches)) {
+        if (\preg_match('~thumbnail=(?P<thumbnail>tiny|small|large|medium)\b~', $element->getAttribute('src'),
+            $matches)) {
             $thumbnail = $matches['thumbnail'];
         }
 
@@ -203,7 +204,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode
     /**
      * Replaces image element with smiley metacode element.
      *
-     * @param   \DOMElement $element
+     * @param \DOMElement $element
      */
     protected function handleSmiley(\DOMElement $element)
     {

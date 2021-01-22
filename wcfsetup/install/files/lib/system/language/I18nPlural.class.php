@@ -33,8 +33,8 @@ class I18nPlural
     /**
      * Returns the plural category for the given value.
      *
-     * @param       number         $value
-     * @param       string         $languageCode
+     * @param number $value
+     * @param string $languageCode
      * @return      string
      */
     public static function getCategory($value, $languageCode = null)
@@ -58,7 +58,7 @@ class I18nPlural
     /**
      * `f` is the fractional number as a whole number (1.234 yields 234)
      *
-     * @param       number          $n
+     * @param number $n
      * @return      int
      */
     private static function getF($n)
@@ -75,7 +75,7 @@ class I18nPlural
     /**
      * `v` represents the number of digits of the fractional part (1.234 yields 3)
      *
-     * @param       number          $n
+     * @param number $n
      * @return      int
      */
     private static function getV($n)

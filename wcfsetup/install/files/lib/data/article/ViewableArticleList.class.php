@@ -21,7 +21,7 @@ use wcf\system\WCF;
  * @method  ViewableArticle     current()
  * @method  ViewableArticle[]   getObjects()
  * @method  ViewableArticle|null    search($objectID)
- * @property    ViewableArticle[]   $objects
+ * @property    ViewableArticle[] $objects
  */
 class ViewableArticleList extends ArticleList
 {
@@ -85,7 +85,8 @@ class ViewableArticleList extends ArticleList
         if ($this->contentLoading && !empty($this->objectIDs)) {
             $contentList = new ViewableArticleContentList();
             $contentList->getConditionBuilder()->add('article_content.articleID IN (?)', [$this->objectIDs]);
-            $contentList->getConditionBuilder()->add('(article_content.languageID IS NULL OR article_content.languageID = ?)', [WCF::getLanguage()->languageID]);
+            $contentList->getConditionBuilder()->add('(article_content.languageID IS NULL OR article_content.languageID = ?)',
+                [WCF::getLanguage()->languageID]);
             $contentList->readObjects();
             foreach ($contentList as $articleContent) {
                 $article = $this->objects[$articleContent->articleID];
@@ -111,7 +112,7 @@ class ViewableArticleList extends ArticleList
     /**
      * Enables/disables the loading of article content objects.
      *
-     * @param   bool        $enable
+     * @param bool $enable
      */
     public function enableContentLoading($enable = true)
     {

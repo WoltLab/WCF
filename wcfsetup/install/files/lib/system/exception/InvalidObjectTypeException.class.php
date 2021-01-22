@@ -17,8 +17,8 @@ class InvalidObjectTypeException extends \UnexpectedValueException
     /**
      * InvalidObjectTypeException constructor.
      *
-     * @param   string      $objectType     invalid object type name
-     * @param   string      $definitionName     name of the required object type definition
+     * @param string $objectType invalid object type name
+     * @param string $definitionName name of the required object type definition
      */
     public function __construct($objectType, $definitionName)
     {

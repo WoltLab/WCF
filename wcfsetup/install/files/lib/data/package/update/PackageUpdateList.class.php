@@ -16,7 +16,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  * @method  PackageUpdate       current()
  * @method  PackageUpdate[]     getObjects()
  * @method  PackageUpdate|null  search($objectID)
- * @property    PackageUpdate[]     $objects
+ * @property    PackageUpdate[] $objects
  */
 class PackageUpdateList extends DatabaseObjectList
 {

@@ -64,8 +64,8 @@ class FileReader
     /**
      * Creates a new instance of the HTTPFileReader class.
      *
-     * @param   string      $location
-     * @param   array       $options
+     * @param string $location
+     * @param array $options
      * @throws  SystemException
      */
     public function __construct($location, array $options)
@@ -171,8 +171,8 @@ class FileReader
             $this->addHeader(
                 'Content-disposition',
                 ($this->options['showInline'] ? 'inline' : 'attachment') . '; '
-                    . 'filename="' . \rawurlencode($asciiFilename) . '"; '
-                    . "filename*=UTF-8''" . \rawurlencode($filename)
+                . 'filename="' . \rawurlencode($asciiFilename) . '"; '
+                . "filename*=UTF-8''" . \rawurlencode($filename)
             );
 
             // range
@@ -211,7 +211,7 @@ class FileReader
     /**
      * Returns an ASCII filename for the given filename.
      *
-     * @param   string  $filename
+     * @param string $filename
      * @return  string
      */
     protected function getAsciiFilename($filename)
@@ -230,7 +230,7 @@ class FileReader
      * Sanitizes the given filename, removing special characters that will
      * cause issues on Windows.
      *
-     * @param   string  $filename
+     * @param string $filename
      * @return  string
      */
     protected function sanitizeFilename($filename)
@@ -280,7 +280,7 @@ class FileReader
     /**
      * Sets the options for the http response.
      *
-     * @param   array       $options
+     * @param array $options
      */
     public function setOptions(array $options)
     {
@@ -294,8 +294,8 @@ class FileReader
     /**
      * Adds the header with the given name and value.
      *
-     * @param   string      $name
-     * @param   string      $value
+     * @param string $name
+     * @param string $value
      */
     public function addHeader($name, $value)
     {
@@ -305,7 +305,7 @@ class FileReader
     /**
      * Removes the header with the given name.
      *
-     * @param   string      $name
+     * @param string $name
      */
     public function removeHeader($name)
     {

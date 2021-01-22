@@ -94,8 +94,8 @@ class StyleHandler extends SingletonFactory
     /**
      * Changes the active style.
      *
-     * @param   int     $styleID
-     * @param   bool        $ignorePermissions
+     * @param int $styleID
+     * @param bool $ignorePermissions
      * @throws  SystemException
      */
     public function changeStyle($styleID = 0, $ignorePermissions = false)
@@ -134,7 +134,7 @@ class StyleHandler extends SingletonFactory
     /**
      * Returns the HTML tag to include current stylesheet.
      *
-     * @param   bool        $isACP      indicates if the request is an acp request
+     * @param bool $isACP indicates if the request is an acp request
      * @return  string
      */
     public function getStylesheet($isACP = false)
@@ -159,7 +159,7 @@ class StyleHandler extends SingletonFactory
     /**
      * Resets stylesheet for given style.
      *
-     * @param   Style   $style
+     * @param Style $style
      */
     public function resetStylesheet(Style $style)
     {
@@ -184,7 +184,7 @@ class StyleHandler extends SingletonFactory
     /**
      * Resets all stylesheets.
      *
-     * @param       bool         $resetACP
+     * @param bool $resetACP
      */
     public static function resetStylesheets($resetACP = true)
     {
@@ -210,8 +210,8 @@ class StyleHandler extends SingletonFactory
     /**
      * Returns a style by package name, optionally filtering tainted styles.
      *
-     * @param   string      $packageName    style package name
-     * @param   bool        $skipTainted    ignore tainted styles
+     * @param string $packageName style package name
+     * @param bool $skipTainted ignore tainted styles
      * @return  StyleEditor|null
      * @since   3.0
      */
@@ -240,7 +240,7 @@ class StyleHandler extends SingletonFactory
      * Returns the list of FontAwesome icons excluding the `fa-`-prefix,
      * optionally encoding the list as JSON.
      *
-     * @param       bool         $toJSON         encode array as a JSON string
+     * @param bool $toJSON encode array as a JSON string
      * @return      string|\string[]        JSON string or PHP array of strings
      */
     public function getIcons($toJSON = false)

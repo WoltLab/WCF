@@ -74,11 +74,11 @@ class UploadFile
     /**
      * UploadFile constructor.
      *
-     * @param       string          $location
-     * @param       string          $filename
-     * @param       bool         $viewableImage
-     * @param       bool         $processed
-     * @param       bool         $detectSvgAsImage
+     * @param string $location
+     * @param string $filename
+     * @param bool $viewableImage
+     * @param bool $processed
+     * @param bool $detectSvgAsImage
      */
     public function __construct(
         $location,
@@ -101,9 +101,9 @@ class UploadFile
 
         if (
             @\getimagesize($location) !== false || ($detectSvgAsImage && \in_array(FileUtil::getMimeType($location), [
-                'image/svg',
-                'image/svg+xml',
-            ]))
+                    'image/svg',
+                    'image/svg+xml',
+                ]))
         ) {
             $this->isImage = true;
         }
@@ -191,7 +191,7 @@ class UploadFile
      * Sets the new location of the file, after it is processed and
      * sets the `processed` attribute to true.
      *
-     * @param       string        $newLocation
+     * @param string $newLocation
      */
     public function setProcessed($newLocation)
     {
@@ -206,7 +206,7 @@ class UploadFile
     /**
      * Sets the new image link of the file for processed files.
      *
-     * @param       string        $link
+     * @param string $link
      */
     public function setImageLink($link)
     {

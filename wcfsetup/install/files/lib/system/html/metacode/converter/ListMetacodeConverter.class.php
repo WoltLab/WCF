@@ -182,7 +182,7 @@ class ListMetacodeConverter extends AbstractMetacodeConverter
      * Returns true if provided node is within another list, prevents issues
      * with nested lists handled in the wrong order.
      *
-     * @param       \DOMNode        $node           target node
+     * @param \DOMNode $node target node
      * @return      bool         true if provided node is within another list
      */
     protected function isInsideList(\DOMNode $node)

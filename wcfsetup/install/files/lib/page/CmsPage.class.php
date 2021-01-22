@@ -104,11 +104,13 @@ class CmsPage extends AbstractPage
         parent::readData();
 
         // add meta/og tags
-        MetaTagHandler::getInstance()->addTag('og:title', 'og:title', $this->content->title . ' - ' . WCF::getLanguage()->get(PAGE_TITLE), true);
+        MetaTagHandler::getInstance()->addTag('og:title', 'og:title',
+            $this->content->title . ' - ' . WCF::getLanguage()->get(PAGE_TITLE), true);
         MetaTagHandler::getInstance()->addTag('og:url', 'og:url', $this->canonicalURL, true);
         MetaTagHandler::getInstance()->addTag('og:type', 'og:type', 'website', true);
         if ($this->content->metaDescription) {
-            MetaTagHandler::getInstance()->addTag('og:description', 'og:description', $this->content->metaDescription, true);
+            MetaTagHandler::getInstance()->addTag('og:description', 'og:description', $this->content->metaDescription,
+                true);
         }
     }
 

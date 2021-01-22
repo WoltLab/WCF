@@ -254,18 +254,20 @@ class MenuItemAddForm extends AbstractForm
     {
         parent::save();
 
-        $this->objectAction = new MenuItemAction([], 'create', ['data' => \array_merge($this->additionalFields, [
-            'isDisabled' => $this->isDisabled ? 1 : 0,
-            'title' => $this->title,
-            'pageID' => $this->pageID,
-            'pageObjectID' => $this->pageObjectID ?: 0,
-            'externalURL' => $this->externalURL,
-            'menuID' => $this->menuID,
-            'parentItemID' => $this->parentItemID,
-            'showOrder' => $this->showOrder,
-            'identifier' => StringUtil::getRandomID(),
-            'packageID' => 1,
-        ])]);
+        $this->objectAction = new MenuItemAction([], 'create', [
+            'data' => \array_merge($this->additionalFields, [
+                'isDisabled' => $this->isDisabled ? 1 : 0,
+                'title' => $this->title,
+                'pageID' => $this->pageID,
+                'pageObjectID' => $this->pageObjectID ?: 0,
+                'externalURL' => $this->externalURL,
+                'menuID' => $this->menuID,
+                'parentItemID' => $this->parentItemID,
+                'showOrder' => $this->showOrder,
+                'identifier' => StringUtil::getRandomID(),
+                'packageID' => 1,
+            ]),
+        ]);
         $this->objectAction->executeAction();
 
         $returnValues = $this->objectAction->getReturnValues();
@@ -280,7 +282,8 @@ class MenuItemAddForm extends AbstractForm
             $data['title'] = 'wcf.menu.item.' . $data['identifier'];
         }
         if (!I18nHandler::getInstance()->isPlainValue('externalURL')) {
-            I18nHandler::getInstance()->save('externalURL', 'wcf.menu.item.externalURL' . $menuItem->itemID, 'wcf.menu');
+            I18nHandler::getInstance()->save('externalURL', 'wcf.menu.item.externalURL' . $menuItem->itemID,
+                'wcf.menu');
             $data['externalURL'] = 'wcf.menu.item.externalURL' . $menuItem->itemID;
         }
 
@@ -294,7 +297,8 @@ class MenuItemAddForm extends AbstractForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(MenuItemEditForm::class, ['id' => $menuItem->itemID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(MenuItemEditForm::class,
+                ['id' => $menuItem->itemID]),
         ]);
 
         // reset variables

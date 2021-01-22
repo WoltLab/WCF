@@ -16,7 +16,7 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Core\System\Box
  * @since   3.0
  *
- * @property    UsersOnlineList         $objectList
+ * @property    UsersOnlineList $objectList
  */
 class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxController
 {
@@ -84,7 +84,8 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
             $templateName = 'boxUsersOnline';
         }
 
-        return WCF::getTPL()->fetch($templateName, 'wcf', ['usersOnlineList' => $this->objectList, '__showRecord' => $this->showRecord], true);
+        return WCF::getTPL()->fetch($templateName, 'wcf',
+            ['usersOnlineList' => $this->objectList, '__showRecord' => $this->showRecord], true);
     }
 
     /**

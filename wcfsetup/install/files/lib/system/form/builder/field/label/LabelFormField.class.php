@@ -86,7 +86,7 @@ class LabelFormField extends AbstractFormField implements IObjectTypeFormNode
      *
      * If no form field label has been set, the title of the label group will be set as label.
      *
-     * @param   ViewableLabelGroup  $labelGroup label group whose labels can be selected
+     * @param ViewableLabelGroup $labelGroup label group whose labels can be selected
      * @return  static                  this form field
      */
     public function labelGroup(ViewableLabelGroup $labelGroup)
@@ -194,9 +194,9 @@ class LabelFormField extends AbstractFormField implements IObjectTypeFormNode
      *
      * The id of each form fields is `{$objectProperty}{$labelGroupID}`.
      *
-     * @param   string          $objectType     `com.woltlab.wcf.label.object` object type
-     * @param   ViewableLabelGroup[]    $labelGroups        label groups for which label form fields are created
-     * @param   string          $objectProperty     object property of form fields
+     * @param string $objectType `com.woltlab.wcf.label.object` object type
+     * @param ViewableLabelGroup[] $labelGroups label groups for which label form fields are created
+     * @param string $objectProperty object property of form fields
      * @return  static[]
      */
     public static function createFields($objectType, array $labelGroups, $objectProperty = 'labelIDs')

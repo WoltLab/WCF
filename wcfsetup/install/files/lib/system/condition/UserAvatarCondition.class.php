@@ -85,15 +85,15 @@ class UserAvatarCondition extends AbstractSelectCondition implements
         switch ($condition->userAvatar) {
             case self::NO_AVATAR:
                 return !$user->avatarID && !$user->enableGravatar;
-            break;
+                break;
 
             case self::AVATAR:
                 return $user->avatarID != 0;
-            break;
+                break;
 
             case self::GRAVATAR:
                 return $user->enableGravatar;
-            break;
+                break;
         }
     }
 

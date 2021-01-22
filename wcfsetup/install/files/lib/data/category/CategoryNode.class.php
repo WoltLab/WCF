@@ -29,7 +29,7 @@ class CategoryNode extends DatabaseObjectDecorator implements IObjectTreeNode
     /**
      * Returns true if this category is visible in a nested menu item list.
      *
-     * @param       AbstractDecoratedCategory        $activeCategory
+     * @param AbstractDecoratedCategory $activeCategory
      * @return  bool
      * @since       5.2
      */

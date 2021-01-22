@@ -122,7 +122,7 @@ trait TMultiCategoryObject
     /**
      * Sets a category id.
      *
-     * @param   int     $categoryID
+     * @param int $categoryID
      */
     public function setCategoryID($categoryID)
     {
@@ -132,7 +132,7 @@ trait TMultiCategoryObject
     /**
      * Sets a category ids.
      *
-     * @param   int[]   $categoryIDs
+     * @param int[] $categoryIDs
      */
     public function setCategoryIDs(array $categoryIDs)
     {

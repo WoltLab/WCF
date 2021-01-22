@@ -107,7 +107,7 @@ class RouteHandler extends SingletonFactory
     /**
      * Adds a new route to the beginning of all routes.
      *
-     * @param   IRequestRoute   $route
+     * @param IRequestRoute $route
      */
     public function addRoute(IRequestRoute $route)
     {
@@ -203,9 +203,9 @@ class RouteHandler extends SingletonFactory
      * Builds a route based upon route components, this is nothing
      * but a reverse lookup.
      *
-     * @param   string      $application    application identifier
-     * @param   array       $components
-     * @param   bool        $isACP
+     * @param string $application application identifier
+     * @param array $components
+     * @param bool $isACP
      * @return  string
      * @throws  SystemException
      */
@@ -240,7 +240,7 @@ class RouteHandler extends SingletonFactory
      * This heavily limits the abilities for end-users to define appealing urls, but at
      * the same time this ensures a sufficient level of stability.
      *
-     * @param   string  $customUrl  url to perform sanity checks on
+     * @param string $customUrl url to perform sanity checks on
      * @return  bool    true if `$customUrl` passes the sanity check
      * @since   3.0
      */
@@ -302,7 +302,7 @@ class RouteHandler extends SingletonFactory
     /**
      * Returns absolute domain path.
      *
-     * @param   array       $removeComponents
+     * @param array $removeComponents
      * @return  string
      */
     public static function getPath(array $removeComponents = [])
@@ -370,7 +370,8 @@ class RouteHandler extends SingletonFactory
                 );
                 $parts = \array_map('strtolower', $parts);
 
-                self::$pathInfo = \implode('-', $parts) . \mb_substr(self::$pathInfo, \mb_strlen($matches['controller']));
+                self::$pathInfo = \implode('-', $parts) . \mb_substr(self::$pathInfo,
+                        \mb_strlen($matches['controller']));
             }
         }
 
@@ -380,7 +381,7 @@ class RouteHandler extends SingletonFactory
     /**
      * Returns the default controller name for given application.
      *
-     * @param   string      $application
+     * @param string $application
      * @return  string
      */
     public function getDefaultController($application)

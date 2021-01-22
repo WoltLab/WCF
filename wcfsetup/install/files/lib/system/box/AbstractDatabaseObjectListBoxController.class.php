@@ -145,8 +145,8 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
     /**
      * Adds fields to the given PIP GUI form to create a box for this controller.
      *
-     * @param   IFormDocument   $form
-     * @param   string      $objectType
+     * @param IFormDocument $form
+     * @param string $objectType
      * @since   5.2
      */
     public function addPipGuiFormFields(IFormDocument $form, $objectType)
@@ -210,8 +210,8 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
     /**
      * Returns additional element data for the given DOM element.
      *
-     * @param   \DOMElement $element
-     * @param   bool        $saveData
+     * @param \DOMElement $element
+     * @param bool $saveData
      * @return  array
      * @since   5.2
      */
@@ -394,8 +394,8 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
      * Sets the box the controller object belongs to and populates the condition object types
      * with the box conditions.
      *
-     * @param   Box     $box            box object
-     * @param   bool        $setConditionData   if true, the condition object types are populated with the box conditions' data
+     * @param Box $box box object
+     * @param bool $setConditionData if true, the condition object types are populated with the box conditions' data
      */
     public function setBox(Box $box, $setConditionData = true)
     {
@@ -455,8 +455,8 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
     }
 
     /**
-     * @param   \DOMElement $element
-     * @param   IFormDocument   $form
+     * @param \DOMElement $element
+     * @param IFormDocument $form
      * @since   5.2
      */
     public function writePipGuiEntry(\DOMElement $element, IFormDocument $form)

@@ -33,10 +33,10 @@ class SystemException extends LoggedException
     /**
      * Creates a new SystemException.
      *
-     * @param   string      $message    error message
-     * @param   int     $code       error code
-     * @param   string      $description    description of the error
-     * @param   \Exception  $previous   repacked Exception
+     * @param string $message error message
+     * @param int $code error code
+     * @param string $description description of the error
+     * @param \Exception $previous repacked Exception
      */
     public function __construct($message = '', $code = 0, $description = '', ?\Exception $previous = null)
     {

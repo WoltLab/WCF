@@ -18,10 +18,10 @@ interface IParameterizedEventListener
     /**
      * Executes this action.
      *
-     * @param   mixed       $eventObj   Object firing the event
-     * @param   string      $className  class name of $eventObj
-     * @param   string      $eventName  name of the event fired
-     * @param   array       &$parameters    given parameters
+     * @param mixed $eventObj Object firing the event
+     * @param string $className class name of $eventObj
+     * @param string $eventName name of the event fired
+     * @param array       &$parameters given parameters
      */
     public function execute($eventObj, $className, $eventName, array &$parameters);
 }

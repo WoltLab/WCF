@@ -155,7 +155,7 @@ class UploadFormField extends AbstractFormField
     /**
      * Returns the removed files for the field.
      *
-     * @param       bool    $processFiles
+     * @param bool $processFiles
      * @return      UploadFile[]
      * @throws      \BadMethodCallException         if the method is called, before the field is populated
      */
@@ -312,7 +312,10 @@ class UploadFormField extends AbstractFormField
         if ($loadValues) {
             // first check, whether an getter for the field exists
             if (\method_exists($object, 'get' . \ucfirst($this->getObjectProperty()) . 'UploadFileLocations')) {
-                $value = \call_user_func([$object, 'get' . \ucfirst($this->getObjectProperty()) . 'UploadFileLocations']);
+                $value = \call_user_func([
+                    $object,
+                    'get' . \ucfirst($this->getObjectProperty()) . 'UploadFileLocations',
+                ]);
                 $method = "method '" . \get_class($object) . "::get" . \ucfirst($this->getObjectProperty()) . "UploadFileLocations()'";
             } elseif (\method_exists($object, 'get' . \ucfirst($this->getObjectProperty()))) {
                 $value = \call_user_func([$object, 'get' . \ucfirst($this->getObjectProperty())]);
@@ -353,7 +356,7 @@ class UploadFormField extends AbstractFormField
     /**
      * @inheritDoc
      *
-     * @param       UploadFile[]    $value
+     * @param UploadFile[] $value
      *
      * @throws      \InvalidArgumentException       if the value is not an array
      * @throws      \InvalidArgumentException       if the value contains objects, which are not an instance of UploadFile
@@ -449,7 +452,7 @@ class UploadFormField extends AbstractFormField
      * Sets the maximum filesize for each upload. If `null` is passed, the
      * maximum filesize is removed.
      *
-     * @param   null|number $maximumFilesize            maximum filesize
+     * @param null|number $maximumFilesize maximum filesize
      * @return  static                      this field
      *
      * @throws  \InvalidArgumentException   if the given maximum filesize is no number or otherwise invalid
@@ -484,7 +487,7 @@ class UploadFormField extends AbstractFormField
      * Sets the minimum image width for each uploaded file. If `null` is passed, the
      * minimum image width is removed.
      *
-     * @param   null|number $minimumImageWidth      the mimimum image width
+     * @param null|number $minimumImageWidth the mimimum image width
      * @return  static                     this field
      *
      * @throws  \InvalidArgumentException   if the given mimimum image width is no number or otherwise invalid
@@ -529,7 +532,7 @@ class UploadFormField extends AbstractFormField
      * Sets the maximum image width for each uploaded file. If `null` is passed, the
      * maximum image width is removed.
      *
-     * @param   null|number $maximumImageWidth      the maximum image width
+     * @param null|number $maximumImageWidth the maximum image width
      * @return  static                     this field
      *
      * @throws  \InvalidArgumentException   if the given mimimum image width is no number or otherwise invalid
@@ -574,7 +577,7 @@ class UploadFormField extends AbstractFormField
      * Sets the minimum image height for each uploaded file. If `null` is passed, the
      * minimum image height is removed.
      *
-     * @param   null|number $minimumImageHeight      the mimimum image height
+     * @param null|number $minimumImageHeight the mimimum image height
      * @return  static                      this field
      *
      * @throws  \InvalidArgumentException   if the given mimimum image height is no number or otherwise invalid
@@ -619,7 +622,7 @@ class UploadFormField extends AbstractFormField
      * Sets the maximum image height for each uploaded file. If `null` is passed, the
      * maximum image height is removed.
      *
-     * @param   null|number $maximumImageHeight     the maximum image height
+     * @param null|number $maximumImageHeight the maximum image height
      * @return  static                     this field
      *
      * @throws  \InvalidArgumentException   if the given mimimum image height is no number or otherwise invalid
@@ -667,7 +670,7 @@ class UploadFormField extends AbstractFormField
      * If set to `true` will also set the acceptable types to `image/*`. If set to
      * false it will clear the acceptable types if they are `image/*`.
      *
-     * @param   bool            $imageOnly
+     * @param bool $imageOnly
      * @return  static              this field
      *
      * @throws       \InvalidArgumentException         if the field is not set to images only and a minimum/maximum width/height is set
@@ -723,7 +726,7 @@ class UploadFormField extends AbstractFormField
      * <strong>Heads up:</strong> SVG images can contain bad code, therefore do not
      * use this option, outside the acp or check the file whether remote code is contained.
      *
-     * @param   bool            $allowSvgImages
+     * @param bool $allowSvgImages
      * @return  static              this field
      *
      * @throws      \BadMethodCallException         if the imageOnly flag isn't set to true
@@ -776,7 +779,7 @@ class UploadFormField extends AbstractFormField
      * - `video/*`
      *
      * @see         https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#Unique_file_type_specifiers
-     * @param       string[]|null     $acceptableFiles
+     * @param string[]|null $acceptableFiles
      * @since       5.3
      */
     public function setAcceptableFiles($acceptableFiles = null)

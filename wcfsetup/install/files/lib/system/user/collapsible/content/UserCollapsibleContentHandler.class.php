@@ -51,8 +51,8 @@ class UserCollapsibleContentHandler extends SingletonFactory
     /**
      * Returns true if given object is collapsed.
      *
-     * @param   string      $objectType
-     * @param   string      $objectID
+     * @param string $objectType
+     * @param string $objectID
      * @return  bool
      * @throws  InvalidObjectTypeException
      */
@@ -70,7 +70,7 @@ class UserCollapsibleContentHandler extends SingletonFactory
      * Returns the object type id based upon specified object type name. Returns
      * null, if object type is unknown.
      *
-     * @param   string      $objectType
+     * @param string $objectType
      * @return  int
      */
     public function getObjectTypeID($objectType)
@@ -83,7 +83,7 @@ class UserCollapsibleContentHandler extends SingletonFactory
     /**
      * Returns a list of object ids being collapsed by current user.
      *
-     * @param   int     $objectTypeID
+     * @param int $objectTypeID
      * @return  int[]
      */
     public function getCollapsedContent($objectTypeID)
@@ -132,8 +132,8 @@ class UserCollapsibleContentHandler extends SingletonFactory
     /**
      * Marks content as collapsed.
      *
-     * @param   int     $objectTypeID
-     * @param   string      $objectID
+     * @param int $objectTypeID
+     * @param string $objectID
      */
     public function markAsCollapsed($objectTypeID, $objectID)
     {
@@ -183,8 +183,8 @@ class UserCollapsibleContentHandler extends SingletonFactory
     /**
      * Marks content as opened, thus removing the collapsed marking.
      *
-     * @param   int     $objectTypeID
-     * @param   string      $objectID
+     * @param int $objectTypeID
+     * @param string $objectID
      */
     public function markAsOpened($objectTypeID, $objectID)
     {
@@ -223,7 +223,7 @@ class UserCollapsibleContentHandler extends SingletonFactory
     /**
      * Deletes all saved states for a specific object type.
      *
-     * @param   int     $objectTypeID
+     * @param int $objectTypeID
      */
     public function reset($objectTypeID)
     {
@@ -257,8 +257,8 @@ class UserCollapsibleContentHandler extends SingletonFactory
      * Deletes the saved states for a specific object or all objects of a
      * specific object type for all users.
      *
-     * @param   string      $objectType
-     * @param   int     $objectID
+     * @param string $objectType
+     * @param int $objectID
      * @throws  InvalidObjectTypeException
      */
     public function resetAll($objectType, $objectID = null)

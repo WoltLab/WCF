@@ -12,7 +12,7 @@ use wcf\data\DatabaseObjectEditor;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Core\Object
  *
- * @method static   CoreObject  create(array $parameters = [])
+ * @method static CoreObject  create(array $parameters = [])
  * @method      CoreObject  getDecoratedObject()
  * @mixin       CoreObject
  */

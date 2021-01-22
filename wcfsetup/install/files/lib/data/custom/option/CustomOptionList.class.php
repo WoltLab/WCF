@@ -16,7 +16,7 @@ use wcf\data\DatabaseObjectList;
  * @method  CustomOption        current()
  * @method  CustomOption[]      getObjects()
  * @method  CustomOption|null   search($objectID)
- * @property    CustomOption[]      $objects
+ * @property    CustomOption[] $objects
  */
 abstract class CustomOptionList extends DatabaseObjectList
 {

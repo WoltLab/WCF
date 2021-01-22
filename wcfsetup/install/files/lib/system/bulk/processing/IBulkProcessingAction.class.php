@@ -19,7 +19,7 @@ interface IBulkProcessingAction
      * Executes the bulk processing action on all objects in the given object
      * list.
      *
-     * @param   DatabaseObjectList  $objectList
+     * @param DatabaseObjectList $objectList
      * @throws  \InvalidArgumentException   if given object list cannot be handled by the action
      */
     public function executeAction(DatabaseObjectList $objectList);

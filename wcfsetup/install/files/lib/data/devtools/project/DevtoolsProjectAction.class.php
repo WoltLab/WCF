@@ -129,7 +129,13 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction
         $projectCount = 0;
 
         $directoryUtil = DirectoryUtil::getInstance($path, false);
-        $directoryUtil->executeCallback(static function ($directory) use ($path, $projectNames, $projectPaths, &$projectCount) {
+        $directoryUtil->executeCallback(static function ($directory) use (
+            $path,
+            $projectNames,
+            $projectPaths,
+            &
+            $projectCount
+        ) {
             $projectPath = $path . $directory . '/';
 
             // validate path
@@ -150,10 +156,12 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction
                 $name = $directory . ' (' . ($iteration++) . ')';
             }
 
-            (new self([], 'create', ['data' => [
-                'name' => $name,
-                'path' => $projectPath,
-            ]]))->executeAction();
+            (new self([], 'create', [
+                'data' => [
+                    'name' => $name,
+                    'path' => $projectPath,
+                ],
+            ]))->executeAction();
 
             $projectCount++;
         });

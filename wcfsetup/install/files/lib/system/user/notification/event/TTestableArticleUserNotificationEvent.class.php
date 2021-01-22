@@ -22,8 +22,8 @@ trait TTestableArticleUserNotificationEvent
     /**
      * Creates an test article.
      *
-     * @param       Category        $category
-     * @param       UserProfile     $author
+     * @param Category $category
+     * @param UserProfile $author
      * @return      Article
      */
     public static function getTestArticle(Category $category, UserProfile $author)

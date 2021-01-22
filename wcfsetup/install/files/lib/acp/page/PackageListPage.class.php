@@ -27,7 +27,10 @@ class PackageListPage extends SortablePage
     /**
      * @inheritDoc
      */
-    public $neededPermissions = ['admin.configuration.package.canUpdatePackage', 'admin.configuration.package.canUninstallPackage'];
+    public $neededPermissions = [
+        'admin.configuration.package.canUpdatePackage',
+        'admin.configuration.package.canUninstallPackage',
+    ];
 
     /**
      * @inheritDoc
@@ -53,7 +56,20 @@ class PackageListPage extends SortablePage
     /**
      * @inheritDoc
      */
-    public $validSortFields = ['packageID', 'package', 'packageDir', 'packageName', 'packageDescription', 'packageDate', 'packageURL', 'isApplication', 'author', 'authorURL', 'installDate', 'updateDate'];
+    public $validSortFields = [
+        'packageID',
+        'package',
+        'packageDir',
+        'packageName',
+        'packageDescription',
+        'packageDate',
+        'packageURL',
+        'isApplication',
+        'author',
+        'authorURL',
+        'installDate',
+        'updateDate',
+    ];
 
     /**
      * @inheritDoc

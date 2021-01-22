@@ -12,7 +12,7 @@ use wcf\data\DatabaseObjectEditor;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\User\Follow
  *
- * @method static   UserFollow  create(array $parameters = [])
+ * @method static UserFollow  create(array $parameters = [])
  * @method      UserFollow  getDecoratedObject()
  * @mixin       UserFollow
  */

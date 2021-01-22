@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\User\Avatar
  *
- * @method static   UserAvatar  create(array $parameters = [])
+ * @method static UserAvatar  create(array $parameters = [])
  * @method      UserAvatar  getDecoratedObject()
  * @mixin       UserAvatar
  */

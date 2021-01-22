@@ -26,11 +26,11 @@ class TagEngine extends SingletonFactory
     /**
      * Adds tags to a tagged object.
      *
-     * @param   string      $objectType
-     * @param   int     $objectID
-     * @param   array       $tags
-     * @param   int     $languageID
-     * @param   bool        $replace
+     * @param string $objectType
+     * @param int $objectID
+     * @param array $tags
+     * @param int $languageID
+     * @param bool $replace
      */
     public function addObjectTags($objectType, $objectID, array $tags, $languageID, $replace = true)
     {
@@ -69,10 +69,12 @@ class TagEngine extends SingletonFactory
             $tagObj = Tag::getTag($tag, $languageID);
             if ($tagObj === null) {
                 // create new tag
-                $tagAction = new TagAction([], 'create', ['data' => [
-                    'name' => $tag,
-                    'languageID' => $languageID,
-                ]]);
+                $tagAction = new TagAction([], 'create', [
+                    'data' => [
+                        'name' => $tag,
+                        'languageID' => $languageID,
+                    ],
+                ]);
 
                 $tagAction->executeAction();
                 $returnValues = $tagAction->getReturnValues();
@@ -101,9 +103,9 @@ class TagEngine extends SingletonFactory
     /**
      * Deletes all tags assigned to given tagged object.
      *
-     * @param   string      $objectType
-     * @param   int     $objectID
-     * @param   int     $languageID
+     * @param string $objectType
+     * @param int $objectID
+     * @param int $languageID
      */
     public function deleteObjectTags($objectType, $objectID, $languageID = null)
     {
@@ -127,8 +129,8 @@ class TagEngine extends SingletonFactory
     /**
      * Deletes all tags assigned to given tagged objects.
      *
-     * @param   string          $objectType
-     * @param   int[]       $objectIDs
+     * @param string $objectType
+     * @param int[] $objectIDs
      */
     public function deleteObjects($objectType, array $objectIDs)
     {
@@ -147,9 +149,9 @@ class TagEngine extends SingletonFactory
     /**
      * Returns all tags set for given object.
      *
-     * @param   string          $objectType
-     * @param   int         $objectID
-     * @param   int[]       $languageIDs
+     * @param string $objectType
+     * @param int $objectID
+     * @param int[] $languageIDs
      * @return  Tag[]
      */
     public function getObjectTags($objectType, $objectID, array $languageIDs = [])
@@ -162,9 +164,9 @@ class TagEngine extends SingletonFactory
     /**
      * Returns all tags set for given objects.
      *
-     * @param   string          $objectType
-     * @param   int[]       $objectIDs
-     * @param   int[]       $languageIDs
+     * @param string $objectType
+     * @param int[] $objectIDs
+     * @param int[] $languageIDs
      * @return  array
      */
     public function getObjectsTags($objectType, array $objectIDs, array $languageIDs = [])
@@ -218,7 +220,7 @@ class TagEngine extends SingletonFactory
     /**
      * Returns id of the object type with the given name.
      *
-     * @param   string      $objectType
+     * @param string $objectType
      * @return  int
      * @throws  InvalidObjectTypeException
      */
@@ -241,8 +243,8 @@ class TagEngine extends SingletonFactory
      * associated tags for that object is returned, but can still be arbitrary if
      * there are two or more top language ids with the same amount of tags.
      *
-     * @param       string          $objectType
-     * @param       int         $objectID
+     * @param string $objectType
+     * @param int $objectID
      * @return      int|null
      */
     public function getImplicitLanguageID($objectType, $objectID)

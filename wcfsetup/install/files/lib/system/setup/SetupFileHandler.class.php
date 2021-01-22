@@ -37,7 +37,7 @@ class SetupFileHandler implements IFileHandler
     /**
      * Writes the list of files to a log file.
      *
-     * @param       string          $filename
+     * @param string $filename
      */
     public function dumpToFile($filename)
     {

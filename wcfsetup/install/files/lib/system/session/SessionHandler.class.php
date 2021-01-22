@@ -33,13 +33,13 @@ use wcf\util\UserUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Session
  *
- * @property-read   string      $sessionID      unique textual identifier of the session
- * @property-read   int|null    $userID         id of the user the session belongs to or `null` if the session belongs to a guest
- * @property-read   int|null    $pageID         id of the latest page visited
- * @property-read   int|null    $pageObjectID       id of the object the latest page visited belongs to
- * @property-read   int|null    $parentPageID       id of the parent page of latest page visited
- * @property-read   int|null    $parentPageObjectID id of the object the parent page of latest page visited belongs to
- * @property-read   int     $spiderID       id of the spider the session belongs to
+ * @property-read   string $sessionID      unique textual identifier of the session
+ * @property-read   int|null $userID         id of the user the session belongs to or `null` if the session belongs to a guest
+ * @property-read   int|null $pageID         id of the latest page visited
+ * @property-read   int|null $pageObjectID       id of the object the latest page visited belongs to
+ * @property-read   int|null $parentPageID       id of the parent page of latest page visited
+ * @property-read   int|null $parentPageObjectID id of the object the parent page of latest page visited belongs to
+ * @property-read   int $spiderID       id of the spider the session belongs to
  */
 final class SessionHandler extends SingletonFactory
 {
@@ -157,7 +157,7 @@ final class SessionHandler extends SingletonFactory
     /**
      * Provides access to session data.
      *
-     * @param   string      $key
+     * @param string $key
      * @return  mixed
      */
     public function __get($key)
@@ -500,7 +500,8 @@ final class SessionHandler extends SingletonFactory
                 $sameSite = '; SameSite=strict';
             }
 
-            \header('set-cookie: XSRF-TOKEN=' . \rawurlencode($xsrfToken) . '; path=/' . $cookieDomain . (RouteHandler::secureConnection() ? '; secure' : '') . $sameSite, false);
+            \header('set-cookie: XSRF-TOKEN=' . \rawurlencode($xsrfToken) . '; path=/' . $cookieDomain . (RouteHandler::secureConnection() ? '; secure' : '') . $sameSite,
+                false);
         }
 
         $this->xsrfToken = $xsrfToken;
@@ -524,7 +525,7 @@ final class SessionHandler extends SingletonFactory
      * Validates the given security token, returns false if
      * given token is invalid.
      *
-     * @param   string      $token
+     * @param string $token
      * @return  bool
      */
     public function checkSecurityToken($token)
@@ -540,8 +541,8 @@ final class SessionHandler extends SingletonFactory
     /**
      * Registers a session variable.
      *
-     * @param   string      $key
-     * @param   mixed       $value
+     * @param string $key
+     * @param mixed $value
      */
     public function register($key, $value)
     {
@@ -554,7 +555,7 @@ final class SessionHandler extends SingletonFactory
     /**
      * Unsets a session variable.
      *
-     * @param   string      $key
+     * @param string $key
      */
     public function unregister($key)
     {
@@ -568,7 +569,7 @@ final class SessionHandler extends SingletonFactory
      * Returns the value of a session variable or `null` if the session
      * variable does not exist.
      *
-     * @param   string      $key
+     * @param string $key
      * @return  mixed
      */
     public function getVar($key)
@@ -731,7 +732,7 @@ final class SessionHandler extends SingletonFactory
     /**
      * Returns the value of the permission with the given name.
      *
-     * @param   string      $permission
+     * @param string $permission
      * @return  mixed       permission value
      */
     public function getPermission($permission)
@@ -755,7 +756,7 @@ final class SessionHandler extends SingletonFactory
      * Returns true if a permission was set to 'Never'. This is required to preserve
      * compatibility, while preventing ACLs from overruling a 'Never' setting.
      *
-     * @param       string          $permission
+     * @param string $permission
      * @return      bool
      */
     public function getNeverPermission($permission)
@@ -769,7 +770,7 @@ final class SessionHandler extends SingletonFactory
      * Checks if the active user has the given permissions and throws a
      * PermissionDeniedException if that isn't the case.
      *
-     * @param   string[]    $permissions    list of permissions where each one must pass
+     * @param string[] $permissions list of permissions where each one must pass
      * @throws  PermissionDeniedException
      */
     public function checkPermissions(array $permissions)
@@ -885,9 +886,9 @@ final class SessionHandler extends SingletonFactory
      * As a safety check you must provide the `$expectedUser` as a parameter, it must match the
      * data stored within the session.
      *
-     * @see SessionHandler::getPendingUserChange()
      * @throws \RuntimeException If the `$expectedUser` does not match.
      * @throws \BadMethodCallException If `getPendingUserChange()` returns `null`.
+     * @see SessionHandler::getPendingUserChange()
      * @since 5.4
      */
     public function applyPendingUserChange(User $expectedUser): void
@@ -950,8 +951,8 @@ final class SessionHandler extends SingletonFactory
      * Stores a new user object in this session, e.g. a user was guest because not
      * logged in, after the login his old session is used to store his full data.
      *
-     * @param   User        $user
-     * @param   bool        $hideSession    if true, database won't be updated
+     * @param User $user
+     * @param bool $hideSession if true, database won't be updated
      */
     public function changeUser(User $user, $hideSession = false)
     {
@@ -988,7 +989,7 @@ final class SessionHandler extends SingletonFactory
     /**
      * Changes the user stored in the session.
      *
-     * @param   User    $user
+     * @param User $user
      * @throws  DatabaseException
      */
     protected function changeUserVirtual(User $user)
@@ -1111,8 +1112,8 @@ final class SessionHandler extends SingletonFactory
      * This method should be considered to be semi-public and is intended to be used
      * by `ReAuthenticationForm` only.
      *
-     * @see SessionHandler::needsReauthentication()
      * @throws \BadMethodCallException If the current user is a guest.
+     * @see SessionHandler::needsReauthentication()
      * @since 5.4
      */
     public function registerReauthentication(): void
@@ -1133,9 +1134,9 @@ final class SessionHandler extends SingletonFactory
      * After this method is called `needsReauthentication()` will return true until
      * `registerReauthentication()` is called again.
      *
-     * @see SessionHandler::registerReauthentication()
-     * @see SessionHandler::needsReauthentication()
      * @throws \BadMethodCallException If the current user is a guest.
+     * @see SessionHandler::needsReauthentication()
+     * @see SessionHandler::registerReauthentication()
      * @since 5.4
      */
     public function clearReauthentication(): void
@@ -1282,7 +1283,7 @@ final class SessionHandler extends SingletonFactory
     /**
      * Sets the currently active language id.
      *
-     * @param   int     $languageID
+     * @param int $languageID
      */
     public function setLanguageID($languageID)
     {
@@ -1303,7 +1304,7 @@ final class SessionHandler extends SingletonFactory
     /**
      * Sets the currently active style id.
      *
-     * @param   int     $styleID
+     * @param int $styleID
      */
     public function setStyleID($styleID)
     {
@@ -1314,7 +1315,7 @@ final class SessionHandler extends SingletonFactory
     /**
      * Resets session-specific storage data.
      *
-     * @param   int[]   $userIDs
+     * @param int[] $userIDs
      */
     public static function resetSessions(array $userIDs = [])
     {
@@ -1330,7 +1331,7 @@ final class SessionHandler extends SingletonFactory
     /**
      * Returns the spider id for given user agent.
      *
-     * @param   string      $userAgent
+     * @param string $userAgent
      * @return  mixed
      */
     protected function getSpiderID($userAgent)

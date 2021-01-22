@@ -45,7 +45,7 @@ class StructuredCommentResponse extends DatabaseObjectDecorator
     /**
      * Sets the user's profile.
      *
-     * @param   UserProfile $userProfile
+     * @param UserProfile $userProfile
      * @deprecated  3.0
      */
     public function setUserProfile(UserProfile $userProfile)
@@ -74,7 +74,7 @@ class StructuredCommentResponse extends DatabaseObjectDecorator
     /**
      * Returns a structured response.
      *
-     * @param   int     $responseID
+     * @param int $responseID
      * @return  StructuredCommentResponse
      */
     public static function getResponse($responseID)
@@ -98,7 +98,7 @@ class StructuredCommentResponse extends DatabaseObjectDecorator
     /**
      * Sets deletable state.
      *
-     * @param   bool        $deletable
+     * @param bool $deletable
      */
     public function setIsDeletable($deletable)
     {
@@ -108,7 +108,7 @@ class StructuredCommentResponse extends DatabaseObjectDecorator
     /**
      * Sets editable state.
      *
-     * @param   bool        $editable
+     * @param bool $editable
      */
     public function setIsEditable($editable)
     {

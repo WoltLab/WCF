@@ -80,7 +80,7 @@ final class ExifUtil
      * Returns the exif data of the image at the given location or an empty
      * array if the exif data can't be read.
      *
-     * @param   string      $filename
+     * @param string $filename
      * @return  array
      */
     public static function getExifData($filename)
@@ -98,7 +98,7 @@ final class ExifUtil
     /**
      * Returns the name of the used camera based on the given exif data.
      *
-     * @param   array       $exifData
+     * @param array $exifData
      * @return  string
      */
     public static function getCamera(array $exifData)
@@ -124,7 +124,7 @@ final class ExifUtil
     /**
      * Returns the creation timestamp based on the given exif data.
      *
-     * @param   array       $exifData
+     * @param array $exifData
      * @return  string
      */
     public static function getCreationTime(array $exifData)
@@ -150,7 +150,7 @@ final class ExifUtil
      * Returns the longitude of the place the image with the given exif data
      * was taken.
      *
-     * @param   array       $exifData
+     * @param array $exifData
      * @return  float
      */
     public static function getLongitude(array $exifData)
@@ -177,7 +177,7 @@ final class ExifUtil
      * Returns the latitude of the place the image with the given exif data
      * was taken.
      *
-     * @param   array       $exifData
+     * @param array $exifData
      * @return  float
      */
     public static function getLatitude(array $exifData)
@@ -203,7 +203,7 @@ final class ExifUtil
     /**
      * Returns the formats exif data.
      *
-     * @param   array       $rawExifData
+     * @param array $rawExifData
      * @return  array
      */
     public static function getFormattedExifData(array $rawExifData)
@@ -242,7 +242,7 @@ final class ExifUtil
     /**
      * Returns the orientation of the image based on the given exif data.
      *
-     * @param   array       $exifData
+     * @param array $exifData
      * @return  int
      */
     public static function getOrientation(array $exifData)
@@ -261,7 +261,7 @@ final class ExifUtil
     /**
      * Converts the format of exif geo tagging coordinates.
      *
-     * @param   string      $coordinate
+     * @param string $coordinate
      * @return  double
      */
     private static function convertCoordinateToDecimal($coordinate)
@@ -282,7 +282,7 @@ final class ExifUtil
     /**
      * Converts a exif rational value to a float.
      *
-     * @param   string      $rational
+     * @param string $rational
      * @return  float
      */
     private static function convertExifRational($rational)

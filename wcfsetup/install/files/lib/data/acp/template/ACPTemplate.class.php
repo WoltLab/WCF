@@ -13,10 +13,10 @@ use wcf\data\package\PackageCache;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Acp\Template
  *
- * @property-read   int     $templateID unique id of the acp template
- * @property-read   int|null    $packageID  id of the package which delivers the acp template
- * @property-read   string      $templateName   name of the template
- * @property-read   string      $application    abbreviation of the application to which the template belongs
+ * @property-read   int $templateID unique id of the acp template
+ * @property-read   int|null $packageID  id of the package which delivers the acp template
+ * @property-read   string $templateName   name of the template
+ * @property-read   string $application    abbreviation of the application to which the template belongs
  */
 class ACPTemplate extends DatabaseObject
 {

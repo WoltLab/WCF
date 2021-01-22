@@ -16,7 +16,7 @@ use wcf\data\DatabaseObjectList;
  * @method  DevtoolsProject     current()
  * @method  DevtoolsProject[]   getObjects()
  * @method  DevtoolsProject|null    search($objectID)
- * @property    DevtoolsProject[]   $objects
+ * @property    DevtoolsProject[] $objects
  */
 class DevtoolsProjectList extends DatabaseObjectList
 {

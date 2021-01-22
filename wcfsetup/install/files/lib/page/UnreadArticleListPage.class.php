@@ -39,7 +39,8 @@ class UnreadArticleListPage extends ArticleListPage
     {
         parent::readParameters();
 
-        $this->canonicalURL = LinkHandler::getInstance()->getLink('UnreadArticleList', $this->controllerParameters, ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : ''));
+        $this->canonicalURL = LinkHandler::getInstance()->getLink('UnreadArticleList', $this->controllerParameters,
+            ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : ''));
     }
 
     /**
@@ -49,7 +50,8 @@ class UnreadArticleListPage extends ArticleListPage
     {
         parent::initObjectList();
 
-        $this->objectList->getConditionBuilder()->add('article.time > ?', [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article')]);
+        $this->objectList->getConditionBuilder()->add('article.time > ?',
+            [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article')]);
 
         if (WCF::getUser()->userID) {
             $this->objectList->sqlConditionJoins = "LEFT JOIN wcf" . WCF_N . "_tracked_visit tracked_visit ON (tracked_visit.objectTypeID = " . VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.article') . " AND tracked_visit.objectID = article.articleID AND tracked_visit.userID = " . WCF::getUser()->userID . ")";

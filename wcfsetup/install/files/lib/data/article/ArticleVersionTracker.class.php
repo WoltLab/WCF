@@ -43,7 +43,7 @@ class ArticleVersionTracker extends DatabaseObjectDecorator implements IVersionT
     /**
      * Adds an article content object as child.
      *
-     * @param       ArticleContent  $content        article content object
+     * @param ArticleContent $content article content object
      */
     public function addContent(ArticleContent $content)
     {
@@ -53,7 +53,7 @@ class ArticleVersionTracker extends DatabaseObjectDecorator implements IVersionT
     /**
      * Sets the list of article content objects.
      *
-     * @param       ArticleContent[]        $content        article content objects
+     * @param ArticleContent[] $content article content objects
      */
     public function setContent(array $content)
     {

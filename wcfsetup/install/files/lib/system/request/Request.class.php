@@ -58,10 +58,10 @@ class Request
     /**
      * Creates a new request object.
      *
-     * @param   string      $className  fully qualified name
-     * @param   string      $pageName   class name
-     * @param   string      $pageType   can be 'action', 'form' or 'page'
-     * @param   string[]    $metaData   additional meta data
+     * @param string $className fully qualified name
+     * @param string $pageName class name
+     * @param string $pageType can be 'action', 'form' or 'page'
+     * @param string[] $metaData additional meta data
      */
     public function __construct($className, $pageName, $pageType, array $metaData)
     {

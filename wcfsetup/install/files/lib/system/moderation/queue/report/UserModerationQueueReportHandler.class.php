@@ -113,7 +113,7 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
     /**
      * Returns a user object by user id or null if user id is invalid.
      *
-     * @param   int     $objectID
+     * @param int $objectID
      * @return  User|null
      */
     protected function getUser($objectID)

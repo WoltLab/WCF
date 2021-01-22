@@ -43,7 +43,7 @@ class PageVersionTracker extends DatabaseObjectDecorator implements IVersionTrac
     /**
      * Adds an page content object as child.
      *
-     * @param       PageContent     $content        page content object
+     * @param PageContent $content page content object
      */
     public function addContent(PageContent $content)
     {
@@ -53,7 +53,7 @@ class PageVersionTracker extends DatabaseObjectDecorator implements IVersionTrac
     /**
      * Sets the list of page content objects.
      *
-     * @param       PageContent[]   $content        page content objects
+     * @param PageContent[] $content page content objects
      */
     public function setContent(array $content)
     {

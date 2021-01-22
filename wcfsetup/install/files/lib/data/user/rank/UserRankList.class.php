@@ -15,7 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method  UserRank    current()
  * @method  UserRank[]  getObjects()
  * @method  UserRank|null   search($objectID)
- * @property    UserRank[]  $objects
+ * @property    UserRank[] $objects
  */
 class UserRankList extends DatabaseObjectList
 {

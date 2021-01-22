@@ -159,7 +159,8 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
 
                         // search for files with two consecutive upper-case letters but ignore interfaces such as `IPage`
                         if (!\preg_match('~^I[A-Z][a-z]~', $filename) && \preg_match('~[A-Z]{2,}~', $filename)) {
-                            $parts = \preg_split('~([A-Z][a-z0-9]+)~', $filename, -1, \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY);
+                            $parts = \preg_split('~([A-Z][a-z0-9]+)~', $filename, -1,
+                                \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY);
 
                             // drop the last part containing `Action` or `Page`
                             \array_pop($parts);
@@ -201,7 +202,8 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
                                 if (!isset($this->brokenControllers['reverse'][$abbreviation])) {
                                     $this->brokenControllers['reverse'][$abbreviation] = [];
                                 }
-                                $this->brokenControllers['reverse'][$abbreviation][\preg_replace('~(?:Page|Form|Action)$~', '', $filename)] = $ciController;
+                                $this->brokenControllers['reverse'][$abbreviation][\preg_replace('~(?:Page|Form|Action)$~',
+                                    '', $filename)] = $ciController;
                             }
                         }
                     }
@@ -216,7 +218,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
      * Builds up a lookup and a reverse lookup list per application in order to resolve
      * custom page mappings.
      *
-     * @param       array   $landingPages
+     * @param array $landingPages
      * @return  array
      */
     protected function getCustomUrls(array $landingPages)
@@ -270,7 +272,8 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
 
             if (isset($row['controller'])) {
                 $data['lookup'][$abbreviations[$packageID]][$customUrl] = $row['controller'];
-                $data['reverse'][$abbreviations[$packageID]][\preg_replace('~^.*?([A-Za-z0-9]+)(?:Action|Form|Page)~', '$1', $row['controller'])] = $customUrl;
+                $data['reverse'][$abbreviations[$packageID]][\preg_replace('~^.*?([A-Za-z0-9]+)(?:Action|Form|Page)~',
+                    '$1', $row['controller'])] = $customUrl;
             } else {
                 $cmsIdentifier = '__WCF_CMS__' . $row['pageID'] . '-' . ($row['languageID'] ?: 0);
 
@@ -385,9 +388,10 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
 
         // The controller may be the custom url of a CMS page.
         if (\strpos($landingPageController, '__WCF_CMS__') === 0) {
-            $controllers = \array_filter($data['customUrls']['reverse']['wcf'], static function ($controller) use ($landingPageController) {
-                return \strpos($controller, "{$landingPageController}-") === 0;
-            }, \ARRAY_FILTER_USE_KEY);
+            $controllers = \array_filter($data['customUrls']['reverse']['wcf'],
+                static function ($controller) use ($landingPageController) {
+                    return \strpos($controller, "{$landingPageController}-") === 0;
+                }, \ARRAY_FILTER_USE_KEY);
         }
 
         foreach ($controllers as $controller) {

@@ -18,7 +18,7 @@ use wcf\system\WCF;
  * @method  Box     current()
  * @method  Box[]       getObjects()
  * @method  Box|null    search($objectID)
- * @property    Box[]       $objects
+ * @property    Box[] $objects
  */
 class BoxList extends DatabaseObjectList
 {
@@ -69,7 +69,7 @@ class BoxList extends DatabaseObjectList
     /**
      * Enables/disables the loading of box content objects.
      *
-     * @param   bool        $enable
+     * @param bool $enable
      */
     public function enableContentLoading($enable = true)
     {

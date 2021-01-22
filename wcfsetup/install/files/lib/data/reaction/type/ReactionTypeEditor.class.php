@@ -14,7 +14,7 @@ use wcf\data\IEditableCachedObject;
  * @package WoltLabSuite\Core\Data\Reaction\Type
  * @since   5.2
  *
- * @method      static          ReactionType    create(array $parameters = [])
+ * @method      static ReactionType    create(array $parameters = [])
  * @method              ReactionType    getDecoratedObject()
  * @mixin                   ReactionType
  */

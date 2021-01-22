@@ -32,8 +32,8 @@ class PageLanguage
     /**
      * Creates a new PageLanguage object.
      *
-     * @param       int         $pageID
-     * @param       int         $languageID
+     * @param int $pageID
+     * @param int $languageID
      */
     public function __construct($pageID, $languageID)
     {

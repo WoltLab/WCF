@@ -105,7 +105,7 @@ class ReactionHandler extends SingletonFactory
     /**
      * Returns a reaction type by id.
      *
-     * @param       int                 $reactionID
+     * @param int $reactionID
      * @return      ReactionType|null
      */
     public function getReactionTypeByID($reactionID)
@@ -116,8 +116,8 @@ class ReactionHandler extends SingletonFactory
     /**
      * Builds the data attributes for the object container.
      *
-     * @param       string          $objectTypeName
-     * @param       int         $objectID
+     * @param string $objectTypeName
+     * @param int $objectID
      * @return      string
      */
     public function getDataAttributes($objectTypeName, $objectID)
@@ -152,8 +152,8 @@ class ReactionHandler extends SingletonFactory
     /**
      * Cache likeable objects.
      *
-     * @param       string          $objectTypeName
-     * @param       int[]       $objectIDs
+     * @param string $objectTypeName
+     * @param int[] $objectIDs
      */
     public function cacheLikeableObjects($objectTypeName, array $objectIDs)
     {
@@ -181,8 +181,8 @@ class ReactionHandler extends SingletonFactory
     /**
      * Get an likeable object from the internal cache.
      *
-     * @param       string          $objectTypeName
-     * @param       int         $objectID
+     * @param string $objectTypeName
+     * @param int $objectID
      * @return      ILikeObject
      */
     public function getLikeableObject($objectTypeName, $objectID)
@@ -210,7 +210,7 @@ class ReactionHandler extends SingletonFactory
     /**
      * Returns an object type from cache.
      *
-     * @param   string              $objectName
+     * @param string $objectName
      * @return  ObjectType|null
      */
     public function getObjectType($objectName)
@@ -223,8 +223,8 @@ class ReactionHandler extends SingletonFactory
     /**
      * Returns a like object.
      *
-     * @param   ObjectType  $objectType
-     * @param   int     $objectID
+     * @param ObjectType $objectType
+     * @param int $objectID
      * @return  LikeObject|null
      */
     public function getLikeObject(ObjectType $objectType, $objectID)
@@ -239,7 +239,7 @@ class ReactionHandler extends SingletonFactory
     /**
      * Returns the like objects of a specific object type.
      *
-     * @param   ObjectType  $objectType
+     * @param ObjectType $objectType
      * @return  LikeObject[]
      */
     public function getLikeObjects(ObjectType $objectType)
@@ -255,8 +255,8 @@ class ReactionHandler extends SingletonFactory
      * Loads the like data for a set of objects and returns the number of loaded
      * like objects
      *
-     * @param   ObjectType  $objectType
-     * @param   array       $objectIDs
+     * @param ObjectType $objectType
+     * @param array $objectIDs
      * @return  int
      */
     public function loadLikeObjects(ObjectType $objectType, array $objectIDs)
@@ -307,10 +307,10 @@ class ReactionHandler extends SingletonFactory
     /**
      * Add a reaction to an object.
      *
-     * @param   ILikeObject $likeable
-     * @param   User        $user
-     * @param   int     $reactionTypeID
-     * @param   int     $time
+     * @param ILikeObject $likeable
+     * @param User $user
+     * @param int $reactionTypeID
+     * @param int $time
      * @return  array
      * @throws  DatabaseQueryException
      */
@@ -339,15 +339,17 @@ class ReactionHandler extends SingletonFactory
 
             if (!$like->likeID) {
                 // save like
-                $returnValues = (new ReactionAction([], 'create', ['data' => [
-                    'objectID' => $likeable->getObjectID(),
-                    'objectTypeID' => $likeable->getObjectType()->objectTypeID,
-                    'objectUserID' => $likeable->getUserID() ?: null,
-                    'userID' => $user->userID,
-                    'time' => $time,
-                    'likeValue' => 1,
-                    'reactionTypeID' => $reactionTypeID,
-                ]]))->executeAction();
+                $returnValues = (new ReactionAction([], 'create', [
+                    'data' => [
+                        'objectID' => $likeable->getObjectID(),
+                        'objectTypeID' => $likeable->getObjectType()->objectTypeID,
+                        'objectUserID' => $likeable->getUserID() ?: null,
+                        'userID' => $user->userID,
+                        'time' => $time,
+                        'likeValue' => 1,
+                        'reactionTypeID' => $reactionTypeID,
+                    ],
+                ]))->executeAction();
 
                 $like = $returnValues['returnValues'];
 
@@ -359,11 +361,13 @@ class ReactionHandler extends SingletonFactory
                     );
                 }
             } else {
-                (new ReactionAction([$like], 'update', ['data' => [
-                    'time' => $time,
-                    'likeValue' => 1,
-                    'reactionTypeID' => $reactionTypeID,
-                ]]))->executeAction();
+                (new ReactionAction([$like], 'update', [
+                    'data' => [
+                        'time' => $time,
+                        'likeValue' => 1,
+                        'reactionTypeID' => $reactionTypeID,
+                    ],
+                ]))->executeAction();
 
                 if ($likeable->getUserID()) {
                     UserActivityPointHandler::getInstance()->removeEvents(
@@ -432,10 +436,10 @@ class ReactionHandler extends SingletonFactory
     /**
      * Creates or updates a LikeObject for an likable object.
      *
-     * @param   ILikeObject $likeable
-     * @param   LikeObject  $likeObject
-     * @param   Like        $like
-     * @param   ReactionType    $reactionType
+     * @param ILikeObject $likeable
+     * @param LikeObject $likeObject
+     * @param Like $like
+     * @param ReactionType $reactionType
      * @return  array
      */
     private function updateLikeObject(
@@ -495,15 +499,17 @@ class ReactionHandler extends SingletonFactory
             ];
 
             // create cache
-            $likeObjectActionReturnValues = (new LikeObjectAction([], 'create', ['data' => [
-                'objectTypeID' => $likeable->getObjectType()->objectTypeID,
-                'objectID' => $likeable->getObjectID(),
-                'objectUserID' => $likeable->getUserID() ?: null,
-                'likes' => $cumulativeLikes,
-                'dislikes' => 0,
-                'cumulativeLikes' => $cumulativeLikes,
-                'cachedReactions' => \serialize($cachedReactions),
-            ]]))->executeAction();
+            $likeObjectActionReturnValues = (new LikeObjectAction([], 'create', [
+                'data' => [
+                    'objectTypeID' => $likeable->getObjectType()->objectTypeID,
+                    'objectID' => $likeable->getObjectID(),
+                    'objectUserID' => $likeable->getUserID() ?: null,
+                    'likes' => $cumulativeLikes,
+                    'dislikes' => 0,
+                    'cumulativeLikes' => $cumulativeLikes,
+                    'cachedReactions' => \serialize($cachedReactions),
+                ],
+            ]))->executeAction();
             $likeObject = $likeObjectActionReturnValues['returnValues'];
         }
 
@@ -517,10 +523,10 @@ class ReactionHandler extends SingletonFactory
     /**
      * Updates the like counter for a user.
      *
-     * @param   ILikeObject $likeable
-     * @param   LikeObject  $likeObject
-     * @param   Like        $like
-     * @param   ReactionType    $reactionType
+     * @param ILikeObject $likeable
+     * @param LikeObject $likeObject
+     * @param Like $like
+     * @param ReactionType $reactionType
      */
     private function updateUsersLikeCounter(
         ILikeObject $likeable,
@@ -548,10 +554,10 @@ class ReactionHandler extends SingletonFactory
     /**
      * Reverts a reaction for an object.
      *
-     * @param   Like        $like
-     * @param   ILikeObject $likeable
-     * @param   LikeObject  $likeObject
-     * @param   User        $user
+     * @param Like $like
+     * @param ILikeObject $likeable
+     * @param LikeObject $likeObject
+     * @param User $user
      * @return  array
      */
     public function revertReact(Like $like, ILikeObject $likeable, LikeObject $likeObject, User $user)
@@ -612,8 +618,8 @@ class ReactionHandler extends SingletonFactory
     /**
      * Creates or updates a LikeObject for an likable object.
      *
-     * @param   LikeObject  $likeObject
-     * @param   Like        $like
+     * @param LikeObject $likeObject
+     * @param Like $like
      * @return  array
      */
     private function revertLikeObject(LikeObject $likeObject, Like $like)
@@ -662,9 +668,9 @@ class ReactionHandler extends SingletonFactory
     /**
      * Removes all reactions for given objects.
      *
-     * @param   string      $objectType
-     * @param   int[]   $objectIDs
-     * @param   string[]    $notificationObjectTypes
+     * @param string $objectType
+     * @param int[] $objectIDs
+     * @param string[] $notificationObjectTypes
      */
     public function removeReactions($objectType, array $objectIDs, array $notificationObjectTypes = [])
     {
@@ -752,8 +758,8 @@ class ReactionHandler extends SingletonFactory
     /**
      * Returns current like object status.
      *
-     * @param   LikeObject  $likeObject
-     * @param   User        $user
+     * @param LikeObject $likeObject
+     * @param User $user
      * @return  array
      */
     protected function loadLikeStatus(LikeObject $likeObject, User $user)
@@ -813,7 +819,7 @@ class ReactionHandler extends SingletonFactory
     /**
      * Removes deleted reactions from the reaction counter for the like object table.
      *
-     * @param       array   $cachedReactions
+     * @param array $cachedReactions
      * @return      array
      */
     private function cleanUpCachedReactions(array $cachedReactions)
@@ -860,7 +866,7 @@ class ReactionHandler extends SingletonFactory
     /**
      * Renders an inline list of reaction counts.
      *
-     * @param       int[]   $reactionCounts         format: `[reactionID => count]`
+     * @param int[] $reactionCounts format: `[reactionID => count]`
      * @return      string
      * @since       5.3
      */

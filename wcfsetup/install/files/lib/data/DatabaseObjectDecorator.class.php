@@ -31,7 +31,7 @@ abstract class DatabaseObjectDecorator extends DatabaseObject
     /**
      * Creates a new DatabaseObjectDecorator object.
      *
-     * @param   DatabaseObject      $object
+     * @param DatabaseObject $object
      * @throws  SystemException
      */
     public function __construct(DatabaseObject $object)
@@ -82,8 +82,8 @@ abstract class DatabaseObjectDecorator extends DatabaseObject
     /**
      * Delegates inaccessible methods calls to the decorated object.
      *
-     * @param   string      $name
-     * @param   array       $arguments
+     * @param string $name
+     * @param array $arguments
      * @return  mixed
      * @throws  SystemException
      */

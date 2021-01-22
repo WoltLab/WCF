@@ -18,7 +18,7 @@ use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
  * @method  BoxContent      current()
  * @method  BoxContent[]            getObjects()
  * @method  BoxContent|null         search($objectID)
- * @property    BoxContent[]            $objects
+ * @property    BoxContent[] $objects
  */
 class BoxContentList extends DatabaseObjectList
 {
@@ -74,7 +74,8 @@ class BoxContentList extends DatabaseObjectList
 
         if ($this->embeddedObjectLoading) {
             if (!empty($embeddedObjectBoxContentIDs)) {
-                MessageEmbeddedObjectManager::getInstance()->loadObjects('com.woltlab.wcf.box.content', $embeddedObjectBoxContentIDs);
+                MessageEmbeddedObjectManager::getInstance()->loadObjects('com.woltlab.wcf.box.content',
+                    $embeddedObjectBoxContentIDs);
             }
         }
     }
@@ -82,7 +83,7 @@ class BoxContentList extends DatabaseObjectList
     /**
      * Enables/disables the loading of box content images.
      *
-     * @param   bool        $enable
+     * @param bool $enable
      */
     public function enableImageLoading($enable = true)
     {
@@ -92,7 +93,7 @@ class BoxContentList extends DatabaseObjectList
     /**
      * Enables/disables the loading of embedded objects.
      *
-     * @param   bool        $enable
+     * @param bool $enable
      */
     public function enableEmbeddedObjectLoading($enable = true)
     {

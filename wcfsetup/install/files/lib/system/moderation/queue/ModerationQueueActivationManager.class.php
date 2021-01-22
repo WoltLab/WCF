@@ -25,7 +25,7 @@ class ModerationQueueActivationManager extends AbstractModerationQueueManager
     /**
      * Enables affected content.
      *
-     * @param   ModerationQueue     $queue
+     * @param ModerationQueue $queue
      */
     public function enableContent(ModerationQueue $queue)
     {
@@ -35,7 +35,7 @@ class ModerationQueueActivationManager extends AbstractModerationQueueManager
     /**
      * Returns outstanding content.
      *
-     * @param   ViewableModerationQueue     $queue
+     * @param ViewableModerationQueue $queue
      * @return  string
      */
     public function getDisabledContent(ViewableModerationQueue $queue)
@@ -57,9 +57,9 @@ class ModerationQueueActivationManager extends AbstractModerationQueueManager
     /**
      * Adds an entry for moderated content.
      *
-     * @param   string      $objectType
-     * @param   int     $objectID
-     * @param   array       $additionalData
+     * @param string $objectType
+     * @param int $objectID
+     * @param array $additionalData
      * @throws  InvalidObjectTypeException
      */
     public function addModeratedContent($objectType, $objectID, array $additionalData = [])
@@ -85,10 +85,10 @@ class ModerationQueueActivationManager extends AbstractModerationQueueManager
      *
      * This method is intended for bulk processing.
      *
-     * @param   string      $objectType
-     * @param   int[]   $objectID
+     * @param string $objectType
+     * @param int[] $objectID
      * @poram   int[]   $containerIDs       format: `objectID => containerID`
-     * @param   array       $additionalData
+     * @param array $additionalData
      * @throws  InvalidObjectTypeException
      */
     public function addModeratedContents($objectType, array $objectIDs, array $containerIDs, array $additionalData = [])
@@ -108,8 +108,8 @@ class ModerationQueueActivationManager extends AbstractModerationQueueManager
     /**
      * Marks entries from moderation queue as done.
      *
-     * @param   string      $objectType
-     * @param   int[]   $objectIDs
+     * @param string $objectType
+     * @param int[] $objectIDs
      * @throws  InvalidObjectTypeException
      */
     public function removeModeratedContent($objectType, array $objectIDs)

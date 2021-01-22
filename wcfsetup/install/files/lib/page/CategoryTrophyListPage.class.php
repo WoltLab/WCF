@@ -19,7 +19,7 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Core\Page
  * @since       5.2
  *
- * @property    TrophyList  $objectList
+ * @property    TrophyList $objectList
  */
 class CategoryTrophyListPage extends TrophyListPage
 {

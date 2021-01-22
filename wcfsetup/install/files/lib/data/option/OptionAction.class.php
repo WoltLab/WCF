@@ -46,7 +46,15 @@ class OptionAction extends AbstractDatabaseObjectAction
     /**
      * @inheritDoc
      */
-    protected $requireACP = ['create', 'delete', 'emailSmtpTest', 'import', 'update', 'updateAll', 'generateRewriteRules'];
+    protected $requireACP = [
+        'create',
+        'delete',
+        'emailSmtpTest',
+        'import',
+        'update',
+        'updateAll',
+        'generateRewriteRules',
+    ];
 
     /**
      * Validates permissions and parameters.

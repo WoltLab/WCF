@@ -15,7 +15,7 @@ interface IFormElement
     /**
      * Creates a new object of type FormElement.
      *
-     * @param   IFormElementContainer   $parent
+     * @param IFormElementContainer $parent
      */
     public function __construct(IFormElementContainer $parent);
 
@@ -29,7 +29,7 @@ interface IFormElement
     /**
      * Sets form element description.
      *
-     * @param   string      $description
+     * @param string $description
      */
     public function setDescription($description);
 
@@ -43,7 +43,7 @@ interface IFormElement
     /**
      * Sets label.
      *
-     * @param   string      $label
+     * @param string $label
      */
     public function setLabel($label);
 
@@ -57,7 +57,7 @@ interface IFormElement
     /**
      * Returns HTML-representation of current form element.
      *
-     * @param   string      $formName
+     * @param string $formName
      * @return  string
      */
     public function getHTML($formName);
@@ -65,7 +65,7 @@ interface IFormElement
     /**
      * Sets localized error message.
      *
-     * @param   string      $error
+     * @param string $error
      */
     public function setError($error);
 

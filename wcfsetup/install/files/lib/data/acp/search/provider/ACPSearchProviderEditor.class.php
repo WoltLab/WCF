@@ -12,7 +12,7 @@ use wcf\data\DatabaseObjectEditor;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Acp\Search\Provider
  *
- * @method static   ACPSearchProvider   create(array $parameters = [])
+ * @method static ACPSearchProvider   create(array $parameters = [])
  * @method      ACPSearchProvider   getDecoratedObject()
  * @mixin       ACPSearchProvider
  */

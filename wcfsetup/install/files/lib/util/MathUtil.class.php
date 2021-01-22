@@ -15,8 +15,8 @@ final class MathUtil
     /**
      * Generates a random value.
      *
-     * @param   int     $min
-     * @param   int     $max
+     * @param int $min
+     * @param int $max
      * @return  int
      */
     public static function getRandomValue($min = null, $max = null)
@@ -29,8 +29,8 @@ final class MathUtil
      * Transforms the given latitude and longitude into cartesian coordinates
      * (x, y, z).
      *
-     * @param   float       $latitude
-     * @param   float       $longitude
+     * @param float $latitude
+     * @param float $longitude
      * @return  float[]
      */
     public static function latitudeLongitudeToCartesian($latitude, $longitude)

@@ -59,7 +59,7 @@ class ClassNameFormField extends TextFormField
     /**
      * Sets whether entered class must exist and returns this field.
      *
-     * @param   bool        $classExists    determines if entered class must exist
+     * @param bool $classExists determines if entered class must exist
      * @return  static              this field
      */
     public function classExists($classExists = true)
@@ -111,7 +111,7 @@ class ClassNameFormField extends TextFormField
      * If no description has been set yet, `wcf.form.field.className.description.interface`
      * is automatically used for the description.
      *
-     * @param   string      $interface  name of the interface the entered class must implement
+     * @param string $interface name of the interface the entered class must implement
      * @return  static              this field
      *
      * @throws  \InvalidArgumentException   if the entered interface does not exists
@@ -137,7 +137,7 @@ class ClassNameFormField extends TextFormField
     /**
      * Sets whether entered class must be instantiable and returns this field.
      *
-     * @param   bool        $instantiable   determines if entered class must be instantiable
+     * @param bool $instantiable determines if entered class must be instantiable
      * @return  static              this field
      */
     public function instantiable($instantiable = true)
@@ -161,7 +161,7 @@ class ClassNameFormField extends TextFormField
     /**
      * Returns the name of the class the entered class must extend.
      *
-     * @param   string      $parentClass    name of the class the entered class must extend
+     * @param string $parentClass name of the class the entered class must extend
      * @return  static              this field
      *
      * @throws  \InvalidArgumentException   if the entered class does not exists

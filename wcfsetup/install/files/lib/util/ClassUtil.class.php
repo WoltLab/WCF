@@ -19,8 +19,8 @@ final class ClassUtil
      * Checks whether the given objects are equal.
      * Objects are considered equal, when they are instances of the same class and all attributes are equal.
      *
-     * @param   object      $a
-     * @param   object      $b
+     * @param object $a
+     * @param object $b
      * @return  bool
      */
     public static function equals($a, $b)
@@ -36,8 +36,8 @@ final class ClassUtil
      * Checks whether given class extends or implements the target class or interface.
      * You SHOULD NOT call this method if 'instanceof' satisfies your request!
      *
-     * @param   string      $className
-     * @param   string      $targetClass
+     * @param string $className
+     * @param string $targetClass
      * @return  bool
      * @throws  SystemException
      *
@@ -68,8 +68,8 @@ final class ClassUtil
      *
      * This method also supports decorated decorators.
      *
-     * @param   string      $className      checked class
-     * @param   string      $targetClass        target class or interface
+     * @param string $className checked class
+     * @param string $targetClass target class or interface
      * @return  bool
      */
     public static function isDecoratedInstanceOf($className, $targetClass)

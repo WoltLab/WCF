@@ -211,8 +211,8 @@ abstract class AbstractExporter implements IExporter
     /**
      * Returns the maximum value of a specific column.
      *
-     * @param   string      $tableName
-     * @param   string      $columnName
+     * @param string $tableName
+     * @param string $columnName
      * @return  int
      */
     protected function __getMaxID($tableName, $columnName)

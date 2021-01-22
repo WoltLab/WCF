@@ -26,7 +26,7 @@ trait TFilterableSelectionFormField
      * are able to quickly find the desired option out of a larger list of
      * available options.
      *
-     * @param   bool    $filterable determines if field's options are filterable by user
+     * @param bool $filterable determines if field's options are filterable by user
      * @return  static          this node
      */
     public function filterable($filterable = true)

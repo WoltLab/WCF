@@ -61,10 +61,10 @@ class DatabaseException extends SystemException
     /**
      * Creates a new DatabaseException.
      *
-     * @param   string          $message        error message
-     * @param   Database        $db         affected db object
-     * @param   PreparedStatement   $preparedStatement  affected prepared statement
-     * @param   string          $sqlQuery       SQL query if prepare() failed
+     * @param string $message error message
+     * @param Database $db affected db object
+     * @param PreparedStatement $preparedStatement affected prepared statement
+     * @param string $sqlQuery SQL query if prepare() failed
      */
     public function __construct($message, Database $db, ?PreparedStatement $preparedStatement = null, $sqlQuery = null)
     {

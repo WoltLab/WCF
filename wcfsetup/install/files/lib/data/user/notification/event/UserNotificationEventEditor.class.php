@@ -12,7 +12,7 @@ use wcf\data\DatabaseObjectEditor;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\User\Notification\Event
  *
- * @method static   UserNotificationEvent   create(array $parameters = [])
+ * @method static UserNotificationEvent   create(array $parameters = [])
  * @method      UserNotificationEvent   getDecoratedObject()
  * @mixin       UserNotificationEvent
  */

@@ -179,9 +179,9 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
      * Renames a tag by creating a new element, moving all child nodes and
      * eventually removing the original element.
      *
-     * @param       \DOMElement     $element        old element
-     * @param       string          $tagName        tag name for the new element
-     * @param       bool            $preserveAttributes     retain attributes for the new element
+     * @param \DOMElement $element old element
+     * @param string $tagName tag name for the new element
+     * @param bool $preserveAttributes retain attributes for the new element
      * @return      \DOMElement     newly created element
      */
     public function renameTag(\DOMElement $element, $tagName, $preserveAttributes = false)
@@ -207,9 +207,9 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
     /**
      * Replaces an element with plain text.
      *
-     * @param       \DOMElement     $element        target element
-     * @param       string          $text           text used to replace target
-     * @param       bool         $isBlockElement true if element is a block element
+     * @param \DOMElement $element target element
+     * @param string $text text used to replace target
+     * @param bool $isBlockElement true if element is a block element
      */
     public function replaceElementWithText(\DOMElement $element, $text, $isBlockElement)
     {
@@ -230,7 +230,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
      * Removes an element but preserves child nodes by moving them into
      * its original position.
      *
-     * @param       \DOMElement     $element        element to be removed
+     * @param \DOMElement $element element to be removed
      */
     public function unwrapContent(\DOMElement $element)
     {
@@ -244,9 +244,9 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
     /**
      * Adds node replacement data.
      *
-     * @param       IHtmlNode       $htmlNode               node processor instance
-     * @param       string          $nodeIdentifier         replacement node identifier
-     * @param       array           $data                   replacement data
+     * @param IHtmlNode $htmlNode node processor instance
+     * @param string $nodeIdentifier replacement node identifier
+     * @param array $data replacement data
      */
     public function addNodeData(IHtmlNode $htmlNode, $nodeIdentifier, array $data)
     {
@@ -260,7 +260,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
     /**
      * Parses an attribute string.
      *
-     * @param       string          $attributes             base64 and JSON encoded attributes
+     * @param string $attributes base64 and JSON encoded attributes
      * @return      array           parsed attributes
      */
     public function parseAttributes($attributes)
@@ -293,7 +293,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
     /**
      * Invokes a html node processor.
      *
-     * @param       IHtmlNode       $htmlNode       html node processor
+     * @param IHtmlNode $htmlNode html node processor
      */
     protected function invokeHtmlNode(IHtmlNode $htmlNode)
     {
@@ -321,9 +321,9 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
     /**
      * Invokes possible html node processors based on found element tag names.
      *
-     * @param       string          $classNamePattern       full namespace pattern for class guessing
-     * @param       string[]        $skipTags               list of tag names that should be ignored
-     * @param       callable        $callback               optional callback
+     * @param string $classNamePattern full namespace pattern for class guessing
+     * @param string[] $skipTags list of tag names that should be ignored
+     * @param callable $callback optional callback
      */
     protected function invokeNodeHandlers($classNamePattern, array $skipTags = [], ?callable $callback = null)
     {

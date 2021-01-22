@@ -30,7 +30,8 @@ use wcf\util\StringUtil;
  * @package WoltLabSuite\Core\System\Package\
  * @since   3.1
  */
-class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin
+class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
+    IGuiPackageInstallationPlugin
 {
     use TXmlGuiPackageInstallationPlugin;
 
@@ -183,27 +184,29 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
                         );
                     }
                 }))
-                ->addValidator(new FormFieldValidator('noClassName', static function (MultilineTextFormField $formField) {
-                    /** @var ClassNameFormField $className */
-                    $className = $formField->getDocument()->getNodeById('className');
+                ->addValidator(new FormFieldValidator('noClassName',
+                    static function (MultilineTextFormField $formField) {
+                        /** @var ClassNameFormField $className */
+                        $className = $formField->getDocument()->getNodeById('className');
 
-                    if ($formField->getSaveValue() === '' && $className->getSaveValue() === '') {
-                        $formField->addValidationError(
-                            new FormFieldValidationError(
-                                'noClassName',
-                                'wcf.acp.pip.mediaProvider.html.error.noClassName'
-                            )
-                        );
-                    }
-                })),
+                        if ($formField->getSaveValue() === '' && $className->getSaveValue() === '') {
+                            $formField->addValidationError(
+                                new FormFieldValidationError(
+                                    'noClassName',
+                                    'wcf.acp.pip.mediaProvider.html.error.noClassName'
+                                )
+                            );
+                        }
+                    })),
         ]);
 
-        $form->getDataHandler()->addProcessor(new CustomFormDataProcessor('unifyNewlines', static function (IFormDocument $document, array $parameters) {
-            $parameters['data']['regex'] = StringUtil::unifyNewlines(StringUtil::escapeCDATA($parameters['data']['regex']));
-            $parameters['data']['html'] = StringUtil::unifyNewlines(StringUtil::escapeCDATA($parameters['data']['html']));
+        $form->getDataHandler()->addProcessor(new CustomFormDataProcessor('unifyNewlines',
+            static function (IFormDocument $document, array $parameters) {
+                $parameters['data']['regex'] = StringUtil::unifyNewlines(StringUtil::escapeCDATA($parameters['data']['regex']));
+                $parameters['data']['html'] = StringUtil::unifyNewlines(StringUtil::escapeCDATA($parameters['data']['html']));
 
-            return $parameters;
-        }));
+                return $parameters;
+            }));
     }
 
     /**

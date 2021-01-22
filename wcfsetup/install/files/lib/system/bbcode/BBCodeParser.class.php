@@ -82,7 +82,7 @@ class BBCodeParser extends SingletonFactory
     /**
      * Sets the output type of the parser.
      *
-     * @param   string      $outputType
+     * @param string $outputType
      */
     public function setOutputType($outputType)
     {
@@ -102,7 +102,7 @@ class BBCodeParser extends SingletonFactory
     /**
      * Sets the text to be parsed.
      *
-     * @param   string      $text
+     * @param string $text
      */
     public function setText($text)
     {
@@ -112,7 +112,7 @@ class BBCodeParser extends SingletonFactory
     /**
      * Parses the given text.
      *
-     * @param   string      $text
+     * @param string $text
      * @return  string      parsed text
      */
     public function parse($text)
@@ -233,7 +233,7 @@ class BBCodeParser extends SingletonFactory
     /**
      * Validates the attributes of a tag.
      *
-     * @param   array       $tag
+     * @param array $tag
      * @return  bool
      */
     protected function isValidTag(array $tag)
@@ -279,15 +279,16 @@ class BBCodeParser extends SingletonFactory
     /**
      * Validates an attributes of a tag.
      *
-     * @param   array           $tagAttributes
-     * @param   BBCodeAttribute     $definedTagAttribute
+     * @param array $tagAttributes
+     * @param BBCodeAttribute $definedTagAttribute
      * @return  bool
      */
     protected function isValidTagAttribute(array $tagAttributes, BBCodeAttribute $definedTagAttribute)
     {
         if ($definedTagAttribute->validationPattern && isset($tagAttributes[$definedTagAttribute->attributeNo])) {
             // validate attribute
-            if (!\preg_match('~' . \str_replace('~', '\~', $definedTagAttribute->validationPattern) . '~i', $tagAttributes[$definedTagAttribute->attributeNo])) {
+            if (!\preg_match('~' . \str_replace('~', '\~', $definedTagAttribute->validationPattern) . '~i',
+                $tagAttributes[$definedTagAttribute->attributeNo])) {
                 return false;
             }
         }
@@ -302,7 +303,7 @@ class BBCodeParser extends SingletonFactory
     /**
      * Returns true if the text inside the given text needs to be buffered.
      *
-     * @param   array       $tag
+     * @param array $tag
      * @return  bool
      */
     protected function needBuffering(array $tag)
@@ -325,7 +326,7 @@ class BBCodeParser extends SingletonFactory
     /**
      * Builds the opening tag.
      *
-     * @param   array       $tag
+     * @param array $tag
      * @return  string
      */
     protected function buildOpeningTag(array $tag)
@@ -356,7 +357,7 @@ class BBCodeParser extends SingletonFactory
     /**
      * Builds the closing tag.
      *
-     * @param   array       $tag
+     * @param array $tag
      * @return  string
      */
     protected function buildClosingTag(array $tag)
@@ -371,9 +372,9 @@ class BBCodeParser extends SingletonFactory
     /**
      * Returns true if the given tag is allowed in the given list of open tags.
      *
-     * @param   array       $openTags
-     * @param   string      $tag
-     * @param   bool        $closing
+     * @param array $openTags
+     * @param string $tag
+     * @param bool $closing
      * @return  bool
      */
     protected function isAllowed(array $openTags, $tag, $closing = false)
@@ -447,7 +448,8 @@ class BBCodeParser extends SingletonFactory
                     if ($this->isValidTag($openingTag)) {
                         if ($this->bbcodes[$tag['name']]->getProcessor()) {
                             // build tag
-                            $parsedTag = $this->bbcodes[$tag['name']]->getProcessor()->getParsedTag($openingTag, $buffer, $tag, $this);
+                            $parsedTag = $this->bbcodes[$tag['name']]->getProcessor()->getParsedTag($openingTag,
+                                $buffer, $tag, $this);
                         } else {
                             // build tag
                             $parsedTag = $this->buildOpeningTag($openingTag);
@@ -497,7 +499,7 @@ class BBCodeParser extends SingletonFactory
     /**
      * Builds the tag array from the given text.
      *
-     * @param   bool        $ignoreSourceCodes
+     * @param bool $ignoreSourceCodes
      */
     public function buildTagArray($ignoreSourceCodes = true)
     {
@@ -539,7 +541,7 @@ class BBCodeParser extends SingletonFactory
     /**
      * Builds a bbcode tag.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  array       bbcode tag data
      */
     protected function buildTag($string)
@@ -568,7 +570,7 @@ class BBCodeParser extends SingletonFactory
     /**
      * Builds the attributes of a bbcode tag.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  array       bbcode attributes
      */
     protected function buildTagAttributes($string)
@@ -592,8 +594,8 @@ class BBCodeParser extends SingletonFactory
      * Validates the used BBCodes in the given text by the given allowed
      * BBCodes and returns a list of used disallowed BBCodes.
      *
-     * @param   string          $text
-     * @param   string[]        $allowedBBCodes
+     * @param string $text
+     * @param string[] $allowedBBCodes
      * @deprecated  3.0 - please use HtmlInputProcessor::validate() instead
      */
     public function validateBBCodes($text, array $allowedBBCodes)
@@ -604,7 +606,7 @@ class BBCodeParser extends SingletonFactory
     /**
      * Removes code bbcode occurrences in given message.
      *
-     * @param   string      $message
+     * @param string $message
      * @return  string
      */
     public function removeCodeTags($message)

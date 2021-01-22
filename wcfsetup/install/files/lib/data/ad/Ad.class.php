@@ -19,12 +19,12 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Ad
  *
- * @property-read   int     $adID       unique id of the ad
- * @property-read   int     $objectTypeID   id of the `com.woltlab.wcf.adLocation` object type
- * @property-read   string      $adName     name of the ad shown in ACP
- * @property-read   string      $ad     ad text
- * @property-read   int     $isDisabled is `1` if the ad is disabled and thus not shown, otherwise `0`
- * @property-read   int     $showOrder  position of the ad in relation to the other ads at the same location
+ * @property-read   int $adID       unique id of the ad
+ * @property-read   int $objectTypeID   id of the `com.woltlab.wcf.adLocation` object type
+ * @property-read   string $adName     name of the ad shown in ACP
+ * @property-read   string $ad     ad text
+ * @property-read   int $isDisabled is `1` if the ad is disabled and thus not shown, otherwise `0`
+ * @property-read   int $showOrder  position of the ad in relation to the other ads at the same location
  */
 class Ad extends DatabaseObject implements IRouteController
 {
@@ -80,7 +80,8 @@ class Ad extends DatabaseObject implements IRouteController
         if (WCF::getUser()->userID) {
             $output = \strtr($output, ['{$username}' => StringUtil::encodeHTML(WCF::getUser()->username)]);
         } else {
-            $output = \strtr($output, ['{$username}' => StringUtil::encodeHTML(WCF::getLanguage()->get('wcf.user.guest'))]);
+            $output = \strtr($output,
+                ['{$username}' => StringUtil::encodeHTML(WCF::getLanguage()->get('wcf.user.guest'))]);
         }
 
         if ($objectType->className && \is_subclass_of($objectType->className, IAdLocation::class)) {

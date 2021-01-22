@@ -33,7 +33,7 @@ trait TFormParentNode
     /**
      * Appends the given node to this node and returns this node.
      *
-     * @param   IFormChildNode      $child      appended child
+     * @param IFormChildNode $child appended child
      * @return  static                  this node
      *
      * @throws  \BadMethodCallException     if method is called with more than one parameter (might be mistakenly used instead of `appendChildren()`)
@@ -54,7 +54,7 @@ trait TFormParentNode
     /**
      * Appends the given children to this node and returns this node.
      *
-     * @param   IFormChildNode[]    $children   appended children
+     * @param IFormChildNode[] $children appended children
      * @return  static                  this node
      */
     public function appendChildren(array $children)
@@ -70,7 +70,7 @@ trait TFormParentNode
      * Returns `true` if this node (or any of the child nodes) contains the node
      * with the given id and returns `false` otherwise.
      *
-     * @param   string      $nodeId     id of searched node
+     * @param string $nodeId id of searched node
      * @return  bool
      */
     public function contains($nodeId)
@@ -177,7 +177,7 @@ trait TFormParentNode
      * All descendants, not only the direct child nodes, are checked to find the
      * requested node.
      *
-     * @param   string      $nodeId     id of the requested node
+     * @param string $nodeId id of the requested node
      * @return  null|IFormNode          requested node
      *
      * @throws  \InvalidArgumentException   if the given id is invalid
@@ -236,8 +236,8 @@ trait TFormParentNode
     /**
      * Inserts the given node after the node with the given id and returns this node.
      *
-     * @param   IFormChildNode      $child          inserted child node
-     * @param   string          $referenceNodeId    id of the node after which the given node is inserted
+     * @param IFormChildNode $child inserted child node
+     * @param string $referenceNodeId id of the node after which the given node is inserted
      * @return  static                      this node
      *
      * @throws  \InvalidArgumentException           if given node cannot be inserted or reference node id is invalid
@@ -266,8 +266,8 @@ trait TFormParentNode
     /**
      * Inserts the given node before the node with the given id and returns this node.
      *
-     * @param   IFormChildNode      $child          inserted child node
-     * @param   string          $referenceNodeId    id of the node before which the given node is inserted
+     * @param IFormChildNode $child inserted child node
+     * @param string $referenceNodeId id of the node before which the given node is inserted
      * @return  static                      this node
      *
      * @throws  \InvalidArgumentException           if given node cannot be inserted or reference node id is invalid
@@ -389,7 +389,7 @@ trait TFormParentNode
     /**
      * Checks if the given node can be added as a child to this node.
      *
-     * @param   IFormChildNode      $child      validated child node
+     * @param IFormChildNode $child validated child node
      *
      * @throws  \InvalidArgumentException       if given node cannot be added as a child
      */

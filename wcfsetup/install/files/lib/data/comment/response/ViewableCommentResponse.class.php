@@ -54,7 +54,7 @@ class ViewableCommentResponse extends DatabaseObjectDecorator
     /**
      * Returns a specific comment response decorated as viewable comment response.
      *
-     * @param   int     $responseID
+     * @param int $responseID
      * @return  ViewableCommentResponse
      */
     public static function getResponse($responseID)

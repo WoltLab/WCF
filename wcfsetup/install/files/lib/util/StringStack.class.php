@@ -27,10 +27,10 @@ final class StringStack
     /**
      * Replaces a string with an unique hash value.
      *
-     * @param   string      $string
-     * @param   string      $type
+     * @param string $string
+     * @param string $type
+     * @param string $delimiter
      * @return  string      $hash
-     * @param   string      $delimiter
      */
     public static function pushToStringStack($string, $type = 'default', $delimiter = '@@')
     {
@@ -49,8 +49,8 @@ final class StringStack
     /**
      * Reinserts strings that have been replaced by unique hash values.
      *
-     * @param   string      $string
-     * @param   string      $type
+     * @param string $string
+     * @param string $type
      * @return  string
      */
     public static function reinsertStrings($string, $type = 'default')
@@ -70,7 +70,7 @@ final class StringStack
     /**
      * Returns the stack.
      *
-     * @param   string      $type
+     * @param string $type
      * @return  array
      */
     public static function getStack($type = 'default')

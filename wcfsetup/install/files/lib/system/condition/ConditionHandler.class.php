@@ -32,8 +32,8 @@ class ConditionHandler extends SingletonFactory
      * Creates condition objects for the object with the given id and based
      * on the given condition object types.
      *
-     * @param   int     $objectID
-     * @param   ObjectType[]    $conditionObjectTypes
+     * @param int $objectID
+     * @param ObjectType[] $conditionObjectTypes
      */
     public function createConditions($objectID, array $conditionObjectTypes)
     {
@@ -55,8 +55,8 @@ class ConditionHandler extends SingletonFactory
     /**
      * Deletes all conditions of the objects with the given ids.
      *
-     * @param   string      $definitionName
-     * @param   int[]   $objectIDs
+     * @param string $definitionName
+     * @param int[] $objectIDs
      * @throws  SystemException
      */
     public function deleteConditions($definitionName, array $objectIDs)
@@ -95,8 +95,8 @@ class ConditionHandler extends SingletonFactory
      * Returns the conditions for the conditioned object with the given condition
      * object type definition and object id.
      *
-     * @param   string      $definitionName
-     * @param   int     $objectID
+     * @param string $definitionName
+     * @param int $objectID
      * @return  Condition[]
      * @throws  SystemException
      */
@@ -124,9 +124,9 @@ class ConditionHandler extends SingletonFactory
     /**
      * Updates the conditions for the object with the given object id.
      *
-     * @param   int     $objectID
-     * @param   Condition[] $oldConditions
-     * @param   ObjectType[]    $conditionObjectTypes
+     * @param int $objectID
+     * @param Condition[] $oldConditions
+     * @param ObjectType[] $conditionObjectTypes
      */
     public function updateConditions($objectID, array $oldConditions, array $conditionObjectTypes)
     {

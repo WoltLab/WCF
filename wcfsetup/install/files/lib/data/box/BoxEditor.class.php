@@ -13,7 +13,7 @@ use wcf\data\DatabaseObjectEditor;
  * @package WoltLabSuite\Core\Data\Box
  * @since   3.0
  *
- * @method static   Box create(array $parameters = [])
+ * @method static Box create(array $parameters = [])
  * @method      Box getDecoratedObject()
  * @mixin       Box
  */
@@ -27,8 +27,8 @@ class BoxEditor extends DatabaseObjectEditor
     /**
      * Creates the template file for "tpl"-type boxes.
      *
-     * @param       int         $languageID
-     * @param       string          $content
+     * @param int $languageID
+     * @param string $content
      */
     public function writeTemplate($languageID, $content)
     {

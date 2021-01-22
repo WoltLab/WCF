@@ -52,7 +52,7 @@ class DatabaseTableIndex
     /**
      * Creates a new `DatabaseTableIndex` object.
      *
-     * @param   string      $name       column name
+     * @param string $name column name
      */
     protected function __construct($name)
     {
@@ -62,7 +62,7 @@ class DatabaseTableIndex
     /**
      * Sets the indexed columns and returns the index.
      *
-     * @param   string[]    $columns    indexed columns
+     * @param string[] $columns indexed columns
      * @return  $this               this index
      */
     public function columns($columns)
@@ -75,7 +75,7 @@ class DatabaseTableIndex
     /**
      * Sets the automatically generated name of the index.
      *
-     * @param   string      $name       index name
+     * @param string $name index name
      * @return  $this               this index
      */
     public function generatedName($name)
@@ -142,7 +142,7 @@ class DatabaseTableIndex
     /**
      * Sets the name of the index.
      *
-     * @param   string      $name       index name
+     * @param string $name index name
      * @return  $this               this index
      */
     public function name($name)
@@ -155,7 +155,7 @@ class DatabaseTableIndex
     /**
      * Sets the type of the index and returns the index
      *
-     * @param   null|string $type       index type
+     * @param null|string $type index type
      * @return  $this               this index
      * @throws  \InvalidArgumentException   if given type is invalid
      */
@@ -178,7 +178,7 @@ class DatabaseTableIndex
     /**
      * Returns a `DatabaseTableIndex` object with the given name.
      *
-     * @param   string      $name
+     * @param string $name
      * @return  static
      */
     public static function create($name = '')
@@ -189,8 +189,8 @@ class DatabaseTableIndex
     /**
      * Returns a `DatabaseTableIndex` object with the given name and data.
      *
-     * @param   string      $name
-     * @param   array       $data       data returned by `DatabaseEditor::getIndexInformation()`
+     * @param string $name
+     * @param array $data data returned by `DatabaseEditor::getIndexInformation()`
      * @return  static
      */
     public static function createFromData($name, array $data)

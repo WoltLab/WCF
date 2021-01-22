@@ -59,7 +59,7 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
     /**
      * Saves the descriptions of the cronjob in language items.
      *
-     * @param   string[]        $descriptions
+     * @param string[] $descriptions
      * @since   3.0
      */
     protected function saveDescriptions(array $descriptions)

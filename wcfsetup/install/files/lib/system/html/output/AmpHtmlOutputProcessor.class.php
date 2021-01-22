@@ -32,10 +32,19 @@ class AmpHtmlOutputProcessor extends HtmlOutputProcessor
         // remove tags and discarding content
         $tags = [
             // general
-            'base', 'frame', 'frameset', 'object', 'param', 'applet', 'embed',
+            'base',
+            'frame',
+            'frameset',
+            'object',
+            'param',
+            'applet',
+            'embed',
 
             // forms
-            'input', 'textarea', 'select', 'option',
+            'input',
+            'textarea',
+            'select',
+            'option',
 
             // special
             'style',
@@ -158,8 +167,8 @@ class AmpHtmlOutputProcessor extends HtmlOutputProcessor
      * Filters a list of elements using a callback. Return false from the callback
      * to add the element to the list of bad elements.
      *
-     * @param       \DOMNodeList    $elements       list of possible elements
-     * @param       callable        $callback       validation callback, return false to flag element as bad
+     * @param \DOMNodeList $elements list of possible elements
+     * @param callable $callback validation callback, return false to flag element as bad
      * @return      \DOMElement[]   list of bad elements
      */
     protected function filterElements(\DOMNodeList $elements, callable $callback)

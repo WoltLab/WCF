@@ -17,8 +17,8 @@ class ImplementationException extends \LogicException
     /**
      * ImplementationException constructor.
      *
-     * @param   string      $className
-     * @param   string      $interfaceName
+     * @param string $className
+     * @param string $interfaceName
      */
     public function __construct($className, $interfaceName)
     {

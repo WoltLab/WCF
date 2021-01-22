@@ -168,7 +168,15 @@ class DailyMailNotificationCronjob extends AbstractCronjob
                 continue;
             }
 
-            $notifications = \array_map(static function ($notificationID) use ($notificationObjects, $eventObjects, $user, $objectTypes, $authors, $authorToNotification, $unknownAuthor) {
+            $notifications = \array_map(static function ($notificationID) use (
+                $notificationObjects,
+                $eventObjects,
+                $user,
+                $objectTypes,
+                $authors,
+                $authorToNotification,
+                $unknownAuthor
+            ) {
                 $notification = $notificationObjects[$notificationID];
 
                 $className = $eventObjects[$notification->eventID]->className;

@@ -33,9 +33,9 @@ class UserInputException extends UserException
     /**
      * Creates a new UserInputException.
      *
-     * @param   string      $field      affected formular field
-     * @param   string      $type       kind of this error
-     * @param   array       $variables  additional variables for AJAX error handling
+     * @param string $field affected formular field
+     * @param string $type kind of this error
+     * @param array $variables additional variables for AJAX error handling
      */
     public function __construct($field = '', $type = 'empty', array $variables = [])
     {

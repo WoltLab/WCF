@@ -38,7 +38,7 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator
     /**
      * Adds a breadcrumb (insertion order is crucial!).
      *
-     * @param   Breadcrumb  $item
+     * @param Breadcrumb $item
      * @deprecated  3.0
      */
     public function add(Breadcrumb $item)
@@ -63,8 +63,8 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator
     /**
      * Replaces a breadcrumb, returns true if replacement was successful.
      *
-     * @param   Breadcrumb  $item
-     * @param   int     $index
+     * @param Breadcrumb $item
+     * @param int $index
      * @deprecated  3.0
      */
     public function replace(Breadcrumb $item, $index)
@@ -75,7 +75,7 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator
     /**
      * Removes a breadcrumb, returns true if deletion was successful.
      *
-     * @param   int     $index
+     * @param int $index
      * @deprecated  3.0
      */
     public function remove($index)

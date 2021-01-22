@@ -92,7 +92,7 @@ abstract class CustomOptionHandler extends OptionHandler
     /**
      * Sets the option values.
      *
-     * @param   array       $values
+     * @param array $values
      */
     public function setOptionValues(array $values)
     {

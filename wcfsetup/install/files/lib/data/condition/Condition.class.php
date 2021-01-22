@@ -13,10 +13,10 @@ use wcf\data\object\type\ObjectTypeCache;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Condition
  *
- * @property-read   int     $conditionID        unique id of the condition
- * @property-read   int     $objectTypeID       id of the condition object type (of different condition object type definitions)
- * @property-read   int     $objectID       id of the conditioned object of the object type represented by `$objectTypeID`
- * @property-read   array       $conditionData      array with the condition data with is processed by the condition object type's processor
+ * @property-read   int $conditionID        unique id of the condition
+ * @property-read   int $objectTypeID       id of the condition object type (of different condition object type definitions)
+ * @property-read   int $objectID       id of the conditioned object of the object type represented by `$objectTypeID`
+ * @property-read   array $conditionData      array with the condition data with is processed by the condition object type's processor
  */
 class Condition extends DatabaseObject
 {

@@ -39,7 +39,7 @@ class SimpleAclHandler extends SingletonFactory
     /**
      * Returns the object type id by object type.
      *
-     * @param       string          $objectType     object type name
+     * @param string $objectType object type name
      * @return      int         object type id
      * @throws      \InvalidArgumentException
      */
@@ -55,8 +55,8 @@ class SimpleAclHandler extends SingletonFactory
     /**
      * Returns the user and group values for provided object type and object id.
      *
-     * @param       string          $objectType     object type name
-     * @param       int         $objectID       object id
+     * @param string $objectType object type name
+     * @param int $objectID object id
      * @return      array           array containing the keys `allowAll`, `user` and `group`
      */
     public function getValues($objectType, $objectID)
@@ -109,9 +109,9 @@ class SimpleAclHandler extends SingletonFactory
     /**
      * Sets the user and group values for provided object type and object id.
      *
-     * @param   string      $objectType object type name
-     * @param   int     $objectID   object id
-     * @param   array       $values     list of user and group ids
+     * @param string $objectType object type name
+     * @param int $objectID object id
+     * @param array $values list of user and group ids
      * @throws  \InvalidArgumentException
      */
     public function setValues($objectType, $objectID, array $values)
@@ -191,7 +191,7 @@ class SimpleAclHandler extends SingletonFactory
      * Processes the provided values and returns the final
      * values for template assignment.
      *
-     * @param       array   $rawValues      acl values as provided (by the user input)
+     * @param array $rawValues acl values as provided (by the user input)
      * @return      array   final values for template assignment
      */
     public function getOutputValues(array $rawValues)

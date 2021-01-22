@@ -12,9 +12,9 @@ use wcf\data\DatabaseObject;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Style\Variable
  *
- * @property-read   int     $variableID     unique id of the style variable
- * @property-read   string      $variableName       name of the style variable
- * @property-read   string      $defaultValue       default value of the style variable
+ * @property-read   int $variableID     unique id of the style variable
+ * @property-read   string $variableName       name of the style variable
+ * @property-read   string $defaultValue       default value of the style variable
  */
 class StyleVariable extends DatabaseObject
 {

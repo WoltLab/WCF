@@ -79,16 +79,20 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction
                 /** @noinspection PhpUndefinedMethodInspection */
                 if ($this->parameters['filteredByFollowedUsers'] && \count(WCF::getUserProfileHandler()->getFollowingUsers())) {
                     /** @noinspection PhpUndefinedMethodInspection */
-                    $eventList->getConditionBuilder()->add('user_activity_event.userID IN (?)', [WCF::getUserProfileHandler()->getFollowingUsers()]);
+                    $eventList->getConditionBuilder()->add('user_activity_event.userID IN (?)',
+                        [WCF::getUserProfileHandler()->getFollowingUsers()]);
                 }
             }
         }
 
         if ($this->parameters['lastEventID']) {
-            $eventList->getConditionBuilder()->add("user_activity_event.time <= ?", [$this->parameters['lastEventTime']]);
-            $eventList->getConditionBuilder()->add("user_activity_event.eventID < ?", [$this->parameters['lastEventID']]);
+            $eventList->getConditionBuilder()->add("user_activity_event.time <= ?",
+                [$this->parameters['lastEventTime']]);
+            $eventList->getConditionBuilder()->add("user_activity_event.eventID < ?",
+                [$this->parameters['lastEventID']]);
         } else {
-            $eventList->getConditionBuilder()->add("user_activity_event.time < ?", [$this->parameters['lastEventTime']]);
+            $eventList->getConditionBuilder()->add("user_activity_event.time < ?",
+                [$this->parameters['lastEventTime']]);
         }
 
         $eventList->readObjects();

@@ -19,9 +19,9 @@ interface IEmailTransport
     /**
      * Delivers the given $email to the given Mailbox as the recipient.
      *
-     * @param   Email       $email
-     * @param   Mailbox     $envelopeFrom
-     * @param   Mailbox     $envelopeTo
+     * @param Email $email
+     * @param Mailbox $envelopeFrom
+     * @param Mailbox $envelopeTo
      */
     public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo);
 }

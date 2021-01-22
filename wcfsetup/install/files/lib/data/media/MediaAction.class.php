@@ -145,7 +145,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
     /**
      * Returns the data of the media file to be returned by AJAX requests.
      *
-     * @param   Media|ViewableMedia $media      media files whose data will be returned
+     * @param Media|ViewableMedia $media media files whose data will be returned
      * @return  string[]
      */
     protected function getMediaData($media)
@@ -164,9 +164,10 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             'fileType' => $media->fileType,
             'height' => $media->height,
             'languageID' => $media->languageID,
-            'imageDimensions' => $media->isImage ? WCF::getLanguage()->getDynamicVariable('wcf.media.imageDimensions.value', [
-                'media' => $media,
-            ]) : '',
+            'imageDimensions' => $media->isImage ? WCF::getLanguage()->getDynamicVariable('wcf.media.imageDimensions.value',
+                [
+                    'media' => $media,
+                ]) : '',
             'isImage' => $media->isImage,
             'isMultilingual' => $media->isMultilingual,
             'largeThumbnailHeight' => $media->largeThumbnailHeight,
@@ -257,7 +258,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
     /**
      * Returns the complete i18n data of the media files in the given list.
      *
-     * @param   MediaList   $mediaList
+     * @param MediaList $mediaList
      * @return  array
      */
     protected function getI18nMediaData(MediaList $mediaList)
@@ -455,9 +456,11 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
                 $statement->execute([
                     $media->mediaID,
                     $languageID,
-                    isset($this->parameters['title'][$languageID]) ? \mb_substr($this->parameters['title'][$languageID], 0, 255) : '',
+                    isset($this->parameters['title'][$languageID]) ? \mb_substr($this->parameters['title'][$languageID],
+                        0, 255) : '',
                     $this->parameters['caption'][$languageID] ?? '',
-                    isset($this->parameters['altText'][$languageID]) ? \mb_substr($this->parameters['altText'][$languageID], 0, 255) : '',
+                    isset($this->parameters['altText'][$languageID]) ? \mb_substr($this->parameters['altText'][$languageID],
+                        0, 255) : '',
                 ]);
             } else {
                 $languages = LanguageFactory::getInstance()->getLanguages();
@@ -488,7 +491,8 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
             }
 
             if (!empty($this->parameters['aclValues'])) {
-                SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.media', $media->mediaID, $this->parameters['aclValues']);
+                SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.media', $media->mediaID,
+                    $this->parameters['aclValues']);
             }
         }
     }
@@ -616,7 +620,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
      * Unmarks the media files with the given ids. If no media ids are given,
      * all media files currently loaded are unmarked.
      *
-     * @param   int[]   $mediaIDs   ids of the media files to be unmarked
+     * @param int[] $mediaIDs ids of the media files to be unmarked
      */
     protected function unmarkItems(array $mediaIDs = [])
     {
@@ -627,7 +631,8 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
         }
 
         if (!empty($mediaIDs)) {
-            ClipboardHandler::getInstance()->unmark($mediaIDs, ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.media'));
+            ClipboardHandler::getInstance()->unmark($mediaIDs,
+                ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.media'));
         }
     }
 

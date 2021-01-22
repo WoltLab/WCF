@@ -12,7 +12,7 @@ use wcf\data\DatabaseObjectEditor;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Acl\Option\Category
  *
- * @method static   ACLOptionCategory   create(array $parameters = [])
+ * @method static ACLOptionCategory   create(array $parameters = [])
  * @method      ACLOptionCategory   getDecoratedObject()
  * @mixin       ACLOptionCategory
  */

@@ -16,7 +16,7 @@ use wcf\data\DatabaseObjectList;
  * @method  PageContent     current()
  * @method  PageContent[]           getObjects()
  * @method  PageContent|null    search($objectID)
- * @property    PageContent[]           $objects
+ * @property    PageContent[] $objects
  */
 class PageContentList extends DatabaseObjectList
 {

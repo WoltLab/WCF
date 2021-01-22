@@ -15,7 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method  Smiley      current()
  * @method  Smiley[]    getObjects()
  * @method  Smiley|null search($objectID)
- * @property    Smiley[]    $objects
+ * @property    Smiley[] $objects
  */
 class SmileyList extends DatabaseObjectList
 {

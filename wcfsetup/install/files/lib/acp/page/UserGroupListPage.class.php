@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Page
  *
- * @property    I18nUserGroupList       $objectList
+ * @property    I18nUserGroupList $objectList
  */
 class UserGroupListPage extends SortablePage
 {

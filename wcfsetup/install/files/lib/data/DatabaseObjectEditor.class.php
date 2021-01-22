@@ -144,7 +144,7 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
     /**
      * Creates a new object, returns null if the row already exists.
      *
-     * @param   array   $parameters
+     * @param array $parameters
      * @return  IStorableObject|null
      * @since       5.3
      */

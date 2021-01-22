@@ -177,7 +177,7 @@ class UninstallPackageAction extends InstallPackageAction
 
             default:
                 throw new IllegalLinkException();
-            break;
+                break;
         }
     }
 

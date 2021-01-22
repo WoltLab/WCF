@@ -16,7 +16,7 @@ interface IStorableObject
      * Returns the value of a object data variable with the given name or `null` if no
      * such data variable exists.
      *
-     * @param   string      $name
+     * @param string $name
      * @return  mixed
      */
     public function __get($name);
@@ -25,7 +25,7 @@ interface IStorableObject
      * Determines if the object data variable with the given name is set and
      * is not NULL.
      *
-     * @param   string      $name
+     * @param string $name
      * @return  bool
      */
     public function __isset($name);

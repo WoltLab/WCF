@@ -19,7 +19,7 @@ class UserOnlineLocationHandler extends SingletonFactory
     /**
      * Returns the location of the given user.
      *
-     * @param   UserOnline  $user
+     * @param UserOnline $user
      * @return  string
      */
     public function getLocation(UserOnline $user)

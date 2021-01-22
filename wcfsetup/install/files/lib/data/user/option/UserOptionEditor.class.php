@@ -108,7 +108,7 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
     /**
      * Enables this option.
      *
-     * @param   bool        $enable
+     * @param bool $enable
      */
     public function enable($enable = true)
     {
@@ -124,7 +124,7 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
     /**
      * Determines the needed sql statement to modify column definitions.
      *
-     * @param   string      $optionType
+     * @param string $optionType
      * @return  array       column definition
      */
     public static function getColumnDefinition($optionType)

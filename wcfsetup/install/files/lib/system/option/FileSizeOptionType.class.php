@@ -47,7 +47,7 @@ class FileSizeOptionType extends TextOptionType
                 // no break
                 case 'mb':
                     $number *= 1000;
-                    // no break
+                // no break
                 case 'kb':
                     $number *= 1000;
                     break;
@@ -62,7 +62,7 @@ class FileSizeOptionType extends TextOptionType
                 // no break
                 case 'mib':
                     $number *= 1024;
-                    // no break
+                // no break
                 case 'kib':
                     $number *= 1024;
                     break;

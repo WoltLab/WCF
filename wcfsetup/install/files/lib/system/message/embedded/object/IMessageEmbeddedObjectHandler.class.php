@@ -13,7 +13,7 @@ use wcf\system\html\input\HtmlInputProcessor;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Message\Embedded\Object
  *
- * @property-read   int     $objectTypeID   id of the embedded object type
+ * @property-read   int $objectTypeID   id of the embedded object type
  */
 interface IMessageEmbeddedObjectHandler
 {
@@ -22,8 +22,8 @@ interface IMessageEmbeddedObjectHandler
      * document to extract additional data. Returns the IDs of found
      * embedded objects.
      *
-     * @param       HtmlInputProcessor      $htmlInputProcessor     html input processor holding the current document
-     * @param       mixed[]                 $embeddedData           list of found embedded data with attributes
+     * @param HtmlInputProcessor $htmlInputProcessor html input processor holding the current document
+     * @param mixed[] $embeddedData list of found embedded data with attributes
      * @return      int[]               ids of found embedded objects
      */
     public function parse(HtmlInputProcessor $htmlInputProcessor, array $embeddedData);
@@ -31,7 +31,7 @@ interface IMessageEmbeddedObjectHandler
     /**
      * Loads and returns embedded objects.
      *
-     * @param   array       $objectIDs
+     * @param array $objectIDs
      * @return  DatabaseObject[]
      */
     public function loadObjects(array $objectIDs);

@@ -32,8 +32,8 @@ trait TDecoratedCategoryOnlineLocationPageHandler
     /**
      * Returns the textual description if a user is currently online viewing this page.
      *
-     * @param   Page        $page       visited page
-     * @param   UserOnline  $user       user online object with request data
+     * @param Page $page visited page
+     * @param UserOnline $user user online object with request data
      * @return  string
      * @see IOnlineLocationPageHandler::getOnlineLocation()
      */

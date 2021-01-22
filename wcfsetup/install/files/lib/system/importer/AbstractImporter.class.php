@@ -32,9 +32,9 @@ abstract class AbstractImporter implements IImporter
     /**
      * Imports a list of language items.
      *
-     * @param       string[][]      $items
-     * @param       string          $languageCategory
-     * @param       string          $package
+     * @param string[][] $items
+     * @param string $languageCategory
+     * @param string $package
      */
     protected function importI18nValues(array $items, $languageCategory, $package)
     {
@@ -62,7 +62,7 @@ abstract class AbstractImporter implements IImporter
     /**
      * Returns the language category id.
      *
-     * @param       string          $languageCategory
+     * @param string $languageCategory
      * @return      int
      */
     protected function getLanguageCategoryID($languageCategory)

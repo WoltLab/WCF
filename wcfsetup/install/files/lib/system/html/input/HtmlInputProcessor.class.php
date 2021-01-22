@@ -46,10 +46,10 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
     /**
      * Processes the input html string.
      *
-     * @param       string          $html                   html string
-     * @param       string          $objectType             object type identifier
-     * @param       int         $objectID               object id
-     * @param       bool         $convertFromBBCode      interpret input as bbcode
+     * @param string $html html string
+     * @param string $objectType object type identifier
+     * @param int $objectID object id
+     * @param bool $convertFromBBCode interpret input as bbcode
      */
     public function process($html, $objectType, $objectID = 0, $convertFromBBCode = false)
     {
@@ -84,7 +84,7 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
      * does not perform any filtering or validation. You SHOULD NOT use this
      * to deal with HTML that has not been filtered previously.
      *
-     * @param       string          $html   html string
+     * @param string $html html string
      */
     public function processIntermediate($html)
     {
@@ -95,9 +95,9 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
      * Reprocesses a message by transforming the message into an editor-like
      * state using plain bbcodes instead of metacode elements.
      *
-     * @param       string          $html           html string
-     * @param       string          $objectType     object type identifier
-     * @param       int         $objectID       object id
+     * @param string $html html string
+     * @param string $objectType object type identifier
+     * @param int $objectID object id
      * @since       3.1
      */
     public function reprocess($html, $objectType, $objectID)
@@ -152,9 +152,9 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
      * Processes only embedded content. This method should only be called when rebuilding
      * data where only embedded content is relevant, but no actual parsing is required.
      *
-     * @param       string          $html           html string
-     * @param       string          $objectType     object type identifier
-     * @param       int         $objectID       object id
+     * @param string $html html string
+     * @param string $objectType object type identifier
+     * @param int $objectID object id
      * @throws      \UnexpectedValueException
      */
     public function processEmbeddedContent($html, $objectType, $objectID)
@@ -183,7 +183,7 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
     /**
      * Enforces the maximum depth of nested quotes.
      *
-     * @param   int     $depth
+     * @param int $depth
      */
     public function enforceQuoteDepth($depth)
     {
@@ -245,7 +245,7 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
     /**
      * Sets the new object id.
      *
-     * @param       int         $objectID       object id
+     * @param int $objectID object id
      */
     public function setObjectID($objectID)
     {
@@ -276,7 +276,7 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
     /**
      * Converts bbcodes using newlines into valid HTML.
      *
-     * @param       string          $html           html string
+     * @param string $html html string
      * @return      string          parsed html string
      */
     protected function convertToHtml($html)

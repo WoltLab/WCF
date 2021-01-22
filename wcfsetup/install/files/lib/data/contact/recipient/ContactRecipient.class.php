@@ -14,13 +14,13 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Core\Data\Contact\Recipient
  * @since   3.1
  *
- * @property-read   int     $recipientID        unique id of the recipient
- * @property-read   string      $name           name of the recipient
- * @property-read   string      $email          email address of the recipient
- * @property-read   int     $showOrder      position of the recipient in relation to other recipients
- * @property-read   int     $isAdministrator    is `1` if the recipient is the administrator and the `email` value equals `MAIL_ADMIN_ADDRESS`, otherwise `0`
- * @property-read   int     $isDisabled     is `1` if the recipient is disabled and thus is not available for selection, otherwise `0`
- * @property-read   int     $originIsSystem     is `1` if the recipient has been delivered by a package, otherwise `0` (i.e. the recipient has been created in the ACP)
+ * @property-read   int $recipientID        unique id of the recipient
+ * @property-read   string $name           name of the recipient
+ * @property-read   string $email          email address of the recipient
+ * @property-read   int $showOrder      position of the recipient in relation to other recipients
+ * @property-read   int $isAdministrator    is `1` if the recipient is the administrator and the `email` value equals `MAIL_ADMIN_ADDRESS`, otherwise `0`
+ * @property-read   int $isDisabled     is `1` if the recipient is disabled and thus is not available for selection, otherwise `0`
+ * @property-read   int $originIsSystem     is `1` if the recipient has been delivered by a package, otherwise `0` (i.e. the recipient has been created in the ACP)
  */
 class ContactRecipient extends DatabaseObject
 {

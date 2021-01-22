@@ -16,18 +16,18 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Bbcode
  *
- * @property-read   int     $bbcodeID       unique id of the bbcode
- * @property-read   string      $bbcodeTag      tag of the bbcode
- * @property-read   int     $packageID      id of the package which delivers the bbcode or `1` if it has been created in the acp
- * @property-read   string      $htmlOpen       html code of the opening tag (without the less-than sign and greater-than sign) or empty if no such html code exists
- * @property-read   string      $htmlClose      html code of the closing tag (without the less-than sign and greater-than sign) or empty if no such html code exists
- * @property-read   string      $className      name of the PHP class implementing `wcf\system\bbcode\IBBCode` or empty if no such class exists
- * @property-read   int     $isBlockElement     is `1` if the bbcode represents a block element and thus can contain multiple lines, otherwise `0`
- * @property-read   string      $wysiwygIcon        css class name used as icon for the bbcode in the editor toolbar
- * @property-read   string      $buttonLabel        name of the language item used as button label for the bbcode in the editor toolbar
- * @property-read   int     $isSourceCode       is `1` if the bbcode's content is treated as source code, otherwise `0`
- * @property-read   int     $showButton     is `1` if a button for the bbcode will be shown in the editor toolbar, otherwise `0`
- * @property-read   int     $originIsSystem     is `1` if the bbcode has been delivered by a package, otherwise `0` (if the bbcode has been created by an admin in the acp)
+ * @property-read   int $bbcodeID       unique id of the bbcode
+ * @property-read   string $bbcodeTag      tag of the bbcode
+ * @property-read   int $packageID      id of the package which delivers the bbcode or `1` if it has been created in the acp
+ * @property-read   string $htmlOpen       html code of the opening tag (without the less-than sign and greater-than sign) or empty if no such html code exists
+ * @property-read   string $htmlClose      html code of the closing tag (without the less-than sign and greater-than sign) or empty if no such html code exists
+ * @property-read   string $className      name of the PHP class implementing `wcf\system\bbcode\IBBCode` or empty if no such class exists
+ * @property-read   int $isBlockElement     is `1` if the bbcode represents a block element and thus can contain multiple lines, otherwise `0`
+ * @property-read   string $wysiwygIcon        css class name used as icon for the bbcode in the editor toolbar
+ * @property-read   string $buttonLabel        name of the language item used as button label for the bbcode in the editor toolbar
+ * @property-read   int $isSourceCode       is `1` if the bbcode's content is treated as source code, otherwise `0`
+ * @property-read   int $showButton     is `1` if a button for the bbcode will be shown in the editor toolbar, otherwise `0`
+ * @property-read   int $originIsSystem     is `1` if the bbcode has been delivered by a package, otherwise `0` (if the bbcode has been created by an admin in the acp)
  */
 class BBCode extends ProcessibleDatabaseObject implements IRouteController
 {
@@ -69,7 +69,7 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController
     /**
      * Sets the attributes of this bbcode.
      *
-     * @param       BBCodeAttribute[]       $attributes     list of attributes
+     * @param BBCodeAttribute[] $attributes list of attributes
      */
     public function setAttributes(array $attributes)
     {
@@ -98,7 +98,7 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController
     /**
      * Returns BBCode object with the given tag.
      *
-     * @param   string      $tag
+     * @param string $tag
      * @return  BBCode
      */
     public static function getBBCodeByTag($tag)
@@ -121,8 +121,8 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController
      * BBCode tags. If the relevant BBCode should be globally disabled or non-
      * existent, false is returned.
      *
-     * @param   string      $bbcodeTag
-     * @param   string[]    $allowedBBCodeTags
+     * @param string $bbcodeTag
+     * @param string[] $allowedBBCodeTags
      * @return  bool
      */
     public static function isAllowedBBCode($bbcodeTag, array $allowedBBCodeTags)

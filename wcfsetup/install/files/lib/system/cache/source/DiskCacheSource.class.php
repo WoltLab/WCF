@@ -86,7 +86,7 @@ class DiskCacheSource implements ICacheSource
     /**
      * Returns cache filename.
      *
-     * @param   string      $cacheName
+     * @param string $cacheName
      * @return  string
      */
     protected function getFilename($cacheName)
@@ -97,7 +97,7 @@ class DiskCacheSource implements ICacheSource
     /**
      * Removes files matching given pattern.
      *
-     * @param   string      $pattern
+     * @param string $pattern
      */
     protected function removeFiles($pattern)
     {
@@ -116,8 +116,8 @@ class DiskCacheSource implements ICacheSource
     /**
      * Determines whether the cache needs to be rebuild or not.
      *
-     * @param   string      $filename
-     * @param   int     $maxLifetime
+     * @param string $filename
+     * @param int $maxLifetime
      * @return  bool
      */
     protected function needRebuild($filename, $maxLifetime)
@@ -149,8 +149,8 @@ class DiskCacheSource implements ICacheSource
     /**
      * Loads the file of a cached resource.
      *
-     * @param   string      $cacheName
-     * @param   string      $filename
+     * @param string $cacheName
+     * @param string $filename
      * @return  mixed
      * @throws  SystemException
      */

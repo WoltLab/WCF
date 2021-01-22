@@ -39,7 +39,7 @@ final class StringUtil
     /**
      * Alias to php sha1() function.
      *
-     * @param   string      $value
+     * @param string $value
      * @return  string
      */
     public static function getHash($value)
@@ -87,7 +87,7 @@ final class StringUtil
     /**
      * Converts dos to unix newlines.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      */
     public static function unifyNewlines($string)
@@ -99,7 +99,7 @@ final class StringUtil
      * Removes Unicode whitespace characters from the beginning
      * and ending of the given string.
      *
-     * @param   string      $text
+     * @param string $text
      * @return  string
      */
     public static function trim($text)
@@ -117,7 +117,7 @@ final class StringUtil
     /**
      * Converts html special characters.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      */
     public static function encodeHTML($string)
@@ -128,7 +128,7 @@ final class StringUtil
     /**
      * Converts javascript special characters.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      */
     public static function encodeJS($string)
@@ -141,7 +141,7 @@ final class StringUtil
     /**
      * Encodes JSON strings. This is not the same as PHP's json_encode()!
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      */
     public static function encodeJSON($string)
@@ -157,7 +157,7 @@ final class StringUtil
     /**
      * Decodes html entities.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      */
     public static function decodeHTML($string)
@@ -170,7 +170,7 @@ final class StringUtil
     /**
      * Formats a numeric.
      *
-     * @param   number      $numeric
+     * @param number $numeric
      * @return  string
      */
     public static function formatNumeric($numeric)
@@ -191,7 +191,7 @@ final class StringUtil
     /**
      * Formats an integer.
      *
-     * @param   int     $integer
+     * @param int $integer
      * @return  string
      */
     public static function formatInteger($integer)
@@ -205,8 +205,8 @@ final class StringUtil
     /**
      * Formats a double.
      *
-     * @param   double      $double
-     * @param   int     $maxDecimals
+     * @param double $double
+     * @param int $maxDecimals
      * @return  string
      */
     public static function formatDouble($double, $maxDecimals = 0)
@@ -237,13 +237,14 @@ final class StringUtil
     /**
      * Adds thousands separators to a given number.
      *
-     * @param   mixed       $number
+     * @param mixed $number
      * @return  string
      */
     public static function addThousandsSeparator($number)
     {
         if ($number >= 1000 || $number <= -1000) {
-            $number = \preg_replace('~(?<=\d)(?=(\d{3})+(?!\d))~', WCF::getLanguage()->get('wcf.global.thousandsSeparator'), $number);
+            $number = \preg_replace('~(?<=\d)(?=(\d{3})+(?!\d))~',
+                WCF::getLanguage()->get('wcf.global.thousandsSeparator'), $number);
         }
 
         return $number;
@@ -252,7 +253,7 @@ final class StringUtil
     /**
      * Replaces the MINUS-HYPHEN with the MINUS SIGN.
      *
-     * @param   mixed       $number
+     * @param mixed $number
      * @return  string
      */
     public static function formatNegative($number)
@@ -263,7 +264,7 @@ final class StringUtil
     /**
      * Alias to php ucfirst() function with multibyte support.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      */
     public static function firstCharToUpperCase($string)
@@ -274,7 +275,7 @@ final class StringUtil
     /**
      * Alias to php lcfirst() function with multibyte support.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      */
     public static function firstCharToLowerCase($string)
@@ -285,7 +286,7 @@ final class StringUtil
     /**
      * Alias to php mb_convert_case() function.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      */
     public static function wordsToUpperCase($string)
@@ -299,10 +300,10 @@ final class StringUtil
      * This function is considered to be slow, if $search contains
      * only ASCII characters, please use str_ireplace() instead.
      *
-     * @param   string      $search
-     * @param   string      $replace
-     * @param   string      $subject
-     * @param   int     $count
+     * @param string $search
+     * @param string $replace
+     * @param string $subject
+     * @param int $count
      * @return  string
      */
     public static function replaceIgnoreCase($search, $replace, $subject, &$count = 0)
@@ -314,15 +315,16 @@ final class StringUtil
             $endPos = $startPos + \mb_strlen($search);
             $count++;
 
-            return \mb_substr($subject, 0, $startPos) . $replace . self::replaceIgnoreCase($search, $replace, \mb_substr($subject, $endPos), $count);
+            return \mb_substr($subject, 0, $startPos) . $replace . self::replaceIgnoreCase($search, $replace,
+                    \mb_substr($subject, $endPos), $count);
         }
     }
 
     /**
      * Alias to php str_split() function with multibyte support.
      *
-     * @param   string      $string
-     * @param   int     $length
+     * @param string $string
+     * @param int $length
      * @return  string[]
      */
     public static function split($string, $length = 1)
@@ -338,9 +340,9 @@ final class StringUtil
     /**
      * Checks whether $haystack starts with $needle, or not.
      *
-     * @param   string      $haystack   The string to be checked for starting with $needle
-     * @param   string      $needle     The string to be found at the start of $haystack
-     * @param   bool        $ci     Case insensitive or not. Default = false.
+     * @param string $haystack The string to be checked for starting with $needle
+     * @param string $needle The string to be found at the start of $haystack
+     * @param bool $ci Case insensitive or not. Default = false.
      *
      * @return  bool                True, if $haystack starts with $needle, false otherwise.
      */
@@ -357,9 +359,9 @@ final class StringUtil
     /**
      * Returns true if $haystack ends with $needle or if the length of $needle is 0.
      *
-     * @param   string      $haystack
-     * @param   string      $needle
-     * @param   bool        $ci     case insensitive
+     * @param string $haystack
+     * @param string $needle
+     * @param bool $ci case insensitive
      * @return  bool
      */
     public static function endsWith($haystack, $needle, $ci = false)
@@ -379,10 +381,10 @@ final class StringUtil
     /**
      * Alias to php str_pad function with multibyte support.
      *
-     * @param   string      $input
-     * @param   int     $padLength
-     * @param   string      $padString
-     * @param   int     $padType
+     * @param string $input
+     * @param int $padLength
+     * @param string $padString
+     * @param int $padType
      * @return  string
      */
     public static function pad($input, $padLength, $padString = ' ', $padType = \STR_PAD_RIGHT)
@@ -395,8 +397,8 @@ final class StringUtil
     /**
      * Unescapes escaped characters in a string.
      *
-     * @param   string      $string
-     * @param   string      $chars
+     * @param string $string
+     * @param string $chars
      * @return  string
      */
     public static function unescape($string, $chars = '"')
@@ -411,7 +413,7 @@ final class StringUtil
     /**
      * Takes a numeric HTML entity value and returns the appropriate UTF-8 bytes.
      *
-     * @param   int     $dec        html entity value
+     * @param int $dec html entity value
      * @return  string              utf-8 bytes
      */
     public static function getCharacter($dec)
@@ -434,7 +436,7 @@ final class StringUtil
      * Converts UTF-8 to Unicode
      * @see     http://www1.tip.nl/~t876506/utf8tbl.html
      *
-     * @param   string      $c
+     * @param string $c
      * @return  int
      */
     public static function getCharValue($c)
@@ -468,7 +470,7 @@ final class StringUtil
     /**
      * Returns html entities of all characters in the given string.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      */
     public static function encodeAllChars($string)
@@ -485,7 +487,7 @@ final class StringUtil
     /**
      * Returns true if the given string contains only ASCII characters.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  bool
      */
     public static function isASCII($string)
@@ -497,7 +499,7 @@ final class StringUtil
      * Returns true if the given string is utf-8 encoded.
      * @see     http://www.w3.org/International/questions/qa-forms-utf-8
      *
-     * @param   string      $string
+     * @param string $string
      * @return  bool
      */
     public static function isUTF8($string)
@@ -517,7 +519,7 @@ final class StringUtil
     /**
      * Escapes the closing cdata tag.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      */
     public static function escapeCDATA($string)
@@ -527,12 +529,12 @@ final class StringUtil
 
     /**
      * Converts a string to requested character encoding.
+     * @param string $inCharset
+     * @param string $outCharset
+     * @param string $string
+     * @return  string      converted string
      * @see     mb_convert_encoding()
      *
-     * @param   string      $inCharset
-     * @param   string      $outCharset
-     * @param   string      $string
-     * @return  string      converted string
      */
     public static function convertEncoding($inCharset, $outCharset, $string)
     {
@@ -549,7 +551,7 @@ final class StringUtil
     /**
      * Strips HTML tags from a string.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      */
     public static function stripHTML($string)
@@ -560,8 +562,8 @@ final class StringUtil
     /**
      * Returns false if the given word is forbidden by given word filter.
      *
-     * @param   string      $word
-     * @param   string      $filter
+     * @param string $word
+     * @param string $filter
      * @return  bool
      */
     public static function executeWordFilter($word, $filter)
@@ -597,10 +599,10 @@ final class StringUtil
     /**
      * Truncates the given string to a certain number of characters.
      *
-     * @param   string      $string     string which shall be truncated
-     * @param   int     $length     string length after truncating
-     * @param   string      $etc        string to append when $string is truncated
-     * @param   bool        $breakWords should words be broken in the middle
+     * @param string $string string which shall be truncated
+     * @param int $length string length after truncating
+     * @param string $etc string to append when $string is truncated
+     * @param bool $breakWords should words be broken in the middle
      * @return  string              truncated string
      */
     public static function truncate($string, $length = 80, $etc = self::HELLIP, $breakWords = false)
@@ -625,10 +627,10 @@ final class StringUtil
     /**
      * Truncates a string containing HTML code and keeps the HTML syntax intact.
      *
-     * @param   string      $string         string which shall be truncated
-     * @param   int     $length         string length after truncating
-     * @param   string      $etc            ending string which will be appended after truncating
-     * @param   bool        $breakWords     if false words will not be split and the return string might be shorter than $length
+     * @param string $string string which shall be truncated
+     * @param int $length string length after truncating
+     * @param string $etc ending string which will be appended after truncating
+     * @param bool $breakWords if false words will not be split and the return string might be shorter than $length
      * @return  string                  truncated string
      */
     public static function truncateHTML($string, $length = 500, $etc = self::HELLIP, $breakWords = false)
@@ -646,12 +648,12 @@ final class StringUtil
 
         foreach ($tags as $tag) {
             // ignore void elements
-            if (!\preg_match('/^(area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$/s', $tag[2])) {
+            if (!\preg_match('/^(area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$/s',
+                $tag[2])) {
                 // look for opening tags
                 if (\preg_match('/<[\w]+[^>]*>/s', $tag[0])) {
                     \array_unshift($openTags, $tag[2]);
-                }
-                /**
+                } /**
                  * look for closing tags and check if this tag has a corresponding opening tag
                  * and omit the opening tag if it has been closed already
                  */
@@ -679,7 +681,8 @@ final class StringUtil
 
                 $left = $length - $totalLength;
                 $entitiesLength = 0;
-                if (\preg_match_all('/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6};/i', $tag[3], $entities, \PREG_OFFSET_CAPTURE)) {
+                if (\preg_match_all('/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6};/i', $tag[3], $entities,
+                    \PREG_OFFSET_CAPTURE)) {
                     foreach ($entities[0] as $entity) {
                         if ($entity[1] + 1 - $entitiesLength <= $left) {
                             $left--;
@@ -714,10 +717,10 @@ final class StringUtil
     /**
      * Generates an anchor tag from given URL.
      *
-     * @param   string      $url
-     * @param   string      $title
-     * @param   bool        $encodeTitle
-     * @param       bool         $isUgc          true to add rel=ugc to the anchor tag
+     * @param string $url
+     * @param string $title
+     * @param bool $encodeTitle
+     * @param bool $isUgc true to add rel=ugc to the anchor tag
      * @return  string      anchor tag
      */
     public static function getAnchorTag($url, $title = '', $encodeTitle = true, $isUgc = false)
@@ -738,14 +741,15 @@ final class StringUtil
             }
         }
 
-        return '<a ' . self::getAnchorTagAttributes($url, $isUgc) . '>' . ($encodeTitle ? self::encodeHTML($title) : $title) . '</a>';
+        return '<a ' . self::getAnchorTagAttributes($url,
+                $isUgc) . '>' . ($encodeTitle ? self::encodeHTML($title) : $title) . '</a>';
     }
 
     /**
      * Generates the attributes for an anchor tag from given URL.
      *
-     * @param   string      $url
-     * @param       bool         $isUgc          true to add rel=ugc to the attributes
+     * @param string $url
+     * @param bool $isUgc true to add rel=ugc to the attributes
      * @return  string      attributes
      * @since       5.3
      */
@@ -778,9 +782,9 @@ final class StringUtil
     /**
      * Splits given string into smaller chunks.
      *
-     * @param   string      $string
-     * @param   int     $length
-     * @param   string      $break
+     * @param string $string
+     * @param int $length
+     * @param string $break
      * @return  string
      */
     public static function splitIntoChunks($string, $length = 75, $break = "\r\n")
@@ -791,9 +795,9 @@ final class StringUtil
     /**
      * Simple multi-byte safe wordwrap() function.
      *
-     * @param   string      $string
-     * @param   int     $width
-     * @param   string      $break
+     * @param string $string
+     * @param int $width
+     * @param string $break
      * @return  string
      */
     public static function wordwrap($string, $width = 50, $break = ' ')
@@ -830,7 +834,7 @@ final class StringUtil
     /**
      * Shortens numbers larger than 1000 by using unit suffixes.
      *
-     * @param       int         $number
+     * @param int $number
      * @return      string
      */
     public static function getShortUnit($number)
@@ -863,7 +867,7 @@ final class StringUtil
      * that the separator is just a comma, not a combination of whitespace and
      * a comma.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      * @since   3.1
      */

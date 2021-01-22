@@ -38,7 +38,7 @@ trait TMultiXmlGuiPackageInstallationPlugin
      * Adds a new entry of this pip based on the data provided by the given
      * form.
      *
-     * @param   IFormDocument       $form
+     * @param IFormDocument $form
      */
     public function addEntry(IFormDocument $form)
     {
@@ -54,8 +54,8 @@ trait TMultiXmlGuiPackageInstallationPlugin
     /**
      * Creates a new XML element and insert it into the XML file.
      *
-     * @param   XML     $xml
-     * @param   IFormDocument   $form
+     * @param XML $xml
+     * @param IFormDocument $form
      * @return  \DOMElement
      */
     protected function createAndInsertNewXmlElement(XML $xml, IFormDocument $form)
@@ -71,8 +71,8 @@ trait TMultiXmlGuiPackageInstallationPlugin
      * provided by the given form and returns the new identifier of the entry
      * (or the old identifier if it has not changed).
      *
-     * @param   IFormDocument       $form
-     * @param   string          $identifier
+     * @param IFormDocument $form
+     * @param string $identifier
      * @return  string          new identifier
      */
     public function editEntry(IFormDocument $form, $identifier)
@@ -97,9 +97,9 @@ trait TMultiXmlGuiPackageInstallationPlugin
     /**
      * Replaces an edited element with a new element and returns the new element.
      *
-     * @param   XML     $xml
-     * @param   IFormDocument   $form
-     * @param   string      $identifier
+     * @param XML $xml
+     * @param IFormDocument $form
+     * @param string $identifier
      * @return  \DOMElement
      */
     protected function replaceXmlElement(XML $xml, IFormDocument $form, $identifier)
@@ -142,7 +142,7 @@ trait TMultiXmlGuiPackageInstallationPlugin
     /**
      * Returns the xml objects for this pip.
      *
-     * @param   bool        $createXmlFiles     if `true` and if a relevant XML file does not exist, it is created
+     * @param bool $createXmlFiles if `true` and if a relevant XML file does not exist, it is created
      * @return  XML[]
      */
     abstract protected function getProjectXmls($createXmlFiles = false);

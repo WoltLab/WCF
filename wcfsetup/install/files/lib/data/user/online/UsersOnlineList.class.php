@@ -22,7 +22,7 @@ use wcf\util\StringUtil;
  * @method  UserOnline      current()
  * @method  UserOnline[]        getObjects()
  * @method  UserOnline|null         search($objectID)
- * @property    UserOnline[]        $objects
+ * @property    UserOnline[] $objects
  */
 class UsersOnlineList extends SessionList
 {
@@ -138,7 +138,8 @@ class UsersOnlineList extends SessionList
             foreach (UserGroup::getGroupsByType() as $group) {
                 if ($group->userOnlineMarking != '%s') {
                     $priorities[] = $group->priority;
-                    $this->usersOnlineMarkings[] = \str_replace('%s', StringUtil::encodeHTML(WCF::getLanguage()->get($group->groupName)), $group->userOnlineMarking);
+                    $this->usersOnlineMarkings[] = \str_replace('%s',
+                        StringUtil::encodeHTML(WCF::getLanguage()->get($group->groupName)), $group->userOnlineMarking);
                 }
             }
 
@@ -157,10 +158,12 @@ class UsersOnlineList extends SessionList
         $usersOnlineTotal = (USERS_ONLINE_RECORD_NO_GUESTS ? $this->stats['members'] : $this->stats['total']);
         if ($usersOnlineTotal > USERS_ONLINE_RECORD) {
             // save new record
-            $optionAction = new OptionAction([], 'import', ['data' => [
-                'users_online_record' => $usersOnlineTotal,
-                'users_online_record_time' => TIME_NOW,
-            ]]);
+            $optionAction = new OptionAction([], 'import', [
+                'data' => [
+                    'users_online_record' => $usersOnlineTotal,
+                    'users_online_record_time' => TIME_NOW,
+                ],
+            ]);
             $optionAction->executeAction();
         }
     }
@@ -168,8 +171,8 @@ class UsersOnlineList extends SessionList
     /**
      * Checks the 'canViewOnlineStatus' setting.
      *
-     * @param   int     $userID
-     * @param   int     $canViewOnlineStatus
+     * @param int $userID
+     * @param int $canViewOnlineStatus
      * @return  bool
      * @deprecated  5.3             Use `isVisibleUser` instead
      */
@@ -212,7 +215,7 @@ class UsersOnlineList extends SessionList
     /**
      * Checks the 'canViewOnlineStatus' setting for the given user.
      *
-     * @param       UserOnline      $userOnline
+     * @param UserOnline $userOnline
      * @return      bool
      * @since       5.3
      */

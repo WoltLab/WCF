@@ -36,7 +36,7 @@ class TabMenuFormContainer extends FormContainer implements ITabMenuFormContaine
     /**
      * Sets if the links in the tab menu have anchors and returns this form container.
      *
-     * @param   bool        $useAnchors
+     * @param bool $useAnchors
      * @return  TabMenuFormContainer        this form container
      */
     public function useAnchors($useAnchors = true)

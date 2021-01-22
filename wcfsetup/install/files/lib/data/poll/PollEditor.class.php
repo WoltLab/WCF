@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Poll
  *
- * @method static   Poll    create(array $parameters = [])
+ * @method static Poll    create(array $parameters = [])
  * @method      Poll    getDecoratedObject()
  * @mixin       Poll
  */

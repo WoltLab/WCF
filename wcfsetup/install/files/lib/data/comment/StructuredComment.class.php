@@ -58,7 +58,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
     /**
      * Adds an response
      *
-     * @param   StructuredCommentResponse   $response
+     * @param StructuredCommentResponse $response
      */
     public function addResponse(StructuredCommentResponse $response)
     {
@@ -97,7 +97,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
     /**
      * Sets the user's profile.
      *
-     * @param   UserProfile $userProfile
+     * @param UserProfile $userProfile
      * @deprecated  3.0
      */
     public function setUserProfile(UserProfile $userProfile)
@@ -126,7 +126,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
     /**
      * Sets deletable state.
      *
-     * @param   bool        $deletable
+     * @param bool $deletable
      */
     public function setIsDeletable($deletable)
     {
@@ -136,7 +136,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
     /**
      * Sets editable state.
      *
-     * @param   bool        $editable
+     * @param bool $editable
      */
     public function setIsEditable($editable)
     {

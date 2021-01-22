@@ -38,7 +38,7 @@ class RegistryHandler extends SingletonFactory
     /**
      * Loads the storage for the provided packages.
      *
-     * @param       string[]        $packages
+     * @param string[] $packages
      */
     public function loadStorage(array $packages)
     {
@@ -75,8 +75,8 @@ class RegistryHandler extends SingletonFactory
     /**
      * Returns the value of the given field or null if no such value exists.
      *
-     * @param       string          $package
-     * @param       string          $field
+     * @param string $package
+     * @param string $field
      * @return  string|null
      */
     public function get($package, $field)
@@ -96,9 +96,9 @@ class RegistryHandler extends SingletonFactory
     /**
      * Inserts new data records into database.
      *
-     * @param       string          $package
-     * @param       string          $field
-     * @param       string          $fieldValue
+     * @param string $package
+     * @param string $field
+     * @param string $fieldValue
      */
     public function set($package, $field, $fieldValue)
     {
@@ -118,8 +118,8 @@ class RegistryHandler extends SingletonFactory
     /**
      * Removes a data record from database.
      *
-     * @param       string          $package
-     * @param       string          $field
+     * @param string $package
+     * @param string $field
      */
     public function delete($package, $field)
     {
@@ -235,7 +235,7 @@ class RegistryHandler extends SingletonFactory
     /**
      * Returns the package id of the provided package.
      *
-     * @param       string          $package
+     * @param string $package
      * @return      int
      */
     protected function getPackageID($package)

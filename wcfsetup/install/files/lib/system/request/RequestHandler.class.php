@@ -53,8 +53,8 @@ class RequestHandler extends SingletonFactory
     /**
      * Handles a http request.
      *
-     * @param   string      $application
-     * @param   bool        $isACPRequest
+     * @param string $application
+     * @param bool $isACPRequest
      * @throws  AJAXException
      * @throws  IllegalLinkException
      * @throws  SystemException
@@ -127,7 +127,7 @@ class RequestHandler extends SingletonFactory
     /**
      * Builds a new request.
      *
-     * @param   string      $application
+     * @param string $application
      * @throws  IllegalLinkException
      * @throws  NamedUserException
      * @throws  SystemException
@@ -287,9 +287,9 @@ class RequestHandler extends SingletonFactory
     /**
      * Redirects to the actual URL, e.g. controller has been aliased or mistyped (boardlist instead of board-list).
      *
-     * @param   string[]    $routeData
-     * @param   string      $application
-     * @param   string      $controller
+     * @param string[] $routeData
+     * @param string $application
+     * @param string $controller
      */
     protected function redirect(array $routeData, $application, $controller = null)
     {
@@ -314,8 +314,8 @@ class RequestHandler extends SingletonFactory
     /**
      * Checks page access for possible mandatory redirects.
      *
-     * @param   string      $application
-     * @param   string[]    $routeData
+     * @param string $application
+     * @param string[] $routeData
      * @throws  IllegalLinkException
      */
     protected function handleDefaultController($application, array &$routeData)

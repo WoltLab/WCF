@@ -36,7 +36,7 @@ trait TObjectTreeNode
     /**
      * Adds the given node as child node and sets the child node's parent node to this node.
      *
-     * @param   IObjectTreeNode     $child      added child node
+     * @param IObjectTreeNode $child added child node
      * @throws  \InvalidArgumentException       if given object is no (deocrated) instance of this class
      */
     public function addChild(IObjectTreeNode $child)
@@ -183,7 +183,7 @@ trait TObjectTreeNode
     /**
      * Sets the parent node of this node.
      *
-     * @param   IObjectTreeNode     $parentNode parent node
+     * @param IObjectTreeNode $parentNode parent node
      * @throws  \InvalidArgumentException       if given object is no (deocrated) instance of this class
      */
     public function setParentNode(IObjectTreeNode $parentNode)

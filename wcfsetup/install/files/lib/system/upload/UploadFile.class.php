@@ -63,11 +63,11 @@ class UploadFile
     /**
      * Creates a new UploadFile object.
      *
-     * @param   string      $filename
-     * @param   string      $location
-     * @param   int     $filesize
-     * @param   int     $errorCode
-     * @param   string      $mimeType
+     * @param string $filename
+     * @param string $location
+     * @param int $filesize
+     * @param int $errorCode
+     * @param string $mimeType
      *
      * @throws  \Exception  if an error occurred during upload and debug mode is enabled
      */
@@ -181,8 +181,8 @@ class UploadFile
     /**
      * Sets the validation error type.
      *
-     * @param   string      $validationErrorType
-     * @param       array           $additionalData
+     * @param string $validationErrorType
+     * @param array $additionalData
      */
     public function setValidationErrorType($validationErrorType, array $additionalData = [])
     {
@@ -230,7 +230,7 @@ class UploadFile
      * Moves the uploaded file to the given location and updates the internal location value to the new location
      * and the internal filename value to the new filename derived from the given location.
      *
-     * @param   string      $newLocation    new file location
+     * @param string $newLocation new file location
      */
     public function moveUploadedFile($newLocation)
     {

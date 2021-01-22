@@ -64,7 +64,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
     /**
      * Sets the desired output type.
      *
-     * @param       string          $outputType     desired output type
+     * @param string $outputType desired output type
      */
     public function setOutputType($outputType)
     {
@@ -212,7 +212,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
     /**
      * Enables the keyword highlighting.
      *
-     * @param       bool         $enable
+     * @param bool $enable
      */
     public function enableKeywordHighlighting($enable = true)
     {
@@ -258,8 +258,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
                 // text
                 if ($i % 2 == 0) {
                     $node->parentNode->insertBefore($node->ownerDocument->createTextNode($split[$i]), $node);
-                }
-                // match
+                } // match
                 else {
                     /** @var \DOMElement $element */
                     $element = $node->ownerDocument->createElement('span');
@@ -277,7 +276,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
      * Returns true if text node is inside a code element, suppressing any
      * auto-detection of content.
      *
-     * @param       \DOMText        $text           text node
+     * @param \DOMText $text text node
      * @return      bool         true if text node is inside a code element
      */
     protected function hasCodeParent(\DOMText $text)

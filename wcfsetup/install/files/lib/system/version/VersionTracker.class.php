@@ -70,8 +70,8 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction
     /**
      * Adds a new entry to the version history.
      *
-     * @param       string                  $objectTypeName         object type name
-     * @param       IVersionTrackerObject   $object                 target object
+     * @param string $objectTypeName object type name
+     * @param IVersionTrackerObject $object target object
      */
     public function add($objectTypeName, IVersionTrackerObject $object)
     {
@@ -97,8 +97,8 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction
     /**
      * Returns the number of stored versions for provided object type and object id.
      *
-     * @param       string          $objectTypeName         object type name
-     * @param       int         $objectID               target object id
+     * @param string $objectTypeName object type name
+     * @param int $objectID target object id
      * @return      int         number of stored versions
      */
     public function countVersions($objectTypeName, $objectID)
@@ -117,8 +117,8 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction
     /**
      * Returns the last stored version.
      *
-     * @param       string          $objectTypeName         object type name
-     * @param       int         $objectID               target object id
+     * @param string $objectTypeName object type name
+     * @param int $objectID target object id
      * @return      VersionTrackerEntry|null|DatabaseObject
      */
     public function getLastVersion($objectTypeName, $objectID)
@@ -138,8 +138,8 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction
     /**
      * Returns the list of stored versions.
      *
-     * @param       string          $objectTypeName         object type name
-     * @param       int         $objectID               target object id
+     * @param string $objectTypeName object type name
+     * @param int $objectID target object id
      * @return      VersionTrackerEntry[]
      */
     public function getVersions($objectTypeName, $objectID)
@@ -163,8 +163,8 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction
     /**
      * Returns a version including the contents of the data column.
      *
-     * @param       string          $objectTypeName         object type name
-     * @param       int         $versionID              version id
+     * @param string $objectTypeName object type name
+     * @param int $versionID version id
      * @return      VersionTrackerEntry|null|DatabaseObject
      */
     public function getVersion($objectTypeName, $versionID)
@@ -205,7 +205,7 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction
     /**
      * Retrieves the object type object by its name.
      *
-     * @param       string          $name   object type name
+     * @param string $name object type name
      * @return      ObjectType      target object
      * @throws      \InvalidArgumentException
      */
@@ -271,8 +271,8 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction
     /**
      * Resets the entire history for provided object id.
      *
-     * @param       string          $objectTypeName         object type name
-     * @param       int         $objectID               object id
+     * @param string $objectTypeName object type name
+     * @param int $objectID object id
      */
     public function reset($objectTypeName, $objectID)
     {
@@ -287,7 +287,7 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction
     /**
      * Creates a database table for an object type unless it exists already.
      *
-     * @param       ObjectType      $objectType     target object type
+     * @param ObjectType $objectType target object type
      * @return      bool         false if table already exists
      */
     protected function createStorageTable(ObjectType $objectType)
@@ -308,7 +308,15 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction
         }
 
         $columns = [
-            ['name' => 'versionID', 'data' => ['length' => 10, 'notNull' => true, 'type' => 'int', 'key' => 'PRIMARY', 'autoIncrement' => true]],
+            ['name' => 'versionID',
+                'data' => [
+                    'length' => 10,
+                    'notNull' => true,
+                    'type' => 'int',
+                    'key' => 'PRIMARY',
+                    'autoIncrement' => true,
+                ],
+            ],
             ['name' => 'objectID', 'data' => ['length' => 10, 'notNull' => true, 'type' => 'int']],
             ['name' => 'userID', 'data' => ['length' => 10, 'type' => 'int']],
             ['name' => 'username', 'data' => ['length' => 100, 'notNull' => true, 'type' => 'varchar']],
@@ -360,7 +368,7 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction
     /**
      * Retrieves the database table name.
      *
-     * @param       ObjectType      $objectType     target object type
+     * @param ObjectType $objectType target object type
      * @return      string          database table name
      */
     protected function getTableName(ObjectType $objectType)

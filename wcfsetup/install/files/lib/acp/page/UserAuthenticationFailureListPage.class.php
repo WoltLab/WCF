@@ -13,7 +13,7 @@ use wcf\page\SortablePage;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Page
  *
- * @property    UserAuthenticationFailureList   $objectList
+ * @property    UserAuthenticationFailureList $objectList
  */
 class UserAuthenticationFailureListPage extends SortablePage
 {

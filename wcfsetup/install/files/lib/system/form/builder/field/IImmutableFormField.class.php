@@ -16,7 +16,7 @@ interface IImmutableFormField extends IFormField
     /**
      * Sets whether the value of this field is immutable and returns this field.
      *
-     * @param   bool        $immutable  determines if field value is immutable
+     * @param bool $immutable determines if field value is immutable
      * @return  static              this field
      */
     public function immutable($immutable = true);

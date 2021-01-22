@@ -12,7 +12,7 @@ use wcf\data\DatabaseObjectEditor;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\User\Activity\Event
  *
- * @method static   UserActivityEvent   create(array $parameters = [])
+ * @method static UserActivityEvent   create(array $parameters = [])
  * @method      UserActivityEvent   getDecoratedObject()
  * @mixin       UserActivityEvent
  */

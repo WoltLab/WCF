@@ -19,7 +19,7 @@ use wcf\system\reaction\ReactionHandler;
  * @method  StructuredCommentResponse       current()
  * @method  StructuredCommentResponse[]     getObjects()
  * @method  StructuredCommentResponse|null      search($objectID)
- * @property    StructuredCommentResponse[]     $objects
+ * @property    StructuredCommentResponse[] $objects
  */
 class StructuredCommentResponseList extends CommentResponseList
 {
@@ -54,8 +54,8 @@ class StructuredCommentResponseList extends CommentResponseList
     /**
      * Creates a new structured comment response list.
      *
-     * @param   ICommentManager     $commentManager
-     * @param   Comment         $comment
+     * @param ICommentManager $commentManager
+     * @param Comment $comment
      */
     public function __construct(ICommentManager $commentManager, Comment $comment)
     {

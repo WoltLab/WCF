@@ -82,7 +82,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
     /**
      * Validates accessible groups.
      *
-     * @param   bool        $ignoreOwnUser
+     * @param bool $ignoreOwnUser
      * @throws  PermissionDeniedException
      * @throws  UserInputException
      */
@@ -344,9 +344,11 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
                 }
             }
 
-            if (\array_key_exists('password', $this->parameters['data']) && $this->parameters['data']['password'] !== '') {
+            if (\array_key_exists('password',
+                    $this->parameters['data']) && $this->parameters['data']['password'] !== '') {
                 foreach ($this->getObjects() as $object) {
-                    SessionHandler::getInstance()->deleteUserSessionsExcept($object->getDecoratedObject(), SessionHandler::getInstance()->sessionID);
+                    SessionHandler::getInstance()->deleteUserSessionsExcept($object->getDecoratedObject(),
+                        SessionHandler::getInstance()->sessionID);
                 }
             }
         } else {
@@ -550,7 +552,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
             }
 
             foreach ($accessibleGroups as $group) {
-                if (!empty($this->parameters['data']['restrictUserGroupIDs']) && !\in_array($group->groupID, $this->parameters['data']['restrictUserGroupIDs'])) {
+                if (!empty($this->parameters['data']['restrictUserGroupIDs']) && !\in_array($group->groupID,
+                        $this->parameters['data']['restrictUserGroupIDs'])) {
                     continue;
                 }
 
@@ -622,7 +625,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
     /**
      * Unmarks users.
      *
-     * @param   int[]   $userIDs
+     * @param int[] $userIDs
      */
     protected function unmarkItems(array $userIDs = [])
     {
@@ -631,7 +634,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         }
 
         if (!empty($userIDs)) {
-            ClipboardHandler::getInstance()->unmark($userIDs, ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
+            ClipboardHandler::getInstance()->unmark($userIDs,
+                ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
         }
     }
 
@@ -1052,9 +1056,10 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
     {
         $knownContentProvider = \array_map(static function ($contentProvider) {
             return $contentProvider->objectType;
-        }, \array_filter(ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.content.userContentProvider'), static function ($contentProvider) {
-            return !$contentProvider->hidden;
-        }));
+        }, \array_filter(ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.content.userContentProvider'),
+            static function ($contentProvider) {
+                return !$contentProvider->hidden;
+            }));
 
         return [
             'template' => WCF::getTPL()->fetch('removeUserContentDialog', 'wcf', [

@@ -52,7 +52,7 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
     /**
      * Returns the id of the object type with the given name.
      *
-     * @param   string      $objectType
+     * @param string $objectType
      * @return  int
      * @throws  SystemException
      */
@@ -68,7 +68,7 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
     /**
      * Returns the the object type with the given name.
      *
-     * @param   string      $objectType
+     * @param string $objectType
      * @return  ObjectType
      * @throws  SystemException
      */
@@ -208,7 +208,7 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
     /**
      * Returns the database table name for the object type's search index.
      *
-     * @param   mixed       $objectType
+     * @param mixed $objectType
      * @return  string
      */
     public static function getTableName($objectType)

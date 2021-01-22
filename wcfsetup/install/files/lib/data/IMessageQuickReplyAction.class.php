@@ -24,7 +24,7 @@ interface IMessageQuickReplyAction
     /**
      * Returns the current html input processor or a new one if `$message` is not null.
      *
-     * @param       string|null     $message        source message
+     * @param string|null $message source message
      * @return      HtmlInputProcessor
      */
     public function getHtmlInputProcessor($message = null);
@@ -32,8 +32,8 @@ interface IMessageQuickReplyAction
     /**
      * Returns a message list object.
      *
-     * @param   DatabaseObject      $container
-     * @param   int         $lastMessageTime
+     * @param DatabaseObject $container
+     * @param int $lastMessageTime
      * @return  DatabaseObjectList
      */
     public function getMessageList(DatabaseObject $container, $lastMessageTime);
@@ -41,7 +41,7 @@ interface IMessageQuickReplyAction
     /**
      * Returns page no for given container object.
      *
-     * @param   DatabaseObject      $container
+     * @param DatabaseObject $container
      * @return  array
      */
     public function getPageNo(DatabaseObject $container);
@@ -49,8 +49,8 @@ interface IMessageQuickReplyAction
     /**
      * Returns the redirect url.
      *
-     * @param   DatabaseObject      $container
-     * @param   DatabaseObject      $message
+     * @param DatabaseObject $container
+     * @param DatabaseObject $message
      * @return  string
      */
     public function getRedirectUrl(DatabaseObject $container, DatabaseObject $message);
@@ -58,8 +58,8 @@ interface IMessageQuickReplyAction
     /**
      * Validates the message.
      *
-     * @param   DatabaseObject      $container
-     * @param   HtmlInputProcessor      $htmlInputProcessor
+     * @param DatabaseObject $container
+     * @param HtmlInputProcessor $htmlInputProcessor
      */
     public function validateMessage(DatabaseObject $container, HtmlInputProcessor $htmlInputProcessor);
 
@@ -73,7 +73,7 @@ interface IMessageQuickReplyAction
     /**
      * Validates the container object for quick reply.
      *
-     * @param   DatabaseObject      $container
+     * @param DatabaseObject $container
      */
     public function validateContainer(DatabaseObject $container);
 

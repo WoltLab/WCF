@@ -18,7 +18,7 @@ interface ITaggable
     /**
      * Returns a list of tagged objects.
      *
-     * @param   Tag $tag
+     * @param Tag $tag
      * @return  DatabaseObjectList
      * @deprecated 5.2
      */

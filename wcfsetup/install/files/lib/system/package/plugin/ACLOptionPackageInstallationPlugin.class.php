@@ -219,7 +219,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
     /**
      * Imports options.
      *
-     * @param   \DOMXPath   $xpath
+     * @param \DOMXPath $xpath
      * @throws  SystemException
      */
     protected function importOptions(\DOMXPath $xpath)
@@ -308,7 +308,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
      * Returns the object type id of the acl option type with the given name
      * or throws a SystemException if no such option type exists.
      *
-     * @param   string      $optionType
+     * @param string $optionType
      * @return  int
      * @throws  SystemException
      */
@@ -415,55 +415,58 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
             ->description('wcf.acp.pip.aclOption.objectType.' . $this->entryType . '.description')
             ->options($objectTypes, false, false)
             ->required()
-            ->addValidator(new FormFieldValidator('nameUniqueness', function (SingleSelectionFormField $formField) use ($entryType) {
-                /** @var TextFormField $nameField */
-                $nameField = $formField->getDocument()->getNodeById('name');
+            ->addValidator(new FormFieldValidator('nameUniqueness',
+                function (SingleSelectionFormField $formField) use ($entryType) {
+                    /** @var TextFormField $nameField */
+                    $nameField = $formField->getDocument()->getNodeById('name');
 
-                if (
-                    $formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE
-                    || $this->editedEntry->getAttribute('name') !== $nameField->getValue()
-                ) {
-                    switch ($entryType) {
-                        case 'categories':
-                            $categoryList = new ACLOptionCategoryList();
-                            $categoryList->getConditionBuilder()->add('categoryName = ?', [
-                                $nameField->getValue(),
-                            ]);
-                            $categoryList->getConditionBuilder()->add('objectTypeID = ?', [
-                                ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.acl', $formField->getValue())->objectTypeID,
-                            ]);
+                    if (
+                        $formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE
+                        || $this->editedEntry->getAttribute('name') !== $nameField->getValue()
+                    ) {
+                        switch ($entryType) {
+                            case 'categories':
+                                $categoryList = new ACLOptionCategoryList();
+                                $categoryList->getConditionBuilder()->add('categoryName = ?', [
+                                    $nameField->getValue(),
+                                ]);
+                                $categoryList->getConditionBuilder()->add('objectTypeID = ?', [
+                                    ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.acl',
+                                        $formField->getValue())->objectTypeID,
+                                ]);
 
-                            if ($categoryList->countObjects() > 0) {
-                                $nameField->addValidationError(
-                                    new FormFieldValidationError(
-                                        'notUnique',
-                                        'wcf.acp.pip.aclOption.' . $entryType . '.name.error.notUnique'
-                                    )
-                                );
-                            }
-                            break;
+                                if ($categoryList->countObjects() > 0) {
+                                    $nameField->addValidationError(
+                                        new FormFieldValidationError(
+                                            'notUnique',
+                                            'wcf.acp.pip.aclOption.' . $entryType . '.name.error.notUnique'
+                                        )
+                                    );
+                                }
+                                break;
 
-                        case 'options':
-                            $optionList = new ACLOptionList();
-                            $optionList->getConditionBuilder()->add('optionName = ?', [
-                                $nameField->getValue(),
-                            ]);
-                            $optionList->getConditionBuilder()->add('objectTypeID = ?', [
-                                ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.acl', $formField->getValue())->objectTypeID,
-                            ]);
+                            case 'options':
+                                $optionList = new ACLOptionList();
+                                $optionList->getConditionBuilder()->add('optionName = ?', [
+                                    $nameField->getValue(),
+                                ]);
+                                $optionList->getConditionBuilder()->add('objectTypeID = ?', [
+                                    ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.acl',
+                                        $formField->getValue())->objectTypeID,
+                                ]);
 
-                            if ($optionList->countObjects() > 0) {
-                                $nameField->addValidationError(
-                                    new FormFieldValidationError(
-                                        'notUnique',
-                                        'wcf.acp.pip.aclOption.' . $entryType . '.name.error.notUnique'
-                                    )
-                                );
-                            }
-                            break;
+                                if ($optionList->countObjects() > 0) {
+                                    $nameField->addValidationError(
+                                        new FormFieldValidationError(
+                                            'notUnique',
+                                            'wcf.acp.pip.aclOption.' . $entryType . '.name.error.notUnique'
+                                        )
+                                    );
+                                }
+                                break;
+                        }
                     }
-                }
-            }));
+                }));
 
         /** @var FormContainer $dataContainer */
         $dataContainer = $form->getNodeById('data');
@@ -486,7 +489,8 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
             }
 
             foreach ($objectTypes as $objectType) {
-                $objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.acl', $objectType);
+                $objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.acl',
+                    $objectType);
 
                 if (isset($categories[$objectTypeID])) {
                     $categoryNameField = SingleSelectionFormField::create('categoryName_' . $objectTypeID)

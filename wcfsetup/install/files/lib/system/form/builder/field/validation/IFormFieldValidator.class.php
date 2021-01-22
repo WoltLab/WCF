@@ -18,8 +18,8 @@ interface IFormFieldValidator
     /**
      * Initializes a new validator.
      *
-     * @param   string      $id     id of the validator
-     * @param   callable    $validator  validation function
+     * @param string $id id of the validator
+     * @param callable $validator validation function
      *
      * @throws  \InvalidArgumentException   if the given id is invalid
      */
@@ -28,7 +28,7 @@ interface IFormFieldValidator
     /**
      * Validates the value of the given field.
      *
-     * @param   IFormField  $field      validated field
+     * @param IFormField $field validated field
      */
     public function __invoke(IFormField $field);
 
@@ -42,7 +42,7 @@ interface IFormFieldValidator
     /**
      * Checks if the given parameter is a and a valid validator id.
      *
-     * @param   mixed       $id     checked id
+     * @param mixed $id checked id
      *
      * @throws  \InvalidArgumentException   if the given id is invalid
      */

@@ -257,7 +257,8 @@ class SmileyAddForm extends AbstractForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(SmileyEditForm::class, ['id' => $smileyID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(SmileyEditForm::class,
+                ['id' => $smileyID]),
         ]);
     }
 
@@ -280,10 +281,12 @@ class SmileyAddForm extends AbstractForm
             }
 
             do {
-                $this->uploadedFilename = StringUtil::getRandomID() . '.' . \mb_strtolower(\mb_substr($this->fileUpload['name'], \mb_strrpos($this->fileUpload['name'], '.') + 1));
+                $this->uploadedFilename = StringUtil::getRandomID() . '.' . \mb_strtolower(\mb_substr($this->fileUpload['name'],
+                        \mb_strrpos($this->fileUpload['name'], '.') + 1));
             } while (\file_exists(WCF_DIR . 'images/smilies/' . $this->uploadedFilename));
 
-            if (!@\move_uploaded_file($this->fileUpload['tmp_name'], WCF_DIR . 'images/smilies/' . $this->uploadedFilename)) {
+            if (!@\move_uploaded_file($this->fileUpload['tmp_name'],
+                WCF_DIR . 'images/smilies/' . $this->uploadedFilename)) {
                 $this->uploadedFilename = '';
                 throw new UserInputException('fileUpload', 'uploadFailed');
             }
@@ -309,10 +312,12 @@ class SmileyAddForm extends AbstractForm
             }
 
             do {
-                $this->uploadedFilename2x = StringUtil::getRandomID() . '.' . \mb_strtolower(\mb_substr($this->fileUpload2x['name'], \mb_strrpos($this->fileUpload2x['name'], '.') + 1));
+                $this->uploadedFilename2x = StringUtil::getRandomID() . '.' . \mb_strtolower(\mb_substr($this->fileUpload2x['name'],
+                        \mb_strrpos($this->fileUpload2x['name'], '.') + 1));
             } while (\file_exists(WCF_DIR . 'images/smilies/' . $this->uploadedFilename2x));
 
-            if (!@\move_uploaded_file($this->fileUpload2x['tmp_name'], WCF_DIR . 'images/smilies/' . $this->uploadedFilename2x)) {
+            if (!@\move_uploaded_file($this->fileUpload2x['tmp_name'],
+                WCF_DIR . 'images/smilies/' . $this->uploadedFilename2x)) {
                 $this->uploadedFilename2x = '';
                 throw new UserInputException('fileUpload2x', 'uploadFailed');
             }

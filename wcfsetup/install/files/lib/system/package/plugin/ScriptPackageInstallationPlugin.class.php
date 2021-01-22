@@ -77,7 +77,7 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin
     /**
      * Runs the script with the given path.
      *
-     * @param   string      $scriptPath
+     * @param string $scriptPath
      */
     private function run($scriptPath)
     {

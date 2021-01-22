@@ -70,7 +70,7 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor
      * - Return an ['template' => ..., 'application' => ..., 'variables' => ...] array
      *   to be included into the summary email.
      *
-     * @param   string      $notificationType
+     * @param string $notificationType
      * @return  mixed
      * @see     \wcf\system\email\Email
      */
@@ -107,7 +107,7 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor
     /**
      * Sets a list of authors for stacked notifications.
      *
-     * @param   UserProfile[]   $authors
+     * @param UserProfile[] $authors
      */
     public function setAuthors(array $authors);
 
@@ -121,10 +121,10 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor
     /**
      * Sets the object for the event.
      *
-     * @param   UserNotification        $notification
-     * @param   IUserNotificationObject     $object
-     * @param   UserProfile         $author
-     * @param   array               $additionalData
+     * @param UserNotification $notification
+     * @param IUserNotificationObject $object
+     * @param UserProfile $author
+     * @param array $additionalData
      */
     public function setObject(
         UserNotification $notification,
@@ -136,7 +136,7 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor
     /**
      * Sets the language for the event
      *
-     * @param   Language    $language
+     * @param Language $language
      */
     public function setLanguage(Language $language);
 

@@ -15,7 +15,7 @@ use wcf\system\cache\builder\ContactOptionCacheBuilder;
  * @package WoltLabSuite\Core\Data\Contact\Option
  * @since   3.1
  *
- * @method static   ContactOption   create(array $parameters = [])
+ * @method static ContactOption   create(array $parameters = [])
  * @method      ContactOption   getDecoratedObject()
  * @mixin       ContactOption
  */

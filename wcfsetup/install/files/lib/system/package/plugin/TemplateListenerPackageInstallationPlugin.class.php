@@ -151,7 +151,8 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
             $templateEvents = [];
             /** @var ACPTemplate|Template $template */
             foreach ($templateList as $template) {
-                if (\preg_match_all("~{$ldq}event\\ name\\=\\'(?<event>[\\w]+)\\'{$rdq}~", $template->getSource(), $matches)) {
+                if (\preg_match_all("~{$ldq}event\\ name\\=\\'(?<event>[\\w]+)\\'{$rdq}~", $template->getSource(),
+                    $matches)) {
                     $templates[$template->templateName] = $template->templateName;
 
                     foreach ($matches['event'] as $event) {
@@ -175,10 +176,12 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
         $templateList = new TemplateList();
         $templateList->getConditionBuilder()->add(
             'template.packageID IN (?)',
-            [\array_merge(
-                [$this->installation->getPackage()->packageID],
-                \array_keys($this->installation->getPackage()->getAllRequiredPackages())
-            )]
+            [
+                \array_merge(
+                    [$this->installation->getPackage()->packageID],
+                    \array_keys($this->installation->getPackage()->getAllRequiredPackages())
+                ),
+            ]
         );
         $templateList->getConditionBuilder()->add('template.templateGroupID IS NULL');
         $templateList->sqlOrderBy = 'template.templateName ASC';
@@ -189,10 +192,12 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
         $acpTemplateList = new ACPTemplateList();
         $acpTemplateList->getConditionBuilder()->add(
             'acp_template.packageID IN (?)',
-            [\array_merge(
-                [$this->installation->getPackage()->packageID],
-                \array_keys($this->installation->getPackage()->getAllRequiredPackages())
-            )]
+            [
+                \array_merge(
+                    [$this->installation->getPackage()->packageID],
+                    \array_keys($this->installation->getPackage()->getAllRequiredPackages())
+                ),
+            ]
         );
         $acpTemplateList->sqlOrderBy = 'acp_template.templateName ASC';
         $acpTemplateList->readObjects();
@@ -383,11 +388,12 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
         ]);
 
         // ensure proper normalization of template code
-        $form->getDataHandler()->addProcessor(new CustomFormDataProcessor('templateCode', static function (IFormDocument $document, array $parameters) {
-            $parameters['data']['templatecode'] = StringUtil::unifyNewlines(StringUtil::escapeCDATA($parameters['data']['templatecode']));
+        $form->getDataHandler()->addProcessor(new CustomFormDataProcessor('templateCode',
+            static function (IFormDocument $document, array $parameters) {
+                $parameters['data']['templatecode'] = StringUtil::unifyNewlines(StringUtil::escapeCDATA($parameters['data']['templatecode']));
 
-            return $parameters;
-        }));
+                return $parameters;
+            }));
     }
 
     /**
@@ -551,9 +557,11 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
             $elements[$childElement] = $element->getElementsByTagName($childElement)->item(0)->nodeValue;
         }
 
-        $this->handleDelete([[
-            'attributes' => ['name' => $element->getAttribute('name')],
-            'elements' => $elements,
-        ]]);
+        $this->handleDelete([
+            [
+                'attributes' => ['name' => $element->getAttribute('name')],
+                'elements' => $elements,
+            ],
+        ]);
     }
 }

@@ -100,7 +100,7 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator
     /**
      * Sets user profile.
      *
-     * @param   UserProfile $userProfile
+     * @param UserProfile $userProfile
      * @deprecated  3.0
      */
     public function setUserProfile(UserProfile $userProfile)
@@ -125,8 +125,8 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator
     /**
      * Sets event text.
      *
-     * @param   string      $description
-     * @param       bool         $isRawHtml
+     * @param string $description
+     * @param bool $isRawHtml
      */
     public function setDescription($description, $isRawHtml = false)
     {
@@ -147,7 +147,7 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator
     /**
      * Sets event title.
      *
-     * @param   string      $title
+     * @param string $title
      */
     public function setTitle($title)
     {

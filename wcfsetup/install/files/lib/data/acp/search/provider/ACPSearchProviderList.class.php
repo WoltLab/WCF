@@ -15,7 +15,7 @@ use wcf\data\DatabaseObjectList;
  * @method  ACPSearchProvider       current()
  * @method  ACPSearchProvider[]     getObjects()
  * @method  ACPSearchProvider|null      search($objectID)
- * @property    ACPSearchProvider[]     $objects
+ * @property    ACPSearchProvider[] $objects
  */
 class ACPSearchProviderList extends DatabaseObjectList
 {

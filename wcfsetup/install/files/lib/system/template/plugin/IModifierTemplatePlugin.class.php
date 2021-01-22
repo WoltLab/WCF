@@ -18,8 +18,8 @@ interface IModifierTemplatePlugin
     /**
      * Executes this modifier.
      *
-     * @param   array           $tagArgs
-     * @param   TemplateEngine      $tplObj
+     * @param array $tagArgs
+     * @param TemplateEngine $tplObj
      * @return  string
      */
     public function execute($tagArgs, TemplateEngine $tplObj);

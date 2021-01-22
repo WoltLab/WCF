@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Page
  *
- * @property    AdministrativeAttachmentList    $objectList
+ * @property    AdministrativeAttachmentList $objectList
  */
 class AttachmentListPage extends SortablePage
 {

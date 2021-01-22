@@ -27,8 +27,8 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager
     /**
      * Returns true if given item was already reported.
      *
-     * @param   string      $objectType
-     * @param   int     $objectID
+     * @param string $objectType
+     * @param int $objectID
      * @return  bool
      */
     public function isAlreadyReported($objectType, $objectID)
@@ -52,8 +52,8 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager
      * Returns true if the object with the given data has a pending report.
      * A pending report has a status other than done.
      *
-     * @param   string      $objectType
-     * @param   int     $objectID
+     * @param string $objectType
+     * @param int $objectID
      * @return  bool
      */
     public function hasPendingReport($objectType, $objectID)
@@ -79,8 +79,8 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager
     /**
      * Returns true if current user can report given content.
      *
-     * @param   string      $objectType
-     * @param   int     $objectID
+     * @param string $objectType
+     * @param int $objectID
      * @return  bool
      */
     public function canReport($objectType, $objectID)
@@ -102,7 +102,7 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager
     /**
      * Returns rendered template for reported content.
      *
-     * @param   ViewableModerationQueue     $queue
+     * @param ViewableModerationQueue $queue
      * @return  string
      */
     public function getReportedContent(ViewableModerationQueue $queue)
@@ -113,8 +113,8 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager
     /**
      * Returns the reported object.
      *
-     * @param   string      $objectType
-     * @param   int     $objectID
+     * @param string $objectType
+     * @param int $objectID
      * @return  \wcf\data\IUserContent
      */
     public function getReportedObject($objectType, $objectID)
@@ -125,10 +125,10 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager
     /**
      * Adds a report for specified content.
      *
-     * @param   string      $objectType
-     * @param   int     $objectID
-     * @param   string      $message
-     * @param   array       $additionalData
+     * @param string $objectType
+     * @param int $objectID
+     * @param string $message
+     * @param array $additionalData
      * @throws  InvalidObjectTypeException
      */
     public function addReport($objectType, $objectID, $message, array $additionalData = [])

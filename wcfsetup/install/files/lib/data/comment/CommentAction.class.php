@@ -52,7 +52,14 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     /**
      * @inheritDoc
      */
-    protected $allowGuestAccess = ['addComment', 'addResponse', 'loadComment', 'loadComments', 'loadResponse', 'getGuestDialog'];
+    protected $allowGuestAccess = [
+        'addComment',
+        'addResponse',
+        'loadComment',
+        'loadComments',
+        'loadResponse',
+        'getGuestDialog',
+    ];
 
     /**
      * captcha object type used for comments
@@ -142,7 +149,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
                 // remove activity events
                 $objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
                 if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType . '.recentActivityEvent')) {
-                    UserActivityEventHandler::getInstance()->removeEvents($objectType->objectType . '.recentActivityEvent', $objectIDs);
+                    UserActivityEventHandler::getInstance()->removeEvents($objectType->objectType . '.recentActivityEvent',
+                        $objectIDs);
                 }
 
                 $likeObjectIDs = \array_merge($likeObjectIDs, $objectIDs);
@@ -150,7 +158,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
                 // delete notifications
                 $objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
                 if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.notification')) {
-                    UserNotificationHandler::getInstance()->removeNotifications($objectType->objectType . '.notification', $objectIDs);
+                    UserNotificationHandler::getInstance()->removeNotifications($objectType->objectType . '.notification',
+                        $objectIDs);
                 }
 
                 if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.like.notification')) {
@@ -159,7 +168,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             }
 
             // remove likes
-            ReactionHandler::getInstance()->removeReactions('com.woltlab.wcf.comment', $likeObjectIDs, $notificationObjectTypes);
+            ReactionHandler::getInstance()->removeReactions('com.woltlab.wcf.comment', $likeObjectIDs,
+                $notificationObjectTypes);
         }
 
         // delete responses
@@ -202,7 +212,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      */
     public function loadComments()
     {
-        $commentList = CommentHandler::getInstance()->getCommentList($this->commentProcessor, $this->parameters['data']['objectTypeID'], $this->parameters['data']['objectID'], false);
+        $commentList = CommentHandler::getInstance()->getCommentList($this->commentProcessor,
+            $this->parameters['data']['objectTypeID'], $this->parameters['data']['objectID'], false);
         $commentList->getConditionBuilder()->add("comment.time < ?", [$this->parameters['data']['lastCommentTime']]);
         $commentList->readObjects();
 
@@ -394,7 +405,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             $action->executeAction();
         } else {
             // mark comment for moderated content
-            ModerationQueueActivationManager::getInstance()->addModeratedContent('com.woltlab.wcf.comment.comment', $this->createdComment->commentID);
+            ModerationQueueActivationManager::getInstance()->addModeratedContent('com.woltlab.wcf.comment.comment',
+                $this->createdComment->commentID);
         }
 
         FloodControl::getInstance()->registerContent('com.woltlab.wcf.comment');
@@ -441,7 +453,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
             // fire activity event
             if ($comment->userID && UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType . '.recentActivityEvent')) {
-                UserActivityEventHandler::getInstance()->fireEvent($objectType->objectType . '.recentActivityEvent', $comment->commentID, null, $comment->userID, $comment->time);
+                UserActivityEventHandler::getInstance()->fireEvent($objectType->objectType . '.recentActivityEvent',
+                    $comment->commentID, null, $comment->userID, $comment->time);
             }
 
             // fire notification event
@@ -456,14 +469,17 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
                     $recipientIDs = \array_diff($recipientIDs, [WCF::getUser()->userID]);
 
                     if (!empty($recipientIDs)) {
-                        UserNotificationHandler::getInstance()->fireEvent('comment', $objectType->objectType . '.notification', $notificationObject, $recipientIDs);
+                        UserNotificationHandler::getInstance()->fireEvent('comment',
+                            $objectType->objectType . '.notification', $notificationObject, $recipientIDs);
                     }
                 } else {
                     /** @var ICommentUserNotificationObjectType $notificationObjectType */
 
                     $userID = $notificationObjectType->getOwnerID($comment->commentID);
                     if ($userID != WCF::getUser()->userID) {
-                        UserNotificationHandler::getInstance()->fireEvent('comment', $objectType->objectType . '.notification', $notificationObject, [$userID], ['objectUserID' => $userID]);
+                        UserNotificationHandler::getInstance()->fireEvent('comment',
+                            $objectType->objectType . '.notification', $notificationObject, [$userID],
+                            ['objectUserID' => $userID]);
                     }
                 }
             }
@@ -568,7 +584,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             $action->executeAction();
         } else {
             // mark response for moderated content
-            ModerationQueueActivationManager::getInstance()->addModeratedContent('com.woltlab.wcf.comment.response', $this->createdResponse->responseID);
+            ModerationQueueActivationManager::getInstance()->addModeratedContent('com.woltlab.wcf.comment.response',
+                $this->createdResponse->responseID);
         }
 
         FloodControl::getInstance()->registerContent('com.woltlab.wcf.comment');
@@ -587,7 +604,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         }
 
         $responses = $this->comment->responses;
-        if ($this->commentProcessor->canModerate($this->parameters['data']['objectTypeID'], $this->parameters['data']['objectID'])) {
+        if ($this->commentProcessor->canModerate($this->parameters['data']['objectTypeID'],
+            $this->parameters['data']['objectID'])) {
             $responses = $this->comment->unfilteredResponses;
         }
 
@@ -635,7 +653,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
             // fire activity event
             if ($response->userID && UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType . '.response.recentActivityEvent')) {
-                UserActivityEventHandler::getInstance()->fireEvent($objectType->objectType . '.response.recentActivityEvent', $response->responseID, null, $response->userID, $response->time);
+                UserActivityEventHandler::getInstance()->fireEvent($objectType->objectType . '.response.recentActivityEvent',
+                    $response->responseID, null, $response->userID, $response->time);
             }
 
             // fire notification event
@@ -758,7 +777,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             $action->executeAction();
         }
 
-        ModerationQueueActivationManager::getInstance()->removeModeratedContent('com.woltlab.wcf.comment.comment', [$this->comment->commentID]);
+        ModerationQueueActivationManager::getInstance()->removeModeratedContent('com.woltlab.wcf.comment.comment',
+            [$this->comment->commentID]);
 
         return ['commentID' => $this->comment->commentID];
     }
@@ -809,7 +829,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
             $action->executeAction();
         }
 
-        ModerationQueueActivationManager::getInstance()->removeModeratedContent('com.woltlab.wcf.comment.response', [$this->response->responseID]);
+        ModerationQueueActivationManager::getInstance()->removeModeratedContent('com.woltlab.wcf.comment.response',
+            [$this->response->responseID]);
 
         return ['responseID' => $this->response->responseID];
     }
@@ -1073,8 +1094,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     /**
      * Renders a comment.
      *
-     * @param   Comment     $comment
-     * @param       CommentResponse $response
+     * @param Comment $comment
+     * @param CommentResponse $response
      * @return  string|string[]
      */
     protected function renderComment(Comment $comment, ?CommentResponse $response = null)
@@ -1109,7 +1130,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         }
 
         WCF::getTPL()->assign([
-            'commentCanModerate' => $this->commentProcessor->canModerate($comment->getDecoratedObject()->objectTypeID, $comment->getDecoratedObject()->objectID),
+            'commentCanModerate' => $this->commentProcessor->canModerate($comment->getDecoratedObject()->objectTypeID,
+                $comment->getDecoratedObject()->objectID),
             'commentList' => [$comment],
             'commentManager' => $this->commentProcessor,
         ]);
@@ -1153,7 +1175,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     /**
      * Renders a response.
      *
-     * @param   CommentResponse $response
+     * @param CommentResponse $response
      * @return  string
      */
     protected function renderResponse(CommentResponse $response)
@@ -1165,7 +1187,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         // render response
         WCF::getTPL()->assign([
             'responseList' => [$response],
-            'commentCanModerate' => $this->commentProcessor->canModerate($response->getComment()->objectTypeID, $response->getComment()->objectID),
+            'commentCanModerate' => $this->commentProcessor->canModerate($response->getComment()->objectTypeID,
+                $response->getComment()->objectID),
             'commentManager' => $this->commentProcessor,
         ]);
 
@@ -1189,12 +1212,15 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
         CommentHandler::enforceCensorship($this->parameters['data']['message']);
 
         $this->setDisallowedBBCodes();
-        $htmlInputProcessor = $this->getHtmlInputProcessor($this->parameters['data']['message'], ($this->comment !== null ? $this->comment->commentID : 0));
+        $htmlInputProcessor = $this->getHtmlInputProcessor($this->parameters['data']['message'],
+            ($this->comment !== null ? $this->comment->commentID : 0));
 
         // search for disallowed bbcodes
         $disallowedBBCodes = $htmlInputProcessor->validate();
         if (!empty($disallowedBBCodes)) {
-            throw new UserInputException('text', WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes', ['disallowedBBCodes' => $disallowedBBCodes]));
+            throw new UserInputException('text',
+                WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes',
+                    ['disallowedBBCodes' => $disallowedBBCodes]));
         }
 
         if ($htmlInputProcessor->appearsToBeEmpty()) {
@@ -1207,7 +1233,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
     /**
      * Validates object type id parameter.
      *
-     * @param       int         $objectTypeID
+     * @param int $objectTypeID
      * @return  ObjectType
      * @throws  UserInputException
      */
@@ -1318,14 +1344,15 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
      */
     protected function setDisallowedBBCodes()
     {
-        BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(',', WCF::getSession()->getPermission('user.comment.disallowedBBCodes')));
+        BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(',',
+            WCF::getSession()->getPermission('user.comment.disallowedBBCodes')));
     }
 
     /**
      * Returns the current html input processor or a new one if `$message` is not null.
      *
-     * @param       string|null     $message        source message
-     * @param       int         $objectID       object id
+     * @param string|null $message source message
+     * @param int $objectID object id
      * @return      HtmlInputProcessor
      */
     public function getHtmlInputProcessor($message = null, $objectID = 0)

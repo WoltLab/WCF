@@ -65,7 +65,7 @@ class PackageInstallationNodeBuilder
     /**
      * Creates a new instance of PackageInstallationNodeBuilder
      *
-     * @param   PackageInstallationDispatcher   $installation
+     * @param PackageInstallationDispatcher $installation
      */
     public function __construct(PackageInstallationDispatcher $installation)
     {
@@ -75,7 +75,7 @@ class PackageInstallationNodeBuilder
     /**
      * Sets parent node.
      *
-     * @param   string      $parentNode
+     * @param string $parentNode
      */
     public function setParentNode($parentNode)
     {
@@ -117,7 +117,7 @@ class PackageInstallationNodeBuilder
     /**
      * Returns the succeeding node.
      *
-     * @param   string      $parentNode
+     * @param string $parentNode
      * @return  string
      */
     public function getNextNode($parentNode = '')
@@ -143,7 +143,7 @@ class PackageInstallationNodeBuilder
     /**
      * Returns package name associated with given queue id.
      *
-     * @param   int     $queueID
+     * @param int $queueID
      * @return  string
      */
     public function getPackageNameByQueue($queueID)
@@ -165,7 +165,7 @@ class PackageInstallationNodeBuilder
     /**
      * Returns installation type by queue id.
      *
-     * @param   int     $queueID
+     * @param int $queueID
      * @return  string
      */
     public function getInstallationTypeByQueue($queueID)
@@ -183,7 +183,7 @@ class PackageInstallationNodeBuilder
     /**
      * Returns data for current node.
      *
-     * @param   string      $node
+     * @param string $node
      * @return  array
      */
     public function getNodeData($node)
@@ -205,7 +205,7 @@ class PackageInstallationNodeBuilder
     /**
      * Marks a node as completed.
      *
-     * @param   string      $node
+     * @param string $node
      */
     public function completeNode($node)
     {
@@ -245,7 +245,7 @@ class PackageInstallationNodeBuilder
     /**
      * Calculates current setup process.
      *
-     * @param   string      $node
+     * @param string $node
      * @return  int
      */
     public function calculateProgress($node)
@@ -284,8 +284,8 @@ class PackageInstallationNodeBuilder
     /**
      * Duplicates a node by re-inserting it and moving all descendants into a new tree.
      *
-     * @param   string      $node
-     * @param   int     $sequenceNo
+     * @param string $node
+     * @param int $sequenceNo
      */
     public function cloneNode($node, $sequenceNo)
     {
@@ -356,8 +356,8 @@ class PackageInstallationNodeBuilder
      * nodes to provide to be descendants of the new node. If you intend
      * to insert more than a single node, you should prefer shiftNodes().
      *
-     * @param   string      $beforeNode
-     * @param   callable    $callback
+     * @param string $beforeNode
+     * @param callable $callback
      */
     public function insertNode($beforeNode, callable $callback)
     {
@@ -382,8 +382,8 @@ class PackageInstallationNodeBuilder
     /**
      * Shifts nodes to allow dynamic inserts at runtime.
      *
-     * @param   string      $oldParentNode
-     * @param   string      $newParentNode
+     * @param string $oldParentNode
+     * @param string $newParentNode
      */
     public function shiftNodes($oldParentNode, $newParentNode)
     {
@@ -454,7 +454,8 @@ class PackageInstallationNodeBuilder
         $requiredPackages = $this->installation->getArchive()->getOpenRequirements();
         foreach ($requiredPackages as $packageName => $package) {
             if (!isset($package['file'])) {
-                if (isset(self::$pendingPackages[$packageName]) && (!isset($package['minversion']) || Package::compareVersion(self::$pendingPackages[$packageName], $package['minversion']) >= 0)) {
+                if (isset(self::$pendingPackages[$packageName]) && (!isset($package['minversion']) || Package::compareVersion(self::$pendingPackages[$packageName],
+                            $package['minversion']) >= 0)) {
                     // the package will already be installed and no
                     // minversion is given or the package which will be
                     // installed satisfies the minversion, thus we can
@@ -486,7 +487,8 @@ class PackageInstallationNodeBuilder
                 throw new SystemException("Unable to find required package '" . $package['file'] . "' within archive of package '" . $this->installation->queue->package . "'.");
             }
 
-            $fileName = FileUtil::getTemporaryFilename('package_', \preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', \basename($package['file'])));
+            $fileName = FileUtil::getTemporaryFilename('package_',
+                \preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', \basename($package['file'])));
             $this->installation->getArchive()->getTar()->extract($index, $fileName);
 
             // get archive data
@@ -499,7 +501,8 @@ class PackageInstallationNodeBuilder
             }
 
             // check if delivered version satisfies minversion
-            if (isset($package['minversion']) && Package::compareVersion($package['minversion'], $archive->getPackageInfo('version')) > 0) {
+            if (isset($package['minversion']) && Package::compareVersion($package['minversion'],
+                    $archive->getPackageInfo('version')) > 0) {
                 throw new SystemException("Package '" . $this->installation->getArchive()->getPackageInfo('name') . "' requires package '" . $packageName . "' at least in version " . $package['minversion'] . ", but only delivers version " . $archive->getPackageInfo('version') . ".");
             }
 
@@ -514,7 +517,8 @@ class PackageInstallationNodeBuilder
 
             // check if package will already be installed
             if (isset(self::$pendingPackages[$packageName])) {
-                if (Package::compareVersion(self::$pendingPackages[$packageName], $archive->getPackageInfo('version')) >= 0) {
+                if (Package::compareVersion(self::$pendingPackages[$packageName],
+                        $archive->getPackageInfo('version')) >= 0) {
                     // the version to be installed satisfies the required version
                     continue;
                 } else {
@@ -663,7 +667,8 @@ class PackageInstallationNodeBuilder
                 throw new SystemException("Unable to find required package '" . $package['file'] . "' within archive.");
             }
 
-            $fileName = FileUtil::getTemporaryFilename('package_', \preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', \basename($package['file'])));
+            $fileName = FileUtil::getTemporaryFilename('package_',
+                \preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', \basename($package['file'])));
             $this->installation->getArchive()->getTar()->extract($index, $fileName);
 
             // get archive data
@@ -732,7 +737,8 @@ class PackageInstallationNodeBuilder
     protected function buildChildQueues()
     {
         $queueList = new PackageInstallationQueueList();
-        $queueList->getConditionBuilder()->add("package_installation_queue.parentQueueID = ?", [$this->installation->queue->queueID]);
+        $queueList->getConditionBuilder()->add("package_installation_queue.parentQueueID = ?",
+            [$this->installation->queue->queueID]);
         $queueList->getConditionBuilder()->add("package_installation_queue.queueID NOT IN (SELECT queueID FROM wcf" . WCF_N . "_package_installation_node)");
         $queueList->readObjects();
 
@@ -766,8 +772,8 @@ class PackageInstallationNodeBuilder
     /**
      * Returns queue id based upon current node.
      *
-     * @param   int     $processNo
-     * @param   string      $node
+     * @param int $processNo
+     * @param string $node
      * @return  int|null
      */
     public function getQueueByNode($processNo, $node)

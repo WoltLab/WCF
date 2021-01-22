@@ -41,9 +41,9 @@ class ACPSearchHandler extends SingletonFactory
     /**
      * Returns a list of search result collections for given query.
      *
-     * @param   string      $query
-     * @param   int     $limit
-     * @param       string          $providerName
+     * @param string $query
+     * @param int $limit
+     * @param string $providerName
      * @return  ACPSearchResultList[]
      * @throws  ImplementationException
      */
@@ -125,7 +125,7 @@ class ACPSearchHandler extends SingletonFactory
     /**
      * Returns a list of application abbreviations.
      *
-     * @param   string      $suffix
+     * @param string $suffix
      * @return  string[]
      */
     public function getAbbreviations($suffix = '')

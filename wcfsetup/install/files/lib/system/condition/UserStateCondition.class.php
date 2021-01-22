@@ -162,7 +162,7 @@ class UserStateCondition extends AbstractSingleFieldCondition implements
     /**
      * Returns the "checked" attribute for an input element.
      *
-     * @param   string      $propertyName
+     * @param string $propertyName
      * @return  string
      */
     protected function getCheckedAttribute($propertyName)

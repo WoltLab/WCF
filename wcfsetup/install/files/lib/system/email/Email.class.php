@@ -135,7 +135,7 @@ class Email
     /**
      * Sets the email's 'Subject'.
      *
-     * @param   string  $subject
+     * @param string $subject
      */
     public function setSubject($subject)
     {
@@ -155,7 +155,7 @@ class Email
     /**
      * Sets the email's 'Date'.
      *
-     * @param   \DateTime   $date
+     * @param \DateTime $date
      */
     public function setDate(?\DateTime $date = null)
     {
@@ -180,7 +180,7 @@ class Email
     /**
      * Sets the part left of the at sign (@) in the email's 'Message-Id'.
      *
-     * @param   string      $messageID
+     * @param string $messageID
      * @throws  \DomainException
      */
     public function setMessageID($messageID = null)
@@ -221,7 +221,7 @@ class Email
     /**
      * Adds a message id to the email's 'In-Reply-To'.
      *
-     * @param   string      $messageID
+     * @param string $messageID
      * @throws  \DomainException
      */
     public function addInReplyTo($messageID)
@@ -236,7 +236,7 @@ class Email
     /**
      * Removes a message id from the email's 'In-Reply-To'.
      *
-     * @param   string  $messageID
+     * @param string $messageID
      */
     public function removeInReplyTo($messageID)
     {
@@ -256,7 +256,7 @@ class Email
     /**
      * Adds a message id to the email's 'References'.
      *
-     * @param   string      $messageID
+     * @param string $messageID
      * @throws  \DomainException
      */
     public function addReferences($messageID)
@@ -271,7 +271,7 @@ class Email
     /**
      * Removes a message id from the email's 'References'.
      *
-     * @param   string  $messageID
+     * @param string $messageID
      */
     public function removeReferences($messageID)
     {
@@ -291,8 +291,8 @@ class Email
     /**
      * Sets the list-label part of the email's 'List-Id'.
      *
-     * @param   string      $listId
-     * @param   string      $humanReadable
+     * @param string $listId
+     * @param string $humanReadable
      * @throws  \DomainException
      * @since 5.3
      */
@@ -345,8 +345,8 @@ class Email
      * If $supportsOneClick is set to true the 'List-Unsubscribe-Post' header
      * with the value 'List-Unsubscribe=One-Click' is added.
      *
-     * @param   string      $uri
-     * @param   bool        $supportsOneClick
+     * @param string $uri
+     * @param bool $supportsOneClick
      * @since 5.3
      */
     public function setListUnsubscribe($uri, $supportsOneClick = false)
@@ -376,7 +376,7 @@ class Email
     /**
      * Sets the email's 'From'.
      *
-     * @param   Mailbox     $sender
+     * @param Mailbox $sender
      */
     public function setSender(?Mailbox $sender = null)
     {
@@ -401,7 +401,7 @@ class Email
     /**
      * Sets the email's 'Reply-To'.
      *
-     * @param   Mailbox     $replyTo
+     * @param Mailbox $replyTo
      */
     public function setReplyTo(?Mailbox $replyTo = null)
     {
@@ -426,8 +426,8 @@ class Email
     /**
      * Adds a recipient to this email.
      *
-     * @param   Mailbox     $recipient
-     * @param   string      $type       One of 'to', 'cc', 'bcc'
+     * @param Mailbox $recipient
+     * @param string $type One of 'to', 'cc', 'bcc'
      * @throws  \DomainException
      */
     public function addRecipient(Mailbox $recipient, $type = 'to')
@@ -456,7 +456,7 @@ class Email
     /**
      * Removes a recipient from this email.
      *
-     * @param   Mailbox     $recipient
+     * @param Mailbox $recipient
      */
     public function removeRecipient(Mailbox $recipient)
     {
@@ -476,8 +476,8 @@ class Email
     /**
      * Adds a custom X-* header to the email.
      *
-     * @param   string      $header
-     * @param   string      $value
+     * @param string $header
+     * @param string $value
      * @throws  \DomainException
      */
     public function addHeader($header, $value)
@@ -568,9 +568,9 @@ class Email
      * Note: This method attempts to convert the header name to the "canonical"
      *       case of the header (e.g. upper case at the start and after the hyphen).
      *
+     * @return  string
      * @see \wcf\system\email\Email::getHeaders()
      *
-     * @return  string
      */
     public function getHeaderString()
     {
@@ -606,7 +606,7 @@ class Email
     /**
      * Sets the body of this email.
      *
-     * @param   AbstractMimePart    $body
+     * @param AbstractMimePart $body
      */
     public function setBody(AbstractMimePart $body)
     {
@@ -639,10 +639,10 @@ class Email
                 return \quoted_printable_encode(
                     \str_replace("\n", "\r\n", StringUtil::unifyNewlines($this->body->getContent()))
                 );
-            break;
+                break;
             case 'base64':
                 return \chunk_split(\base64_encode($this->body->getContent()));
-            break;
+                break;
             case '':
                 return $this->body->getContent();
         }
@@ -778,8 +778,8 @@ class Email
             } elseif ($body instanceof mime\AttachmentMimePart) {
                 $result .= "<fieldset><legend><h" . $depth . ">" . \get_class($body) . "</h" . $depth . "></legend>";
                 $result .= "<dl>" . \implode('', \array_map(static function ($item) {
-                    return "<dt>" . $item[0] . "</dt><dd>" . $item[1] . "</dd>";
-                }, $body->getAdditionalHeaders())) . "</dl>";
+                        return "<dt>" . $item[0] . "</dt><dd>" . $item[1] . "</dd>";
+                    }, $body->getAdditionalHeaders())) . "</dl>";
                 $result .= "<" . \strlen($body->getContent()) . " Bytes>";
                 $result .= '</fieldset>';
             } else {

@@ -38,8 +38,8 @@ class PackageUpdateDispatcher extends SingletonFactory
     /**
      * Refreshes the package database.
      *
-     * @param   int[]       $packageUpdateServerIDs
-     * @param   bool            $ignoreCache
+     * @param int[] $packageUpdateServerIDs
+     * @param bool $ignoreCache
      */
     public function refreshPackageDatabase(array $packageUpdateServerIDs = [], $ignoreCache = false)
     {
@@ -140,8 +140,8 @@ class PackageUpdateDispatcher extends SingletonFactory
     /**
      * Fetches the package_update.xml from an update server.
      *
-     * @param   PackageUpdateServer $updateServer
-     * @param   bool            $forceHTTP
+     * @param PackageUpdateServer $updateServer
+     * @param bool $forceHTTP
      * @throws  PackageUpdateUnauthorizedException
      * @throws  SystemException
      */
@@ -271,9 +271,9 @@ class PackageUpdateDispatcher extends SingletonFactory
     /**
      * Parses a stream containing info from a packages_update.xml.
      *
-     * @param       PackageUpdateServer     $updateServer
-     * @param       string                  $content
-     * @param       string                  $apiVersion
+     * @param PackageUpdateServer $updateServer
+     * @param string $content
+     * @param string $apiVersion
      * @return      array
      * @throws      SystemException
      */
@@ -313,10 +313,10 @@ class PackageUpdateDispatcher extends SingletonFactory
     /**
      * Parses the xml structure from a packages_update.xml.
      *
-     * @param       PackageUpdateServer     $updateServer
-     * @param       \DOMXPath               $xpath
-     * @param       \DOMElement             $package
-     * @param       string                  $apiVersion
+     * @param PackageUpdateServer $updateServer
+     * @param \DOMXPath $xpath
+     * @param \DOMElement $package
+     * @param string $apiVersion
      * @return      array
      * @throws      PackageValidationException
      */
@@ -396,7 +396,8 @@ class PackageUpdateDispatcher extends SingletonFactory
                     if ($this->purchasedVersions[$key][$packageName] == '*') {
                         $isAccessible = 1;
                     } else {
-                        $isAccessible = (Package::compareVersion($versionNo, $this->purchasedVersions[$key][$packageName] . '.99', '<=') ? 1 : 0);
+                        $isAccessible = (Package::compareVersion($versionNo,
+                            $this->purchasedVersions[$key][$packageName] . '.99', '<=') ? 1 : 0);
                     }
                 } else {
                     $isAccessible = 0;
@@ -505,8 +506,8 @@ class PackageUpdateDispatcher extends SingletonFactory
     /**
      * Updates information parsed from a packages_update.xml into the database.
      *
-     * @param   array       $allNewPackages
-     * @param   int     $packageUpdateServerID
+     * @param array $allNewPackages
+     * @param int $packageUpdateServerID
      */
     protected function savePackageUpdates(array &$allNewPackages, $packageUpdateServerID)
     {
@@ -742,8 +743,8 @@ class PackageUpdateDispatcher extends SingletonFactory
     /**
      * Returns a list of available updates for installed packages.
      *
-     * @param   bool        $removeRequirements
-     * @param   bool        $removeOlderMinorReleases
+     * @param bool $removeRequirements
+     * @param bool $removeOlderMinorReleases
      * @return  array
      * @throws      SystemException
      */
@@ -876,8 +877,8 @@ class PackageUpdateDispatcher extends SingletonFactory
     /**
      * Removes unnecessary updates of requirements from the list of available updates.
      *
-     * @param   array       $updates
-     * @param   int     $packageUpdateVersionID
+     * @param array $updates
+     * @param int $packageUpdateVersionID
      * @return  array       $updates
      */
     protected function removeUpdateRequirements(array $updates, $packageUpdateVersionID)
@@ -895,7 +896,8 @@ class PackageUpdateDispatcher extends SingletonFactory
                     $updates,
                     $updates[$row['packageID']]['version']['servers'][0]['packageUpdateVersionID']
                 );
-                if (Package::compareVersion($row['minversion'], $updates[$row['packageID']]['version']['packageVersion'], '>=')) {
+                if (Package::compareVersion($row['minversion'],
+                    $updates[$row['packageID']]['version']['packageVersion'], '>=')) {
                     unset($updates[$row['packageID']]);
                 }
             }
@@ -907,7 +909,7 @@ class PackageUpdateDispatcher extends SingletonFactory
     /**
      * Creates a new package installation scheduler.
      *
-     * @param   array   $selectedPackages
+     * @param array $selectedPackages
      * @return  PackageInstallationScheduler
      */
     public function prepareInstallation(array $selectedPackages)
@@ -918,8 +920,8 @@ class PackageUpdateDispatcher extends SingletonFactory
     /**
      * Returns package update versions of the specified package.
      *
-     * @param   string      $package    package identifier
-     * @param   string      $version    package version
+     * @param string $package package identifier
+     * @param string $version package version
      * @return  array       package update versions
      * @throws  SystemException
      */
@@ -963,7 +965,7 @@ class PackageUpdateDispatcher extends SingletonFactory
     /**
      * Returns the newest available version of a package.
      *
-     * @param   string      $package    package identifier
+     * @param string $package package identifier
      * @return  string      newest package version
      */
     public function getNewestPackageVersion($package)
@@ -993,9 +995,9 @@ class PackageUpdateDispatcher extends SingletonFactory
     /**
      * Stores the filename of a download in session.
      *
-     * @param   string      $package    package identifier
-     * @param   string      $version    package version
-     * @param   string      $filename
+     * @param string $package package identifier
+     * @param string $version package version
+     * @param string $filename
      */
     public function cacheDownload($package, $version, $filename)
     {

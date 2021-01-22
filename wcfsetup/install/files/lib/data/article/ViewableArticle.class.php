@@ -28,7 +28,7 @@ use wcf\system\WCF;
  * @method          Article                 getDecoratedObject()
  * @method          ArticleContent|ViewableArticleContent   getArticleContent()
  * @mixin           Article
- * @property-read   int|null                            $visitTime  last time the active user has visited the time or `null` if object has not been fetched via `ViewableArticleList` or if the active user is a guest
+ * @property-read   int|null $visitTime  last time the active user has visited the time or `null` if object has not been fetched via `ViewableArticleList` or if the active user is a guest
  */
 class ViewableArticle extends DatabaseObjectDecorator
 {
@@ -78,8 +78,8 @@ class ViewableArticle extends DatabaseObjectDecorator
     /**
      * Returns a specific article decorated as viewable article or `null` if it does not exist.
      *
-     * @param   int     $articleID
-     * @param       bool         $enableContentLoading   Enables/disables the loading of article content objects
+     * @param int $articleID
+     * @param bool $enableContentLoading Enables/disables the loading of article content objects
      * @return  ViewableArticle
      */
     public static function getArticle($articleID, $enableContentLoading = true)
@@ -115,7 +115,7 @@ class ViewableArticle extends DatabaseObjectDecorator
     /**
      * Sets the article's content.
      *
-     * @param       ViewableArticleContent  $articleContent
+     * @param ViewableArticleContent $articleContent
      */
     public function setArticleContent(ViewableArticleContent $articleContent)
     {
@@ -159,9 +159,11 @@ class ViewableArticle extends DatabaseObjectDecorator
     {
         if ($this->effectiveVisitTime === null) {
             if (WCF::getUser()->userID) {
-                $this->effectiveVisitTime = \max($this->visitTime, VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article'));
+                $this->effectiveVisitTime = \max($this->visitTime,
+                    VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article'));
             } else {
-                $this->effectiveVisitTime = \max(VisitTracker::getInstance()->getObjectVisitTime('com.woltlab.wcf.article', $this->articleID), VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article'));
+                $this->effectiveVisitTime = \max(VisitTracker::getInstance()->getObjectVisitTime('com.woltlab.wcf.article',
+                    $this->articleID), VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article'));
             }
             if ($this->effectiveVisitTime === null) {
                 $this->effectiveVisitTime = 0;
@@ -184,7 +186,7 @@ class ViewableArticle extends DatabaseObjectDecorator
     /**
      * Adds a label.
      *
-     * @param   Label   $label
+     * @param Label $label
      */
     public function addLabel(Label $label)
     {
@@ -239,7 +241,8 @@ class ViewableArticle extends DatabaseObjectDecorator
                     if (!empty($categoryIDs)) {
                         $conditionBuilder = new PreparedStatementConditionBuilder();
                         $conditionBuilder->add('article.categoryID IN (?)', [$categoryIDs]);
-                        $conditionBuilder->add('article.time > ?', [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article')]);
+                        $conditionBuilder->add('article.time > ?',
+                            [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article')]);
                         $conditionBuilder->add('article.isDeleted = ?', [0]);
                         $conditionBuilder->add('article.publicationStatus = ?', [Article::PUBLISHED]);
                         $conditionBuilder->add('(article.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)');
@@ -259,7 +262,8 @@ class ViewableArticle extends DatabaseObjectDecorator
                     }
 
                     // update storage unreadEntries
-                    UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'unreadArticles', self::$unreadArticles);
+                    UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'unreadArticles',
+                        self::$unreadArticles);
                 } else {
                     self::$unreadArticles = $unreadArticles;
                 }
@@ -272,7 +276,7 @@ class ViewableArticle extends DatabaseObjectDecorator
     /**
      * Returns the number of unread articles for a specific category.
      *
-     * @param       int         $articleCategoryID
+     * @param int $articleCategoryID
      * @return  int
      * @since       5.2
      */
@@ -289,7 +293,8 @@ class ViewableArticle extends DatabaseObjectDecorator
                     self::$unreadArticlesByCategory[$articleCategoryID] = self::fetchUnreadArticlesForCategory($articleCategoryID);
 
                     // update storage unreadEntries
-                    UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'unreadArticlesByCategory', \serialize(self::$unreadArticlesByCategory));
+                    UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'unreadArticlesByCategory',
+                        \serialize(self::$unreadArticlesByCategory));
                 } else {
                     $unreadArticlesByCategory = \unserialize($unreadArticlesByCategory);
 
@@ -299,7 +304,8 @@ class ViewableArticle extends DatabaseObjectDecorator
                         self::$unreadArticlesByCategory[$articleCategoryID] = self::fetchUnreadArticlesForCategory($articleCategoryID);
 
                         // update storage unreadEntries
-                        UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'unreadArticlesByCategory', \serialize(self::$unreadArticlesByCategory));
+                        UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'unreadArticlesByCategory',
+                            \serialize(self::$unreadArticlesByCategory));
                     }
                 }
             } else {
@@ -310,7 +316,8 @@ class ViewableArticle extends DatabaseObjectDecorator
                 self::$unreadArticlesByCategory[$articleCategoryID] = self::fetchUnreadArticlesForCategory($articleCategoryID);
 
                 // update storage unreadEntries
-                UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'unreadArticlesByCategory', \serialize(self::$unreadArticlesByCategory));
+                UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'unreadArticlesByCategory',
+                    \serialize(self::$unreadArticlesByCategory));
             } else {
                 self::$unreadArticlesByCategory[$articleCategoryID] = 0;
             }
@@ -322,7 +329,7 @@ class ViewableArticle extends DatabaseObjectDecorator
     /**
      * Returns the unread article count for a specific category.
      *
-     * @param       int         $articleCategoryID
+     * @param int $articleCategoryID
      * @return      int
      * @since       5.2
      */
@@ -348,7 +355,8 @@ class ViewableArticle extends DatabaseObjectDecorator
 
         $conditionBuilder = new PreparedStatementConditionBuilder();
         $conditionBuilder->add('article.categoryID IN (?)', [$categoryIDs]);
-        $conditionBuilder->add('article.time > ?', [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article')]);
+        $conditionBuilder->add('article.time > ?',
+            [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article')]);
         $conditionBuilder->add('article.isDeleted = ?', [0]);
         $conditionBuilder->add('article.publicationStatus = ?', [Article::PUBLISHED]);
         $conditionBuilder->add('(article.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)');
@@ -388,7 +396,8 @@ class ViewableArticle extends DatabaseObjectDecorator
                     if (!empty($categoryIDs)) {
                         $conditionBuilder = new PreparedStatementConditionBuilder();
                         $conditionBuilder->add('article.categoryID IN (?)', [$categoryIDs]);
-                        $conditionBuilder->add('article.time > ?', [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article')]);
+                        $conditionBuilder->add('article.time > ?',
+                            [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article')]);
                         $conditionBuilder->add('article.isDeleted = ?', [0]);
                         $conditionBuilder->add('article.publicationStatus = ?', [Article::PUBLISHED]);
                         $conditionBuilder->add('(article.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)');
@@ -408,7 +417,8 @@ class ViewableArticle extends DatabaseObjectDecorator
                     }
 
                     // update storage unreadEntries
-                    UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'unreadWatchedArticles', self::$unreadWatchedArticles);
+                    UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'unreadWatchedArticles',
+                        self::$unreadWatchedArticles);
                 } else {
                     self::$unreadWatchedArticles = $unreadArticles;
                 }

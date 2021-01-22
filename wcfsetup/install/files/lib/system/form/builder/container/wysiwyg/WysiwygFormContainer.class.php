@@ -154,7 +154,7 @@ class WysiwygFormContainer extends FormContainer
      * Adds a node that will be appended to the settings form container when it is built and
      * returns this container.
      *
-     * @param   IFormChildNode  $settingsNode   added settings node
+     * @param IFormChildNode $settingsNode added settings node
      * @return  WysiwygFormContainer        this form field container
      */
     public function addSettingsNode(IFormChildNode $settingsNode)
@@ -173,7 +173,7 @@ class WysiwygFormContainer extends FormContainer
      * Adds nodes that will be appended to the settings form container when it is built and
      * returns this container.
      *
-     * @param   IFormChildNode[]    $settingsNodes  added settings nodes
+     * @param IFormChildNode[] $settingsNodes added settings nodes
      * @return  WysiwygFormContainer            this form field container
      */
     public function addSettingsNodes(array $settingsNodes)
@@ -191,8 +191,8 @@ class WysiwygFormContainer extends FormContainer
      *
      * By default, no attachment data is set.
      *
-     * @param   null|string $objectType     name of attachment object type or `null` to unset previous attachment data
-     * @param   int     $parentObjectID     id of the parent of the object the attachments belong to or `0` if no such parent exists
+     * @param null|string $objectType name of attachment object type or `null` to unset previous attachment data
+     * @param int $parentObjectID id of the parent of the object the attachments belong to or `0` if no such parent exists
      * @return  WysiwygFormContainer            this form container
      * @throws  \BadMethodCallException         if the attachment form field has already been initialized
      */
@@ -205,7 +205,8 @@ class WysiwygFormContainer extends FormContainer
         if ($objectType === null) {
             $this->attachmentData = null;
         } else {
-            if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', $objectType) === null) {
+            if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType',
+                    $objectType) === null) {
                 throw new \InvalidArgumentException("Unknown attachment object type '{$objectType}'.");
             }
 
@@ -223,10 +224,10 @@ class WysiwygFormContainer extends FormContainer
      *
      * By default, the preview button is shown.
      *
-     * @param       bool                            $enablePreviewButton
+     * @param bool $enablePreviewButton
      * @return      WysiwygFormContainer            this form container
-     * @since       5.3
      * @throws      \BadMethodCallException         if the form field container has already been populated yet
+     * @since       5.3
      */
     public function enablePreviewButton($enablePreviewButton = true)
     {
@@ -395,13 +396,14 @@ class WysiwygFormContainer extends FormContainer
     /**
      * Sets the message object type used by the wysiwyg form field.
      *
-     * @param   string      $messageObjectType  message object type for wysiwyg form field
+     * @param string $messageObjectType message object type for wysiwyg form field
      * @return  WysiwygFormContainer            this container
      * @throws  \InvalidArgumentException       if the given string is no message object type
      */
     public function messageObjectType($messageObjectType)
     {
-        if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.message', $messageObjectType) === null) {
+        if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.message',
+                $messageObjectType) === null) {
             throw new \InvalidArgumentException("Unknown message object type '{$messageObjectType}'.");
         }
 
@@ -431,7 +433,7 @@ class WysiwygFormContainer extends FormContainer
      *
      * By default, no poll object type is set, thus the poll form field container is not available.
      *
-     * @param   string      $pollObjectType     poll object type for wysiwyg form field
+     * @param string $pollObjectType poll object type for wysiwyg form field
      * @return  WysiwygFormContainer            this container
      * @throws  \InvalidArgumentException       if the given string is no poll object type
      */
@@ -534,7 +536,7 @@ class WysiwygFormContainer extends FormContainer
      * Sets the value of the wysiwyg tab menu's `data-preselect` attribute used to determine which
      * tab is preselected.
      *
-     * @param   string      $preselect  id of preselected tab, `'true'` for first tab, or non-existing id for no preselected tab
+     * @param string $preselect id of preselected tab, `'true'` for first tab, or non-existing id for no preselected tab
      * @return  WysiwygFormContainer
      */
     public function preselect($preselect = 'true')
@@ -550,9 +552,9 @@ class WysiwygFormContainer extends FormContainer
      *
      * Calling this method automatically enables quote support for this container.
      *
-     * @param   string      $objectType name of the relevant `com.woltlab.wcf.message.quote` object type
-     * @param   string      $actionClass    action class implementing `wcf\data\IMessageQuoteAction`
-     * @param   string[]    $selectors  selectors for the quotable content (required keys: `container`, `messageBody`, and `messageContent`)
+     * @param string $objectType name of the relevant `com.woltlab.wcf.message.quote` object type
+     * @param string $actionClass action class implementing `wcf\data\IMessageQuoteAction`
+     * @param string[] $selectors selectors for the quotable content (required keys: `container`, `messageBody`, and `messageContent`)
      * @return  static
      */
     public function quoteData($objectType, $actionClass, array $selectors = [])
@@ -576,7 +578,7 @@ class WysiwygFormContainer extends FormContainer
     /**
      * Sets whether it is required to fill out the wysiwyg field and returns this container.
      *
-     * @param   bool        $required   determines if field has to be filled out
+     * @param bool $required determines if field has to be filled out
      * @return  static              this container
      */
     public function required($required = true)
@@ -608,7 +610,7 @@ class WysiwygFormContainer extends FormContainer
      *
      * By default, mentions are not supported.
      *
-     * @param   bool        $supportMentions
+     * @param bool $supportMentions
      * @return  WysiwygFormContainer        this form container
      */
     public function supportMentions($supportMentions = true)
@@ -627,7 +629,7 @@ class WysiwygFormContainer extends FormContainer
      *
      * By default, quotes are not supported.
      *
-     * @param   bool        $supportQuotes
+     * @param bool $supportQuotes
      * @return  WysiwygFormContainer        this form container
      */
     public function supportQuotes($supportQuotes = true)
@@ -646,7 +648,7 @@ class WysiwygFormContainer extends FormContainer
      *
      * By default, smilies are supported.
      *
-     * @param   bool        $supportSmilies
+     * @param bool $supportSmilies
      * @return  WysiwygFormContainer        this form container
      */
     public function supportSmilies($supportSmilies = true)

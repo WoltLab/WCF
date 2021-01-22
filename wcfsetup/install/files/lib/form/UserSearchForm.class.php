@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Form
  *
- * @property    UserOptionHandler   $optionHandler
+ * @property    UserOptionHandler $optionHandler
  */
 class UserSearchForm extends UserOptionListForm
 {

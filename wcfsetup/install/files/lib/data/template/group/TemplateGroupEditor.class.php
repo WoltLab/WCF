@@ -18,7 +18,7 @@ use wcf\util\DirectoryUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Template\Group
  *
- * @method static   TemplateGroup   create(array $parameters = [])
+ * @method static TemplateGroup   create(array $parameters = [])
  * @method      TemplateGroup   getDecoratedObject()
  * @mixin       TemplateGroup
  */
@@ -37,7 +37,8 @@ class TemplateGroupEditor extends DatabaseObjectEditor implements IEditableCache
         parent::update($parameters);
 
         if (isset($parameters['templateGroupFolderName']) && ($parameters['templateGroupFolderName'] != $this->templateGroupFolderName)) {
-            @\rename(WCF_DIR . 'templates/' . $this->templateGroupFolderName, WCF_DIR . 'templates/' . $parameters['templateGroupFolderName']);
+            @\rename(WCF_DIR . 'templates/' . $this->templateGroupFolderName,
+                WCF_DIR . 'templates/' . $parameters['templateGroupFolderName']);
 
             // check template group folders in other applications
             $sql = "SELECT  DISTINCT application
@@ -50,7 +51,8 @@ class TemplateGroupEditor extends DatabaseObjectEditor implements IEditableCache
                 $application = ApplicationHandler::getInstance()->getApplication($row['application']);
                 $package = PackageCache::getInstance()->getPackage($application->packageID);
 
-                @\rename(WCF_DIR . $package->packageDir . 'templates/' . $this->templateGroupFolderName, WCF_DIR . $package->packageDir . 'templates/' . $parameters['templateGroupFolderName']);
+                @\rename(WCF_DIR . $package->packageDir . 'templates/' . $this->templateGroupFolderName,
+                    WCF_DIR . $package->packageDir . 'templates/' . $parameters['templateGroupFolderName']);
             }
         }
     }

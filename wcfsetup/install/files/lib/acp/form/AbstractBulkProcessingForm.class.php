@@ -86,7 +86,8 @@ abstract class AbstractBulkProcessingForm extends AbstractForm
     public function readData()
     {
         // read bulk processable object type
-        $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.bulkProcessableObject', $this->objectTypeName);
+        $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.bulkProcessableObject',
+            $this->objectTypeName);
         if ($this->objectType === null) {
             throw new \LogicException("Unknown bulk processable object type '" . $this->objectTypeName . "'");
         }

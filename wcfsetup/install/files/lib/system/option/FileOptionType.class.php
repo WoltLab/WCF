@@ -29,7 +29,7 @@ class FileOptionType extends AbstractOptionType
     /**
      * Creates the upload handler for the given option.
      *
-     * @param   Option      $option
+     * @param Option $option
      */
     protected function createUploadHandler(Option $option)
     {

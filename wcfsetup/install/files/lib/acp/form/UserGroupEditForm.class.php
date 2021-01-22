@@ -105,7 +105,8 @@ class UserGroupEditForm extends UserGroupAddForm
     {
         if (empty($_POST)) {
             I18nHandler::getInstance()->setOptions('groupName', 1, $this->group->groupName, 'wcf.acp.group.group\d+');
-            I18nHandler::getInstance()->setOptions('groupDescription', 1, $this->group->groupDescription, 'wcf.acp.group.groupDescription\d+');
+            I18nHandler::getInstance()->setOptions('groupDescription', 1, $this->group->groupDescription,
+                'wcf.acp.group.groupDescription\d+');
             $this->groupName = $this->group->groupName;
             $this->groupDescription = $this->group->groupDescription;
             $this->priority = $this->group->priority;

@@ -256,7 +256,8 @@ class UserAddForm extends UserOptionListForm
         $this->htmlInputProcessor = new HtmlInputProcessor();
         $this->htmlInputProcessor->process($this->signature, 'com.woltlab.wcf.user.signature', 0);
 
-        BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(',', WCF::getSession()->getPermission('user.signature.disallowedBBCodes')));
+        BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(',',
+            WCF::getSession()->getPermission('user.signature.disallowedBBCodes')));
         $disallowedBBCodes = $this->htmlInputProcessor->validate();
         if (!empty($disallowedBBCodes)) {
             WCF::getTPL()->assign('disallowedBBCodes', $disallowedBBCodes);
@@ -304,7 +305,8 @@ class UserAddForm extends UserOptionListForm
         // show empty add form
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(UserEditForm::class, ['id' => $returnValues['returnValues']->userID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(UserEditForm::class,
+                ['id' => $returnValues['returnValues']->userID]),
         ]);
 
         // reset values
@@ -320,7 +322,7 @@ class UserAddForm extends UserOptionListForm
     /**
      * Throws a UserInputException if the username is not unique or not valid.
      *
-     * @param   string      $username
+     * @param string $username
      * @throws  UserInputException
      */
     protected function validateUsername($username)
@@ -343,8 +345,8 @@ class UserAddForm extends UserOptionListForm
     /**
      * Throws a UserInputException if the email is not unique or not valid.
      *
-     * @param   string      $email
-     * @param   string      $confirmEmail
+     * @param string $email
+     * @param string $confirmEmail
      * @throws  UserInputException
      */
     protected function validateEmail($email, $confirmEmail)
@@ -372,8 +374,8 @@ class UserAddForm extends UserOptionListForm
     /**
      * Throws a UserInputException if the password is not valid.
      *
-     * @param   string      $password
-     * @param   string      $confirmPassword
+     * @param string $password
+     * @param string $confirmPassword
      * @throws  UserInputException
      */
     protected function validatePassword($password, $confirmPassword)

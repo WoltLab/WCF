@@ -71,7 +71,7 @@ class UserProfileMenu extends SingletonFactory
     /**
      * Checks the options and permissions of given menu item.
      *
-     * @param   UserProfileMenuItem $item
+     * @param UserProfileMenuItem $item
      * @return  bool
      */
     protected function checkMenuItem(UserProfileMenuItem $item)
@@ -92,7 +92,7 @@ class UserProfileMenu extends SingletonFactory
     /**
      * Sets active menu item.
      *
-     * @param   string      $menuItem
+     * @param string $menuItem
      * @return  bool
      */
     public function setActiveMenuItem($menuItem)
@@ -111,7 +111,7 @@ class UserProfileMenu extends SingletonFactory
     /**
      * Returns the first visible menu item.
      *
-     * @param   int     $userID
+     * @param int $userID
      * @return  UserProfileMenuItem
      */
     public function getActiveMenuItem($userID = 0)
@@ -139,7 +139,7 @@ class UserProfileMenu extends SingletonFactory
     /**
      * Returns a specific menu item.
      *
-     * @param   string      $menuItem
+     * @param string $menuItem
      * @return  UserProfileMenuItem
      */
     public function getMenuItem($menuItem)

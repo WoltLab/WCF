@@ -146,9 +146,9 @@ class DatabaseTableChangeProcessor
     /**
      * Creates a new instance of `DatabaseTableChangeProcessor`.
      *
-     * @param   Package         $package
-     * @param   DatabaseTable[]     $tables
-     * @param   DatabaseEditor      $dbEditor
+     * @param Package $package
+     * @param DatabaseTable[] $tables
+     * @param DatabaseEditor $dbEditor
      */
     public function __construct(Package $package, array $tables, DatabaseEditor $dbEditor)
     {
@@ -194,8 +194,8 @@ class DatabaseTableChangeProcessor
     /**
      * Adds the given index to the table.
      *
-     * @param   string              $tableName
-     * @param   DatabaseTableForeignKey     $foreignKey
+     * @param string $tableName
+     * @param DatabaseTableForeignKey $foreignKey
      */
     protected function addForeignKey($tableName, DatabaseTableForeignKey $foreignKey)
     {
@@ -205,8 +205,8 @@ class DatabaseTableChangeProcessor
     /**
      * Adds the given index to the table.
      *
-     * @param   string          $tableName
-     * @param   DatabaseTableIndex  $index
+     * @param string $tableName
+     * @param DatabaseTableIndex $index
      */
     protected function addIndex($tableName, DatabaseTableIndex $index)
     {
@@ -330,10 +330,10 @@ class DatabaseTableChangeProcessor
      *
      * Before a column is dropped, all of its foreign keys are dropped.
      *
-     * @param   string          $tableName
-     * @param   IDatabaseTableColumn[]  $addedColumns
-     * @param   IDatabaseTableColumn[]  $alteredColumns
-     * @param   IDatabaseTableColumn[]  $droppedColumns
+     * @param string $tableName
+     * @param IDatabaseTableColumn[] $addedColumns
+     * @param IDatabaseTableColumn[] $alteredColumns
+     * @param IDatabaseTableColumn[] $droppedColumns
      */
     protected function applyColumnChanges($tableName, array $addedColumns, array $alteredColumns, array $droppedColumns)
     {
@@ -453,7 +453,8 @@ class DatabaseTableChangeProcessor
                             }
                             $this->foreignKeysToDrop[$tableName][] = $foreignKey;
 
-                            $this->splitNodeMessage .= "Dropped foreign key '{$tableName}." . \implode(',', $foreignKey->getColumns()) . "'.";
+                            $this->splitNodeMessage .= "Dropped foreign key '{$tableName}." . \implode(',',
+                                    $foreignKey->getColumns()) . "'.";
                             break 2;
                         } elseif (isset($this->foreignKeyPackageIDs[$tableName][$foreignKey->getName()])) {
                             $this->deleteForeignKeyLog($tableName, $foreignKey);
@@ -464,7 +465,8 @@ class DatabaseTableChangeProcessor
                         }
                         $this->foreignKeysToAdd[$tableName][] = $foreignKey;
 
-                        $this->splitNodeMessage .= "Added foreign key '{$tableName}." . \implode(',', $foreignKey->getColumns()) . "'.";
+                        $this->splitNodeMessage .= "Added foreign key '{$tableName}." . \implode(',',
+                                $foreignKey->getColumns()) . "'.";
                         break 2;
                     } elseif (!empty(\array_diff($foreignKey->getData(), $matchingExistingForeignKey->getData()))) {
                         if (!isset($this->foreignKeysToDrop[$tableName])) {
@@ -477,7 +479,8 @@ class DatabaseTableChangeProcessor
                         }
                         $this->foreignKeysToAdd[$tableName][] = $foreignKey;
 
-                        $this->splitNodeMessage .= "Replaced foreign key '{$tableName}." . \implode(',', $foreignKey->getColumns()) . "'.";
+                        $this->splitNodeMessage .= "Replaced foreign key '{$tableName}." . \implode(',',
+                                $foreignKey->getColumns()) . "'.";
                         break 2;
                     }
                 }
@@ -499,7 +502,8 @@ class DatabaseTableChangeProcessor
                             }
                             $this->indicesToDrop[$tableName][] = $index;
 
-                            $this->splitNodeMessage .= "Dropped index '{$tableName}." . \implode(',', $index->getColumns()) . "'.";
+                            $this->splitNodeMessage .= "Dropped index '{$tableName}." . \implode(',',
+                                    $index->getColumns()) . "'.";
                             break 2;
                         } elseif (isset($this->indexPackageIDs[$tableName][$index->getName()])) {
                             $this->deleteIndexLog($tableName, $index);
@@ -528,7 +532,8 @@ class DatabaseTableChangeProcessor
                         }
                         $this->indicesToAdd[$tableName][] = $index;
 
-                        $this->splitNodeMessage .= "Added index '{$tableName}." . \implode(',', $index->getColumns()) . "'.";
+                        $this->splitNodeMessage .= "Added index '{$tableName}." . \implode(',',
+                                $index->getColumns()) . "'.";
                         break 2;
                     }
                 }
@@ -559,24 +564,21 @@ class DatabaseTableChangeProcessor
                 } else {
                     $undoneEntries[] = $row;
                 }
-            }
-            // column
+            } // column
             elseif ($row['sqlIndex'] === '') {
                 if (isset($this->getExistingTable($row['sqlTable'])->getColumns()[$row['sqlColumn']])) {
                     $doneEntries[] = $row;
                 } else {
                     $undoneEntries[] = $row;
                 }
-            }
-            // foreign key
+            } // foreign key
             elseif (\substr($row['sqlIndex'], -3) === '_fk') {
                 if (isset($this->getExistingTable($row['sqlTable'])->getForeignKeys()[$row['sqlIndex']])) {
                     $doneEntries[] = $row;
                 } else {
                     $undoneEntries[] = $row;
                 }
-            }
-            // index
+            } // index
             else {
                 if (isset($this->getExistingTable($row['sqlTable'])->getIndices()[$row['sqlIndex']])) {
                     $doneEntries[] = $row;
@@ -603,8 +605,8 @@ class DatabaseTableChangeProcessor
     /**
      * Creates a done log entry for the given foreign key.
      *
-     * @param   string              $tableName
-     * @param   DatabaseTableForeignKey     $foreignKey
+     * @param string $tableName
+     * @param DatabaseTableForeignKey $foreignKey
      */
     protected function createForeignKeyLog($tableName, DatabaseTableForeignKey $foreignKey)
     {
@@ -624,7 +626,7 @@ class DatabaseTableChangeProcessor
     /**
      * Creates the given table.
      *
-     * @param   DatabaseTable       $table
+     * @param DatabaseTable $table
      */
     protected function createTable(DatabaseTable $table)
     {
@@ -667,8 +669,8 @@ class DatabaseTableChangeProcessor
     /**
      * Deletes the log entry for the given column.
      *
-     * @param   string              $tableName
-     * @param   IDatabaseTableColumn        $column
+     * @param string $tableName
+     * @param IDatabaseTableColumn $column
      */
     protected function deleteColumnLog($tableName, IDatabaseTableColumn $column)
     {
@@ -678,8 +680,8 @@ class DatabaseTableChangeProcessor
     /**
      * Deletes the log entry for the given foreign key.
      *
-     * @param   string              $tableName
-     * @param   DatabaseTableForeignKey     $foreignKey
+     * @param string $tableName
+     * @param DatabaseTableForeignKey $foreignKey
      */
     protected function deleteForeignKeyLog($tableName, DatabaseTableForeignKey $foreignKey)
     {
@@ -689,8 +691,8 @@ class DatabaseTableChangeProcessor
     /**
      * Deletes the log entry for the given index.
      *
-     * @param   string          $tableName
-     * @param   DatabaseTableIndex  $index
+     * @param string $tableName
+     * @param DatabaseTableIndex $index
      */
     protected function deleteIndexLog($tableName, DatabaseTableIndex $index)
     {
@@ -700,7 +702,7 @@ class DatabaseTableChangeProcessor
     /**
      * Deletes a log entry.
      *
-     * @param   array   $data
+     * @param array $data
      */
     protected function deleteLog(array $data)
     {
@@ -722,7 +724,7 @@ class DatabaseTableChangeProcessor
     /**
      * Deletes all log entry related to the given table.
      *
-     * @param   DatabaseTable   $table
+     * @param DatabaseTable $table
      */
     protected function deleteTableLog(DatabaseTable $table)
     {
@@ -740,8 +742,8 @@ class DatabaseTableChangeProcessor
     /**
      * Returns `true` if the two columns differ.
      *
-     * @param   IDatabaseTableColumn    $oldColumn
-     * @param   IDatabaseTableColumn    $newColumn
+     * @param IDatabaseTableColumn $oldColumn
+     * @param IDatabaseTableColumn $newColumn
      * @return  bool
      */
     protected function diffColumns(IDatabaseTableColumn $oldColumn, IDatabaseTableColumn $newColumn)
@@ -784,8 +786,8 @@ class DatabaseTableChangeProcessor
     /**
      * Returns `true` if the two indices differ.
      *
-     * @param   DatabaseTableIndex  $oldIndex
-     * @param   DatabaseTableIndex  $newIndex
+     * @param DatabaseTableIndex $oldIndex
+     * @param DatabaseTableIndex $newIndex
      * @return  bool
      */
     protected function diffIndices(DatabaseTableIndex $oldIndex, DatabaseTableIndex $newIndex)
@@ -800,8 +802,8 @@ class DatabaseTableChangeProcessor
     /**
      * Drops the given foreign key.
      *
-     * @param   string              $tableName
-     * @param   DatabaseTableForeignKey     $foreignKey
+     * @param string $tableName
+     * @param DatabaseTableForeignKey $foreignKey
      */
     protected function dropForeignKey($tableName, DatabaseTableForeignKey $foreignKey)
     {
@@ -812,8 +814,8 @@ class DatabaseTableChangeProcessor
     /**
      * Drops the given index.
      *
-     * @param   string          $tableName
-     * @param   DatabaseTableIndex  $index
+     * @param string $tableName
+     * @param DatabaseTableIndex $index
      */
     protected function dropIndex($tableName, DatabaseTableIndex $index)
     {
@@ -823,7 +825,7 @@ class DatabaseTableChangeProcessor
     /**
      * Drops the given table.
      *
-     * @param   DatabaseTable       $table
+     * @param DatabaseTable $table
      */
     protected function dropTable(DatabaseTable $table)
     {
@@ -833,9 +835,9 @@ class DatabaseTableChangeProcessor
     /**
      * Finalizes the log entry for the creation of the given column.
      *
-     * @param   string          $tableName
-     * @param   IDatabaseTableColumn    $column
-     * @param       bool                    $useNewName
+     * @param string $tableName
+     * @param IDatabaseTableColumn $column
+     * @param bool $useNewName
      */
     protected function finalizeColumnLog($tableName, IDatabaseTableColumn $column, bool $useNewName = false)
     {
@@ -848,8 +850,8 @@ class DatabaseTableChangeProcessor
     /**
      * Finalizes the log entry for adding the given index.
      *
-     * @param   string              $tableName
-     * @param   DatabaseTableForeignKey     $foreignKey
+     * @param string $tableName
+     * @param DatabaseTableForeignKey $foreignKey
      */
     protected function finalizeForeignKeyLog($tableName, DatabaseTableForeignKey $foreignKey)
     {
@@ -859,8 +861,8 @@ class DatabaseTableChangeProcessor
     /**
      * Finalizes the log entry for adding the given index.
      *
-     * @param   string          $tableName
-     * @param   DatabaseTableIndex  $index
+     * @param string $tableName
+     * @param DatabaseTableIndex $index
      */
     protected function finalizeIndexLog($tableName, DatabaseTableIndex $index)
     {
@@ -870,7 +872,7 @@ class DatabaseTableChangeProcessor
     /**
      * Finalizes a log entry after the relevant change has been executed.
      *
-     * @param   array   $data
+     * @param array $data
      */
     protected function finalizeLog(array $data)
     {
@@ -894,7 +896,7 @@ class DatabaseTableChangeProcessor
     /**
      * Finalizes the log entry for the creation of the given table.
      *
-     * @param   DatabaseTable   $table
+     * @param DatabaseTable $table
      */
     protected function finalizeTableLog(DatabaseTable $table)
     {
@@ -905,8 +907,8 @@ class DatabaseTableChangeProcessor
      * Returns the log entry for the given column or `null` if there is no explicit entry for
      * this column.
      *
-     * @param       string                  $tableName
-     * @param       IDatabaseTableColumn    $column
+     * @param string $tableName
+     * @param IDatabaseTableColumn $column
      * @return      array|null
      * @since       5.4
      */
@@ -938,8 +940,8 @@ class DatabaseTableChangeProcessor
      * log entry for the given column, the table log is checked and the relevant package id of
      * the whole table is returned. If the package of the table is also unknown, `null` is returned.
      *
-     * @param   DatabaseTable       $table
-     * @param   IDatabaseTableColumn    $column
+     * @param DatabaseTable $table
+     * @param IDatabaseTableColumn $column
      * @return  null|int
      */
     protected function getColumnPackageID(DatabaseTable $table, IDatabaseTableColumn $column)
@@ -954,7 +956,7 @@ class DatabaseTableChangeProcessor
     /**
      * Returns the `DatabaseTable` object for the table with the given name.
      *
-     * @param   string      $tableName
+     * @param string $tableName
      * @return  DatabaseTable
      */
     protected function getExistingTable($tableName)
@@ -971,8 +973,8 @@ class DatabaseTableChangeProcessor
      * log entry for the given foreign key, the table log is checked and the relevant package id of
      * the whole table is returned. If the package of the table is also unknown, `null` is returned.
      *
-     * @param   DatabaseTable           $table
-     * @param   DatabaseTableForeignKey     $foreignKey
+     * @param DatabaseTable $table
+     * @param DatabaseTableForeignKey $foreignKey
      * @return  null|int
      */
     protected function getForeignKeyPackageID(DatabaseTable $table, DatabaseTableForeignKey $foreignKey)
@@ -989,8 +991,8 @@ class DatabaseTableChangeProcessor
      * log entry for the given index, the table log is checked and the relevant package id of
      * the whole table is returned. If the package of the table is also unknown, `null` is returned.
      *
-     * @param   DatabaseTable       $table
-     * @param   DatabaseTableIndex  $index
+     * @param DatabaseTable $table
+     * @param DatabaseTableIndex $index
      * @return  null|int
      */
     protected function getIndexPackageID(DatabaseTable $table, DatabaseTableIndex $index)
@@ -1005,9 +1007,9 @@ class DatabaseTableChangeProcessor
     /**
      * Prepares the log entry for the creation of the given column.
      *
-     * @param   string          $tableName
-     * @param   IDatabaseTableColumn    $column
-     * @param       bool                    $useNewName
+     * @param string $tableName
+     * @param IDatabaseTableColumn $column
+     * @param bool $useNewName
      */
     protected function prepareColumnLog($tableName, IDatabaseTableColumn $column, bool $useNewName = false)
     {
@@ -1020,8 +1022,8 @@ class DatabaseTableChangeProcessor
     /**
      * Prepares the log entry for adding the given foreign key.
      *
-     * @param   string              $tableName
-     * @param   DatabaseTableForeignKey     $foreignKey
+     * @param string $tableName
+     * @param DatabaseTableForeignKey $foreignKey
      */
     protected function prepareForeignKeyLog($tableName, DatabaseTableForeignKey $foreignKey)
     {
@@ -1031,8 +1033,8 @@ class DatabaseTableChangeProcessor
     /**
      * Prepares the log entry for adding the given index.
      *
-     * @param   string          $tableName
-     * @param   DatabaseTableIndex  $index
+     * @param string $tableName
+     * @param DatabaseTableIndex $index
      */
     protected function prepareIndexLog($tableName, DatabaseTableIndex $index)
     {
@@ -1042,7 +1044,7 @@ class DatabaseTableChangeProcessor
     /**
      * Prepares a log entry before the relevant change has been executed.
      *
-     * @param   array   $data
+     * @param array $data
      */
     protected function prepareLog(array $data)
     {
@@ -1063,7 +1065,7 @@ class DatabaseTableChangeProcessor
     /**
      * Prepares the log entry for the creation of the given table.
      *
-     * @param   DatabaseTable   $table
+     * @param DatabaseTable $table
      */
     protected function prepareTableLog(DatabaseTable $table)
     {
@@ -1181,7 +1183,8 @@ class DatabaseTableChangeProcessor
                             foreach ($existingForeignKeys as $existingForeignKey) {
                                 if (empty(\array_diff($foreignKey->getData(), $existingForeignKey->getData()))) {
                                     if ($foreignKey->willBeDropped()) {
-                                        if ($this->getForeignKeyPackageID($table, $foreignKey) !== $this->package->packageID) {
+                                        if ($this->getForeignKeyPackageID($table,
+                                                $foreignKey) !== $this->package->packageID) {
                                             $errors[] = [
                                                 'columnNames' => \implode(',', $existingForeignKey->getColumns()),
                                                 'tableName' => $table->getName(),
@@ -1232,9 +1235,9 @@ class DatabaseTableChangeProcessor
     /**
      * Returns the column with the given name from the given table.
      *
-     * @param       string                  $columnName
-     * @param       DatabaseTable           $updateTable
-     * @param       DatabaseTable|null      $existingTable
+     * @param string $columnName
+     * @param DatabaseTable $updateTable
+     * @param DatabaseTable|null $existingTable
      * @return      IDatabaseTableColumn|null
      * @since       5.2.10
      */

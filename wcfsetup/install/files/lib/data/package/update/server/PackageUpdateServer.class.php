@@ -18,15 +18,15 @@ use wcf\util\Url;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Package\Update\Server
  *
- * @property-read   int     $packageUpdateServerID      unique id of the package update server
- * @property-read   string      $serverURL          url of the package update server
- * @property-read   string      $loginUsername          username used to login on the package update server
- * @property-read   string      $loginPassword          password used to login on the package update server
- * @property-read   int     $isDisabled         is `1` if the package update server is disabled and thus not considered for package updates, otherwise `0`
- * @property-read   int     $lastUpdateTime         timestamp at which the data of the package update server has been fetched the last time
- * @property-read   string      $status             status of the package update server (`online` or `offline`)
- * @property-read   string      $errorMessage           error message if the package update server if offline or empty otherwise
- * @property-read   string      $apiVersion         version of the supported package update server api (`2.0`, `2.1`)
+ * @property-read   int $packageUpdateServerID      unique id of the package update server
+ * @property-read   string $serverURL          url of the package update server
+ * @property-read   string $loginUsername          username used to login on the package update server
+ * @property-read   string $loginPassword          password used to login on the package update server
+ * @property-read   int $isDisabled         is `1` if the package update server is disabled and thus not considered for package updates, otherwise `0`
+ * @property-read   int $lastUpdateTime         timestamp at which the data of the package update server has been fetched the last time
+ * @property-read   string $status             status of the package update server (`online` or `offline`)
+ * @property-read   string $errorMessage           error message if the package update server if offline or empty otherwise
+ * @property-read   string $apiVersion         version of the supported package update server api (`2.0`, `2.1`)
  */
 class PackageUpdateServer extends DatabaseObject
 {
@@ -72,7 +72,7 @@ class PackageUpdateServer extends DatabaseObject
     /**
      * Returns all active update package servers sorted by hostname.
      *
-     * @param   int[]   $packageUpdateServerIDs
+     * @param int[] $packageUpdateServerIDs
      * @return  PackageUpdateServer[]
      */
     final public static function getActiveUpdateServers(array $packageUpdateServerIDs = [])
@@ -124,7 +124,7 @@ class PackageUpdateServer extends DatabaseObject
     /**
      * Returns true if the given server url is valid.
      *
-     * @param   string      $serverURL
+     * @param string $serverURL
      * @return  bool
      */
     public static function isValidServerURL($serverURL)
@@ -172,10 +172,10 @@ class PackageUpdateServer extends DatabaseObject
     /**
      * Stores auth data for a package update server.
      *
-     * @param   int     $packageUpdateServerID
-     * @param   string      $username
-     * @param   string      $password
-     * @param   bool        $saveCredentials
+     * @param int $packageUpdateServerID
+     * @param string $username
+     * @param string $password
+     * @param bool $saveCredentials
      */
     public static function storeAuthData($packageUpdateServerID, $username, $password, $saveCredentials = false)
     {
@@ -192,10 +192,12 @@ class PackageUpdateServer extends DatabaseObject
         WCF::getSession()->register('packageUpdateAuthData', \serialize($packageUpdateAuthData));
 
         if ($saveCredentials) {
-            $serverAction = new PackageUpdateServerAction([$packageUpdateServerID], 'update', ['data' => [
-                'loginUsername' => $username,
-                'loginPassword' => $password,
-            ]]);
+            $serverAction = new PackageUpdateServerAction([$packageUpdateServerID], 'update', [
+                'data' => [
+                    'loginUsername' => $username,
+                    'loginPassword' => $password,
+                ],
+            ]);
             $serverAction->executeAction();
         }
     }
@@ -225,7 +227,7 @@ class PackageUpdateServer extends DatabaseObject
     /**
      * Returns the list endpoint for package servers.
      *
-     * @param   bool        $forceHTTP
+     * @param bool $forceHTTP
      * @return  string
      */
     public function getListURL($forceHTTP = false)

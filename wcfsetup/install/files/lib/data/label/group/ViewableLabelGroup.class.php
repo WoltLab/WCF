@@ -57,7 +57,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
     /**
      * Adds a label.
      *
-     * @param   Label   $label
+     * @param Label $label
      */
     public function addLabel(Label $label)
     {
@@ -68,7 +68,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
     /**
      * Sets group permissions.
      *
-     * @param   array       $permissions
+     * @param array $permissions
      */
     public function setGroupPermissions(array $permissions)
     {
@@ -78,7 +78,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
     /**
      * Sets user permissions.
      *
-     * @param   array       $permissions
+     * @param array $permissions
      */
     public function setUserPermissions(array $permissions)
     {
@@ -88,7 +88,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
     /**
      * Returns true, if label is known.
      *
-     * @param   int     $labelID
+     * @param int $labelID
      * @return  bool
      */
     public function isValid($labelID)
@@ -100,8 +100,8 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
      * Returns true, if the given user fulfils option id permissions.
      * If the user parameter is null, the method checks the current user.
      *
-     * @param   int     $optionID
-     * @param   User        $user
+     * @param int $optionID
+     * @param User $user
      * @return  bool
      */
     public function getPermission($optionID, ?User $user = null)
@@ -160,7 +160,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
     /**
      * Returns a label by id.
      *
-     * @param   int     $labelID
+     * @param int $labelID
      * @return  Label|null
      */
     public function getLabel($labelID)

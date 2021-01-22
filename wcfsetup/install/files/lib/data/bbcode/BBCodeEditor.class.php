@@ -14,7 +14,7 @@ use wcf\system\cache\builder\BBCodeCacheBuilder;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Bbcode
  *
- * @method static   BBCode      create(array $parameters = [])
+ * @method static BBCode      create(array $parameters = [])
  * @method      BBCode      getDecoratedObject()
  * @mixin       BBCode
  */

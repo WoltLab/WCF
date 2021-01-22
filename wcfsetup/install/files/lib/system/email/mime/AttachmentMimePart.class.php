@@ -43,9 +43,9 @@ class AttachmentMimePart extends AbstractMimePart
     /**
      * Creates a new Attachment.
      *
-     * @param   string  $path       Path to read the file from.
-     * @param   string  $filename   Filename to provide in the email or null to use the $path's basename.
-     * @param   string  $mimeType   Mime type to provide in the email or null to guess the mime type.
+     * @param string $path Path to read the file from.
+     * @param string $filename Filename to provide in the email or null to use the $path's basename.
+     * @param string $mimeType Mime type to provide in the email or null to guess the mime type.
      * @throws  \InvalidArgumentException
      */
     public function __construct($path, $filename = null, $mimeType = null)

@@ -64,7 +64,7 @@ class QuotedMessage implements \Countable, \Iterator
     /**
      * Creates a new QuotedMessage object.
      *
-     * @param   IMessage    $object
+     * @param IMessage $object
      */
     public function __construct(IMessage $object)
     {
@@ -74,9 +74,9 @@ class QuotedMessage implements \Countable, \Iterator
     /**
      * Adds a quote for this message.
      *
-     * @param   string      $quoteID
-     * @param   string      $quote
-     * @param   string      $fullQuote
+     * @param string $quoteID
+     * @param string $quote
+     * @param string $fullQuote
      */
     public function addQuote($quoteID, $quote, $fullQuote)
     {
@@ -96,8 +96,8 @@ class QuotedMessage implements \Countable, \Iterator
     /**
      * Forwards calls to the decorated object.
      *
-     * @param   string      $name
-     * @param   mixed       $value
+     * @param string $name
+     * @param mixed $value
      * @return  mixed
      */
     public function __call($name, $value)
@@ -108,8 +108,8 @@ class QuotedMessage implements \Countable, \Iterator
     /**
      * Overrides the full quote flag.
      *
-     * @param       string          $quoteID
-     * @param       bool         $overrideIsFullQuote
+     * @param string $quoteID
+     * @param bool $overrideIsFullQuote
      */
     public function setOverrideIsFullQuote($quoteID, $overrideIsFullQuote)
     {
@@ -129,7 +129,7 @@ class QuotedMessage implements \Countable, \Iterator
     /**
      * Returns the full quote by quote id.
      *
-     * @param   string      $quoteID
+     * @param string $quoteID
      * @return  string
      */
     public function getFullQuote($quoteID)
@@ -142,7 +142,7 @@ class QuotedMessage implements \Countable, \Iterator
     /**
      * Returns true if given quote id represents a full quote.
      *
-     * @param   string      $quoteID
+     * @param string $quoteID
      * @return  bool
      */
     public function isFullQuote($quoteID)

@@ -353,32 +353,36 @@ class UserOptionAddForm extends AbstractForm
             $additionalData['messageObjectType'] = 'com.woltlab.wcf.user.option.generic';
         }
 
-        $this->objectAction = new UserOptionAction([], 'create', ['data' => \array_merge($this->additionalFields, [
-            'optionName' => StringUtil::getRandomID(),
-            'categoryName' => $this->categoryName,
-            'optionType' => $this->optionType,
-            'defaultValue' => $this->defaultValue,
-            'showOrder' => $this->showOrder,
-            'outputClass' => $this->outputClass,
-            'validationPattern' => $this->validationPattern,
-            'selectOptions' => $this->selectOptions,
-            'required' => $this->required,
-            'askDuringRegistration' => $this->askDuringRegistration,
-            'searchable' => $this->searchable,
-            'editable' => $this->editable,
-            'visible' => $this->visible,
-            'packageID' => 1,
-            'additionalData' => !empty($additionalData) ? \serialize($additionalData) : '',
-            'labeledUrl' => $this->labeledUrl,
-        ])]);
+        $this->objectAction = new UserOptionAction([], 'create', [
+            'data' => \array_merge($this->additionalFields, [
+                'optionName' => StringUtil::getRandomID(),
+                'categoryName' => $this->categoryName,
+                'optionType' => $this->optionType,
+                'defaultValue' => $this->defaultValue,
+                'showOrder' => $this->showOrder,
+                'outputClass' => $this->outputClass,
+                'validationPattern' => $this->validationPattern,
+                'selectOptions' => $this->selectOptions,
+                'required' => $this->required,
+                'askDuringRegistration' => $this->askDuringRegistration,
+                'searchable' => $this->searchable,
+                'editable' => $this->editable,
+                'visible' => $this->visible,
+                'packageID' => 1,
+                'additionalData' => !empty($additionalData) ? \serialize($additionalData) : '',
+                'labeledUrl' => $this->labeledUrl,
+            ]),
+        ]);
         $this->objectAction->executeAction();
 
         $returnValues = $this->objectAction->getReturnValues();
         $userOption = $returnValues['returnValues'];
 
         // save language vars
-        I18nHandler::getInstance()->save('optionName', 'wcf.user.option.option' . $userOption->optionID, 'wcf.user.option');
-        I18nHandler::getInstance()->save('optionDescription', 'wcf.user.option.option' . $userOption->optionID . '.description', 'wcf.user.option');
+        I18nHandler::getInstance()->save('optionName', 'wcf.user.option.option' . $userOption->optionID,
+            'wcf.user.option');
+        I18nHandler::getInstance()->save('optionDescription',
+            'wcf.user.option.option' . $userOption->optionID . '.description', 'wcf.user.option');
         $editor = new UserOptionEditor($userOption);
         $editor->update([
             'optionName' => 'option' . $userOption->optionID,
@@ -397,7 +401,8 @@ class UserOptionAddForm extends AbstractForm
         // show success
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(UserOptionEditForm::class, ['id' => $userOption->optionID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(UserOptionEditForm::class,
+                ['id' => $userOption->optionID]),
         ]);
     }
 

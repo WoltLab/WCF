@@ -20,13 +20,13 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\User\Profile\Menu\Item
  *
- * @property-read   int     $menuItemID     unique id of the user profile menu item
- * @property-read   int     $packageID      id of the package which delivers the user profile menu item
- * @property-read   string      $menuItem       textual identifier of the user profile menu item
- * @property-read   int     $showOrder      position of the user profile menu item in relation to its siblings
- * @property-read   string      $permissions        comma separated list of user group permissions of which the active user needs to have at least one to see the user profile menu item
- * @property-read   string      $options        comma separated list of options of which at least one needs to be enabled for the user profile menu item to be shown
- * @property-read   string      $className      name of the PHP class implementing `wcf\system\menu\user\profile\content\IUserProfileMenuContent` handling outputting the content of the user profile tab
+ * @property-read   int $menuItemID     unique id of the user profile menu item
+ * @property-read   int $packageID      id of the package which delivers the user profile menu item
+ * @property-read   string $menuItem       textual identifier of the user profile menu item
+ * @property-read   int $showOrder      position of the user profile menu item in relation to its siblings
+ * @property-read   string $permissions        comma separated list of user group permissions of which the active user needs to have at least one to see the user profile menu item
+ * @property-read   string $options        comma separated list of options of which at least one needs to be enabled for the user profile menu item to be shown
+ * @property-read   string $className      name of the PHP class implementing `wcf\system\menu\user\profile\content\IUserProfileMenuContent` handling outputting the content of the user profile tab
  */
 class UserProfileMenuItem extends DatabaseObject
 {

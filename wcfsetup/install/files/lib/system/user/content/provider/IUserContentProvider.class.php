@@ -19,7 +19,7 @@ interface IUserContentProvider
     /**
      * Returns a DatabaseObjectList with all user content objects.
      *
-     * @param       User                    $user
+     * @param User $user
      * @return      DatabaseObjectList
      */
     public function getContentListForUser(User $user);
@@ -27,7 +27,7 @@ interface IUserContentProvider
     /**
      * Delete the content for the given object ids.
      *
-     * @param       int[]   $objectIDs
+     * @param int[] $objectIDs
      */
     public function deleteContent(array $objectIDs);
 }

@@ -163,7 +163,8 @@ class TemplateAddForm extends AbstractForm
         $conditionBuilder->add('templateGroupID = ?', [$this->templateGroupID]);
 
         if ($this->copiedTemplate !== null) {
-            $conditionBuilder->add('(packageID = ? OR application = ?)', [$this->packageID, $this->copiedTemplate->application]);
+            $conditionBuilder->add('(packageID = ? OR application = ?)',
+                [$this->packageID, $this->copiedTemplate->application]);
         } else {
             $conditionBuilder->add('packageID = ?', [$this->packageID]);
         }
@@ -205,12 +206,15 @@ class TemplateAddForm extends AbstractForm
             $this->application = Package::getAbbreviation(PackageCache::getInstance()->getPackage($this->packageID)->package);
         }
 
-        $this->objectAction = new TemplateAction([], 'create', ['data' => \array_merge($this->additionalFields, [
-            'application' => $this->application,
-            'templateName' => $this->tplName,
-            'packageID' => $this->packageID,
-            'templateGroupID' => $this->templateGroupID,
-        ]), 'source' => $this->templateSource]);
+        $this->objectAction = new TemplateAction([], 'create', [
+            'data' => \array_merge($this->additionalFields, [
+                'application' => $this->application,
+                'templateName' => $this->tplName,
+                'packageID' => $this->packageID,
+                'templateGroupID' => $this->templateGroupID,
+            ]),
+            'source' => $this->templateSource,
+        ]);
         $returnValues = $this->objectAction->executeAction();
         $this->saved();
 
@@ -221,7 +225,8 @@ class TemplateAddForm extends AbstractForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(TemplateEditForm::class, ['id' => $returnValues['returnValues']->templateID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(TemplateEditForm::class,
+                ['id' => $returnValues['returnValues']->templateID]),
         ]);
     }
 

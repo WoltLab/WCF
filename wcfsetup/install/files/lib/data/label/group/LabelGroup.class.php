@@ -14,11 +14,11 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Label\Group
  *
- * @property-read   int     $groupID        unique id of the label group
- * @property-read   string      $groupName      name of the label group or name of language item which contains the label text
- * @property-read   string      $groupDescription   description of the label group (only shown in ACP)
- * @property-read   int     $forceSelection     is `1` if a label in the label group has to be selected when creating an object for which the label group is available, otherwise `0`
- * @property-read   int     $showOrder      position of the label group in relation to the other label groups
+ * @property-read   int $groupID        unique id of the label group
+ * @property-read   string $groupName      name of the label group or name of language item which contains the label text
+ * @property-read   string $groupDescription   description of the label group (only shown in ACP)
+ * @property-read   int $forceSelection     is `1` if a label in the label group has to be selected when creating an object for which the label group is available, otherwise `0`
+ * @property-read   int $showOrder      position of the label group in relation to the other label groups
  */
 class LabelGroup extends DatabaseObject implements IRouteController
 {
@@ -43,8 +43,8 @@ class LabelGroup extends DatabaseObject implements IRouteController
     /**
      * Callback for uasort() to sort label groups by show order and (if equal) group id.
      *
-     * @param   DatabaseObject      $groupA
-     * @param   DatabaseObject      $groupB
+     * @param DatabaseObject $groupA
+     * @param DatabaseObject $groupB
      * @return  int
      */
     public static function sortLabelGroups(DatabaseObject $groupA, DatabaseObject $groupB)

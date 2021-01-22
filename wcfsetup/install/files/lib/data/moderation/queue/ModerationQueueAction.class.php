@@ -117,8 +117,10 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("moderation_queue_to_user.userID = ?", [WCF::getUser()->userID]);
         $conditions->add("moderation_queue_to_user.isAffected = ?", [1]);
-        $conditions->add("moderation_queue.status IN (?)", [[ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING]]);
-        $conditions->add("moderation_queue.time > ?", [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.moderation.queue')]);
+        $conditions->add("moderation_queue.status IN (?)",
+            [[ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING]]);
+        $conditions->add("moderation_queue.time > ?",
+            [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.moderation.queue')]);
         $conditions->add("(moderation_queue.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)");
 
         $sql = "SELECT      moderation_queue.queueID
@@ -154,7 +156,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
         if ($count < $MAX_ITEMS) {
             // load more entries to fill up list
             $queueList = new ViewableModerationQueueList();
-            $queueList->getConditionBuilder()->add("moderation_queue.status IN (?)", [[ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING]]);
+            $queueList->getConditionBuilder()->add("moderation_queue.status IN (?)",
+                [[ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING]]);
             if (!empty($queueIDs)) {
                 $queueList->getConditionBuilder()->add("moderation_queue.queueID NOT IN (?)", [$queueIDs]);
             }
@@ -244,7 +247,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
 
             // get handler
             $objectType = ObjectTypeCache::getInstance()->getObjectType($this->moderationQueueEditor->objectTypeID);
-            if (!$objectType->getProcessor()->isAffectedUser($this->moderationQueueEditor->getDecoratedObject(), $this->user->userID)) {
+            if (!$objectType->getProcessor()->isAffectedUser($this->moderationQueueEditor->getDecoratedObject(),
+                $this->user->userID)) {
                 throw new UserInputException('assignedUsername', 'notAffected');
             }
 
@@ -308,7 +312,8 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
         }
 
         foreach ($this->getObjects() as $queue) {
-            VisitTracker::getInstance()->trackObjectVisit('com.woltlab.wcf.moderation.queue', $queue->queueID, $this->parameters['visitTime']);
+            VisitTracker::getInstance()->trackObjectVisit('com.woltlab.wcf.moderation.queue', $queue->queueID,
+                $this->parameters['visitTime']);
         }
 
         // reset storage

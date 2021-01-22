@@ -39,8 +39,8 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin
     /**
      * Inserts the page number into the link.
      *
-     * @param   string      $link
-     * @param   int     $pageNo
+     * @param string $link
+     * @param int $pageNo
      * @return  string      final link
      */
     protected static function insertPageNumber($link, $pageNo)
@@ -56,33 +56,37 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin
     /**
      * Generates HTML code for a link.
      *
-     * @param   string      $link
-     * @param   int     $pageNo
-     * @param   int     $activePage
-     * @param   int     $pages
+     * @param string $link
+     * @param int $pageNo
+     * @param int $activePage
+     * @param int $pages
      * @return  string
      */
     protected function makeLink($link, $pageNo, $activePage, $pages)
     {
         // first page
         if ($activePage != $pageNo) {
-            return '<li><a href="' . self::insertPageNumber($link, $pageNo) . '" title="' . WCF::getLanguage()->getDynamicVariable('wcf.page.pageNo', ['pageNo' => $pageNo]) . '">' . StringUtil::formatInteger($pageNo) . '</a></li>' . "\n";
+            return '<li><a href="' . self::insertPageNumber($link,
+                    $pageNo) . '" title="' . WCF::getLanguage()->getDynamicVariable('wcf.page.pageNo',
+                    ['pageNo' => $pageNo]) . '">' . StringUtil::formatInteger($pageNo) . '</a></li>' . "\n";
         } else {
-            return '<li class="active"><span>' . StringUtil::formatInteger($pageNo) . '</span><span class="invisible">' . WCF::getLanguage()->getDynamicVariable('wcf.page.pagePosition', ['pageNo' => $pageNo, 'pages' => $pages]) . '</span></li>' . "\n";
+            return '<li class="active"><span>' . StringUtil::formatInteger($pageNo) . '</span><span class="invisible">' . WCF::getLanguage()->getDynamicVariable('wcf.page.pagePosition',
+                    ['pageNo' => $pageNo, 'pages' => $pages]) . '</span></li>' . "\n";
         }
     }
 
     /**
      * Generates HTML code for 'previous' link.
      *
-     * @param   string      $link
-     * @param   int     $pageNo
+     * @param string $link
+     * @param int $pageNo
      * @return  string
      */
     protected function makePreviousLink($link, $pageNo)
     {
         if ($pageNo > 1) {
-            return '<li class="skip"><a href="' . self::insertPageNumber($link, $pageNo - 1) . '" title="' . WCF::getLanguage()->getDynamicVariable('wcf.global.page.previous') . '" class="icon icon24 fa-chevron-left jsTooltip" rel="prev"></a></li>' . "\n";
+            return '<li class="skip"><a href="' . self::insertPageNumber($link,
+                    $pageNo - 1) . '" title="' . WCF::getLanguage()->getDynamicVariable('wcf.global.page.previous') . '" class="icon icon24 fa-chevron-left jsTooltip" rel="prev"></a></li>' . "\n";
         } else {
             return '<li class="skip disabled"><span class="icon icon24 fa-chevron-left"></span></li>' . "\n";
         }
@@ -91,15 +95,16 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin
     /**
      * Generates HTML code for 'next' link.
      *
-     * @param   string      $link
-     * @param   int     $pageNo
-     * @param   int     $pages
+     * @param string $link
+     * @param int $pageNo
+     * @param int $pages
      * @return  string
      */
     protected function makeNextLink($link, $pageNo, $pages)
     {
         if ($pageNo && $pageNo < $pages) {
-            return '<li class="skip"><a href="' . self::insertPageNumber($link, $pageNo + 1) . '" title="' . WCF::getLanguage()->getDynamicVariable('wcf.global.page.next') . '" class="icon icon24 fa-chevron-right jsTooltip" rel="next"></a></li>' . "\n";
+            return '<li class="skip"><a href="' . self::insertPageNumber($link,
+                    $pageNo + 1) . '" title="' . WCF::getLanguage()->getDynamicVariable('wcf.global.page.next') . '" class="icon icon24 fa-chevron-right jsTooltip" rel="next"></a></li>' . "\n";
         } else {
             return '<li class="skip disabled"><span class="icon icon24 fa-chevron-right"></span></li>' . "\n";
         }

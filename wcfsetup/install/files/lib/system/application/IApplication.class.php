@@ -50,8 +50,8 @@ interface IApplication
     /**
      * Forwards unknown method calls to WCF.
      *
-     * @param   string      $method
-     * @param   array       $arguments
+     * @param string $method
+     * @param array $arguments
      * @return  mixed
      */
     public static function __callStatic($method, array $arguments);

@@ -64,9 +64,9 @@ class Gravatar extends DefaultAvatar
     /**
      * Creates a new Gravatar object.
      *
-     * @param   int     $userID
-     * @param   string      $gravatar
-     * @param   string      $fileExtension
+     * @param int $userID
+     * @param string $gravatar
+     * @param string $fileExtension
      */
     public function __construct($userID, $gravatar, $fileExtension = 'png')
     {
@@ -82,7 +82,8 @@ class Gravatar extends DefaultAvatar
     {
         if (empty($this->url)) {
             // try to use cached gravatar
-            $cachedFilename = \sprintf(self::GRAVATAR_CACHE_LOCATION, \md5(\mb_strtolower($this->gravatar)), $this->size, $this->fileExtension);
+            $cachedFilename = \sprintf(self::GRAVATAR_CACHE_LOCATION, \md5(\mb_strtolower($this->gravatar)),
+                $this->size, $this->fileExtension);
             if (\file_exists(WCF_DIR . $cachedFilename) && \filemtime(WCF_DIR . $cachedFilename) > (TIME_NOW - (self::GRAVATAR_CACHE_EXPIRE * 86400))) {
                 $this->url = WCF::getPath() . $cachedFilename;
             } else {
@@ -98,7 +99,7 @@ class Gravatar extends DefaultAvatar
     /**
      * Checks a given email address for gravatar support.
      *
-     * @param   string      $email
+     * @param string $email
      * @return  bool
      */
     public static function test($email)

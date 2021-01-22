@@ -35,7 +35,7 @@ trait TDecoratedCategoryLookupPageHandler
     /**
      * Returns the link for a page with an object id.
      *
-     * @param   int     $objectID   page object id
+     * @param int $objectID page object id
      * @return  string      page url
      * @see ILookupPageHandler::getLink()
      */
@@ -57,7 +57,7 @@ trait TDecoratedCategoryLookupPageHandler
     /**
      * Returns true if provided object id exists and is valid.
      *
-     * @param   int     $objectID   page object id
+     * @param int $objectID page object id
      * @return  bool        true if object id is valid
      * @see ILookupPageHandler::isValid()
      */
@@ -81,7 +81,7 @@ trait TDecoratedCategoryLookupPageHandler
      * Performs a search for pages using a query string, returning an array containing
      * an `objectID => title` relation.
      *
-     * @param   string      $searchString   search string
+     * @param string $searchString search string
      * @return  string[]
      * @see ILookupPageHandler::lookup()
      */

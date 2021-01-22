@@ -211,12 +211,14 @@ class ApplicationEditForm extends AbstractForm
         parent::save();
 
         // save application
-        $this->objectAction = new ApplicationAction([$this->application->getDecoratedObject()], 'update', ['data' => \array_merge($this->additionalFields, [
-            'cookieDomain' => \mb_strtolower($this->cookieDomain),
-            'domainName' => \mb_strtolower($this->domainName),
-            'domainPath' => $this->domainPath,
-            'landingPageID' => ($this->landingPageID ?: null),
-        ])]);
+        $this->objectAction = new ApplicationAction([$this->application->getDecoratedObject()], 'update', [
+            'data' => \array_merge($this->additionalFields, [
+                'cookieDomain' => \mb_strtolower($this->cookieDomain),
+                'domainName' => \mb_strtolower($this->domainName),
+                'domainPath' => $this->domainPath,
+                'landingPageID' => ($this->landingPageID ?: null),
+            ]),
+        ]);
         $this->objectAction->executeAction();
 
         $this->saved();

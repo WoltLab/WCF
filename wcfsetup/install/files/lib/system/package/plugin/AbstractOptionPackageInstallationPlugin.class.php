@@ -172,7 +172,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
     /**
      * Imports option categories.
      *
-     * @param   \DOMXPath   $xpath
+     * @param \DOMXPath $xpath
      * @throws  SystemException
      */
     protected function importCategories(\DOMXPath $xpath)
@@ -200,7 +200,8 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 
             // adjust show order
             if ($data['showOrder'] !== null || $this->installation->getAction() != 'update' || $this->getExistingCategory($element->getAttribute('name')) === false) {
-                $data['showOrder'] = $this->getShowOrder($data['showOrder'], $data['parentCategoryName'], 'parentCategoryName', '_category');
+                $data['showOrder'] = $this->getShowOrder($data['showOrder'], $data['parentCategoryName'],
+                    'parentCategoryName', '_category');
             }
 
             // validate parent
@@ -224,7 +225,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
     /**
      * Imports options.
      *
-     * @param   \DOMXPath   $xpath
+     * @param \DOMXPath $xpath
      */
     protected function importOptions(\DOMXPath $xpath)
     {
@@ -278,7 +279,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
     /**
      * Returns the category with given name.
      *
-     * @param       string          $category
+     * @param string $category
      * @return      array|false
      */
     protected function getExistingCategory($category)
@@ -297,7 +298,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
     /**
      * Installs option categories.
      *
-     * @param   array       $category
+     * @param array $category
      * @throws  SystemException
      */
     protected function saveCategory($category)
@@ -355,9 +356,9 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
     /**
      * Installs options.
      *
-     * @param   array       $option
-     * @param   string      $categoryName
-     * @param   int     $existingOptionID
+     * @param array $option
+     * @param string $categoryName
+     * @param int $existingOptionID
      */
     abstract protected function saveOption($option, $categoryName, $existingOptionID = 0);
 
@@ -369,7 +370,8 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
         if (!\preg_match("/^[\\w\\-\\.]+$/", $data['name'])) {
             $matches = [];
             \preg_match_all("/(\\W)/", $data['name'], $matches);
-            throw new SystemException("The option '" . $data['name'] . "' has at least one non-alphanumeric character (underscore is permitted): (" . \implode("), ( ", $matches[1]) . ").");
+            throw new SystemException("The option '" . $data['name'] . "' has at least one non-alphanumeric character (underscore is permitted): (" . \implode("), ( ",
+                    $matches[1]) . ").");
         }
 
         // check if option already exists
@@ -440,7 +442,9 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                         ->options(function () {
                             $categories = $this->getSortedCategories();
 
-                            $getDepth = static function (/** @var OptionCategory $category */$category) use ($categories) {
+                            $getDepth = static function (/** @var OptionCategory $category */ $category) use (
+                                $categories
+                            ) {
                                 $depth = 0;
 
                                 while (isset($categories[$category->parentCategoryName])) {
@@ -520,7 +524,9 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                         ->options(function (): array {
                             $categories = $this->getSortedCategories();
 
-                            $getDepth = static function (/** @var OptionCategory $category */$category) use ($categories) {
+                            $getDepth = static function (/** @var OptionCategory $category */ $category) use (
+                                $categories
+                            ) {
                                 $depth = 0;
 
                                 while (isset($categories[$category->parentCategoryName])) {
@@ -703,17 +709,18 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                 ]);
 
                 // ensure proper normalization of default value and enable options
-                $form->getDataHandler()->addProcessor(new CustomFormDataProcessor('enableOptions', static function (IFormDocument $document, array $parameters) {
-                    if (isset($parameters['data']['enableoptions'])) {
-                        $parameters['data']['enableoptions'] = StringUtil::unifyNewlines($parameters['data']['enableoptions']);
-                    }
+                $form->getDataHandler()->addProcessor(new CustomFormDataProcessor('enableOptions',
+                    static function (IFormDocument $document, array $parameters) {
+                        if (isset($parameters['data']['enableoptions'])) {
+                            $parameters['data']['enableoptions'] = StringUtil::unifyNewlines($parameters['data']['enableoptions']);
+                        }
 
-                    if (isset($parameters['data']['defaultvalue'])) {
-                        $parameters['data']['defaultvalue'] = StringUtil::unifyNewlines($parameters['data']['defaultvalue']);
-                    }
+                        if (isset($parameters['data']['defaultvalue'])) {
+                            $parameters['data']['defaultvalue'] = StringUtil::unifyNewlines($parameters['data']['defaultvalue']);
+                        }
 
-                    return $parameters;
-                }));
+                        return $parameters;
+                    }));
 
                 break;
 
@@ -913,7 +920,10 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
             \array_keys($this->installation->getPackage()->getAllRequiredPackages())
         );
 
-        $buildSortedCategories = static function ($parentCategories) use ($relevantPackageIDs, &$buildSortedCategories) {
+        $buildSortedCategories = static function ($parentCategories) use (
+            $relevantPackageIDs,
+            &$buildSortedCategories
+        ) {
             $categories = [];
             foreach ($parentCategories as $categoryData) {
                 /** @var OptionCategory $category */
@@ -1120,7 +1130,8 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                     $unqualifiedClassname = \str_replace('.class.php', '', $fileObject->getFilename());
                     $classname = $namespace . '\\' . $unqualifiedClassname;
 
-                    if (!\is_subclass_of($classname, IOptionType::class) || !(new \ReflectionClass($classname))->isInstantiable()) {
+                    if (!\is_subclass_of($classname,
+                            IOptionType::class) || !(new \ReflectionClass($classname))->isInstantiable()) {
                         continue;
                     }
 
@@ -1140,7 +1151,8 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                         $this->selectOptionOptionTypes[] = $optionType;
                     }
 
-                    if ($classname === IntegerOptionType::class || \is_subclass_of($classname, IntegerOptionType::class)) {
+                    if ($classname === IntegerOptionType::class || \is_subclass_of($classname,
+                            IntegerOptionType::class)) {
                         $this->integerOptionTypes[] = $optionType;
                     }
 

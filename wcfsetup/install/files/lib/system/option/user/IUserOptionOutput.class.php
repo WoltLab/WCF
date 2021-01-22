@@ -18,9 +18,9 @@ interface IUserOptionOutput
     /**
      * Returns the html code for the output of the given user option.
      *
-     * @param   User        $user
-     * @param   UserOption  $option
-     * @param   string      $value
+     * @param User $user
+     * @param UserOption $option
+     * @param string $value
      * @return  string
      */
     public function getOutput(User $user, UserOption $option, $value);

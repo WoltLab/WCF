@@ -29,7 +29,7 @@ class UploadHandler
     /**
      * Creates a new UploadHandler object.
      *
-     * @param   mixed[]     $rawFileData
+     * @param mixed[] $rawFileData
      */
     protected function __construct(array $rawFileData)
     {
@@ -94,7 +94,7 @@ class UploadHandler
     /**
      * Validates the uploaded files. Returns true on success, otherwise false.
      *
-     * @param   IUploadFileValidationStrategy   $validationStrategy
+     * @param IUploadFileValidationStrategy $validationStrategy
      * @return  bool
      */
     public function validateFiles(IUploadFileValidationStrategy $validationStrategy)
@@ -123,7 +123,7 @@ class UploadHandler
     /**
      * Saves the uploaded files.
      *
-     * @param   IUploadFileSaveStrategy     $saveStrategy
+     * @param IUploadFileSaveStrategy $saveStrategy
      */
     public function saveFiles(IUploadFileSaveStrategy $saveStrategy)
     {
@@ -138,7 +138,7 @@ class UploadHandler
      * Returns an upload handler instance for the given identifier or `null` if no data exists in `$_FILES`
      * for the identifier.
      *
-     * @param   string      $identifier
+     * @param string $identifier
      * @return  UploadHandler
      */
     public static function getUploadHandler($identifier)
@@ -151,8 +151,8 @@ class UploadHandler
     /**
      * Returns the mime type of a file.
      *
-     * @param   string      $file
-     * @param   string      $mimeType   mime type transferred by client
+     * @param string $file
+     * @param string $mimeType mime type transferred by client
      * @return  string
      */
     protected static function getMimeType($file, $mimeType)

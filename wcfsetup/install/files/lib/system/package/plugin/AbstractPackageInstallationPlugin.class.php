@@ -44,8 +44,8 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
     /**
      * Creates a new AbstractPackageInstallationPlugin object.
      *
-     * @param   PackageInstallationDispatcher   $installation
-     * @param   array               $instruction
+     * @param PackageInstallationDispatcher $installation
+     * @param array $instruction
      */
     public function __construct(PackageInstallationDispatcher $installation, $instruction = [])
     {

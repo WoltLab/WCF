@@ -60,7 +60,7 @@ class ViewableArticleContent extends DatabaseObjectDecorator
     /**
      * Sets the article objects.
      *
-     * @param   ViewableArticle     $article
+     * @param ViewableArticle $article
      */
     public function setArticle(ViewableArticle $article)
     {
@@ -90,7 +90,7 @@ class ViewableArticleContent extends DatabaseObjectDecorator
     /**
      * Sets the article's image.
      *
-     * @param   ViewableMedia   $image
+     * @param ViewableMedia $image
      */
     public function setImage(ViewableMedia $image)
     {
@@ -122,7 +122,7 @@ class ViewableArticleContent extends DatabaseObjectDecorator
     /**
      * Sets the article's teaser image.
      *
-     * @param   ViewableMedia   $image
+     * @param ViewableMedia $image
      */
     public function setTeaserImage(ViewableMedia $image)
     {
@@ -132,7 +132,7 @@ class ViewableArticleContent extends DatabaseObjectDecorator
     /**
      * Returns a specific article content decorated as viewable article content.
      *
-     * @param   int     $articleContentID
+     * @param int $articleContentID
      * @return  ViewableArticleContent
      */
     public static function getArticleContent($articleContentID)

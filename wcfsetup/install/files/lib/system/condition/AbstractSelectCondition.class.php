@@ -80,8 +80,8 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition
     /**
      * Returns the html code for an opt group.
      *
-     * @param   string          $label
-     * @param   string[]        $options
+     * @param string $label
+     * @param string[] $options
      * @return  string
      */
     protected function getOptGroupCode($label, array $options)
@@ -98,8 +98,8 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition
     /**
      * Returns the html code for an option.
      *
-     * @param   string      $value
-     * @param   string      $label
+     * @param string $value
+     * @param string $label
      * @return  string
      */
     protected function getOptionCode($value, $label)

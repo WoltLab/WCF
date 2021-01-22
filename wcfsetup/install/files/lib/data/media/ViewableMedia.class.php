@@ -52,8 +52,8 @@ class ViewableMedia extends DatabaseObjectDecorator
     /**
      * Registers localized content by language id.
      *
-     * @param       int         $languageID
-     * @param       string[]        $content
+     * @param int $languageID
+     * @param string[] $content
      */
     public function setLocalizedContent($languageID, array $content)
     {
@@ -63,7 +63,7 @@ class ViewableMedia extends DatabaseObjectDecorator
     /**
      * Returns an instance of this class with localized versions.
      *
-     * @param       int         $languageID
+     * @param int $languageID
      * @return      ViewableMedia
      */
     public function getLocalizedVersion($languageID)
@@ -81,7 +81,7 @@ class ViewableMedia extends DatabaseObjectDecorator
     /**
      * Forces the localized values by language id.
      *
-     * @param       int         $languageID
+     * @param int $languageID
      */
     protected function forceLanguageID($languageID)
     {
@@ -129,7 +129,7 @@ class ViewableMedia extends DatabaseObjectDecorator
     /**
      * Returns a tag to display the media element.
      *
-     * @param   string      $size
+     * @param string $size
      * @return  string
      */
     public function getElementTag($size)
@@ -185,8 +185,8 @@ class ViewableMedia extends DatabaseObjectDecorator
             if ($link !== null) {
                 return '<span style="display: inline-block; text-align: center; width: ' . $size . 'px; height: ' . $size . 'px;">
                             <img src="' . StringUtil::encodeHTML($link) . '" alt="' . StringUtil::encodeHTML($this->altText)
-                            . '" ' . ($this->title ? 'title="' . StringUtil::encodeHTML($this->title) . '" ' : '')
-                            . 'style="width: ' . $width . 'px; height: ' . $height . 'px; margin-top: ' . $marginTop . 'px;">
+                    . '" ' . ($this->title ? 'title="' . StringUtil::encodeHTML($this->title) . '" ' : '')
+                    . 'style="width: ' . $width . 'px; height: ' . $height . 'px; margin-top: ' . $marginTop . 'px;">
                         </span>';
             }
         }
@@ -199,7 +199,7 @@ class ViewableMedia extends DatabaseObjectDecorator
     /**
      * Returns a tag to display a certain thumbnail.
      *
-     * @param   string      $size       thumbnail size
+     * @param string $size thumbnail size
      * @return  string
      * @throws  \InvalidArgumentException
      */
@@ -247,7 +247,7 @@ class ViewableMedia extends DatabaseObjectDecorator
     /**
      * Returns the viewable media file with the given id.
      *
-     * @param   int     $mediaID
+     * @param int $mediaID
      * @return  ViewableMedia|null
      */
     public static function getMedia($mediaID)

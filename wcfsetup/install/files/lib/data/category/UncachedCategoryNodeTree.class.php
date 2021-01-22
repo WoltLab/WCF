@@ -32,7 +32,8 @@ class UncachedCategoryNodeTree extends CategoryNodeTree
     protected function buildTree()
     {
         $categoryList = new CategoryList();
-        $categoryList->getConditionBuilder()->add('category.objectTypeID = ?', [CategoryHandler::getInstance()->getObjectTypeByName($this->objectType)->objectTypeID]);
+        $categoryList->getConditionBuilder()->add('category.objectTypeID = ?',
+            [CategoryHandler::getInstance()->getObjectTypeByName($this->objectType)->objectTypeID]);
         $categoryList->sqlOrderBy = "category.showOrder ASC";
         $categoryList->readObjects();
         foreach ($categoryList as $category) {

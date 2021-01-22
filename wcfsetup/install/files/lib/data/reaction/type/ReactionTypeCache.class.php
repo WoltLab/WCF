@@ -33,7 +33,7 @@ class ReactionTypeCache extends SingletonFactory
     /**
      * Returns the reaction type with the given reactionTypeID.
      *
-     * @param   int     $reactionTypeID
+     * @param int $reactionTypeID
      * @return  ReactionType
      */
     public function getReactionTypeByID($reactionTypeID)
@@ -46,7 +46,7 @@ class ReactionTypeCache extends SingletonFactory
     /**
      * Returns the reaction types with the given reactionTypeIDs.
      *
-     * @param   int[]   $reactionTypeIDs
+     * @param int[] $reactionTypeIDs
      * @return  ReactionType[]
      */
     public function getReactionTypesByID(array $reactionTypeIDs)

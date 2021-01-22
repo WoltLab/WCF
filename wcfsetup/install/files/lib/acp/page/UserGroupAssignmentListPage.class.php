@@ -13,7 +13,7 @@ use wcf\page\MultipleLinkPage;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Page
  *
- * @property    UserGroupAssignmentList     $objectList
+ * @property    UserGroupAssignmentList $objectList
  */
 class UserGroupAssignmentListPage extends MultipleLinkPage
 {

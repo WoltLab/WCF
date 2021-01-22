@@ -33,15 +33,17 @@ final class HeaderUtil
     /**
      * Alias to php setcookie() function.
      *
-     * @param   string      $name
-     * @param   string      $value
-     * @param   int     $expire
+     * @param string $name
+     * @param string $value
+     * @param int $expire
      */
     public static function setCookie($name, $value = '', $expire = 0)
     {
         $cookieDomain = self::getCookieDomain();
 
-        @\header('Set-Cookie: ' . \rawurlencode(COOKIE_PREFIX . $name) . '=' . \rawurlencode((string)$value) . ($expire ? '; expires=' . \gmdate('D, d-M-Y H:i:s', $expire) . ' GMT; max-age=' . ($expire - TIME_NOW) : '') . '; path=/' . ($cookieDomain !== null ? '; domain=' . $cookieDomain : '') . (RouteHandler::secureConnection() ? '; secure' : '') . '; HttpOnly', false);
+        @\header('Set-Cookie: ' . \rawurlencode(COOKIE_PREFIX . $name) . '=' . \rawurlencode((string)$value) . ($expire ? '; expires=' . \gmdate('D, d-M-Y H:i:s',
+                    $expire) . ' GMT; max-age=' . ($expire - TIME_NOW) : '') . '; path=/' . ($cookieDomain !== null ? '; domain=' . $cookieDomain : '') . (RouteHandler::secureConnection() ? '; secure' : '') . '; HttpOnly',
+            false);
     }
 
     /**
@@ -50,7 +52,9 @@ final class HeaderUtil
     public static function getCookieDomain(): ?string
     {
         $application = ApplicationHandler::getInstance()->getActiveApplication();
-        $addDomain = (\mb_strpos($application->cookieDomain, '.') === false || StringUtil::endsWith($application->cookieDomain, '.lan') || StringUtil::endsWith($application->cookieDomain, '.local')) ? false : true;
+        $addDomain = (\mb_strpos($application->cookieDomain,
+                '.') === false || StringUtil::endsWith($application->cookieDomain,
+                '.lan') || StringUtil::endsWith($application->cookieDomain, '.local')) ? false : true;
 
         if (!$addDomain) {
             return null;
@@ -104,7 +108,7 @@ final class HeaderUtil
     /**
      * Parses the rendered output.
      *
-     * @param   string      $output
+     * @param string $output
      * @return  string
      */
     public static function parseOutput($output)
@@ -156,9 +160,9 @@ final class HeaderUtil
     /**
      * Redirects the user agent to given location.
      *
-     * @param   string      $location
-     * @param   bool        $sendStatusCode
-     * @param   bool        $temporaryRedirect
+     * @param string $location
+     * @param bool $sendStatusCode
+     * @param bool $temporaryRedirect
      */
     public static function redirect($location, $sendStatusCode = false, $temporaryRedirect = true)
     {
@@ -181,10 +185,10 @@ final class HeaderUtil
     /**
      * Does a delayed redirect.
      *
-     * @param   string      $location
-     * @param   string      $message
-     * @param   int     $delay
-     * @param   string      $status
+     * @param string $location
+     * @param string $message
+     * @param int $delay
+     * @param string $status
      */
     public static function delayedRedirect($location, $message, $delay = 5, $status = 'success')
     {

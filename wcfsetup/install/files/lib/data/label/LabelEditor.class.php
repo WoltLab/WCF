@@ -15,7 +15,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Label
  *
- * @method static   Label   create(array $parameters = [])
+ * @method static Label   create(array $parameters = [])
  * @method      Label   getDecoratedObject()
  * @mixin       Label
  */
@@ -37,8 +37,8 @@ class LabelEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Adds the label to a specific position in the label group.
      *
-     * @param   int     $groupID
-     * @param   int     $showOrder
+     * @param int $groupID
+     * @param int $showOrder
      */
     public function setShowOrder($groupID, $showOrder = 0)
     {

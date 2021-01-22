@@ -47,7 +47,23 @@ class BBCodeEditForm extends BBCodeAddForm
      * list of native bbcodes
      * @var string[]
      */
-    public static $nativeBBCodes = ['b', 'i', 'u', 's', 'sub', 'sup', 'list', 'align', 'color', 'size', 'font', 'url', 'img', 'email', 'table'];
+    public static $nativeBBCodes = [
+        'b',
+        'i',
+        'u',
+        's',
+        'sub',
+        'sup',
+        'list',
+        'align',
+        'color',
+        'size',
+        'font',
+        'url',
+        'img',
+        'email',
+        'table',
+    ];
 
     /**
      * @inheritDoc
@@ -107,17 +123,19 @@ class BBCodeEditForm extends BBCodeAddForm
         }
 
         // update bbcode
-        $this->objectAction = new BBCodeAction([$this->bbcodeID], 'update', ['data' => \array_merge($this->additionalFields, [
-            'bbcodeTag' => $this->bbcodeTag,
-            'buttonLabel' => $this->buttonLabel,
-            'className' => $this->className,
-            'htmlClose' => $this->htmlClose,
-            'htmlOpen' => $this->htmlOpen,
-            'isBlockElement' => $this->isBlockElement ? 1 : 0,
-            'isSourceCode' => $this->isSourceCode ? 1 : 0,
-            'showButton' => $this->showButton ? 1 : 0,
-            'wysiwygIcon' => $this->wysiwygIcon,
-        ])]);
+        $this->objectAction = new BBCodeAction([$this->bbcodeID], 'update', [
+            'data' => \array_merge($this->additionalFields, [
+                'bbcodeTag' => $this->bbcodeTag,
+                'buttonLabel' => $this->buttonLabel,
+                'className' => $this->className,
+                'htmlClose' => $this->htmlClose,
+                'htmlOpen' => $this->htmlOpen,
+                'isBlockElement' => $this->isBlockElement ? 1 : 0,
+                'isSourceCode' => $this->isSourceCode ? 1 : 0,
+                'showButton' => $this->showButton ? 1 : 0,
+                'wysiwygIcon' => $this->wysiwygIcon,
+            ]),
+        ]);
         $this->objectAction->executeAction();
 
         // clear existing attributes
@@ -127,14 +145,16 @@ class BBCodeEditForm extends BBCodeAddForm
         $statement->execute([$this->bbcodeID]);
 
         foreach ($this->attributes as $attribute) {
-            $attributeAction = new BBCodeAttributeAction([], 'create', ['data' => [
-                'bbcodeID' => $this->bbcodeID,
-                'attributeNo' => $attribute->attributeNo,
-                'attributeHtml' => $attribute->attributeHtml,
-                'validationPattern' => $attribute->validationPattern,
-                'required' => $attribute->required,
-                'useText' => $attribute->useText,
-            ]]);
+            $attributeAction = new BBCodeAttributeAction([], 'create', [
+                'data' => [
+                    'bbcodeID' => $this->bbcodeID,
+                    'attributeNo' => $attribute->attributeNo,
+                    'attributeHtml' => $attribute->attributeHtml,
+                    'validationPattern' => $attribute->validationPattern,
+                    'required' => $attribute->required,
+                    'useText' => $attribute->useText,
+                ],
+            ]);
             $attributeAction->executeAction();
         }
 
@@ -152,7 +172,8 @@ class BBCodeEditForm extends BBCodeAddForm
         parent::readData();
 
         if (empty($_POST)) {
-            I18nHandler::getInstance()->setOptions('buttonLabel', 1, $this->bbcode->buttonLabel, 'wcf.editor.button.button\d+');
+            I18nHandler::getInstance()->setOptions('buttonLabel', 1, $this->bbcode->buttonLabel,
+                'wcf.editor.button.button\d+');
             $this->buttonLabel = $this->bbcode->buttonLabel;
 
             $this->attributes = BBCodeAttribute::getAttributesByBBCode($this->bbcode);

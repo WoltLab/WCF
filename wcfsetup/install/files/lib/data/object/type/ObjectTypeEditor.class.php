@@ -13,7 +13,7 @@ use wcf\data\IEditableCachedObject;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Object\Type
  *
- * @method static   ObjectType  create(array $parameters = [])
+ * @method static ObjectType  create(array $parameters = [])
  * @method      ObjectType  getDecoratedObject()
  * @mixin       ObjectType
  */

@@ -41,7 +41,7 @@ class PackageInstallationStep
     /**
      * Sets next installation node.
      *
-     * @param   string      $node
+     * @param string $node
      */
     public function setNode($node)
     {
@@ -61,7 +61,7 @@ class PackageInstallationStep
     /**
      * Sets form document object.
      *
-     * @param   FormDocument    $document
+     * @param FormDocument $document
      */
     public function setDocument(FormDocument $document)
     {
@@ -102,7 +102,7 @@ class PackageInstallationStep
     /**
      * Enforces node splitting.
      *
-     * @param   null|SplitNodeException     $splitNodeException
+     * @param null|SplitNodeException $splitNodeException
      */
     public function setSplitNode(?SplitNodeException $splitNodeException = null)
     {

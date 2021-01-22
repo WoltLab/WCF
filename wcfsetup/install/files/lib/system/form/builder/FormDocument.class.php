@@ -246,7 +246,8 @@ class FormDocument implements IFormDocument
         }
 
         if (!empty($doubleNodeIds)) {
-            throw new \LogicException("Non-unique node id" . (\count($doubleNodeIds) > 1 ? 's' : '') . " '" . \implode("', '", $doubleNodeIds) . "'.");
+            throw new \LogicException("Non-unique node id" . (\count($doubleNodeIds) > 1 ? 's' : '') . " '" . \implode("', '",
+                    $doubleNodeIds) . "'.");
         }
 
         $this->isBuilt = true;

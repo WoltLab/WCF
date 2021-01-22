@@ -12,7 +12,7 @@ use wcf\data\DatabaseObjectEditor;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\User\Menu\Item
  *
- * @method static   UserMenuItem    create(array $parameters = [])
+ * @method static UserMenuItem    create(array $parameters = [])
  * @method      UserMenuItem    getDecoratedObject()
  * @mixin       UserMenuItem
  */

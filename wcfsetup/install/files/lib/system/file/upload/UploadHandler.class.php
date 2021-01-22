@@ -42,8 +42,8 @@ class UploadHandler extends SingletonFactory
     /**
      * Registers a UploadField.
      *
-     * @param       UploadField     $field
-     * @param       mixed           $requestData
+     * @param UploadField $field
+     * @param mixed $requestData
      *
      * @throws      \InvalidArgumentException       if a field with the given fieldId is already registered
      */
@@ -80,7 +80,7 @@ class UploadHandler extends SingletonFactory
     /**
      * Unregisters an upload field by the given field id.
      *
-     * @param       string          $fieldId
+     * @param string $fieldId
      *
      * @throws      \InvalidArgumentException       if the given fieldId is unknown
      */
@@ -101,7 +101,7 @@ class UploadHandler extends SingletonFactory
     /**
      * Returns the uploaded files for a specific fieldId.
      *
-     * @param       string          $fieldId
+     * @param string $fieldId
      * @return      UploadFile[]
      *
      * @throws      \InvalidArgumentException       if the given fieldId is unknown
@@ -118,8 +118,8 @@ class UploadHandler extends SingletonFactory
     /**
      * Returns the removed but previosly proccessed files for a specific fieldId.
      *
-     * @param       string          $fieldId
-     * @param       bool         $processFiles
+     * @param string $fieldId
+     * @param bool $processFiles
      * @return      UploadFile[]
      *
      * @throws      \InvalidArgumentException       if the given fieldId is unknown
@@ -136,8 +136,8 @@ class UploadHandler extends SingletonFactory
     /**
      * Returns the removed but previosly proccessed files for a specific internalId.
      *
-     * @param       string          $internalId
-     * @param       bool         $processFiles
+     * @param string $internalId
+     * @param bool $processFiles
      * @return      UploadFile[]
      */
     public function getRemovedFiledByInternalId($internalId, $processFiles = true)
@@ -166,8 +166,8 @@ class UploadHandler extends SingletonFactory
     /**
      * Removes a file from the upload.
      *
-     * @param       string          $internalId
-     * @param       string          $uniqueFileId
+     * @param string $internalId
+     * @param string $uniqueFileId
      *
      * @throws      \InvalidArgumentException       if the given internalId is unknown
      */
@@ -189,8 +189,8 @@ class UploadHandler extends SingletonFactory
     /**
      * Removes an file by file object.
      *
-     * @param       string          $internalId
-     * @param       UploadFile      $file
+     * @param string $internalId
+     * @param UploadFile $file
      */
     private function removeFileByObject($internalId, UploadFile $file)
     {
@@ -216,7 +216,7 @@ class UploadHandler extends SingletonFactory
     /**
      * Renders the field with the given fieldId for the template.
      *
-     * @param       string          $fieldId
+     * @param string $fieldId
      * @return      string
      *
      * @throws      \InvalidArgumentException       if the given fieldId is unknown
@@ -237,7 +237,7 @@ class UploadHandler extends SingletonFactory
     /**
      * Returns true, if the given internalId is valid.
      *
-     * @param       string          $internalId
+     * @param string $internalId
      * @return      bool
      */
     public function isValidInternalId($internalId)
@@ -248,8 +248,8 @@ class UploadHandler extends SingletonFactory
     /**
      * Checks whether the passed internal file id is valid for an internal id.
      *
-     * @param       string        $internalId
-     * @param       string        $uniqueFileId
+     * @param string $internalId
+     * @param string $uniqueFileId
      * @return      bool
      */
     public function isValidUniqueFileId($internalId, $uniqueFileId)
@@ -260,8 +260,8 @@ class UploadHandler extends SingletonFactory
     /**
      * Return all files by file id.
      *
-     * @param       string          $internalId
-     * @param       string          $uniqueFileId
+     * @param string $internalId
+     * @param string $uniqueFileId
      * @return      UploadFile|null
      *
      * @throws      \InvalidArgumentException       if the given internalId is unknown
@@ -282,8 +282,8 @@ class UploadHandler extends SingletonFactory
     /**
      * Add a file for an internalId.
      *
-     * @param       string          $internalId
-     * @param       UploadFile      $file
+     * @param string $internalId
+     * @param UploadFile $file
      */
     public function addFileByInternalId($internalId, UploadFile $file)
     {
@@ -296,8 +296,8 @@ class UploadHandler extends SingletonFactory
      * HEADS UP: Deletes all uploaded files and overwrites them with
      * the given files. If you want to add a file, use the addFileForInternalId method.
      *
-     * @param       string          $internalId
-     * @param       UploadFile[]    $files
+     * @param string $internalId
+     * @param UploadFile[] $files
      *
      * @throws      \InvalidArgumentException       if the given internalId is unknown
      */
@@ -322,8 +322,8 @@ class UploadHandler extends SingletonFactory
     /**
      * Add a file for an upload field with the given fieldId.
      *
-     * @param       string          $fieldId
-     * @param       UploadFile      $file
+     * @param string $fieldId
+     * @param UploadFile $file
      */
     public function addFileByField($fieldId, UploadFile $file)
     {
@@ -336,8 +336,8 @@ class UploadHandler extends SingletonFactory
      * HEADS UP: Deletes all uploaded files and overwrites them with
      * the given files. If you want to add a file, use the addFileForField method.
      *
-     * @param       string          $fieldId
-     * @param       UploadFile[]    $files
+     * @param string $fieldId
+     * @param UploadFile[] $files
      *
      * @throws      \InvalidArgumentException       if the given fieldId is unknown
      */
@@ -353,7 +353,7 @@ class UploadHandler extends SingletonFactory
     /**
      * Returns the field for the internalId.
      *
-     * @param       string          $internalId
+     * @param string $internalId
      * @return      UploadField
      *
      * @throws      \InvalidArgumentException       if the given internalId is unknown
@@ -370,7 +370,7 @@ class UploadHandler extends SingletonFactory
     /**
      * Returns the count of uploaded files for an internal id.
      *
-     * @param       string          $internalId
+     * @param string $internalId
      * @return      int
      */
     public function getFilesCountByInternalId($internalId)
@@ -381,7 +381,7 @@ class UploadHandler extends SingletonFactory
     /**
      * Returns true, iff a field with the given fieldId is already registered.
      *
-     * @param       string          $fieldId
+     * @param string $fieldId
      * @return      bool
      */
     public function isRegisteredFieldId($fieldId)
@@ -392,7 +392,7 @@ class UploadHandler extends SingletonFactory
     /**
      * Returns the files for an internal identifier.
      *
-     * @param       string          $internalId
+     * @param string $internalId
      * @return      UploadFile[]
      */
     private function getFilesByInternalId($internalId)
@@ -431,7 +431,7 @@ class UploadHandler extends SingletonFactory
     /**
      * Registers an field in the storage.
      *
-     * @param       UploadField     $field
+     * @param UploadField $field
      */
     private function registerFieldInStorage(UploadField $field)
     {
@@ -450,7 +450,7 @@ class UploadHandler extends SingletonFactory
     /**
      * Remove the removedFiles from the upload process.
      *
-     * @param       UploadField     $field
+     * @param UploadField $field
      */
     private function processRemovedFiles(UploadField $field)
     {
@@ -463,9 +463,9 @@ class UploadHandler extends SingletonFactory
     /**
      * Returns true, iff the given location contains an image.
      *
-     * @param       string          $location
-     * @param       string          $imageName
-     * @param       bool            $svgImageAllowed
+     * @param string $location
+     * @param string $imageName
+     * @param bool $svgImageAllowed
      * @return      bool
      * @deprecated  5.3 Use \wcf\util\ImageUtil::isImage() instead (direct replacement).
      */

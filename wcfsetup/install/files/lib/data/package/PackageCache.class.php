@@ -32,7 +32,7 @@ class PackageCache extends SingletonFactory
     /**
      * Returns a specific package.
      *
-     * @param   int     $packageID
+     * @param int $packageID
      * @return  Package
      */
     public function getPackage($packageID)
@@ -45,7 +45,7 @@ class PackageCache extends SingletonFactory
     /**
      * Returns the id of a specific package or 'null' if not found.
      *
-     * @param   string      $package
+     * @param string $package
      * @return  string
      */
     public function getPackageID($package)
@@ -68,7 +68,7 @@ class PackageCache extends SingletonFactory
     /**
      * Returns a specific package.
      *
-     * @param   string      $package
+     * @param string $package
      * @return  Package
      */
     public function getPackageByIdentifier($package)

@@ -55,7 +55,7 @@ class UploadField
     /**
      * UploadField constructor.
      *
-     * @param       string          $fieldId
+     * @param string $fieldId
      */
     public function __construct($fieldId)
     {
@@ -115,7 +115,7 @@ class UploadField
     /**
      * Sets the internalId for this field.
      *
-     * @param       string          $internalId
+     * @param string $internalId
      */
     public function setInternalId($internalId)
     {
@@ -139,7 +139,7 @@ class UploadField
      * If set to `true` will also set the acceptable types to `image/*`. If set to
      * false it will clear the acceptable types if they are `image/*`.
      *
-     * @param       bool       $imageOnly
+     * @param bool $imageOnly
      */
     public function setImageOnly($imageOnly)
     {
@@ -165,7 +165,7 @@ class UploadField
      * <strong>Heads up:</strong> SVG images can contain bad code, therefore do not
      * use this option, outside the acp or check the file whether remote code is contained.
      *
-     * @param       bool       $allowSvgImage
+     * @param bool $allowSvgImage
      *
      * @throws      \BadMethodCallException         if the imageOnly flag isn't set to true
      */
@@ -195,7 +195,7 @@ class UploadField
      * - `video/*`
      *
      * @see         https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#Unique_file_type_specifiers
-     * @param       string[]|null     $acceptableFiles
+     * @param string[]|null $acceptableFiles
      * @since       5.3
      */
     public function setAcceptableFiles($acceptableFiles = null)

@@ -76,7 +76,7 @@ abstract class AbstractCacheBuilder extends SingletonFactory implements ICacheBu
     /**
      * Rebuilds cache for current resource.
      *
-     * @param   array       $parameters
+     * @param array $parameters
      */
     abstract protected function rebuild(array $parameters);
 }

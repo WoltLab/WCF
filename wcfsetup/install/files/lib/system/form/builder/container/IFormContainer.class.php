@@ -33,9 +33,9 @@ interface IFormContainer extends IFormChildNode, IFormElement, IFormParentNode
      * This method is *not* intended to generally call `IFormField::updatedObject()` on its form field
      * children as these methods are already called by `IFormDocument::updatedObject()`.
      *
-     * @param   array           $data       data from which the values are extracted
-     * @param   IStorableObject     $object     object the data belongs to
-     * @param   bool            $loadValues
+     * @param array $data data from which the values are extracted
+     * @param IStorableObject $object object the data belongs to
+     * @param bool $loadValues
      *
      * @return  static                  this container
      */

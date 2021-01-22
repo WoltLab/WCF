@@ -18,7 +18,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Page
  *
- * @property    SmileyList  $objectList
+ * @property    SmileyList $objectList
  */
 class SmileyListPage extends MultipleLinkPage
 {

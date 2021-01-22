@@ -25,7 +25,7 @@ final class ImageUtil
      * Checks the content of an image for bad sections, e.g. the use of javascript
      * and returns false if any bad stuff was found.
      *
-     * @param   string      $file
+     * @param string $file
      * @return  bool
      */
     public static function checkImageContent($file)
@@ -52,9 +52,9 @@ final class ImageUtil
     /**
      * Checks whether a given file is a valid image.
      *
-     * @param       string          $location
-     * @param       string|null     $filename
-     * @param       bool            $handleSvgAsValidImage  flag, whether a svg file is handled as image
+     * @param string $location
+     * @param string|null $filename
+     * @param bool $handleSvgAsValidImage flag, whether a svg file is handled as image
      * @return      bool
      */
     public static function isImage($location, $filename = null, $handleSvgAsValidImage = false)
@@ -84,7 +84,7 @@ final class ImageUtil
     /**
      * Return the file extension for an image with the given mime type.
      *
-     * @param   string      $mimeType
+     * @param string $mimeType
      * @return  string
      * @see http://www.php.net/manual/en/function.image-type-to-mime-type.php
      */
@@ -116,10 +116,10 @@ final class ImageUtil
     /**
      * Enforces dimensions for given image.
      *
-     * @param   string      $filename
-     * @param       int         $maxWidth
-     * @param       int         $maxHeight
-     * @param   bool        $obtainDimensions
+     * @param string $filename
+     * @param int $maxWidth
+     * @param int $maxHeight
+     * @param bool $obtainDimensions
      * @return  string          new filename if file was changed, otherwise old filename
      * @since       5.2
      */
@@ -143,7 +143,7 @@ final class ImageUtil
     /**
      * Rotates the given image based on the orientation stored in the exif data.
      *
-     * @param   string      $filename
+     * @param string $filename
      * @return  string          new filename if file was changed, otherwise old filename
      * @since       5.2
      */

@@ -80,7 +80,7 @@ class SmileyCache extends SingletonFactory
     /**
      * Returns the smiley with the given smiley code or `null` if no such smiley exists.
      *
-     * @param   string      $code
+     * @param string $code
      * @return  Smiley|null
      */
     public function getSmileyByCode($code)
@@ -127,7 +127,7 @@ class SmileyCache extends SingletonFactory
     /**
      * Returns all the smilies of a category.
      *
-     * @param   int     $categoryID
+     * @param int $categoryID
      * @return  array
      */
     public function getCategorySmilies($categoryID = null)

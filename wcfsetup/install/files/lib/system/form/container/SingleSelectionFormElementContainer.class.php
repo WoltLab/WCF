@@ -23,7 +23,7 @@ class SingleSelectionFormElementContainer extends SelectionFormElementContainer
     /**
      * Sets container value.
      *
-     * @param   string      $value
+     * @param string $value
      */
     public function setValue($value)
     {

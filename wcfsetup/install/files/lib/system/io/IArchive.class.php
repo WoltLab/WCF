@@ -23,7 +23,7 @@ interface IArchive
      * Returns an associative array with information about a specific file
      * in the archive.
      *
-     * @param   mixed       $index      index or name of the requested file
+     * @param mixed $index index or name of the requested file
      * @return  array
      */
     public function getFileInfo($index);
@@ -32,7 +32,7 @@ interface IArchive
      * Extracts a specific file and returns the content as string. Returns
      * false if extraction failed.
      *
-     * @param   mixed       $index      index or name of the requested file
+     * @param mixed $index index or name of the requested file
      * @return  string              content of the requested file
      */
     public function extractToString($index);
@@ -41,8 +41,8 @@ interface IArchive
      * Extracts a specific file and writes its content to the file specified
      * with $destination.
      *
-     * @param   mixed       $index      index or name of the requested file
-     * @param   string      $destination
+     * @param mixed $index index or name of the requested file
+     * @param string $destination
      * @return  bool        $success
      */
     public function extract($index, $destination);
@@ -51,7 +51,7 @@ interface IArchive
      * Searchs a file in the archive and returns the numeric file index.
      * Returns false if not found.
      *
-     * @param   string      $filename
+     * @param string $filename
      * @return  int             index of the requested file
      */
     public function getIndexByFilename($filename);

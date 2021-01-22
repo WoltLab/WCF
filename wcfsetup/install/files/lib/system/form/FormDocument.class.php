@@ -29,7 +29,7 @@ class FormDocument
     /**
      * Creates a new instance of FormDocument.
      *
-     * @param   string      $name
+     * @param string $name
      */
     public function __construct($name)
     {
@@ -49,7 +49,7 @@ class FormDocument
     /**
      * Appends a FormElementContainer object.
      *
-     * @param   IFormElementContainer       $container
+     * @param IFormElementContainer $container
      */
     public function appendContainer(IFormElementContainer $container)
     {
@@ -59,7 +59,7 @@ class FormDocument
     /**
      * Prepends a FormElementContainer object.
      *
-     * @param   IFormElementContainer       $container
+     * @param IFormElementContainer $container
      */
     public function prependContainer(IFormElementContainer $container)
     {
@@ -79,7 +79,7 @@ class FormDocument
     /**
      * Returns the value of container's child element with given name.
      *
-     * @param   string      $key
+     * @param string $key
      * @return  mixed
      */
     public function getValue($key)
@@ -132,8 +132,8 @@ class FormDocument
     /**
      * Sets localized error message for given element.
      *
-     * @param   string      $name
-     * @param   string      $error
+     * @param string $name
+     * @param string $error
      */
     public function setError($name, $error)
     {

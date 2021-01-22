@@ -22,8 +22,8 @@ interface IFormDataProcessor
      * Processes the given parameters array and returns the processed version of it that will be
      * passed to the constructor of a database object action.
      *
-     * @param   IFormDocument   $document   documents whose field data is processed
-     * @param   array       $parameters parameters before processing
+     * @param IFormDocument $document documents whose field data is processed
+     * @param array $parameters parameters before processing
      * @return  array               parameters after processing
      */
     public function processFormData(IFormDocument $document, array $parameters);
@@ -32,9 +32,9 @@ interface IFormDataProcessor
      * Processes the given object data and returns the processed version of it that will be used
      * to set the form field values.
      *
-     * @param   IFormDocument   $document   documents whose field values will be set using the processed data
-     * @param   array       $data       data before processing
-     * @param   IStorableObject $object     object the data belongs to
+     * @param IFormDocument $document documents whose field values will be set using the processed data
+     * @param array $data data before processing
+     * @param IStorableObject $object object the data belongs to
      * @return  array               data after processing
      */
     public function processObjectData(IFormDocument $document, array $data, IStorableObject $object);

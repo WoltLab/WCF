@@ -49,7 +49,10 @@ class ArticleAddForm extends AbstractForm
     /**
      * @inheritDoc
      */
-    public $neededPermissions = ['admin.content.article.canManageArticle', 'admin.content.article.canContributeArticle'];
+    public $neededPermissions = [
+        'admin.content.article.canManageArticle',
+        'admin.content.article.canContributeArticle',
+    ];
 
     /**
      * true if created article is multi-lingual
@@ -402,7 +405,8 @@ class ArticleAddForm extends AbstractForm
                 }
 
                 $this->htmlInputProcessors[$language->languageID] = new HtmlInputProcessor();
-                $this->htmlInputProcessors[$language->languageID]->process($this->content[$language->languageID], 'com.woltlab.wcf.article.content', 0);
+                $this->htmlInputProcessors[$language->languageID]->process($this->content[$language->languageID],
+                    'com.woltlab.wcf.article.content', 0);
             }
         } else {
             // title
@@ -429,7 +433,8 @@ class ArticleAddForm extends AbstractForm
         // set category ids to selected category ids for validation
         ArticleLabelObjectHandler::getInstance()->setCategoryIDs([$this->categoryID]);
 
-        $validationResult = ArticleLabelObjectHandler::getInstance()->validateLabelIDs($this->labelIDs, 'canSetLabel', false);
+        $validationResult = ArticleLabelObjectHandler::getInstance()->validateLabelIDs($this->labelIDs, 'canSetLabel',
+            false);
 
         // reset category ids to accessible category ids
         ArticleLabelObjectHandler::getInstance()->setCategoryIDs(ArticleCategory::getAccessibleCategoryIDs());
@@ -491,7 +496,8 @@ class ArticleAddForm extends AbstractForm
             'hasLabels' => empty($this->labelIDs) ? 0 : 1,
         ];
 
-        $this->objectAction = new ArticleAction([], 'create', ['data' => \array_merge($this->additionalFields, $data), 'content' => $content]);
+        $this->objectAction = new ArticleAction([], 'create',
+            ['data' => \array_merge($this->additionalFields, $data), 'content' => $content]);
         /** @var Article $article */
         $article = $this->objectAction->executeAction()['returnValues'];
         // save labels
@@ -510,7 +516,8 @@ class ArticleAddForm extends AbstractForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(ArticleEditForm::class, ['id' => $article->getObjectID()]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(ArticleEditForm::class,
+                ['id' => $article->getObjectID()]),
         ]);
 
         // reset variables

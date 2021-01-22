@@ -153,7 +153,7 @@ abstract class AbstractNumericFormField extends AbstractFormField implements
     /**
      * Sets the value for the input element's step attribute.
      *
-     * @param   null|number|string  $step
+     * @param null|number|string $step
      * @return  static
      *
      * @throws  \InvalidArgumentException   if the given step value is invalid

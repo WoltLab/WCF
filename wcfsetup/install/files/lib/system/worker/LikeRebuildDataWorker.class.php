@@ -177,8 +177,8 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker
     /**
      * Merges two cached reaction objects into one object.
      *
-     * @param       int[]|null      $oldCachedReactions
-     * @param       int[]           $newCachedReactions
+     * @param int[]|null $oldCachedReactions
+     * @param int[] $newCachedReactions
      * @return      int[]
      */
     private function mergeCachedReactions($oldCachedReactions, array $newCachedReactions)

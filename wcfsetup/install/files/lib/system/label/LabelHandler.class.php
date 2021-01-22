@@ -58,7 +58,7 @@ class LabelHandler extends SingletonFactory
      * Returns the id of the label ACL option with the given name or null if
      * no such option exists.
      *
-     * @param   string      $optionName
+     * @param string $optionName
      * @return  int
      */
     public function getOptionID($optionName)
@@ -74,7 +74,7 @@ class LabelHandler extends SingletonFactory
      * Returns the label object type with the given name or null of no such
      * object.
      *
-     * @param   string      $objectType
+     * @param string $objectType
      * @return  \wcf\data\object\type\ObjectType
      */
     public function getObjectType($objectType)
@@ -89,8 +89,8 @@ class LabelHandler extends SingletonFactory
     /**
      * Returns an array with view permissions for the labels with the given id.
      *
-     * @param   int[]       $labelIDs
-     * @param   User            $user
+     * @param int[] $labelIDs
+     * @param User $user
      * @return  array
      * @see     \wcf\system\label\LabelHandler::getPermissions()
      */
@@ -102,8 +102,8 @@ class LabelHandler extends SingletonFactory
     /**
      * Returns an array with use permissions for the labels with the given id.
      *
-     * @param   int[]       $labelIDs
-     * @param   User            $user
+     * @param int[] $labelIDs
+     * @param User $user
      * @return  array
      * @see     \wcf\system\label\LabelHandler::getPermissions()
      */
@@ -115,9 +115,9 @@ class LabelHandler extends SingletonFactory
     /**
      * Returns an array with boolean values for each given label id.
      *
-     * @param   string          $optionName
-     * @param   int[]       $labelIDs
-     * @param   User            $user
+     * @param string $optionName
+     * @param int[] $labelIDs
+     * @param User $user
      * @return  array
      * @throws  SystemException
      */
@@ -168,10 +168,10 @@ class LabelHandler extends SingletonFactory
      * Sets labels for given object id, pass an empty array to remove all previously
      * assigned labels.
      *
-     * @param   int[]       $labelIDs
-     * @param   int         $objectTypeID
-     * @param   int         $objectID
-     * @param   bool            $validatePermissions
+     * @param int[] $labelIDs
+     * @param int $objectTypeID
+     * @param int $objectID
+     * @param bool $validatePermissions
      */
     public function setLabels(array $labelIDs, $objectTypeID, $objectID, $validatePermissions = true)
     {
@@ -215,10 +215,10 @@ class LabelHandler extends SingletonFactory
      * label for any of the given label group is given, an existing label from this group will
      * be removed.
      *
-     * @param   int[]   $groupIDs       ids of the relevant label groups
-     * @param   int[]   $labelIDs       ids of the new labels
-     * @param   string      $objectType     label object type of the updated object
-     * @param   int     $objectID       id of the updated object
+     * @param int[] $groupIDs ids of the relevant label groups
+     * @param int[] $labelIDs ids of the new labels
+     * @param string $objectType label object type of the updated object
+     * @param int $objectID id of the updated object
      * @since   5.2
      */
     public function replaceLabels(array $groupIDs, array $labelIDs, $objectType, $objectID)
@@ -264,9 +264,9 @@ class LabelHandler extends SingletonFactory
     /**
      * Returns all assigned labels, optionally filtered to validate permissions.
      *
-     * @param   int     $objectTypeID
-     * @param   int[]   $objectIDs
-     * @param   bool        $validatePermissions
+     * @param int $objectTypeID
+     * @param int[] $objectIDs
+     * @param bool $validatePermissions
      * @return  Label[][]
      */
     public function getAssignedLabels($objectTypeID, array $objectIDs, $validatePermissions = true)
@@ -333,9 +333,9 @@ class LabelHandler extends SingletonFactory
     /**
      * Returns given label groups by id.
      *
-     * @param   int[]   $groupIDs
-     * @param   bool        $validatePermissions
-     * @param   string      $permission
+     * @param int[] $groupIDs
+     * @param bool $validatePermissions
+     * @param string $permission
      * @return  ViewableLabelGroup[]
      * @throws  SystemException
      */
@@ -398,7 +398,7 @@ class LabelHandler extends SingletonFactory
     /**
      * Returns label group by id.
      *
-     * @param   int     $groupID
+     * @param int $groupID
      * @return  ViewableLabelGroup
      */
     public function getLabelGroup($groupID)
@@ -411,8 +411,8 @@ class LabelHandler extends SingletonFactory
     /**
      * Removes all assigned labels for given object ids.
      *
-     * @param   int     $objectTypeID
-     * @param   int[]   $objectIDs
+     * @param int $objectTypeID
+     * @param int[] $objectIDs
      */
     public function removeLabels($objectTypeID, array $objectIDs)
     {

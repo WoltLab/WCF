@@ -13,7 +13,7 @@ use wcf\page\SortablePage;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Page
  *
- * @property    TemplateGroupList   $objectList
+ * @property    TemplateGroupList $objectList
  */
 class TemplateGroupListPage extends SortablePage
 {
@@ -40,7 +40,13 @@ class TemplateGroupListPage extends SortablePage
     /**
      * @inheritDoc
      */
-    public $validSortFields = ['templateGroupID', 'templateGroupName', 'templateGroupFolderName', 'templates', 'styles'];
+    public $validSortFields = [
+        'templateGroupID',
+        'templateGroupName',
+        'templateGroupFolderName',
+        'templates',
+        'styles',
+    ];
 
     /**
      * @inheritDoc

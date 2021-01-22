@@ -22,9 +22,9 @@ use wcf\util\DirectoryUtil;
  * @package WoltLabSuite\Core\Devtools\Project
  * @since   3.1
  *
- * @property-read   int     $projectID  unique id of the project
- * @property-read   string      $name       internal name for display inside the ACP
- * @property-read   string      $path       file system path
+ * @property-read   int $projectID  unique id of the project
+ * @property-read   string $name       internal name for display inside the ACP
+ * @property-read   string $path       file system path
  */
 class DevtoolsProject extends DatabaseObject
 {
@@ -158,7 +158,8 @@ class DevtoolsProject extends DatabaseObject
     {
         if ($this->package === null) {
             $packageList = new PackageList();
-            $packageList->getConditionBuilder()->add('package = ?', [$this->getPackageArchive()->getPackageInfo('name')]);
+            $packageList->getConditionBuilder()->add('package = ?',
+                [$this->getPackageArchive()->getPackageInfo('name')]);
             $packageList->readObjects();
 
             if (\count($packageList)) {
@@ -203,13 +204,14 @@ class DevtoolsProject extends DatabaseObject
             return [];
         }
 
-        return \array_values(DirectoryUtil::getInstance($languageDirectory)->getFiles(\SORT_ASC, Regex::compile('\w+\.xml')));
+        return \array_values(DirectoryUtil::getInstance($languageDirectory)->getFiles(\SORT_ASC,
+            Regex::compile('\w+\.xml')));
     }
 
     /**
      * Sets the package that belongs to this project.
      *
-     * @param   Package     $package
+     * @param Package $package
      * @throws  \InvalidArgumentException   if the identifier of the given package does not match
      * @since   5.2
      */
@@ -227,7 +229,7 @@ class DevtoolsProject extends DatabaseObject
      * if the path does not exist (`notFound`) or if there is
      * no package.xml (`packageXml`).
      *
-     * @param       string          $path
+     * @param string $path
      * @return      string
      */
     public static function validatePath($path)
@@ -247,7 +249,7 @@ class DevtoolsProject extends DatabaseObject
     /**
      * Returns true if the path appears to point to `WoltLab Suite Core`.
      *
-     * @param       string          $path
+     * @param string $path
      * @return      bool
      */
     public static function pathIsCore($path)

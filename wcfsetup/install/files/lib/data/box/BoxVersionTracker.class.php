@@ -43,7 +43,7 @@ class BoxVersionTracker extends DatabaseObjectDecorator implements IVersionTrack
     /**
      * Adds an box content object as child.
      *
-     * @param       BoxContent      $content        box content object
+     * @param BoxContent $content box content object
      */
     public function addContent(BoxContent $content)
     {
@@ -53,7 +53,7 @@ class BoxVersionTracker extends DatabaseObjectDecorator implements IVersionTrack
     /**
      * Sets the list of box content objects.
      *
-     * @param       BoxContent[]    $content        box content objects
+     * @param BoxContent[] $content box content objects
      */
     public function setContent(array $content)
     {

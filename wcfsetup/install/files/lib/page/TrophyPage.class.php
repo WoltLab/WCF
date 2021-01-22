@@ -25,7 +25,7 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Core\Page
  * @since   3.1
  *
- * @property    UserTrophyList      $objectList
+ * @property    UserTrophyList $objectList
  */
 class TrophyPage extends MultipleLinkPage
 {
@@ -84,7 +84,8 @@ class TrophyPage extends MultipleLinkPage
     {
         parent::readData();
 
-        PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.TrophyCategoryList', $this->trophy->getCategory()->getObjectID(), $this->trophy->getCategory());
+        PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.TrophyCategoryList',
+            $this->trophy->getCategory()->getObjectID(), $this->trophy->getCategory());
     }
 
     /**
@@ -148,11 +149,14 @@ class TrophyPage extends MultipleLinkPage
 
             $friendshipConditionBuilder = new PreparedStatementConditionBuilder(false);
             $friendshipConditionBuilder->add('user_trophy.userID IN (SELECT userID FROM wcf' . WCF_N . '_user_option_value WHERE COALESCE(userOption' . UserOptionCacheBuilder::getInstance()->getData()['options']['canViewTrophies']->optionID . ', ' . $canViewTrophyDefaultValue . ') = 2)');
-            $friendshipConditionBuilder->add('user_trophy.userID IN (SELECT userID FROM wcf' . WCF_N . '_user_follow WHERE followUserID = ?)', [WCF::getUser()->userID]);
-            $conditionBuilder->add('(' . $friendshipConditionBuilder . ')', $friendshipConditionBuilder->getParameters());
+            $friendshipConditionBuilder->add('user_trophy.userID IN (SELECT userID FROM wcf' . WCF_N . '_user_follow WHERE followUserID = ?)',
+                [WCF::getUser()->userID]);
+            $conditionBuilder->add('(' . $friendshipConditionBuilder . ')',
+                $friendshipConditionBuilder->getParameters());
             $conditionBuilder->add('user_trophy.userID = ?', [WCF::getUser()->userID]);
 
-            $this->objectList->getConditionBuilder()->add('(' . $conditionBuilder . ')', $conditionBuilder->getParameters());
+            $this->objectList->getConditionBuilder()->add('(' . $conditionBuilder . ')',
+                $conditionBuilder->getParameters());
         }
     }
 

@@ -37,7 +37,7 @@ trait TMinimumLengthFormField
      * Sets the minimum length of the values of this field. If `null` is passed, the
      * minimum length is removed.
      *
-     * @param   null|int    $minimumLength  minimum field value length
+     * @param null|int $minimumLength minimum field value length
      * @return  static              this field
      *
      * @throws  \InvalidArgumentException   if the given minimum length is no integer or otherwise invalid
@@ -73,8 +73,8 @@ trait TMinimumLengthFormField
     /**
      * Validates the minimum length of the given text.
      *
-     * @param   string      $text       validated text
-     * @param   null|Language   $language   language of the validated text
+     * @param string $text validated text
+     * @param null|Language $language language of the validated text
      */
     public function validateMinimumLength($text, ?Language $language = null)
     {

@@ -21,7 +21,7 @@ class HTTPException extends SystemException implements IExtraInformationExceptio
     /**
      * The HTTP request that lead to this Exception.
      *
-     * @param   HTTPRequest
+     * @param HTTPRequest
      */
     protected $http;
 

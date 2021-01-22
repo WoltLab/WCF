@@ -48,8 +48,8 @@ class HtmlSimpleParser extends SingletonFactory
     /**
      * Sets the embedded object context.
      *
-     * @param       string          $objectType     object type identifier
-     * @param       int         $objectID       object id
+     * @param string $objectType object type identifier
+     * @param int $objectID object id
      */
     public function setContext($objectType, $objectID)
     {
@@ -64,9 +64,9 @@ class HtmlSimpleParser extends SingletonFactory
     /**
      * Parses a message to identify any embedded content using simple placeholders.
      *
-     * @param       string          $objectType     object type identifier
-     * @param       int         $objectID       object id
-     * @param       string          $message        message content
+     * @param string $objectType object type identifier
+     * @param int $objectID object id
+     * @param string $message message content
      * @return      bool         true if there is at least one embedded content found
      */
     public function parse($objectType, $objectID, $message)
@@ -105,9 +105,9 @@ class HtmlSimpleParser extends SingletonFactory
     /**
      * Replaces simple placeholders with embedded content data.
      *
-     * @param       string          $objectType     object type identifier
-     * @param       int         $objectID       object id
-     * @param       string          $message        message content
+     * @param string $objectType object type identifier
+     * @param int $objectID object id
+     * @param string $message message content
      * @return      string          parsed and replaced string
      */
     public function replaceTags($objectType, $objectID, $message)
@@ -125,7 +125,7 @@ class HtmlSimpleParser extends SingletonFactory
     /**
      * Replaces a placeholder.
      *
-     * @param       array           $data           placeholder data
+     * @param array $data placeholder data
      * @return      string          placeholder replacement
      */
     public function replaceTag(array $data)
@@ -156,7 +156,7 @@ class HtmlSimpleParser extends SingletonFactory
      * with a custom template plugin. This step ensures proper replacement
      * without causing conflicts with existing syntax.
      *
-     * @param       string          $template       template content
+     * @param string $template template content
      * @return      string          template content with custom template plugin
      */
     public function parseTemplate($template)
@@ -177,7 +177,7 @@ class HtmlSimpleParser extends SingletonFactory
     /**
      * Parses the attribute string and return individual components.
      *
-     * @param       string          $attributesString       attributes string, e.g. `foo="1" bar="baz"`
+     * @param string $attributesString attributes string, e.g. `foo="1" bar="baz"`
      * @return      array           list of individual components
      */
     protected function parseAttributes($attributesString)

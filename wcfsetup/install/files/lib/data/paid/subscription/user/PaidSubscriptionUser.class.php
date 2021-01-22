@@ -15,13 +15,13 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Paid\Subscription\User
  *
- * @property-read   int     $subscriptionUserID     unique id of the paid subscription-user-association
- * @property-read   int     $subscriptionID         id of the paid subscription the paid subscription-user-association belongs to
- * @property-read   int     $userID             id of the user the paid subscription-user-association belongs to
- * @property-read   int     $startDate          timestamp at which the paid subscription started
- * @property-read   int     $endDate            timestamp at which the paid subscription ended or will end
- * @property-read   int     $isActive           is `1` if the user's paid subscription is currently active and thus not expired, otherwise `0`
- * @property-read   int     $sentExpirationNotification is `1` if the user has been notified that the paid subscription is expiring
+ * @property-read   int $subscriptionUserID     unique id of the paid subscription-user-association
+ * @property-read   int $subscriptionID         id of the paid subscription the paid subscription-user-association belongs to
+ * @property-read   int $userID             id of the user the paid subscription-user-association belongs to
+ * @property-read   int $startDate          timestamp at which the paid subscription started
+ * @property-read   int $endDate            timestamp at which the paid subscription ended or will end
+ * @property-read   int $isActive           is `1` if the user's paid subscription is currently active and thus not expired, otherwise `0`
+ * @property-read   int $sentExpirationNotification is `1` if the user has been notified that the paid subscription is expiring
  */
 class PaidSubscriptionUser extends DatabaseObject
 {
@@ -59,7 +59,7 @@ class PaidSubscriptionUser extends DatabaseObject
     /**
      * Sets the paid subscription object.
      *
-     * @param   PaidSubscription    $subscription
+     * @param PaidSubscription $subscription
      */
     public function setSubscription(PaidSubscription $subscription)
     {
@@ -83,8 +83,8 @@ class PaidSubscriptionUser extends DatabaseObject
     /**
      * Returns a specific subscription user or `null` if such a user does not exist.
      *
-     * @param   int     $subscriptionID
-     * @param   int     $userID
+     * @param int $subscriptionID
+     * @param int $userID
      * @return  PaidSubscriptionUser|null
      */
     public static function getSubscriptionUser($subscriptionID, $userID)

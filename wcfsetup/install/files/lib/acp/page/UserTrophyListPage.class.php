@@ -105,7 +105,8 @@ class UserTrophyListPage extends SortablePage
         }
 
         if ($this->username) {
-            $this->objectList->getConditionBuilder()->add('user_trophy.userID IN (SELECT userID FROM wcf' . WCF_N . '_user WHERE username LIKE ?)', ['%' . $this->username . '%']);
+            $this->objectList->getConditionBuilder()->add('user_trophy.userID IN (SELECT userID FROM wcf' . WCF_N . '_user WHERE username LIKE ?)',
+                ['%' . $this->username . '%']);
         }
     }
 

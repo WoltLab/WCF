@@ -161,7 +161,8 @@ class OptionHandler implements IOptionHandler
             foreach ($this->options as $option) {
                 if ($option->supportI18n) {
                     I18nHandler::getInstance()->register($option->optionName);
-                    I18nHandler::getInstance()->setOptions($option->optionName, $option->packageID, $option->optionValue, $this->languageItemPattern);
+                    I18nHandler::getInstance()->setOptions($option->optionName, $option->packageID,
+                        $option->optionValue, $this->languageItemPattern);
                 }
             }
             I18nHandler::getInstance()->readValues();
@@ -259,7 +260,7 @@ class OptionHandler implements IOptionHandler
     /**
      * Counts the number of options in a specific option category.
      *
-     * @param   string      $categoryName
+     * @param string $categoryName
      * @return  int
      */
     public function countCategoryOptions($categoryName = '')
@@ -293,7 +294,8 @@ class OptionHandler implements IOptionHandler
         foreach ($this->options as $option) {
             if ($this->supportI18n && $option->supportI18n) {
                 I18nHandler::getInstance()->register($option->optionName);
-                I18nHandler::getInstance()->setOptions($option->optionName, $option->packageID, $option->optionValue, $this->languageItemPattern);
+                I18nHandler::getInstance()->setOptions($option->optionName, $option->packageID, $option->optionValue,
+                    $this->languageItemPattern);
             }
 
             $this->optionValues[$option->optionName] = $option->optionValue;
@@ -318,7 +320,8 @@ class OptionHandler implements IOptionHandler
                     I18nHandler::getInstance()->remove($optionPrefix . $option->optionID);
                     $saveOptions[$option->optionID] = I18nHandler::getInstance()->getValue($option->optionName);
                 } else {
-                    I18nHandler::getInstance()->save($option->optionName, $optionPrefix . $option->optionID, $categoryName, $option->packageID);
+                    I18nHandler::getInstance()->save($option->optionName, $optionPrefix . $option->optionID,
+                        $categoryName, $option->packageID);
                     $saveOptions[$option->optionID] = $optionPrefix . $option->optionID;
                 }
             } else {
@@ -332,7 +335,7 @@ class OptionHandler implements IOptionHandler
     /**
      * Returns a parsed option.
      *
-     * @param   string      $optionName
+     * @param string $optionName
      * @return  array
      */
     protected function getOption($optionName)
@@ -367,7 +370,7 @@ class OptionHandler implements IOptionHandler
     /**
      * Validates an option.
      *
-     * @param   Option      $option
+     * @param Option $option
      * @throws  UserInputException
      */
     protected function validateOption(Option $option)
@@ -383,7 +386,8 @@ class OptionHandler implements IOptionHandler
 
         // validate with pattern
         if ($option->validationPattern) {
-            if (!\preg_match('~' . \str_replace('~', '\~', $option->validationPattern) . '~', $this->optionValues[$option->optionName])) {
+            if (!\preg_match('~' . \str_replace('~', '\~', $option->validationPattern) . '~',
+                $this->optionValues[$option->optionName])) {
                 throw new UserInputException($option->optionName, 'validationFailed');
             }
         }
@@ -403,7 +407,7 @@ class OptionHandler implements IOptionHandler
     /**
      * Returns an object of the requested option type.
      *
-     * @param   string          $type
+     * @param string $type
      * @return  IOptionType
      * @throws  SystemException
      */
@@ -425,7 +429,7 @@ class OptionHandler implements IOptionHandler
     /**
      * Returns class name for option type.
      *
-     * @param   string      $optionType
+     * @param string $optionType
      * @return  string
      * @throws  ImplementationException
      */
@@ -516,7 +520,7 @@ class OptionHandler implements IOptionHandler
     /**
      * Creates a list of all active options.
      *
-     * @param   string      $parentCategoryName
+     * @param string $parentCategoryName
      */
     protected function loadActiveOptions($parentCategoryName)
     {
@@ -540,7 +544,7 @@ class OptionHandler implements IOptionHandler
     /**
      * Checks the required permissions and options of a category.
      *
-     * @param   OptionCategory      $category
+     * @param OptionCategory $category
      * @return  bool
      */
     protected function checkCategory(OptionCategory $category)
@@ -559,7 +563,7 @@ class OptionHandler implements IOptionHandler
     /**
      * Checks the required permissions and options of an option.
      *
-     * @param   Option      $option
+     * @param Option $option
      * @return  bool
      */
     protected function checkOption(Option $option)
@@ -570,7 +574,7 @@ class OptionHandler implements IOptionHandler
     /**
      * Checks visibility of an option.
      *
-     * @param   Option      $option
+     * @param Option $option
      * @return  bool
      */
     protected function checkVisibility(Option $option)

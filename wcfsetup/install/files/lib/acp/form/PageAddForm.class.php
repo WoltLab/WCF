@@ -371,11 +371,13 @@ class PageAddForm extends AbstractForm
             if ($this->isMultilingual) {
                 foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                     $this->htmlInputProcessors[$language->languageID] = new HtmlInputProcessor();
-                    $this->htmlInputProcessors[$language->languageID]->process((!empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : ''), 'com.woltlab.wcf.page.content');
+                    $this->htmlInputProcessors[$language->languageID]->process((!empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : ''),
+                        'com.woltlab.wcf.page.content');
                 }
             } else {
                 $this->htmlInputProcessors[0] = new HtmlInputProcessor();
-                $this->htmlInputProcessors[0]->process((!empty($this->content[0]) ? $this->content[0] : ''), 'com.woltlab.wcf.page.content');
+                $this->htmlInputProcessors[0]->process((!empty($this->content[0]) ? $this->content[0] : ''),
+                    'com.woltlab.wcf.page.content');
             }
         }
     }
@@ -464,8 +466,8 @@ class PageAddForm extends AbstractForm
     /**
      * Validates given custom url.
      *
-     * @param       int                 $languageID
-     * @param       string                  $customURL
+     * @param int $languageID
+     * @param string $customURL
      *
      * @throws  UserInputException
      */
@@ -600,22 +602,26 @@ class PageAddForm extends AbstractForm
             ];
         }
 
-        $this->objectAction = new PageAction([], 'create', ['data' => \array_merge($this->additionalFields, [
-            'parentPageID' => $this->parentPageID ?: null,
-            'pageType' => $this->pageType,
-            'name' => $this->name,
-            'cssClassName' => $this->cssClassName,
-            'isDisabled' => $this->isDisabled ? 1 : 0,
-            'isLandingPage' => 0,
-            'availableDuringOfflineMode' => $this->availableDuringOfflineMode,
-            'allowSpidersToIndex' => $this->allowSpidersToIndex,
-            'enableShareButtons' => $this->enableShareButtons,
-            'applicationPackageID' => $this->applicationPackageID,
-            'lastUpdateTime' => TIME_NOW,
-            'isMultilingual' => $this->isMultilingual,
-            'identifier' => '',
-            'packageID' => 1,
-        ]), 'content' => $content, 'boxToPage' => $this->getBoxToPage()]);
+        $this->objectAction = new PageAction([], 'create', [
+            'data' => \array_merge($this->additionalFields, [
+                'parentPageID' => $this->parentPageID ?: null,
+                'pageType' => $this->pageType,
+                'name' => $this->name,
+                'cssClassName' => $this->cssClassName,
+                'isDisabled' => $this->isDisabled ? 1 : 0,
+                'isLandingPage' => 0,
+                'availableDuringOfflineMode' => $this->availableDuringOfflineMode,
+                'allowSpidersToIndex' => $this->allowSpidersToIndex,
+                'enableShareButtons' => $this->enableShareButtons,
+                'applicationPackageID' => $this->applicationPackageID,
+                'lastUpdateTime' => TIME_NOW,
+                'isMultilingual' => $this->isMultilingual,
+                'identifier' => '',
+                'packageID' => 1,
+            ]),
+            'content' => $content,
+            'boxToPage' => $this->getBoxToPage(),
+        ]);
 
         /** @var Page $page */
         $page = $this->objectAction->executeAction()['returnValues'];
@@ -650,16 +656,18 @@ class PageAddForm extends AbstractForm
             $statement->execute($conditionBuilder->getParameters());
             $maxShowOrder = $statement->fetchSingleColumn() ?? 0;
 
-            $menuItemAction = new MenuItemAction([], 'create', ['data' => [
-                'isDisabled' => $this->isDisabled ? 1 : 0,
-                'title' => (!$this->isMultilingual ? $this->title[0] : ''),
-                'pageID' => $page->pageID,
-                'menuID' => MenuCache::getInstance()->getMainMenuID(),
-                'parentItemID' => $this->parentMenuItemID,
-                'showOrder' => $maxShowOrder + 1,
-                'identifier' => StringUtil::getRandomID(),
-                'packageID' => 1,
-            ]]);
+            $menuItemAction = new MenuItemAction([], 'create', [
+                'data' => [
+                    'isDisabled' => $this->isDisabled ? 1 : 0,
+                    'title' => (!$this->isMultilingual ? $this->title[0] : ''),
+                    'pageID' => $page->pageID,
+                    'menuID' => MenuCache::getInstance()->getMainMenuID(),
+                    'parentItemID' => $this->parentMenuItemID,
+                    'showOrder' => $maxShowOrder + 1,
+                    'identifier' => StringUtil::getRandomID(),
+                    'packageID' => 1,
+                ],
+            ]);
             $menuItemAction->executeAction();
 
             if ($this->isMultilingual) {
@@ -682,7 +690,8 @@ class PageAddForm extends AbstractForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(PageEditForm::class, ['id' => $page->pageID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(PageEditForm::class,
+                ['id' => $page->pageID]),
         ]);
 
         // reset variables
@@ -746,7 +755,8 @@ class PageAddForm extends AbstractForm
                     }
                 }
 
-                $this->aclValues = SimpleAclHandler::getInstance()->getValues('com.woltlab.wcf.page', $this->presetPage->pageID);
+                $this->aclValues = SimpleAclHandler::getInstance()->getValues('com.woltlab.wcf.page',
+                    $this->presetPage->pageID);
             }
         }
 

@@ -71,8 +71,8 @@ class PackageValidationManager extends SingletonFactory
      * looks fine, this is useful for a rough check during upload when a more detailed check will
      * be performed afterwards.
      *
-     * @param   string      $archive
-     * @param   bool        $deepInspection
+     * @param string $archive
+     * @param bool $deepInspection
      * @return  bool
      */
     public function validate($archive, $deepInspection)
@@ -105,8 +105,8 @@ class PackageValidationManager extends SingletonFactory
      * Adds a virtual package with the corresponding version, if the package is already known,
      * the higher version number will be stored.
      *
-     * @param   string      $package
-     * @param   string      $packageVersion
+     * @param string $package
+     * @param string $packageVersion
      * @return  bool
      */
     public function addVirtualPackage($package, $packageVersion)
@@ -125,7 +125,7 @@ class PackageValidationManager extends SingletonFactory
     /**
      * Returns the version number of a virtual package or null if it doesn't exist.
      *
-     * @param   string      $package
+     * @param string $package
      * @return  string
      */
     public function getVirtualPackage($package)
@@ -183,9 +183,9 @@ class PackageValidationManager extends SingletonFactory
      *
      * Please be aware that unknown PIPs will silently ignored and cause no error.
      *
-     * @param   PackageArchive      $archive
-     * @param   string          $pip
-     * @param   string          $instruction
+     * @param PackageArchive $archive
+     * @param string $pip
+     * @param string $instruction
      * @return  bool
      */
     public function validatePackageInstallationPluginInstruction(PackageArchive $archive, $pip, $instruction)
@@ -201,7 +201,7 @@ class PackageValidationManager extends SingletonFactory
      * Returns the default filename for the given pip name. If no default filename
      * exists `null` is returned.
      *
-     * @param   string          $pip
+     * @param string $pip
      * @return  string|null
      * @since   3.1
      */

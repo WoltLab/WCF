@@ -19,14 +19,14 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Comment\Response
  *
- * @property-read   int     $responseID unique id of the comment response
- * @property-read   int     $commentID  id of the comment the comment response belongs to
- * @property-read   int     $time       timestamp at which the comment response has been written
- * @property-read   int|null    $userID     id of the user who wrote the comment response or `null` if the user does not exist anymore or if the comment response has been written by a guest
- * @property-read   string      $username   name of the user or guest who wrote the comment response
- * @property-read   string      $message    comment response message
- * @property-read       int         $enableHtml     is 1 if HTML will rendered in the comment response, otherwise 0
- * @property-read   int     $isDisabled is 1 if the comment response is disabled, otherwise 0
+ * @property-read   int $responseID unique id of the comment response
+ * @property-read   int $commentID  id of the comment the comment response belongs to
+ * @property-read   int $time       timestamp at which the comment response has been written
+ * @property-read   int|null $userID     id of the user who wrote the comment response or `null` if the user does not exist anymore or if the comment response has been written by a guest
+ * @property-read   string $username   name of the user or guest who wrote the comment response
+ * @property-read   string $message    comment response message
+ * @property-read       int $enableHtml     is 1 if HTML will rendered in the comment response, otherwise 0
+ * @property-read   int $isDisabled is 1 if the comment response is disabled, otherwise 0
  */
 class CommentResponse extends DatabaseObject implements IMessage
 {
@@ -66,7 +66,7 @@ class CommentResponse extends DatabaseObject implements IMessage
     /**
      * Returns a version of this message optimized for use in emails.
      *
-     * @param   string  $mimeType   Either 'text/plain' or 'text/html'
+     * @param string $mimeType Either 'text/plain' or 'text/html'
      * @return  string
      */
     public function getMailText($mimeType = 'text/plain')
@@ -118,7 +118,7 @@ class CommentResponse extends DatabaseObject implements IMessage
     /**
      * Sets related comment object.
      *
-     * @param   Comment     $comment
+     * @param Comment $comment
      */
     public function setComment(Comment $comment)
     {
@@ -143,7 +143,8 @@ class CommentResponse extends DatabaseObject implements IMessage
      */
     public function getTitle()
     {
-        return CommentHandler::getInstance()->getObjectType($this->getComment()->objectTypeID)->getProcessor()->getTitle($this->getComment()->objectTypeID, $this->getComment()->objectID, true);
+        return CommentHandler::getInstance()->getObjectType($this->getComment()->objectTypeID)->getProcessor()->getTitle($this->getComment()->objectTypeID,
+            $this->getComment()->objectID, true);
     }
 
     /**

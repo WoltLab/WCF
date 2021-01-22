@@ -22,7 +22,7 @@ class MessageUtil
     /**
      * Strips session links, html entities and \r\n from the given text.
      *
-     * @param   string      $text
+     * @param string $text
      * @return  string
      */
     public static function stripCrap($text)
@@ -47,7 +47,7 @@ class MessageUtil
     /**
      * Returns the mentioned users in the given text.
      *
-     * @param       HtmlInputProcessor      $htmlInputProcessor     html input processor instance
+     * @param HtmlInputProcessor $htmlInputProcessor html input processor instance
      * @return      int[]                   ids of the mentioned users
      * @since       5.3
      */
@@ -114,7 +114,7 @@ class MessageUtil
     /**
      * Returns the mentioned users in the given text.
      *
-     * @param       HtmlInputProcessor      $htmlInputProcessor     html input processor instance
+     * @param HtmlInputProcessor $htmlInputProcessor html input processor instance
      * @return      string[]                mentioned usernames
      * @deprecated  5.3
      */
@@ -180,7 +180,7 @@ class MessageUtil
     /**
      * Returns the quoted users in the given text.
      *
-     * @param       HtmlInputProcessor      $htmlInputProcessor     html input processor instance
+     * @param HtmlInputProcessor $htmlInputProcessor html input processor instance
      * @return      string[]                quoted usernames
      */
     public static function getQuotedUsers(HtmlInputProcessor $htmlInputProcessor)
@@ -223,8 +223,8 @@ class MessageUtil
     /**
      * Truncates a formatted message and keeps the HTML syntax intact.
      *
-     * @param   string      $message        string which shall be truncated
-     * @param   int     $maxLength      string length after truncating
+     * @param string $message string which shall be truncated
+     * @param int $maxLength string length after truncating
      * @return  string                  truncated string
      */
     public static function truncateFormattedMessage($message, $maxLength = 1000)

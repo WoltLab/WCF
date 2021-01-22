@@ -91,7 +91,8 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
     public static function deleteAll(array $objectIDs = [])
     {
         // unmark users
-        ClipboardHandler::getInstance()->unmark($objectIDs, ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
+        ClipboardHandler::getInstance()->unmark($objectIDs,
+            ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
 
         return parent::deleteAll($objectIDs);
     }
@@ -117,7 +118,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Inserts default options.
      *
-     * @param   int     $userID
+     * @param int $userID
      */
     protected static function createUserOptions($userID)
     {
@@ -155,7 +156,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Updates user options.
      *
-     * @param   array       $userOptions
+     * @param array $userOptions
      */
     public function updateUserOptions(array $userOptions = [])
     {
@@ -183,9 +184,9 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Adds a user to the groups he should be in.
      *
-     * @param   array       $groupIDs
-     * @param   bool        $deleteOldGroups
-     * @param   bool        $addDefaultGroups
+     * @param array $groupIDs
+     * @param bool $deleteOldGroups
+     * @param bool $addDefaultGroups
      */
     public function addToGroups(array $groupIDs, $deleteOldGroups = true, $addDefaultGroups = true)
     {
@@ -218,7 +219,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Adds a user to a user group.
      *
-     * @param   int $groupID
+     * @param int $groupID
      */
     public function addToGroup($groupID)
     {
@@ -232,7 +233,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Removes a user from a user group.
      *
-     * @param   int     $groupID
+     * @param int $groupID
      */
     public function removeFromGroup($groupID)
     {
@@ -246,7 +247,7 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Removes a user from multiple user groups.
      *
-     * @param   array       $groupIDs
+     * @param array $groupIDs
      */
     public function removeFromGroups(array $groupIDs)
     {
@@ -265,8 +266,8 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Saves the visible languages of a user.
      *
-     * @param   array       $languageIDs
-     * @param   bool        $deleteOldLanguages
+     * @param array $languageIDs
+     * @param bool $deleteOldLanguages
      */
     public function addToLanguages(array $languageIDs, $deleteOldLanguages = true)
     {

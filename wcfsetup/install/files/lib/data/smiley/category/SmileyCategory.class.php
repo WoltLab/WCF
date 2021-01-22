@@ -21,7 +21,7 @@ use wcf\system\WCF;
  * @method      SmileyCategory[]    getAllChildCategories()
  * @method      SmileyCategory      getParentCategory()
  * @method      SmileyCategory[]    getParentCategories()
- * @method static   SmileyCategory|null getCategory($categoryID)
+ * @method static SmileyCategory|null getCategory($categoryID)
  */
 class SmileyCategory extends AbstractDecoratedCategory implements \Countable, ITraversableObject
 {

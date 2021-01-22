@@ -36,7 +36,7 @@ interface IExtendedModificationLogHandler
      * Processes a list of items by converting them into IViewableModificationLog
      * instances and pre-loading their data.
      *
-     * @param   ModificationLog[]   $items
+     * @param ModificationLog[] $items
      * @return  IViewableModificationLog[]
      */
     public function processItems(array $items);

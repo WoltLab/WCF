@@ -80,8 +80,8 @@ class ModerationQueueManager extends SingletonFactory
     /**
      * Returns true if the given combination of definition and object type is valid.
      *
-     * @param   string      $definitionName
-     * @param   string      $objectType
+     * @param string $definitionName
+     * @param string $objectType
      * @return  bool
      */
     public function isValid($definitionName, $objectType)
@@ -98,9 +98,9 @@ class ModerationQueueManager extends SingletonFactory
     /**
      * Returns the object type processor.
      *
-     * @param   string      $definitionName
-     * @param   string      $objectType
-     * @param   int     $objectTypeID
+     * @param string $definitionName
+     * @param string $objectType
+     * @param int $objectTypeID
      * @return  object
      */
     public function getProcessor($definitionName, $objectType, $objectTypeID = null)
@@ -117,8 +117,8 @@ class ModerationQueueManager extends SingletonFactory
     /**
      * Returns link for viewing/editing an object type.
      *
-     * @param   int     $objectTypeID
-     * @param   int     $queueID
+     * @param int $objectTypeID
+     * @param int $queueID
      * @return  string
      */
     public function getLink($objectTypeID, $queueID)
@@ -135,8 +135,8 @@ class ModerationQueueManager extends SingletonFactory
     /**
      * Returns object type id.
      *
-     * @param   string      $definitionName
-     * @param   string      $objectType
+     * @param string $definitionName
+     * @param string $objectType
      * @return  int
      */
     public function getObjectTypeID($definitionName, $objectType)
@@ -169,7 +169,7 @@ class ModerationQueueManager extends SingletonFactory
     /**
      * Returns a list of object type ids for given definition ids.
      *
-     * @param   int[]       $definitionIDs
+     * @param int[] $definitionIDs
      * @return  int[]
      */
     public function getObjectTypeIDs(array $definitionIDs)
@@ -189,8 +189,8 @@ class ModerationQueueManager extends SingletonFactory
     /**
      * Populates object properties for viewing.
      *
-     * @param   int             $objectTypeID
-     * @param   ViewableModerationQueue[]   $objects
+     * @param int $objectTypeID
+     * @param ViewableModerationQueue[] $objects
      * @throws  SystemException
      */
     public function populate($objectTypeID, array $objects)
@@ -230,7 +230,8 @@ class ModerationQueueManager extends SingletonFactory
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("moderation_queue_to_user.userID = ?", [WCF::getUser()->userID]);
             $conditions->add("moderation_queue_to_user.isAffected = ?", [1]);
-            $conditions->add("moderation_queue.status IN (?)", [[ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING]]);
+            $conditions->add("moderation_queue.status IN (?)",
+                [[ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING]]);
 
             $sql = "SELECT      COUNT(*)
                     FROM        wcf" . WCF_N . "_moderation_queue_to_user moderation_queue_to_user
@@ -251,7 +252,7 @@ class ModerationQueueManager extends SingletonFactory
     /**
      * Returns the count of unread moderation queue items.
      *
-     * @param   bool        $skipCache
+     * @param bool $skipCache
      * @return  int
      */
     public function getUnreadModerationCount($skipCache = false)
@@ -268,8 +269,10 @@ class ModerationQueueManager extends SingletonFactory
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("moderation_queue_to_user.userID = ?", [WCF::getUser()->userID]);
             $conditions->add("moderation_queue_to_user.isAffected = ?", [1]);
-            $conditions->add("moderation_queue.status IN (?)", [[ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING]]);
-            $conditions->add("moderation_queue.time > ?", [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.moderation.queue')]);
+            $conditions->add("moderation_queue.status IN (?)",
+                [[ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING]]);
+            $conditions->add("moderation_queue.time > ?",
+                [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.moderation.queue')]);
             $conditions->add("(moderation_queue.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)");
 
             $sql = "SELECT      COUNT(*)
@@ -317,7 +320,8 @@ class ModerationQueueManager extends SingletonFactory
             foreach ($this->objectTypeNames as $definitionName => $objectTypeIDs) {
                 foreach ($objectTypeIDs as $objectTypeID) {
                     if (isset($queues[$objectTypeID])) {
-                        $this->moderationTypes[$definitionName]->getProcessor()->assignQueues($objectTypeID, $queues[$objectTypeID]);
+                        $this->moderationTypes[$definitionName]->getProcessor()->assignQueues($objectTypeID,
+                            $queues[$objectTypeID]);
                     }
                 }
             }
@@ -327,7 +331,7 @@ class ModerationQueueManager extends SingletonFactory
     /**
      * Saves moderation queue assignments.
      *
-     * @param   bool[]  $assignments
+     * @param bool[] $assignments
      */
     public function setAssignment(array $assignments)
     {
@@ -379,7 +383,9 @@ class ModerationQueueManager extends SingletonFactory
         if (!empty($queues)) {
             $queueIDs = [];
             foreach ($queues as $objectTypeID => $objectQueues) {
-                $queueIDs = \array_merge($queueIDs, $this->getProcessor($this->definitions[$this->objectTypes[$objectTypeID]->definitionID], null, $objectTypeID)->identifyOrphans($objectQueues));
+                $queueIDs = \array_merge($queueIDs,
+                    $this->getProcessor($this->definitions[$this->objectTypes[$objectTypeID]->definitionID], null,
+                        $objectTypeID)->identifyOrphans($objectQueues));
             }
 
             $this->removeOrphans($queueIDs);
@@ -389,7 +395,7 @@ class ModerationQueueManager extends SingletonFactory
     /**
      * Removes a list of orphaned queue ids.
      *
-     * @param   int[]       $queueIDs
+     * @param int[] $queueIDs
      */
     public function removeOrphans(array $queueIDs)
     {
@@ -408,7 +414,7 @@ class ModerationQueueManager extends SingletonFactory
     /**
      * Resets moderation count for all users or optionally only for one user.
      *
-     * @param   int     $userID
+     * @param int $userID
      */
     public function resetModerationCount($userID = null)
     {
@@ -441,7 +447,7 @@ class ModerationQueueManager extends SingletonFactory
     /**
      * Returns a list of definition names associated with the specified object type.
      *
-     * @param   string      $objectType
+     * @param string $objectType
      * @return  string[]
      */
     public function getDefinitionNamesByObjectType($objectType)
@@ -459,8 +465,8 @@ class ModerationQueueManager extends SingletonFactory
     /**
      * Removes moderation queues, should only be called if related objects are permanently deleted.
      *
-     * @param   string      $objectType
-     * @param   int[]   $objectIDs
+     * @param string $objectType
+     * @param int[] $objectIDs
      * @throws  SystemException
      */
     public function removeQueues($objectType, array $objectIDs)

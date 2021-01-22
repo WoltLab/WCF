@@ -18,10 +18,12 @@ class CssHighlighter extends Highlighter
      */
     protected function highlightNumbers($string)
     {
-        $string = \preg_replace('!(?<=' . $this->separatorsRegEx . ')(-?\d*\.?\d+(?:px|pt|em|%|ex|in|cm|mm|pc)?)(?=' . $this->separatorsRegEx . ')!i', '<span class="hlNumbers">\\0</span>', $string);
+        $string = \preg_replace('!(?<=' . $this->separatorsRegEx . ')(-?\d*\.?\d+(?:px|pt|em|%|ex|in|cm|mm|pc)?)(?=' . $this->separatorsRegEx . ')!i',
+            '<span class="hlNumbers">\\0</span>', $string);
 
         // highlight colors (hexadecimal numbers)
-        return \preg_replace('!(?<=' . $this->separatorsRegEx . ')(#([0-9a-f]{3}|[0-9a-f]{6}))(?=' . $this->separatorsRegEx . ')!i', '<span class="hlColors">\\0</span>', $string);
+        return \preg_replace('!(?<=' . $this->separatorsRegEx . ')(#([0-9a-f]{3}|[0-9a-f]{6}))(?=' . $this->separatorsRegEx . ')!i',
+            '<span class="hlColors">\\0</span>', $string);
     }
 
     /**
@@ -31,7 +33,8 @@ class CssHighlighter extends Highlighter
     {
         $string = parent::highlightKeywords($string);
 
-        return \preg_replace('!(?<=' . $this->separatorsRegEx . ')(@[a-z0-9-]+)(?=' . $this->separatorsRegEx . ')!i', '<span class="hlKeywords5">\\0</span>', $string);
+        return \preg_replace('!(?<=' . $this->separatorsRegEx . ')(@[a-z0-9-]+)(?=' . $this->separatorsRegEx . ')!i',
+            '<span class="hlKeywords5">\\0</span>', $string);
     }
 
     /**
@@ -39,16 +42,20 @@ class CssHighlighter extends Highlighter
      */
     public function highlight($string)
     {
-        $string = \str_replace('span', '053a0024219422ca9215c0a3ed0578ee76cff477', $string); // fix to not highlight the spans of the highlighter
+        $string = \str_replace('span', '053a0024219422ca9215c0a3ed0578ee76cff477',
+            $string); // fix to not highlight the spans of the highlighter
         $string = \str_replace(':link', ':li@@nk', $string); // fix to highlight pseudo-class different than tag
-        $string = \str_replace(['right:', 'left:'], ['r@@ight:', 'l@@eft:'], $string); // fix to highlight properties different than values
+        $string = \str_replace(['right:', 'left:'], ['r@@ight:', 'l@@eft:'],
+            $string); // fix to highlight properties different than values
 
         $string = parent::highlight($string);
 
-        $string = \str_replace(['r@@ight', 'l@@eft'], ['right', 'left'], $string); // fix to highlight properties different than values
+        $string = \str_replace(['r@@ight', 'l@@eft'], ['right', 'left'],
+            $string); // fix to highlight properties different than values
         $string = \str_replace('li@@nk', 'link', $string); // fix to highlight pseudo-class different than tag
 
-        return \str_replace('053a0024219422ca9215c0a3ed0578ee76cff477', 'span', $string); // fix to not highlight the spans of the highlighter
+        return \str_replace('053a0024219422ca9215c0a3ed0578ee76cff477', 'span',
+            $string); // fix to not highlight the spans of the highlighter
     }
 
     /**

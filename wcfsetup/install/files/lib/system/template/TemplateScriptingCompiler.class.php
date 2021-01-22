@@ -36,9 +36,19 @@ class TemplateScriptingCompiler
      * @var string[]
      */
     protected $disabledPHPFunctions = [
-        'system', 'exec', 'passthru', 'shell_exec', // command line execution
-        'include', 'require', 'include_once', 'require_once', // includes
-        'eval', 'virtual', 'call_user_func_array', 'call_user_func', 'assert', // code execution
+        'system',
+        'exec',
+        'passthru',
+        'shell_exec', // command line execution
+        'include',
+        'require',
+        'include_once',
+        'require_once', // includes
+        'eval',
+        'virtual',
+        'call_user_func_array',
+        'call_user_func',
+        'assert', // code execution
     ];
 
     /**
@@ -279,7 +289,7 @@ class TemplateScriptingCompiler
     /**
      * Creates a new TemplateScriptingCompiler object.
      *
-     * @param   TemplateEngine      $template
+     * @param TemplateEngine $template
      */
     public function __construct(TemplateEngine $template)
     {
@@ -296,10 +306,10 @@ class TemplateScriptingCompiler
     /**
      * Compiles the source of a template.
      *
-     * @param   string      $identifier
-     * @param   string      $sourceContent
-     * @param   array       $metaData
-     * @param   bool        $isolated
+     * @param string $identifier
+     * @param string $sourceContent
+     * @param array $metaData
+     * @param bool $isolated
      * @return  array|bool
      * @throws  SystemException
      */
@@ -419,9 +429,9 @@ class TemplateScriptingCompiler
     /**
      * Compiles a template tag.
      *
-     * @param   string      $tag
-     * @param   string      $identifier
-     * @param   array       $metaData
+     * @param string $tag
+     * @param string $identifier
+     * @param array $metaData
      * @return  string
      * @throws  SystemException
      */
@@ -621,8 +631,8 @@ class TemplateScriptingCompiler
      * Compiles a function plugin and returns the output of the plugin or false
      * if the plugin doesn't exist.
      *
-     * @param   string      $tagCommand
-     * @param   string      $tagArgs
+     * @param string $tagCommand
+     * @param string $tagArgs
      * @return  mixed
      */
     protected function compileFunctionPlugin($tagCommand, $tagArgs)
@@ -642,8 +652,8 @@ class TemplateScriptingCompiler
      * Compiles a block plugin and returns the output of the plugin or false
      * if the plugin doesn't exist.
      *
-     * @param   string      $tagCommand
-     * @param   string      $tagArgs
+     * @param string $tagCommand
+     * @param string $tagArgs
      * @return  mixed
      * @throws  SystemException
      */
@@ -695,8 +705,8 @@ class TemplateScriptingCompiler
      * Compiles a compiler function/block and returns the output of the plugin
      * or false if the plugin doesn't exist.
      *
-     * @param   string      $tagCommand
-     * @param   string      $tagArgs
+     * @param string $tagCommand
+     * @param string $tagArgs
      * @return  mixed
      * @throws  SystemException
      */
@@ -744,8 +754,8 @@ class TemplateScriptingCompiler
     /**
      * Compiles a capture tag and returns the compiled PHP code.
      *
-     * @param   bool        $startTag
-     * @param   string      $captureTag
+     * @param bool $startTag
+     * @param string $captureTag
      * @return  string
      */
     protected function compileCaptureTag($startTag, $captureTag = null)
@@ -786,7 +796,7 @@ class TemplateScriptingCompiler
     /**
      * Compiles a section tag and returns the compiled PHP code.
      *
-     * @param   string      $sectionTag
+     * @param string $sectionTag
      * @return  string
      * @throws  SystemException
      */
@@ -871,7 +881,7 @@ class TemplateScriptingCompiler
     /**
      * Compiles a foreach tag and returns the compiled PHP code.
      *
-     * @param   string      $foreachTag
+     * @param string $foreachTag
      * @return  string
      * @throws  SystemException
      */
@@ -991,9 +1001,9 @@ class TemplateScriptingCompiler
     /**
      * Compiles an include tag and returns the compiled PHP code.
      *
-     * @param   string      $includeTag
-     * @param   string      $identifier
-     * @param   array       $metaData
+     * @param string $includeTag
+     * @param string $identifier
+     * @param array $metaData
      * @return  string
      * @throws  SystemException
      */
@@ -1148,8 +1158,8 @@ class TemplateScriptingCompiler
      * Parses an argument list and returns the keys and values in an associative
      * array.
      *
-     * @param   string      $tagArgs
-     * @param   string      $tag
+     * @param string $tagArgs
+     * @param string $tag
      * @return  array
      * @throws  SystemException
      */
@@ -1203,7 +1213,7 @@ class TemplateScriptingCompiler
      * Takes an array created by TemplateCompiler::parseTagArgs() and creates
      * a string.
      *
-     * @param   array       $args
+     * @param array $args
      * @return  string      $args
      */
     public static function makeArgString($args)
@@ -1222,9 +1232,9 @@ class TemplateScriptingCompiler
     /**
      * Returns a formatted syntax error message.
      *
-     * @param   string      $errorMsg
-     * @param   string      $file
-     * @param   int     $line
+     * @param string $errorMsg
+     * @param string $file
+     * @param int $line
      * @return  string
      */
     public static function formatSyntaxError($errorMsg, $file = null, $line = null)
@@ -1242,8 +1252,8 @@ class TemplateScriptingCompiler
     /**
      * Compiles an {if} tag and returns the compiled PHP code.
      *
-     * @param   string      $tagArgs
-     * @param   bool        $elseif     true, if this tag is an else tag
+     * @param string $tagArgs
+     * @param bool $elseif true, if this tag is an else tag
      * @return  string
      * @throws  SystemException
      */
@@ -1292,7 +1302,8 @@ class TemplateScriptingCompiler
                 $leftParentheses += $leftParenthesis - $rightParenthesis;
                 $value = \mb_substr($values[$i], 0, $leftParenthesis - $rightParenthesis);
 
-                if ($leftParentheses < 0 || \str_replace(')', '', \mb_substr($values[$i], $leftParenthesis - $rightParenthesis)) != '') {
+                if ($leftParentheses < 0 || \str_replace(')', '',
+                        \mb_substr($values[$i], $leftParenthesis - $rightParenthesis)) != '') {
                     throw new SystemException(
                         static::formatSyntaxError(
                             'syntax error in tag {' . ($elseif ? 'elseif' : 'if') . '}',
@@ -1334,7 +1345,7 @@ class TemplateScriptingCompiler
     /**
      * Adds a tag to the tag stack.
      *
-     * @param   string      $tag
+     * @param string $tag
      */
     public function pushTag($tag)
     {
@@ -1344,12 +1355,12 @@ class TemplateScriptingCompiler
     /**
      * Deletes a tag from the tag stack.
      *
-     * @param   string      $tag
+     * @param string $tag
      * @return  string      $tag
      */
     public function popTag($tag)
     {
-        [$openTag, ] = \array_pop($this->tagStack);
+        [$openTag,] = \array_pop($this->tagStack);
         if ($tag == $openTag) {
             return $openTag;
         }
@@ -1367,7 +1378,7 @@ class TemplateScriptingCompiler
     /**
      * Compiles an output tag and returns the compiled PHP code.
      *
-     * @param   string      $tag
+     * @param string $tag
      * @return  string
      * @throws  SystemException
      */
@@ -1415,9 +1426,9 @@ class TemplateScriptingCompiler
     /**
      * Compiles a variable tag and returns the compiled PHP code.
      *
-     * @param   string      $variable
-     * @param   string      $type
-     * @param   bool        $allowConstants
+     * @param string $variable
+     * @param string $type
+     * @param bool $allowConstants
      * @return  string
      */
     protected function compileSimpleVariable($variable, $type = '', $allowConstants = true)
@@ -1448,13 +1459,14 @@ class TemplateScriptingCompiler
     /**
      * Compiles a modifier tag and returns the compiled PHP code.
      *
-     * @param   array       $data
+     * @param array $data
      * @return  string
      */
     protected function compileModifier($data)
     {
         if (isset($data['className'])) {
-            return "\$this->pluginObjects['" . $data['className'] . "']->execute([" . \implode(',', $data['parameter']) . "], \$this)";
+            return "\$this->pluginObjects['" . $data['className'] . "']->execute([" . \implode(',',
+                    $data['parameter']) . "], \$this)";
         } else {
             return $data['name'] . '(' . \implode(',', $data['parameter']) . ')';
         }
@@ -1463,7 +1475,7 @@ class TemplateScriptingCompiler
     /**
      * Returns type of the given variable.
      *
-     * @param   string      $variable
+     * @param string $variable
      * @return  string
      */
     protected function getVariableType($variable)
@@ -1480,8 +1492,8 @@ class TemplateScriptingCompiler
     /**
      * Compiles a variable tag and returns the compiled PHP code.
      *
-     * @param   string      $tag
-     * @param   bool        $replaceQuotes
+     * @param string $tag
+     * @param bool $replaceQuotes
      * @return  string
      * @throws  SystemException
      */
@@ -1520,7 +1532,7 @@ class TemplateScriptingCompiler
                         break;
 
                     case 'object access':
-                        if (/*strpos($values[$i], '$') !== false || */\strpos($values[$i], '@@') !== false) {
+                        if (/*strpos($values[$i], '$') !== false || */ \strpos($values[$i], '@@') !== false) {
                             throw new SystemException(
                                 static::formatSyntaxError(
                                     "unexpected '->" . $values[$i] . "' in tag '" . $tag . "'",
@@ -1628,7 +1640,7 @@ class TemplateScriptingCompiler
                                 $this->currentLineNo
                             )
                         );
-                    break;
+                        break;
                 }
             }
 
@@ -1652,7 +1664,7 @@ class TemplateScriptingCompiler
                                 $this->currentLineNo
                             )
                         );
-                    break;
+                        break;
 
                     // object access
                     case '->':
@@ -1669,7 +1681,7 @@ class TemplateScriptingCompiler
                                 $this->currentLineNo
                             )
                         );
-                    break;
+                        break;
 
                     // left parenthesis
                     case '(':
@@ -1679,7 +1691,7 @@ class TemplateScriptingCompiler
                             $result .= $operator;
                             break;
                         } elseif (
-                                $status == 'math'
+                            $status == 'math'
                             || $status == 'start'
                             || $status == 'left parenthesis'
                             || $status == 'bracket open'
@@ -1700,7 +1712,7 @@ class TemplateScriptingCompiler
                                 $this->currentLineNo
                             )
                         );
-                    break;
+                        break;
 
                     // right parenthesis
                     case ')':
@@ -1731,7 +1743,7 @@ class TemplateScriptingCompiler
                                 $this->currentLineNo
                             )
                         );
-                    break;
+                        break;
 
                     // bracket open
                     case '[':
@@ -1751,7 +1763,7 @@ class TemplateScriptingCompiler
                                 $this->currentLineNo
                             )
                         );
-                    break;
+                        break;
 
                     // bracket close
                     case ']':
@@ -1778,7 +1790,7 @@ class TemplateScriptingCompiler
                                 $this->currentLineNo
                             )
                         );
-                    break;
+                        break;
 
                     // modifier
                     case '|':
@@ -1843,7 +1855,7 @@ class TemplateScriptingCompiler
                                 $this->currentLineNo
                             )
                         );
-                    break;
+                        break;
 
                     case ',':
                         while ($oldStatus = \array_pop($statusStack)) {
@@ -1899,7 +1911,7 @@ class TemplateScriptingCompiler
                                 $this->currentLineNo
                             )
                         );
-                    break;
+                        break;
                 }
             }
         }
@@ -1990,8 +2002,8 @@ class TemplateScriptingCompiler
     /**
      * Applies the prefilters to the given string.
      *
-     * @param   string      $templateName
-     * @param   string      $string
+     * @param string $templateName
+     * @param string $string
      * @return  string
      * @throws  SystemException
      */
@@ -2029,7 +2041,7 @@ class TemplateScriptingCompiler
     /**
      * Replaces all {literal} Tags with unique hash values.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      */
     public function replaceLiterals($string)
@@ -2044,7 +2056,7 @@ class TemplateScriptingCompiler
     /**
      * Reinserts the literal tags.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      */
     public function reinsertLiterals($string)
@@ -2055,7 +2067,7 @@ class TemplateScriptingCompiler
     /**
      * Callback function used in replaceLiterals()
      *
-     * @param   string[]    $matches
+     * @param string[] $matches
      * @return  string
      */
     private function replaceLiteralsCallback($matches)
@@ -2066,7 +2078,7 @@ class TemplateScriptingCompiler
     /**
      * Removes template comments
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      */
     public function removeComments($string)
@@ -2077,7 +2089,7 @@ class TemplateScriptingCompiler
     /**
      * Replaces all quotes with unique hash values.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      */
     public function replaceQuotes($string)
@@ -2090,7 +2102,7 @@ class TemplateScriptingCompiler
     /**
      * Callback function used in replaceQuotes()
      *
-     * @param   string[]    $matches
+     * @param string[] $matches
      * @return  string
      */
     private function replaceSingleQuotesCallback($matches)
@@ -2101,7 +2113,7 @@ class TemplateScriptingCompiler
     /**
      * Callback function used in replaceQuotes()
      *
-     * @param   string[]    $matches
+     * @param string[] $matches
      * @return  string
      */
     private function replaceDoubleQuotesCallback($matches)
@@ -2120,7 +2132,7 @@ class TemplateScriptingCompiler
     /**
      * Reinserts the quotes.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      */
     public function reinsertQuotes($string)
@@ -2133,7 +2145,7 @@ class TemplateScriptingCompiler
     /**
      * Replaces all constants with unique hash values.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      */
     public function replaceConstants($string)
@@ -2148,7 +2160,7 @@ class TemplateScriptingCompiler
     /**
      * Callback function used in replaceConstants()
      *
-     * @param   string[]    $matches
+     * @param string[] $matches
      * @return  string
      */
     private function replaceConstantsCallback($matches)
@@ -2159,7 +2171,7 @@ class TemplateScriptingCompiler
     /**
      * Reinserts the constants.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      */
     public function reinsertConstants($string)
@@ -2170,7 +2182,7 @@ class TemplateScriptingCompiler
     /**
      * Replaces all php tags.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      */
     public function replacePHPTags($string)

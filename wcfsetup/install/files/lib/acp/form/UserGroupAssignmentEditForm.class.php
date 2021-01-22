@@ -106,7 +106,8 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm
             $conditions = \array_merge($conditions, $groupedObjectTypes);
         }
 
-        ConditionHandler::getInstance()->updateConditions($this->assignment->assignmentID, $this->assignment->getConditions(), $conditions);
+        ConditionHandler::getInstance()->updateConditions($this->assignment->assignmentID,
+            $this->assignment->getConditions(), $conditions);
 
         $this->saved();
 

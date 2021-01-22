@@ -155,13 +155,14 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
     /**
      * Recursively removes a directory and all it's contents.
      *
-     * @param   string      $pathComponent
+     * @param string $pathComponent
      */
     protected function removeDirectory($pathComponent)
     {
         $dir = WCF_DIR . $pathComponent;
         if (\is_dir($dir)) {
-            $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir), \RecursiveIteratorIterator::CHILD_FIRST);
+            $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir),
+                \RecursiveIteratorIterator::CHILD_FIRST);
             foreach ($iterator as $path) {
                 if ($path->isDir()) {
                     @\rmdir($path);
@@ -177,8 +178,8 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
     /**
      * Updates style variables for given style.
      *
-     * @param   Style       $style
-     * @param   bool        $removePreviousVariables
+     * @param Style $style
+     * @param bool $removePreviousVariables
      */
     protected function updateVariables(Style $style, $removePreviousVariables = false)
     {
@@ -263,7 +264,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
     /**
      * Updates style preview image.
      *
-     * @param   Style       $style
+     * @param Style $style
      */
     protected function updateStylePreviewImage(Style $style)
     {
@@ -309,7 +310,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
     /**
      * Updates style favicon files.
      *
-     * @param       Style           $style
+     * @param Style $style
      * @since       3.1
      */
     protected function updateFavicons(Style $style)
@@ -423,7 +424,7 @@ BROWSERCONFIG;
     /**
      * Updates the style cover photo.
      *
-     * @param       Style           $style
+     * @param Style $style
      * @since       3.1
      */
     protected function updateCoverPhoto(Style $style)
@@ -694,9 +695,11 @@ BROWSERCONFIG;
 
             if (WCF::getUser()->userID) {
                 // set this as the permanent style
-                $userAction = new UserAction([WCF::getUser()], 'update', ['data' => [
-                    'styleID' => $this->style->isDefault ? 0 : $this->style->styleID,
-                ]]);
+                $userAction = new UserAction([WCF::getUser()], 'update', [
+                    'data' => [
+                        'styleID' => $this->style->isDefault ? 0 : $this->style->styleID,
+                    ],
+                ]);
                 $userAction->executeAction();
             }
         }
@@ -757,8 +760,10 @@ BROWSERCONFIG;
     {
         // merge definitions
         $variables = $this->styleEditor->getVariables();
-        $variables['individualScss'] = \str_replace("/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n", '', $variables['individualScss']);
-        $variables['overrideScss'] = \str_replace("/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n", '', $variables['overrideScss']);
+        $variables['individualScss'] = \str_replace("/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n", '',
+            $variables['individualScss']);
+        $variables['overrideScss'] = \str_replace("/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n", '',
+            $variables['overrideScss']);
         $this->styleEditor->setVariables($variables);
 
         $this->styleEditor->update([

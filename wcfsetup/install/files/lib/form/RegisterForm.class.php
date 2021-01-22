@@ -509,7 +509,7 @@ class RegisterForm extends UserAddForm
     }
 
     /**
-     * @param       User $user
+     * @param User $user
      * @since       5.2
      */
     protected function fireNotificationEvent(User $user)

@@ -61,7 +61,7 @@ abstract class AbstractMultipartMimePart extends AbstractMimePart implements IRe
     /**
      * Concatenates the given mime parts.
      *
-     * @param   \Traversable    $parts
+     * @param \Traversable $parts
      * @return  string
      */
     protected function getConcatenatedParts($parts)
@@ -78,8 +78,8 @@ abstract class AbstractMultipartMimePart extends AbstractMimePart implements IRe
 
             if ($part->getAdditionalHeaders()) {
                 $content .= \implode("\r\n", \array_map(static function ($item) {
-                    return \implode(': ', $item);
-                }, $part->getAdditionalHeaders())) . "\r\n";
+                        return \implode(': ', $item);
+                    }, $part->getAdditionalHeaders())) . "\r\n";
             }
             $content .= "\r\n";
             switch ($part->getContentTransferEncoding()) {
@@ -124,8 +124,8 @@ abstract class AbstractMultipartMimePart extends AbstractMimePart implements IRe
      * Adds a mime part to this email. Should be either \wcf\system\email\mime\TextMimePart
      * or \wcf\system\email\mime\AttachmentMimePart.
      *
-     * @param   AbstractMimePart    $part
-     * @param   mixed           $data   Additional data, to be defined by child classes
+     * @param AbstractMimePart $part
+     * @param mixed $data Additional data, to be defined by child classes
      * @throws  \InvalidArgumentException
      * @throws  \DomainException
      */
@@ -159,7 +159,7 @@ abstract class AbstractMultipartMimePart extends AbstractMimePart implements IRe
     /**
      * Removes a mime part from this multipart part.
      *
-     * @param   AbstractMimePart    $part
+     * @param AbstractMimePart $part
      */
     public function removeMimePart(AbstractMimePart $part)
     {

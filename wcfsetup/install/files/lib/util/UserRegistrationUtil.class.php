@@ -23,7 +23,7 @@ final class UserRegistrationUtil
     /**
      * Returns true if the given name is a valid username.
      *
-     * @param   string      $name       username
+     * @param string $name username
      * @return  bool
      */
     public static function isValidUsername($name)
@@ -53,7 +53,7 @@ final class UserRegistrationUtil
     /**
      * Returns true if the given e-mail is a valid address.
      *
-     * @param   string      $email
+     * @param string $email
      * @return  bool
      */
     public static function isValidEmail($email)
@@ -64,7 +64,7 @@ final class UserRegistrationUtil
     /**
      * Returns false if the given name is a forbidden username.
      *
-     * @param   string      $name
+     * @param string $name
      * @return  bool
      */
     public static function checkForbiddenUsernames($name)
@@ -75,12 +75,14 @@ final class UserRegistrationUtil
     /**
      * Returns false if the given email is a forbidden email.
      *
-     * @param   string      $email
+     * @param string $email
      * @return  bool
      */
     public static function checkForbiddenEmails($email)
     {
-        return StringUtil::executeWordFilter($email, REGISTER_FORBIDDEN_EMAILS) && (!StringUtil::trim(REGISTER_ALLOWED_EMAILS) || !StringUtil::executeWordFilter($email, REGISTER_ALLOWED_EMAILS));
+        return StringUtil::executeWordFilter($email,
+                REGISTER_FORBIDDEN_EMAILS) && (!StringUtil::trim(REGISTER_ALLOWED_EMAILS) || !StringUtil::executeWordFilter($email,
+                    REGISTER_ALLOWED_EMAILS));
     }
 
     /**
@@ -108,7 +110,7 @@ final class UserRegistrationUtil
      * Generates a random activation code with the given length.
      * Warning: A length greater than 9 is out of integer range.
      *
-     * @param   int     $length
+     * @param int $length
      * @return  int
      */
     public static function getActivationCode($length = 9)
@@ -119,7 +121,7 @@ final class UserRegistrationUtil
     /**
      * Generates a random field name.
      *
-     * @param   string      $fieldName
+     * @param string $fieldName
      * @return  string
      */
     public static function getRandomFieldName($fieldName)

@@ -30,7 +30,7 @@ abstract class AbstractArticleDiscussionProvider implements IArticleDiscussionPr
     /**
      * AbstractArticleDiscussionProvider constructor.
      *
-     * @param       Article         $article
+     * @param Article $article
      */
     public function __construct(Article $article)
     {

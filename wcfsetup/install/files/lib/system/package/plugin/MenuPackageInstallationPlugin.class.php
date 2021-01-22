@@ -162,7 +162,8 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 
             $this->boxData[$identifier] = [
                 'identifier' => $identifier,
-                'name' => $this->getI18nValues(!empty($data['elements']['box']['name']) ? $data['elements']['box']['name'] : $data['elements']['title'], true),
+                'name' => $this->getI18nValues(!empty($data['elements']['box']['name']) ? $data['elements']['box']['name'] : $data['elements']['title'],
+                    true),
                 'boxType' => 'menu',
                 'position' => $position,
                 'showHeader' => !empty($data['elements']['box']['showHeader']) ? 1 : 0,
@@ -413,7 +414,15 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 
         /** @var BooleanFormField $createBox */
         $createBox = $form->getNodeById('createBox');
-        foreach (['boxPosition', 'boxShowHeader', 'boxVisibleEverywhere', 'boxVisibilityExceptions', 'boxCssClassName'] as $boxField) {
+        foreach (
+            [
+                'boxPosition',
+                'boxShowHeader',
+                'boxVisibleEverywhere',
+                'boxVisibilityExceptions',
+                'boxCssClassName',
+            ] as $boxField
+        ) {
             $form->getNodeById($boxField)->addDependency(
                 NonEmptyFormFieldDependency::create('createBox')
                     ->field($createBox)
@@ -563,7 +572,13 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 
             $box->appendChild($document->createElement('position', $formData['data']['boxPosition']));
 
-            foreach (['showHeader' => 0, 'visibleEverywhere' => 0, 'cssClassName' => ''] as $boxProperty => $defaultValue) {
+            foreach (
+                [
+                    'showHeader' => 0,
+                    'visibleEverywhere' => 0,
+                    'cssClassName' => '',
+                ] as $boxProperty => $defaultValue
+            ) {
                 $index = 'box' . \ucfirst($boxProperty);
                 if (isset($formData['data'][$index]) && $formData['data'][$index] !== $defaultValue) {
                     $box->appendChild($document->createElement($boxProperty, (string)$formData['data'][$index]));

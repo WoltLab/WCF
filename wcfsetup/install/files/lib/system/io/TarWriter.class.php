@@ -32,8 +32,8 @@ class TarWriter extends Tar
     /**
      * Creates a new TarWriter object.
      *
-     * @param   string      $archiveName
-     * @param   bool        $compress   enables gzip compression
+     * @param string $archiveName
+     * @param bool $compress enables gzip compression
      */
     public function __construct($archiveName, $compress = false)
     {
@@ -65,8 +65,8 @@ class TarWriter extends Tar
     /**
      * Adds a string to the tar archive.
      *
-     * @param   string      $filename
-     * @param   string      $string     file content
+     * @param string $filename
+     * @param string $string file content
      * @return  bool        result
      */
     public function addString($filename, $string)
@@ -92,9 +92,9 @@ class TarWriter extends Tar
     /**
      * Adds a list of files or directories to the tar archive.
      *
-     * @param   mixed       $files
-     * @param   string      $addDir
-     * @param   string      $removeDir
+     * @param mixed $files
+     * @param string $addDir
+     * @param string $removeDir
      * @return  bool        result
      * @throws  SystemException
      */
@@ -154,9 +154,9 @@ class TarWriter extends Tar
     /**
      * Adds a file to the tar archive.
      *
-     * @param   string      $filename
-     * @param   string      $addDir
-     * @param   string      $removeDir
+     * @param string $filename
+     * @param string $addDir
+     * @param string $removeDir
      * @return  bool        result
      */
     protected function addFile($filename, $addDir, $removeDir)
@@ -199,8 +199,8 @@ class TarWriter extends Tar
     /**
      * Writes the file header.
      *
-     * @param   string      $filename
-     * @param   string      $storedFilename
+     * @param string $filename
+     * @param string $storedFilename
      * @return  bool        result
      */
     protected function writeFileHeader($filename, $storedFilename)
@@ -231,13 +231,13 @@ class TarWriter extends Tar
     /**
      * Writes header block.
      *
-     * @param   string      $filename
-     * @param   int     $size
-     * @param   int     $mtime
-     * @param   int     $permissions
-     * @param   string      $typeFlag
-     * @param   int     $uid
-     * @param   int     $gid
+     * @param string $filename
+     * @param int $size
+     * @param int $mtime
+     * @param int $permissions
+     * @param string $typeFlag
+     * @param int $uid
+     * @param int $gid
      * @return  bool
      */
     public function writeHeaderBlock($filename, $size, $mtime = 0, $permissions = 0, $typeFlag = '', $uid = 0, $gid = 0)
@@ -284,7 +284,7 @@ class TarWriter extends Tar
     /**
      * Writes a long header block.
      *
-     * @param   string      $filename
+     * @param string $filename
      * @return  bool
      */
     protected function writeLongHeaderBlock($filename)

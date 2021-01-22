@@ -99,7 +99,7 @@ class AJAXFileDeleteAction extends AbstractSecureAction
     /**
      * Sends a JSON-encoded response.
      *
-     * @param   array       $data
+     * @param array $data
      */
     protected function sendJsonResponse(array $data)
     {

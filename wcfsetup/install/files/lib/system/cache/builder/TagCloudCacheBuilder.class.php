@@ -63,7 +63,7 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder
     /**
      * Parses a list of language ids. If one given language id evaluates to '0' all ids will be discarded.
      *
-     * @param   int[]       $parameters
+     * @param int[] $parameters
      * @return  int[]
      */
     protected function parseLanguageIDs(array $parameters)
@@ -102,7 +102,8 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder
             if (!empty($tagIDs)) {
                 $sql = "SELECT  *
                         FROM    wcf" . WCF_N . "_tag
-                        WHERE   tagID IN (?" . (\count($tagIDs) > 1 ? \str_repeat(',?', \count($tagIDs) - 1) : '') . ")";
+                        WHERE   tagID IN (?" . (\count($tagIDs) > 1 ? \str_repeat(',?',
+                        \count($tagIDs) - 1) : '') . ")";
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute(\array_keys($tagIDs));
                 while ($row = $statement->fetchArray()) {
@@ -119,8 +120,8 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder
     /**
      * Compares the weight between two tags.
      *
-     * @param   TagCloudTag $tagA
-     * @param   TagCloudTag $tagB
+     * @param TagCloudTag $tagA
+     * @param TagCloudTag $tagB
      * @return  int
      */
     protected static function compareTags($tagA, $tagB)

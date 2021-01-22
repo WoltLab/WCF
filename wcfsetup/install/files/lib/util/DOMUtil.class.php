@@ -17,7 +17,7 @@ final class DOMUtil
     /**
      * Moves all child nodes from given element into a document fragment.
      *
-     * @param   \DOMElement $element    element
+     * @param \DOMElement $element element
      * @return  \DOMDocumentFragment        document fragment containing all child nodes from `$element`
      */
     public static function childNodesToFragment(\DOMElement $element)
@@ -34,8 +34,8 @@ final class DOMUtil
     /**
      * Returns true if `$ancestor` contains the node `$node`.
      *
-     * @param   \DOMNode    $ancestor   ancestor node
-     * @param   \DOMNode    $node       node
+     * @param \DOMNode $ancestor ancestor node
+     * @param \DOMNode $node node
      * @return  bool        true if `$ancestor` contains the node `$node`
      */
     public static function contains(\DOMNode $ancestor, \DOMNode $node)
@@ -63,7 +63,7 @@ final class DOMUtil
     /**
      * Returns a static list of child nodes of provided element.
      *
-     * @param       \DOMElement     $element        target element
+     * @param \DOMElement $element target element
      * @return      \DOMNode[]      list of child nodes
      */
     public static function getChildNodes(\DOMElement $element)
@@ -79,8 +79,8 @@ final class DOMUtil
     /**
      * Returns the common ancestor of both nodes.
      *
-     * @param   \DOMNode        $node1      first node
-     * @param   \DOMNode        $node2      second node
+     * @param \DOMNode $node1 first node
+     * @param \DOMNode $node2 second node
      * @return  \DOMNode|null   common ancestor or null
      */
     public static function getCommonAncestor(\DOMNode $node1, \DOMNode $node2)
@@ -108,7 +108,7 @@ final class DOMUtil
      * Returns a non-live collection of elements.
      *
      * @param       (\DOMDocument|\DOMElement)      $context        context element
-     * @param       string                          $tagName        tag name
+     * @param string $tagName tag name
      * @return      \DOMElement[]                   list of elements
      * @throws      SystemException
      */
@@ -130,8 +130,8 @@ final class DOMUtil
      * Returns the immediate parent element before provided ancestor element. Returns null if
      * the ancestor element is the direct parent of provided node.
      *
-     * @param   \DOMNode        $node       node
-     * @param   \DOMElement     $ancestor   ancestor node
+     * @param \DOMNode $node node
+     * @param \DOMElement $ancestor ancestor node
      * @return  \DOMElement|null    immediate parent element before ancestor element
      */
     public static function getParentBefore(\DOMNode $node, \DOMElement $ancestor)
@@ -153,7 +153,7 @@ final class DOMUtil
     /**
      * Returns the parent node of given node.
      *
-     * @param   \DOMNode    $node       node
+     * @param \DOMNode $node node
      * @return  \DOMNode    parent node, can be `\DOMElement` or `\DOMDocument`
      */
     public static function getParentNode(\DOMNode $node)
@@ -164,8 +164,8 @@ final class DOMUtil
     /**
      * Returns all ancestors nodes for given node.
      *
-     * @param   \DOMNode    $node       node
-     * @param   bool        $reverseOrder   reversing the order causes the most top ancestor to appear first
+     * @param \DOMNode $node node
+     * @param bool $reverseOrder reversing the order causes the most top ancestor to appear first
      * @return  \DOMElement[]   list of ancestor nodes
      */
     public static function getParents(\DOMNode $node, $reverseOrder = false)
@@ -185,7 +185,7 @@ final class DOMUtil
      * modified, but all changes are non permanent and do not affect the source
      * document at all.
      *
-     * @param       \DOMNode        $node           node
+     * @param \DOMNode $node node
      * @return      \DOMElement[]   list of parent elements
      */
     public static function getReadonlyParentTree(\DOMNode $node)
@@ -207,8 +207,8 @@ final class DOMUtil
     /**
      * Determines the relative position of two nodes to each other.
      *
-     * @param   \DOMNode    $node1      first node
-     * @param   \DOMNode    $node2      second node
+     * @param \DOMNode $node1 first node
+     * @param \DOMNode $node2 second node
      * @return  string
      */
     public static function getRelativePosition(\DOMNode $node1, \DOMNode $node2)
@@ -249,8 +249,8 @@ final class DOMUtil
     /**
      * Returns true if there is at least one parent with the provided tag name.
      *
-     * @param       \DOMElement     $element        start element
-     * @param       string          $tagName        tag name to match
+     * @param \DOMElement $element start element
+     * @param string $tagName tag name to match
      * @return      bool
      */
     public static function hasParent(\DOMElement $element, $tagName)
@@ -267,8 +267,8 @@ final class DOMUtil
     /**
      * Inserts given DOM node after the reference node.
      *
-     * @param   \DOMNode    $node       node
-     * @param   \DOMNode    $refNode    reference node
+     * @param \DOMNode $node node
+     * @param \DOMNode $refNode reference node
      */
     public static function insertAfter(\DOMNode $node, \DOMNode $refNode)
     {
@@ -282,8 +282,8 @@ final class DOMUtil
     /**
      * Inserts given node before the reference node.
      *
-     * @param   \DOMNode    $node       node
-     * @param   \DOMNode    $refNode    reference node
+     * @param \DOMNode $node node
+     * @param \DOMNode $refNode reference node
      */
     public static function insertBefore(\DOMNode $node, \DOMNode $refNode)
     {
@@ -293,7 +293,7 @@ final class DOMUtil
     /**
      * Returns true if this node is empty.
      *
-     * @param   \DOMNode    $node       node
+     * @param \DOMNode $node node
      * @return  bool        true if node is empty
      */
     public static function isEmpty(\DOMNode $node)
@@ -321,8 +321,8 @@ final class DOMUtil
     /**
      * Returns true if given node is the first node of its given ancestor.
      *
-     * @param   \DOMNode    $node       node
-     * @param   \DOMElement $ancestor   ancestor element
+     * @param \DOMNode $node node
+     * @param \DOMElement $ancestor ancestor element
      * @return  bool        true if `$node` is the first node of its given ancestor
      */
     public static function isFirstNode(\DOMNode $node, \DOMElement $ancestor)
@@ -343,8 +343,8 @@ final class DOMUtil
     /**
      * Returns true if given node is the last node of its given ancestor.
      *
-     * @param   \DOMNode    $node       node
-     * @param   \DOMElement $ancestor   ancestor element
+     * @param \DOMNode $node node
+     * @param \DOMElement $ancestor ancestor element
      * @return  bool        true if `$node` is the last node of its given ancestor
      */
     public static function isLastNode(\DOMNode $node, \DOMElement $ancestor)
@@ -369,7 +369,7 @@ final class DOMUtil
      * actual DOM node (such as \DOMElement) but almost their entire
      * body is gone, including the `nodeType` attribute.
      *
-     * @param       \DOMNode        $node           node
+     * @param \DOMNode $node node
      * @return      bool         true if node has been destroyed
      */
     public static function isRemoved(\DOMNode $node)
@@ -381,12 +381,13 @@ final class DOMUtil
      * Returns true if provided element is a void element. Void elements are elements
      * that neither contain content nor have a closing tag, such as `<br>`.
      *
-     * @param   \DOMElement $element    element
+     * @param \DOMElement $element element
      * @return  bool    true if provided element is a void element
      */
     public static function isVoidElement(\DOMElement $element)
     {
-        if (\preg_match('~^(area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$~', $element->nodeName)) {
+        if (\preg_match('~^(area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$~',
+            $element->nodeName)) {
             return true;
         }
 
@@ -398,9 +399,9 @@ final class DOMUtil
      * in which nodes will be considered for moving is determined by the logical position
      * of `$lastElement`.
      *
-     * @param   \DOMElement $container      destination element
-     * @param   \DOMElement $lastElement        last element to move
-     * @param   \DOMElement $commonAncestor     common ancestor of `$container` and `$lastElement`
+     * @param \DOMElement $container destination element
+     * @param \DOMElement $lastElement last element to move
+     * @param \DOMElement $commonAncestor common ancestor of `$container` and `$lastElement`
      */
     public static function moveNodesInto(\DOMElement $container, \DOMElement $lastElement, \DOMElement $commonAncestor)
     {
@@ -443,7 +444,7 @@ final class DOMUtil
     /**
      * Normalizes an element by joining adjacent text nodes.
      *
-     * @param       \DOMElement     $element        target element
+     * @param \DOMElement $element target element
      */
     public static function normalize(\DOMElement $element)
     {
@@ -476,8 +477,8 @@ final class DOMUtil
     /**
      * Prepends a node to provided element.
      *
-     * @param   \DOMNode    $node       node
-     * @param   \DOMElement $element    target element
+     * @param \DOMNode $node node
+     * @param \DOMElement $element target element
      */
     public static function prepend(\DOMNode $node, \DOMElement $element)
     {
@@ -491,8 +492,8 @@ final class DOMUtil
     /**
      * Removes a node, optionally preserves the child nodes if `$node` is an element.
      *
-     * @param   \DOMNode    $node           target node
-     * @param   bool        $preserveChildNodes preserve child nodes, only supported for elements
+     * @param \DOMNode $node target node
+     * @param bool $preserveChildNodes preserve child nodes, only supported for elements
      */
     public static function removeNode(\DOMNode $node, $preserveChildNodes = false)
     {
@@ -512,9 +513,9 @@ final class DOMUtil
     /**
      * Replaces a DOM element with another, preserving all child nodes by default.
      *
-     * @param   \DOMElement $oldElement     old element
-     * @param   \DOMElement $newElement     new element
-     * @param   bool        $preserveChildNodes true if child nodes should be moved, otherwise they'll be implicitly removed
+     * @param \DOMElement $oldElement old element
+     * @param \DOMElement $newElement new element
+     * @param bool $preserveChildNodes true if child nodes should be moved, otherwise they'll be implicitly removed
      */
     public static function replaceElement(\DOMElement $oldElement, \DOMElement $newElement, $preserveChildNodes = true)
     {
@@ -537,9 +538,9 @@ final class DOMUtil
      * extraction of DOM parts while preserving nesting for both the extracted nodes
      * and the remaining siblings.
      *
-     * @param   \DOMNode    $node       reference node
-     * @param   \DOMElement $ancestor   ancestor element that should not be split
-     * @param   bool        $splitBefore    true if nodes before `$node` should be moved into a new node, false to split nodes after `$node`
+     * @param \DOMNode $node reference node
+     * @param \DOMElement $ancestor ancestor element that should not be split
+     * @param bool $splitBefore true if nodes before `$node` should be moved into a new node, false to split nodes after `$node`
      * @return  \DOMNode    parent node containing `$node`, direct child of `$ancestor`
      */
     public static function splitParentsUntil(\DOMNode $node, \DOMElement $ancestor, $splitBefore = true)

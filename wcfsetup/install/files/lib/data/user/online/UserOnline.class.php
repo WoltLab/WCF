@@ -21,9 +21,9 @@ use wcf\util\UserUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\User\Online
  *
- * @property-read   int|null    $pageID         id of the last visited page
- * @property-read   int|null    $pageObjectID       id of the object the last visited page belongs to
- * @property-read   int|null    $parentPageObjectID id of the parent of the object the last visited page belongs to
+ * @property-read   int|null $pageID         id of the last visited page
+ * @property-read   int|null $pageObjectID       id of the object the last visited page belongs to
+ * @property-read   int|null $parentPageObjectID id of the parent of the object the last visited page belongs to
  * @property-read   string|null $userOnlineMarking  HTML code used to print the formatted name of a user group member
  */
 class UserOnline extends UserProfile
@@ -64,7 +64,7 @@ class UserOnline extends UserProfile
      * Sets the location of the user. If no location is given, the method tries to
      * automatically determine the location.
      *
-     * @param   string|null $location
+     * @param string|null $location
      * @return  bool        `true` if the location has been successfully set, otherwise `false`
      */
     public function setLocation($location = null)

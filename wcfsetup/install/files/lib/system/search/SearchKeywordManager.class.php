@@ -19,12 +19,14 @@ class SearchKeywordManager extends SingletonFactory
     /**
      * Adds the given keyword.
      *
-     * @param   string      $keyword
+     * @param string $keyword
      */
     public function add($keyword)
     {
-        (new SearchKeywordAction([], 'upsert', ['data' => [
-            'keyword' => $keyword,
-        ]]))->executeAction();
+        (new SearchKeywordAction([], 'upsert', [
+            'data' => [
+                'keyword' => $keyword,
+            ],
+        ]))->executeAction();
     }
 }

@@ -23,8 +23,8 @@ trait TTestableCategorizedUserNotificationEvent
     /**
      * Returns a newly created test category of the given object type.
      *
-     * @param   string      $objectTypeName
-     * @param   array       $additionalData
+     * @param string $objectTypeName
+     * @param array $additionalData
      * @return  Category
      */
     protected static function createTestCategory($objectTypeName, array $additionalData = [])

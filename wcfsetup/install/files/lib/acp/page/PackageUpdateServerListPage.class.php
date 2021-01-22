@@ -13,7 +13,7 @@ use wcf\page\SortablePage;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Page
  *
- * @property    PackageUpdateServerList     $objectList
+ * @property    PackageUpdateServerList $objectList
  */
 class PackageUpdateServerListPage extends SortablePage
 {
@@ -35,7 +35,15 @@ class PackageUpdateServerListPage extends SortablePage
     /**
      * @inheritDoc
      */
-    public $validSortFields = ['packageUpdateServerID', 'serverURL', 'loginUsername', 'status', 'errorMessage', 'lastUpdateTime', 'packages'];
+    public $validSortFields = [
+        'packageUpdateServerID',
+        'serverURL',
+        'loginUsername',
+        'status',
+        'errorMessage',
+        'lastUpdateTime',
+        'packages',
+    ];
 
     /**
      * @inheritDoc

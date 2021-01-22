@@ -63,7 +63,7 @@ interface IBoxController
     /**
      * Sets the database object of this box.
      *
-     * @param   Box $box
+     * @param Box $box
      */
     public function setBox(Box $box);
 

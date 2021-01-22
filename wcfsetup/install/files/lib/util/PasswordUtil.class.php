@@ -69,7 +69,7 @@ final class PasswordUtil
     /**
      * Returns true if given encryption type is supported.
      *
-     * @param   string      $type
+     * @param string $type
      * @return  bool
      */
     public static function isSupported($type)
@@ -111,9 +111,9 @@ final class PasswordUtil
     /**
      * Validates password against stored hash, encryption type is automatically resolved.
      *
-     * @param   string      $username
-     * @param   string      $password
-     * @param   string      $dbHash
+     * @param string $username
+     * @param string $password
+     * @param string $dbHash
      * @return  bool
      * @throws  SystemException
      */
@@ -148,7 +148,7 @@ final class PasswordUtil
     /**
      * Returns encryption type if possible.
      *
-     * @param   string      $hash
+     * @param string $hash
      * @return  string
      */
     public static function detectEncryption($hash)
@@ -204,7 +204,7 @@ final class PasswordUtil
     /**
      * Generates a random alphanumeric user password with the given character length.
      *
-     * @param   int     $length
+     * @param int $length
      * @return  string
      */
     public static function getRandomPassword($length = 12)

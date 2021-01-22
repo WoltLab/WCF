@@ -49,7 +49,7 @@ class DatabaseTable
     /**
      * Creates a new instance of `DatabaseTable`.
      *
-     * @param   string      $name   name of the database table
+     * @param string $name name of the database table
      */
     protected function __construct($name)
     {
@@ -59,7 +59,7 @@ class DatabaseTable
     /**
      * Sets the columns of the database table.
      *
-     * @param   IDatabaseTableColumn[]  $columns    added/dropped columns
+     * @param IDatabaseTableColumn[] $columns added/dropped columns
      * @return  $this                   this database table
      * @throws  \InvalidArgumentException       if any column is invalid or duplicate column names exist
      */
@@ -86,7 +86,7 @@ class DatabaseTable
     /**
      * Sets the foreign keys of the database table.
      *
-     * @param   DatabaseTableForeignKey[]   $foreignKeys    added/dropped foreign keys
+     * @param DatabaseTableForeignKey[] $foreignKeys added/dropped foreign keys
      * @return  $this                       this database table
      * @throws  \InvalidArgumentException           if any foreign key is invalid or duplicate foreign key names exist
      */
@@ -165,7 +165,7 @@ class DatabaseTable
     /**
      * Returns a `DatabaseTable` object with the given name.
      *
-     * @param   string      $tableName
+     * @param string $tableName
      * @return  static
      */
     public static function create($tableName)
@@ -176,8 +176,8 @@ class DatabaseTable
     /**
      * Returns a `DatabaseTable` object for an existing database table with the given name.
      *
-     * @param   DatabaseEditor      $dbEditor
-     * @param   string          $tableName
+     * @param DatabaseEditor $dbEditor
+     * @param string $tableName
      * @return  DatabaseTable
      */
     public static function createFromExistingTable(DatabaseEditor $dbEditor, $tableName)
@@ -220,7 +220,7 @@ class DatabaseTable
     /**
      * Sets the indices of the database table.
      *
-     * @param   DatabaseTableIndex[]    $indices    added/dropped indices
+     * @param DatabaseTableIndex[] $indices added/dropped indices
      * @return  $this                   this database table
      * @throws  \InvalidArgumentException       if any index is invalid or duplicate index key names exist
      */

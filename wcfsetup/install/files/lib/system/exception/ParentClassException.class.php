@@ -17,8 +17,8 @@ class ParentClassException extends \LogicException
     /**
      * ImplementationException constructor.
      *
-     * @param   string      $className
-     * @param   string      $parentClassName
+     * @param string $className
+     * @param string $parentClassName
      */
     public function __construct($className, $parentClassName)
     {

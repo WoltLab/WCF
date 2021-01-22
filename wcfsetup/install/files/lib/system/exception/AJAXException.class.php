@@ -55,12 +55,12 @@ class AJAXException extends LoggedException
     /**
      * Throws a JSON-encoded error message
      *
-     * @param   string      $message
-     * @param   int     $errorType
-     * @param   string      $stacktrace
-     * @param   mixed[]     $returnValues
-     * @param   string      $exceptionID
-     * @param       \Exception|\Throwable   $previous
+     * @param string $message
+     * @param int $errorType
+     * @param string $stacktrace
+     * @param mixed[] $returnValues
+     * @param string $exceptionID
+     * @param \Exception|\Throwable $previous
      */
     public function __construct(
         $message,

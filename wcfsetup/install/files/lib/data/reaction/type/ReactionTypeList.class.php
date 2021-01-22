@@ -16,7 +16,7 @@ use wcf\data\DatabaseObjectList;
  * @method  ReactionType        current()
  * @method  ReactionType[]          getObjects()
  * @method  ReactionType|null   search($objectID)
- * @property    ReactionType[]          $objects
+ * @property    ReactionType[] $objects
  */
 class ReactionTypeList extends DatabaseObjectList
 {

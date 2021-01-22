@@ -64,9 +64,9 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
     /**
      * Creates a new instance of DefaultUploadFileSaveStrategy.
      *
-     * @param   string      $actionClassName
-     * @param   array       $options
-     * @param   array       $data
+     * @param string $actionClassName
+     * @param array $options
+     * @param array $data
      * @throws  ImplementationException
      * @throws  ParentClassException
      */
@@ -227,7 +227,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
 
                                     // update width, height and filesize of the object
                                     if (
-                                            $newImage !== null
+                                        $newImage !== null
                                         && (
                                             $orientation == ExifUtil::ORIENTATION_90_ROTATE
                                             || $orientation == ExifUtil::ORIENTATION_270_ROTATE
@@ -292,7 +292,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
     /**
      * Generates thumbnails for the given file.
      *
-     * @param   IThumbnailFile  $file
+     * @param IThumbnailFile $file
      */
     public function generateThumbnails(IThumbnailFile $file)
     {

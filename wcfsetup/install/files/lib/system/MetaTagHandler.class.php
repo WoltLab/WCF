@@ -60,10 +60,10 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator
     /**
      * Adds or replaces a meta tag.
      *
-     * @param   string      $identifier
-     * @param   string      $name
-     * @param   string      $value
-     * @param   bool        $isProperty
+     * @param string $identifier
+     * @param string $name
+     * @param string $value
+     * @param bool $isProperty
      */
     public function addTag($identifier, $name, $value, $isProperty = false)
     {
@@ -86,7 +86,7 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator
     /**
      * Removes a meta tag.
      *
-     * @param   string      $identifier
+     * @param string $identifier
      */
     public function removeTag($identifier)
     {

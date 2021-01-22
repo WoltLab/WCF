@@ -53,7 +53,7 @@ class LikeHandler extends SingletonFactory
     /**
      * Returns an object type from cache.
      *
-     * @param   string      $objectName
+     * @param string $objectName
      * @return  ObjectType
      */
     public function getObjectType($objectName)
@@ -64,8 +64,8 @@ class LikeHandler extends SingletonFactory
     /**
      * Returns a like object.
      *
-     * @param   ObjectType  $objectType
-     * @param   int     $objectID
+     * @param ObjectType $objectType
+     * @param int $objectID
      * @return  LikeObject|null
      */
     public function getLikeObject(ObjectType $objectType, $objectID)
@@ -76,7 +76,7 @@ class LikeHandler extends SingletonFactory
     /**
      * Returns the like objects of a specific object type.
      *
-     * @param   ObjectType  $objectType
+     * @param ObjectType $objectType
      * @return  LikeObject[]
      */
     public function getLikeObjects(ObjectType $objectType)
@@ -88,8 +88,8 @@ class LikeHandler extends SingletonFactory
      * Loads the like data for a set of objects and returns the number of loaded
      * like objects
      *
-     * @param   ObjectType  $objectType
-     * @param   array       $objectIDs
+     * @param ObjectType $objectType
+     * @param array $objectIDs
      * @return  int
      */
     public function loadLikeObjects(ObjectType $objectType, array $objectIDs)
@@ -100,10 +100,10 @@ class LikeHandler extends SingletonFactory
     /**
      * Saves the like of an object.
      *
-     * @param   ILikeObject $likeable
-     * @param   User        $user
-     * @param   int     $likeValue
-     * @param   int     $time
+     * @param ILikeObject $likeable
+     * @param User $user
+     * @param int $likeValue
+     * @param int $time
      * @return  array
      */
     public function like(ILikeObject $likeable, User $user, $likeValue, $time = TIME_NOW)
@@ -137,10 +137,10 @@ class LikeHandler extends SingletonFactory
     /**
      * Reverts the like of an object.
      *
-     * @param   Like        $like
-     * @param   ILikeObject $likeable
-     * @param   LikeObject  $likeObject
-     * @param   User        $user
+     * @param Like $like
+     * @param ILikeObject $likeable
+     * @param LikeObject $likeObject
+     * @param User $user
      * @return  array
      */
     public function revertLike(Like $like, ILikeObject $likeable, LikeObject $likeObject, User $user)
@@ -159,9 +159,9 @@ class LikeHandler extends SingletonFactory
     /**
      * Removes all likes for given objects.
      *
-     * @param   string      $objectType
-     * @param   int[]   $objectIDs
-     * @param   string[]    $notificationObjectTypes
+     * @param string $objectType
+     * @param int[] $objectIDs
+     * @param string[] $notificationObjectTypes
      */
     public function removeLikes($objectType, array $objectIDs, array $notificationObjectTypes = [])
     {
@@ -171,8 +171,8 @@ class LikeHandler extends SingletonFactory
     /**
      * Returns current like object status.
      *
-     * @param   LikeObject  $likeObject
-     * @param   User        $user
+     * @param LikeObject $likeObject
+     * @param User $user
      * @return  array
      */
     protected function loadLikeStatus(LikeObject $likeObject, User $user)

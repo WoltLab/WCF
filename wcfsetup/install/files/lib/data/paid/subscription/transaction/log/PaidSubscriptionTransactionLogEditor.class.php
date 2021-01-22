@@ -12,7 +12,7 @@ use wcf\data\DatabaseObjectEditor;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Paid\Subscription\Transaction\Log
  *
- * @method static   PaidSubscriptionTransactionLog      create(array $parameters = [])
+ * @method static PaidSubscriptionTransactionLog      create(array $parameters = [])
  * @method      PaidSubscriptionTransactionLog      getDecoratedObject()
  * @mixin       PaidSubscriptionTransactionLog
  */

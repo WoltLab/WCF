@@ -105,7 +105,8 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
             TextFormField::create('definitionName')
                 ->objectProperty('name')
                 ->label('wcf.acp.pip.objectTypeDefinition.definitionName')
-                ->description('wcf.acp.pip.objectTypeDefinition.definitionName.description', ['project' => $this->installation->getProject()])
+                ->description('wcf.acp.pip.objectTypeDefinition.definitionName.description',
+                    ['project' => $this->installation->getProject()])
                 ->required()
                 ->addValidator(FormFieldValidatorUtil::getDotSeparatedStringValidator(
                     'wcf.acp.pip.objectTypeDefinition.definitionName',
@@ -122,7 +123,7 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
                         if (
                             $objectTypeDefinition !== null && (
                                 $formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE
-                            || $this->editedEntry->getElementsByTagName('name')->item(0)->nodeValue !== $formField->getValue()
+                                || $this->editedEntry->getElementsByTagName('name')->item(0)->nodeValue !== $formField->getValue()
                             )
                         ) {
                             $formField->addValidationError(
@@ -235,8 +236,12 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
      */
     protected function deleteObject(\DOMElement $element)
     {
-        $this->handleDelete([['attributes' => [
-            'name' => $element->getElementsByTagName('name')->item(0)->nodeValue,
-        ]]]);
+        $this->handleDelete([
+            [
+                'attributes' => [
+                    'name' => $element->getElementsByTagName('name')->item(0)->nodeValue,
+                ],
+            ],
+        ]);
     }
 }

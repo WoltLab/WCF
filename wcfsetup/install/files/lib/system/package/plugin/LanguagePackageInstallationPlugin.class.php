@@ -41,7 +41,8 @@ use wcf\util\XML;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Package\Plugin
  */
-class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin
+class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
+    IGuiPackageInstallationPlugin
 {
     use TMultiXmlGuiPackageInstallationPlugin;
 
@@ -127,9 +128,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
                 // use default language
                 if (isset($languageFiles[$installedLanguages[0]['languageCode']])) {
                     $languageFile = $languageFiles[$installedLanguages[0]['languageCode']];
-                }
-
-                // use english (if installed)
+                } // use english (if installed)
                 elseif (isset($languageFiles['en'])) {
                     foreach ($installedLanguages as $installedLanguage2) {
                         if ($installedLanguage2['languageCode'] == 'en') {
@@ -165,7 +164,8 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 
                     // import xml
                     // don't update language files if package is an application
-                    $languageEditor->updateFromXML($xml, $this->installation->getPackageID(), !$this->installation->getPackage()->isApplication, $updateExistingItems);
+                    $languageEditor->updateFromXML($xml, $this->installation->getPackageID(),
+                        !$this->installation->getPackage()->isApplication, $updateExistingItems);
                 }
             }
         }
@@ -216,7 +216,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      * Extracts the language file and parses it. If the specified language file
      * was not found, an exception message is thrown.
      *
-     * @param   string      $filename
+     * @param string $filename
      * @return  XML
      * @throws  SystemException
      */
@@ -239,8 +239,8 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      * Deletes categories which where changed by an update or uninstallation
      * in case they are now empty.
      *
-     * @param   array       $categoryIDs
-     * @param   int     $packageID
+     * @param array $categoryIDs
+     * @param int $packageID
      */
     protected function deleteEmptyCategories(array $categoryIDs, $packageID)
     {
@@ -481,7 +481,8 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
                             || $this->editedEntries[0]->getAttribute('name') !== $formField->getSaveValue()
                         ) {
                             $languageItemList = new LanguageItemList();
-                            $languageItemList->getConditionBuilder()->add('languageItem = ?', [$formField->getSaveValue()]);
+                            $languageItemList->getConditionBuilder()->add('languageItem = ?',
+                                [$formField->getSaveValue()]);
 
                             if ($languageItemList->countObjects() > 0) {
                                 $formField->addValidationError(
@@ -647,7 +648,7 @@ XML;
     /**
      * Returns the xml objects for this pip.
      *
-     * @param   bool        $createXmlFiles     if `true` and if a relevant XML file does not exist, it is created
+     * @param bool $createXmlFiles if `true` and if a relevant XML file does not exist, it is created
      * @return  XML[]
      */
     protected function getProjectXmls($createXmlFiles = false)

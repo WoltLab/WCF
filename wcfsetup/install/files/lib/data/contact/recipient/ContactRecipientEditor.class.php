@@ -13,7 +13,7 @@ use wcf\data\DatabaseObjectEditor;
  * @package WoltLabSuite\Core\Data\Contact\Recipient
  * @since   3.1
  *
- * @method static   ContactRecipient    create(array $parameters = [])
+ * @method static ContactRecipient    create(array $parameters = [])
  * @method      ContactRecipient    getDecoratedObject()
  * @mixin       ContactRecipient
  */

@@ -69,7 +69,8 @@ class UserAvatarAction extends AbstractDatabaseObjectAction
 
         // check max filesize, allowed file extensions etc.
         /** @noinspection PhpUndefinedMethodInspection */
-        $this->parameters['__files']->validateFiles(new AvatarUploadFileValidationStrategy(\PHP_INT_MAX, \explode("\n", WCF::getSession()->getPermission('user.profile.avatar.allowedFileExtensions'))));
+        $this->parameters['__files']->validateFiles(new AvatarUploadFileValidationStrategy(\PHP_INT_MAX,
+            \explode("\n", WCF::getSession()->getPermission('user.profile.avatar.allowedFileExtensions'))));
     }
 
     /**
@@ -228,7 +229,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction
     /**
      * Enforces dimensions for given avatar.
      *
-     * @param   string      $filename
+     * @param string $filename
      * @return  string
      * @throws  UserInputException
      */
@@ -236,8 +237,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction
     {
         try {
             $filename = ImageUtil::enforceDimensions($filename, UserAvatar::AVATAR_SIZE, UserAvatar::AVATAR_SIZE);
-        }
-        /** @noinspection PhpRedundantCatchClauseInspection */
+        } /** @noinspection PhpRedundantCatchClauseInspection */
         catch (SystemException $e) {
             throw new UserInputException('avatar', 'tooLarge');
         }

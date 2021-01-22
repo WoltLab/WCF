@@ -165,7 +165,7 @@ HTML;
     /**
      * Returns the option elements for the user group selection.
      *
-     * @param   string      $identifier
+     * @param string $identifier
      * @return  string
      */
     protected function getOptionElements($identifier)
@@ -175,7 +175,8 @@ HTML;
         $returnValue = "";
         foreach ($userGroups as $userGroup) {
             /** @noinspection PhpVariableVariableInspection */
-            $returnValue .= "<label><input type=\"checkbox\" name=\"" . $identifier . "[]\" value=\"" . $userGroup->groupID . "\"" . (\in_array($userGroup->groupID, $this->{$identifier}) ? ' checked' : "") . "> " . StringUtil::encodeHTML($userGroup->getName()) . "</label>";
+            $returnValue .= "<label><input type=\"checkbox\" name=\"" . $identifier . "[]\" value=\"" . $userGroup->groupID . "\"" . (\in_array($userGroup->groupID,
+                    $this->{$identifier}) ? ' checked' : "") . "> " . StringUtil::encodeHTML($userGroup->getName()) . "</label>";
         }
 
         return $returnValue;
@@ -241,7 +242,7 @@ HTML;
     /**
      * Sets the selectable user groups.
      *
-     * @param   UserGroup[] $userGroups
+     * @param UserGroup[] $userGroups
      */
     public function setUserGroups(array $userGroups)
     {

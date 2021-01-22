@@ -136,8 +136,8 @@ class TemplateEngine extends SingletonFactory
     /**
      * Adds a new application.
      *
-     * @param   string      $abbreviation
-     * @param   string      $templatePath
+     * @param string $abbreviation
+     * @param string $templatePath
      */
     public function addApplication($abbreviation, $templatePath)
     {
@@ -147,7 +147,7 @@ class TemplateEngine extends SingletonFactory
     /**
      * Sets active language id.
      *
-     * @param   int     $languageID
+     * @param int $languageID
      */
     public function setLanguageID($languageID)
     {
@@ -180,8 +180,8 @@ class TemplateEngine extends SingletonFactory
     /**
      * Assigns a template variable.
      *
-     * @param   mixed       $variable
-     * @param   mixed       $value
+     * @param mixed $variable
+     * @param mixed $value
      */
     public function assign($variable, $value = '')
     {
@@ -201,8 +201,8 @@ class TemplateEngine extends SingletonFactory
     /**
      * Appends content to an existing template variable.
      *
-     * @param   mixed       $variable
-     * @param   mixed       $value
+     * @param mixed $variable
+     * @param mixed $value
      */
     public function append($variable, $value = '')
     {
@@ -237,8 +237,8 @@ class TemplateEngine extends SingletonFactory
     /**
      * Prepends content to an existing template variable.
      *
-     * @param   mixed       $variable
-     * @param   mixed       $value
+     * @param mixed $variable
+     * @param mixed $value
      */
     public function prepend($variable, $value = '')
     {
@@ -273,8 +273,8 @@ class TemplateEngine extends SingletonFactory
     /**
      * Assigns a template variable by reference.
      *
-     * @param   string      $variable
-     * @param   mixed       $value
+     * @param string $variable
+     * @param mixed $value
      */
     public function assignByRef($variable, &$value)
     {
@@ -286,7 +286,7 @@ class TemplateEngine extends SingletonFactory
     /**
      * Clears an assignment of template variables.
      *
-     * @param   mixed       $variables
+     * @param mixed $variables
      */
     public function clearAssign(array $variables)
     {
@@ -307,9 +307,9 @@ class TemplateEngine extends SingletonFactory
     /**
      * Outputs a template.
      *
-     * @param   string      $templateName
-     * @param   string      $application
-     * @param   bool        $sendHeaders
+     * @param string $templateName
+     * @param string $application
+     * @param bool $sendHeaders
      */
     public function display($templateName, $application = 'wcf', $sendHeaders = true)
     {
@@ -356,8 +356,8 @@ class TemplateEngine extends SingletonFactory
     /**
      * Returns the absolute filename of a template source.
      *
-     * @param   string      $templateName
-     * @param   string      $application
+     * @param string $templateName
+     * @param string $application
      * @return  string      $path
      * @throws  SystemException
      */
@@ -382,8 +382,8 @@ class TemplateEngine extends SingletonFactory
     /**
      * Returns path if template was found.
      *
-     * @param   string      $templatePath
-     * @param   string      $templateName
+     * @param string $templatePath
+     * @param string $templateName
      * @return  string
      */
     protected function getPath($templatePath, $templateName)
@@ -416,8 +416,8 @@ class TemplateEngine extends SingletonFactory
     /**
      * Returns the absolute filename of a compiled template.
      *
-     * @param   string      $templateName
-     * @param   string      $application
+     * @param string $templateName
+     * @param string $application
      * @return  string
      */
     public function getCompiledFilename($templateName, $application)
@@ -428,7 +428,7 @@ class TemplateEngine extends SingletonFactory
     /**
      * Returns the absolute filename for template's meta data.
      *
-     * @param   string      $templateName
+     * @param string $templateName
      * @return  string
      */
     public function getMetaDataFilename($templateName)
@@ -439,11 +439,11 @@ class TemplateEngine extends SingletonFactory
     /**
      * Returns true if the template with the given data is already compiled.
      *
-     * @param   string      $templateName
-     * @param   string      $sourceFilename
-     * @param   string      $compiledFilename
-     * @param   string      $application
-     * @param   array       $metaData
+     * @param string $templateName
+     * @param string $sourceFilename
+     * @param string $compiledFilename
+     * @param string $application
+     * @param array $metaData
      * @return  bool
      */
     protected function isCompiled($templateName, $sourceFilename, $compiledFilename, $application, array $metaData)
@@ -479,10 +479,10 @@ class TemplateEngine extends SingletonFactory
     /**
      * Compiles a template.
      *
-     * @param   string      $templateName
-     * @param   string      $sourceFilename
-     * @param   string      $compiledFilename
-     * @param   array       $metaData
+     * @param string $templateName
+     * @param string $sourceFilename
+     * @param string $compiledFilename
+     * @param array $metaData
      */
     protected function compileTemplate($templateName, $sourceFilename, $compiledFilename, array $metaData)
     {
@@ -510,7 +510,7 @@ class TemplateEngine extends SingletonFactory
     /**
      * Reads the content of a template file.
      *
-     * @param   string      $sourceFilename
+     * @param string $sourceFilename
      * @return  string
      * @throws  SystemException
      */
@@ -528,8 +528,8 @@ class TemplateEngine extends SingletonFactory
     /**
      * Returns the class name of a plugin.
      *
-     * @param   string      $type
-     * @param   string      $tag
+     * @param string $type
+     * @param string $tag
      * @return  string
      */
     public function getPluginClassName($type, $tag)
@@ -561,10 +561,10 @@ class TemplateEngine extends SingletonFactory
     /**
      * Returns the output of a template.
      *
-     * @param   string      $templateName
-     * @param   string      $application
-     * @param   array       $variables
-     * @param   bool        $sandbox    enables execution in sandbox
+     * @param string $templateName
+     * @param string $application
+     * @param array $variables
+     * @param bool $sandbox enables execution in sandbox
      * @return  string
      */
     public function fetch($templateName, $application = 'wcf', array $variables = [], $sandbox = false)
@@ -599,9 +599,9 @@ class TemplateEngine extends SingletonFactory
     /**
      * Executes a compiled template scripting source and returns the result.
      *
-     * @param   string      $compiledSource
-     * @param   array       $variables
-     * @param   bool        $sandbox    enables execution in sandbox
+     * @param string $compiledSource
+     * @param array $variables
+     * @param bool $sandbox enables execution in sandbox
      * @return  string
      */
     public function fetchString($compiledSource, array $variables = [], $sandbox = true)
@@ -633,7 +633,7 @@ class TemplateEngine extends SingletonFactory
     /**
      * Deletes all compiled templates.
      *
-     * @param   string      $compileDir
+     * @param string $compileDir
      */
     public static function deleteCompiledTemplates($compileDir = '')
     {
@@ -668,7 +668,7 @@ class TemplateEngine extends SingletonFactory
     /**
      * Sets the active template group id.
      *
-     * @param   int     $templateGroupID
+     * @param int $templateGroupID
      */
     public function setTemplateGroupID($templateGroupID)
     {
@@ -690,7 +690,7 @@ class TemplateEngine extends SingletonFactory
     /**
      * Registers prefilters.
      *
-     * @param   string[]        $prefilters
+     * @param string[] $prefilters
      */
     public function registerPrefilter(array $prefilters)
     {
@@ -702,7 +702,7 @@ class TemplateEngine extends SingletonFactory
     /**
      * Removes a prefilter by its internal name.
      *
-     * @param       string          $name   internal prefilter identifier
+     * @param string $name internal prefilter identifier
      */
     public function removePrefilter($name)
     {
@@ -712,7 +712,7 @@ class TemplateEngine extends SingletonFactory
     /**
      * Sets the dir for the compiled templates.
      *
-     * @param   string      $compileDir
+     * @param string $compileDir
      * @throws  SystemException
      */
     public function setCompileDir($compileDir)
@@ -727,10 +727,10 @@ class TemplateEngine extends SingletonFactory
     /**
      * Includes a template.
      *
-     * @param   string      $templateName
-     * @param   string      $application
-     * @param   array       $variables
-     * @param   bool        $sandbox    enables execution in sandbox
+     * @param string $templateName
+     * @param string $application
+     * @param array $variables
+     * @param bool $sandbox enables execution in sandbox
      */
     protected function includeTemplate($templateName, $application, array $variables = [], $sandbox = true)
     {
@@ -756,7 +756,7 @@ class TemplateEngine extends SingletonFactory
     /**
      * Returns the value of a template variable.
      *
-     * @param   string      $varname
+     * @param string $varname
      * @return  mixed
      */
     public function get($varname)
@@ -781,8 +781,8 @@ class TemplateEngine extends SingletonFactory
     /**
      * Returns template listener's code.
      *
-     * @param   string      $templateName
-     * @param   string      $eventName
+     * @param string $templateName
+     * @param string $eventName
      * @return  string
      */
     public function getTemplateListenerCode($templateName, $eventName)
@@ -799,8 +799,8 @@ class TemplateEngine extends SingletonFactory
     /**
      * Reads meta data from file.
      *
-     * @param   string      $templateName
-     * @param   string      $filename
+     * @param string $templateName
+     * @param string $filename
      * @return  array
      */
     protected function getMetaData($templateName, $filename)

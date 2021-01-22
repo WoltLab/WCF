@@ -14,7 +14,7 @@ use wcf\system\cache\builder\ACPMenuCacheBuilder;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Acp\Menu\Item
  *
- * @method static   ACPMenuItem create(array $parameters = [])
+ * @method static ACPMenuItem create(array $parameters = [])
  * @method      ACPMenuItem getDecoratedObject()
  * @mixin       ACPMenuItem
  */

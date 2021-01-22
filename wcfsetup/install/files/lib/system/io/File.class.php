@@ -53,9 +53,9 @@ class File
     /**
      * Opens a new file.
      *
-     * @param   string      $filename
-     * @param   string      $mode
-     * @param   array       $options
+     * @param string $filename
+     * @param string $mode
+     * @param array $options
      * @throws  SystemException
      */
     public function __construct($filename, $mode = 'wb', $options = [])
@@ -76,8 +76,8 @@ class File
      * Calls the specified function on the open file.
      * Do not call this function directly. Use $file->write('') instead.
      *
-     * @param   string      $function
-     * @param   array       $arguments
+     * @param string $function
+     * @param array $arguments
      * @return  mixed
      * @throws  SystemException
      */

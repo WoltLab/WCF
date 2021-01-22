@@ -23,7 +23,7 @@ use wcf\system\WCF;
  * @method      TrophyCategory[]    getAllChildCategories()
  * @method      TrophyCategory      getParentCategory()
  * @method      TrophyCategory[]    getParentCategories()
- * @method static   TrophyCategory|null getCategory($categoryID)
+ * @method static TrophyCategory|null getCategory($categoryID)
  */
 class TrophyCategory extends AbstractDecoratedCategory implements ITitledLinkObject
 {
@@ -71,7 +71,7 @@ class TrophyCategory extends AbstractDecoratedCategory implements ITitledLinkObj
     /**
      * Returns the trophies for the category.
      *
-     * @param   bool    $includeDisabled
+     * @param bool $includeDisabled
      * @return  Trophy[]
      */
     public function getTrophies($includeDisabled = false)

@@ -23,20 +23,20 @@ use wcf\util\StringUtil;
  * @package WoltLabSuite\Core\Data\Trophy
  * @since   3.1
  *
- * @property-read   int     $trophyID           unique id for the trophy
- * @property-read   string      $title              the trophy title
- * @property-read   string      $description            the trophy description
- * @property-read   int     $categoryID         the categoryID of the trophy
- * @property-read   int     $type               the trophy type
- * @property-read   string      $iconFile           the file location of the icon
- * @property-read   string      $iconName           the icon name
- * @property-read   string      $iconColor          the icon color
- * @property-read   string      $badgeColor         the icon badge color
- * @property-read   int     $isDisabled         `1` if the trophy is disabled
- * @property-read   int     $awardAutomatically     `1` if the trophy is awarded automatically
- * @property-read   int     $revokeAutomatically        `1` if the trophy should be automatically revoked once the conditions are no longer met.
- * @property-read   int     $trophyUseHtml              `1` if the trophy use a html description
- * @property-read   int     $showOrder              position of the trophy in relation to the other trophies at the same location
+ * @property-read   int $trophyID           unique id for the trophy
+ * @property-read   string $title              the trophy title
+ * @property-read   string $description            the trophy description
+ * @property-read   int $categoryID         the categoryID of the trophy
+ * @property-read   int $type               the trophy type
+ * @property-read   string $iconFile           the file location of the icon
+ * @property-read   string $iconName           the icon name
+ * @property-read   string $iconColor          the icon color
+ * @property-read   string $badgeColor         the icon badge color
+ * @property-read   int $isDisabled         `1` if the trophy is disabled
+ * @property-read   int $awardAutomatically     `1` if the trophy is awarded automatically
+ * @property-read   int $revokeAutomatically        `1` if the trophy should be automatically revoked once the conditions are no longer met.
+ * @property-read   int $trophyUseHtml              `1` if the trophy use a html description
+ * @property-read   int $showOrder              position of the trophy in relation to the other trophies at the same location
  */
 class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteController
 {
@@ -90,8 +90,8 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
     /**
      * Renders a trophy.
      *
-     * @param   int     $size
-     * @param   bool        $showTooltip
+     * @param int $size
+     * @param bool $showTooltip
      * @return  string
      */
     public function renderTrophy($size = self::DEFAULT_SIZE, $showTooltip = false)
@@ -111,7 +111,7 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
                     'trophy' => $this,
                     'showTooltip' => $showTooltip,
                 ], true);
-            break;
+                break;
 
             default:
                 $parameters = [
@@ -127,7 +127,7 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
                 }
 
                 throw new \LogicException("Unable to render the trophy with the type '" . $this->type . "'.");
-            break;
+                break;
         }
     }
 

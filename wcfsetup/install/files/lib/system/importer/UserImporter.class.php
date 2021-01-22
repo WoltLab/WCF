@@ -82,7 +82,7 @@ class UserImporter extends AbstractImporter
                     $performMerge = true;
                     break;
                 }
-                // no break
+            // no break
             case self::MERGE_MODE_EMAIL:
                 // fetch merge target
                 $targetUser = User::getUserByEmail($data['email']);
@@ -261,7 +261,7 @@ class UserImporter extends AbstractImporter
     /**
      * Revolves duplicate user names and returns the new user name.
      *
-     * @param   string      $username
+     * @param string $username
      * @return  string
      */
     private static function resolveDuplicate($username)

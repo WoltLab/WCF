@@ -35,10 +35,10 @@ class XMLWriter
     /**
      * Creates a new XML document.
      *
-     * @param   string      $rootElement
-     * @param   string      $namespace
-     * @param   string      $schemaLocation
-     * @param   string[]    $attributes
+     * @param string $rootElement
+     * @param string $namespace
+     * @param string $schemaLocation
+     * @param string[] $attributes
      * @throws  SystemException
      */
     public function beginDocument($rootElement, $namespace, $schemaLocation, array $attributes = [])
@@ -77,7 +77,7 @@ class XMLWriter
      * Returns the generated XML document or writes it to given filename. All open
      * elements will be automatically closed before flushing.
      *
-     * @param   string      $filename
+     * @param string $filename
      * @return  mixed
      */
     public function endDocument($filename = '')
@@ -102,8 +102,8 @@ class XMLWriter
     /**
      * Begins a new element.
      *
-     * @param   string      $element
-     * @param   string[]    $attributes
+     * @param string $element
+     * @param string[] $attributes
      */
     public function startElement($element, array $attributes = [])
     {
@@ -129,10 +129,10 @@ class XMLWriter
     /**
      * Writes an element directly.
      *
-     * @param   string      $element
-     * @param   string      $cdata
-     * @param   string[]    $attributes
-     * @param   bool        $writeAsCdata
+     * @param string $element
+     * @param string $cdata
+     * @param string[] $attributes
+     * @param bool $writeAsCdata
      */
     public function writeElement($element, $cdata, array $attributes = [], $writeAsCdata = true)
     {
@@ -158,7 +158,7 @@ class XMLWriter
     /**
      * Writes a comment.
      *
-     * @param   string      $comment
+     * @param string $comment
      * @since   5.2
      */
     public function writeComment($comment)
@@ -169,8 +169,8 @@ class XMLWriter
     /**
      * Writes an attribute to last opened element.
      *
-     * @param   string      $attribute
-     * @param   string      $value
+     * @param string $attribute
+     * @param string $value
      */
     public function writeAttribute($attribute, $value)
     {
@@ -180,7 +180,7 @@ class XMLWriter
     /**
      * Writes a list of attributes to last opened element.
      *
-     * @param   string[]        $attributes
+     * @param string[] $attributes
      */
     public function writeAttributes(array $attributes)
     {

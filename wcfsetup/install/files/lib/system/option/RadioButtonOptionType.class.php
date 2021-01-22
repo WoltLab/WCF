@@ -141,7 +141,7 @@ class RadioButtonOptionType extends AbstractOptionType implements
     /**
      * Returns the select options for the given option.
      *
-     * @param   Option      $option
+     * @param Option $option
      * @return  string[]
      */
     protected function getSelectOptions(Option $option)

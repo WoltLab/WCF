@@ -81,8 +81,8 @@ final class ClipboardEditorItem
     /**
      * Adds internal data, values will be left untouched by clipboard API.
      *
-     * @param   string      $name
-     * @param   mixed       $value
+     * @param string $name
+     * @param mixed $value
      * @throws  SystemException
      */
     public function addInternalData($name, $value)
@@ -101,8 +101,8 @@ final class ClipboardEditorItem
     /**
      * Adds an parameter passed to ClipboardProxyAction.
      *
-     * @param   string      $name
-     * @param   mixed       $value
+     * @param string $name
+     * @param mixed $value
      * @throws  SystemException
      */
     public function addParameter($name, $value)
@@ -121,7 +121,7 @@ final class ClipboardEditorItem
     /**
      * Sets item name.
      *
-     * @param   string      $name
+     * @param string $name
      * @throws  SystemException
      */
     public function setName($name)
@@ -136,7 +136,7 @@ final class ClipboardEditorItem
     /**
      * Sets redirect url, session id will be appended.
      *
-     * @param   string      $url
+     * @param string $url
      */
     public function setURL($url)
     {

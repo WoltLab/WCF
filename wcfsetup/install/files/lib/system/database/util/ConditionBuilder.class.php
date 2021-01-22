@@ -33,8 +33,8 @@ class ConditionBuilder
     /**
      * Creates a new ConditionBuilder object.
      *
-     * @param   bool        $addWhereKeyword
-     * @param   string      $concat
+     * @param bool $addWhereKeyword
+     * @param string $concat
      */
     public function __construct($addWhereKeyword = true, $concat = 'AND')
     {
@@ -45,7 +45,7 @@ class ConditionBuilder
     /**
      * Adds a new condition.
      *
-     * @param   mixed       $conditions
+     * @param mixed $conditions
      */
     public function add($conditions)
     {
@@ -74,7 +74,7 @@ class ConditionBuilder
     /**
      * Enables / disables the where keyword.
      *
-     * @param   bool        $enable
+     * @param bool $enable
      */
     public function enableWhereKeyword($enable = true)
     {

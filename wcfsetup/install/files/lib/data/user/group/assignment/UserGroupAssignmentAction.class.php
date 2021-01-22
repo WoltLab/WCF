@@ -43,7 +43,8 @@ class UserGroupAssignmentAction extends AbstractDatabaseObjectAction implements 
      */
     public function delete()
     {
-        ConditionHandler::getInstance()->deleteConditions('com.woltlab.wcf.condition.userGroupAssignment', $this->objectIDs);
+        ConditionHandler::getInstance()->deleteConditions('com.woltlab.wcf.condition.userGroupAssignment',
+            $this->objectIDs);
 
         return parent::delete();
     }

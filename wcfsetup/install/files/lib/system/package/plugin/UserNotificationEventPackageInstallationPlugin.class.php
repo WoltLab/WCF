@@ -157,7 +157,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
     /**
      * Gets the id of given object type id.
      *
-     * @param       string          $objectType
+     * @param string $objectType
      * @return      int
      * @throws      SystemException
      */
@@ -243,13 +243,18 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
                         || $this->editedEntry->getElementsByTagName('objecttype')->item(0)->nodeValue !== $formField->getSaveValue()
                     ) {
                         $eventList = new UserNotificationEventList();
-                        $eventList->getConditionBuilder()->add('user_notification_event.eventName = ?', [$nameField->getSaveValue()]);
+                        $eventList->getConditionBuilder()->add('user_notification_event.eventName = ?',
+                            [$nameField->getSaveValue()]);
                         $eventList->getConditionBuilder()->add('user_notification_event.objectTypeID = ?', [
-                            ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.notification.objectType', $formField->getSaveValue()),
+                            ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.notification.objectType',
+                                $formField->getSaveValue()),
                         ]);
                         $eventList->getConditionBuilder()->add(
                             'user_notification_event.objectTypeID = ?',
-                            [ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.notification.objectType', $formField->getSaveValue())->objectTypeID]
+                            [
+                                ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.notification.objectType',
+                                    $formField->getSaveValue())->objectTypeID,
+                            ]
                         );
 
                         if ($eventList->countObjects() > 0) {

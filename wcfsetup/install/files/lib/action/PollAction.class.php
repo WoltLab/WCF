@@ -102,7 +102,7 @@ class PollAction extends AJAXProxyAction
 
             default:
                 throw new SystemException("Unknown action '" . $this->actionName . "'");
-            break;
+                break;
         }
 
         if (isset($_POST['optionIDs']) && \is_array($_POST['optionIDs'])) {
@@ -162,7 +162,7 @@ class PollAction extends AJAXProxyAction
     /**
      * Renders the result template.
      *
-     * @param   array       $returnValues
+     * @param array $returnValues
      */
     public function getResult(array &$returnValues)
     {
@@ -176,7 +176,7 @@ class PollAction extends AJAXProxyAction
     /**
      * Renders the vote template.
      *
-     * @param   array       $returnValues
+     * @param array $returnValues
      */
     public function getVote(array &$returnValues)
     {
@@ -190,7 +190,7 @@ class PollAction extends AJAXProxyAction
     /**
      * Adds a user vote.
      *
-     * @param   mixed[]     $returnValues
+     * @param mixed[] $returnValues
      */
     protected function vote(array &$returnValues)
     {
@@ -214,6 +214,7 @@ class PollAction extends AJAXProxyAction
 
         $returnValues['canVote'] = $this->poll->isChangeable ? 1 : 0;
         $returnValues['totalVotes'] = $this->poll->votes;
-        $returnValues['totalVotesTooltip'] = WCF::getLanguage()->getDynamicVariable('wcf.poll.totalVotes', ['poll' => $this->poll]);
+        $returnValues['totalVotesTooltip'] = WCF::getLanguage()->getDynamicVariable('wcf.poll.totalVotes',
+            ['poll' => $this->poll]);
     }
 }

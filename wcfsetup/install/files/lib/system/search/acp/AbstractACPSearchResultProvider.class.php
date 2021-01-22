@@ -18,9 +18,9 @@ abstract class AbstractACPSearchResultProvider
     /**
      * Validates object options and permissions.
      *
-     * @param   DatabaseObject      $object
-     * @param   string          $optionsColumnName
-     * @param   string          $permissionsColumnName
+     * @param DatabaseObject $object
+     * @param string $optionsColumnName
+     * @param string $permissionsColumnName
      * @return  bool
      */
     protected function validate(

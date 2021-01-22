@@ -72,7 +72,7 @@ class Censorship extends SingletonFactory
     /**
      * Returns censored words from a text.
      *
-     * @param   string      $text
+     * @param string $text
      * @return  mixed       $matches / false
      */
     public function test($text)
@@ -103,8 +103,7 @@ class Censorship extends SingletonFactory
                     }
 
                     continue 2;
-                }
-                // check for asterisk matches ("*badword*" == "FooBadwordBar")
+                } // check for asterisk matches ("*badword*" == "FooBadwordBar")
                 elseif (\mb_strpos($censoredWord, '*') !== false) {
                     $censoredWord = \str_replace('\*', '.*', \preg_quote($censoredWord));
                     if (\preg_match('!^' . $censoredWord . '$!', $word)) {
@@ -117,8 +116,7 @@ class Censorship extends SingletonFactory
 
                         continue 2;
                     }
-                }
-                // check for partial matches ("~badword~" == "bad-word")
+                } // check for partial matches ("~badword~" == "bad-word")
                 elseif (\mb_strpos($censoredWord, '~') !== false) {
                     $censoredWord = \str_replace('~', '', $censoredWord);
                     if (($position = \mb_strpos($censoredWord, $word)) !== false) {
@@ -131,7 +129,8 @@ class Censorship extends SingletonFactory
 
                         if ($position + \mb_strlen($word) < \mb_strlen($censoredWord)) {
                             // look ahead
-                            if ($newIndex = $this->lookAhead($i + 1, \mb_substr($censoredWord, $position + \mb_strlen($word)))) {
+                            if ($newIndex = $this->lookAhead($i + 1,
+                                \mb_substr($censoredWord, $position + \mb_strlen($word)))) {
                                 $i = $newIndex;
                             } else {
                                 continue;
@@ -154,8 +153,7 @@ class Censorship extends SingletonFactory
         // at least one censored word was found
         if (\count($this->matches) > 0) {
             return $this->matches;
-        }
-        // text is clean
+        } // text is clean
         else {
             return false;
         }
@@ -164,17 +162,20 @@ class Censorship extends SingletonFactory
     /**
      * Looks behind in the word list.
      *
-     * @param   int     $index
-     * @param   string      $search
+     * @param int $index
+     * @param string $search
      * @return  bool
      */
     protected function lookBehind($index, $search)
     {
         if (isset($this->words[$index])) {
-            if (\mb_strpos($this->words[$index], $search) === (\mb_strlen($this->words[$index]) - \mb_strlen($search))) {
+            if (\mb_strpos($this->words[$index],
+                    $search) === (\mb_strlen($this->words[$index]) - \mb_strlen($search))) {
                 return true;
-            } elseif (\mb_strpos($search, $this->words[$index]) === (\mb_strlen($search) - \mb_strlen($this->words[$index]))) {
-                return $this->lookBehind($index - 1, \mb_substr($search, 0, \mb_strlen($search) - \mb_strlen($this->words[$index])));
+            } elseif (\mb_strpos($search,
+                    $this->words[$index]) === (\mb_strlen($search) - \mb_strlen($this->words[$index]))) {
+                return $this->lookBehind($index - 1,
+                    \mb_substr($search, 0, \mb_strlen($search) - \mb_strlen($this->words[$index])));
             }
         }
 
@@ -184,8 +185,8 @@ class Censorship extends SingletonFactory
     /**
      * Looks ahead in the word list.
      *
-     * @param   int     $index
-     * @param   string      $search
+     * @param int $index
+     * @param string $search
      * @return  mixed
      */
     protected function lookAhead($index, $search)

@@ -25,8 +25,8 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
      * Returns the ids of the objects linked in the text processed by the given
      * processor matching the given regular expression.
      *
-     * @param   HtmlInputNodeProcessor      $processor
-     * @param   Regex               $regex
+     * @param HtmlInputNodeProcessor $processor
+     * @param Regex $regex
      * @return  int[]
      */
     protected function getObjectIDs(HtmlInputNodeProcessor $processor, Regex $regex)
@@ -47,26 +47,31 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
      * Returns a `Regex` object for matching links based on the given string
      * followed by an object id.
      *
-     * @param   string      $link
-     * @param       string          $defaultAnchor
+     * @param string $link
+     * @param string $defaultAnchor
      * @return  Regex
      */
     protected function getRegexFromLink($link, $defaultAnchor = '')
     {
-        return new Regex('^(' . \preg_replace('~^https?~', 'https?', \preg_quote($link)) . '(\d+)-[^#]*?)' . ($defaultAnchor ? '(?:#' . $defaultAnchor . ')?' : '') . '$');
+        return new Regex('^(' . \preg_replace('~^https?~', 'https?',
+                \preg_quote($link)) . '(\d+)-[^#]*?)' . ($defaultAnchor ? '(?:#' . $defaultAnchor . ')?' : '') . '$');
     }
 
     /**
      * Replaces relevant object links with bbcodes.
      *
-     * @param   HtmlInputNodeProcessor      $processor
-     * @param   Regex               $regex
-     * @param   ITitledObject[]         $objects
-     * @param   string              $bbcodeName
+     * @param HtmlInputNodeProcessor $processor
+     * @param Regex $regex
+     * @param ITitledObject[] $objects
+     * @param string $bbcodeName
      * @deprecated 5.2 Use `replaceLinks()` instead.
      */
-    protected function replaceLinksWithBBCode(HtmlInputNodeProcessor $processor, Regex $regex, array $objects, $bbcodeName)
-    {
+    protected function replaceLinksWithBBCode(
+        HtmlInputNodeProcessor $processor,
+        Regex $regex,
+        array $objects,
+        $bbcodeName
+    ) {
         $this->replaceLinks($processor, $objects, $bbcodeName);
     }
 
@@ -74,9 +79,9 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
      * Replaces the text content of relevant object links with the titles of
      * the objects.
      *
-     * @param   HtmlInputNodeProcessor      $processor
-     * @param   Regex               $regex
-     * @param   ITitledObject[]         $objects
+     * @param HtmlInputNodeProcessor $processor
+     * @param Regex $regex
+     * @param ITitledObject[] $objects
      * @throws  ImplementationException
      * @deprecated 5.2 Use `replaceLinks()` instead.
      */

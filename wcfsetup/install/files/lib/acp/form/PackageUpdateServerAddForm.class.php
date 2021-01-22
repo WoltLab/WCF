@@ -129,11 +129,13 @@ class PackageUpdateServerAddForm extends AbstractForm
         parent::save();
 
         // save server
-        $this->objectAction = new PackageUpdateServerAction([], 'create', ['data' => \array_merge($this->additionalFields, [
-            'serverURL' => $this->serverURL,
-            'loginUsername' => $this->loginUsername,
-            'loginPassword' => $this->loginPassword,
-        ])]);
+        $this->objectAction = new PackageUpdateServerAction([], 'create', [
+            'data' => \array_merge($this->additionalFields, [
+                'serverURL' => $this->serverURL,
+                'loginUsername' => $this->loginUsername,
+                'loginPassword' => $this->loginPassword,
+            ]),
+        ]);
         $returnValues = $this->objectAction->executeAction();
         $this->saved();
 
@@ -143,7 +145,8 @@ class PackageUpdateServerAddForm extends AbstractForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(PackageUpdateServerEditForm::class, ['id' => $returnValues['returnValues']->packageUpdateServerID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(PackageUpdateServerEditForm::class,
+                ['id' => $returnValues['returnValues']->packageUpdateServerID]),
         ]);
     }
 

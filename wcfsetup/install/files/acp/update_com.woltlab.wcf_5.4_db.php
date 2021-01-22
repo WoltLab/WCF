@@ -149,7 +149,7 @@ $tables = [
 ];
 
 (new DatabaseTableChangeProcessor(
-    /** @var ScriptPackageInstallationPlugin $this */
+/** @var ScriptPackageInstallationPlugin $this */
     $this->installation->getPackage(),
     $tables,
     WCF::getDB()->getEditor()

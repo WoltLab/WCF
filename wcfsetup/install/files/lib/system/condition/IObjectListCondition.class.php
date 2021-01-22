@@ -20,8 +20,8 @@ interface IObjectListCondition extends ICondition
      * Adds a condition to the given object list based on the given condition
      * data returned by \wcf\system\condition\ICondition::getData().
      *
-     * @param   DatabaseObjectList  $objectList
-     * @param   array           $conditionData
+     * @param DatabaseObjectList $objectList
+     * @param array $conditionData
      * @throws  \InvalidArgumentException   if the given object list object is no object of the expected database object list class
      */
     public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData);

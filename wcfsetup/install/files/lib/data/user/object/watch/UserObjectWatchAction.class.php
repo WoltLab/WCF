@@ -43,7 +43,8 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction
         $this->readString('objectType');
 
         // validate object type
-        $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $this->parameters['objectType']);
+        $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.objectWatch',
+            $this->parameters['objectType']);
         if ($this->objectType === null) {
             throw new UserInputException('objectType');
         }
@@ -52,7 +53,8 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction
         $this->objectType->getProcessor()->validateObjectID($this->parameters['objectID']);
 
         // get existing subscription
-        $this->userObjectWatch = UserObjectWatch::getUserObjectWatch($this->objectType->objectTypeID, WCF::getUser()->userID, $this->parameters['objectID']);
+        $this->userObjectWatch = UserObjectWatch::getUserObjectWatch($this->objectType->objectTypeID,
+            WCF::getUser()->userID, $this->parameters['objectID']);
     }
 
     /**
@@ -131,7 +133,8 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction
      */
     public function subscribe()
     {
-        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $this->parameters['data']['objectType']);
+        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.objectWatch',
+            $this->parameters['data']['objectType']);
 
         UserObjectWatchEditor::create([
             'userID' => WCF::getUser()->userID,
@@ -149,12 +152,14 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction
      */
     public function unsubscribe()
     {
-        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $this->parameters['data']['objectType']);
+        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.objectWatch',
+            $this->parameters['data']['objectType']);
 
         if ($this->userObjectWatch !== null) {
             $userObjectWatch = $this->userObjectWatch;
         } else {
-            $userObjectWatch = UserObjectWatch::getUserObjectWatch($objectType->objectTypeID, WCF::getUser()->userID, \intval($this->parameters['data']['objectID']));
+            $userObjectWatch = UserObjectWatch::getUserObjectWatch($objectType->objectTypeID, WCF::getUser()->userID,
+                \intval($this->parameters['data']['objectID']));
         }
         $editor = new UserObjectWatchEditor($userObjectWatch);
         $editor->delete();
@@ -172,7 +177,8 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction
         $this->readString('objectType', false, 'data');
 
         // validate object type
-        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $this->parameters['data']['objectType']);
+        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.objectWatch',
+            $this->parameters['data']['objectType']);
         if ($objectType === null) {
             throw new UserInputException('objectType');
         }
@@ -181,7 +187,8 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction
         $objectType->getProcessor()->validateObjectID(\intval($this->parameters['data']['objectID']));
 
         // get existing subscription
-        $this->userObjectWatch = UserObjectWatch::getUserObjectWatch($objectType->objectTypeID, WCF::getUser()->userID, \intval($this->parameters['data']['objectID']));
+        $this->userObjectWatch = UserObjectWatch::getUserObjectWatch($objectType->objectTypeID, WCF::getUser()->userID,
+            \intval($this->parameters['data']['objectID']));
     }
 
     /**

@@ -16,7 +16,7 @@ use wcf\data\DatabaseObjectList;
  * @method  Article     current()
  * @method  Article[]       getObjects()
  * @method  Article|null    search($objectID)
- * @property    Article[]       $objects
+ * @property    Article[] $objects
  */
 class ArticleList extends DatabaseObjectList
 {

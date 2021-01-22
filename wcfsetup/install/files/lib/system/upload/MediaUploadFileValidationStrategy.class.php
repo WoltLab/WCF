@@ -22,7 +22,7 @@ class MediaUploadFileValidationStrategy implements IUploadFileValidationStrategy
     /**
      * Creates a new instance of MediaUploadFileValidationStrategy.
      *
-     * @param   bool        $imagesOnly
+     * @param bool $imagesOnly
      */
     public function __construct($imagesOnly)
     {

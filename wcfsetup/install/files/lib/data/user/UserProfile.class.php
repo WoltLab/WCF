@@ -152,7 +152,8 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
                     $this->followingUserIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
                     // update storage data
-                    UserStorageHandler::getInstance()->update($this->userID, 'followingUserIDs', \serialize($this->followingUserIDs));
+                    UserStorageHandler::getInstance()->update($this->userID, 'followingUserIDs',
+                        \serialize($this->followingUserIDs));
                 } else {
                     $this->followingUserIDs = \unserialize($data);
                 }
@@ -186,7 +187,8 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
                     $this->followerUserIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
                     // update storage data
-                    UserStorageHandler::getInstance()->update($this->userID, 'followerUserIDs', \serialize($this->followerUserIDs));
+                    UserStorageHandler::getInstance()->update($this->userID, 'followerUserIDs',
+                        \serialize($this->followerUserIDs));
                 } else {
                     $this->followerUserIDs = \unserialize($data);
                 }
@@ -220,7 +222,8 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
                     $this->ignoredUserIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
                     // update storage data
-                    UserStorageHandler::getInstance()->update($this->userID, 'ignoredUserIDs', \serialize($this->ignoredUserIDs));
+                    UserStorageHandler::getInstance()->update($this->userID, 'ignoredUserIDs',
+                        \serialize($this->ignoredUserIDs));
                 } else {
                     $this->ignoredUserIDs = \unserialize($data);
                 }
@@ -254,7 +257,8 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
                     $this->ignoredByUserIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
                     // update storage data
-                    UserStorageHandler::getInstance()->update($this->userID, 'ignoredByUserIDs', \serialize($this->ignoredByUserIDs));
+                    UserStorageHandler::getInstance()->update($this->userID, 'ignoredByUserIDs',
+                        \serialize($this->ignoredByUserIDs));
                 } else {
                     $this->ignoredByUserIDs = \unserialize($data);
                 }
@@ -267,7 +271,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns true if current user is following given user id.
      *
-     * @param   int     $userID
+     * @param int $userID
      * @return  bool
      */
     public function isFollowing($userID)
@@ -278,7 +282,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns true if given user ids follows current user.
      *
-     * @param   int     $userID
+     * @param int $userID
      * @return  bool
      */
     public function isFollower($userID)
@@ -289,7 +293,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns true if given user is ignored.
      *
-     * @param   int     $userID
+     * @param int $userID
      * @return  bool
      */
     public function isIgnoredUser($userID)
@@ -300,7 +304,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns true if the given user ignores the current user.
      *
-     * @param   int     $userID
+     * @param int $userID
      * @return  bool
      */
     public function isIgnoredByUser($userID)
@@ -323,7 +327,8 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
                             $data = UserStorageHandler::getInstance()->getField('avatar', $this->userID);
                             if ($data === null) {
                                 $this->avatar = new UserAvatar($this->avatarID);
-                                UserStorageHandler::getInstance()->update($this->userID, 'avatar', \serialize($this->avatar));
+                                UserStorageHandler::getInstance()->update($this->userID, 'avatar',
+                                    \serialize($this->avatar));
                             } else {
                                 $this->avatar = \unserialize($data);
                             }
@@ -331,14 +336,16 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
                             $this->avatar = new UserAvatar(null, $this->getDecoratedObject()->data);
                         }
                     } elseif (MODULE_GRAVATAR && $this->enableGravatar) {
-                        $this->avatar = new Gravatar($this->userID, $this->email, ($this->gravatarFileExtension ?: 'png'));
+                        $this->avatar = new Gravatar($this->userID, $this->email,
+                            ($this->gravatarFileExtension ?: 'png'));
                     } else {
                         $parameters = ['avatar' => null];
                         EventHandler::getInstance()->fireAction($this, 'getAvatar', $parameters);
 
                         if ($parameters['avatar'] !== null) {
                             if (!($parameters['avatar'] instanceof IUserAvatar)) {
-                                throw new ImplementationException(\get_class($parameters['avatar']), IUserAvatar::class);
+                                throw new ImplementationException(\get_class($parameters['avatar']),
+                                    IUserAvatar::class);
                             }
 
                             $this->avatar = $parameters['avatar'];
@@ -372,7 +379,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns the user's cover photo.
      *
-     * @param       bool         $isACP          override ban on cover photo
+     * @param bool $isACP override ban on cover photo
      * @return      IUserCoverPhoto
      */
     public function getCoverPhoto($isACP = false)
@@ -381,7 +388,8 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
             if ($this->coverPhotoHash) {
                 if ($isACP || !$this->disableCoverPhoto) {
                     if ($this->canSeeCoverPhoto()) {
-                        $this->coverPhoto = new UserCoverPhoto($this->userID, $this->coverPhotoHash, $this->coverPhotoExtension);
+                        $this->coverPhoto = new UserCoverPhoto($this->userID, $this->coverPhotoHash,
+                            $this->coverPhotoExtension);
                     }
                 }
             }
@@ -501,7 +509,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Prepares the special trophies for the given user ids.
      *
-     * @param       int[]           $userIDs
+     * @param int[] $userIDs
      * @since       5.2
      */
     public static function prepareSpecialTrophies(array $userIDs)
@@ -576,7 +584,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns a new user profile object.
      *
-     * @param   int             $userID
+     * @param int $userID
      * @return  UserProfile
      * @deprecated  3.0, use UserProfileRuntimeCache::getObject()
      */
@@ -588,7 +596,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns a list of user profiles.
      *
-     * @param   int[]       $userIDs
+     * @param int[] $userIDs
      * @return  UserProfile[]
      * @deprecated  3.0, use UserProfileRuntimeCache::getObjects()
      */
@@ -609,7 +617,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns the user profile of the user with the given name.
      *
-     * @param   string      $username
+     * @param string $username
      * @return  UserProfile
      */
     public static function getUserProfileByUsername($username)
@@ -622,7 +630,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns the user profiles of the users with the given names.
      *
-     * @param   string[]    $usernames
+     * @param string[] $usernames
      * @return  UserProfile[]
      */
     public static function getUserProfilesByUsername(array $usernames)
@@ -680,7 +688,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns true if current user fulfills the required permissions.
      *
-     * @param   string      $name
+     * @param string $name
      * @return  bool
      */
     public function isAccessible($name)
@@ -733,7 +741,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns the age of this user.
      *
-     * @param   int     $year
+     * @param int $year
      * @return  int
      */
     public function getAge($year = null)
@@ -769,7 +777,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns the formatted birthday of this user.
      *
-     * @param   int     $year
+     * @param int $year
      * @return  string
      */
     public function getBirthday($year = null)
@@ -796,7 +804,8 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
         $d = new \DateTime();
         $d->setTimezone(WCF::getUser()->getTimeZone());
         $d->setDate($birthdayYear, $month, $day);
-        $dateFormat = (($showYear && $birthdayYear) ? WCF::getLanguage()->get(DateUtil::DATE_FORMAT) : \str_replace('Y', '', WCF::getLanguage()->get(DateUtil::DATE_FORMAT)));
+        $dateFormat = (($showYear && $birthdayYear) ? WCF::getLanguage()->get(DateUtil::DATE_FORMAT) : \str_replace('Y',
+            '', WCF::getLanguage()->get(DateUtil::DATE_FORMAT)));
         $birthday = DateUtil::localizeDate($d->format($dateFormat), $dateFormat, WCF::getLanguage());
 
         if ($showYear) {
@@ -822,7 +831,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns the value of the permission with the given name.
      *
-     * @param   string      $permission
+     * @param string $permission
      * @return  mixed       permission value
      */
     public function getPermission($permission)
@@ -842,7 +851,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      * Returns true if a permission was set to 'Never'. This is required to preserve
      * compatibility, while preventing ACLs from overruling a 'Never' setting.
      *
-     * @param       string          $permission
+     * @param string $permission
      * @return      bool
      */
     public function getNeverPermission($permission)
@@ -1048,7 +1057,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns the formatted value of the user option with the given name.
      *
-     * @param   string      $name
+     * @param string $name
      * @return  mixed
      */
     public function getFormattedUserOption($name)
@@ -1071,7 +1080,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns true, if the active user has access to the user option with the given name.
      *
-     * @param   string      $name
+     * @param string $name
      * @return  bool
      */
     public function isVisibleOption($name)
@@ -1129,7 +1138,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Sets the session-based last activity time.
      *
-     * @param       int         $timestamp
+     * @param int $timestamp
      */
     public function setSessionLastActivityTime($timestamp)
     {
@@ -1142,7 +1151,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      * Such objects can also be used in situations where the relevant user has been deleted
      * but their original username is still known.
      *
-     * @param   string      $username
+     * @param string $username
      * @return  UserProfile
      * @since   3.0
      */

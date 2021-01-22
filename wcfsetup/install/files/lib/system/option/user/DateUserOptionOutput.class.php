@@ -44,7 +44,7 @@ class DateUserOptionOutput implements IUserOptionOutput
     /**
      * Splits the given dashed date into its components.
      *
-     * @param   string      $value
+     * @param string $value
      * @return  int[]
      */
     protected static function splitDate($value)

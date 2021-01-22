@@ -24,7 +24,7 @@ class MediaReplaceUploadFileValidationStrategy extends MediaUploadFileValidation
     /**
      * Creates a new instance of MediaReplaceUploadFileValidationStrategy.
      *
-     * @param       Media           $media
+     * @param Media $media
      */
     public function __construct(Media $media)
     {

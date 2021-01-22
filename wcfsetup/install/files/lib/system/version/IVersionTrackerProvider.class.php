@@ -34,7 +34,7 @@ interface IVersionTrackerProvider extends IObjectTypeProvider
     /**
      * Returns an arbitrary version entry that represents the current version
      *
-     * @param       IVersionTrackerObject   $object         target object
+     * @param IVersionTrackerObject $object target object
      * @return      VersionTrackerEntry
      */
     public function getCurrentVersion(IVersionTrackerObject $object);
@@ -49,7 +49,7 @@ interface IVersionTrackerProvider extends IObjectTypeProvider
     /**
      * Returns the label for provided property.
      *
-     * @param       string          $property       property name
+     * @param string $property property name
      * @return      string          property label
      */
     public function getPropertyLabel($property);
@@ -57,7 +57,7 @@ interface IVersionTrackerProvider extends IObjectTypeProvider
     /**
      * Returns an array containing the values that should be stored in the database.
      *
-     * @param       IVersionTrackerObject   $object         target object
+     * @param IVersionTrackerObject $object target object
      * @return      mixed[]                 property to value mapping
      */
     public function getTrackedData(IVersionTrackerObject $object);
@@ -73,7 +73,7 @@ interface IVersionTrackerProvider extends IObjectTypeProvider
      * Indicates that the payload is provided for each language and that the
      * payload's array indices represent language ids rather than property values.
      *
-     * @param       IVersionTrackerObject   $object         target object
+     * @param IVersionTrackerObject $object target object
      * @return      bool
      */
     public function isI18n(IVersionTrackerObject $object);
@@ -81,8 +81,8 @@ interface IVersionTrackerProvider extends IObjectTypeProvider
     /**
      * Reverts an object to a previous version.
      *
-     * @param       IVersionTrackerObject   $object         target object
-     * @param       VersionTrackerEntry     $entry          previous version
+     * @param IVersionTrackerObject $object target object
+     * @param VersionTrackerEntry $entry previous version
      */
     public function revert(IVersionTrackerObject $object, VersionTrackerEntry $entry);
 }

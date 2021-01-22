@@ -14,7 +14,7 @@ use wcf\system\cache\builder\PackageUpdateCacheBuilder;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Package\Update\Server
  *
- * @method static   PackageUpdateServer create(array $parameters = [])
+ * @method static PackageUpdateServer create(array $parameters = [])
  * @method      PackageUpdateServer getDecoratedObject()
  * @mixin       PackageUpdateServer
  */

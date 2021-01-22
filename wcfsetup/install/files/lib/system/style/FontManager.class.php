@@ -77,7 +77,7 @@ class FontManager extends SingletonFactory
      * Downloads the given font family, stores it in font/families/<family> and
      * returns the decoded font manifest.
      *
-     * @param   string  $family
+     * @param string $family
      * @return  mixed[]
      */
     public function downloadFamily($family)

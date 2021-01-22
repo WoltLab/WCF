@@ -34,7 +34,7 @@ class YouTubeBBCodeMediaProvider implements IBBCodeMediaProvider
     /**
      * Converts the given time parameter into seconds.
      *
-     * @param   string  $time
+     * @param string $time
      * @return  int
      */
     protected function timeToSeconds($time)

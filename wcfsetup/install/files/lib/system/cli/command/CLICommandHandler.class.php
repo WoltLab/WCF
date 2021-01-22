@@ -62,13 +62,13 @@ class CLICommandHandler
     /**
      * Returns a command by the given line.
      *
-     * @param   string      $line
+     * @param string $line
      * @return  ICLICommand
      * @throws  IllegalLinkException
      */
     public static function getCommand($line)
     {
-        [$command, ] = \explode(' ', $line . ' ', 2);
+        [$command,] = \explode(' ', $line . ' ', 2);
 
         if (!isset(self::$commands[\strtolower($command)])) {
             throw new IllegalLinkException();
@@ -80,13 +80,13 @@ class CLICommandHandler
     /**
      * Returns a command by the given line.
      *
-     * @param   string      $line
+     * @param string $line
      * @return  string
      * @throws  IllegalLinkException
      */
     public static function getCommandName($line)
     {
-        [$command, ] = \explode(' ', $line . ' ', 2);
+        [$command,] = \explode(' ', $line . ' ', 2);
 
         if (!isset(self::$commands[\strtolower($command)])) {
             throw new IllegalLinkException();
@@ -98,7 +98,7 @@ class CLICommandHandler
     /**
      * Returns the parameter list of the given line.
      *
-     * @param   string      $line
+     * @param string $line
      * @return  string[]
      */
     public static function getParameters($line)
@@ -116,21 +116,17 @@ class CLICommandHandler
             if ($escaped) {
                 $tmp .= $char;
                 $escaped = false;
-            }
-            // escaping is enabled
+            } // escaping is enabled
             elseif ($char == '\\') {
                 $escaped = true;
-            }
-            // quoting is toggled
+            } // quoting is toggled
             elseif ($char == '"') {
                 $quoted = !$quoted;
-            }
-            // new parameter is begun
+            } // new parameter is begun
             elseif ($char == ' ' && !$quoted) {
                 $return[] = $tmp;
                 $tmp = '';
-            }
-            // other chars are added
+            } // other chars are added
             else {
                 $tmp .= $char;
             }

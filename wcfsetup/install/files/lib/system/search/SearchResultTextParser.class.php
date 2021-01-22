@@ -63,7 +63,7 @@ class SearchResultTextParser extends SingletonFactory
      * Returns an abstract of the given message.
      * Uses search keywords to shift the start and end position of the abstract (like Google).
      *
-     * @param   string      $text
+     * @param string $text
      * @return  string
      */
     protected function getMessageAbstract($text)
@@ -189,7 +189,7 @@ class SearchResultTextParser extends SingletonFactory
     /**
      * Formats a message for search result output.
      *
-     * @param   string      $text
+     * @param string $text
      * @return  string
      */
     public function parse($text)

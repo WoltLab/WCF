@@ -18,7 +18,7 @@ interface IUserGroupGroupOptionType
     /**
      * Sets the active user group object.
      *
-     * @param   UserGroup   $group
+     * @param UserGroup $group
      */
     public function setUserGroup(UserGroup $group);
 

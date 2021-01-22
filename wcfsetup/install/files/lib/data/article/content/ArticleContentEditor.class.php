@@ -13,7 +13,7 @@ use wcf\data\DatabaseObjectEditor;
  * @package WoltLabSuite\Core\Data\Article\Content
  * @since   3.0
  *
- * @method static   ArticleContent  create(array $parameters = [])
+ * @method static ArticleContent  create(array $parameters = [])
  * @method      ArticleContent  getDecoratedObject()
  * @mixin       ArticleContent
  */

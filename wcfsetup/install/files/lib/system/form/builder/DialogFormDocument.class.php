@@ -39,7 +39,7 @@ class DialogFormDocument extends FormDocument
      *
      * For cancelable dialog forms, a cancel button is added.
      *
-     * @param   bool    $cancelable determines if dialog from can be canceled
+     * @param bool $cancelable determines if dialog from can be canceled
      * @return  static          this document
      */
     public function cancelable($cancelable = true)

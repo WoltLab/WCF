@@ -15,7 +15,7 @@ use wcf\system\cache\builder\LabelCacheBuilder;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Label\Group
  *
- * @method static   LabelGroup  create(array $parameters = [])
+ * @method static LabelGroup  create(array $parameters = [])
  * @method      LabelGroup  getDecoratedObject()
  * @mixin       LabelGroup
  */

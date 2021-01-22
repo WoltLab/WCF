@@ -44,10 +44,10 @@ class Installer
     /**
      * Creates a new Installer object.
      *
-     * @param   string      $targetDir
-     * @param   string      $source
-     * @param   IFileHandler    $fileHandler
-     * @param   string      $folder
+     * @param string $targetDir
+     * @param string $source
+     * @param IFileHandler $fileHandler
+     * @param string $folder
      */
     public function __construct($targetDir, $source, $fileHandler = null, $folder = '')
     {
@@ -76,7 +76,7 @@ class Installer
     /**
      * Creates a directory in the target directory.
      *
-     * @param   string      $dir
+     * @param string $dir
      * @throws  SystemException
      */
     protected function createDir($dir)
@@ -96,7 +96,7 @@ class Installer
     /**
      * Touches a file in the target directory.
      *
-     * @param   string      $file
+     * @param string $file
      */
     public function touchFile($file)
     {
@@ -107,9 +107,9 @@ class Installer
     /**
      * Creates a file in the target directory.
      *
-     * @param   string      $file
-     * @param   int     $index
-     * @param   Tar     $tar
+     * @param string $file
+     * @param int $index
+     * @param Tar $tar
      */
     protected function createFile($file, $index, Tar $tar)
     {
@@ -182,7 +182,7 @@ class Installer
     /**
      * Opens a new tar archive.
      *
-     * @param       string          $source
+     * @param string $source
      * @return      Tar
      */
     protected function getTar($source)
@@ -193,7 +193,7 @@ class Installer
     /**
      * Checks whether the given files overwriting locked existing files.
      *
-     * @param   array       $files
+     * @param array $files
      */
     protected function checkFiles(&$files)
     {
@@ -205,7 +205,7 @@ class Installer
     /**
      * Logs the given files.
      *
-     * @param   array       $files
+     * @param array $files
      */
     protected function logFiles(&$files)
     {
@@ -217,7 +217,7 @@ class Installer
     /**
      * Makes a file or directory writeable.
      *
-     * @param   string      $target
+     * @param string $target
      */
     protected function makeWriteable($target)
     {

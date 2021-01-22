@@ -96,11 +96,16 @@ class BirthdayOptionType extends DateOptionType
         $conditions->add('option_value.userOption' . User::getUserOptionID('birthdayShowYear') . ' = ?', [1]);
 
         if ($ageFrom && $ageTo) {
-            $conditions->add('option_value.userOption' . $option->optionID . ' BETWEEN DATE(?) AND DATE(?)', [$dateFrom->format('Y-m-d'), $dateTo->format('Y-m-d')]);
+            $conditions->add('option_value.userOption' . $option->optionID . ' BETWEEN DATE(?) AND DATE(?)',
+                [$dateFrom->format('Y-m-d'), $dateTo->format('Y-m-d')]);
         } elseif ($ageFrom) {
-            $conditions->add('option_value.userOption' . $option->optionID . ' BETWEEN DATE(?) AND DATE(?)', ['1893-01-01', $dateTo->format('Y-m-d')]);
+            $conditions->add('option_value.userOption' . $option->optionID . ' BETWEEN DATE(?) AND DATE(?)',
+                ['1893-01-01', $dateTo->format('Y-m-d')]);
         } else {
-            $conditions->add('option_value.userOption' . $option->optionID . ' BETWEEN DATE(?) AND DATE(?)', [$dateFrom->format('Y-m-d'), DateUtil::getDateTimeByTimestamp(TIME_NOW)->add(new \DateInterval('P1D'))->format('Y-m-d')]);
+            $conditions->add('option_value.userOption' . $option->optionID . ' BETWEEN DATE(?) AND DATE(?)', [
+                $dateFrom->format('Y-m-d'),
+                DateUtil::getDateTimeByTimestamp(TIME_NOW)->add(new \DateInterval('P1D'))->format('Y-m-d'),
+            ]);
         }
 
         return true;
@@ -121,14 +126,21 @@ class BirthdayOptionType extends DateOptionType
         $dateFrom = DateUtil::getDateTimeByTimestamp(TIME_NOW)->sub(new \DateInterval('P' . ($ageTo + 1) . 'Y'))->add(new \DateInterval('P1D'));
         $dateTo = DateUtil::getDateTimeByTimestamp(TIME_NOW)->sub(new \DateInterval('P' . $ageFrom . 'Y'));
 
-        $userList->getConditionBuilder()->add('user_option_value.userOption' . User::getUserOptionID('birthdayShowYear') . ' = ?', [1]);
+        $userList->getConditionBuilder()->add('user_option_value.userOption' . User::getUserOptionID('birthdayShowYear') . ' = ?',
+            [1]);
 
         if ($ageFrom && $ageTo) {
-            $userList->getConditionBuilder()->add('user_option_value.userOption' . $option->optionID . ' BETWEEN DATE(?) AND DATE(?)', [$dateFrom->format('Y-m-d'), $dateTo->format('Y-m-d')]);
+            $userList->getConditionBuilder()->add('user_option_value.userOption' . $option->optionID . ' BETWEEN DATE(?) AND DATE(?)',
+                [$dateFrom->format('Y-m-d'), $dateTo->format('Y-m-d')]);
         } elseif ($ageFrom) {
-            $userList->getConditionBuilder()->add('user_option_value.userOption' . $option->optionID . ' BETWEEN DATE(?) AND DATE(?)', ['1893-01-01', $dateTo->format('Y-m-d')]);
+            $userList->getConditionBuilder()->add('user_option_value.userOption' . $option->optionID . ' BETWEEN DATE(?) AND DATE(?)',
+                ['1893-01-01', $dateTo->format('Y-m-d')]);
         } else {
-            $userList->getConditionBuilder()->add('user_option_value.userOption' . $option->optionID . ' BETWEEN DATE(?) AND DATE(?)', [$dateFrom->format('Y-m-d'), DateUtil::getDateTimeByTimestamp(TIME_NOW)->add(new \DateInterval('P1D'))->format('Y-m-d')]);
+            $userList->getConditionBuilder()->add('user_option_value.userOption' . $option->optionID . ' BETWEEN DATE(?) AND DATE(?)',
+                [
+                    $dateFrom->format('Y-m-d'),
+                    DateUtil::getDateTimeByTimestamp(TIME_NOW)->add(new \DateInterval('P1D'))->format('Y-m-d'),
+                ]);
         }
     }
 

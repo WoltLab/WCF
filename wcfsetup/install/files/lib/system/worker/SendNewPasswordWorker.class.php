@@ -101,7 +101,7 @@ class SendNewPasswordWorker extends AbstractWorker
     /**
      * Resets the password of the given user.
      *
-     * @param   UserEditor  $userEditor
+     * @param UserEditor $userEditor
      */
     protected function resetPassword(UserEditor $userEditor)
     {
@@ -120,7 +120,7 @@ class SendNewPasswordWorker extends AbstractWorker
     /**
      * Send links.
      *
-     * @param   User    $user
+     * @param User $user
      */
     protected function sendLink(User $user)
     {

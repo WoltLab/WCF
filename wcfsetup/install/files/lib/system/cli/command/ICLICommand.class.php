@@ -15,7 +15,7 @@ interface ICLICommand
     /**
      * Executes the command.
      *
-     * @param   array       $parameters
+     * @param array $parameters
      */
     public function execute(array $parameters);
 

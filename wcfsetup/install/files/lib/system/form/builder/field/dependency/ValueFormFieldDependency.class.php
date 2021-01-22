@@ -90,7 +90,7 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency
     /**
      * Sets if the field value may not have any of the set values.
      *
-     * @param   bool        $negate
+     * @param bool $negate
      * @return  static      $this       this dependency
      */
     public function negate($negate = true)
@@ -103,7 +103,7 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency
     /**
      * Sets the possible values the field may have for the dependency to be met.
      *
-     * @param   array|callable|DatabaseObjectList   $values     possible field values
+     * @param array|callable|DatabaseObjectList $values possible field values
      * @return  static      $this                   this dependency
      *
      * @throws  \InvalidArgumentException               if given value are no array, callable, DatabaseObjectList, or otherwise invalid

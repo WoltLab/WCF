@@ -39,7 +39,7 @@ class MenuCache extends SingletonFactory
     /**
      * Returns a menu by id.
      *
-     * @param   int     $menuID     menu id
+     * @param int $menuID menu id
      * @return  Menu|null   menu object or null if menu id is unknown
      */
     public function getMenuByID($menuID)
@@ -52,7 +52,7 @@ class MenuCache extends SingletonFactory
     /**
      * Returns a menu item list by menu id.
      *
-     * @param   int         $menuID     menu id
+     * @param int $menuID menu id
      * @return  MenuItemList|null   menu item list object or null if menu id is unknown
      */
     public function getMenuItemsByMenuID($menuID)

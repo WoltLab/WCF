@@ -70,7 +70,7 @@ class SingleMediaSelectionFormField extends AbstractFormField implements IImmuta
     /**
      * Sets if only images can be selected and returns this field.
      *
-     * @param   bool        $imageOnly
+     * @param bool $imageOnly
      * @return  static              this field
      */
     public function imageOnly($imageOnly = true)

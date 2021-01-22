@@ -27,7 +27,7 @@ interface IFormFieldDependency
     /**
      * Sets the node whose availability depends on the value of a field.
      *
-     * @param   IFormNode   $node       dependent node
+     * @param IFormNode $node dependent node
      * @return  static              this dependency
      *
      * @throws  \BadMethodCallException     if no dependent node has been set
@@ -37,7 +37,7 @@ interface IFormFieldDependency
     /**
      * Sets the field the availability of the node dependents on.
      *
-     * @param   IFormField  $field      field
+     * @param IFormField $field field
      * @return  static              this dependency
      *
      * @throws  \BadMethodCallException     if no field has been set
@@ -50,7 +50,7 @@ interface IFormFieldDependency
      * This method should only be used before building the form as afterwards,
      * the actual field is no automatically set.
      *
-     * @param   string      $fieldId    field id
+     * @param string $fieldId field id
      * @return  static              this dependency
      *
      * @throws  \BadMethodCallException     if the field has already been set
@@ -97,7 +97,7 @@ interface IFormFieldDependency
     /**
      * Creates a new dependency with the given id.
      *
-     * @param   string      $id     id of the created dependency
+     * @param string $id id of the created dependency
      * @return  static              newly created dependency
      *
      * @throws  \InvalidArgumentException   if the given id is invalid

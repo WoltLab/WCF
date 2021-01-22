@@ -18,7 +18,7 @@ interface IFormNode
     /**
      * Adds the given CSS class to this node and returns this node.
      *
-     * @param   string      $class      added CSS class name
+     * @param string $class added CSS class name
      * @return  static              this node
      *
      * @throws  \InvalidArgumentException   if the given class is invalid
@@ -28,7 +28,7 @@ interface IFormNode
     /**
      * Adds the given CSS classes to this node and returns this node.
      *
-     * @param   string[]    $classes    names added CSS classes
+     * @param string[] $classes names added CSS classes
      * @return  static              this node
      *
      * @throws  \InvalidArgumentException   if any of the given classes is invalid
@@ -43,7 +43,7 @@ interface IFormNode
      * This method is expected to set the dependent node of the given dependency
      * to this element.
      *
-     * @param   IFormFieldDependency    $dependency added node dependency
+     * @param IFormFieldDependency $dependency added node dependency
      * @return  static                  this node
      */
     public function addDependency(IFormFieldDependency $dependency);
@@ -53,8 +53,8 @@ interface IFormNode
      *
      * The value of an existing attribute is overwritten by the new value.
      *
-     * @param   string      $name       attribute name
-     * @param   null|string $value      attribute value
+     * @param string $name attribute name
+     * @param null|string $value attribute value
      * @return  static              this node
      *
      * @throws  \InvalidArgumentException   if an invalid name or value is given (some attribute names are invalid as there are specific methods for setting that attribute)
@@ -78,7 +78,7 @@ interface IFormNode
      * form field values while this method manages static availability that is independent
      * of form field values and only depends on external factors.
      *
-     * @param   bool        $available  determines if node is available
+     * @param bool $available determines if node is available
      * @return  static              this node
      */
     public function available($available = true);
@@ -103,7 +103,7 @@ interface IFormNode
     /**
      * Returns the value of the additional attribute of this node with the given name.
      *
-     * @param   string      $name       attribute name
+     * @param string $name attribute name
      * @return  mixed               attribute value
      *
      * @throws  \InvalidArgumentException   if the given name is invalid or no such attribute exists
@@ -181,7 +181,7 @@ interface IFormNode
      * Returns `true` if an additional attribute with the given name exists and returns
      * `false` otherwise.
      *
-     * @param   string      $name       attribute name
+     * @param string $name attribute name
      * @return  bool
      *
      * @throws  \InvalidArgumentException   if the given attribute name is invalid
@@ -191,7 +191,7 @@ interface IFormNode
     /**
      * Returns `true` if a CSS class with the given name exists and returns `false` otherwise.
      *
-     * @param   string      $class      checked CSS class
+     * @param string $class checked CSS class
      * @return  bool
      *
      * @throws  \InvalidArgumentException   if the given class is invalid
@@ -202,7 +202,7 @@ interface IFormNode
      * Returns `true` if this node has a dependency with the given id and
      * returns `false` otherwise.
      *
-     * @param   string      $dependencyId   id of the checked dependency
+     * @param string $dependencyId id of the checked dependency
      * @return  bool
      *
      * @throws  \InvalidArgumentException   if the given id is invalid
@@ -212,7 +212,7 @@ interface IFormNode
     /**
      * Sets the id of the node.
      *
-     * @param   string      $id     new id of node
+     * @param string $id new id of node
      * @return  static              this node
      *
      * @throws  \BadMethodCallException     if id has already been set
@@ -249,7 +249,7 @@ interface IFormNode
      * If this node does not have the given attribute, this method silently
      * ignores that fact.
      *
-     * @param   string      $name       removed attribute
+     * @param string $name removed attribute
      * @return  static              this node
      *
      * @throws  \InvalidArgumentException   if the given attribute is invalid
@@ -262,7 +262,7 @@ interface IFormNode
      * If this node does not have the given CSS class, this method silently
      * ignores that fact.
      *
-     * @param   string      $class      removed CSS class
+     * @param string $class removed CSS class
      * @return  static              this node
      *
      * @throws  \InvalidArgumentException   if the given class is invalid
@@ -272,7 +272,7 @@ interface IFormNode
     /**
      * Removes the dependency with the given id and returns this node.
      *
-     * @param   string      $dependencyId   id of the removed dependency
+     * @param string $dependencyId id of the removed dependency
      * @return  static              this node
      *
      * @throws  \InvalidArgumentException   if the given id is invalid or no such dependency exists
@@ -290,7 +290,7 @@ interface IFormNode
     /**
      * Creates a new element with the given id.
      *
-     * @param   string      $id node id
+     * @param string $id node id
      * @return  static          this node
      *
      * @throws  \InvalidArgumentException   if the given id is already used by another element or otherwise is invalid
@@ -300,7 +300,7 @@ interface IFormNode
     /**
      * Checks if the given attribute name class a and a valid attribute name.
      *
-     * @param   string      $name       checked argument name
+     * @param string $name checked argument name
      *
      * @throws  \InvalidArgumentException   if the given attribute name is invalid
      */
@@ -309,7 +309,7 @@ interface IFormNode
     /**
      * Checks if the given parameter class a and a valid node class.
      *
-     * @param   string      $class      checked class
+     * @param string $class checked class
      *
      * @throws  \InvalidArgumentException   if the given id is invalid
      */
@@ -318,7 +318,7 @@ interface IFormNode
     /**
      * Checks if the given parameter is a and a valid node id.
      *
-     * @param   string      $id     checked id
+     * @param string $id checked id
      *
      * @throws  \InvalidArgumentException   if the given id is invalid
      */

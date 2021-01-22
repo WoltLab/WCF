@@ -15,14 +15,14 @@ interface IDatabaseObjectProcessor
     /**
      * Creates a new instance of a database object processor.
      *
-     * @param   DatabaseObject      $object
+     * @param DatabaseObject $object
      */
     public function __construct(DatabaseObject $object);
 
     /**
      * Delegates accesses to inaccessible object properties the processed object.
      *
-     * @param   string      $name
+     * @param string $name
      * @return  mixed
      */
     public function __get($name);
@@ -31,7 +31,7 @@ interface IDatabaseObjectProcessor
      * Delegates isset calls for inaccessible object properties to the processed
      * object.
      *
-     * @param   string      $name
+     * @param string $name
      * @return  bool
      */
     public function __isset($name);
@@ -39,8 +39,8 @@ interface IDatabaseObjectProcessor
     /**
      * Delegates inaccessible method calls to the processed database object.
      *
-     * @param   string      $name
-     * @param   array       $arguments
+     * @param string $name
+     * @param array $arguments
      * @return  mixed
      */
     public function __call($name, $arguments);

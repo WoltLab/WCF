@@ -57,7 +57,7 @@ class TagCloud
     /**
      * Constructs a new TagCloud object.
      *
-     * @param   int[]   $languageIDs
+     * @param int[] $languageIDs
      */
     public function __construct(array $languageIDs = [])
     {
@@ -81,7 +81,7 @@ class TagCloud
     /**
      * Returns a list of weighted tags.
      *
-     * @param   int     $slice
+     * @param int $slice
      * @return  TagCloudTag[]   the tags to get
      */
     public function getTags($slice = 50)
@@ -115,7 +115,7 @@ class TagCloud
     /**
      * Calculates the weight of the tag based on the given tag count.
      *
-     * @param   int     $counter
+     * @param int $counter
      * @return  float|int
      */
     private function calculateWeight($counter)

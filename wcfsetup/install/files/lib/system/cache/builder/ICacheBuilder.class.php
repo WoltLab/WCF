@@ -15,8 +15,8 @@ interface ICacheBuilder
     /**
      * Returns the data that ought to be cached.
      *
-     * @param   array       $parameters
-     * @param   string      $arrayIndex
+     * @param array $parameters
+     * @param string $arrayIndex
      * @return  mixed
      */
     public function getData(array $parameters = [], $arrayIndex = '');
@@ -32,7 +32,7 @@ interface ICacheBuilder
      * Flushes cache. If no parameters are given, all caches starting with
      * the same cache name will be flushed too.
      *
-     * @param   array       $parameters
+     * @param array $parameters
      */
     public function reset(array $parameters = []);
 }

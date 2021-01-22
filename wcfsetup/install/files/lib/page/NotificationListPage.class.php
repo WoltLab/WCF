@@ -56,7 +56,8 @@ class NotificationListPage extends MultipleLinkPage
     {
         parent::readData();
 
-        $this->notifications = UserNotificationHandler::getInstance()->getNotifications($this->sqlLimit, $this->sqlOffset, true);
+        $this->notifications = UserNotificationHandler::getInstance()->getNotifications($this->sqlLimit,
+            $this->sqlOffset, true);
     }
 
     /**

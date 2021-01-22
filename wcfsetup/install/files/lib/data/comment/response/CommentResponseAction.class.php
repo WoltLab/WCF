@@ -145,12 +145,14 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
             // remove activity events
             $objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
             if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType . '.response.recentActivityEvent')) {
-                UserActivityEventHandler::getInstance()->removeEvents($objectType->objectType . '.response.recentActivityEvent', $objectIDs);
+                UserActivityEventHandler::getInstance()->removeEvents($objectType->objectType . '.response.recentActivityEvent',
+                    $objectIDs);
             }
 
             // delete notifications
             if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.response.notification')) {
-                UserNotificationHandler::getInstance()->removeNotifications($objectType->objectType . '.response.notification', $objectIDs);
+                UserNotificationHandler::getInstance()->removeNotifications($objectType->objectType . '.response.notification',
+                    $objectIDs);
             }
 
             $likeObjectIDs = \array_merge($likeObjectIDs, $objectIDs);
@@ -162,7 +164,8 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
 
         // remove likes
         if (!empty($likeObjectIDs)) {
-            ReactionHandler::getInstance()->removeReactions('com.woltlab.wcf.comment.response', $likeObjectIDs, $notificationObjectTypes);
+            ReactionHandler::getInstance()->removeReactions('com.woltlab.wcf.comment.response', $likeObjectIDs,
+                $notificationObjectTypes);
         }
 
         return $count;
@@ -195,11 +198,13 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
      */
     public function loadResponses()
     {
-        $commentCanModerate = $this->commentManager->canModerate($this->comment->objectTypeID, $this->comment->objectID);
+        $commentCanModerate = $this->commentManager->canModerate($this->comment->objectTypeID,
+            $this->comment->objectID);
 
         // get response list
         $responseList = new StructuredCommentResponseList($this->commentManager, $this->comment);
-        $responseList->getConditionBuilder()->add("comment_response.time > ?", [$this->parameters['data']['lastResponseTime']]);
+        $responseList->getConditionBuilder()->add("comment_response.time > ?",
+            [$this->parameters['data']['lastResponseTime']]);
         if (!$commentCanModerate) {
             $responseList->getConditionBuilder()->add("comment_response.isDisabled = ?", [0]);
         }
@@ -320,12 +325,15 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
         CommentHandler::enforceCensorship($this->parameters['data']['message']);
 
         $this->setDisallowedBBCodes();
-        $htmlInputProcessor = $this->getHtmlInputProcessor($this->parameters['data']['message'], ($this->comment !== null ? $this->comment->commentID : 0));
+        $htmlInputProcessor = $this->getHtmlInputProcessor($this->parameters['data']['message'],
+            ($this->comment !== null ? $this->comment->commentID : 0));
 
         // search for disallowed bbcodes
         $disallowedBBCodes = $htmlInputProcessor->validate();
         if (!empty($disallowedBBCodes)) {
-            throw new UserInputException('text', WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes', ['disallowedBBCodes' => $disallowedBBCodes]));
+            throw new UserInputException('text',
+                WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes',
+                    ['disallowedBBCodes' => $disallowedBBCodes]));
         }
 
         if ($htmlInputProcessor->appearsToBeEmpty()) {
@@ -338,7 +346,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
     /**
      * Validates object type id parameter.
      *
-     * @param       int         $objectTypeID
+     * @param int $objectTypeID
      * @return  ObjectType
      * @throws  UserInputException
      */
@@ -362,14 +370,15 @@ class CommentResponseAction extends AbstractDatabaseObjectAction
      */
     protected function setDisallowedBBCodes()
     {
-        BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(',', WCF::getSession()->getPermission('user.comment.disallowedBBCodes')));
+        BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(',',
+            WCF::getSession()->getPermission('user.comment.disallowedBBCodes')));
     }
 
     /**
      * Returns the current html input processor or a new one if `$message` is not null.
      *
-     * @param       string|null     $message        source message
-     * @param       int         $objectID       object id
+     * @param string|null $message source message
+     * @param int $objectID object id
      * @return      HtmlInputProcessor
      */
     public function getHtmlInputProcessor($message = null, $objectID = 0)

@@ -35,7 +35,7 @@ abstract class AbstractNamedFormElement extends AbstractFormElement
     /**
      * Sets element description.
      *
-     * @param   string      $description
+     * @param string $description
      */
     public function setDescription($description)
     {
@@ -55,7 +55,7 @@ abstract class AbstractNamedFormElement extends AbstractFormElement
     /**
      * Sets element name.
      *
-     * @param   string      $name
+     * @param string $name
      */
     public function setName($name)
     {
@@ -75,7 +75,7 @@ abstract class AbstractNamedFormElement extends AbstractFormElement
     /**
      * Sets element value.
      *
-     * @param   string      $value
+     * @param string $value
      */
     public function setValue($value)
     {

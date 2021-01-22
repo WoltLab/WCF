@@ -103,8 +103,8 @@ class PackageArchive
     /**
      * Creates a new PackageArchive object.
      *
-     * @param   string      $archive
-     * @param   Package     $package
+     * @param string $archive
+     * @param Package $package
      */
     public function __construct($archive, ?Package $package = null)
     {
@@ -116,7 +116,7 @@ class PackageArchive
     /**
      * Sets associated package object.
      *
-     * @param   Package     $package
+     * @param Package $package
      */
     public function setPackage(Package $package)
     {
@@ -515,7 +515,7 @@ class PackageArchive
      * Checks if the new package is compatible with
      * the package that is about to be updated.
      *
-     * @param   Package     $package
+     * @param Package $package
      * @return  bool        isValidUpdate
      */
     public function isValidUpdate(?Package $package = null)
@@ -591,7 +591,7 @@ class PackageArchive
     /**
      * Returns information about the author of this package archive.
      *
-     * @param   string      $name       name of the requested information
+     * @param string $name name of the requested information
      * @return  string
      */
     public function getAuthorInfo($name)
@@ -604,7 +604,7 @@ class PackageArchive
     /**
      * Returns information about this package.
      *
-     * @param   string      $name       name of the requested information
+     * @param string $name name of the requested information
      * @return  mixed
      */
     public function getPackageInfo($name)
@@ -617,7 +617,7 @@ class PackageArchive
     /**
      * Returns a localized information about this package.
      *
-     * @param   string      $name
+     * @param string $name
      * @return  string
      */
     public function getLocalizedPackageInfo($name)
@@ -745,7 +745,8 @@ class PackageArchive
                 // check required package version
                 if (
                     isset($requirements[$row['package']]['minversion'])
-                    && Package::compareVersion($row['packageVersion'], $requirements[$row['package']]['minversion']) == -1
+                    && Package::compareVersion($row['packageVersion'],
+                        $requirements[$row['package']]['minversion']) == -1
                 ) {
                     continue;
                 }
@@ -823,7 +824,8 @@ class PackageArchive
                 // package does already exist
                 // maybe an update is necessary
                 if (isset($requirement['minversion'])) {
-                    if (Package::compareVersion($existingPackages[$requirement['name']]['packageVersion'], $requirement['minversion']) >= 0) {
+                    if (Package::compareVersion($existingPackages[$requirement['name']]['packageVersion'],
+                            $requirement['minversion']) >= 0) {
                         // package does already exist in needed version
                         // skip installation of requirement
                         continue;
@@ -853,8 +855,8 @@ class PackageArchive
      * Extracts the requested file in the package archive to the temp folder
      * and returns the path to the extracted file.
      *
-     * @param   string      $filename
-     * @param   string      $tempPrefix
+     * @param string $filename
+     * @param string $tempPrefix
      * @return  string
      * @throws  PackageValidationException
      */
@@ -883,7 +885,7 @@ class PackageArchive
     /**
      * Unzips compressed package archives and returns the temporary file name.
      *
-     * @param   string      $archive    filename
+     * @param string $archive filename
      * @return  string
      */
     public static function unzipPackageArchive($archive)
@@ -970,7 +972,7 @@ class PackageArchive
     /**
      * Returns a list of instructions for installation or update.
      *
-     * @param   string      $type
+     * @param string $type
      * @return  array
      */
     public function getInstructions($type)

@@ -27,7 +27,7 @@ class ActiveStyle extends DatabaseObjectDecorator
     /**
      * Returns full path to specified image.
      *
-     * @param   string      $image
+     * @param string $image
      * @return  string
      */
     public function getImage($image)

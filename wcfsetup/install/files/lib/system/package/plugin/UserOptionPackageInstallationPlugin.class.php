@@ -58,7 +58,26 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
      * list of names of tags which aren't considered as additional data
      * @var string[]
      */
-    public static $reservedTags = ['name', 'optiontype', 'defaultvalue', 'validationpattern', 'required', 'editable', 'visible', 'searchable', 'showorder', 'outputclass', 'selectoptions', 'enableoptions', 'isdisabled', 'categoryname', 'permissions', 'options', 'attrs', 'cdata'];
+    public static $reservedTags = [
+        'name',
+        'optiontype',
+        'defaultvalue',
+        'validationpattern',
+        'required',
+        'editable',
+        'visible',
+        'searchable',
+        'showorder',
+        'outputclass',
+        'selectoptions',
+        'enableoptions',
+        'isdisabled',
+        'categoryname',
+        'permissions',
+        'options',
+        'attrs',
+        'cdata',
+    ];
 
     /**
      * @inheritDoc
@@ -200,8 +219,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
             $userOption = new UserOption(null, $result);
             $userOptionEditor = new UserOptionEditor($userOption);
             $userOptionEditor->update($data);
-        }
-        // insert new option
+        } // insert new option
         else {
             // append option name
             $data['optionName'] = $optionName;

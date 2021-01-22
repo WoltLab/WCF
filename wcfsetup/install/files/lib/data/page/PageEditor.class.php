@@ -21,7 +21,7 @@ use wcf\util\FileUtil;
  * @package WoltLabSuite\Core\Data\Page
  * @since   3.0
  *
- * @method static   Page    create(array $parameters = [])
+ * @method static Page    create(array $parameters = [])
  * @method      Page    getDecoratedObject()
  * @mixin       Page
  */
@@ -35,8 +35,8 @@ class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Creates or updates the page's template file.
      *
-     * @param       int         $languageID     language id or `null`
-     * @param       string          $content        template content
+     * @param int $languageID language id or `null`
+     * @param string $content template content
      */
     public function updateTemplate($languageID, $content)
     {
@@ -62,8 +62,8 @@ class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject
     /**
      * Returns true if given custom url is unique.
      *
-     * @param       string          $customURL
-     * @param       int         $packageID
+     * @param string $customURL
+     * @param int $packageID
      *
      * @return      bool
      */

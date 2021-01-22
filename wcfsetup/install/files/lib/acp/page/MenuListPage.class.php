@@ -14,7 +14,7 @@ use wcf\page\SortablePage;
  * @package WoltLabSuite\Core\Acp\Page
  * @since   3.0
  *
- * @property    MenuList    $objectList
+ * @property    MenuList $objectList
  */
 class MenuListPage extends SortablePage
 {

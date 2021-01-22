@@ -50,7 +50,7 @@ class MultilineTextFormField extends TextFormField
     /**
      * Sets the number of rows of the textarea and returns this field.
      *
-     * @param   int $rows           number of textarea rows
+     * @param int $rows number of textarea rows
      * @return  static              this field
      *
      * @throws  \InvalidArgumentException   if given number of rows is invalid

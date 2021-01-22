@@ -49,7 +49,7 @@ trait TWysiwygFormNode
     /**
      * Sets the id of the related `WysiwygFormField` form field and returns this field.
      *
-     * @param   string      $wysiwygId
+     * @param string $wysiwygId
      * @return  static              this field
      */
     public function wysiwygId($wysiwygId)

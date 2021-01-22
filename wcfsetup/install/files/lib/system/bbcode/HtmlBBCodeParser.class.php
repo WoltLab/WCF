@@ -29,7 +29,22 @@ class HtmlBBCodeParser extends BBCodeParser
      * list of bbcodes that cannot be nested
      * @var string[]
      */
-    public static $disallowNesting = ['attach', 'b', 'code', 'email', 'i', 'img', 'media', 's', 'tt', 'u', 'url', 'user', 'wsm', 'wsp'];
+    public static $disallowNesting = [
+        'attach',
+        'b',
+        'code',
+        'email',
+        'i',
+        'img',
+        'media',
+        's',
+        'tt',
+        'u',
+        'url',
+        'user',
+        'wsm',
+        'wsp',
+    ];
 
     /**
      * tag names used to isolate bbcodes contained in source code elements
@@ -68,12 +83,13 @@ class HtmlBBCodeParser extends BBCodeParser
     {
         $codeBlocks = [];
         foreach (self::$codeTagNames as $tagName) {
-            $text = \preg_replace_callback('~(<' . $tagName . '[^>]+>)([\s\S]+?)(<\/' . $tagName . ')~', static function ($matches) use (&$codeBlocks) {
-                $uuid = StringUtil::getUUID();
-                $codeBlocks[$uuid] = $matches[2];
+            $text = \preg_replace_callback('~(<' . $tagName . '[^>]+>)([\s\S]+?)(<\/' . $tagName . ')~',
+                static function ($matches) use (&$codeBlocks) {
+                    $uuid = StringUtil::getUUID();
+                    $codeBlocks[$uuid] = $matches[2];
 
-                return $matches[1] . '###' . $uuid . '###' . $matches[3];
-            }, $text);
+                    return $matches[1] . '###' . $uuid . '###' . $matches[3];
+                }, $text);
         }
 
         $this->setText($text);
@@ -97,7 +113,7 @@ class HtmlBBCodeParser extends BBCodeParser
     /**
      * Enables or disables Google AMP support.
      *
-     * @param       bool         $isGoogleAmp
+     * @param bool $isGoogleAmp
      * @since       3.1
      */
     public function setIsGoogleAmp($isGoogleAmp)
@@ -330,9 +346,9 @@ class HtmlBBCodeParser extends BBCodeParser
     /**
      * Builds the bbcode output.
      *
-     * @param   string      $name       bbcode identifier
-     * @param   array       $attributes list of attributes
-     * @param       \DOMElement     $element        element
+     * @param string $name bbcode identifier
+     * @param array $attributes list of attributes
+     * @param \DOMElement $element element
      * @return  string      parsed bbcode
      */
     public function getHtmlOutput($name, array $attributes, \DOMElement $element)
@@ -363,9 +379,9 @@ class HtmlBBCodeParser extends BBCodeParser
     /**
      * Builds a plain bbcode string, used for unknown bbcodes.
      *
-     * @param   string      $name           bbcode identifier
-     * @param   array       $attributes     list of attributes
-     * @param   bool        $openingTagOnly     only render the opening tag
+     * @param string $name bbcode identifier
+     * @param array $attributes list of attributes
+     * @param bool $openingTagOnly only render the opening tag
      * @return  string
      */
     public function buildBBCodeTag($name, $attributes, $openingTagOnly = false)
@@ -443,9 +459,9 @@ class HtmlBBCodeParser extends BBCodeParser
     /**
      * Compiles tag fragments into the custom HTML element.
      *
-     * @param   array   $openingTag opening tag data
-     * @param   string  $content    content between opening and closing tag
-     * @param   array   $closingTag closing tag data
+     * @param array $openingTag opening tag data
+     * @param string $content content between opening and closing tag
+     * @param array $closingTag closing tag data
      * @return  string  custom HTML element
      */
     protected function compileTag(array $openingTag, $content, array $closingTag)
@@ -520,7 +536,7 @@ class HtmlBBCodeParser extends BBCodeParser
     /**
      * Returns true if provided name is a valid bbcode identifier.
      *
-     * @param   string      $name       bbcode identifier
+     * @param string $name bbcode identifier
      * @return  bool        true if provided name is a valid bbcode identifier
      */
     protected function isValidBBCodeName($name)

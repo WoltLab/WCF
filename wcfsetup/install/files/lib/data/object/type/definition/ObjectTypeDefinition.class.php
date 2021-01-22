@@ -12,11 +12,11 @@ use wcf\data\DatabaseObject;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Object\Type\Definition
  *
- * @property-read   int     $definitionID       unique id of the object type definition
- * @property-read   string      $definitionName     textual identifier of the object type definition
- * @property-read   int     $packageID      id of the package the which delivers the object type definition
- * @property-read   string      $interfaceName      PHP interface name the PHP classes of the object types' processors need to implement
- * @property-read   string      $categoryName
+ * @property-read   int $definitionID       unique id of the object type definition
+ * @property-read   string $definitionName     textual identifier of the object type definition
+ * @property-read   int $packageID      id of the package the which delivers the object type definition
+ * @property-read   string $interfaceName      PHP interface name the PHP classes of the object types' processors need to implement
+ * @property-read   string $categoryName
  */
 class ObjectTypeDefinition extends DatabaseObject
 {

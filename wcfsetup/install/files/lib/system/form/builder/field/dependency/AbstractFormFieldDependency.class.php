@@ -142,7 +142,7 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency
     /**
      * Sets the id of this dependency and returns this dependency.
      *
-     * @param   string      $id     id of the dependency
+     * @param string $id id of the dependency
      * @return  static      $this       this dependency
      *
      * @throws  \InvalidArgumentException   if given id no or otherwise invalid

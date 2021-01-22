@@ -48,8 +48,8 @@ class GroupedUserList implements \Countable, \Iterator
     /**
      * Creates a new grouped list of users.
      *
-     * @param   string      $groupName
-     * @param   string      $noUsersMessage
+     * @param string $groupName
+     * @param string $noUsersMessage
      */
     public function __construct($groupName = '', $noUsersMessage = '')
     {
@@ -88,7 +88,7 @@ class GroupedUserList implements \Countable, \Iterator
     /**
      * Adds a list of user ids to this group.
      *
-     * @param   int[]       $userIDs
+     * @param int[] $userIDs
      */
     public function addUserIDs(array $userIDs)
     {

@@ -19,15 +19,15 @@ interface ISearchableObjectType
     /**
      * Caches the data for the given object ids.
      *
-     * @param   array       $objectIDs
-     * @param   array       $additionalData
+     * @param array $objectIDs
+     * @param array $additionalData
      */
     public function cacheObjects(array $objectIDs, ?array $additionalData = null);
 
     /**
      * Returns the object with the given object id.
      *
-     * @param   int     $objectID
+     * @param int $objectID
      * @return  ISearchResultObject
      */
     public function getObject($objectID);
@@ -35,7 +35,7 @@ interface ISearchableObjectType
     /**
      * Shows the form part of this object type.
      *
-     * @param   IForm       $form       instance of the form class where the search has taken place
+     * @param IForm $form instance of the form class where the search has taken place
      */
     public function show(?IForm $form = null);
 
@@ -49,7 +49,7 @@ interface ISearchableObjectType
     /**
      * Returns the search conditions of this message type or `null` if no special search conditions are necessary.
      *
-     * @param   IForm       $form
+     * @param IForm $form
      * @return  PreparedStatementConditionBuilder|null
      */
     public function getConditions(?IForm $form = null);
@@ -121,9 +121,9 @@ interface ISearchableObjectType
      * Replaces the outer SQL query with a custom version. Querying the search index requires the
      * placeholder {WCF_SEARCH_INNER_JOIN} within an empty INNER JOIN() statement.
      *
-     * @param   string                  $q
-     * @param   PreparedStatementConditionBuilder   $searchIndexConditions
-     * @param   PreparedStatementConditionBuilder   $additionalConditions
+     * @param string $q
+     * @param PreparedStatementConditionBuilder $searchIndexConditions
+     * @param PreparedStatementConditionBuilder $additionalConditions
      * @return  string
      */
     public function getOuterSQLQuery(

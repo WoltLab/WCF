@@ -16,10 +16,10 @@ use wcf\system\request\IRouteController;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\User\Group\Assignment
  *
- * @property-read   int     $assignmentID       unique id of the automatic user group assignment
- * @property-read   int     $groupID        id of the user group to which users are automatically assigned
- * @property-read   string      $title          title of the automatic user group assignment
- * @property-read   int     $isDisabled     is `1` if the user group assignment is disabled and thus not checked for automatic assignments, otherwise `0`
+ * @property-read   int $assignmentID       unique id of the automatic user group assignment
+ * @property-read   int $groupID        id of the user group to which users are automatically assigned
+ * @property-read   string $title          title of the automatic user group assignment
+ * @property-read   int $isDisabled     is `1` if the user group assignment is disabled and thus not checked for automatic assignments, otherwise `0`
  */
 class UserGroupAssignment extends DatabaseObject implements IRouteController
 {
@@ -30,7 +30,8 @@ class UserGroupAssignment extends DatabaseObject implements IRouteController
      */
     public function getConditions()
     {
-        return ConditionHandler::getInstance()->getConditions('com.woltlab.wcf.condition.userGroupAssignment', $this->assignmentID);
+        return ConditionHandler::getInstance()->getConditions('com.woltlab.wcf.condition.userGroupAssignment',
+            $this->assignmentID);
     }
 
     /**

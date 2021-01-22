@@ -18,7 +18,7 @@ interface ILabelObjectHandler
     /**
      * Returns a list of label group ids.
      *
-     * @param   array       $parameters
+     * @param array $parameters
      * @return  int[]
      */
     public function getLabelGroupIDs(array $parameters = []);
@@ -26,7 +26,7 @@ interface ILabelObjectHandler
     /**
      * Returns a list of label groups.
      *
-     * @param   array       $parameters
+     * @param array $parameters
      * @return  ViewableLabelGroup[]
      */
     public function getLabelGroups(array $parameters = []);
@@ -34,9 +34,9 @@ interface ILabelObjectHandler
     /**
      * Returns true, if all given label ids are valid and accessible.
      *
-     * @param   int[]   $labelIDs
-     * @param   string      $optionName
-     * @param   bool        $legacyReturnValue
+     * @param int[] $labelIDs
+     * @param string $optionName
+     * @param bool $legacyReturnValue
      * @return  mixed
      */
     public function validateLabelIDs(array $labelIDs, $optionName = '', $legacyReturnValue = true);
@@ -44,9 +44,9 @@ interface ILabelObjectHandler
     /**
      * Assigns labels to an object.
      *
-     * @param   int[]       $labelIDs
-     * @param   int         $objectID
-     * @param   bool            $validatePermissions
+     * @param int[] $labelIDs
+     * @param int $objectID
+     * @param bool $validatePermissions
      * @see     \wcf\system\label\LabelHandler::setLabels()
      */
     public function setLabels(array $labelIDs, $objectID, $validatePermissions = true);
@@ -54,8 +54,8 @@ interface ILabelObjectHandler
     /**
      * Removes all assigned labels.
      *
-     * @param   int     $objectID
-     * @param   bool        $validatePermissions
+     * @param int $objectID
+     * @param bool $validatePermissions
      * @see     \wcf\system\label\LabelHandler::removeLabels()
      */
     public function removeLabels($objectID, $validatePermissions = true);
@@ -63,8 +63,8 @@ interface ILabelObjectHandler
     /**
      * Returns a list of assigned labels.
      *
-     * @param   int[]       $objectIDs
-     * @param   bool            $validatePermissions
+     * @param int[] $objectIDs
+     * @param bool $validatePermissions
      * @return  Label[]
      */
     public function getAssignedLabels(array $objectIDs, $validatePermissions = true);

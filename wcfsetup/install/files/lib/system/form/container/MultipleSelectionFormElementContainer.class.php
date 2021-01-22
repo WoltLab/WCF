@@ -21,7 +21,7 @@ class MultipleSelectionFormElementContainer extends SelectionFormElementContaine
     /**
      * Sets container value.
      *
-     * @param   array       $value
+     * @param array $value
      */
     public function setValue(array $value)
     {

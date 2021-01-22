@@ -55,7 +55,8 @@ class EventHandler extends SingletonFactory
      */
     protected function loadActions()
     {
-        $environment = ((\class_exists('wcf\system\WCFACP', false) || \class_exists('wcf\system\CLIWCF', false)) ? 'admin' : 'user');
+        $environment = ((\class_exists('wcf\system\WCFACP', false) || \class_exists('wcf\system\CLIWCF',
+                false)) ? 'admin' : 'user');
         $cache = EventListenerCacheBuilder::getInstance()->getData();
 
         if (isset($cache['actions'][$environment])) {
@@ -77,11 +78,11 @@ class EventHandler extends SingletonFactory
     /**
      * Executes all inherited listeners for the given event.
      *
-     * @param   mixed       $eventObj
-     * @param   string      $eventName
-     * @param   string      $className
-     * @param   string      $name
-     * @param   array       &$parameters
+     * @param mixed $eventObj
+     * @param string $eventName
+     * @param string $className
+     * @param string $name
+     * @param array       &$parameters
      * @throws  SystemException
      */
     protected function executeInheritedActions($eventObj, $eventName, $className, $name, array &$parameters)
@@ -118,10 +119,13 @@ class EventHandler extends SingletonFactory
                                     if (!\class_exists($eventListener->listenerClassName)) {
                                         throw new SystemException("Unable to find class '" . $eventListener->listenerClassName . "'");
                                     }
-                                    if (!\is_subclass_of($eventListener->listenerClassName, IParameterizedEventListener::class)) {
+                                    if (!\is_subclass_of($eventListener->listenerClassName,
+                                        IParameterizedEventListener::class)) {
                                         // legacy event listeners
-                                        if (!\is_subclass_of($eventListener->listenerClassName, IEventListener::class)) {
-                                            throw new ImplementationException($eventListener->listenerClassName, IParameterizedEventListener::class);
+                                        if (!\is_subclass_of($eventListener->listenerClassName,
+                                            IEventListener::class)) {
+                                            throw new ImplementationException($eventListener->listenerClassName,
+                                                IParameterizedEventListener::class);
                                         }
                                     }
 
@@ -161,9 +165,9 @@ class EventHandler extends SingletonFactory
      * the next event listener and be available after execution of every
      * event listener.
      *
-     * @param   mixed       $eventObj
-     * @param   string      $eventName
-     * @param   array       &$parameters
+     * @param mixed $eventObj
+     * @param string $eventName
+     * @param array       &$parameters
      * @throws  SystemException
      */
     public function fireAction($eventObj, $eventName, array &$parameters = [])
@@ -214,7 +218,8 @@ class EventHandler extends SingletonFactory
                         if (!\is_subclass_of($eventListener->listenerClassName, IParameterizedEventListener::class)) {
                             // legacy event listeners
                             if (!\is_subclass_of($eventListener->listenerClassName, IEventListener::class)) {
-                                throw new ImplementationException($eventListener->listenerClassName, IParameterizedEventListener::class);
+                                throw new ImplementationException($eventListener->listenerClassName,
+                                    IParameterizedEventListener::class);
                             }
                         }
 
@@ -244,8 +249,8 @@ class EventHandler extends SingletonFactory
     /**
      * Generates an unique name for an action.
      *
-     * @param   string  $className
-     * @param   string  $eventName
+     * @param string $className
+     * @param string $eventName
      * @return  string  unique action name
      */
     public static function generateKey($className, $eventName)

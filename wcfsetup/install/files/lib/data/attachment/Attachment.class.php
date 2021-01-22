@@ -20,30 +20,30 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Attachment
  *
- * @property-read   int     $attachmentID       unique id of the attachment
- * @property-read   int     $objectTypeID       id of the `com.woltlab.wcf.attachment.objectType` object type
- * @property-read   int|null    $objectID       id of the attachment container object the attachment belongs to
- * @property-read   int|null    $userID         id of the user who uploaded the attachment or `null` if the user does not exist anymore or if the attachment has been uploaded by a guest
- * @property-read   string      $tmpHash        temporary hash used to identify uploaded attachments but not associated with an object yet or empty if the attachment has been associated with an object
- * @property-read   string      $filename       name of the physical attachment file
- * @property-read   int     $filesize       size of the physical attachment file
- * @property-read   string      $fileType       type of the physical attachment file
- * @property-read   string      $fileHash       hash of the physical attachment file
- * @property-read   int     $isImage        is `1` if the attachment is an image, otherwise `0`
- * @property-read   int     $width          width of the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read   int     $height         height of the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read   string      $tinyThumbnailType  type of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise empty
- * @property-read   int     $tinyThumbnailSize  size of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read   int     $tinyThumbnailWidth width of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read   int     $tinyThumbnailHeight    height of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read   string      $thumbnailType  type of the thumbnail file for the attachment if `$isImage` is `1`, otherwise empty
- * @property-read   int     $thumbnailSize  size of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read   int     $thumbnailWidth width of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read   int     $thumbnailHeight    height of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
- * @property-read   int     $downloads      number of times the attachment has been downloaded
- * @property-read   int     $lastDownloadTime   timestamp at which the attachment has been downloaded the last time
- * @property-read   int     $uploadTime     timestamp at which the attachment has been uploaded
- * @property-read   int     $showOrder      position of the attachment in relation to the other attachment to the same message
+ * @property-read   int $attachmentID       unique id of the attachment
+ * @property-read   int $objectTypeID       id of the `com.woltlab.wcf.attachment.objectType` object type
+ * @property-read   int|null $objectID       id of the attachment container object the attachment belongs to
+ * @property-read   int|null $userID         id of the user who uploaded the attachment or `null` if the user does not exist anymore or if the attachment has been uploaded by a guest
+ * @property-read   string $tmpHash        temporary hash used to identify uploaded attachments but not associated with an object yet or empty if the attachment has been associated with an object
+ * @property-read   string $filename       name of the physical attachment file
+ * @property-read   int $filesize       size of the physical attachment file
+ * @property-read   string $fileType       type of the physical attachment file
+ * @property-read   string $fileHash       hash of the physical attachment file
+ * @property-read   int $isImage        is `1` if the attachment is an image, otherwise `0`
+ * @property-read   int $width          width of the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read   int $height         height of the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read   string $tinyThumbnailType  type of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise empty
+ * @property-read   int $tinyThumbnailSize  size of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read   int $tinyThumbnailWidth width of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read   int $tinyThumbnailHeight    height of the tiny thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read   string $thumbnailType  type of the thumbnail file for the attachment if `$isImage` is `1`, otherwise empty
+ * @property-read   int $thumbnailSize  size of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read   int $thumbnailWidth width of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read   int $thumbnailHeight    height of the thumbnail file for the attachment if `$isImage` is `1`, otherwise `0`
+ * @property-read   int $downloads      number of times the attachment has been downloaded
+ * @property-read   int $lastDownloadTime   timestamp at which the attachment has been downloaded the last time
+ * @property-read   int $uploadTime     timestamp at which the attachment has been uploaded
+ * @property-read   int $showOrder      position of the attachment in relation to the other attachment to the same message
  */
 class Attachment extends DatabaseObject implements ILinkableObject, IRouteController, IThumbnailFile
 {
@@ -106,7 +106,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
     /**
      * Checks permissions.
      *
-     * @param   string      $permission
+     * @param string $permission
      * @return  bool
      */
     protected function getPermission($permission)
@@ -133,7 +133,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
     /**
      * Sets the permissions for attachment access.
      *
-     * @param   bool[]      $permissions
+     * @param bool[] $permissions
      */
     public function setPermissions(array $permissions)
     {
@@ -145,7 +145,8 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      */
     public function getLocation()
     {
-        return $this->getLocationHelper(self::getStorage() . \substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-' . $this->fileHash);
+        return $this->getLocationHelper(self::getStorage() . \substr($this->fileHash, 0,
+                2) . '/' . $this->attachmentID . '-' . $this->fileHash);
     }
 
     /**
@@ -164,9 +165,11 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
     public function getThumbnailLocation($size = '')
     {
         if ($size == 'tiny') {
-            $location = self::getStorage() . \substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-tiny-' . $this->fileHash;
+            $location = self::getStorage() . \substr($this->fileHash, 0,
+                    2) . '/' . $this->attachmentID . '-tiny-' . $this->fileHash;
         } else {
-            $location = self::getStorage() . \substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-thumbnail-' . $this->fileHash;
+            $location = self::getStorage() . \substr($this->fileHash, 0,
+                    2) . '/' . $this->attachmentID . '-thumbnail-' . $this->fileHash;
         }
 
         return $this->getLocationHelper($location);
@@ -180,7 +183,13 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      */
     public function migrateStorage()
     {
-        foreach ([$this->getLocation(), $this->getThumbnailLocation(), $this->getThumbnailLocation('tiny')] as $location) {
+        foreach (
+            [
+                $this->getLocation(),
+                $this->getThumbnailLocation(),
+                $this->getThumbnailLocation('tiny'),
+            ] as $location
+        ) {
             if (!StringUtil::endsWith($location, '.bin')) {
                 \rename($location, $location . '.bin');
             }
@@ -193,7 +202,7 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      * Files are suffixed with `.bin` since 5.2, but they are recognized
      * without the extension for backward compatibility.
      *
-     * @param   string $location
+     * @param string $location
      * @return  string
      * @since   5.2
      */

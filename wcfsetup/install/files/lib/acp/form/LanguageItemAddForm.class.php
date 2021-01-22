@@ -100,52 +100,54 @@ class LanguageItemAddForm extends AbstractFormBuilderForm
                             );
                         }
                     }))
-                    ->addValidator(new FormFieldValidator('languageCategory', static function (TextFormField $formField) {
-                        /** @var RadioButtonFormField $languageCategoryIDMode */
-                        $languageCategoryIDMode = $formField->getDocument()->getNodeById('languageCategoryIDMode');
+                    ->addValidator(new FormFieldValidator('languageCategory',
+                        static function (TextFormField $formField) {
+                            /** @var RadioButtonFormField $languageCategoryIDMode */
+                            $languageCategoryIDMode = $formField->getDocument()->getNodeById('languageCategoryIDMode');
 
-                        switch ($languageCategoryIDMode->getSaveValue()) {
-                            case 'automatic':
-                                $languageItemPieces = \explode('.', $formField->getSaveValue());
+                            switch ($languageCategoryIDMode->getSaveValue()) {
+                                case 'automatic':
+                                    $languageItemPieces = \explode('.', $formField->getSaveValue());
 
-                                $category = LanguageFactory::getInstance()->getCategory(
-                                    $languageItemPieces[0] . '.' . $languageItemPieces[1] . '.' . $languageItemPieces[2]
-                                );
-                                if ($category === null) {
                                     $category = LanguageFactory::getInstance()->getCategory(
-                                        $languageItemPieces[0] . '.' . $languageItemPieces[1]
+                                        $languageItemPieces[0] . '.' . $languageItemPieces[1] . '.' . $languageItemPieces[2]
                                     );
-                                }
+                                    if ($category === null) {
+                                        $category = LanguageFactory::getInstance()->getCategory(
+                                            $languageItemPieces[0] . '.' . $languageItemPieces[1]
+                                        );
+                                    }
 
-                                if ($category === null) {
-                                    $languageCategoryIDMode->addValidationError(
-                                        new FormFieldValidationError(
-                                            'automatic',
-                                            'wcf.acp.language.item.languageCategoryID.mode.error.automaticImpossible'
-                                        )
-                                    );
-                                }
-
-                                break;
-
-                            case 'selection':
-                                /** @var SingleSelectionFormField $languageCategoryID */
-                                $languageCategoryID = $formField->getDocument()->getNodeById('languageCategoryID');
-
-                                if ($languageCategory = LanguageFactory::getInstance()->getCategoryByID($languageCategoryID->getSaveValue())) {
-                                    if (\strpos($formField->getSaveValue(), $languageCategory->languageCategory . '.') !== 0) {
-                                        $formField->addValidationError(
+                                    if ($category === null) {
+                                        $languageCategoryIDMode->addValidationError(
                                             new FormFieldValidationError(
-                                                'prefixMismatch',
-                                                'wcf.acp.language.item.languageItem.error.prefixMismatch'
+                                                'automatic',
+                                                'wcf.acp.language.item.languageCategoryID.mode.error.automaticImpossible'
                                             )
                                         );
                                     }
-                                }
 
-                                break;
-                        }
-                    }))
+                                    break;
+
+                                case 'selection':
+                                    /** @var SingleSelectionFormField $languageCategoryID */
+                                    $languageCategoryID = $formField->getDocument()->getNodeById('languageCategoryID');
+
+                                    if ($languageCategory = LanguageFactory::getInstance()->getCategoryByID($languageCategoryID->getSaveValue())) {
+                                        if (\strpos($formField->getSaveValue(),
+                                                $languageCategory->languageCategory . '.') !== 0) {
+                                            $formField->addValidationError(
+                                                new FormFieldValidationError(
+                                                    'prefixMismatch',
+                                                    'wcf.acp.language.item.languageItem.error.prefixMismatch'
+                                                )
+                                            );
+                                        }
+                                    }
+
+                                    break;
+                            }
+                        }))
                     ->addValidator(new FormFieldValidator('uniqueness', static function (TextFormField $formField) {
                         $languageItemList = new LanguageItemList();
                         $languageItemList->getConditionBuilder()->add('languageItem = ?', [$formField->getSaveValue()]);
@@ -174,37 +176,38 @@ class LanguageItemAddForm extends AbstractFormBuilderForm
         $this->form->getDataHandler()->addProcessor(new VoidFormDataProcessor('languageCategoryIDMode'));
 
         $this->form->getDataHandler()->addProcessor(
-            new CustomFormDataProcessor('languageItemOriginIsSystem', static function (IFormDocument $document, array $parameters) {
-                $parameters['data']['languageItemOriginIsSystem'] = 0;
-                $parameters['data']['isCustomLanguageItem'] = 1;
+            new CustomFormDataProcessor('languageItemOriginIsSystem',
+                static function (IFormDocument $document, array $parameters) {
+                    $parameters['data']['languageItemOriginIsSystem'] = 0;
+                    $parameters['data']['isCustomLanguageItem'] = 1;
 
-                /** @var RadioButtonFormField $languageCategoryIDMode */
-                $languageCategoryIDMode = $document->getNodeById('languageCategoryIDMode');
+                    /** @var RadioButtonFormField $languageCategoryIDMode */
+                    $languageCategoryIDMode = $document->getNodeById('languageCategoryIDMode');
 
-                // automatically determine language item
-                if ($languageCategoryIDMode->getSaveValue() === 'automatic') {
-                    /** @var TextFormField $languageItemField */
-                    $languageItemField = $document->getNodeById('languageItem');
-                    $languageItemPieces = \explode('.', $languageItemField->getSaveValue());
+                    // automatically determine language item
+                    if ($languageCategoryIDMode->getSaveValue() === 'automatic') {
+                        /** @var TextFormField $languageItemField */
+                        $languageItemField = $document->getNodeById('languageItem');
+                        $languageItemPieces = \explode('.', $languageItemField->getSaveValue());
 
-                    $category = LanguageFactory::getInstance()->getCategory(
-                        $languageItemPieces[0] . '.' . $languageItemPieces[1] . '.' . $languageItemPieces[2]
-                    );
-                    if ($category === null) {
                         $category = LanguageFactory::getInstance()->getCategory(
-                            $languageItemPieces[0] . '.' . $languageItemPieces[1]
+                            $languageItemPieces[0] . '.' . $languageItemPieces[1] . '.' . $languageItemPieces[2]
                         );
+                        if ($category === null) {
+                            $category = LanguageFactory::getInstance()->getCategory(
+                                $languageItemPieces[0] . '.' . $languageItemPieces[1]
+                            );
+                        }
+
+                        if ($category === null) {
+                            throw new \UnexpectedValueException("Cannot automatically determine language category for item '{$languageItemField->getSaveValue()}'.");
+                        }
+
+                        $parameters['data']['languageCategoryID'] = $category->languageCategoryID;
                     }
 
-                    if ($category === null) {
-                        throw new \UnexpectedValueException("Cannot automatically determine language category for item '{$languageItemField->getSaveValue()}'.");
-                    }
-
-                    $parameters['data']['languageCategoryID'] = $category->languageCategoryID;
-                }
-
-                return $parameters;
-            })
+                    return $parameters;
+                })
         );
 
         /** @var RadioButtonFormField $modeField */

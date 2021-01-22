@@ -30,8 +30,8 @@ abstract class PackageInstallationFileHandler implements IFileHandler
     /**
      * Creates a new PackageInstallationFileHandler object.
      *
-     * @param   PackageInstallationDispatcher   $packageInstallation
-     * @param   string      $application
+     * @param PackageInstallationDispatcher $packageInstallation
+     * @param string $application
      */
     public function __construct(PackageInstallationDispatcher $packageInstallation, $application)
     {

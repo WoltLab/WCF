@@ -14,13 +14,13 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\User\Avatar
  *
- * @property-read   int     $avatarID       unique id of the user avatar
- * @property-read   string      $avatarName     name of the original avatar file
- * @property-read   string      $avatarExtension    extension of the avatar file
- * @property-read   int     $width          width of the user avatar image
- * @property-read   int     $height         height of the user avatar image
- * @property-read   int|null    $userID         id of the user to which the user avatar belongs or null
- * @property-read   string      $fileHash       SHA1 hash of the original avatar file
+ * @property-read   int $avatarID       unique id of the user avatar
+ * @property-read   string $avatarName     name of the original avatar file
+ * @property-read   string $avatarExtension    extension of the avatar file
+ * @property-read   int $width          width of the user avatar image
+ * @property-read   int $height         height of the user avatar image
+ * @property-read   int|null $userID         id of the user to which the user avatar belongs or null
+ * @property-read   string $fileHash       SHA1 hash of the original avatar file
  */
 class UserAvatar extends DatabaseObject implements IUserAvatar
 {
@@ -54,7 +54,7 @@ class UserAvatar extends DatabaseObject implements IUserAvatar
     /**
      * Returns the physical location of this avatar.
      *
-     * @param   int     $size
+     * @param int $size
      * @return  string
      */
     public function getLocation($size = null)
@@ -65,12 +65,13 @@ class UserAvatar extends DatabaseObject implements IUserAvatar
     /**
      * Returns the file name of this avatar.
      *
-     * @param   int     $size
+     * @param int $size
      * @return  string
      */
     public function getFilename($size = null)
     {
-        return \substr($this->fileHash, 0, 2) . '/' . $this->avatarID . '-' . $this->fileHash . ($size !== null ? ('-' . $size) : '') . '.' . $this->avatarExtension;
+        return \substr($this->fileHash, 0,
+                2) . '/' . $this->avatarID . '-' . $this->fileHash . ($size !== null ? ('-' . $size) : '') . '.' . $this->avatarExtension;
     }
 
     /**

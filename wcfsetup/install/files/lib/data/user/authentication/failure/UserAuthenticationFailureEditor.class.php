@@ -12,7 +12,7 @@ use wcf\data\DatabaseObjectEditor;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\User\Authentication\Failure
  *
- * @method static   UserAuthenticationFailure   create(array $parameters = [])
+ * @method static UserAuthenticationFailure   create(array $parameters = [])
  * @method      UserAuthenticationFailure   getDecoratedObject()
  * @mixin       UserAuthenticationFailure
  */

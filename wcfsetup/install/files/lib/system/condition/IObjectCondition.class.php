@@ -20,8 +20,8 @@ interface IObjectCondition extends ICondition
      * Returns true if the given object fulfills the condition specified by
      * the given condition data returned by \wcf\system\condition\ICondition::getData().
      *
-     * @param   DatabaseObject  $object
-     * @param   array       $conditionData
+     * @param DatabaseObject $object
+     * @param array $conditionData
      * @return  bool
      */
     public function checkObject(DatabaseObject $object, array $conditionData);

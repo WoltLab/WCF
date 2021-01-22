@@ -33,7 +33,7 @@ class URLUserOptionOutput implements IUserOptionOutput
     /**
      * Formats the URL.
      *
-     * @param   string      $url
+     * @param string $url
      * @return  string
      */
     private static function getURL($url)

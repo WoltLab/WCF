@@ -14,7 +14,7 @@ use wcf\system\request\LinkHandler;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Page
  *
- * @property    TeamList    $objectList
+ * @property    TeamList $objectList
  */
 class TeamPage extends MultipleLinkPage
 {

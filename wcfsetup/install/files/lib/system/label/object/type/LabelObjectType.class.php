@@ -45,10 +45,10 @@ class LabelObjectType
     /**
      * Creates a new LabelObjectType object.
      *
-     * @param   string      $label
-     * @param   int     $objectID
-     * @param   int     $depth
-     * @param   bool        $isCategory
+     * @param string $label
+     * @param int $objectID
+     * @param int $depth
+     * @param bool $isCategory
      */
     public function __construct($label, $objectID = 0, $depth = 0, $isCategory = false)
     {
@@ -100,7 +100,7 @@ class LabelObjectType
     /**
      * Sets option value.
      *
-     * @param   int     $optionValue
+     * @param int $optionValue
      */
     public function setOptionValue($optionValue)
     {

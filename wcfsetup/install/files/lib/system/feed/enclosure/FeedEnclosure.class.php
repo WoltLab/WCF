@@ -33,9 +33,9 @@ class FeedEnclosure
     /**
      * Creates a new FeedEnclosure object.
      *
-     * @param       string          $url            url to the enclosure
-     * @param       string          $type           enclosure's MIME type
-     * @param       int         $length         size of the enclosure in bytes
+     * @param string $url url to the enclosure
+     * @param string $type enclosure's MIME type
+     * @param int $length size of the enclosure in bytes
      */
     public function __construct($url, $type, $length)
     {

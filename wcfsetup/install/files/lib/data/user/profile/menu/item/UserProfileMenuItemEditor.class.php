@@ -68,7 +68,7 @@ class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditabl
     /**
      * Updates show order for current menu item.
      *
-     * @param   int     $showOrder
+     * @param int $showOrder
      */
     protected function updateShowOrder($showOrder)
     {
@@ -100,7 +100,7 @@ class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditabl
     /**
      * Returns show order for a new menu item.
      *
-     * @param   int     $showOrder
+     * @param int $showOrder
      * @return  int
      */
     protected static function getShowOrder($showOrder = 0)

@@ -22,7 +22,7 @@ interface IMultiRecipientCommentResponseOwnerUserNotificationObjectType
     /**
      * Returns the user id of the comment owner.
      *
-     * @param   Comment     $comment
+     * @param Comment $comment
      * @return  int
      */
     public function getCommentOwnerID(Comment $comment);

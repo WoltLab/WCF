@@ -32,7 +32,8 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Package\Plugin
  */
-class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin
+class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
+    IGuiPackageInstallationPlugin
 {
     use TXmlGuiPackageInstallationPlugin;
 
@@ -124,7 +125,8 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
      */
     protected function validateImport(array $data)
     {
-        CronjobUtil::validate($data['startMinute'], $data['startHour'], $data['startDom'], $data['startMonth'], $data['startDow']);
+        CronjobUtil::validate($data['startMinute'], $data['startHour'], $data['startDom'], $data['startMonth'],
+            $data['startDow']);
     }
 
     /**
@@ -252,18 +254,19 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
                     ->label('wcf.acp.cronjob.' . $timeProperty)
                     ->description("wcf.acp.cronjob.{$timeProperty}.description")
                     ->required()
-                    ->addValidator(new FormFieldValidator('format', static function (TextFormField $formField) use ($timeProperty) {
-                        try {
-                            CronjobUtil::validateAttribute($timeProperty, $formField->getSaveValue());
-                        } catch (SystemException $e) {
-                            $formField->addValidationError(
-                                new FormFieldValidationError(
-                                    'format',
-                                    "wcf.acp.pip.cronjob.{$timeProperty}.error.format"
-                                )
-                            );
-                        }
-                    })),
+                    ->addValidator(new FormFieldValidator('format',
+                        static function (TextFormField $formField) use ($timeProperty) {
+                            try {
+                                CronjobUtil::validateAttribute($timeProperty, $formField->getSaveValue());
+                            } catch (SystemException $e) {
+                                $formField->addValidationError(
+                                    new FormFieldValidationError(
+                                        'format',
+                                        "wcf.acp.pip.cronjob.{$timeProperty}.error.format"
+                                    )
+                                );
+                            }
+                        })),
                 'options'
             );
         }

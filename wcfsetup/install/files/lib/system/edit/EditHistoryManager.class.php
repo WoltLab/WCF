@@ -38,7 +38,7 @@ class EditHistoryManager extends SingletonFactory
     /**
      * Returns the id of the object type with the given name.
      *
-     * @param   string      $objectType
+     * @param string $objectType
      * @return  int
      * @throws  SystemException
      */
@@ -54,14 +54,14 @@ class EditHistoryManager extends SingletonFactory
     /**
      * Adds a new entry.
      *
-     * @param   string      $objectType
-     * @param   int     $objectID
-     * @param   string      $message
-     * @param   int     $time
-     * @param   int     $userID
-     * @param   string      $username
-     * @param   string      $editReason
-     * @param   int     $obsoletedByUserID  The userID of the user that forced this entry to become outdated
+     * @param string $objectType
+     * @param int $objectID
+     * @param string $message
+     * @param int $time
+     * @param int $userID
+     * @param string $username
+     * @param string $editReason
+     * @param int $obsoletedByUserID The userID of the user that forced this entry to become outdated
      */
     public function add($objectType, $objectID, $message, $time, $userID, $username, $editReason, $obsoletedByUserID)
     {
@@ -91,8 +91,8 @@ class EditHistoryManager extends SingletonFactory
     /**
      * Deletes edit history entries.
      *
-     * @param   string      $objectType
-     * @param   int[]   $objectIDs
+     * @param string $objectType
+     * @param int[] $objectIDs
      */
     public function delete($objectType, array $objectIDs)
     {
@@ -120,8 +120,8 @@ class EditHistoryManager extends SingletonFactory
     /**
      * Performs mass reverting of edits by the given users in the given timeframe.
      *
-     * @param   int[]   $userIDs
-     * @param   int     $timeframe
+     * @param int[] $userIDs
+     * @param int $timeframe
      */
     public function bulkRevert(array $userIDs, $timeframe = 86400)
     {

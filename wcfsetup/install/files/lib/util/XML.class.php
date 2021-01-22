@@ -51,7 +51,7 @@ class XML
     /**
      * Loads a xml file for processing.
      *
-     * @param   string      $path
+     * @param string $path
      * @throws  SystemException
      */
     public function load($path)
@@ -80,8 +80,8 @@ class XML
     /**
      * Loads a xml string, specifying $path is mandatory to provide detailed error handling.
      *
-     * @param   string      $path
-     * @param   string      $xml
+     * @param string $path
+     * @param string $xml
      */
     public function loadXML($path, $xml)
     {
@@ -186,8 +186,8 @@ class XML
     /**
      * Reads errors from libxml since be bypassed built-in error handler.
      *
-     * @see     \wcf\util\XML::__construct()
      * @return  string[][]
+     * @see     \wcf\util\XML::__construct()
      */
     public function pollErrors()
     {
@@ -210,8 +210,8 @@ class XML
     /**
      * Throws a SystemException providing details on xml errors if applicable.
      *
-     * @param   string      $message
-     * @param   array       $errors
+     * @param string $message
+     * @param array $errors
      * @throws  SystemException
      */
     protected function throwException($message, array $errors = [])
@@ -243,8 +243,8 @@ class XML
     /**
      * Writes the xml structure into the given file.
      *
-     * @param   string      $fileLocation   location of file
-     * @param   bool        $cdata      indicates of values are escaped using cdata
+     * @param string $fileLocation location of file
+     * @param bool $cdata indicates of values are escaped using cdata
      * @since   5.2
      */
     public function write($fileLocation, $cdata = false)
@@ -273,9 +273,9 @@ class XML
     /**
      * Writes the given element using the given xml writer.
      *
-     * @param   XMLWriter   $writer     xml writer
-     * @param   \DOMElement $element    written element
-     * @param   bool        $cdata      indicates if element value is escaped using cdata
+     * @param XMLWriter $writer xml writer
+     * @param \DOMElement $element written element
+     * @param bool $cdata indicates if element value is escaped using cdata
      * @since   5.2
      */
     protected function writeElement(XMLWriter $writer, \DOMElement $element, $cdata)
@@ -305,7 +305,7 @@ class XML
      * Returns an array with the attribute values of the given dom element
      * (with the attribute names as array keys).
      *
-     * @param   \DOMElement $element    elements whose attributes will be returned
+     * @param \DOMElement $element elements whose attributes will be returned
      * @return  array               attributes
      * @since   5.2
      */

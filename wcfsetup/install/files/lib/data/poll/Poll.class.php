@@ -16,18 +16,18 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\Poll
  *
- * @property-read   int     $pollID         unique id of the poll
- * @property-read   int     $objectTypeID       id of the `com.woltlab.wcf.poll` object type
- * @property-read   int     $objectID       id of the poll container object the poll belongs to
- * @property-read   string      $question       question of the poll
- * @property-read   int     $time           timestamp at which the poll has been created
- * @property-read   int     $endTime        timestamp at which the poll has been/will be closed
- * @property-read   int     $isChangeable       is `1` if participants can change their vote, otherwise `0`
- * @property-read   int     $isPublic       is `1` if the result of the poll is public, otherwise `0`
- * @property-read   int     $sortByVotes        is `1` if the results will be sorted by votes, otherwise `0`
- * @property-read   int     $resultsRequireVote is `1` if a user has to have voted to see the results, otherwise `0`
- * @property-read   int     $maxVotes       maximum number of options the user can select
- * @property-read   int     $votes          number of votes in the poll
+ * @property-read   int $pollID         unique id of the poll
+ * @property-read   int $objectTypeID       id of the `com.woltlab.wcf.poll` object type
+ * @property-read   int $objectID       id of the poll container object the poll belongs to
+ * @property-read   string $question       question of the poll
+ * @property-read   int $time           timestamp at which the poll has been created
+ * @property-read   int $endTime        timestamp at which the poll has been/will be closed
+ * @property-read   int $isChangeable       is `1` if participants can change their vote, otherwise `0`
+ * @property-read   int $isPublic       is `1` if the result of the poll is public, otherwise `0`
+ * @property-read   int $sortByVotes        is `1` if the results will be sorted by votes, otherwise `0`
+ * @property-read   int $resultsRequireVote is `1` if a user has to have voted to see the results, otherwise `0`
+ * @property-read   int $maxVotes       maximum number of options the user can select
+ * @property-read   int $votes          number of votes in the poll
  */
 class Poll extends DatabaseObject
 {
@@ -52,7 +52,7 @@ class Poll extends DatabaseObject
     /**
      * Adds an option to current poll.
      *
-     * @param   PollOption  $option
+     * @param PollOption $option
      */
     public function addOption(PollOption $option)
     {
@@ -69,7 +69,7 @@ class Poll extends DatabaseObject
     /**
      * Returns a list of poll options.
      *
-     * @param   bool        $isResultDisplay
+     * @param bool $isResultDisplay
      * @return  PollOption[]
      */
     public function getOptions($isResultDisplay = false)
@@ -198,7 +198,7 @@ class Poll extends DatabaseObject
     /**
      * Sets related object for this poll.
      *
-     * @param   IPollObject $object
+     * @param IPollObject $object
      */
     public function setRelatedObject(IPollObject $object)
     {

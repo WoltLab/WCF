@@ -40,7 +40,7 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter
     /**
      * Creates a new ImageAdapter instance.
      *
-     * @param   string      $adapterClassName
+     * @param string $adapterClassName
      */
     public function __construct($adapterClassName)
     {

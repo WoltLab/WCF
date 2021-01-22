@@ -18,7 +18,7 @@ interface IAttachmentObjectType
     /**
      * Returns true if the active user has the permission to download attachments.
      *
-     * @param   int     $objectID
+     * @param int $objectID
      * @return  bool
      */
     public function canDownload($objectID);
@@ -27,7 +27,7 @@ interface IAttachmentObjectType
      * Returns true if the active user has the permission to view attachment
      * previews (thumbnails).
      *
-     * @param   int     $objectID
+     * @param int $objectID
      * @return  bool
      */
     public function canViewPreview($objectID);
@@ -35,8 +35,8 @@ interface IAttachmentObjectType
     /**
      * Returns true if the active user has the permission to upload attachments.
      *
-     * @param   int     $objectID
-     * @param   int     $parentObjectID
+     * @param int $objectID
+     * @param int $parentObjectID
      * @return  bool
      */
     public function canUpload($objectID, $parentObjectID = 0);
@@ -44,7 +44,7 @@ interface IAttachmentObjectType
     /**
      * Returns true if the active user has the permission to delete attachments.
      *
-     * @param   int     $objectID
+     * @param int $objectID
      * @return  bool
      */
     public function canDelete($objectID);
@@ -73,7 +73,7 @@ interface IAttachmentObjectType
     /**
      * Returns the container object of an attachment or `null` if the container object does not exist.
      *
-     * @param   int     $objectID
+     * @param int $objectID
      * @return  IUserContent|null
      */
     public function getObject($objectID);
@@ -81,14 +81,14 @@ interface IAttachmentObjectType
     /**
      * Caches the data of the given container objects.
      *
-     * @param   int[]   $objectIDs
+     * @param int[] $objectIDs
      */
     public function cacheObjects(array $objectIDs);
 
     /**
      * Loads the permissions for given attachments.
      *
-     * @param   Attachment[]    $attachments
+     * @param Attachment[] $attachments
      */
     public function setPermissions(array $attachments);
 }

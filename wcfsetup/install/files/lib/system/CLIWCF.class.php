@@ -167,7 +167,8 @@ class CLIWCF extends WCF
             if ($help) {
                 echo $help . \PHP_EOL;
             } else {
-                echo WCF::getLanguage()->getDynamicVariable('wcf.cli.help.noLongHelp', ['topic' => self::getArgvParser()->help]) . \PHP_EOL;
+                echo WCF::getLanguage()->getDynamicVariable('wcf.cli.help.noLongHelp',
+                        ['topic' => self::getArgvParser()->help]) . \PHP_EOL;
             }
 
             exit;
@@ -182,7 +183,8 @@ class CLIWCF extends WCF
             // set language
             $language = LanguageFactory::getInstance()->getLanguageByCode(self::getArgvParser()->language);
             if ($language === null) {
-                echo WCF::getLanguage()->getDynamicVariable('wcf.cli.error.language.notFound', ['languageCode' => self::getArgvParser()->language]) . \PHP_EOL;
+                echo WCF::getLanguage()->getDynamicVariable('wcf.cli.error.language.notFound',
+                        ['languageCode' => self::getArgvParser()->language]) . \PHP_EOL;
 
                 exit;
             }
@@ -217,7 +219,8 @@ class CLIWCF extends WCF
         self::getReader()->setExpandEvents(false);
 
         if (VERBOSITY >= 0) {
-            $headline = \str_pad("WoltLab Suite (tm) " . WCF_VERSION, self::getTerminal()->getWidth(), " ", \STR_PAD_BOTH);
+            $headline = \str_pad("WoltLab Suite (tm) " . WCF_VERSION, self::getTerminal()->getWidth(), " ",
+                \STR_PAD_BOTH);
             self::getReader()->println($headline);
         }
     }
@@ -274,10 +277,12 @@ class CLIWCF extends WCF
 
             // check credentials and switch user
             try {
-                $user = UserAuthenticationFactory::getInstance()->getUserAuthentication()->loginManually($username, $password);
+                $user = UserAuthenticationFactory::getInstance()->getUserAuthentication()->loginManually($username,
+                    $password);
                 WCF::getSession()->changeUser($user);
             } catch (UserInputException $e) {
-                $message = WCF::getLanguage()->getDynamicVariable('wcf.user.' . $e->getField() . '.error.' . $e->getType(), ['username' => $username]);
+                $message = WCF::getLanguage()->getDynamicVariable('wcf.user.' . $e->getField() . '.error.' . $e->getType(),
+                    ['username' => $username]);
                 self::getReader()->println($message);
 
                 exit(1);
@@ -319,7 +324,8 @@ class CLIWCF extends WCF
                 $command->execute(CLICommandHandler::getParameters($line));
             } catch (IllegalLinkException $e) {
                 Log::error('notFound:' . JSON::encode(['command' => $line]));
-                self::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.cli.error.command.notFound', ['command' => $line]));
+                self::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.cli.error.command.notFound',
+                    ['command' => $line]));
 
                 if (self::getArgvParser()->exitOnFail) {
                     exit(1);

@@ -100,7 +100,7 @@ class WysiwygFormField extends AbstractFormField implements
     /**
      * Sets the identifier used to autosave the field value and returns this field.
      *
-     * @param   string      $autosaveId identifier used to autosave field value
+     * @param string $autosaveId identifier used to autosave field value
      * @return  WysiwygFormField        this field
      */
     public function autosaveId($autosaveId)
@@ -174,7 +174,7 @@ class WysiwygFormField extends AbstractFormField implements
     /**
      * Returns all quote data or specific quote data if an argument is given.
      *
-     * @param   null|string $index      quote data index
+     * @param null|string $index quote data index
      * @return  string[]|string
      *
      * @throws  \BadMethodCallException     if quotes are not supported for this field
@@ -208,7 +208,7 @@ class WysiwygFormField extends AbstractFormField implements
     /**
      * Sets the last time this field has been edited and returns this field.
      *
-     * @param   int $lastEditTime   last time field has been edited
+     * @param int $lastEditTime last time field has been edited
      * @return  WysiwygFormField    this field
      */
     public function lastEditTime($lastEditTime)
@@ -245,16 +245,17 @@ class WysiwygFormField extends AbstractFormField implements
      *
      * Calling this method automatically enables quote support for this field.
      *
-     * @param   string      $objectType name of the relevant `com.woltlab.wcf.message.quote` object type
-     * @param   string      $actionClass    action class implementing `wcf\data\IMessageQuoteAction`
-     * @param   string[]    $selectors  selectors for the quotable content (required keys: `container`, `messageBody`, and `messageContent`)
+     * @param string $objectType name of the relevant `com.woltlab.wcf.message.quote` object type
+     * @param string $actionClass action class implementing `wcf\data\IMessageQuoteAction`
+     * @param string[] $selectors selectors for the quotable content (required keys: `container`, `messageBody`, and `messageContent`)
      * @return  static
      *
      * @throws  \InvalidArgumentException   if any of the given arguments is invalid
      */
     public function quoteData($objectType, $actionClass, array $selectors = [])
     {
-        if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.message.quote', $objectType) === null) {
+        if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.message.quote',
+                $objectType) === null) {
             throw new \InvalidArgumentException("Unknown message quote object type '{$objectType}'.");
         }
 
@@ -309,7 +310,7 @@ class WysiwygFormField extends AbstractFormField implements
     /**
      * Sets if the form field supports attachments and returns this field.
      *
-     * @param   bool        $supportAttachments
+     * @param bool $supportAttachments
      * @return  WysiwygFormField        this field
      */
     public function supportAttachments($supportAttachments = true)
@@ -322,7 +323,7 @@ class WysiwygFormField extends AbstractFormField implements
     /**
      * Sets if the form field supports mentions and returns this field.
      *
-     * @param   bool        $supportMentions
+     * @param bool $supportMentions
      * @return  WysiwygFormField        this field
      */
     public function supportMentions($supportMentions = true)
@@ -335,7 +336,7 @@ class WysiwygFormField extends AbstractFormField implements
     /**
      * Sets if the form field supports quotes and returns this field.
      *
-     * @param   bool        $supportQuotes
+     * @param bool $supportQuotes
      * @return  WysiwygFormField        this field
      */
     public function supportQuotes($supportQuotes = true)

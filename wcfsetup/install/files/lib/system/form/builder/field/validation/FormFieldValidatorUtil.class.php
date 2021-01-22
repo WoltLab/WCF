@@ -21,10 +21,10 @@ abstract class FormFieldValidatorUtil
      * Returns a form field validator to ensure that the value of the form field
      * is a dot-separated string.
      *
-     * @param   string      $languageItemPrefix     language item prefix used for error language items `{$languageItemPrefix}.error.{errorType}`
-     * @param   int     $minimumSegmentCount        minimum number of dot-separated segments, or `-1` if there is no minimum
-     * @param   int     $maximumSegmentCount        maximum number of dot-separated segments, or `-1` if there is no maximum
-     * @param   string      $segmentRegularExpression   regular expression used to validate each segment
+     * @param string $languageItemPrefix language item prefix used for error language items `{$languageItemPrefix}.error.{errorType}`
+     * @param int $minimumSegmentCount minimum number of dot-separated segments, or `-1` if there is no minimum
+     * @param int $maximumSegmentCount maximum number of dot-separated segments, or `-1` if there is no maximum
+     * @param string $segmentRegularExpression regular expression used to validate each segment
      * @return  FormFieldValidator
      */
     public static function getDotSeparatedStringValidator(
@@ -40,7 +40,12 @@ abstract class FormFieldValidatorUtil
 
         return new FormFieldValidator(
             'format',
-            static function (TextFormField $formField) use ($languageItemPrefix, $minimumSegmentCount, $maximumSegmentCount, $regex) {
+            static function (TextFormField $formField) use (
+                $languageItemPrefix,
+                $minimumSegmentCount,
+                $maximumSegmentCount,
+                $regex
+            ) {
                 if ($formField->getValue()) {
                     $segments = \explode('.', $formField->getValue());
                     if ($minimumSegmentCount !== -1 && \count($segments) < $minimumSegmentCount) {
@@ -87,8 +92,8 @@ abstract class FormFieldValidatorUtil
      * the given regular expression. The regex is not checked if the form
      * field is empty and not required.
      *
-     * @param   string      $regularExpression  regular expression used to validate form field value
-     * @param   string      $languageItemPrefix language item prefix used for error language item `{$languageItemPrefix}.error.format`
+     * @param string $regularExpression regular expression used to validate form field value
+     * @param string $languageItemPrefix language item prefix used for error language item `{$languageItemPrefix}.error.format`
      *
      * @return  IFormFieldValidator
      *

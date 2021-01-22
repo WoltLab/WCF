@@ -22,7 +22,14 @@ class ArticleCategoriesBoxController extends AbstractBoxController
     /**
      * @inheritDoc
      */
-    protected static $supportedPositions = ['footerBoxes', 'sidebarLeft', 'sidebarRight', 'contentTop', 'contentBottom', 'footer'];
+    protected static $supportedPositions = [
+        'footerBoxes',
+        'sidebarLeft',
+        'sidebarRight',
+        'contentTop',
+        'contentBottom',
+        'footer',
+    ];
 
     /**
      * @inheritDoc
@@ -44,7 +51,8 @@ class ArticleCategoriesBoxController extends AbstractBoxController
                 }
             }
 
-            $this->content = WCF::getTPL()->fetch('boxArticleCategories', 'wcf', ['categoryList' => $categoryList, 'activeCategory' => $activeCategory], true);
+            $this->content = WCF::getTPL()->fetch('boxArticleCategories', 'wcf',
+                ['categoryList' => $categoryList, 'activeCategory' => $activeCategory], true);
         }
     }
 }

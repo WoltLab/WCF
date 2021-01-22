@@ -105,7 +105,8 @@ HTML;
     {
         $fieldElement = '<select name="timezone" id="timezone"><option value="0"' . ($this->timezone ? ' selected' : '') . '>' . WCF::getLanguage()->get('wcf.date.timezone.user') . '</option>';
         foreach (DateUtil::getAvailableTimezones() as $timezone) {
-            $fieldElement .= '<option value="' . $timezone . '"' . ($this->timezone === $timezone ? ' selected' : '') . '>' . WCF::getLanguage()->get('wcf.date.timezone.' . \str_replace('/', '.', \strtolower($timezone))) . '</option>';
+            $fieldElement .= '<option value="' . $timezone . '"' . ($this->timezone === $timezone ? ' selected' : '') . '>' . WCF::getLanguage()->get('wcf.date.timezone.' . \str_replace('/',
+                        '.', \strtolower($timezone))) . '</option>';
         }
         $fieldElement .= '</select>';
 

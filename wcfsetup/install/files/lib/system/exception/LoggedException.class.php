@@ -8,18 +8,18 @@ namespace wcf\system\exception;
  * A logged exceptions prevents information disclosures and provides an easy
  * way to log errors.
  *
- * @author	Tim Duesterhus, Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	WoltLabSuite\Core\System\Exception
- * @deprecated	3.0 - Fatal Exceptions are logged automatically.
+ * @author    Tim Duesterhus, Alexander Ebert
+ * @copyright    2001-2019 WoltLab GmbH
+ * @license    GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package    WoltLabSuite\Core\System\Exception
+ * @deprecated    3.0 - Fatal Exceptions are logged automatically.
  */
 class LoggedException extends \Exception
 {
     /**
      * Returns exception id
      *
-     * @return	string
+     * @return    string
      */
     public function getExceptionID()
     {
@@ -30,7 +30,7 @@ class LoggedException extends \Exception
             }
             $this->exceptionID = '*MAYDAY*';
         }
-        
+
         return $this->exceptionID;
     }
 }

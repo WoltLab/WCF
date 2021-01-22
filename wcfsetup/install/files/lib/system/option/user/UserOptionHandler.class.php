@@ -24,9 +24,9 @@ use wcf\util\MessageUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Option\User
  *
- * @property    UserOptionCategory  $cachedCategories
- * @property    UserOption[]        $cachedOptions
- * @property    UserOption[]        $options
+ * @property    UserOptionCategory $cachedCategories
+ * @property    UserOption[] $cachedOptions
+ * @property    UserOption[] $options
  */
 class UserOptionHandler extends OptionHandler
 {
@@ -74,7 +74,7 @@ class UserOptionHandler extends OptionHandler
     /**
      * Shows empty options.
      *
-     * @param   bool        $show
+     * @param bool $show
      */
     public function showEmptyOptions($show = true)
     {
@@ -84,7 +84,7 @@ class UserOptionHandler extends OptionHandler
     /**
      * Sets registration mode.
      *
-     * @param   bool        $inRegistration
+     * @param bool $inRegistration
      */
     public function setInRegistration($inRegistration = true)
     {
@@ -97,7 +97,7 @@ class UserOptionHandler extends OptionHandler
     /**
      * Enables edit mode.
      *
-     * @param   bool        $enable
+     * @param bool $enable
      */
     public function enableEditMode($enable = true)
     {
@@ -107,7 +107,7 @@ class UserOptionHandler extends OptionHandler
     /**
      * Enables search mode.
      *
-     * @param   bool        $enable
+     * @param bool $enable
      */
     public function enableSearchMode($enable = true)
     {
@@ -120,7 +120,7 @@ class UserOptionHandler extends OptionHandler
     /**
      * Sets option values for a certain user.
      *
-     * @param   User    $user
+     * @param User $user
      */
     public function setUser(User $user)
     {
@@ -153,7 +153,7 @@ class UserOptionHandler extends OptionHandler
      * are considered. Furthermore, the visibility setting of the option is disregarded to ensure that
      * during automatic cronjob execution (always done as a guest), the conditions are properly set.
      *
-     * @param   bool        $enable
+     * @param bool $enable
      */
     public function enableConditionMode($enable = true)
     {
@@ -177,7 +177,7 @@ class UserOptionHandler extends OptionHandler
     /**
      * Sets the option values.
      *
-     * @param   array       $values
+     * @param array $values
      */
     public function setOptionValues(array $values)
     {

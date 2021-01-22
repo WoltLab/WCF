@@ -24,7 +24,7 @@ abstract class DatabaseEditor
     /**
      * Creates a new DatabaseEditor object.
      *
-     * @param   Database    $dbObj
+     * @param Database $dbObj
      */
     public function __construct(Database $dbObj)
     {
@@ -41,7 +41,7 @@ abstract class DatabaseEditor
     /**
      * Returns the columns of a table.
      *
-     * @param   string      $tableName
+     * @param string $tableName
      * @return  array       $columns
      */
     abstract public function getColumns($tableName);
@@ -59,7 +59,7 @@ abstract class DatabaseEditor
     /**
      * Returns the names of the indices of a table.
      *
-     * @param   string      $tableName
+     * @param string $tableName
      * @return  string[]    $indices
      */
     abstract public function getIndices($tableName);
@@ -67,7 +67,7 @@ abstract class DatabaseEditor
     /**
      * Returns information on the indices of a table.
      *
-     * @param   string      $tableName
+     * @param string $tableName
      * @return  array
      */
     public function getIndexInformation($tableName)
@@ -78,43 +78,43 @@ abstract class DatabaseEditor
     /**
      * Creates a new database table.
      *
-     * @param   string      $tableName
-     * @param   array       $columns
-     * @param   array       $indices
+     * @param string $tableName
+     * @param array $columns
+     * @param array $indices
      */
     abstract public function createTable($tableName, $columns, $indices = []);
 
     /**
      * Drops a database table.
      *
-     * @param   string      $tableName
+     * @param string $tableName
      */
     abstract public function dropTable($tableName);
 
     /**
      * Adds a new column to an existing database table.
      *
-     * @param   string      $tableName
-     * @param   string      $columnName
-     * @param   array       $columnData
+     * @param string $tableName
+     * @param string $columnName
+     * @param array $columnData
      */
     abstract public function addColumn($tableName, $columnName, $columnData);
 
     /**
      * Alters an existing column.
      *
-     * @param   string      $tableName
-     * @param   string      $oldColumnName
-     * @param   string      $newColumnName
-     * @param   array       $newColumnData
+     * @param string $tableName
+     * @param string $oldColumnName
+     * @param string $newColumnName
+     * @param array $newColumnData
      */
     abstract public function alterColumn($tableName, $oldColumnName, $newColumnName, $newColumnData);
 
     /**
      * Adds, alters and drops multiple columns at once.
      *
-     * @param   string      $tableName
-     * @param   array       $alterData
+     * @param string $tableName
+     * @param array $alterData
      */
     public function alterColumns($tableName, $alterData)
     {
@@ -124,49 +124,49 @@ abstract class DatabaseEditor
     /**
      * Drops an existing column.
      *
-     * @param   string      $tableName
-     * @param   string      $columnName
+     * @param string $tableName
+     * @param string $columnName
      */
     abstract public function dropColumn($tableName, $columnName);
 
     /**
      * Adds a new index to an existing database table.
      *
-     * @param   string      $tableName
-     * @param   string      $indexName
-     * @param   array       $indexData
+     * @param string $tableName
+     * @param string $indexName
+     * @param array $indexData
      */
     abstract public function addIndex($tableName, $indexName, $indexData);
 
     /**
      * Adds a new foreign key to an existing database table.
      *
-     * @param   string      $tableName
-     * @param   string      $indexName
-     * @param   array       $indexData
+     * @param string $tableName
+     * @param string $indexName
+     * @param array $indexData
      */
     abstract public function addForeignKey($tableName, $indexName, $indexData);
 
     /**
      * Drops an existing index.
      *
-     * @param   string      $tableName
-     * @param   string      $indexName
+     * @param string $tableName
+     * @param string $indexName
      */
     abstract public function dropIndex($tableName, $indexName);
 
     /**
      * Drops existing primary keys.
      *
-     * @param   string      $tableName
+     * @param string $tableName
      */
     abstract public function dropPrimaryKey($tableName);
 
     /**
      * Drops an existing foreign key.
      *
-     * @param   string      $tableName
-     * @param   string      $indexName
+     * @param string $tableName
+     * @param string $indexName
      */
     abstract public function dropForeignKey($tableName, $indexName);
 }

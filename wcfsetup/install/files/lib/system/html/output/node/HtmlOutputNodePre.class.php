@@ -242,7 +242,7 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode
         if (
             \mb_strpos($content, '{/if}') !== false
             && (\mb_strpos($content, '<div') !== false
-            || \mb_strpos($content, '<span') !== false)
+                || \mb_strpos($content, '<span') !== false)
         ) {
             return 'smarty';
         }
@@ -269,8 +269,8 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode
     /**
      * Returns a unique ID for this code block.
      *
-     * @param   string      $prefix
-     * @param   string      $code
+     * @param string $prefix
+     * @param string $code
      * @return  string
      */
     protected function getCodeID($prefix, $code)

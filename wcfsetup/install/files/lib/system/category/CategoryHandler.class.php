@@ -47,7 +47,7 @@ class CategoryHandler extends SingletonFactory
      * Returns all category objects with the given object type. If no object
      * type is given, all categories grouped by object type are returned.
      *
-     * @param   string      $objectType
+     * @param string $objectType
      * @return  Category[]|Category[][]
      */
     public function getCategories($objectType = null)
@@ -69,7 +69,7 @@ class CategoryHandler extends SingletonFactory
     /**
      * Returns the category with the given id or `null` if no such category exists.
      *
-     * @param   int     $categoryID
+     * @param int $categoryID
      * @return  Category|null
      */
     public function getCategory($categoryID)
@@ -84,8 +84,8 @@ class CategoryHandler extends SingletonFactory
      *
      * The second parameter is only needed if $categoryID is 0.
      *
-     * @param   int     $categoryID
-     * @param   int     $objectTypeID
+     * @param int $categoryID
+     * @param int $objectTypeID
      * @return  Category[]
      * @throws  SystemException
      */
@@ -111,7 +111,7 @@ class CategoryHandler extends SingletonFactory
     /**
      * Returns the category object type with the given id or `null` if no such object type exists.
      *
-     * @param   int     $objectTypeID
+     * @param int $objectTypeID
      * @return  ObjectType|null
      */
     public function getObjectType($objectTypeID)
@@ -124,7 +124,7 @@ class CategoryHandler extends SingletonFactory
     /**
      * Returns the category object type with the given name or `null` if no such object type exists.
      *
-     * @param   string      $objectType
+     * @param string $objectType
      * @return  ObjectType|null
      */
     public function getObjectTypeByName($objectType)

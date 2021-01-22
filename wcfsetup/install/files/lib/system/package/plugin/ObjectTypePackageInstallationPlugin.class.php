@@ -89,7 +89,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     /**
      * Returns the id of the object type definition with the given name.
      *
-     * @param   string      $definitionName
+     * @param string $definitionName
      * @return  int
      * @throws  SystemException
      */
@@ -508,7 +508,8 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                             }
 
                             foreach ($formField->getValue() as $segment) {
-                                if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.content.userContentProvider', $segment) === null) {
+                                if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.content.userContentProvider',
+                                        $segment) === null) {
                                     $formField->addValidationError(
                                         new FormFieldValidationError(
                                             'unknownObjectType',
@@ -807,7 +808,10 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                         }
                     })),
             ]);
-        $this->definitionElementChildren['com.woltlab.wcf.versionTracker.objectType'] = ['tableName', 'tablePrimaryKey'];
+        $this->definitionElementChildren['com.woltlab.wcf.versionTracker.objectType'] = [
+            'tableName',
+            'tablePrimaryKey',
+        ];
     }
 
     /**
@@ -865,8 +869,8 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
      * has a dependency on the `definitionName` field so that the form container
      * is only shown for the relevant object type definition.
      *
-     * @param   IFormDocument   $form
-     * @param   string      $definitionName
+     * @param IFormDocument $form
+     * @param string $definitionName
      * @return  FormContainer
      * @since   5.2
      */
@@ -926,8 +930,8 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
      * Adds bulk processing action-related fields to the given form for the given bulk
      * processing action object type definition.
      *
-     * @param   IFormDocument   $form
-     * @param   string      $objectTypeDefinition
+     * @param IFormDocument $form
+     * @param string $objectTypeDefinition
      */
     public function addBulkProcessingActionFields(IFormDocument $form, $objectTypeDefinition)
     {
@@ -980,10 +984,10 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     /**
      * Adds all condition specific fields to the given form container.
      *
-     * @param   IFormContainer      $dataContainer
-     * @param   string          $objectTypeDefinition
-     * @param   bool            $addConditionObject
-     * @param   bool            $addConditionGroup
+     * @param IFormContainer $dataContainer
+     * @param string $objectTypeDefinition
+     * @param bool $addConditionObject
+     * @param bool $addConditionGroup
      * @since   5.2
      */
     public function addConditionFields(
@@ -1140,11 +1144,11 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
      * Returns a form field to enter the name of an integer property for an
      * integer condition.
      *
-     * @param   TextFormField   $classNameField     class name field on which the visibility of the created field depends
-     * @param   string      $conditionClass     name of the PHP class the field is created for
-     * @param   string      $id         id of the created field
-     * @param   string      $databaseTableName  name of the database table that stores the conditioned objects
-     * @param   bool        $lowercase      is `true`, if `propertyname` should be used, otherwise `propertyName` is used
+     * @param TextFormField $classNameField class name field on which the visibility of the created field depends
+     * @param string $conditionClass name of the PHP class the field is created for
+     * @param string $id id of the created field
+     * @param string $databaseTableName name of the database table that stores the conditioned objects
+     * @param bool $lowercase is `true`, if `propertyname` should be used, otherwise `propertyName` is used
      * @return  TextFormField
      */
     public function getIntegerConditionPropertyNameField(
@@ -1258,9 +1262,11 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
         $name = $element->getElementsByTagName('name')->item(0)->nodeValue;
         $definitionName = $element->getElementsByTagName('definitionname')->item(0)->nodeValue;
 
-        $this->handleDelete([[
-            'attributes' => ['name' => $name],
-            'elements' => ['definitionname' => $definitionName],
-        ]]);
+        $this->handleDelete([
+            [
+                'attributes' => ['name' => $name],
+                'elements' => ['definitionname' => $definitionName],
+            ],
+        ]);
     }
 }

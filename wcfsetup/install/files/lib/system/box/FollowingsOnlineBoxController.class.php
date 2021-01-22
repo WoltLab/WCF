@@ -33,7 +33,8 @@ class FollowingsOnlineBoxController extends AbstractDatabaseObjectListBoxControl
     {
         $objectList = new UsersOnlineList();
         /** @noinspection PhpUndefinedMethodInspection */
-        $objectList->getConditionBuilder()->add('session.userID IN (?)', [WCF::getUserProfileHandler()->getFollowingUsers()]);
+        $objectList->getConditionBuilder()->add('session.userID IN (?)',
+            [WCF::getUserProfileHandler()->getFollowingUsers()]);
 
         return $objectList;
     }

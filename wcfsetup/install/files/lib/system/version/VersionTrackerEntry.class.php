@@ -11,11 +11,11 @@ namespace wcf\system\version;
  * @package WoltLabSuite\Core\System\Version
  * @since   3.1
  *
- * @property-read   int     $versionID      unique id of the tracked version entry
- * @property-read   int     $objectID       id of the edited object
- * @property-read   int|null    $userID         id of the user who has created the previous version of the object or `null` if the user does not exist anymore or if the previous version has been created by a guest
- * @property-read   string      $username       name of the user who has created the previous version of the object
- * @property-read   int     $time           timestamp at which the original version has been created
+ * @property-read   int $versionID      unique id of the tracked version entry
+ * @property-read   int $objectID       id of the edited object
+ * @property-read   int|null $userID         id of the user who has created the previous version of the object or `null` if the user does not exist anymore or if the previous version has been created by a guest
+ * @property-read   string $username       name of the user who has created the previous version of the object
+ * @property-read   int $time           timestamp at which the original version has been created
  */
 class VersionTrackerEntry
 {
@@ -34,8 +34,8 @@ class VersionTrackerEntry
     /**
      * VersionTrackerEntry constructor.
      *
-     * @param       int         $id             id
-     * @param       array           $data           version data
+     * @param int $id id
+     * @param array $data version data
      */
     public function __construct($id, array $data)
     {
@@ -59,7 +59,7 @@ class VersionTrackerEntry
      * Returns the value of a object data variable with the given name or `null` if no
      * such data variable exists.
      *
-     * @param   string      $name
+     * @param string $name
      * @return  mixed
      */
     public function __get($name)
@@ -75,7 +75,7 @@ class VersionTrackerEntry
      * Determines if the object data variable with the given name is set and
      * is not NULL.
      *
-     * @param   string      $name
+     * @param string $name
      * @return  bool
      */
     public function __isset($name)
@@ -86,8 +86,8 @@ class VersionTrackerEntry
     /**
      * Returns the stored value of a property or null if unknown.
      *
-     * @param       string          $property       property name
-     * @param       int         $languageID     language id
+     * @param string $property property name
+     * @param int $languageID language id
      * @return      string
      */
     public function getPayload($property, $languageID)
@@ -103,8 +103,8 @@ class VersionTrackerEntry
      * Returns the stored values for all given properties. Unknown or missing
      * properties will be set to an empty string.
      *
-     * @param       string[]        $properties     list of property names
-     * @param       int         $languageID     language id
+     * @param string[] $properties list of property names
+     * @param int $languageID language id
      * @return      string[]
      */
     public function getPayloadForProperties(array $properties, $languageID)

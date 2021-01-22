@@ -75,7 +75,7 @@ class Tar implements IArchive
      * Creates a new Tar object.
      * archiveName must be tarball or gzipped tarball
      *
-     * @param   string      $archiveName
+     * @param string $archiveName
      * @throws  SystemException
      */
     public function __construct($archiveName)
@@ -284,8 +284,7 @@ class Tar implements IArchive
                 $fileData = \unpack($format, $this->file->read(512));
                 $longFilename = $fileData['filename'];
                 $header['size'] = 0;
-            }
-            // don't include the @LongLink file in the content list
+            } // don't include the @LongLink file in the content list
             else {
                 $this->contentList[$i] = $header;
                 $this->contentList[$i]['index'] = $i;
@@ -299,7 +298,7 @@ class Tar implements IArchive
     /**
      * Unpacks file header for one file entry.
      *
-     * @param   string      $binaryData
+     * @param string $binaryData
      * @return  array|bool
      */
     protected function readHeader($binaryData)

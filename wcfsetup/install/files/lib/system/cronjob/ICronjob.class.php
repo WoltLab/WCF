@@ -17,7 +17,7 @@ interface ICronjob
     /**
      * Executes the cronjob.
      *
-     * @param   Cronjob     $cronjob
+     * @param Cronjob $cronjob
      */
     public function execute(Cronjob $cronjob);
 }

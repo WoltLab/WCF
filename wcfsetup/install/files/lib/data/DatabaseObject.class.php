@@ -53,9 +53,9 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
     /**
      * Creates a new instance of the DatabaseObject class.
      *
-     * @param   mixed           $id
-     * @param   array           $row
-     * @param   DatabaseObject      $object
+     * @param mixed $id
+     * @param array $row
+     * @param DatabaseObject $object
      */
     public function __construct($id, ?array $row = null, ?self $object = null)
     {
@@ -81,7 +81,7 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
     /**
      * Stores the data of a database row.
      *
-     * @param   array       $data
+     * @param array $data
      */
     protected function handleData($data)
     {
@@ -145,7 +145,9 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
 
         static $databaseTableNames = [];
         if (!isset($databaseTableNames[$className])) {
-            $databaseTableNames[$className] = $classParts[0] . WCF_N . '_' . \strtolower(\implode('_', \preg_split('~(?=[A-Z](?=[a-z]))~', \array_pop($classParts), -1, \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY)));
+            $databaseTableNames[$className] = $classParts[0] . WCF_N . '_' . \strtolower(\implode('_',
+                    \preg_split('~(?=[A-Z](?=[a-z]))~', \array_pop($classParts), -1,
+                        \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY)));
         }
 
         return $databaseTableNames[$className];
@@ -164,7 +166,9 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
         static $databaseTableAliases = [];
         if (!isset($databaseTableAliases[$className])) {
             $classParts = \explode('\\', $className);
-            $databaseTableAliases[$className] = \strtolower(\implode('_', \preg_split('~(?=[A-Z](?=[a-z]))~', \array_pop($classParts), -1, \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY)));
+            $databaseTableAliases[$className] = \strtolower(\implode('_',
+                \preg_split('~(?=[A-Z](?=[a-z]))~', \array_pop($classParts), -1,
+                    \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY)));
         }
 
         return $databaseTableAliases[$className];
@@ -190,7 +194,8 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
         static $databaseTableIndexName = null;
         if ($databaseTableIndexName === null) {
             $className = \explode('\\', \get_called_class());
-            $parts = \preg_split('~(?=[A-Z](?=[a-z]))~', \array_pop($className), -1, \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY);
+            $parts = \preg_split('~(?=[A-Z](?=[a-z]))~', \array_pop($className), -1,
+                \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY);
             $databaseTableIndexName = \strtolower(\array_pop($parts)) . 'ID';
         }
 
@@ -200,10 +205,10 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
     /**
      * Sorts a list of database objects.
      *
-     * @param   DatabaseObject[]    $objects
-     * @param   mixed           $sortBy
-     * @param   string          $sortOrder
-     * @param   bool            $maintainIndexAssociation
+     * @param DatabaseObject[] $objects
+     * @param mixed $sortBy
+     * @param string $sortOrder
+     * @param bool $maintainIndexAssociation
      */
     public static function sort(&$objects, $sortBy, $sortOrder = 'ASC', $maintainIndexAssociation = true)
     {

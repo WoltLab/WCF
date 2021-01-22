@@ -50,7 +50,7 @@ class UserStorageHandler extends SingletonFactory
     /**
      * Loads storage for a given set of users.
      *
-     * @param   int[]   $userIDs
+     * @param int[] $userIDs
      */
     public function loadStorage(array $userIDs)
     {
@@ -106,8 +106,8 @@ class UserStorageHandler extends SingletonFactory
     /**
      * Returns stored data for given users.
      *
-     * @param   int[]   $userIDs
-     * @param   string      $field
+     * @param int[] $userIDs
+     * @param string $field
      * @return  mixed[]
      */
     public function getStorage(array $userIDs, $field)
@@ -146,8 +146,8 @@ class UserStorageHandler extends SingletonFactory
      * In contrast to getStorage(), this method calls loadStorage() if no stored
      * data for the user has been loaded yet!
      *
-     * @param   string      $field
-     * @param   int     $userID
+     * @param string $field
+     * @param int $userID
      * @return  mixed
      */
     public function getField($field, $userID = null)
@@ -182,9 +182,9 @@ class UserStorageHandler extends SingletonFactory
     /**
      * Inserts new data records into database.
      *
-     * @param   int     $userID
-     * @param   string      $field
-     * @param   string      $fieldValue
+     * @param int $userID
+     * @param string $field
+     * @param string $fieldValue
      */
     public function update($userID, $field, $fieldValue)
     {
@@ -211,8 +211,8 @@ class UserStorageHandler extends SingletonFactory
     /**
      * Removes a data record from database.
      *
-     * @param   int[]   $userIDs
-     * @param   string      $field
+     * @param int[] $userIDs
+     * @param string $field
      */
     public function reset(array $userIDs, $field)
     {
@@ -239,7 +239,7 @@ class UserStorageHandler extends SingletonFactory
     /**
      * Removes a specific data record for all users.
      *
-     * @param   string      $field
+     * @param string $field
      */
     public function resetAll($field)
     {
@@ -367,7 +367,7 @@ class UserStorageHandler extends SingletonFactory
     /**
      * Returns the field name for use in Redis.
      *
-     * @param   string  $fieldName
+     * @param string $fieldName
      * @return  string
      */
     protected function getRedisFieldName($fieldName)

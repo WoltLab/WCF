@@ -17,7 +17,7 @@ final class EmailGrammar
     /**
      * Returns a regular expression matching the given type in RFC 5322.
      *
-     * @param   string  $type
+     * @param string $type
      * @return  string
      */
     public static function getGrammar($type)
@@ -83,7 +83,7 @@ final class EmailGrammar
     /**
      * Encode text using quoted printable encoding.
      *
-     * @param   string  $header     Header to encode
+     * @param string $header Header to encode
      * @return  string          Encoded header
      */
     public static function encodeQuotedPrintableHeader($header)
@@ -96,7 +96,7 @@ final class EmailGrammar
      * in double quotes or encoded in quoted printable. Depending on which
      * encoding is necessary.
      *
-     * @param   string  $header     Header to encode
+     * @param string $header Header to encode
      * @return  string          Encoded header
      */
     public static function encodeHeader($header)

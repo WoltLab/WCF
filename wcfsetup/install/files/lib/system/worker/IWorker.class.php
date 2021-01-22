@@ -15,14 +15,14 @@ interface IWorker
     /**
      * Creates a new worker object with additional parameters
      *
-     * @param   array       $parameters
+     * @param array $parameters
      */
     public function __construct(array $parameters);
 
     /**
      * Sets current loop count.
      *
-     * @param   int     $loopCount
+     * @param int $loopCount
      */
     public function setLoopCount($loopCount);
 

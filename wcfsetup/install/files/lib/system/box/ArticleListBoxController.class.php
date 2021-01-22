@@ -19,7 +19,15 @@ class ArticleListBoxController extends AbstractDatabaseObjectListBoxController
     /**
      * @inheritDoc
      */
-    protected static $supportedPositions = ['sidebarLeft', 'sidebarRight', 'contentTop', 'contentBottom', 'top', 'bottom', 'footerBoxes'];
+    protected static $supportedPositions = [
+        'sidebarLeft',
+        'sidebarRight',
+        'contentTop',
+        'contentBottom',
+        'top',
+        'bottom',
+        'footerBoxes',
+    ];
 
     /**
      * @inheritDoc

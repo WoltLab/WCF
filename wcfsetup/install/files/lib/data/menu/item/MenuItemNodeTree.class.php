@@ -55,9 +55,9 @@ class MenuItemNodeTree
     /**
      * Creates a new MenuItemNodeTree object.
      *
-     * @param   int     $menuID         menu id
-     * @param   MenuItemList    $menuItemList       optional object to be provided when building the tree from cache
-     * @param   bool        $checkVisibility    if `false`, individual menu item visibility will not be checked
+     * @param int $menuID menu id
+     * @param MenuItemList $menuItemList optional object to be provided when building the tree from cache
+     * @param bool $checkVisibility if `false`, individual menu item visibility will not be checked
      */
     public function __construct($menuID, ?MenuItemList $menuItemList = null, $checkVisibility = true)
     {
@@ -128,8 +128,8 @@ class MenuItemNodeTree
     /**
      * Generates the node tree recursively.
      *
-     * @param   int         $parentID   parent menu item id
-     * @param   MenuItemNode        $parentNode parent menu item object
+     * @param int $parentID parent menu item id
+     * @param MenuItemNode $parentNode parent menu item object
      * @return  MenuItemNode[]      nested menu item tree
      */
     protected function generateNodeTree($parentID = null, ?MenuItemNode $parentNode = null)
@@ -144,7 +144,8 @@ class MenuItemNodeTree
                 continue;
             }
 
-            $node = new MenuItemNode($parentNode, $menuItem, ($parentNode !== null ? ($parentNode->getDepth() + 1) : 0));
+            $node = new MenuItemNode($parentNode, $menuItem,
+                ($parentNode !== null ? ($parentNode->getDepth() + 1) : 0));
             $nodes[] = $node;
 
             // get children

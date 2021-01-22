@@ -34,7 +34,7 @@ class UserGroupAssignmentHandler extends SingletonFactory
      * Note: This method uses the user ids as a parameter instead of user objects
      * on purpose to make sure the latest data of the users are fetched.
      *
-     * @param   int[]       $userIDs
+     * @param int[] $userIDs
      */
     public function checkUsers(array $userIDs)
     {
@@ -97,8 +97,8 @@ class UserGroupAssignmentHandler extends SingletonFactory
      * Returns the users who fulfill all conditions of the given user group
      * assignment.
      *
-     * @param   UserGroupAssignment $assignment
-     * @param   int         $maxUsers
+     * @param UserGroupAssignment $assignment
+     * @param int $maxUsers
      * @return  User[]
      */
     public function getUsers(UserGroupAssignment $assignment, $maxUsers = null)

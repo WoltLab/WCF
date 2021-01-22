@@ -29,8 +29,8 @@ class GZipFile extends File
     /**
      * Opens a gzip file.
      *
-     * @param   string      $filename
-     * @param   string      $mode
+     * @param string $filename
+     * @param string $mode
      * @throws  SystemException
      */
     public function __construct($filename, $mode = 'wb')
@@ -50,8 +50,8 @@ class GZipFile extends File
     /**
      * Calls the specified function on the open file.
      *
-     * @param   string      $function
-     * @param   array       $arguments
+     * @param string $function
+     * @param array $arguments
      * @return  mixed
      * @throws  SystemException
      */

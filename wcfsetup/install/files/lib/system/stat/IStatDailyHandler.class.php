@@ -15,7 +15,7 @@ interface IStatDailyHandler
     /**
      * Returns the stats.
      *
-     * @param   int     $date
+     * @param int $date
      * @return  array
      */
     public function getData($date);
@@ -23,7 +23,7 @@ interface IStatDailyHandler
     /**
      * Returns a formatted counter value.
      *
-     * @param   int     $counter
+     * @param int $counter
      * @return  mixed
      */
     public function getFormattedCounter($counter);

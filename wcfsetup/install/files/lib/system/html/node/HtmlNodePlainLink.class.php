@@ -149,8 +149,8 @@ class HtmlNodePlainLink
      * Replaces the entire link, including any formatting, with the provided bbcode. This is
      * available for standalone links only.
      *
-     * @param BBCode        $bbcode
-     * @param int|null      $overrideObjectID
+     * @param BBCode $bbcode
+     * @param int|null $overrideObjectID
      */
     public function replaceWithBBCode(BBCode $bbcode, $overrideObjectID = null)
     {

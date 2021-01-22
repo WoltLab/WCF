@@ -39,13 +39,15 @@ class UserRankAction extends AbstractDatabaseObjectAction
 
         if (isset($this->parameters['rankImageFile']) && $this->parameters['rankImageFile']) {
             if (!($this->parameters['rankImageFile'] instanceof UploadFile)) {
-                throw new InvalidObjectArgument($this->parameters['rankImageFile'], UploadFile::class, "The parameter 'rankImageFile'");
+                throw new InvalidObjectArgument($this->parameters['rankImageFile'], UploadFile::class,
+                    "The parameter 'rankImageFile'");
             }
 
             if (!$this->parameters['rankImageFile']->isProcessed()) {
                 $fileName = $rank->rankID . '-' . $this->parameters['rankImageFile']->getFilename();
 
-                \rename($this->parameters['rankImageFile']->getLocation(), WCF_DIR . UserRank::RANK_IMAGE_DIR . $fileName);
+                \rename($this->parameters['rankImageFile']->getLocation(),
+                    WCF_DIR . UserRank::RANK_IMAGE_DIR . $fileName);
                 $this->parameters['rankImageFile']->setProcessed(WCF_DIR . UserRank::RANK_IMAGE_DIR . $fileName);
 
                 $updateData['rankImage'] = $fileName;
@@ -66,7 +68,8 @@ class UserRankAction extends AbstractDatabaseObjectAction
         if (isset($this->parameters['rankImageFile__removedFiles']) && \is_array($this->parameters['rankImageFile__removedFiles'])) {
             foreach ($this->parameters['rankImageFile__removedFiles'] as $file) {
                 if (!($file instanceof UploadFile)) {
-                    throw new InvalidObjectArgument($this->parameters['rankImageFile__removedFiles'], UploadFile::class, "An array values of 'rankImageFile__removedFiles'");
+                    throw new InvalidObjectArgument($this->parameters['rankImageFile__removedFiles'], UploadFile::class,
+                        "An array values of 'rankImageFile__removedFiles'");
                 }
 
                 @\unlink($file->getLocation());
@@ -84,13 +87,15 @@ class UserRankAction extends AbstractDatabaseObjectAction
                 $this->parameters['data']['rankImage'] = "";
             } else {
                 if (!($this->parameters['rankImageFile'] instanceof UploadFile)) {
-                    throw new InvalidObjectArgument($this->parameters['rankImageFile'], UploadFile::class, "The parameter 'rankImageFile'");
+                    throw new InvalidObjectArgument($this->parameters['rankImageFile'], UploadFile::class,
+                        "The parameter 'rankImageFile'");
                 }
 
                 if (!$this->parameters['rankImageFile']->isProcessed()) {
                     $fileName = $object->rankID . '-' . $this->parameters['rankImageFile']->getFilename();
 
-                    \rename($this->parameters['rankImageFile']->getLocation(), WCF_DIR . UserRank::RANK_IMAGE_DIR . $fileName);
+                    \rename($this->parameters['rankImageFile']->getLocation(),
+                        WCF_DIR . UserRank::RANK_IMAGE_DIR . $fileName);
                     $this->parameters['rankImageFile']->setProcessed(WCF_DIR . UserRank::RANK_IMAGE_DIR . $fileName);
 
                     $this->parameters['data']['rankImage'] = $fileName;

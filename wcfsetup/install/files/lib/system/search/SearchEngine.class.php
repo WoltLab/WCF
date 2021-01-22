@@ -64,7 +64,7 @@ class SearchEngine extends SingletonFactory implements ISearchEngine
     /**
      * Returns the object type with the given name.
      *
-     * @param   string      $objectTypeName
+     * @param string $objectTypeName
      * @return  ISearchableObjectType|null
      */
     public function getObjectType($objectTypeName)

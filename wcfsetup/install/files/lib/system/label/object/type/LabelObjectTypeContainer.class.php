@@ -35,7 +35,7 @@ class LabelObjectTypeContainer implements \Countable, \Iterator
     /**
      * Creates a new LabelObjectTypeContainer object.
      *
-     * @param   int     $objectTypeID
+     * @param int $objectTypeID
      */
     public function __construct($objectTypeID)
     {
@@ -45,7 +45,7 @@ class LabelObjectTypeContainer implements \Countable, \Iterator
     /**
      * Adds a label object type.
      *
-     * @param   LabelObjectType     $objectType
+     * @param LabelObjectType $objectType
      */
     public function add(LabelObjectType $objectType)
     {

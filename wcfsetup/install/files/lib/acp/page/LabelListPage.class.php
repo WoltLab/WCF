@@ -22,7 +22,7 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Page
  *
- * @property    LabelList   $objectList
+ * @property    LabelList $objectList
  */
 class LabelListPage extends SortablePage
 {
@@ -121,15 +121,18 @@ class LabelListPage extends SortablePage
             $this->itemsPerPage = 1000;
         }
         if ($this->cssClassName) {
-            $this->objectList->getConditionBuilder()->add('label.cssClassName LIKE ?', ['%' . \addcslashes($this->cssClassName, '_%') . '%']);
+            $this->objectList->getConditionBuilder()->add('label.cssClassName LIKE ?',
+                ['%' . \addcslashes($this->cssClassName, '_%') . '%']);
         }
 
         if ($this->label) {
             $languageItemList = new LanguageItemList();
-            $languageItemList->getConditionBuilder()->add('languageCategoryID = ?', [LanguageFactory::getInstance()->getCategory('wcf.acp.label')->languageCategoryID]);
+            $languageItemList->getConditionBuilder()->add('languageCategoryID = ?',
+                [LanguageFactory::getInstance()->getCategory('wcf.acp.label')->languageCategoryID]);
             $languageItemList->getConditionBuilder()->add('languageID = ?', [WCF::getLanguage()->languageID]);
             $languageItemList->getConditionBuilder()->add('languageItem LIKE ?', ['wcf.acp.label.label%']);
-            $languageItemList->getConditionBuilder()->add('languageItemValue LIKE ?', ['%' . \addcslashes($this->label, '_%') . '%']);
+            $languageItemList->getConditionBuilder()->add('languageItemValue LIKE ?',
+                ['%' . \addcslashes($this->label, '_%') . '%']);
             $languageItemList->readObjects();
 
             $labelIDs = [];
@@ -138,9 +141,11 @@ class LabelListPage extends SortablePage
             }
 
             if (!empty($labelIDs)) {
-                $this->objectList->getConditionBuilder()->add('(label LIKE ? OR labelID IN (?))', ['%' . \addcslashes($this->label, '_%') . '%', $labelIDs]);
+                $this->objectList->getConditionBuilder()->add('(label LIKE ? OR labelID IN (?))',
+                    ['%' . \addcslashes($this->label, '_%') . '%', $labelIDs]);
             } else {
-                $this->objectList->getConditionBuilder()->add('label LIKE ?', ['%' . \addcslashes($this->label, '_%') . '%']);
+                $this->objectList->getConditionBuilder()->add('label LIKE ?',
+                    ['%' . \addcslashes($this->label, '_%') . '%']);
             }
         }
     }

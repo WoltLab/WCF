@@ -45,10 +45,10 @@ class RecipientAwareTextMimePart extends TextMimePart implements IRecipientAware
     /**
      * Creates a new AbstractRecipientAwareTextMimePart.
      *
-     * @param   string  $mimeType   Mime type to provide in the email. You *must* not provide a charset. UTF-8 will be used automatically.
-     * @param   string  $template   Template to evaluate
-     * @param   string  $application    Application of the template to evaluate (default: wcf)
-     * @param   mixed   $content    Content of this text part. Passed as 'content' to the template. If it is an array it will additionally be merged with the template variables.
+     * @param string $mimeType Mime type to provide in the email. You *must* not provide a charset. UTF-8 will be used automatically.
+     * @param string $template Template to evaluate
+     * @param string $application Application of the template to evaluate (default: wcf)
+     * @param mixed $content Content of this text part. Passed as 'content' to the template. If it is an array it will additionally be merged with the template variables.
      */
     public function __construct($mimeType, $template, $application = 'wcf', $content = null)
     {

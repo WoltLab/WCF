@@ -25,7 +25,7 @@ class FeedArticleList extends CategoryArticleList
     /**
      * Creates a new FeedArticleList object.
      *
-     * @param   int         $categoryID
+     * @param int $categoryID
      */
     public function __construct($categoryID = 0)
     {

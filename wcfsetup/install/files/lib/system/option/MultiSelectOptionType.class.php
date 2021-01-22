@@ -108,7 +108,8 @@ class MultiSelectOptionType extends SelectOptionType
         }, $value);
 
         $conditions->add(
-            "option_value.userOption" . $option->optionID . " REGEXP '" . '(^|\n)' . \implode('\n([^\n]*\n)*', $value) . '($|\n)' . "'"
+            "option_value.userOption" . $option->optionID . " REGEXP '" . '(^|\n)' . \implode('\n([^\n]*\n)*',
+                $value) . '($|\n)' . "'"
         );
 
         return true;
@@ -129,7 +130,8 @@ class MultiSelectOptionType extends SelectOptionType
         }, $value);
 
         $userList->getConditionBuilder()->add(
-            "user_option_value.userOption" . $option->optionID . " REGEXP '" . '(^|\n)' . \implode('\n([^\n]*\n)*', $value) . '($|\n)' . "'"
+            "user_option_value.userOption" . $option->optionID . " REGEXP '" . '(^|\n)' . \implode('\n([^\n]*\n)*',
+                $value) . '($|\n)' . "'"
         );
     }
 

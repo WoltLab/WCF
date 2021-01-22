@@ -49,7 +49,23 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
      * list of names of tags which aren't considered as additional data
      * @var string[]
      */
-    public static $reservedTags = ['name', 'optiontype', 'defaultvalue', 'validationpattern', 'enableoptions', 'showorder', 'hidden', 'selectoptions', 'categoryname', 'permissions', 'options', 'attrs', 'cdata', 'supporti18n', 'requirei18n'];
+    public static $reservedTags = [
+        'name',
+        'optiontype',
+        'defaultvalue',
+        'validationpattern',
+        'enableoptions',
+        'showorder',
+        'hidden',
+        'selectoptions',
+        'categoryname',
+        'permissions',
+        'options',
+        'attrs',
+        'cdata',
+        'supporti18n',
+        'requirei18n',
+    ];
 
     /**
      * @inheritDoc
@@ -180,28 +196,31 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 
                 /** @var TextFormField $optionNameField */
                 $optionNameField = $dataContainer->getNodeById('optionName');
-                $optionNameField->addValidator(new FormFieldValidator('uniqueness', function (TextFormField $formField) {
-                    if (
-                        $formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE
-                        || $this->editedEntry->getAttribute('name') !== $formField->getValue()
-                    ) {
-                        $optionList = new OptionList();
-                        $optionList->getConditionBuilder()->add('optionName = ?', [$formField->getValue()]);
-                        $optionList->getConditionBuilder()->add('packageID IN (?)', [\array_merge(
-                            [$this->installation->getPackage()->packageID],
-                            \array_keys($this->installation->getPackage()->getAllRequiredPackages())
-                        )]);
+                $optionNameField->addValidator(new FormFieldValidator('uniqueness',
+                    function (TextFormField $formField) {
+                        if (
+                            $formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE
+                            || $this->editedEntry->getAttribute('name') !== $formField->getValue()
+                        ) {
+                            $optionList = new OptionList();
+                            $optionList->getConditionBuilder()->add('optionName = ?', [$formField->getValue()]);
+                            $optionList->getConditionBuilder()->add('packageID IN (?)', [
+                                \array_merge(
+                                    [$this->installation->getPackage()->packageID],
+                                    \array_keys($this->installation->getPackage()->getAllRequiredPackages())
+                                ),
+                            ]);
 
-                        if ($optionList->countObjects() > 0) {
-                            $formField->addValidationError(
-                                new FormFieldValidationError(
-                                    'notUnique',
-                                    'wcf.acp.pip.option.optionName.error.notUnique'
-                                )
-                            );
+                            if ($optionList->countObjects() > 0) {
+                                $formField->addValidationError(
+                                    new FormFieldValidationError(
+                                        'notUnique',
+                                        'wcf.acp.pip.option.optionName.error.notUnique'
+                                    )
+                                );
+                            }
                         }
-                    }
-                }));
+                    }));
 
                 // add `hidden` pseudo-category
                 /** @var SingleSelectionFormField $categoryName */
@@ -253,13 +272,14 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
                 ]);
 
                 // ensure proper normalization of select options
-                $form->getDataHandler()->addProcessor(new CustomFormDataProcessor('selectOptions', static function (IFormDocument $document, array $parameters) {
-                    if (isset($parameters['data']['selectoptions'])) {
-                        $parameters['data']['selectoptions'] = StringUtil::unifyNewlines($parameters['data']['selectoptions']);
-                    }
+                $form->getDataHandler()->addProcessor(new CustomFormDataProcessor('selectOptions',
+                    static function (IFormDocument $document, array $parameters) {
+                        if (isset($parameters['data']['selectoptions'])) {
+                            $parameters['data']['selectoptions'] = StringUtil::unifyNewlines($parameters['data']['selectoptions']);
+                        }
 
-                    return $parameters;
-                }));
+                        return $parameters;
+                    }));
 
                 break;
         }

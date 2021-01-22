@@ -49,7 +49,7 @@ class VisitTracker extends SingletonFactory
     /**
      * Returns the object type id of the given visit tracker object type.
      *
-     * @param   string      $objectType
+     * @param string $objectType
      * @return  int
      * @throws  SystemException
      */
@@ -65,7 +65,7 @@ class VisitTracker extends SingletonFactory
     /**
      * Returns the last visit time for a whole object type.
      *
-     * @param   string      $objectType
+     * @param string $objectType
      * @return  int
      */
     public function getVisitTime($objectType)
@@ -121,8 +121,8 @@ class VisitTracker extends SingletonFactory
     /**
      * Returns the last visit time for a specific object.
      *
-     * @param   string      $objectType
-     * @param   int     $objectID
+     * @param string $objectType
+     * @param int $objectID
      * @return  int
      */
     public function getObjectVisitTime($objectType, $objectID)
@@ -151,7 +151,7 @@ class VisitTracker extends SingletonFactory
     /**
      * Deletes all tracked visits of a specific object type.
      *
-     * @param   string      $objectType
+     * @param string $objectType
      */
     public function deleteObjectVisits($objectType)
     {
@@ -167,10 +167,10 @@ class VisitTracker extends SingletonFactory
     /**
      * Tracks an object visit for the users with the given ids.
      *
-     * @param   string      $objectType
-     * @param   int     $objectID
-     * @param   int[]   $userIDs
-     * @param   int         $time
+     * @param string $objectType
+     * @param int $objectID
+     * @param int[] $userIDs
+     * @param int $time
      */
     public function trackObjectVisitByUserIDs($objectType, $objectID, array $userIDs, $time = TIME_NOW)
     {
@@ -192,9 +192,9 @@ class VisitTracker extends SingletonFactory
     /**
      * Tracks an object visit.
      *
-     * @param   string      $objectType
-     * @param   int     $objectID
-     * @param   int     $time
+     * @param string $objectType
+     * @param int $objectID
+     * @param int $time
      */
     public function trackObjectVisit($objectType, $objectID, $time = TIME_NOW)
     {
@@ -216,8 +216,8 @@ class VisitTracker extends SingletonFactory
     /**
      * Tracks an object type visit.
      *
-     * @param   string      $objectType
-     * @param   int     $time
+     * @param string $objectType
+     * @param int $time
      */
     public function trackTypeVisit($objectType, $time = TIME_NOW)
     {

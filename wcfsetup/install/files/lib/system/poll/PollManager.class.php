@@ -92,7 +92,7 @@ class PollManager extends SingletonFactory
     /**
      * Removes a list of polls by id.
      *
-     * @param   int[]       $pollIDs
+     * @param int[] $pollIDs
      */
     public function removePolls(array $pollIDs)
     {
@@ -108,9 +108,9 @@ class PollManager extends SingletonFactory
     /**
      * Sets object data.
      *
-     * @param   string      $objectType
-     * @param   int     $objectID
-     * @param   int     $pollID
+     * @param string $objectType
+     * @param int $objectID
+     * @param int $pollID
      * @return  bool
      * @throws  SystemException
      */
@@ -163,7 +163,7 @@ class PollManager extends SingletonFactory
     /**
      * Reads form parameters for polls.
      *
-     * @param   array   $postData   optional post data to be used instead of $_POST
+     * @param array $postData optional post data to be used instead of $_POST
      */
     public function readFormParameters(array $postData = [])
     {
@@ -255,7 +255,7 @@ class PollManager extends SingletonFactory
      * Handles poll creation, modification and deletion. Returns poll id or zero
      * if poll was deleted or nothing was created.
      *
-     * @param   int     $objectID
+     * @param int $objectID
      * @return  int
      * @throws  SystemException
      */
@@ -315,8 +315,8 @@ class PollManager extends SingletonFactory
      *
      * This method either creates a new poll or updates or deletes an existing poll.
      *
-     * @param   IPollContainer      $pollContainer      object the poll belongs to
-     * @param   array           $pollData       poll data
+     * @param IPollContainer $pollContainer object the poll belongs to
+     * @param array $pollData poll data
      * @return  null|int                    id of the poll
      * @since   5.2
      */
@@ -391,7 +391,7 @@ class PollManager extends SingletonFactory
     /**
      * Returns a list of polls including options and vote state for current user.
      *
-     * @param   int[]       $pollIDs
+     * @param int[] $pollIDs
      * @return  Poll[]
      */
     public function getPolls(array $pollIDs)
@@ -420,7 +420,7 @@ class PollManager extends SingletonFactory
     /**
      * Returns a list of poll options with vote state for current user.
      *
-     * @param   int[]   $pollIDs
+     * @param int[] $pollIDs
      * @return  PollOptionList
      */
     public function getPollOptions(array $pollIDs)
@@ -444,7 +444,7 @@ class PollManager extends SingletonFactory
     /**
      * Returns related object for given poll object.
      *
-     * @param   Poll    $poll
+     * @param Poll $poll
      * @return  \wcf\data\IPollObject
      */
     public function getRelatedObject(Poll $poll)
@@ -458,8 +458,8 @@ class PollManager extends SingletonFactory
      * Returns the handler object for given object type. Returns false if object type (id)
      * is not found, or null if no handler is assigned.
      *
-     * @param   int     $objectTypeID
-     * @param   string      $objectType
+     * @param int $objectTypeID
+     * @param string $objectType
      * @return  mixed
      * @throws  SystemException
      */

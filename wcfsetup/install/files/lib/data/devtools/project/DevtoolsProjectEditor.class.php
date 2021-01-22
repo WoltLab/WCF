@@ -13,7 +13,7 @@ use wcf\data\DatabaseObjectEditor;
  * @package WoltLabSuite\Core\Data\Devtools\Project
  * @since   3.1
  *
- * @method static   DevtoolsProject create(array $parameters = [])
+ * @method static DevtoolsProject create(array $parameters = [])
  * @method      DevtoolsProject getDecoratedObject()
  * @mixin       DevtoolsProject
  */

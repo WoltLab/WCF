@@ -44,7 +44,10 @@ class ArticleListPage extends SortablePage
     /**
      * @inheritDoc
      */
-    public $neededPermissions = ['admin.content.article.canManageArticle', 'admin.content.article.canContributeArticle'];
+    public $neededPermissions = [
+        'admin.content.article.canManageArticle',
+        'admin.content.article.canContributeArticle',
+    ];
 
     /**
      * @inheritDoc
@@ -156,10 +159,12 @@ class ArticleListPage extends SortablePage
             }
         }
         if (!empty($this->title)) {
-            $this->objectList->getConditionBuilder()->add('article.articleID IN (SELECT articleID FROM wcf' . WCF_N . '_article_content WHERE title LIKE ?)', ['%' . $this->title . '%']);
+            $this->objectList->getConditionBuilder()->add('article.articleID IN (SELECT articleID FROM wcf' . WCF_N . '_article_content WHERE title LIKE ?)',
+                ['%' . $this->title . '%']);
         }
         if (!empty($this->content)) {
-            $this->objectList->getConditionBuilder()->add('article.articleID IN (SELECT articleID FROM wcf' . WCF_N . '_article_content WHERE content LIKE ?)', ['%' . $this->content . '%']);
+            $this->objectList->getConditionBuilder()->add('article.articleID IN (SELECT articleID FROM wcf' . WCF_N . '_article_content WHERE content LIKE ?)',
+                ['%' . $this->content . '%']);
         }
         if (!WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
             // only show own articles

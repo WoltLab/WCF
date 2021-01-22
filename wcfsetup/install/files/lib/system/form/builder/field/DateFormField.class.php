@@ -82,7 +82,7 @@ class DateFormField extends AbstractFormField implements
      * Sets the earliest valid date in `DateFormField::$saveValueFormat` format and returns this
      * field. If `null` is given, the previously set earliest valid date is unset.
      *
-     * @param   null|string|int     $earliestDate
+     * @param null|string|int $earliestDate
      * @return  static
      */
     public function earliestDate($earliestDate = null)
@@ -241,7 +241,7 @@ class DateFormField extends AbstractFormField implements
      * Sets the latest valid date in `DateFormField::$saveValueFormat` format and returns this
      * field. If `null` is given, the previously set latest valid date is unset.
      *
-     * @param   null|string|int     $latestDate
+     * @param null|string|int $latestDate
      * @return  static
      */
     public function latestDate($latestDate = null)
@@ -297,7 +297,7 @@ class DateFormField extends AbstractFormField implements
     /**
      * Sets the date time format of the save value.
      *
-     * @param   string      $saveValueFormat
+     * @param string $saveValueFormat
      * @return  static
      */
     public function saveValueFormat($saveValueFormat)
@@ -314,7 +314,7 @@ class DateFormField extends AbstractFormField implements
     /**
      * Sets if not only the date, but also the time can be set.
      *
-     * @param   bool        $supportsTime
+     * @param bool $supportsTime
      * @return  static      this field
      */
     public function supportTime($supportsTime = true)

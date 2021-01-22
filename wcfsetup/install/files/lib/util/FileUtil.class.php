@@ -115,9 +115,9 @@ final class FileUtil
     /**
      * Generates a new temporary filename in TMP_DIR.
      *
-     * @param   string      $prefix
-     * @param   string      $extension
-     * @param   string      $dir
+     * @param string $prefix
+     * @param string $extension
+     * @param string $dir
      * @return  string
      */
     public static function getTemporaryFilename($prefix = 'tmpFile_', $extension = '', $dir = TMP_DIR)
@@ -133,7 +133,7 @@ final class FileUtil
     /**
      * Removes a leading slash from the given path.
      *
-     * @param   string      $path
+     * @param string $path
      * @return  string
      */
     public static function removeLeadingSlash($path)
@@ -144,7 +144,7 @@ final class FileUtil
     /**
      * Removes a trailing slash from the given path.
      *
-     * @param   string      $path
+     * @param string $path
      * @return  string
      */
     public static function removeTrailingSlash($path)
@@ -155,7 +155,7 @@ final class FileUtil
     /**
      * Adds a trailing slash to the given path.
      *
-     * @param   string      $path
+     * @param string $path
      * @return  string
      */
     public static function addTrailingSlash($path)
@@ -166,7 +166,7 @@ final class FileUtil
     /**
      * Adds a leading slash to the given path.
      *
-     * @param   string      $path
+     * @param string $path
      * @return  string
      */
     public static function addLeadingSlash($path)
@@ -177,8 +177,8 @@ final class FileUtil
     /**
      * Returns the relative path from the given absolute paths.
      *
-     * @param   string      $currentDir
-     * @param   string      $targetDir
+     * @param string $currentDir
+     * @param string $targetDir
      * @return  string
      */
     public static function getRelativePath($currentDir, $targetDir)
@@ -206,8 +206,7 @@ final class FileUtil
 
                     break;
                 }
-            }
-            // go up one level
+            } // go up one level
             elseif (isset($current[$i]) && !isset($target[$i])) {
                 $relPath .= '../';
             } elseif (!isset($current[$i]) && isset($target[$i])) {
@@ -223,7 +222,7 @@ final class FileUtil
      * Parent directories do not need to exists as they will be created if
      * necessary.
      *
-     * @param   string      $path
+     * @param string $path
      * @return  bool
      */
     public static function makePath($path)
@@ -263,7 +262,7 @@ final class FileUtil
     /**
      * Unifies windows and unix directory separators.
      *
-     * @param   string      $path
+     * @param string $path
      * @return  string
      */
     public static function unifyDirSeparator($path)
@@ -277,9 +276,9 @@ final class FileUtil
      * Scans a folder (and subfolder) for a specific file.
      * Returns the filename if found, otherwise false.
      *
-     * @param   string      $folder
-     * @param   string      $searchfile
-     * @param   bool        $recursive
+     * @param string $folder
+     * @param string $searchfile
+     * @param bool $recursive
      * @return  mixed
      */
     public static function scanFolder($folder, $searchfile, $recursive = true)
@@ -317,7 +316,7 @@ final class FileUtil
     /**
      * Returns true if the given filename is an url (http or ftp).
      *
-     * @param   string      $filename
+     * @param string $filename
      * @return  bool
      */
     public static function isURL($filename)
@@ -328,7 +327,7 @@ final class FileUtil
     /**
      * Returns canonicalized absolute pathname.
      *
-     * @param   string      $path
+     * @param string $path
      * @return  string      path
      */
     public static function getRealPath($path)
@@ -367,8 +366,8 @@ final class FileUtil
     /**
      * Formats the given filesize.
      *
-     * @param   int     $byte
-     * @param   int     $precision
+     * @param int $byte
+     * @param int $precision
      * @return  string
      */
     public static function formatFilesize($byte, $precision = 2)
@@ -399,8 +398,8 @@ final class FileUtil
      *
      * For more information: <http://en.wikipedia.org/wiki/Binary_prefix>
      *
-     * @param   int     $byte
-     * @param   int     $precision
+     * @param int $byte
+     * @param int $precision
      * @return  string
      */
     public static function formatFilesizeBinary($byte, $precision = 2)
@@ -430,11 +429,11 @@ final class FileUtil
      * Downloads a package archive from an http URL and returns the path to
      * the downloaded file.
      *
-     * @param   string      $httpUrl
-     * @param   string      $prefix
-     * @param   array       $options
-     * @param   array       $postParameters
-     * @param   array       $headers        empty array or a not initialized variable
+     * @param string $httpUrl
+     * @param string $prefix
+     * @param array $options
+     * @param array $postParameters
+     * @param array $headers empty array or a not initialized variable
      * @return  string
      * @deprecated  This method currently only is a wrapper around \wcf\util\HTTPRequest. Please use
      *      HTTPRequest from now on, as this method may be removed in the future.
@@ -465,7 +464,7 @@ final class FileUtil
      * If every byte in that part of the file is non-null, considers the file to be text;
      * otherwise it considers the file to be binary.
      *
-     * @param   string      $file
+     * @param string $file
      * @return  bool
      */
     public static function isBinary($file)
@@ -495,8 +494,8 @@ final class FileUtil
     /**
      * Uncompresses a gzipped file and returns true if successful.
      *
-     * @param   string      $gzipped
-     * @param   string      $destination
+     * @param string $gzipped
+     * @param string $destination
      * @return  bool
      */
     public static function uncompressFile($gzipped, $destination)
@@ -532,7 +531,7 @@ final class FileUtil
     /**
      * Returns the mime type of a file.
      *
-     * @param   string      $filename
+     * @param string $filename
      * @return  string
      */
     public static function getMimeType($filename)
@@ -555,7 +554,7 @@ final class FileUtil
      * Tries to make a file or directory writable. It starts of with the least
      * permissions and goes up until 0666 for files and 0777 for directories.
      *
-     * @param   string      $filename
+     * @param string $filename
      * @throws  SystemException
      */
     public static function makeWritable($filename)
@@ -667,7 +666,7 @@ final class FileUtil
     /**
      * Returns true if the given amount of memory is available.
      *
-     * @param   int     $neededMemory
+     * @param int $neededMemory
      * @return  bool
      */
     public static function checkMemoryLimit($neededMemory)
@@ -678,34 +677,57 @@ final class FileUtil
     /**
      * Returns icon name for given filename.
      *
-     * @param       string          $filename
+     * @param string $filename
      * @return      string
      */
     public static function getIconNameByFilename($filename)
     {
         static $mapping = [
             // archive
-            'zip' => 'archive', 'rar' => 'archive', 'tar' => 'archive', 'gz' => 'archive',
+            'zip' => 'archive',
+            'rar' => 'archive',
+            'tar' => 'archive',
+            'gz' => 'archive',
             // audio
-            'mp3' => 'audio', 'ogg' => 'audio', 'wav' => 'audio',
+            'mp3' => 'audio',
+            'ogg' => 'audio',
+            'wav' => 'audio',
             // code
-            'php' => 'code', 'html' => 'code', 'htm' => 'code', 'tpl' => 'code', 'js' => 'code',
+            'php' => 'code',
+            'html' => 'code',
+            'htm' => 'code',
+            'tpl' => 'code',
+            'js' => 'code',
             // excel
-            'xls' => 'excel', 'ods' => 'excel', 'xlsx' => 'excel',
+            'xls' => 'excel',
+            'ods' => 'excel',
+            'xlsx' => 'excel',
             // image
-            'gif' => 'image', 'jpg' => 'image', 'jpeg' => 'image', 'png' => 'image',
-            'bmp' => 'image', 'webp' => 'image',
+            'gif' => 'image',
+            'jpg' => 'image',
+            'jpeg' => 'image',
+            'png' => 'image',
+            'bmp' => 'image',
+            'webp' => 'image',
             // video
-            'avi' => 'video', 'wmv' => 'video', 'mov' => 'video', 'mp4' => 'video', 'mpg' => 'video',
-            'mpeg' => 'video', 'flv' => 'video',
+            'avi' => 'video',
+            'wmv' => 'video',
+            'mov' => 'video',
+            'mp4' => 'video',
+            'mpg' => 'video',
+            'mpeg' => 'video',
+            'flv' => 'video',
             // pdf
             'pdf' => 'pdf',
             // powerpoint
-            'ppt' => 'powerpoint', 'pptx' => 'powerpoint',
+            'ppt' => 'powerpoint',
+            'pptx' => 'powerpoint',
             // text
             'txt' => 'text',
             // word
-            'doc' => 'word', 'docx' => 'word', 'odt' => 'word',
+            'doc' => 'word',
+            'docx' => 'word',
+            'odt' => 'word',
         ];
 
         $lastDotPosition = \strrpos($filename, '.');

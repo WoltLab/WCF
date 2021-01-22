@@ -27,55 +27,55 @@ use wcf\util\UserUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\User
  *
- * @property-read   int     $userID             unique id of the user
- * @property-read   string      $username           name of the user
- * @property-read   string      $email              email address of the user
- * @property-read   string      $password           double salted hash of the user's password
- * @property-read   string      $accessToken            token used for access authentication, for example used by feed pages
- * @property-read   int     $languageID         id of the interface language used by the user
- * @property-read   int     $registrationDate       timestamp at which the user has registered/has been created
- * @property-read   int     $styleID            id of the style used by the user
- * @property-read   int     $banned             is `1` if the user is banned, otherwise `0`
- * @property-read   string      $banReason          reason why the user is banned
- * @property-read   int     $banExpires         timestamp at which the banned user is automatically unbanned
- * @property-read   int     $activationCode         flag which determines, whether the user is activated (for legacy reasons an random integer, if the user is *not* activated)
- * @property-read   string      $emailConfirmed         code sent to the user's email address used for account activation or null if the email is confirmed
- * @property-read   int     $lastLostPasswordRequestTime    timestamp at which the user has reported that they lost their password or 0 if password has not been reported as lost
- * @property-read   string      $lostPasswordKey        code used for authenticating setting new password after password loss or empty if password has not been reported as lost
- * @property-read   int     $lastUsernameChange     timestamp at which the user changed their name the last time or 0 if username has not been changed
- * @property-read   string      $newEmail           new email address of the user that has to be manually confirmed or empty if no new email address has been set
- * @property-read   string      $oldUsername            previous name of the user or empty if they have had no previous name
- * @property-read   int     $quitStarted            timestamp at which the user terminated their account
- * @property-read   int     $reactivationCode       code used for authenticating setting new email address or empty if no new email address has been set
- * @property-read   string      $registrationIpAddress      ip address of the user at the time of registration or empty if user has been created manually or if no ip address are logged
- * @property-read   int|null    $avatarID           id of the user's avatar or null if they have no avatar
- * @property-read   int     $disableAvatar          is `1` if the user's avatar has been disabled, otherwise `0`
- * @property-read   string      $disableAvatarReason        reason why the user's avatar is disabled
- * @property-read   int     $disableAvatarExpires       timestamp at which the user's avatar will automatically be enabled again
- * @property-read   int     $enableGravatar         is `1` if the user uses a gravatar as avatar, otherwise `0`
- * @property-read   string      $gravatarFileExtension      extension of the user's gravatar file
- * @property-read   string      $signature          text of the user's signature
- * @property-read   int     $signatureEnableHtml        is `1` if HTML will rendered in the user's signature, otherwise `0`
- * @property-read   int     $disableSignature       is `1` if the user's signature has been disabled, otherwise `0`
- * @property-read   string      $disableSignatureReason     reason why the user's signature is disabled
- * @property-read   int     $disableSignatureExpires    timestamp at which the user's signature will automatically be enabled again
- * @property-read   int     $lastActivityTime       timestamp of the user's last activity
- * @property-read   int     $profileHits            number of times the user's profile has been visited
- * @property-read   int|null    $rankID             id of the user's rank or null if they have no rank
- * @property-read   string      $userTitle          custom user title used instead of rank title or empty if user has no custom title
- * @property-read   int|null    $userOnlineGroupID      id of the user group whose online marking is used when printing the user's formatted name or null if no special marking is used
- * @property-read   int     $activityPoints         total number of the user's activity points
- * @property-read   string      $notificationMailToken      token used for authenticating requests by the user to disable notification emails
- * @property-read   string      $authData           data of the third party used for authentication
- * @property-read   int     $likesReceived          cumulative result of likes (counting +1) the user's contents have received
- * @property-read       string          $coverPhotoHash                 hash of the user's cover photo
- * @property-read   string      $coverPhotoExtension        extension of the user's cover photo file
- * @property-read       int         $disableCoverPhoto              is `1` if the user's cover photo has been disabled, otherwise `0`
- * @property-read   string      $disableCoverPhotoReason    reason why the user's cover photo is disabled
- * @property-read   int     $disableCoverPhotoExpires   timestamp at which the user's cover photo will automatically be enabled again
- * @property-read   int     $articles           number of articles written by the user
- * @property-read       string          $blacklistMatches               JSON string of an array with all matches in the blacklist, otherwise an empty string
- * @property-read       int         $multifactorActive              is `1` if the use has enabled a second factor, otherwise `0`
+ * @property-read   int $userID             unique id of the user
+ * @property-read   string $username           name of the user
+ * @property-read   string $email              email address of the user
+ * @property-read   string $password           double salted hash of the user's password
+ * @property-read   string $accessToken            token used for access authentication, for example used by feed pages
+ * @property-read   int $languageID         id of the interface language used by the user
+ * @property-read   int $registrationDate       timestamp at which the user has registered/has been created
+ * @property-read   int $styleID            id of the style used by the user
+ * @property-read   int $banned             is `1` if the user is banned, otherwise `0`
+ * @property-read   string $banReason          reason why the user is banned
+ * @property-read   int $banExpires         timestamp at which the banned user is automatically unbanned
+ * @property-read   int $activationCode         flag which determines, whether the user is activated (for legacy reasons an random integer, if the user is *not* activated)
+ * @property-read   string $emailConfirmed         code sent to the user's email address used for account activation or null if the email is confirmed
+ * @property-read   int $lastLostPasswordRequestTime    timestamp at which the user has reported that they lost their password or 0 if password has not been reported as lost
+ * @property-read   string $lostPasswordKey        code used for authenticating setting new password after password loss or empty if password has not been reported as lost
+ * @property-read   int $lastUsernameChange     timestamp at which the user changed their name the last time or 0 if username has not been changed
+ * @property-read   string $newEmail           new email address of the user that has to be manually confirmed or empty if no new email address has been set
+ * @property-read   string $oldUsername            previous name of the user or empty if they have had no previous name
+ * @property-read   int $quitStarted            timestamp at which the user terminated their account
+ * @property-read   int $reactivationCode       code used for authenticating setting new email address or empty if no new email address has been set
+ * @property-read   string $registrationIpAddress      ip address of the user at the time of registration or empty if user has been created manually or if no ip address are logged
+ * @property-read   int|null $avatarID           id of the user's avatar or null if they have no avatar
+ * @property-read   int $disableAvatar          is `1` if the user's avatar has been disabled, otherwise `0`
+ * @property-read   string $disableAvatarReason        reason why the user's avatar is disabled
+ * @property-read   int $disableAvatarExpires       timestamp at which the user's avatar will automatically be enabled again
+ * @property-read   int $enableGravatar         is `1` if the user uses a gravatar as avatar, otherwise `0`
+ * @property-read   string $gravatarFileExtension      extension of the user's gravatar file
+ * @property-read   string $signature          text of the user's signature
+ * @property-read   int $signatureEnableHtml        is `1` if HTML will rendered in the user's signature, otherwise `0`
+ * @property-read   int $disableSignature       is `1` if the user's signature has been disabled, otherwise `0`
+ * @property-read   string $disableSignatureReason     reason why the user's signature is disabled
+ * @property-read   int $disableSignatureExpires    timestamp at which the user's signature will automatically be enabled again
+ * @property-read   int $lastActivityTime       timestamp of the user's last activity
+ * @property-read   int $profileHits            number of times the user's profile has been visited
+ * @property-read   int|null $rankID             id of the user's rank or null if they have no rank
+ * @property-read   string $userTitle          custom user title used instead of rank title or empty if user has no custom title
+ * @property-read   int|null $userOnlineGroupID      id of the user group whose online marking is used when printing the user's formatted name or null if no special marking is used
+ * @property-read   int $activityPoints         total number of the user's activity points
+ * @property-read   string $notificationMailToken      token used for authenticating requests by the user to disable notification emails
+ * @property-read   string $authData           data of the third party used for authentication
+ * @property-read   int $likesReceived          cumulative result of likes (counting +1) the user's contents have received
+ * @property-read       string $coverPhotoHash                 hash of the user's cover photo
+ * @property-read   string $coverPhotoExtension        extension of the user's cover photo file
+ * @property-read       int $disableCoverPhoto              is `1` if the user's cover photo has been disabled, otherwise `0`
+ * @property-read   string $disableCoverPhotoReason    reason why the user's cover photo is disabled
+ * @property-read   int $disableCoverPhotoExpires   timestamp at which the user's cover photo will automatically be enabled again
+ * @property-read   int $articles           number of articles written by the user
+ * @property-read       string $blacklistMatches               JSON string of an array with all matches in the blacklist, otherwise an empty string
+ * @property-read       int $multifactorActive              is `1` if the use has enabled a second factor, otherwise `0`
  */
 final class User extends DatabaseObject implements IPopoverObject, IRouteController, IUserContent
 {
@@ -148,7 +148,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns true if the given password is the correct password for this user.
      *
-     * @param   string      $password
+     * @param string $password
      * @return  bool        password correct
      */
     public function checkPassword($password)
@@ -199,7 +199,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns an array with all the groups in which the actual user is a member.
      *
-     * @param   bool        $skipCache
+     * @param bool $skipCache
      * @return  int[]
      */
     public function getGroupIDs($skipCache = false)
@@ -223,7 +223,8 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 
                     // update storage data
                     if (!$skipCache) {
-                        UserStorageHandler::getInstance()->update($this->userID, 'groupIDs', \serialize($this->groupIDs));
+                        UserStorageHandler::getInstance()->update($this->userID, 'groupIDs',
+                            \serialize($this->groupIDs));
                     }
                 } else {
                     $this->groupIDs = \unserialize($data);
@@ -260,7 +261,8 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
                     $this->languageIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
                     // update storage data
-                    UserStorageHandler::getInstance()->update($this->userID, 'languageIDs', \serialize($this->languageIDs));
+                    UserStorageHandler::getInstance()->update($this->userID, 'languageIDs',
+                        \serialize($this->languageIDs));
                 } else {
                     $this->languageIDs = \unserialize($data);
                 }
@@ -275,8 +277,8 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns the value of the user option with the given name.
      *
-     * @param   string      $name       user option name
-     * @param       bool         $filterDisabled suppress values for disabled options
+     * @param string $name user option name
+     * @param bool $filterDisabled suppress values for disabled options
      * @return  mixed               user option value
      */
     public function getUserOption($name, $filterDisabled = false)
@@ -306,7 +308,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns the id of a user option.
      *
-     * @param   string      $name
+     * @param string $name
      * @return  int     id
      */
     public static function getUserOptionID($name)
@@ -339,7 +341,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns the user with the given username.
      *
-     * @param   string      $username
+     * @param string $username
      * @return  User
      */
     public static function getUserByUsername($username)
@@ -362,7 +364,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns the user with the given email.
      *
-     * @param   string      $email
+     * @param string $email
      * @return  User
      */
     public static function getUserByEmail($email)
@@ -385,7 +387,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns the user with the given authData.
      *
-     * @param   string      $authData
+     * @param string $authData
      * @return  User
      */
     public static function getUserByAuthData($authData)
@@ -469,7 +471,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     /**
      * Returns a list of users.
      *
-     * @param   array       $userIDs
+     * @param array $userIDs
      * @return  User[]
      */
     public static function getUsers(array $userIDs)
@@ -617,9 +619,9 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 
     /**
      * Returns the social network privacy settings of the user.
+     * @return  bool[]
      * @deprecated 3.0
      *
-     * @return  bool[]
      */
     public function getSocialNetworkPrivacySettings()
     {

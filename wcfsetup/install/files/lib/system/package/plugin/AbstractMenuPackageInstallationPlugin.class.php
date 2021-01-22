@@ -171,11 +171,13 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
                 ->options(function () {
                     $menuStructure = $this->getMenuStructureData()['structure'];
 
-                    $options = [[
-                        'depth' => 0,
-                        'label' => 'wcf.global.noSelection',
-                        'value' => '',
-                    ]];
+                    $options = [
+                        [
+                            'depth' => 0,
+                            'label' => 'wcf.global.noSelection',
+                            'value' => '',
+                        ],
+                    ];
 
                     $buildOptions = static function ($parent = '', $depth = 0) use ($menuStructure, &$buildOptions) {
                         // only consider menu items until the third level (thus only parent
@@ -203,50 +205,56 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
                     return \array_merge($options, $buildOptions());
                 }, true)
                 ->value('')
-                ->addValidator(new FormFieldValidator('selfChildAsParent', function (SingleSelectionFormField $formField) {
-                    if (
-                        $formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_UPDATE
-                        && $formField->getSaveValue() !== ''
-                    ) {
-                        /** @var TextFormField $menuItemField */
-                        $menuItemField = $formField->getDocument()->getNodeById('menuItem');
-                        $menuItem = $menuItemField->getSaveValue();
-                        $parentMenuItem = $formField->getSaveValue();
+                ->addValidator(new FormFieldValidator('selfChildAsParent',
+                    function (SingleSelectionFormField $formField) {
+                        if (
+                            $formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_UPDATE
+                            && $formField->getSaveValue() !== ''
+                        ) {
+                            /** @var TextFormField $menuItemField */
+                            $menuItemField = $formField->getDocument()->getNodeById('menuItem');
+                            $menuItem = $menuItemField->getSaveValue();
+                            $parentMenuItem = $formField->getSaveValue();
 
-                        if ($menuItem === $parentMenuItem) {
-                            $formField->addValidationError(new FormFieldValidationError(
-                                'selfParent',
-                                'wcf.acp.pip.abstractMenu.parentMenuItem.error.selfParent'
-                            ));
-                        } else {
-                            $menuStructure = $this->getMenuStructureData()['structure'];
+                            if ($menuItem === $parentMenuItem) {
+                                $formField->addValidationError(new FormFieldValidationError(
+                                    'selfParent',
+                                    'wcf.acp.pip.abstractMenu.parentMenuItem.error.selfParent'
+                                ));
+                            } else {
+                                $menuStructure = $this->getMenuStructureData()['structure'];
 
-                            $checkChildren = static function ($menuItem) use ($formField, $menuStructure, $parentMenuItem, &$checkChildren) {
-                                if (isset($menuStructure[$menuItem])) {
-                                    /** @var ACPMenuItem $childMenuItem */
-                                    foreach ($menuStructure[$menuItem] as $childMenuItem) {
-                                        if ($childMenuItem->menuItem === $parentMenuItem) {
-                                            $formField->addValidationError(new FormFieldValidationError(
-                                                'childAsParent',
-                                                'wcf.acp.pip.abstractMenu.parentMenuItem.error.childAsParent'
-                                            ));
+                                $checkChildren = static function ($menuItem) use (
+                                    $formField,
+                                    $menuStructure,
+                                    $parentMenuItem,
+                                    &$checkChildren
+                                ) {
+                                    if (isset($menuStructure[$menuItem])) {
+                                        /** @var ACPMenuItem $childMenuItem */
+                                        foreach ($menuStructure[$menuItem] as $childMenuItem) {
+                                            if ($childMenuItem->menuItem === $parentMenuItem) {
+                                                $formField->addValidationError(new FormFieldValidationError(
+                                                    'childAsParent',
+                                                    'wcf.acp.pip.abstractMenu.parentMenuItem.error.childAsParent'
+                                                ));
 
-                                            return false;
-                                        } else {
-                                            if (!$checkChildren($childMenuItem->menuItem)) {
                                                 return false;
+                                            } else {
+                                                if (!$checkChildren($childMenuItem->menuItem)) {
+                                                    return false;
+                                                }
                                             }
                                         }
                                     }
-                                }
 
-                                return true;
-                            };
+                                    return true;
+                                };
 
-                            $checkChildren($menuItem);
+                                $checkChildren($menuItem);
+                            }
                         }
-                    }
-                })),
+                    })),
 
             ClassNameFormField::create('menuItemController')
                 ->objectProperty('controller')
@@ -404,10 +412,12 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 
         /** @var DatabaseObjectList $menuItemList */
         $menuItemList = new $listClassName();
-        $menuItemList->getConditionBuilder()->add('packageID IN (?)', [\array_merge(
-            [$this->installation->getPackage()->packageID],
-            \array_keys($this->installation->getPackage()->getAllRequiredPackages())
-        )]);
+        $menuItemList->getConditionBuilder()->add('packageID IN (?)', [
+            \array_merge(
+                [$this->installation->getPackage()->packageID],
+                \array_keys($this->installation->getPackage()->getAllRequiredPackages())
+            ),
+        ]);
         $menuItemList->sqlOrderBy = 'parentMenuItem ASC, showOrder ASC';
         $menuItemList->readObjects();
 

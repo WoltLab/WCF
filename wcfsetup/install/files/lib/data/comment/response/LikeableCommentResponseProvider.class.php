@@ -22,7 +22,8 @@ use wcf\system\WCF;
  * @method  LikeableCommentResponse     getObjectByID($objectID)
  * @method  LikeableCommentResponse[]   getObjectsByIDs(array $objectIDs)
  */
-class LikeableCommentResponseProvider extends AbstractObjectTypeProvider implements ILikeObjectTypeProvider, IViewableLikeProvider
+class LikeableCommentResponseProvider extends AbstractObjectTypeProvider implements ILikeObjectTypeProvider,
+                                                                                    IViewableLikeProvider
 {
     /**
      * @inheritDoc

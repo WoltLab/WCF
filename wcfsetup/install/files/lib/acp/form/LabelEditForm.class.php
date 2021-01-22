@@ -88,11 +88,13 @@ class LabelEditForm extends LabelAddForm
 
         // groupID is immutable because altering it would cause issues with objects that are
         // assigned to them, but the new group is not allowed at their current position
-        $this->objectAction = new LabelAction([$this->labelID], 'update', ['data' => \array_merge($this->additionalFields, [
-            'label' => $this->label,
-            'cssClassName' => $this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName,
-            'showOrder' => $this->showOrder,
-        ])]);
+        $this->objectAction = new LabelAction([$this->labelID], 'update', [
+            'data' => \array_merge($this->additionalFields, [
+                'label' => $this->label,
+                'cssClassName' => $this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName,
+                'showOrder' => $this->showOrder,
+            ]),
+        ]);
         $this->objectAction->executeAction();
 
         $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.label.objectType');

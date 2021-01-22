@@ -50,9 +50,9 @@ class PageNode extends DatabaseObjectDecorator implements \Countable, \Recursive
     /**
      * Creates a new PageNode object.
      *
-     * @param   PageNode    $parentNode
-     * @param   Page        $page
-     * @param   int     $depth
+     * @param PageNode $parentNode
+     * @param Page $page
+     * @param int $depth
      */
     public function __construct($parentNode = null, ?Page $page = null, $depth = 0)
     {
@@ -68,7 +68,7 @@ class PageNode extends DatabaseObjectDecorator implements \Countable, \Recursive
     /**
      * Sets the children of this node.
      *
-     * @param   PageNode[]  $children
+     * @param PageNode[] $children
      */
     public function setChildren(array $children)
     {

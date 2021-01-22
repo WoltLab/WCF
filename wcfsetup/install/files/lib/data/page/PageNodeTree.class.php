@@ -46,8 +46,8 @@ class PageNodeTree
     /**
      * Creates a new PageNodeTree object.
      *
-     * @param   int         $parentID
-     * @param   int         $startDepth
+     * @param int $parentID
+     * @param int $startDepth
      */
     public function __construct($parentID = null, $startDepth = 0)
     {
@@ -76,8 +76,8 @@ class PageNodeTree
     /**
      * Generates the node tree recursively.
      *
-     * @param   int         $parentID
-     * @param   PageNode        $parentNode
+     * @param int $parentID
+     * @param PageNode $parentNode
      * @return  PageNode[]
      */
     protected function generateNodeTree($parentID, ?PageNode $parentNode = null)

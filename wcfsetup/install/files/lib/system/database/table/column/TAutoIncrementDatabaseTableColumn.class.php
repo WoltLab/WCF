@@ -22,7 +22,7 @@ trait TAutoIncrementDatabaseTableColumn
     /**
      * Sets if the values of the database table column are auto-increment and returns this column.
      *
-     * @param   bool    $autoIncrement
+     * @param bool $autoIncrement
      * @return  $this
      */
     public function autoIncrement($autoIncrement = true)

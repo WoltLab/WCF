@@ -15,7 +15,7 @@ interface IUserProfileMenuContent
     /**
      * Returns content for this user profile menu item.
      *
-     * @param   int     $userID
+     * @param int $userID
      * @return  string
      */
     public function getContent($userID);
@@ -23,7 +23,7 @@ interface IUserProfileMenuContent
     /**
      * Returns true if the associated menu item should be visible for the active user.
      *
-     * @param   int     $userID
+     * @param int $userID
      * @return  bool
      */
     public function isVisible($userID);

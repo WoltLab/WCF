@@ -49,7 +49,7 @@ class ViewableUserOption extends DatabaseObjectDecorator
     /**
      * Sets option values for a specific user.
      *
-     * @param   User    $user
+     * @param User $user
      */
     public function setOptionValue(User $user)
     {
@@ -93,7 +93,7 @@ class ViewableUserOption extends DatabaseObjectDecorator
     /**
      * Returns the user option with the given name
      *
-     * @param   string      $name
+     * @param string $name
      * @return  ViewableUserOption
      */
     public static function getUserOption($name)

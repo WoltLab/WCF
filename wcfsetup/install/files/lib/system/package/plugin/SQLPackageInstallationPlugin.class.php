@@ -122,12 +122,10 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin
             // drop table
             if (!empty($entry['sqlTable']) && empty($entry['sqlColumn']) && empty($entry['sqlIndex'])) {
                 WCF::getDB()->getEditor()->dropTable($entry['sqlTable']);
-            }
-            // drop column
+            } // drop column
             elseif (\in_array($entry['sqlTable'], $existingTableNames) && !empty($entry['sqlColumn'])) {
                 WCF::getDB()->getEditor()->dropColumn($entry['sqlTable'], $entry['sqlColumn']);
-            }
-            // drop index
+            } // drop index
             elseif (\in_array($entry['sqlTable'], $existingTableNames) && !empty($entry['sqlIndex'])) {
                 if (\substr($entry['sqlIndex'], -3) == '_fk') {
                     WCF::getDB()->getEditor()->dropForeignKey($entry['sqlTable'], $entry['sqlIndex']);
@@ -144,7 +142,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin
      * Extracts and returns the sql file.
      * If the specified sql file was not found, an error message is thrown.
      *
-     * @param   string      $filename
+     * @param string $filename
      * @return  string
      * @throws  SystemException
      */

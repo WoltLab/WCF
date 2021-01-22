@@ -23,7 +23,7 @@ class TemplateScriptingCore
     /**
      * Initializes a new `TemplateScriptingCore` object.
      *
-     * @param   WCF $wcf
+     * @param WCF $wcf
      */
     public function __construct(WCF $wcf)
     {
@@ -34,8 +34,8 @@ class TemplateScriptingCore
      * Forwards method calls to the decorated `WCF` object but blocks access to the database
      * and the template object.
      *
-     * @param   string  $name       called method
-     * @param   array   $arguments  method parameters
+     * @param string $name called method
+     * @param array $arguments method parameters
      * @return  mixed
      */
     public function __call($name, array $arguments)
@@ -51,7 +51,7 @@ class TemplateScriptingCore
      * Forwards property access to the decorated `WCF` object but blocks access to the database
      * and the template object.
      *
-     * @param   string  $name   accessed property
+     * @param string $name accessed property
      * @return  mixed
      */
     public function __get($name)

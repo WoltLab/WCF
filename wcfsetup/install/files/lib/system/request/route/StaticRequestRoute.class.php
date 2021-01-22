@@ -46,7 +46,7 @@ class StaticRequestRoute extends DynamicRequestRoute
      * Controller must be part of the url and match the static controller, useful
      * for controllers requiring a custom set of additional parameters.
      *
-     * @param       bool         $matchController
+     * @param bool $matchController
      */
     public function setMatchController($matchController)
     {
@@ -56,8 +56,8 @@ class StaticRequestRoute extends DynamicRequestRoute
     /**
      * Sets the static controller for this route.
      *
-     * @param   string      $application
-     * @param   string      $controller
+     * @param string $application
+     * @param string $controller
      */
     public function setStaticController($application, $controller)
     {

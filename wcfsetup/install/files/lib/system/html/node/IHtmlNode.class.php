@@ -23,7 +23,7 @@ interface IHtmlNode
     /**
      * Checks for disallowed bbcodes, must return the offending bbcode on match.
      *
-     * @param       AbstractHtmlNodeProcessor       $htmlNodeProcessor      node processor instance
+     * @param AbstractHtmlNodeProcessor $htmlNodeProcessor node processor instance
      * @return      string[]                        disallowed bbcodes on match or empty array
      */
     public function isAllowed(AbstractHtmlNodeProcessor $htmlNodeProcessor);
@@ -31,15 +31,15 @@ interface IHtmlNode
     /**
      * Processes the provided elements and marks them for replacement if applicable.
      *
-     * @param       \DOMElement[]                   $elements               static list of matched elements, does not change when removing elements
-     * @param       AbstractHtmlNodeProcessor       $htmlNodeProcessor      node processor instance
+     * @param \DOMElement[] $elements static list of matched elements, does not change when removing elements
+     * @param AbstractHtmlNodeProcessor $htmlNodeProcessor node processor instance
      */
     public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor);
 
     /**
      * Replaces a placeholder tag with the provided data.
      *
-     * @param       array   $data   replacement data
+     * @param array $data replacement data
      */
     public function replaceTag(array $data);
 }

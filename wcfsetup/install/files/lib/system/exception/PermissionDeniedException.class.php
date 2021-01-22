@@ -22,7 +22,7 @@ class PermissionDeniedException extends UserException
     /**
      * Creates a new PermissionDeniedException object.
      *
-     * @param   string|null $message    custom error message
+     * @param string|null $message custom error message
      */
     public function __construct($message = null)
     {

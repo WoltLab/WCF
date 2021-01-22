@@ -21,7 +21,7 @@ use wcf\system\WCF;
  * @method  ViewableModerationQueue     current()
  * @method  ViewableModerationQueue[]   getObjects()
  * @method  ViewableModerationQueue|null    search($objectID)
- * @property    ViewableModerationQueue[]   $objects
+ * @property    ViewableModerationQueue[] $objects
  */
 class ViewableModerationQueueList extends ModerationQueueList
 {

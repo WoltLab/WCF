@@ -35,7 +35,7 @@ class ACPSearchResultList implements \Countable, \Iterator
     /**
      * Creates a new ACPSearchResultList.
      *
-     * @param   string      $title
+     * @param string $title
      */
     public function __construct($title)
     {
@@ -45,7 +45,7 @@ class ACPSearchResultList implements \Countable, \Iterator
     /**
      * Adds a result to the collection.
      *
-     * @param   ACPSearchResult     $result
+     * @param ACPSearchResult $result
      */
     public function addResult(ACPSearchResult $result)
     {
@@ -56,7 +56,7 @@ class ACPSearchResultList implements \Countable, \Iterator
      * Reduces the result collection by given count. If the count is higher
      * than the actual amount of results, the results will be cleared.
      *
-     * @param   int     $count
+     * @param int $count
      */
     public function reduceResults($count)
     {
@@ -77,7 +77,7 @@ class ACPSearchResultList implements \Countable, \Iterator
     /**
      * Reduces the result collection to specified size.
      *
-     * @param   int     $size
+     * @param int $size
      */
     public function reduceResultsTo($size)
     {

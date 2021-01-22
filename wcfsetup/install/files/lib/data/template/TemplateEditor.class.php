@@ -48,7 +48,7 @@ class TemplateEditor extends DatabaseObjectEditor
     /**
      * Saves the source of this template.
      *
-     * @param   string      $source
+     * @param string $source
      */
     public function setSource($source)
     {
@@ -69,8 +69,8 @@ class TemplateEditor extends DatabaseObjectEditor
     /**
      * Renames the file of this template.
      *
-     * @param   string      $name
-     * @param   int     $templateGroupID
+     * @param string $name
+     * @param int $templateGroupID
      */
     public function rename($name, $templateGroupID = 0)
     {

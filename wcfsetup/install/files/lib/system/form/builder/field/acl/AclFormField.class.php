@@ -57,7 +57,7 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormNode
      * Sets the name of/filter for the name(s) of the shown acl option categories and
      * returns this field.
      *
-     * @param   string      $categoryName   name of/filter for the acl option categories
+     * @param string $categoryName name of/filter for the acl option categories
      * @return  static      $this       this field
      *
      * @throws  \InvalidArgumentException   if given category name is invalid

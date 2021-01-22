@@ -31,7 +31,7 @@ class UserBirthdayCache extends SingletonFactory
     /**
      * Loads the birthday cache.
      *
-     * @param   int     $month
+     * @param int $month
      */
     protected function loadMonth($month)
     {
@@ -54,8 +54,8 @@ class UserBirthdayCache extends SingletonFactory
     /**
      * Returns the user birthdays for a specific day.
      *
-     * @param   int     $month
-     * @param   int     $day
+     * @param int $month
+     * @param int $day
      * @return  int[]   list of user ids
      */
     public function getBirthdays($month, $day)

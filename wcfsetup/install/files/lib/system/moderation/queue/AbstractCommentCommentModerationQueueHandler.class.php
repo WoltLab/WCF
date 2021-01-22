@@ -97,7 +97,7 @@ class AbstractCommentCommentModerationQueueHandler extends AbstractModerationQue
     /**
      * Returns a comment object by comment id or null if comment id is invalid.
      *
-     * @param   int     $objectID
+     * @param int $objectID
      * @return  Comment|null
      */
     protected function getComment($objectID)
@@ -108,7 +108,7 @@ class AbstractCommentCommentModerationQueueHandler extends AbstractModerationQue
     /**
      * Returns a comment manager for given comment.
      *
-     * @param   Comment $comment
+     * @param Comment $comment
      * @return  ICommentManager
      */
     protected function getCommentManager(Comment $comment)
@@ -157,7 +157,7 @@ class AbstractCommentCommentModerationQueueHandler extends AbstractModerationQue
     /**
      * Returns the parsed template for the target comment.
      *
-     * @param       ViewableModerationQueue         $queue
+     * @param ViewableModerationQueue $queue
      * @return      string
      */
     protected function getRelatedContent(ViewableModerationQueue $queue)

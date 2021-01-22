@@ -36,7 +36,8 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Core\Acp\Package\Plugin
  * @since   3.0
  */
-class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin
+class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
+    IGuiPackageInstallationPlugin
 {
     use TXmlGuiPackageInstallationPlugin;
 
@@ -176,7 +177,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      * Returns the id of the menu with the given identifier. If no such menu
      * exists, `null` is returned.
      *
-     * @param   string  $identifier
+     * @param string $identifier
      * @return  null|int
      */
     protected function getMenuID($identifier)
@@ -194,7 +195,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      * Returns the id of the page with the given identifier. If no such page
      * exists, `null` is returned.
      *
-     * @param   string  $identifier
+     * @param string $identifier
      * @return  null|int
      */
     protected function getPageID($identifier)
@@ -246,8 +247,8 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
      * Returns the show order for a new item that will append it to the current
      * menu or parent item.
      *
-     * @param   int     $menuID
-     * @param   int     $parentItemID
+     * @param int $menuID
+     * @param int $parentItemID
      * @return  int
      */
     protected function getItemOrder($menuID, $parentItemID = null)
@@ -400,11 +401,13 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
                     ->objectProperty('parent')
                     ->label('wcf.acp.pip.menuItem.parentMenuItem')
                     ->options(function () use ($menu) {
-                        $options = [[
-                            'depth' => 0,
-                            'label' => 'wcf.global.noSelection',
-                            'value' => '',
-                        ]];
+                        $options = [
+                            [
+                                'depth' => 0,
+                                'label' => 'wcf.global.noSelection',
+                                'value' => '',
+                            ],
+                        ];
 
                         $packageIDs = \array_merge(
                             [$this->installation->getPackage()->packageID],

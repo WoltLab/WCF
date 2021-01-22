@@ -213,7 +213,8 @@ class ImportCLICommand implements ICLICommand
             if ($this->dbUser === null) {
                 exit;
             }
-            $this->dbPassword = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.password') . '> ', '*');
+            $this->dbPassword = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.password') . '> ',
+                '*');
             if ($this->dbPassword === null) {
                 exit;
             }
@@ -226,7 +227,8 @@ class ImportCLICommand implements ICLICommand
                 exit;
             }
 
-            $this->exporter->setData($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName, $this->dbPrefix, '', []);
+            $this->exporter->setData($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName, $this->dbPrefix,
+                '', []);
 
             try {
                 $this->exporter->validateDatabaseAccess();
@@ -311,7 +313,8 @@ class ImportCLICommand implements ICLICommand
             if ($this->fileSystemPath === null) {
                 exit;
             }
-            $this->exporter->setData($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName, $this->dbPrefix, $this->fileSystemPath, []);
+            $this->exporter->setData($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName, $this->dbPrefix,
+                $this->fileSystemPath, []);
 
             if (!$this->exporter->validateFileAccess()) {
                 CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.configure.fileSystem.path.error'));
@@ -355,10 +358,11 @@ class ImportCLICommand implements ICLICommand
                         $supportedDataIndex++;
                     }
                 }
-                CLIWCF::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.cli.selection', [
-                    'minSelection' => $minSupportedDataIndex,
-                    'maxSelection' => $supportedDataIndex - 1,
-                ]));
+                CLIWCF::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.cli.selection',
+                    [
+                        'minSelection' => $minSupportedDataIndex,
+                        'maxSelection' => $supportedDataIndex - 1,
+                    ]));
                 $printPrimaryTypes = false;
             }
 
@@ -406,10 +410,11 @@ class ImportCLICommand implements ICLICommand
                     CLIWCF::getReader()->println('  ' . $supportedDataIndex . ') ' . WCF::getLanguage()->get('wcf.acp.dataImport.data.' . $objectType));
                     $supportedDataSelection[$selectedObjectType][$supportedDataIndex++] = $objectType;
                 }
-                CLIWCF::getReader()->println('  ' . WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.cli.selection', [
-                    'minSelection' => 0,
-                    'maxSelection' => $supportedDataIndex - 1,
-                ]));
+                CLIWCF::getReader()->println('  ' . WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.cli.selection',
+                        [
+                            'minSelection' => 0,
+                            'maxSelection' => $supportedDataIndex - 1,
+                        ]));
 
                 while (true) {
                     // read index of selected secondary import data type
@@ -426,7 +431,8 @@ class ImportCLICommand implements ICLICommand
                     // validate selected secondary import data type
                     if ($selectedSecondaryObjectTypeIndex == \intval($selectedSecondaryObjectTypeIndex) && !$selectedSecondaryObjectTypeIndex) {
                         // selected all secondary import data type
-                        $selectedData[$selectedObjectType] = \array_merge($selectedData[$selectedObjectType], $supportedDataSelection[$selectedObjectType]);
+                        $selectedData[$selectedObjectType] = \array_merge($selectedData[$selectedObjectType],
+                            $supportedDataSelection[$selectedObjectType]);
                         break;
                     } elseif (isset($supportedDataSelection[$selectedObjectType][$selectedSecondaryObjectTypeIndex])) {
                         $selectedSecondaryObjectType = $supportedDataSelection[$selectedObjectType][$selectedSecondaryObjectTypeIndex];

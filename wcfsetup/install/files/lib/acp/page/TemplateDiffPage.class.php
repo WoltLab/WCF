@@ -102,7 +102,10 @@ class TemplateDiffPage extends AbstractPage
         $this->templateGroupHierarchy = [];
         $templateGroup = $templateGroupList->search($this->template->templateGroupID);
         while ($templateGroup !== null) {
-            $this->templateGroupHierarchy[$templateGroup->templateGroupID] = ['group' => $templateGroup, 'hasTemplate' => false];
+            $this->templateGroupHierarchy[$templateGroup->templateGroupID] = [
+                'group' => $templateGroup,
+                'hasTemplate' => false,
+            ];
             $templateGroup = $templateGroupList->search($templateGroup->parentTemplateGroupID);
         }
         $this->templateGroupHierarchy[0] = ['group' => [], 'hasTemplate' => false];
@@ -111,7 +114,8 @@ class TemplateDiffPage extends AbstractPage
         $templateList = new TemplateList();
         $templateList->getConditionBuilder()->add('templateName = ?', [$this->template->templateName]);
         $templateList->getConditionBuilder()->add('application = ?', [$this->template->application]);
-        $templateList->getConditionBuilder()->add('(template.templateGroupID IN(?) OR template.templateGroupID IS NULL)', [\array_keys($this->templateGroupHierarchy)]);
+        $templateList->getConditionBuilder()->add('(template.templateGroupID IN(?) OR template.templateGroupID IS NULL)',
+            [\array_keys($this->templateGroupHierarchy)]);
         $templateList->readObjects();
         foreach ($templateList as $template) {
             $this->templateGroupHierarchy[$template->templateGroupID ?: 0]['hasTemplate'] = $template->templateID;

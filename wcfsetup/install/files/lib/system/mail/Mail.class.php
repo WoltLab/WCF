@@ -54,15 +54,15 @@ class Mail
     /**
      * Creates a new Mail object.
      *
-     * @param   string      $to
-     * @param   string      $subject
-     * @param   string      $message
-     * @param   string      $from
-     * @param   string      $cc
-     * @param   string      $bcc
-     * @param   array       $attachments
-     * @param   int|string  $priority
-     * @param   string      $header
+     * @param string $to
+     * @param string $subject
+     * @param string $message
+     * @param string $from
+     * @param string $cc
+     * @param string $bcc
+     * @param array $attachments
+     * @param int|string $priority
+     * @param string $header
      */
     public function __construct(
         $to = '',
@@ -180,7 +180,7 @@ class Mail
     /**
      * Sets the recipients of this mail.
      *
-     * @param   mixed       $to
+     * @param mixed $to
      */
     public function addTo($to)
     {
@@ -228,7 +228,7 @@ class Mail
     /**
      * Sets the message of this mail.
      *
-     * @param   string      $message
+     * @param string $message
      */
     public function setMessage($message)
     {
@@ -266,7 +266,7 @@ class Mail
     /**
      * Sets the carbon copy recipients of this mail.
      *
-     * @param   mixed       $cc
+     * @param mixed $cc
      */
     public function addCC($cc)
     {
@@ -298,7 +298,7 @@ class Mail
     /**
      * Sets the blind carbon copy recipients of this mail.
      *
-     * @param   mixed       $bcc
+     * @param mixed $bcc
      */
     public function addBCC($bcc)
     {
@@ -330,7 +330,7 @@ class Mail
     /**
      * Sets the attachments of this mail.
      *
-     * @param   array       $attachments
+     * @param array $attachments
      */
     public function setAttachments($attachments)
     {
@@ -350,8 +350,8 @@ class Mail
     /**
      * Adds an attachment to this mail.
      *
-     * @param   string      $path       local path to file
-     * @param   string      $name       filename
+     * @param string $path local path to file
+     * @param string $name filename
      */
     public function addAttachment($path, $name = '')
     {
@@ -361,7 +361,7 @@ class Mail
     /**
      * Sets the priority of the mail.
      *
-     * @param   int     $priority
+     * @param int $priority
      */
     public function setPriority($priority)
     {
@@ -403,7 +403,7 @@ class Mail
     /**
      * Sets the mail language.
      *
-     * @param   Language    $language
+     * @param Language $language
      */
     public function setLanguage(Language $language)
     {
@@ -427,7 +427,7 @@ class Mail
     /**
      * Encodes string for MIME header.
      *
-     * @param   string      $string
+     * @param string $string
      * @return  string
      */
     public static function encodeMIMEHeader($string)
@@ -435,7 +435,8 @@ class Mail
         if (\function_exists('mb_encode_mimeheader')) {
             $string = \mb_encode_mimeheader($string, 'UTF-8', 'Q', self::$lineEnding);
         } else {
-            $string = '=?UTF-8?Q?' . \preg_replace('/[^\r\n]{73}[^=\r\n]{2}/', "$0=\r\n", \str_replace("%", "=", \str_replace("%0D%0A", "\r\n", \str_replace("%20", " ", \rawurlencode($string))))) . '?=';
+            $string = '=?UTF-8?Q?' . \preg_replace('/[^\r\n]{73}[^=\r\n]{2}/', "$0=\r\n", \str_replace("%", "=",
+                    \str_replace("%0D%0A", "\r\n", \str_replace("%20", " ", \rawurlencode($string))))) . '?=';
         }
 
         return $string;

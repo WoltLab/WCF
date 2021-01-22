@@ -21,7 +21,7 @@ final class CryptoUtil
     /**
      * Signs the given value with the signature secret.
      *
-     * @param   string      $value
+     * @param string $value
      * @throws  CryptoException
      */
     public static function getSignature($value): string
@@ -36,7 +36,7 @@ final class CryptoUtil
     /**
      * Creates a signed (signature + encoded value) string.
      *
-     * @param   string  $value
+     * @param string $value
      */
     public static function createSignedString($value): string
     {
@@ -47,7 +47,7 @@ final class CryptoUtil
      * Returns whether the given string is a proper signed string.
      * (i.e. consists of a valid signature + encoded value)
      *
-     * @param   string  $string
+     * @param string $string
      */
     public static function validateSignedString($string): bool
     {
@@ -72,7 +72,7 @@ final class CryptoUtil
      *
      * - Returns null if the string is not properly signed.
      *
-     * @param   string      $string
+     * @param string $string
      * @see     \wcf\util\CryptoUtil::validateSignedString()
      */
     public static function getValueFromSignedString($string): ?string

@@ -19,7 +19,7 @@ use wcf\util\HeaderUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Page
  *
- * @property    UsersOnlineList     $objectList
+ * @property    UsersOnlineList $objectList
  */
 class UsersOnlineListPage extends SortablePage
 {
@@ -72,7 +72,8 @@ class UsersOnlineListPage extends SortablePage
         }
 
         if (!empty($_POST)) {
-            HeaderUtil::redirect(LinkHandler::getInstance()->getLink('UsersOnlineList', [], 'sortField=' . $this->sortField . '&sortOrder=' . $this->sortOrder));
+            HeaderUtil::redirect(LinkHandler::getInstance()->getLink('UsersOnlineList', [],
+                'sortField=' . $this->sortField . '&sortOrder=' . $this->sortOrder));
 
             exit;
         }

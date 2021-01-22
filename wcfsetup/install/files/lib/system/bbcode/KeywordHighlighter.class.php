@@ -67,8 +67,7 @@ class KeywordHighlighter extends SingletonFactory
         // take keywords from request
         if (isset($_GET['highlight'])) {
             $this->parseKeywords($_GET['highlight']);
-        }
-        // take keywords from referer
+        } // take keywords from referer
         elseif (!empty($_SERVER['HTTP_REFERER'])) {
             $url = Url::parse($_SERVER['HTTP_REFERER']);
             if (!empty($url['query'])) {
@@ -96,7 +95,7 @@ class KeywordHighlighter extends SingletonFactory
     /**
      * Parses search keywords.
      *
-     * @param   string      $keywordString
+     * @param string $keywordString
      */
     protected function parseKeywords($keywordString)
     {
@@ -132,7 +131,7 @@ class KeywordHighlighter extends SingletonFactory
     /**
      * Highlights search keywords.
      *
-     * @param   string      $text
+     * @param string $text
      * @return  string      highlighted text
      */
     public function doHighlight($text)
@@ -144,7 +143,8 @@ class KeywordHighlighter extends SingletonFactory
         $keywordPattern = '(' . \implode('|', $this->keywords) . ')';
         $keywordPattern = \str_replace('\*', '\w*', $keywordPattern);
 
-        return \preg_replace('+(?<!&|&\w{1}|&\w{2}|&\w{3}|&\w{4}|&\w{5}|&\w{6})' . $keywordPattern . '(?![^<]*>)+i', '<span class="highlight">\\1</span>', $text);
+        return \preg_replace('+(?<!&|&\w{1}|&\w{2}|&\w{3}|&\w{4}|&\w{5}|&\w{6})' . $keywordPattern . '(?![^<]*>)+i',
+            '<span class="highlight">\\1</span>', $text);
     }
 
     /**

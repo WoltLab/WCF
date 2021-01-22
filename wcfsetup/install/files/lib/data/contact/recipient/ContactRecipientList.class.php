@@ -16,7 +16,7 @@ use wcf\data\DatabaseObjectList;
  * @method  ContactRecipient        current()
  * @method  ContactRecipient[]      getObjects()
  * @method  ContactRecipient|null       search($objectID)
- * @property    ContactRecipient[]      $objects
+ * @property    ContactRecipient[] $objects
  */
 class ContactRecipientList extends DatabaseObjectList
 {

@@ -27,7 +27,10 @@ class PluginStorePurchasedItemsPage extends AbstractPage
     /**
      * @inheritDoc
      */
-    public $neededPermissions = ['admin.configuration.package.canUpdatePackage', 'admin.configuration.package.canUninstallPackage'];
+    public $neededPermissions = [
+        'admin.configuration.package.canUpdatePackage',
+        'admin.configuration.package.canUninstallPackage',
+    ];
 
     public $fetchedPackageServers = false;
 

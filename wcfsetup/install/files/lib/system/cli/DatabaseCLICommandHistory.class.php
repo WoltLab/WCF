@@ -24,7 +24,7 @@ class DatabaseCLICommandHistory extends MemoryHistory
     /**
      * Saves the history.
      *
-     * @param   bool        $append
+     * @param bool $append
      */
     public function save($append = false)
     {

@@ -30,7 +30,7 @@ class ACPMenu extends TreeMenu
 
     /**
      * @inheritDoc
-     * @param   ACPMenuItem $item
+     * @param ACPMenuItem $item
      */
     protected function checkMenuItem(ITreeMenuItem $item)
     {

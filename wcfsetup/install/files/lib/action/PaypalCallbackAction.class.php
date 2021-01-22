@@ -101,7 +101,9 @@ class PaypalCallbackAction extends AbstractAction
             }
 
             if ($status) {
-                $processor->processTransaction(ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.payment.method', 'com.woltlab.wcf.payment.method.paypal'), $tokenParts[1], $_POST['mc_gross'], $_POST['mc_currency'], $_POST['txn_id'], $status, $_POST);
+                $processor->processTransaction(ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.payment.method',
+                    'com.woltlab.wcf.payment.method.paypal'), $tokenParts[1], $_POST['mc_gross'], $_POST['mc_currency'],
+                    $_POST['txn_id'], $status, $_POST);
             }
 
             $this->executed();

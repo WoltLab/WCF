@@ -37,8 +37,8 @@ trait TPlaceholderFormField
      * and returns this element. If `null` is passed, the placeholder value is
      * removed.
      *
-     * @param   null|string $languageItem   language item containing the placeholder or `null` to unset description
-     * @param   array       $variables  additional variables used when resolving the language item
+     * @param null|string $languageItem language item containing the placeholder or `null` to unset description
+     * @param array $variables additional variables used when resolving the language item
      * @return  static              this field
      *
      * @throws  \InvalidArgumentException   if the given value is no or otherwise invalid

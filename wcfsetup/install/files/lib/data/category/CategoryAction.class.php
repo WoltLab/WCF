@@ -28,7 +28,8 @@ use wcf\system\WCF;
  * @method  CategoryEditor[]    getObjects()
  * @method  CategoryEditor      getSingleObject()
  */
-class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction, IToggleContainerAction
+class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction,
+                                                                     IToggleContainerAction
 {
     use TDatabaseObjectToggle;
 
@@ -123,7 +124,8 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
         if (\count($this->objects) == 1 && isset($this->parameters['data']['parentCategoryID']) && isset($this->parameters['data']['showOrder'])) {
             $categoryEditor = $this->getObjects()[0];
             if ($categoryEditor->parentCategoryID != $this->parameters['data']['parentCategoryID'] || $categoryEditor->showOrder != $this->parameters['data']['showOrder']) {
-                $this->parameters['data']['showOrder'] = $categoryEditor->updateShowOrder($this->parameters['data']['parentCategoryID'], $this->parameters['data']['showOrder']);
+                $this->parameters['data']['showOrder'] = $categoryEditor->updateShowOrder($this->parameters['data']['parentCategoryID'],
+                    $this->parameters['data']['showOrder']);
             }
         }
 

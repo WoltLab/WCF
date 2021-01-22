@@ -15,32 +15,32 @@ interface IImageAdapter
     /**
      * Loads an image resource.
      *
-     * @param   mixed       $image
-     * @param   int     $type
+     * @param mixed $image
+     * @param int $type
      */
     public function load($image, $type = 0);
 
     /**
      * Loads an image from file.
      *
-     * @param   string      $file
+     * @param string $file
      */
     public function loadFile($file);
 
     /**
      * Creates a new empty image.
      *
-     * @param   int     $width
-     * @param   int     $height
+     * @param int $width
+     * @param int $height
      */
     public function createEmptyImage($width, $height);
 
     /**
      * Creates a thumbnail from previously loaded image.
      *
-     * @param   int     $maxWidth
-     * @param   int     $maxHeight
-     * @param   bool        $preserveAspectRatio
+     * @param int $maxWidth
+     * @param int $maxHeight
+     * @param bool $preserveAspectRatio
      * @return  mixed
      */
     public function createThumbnail($maxWidth, $maxHeight, $preserveAspectRatio = true);
@@ -48,10 +48,10 @@ interface IImageAdapter
     /**
      * Clips a part of currently loaded image, overwrites image resource within instance.
      *
-     * @param   int     $originX
-     * @param   int     $originY
-     * @param   int     $width
-     * @param   int     $height
+     * @param int $originX
+     * @param int $originY
+     * @param int $width
+     * @param int $height
      * @see     \wcf\system\image\adapter\IImageAdapter::getImage()
      */
     public function clip($originX, $originY, $width, $height);
@@ -59,12 +59,12 @@ interface IImageAdapter
     /**
      * Resizes an image with optional scaling, overwrites image resource within instance.
      *
-     * @param   int     $originX
-     * @param   int     $originY
-     * @param   int     $originWidth
-     * @param   int     $originHeight
-     * @param   int     $targetWidth
-     * @param   int     $targetHeight
+     * @param int $originX
+     * @param int $originY
+     * @param int $originWidth
+     * @param int $originHeight
+     * @param int $targetWidth
+     * @param int $targetHeight
      * @see     \wcf\system\image\adapter\IImageAdapter::getImage()
      */
     public function resize($originX, $originY, $originWidth, $originHeight, $targetWidth, $targetHeight);
@@ -72,10 +72,10 @@ interface IImageAdapter
     /**
      * Draws a rectangle, overwrites image resource within instance.
      *
-     * @param   int     $startX
-     * @param   int     $startY
-     * @param   int     $endX
-     * @param   int     $endY
+     * @param int $startX
+     * @param int $startY
+     * @param int $endX
+     * @param int $endY
      * @see     \wcf\system\image\adapter\IImageAdapter::getImage()
      * @see     \wcf\system\image\adapter\IImageAdapter::setColor()
      */
@@ -84,12 +84,12 @@ interface IImageAdapter
     /**
      * Draws a line of text, overwrites image resource within instance.
      *
-     * @param   string      $text
-     * @param   int     $x
-     * @param   int     $y
-     * @param   string      $font       path to TrueType font file
-     * @param   int     $size       font size
-     * @param   float       $opacity
+     * @param string $text
+     * @param int $x
+     * @param int $y
+     * @param string $font path to TrueType font file
+     * @param int $size font size
+     * @param float $opacity
      * @see     \wcf\system\image\adapter\IImageAdapter::getImage()
      * @see     \wcf\system\image\adapter\IImageAdapter::setColor()
      */
@@ -99,24 +99,24 @@ interface IImageAdapter
      * Draws (multiple lines of) text on the image at the given relative position
      * with a certain margin to the image border.
      *
-     * @param   string      $text
-     * @param   string      $position
-     * @param   int     $margin     in pixels
-     * @param   int     $offsetX
-     * @param   int     $offsetY
-     * @param   string      $font       path to TrueType font file
-     * @param   int     $size       font size
-     * @param   float       $opacity
+     * @param string $text
+     * @param string $position
+     * @param int $margin in pixels
+     * @param int $offsetX
+     * @param int $offsetY
+     * @param string $font path to TrueType font file
+     * @param int $size font size
+     * @param float $opacity
      */
     public function drawTextRelative($text, $position, $margin, $offsetX, $offsetY, $font, $size, $opacity = 1.0);
 
     /**
      * Returns true if the given text fits the image.
      *
-     * @param   string      $text
-     * @param   int     $margin
-     * @param   string      $font       path to TrueType font file
-     * @param   int     $size       font size
+     * @param string $text
+     * @param int $margin
+     * @param string $font path to TrueType font file
+     * @param int $size font size
      * @return  int
      * @return  bool
      */
@@ -126,10 +126,10 @@ interface IImageAdapter
      * Adjusts the given font size so that the given text fits on the current
      * image. Returns 0 if no appropriate font size could be determined.
      *
-     * @param   string      $text
-     * @param   int     $margin
-     * @param   string      $font       path to TrueType font file
-     * @param   int     $size       font size
+     * @param string $text
+     * @param int $margin
+     * @param string $font path to TrueType font file
+     * @param int $size font size
      * @return  int
      */
     public function adjustFontSize($text, $margin, $font, $size);
@@ -137,9 +137,9 @@ interface IImageAdapter
     /**
      * Sets active color.
      *
-     * @param   int     $red
-     * @param   int     $green
-     * @param   int     $blue
+     * @param int $red
+     * @param int $green
+     * @param int $blue
      */
     public function setColor($red, $green, $blue);
 
@@ -153,17 +153,17 @@ interface IImageAdapter
     /**
      * Sets a color to be transparent with alpha 0.
      *
-     * @param   int     $red
-     * @param   int     $green
-     * @param   int     $blue
+     * @param int $red
+     * @param int $green
+     * @param int $blue
      */
     public function setTransparentColor($red, $green, $blue);
 
     /**
      * Writes an image to disk.
      *
-     * @param   mixed       $image
-     * @param   string      $filename
+     * @param mixed $image
+     * @param string $filename
      */
     public function writeImage($image, $filename);
 
@@ -198,7 +198,7 @@ interface IImageAdapter
     /**
      * Rotates an image the specified number of degrees.
      *
-     * @param   float       $degrees    number of degrees to rotate the image clockwise
+     * @param float $degrees number of degrees to rotate the image clockwise
      * @return  mixed
      */
     public function rotate($degrees);
@@ -206,20 +206,20 @@ interface IImageAdapter
     /**
      * Overlays the given image at an absolute position.
      *
-     * @param   string      $file
-     * @param   int     $x
-     * @param   int     $y
-     * @param   float       $opacity
+     * @param string $file
+     * @param int $x
+     * @param int $y
+     * @param float $opacity
      */
     public function overlayImage($file, $x, $y, $opacity);
 
     /**
      * Overlays the given image at a relative position.
      *
-     * @param   string      $file
-     * @param   string      $position
-     * @param   int     $margin
-     * @param   float       $opacity
+     * @param string $file
+     * @param string $position
+     * @param int $margin
+     * @param float $opacity
      */
     public function overlayImageRelative($file, $position, $margin, $opacity);
 

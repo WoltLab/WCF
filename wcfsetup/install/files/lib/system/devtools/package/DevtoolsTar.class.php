@@ -41,8 +41,8 @@ class DevtoolsTar extends Tar
     /**
      * Registers a new file in the virtual file list.
      *
-     * @param       string          $filename
-     * @param       string          $fullPath
+     * @param string $filename
+     * @param string $fullPath
      */
     public function registerFile($filename, $fullPath)
     {
@@ -126,7 +126,7 @@ class DevtoolsTar extends Tar
     /**
      * Sets all files in the virtual file list.
      *
-     * @param   string[]    $files
+     * @param string[] $files
      */
     public function setFiles(array $files)
     {

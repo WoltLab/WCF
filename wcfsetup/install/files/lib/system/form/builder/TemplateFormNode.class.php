@@ -41,7 +41,7 @@ class TemplateFormNode implements IFormChildNode
      * Sets the application of the template with the contents of the form node and returns this
      * form node.
      *
-     * @param   string      $application    application abbreviation
+     * @param string $application application abbreviation
      * @return  static              this form node
      *
      * @throws  \InvalidArgumentException   if no application with the given abbreviation exists
@@ -115,7 +115,7 @@ class TemplateFormNode implements IFormChildNode
     /**
      * Sets the name of the template with the contents of the form node and returns this form node.
      *
-     * @param   string      $templateName   name of template with form node contents
+     * @param string $templateName name of template with form node contents
      * @return  static              this form node
      */
     public function templateName($templateName)
@@ -136,7 +136,7 @@ class TemplateFormNode implements IFormChildNode
     /**
      * Sets the template variables passed to the template and returns this form node.
      *
-     * @param   array   $variables  template variables passed to template
+     * @param array $variables template variables passed to template
      * @return  static          this form node
      */
     public function variables(array $variables)

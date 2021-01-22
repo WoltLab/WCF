@@ -23,17 +23,17 @@ use wcf\util\StringUtil;
  * @package WoltLabSuite\Core\Data\Article\Content
  * @since   3.0
  *
- * @property-read   int     $articleContentID   unique id of the article content
- * @property-read   int     $articleID      id of the article the article content belongs to
- * @property-read   int     $languageID     id of the article content's language
- * @property-read   string      $title          title of the article in the associated language
- * @property-read   string      $content        actual content of the article in the associated language
- * @property-read   string      $teaser         teaser of the article in the associated language or empty if no teaser exists
- * @property-read   int|null    $imageID        id of the (image) media object used as article image for the associated language or `null` if no image is used
- * @property-read   int|null    $teaserImageID          id of the (image) media object used as article teaser image for the associated language or `null` if no image is used
- * @property-read   int     $hasEmbeddedObjects is `1` if there are embedded objects in the article content, otherwise `0`
- * @property-read       string          $metaTitle              title of the article used in the title tag
- * @property-read       string          $metaDescription        meta description of the article
+ * @property-read   int $articleContentID   unique id of the article content
+ * @property-read   int $articleID      id of the article the article content belongs to
+ * @property-read   int $languageID     id of the article content's language
+ * @property-read   string $title          title of the article in the associated language
+ * @property-read   string $content        actual content of the article in the associated language
+ * @property-read   string $teaser         teaser of the article in the associated language or empty if no teaser exists
+ * @property-read   int|null $imageID        id of the (image) media object used as article image for the associated language or `null` if no image is used
+ * @property-read   int|null $teaserImageID          id of the (image) media object used as article teaser image for the associated language or `null` if no image is used
+ * @property-read   int $hasEmbeddedObjects is `1` if there are embedded objects in the article content, otherwise `0`
+ * @property-read       string $metaTitle              title of the article used in the title tag
+ * @property-read       string $metaDescription        meta description of the article
  */
 class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteController
 {
@@ -90,7 +90,8 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
             $htmlOutputProcessor = new HtmlOutputProcessor();
             $htmlOutputProcessor->setOutputType('text/plain');
             $htmlOutputProcessor->enableUgc = false;
-            $htmlOutputProcessor->process($this->content, 'com.woltlab.wcf.article.content', $this->articleContentID, false, $this->languageID);
+            $htmlOutputProcessor->process($this->content, 'com.woltlab.wcf.article.content', $this->articleContentID,
+                false, $this->languageID);
 
             return \nl2br(StringUtil::encodeHTML(StringUtil::truncate($htmlOutputProcessor->getHtml(), 500)), false);
         }
@@ -105,7 +106,8 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
     {
         $processor = new HtmlOutputProcessor();
         $processor->enableUgc = false;
-        $processor->process($this->content, 'com.woltlab.wcf.article.content', $this->articleContentID, false, $this->languageID);
+        $processor->process($this->content, 'com.woltlab.wcf.article.content', $this->articleContentID, false,
+            $this->languageID);
 
         return $processor->getHtml();
     }
@@ -153,7 +155,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
     /**
      * Returns a version of this message optimized for use in emails.
      *
-     * @param   string  $mimeType   Either 'text/plain' or 'text/html'
+     * @param string $mimeType Either 'text/plain' or 'text/html'
      * @return  string
      * @since       5.2
      */
@@ -183,8 +185,8 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
     /**
      * Returns a certain article content or `null` if it does not exist.
      *
-     * @param       int         $articleID
-     * @param       int         $languageID
+     * @param int $articleID
+     * @param int $languageID
      * @return      ArticleContent|null
      */
     public static function getArticleContent($articleID, $languageID)

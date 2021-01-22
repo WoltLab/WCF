@@ -84,16 +84,19 @@ class MySQLDatabaseEditor extends DatabaseEditor
                 }
             }
 
-            $columns[] = ['name' => $row['Field'], 'data' => [
-                'type' => $type,
-                'length' => $length,
-                'notNull' => $row['Null'] == 'YES' ? false : true,
-                'key' => ($row['Key'] == 'PRI') ? 'PRIMARY' : (($row['Key'] == 'UNI') ? 'UNIQUE' : ''),
-                'default' => $row['Default'],
-                'autoIncrement' => $row['Extra'] == 'auto_increment' ? true : false,
-                'enumValues' => $enumValues,
-                'decimals' => $decimals,
-            ]];
+            $columns[] = [
+                'name' => $row['Field'],
+                'data' => [
+                    'type' => $type,
+                    'length' => $length,
+                    'notNull' => $row['Null'] == 'YES' ? false : true,
+                    'key' => ($row['Key'] == 'PRI') ? 'PRIMARY' : (($row['Key'] == 'UNI') ? 'UNIQUE' : ''),
+                    'default' => $row['Default'],
+                    'autoIncrement' => $row['Extra'] == 'auto_increment' ? true : false,
+                    'enumValues' => $enumValues,
+                    'decimals' => $decimals,
+                ],
+            ];
         }
 
         return $columns;
@@ -122,8 +125,10 @@ class MySQLDatabaseEditor extends DatabaseEditor
             $foreignKeys[$information['CONSTRAINT_NAME']] = [
                 'columns' => [],
                 'referencedColumns' => [],
-                'ON DELETE' => \in_array($information['DELETE_RULE'], $validActions) ? $information['DELETE_RULE'] : null,
-                'ON UPDATE' => \in_array($information['UPDATE_RULE'], $validActions) ? $information['UPDATE_RULE'] : null,
+                'ON DELETE' => \in_array($information['DELETE_RULE'],
+                    $validActions) ? $information['DELETE_RULE'] : null,
+                'ON UPDATE' => \in_array($information['UPDATE_RULE'],
+                    $validActions) ? $information['UPDATE_RULE'] : null,
             ];
         }
 
@@ -266,7 +271,8 @@ class MySQLDatabaseEditor extends DatabaseEditor
      */
     public function alterColumn($tableName, $oldColumnName, $newColumnName, $newColumnData)
     {
-        $sql = "ALTER TABLE `" . $tableName . "` CHANGE COLUMN `" . $oldColumnName . "` " . $this->buildColumnDefinition($newColumnName, $newColumnData);
+        $sql = "ALTER TABLE `" . $tableName . "` CHANGE COLUMN `" . $oldColumnName . "` " . $this->buildColumnDefinition($newColumnName,
+                $newColumnData);
         $statement = $this->dbObj->prepareStatement($sql);
         $statement->execute();
     }
@@ -432,8 +438,8 @@ class MySQLDatabaseEditor extends DatabaseEditor
     /**
      * Builds a column definition for execution in a create table or alter table statement.
      *
-     * @param   string      $columnName
-     * @param   array       $columnData
+     * @param string $columnName
+     * @param array $columnData
      * @return  string
      */
     protected function buildColumnDefinition($columnName, $columnData)
@@ -474,8 +480,8 @@ class MySQLDatabaseEditor extends DatabaseEditor
     /**
      * Builds a index definition for execution in a create table or alter table statement.
      *
-     * @param   string      $indexName
-     * @param   array       $indexData
+     * @param string $indexName
+     * @param array $indexData
      * @return  string
      */
     protected function buildIndexDefinition($indexName, $indexData)

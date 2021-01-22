@@ -56,9 +56,9 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
     /**
      * Creates a new MenuItemNode object.
      *
-     * @param   MenuItemNode        $parentNode
-     * @param   MenuItem        $menuItem
-     * @param   int         $depth
+     * @param MenuItemNode $parentNode
+     * @param MenuItem $menuItem
+     * @param int $depth
      */
     public function __construct($parentNode = null, ?MenuItem $menuItem = null, $depth = 0)
     {
@@ -74,7 +74,7 @@ class MenuItemNode extends DatabaseObjectDecorator implements \Countable, \Recur
     /**
      * Sets the children of this node.
      *
-     * @param   MenuItemNode[]      $children
+     * @param MenuItemNode[] $children
      */
     public function setChildren(array $children)
     {

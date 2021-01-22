@@ -72,21 +72,24 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
                 }
 
                 if (!$hasTrophy) {
-                    $userProfileAction = new UserProfileAction([$userTrophy->getUserProfile()->getDecoratedObject()], 'updateSpecialTrophies', [
-                        'trophyIDs' => \array_unique(\array_merge(\array_map(static function ($trophy) {
-                            return $trophy->trophyID;
-                        }, $userTrophy->getUserProfile()->getSpecialTrophies()), [$userTrophy->trophyID])),
-                    ]);
+                    $userProfileAction = new UserProfileAction([$userTrophy->getUserProfile()->getDecoratedObject()],
+                        'updateSpecialTrophies', [
+                            'trophyIDs' => \array_unique(\array_merge(\array_map(static function ($trophy) {
+                                return $trophy->trophyID;
+                            }, $userTrophy->getUserProfile()->getSpecialTrophies()), [$userTrophy->trophyID])),
+                        ]);
                     $userProfileAction->executeAction();
                 }
             }
         }
 
-        UserActivityEventHandler::getInstance()->fireEvent('com.woltlab.wcf.userTrophy.recentActivityEvent.trophyReceived', $userTrophy->getObjectID(), null, $userTrophy->userID);
+        UserActivityEventHandler::getInstance()->fireEvent('com.woltlab.wcf.userTrophy.recentActivityEvent.trophyReceived',
+            $userTrophy->getObjectID(), null, $userTrophy->userID);
 
-        UserNotificationHandler::getInstance()->fireEvent('received', 'com.woltlab.wcf.userTrophy.notification', new UserTrophyNotificationObject($userTrophy), [
-            $userTrophy->userID,
-        ]);
+        UserNotificationHandler::getInstance()->fireEvent('received', 'com.woltlab.wcf.userTrophy.notification',
+            new UserTrophyNotificationObject($userTrophy), [
+                $userTrophy->userID,
+            ]);
 
         return $userTrophy;
     }
@@ -220,7 +223,8 @@ class UserTrophyAction extends AbstractDatabaseObjectAction
 
         return [
             'pageCount' => $pageCount,
-            'title' => WCF::getLanguage()->getDynamicVariable('wcf.user.trophy.dialogTitle', ['username' => $this->userProfile->username]),
+            'title' => WCF::getLanguage()->getDynamicVariable('wcf.user.trophy.dialogTitle',
+                ['username' => $this->userProfile->username]),
             'template' => WCF::getTPL()->fetch('groupedUserTrophyList', 'wcf', [
                 'userTrophyList' => $userTrophyList,
             ]),
