@@ -31,6 +31,7 @@ abstract class UserException extends \Exception implements IPrintableException
      *
      * @return  string
      */
+    // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
     protected function _getMessage()
     {
         return $this->getMessage();

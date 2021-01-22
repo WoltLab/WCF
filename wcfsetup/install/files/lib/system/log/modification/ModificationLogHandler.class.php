@@ -64,6 +64,7 @@ class ModificationLogHandler extends SingletonFactory
      * @return  ModificationLog
      * @throws  SystemException
      */
+    // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
     protected function _add($objectType, $objectID, $action, array $additionalData = [], $time = TIME_NOW, $userID = null, $username = null)
     {
         $objectTypeObj = $this->getObjectType($objectType);
@@ -108,6 +109,7 @@ class ModificationLogHandler extends SingletonFactory
      * @param   int[]   $objectIDs
      * @throws  SystemException
      */
+    // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
     protected function _remove($objectType, array $objectIDs)
     {
         $objectTypeObj = $this->getObjectType($objectType);
