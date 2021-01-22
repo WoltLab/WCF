@@ -100,7 +100,9 @@ trait TMultipleFormField
     {
         if ($maximum !== IMultipleFormField::NO_MAXIMUM_MULTIPLES) {
             if ($maximum <= 0) {
-                throw new \InvalidArgumentException("The maximum number of values has to be positive, '{$maximum}' given.");
+                throw new \InvalidArgumentException(
+                    "The maximum number of values has to be positive, '{$maximum}' given."
+                );
             }
 
             if ($this->getMinimumMultiples() !== 0 && $maximum < $this->getMinimumMultiples()) {
@@ -126,7 +128,9 @@ trait TMultipleFormField
     public function minimumMultiples($minimum)
     {
         if ($minimum < 0) {
-            throw new \InvalidArgumentException("The minimum number of values has to be non-negative, '{$minimum}' given.");
+            throw new \InvalidArgumentException(
+                "The minimum number of values has to be non-negative, '{$minimum}' given."
+            );
         }
 
         if ($this->getMaximumMultiples() !== IMultipleFormField::NO_MAXIMUM_MULTIPLES && $minimum > $this->getMaximumMultiples()) {
@@ -167,13 +171,16 @@ trait TMultipleFormField
         parent::populate();
 
         if ($this->allowsMultiple()) {
-            $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor('multiple', function (IFormDocument $document, array $parameters) {
-                if ($this->checkDependencies() && !empty($this->getValue())) {
-                    $parameters[$this->getObjectProperty()] = $this->getValue();
-                }
+            $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor(
+                'multiple',
+                function (IFormDocument $document, array $parameters) {
+                    if ($this->checkDependencies() && !empty($this->getValue())) {
+                        $parameters[$this->getObjectProperty()] = $this->getValue();
+                    }
 
-                return $parameters;
-            }));
+                    return $parameters;
+                }
+            ));
         }
 
         return $this;

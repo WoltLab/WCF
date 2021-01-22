@@ -46,7 +46,9 @@ trait TMaximumLengthFormField
     {
         if ($maximumLength !== null) {
             if (!\is_int($maximumLength)) {
-                throw new \InvalidArgumentException("Given maximum length is no int, '" . \gettype($maximumLength) . "' given.");
+                throw new \InvalidArgumentException(
+                    "Given maximum length is no int, '" . \gettype($maximumLength) . "' given."
+                );
             }
 
             if ($maximumLength <= 0) {
@@ -56,7 +58,9 @@ trait TMaximumLengthFormField
             if ($this instanceof IMinimumLengthFormField) {
                 $minimumLength = $this->getMinimumLength();
                 if ($minimumLength !== null && $minimumLength > $maximumLength) {
-                    throw new \InvalidArgumentException("Minimum length ({$minimumLength}) cannot be greater than maximum length ({$maximumLength}).");
+                    throw new \InvalidArgumentException(
+                        "Minimum length ({$minimumLength}) cannot be greater than maximum length ({$maximumLength})."
+                    );
                 }
             }
         }

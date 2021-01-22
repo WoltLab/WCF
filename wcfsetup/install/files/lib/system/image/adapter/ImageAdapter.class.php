@@ -100,7 +100,9 @@ class ImageAdapter implements IImageAdapter, IMemoryAwareImageAdapter
             throw new SystemException("Clipping an image requires valid offsets, an offset below zero is invalid.");
         }
         if ($width <= 0 || $height <= 0) {
-            throw new SystemException("Clipping an image requires valid dimensions, width or height below or equal zero are invalid.");
+            throw new SystemException(
+                "Clipping an image requires valid dimensions, width or height below or equal zero are invalid."
+            );
         }
         if ((($originX + $width) > $this->getWidth()) || (($originY + $height) > $this->getHeight())) {
             throw new SystemException("Offset and dimension can not exceed image dimensions.");

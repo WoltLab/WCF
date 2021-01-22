@@ -42,7 +42,8 @@ class AbstractLikeImporter extends AbstractImporter
     public function import($oldID, array $data, array $additionalData = [])
     {
         if ($data['objectUserID']) {
-            $data['objectUserID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['objectUserID']);
+            $data['objectUserID'] = ImportHandler::getInstance()
+                ->getNewID('com.woltlab.wcf.user', $data['objectUserID']);
         }
         $data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
         if (!$data['userID']) {
@@ -59,7 +60,8 @@ class AbstractLikeImporter extends AbstractImporter
                 $data['reactionTypeID'] = self::getDislikeReactionTypeID();
             }
         } else {
-            $data['reactionTypeID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.reactionType', $data['reactionTypeID']);
+            $data['reactionTypeID'] = ImportHandler::getInstance()
+                ->getNewID('com.woltlab.wcf.reactionType', $data['reactionTypeID']);
         }
 
         if (empty($data['reactionTypeID'])) {

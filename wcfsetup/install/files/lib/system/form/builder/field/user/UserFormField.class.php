@@ -28,7 +28,11 @@ use wcf\util\StringUtil;
  * @package WoltLabSuite\Core\System\Form\Builder\Field\User
  * @since   5.2
  */
-class UserFormField extends AbstractFormField implements IAutoFocusFormField, IImmutableFormField, IMultipleFormField, INullableFormField
+class UserFormField extends AbstractFormField implements
+    IAutoFocusFormField,
+    IImmutableFormField,
+    IMultipleFormField,
+    INullableFormField
 {
     use TAutoFocusFormField;
     use TImmutableFormField;
@@ -87,15 +91,20 @@ class UserFormField extends AbstractFormField implements IAutoFocusFormField, II
         parent::populate();
 
         if ($this->allowsMultiple()) {
-            $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor('multipleUsers', function (IFormDocument $document, array $parameters) {
-                if ($this->checkDependencies()) {
-                    $parameters[$this->getObjectProperty()] = \array_values(\array_map(static function (UserProfile $user) {
-                        return $user->userID;
-                    }, $this->getUsers()));
-                }
+            $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor(
+                'multipleUsers',
+                function (IFormDocument $document, array $parameters) {
+                    if ($this->checkDependencies()) {
+                        $parameters[$this->getObjectProperty()] = \array_values(
+                            \array_map(static function (UserProfile $user) {
+                                return $user->userID;
+                            }, $this->getUsers())
+                        );
+                    }
 
-                return $parameters;
-            }));
+                    return $parameters;
+                }
+            ));
         }
 
         return $this;
@@ -147,7 +156,10 @@ class UserFormField extends AbstractFormField implements IAutoFocusFormField, II
                         'count' => \count($this->getValue()),
                     ]
                 ));
-            } elseif ($this->getMaximumMultiples() !== IMultipleFormField::NO_MAXIMUM_MULTIPLES && \count($this->getValue()) > $this->getMaximumMultiples()) {
+            } elseif (
+                $this->getMaximumMultiples() !== IMultipleFormField::NO_MAXIMUM_MULTIPLES
+                && \count($this->getValue()) > $this->getMaximumMultiples()
+            ) {
                 $this->addValidationError(new FormFieldValidationError(
                     'maximumMultiples',
                     'wcf.form.field.user.error.maximumMultiples',

@@ -45,8 +45,11 @@ class FormFieldValidator implements IFormFieldValidator
         $parameterType = $parameters[0]->getType();
         if (
             !(
-                ($parameterType instanceof \ReflectionNamedType
-                && ($parameterType->getName() === IFormField::class || \is_subclass_of($parameterType->getName(), IFormField::class)))
+                $parameterType instanceof \ReflectionNamedType
+                && (
+                    $parameterType->getName() === IFormField::class
+                    || \is_subclass_of($parameterType->getName(), IFormField::class)
+                )
             )
         ) {
             throw new \InvalidArgumentException(

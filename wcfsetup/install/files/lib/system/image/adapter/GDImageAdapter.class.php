@@ -180,7 +180,18 @@ class GDImageAdapter implements IImageAdapter
         // resize image
         $image = imagecreatetruecolor((int)$width, (int)$height);
         imagealphablending($image, false);
-        imagecopyresampled($image, $this->image, 0, 0, (int)$x, (int)$y, (int)$width, (int)$height, (int)$sourceWidth, (int)$sourceHeight);
+        imagecopyresampled(
+            $image,
+            $this->image,
+            0,
+            0,
+            (int)$x,
+            (int)$y,
+            (int)$width,
+            (int)$height,
+            (int)$sourceWidth,
+            (int)$sourceHeight
+        );
         imagesavealpha($image, true);
 
         return $image;
@@ -209,7 +220,18 @@ class GDImageAdapter implements IImageAdapter
         $image = imagecreatetruecolor($targetWidth, $targetHeight);
         imagealphablending($image, false);
 
-        imagecopyresampled($image, $this->image, 0, 0, (int)$originX, (int)$originY, (int)$targetWidth, (int)$targetHeight, (int)$originWidth, (int)$originHeight);
+        imagecopyresampled(
+            $image,
+            $this->image,
+            0,
+            0,
+            (int)$originX,
+            (int)$originY,
+            (int)$targetWidth,
+            (int)$targetHeight,
+            (int)$originWidth,
+            (int)$originHeight
+        );
         imagesavealpha($image, true);
 
         // reload image to update image resource, width and height
@@ -230,7 +252,13 @@ class GDImageAdapter implements IImageAdapter
     public function drawText($text, $x, $y, $font, $size, $opacity = 1.0)
     {
         // set opacity
-        $color = imagecolorallocatealpha($this->image, $this->colorData['red'], $this->colorData['green'], $this->colorData['blue'], (1 - $opacity) * 127);
+        $color = imagecolorallocatealpha(
+            $this->image,
+            $this->colorData['red'],
+            $this->colorData['green'],
+            $this->colorData['blue'],
+            (1 - $opacity) * 127
+        );
 
         // draw text
         imagettftext($this->image, $size, 0, $x, $y, $color, $font, $text);
@@ -443,7 +471,17 @@ class GDImageAdapter implements IImageAdapter
         imagecopy($cut, $this->image, 0, 0, $x, $y, $overlayImage->getWidth(), $overlayImage->getHeight());
         imagecopy($cut, $overlayImage->image, 0, 0, 0, 0, $overlayImage->getWidth(), $overlayImage->getHeight());
 
-        $this->imagecopymerge_alpha($this->image, $cut, $x, $y, 0, 0, $overlayImage->getWidth(), $overlayImage->getHeight(), $opacity * 100);
+        $this->imagecopymerge_alpha(
+            $this->image,
+            $cut,
+            $x,
+            $y,
+            0,
+            0,
+            $overlayImage->getWidth(),
+            $overlayImage->getHeight(),
+            $opacity * 100
+        );
     }
 
     /**
@@ -497,7 +535,13 @@ class GDImageAdapter implements IImageAdapter
                     $alpha += 127 * $pct;
                 }
                 // get the color index with new alpha
-                $alphacolorxy = imagecolorallocatealpha($src_im, ($colorxy >> 16) & 0xFF, ($colorxy >> 8) & 0xFF, $colorxy & 0xFF, $alpha);
+                $alphacolorxy = imagecolorallocatealpha(
+                    $src_im,
+                    ($colorxy >> 16) & 0xFF,
+                    ($colorxy >> 8) & 0xFF,
+                    $colorxy & 0xFF,
+                    $alpha
+                );
                 // set pixel with the new color + opacity
                 if (!imagesetpixel($src_im, $x, $y, $alphacolorxy)) {
                     return false;

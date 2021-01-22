@@ -474,10 +474,17 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
     protected function wrapContent($name, $attributes, $startNode, $endNode)
     {
         if ($startNode === null && $endNode === null) {
-            throw new \InvalidArgumentException("Must provide an existing element for start node or end node, both cannot be null.");
+            throw new \InvalidArgumentException(
+                "Must provide an existing element for start node or end node, both cannot be null."
+            );
         }
 
-        $element = $startNode ? $startNode->ownerDocument->createElement('woltlab-metacode') : $endNode->ownerDocument->createElement('woltlab-metacode');
+        if ($startNode) {
+            $element = $startNode->ownerDocument->createElement('woltlab-metacode');
+        } else {
+            $element = $endNode->ownerDocument->createElement('woltlab-metacode');
+        }
+
         $element->setAttribute('data-name', $name);
         $element->setAttribute('data-attributes', $attributes);
 

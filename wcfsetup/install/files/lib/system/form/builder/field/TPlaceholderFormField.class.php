@@ -47,13 +47,17 @@ trait TPlaceholderFormField
     {
         if ($languageItem === null) {
             if (!empty($variables)) {
-                throw new \InvalidArgumentException("Cannot use variables when unsetting placeholder of field '{$this->getId()}'");
+                throw new \InvalidArgumentException(
+                    "Cannot use variables when unsetting placeholder of field '{$this->getId()}'"
+                );
             }
 
             $this->placeholder = null;
         } else {
             if (!\is_string($languageItem)) {
-                throw new \InvalidArgumentException("Given placeholder language item is no string, " . \gettype($languageItem) . " given.");
+                throw new \InvalidArgumentException(
+                    "Given placeholder language item is no string, " . \gettype($languageItem) . " given."
+                );
             }
 
             $this->placeholder = WCF::getLanguage()->getDynamicVariable($languageItem, $variables);

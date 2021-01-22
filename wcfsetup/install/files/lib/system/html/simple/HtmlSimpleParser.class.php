@@ -98,7 +98,8 @@ class HtmlSimpleParser extends SingletonFactory
             }
         }
 
-        return MessageEmbeddedObjectManager::getInstance()->registerSimpleObjects($objectType, $objectID, $embeddedContent);
+        return MessageEmbeddedObjectManager::getInstance()
+            ->registerSimpleObjects($objectType, $objectID, $embeddedContent);
     }
 
     /**
@@ -136,7 +137,12 @@ class HtmlSimpleParser extends SingletonFactory
             return $data['raw'];
         }
 
-        $value = $this->handlers[$handler]->replaceSimple($this->context['objectType'], $this->context['objectID'], $data['value'], $data['attributes']);
+        $value = $this->handlers[$handler]->replaceSimple(
+            $this->context['objectType'],
+            $this->context['objectID'],
+            $data['value'],
+            $data['attributes']
+        );
         if ($value === null) {
             // invalid value
             return $data['raw'];

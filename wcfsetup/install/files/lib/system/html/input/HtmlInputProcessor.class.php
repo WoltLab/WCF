@@ -108,7 +108,8 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
         $metacodes = DOMUtil::getElements($this->getHtmlInputNodeProcessor()->getDocument(), 'woltlab-metacode');
         foreach ($metacodes as $metacode) {
             $name = $metacode->getAttribute('data-name');
-            $attributes = $this->getHtmlInputNodeProcessor()->parseAttributes($metacode->getAttribute('data-attributes'));
+            $attributes = $this->getHtmlInputNodeProcessor()
+                ->parseAttributes($metacode->getAttribute('data-attributes'));
 
             $bbcodeAttributes = '';
             foreach ($attributes as $attribute) {
@@ -128,7 +129,9 @@ class HtmlInputProcessor extends AbstractHtmlProcessor
                 }
             }
 
-            $text = $metacode->ownerDocument->createTextNode('[' . $name . (!empty($bbcodeAttributes) ? '=' . $bbcodeAttributes : '') . ']');
+            $text = $metacode->ownerDocument->createTextNode(
+                '[' . $name . (!empty($bbcodeAttributes) ? '=' . $bbcodeAttributes : '') . ']'
+            );
             $metacode->insertBefore($text, $metacode->firstChild);
 
             $text = $metacode->ownerDocument->createTextNode('[/' . $name . ']');

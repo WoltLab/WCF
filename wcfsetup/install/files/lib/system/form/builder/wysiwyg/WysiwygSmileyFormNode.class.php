@@ -77,9 +77,13 @@ class WysiwygSmileyFormNode implements IFormChildNode
     {
         foreach ($smilies as $smiley) {
             if (!\is_object($smiley)) {
-                throw new \InvalidArgumentException("Given value array contains invalid value of type " . \gettype($smiley) . ".");
+                throw new \InvalidArgumentException(
+                    "Given value array contains invalid value of type " . \gettype($smiley) . "."
+                );
             } elseif (!($smiley instanceof Smiley)) {
-                throw new \InvalidArgumentException("Given value array contains invalid object of class " . \get_class($smiley) . ".");
+                throw new \InvalidArgumentException(
+                    "Given value array contains invalid object of class " . \get_class($smiley) . "."
+                );
             }
         }
 

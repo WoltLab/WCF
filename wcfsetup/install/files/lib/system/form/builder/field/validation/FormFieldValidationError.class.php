@@ -41,7 +41,9 @@ class FormFieldValidationError implements IFormFieldValidationError
         if ($languageItem === null) {
             $languageItem = 'wcf.global.form.error.' . $type;
         } elseif (!\is_string($languageItem)) {
-            throw new \InvalidArgumentException("Given language item is no string, '" . \gettype($languageItem) . "' given.'");
+            throw new \InvalidArgumentException(
+                "Given language item is no string, '" . \gettype($languageItem) . "' given.'"
+            );
         }
 
         $this->type = $type;

@@ -53,7 +53,10 @@ class PollOptionsFormField extends AbstractFormField
      */
     public function readValue()
     {
-        if ($this->getDocument()->hasRequestData($this->getPrefixedId()) && \is_array($this->getDocument()->getRequestData($this->getPrefixedId()))) {
+        if (
+            $this->getDocument()->hasRequestData($this->getPrefixedId())
+            && \is_array($this->getDocument()->getRequestData($this->getPrefixedId()))
+        ) {
             $value = \array_slice(
                 ArrayUtil::trim($this->getDocument()->getRequestData($this->getPrefixedId())),
                 0,

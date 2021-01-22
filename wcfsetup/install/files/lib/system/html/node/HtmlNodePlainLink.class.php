@@ -162,7 +162,10 @@ class HtmlNodePlainLink
 
         $metacodeElement = $this->link->ownerDocument->createElement('woltlab-metacode');
         $metacodeElement->setAttribute('data-name', $bbcode->bbcodeTag);
-        $metacodeElement->setAttribute('data-attributes', \base64_encode(JSON::encode([($overrideObjectID !== null ? $overrideObjectID : $this->objectID)])));
+        $metacodeElement->setAttribute(
+            'data-attributes',
+            \base64_encode(JSON::encode([($overrideObjectID !== null ? $overrideObjectID : $this->objectID)]))
+        );
 
         if ($bbcode->isBlockElement) {
             if (!$this->isStandalone()) {

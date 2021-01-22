@@ -429,7 +429,9 @@ trait TFormNode
         foreach ($this->getDependencies() as $dependency) {
             if ($dependency->getField() === null) {
                 if ($dependency->getFieldId() === null) {
-                    throw new \UnexpectedValueException("Dependency '{$dependency->getId()}' for node '{$this->getId()}' has no field.");
+                    throw new \UnexpectedValueException(
+                        "Dependency '{$dependency->getId()}' for node '{$this->getId()}' has no field."
+                    );
                 }
 
                 /** @var IFormField $field */

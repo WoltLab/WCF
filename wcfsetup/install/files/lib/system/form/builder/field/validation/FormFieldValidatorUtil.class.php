@@ -27,52 +27,59 @@ abstract class FormFieldValidatorUtil
      * @param   string      $segmentRegularExpression   regular expression used to validate each segment
      * @return  FormFieldValidator
      */
-    public static function getDotSeparatedStringValidator($languageItemPrefix, $minimumSegmentCount = 3, $maximumSegmentCount = -1, $segmentRegularExpression = '^[A-z0-9\-\_]+$')
-    {
+    public static function getDotSeparatedStringValidator(
+        $languageItemPrefix,
+        $minimumSegmentCount = 3,
+        $maximumSegmentCount = -1,
+        $segmentRegularExpression = '^[A-z0-9\-\_]+$'
+    ) {
         $regex = Regex::compile($segmentRegularExpression);
         if (!$regex->isValid()) {
             throw new \InvalidArgumentException("Invalid regular expression '{$segmentRegularExpression}' given.");
         }
 
-        return new FormFieldValidator('format', static function (TextFormField $formField) use ($languageItemPrefix, $minimumSegmentCount, $maximumSegmentCount, $regex) {
-            if ($formField->getValue()) {
-                $segments = \explode('.', $formField->getValue());
-                if ($minimumSegmentCount !== -1 && \count($segments) < $minimumSegmentCount) {
-                    $formField->addValidationError(
-                        new FormFieldValidationError(
-                            'tooFewSegments',
-                            $languageItemPrefix . '.error.tooFewSegments',
-                            ['segmentCount' => \count($segments)]
-                        )
-                    );
-                } elseif ($maximumSegmentCount !== -1 && \count($segments) > $maximumSegmentCount) {
-                    $formField->addValidationError(
-                        new FormFieldValidationError(
-                            'tooManySegments',
-                            $languageItemPrefix . '.error.tooManySegments',
-                            ['segmentCount' => \count($segments)]
-                        )
-                    );
-                } else {
-                    $invalidSegments = [];
-                    foreach ($segments as $key => $segment) {
-                        if (!$regex->match($segment)) {
-                            $invalidSegments[$key] = $segment;
-                        }
-                    }
-
-                    if (!empty($invalidSegments)) {
+        return new FormFieldValidator(
+            'format',
+            static function (TextFormField $formField) use ($languageItemPrefix, $minimumSegmentCount, $maximumSegmentCount, $regex) {
+                if ($formField->getValue()) {
+                    $segments = \explode('.', $formField->getValue());
+                    if ($minimumSegmentCount !== -1 && \count($segments) < $minimumSegmentCount) {
                         $formField->addValidationError(
                             new FormFieldValidationError(
-                                'invalidSegments',
-                                'wcf.form.fieldValidator.dotSeparatedString.error.invalidSegments',
-                                ['invalidSegments' => $invalidSegments]
+                                'tooFewSegments',
+                                $languageItemPrefix . '.error.tooFewSegments',
+                                ['segmentCount' => \count($segments)]
                             )
                         );
+                    } elseif ($maximumSegmentCount !== -1 && \count($segments) > $maximumSegmentCount) {
+                        $formField->addValidationError(
+                            new FormFieldValidationError(
+                                'tooManySegments',
+                                $languageItemPrefix . '.error.tooManySegments',
+                                ['segmentCount' => \count($segments)]
+                            )
+                        );
+                    } else {
+                        $invalidSegments = [];
+                        foreach ($segments as $key => $segment) {
+                            if (!$regex->match($segment)) {
+                                $invalidSegments[$key] = $segment;
+                            }
+                        }
+
+                        if (!empty($invalidSegments)) {
+                            $formField->addValidationError(
+                                new FormFieldValidationError(
+                                    'invalidSegments',
+                                    'wcf.form.fieldValidator.dotSeparatedString.error.invalidSegments',
+                                    ['invalidSegments' => $invalidSegments]
+                                )
+                            );
+                        }
                     }
                 }
             }
-        });
+        );
     }
 
     /**

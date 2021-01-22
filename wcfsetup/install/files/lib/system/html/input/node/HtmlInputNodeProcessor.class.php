@@ -348,14 +348,18 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
 
             if ($paragraph->firstChild && $paragraph->firstChild->nodeType === \XML_TEXT_NODE) {
                 $oldNode = $paragraph->firstChild;
-                $newNode = $paragraph->ownerDocument->createTextNode(\preg_replace('/^[\p{Zs}\s]+/u', '', $oldNode->textContent));
+                $newNode = $paragraph->ownerDocument->createTextNode(
+                    \preg_replace('/^[\p{Zs}\s]+/u', '', $oldNode->textContent)
+                );
                 $paragraph->insertBefore($newNode, $oldNode);
                 $paragraph->removeChild($oldNode);
             }
 
             if ($paragraph->lastChild && $paragraph->lastChild->nodeType === \XML_TEXT_NODE) {
                 $oldNode = $paragraph->lastChild;
-                $newNode = $paragraph->ownerDocument->createTextNode(\preg_replace('/[\p{Zs}\s]+$/u', '', $oldNode->textContent));
+                $newNode = $paragraph->ownerDocument->createTextNode(
+                    \preg_replace('/[\p{Zs}\s]+$/u', '', $oldNode->textContent)
+                );
                 $paragraph->insertBefore($newNode, $oldNode);
                 $paragraph->removeChild($oldNode);
             }
@@ -421,12 +425,16 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
     {
         $result = [];
 
-        $this->invokeNodeHandlers('wcf\system\html\input\node\HtmlInputNode', [], function (IHtmlNode $nodeHandler) use (&$result) {
-            $disallowed = $nodeHandler->isAllowed($this);
-            if ($disallowed) {
-                $result = \array_merge($result, $disallowed);
+        $this->invokeNodeHandlers(
+            'wcf\system\html\input\node\HtmlInputNode',
+            [],
+            function (IHtmlNode $nodeHandler) use (&$result) {
+                $disallowed = $nodeHandler->isAllowed($this);
+                if ($disallowed) {
+                    $result = \array_merge($result, $disallowed);
+                }
             }
-        });
+        );
 
         // handle custom nodes that have no dedicated handler
         $customTags = [

@@ -13,7 +13,11 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * @package WoltLabSuite\Core\System\Form\Builder\Field
  * @since   5.2
  */
-class RadioButtonFormField extends AbstractFormField implements IAttributeFormField, ICssClassFormField, IImmutableFormField, ISelectionFormField
+class RadioButtonFormField extends AbstractFormField implements
+    IAttributeFormField,
+    ICssClassFormField,
+    IImmutableFormField,
+    ISelectionFormField
 {
     use TInputAttributeFormField;
     use TCssClassFormField;

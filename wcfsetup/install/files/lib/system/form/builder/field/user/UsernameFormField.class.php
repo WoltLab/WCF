@@ -36,7 +36,15 @@ use wcf\util\UserUtil;
  * @package WoltLabSuite\Core\System\Form\Builder\Field\User
  * @since   5.2
  */
-class UsernameFormField extends AbstractFormField implements IAttributeFormField, IAutoCompleteFormField, IAutoFocusFormField, IImmutableFormField, IMaximumLengthFormField, IMinimumLengthFormField, INullableFormField, IPlaceholderFormField
+class UsernameFormField extends AbstractFormField implements
+    IAttributeFormField,
+    IAutoCompleteFormField,
+    IAutoFocusFormField,
+    IImmutableFormField,
+    IMaximumLengthFormField,
+    IMinimumLengthFormField,
+    INullableFormField,
+    IPlaceholderFormField
 {
     use TInputAttributeFormField;
     use TAutoCompleteFormField;

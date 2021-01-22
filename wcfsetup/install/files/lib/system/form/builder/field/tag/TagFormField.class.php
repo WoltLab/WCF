@@ -78,7 +78,9 @@ class TagFormField extends AbstractFormField implements IAttributeFormField, IOb
             $objectID = $object->{$object::getDatabaseTableIndexName()};
 
             if ($objectID === null) {
-                throw new \UnexpectedValueException("Cannot read object id from object of class '" . \get_class($object) . "'.");
+                throw new \UnexpectedValueException(
+                    "Cannot read object id from object of class '" . \get_class($object) . "'."
+                );
             }
 
             if ($this->getObjectType() === null) {
@@ -92,7 +94,11 @@ class TagFormField extends AbstractFormField implements IAttributeFormField, IOb
                 $languageIDs[] = $data['languageID'];
             }
 
-            $tags = TagEngine::getInstance()->getObjectTags($this->getObjectType()->objectType, $objectID, $languageIDs);
+            $tags = TagEngine::getInstance()->getObjectTags(
+                $this->getObjectType()->objectType,
+                $objectID,
+                $languageIDs
+            );
 
             $this->value = [];
             foreach ($tags as $tag) {
@@ -110,13 +116,16 @@ class TagFormField extends AbstractFormField implements IAttributeFormField, IOb
     {
         parent::populate();
 
-        $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor('acl', function (IFormDocument $document, array $parameters) {
-            if ($this->checkDependencies() && $this->getValue() !== null && !empty($this->getValue())) {
-                $parameters[$this->getObjectProperty()] = $this->getValue();
-            }
+        $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor(
+            'acl',
+            function (IFormDocument $document, array $parameters) {
+                if ($this->checkDependencies() && $this->getValue() !== null && !empty($this->getValue())) {
+                    $parameters[$this->getObjectProperty()] = $this->getValue();
+                }
 
-            return $parameters;
-        }));
+                return $parameters;
+            }
+        ));
 
         return $this;
     }
@@ -171,7 +180,9 @@ class TagFormField extends AbstractFormField implements IAttributeFormField, IOb
 
                 $stringTags[] = $tag->name;
             } else {
-                throw new \InvalidArgumentException("Given value array contains invalid value of type " . \gettype($tag) . ".");
+                throw new \InvalidArgumentException(
+                    "Given value array contains invalid value of type " . \gettype($tag) . "."
+                );
             }
         }
 

@@ -85,7 +85,9 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor
     public function setOutputType($outputType)
     {
         if (!\in_array($outputType, ['text/html', 'text/simplified-html', 'text/plain'])) {
-            throw new \InvalidArgumentException("Expected 'text/html', 'text/simplified-html' or 'text/plain', but received '" . $outputType . "'");
+            throw new \InvalidArgumentException(
+                "Expected 'text/html', 'text/simplified-html' or 'text/plain', but received '" . $outputType . "'"
+            );
         }
 
         $this->outputType = $outputType;

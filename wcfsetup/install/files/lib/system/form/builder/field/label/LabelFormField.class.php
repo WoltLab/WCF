@@ -139,20 +139,23 @@ class LabelFormField extends AbstractFormField implements IObjectTypeFormNode
     {
         parent::populate();
 
-        $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor('label', function (IFormDocument $document, array $parameters) {
-            $value = $this->getValue();
+        $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor(
+            'label',
+            function (IFormDocument $document, array $parameters) {
+                $value = $this->getValue();
 
-            // `-1` and `0` are special values that are irrlevent for saving
-            if ($value > 0) {
-                if (!isset($parameters[$this->getObjectProperty()])) {
-                    $parameters[$this->getObjectProperty()] = [];
+                // `-1` and `0` are special values that are irrlevent for saving
+                if ($value > 0) {
+                    if (!isset($parameters[$this->getObjectProperty()])) {
+                        $parameters[$this->getObjectProperty()] = [];
+                    }
+
+                    $parameters[$this->getObjectProperty()][$this->getLabelGroup()->groupID] = $value;
                 }
 
-                $parameters[$this->getObjectProperty()][$this->getLabelGroup()->groupID] = $value;
+                return $parameters;
             }
-
-            return $parameters;
-        }));
+        ));
 
         return $this;
     }

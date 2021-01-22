@@ -140,8 +140,16 @@ class AmpHtmlOutputProcessor extends HtmlOutputProcessor
             return '<amp-img layout="responsive"' . $attributes . '>';
         }, $html);
 
-        $html = \str_ireplace('<iframe', '<amp-iframe layout="responsive" width="480" height="300" sizes="(min-width: 480px) 480px, 100vw" ', $html);
-        $html = \str_ireplace('</iframe>', '<div class="wscIframePlaceholder" placeholder=""></div></amp-iframe>', $html);
+        $html = \str_ireplace(
+            '<iframe',
+            '<amp-iframe layout="responsive" width="480" height="300" sizes="(min-width: 480px) 480px, 100vw" ',
+            $html
+        );
+        $html = \str_ireplace(
+            '</iframe>',
+            '<div class="wscIframePlaceholder" placeholder=""></div></amp-iframe>',
+            $html
+        );
 
         return $html;
     }

@@ -25,7 +25,11 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Core\System\Form\Builder\Field
  * @since   5.2
  */
-class RatingFormField extends AbstractFormField implements IImmutableFormField, IMaximumFormField, IMinimumFormField, INullableFormField
+class RatingFormField extends AbstractFormField implements
+    IImmutableFormField,
+    IMaximumFormField,
+    IMinimumFormField,
+    INullableFormField
 {
     use TDefaultIdFormField;
     use TImmutableFormField;

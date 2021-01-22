@@ -41,7 +41,8 @@ class AbstractCategoryImporter extends AbstractImporter
     public function import($oldID, array $data, array $additionalData = [])
     {
         if (!empty($data['parentCategoryID'])) {
-            $data['parentCategoryID'] = ImportHandler::getInstance()->getNewID($this->objectTypeName, $data['parentCategoryID']);
+            $data['parentCategoryID'] = ImportHandler::getInstance()
+                ->getNewID($this->objectTypeName, $data['parentCategoryID']);
         }
 
         $category = CategoryEditor::create(\array_merge($data, ['objectTypeID' => $this->objectTypeID]));

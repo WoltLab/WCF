@@ -28,7 +28,11 @@ use wcf\system\WCF;
  * @package     WoltLabSuite\Core\System\Form\Builder\Field\User
  * @since       5.4
  */
-class UserPasswordField extends AbstractFormField implements IAttributeFormField, IAutoCompleteFormField, IAutoFocusFormField, IPlaceholderFormField
+class UserPasswordField extends AbstractFormField implements
+    IAttributeFormField,
+    IAutoCompleteFormField,
+    IAutoFocusFormField,
+    IPlaceholderFormField
 {
     use TInputAttributeFormField;
     use TAutoCompleteFormField;

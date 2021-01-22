@@ -58,7 +58,8 @@ trait TCssClassFormField
     }
 
     /**
-     * Returns `true` if a CSS class of the actual field element with the given name exists and returns `false` otherwise.
+     * Returns `true` if a CSS class of the actual field element with the given name exists and
+     * returns `false` otherwise.
      *
      * @throws      \InvalidArgumentException       if the given class is invalid
      */

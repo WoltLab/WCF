@@ -288,7 +288,10 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor
             $nodeName = $parent->nodeName;
             if ($nodeName === 'code' || $nodeName === 'kbd' || $nodeName === 'pre') {
                 return true;
-            } elseif ($nodeName === 'woltlab-metacode' && \in_array($parent->getAttribute('data-name'), $this->sourceBBCodes)) {
+            } elseif (
+                $nodeName === 'woltlab-metacode'
+                && \in_array($parent->getAttribute('data-name'), $this->sourceBBCodes)
+            ) {
                 return true;
             }
         }

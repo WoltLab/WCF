@@ -164,7 +164,11 @@ trait TFormParentNode
      */
     public function getIterator()
     {
-        return new \RecursiveIteratorIterator($this, \RecursiveIteratorIterator::SELF_FIRST, \RecursiveIteratorIterator::CATCH_GET_CHILD);
+        return new \RecursiveIteratorIterator(
+            $this,
+            \RecursiveIteratorIterator::SELF_FIRST,
+            \RecursiveIteratorIterator::CATCH_GET_CHILD
+        );
     }
 
     /**
@@ -319,7 +323,11 @@ trait TFormParentNode
             foreach ($this->children() as $child) {
                 if ($child instanceof IFormParentNode) {
                     $child->readValues();
-                } elseif ($child instanceof IFormField && $child->isAvailable() && (!($child instanceof IImmutableFormField) || !$child->isImmutable())) {
+                } elseif (
+                    $child instanceof IFormField
+                    && $child->isAvailable()
+                    && (!($child instanceof IImmutableFormField) || !$child->isImmutable())
+                ) {
                     $child->readValue();
                 }
             }

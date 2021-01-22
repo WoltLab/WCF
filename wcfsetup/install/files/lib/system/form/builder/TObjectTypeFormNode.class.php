@@ -59,7 +59,8 @@ trait TObjectTypeFormNode
             throw new \UnexpectedValueException("Unknown definition name '{$this->getObjectTypeDefinition()}'.");
         }
 
-        $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName($this->getObjectTypeDefinition(), $objectType);
+        $this->objectType = ObjectTypeCache::getInstance()
+            ->getObjectTypeByName($this->getObjectTypeDefinition(), $objectType);
         if ($this->objectType === null) {
             throw new InvalidObjectTypeException($objectType, $this->getObjectTypeDefinition());
         }

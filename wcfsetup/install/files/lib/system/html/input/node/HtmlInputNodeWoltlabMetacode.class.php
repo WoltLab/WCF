@@ -111,7 +111,12 @@ class HtmlInputNodeWoltlabMetacode extends AbstractHtmlInputNode
                     $bbcodeAttributes = $bbcode->getAttributes();
                     $attr = $bbcodeAttributes[0] ?? null;
 
-                    if ($attr !== null && $attr->useText && !empty($attributes[0]) && StringUtil::trim($attributes[0]) == StringUtil::trim($element->textContent)) {
+                    if (
+                        $attr !== null
+                        && $attr->useText
+                        && !empty($attributes[0])
+                        && StringUtil::trim($attributes[0]) == StringUtil::trim($element->textContent)
+                    ) {
                         // discard content as it is already present in the first attribute
                         while ($element->childNodes->length) {
                             $element->removeChild($element->childNodes->item(0));

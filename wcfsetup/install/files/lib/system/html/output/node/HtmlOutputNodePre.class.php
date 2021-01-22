@@ -72,7 +72,10 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode
                 case 'text/plain':
                     $htmlNodeProcessor->replaceElementWithText(
                         $element,
-                        WCF::getLanguage()->getDynamicVariable('wcf.bbcode.code.simplified', ['lines' => \substr_count($element->nodeValue, "\n") + 1]),
+                        WCF::getLanguage()->getDynamicVariable(
+                            'wcf.bbcode.code.simplified',
+                            ['lines' => \substr_count($element->nodeValue, "\n") + 1]
+                        ),
                         true
                     );
                     break;

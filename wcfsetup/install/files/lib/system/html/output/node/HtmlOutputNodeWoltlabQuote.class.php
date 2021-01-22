@@ -38,7 +38,10 @@ class HtmlOutputNodeWoltlabQuote extends AbstractHtmlOutputNode
                     $collapse = false;
 
                     // try to predict long content
-                    if ($element->getElementsByTagName('p')->length > 5 || $element->getElementsByTagName('br')->length > 5) {
+                    if (
+                        $element->getElementsByTagName('p')->length > 5
+                        || $element->getElementsByTagName('br')->length > 5
+                    ) {
                         $collapse = true;
                     }
 
@@ -65,7 +68,10 @@ class HtmlOutputNodeWoltlabQuote extends AbstractHtmlOutputNode
                     } else {
                         $htmlNodeProcessor->replaceElementWithText(
                             $element,
-                            WCF::getLanguage()->getDynamicVariable('wcf.bbcode.quote.simplified', ['cite' => $element->getAttribute('data-author')]),
+                            WCF::getLanguage()->getDynamicVariable(
+                                'wcf.bbcode.quote.simplified',
+                                ['cite' => $element->getAttribute('data-author')]
+                            ),
                             true
                         );
                     }
@@ -79,7 +85,11 @@ class HtmlOutputNodeWoltlabQuote extends AbstractHtmlOutputNode
      */
     public function replaceTag(array $data)
     {
-        $externalQuoteLink = (!empty($data['url'])) ? !ApplicationHandler::getInstance()->isInternalURL($data['url']) : false;
+        $externalQuoteLink = false;
+        if (!empty($data['url'])) {
+            $externalQuoteLink = !ApplicationHandler::getInstance()->isInternalURL($data['url']);
+        }
+
         if (!$externalQuoteLink) {
             $data['url'] = \preg_replace('~^https://~', RouteHandler::getProtocol(), $data['url']);
         }

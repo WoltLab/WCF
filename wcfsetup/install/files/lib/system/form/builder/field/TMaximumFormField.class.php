@@ -49,7 +49,9 @@ trait TMaximumFormField
             if ($this instanceof IMinimumFormField) {
                 $minimum = $this->getMinimum();
                 if ($minimum !== null && $minimum > $maximum) {
-                    throw new \InvalidArgumentException("Minimum ({$minimum}) cannot be greater than maximum ({$maximum}).");
+                    throw new \InvalidArgumentException(
+                        "Minimum ({$minimum}) cannot be greater than maximum ({$maximum})."
+                    );
                 }
             }
         }

@@ -32,7 +32,11 @@ use wcf\util\StringUtil;
  * @package WoltLabSuite\Core\System\Form\Builder\Field
  * @since   5.2
  */
-class WysiwygFormField extends AbstractFormField implements IAttributeFormField, IMaximumLengthFormField, IMinimumLengthFormField, IObjectTypeFormNode
+class WysiwygFormField extends AbstractFormField implements
+    IAttributeFormField,
+    IMaximumLengthFormField,
+    IMinimumLengthFormField,
+    IObjectTypeFormNode
 {
     use TInputAttributeFormField {
         getReservedFieldAttributes as private inputGetReservedFieldAttributes;
@@ -221,13 +225,16 @@ class WysiwygFormField extends AbstractFormField implements IAttributeFormField,
     {
         parent::populate();
 
-        $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor('wysiwyg', function (IFormDocument $document, array $parameters) {
-            if ($this->checkDependencies()) {
-                $parameters[$this->getObjectProperty() . '_htmlInputProcessor'] = $this->htmlInputProcessor;
-            }
+        $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor(
+            'wysiwyg',
+            function (IFormDocument $document, array $parameters) {
+                if ($this->checkDependencies()) {
+                    $parameters[$this->getObjectProperty() . '_htmlInputProcessor'] = $this->htmlInputProcessor;
+                }
 
-            return $parameters;
-        }));
+                return $parameters;
+            }
+        ));
 
         return $this;
     }
@@ -255,7 +262,9 @@ class WysiwygFormField extends AbstractFormField implements IAttributeFormField,
             throw new \InvalidArgumentException("Unknown class '{$actionClass}'");
         }
         if (!\is_subclass_of($actionClass, IMessageQuoteAction::class)) {
-            throw new \InvalidArgumentException("'{$actionClass}' does not implement '" . IMessageQuoteAction::class . "'.");
+            throw new \InvalidArgumentException(
+                "'{$actionClass}' does not implement '" . IMessageQuoteAction::class . "'."
+            );
         }
 
         if (!empty($selectors)) {

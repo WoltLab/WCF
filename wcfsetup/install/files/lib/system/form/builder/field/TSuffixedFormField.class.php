@@ -45,13 +45,17 @@ trait TSuffixedFormField
     {
         if ($languageItem === null) {
             if (!empty($variables)) {
-                throw new \InvalidArgumentException("Cannot use variables when unsetting suffix of field '{$this->getId()}'");
+                throw new \InvalidArgumentException(
+                    "Cannot use variables when unsetting suffix of field '{$this->getId()}'"
+                );
             }
 
             $this->suffix = null;
         } else {
             if (!\is_string($languageItem)) {
-                throw new \InvalidArgumentException("Given suffix language item is no string, " . \gettype($languageItem) . " given.");
+                throw new \InvalidArgumentException(
+                    "Given suffix language item is no string, " . \gettype($languageItem) . " given."
+                );
             }
 
             $this->suffix = WCF::getLanguage()->getDynamicVariable($languageItem, $variables);

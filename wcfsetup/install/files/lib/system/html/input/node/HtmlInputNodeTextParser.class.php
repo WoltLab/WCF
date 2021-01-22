@@ -104,7 +104,10 @@ class HtmlInputNodeTextParser
                 $categories = SmileyCache::getInstance()->getCategories();
 
                 foreach ($smilies as $categoryID => $categorySmilies) {
-                    if (!\array_key_exists($categoryID ?: null, $categories) || $categories[$categoryID ?: null]->isDisabled) {
+                    if (
+                        !\array_key_exists($categoryID ?: null, $categories)
+                        || $categories[$categoryID ?: null]->isDisabled
+                    ) {
                         continue;
                     }
 
@@ -673,7 +676,10 @@ class HtmlInputNodeTextParser
             $nodeName = $parent->nodeName;
             if ($nodeName === 'code' || $nodeName === 'kbd' || $nodeName === 'pre') {
                 return true;
-            } elseif ($nodeName === 'woltlab-metacode' && \in_array($parent->getAttribute('data-name'), $this->sourceBBCodes)) {
+            } elseif (
+                $nodeName === 'woltlab-metacode'
+                && \in_array($parent->getAttribute('data-name'), $this->sourceBBCodes)
+            ) {
                 return true;
             }
         }

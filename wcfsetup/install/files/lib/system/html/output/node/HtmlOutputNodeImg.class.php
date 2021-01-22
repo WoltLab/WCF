@@ -96,7 +96,11 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
                         // proxy is enabled for insecure connections only
                         if (!IMAGE_ALLOW_EXTERNAL_SOURCE && !$this->isAllowedOrigin($src)) {
                             /** @var HtmlOutputNodeProcessor $htmlNodeProcessor */
-                            $this->replaceExternalSource($element, $src, $htmlNodeProcessor->getHtmlProcessor()->enableUgc);
+                            $this->replaceExternalSource(
+                                $element,
+                                $src,
+                                $htmlNodeProcessor->getHtmlProcessor()->enableUgc
+                            );
                         }
 
                         continue;
@@ -105,7 +109,10 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
                     if ($this->bypassProxy($urlComponents['host'])) {
                         // check if page was requested over a secure connection
                         // but the link is insecure
-                        if ((MESSAGE_FORCE_SECURE_IMAGES || RouteHandler::secureConnection()) && $urlComponents['scheme'] === 'http') {
+                        if (
+                            $urlComponents['scheme'] === 'http'
+                            && (MESSAGE_FORCE_SECURE_IMAGES || RouteHandler::secureConnection())
+                        ) {
                             // rewrite protocol to `https`
                             $element->setAttribute('src', \preg_replace('~^http~', 'https', $src));
                         }
@@ -164,7 +171,12 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode
      */
     protected function replaceExternalSource(\DOMElement $element, $src, $isUgc = false)
     {
-        $element->parentNode->insertBefore($element->ownerDocument->createTextNode('[' . WCF::getLanguage()->get('wcf.bbcode.image.blocked') . ': '), $element);
+        $element->parentNode->insertBefore(
+            $element->ownerDocument->createTextNode(
+                '[' . WCF::getLanguage()->get('wcf.bbcode.image.blocked') . ': '
+            ),
+            $element
+        );
 
         if (!DOMUtil::hasParent($element, 'a')) {
             $link = $element->ownerDocument->createElement('a');

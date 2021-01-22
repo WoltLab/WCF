@@ -283,13 +283,17 @@ class FormDocument implements IFormDocument
     {
         if ($languageItem === null) {
             if (!empty($variables)) {
-                throw new \InvalidArgumentException("Cannot use variables when unsetting error message of form '{$this->getId()}'");
+                throw new \InvalidArgumentException(
+                    "Cannot use variables when unsetting error message of form '{$this->getId()}'"
+                );
             }
 
             $this->errorMessage = null;
         } else {
             if (!\is_string($languageItem)) {
-                throw new \InvalidArgumentException("Given error message language item is no string, " . \gettype($languageItem) . " given.");
+                throw new \InvalidArgumentException(
+                    "Given error message language item is no string, " . \gettype($languageItem) . " given."
+                );
             }
 
             $this->errorMessage = WCF::getLanguage()->getDynamicVariable($languageItem, $variables);
@@ -743,13 +747,17 @@ class FormDocument implements IFormDocument
     {
         if ($languageItem === null) {
             if (!empty($variables)) {
-                throw new \InvalidArgumentException("Cannot use variables when unsetting success message of form '{$this->getId()}'");
+                throw new \InvalidArgumentException(
+                    "Cannot use variables when unsetting success message of form '{$this->getId()}'"
+                );
             }
 
             $this->successMessage = null;
         } else {
             if (!\is_string($languageItem)) {
-                throw new \InvalidArgumentException("Given success message language item is no string, " . \gettype($languageItem) . " given.");
+                throw new \InvalidArgumentException(
+                    "Given success message language item is no string, " . \gettype($languageItem) . " given."
+                );
             }
 
             $this->successMessage = WCF::getLanguage()->getDynamicVariable($languageItem, $variables);

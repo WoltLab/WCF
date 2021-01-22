@@ -78,7 +78,9 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
         // We're also injecting a bogus meta tag that magically enables DOMDocument
         // to handle UTF-8 properly. This avoids encoding non-ASCII characters as it
         // would conflict with already existing entities when reverting them.
-        @$this->document->loadHTML('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head><body>' . $html . '</body></html>');
+        @$this->document->loadHTML(
+            '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head><body>' . $html . '</body></html>'
+        );
 
         // flush libxml's error buffer, after all we don't care for any errors caused
         // by the `loadHTML()` call above anyway
@@ -91,7 +93,10 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
             $pre = $pres->item($i);
             /** @var \DOMNode $node */
             foreach ($pre->childNodes as $node) {
-                if ($node->nodeType === \XML_TEXT_NODE && \mb_strpos($node->textContent, '@@@WCF_PRE_LINEBREAK@@@') !== false) {
+                if (
+                    $node->nodeType === \XML_TEXT_NODE
+                    && \mb_strpos($node->textContent, '@@@WCF_PRE_LINEBREAK@@@') !== false
+                ) {
                     $node->nodeValue = \str_replace('@@@WCF_PRE_LINEBREAK@@@', "\n", $node->textContent);
                 }
             }
@@ -113,23 +118,31 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
         $html = \preg_replace('~</body>$~', '', $html);
 
         foreach ($this->nodeData as $data) {
-            $html = \preg_replace_callback('~<wcfNode-' . $data['identifier'] . '>(?P<content>[\s\S]*)</wcfNode-' . $data['identifier'] . '>~', static function ($matches) use ($data) {
-                /** @var IHtmlNode $obj */
-                $obj = $data['object'];
-                $string = $obj->replaceTag($data['data']);
+            $html = \preg_replace_callback(
+                '~<wcfNode-' . $data['identifier'] . '>(?P<content>[\s\S]*)</wcfNode-' . $data['identifier'] . '>~',
+                static function ($matches) use ($data) {
+                    /** @var IHtmlNode $obj */
+                    $obj = $data['object'];
+                    $string = $obj->replaceTag($data['data']);
 
-                if (!isset($data['data']['skipInnerContent']) || $data['data']['skipInnerContent'] !== true) {
-                    if (\mb_strpos($string, '<!-- META_CODE_INNER_CONTENT -->') !== false) {
-                        return \str_replace('<!-- META_CODE_INNER_CONTENT -->', $matches['content'], $string);
-                    } else {
-                        if (\mb_strpos($string, '&lt;!-- META_CODE_INNER_CONTENT --&gt;') !== false) {
-                            return \str_replace('&lt;!-- META_CODE_INNER_CONTENT --&gt;', $matches['content'], $string);
+                    if (!isset($data['data']['skipInnerContent']) || $data['data']['skipInnerContent'] !== true) {
+                        if (\mb_strpos($string, '<!-- META_CODE_INNER_CONTENT -->') !== false) {
+                            return \str_replace('<!-- META_CODE_INNER_CONTENT -->', $matches['content'], $string);
+                        } else {
+                            if (\mb_strpos($string, '&lt;!-- META_CODE_INNER_CONTENT --&gt;') !== false) {
+                                return \str_replace(
+                                    '&lt;!-- META_CODE_INNER_CONTENT --&gt;',
+                                    $matches['content'],
+                                    $string
+                                );
+                            }
                         }
                     }
-                }
 
-                return $string;
-            }, $html);
+                    return $string;
+                },
+                $html
+            );
         }
 
         // work-around for a libxml bug that causes a single space between
@@ -285,7 +298,9 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor
     protected function invokeHtmlNode(IHtmlNode $htmlNode)
     {
         if (!($htmlNode instanceof $this->nodeInterface)) {
-            throw new \InvalidArgumentException("Node '" . \get_class($htmlNode) . "' does not implement the interface '" . $this->nodeInterface . "'.");
+            throw new \InvalidArgumentException(
+                "Node '" . \get_class($htmlNode) . "' does not implement the interface '" . $this->nodeInterface . "'."
+            );
         }
 
         $tagName = $htmlNode->getTagName();

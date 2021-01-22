@@ -32,13 +32,20 @@ class HtmlOutputNodeWoltlabSpoiler extends AbstractHtmlOutputNode
         foreach ($elements as $element) {
             if ($this->outputType === 'text/html') {
                 $nodeIdentifier = StringUtil::getRandomID();
-                $htmlNodeProcessor->addNodeData($this, $nodeIdentifier, ['label' => $element->getAttribute('data-label')]);
+                $htmlNodeProcessor->addNodeData(
+                    $this,
+                    $nodeIdentifier,
+                    ['label' => $element->getAttribute('data-label')]
+                );
 
                 $htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
             } elseif ($this->outputType === 'text/simplified-html' || $this->outputType === 'text/plain') {
                 $htmlNodeProcessor->replaceElementWithText(
                     $element,
-                    WCF::getLanguage()->getDynamicVariable('wcf.bbcode.spoiler.simplified', ['label' => $element->getAttribute('data-label')]),
+                    WCF::getLanguage()->getDynamicVariable(
+                        'wcf.bbcode.spoiler.simplified',
+                        ['label' => $element->getAttribute('data-label')]
+                    ),
                     true
                 );
             }
@@ -55,6 +62,8 @@ class HtmlOutputNodeWoltlabSpoiler extends AbstractHtmlOutputNode
             'spoilerID' => \substr(StringUtil::getRandomID(), 0, 8),
         ]);
 
-        return WCF::getTPL()->fetch((HtmlBBCodeParser::getInstance()->getIsGoogleAmp() ? 'spoilerAmpMetaCode' : 'spoilerMetaCode'));
+        return WCF::getTPL()->fetch(
+            (HtmlBBCodeParser::getInstance()->getIsGoogleAmp() ? 'spoilerAmpMetaCode' : 'spoilerMetaCode')
+        );
     }
 }

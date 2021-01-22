@@ -224,7 +224,12 @@ class UploadFormField extends AbstractFormField
             }
         }
 
-        if ($this->getMinimumImageWidth() !== null || $this->getMaximumImageWidth() !== null || $this->getMinimumImageHeight() !== null || $this->getMaximumImageHeight() !== null) {
+        if (
+            $this->getMinimumImageWidth() !== null
+            || $this->getMaximumImageWidth() !== null
+            || $this->getMinimumImageHeight() !== null
+            || $this->getMaximumImageHeight() !== null
+        ) {
             foreach ($this->getValue() as $file) {
                 $imagesize = \getimagesize($file->getLocation());
 
@@ -320,15 +325,25 @@ class UploadFormField extends AbstractFormField
             if (\is_array($value)) {
                 $value = \array_map(function ($v) use ($method) {
                     if (!\is_string($v) || !\file_exists($v)) {
-                        throw new \InvalidArgumentException("The " . $method . " must return an array of strings with the file locations.");
+                        throw new \InvalidArgumentException(
+                            "The " . $method . " must return an array of strings with the file locations."
+                        );
                     }
 
-                    return new UploadFile($v, \basename($v), ImageUtil::isImage($v, \basename($v), $this->svgImageAllowed()), true, $this->svgImageAllowed());
+                    return new UploadFile(
+                        $v,
+                        \basename($v),
+                        ImageUtil::isImage($v, \basename($v), $this->svgImageAllowed()),
+                        true,
+                        $this->svgImageAllowed()
+                    );
                 }, $value);
 
                 $this->value($value);
             } else {
-                throw new \InvalidArgumentException("The " . $method . " must return an array of strings with the file locations.");
+                throw new \InvalidArgumentException(
+                    "The " . $method . " must return an array of strings with the file locations."
+                );
             }
         }
 
@@ -351,7 +366,9 @@ class UploadFormField extends AbstractFormField
 
         foreach ($value as $file) {
             if (!($file instanceof UploadFile)) {
-                throw new \InvalidArgumentException('All given files must be an instance of ' . UploadFile::class . '.');
+                throw new \InvalidArgumentException(
+                    'All given files must be an instance of ' . UploadFile::class . '.'
+                );
             }
         }
 
@@ -390,18 +407,24 @@ class UploadFormField extends AbstractFormField
     {
         parent::populate();
 
-        UploadHandler::getInstance()->registerUploadField($this->buildUploadField(), $this->getDocument()->getRequestData());
+        UploadHandler::getInstance()->registerUploadField(
+            $this->buildUploadField(),
+            $this->getDocument()->getRequestData()
+        );
 
         if (!empty($this->values)) {
             UploadHandler::getInstance()->registerFilesByField($this->getPrefixedId(), $this->values);
         }
 
-        $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor('upload', function (IFormDocument $document, array $parameters) {
-            $parameters[$this->getObjectProperty()] = $this->getValue();
-            $parameters[$this->getObjectProperty() . '_removedFiles'] = $this->getRemovedFiles(true);
+        $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor(
+            'upload',
+            function (IFormDocument $document, array $parameters) {
+                $parameters[$this->getObjectProperty()] = $this->getValue();
+                $parameters[$this->getObjectProperty() . '_removedFiles'] = $this->getRemovedFiles(true);
 
-            return $parameters;
-        }));
+                return $parameters;
+            }
+        ));
 
         return $this;
     }
@@ -414,7 +437,9 @@ class UploadFormField extends AbstractFormField
     public function maximum($maximum = null)
     {
         if ($this->isRegistered()) {
-            throw new \LogicException('The upload field has already been registered. Therefore no modifications are allowed.');
+            throw new \LogicException(
+                'The upload field has already been registered. Therefore no modifications are allowed.'
+            );
         }
 
         return $this->traitMaximum($maximum);
@@ -433,7 +458,9 @@ class UploadFormField extends AbstractFormField
     {
         if ($maximumFilesize !== null) {
             if (!\is_numeric($maximumFilesize)) {
-                throw new \InvalidArgumentException("Given maximum filesize is no int, '" . \gettype($maximumFilesize) . "' given.");
+                throw new \InvalidArgumentException(
+                    "Given maximum filesize is no int, '" . \gettype($maximumFilesize) . "' given."
+                );
             }
         }
 
@@ -471,7 +498,9 @@ class UploadFormField extends AbstractFormField
 
         if ($minimumImageWidth !== null) {
             if (!\is_numeric($minimumImageWidth)) {
-                throw new \InvalidArgumentException("Given minimum image width is no int, '" . \gettype($minimumImageWidth) . "' given.");
+                throw new \InvalidArgumentException(
+                    "Given minimum image width is no int, '" . \gettype($minimumImageWidth) . "' given."
+                );
             }
 
             $maximumImageWidth = $this->getMaximumImageWidth();
@@ -514,7 +543,9 @@ class UploadFormField extends AbstractFormField
 
         if ($maximumImageWidth !== null) {
             if (!\is_numeric($maximumImageWidth)) {
-                throw new \InvalidArgumentException("Given maximum image width is no int, '" . \gettype($maximumImageWidth) . "' given.");
+                throw new \InvalidArgumentException(
+                    "Given maximum image width is no int, '" . \gettype($maximumImageWidth) . "' given."
+                );
             }
 
             $minimumImageWidth = $this->getMinimumImageWidth();
@@ -557,7 +588,9 @@ class UploadFormField extends AbstractFormField
 
         if ($minimumImageHeight !== null) {
             if (!\is_numeric($minimumImageHeight)) {
-                throw new \InvalidArgumentException("Given minimum image height is no int, '" . \gettype($minimumImageHeight) . "' given.");
+                throw new \InvalidArgumentException(
+                    "Given minimum image height is no int, '" . \gettype($minimumImageHeight) . "' given."
+                );
             }
 
             $maximumImageHeight = $this->getMaximumImageHeight();
@@ -600,7 +633,9 @@ class UploadFormField extends AbstractFormField
 
         if ($maximumImageHeight !== null) {
             if (!\is_numeric($maximumImageHeight)) {
-                throw new \InvalidArgumentException("Given maximum image height is no int, '" . \gettype($maximumImageHeight) . "' given.");
+                throw new \InvalidArgumentException(
+                    "Given maximum image height is no int, '" . \gettype($maximumImageHeight) . "' given."
+                );
             }
 
             $minimumImageHeight = $this->getMinimumImageHeight();
@@ -641,19 +676,27 @@ class UploadFormField extends AbstractFormField
     {
         if (!$imageOnly) {
             if ($this->getMinimumImageWidth() !== null) {
-                throw new \InvalidArgumentException("The form field must be image only, because a minimum image width is set.");
+                throw new \InvalidArgumentException(
+                    "The form field must be image only, because a minimum image width is set."
+                );
             }
 
             if ($this->getMaximumImageWidth() !== null) {
-                throw new \InvalidArgumentException("The form field must be image only, because a maximum image width is set.");
+                throw new \InvalidArgumentException(
+                    "The form field must be image only, because a maximum image width is set."
+                );
             }
 
             if ($this->getMinimumImageHeight() !== null) {
-                throw new \InvalidArgumentException("The form field must be image only, because a minimum image height is set.");
+                throw new \InvalidArgumentException(
+                    "The form field must be image only, because a minimum image height is set."
+                );
             }
 
             if ($this->getMaximumImageHeight() !== null) {
-                throw new \InvalidArgumentException("The form field must be image only, because a maximum image height is set.");
+                throw new \InvalidArgumentException(
+                    "The form field must be image only, because a maximum image height is set."
+                );
             }
         }
 
@@ -688,7 +731,9 @@ class UploadFormField extends AbstractFormField
     public function allowSvgImage($allowSvgImages = true)
     {
         if (!$this->isImageOnly()) {
-            throw new \BadMethodCallException('Allowing SVG images is only relevant, if the `imageOnly` flag is set to `true`.');
+            throw new \BadMethodCallException(
+                'Allowing SVG images is only relevant, if the `imageOnly` flag is set to `true`.'
+            );
         }
 
         $this->allowSvgImage = $allowSvgImages;

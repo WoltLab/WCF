@@ -129,13 +129,16 @@ class WysiwygAttachmentFormField extends AbstractFormField
     {
         parent::populate();
 
-        $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor($this->getId(), function (IFormDocument $document, array $parameters) {
-            if ($this->getAttachmentHandler() !== null) {
-                $parameters[$this->getWysiwygId() . '_attachmentHandler'] = $this->getAttachmentHandler();
-            }
+        $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor(
+            $this->getId(),
+            function (IFormDocument $document, array $parameters) {
+                if ($this->getAttachmentHandler() !== null) {
+                    $parameters[$this->getWysiwygId() . '_attachmentHandler'] = $this->getAttachmentHandler();
+                }
 
-            return $parameters;
-        }));
+                return $parameters;
+            }
+        ));
 
         return $this;
     }

@@ -44,13 +44,17 @@ trait TFormElement
     {
         if ($languageItem === null) {
             if (!empty($variables)) {
-                throw new \InvalidArgumentException("Cannot use variables when unsetting description of element '{$this->getId()}'");
+                throw new \InvalidArgumentException(
+                    "Cannot use variables when unsetting description of element '{$this->getId()}'"
+                );
             }
 
             $this->description = null;
         } else {
             if (!\is_string($languageItem)) {
-                throw new \InvalidArgumentException("Given description language item is no string, " . \gettype($languageItem) . " given.");
+                throw new \InvalidArgumentException(
+                    "Given description language item is no string, " . \gettype($languageItem) . " given."
+                );
             }
 
             $this->description = WCF::getLanguage()->getDynamicVariable($languageItem, $variables);
@@ -94,13 +98,17 @@ trait TFormElement
     {
         if ($languageItem === null) {
             if (!empty($variables)) {
-                throw new \InvalidArgumentException("Cannot use variables when unsetting label of element '{$this->getId()}'");
+                throw new \InvalidArgumentException(
+                    "Cannot use variables when unsetting label of element '{$this->getId()}'"
+                );
             }
 
             $this->label = null;
         } else {
             if (!\is_string($languageItem)) {
-                throw new \InvalidArgumentException("Given label language item is no string, " . \gettype($languageItem) . " given.");
+                throw new \InvalidArgumentException(
+                    "Given label language item is no string, " . \gettype($languageItem) . " given."
+                );
             }
 
             $this->label = WCF::getLanguage()->getDynamicVariable($languageItem, $variables);

@@ -84,7 +84,9 @@ trait TI18nFormField
     public function getLanguageItemPattern()
     {
         if (!$this->isI18n()) {
-            throw new \BadMethodCallException("You can only get the language item pattern for fields with i18n enabled.");
+            throw new \BadMethodCallException(
+                "You can only get the language item pattern for fields with i18n enabled."
+            );
         }
 
         if ($this->languageItemPattern === null) {
@@ -260,7 +262,9 @@ trait TI18nFormField
     public function languageItemPattern($pattern)
     {
         if (!$this->isI18n()) {
-            throw new \BadMethodCallException("The language item pattern can only be set for fields with i18n enabled.");
+            throw new \BadMethodCallException(
+                "The language item pattern can only be set for fields with i18n enabled."
+            );
         }
 
         if (!Regex::compile($pattern)->isValid()) {
@@ -313,13 +317,16 @@ trait TI18nFormField
 
             /** @var IFormDocument $document */
             $document = $this->getDocument();
-            $document->getDataHandler()->addProcessor(new CustomFormDataProcessor('i18n', function (IFormDocument $document, array $parameters) {
-                if ($this->checkDependencies() && $this->hasI18nValues()) {
-                    $parameters[$this->getObjectProperty() . '_i18n'] = $this->getValue();
-                }
+            $document->getDataHandler()->addProcessor(new CustomFormDataProcessor(
+                'i18n',
+                function (IFormDocument $document, array $parameters) {
+                    if ($this->checkDependencies() && $this->hasI18nValues()) {
+                        $parameters[$this->getObjectProperty() . '_i18n'] = $this->getValue();
+                    }
 
-                return $parameters;
-            }));
+                    return $parameters;
+                }
+            ));
         }
 
         return $this;
@@ -389,7 +396,9 @@ trait TI18nFormField
                     I18nHandler::getInstance()->setValues($this->getPrefixedId(), $value);
                 }
             } else {
-                throw new \InvalidArgumentException("Given value is neither a nor an array, " . \gettype($value) . " given.");
+                throw new \InvalidArgumentException(
+                    "Given value is neither a nor an array, " . \gettype($value) . " given."
+                );
             }
         } else {
             if (!\is_string($value) && !\is_numeric($value)) {

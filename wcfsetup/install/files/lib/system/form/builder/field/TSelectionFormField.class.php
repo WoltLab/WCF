@@ -109,10 +109,14 @@ trait TSelectionFormField
     {
         if ($nestedOptions) {
             if (!\is_array($options) && !($options instanceof \Traversable) && !\is_callable($options)) {
-                throw new \InvalidArgumentException("The given nested options are neither iterable nor a callable, " . \gettype($options) . " given.");
+                throw new \InvalidArgumentException(
+                    "The given nested options are neither iterable nor a callable, " . \gettype($options) . " given."
+                );
             }
         } elseif (!\is_array($options) && !($options instanceof \Traversable) && !\is_callable($options)) {
-            throw new \InvalidArgumentException("The given options are neither iterable nor a callable, " . \gettype($options) . " given.");
+            throw new \InvalidArgumentException(
+                "The given options are neither iterable nor a callable, " . \gettype($options) . " given."
+            );
         }
 
         if (\is_callable($options)) {
@@ -137,7 +141,9 @@ trait TSelectionFormField
                 $collectedOptions = [];
                 foreach ($options as $key => $object) {
                     if (!($object instanceof IObjectTreeNode)) {
-                        throw new \InvalidArgumentException("Nested traversable options must implement '" . IObjectTreeNode::class . "'.");
+                        throw new \InvalidArgumentException(
+                            "Nested traversable options must implement '" . IObjectTreeNode::class . "'."
+                        );
                     }
 
                     $collectedOptions[] = [
@@ -172,7 +178,10 @@ trait TSelectionFormField
                 if (\is_object($option['label'])) {
                     if (\method_exists($option['label'], '__toString')) {
                         $option['label'] = (string)$option['label'];
-                    } elseif ($option['label'] instanceof ITitledObject || ClassUtil::isDecoratedInstanceOf($option['label'], ITitledObject::class)) {
+                    } elseif (
+                        $option['label'] instanceof ITitledObject
+                        || ClassUtil::isDecoratedInstanceOf($option['label'], ITitledObject::class)
+                    ) {
                         $option['label'] = $option['label']->getTitle();
                     } else {
                         throw new \InvalidArgumentException("Nested option with key '{$key}' contain invalid label of type " . \gettype($option['label']) . ".");
@@ -182,7 +191,10 @@ trait TSelectionFormField
                 }
 
                 // resolve language item for label
-                if ($labelLanguageItems && \preg_match('~^([a-zA-Z0-9-_]+\.){2,}[a-zA-Z0-9-_]+$~', (string)$option['label'])) {
+                if (
+                    $labelLanguageItems
+                    && \preg_match('~^([a-zA-Z0-9-_]+\.){2,}[a-zA-Z0-9-_]+$~', (string)$option['label'])
+                ) {
                     $option['label'] = WCF::getLanguage()->getDynamicVariable($option['label']);
                 }
 
@@ -190,12 +202,16 @@ trait TSelectionFormField
                 if (!\is_string($option['value']) && !\is_numeric($option['value'])) {
                     throw new \InvalidArgumentException("Nested option with key '{$key}' contain invalid value of type " . \gettype($option['label']) . ".");
                 } elseif (isset($this->options[$option['value']])) {
-                    throw new \InvalidArgumentException("Options values must be unique, but '{$option['value']}' appears at least twice as value.");
+                    throw new \InvalidArgumentException(
+                        "Options values must be unique, but '{$option['value']}' appears at least twice as value."
+                    );
                 }
 
                 // validate depth
                 if (!\is_int($option['depth'])) {
-                    throw new \InvalidArgumentException("Depth of nested option with key '{$key}' is no integer, " . \gettype($options) . " given.");
+                    throw new \InvalidArgumentException(
+                        "Depth of nested option with key '{$key}' is no integer, " . \gettype($options) . " given."
+                    );
                 }
                 if ($option['depth'] < 0) {
                     throw new \InvalidArgumentException("Depth of nested option with key '{$key}' is negative.");
@@ -215,23 +231,34 @@ trait TSelectionFormField
         } else {
             foreach ($options as $value => $label) {
                 if (\is_array($label)) {
-                    throw new \InvalidArgumentException("Non-nested options must not contain any array. Array given for value '{$value}'.");
+                    throw new \InvalidArgumentException(
+                        "Non-nested options must not contain any array. Array given for value '{$value}'."
+                    );
                 }
 
                 if (\is_object($label)) {
                     if (\method_exists($label, '__toString')) {
                         $label = (string)$label;
-                    } elseif ($label instanceof ITitledObject || ClassUtil::isDecoratedInstanceOf($label, ITitledObject::class)) {
+                    } elseif (
+                        $label instanceof ITitledObject
+                        || ClassUtil::isDecoratedInstanceOf($label, ITitledObject::class)
+                    ) {
                         $label = $label->getTitle();
                     } else {
-                        throw new \InvalidArgumentException("Options contain invalid label of type " . \gettype($label) . ".");
+                        throw new \InvalidArgumentException(
+                            "Options contain invalid label of type " . \gettype($label) . "."
+                        );
                     }
                 } elseif (!\is_string($label) && !\is_numeric($label)) {
-                    throw new \InvalidArgumentException("Options contain invalid label of type " . \gettype($label) . ".");
+                    throw new \InvalidArgumentException(
+                        "Options contain invalid label of type " . \gettype($label) . "."
+                    );
                 }
 
                 if (isset($this->options[$value])) {
-                    throw new \InvalidArgumentException("Options values must be unique, but '{$value}' appears at least twice as value.");
+                    throw new \InvalidArgumentException(
+                        "Options values must be unique, but '{$value}' appears at least twice as value."
+                    );
                 }
 
                 // resolve language item for label

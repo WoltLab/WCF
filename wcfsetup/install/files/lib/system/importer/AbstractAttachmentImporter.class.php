@@ -108,7 +108,11 @@ class AbstractAttachmentImporter extends AbstractImporter
      */
     protected function fixEmbeddedAttachments($message, $oldID, $newID)
     {
-        if (\mb_strripos($message, '[attach]' . $oldID . '[/attach]') !== false || \mb_strripos($message, '[attach=' . $oldID . ']') !== false || \mb_strripos($message, '[attach=' . $oldID . ',') !== false) {
+        if (
+            \mb_strripos($message, '[attach]' . $oldID . '[/attach]') !== false
+            || \mb_strripos($message, '[attach=' . $oldID . ']') !== false
+            || \mb_strripos($message, '[attach=' . $oldID . ',') !== false
+        ) {
             $message = \str_ireplace('[attach]' . $oldID . '[/attach]', '[attach]' . $newID . '[/attach]', $message);
             $message = \str_ireplace('[attach=' . $oldID . ']', '[attach=' . $newID . ']', $message);
 
