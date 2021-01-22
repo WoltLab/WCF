@@ -112,7 +112,10 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 
         // validate by user id
         if ($user->userID) {
-            if (isset($this->permissions['user'][$user->userID]) && isset($this->permissions['user'][$user->userID][$optionID])) {
+            if (
+                isset($this->permissions['user'][$user->userID])
+                && isset($this->permissions['user'][$user->userID][$optionID])
+            ) {
                 if ($this->permissions['user'][$user->userID][$optionID] == 1) {
                     return true;
                 }
@@ -121,7 +124,10 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 
         // validate by group id
         foreach ($user->getGroupIDs() as $groupID) {
-            if (isset($this->permissions['group'][$groupID]) && isset($this->permissions['group'][$groupID][$optionID])) {
+            if (
+                isset($this->permissions['group'][$groupID])
+                && isset($this->permissions['group'][$groupID][$optionID])
+            ) {
                 if ($this->permissions['group'][$groupID][$optionID] == 1) {
                     return true;
                 }

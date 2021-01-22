@@ -85,7 +85,9 @@ class EmailNewActivationCodeForm extends RegisterNewActivationCodeForm
         // send activation mail
         $email = new Email();
         $email->addRecipient(new UserMailbox($this->user));
-        $email->setSubject($this->user->getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail.subject'));
+        $email->setSubject(
+            $this->user->getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail.subject')
+        );
         $email->setBody(new MimePartFacade([
             new RecipientAwareTextMimePart('text/html', 'email_changeEmailNeedReactivation'),
             new RecipientAwareTextMimePart('text/plain', 'email_changeEmailNeedReactivation'),
@@ -95,7 +97,11 @@ class EmailNewActivationCodeForm extends RegisterNewActivationCodeForm
         $this->saved();
 
         // forward to index page
-        HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation'), 10);
+        HeaderUtil::delayedRedirect(
+            LinkHandler::getInstance()->getLink(),
+            WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation'),
+            10
+        );
 
         exit;
     }

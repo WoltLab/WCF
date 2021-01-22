@@ -276,7 +276,11 @@ class AccountManagementForm extends AbstractForm
         }
 
         // email
-        if (WCF::getSession()->getPermission('user.profile.canChangeEmail') && $this->email != WCF::getUser()->email && $this->email != WCF::getUser()->newEmail) {
+        if (
+            WCF::getSession()->getPermission('user.profile.canChangeEmail')
+            && $this->email != WCF::getUser()->email
+            && $this->email != WCF::getUser()->newEmail
+        ) {
             if (empty($this->email)) {
                 throw new UserInputException('email');
             }
@@ -390,7 +394,11 @@ class AccountManagementForm extends AbstractForm
         }
 
         // email
-        if (WCF::getSession()->getPermission('user.profile.canChangeEmail') && $this->email != WCF::getUser()->email && $this->email != WCF::getUser()->newEmail) {
+        if (
+            WCF::getSession()->getPermission('user.profile.canChangeEmail')
+            && $this->email != WCF::getUser()->email
+            && $this->email != WCF::getUser()->newEmail
+        ) {
             if (!(REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
                 // update email
                 $updateParameters['email'] = $this->email;

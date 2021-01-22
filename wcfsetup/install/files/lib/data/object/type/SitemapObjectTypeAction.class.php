@@ -39,7 +39,10 @@ class SitemapObjectTypeAction extends ObjectTypeAction implements IToggleAction
     public function toggle()
     {
         foreach ($this->getObjects() as $objectEditor) {
-            $sitemapData = RegistryHandler::getInstance()->get('com.woltlab.wcf', SitemapRebuildWorker::REGISTRY_PREFIX . $objectEditor->objectType);
+            $sitemapData = RegistryHandler::getInstance()->get(
+                'com.woltlab.wcf',
+                SitemapRebuildWorker::REGISTRY_PREFIX . $objectEditor->objectType
+            );
             $sitemapData = @\unserialize($sitemapData);
 
             if (\is_array($sitemapData)) {
@@ -53,7 +56,11 @@ class SitemapObjectTypeAction extends ObjectTypeAction implements IToggleAction
                 ];
             }
 
-            RegistryHandler::getInstance()->set('com.woltlab.wcf', SitemapRebuildWorker::REGISTRY_PREFIX . $objectEditor->objectType, \serialize($sitemapData));
+            RegistryHandler::getInstance()->set(
+                'com.woltlab.wcf',
+                SitemapRebuildWorker::REGISTRY_PREFIX . $objectEditor->objectType,
+                \serialize($sitemapData)
+            );
         }
     }
 

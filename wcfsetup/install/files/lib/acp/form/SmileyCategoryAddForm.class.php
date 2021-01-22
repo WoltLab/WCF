@@ -43,7 +43,10 @@ class SmileyCategoryAddForm extends AbstractCategoryAddForm
         parent::save();
 
         WCF::getTPL()->assign([
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(SmileyCategoryEditForm::class, ['id' => $this->objectAction->getReturnValues()['returnValues']->categoryID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
+                SmileyCategoryEditForm::class,
+                ['id' => $this->objectAction->getReturnValues()['returnValues']->categoryID]
+            ),
         ]);
     }
 }

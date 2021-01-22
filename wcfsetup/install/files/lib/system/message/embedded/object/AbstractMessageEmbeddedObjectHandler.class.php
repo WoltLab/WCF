@@ -16,7 +16,8 @@ use wcf\data\object\type\ObjectType;
  * @method  ObjectType  getDecoratedObject()
  * @mixin   ObjectType
  */
-abstract class AbstractMessageEmbeddedObjectHandler extends DatabaseObjectDecorator implements IMessageEmbeddedObjectHandler
+abstract class AbstractMessageEmbeddedObjectHandler extends DatabaseObjectDecorator implements
+    IMessageEmbeddedObjectHandler
 {
     /**
      * @inheritDoc

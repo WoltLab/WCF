@@ -144,7 +144,11 @@ abstract class TreeMenu extends SingletonFactory
 
         foreach ($this->menuItems[$parentMenuItem] as $key => $item) {
             $this->removeEmptyItems($item->menuItem);
-            if (empty($item->menuItemLink) && empty($item->menuItemController) && (!isset($this->menuItems[$item->menuItem]) || empty($this->menuItems[$item->menuItem]))) {
+            if (
+                empty($item->menuItemLink)
+                && empty($item->menuItemController)
+                && (!isset($this->menuItems[$item->menuItem]) || empty($this->menuItems[$item->menuItem]))
+            ) {
                 // remove this item
                 unset($this->menuItems[$parentMenuItem][$key]);
             }

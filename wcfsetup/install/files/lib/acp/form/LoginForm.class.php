@@ -97,7 +97,10 @@ class LoginForm extends AbstractCaptchaForm
 
                     if ($user->userID) {
                         $failures = UserAuthenticationFailure::countUserFailures($user->userID);
-                        if (USER_AUTHENTICATION_FAILURE_USER_CAPTCHA && $failures >= USER_AUTHENTICATION_FAILURE_USER_CAPTCHA) {
+                        if (
+                            USER_AUTHENTICATION_FAILURE_USER_CAPTCHA
+                            && $failures >= USER_AUTHENTICATION_FAILURE_USER_CAPTCHA
+                        ) {
                             $this->useCaptcha = true;
                         }
                     }
@@ -127,11 +130,14 @@ class LoginForm extends AbstractCaptchaForm
     protected function validateUser()
     {
         try {
-            $this->user = UserAuthenticationFactory::getInstance()->getUserAuthentication()->loginManually($this->username, $this->password);
+            $this->user = UserAuthenticationFactory::getInstance()
+                ->getUserAuthentication()
+                ->loginManually($this->username, $this->password);
         } catch (UserInputException $e) {
             if ($e->getField() == 'username') {
                 try {
-                    $this->user = EmailUserAuthentication::getInstance()->loginManually($this->username, $this->password);
+                    $this->user = EmailUserAuthentication::getInstance()
+                        ->loginManually($this->username, $this->password);
                 } catch (UserInputException $e2) {
                     if ($e2->getField() == 'username') {
                         throw $e;

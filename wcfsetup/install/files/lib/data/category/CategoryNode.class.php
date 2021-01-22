@@ -41,7 +41,10 @@ class CategoryNode extends DatabaseObjectDecorator implements IObjectTreeNode
         }
 
         if ($activeCategory) {
-            if ($activeCategory->categoryID == $this->categoryID || $activeCategory->isParentCategory($this->getDecoratedObject())) {
+            if (
+                $activeCategory->categoryID == $this->categoryID
+                || $activeCategory->isParentCategory($this->getDecoratedObject())
+            ) {
                 // is the active category or a parent of the active category
                 return true;
             }

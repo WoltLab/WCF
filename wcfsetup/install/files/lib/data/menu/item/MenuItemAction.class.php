@@ -82,7 +82,11 @@ class MenuItemAction extends AbstractDatabaseObjectAction implements ISortableAc
         }
 
         // validate structure
-        if (!isset($this->parameters['data']) || !isset($this->parameters['data']['structure']) || !\is_array($this->parameters['data']['structure'])) {
+        if (
+            !isset($this->parameters['data'])
+            || !isset($this->parameters['data']['structure'])
+            || !\is_array($this->parameters['data']['structure'])
+        ) {
             throw new UserInputException('structure');
         }
 

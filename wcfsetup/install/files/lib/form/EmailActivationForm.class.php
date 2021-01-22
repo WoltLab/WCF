@@ -129,7 +129,10 @@ class EmailActivationForm extends AbstractForm
         $this->saved();
 
         // forward to index page
-        HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), WCF::getLanguage()->getDynamicVariable('wcf.user.emailActivation.success'));
+        HeaderUtil::delayedRedirect(
+            LinkHandler::getInstance()->getLink(),
+            WCF::getLanguage()->getDynamicVariable('wcf.user.emailActivation.success')
+        );
 
         exit;
     }

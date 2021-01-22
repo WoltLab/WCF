@@ -25,7 +25,8 @@ $action->executeAction();
 
 // add default article category
 CategoryEditor::create([
-    'objectTypeID' => ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.category', 'com.woltlab.wcf.article.category'),
+    'objectTypeID' => ObjectTypeCache::getInstance()
+        ->getObjectTypeIDByName('com.woltlab.wcf.category', 'com.woltlab.wcf.article.category'),
     'title' => 'Default Category',
     'time' => TIME_NOW,
 ]);

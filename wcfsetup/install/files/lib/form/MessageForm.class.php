@@ -226,7 +226,10 @@ abstract class MessageForm extends AbstractCaptchaForm
         }
 
         if ($this->disallowedBBCodesPermission) {
-            BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(',', WCF::getSession()->getPermission($this->disallowedBBCodesPermission)));
+            BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
+                ',',
+                WCF::getSession()->getPermission($this->disallowedBBCodesPermission)
+            ));
         }
 
         $this->htmlInputProcessor = new HtmlInputProcessor();
@@ -290,7 +293,12 @@ abstract class MessageForm extends AbstractCaptchaForm
     {
         // get attachments
         if ($this->attachmentObjectType) {
-            $this->attachmentHandler = new AttachmentHandler($this->attachmentObjectType, $this->attachmentObjectID, $this->tmpHash, $this->attachmentParentObjectID);
+            $this->attachmentHandler = new AttachmentHandler(
+                $this->attachmentObjectType,
+                $this->attachmentObjectID,
+                $this->tmpHash,
+                $this->attachmentParentObjectID
+            );
         }
 
         if (empty($_POST)) {
@@ -305,12 +313,16 @@ abstract class MessageForm extends AbstractCaptchaForm
 
             $firstCategory = \reset($this->smileyCategories);
             if ($firstCategory) {
-                $this->defaultSmilies = SmileyCache::getInstance()->getCategorySmilies($firstCategory->categoryID ?: null);
+                $this->defaultSmilies = SmileyCache::getInstance()
+                    ->getCategorySmilies($firstCategory->categoryID ?: null);
             }
         }
 
         if ($this->disallowedBBCodesPermission) {
-            BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(',', WCF::getSession()->getPermission($this->disallowedBBCodesPermission)));
+            BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
+                ',',
+                WCF::getSession()->getPermission($this->disallowedBBCodesPermission)
+            ));
         }
     }
 

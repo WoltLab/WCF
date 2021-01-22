@@ -28,8 +28,10 @@ if (!$hanashiTwoStep) {
 }
 
 // Fetch the object types for the relevant MFA methods.
-$totpMethod = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.multifactor', 'com.woltlab.wcf.multifactor.totp');
-$backupMethod = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.multifactor', 'com.woltlab.wcf.multifactor.backup');
+$totpMethod = ObjectTypeCache::getInstance()
+    ->getObjectTypeByName('com.woltlab.wcf.multifactor', 'com.woltlab.wcf.multifactor.totp');
+$backupMethod = ObjectTypeCache::getInstance()
+    ->getObjectTypeByName('com.woltlab.wcf.multifactor', 'com.woltlab.wcf.multifactor.backup');
 
 // Fetch the backup code hashing algorithm.
 // We use the Wcf1 algorithm as it's super cheap compared to BCrypt and the previous

@@ -39,7 +39,11 @@ class CommentUserProfileMenuContent extends SingletonFactory implements IUserPro
             $this->commentManager = $objectType->getProcessor();
         }
 
-        $commentList = CommentHandler::getInstance()->getCommentList($this->commentManager, $this->objectTypeID, $userID);
+        $commentList = CommentHandler::getInstance()->getCommentList(
+            $this->commentManager,
+            $this->objectTypeID,
+            $userID
+        );
 
         // assign variables
         WCF::getTPL()->assign([

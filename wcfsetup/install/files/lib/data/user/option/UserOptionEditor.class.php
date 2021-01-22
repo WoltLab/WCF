@@ -35,7 +35,11 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
         $userOption = parent::create($parameters);
 
         // alter the table "wcf".WCF_N."_user_option_value" with this new option
-        WCF::getDB()->getEditor()->addColumn('wcf' . WCF_N . '_user_option_value', 'userOption' . $userOption->optionID, self::getColumnDefinition($parameters['optionType']));
+        WCF::getDB()->getEditor()->addColumn(
+            'wcf' . WCF_N . '_user_option_value',
+            'userOption' . $userOption->optionID,
+            self::getColumnDefinition($parameters['optionType'])
+        );
 
         // add the default value to this column
         if (isset($parameters['defaultValue']) && $parameters['defaultValue'] !== null) {

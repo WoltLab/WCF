@@ -71,7 +71,9 @@ class AdEditor extends DatabaseObjectEditor implements IEditableCachedObject
     {
         AdCacheBuilder::getInstance()->reset();
         ConditionCacheBuilder::getInstance()->reset([
-            'definitionID' => ObjectTypeCache::getInstance()->getDefinitionByName('com.woltlab.wcf.condition.ad')->definitionID,
+            'definitionID' => ObjectTypeCache::getInstance()
+                ->getDefinitionByName('com.woltlab.wcf.condition.ad')
+                ->definitionID,
         ]);
     }
 }

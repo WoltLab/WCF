@@ -115,6 +115,9 @@ class BoxVersionTracker extends DatabaseObjectDecorator implements IVersionTrack
      */
     public function getEditLink()
     {
-        return LinkHandler::getInstance()->getLink('BoxEdit', ['isACP' => true, 'id' => $this->getDecoratedObject()->boxID]);
+        return LinkHandler::getInstance()->getLink(
+            'BoxEdit',
+            ['isACP' => true, 'id' => $this->getDecoratedObject()->boxID]
+        );
     }
 }

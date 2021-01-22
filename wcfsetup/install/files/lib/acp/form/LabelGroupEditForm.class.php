@@ -74,12 +74,18 @@ class LabelGroupEditForm extends LabelGroupAddForm
         }
 
         // update label
-        $this->objectAction = new LabelGroupAction([$this->groupID], 'update', ['data' => \array_merge($this->additionalFields, [
-            'forceSelection' => $this->forceSelection ? 1 : 0,
-            'groupName' => $this->groupName,
-            'groupDescription' => $this->groupDescription,
-            'showOrder' => $this->showOrder,
-        ])]);
+        $this->objectAction = new LabelGroupAction(
+            [$this->groupID],
+            'update',
+            [
+                'data' => \array_merge($this->additionalFields, [
+                    'forceSelection' => $this->forceSelection ? 1 : 0,
+                    'groupName' => $this->groupName,
+                    'groupDescription' => $this->groupDescription,
+                    'showOrder' => $this->showOrder,
+                ]),
+            ]
+        );
         $this->objectAction->executeAction();
 
         // update acl

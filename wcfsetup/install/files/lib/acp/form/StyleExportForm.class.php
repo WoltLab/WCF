@@ -108,7 +108,11 @@ class StyleExportForm extends AbstractForm
         parent::save();
 
         // get style filename
-        $filename = \str_replace(' ', '-', \preg_replace('/[^a-z0-9 _-]/', '', \mb_strtolower($this->style->styleName)));
+        $filename = \str_replace(' ', '-', \preg_replace(
+            '/[^a-z0-9 _-]/',
+            '',
+            \mb_strtolower($this->style->styleName)
+        ));
 
         // send headers
         \header('Content-Type: application/x-gzip; charset=utf-8');

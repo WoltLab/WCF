@@ -128,7 +128,10 @@ class NotificationUnsubscribeForm extends AbstractForm
             exit;
         } else {
             // redirect to url
-            HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), WCF::getLanguage()->get('wcf.user.notification.mail.disabled'));
+            HeaderUtil::delayedRedirect(
+                LinkHandler::getInstance()->getLink(),
+                WCF::getLanguage()->get('wcf.user.notification.mail.disabled')
+            );
 
             exit;
         }

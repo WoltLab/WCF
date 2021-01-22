@@ -57,7 +57,10 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction
             throw new UserInputException('packageID');
         }
 
-        if (!isset($this->parameters['action']) || !\in_array($this->parameters['action'], ['install', 'update', 'uninstall', 'rollback'])) {
+        if (
+            !isset($this->parameters['action'])
+            || !\in_array($this->parameters['action'], ['install', 'update', 'uninstall', 'rollback'])
+        ) {
             throw new UserInputException('action');
         }
     }

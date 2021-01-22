@@ -104,7 +104,10 @@ class StyleImportForm extends AbstractForm
                 throw new SystemException("Package contains no style");
             }
 
-            $filename = FileUtil::getTemporaryFilename('package_', \preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', \basename($this->source['name'])));
+            $filename = FileUtil::getTemporaryFilename(
+                'package_',
+                \preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', \basename($this->source['name']))
+            );
 
             if (!@\move_uploaded_file($this->source['tmp_name'], $filename)) {
                 throw new SystemException("Cannot move uploaded file");

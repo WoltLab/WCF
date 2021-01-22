@@ -96,7 +96,10 @@ class ArticleCategoryAddForm extends AbstractCategoryAddForm
         parent::save();
 
         WCF::getTPL()->assign([
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(ArticleCategoryEditForm::class, ['id' => $this->objectAction->getReturnValues()['returnValues']->categoryID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
+                ArticleCategoryEditForm::class,
+                ['id' => $this->objectAction->getReturnValues()['returnValues']->categoryID]
+            ),
         ]);
 
         $this->sortField = 'publicationDate';

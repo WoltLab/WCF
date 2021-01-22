@@ -98,8 +98,14 @@ class MessageQuoteManager extends SingletonFactory
      * @return  mixed
      * @throws  SystemException
      */
-    public function addQuote($objectType, $parentObjectID, $objectID, $message, $fullQuote = '', $returnFalseIfExists = true)
-    {
+    public function addQuote(
+        $objectType,
+        $parentObjectID,
+        $objectID,
+        $message,
+        $fullQuote = '',
+        $returnFalseIfExists = true
+    ) {
         if (!isset($this->objectTypes[$objectType])) {
             throw new SystemException("Object type '" . $objectType . "' is unknown");
         }

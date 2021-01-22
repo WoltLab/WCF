@@ -64,7 +64,11 @@ class ViewableArticleContentList extends ArticleContentList
 
         // load embedded objects
         if (!empty($embeddedObjectPostIDs)) {
-            MessageEmbeddedObjectManager::getInstance()->loadObjects('com.woltlab.wcf.article.content', $embeddedObjectPostIDs, $contentLanguageID);
+            MessageEmbeddedObjectManager::getInstance()->loadObjects(
+                'com.woltlab.wcf.article.content',
+                $embeddedObjectPostIDs,
+                $contentLanguageID
+            );
         }
 
         if (!empty($articleIDs)) {

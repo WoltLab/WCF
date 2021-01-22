@@ -63,7 +63,11 @@ class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements ITo
     {
         parent::update();
 
-        if (\count($this->objects) == 1 && isset($this->parameters['data']['showOrder']) && $this->parameters['data']['showOrder'] != \reset($this->objects)->showOrder) {
+        if (
+            \count($this->objects) == 1
+            && isset($this->parameters['data']['showOrder'])
+            && $this->parameters['data']['showOrder'] != \reset($this->objects)->showOrder
+        ) {
             \reset($this->objects)->setShowOrder($this->parameters['data']['showOrder']);
         }
     }

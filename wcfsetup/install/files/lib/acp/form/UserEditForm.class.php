@@ -295,7 +295,9 @@ class UserEditForm extends UserAddForm
             // on the style, eventually triggering a change to the template group which will
             // fail in the admin panel.
             if ($userProfile->canSeeCoverPhoto()) {
-                $this->userCoverPhoto = UserProfileRuntimeCache::getInstance()->getObject($this->userID)->getCoverPhoto(true);
+                $this->userCoverPhoto = UserProfileRuntimeCache::getInstance()
+                    ->getObject($this->userID)
+                    ->getCoverPhoto(true);
             }
         }
     }

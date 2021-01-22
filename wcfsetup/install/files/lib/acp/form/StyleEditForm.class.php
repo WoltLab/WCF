@@ -76,8 +76,14 @@ class StyleEditForm extends StyleAddForm
     {
         $variables = $this->variables;
         if (!$this->style->isTainted) {
-            $variables['individualScss'] = Style::joinLessVariables($variables['individualScss'], $variables['individualScssCustom']);
-            $variables['overrideScss'] = Style::joinLessVariables($variables['overrideScss'], $variables['overrideScssCustom']);
+            $variables['individualScss'] = Style::joinLessVariables(
+                $variables['individualScss'],
+                $variables['individualScssCustom']
+            );
+            $variables['overrideScss'] = Style::joinLessVariables(
+                $variables['overrideScss'],
+                $variables['overrideScssCustom']
+            );
 
             unset($variables['individualScssCustom']);
             unset($variables['overrideScssCustom']);
@@ -88,7 +94,13 @@ class StyleEditForm extends StyleAddForm
         $this->styleTestFileDir = FileUtil::getTemporaryFilename('style_');
         FileUtil::makePath($this->styleTestFileDir);
 
-        $result = StyleCompiler::getInstance()->testStyle($this->styleTestFileDir, $this->styleName, $this->apiVersion, $this->style->imagePath, $variables);
+        $result = StyleCompiler::getInstance()->testStyle(
+            $this->styleTestFileDir,
+            $this->styleName,
+            $this->apiVersion,
+            $this->style->imagePath,
+            $variables
+        );
 
         if ($result !== null) {
             \rmdir($this->styleTestFileDir);
@@ -147,13 +159,25 @@ class StyleEditForm extends StyleAddForm
         }
 
         if ($this->variables['pageLogo'] && \file_exists($this->style->getAssetPath() . $this->variables['pageLogo'])) {
-            $file = new UploadFile($this->style->getAssetPath() . $this->variables['pageLogo'], \basename($this->variables['pageLogo']), true, true, true);
+            $file = new UploadFile(
+                $this->style->getAssetPath() . $this->variables['pageLogo'],
+                \basename($this->variables['pageLogo']),
+                true,
+                true,
+                true
+            );
             UploadHandler::getInstance()->registerFilesByField('pageLogo', [
                 $file,
             ]);
         }
         if ($this->variables['pageLogoMobile'] && \file_exists($this->style->getAssetPath() . $this->variables['pageLogoMobile'])) {
-            $file = new UploadFile($this->style->getAssetPath() . $this->variables['pageLogoMobile'], \basename($this->variables['pageLogoMobile']), true, true, true);
+            $file = new UploadFile(
+                $this->style->getAssetPath() . $this->variables['pageLogoMobile'],
+                \basename($this->variables['pageLogoMobile']),
+                true,
+                true,
+                true
+            );
             UploadHandler::getInstance()->registerFilesByField('pageLogoMobile', [
                 $file,
             ]);
@@ -180,7 +204,12 @@ class StyleEditForm extends StyleAddForm
     {
         parent::readData();
 
-        I18nHandler::getInstance()->setOptions('styleDescription', PACKAGE_ID, $this->style->styleDescription, 'wcf.style.styleDescription\d+');
+        I18nHandler::getInstance()->setOptions(
+            'styleDescription',
+            PACKAGE_ID,
+            $this->style->styleDescription,
+            'wcf.style.styleDescription\d+'
+        );
 
         if (empty($_POST)) {
             $this->apiVersion = $this->style->apiVersion;
@@ -196,19 +225,37 @@ class StyleEditForm extends StyleAddForm
             $this->styleVersion = $this->style->styleVersion;
             $this->templateGroupID = $this->style->templateGroupID;
             if ($this->style->image && \file_exists(WCF_DIR . 'images/' . $this->style->image)) {
-                $file = new UploadFile(WCF_DIR . 'images/' . $this->style->image, $this->style->image, true, true, false);
+                $file = new UploadFile(
+                    WCF_DIR . 'images/' . $this->style->image,
+                    $this->style->image,
+                    true,
+                    true,
+                    false
+                );
                 UploadHandler::getInstance()->registerFilesByField('image', [
                     $file,
                 ]);
             }
             if ($this->style->image2x && \file_exists(WCF_DIR . 'images/' . $this->style->image2x)) {
-                $file = new UploadFile(WCF_DIR . 'images/' . $this->style->image2x, $this->style->image2x, true, true, false);
+                $file = new UploadFile(
+                    WCF_DIR . 'images/' . $this->style->image2x,
+                    $this->style->image2x,
+                    true,
+                    true,
+                    false
+                );
                 UploadHandler::getInstance()->registerFilesByField('image2x', [
                     $file,
                 ]);
             }
             if ($this->style->coverPhotoExtension && \file_exists($this->style->getCoverPhotoLocation())) {
-                $file = new UploadFile($this->style->getCoverPhotoLocation(), $this->style->getCoverPhoto(), true, true, false);
+                $file = new UploadFile(
+                    $this->style->getCoverPhotoLocation(),
+                    $this->style->getCoverPhoto(),
+                    true,
+                    true,
+                    false
+                );
                 UploadHandler::getInstance()->registerFilesByField('coverPhoto', [
                     $file,
                 ]);
@@ -217,7 +264,13 @@ class StyleEditForm extends StyleAddForm
                 foreach (['png', 'jpg', 'gif'] as $extension) {
                     $filename = "favicon-template." . $extension;
                     if (\file_exists($this->style->getAssetPath() . $filename)) {
-                        $file = new UploadFile($this->style->getAssetPath() . $filename, $filename, true, true, false);
+                        $file = new UploadFile(
+                            $this->style->getAssetPath() . $filename,
+                            $filename,
+                            true,
+                            true,
+                            false
+                        );
                         UploadHandler::getInstance()->registerFilesByField('favicon', [
                             $file,
                         ]);
@@ -240,8 +293,14 @@ class StyleEditForm extends StyleAddForm
         AbstractForm::save();
 
         if (!$this->style->isTainted) {
-            $this->variables['individualScss'] = Style::joinLessVariables($this->variables['individualScss'], $this->variables['individualScssCustom']);
-            $this->variables['overrideScss'] = Style::joinLessVariables($this->variables['overrideScss'], $this->variables['overrideScssCustom']);
+            $this->variables['individualScss'] = Style::joinLessVariables(
+                $this->variables['individualScss'],
+                $this->variables['individualScssCustom']
+            );
+            $this->variables['overrideScss'] = Style::joinLessVariables(
+                $this->variables['overrideScss'],
+                $this->variables['overrideScssCustom']
+            );
 
             unset($this->variables['individualScssCustom']);
             unset($this->variables['overrideScssCustom']);
@@ -272,7 +331,11 @@ class StyleEditForm extends StyleAddForm
         $this->objectAction->executeAction();
 
         // save compiled style
-        if ($this->styleTestFileDir && \file_exists($this->styleTestFileDir . '/style.css') && \file_exists($this->styleTestFileDir . '/style-rtl.css')) {
+        if (
+            $this->styleTestFileDir
+            && \file_exists($this->styleTestFileDir . '/style.css')
+            && \file_exists($this->styleTestFileDir . '/style-rtl.css')
+        ) {
             $styleFilename = StyleCompiler::getFilenameForStyle($this->style);
             \rename($this->styleTestFileDir . '/style.css', $styleFilename . '.css');
             \rename($this->styleTestFileDir . '/style-rtl.css', $styleFilename . '-rtl.css');

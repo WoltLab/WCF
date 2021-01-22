@@ -74,11 +74,17 @@ class AdEditForm extends AdAddForm
                     if (\is_array($objectTypes2)) {
                         foreach ($objectTypes2 as $objectType) {
                             if (isset($conditionsByObjectTypeID[$objectType->objectTypeID])) {
-                                $conditionsByObjectTypeID[$objectType->objectTypeID]->getObjectType()->getProcessor()->setData($conditionsByObjectTypeID[$objectType->objectTypeID]);
+                                $conditionsByObjectTypeID[$objectType->objectTypeID]
+                                    ->getObjectType()
+                                    ->getProcessor()
+                                    ->setData($conditionsByObjectTypeID[$objectType->objectTypeID]);
                             }
                         }
                     } elseif (isset($conditionsByObjectTypeID[$objectTypes2->objectTypeID])) {
-                        $conditionsByObjectTypeID[$objectTypes2->objectTypeID]->getObjectType()->getProcessor()->setData($conditionsByObjectTypeID[$objectTypes2->objectTypeID]);
+                        $conditionsByObjectTypeID[$objectTypes2->objectTypeID]
+                            ->getObjectType()
+                            ->getProcessor()
+                            ->setData($conditionsByObjectTypeID[$objectTypes2->objectTypeID]);
                     }
                 }
             }
@@ -131,7 +137,11 @@ class AdEditForm extends AdAddForm
             }
         }
 
-        ConditionHandler::getInstance()->updateConditions($this->adObject->adID, $this->adObject->getConditions(), $conditions);
+        ConditionHandler::getInstance()->updateConditions(
+            $this->adObject->adID,
+            $this->adObject->getConditions(),
+            $conditions
+        );
 
         $this->saved();
 

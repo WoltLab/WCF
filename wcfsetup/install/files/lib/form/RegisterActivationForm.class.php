@@ -91,7 +91,9 @@ class RegisterActivationForm extends AbstractForm
 
         // user email is already confirmed
         if ($this->user->isEmailConfirmed()) {
-            throw new NamedUserException(WCF::getLanguage()->get('wcf.user.registerActivation.error.userAlreadyEnabled'));
+            throw new NamedUserException(
+                WCF::getLanguage()->get('wcf.user.registerActivation.error.userAlreadyEnabled')
+            );
         }
 
         // check given activation code
@@ -118,7 +120,8 @@ class RegisterActivationForm extends AbstractForm
 
         // forward to index page
         if ($this->user->requiresAdminActivation()) {
-            $redirectText = WCF::getLanguage()->getDynamicVariable('wcf.user.registerActivation.success.awaitAdminActivation');
+            $redirectText = WCF::getLanguage()
+                ->getDynamicVariable('wcf.user.registerActivation.success.awaitAdminActivation');
         } else {
             $redirectText = WCF::getLanguage()->getDynamicVariable('wcf.user.registerActivation.success');
         }

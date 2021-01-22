@@ -301,7 +301,10 @@ class BBCodeAddForm extends AbstractForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(BBCodeEditForm::class, ['id' => $returnValues['returnValues']->bbcodeID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
+                BBCodeEditForm::class,
+                ['id' => $returnValues['returnValues']->bbcodeID]
+            ),
         ]);
     }
 

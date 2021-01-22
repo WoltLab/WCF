@@ -32,7 +32,10 @@ class AccessibleArticleList extends ViewableArticleList
 
             if (!WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
                 if (WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles')) {
-                    $this->getConditionBuilder()->add('(article.userID = ? OR (article.isDeleted = ? AND article.publicationStatus = ?))', [WCF::getUser()->userID, 0, Article::PUBLISHED]);
+                    $this->getConditionBuilder()->add(
+                        '(article.userID = ? OR (article.isDeleted = ? AND article.publicationStatus = ?))',
+                        [WCF::getUser()->userID, 0, Article::PUBLISHED]
+                    );
                 } else {
                     $this->getConditionBuilder()->add('article.isDeleted = ?', [0]);
                     $this->getConditionBuilder()->add('article.publicationStatus = ?', [Article::PUBLISHED]);

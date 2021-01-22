@@ -69,7 +69,9 @@ class NoticeEditor extends DatabaseObjectEditor implements IEditableCachedObject
     {
         NoticeCacheBuilder::getInstance()->reset();
         ConditionCacheBuilder::getInstance()->reset([
-            'definitionID' => ObjectTypeCache::getInstance()->getDefinitionByName('com.woltlab.wcf.condition.notice')->definitionID,
+            'definitionID' => ObjectTypeCache::getInstance()
+                ->getDefinitionByName('com.woltlab.wcf.condition.notice')
+                ->definitionID,
         ]);
     }
 }

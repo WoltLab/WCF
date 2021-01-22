@@ -115,6 +115,9 @@ class PageVersionTracker extends DatabaseObjectDecorator implements IVersionTrac
      */
     public function getEditLink()
     {
-        return LinkHandler::getInstance()->getLink('PageEdit', ['isACP' => true, 'id' => $this->getDecoratedObject()->pageID]);
+        return LinkHandler::getInstance()->getLink(
+            'PageEdit',
+            ['isACP' => true, 'id' => $this->getDecoratedObject()->pageID]
+        );
     }
 }

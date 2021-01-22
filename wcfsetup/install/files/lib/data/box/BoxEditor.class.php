@@ -33,7 +33,10 @@ class BoxEditor extends DatabaseObjectEditor
     public function writeTemplate($languageID, $content)
     {
         if ($this->getDecoratedObject()->boxType === 'tpl') {
-            \file_put_contents(WCF_DIR . 'templates/' . $this->getDecoratedObject()->getTplName(($languageID ?: null)) . '.tpl', $content);
+            \file_put_contents(
+                WCF_DIR . 'templates/' . $this->getDecoratedObject()->getTplName(($languageID ?: null)) . '.tpl',
+                $content
+            );
         }
     }
 }

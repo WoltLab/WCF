@@ -73,7 +73,11 @@ class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject
         $package = PackageCache::getInstance()->getPackage($packageID);
         $packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR . $package->packageDir));
 
-        $files = \array_merge(\glob($packageDir . 'lib/action/*.php'), \glob($packageDir . 'lib/form/*.php'), \glob($packageDir . 'lib/page/*.php'));
+        $files = \array_merge(
+            \glob($packageDir . 'lib/action/*.php'),
+            \glob($packageDir . 'lib/form/*.php'),
+            \glob($packageDir . 'lib/page/*.php')
+        );
         foreach ($files as $file) {
             $filename = \preg_replace('/(Action|Page|Form)(\.class)?\.php$/', '', \basename($file));
             if ($customURL == ControllerMap::transformController($filename)) {

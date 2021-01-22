@@ -90,7 +90,9 @@ class ObjectType extends ProcessibleDatabaseObject
                     throw new SystemException("Unable to find class '" . $this->className . "'");
                 }
 
-                $definitionInterface = ObjectTypeCache::getInstance()->getDefinition($this->definitionID)->interfaceName;
+                $definitionInterface = ObjectTypeCache::getInstance()
+                    ->getDefinition($this->definitionID)
+                    ->interfaceName;
                 if ($definitionInterface) {
                     if (!\interface_exists($definitionInterface)) {
                         throw new SystemException("Unable to find interface '" . $definitionInterface . "'");

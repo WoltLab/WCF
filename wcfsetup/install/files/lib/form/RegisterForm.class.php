@@ -161,7 +161,9 @@ class RegisterForm extends UserAddForm
         }
         if (isset($_POST[$this->randomFieldNames['password'] . '_passwordStrengthVerdict'])) {
             try {
-                $this->passwordStrengthVerdict = JSON::decode($_POST[$this->randomFieldNames['password'] . '_passwordStrengthVerdict']);
+                $this->passwordStrengthVerdict = JSON::decode(
+                    $_POST[$this->randomFieldNames['password'] . '_passwordStrengthVerdict']
+                );
             } catch (SystemException $e) {
                 // ignore
             }
@@ -198,12 +200,22 @@ class RegisterForm extends UserAddForm
         parent::validate();
 
         // validate registration time
-        if (!$this->isExternalAuthentication && (!WCF::getSession()->getVar('registrationStartTime') || (TIME_NOW - WCF::getSession()->getVar('registrationStartTime')) < self::$minRegistrationTime)) {
+        if (
+            !$this->isExternalAuthentication
+            && (
+                !WCF::getSession()->getVar('registrationStartTime')
+                || (TIME_NOW - WCF::getSession()->getVar('registrationStartTime')) < self::$minRegistrationTime
+            )
+        ) {
             throw new UserInputException('registrationStartTime', []);
         }
 
         if (BLACKLIST_SFS_ENABLE) {
-            $this->blacklistMatches = BlacklistEntry::getMatches($this->username, $this->email, UserUtil::getIpAddress());
+            $this->blacklistMatches = BlacklistEntry::getMatches(
+                $this->username,
+                $this->email,
+                UserUtil::getIpAddress()
+            );
             if (!empty($this->blacklistMatches) && BLACKLIST_SFS_ACTION === 'block') {
                 throw new NamedUserException('wcf.user.register.error.blacklistMatches');
             }
@@ -371,7 +383,10 @@ class RegisterForm extends UserAddForm
 
                         WCF::getSession()->unregister('__twitterData');
 
-                        if (WCF::getSession()->getVar('__email') && WCF::getSession()->getVar('__email') == $this->email) {
+                        if (
+                            WCF::getSession()->getVar('__email')
+                            && WCF::getSession()->getVar('__email') == $this->email
+                        ) {
                             $registerVia3rdParty = true;
                         }
                     }
@@ -401,7 +416,11 @@ class RegisterForm extends UserAddForm
 
         // generate activation code
         $addDefaultGroups = true;
-        if (!empty($this->blacklistMatches) || (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER && !$registerVia3rdParty) || (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN)) {
+        if (
+            !empty($this->blacklistMatches)
+            || (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER && !$registerVia3rdParty)
+            || (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN)
+        ) {
             $activationCode = UserRegistrationUtil::getActivationCode();
             $emailConfirmCode = Hex::encode(\random_bytes(20));
             $this->additionalFields['activationCode'] = $activationCode;
@@ -450,7 +469,9 @@ class RegisterForm extends UserAddForm
             } else {
                 $email = new Email();
                 $email->addRecipient(new UserMailbox(WCF::getUser()));
-                $email->setSubject(WCF::getLanguage()->getDynamicVariable('wcf.user.register.needActivation.mail.subject'));
+                $email->setSubject(
+                    WCF::getLanguage()->getDynamicVariable('wcf.user.register.needActivation.mail.subject')
+                );
                 $email->setBody(new MimePartFacade([
                     new RecipientAwareTextMimePart('text/html', 'email_registerNeedActivation'),
                     new RecipientAwareTextMimePart('text/plain', 'email_registerNeedActivation'),
@@ -478,7 +499,11 @@ class RegisterForm extends UserAddForm
         $this->saved();
 
         // forward to index page
-        HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), WCF::getLanguage()->getDynamicVariable($this->message, ['user' => $user]), 15);
+        HeaderUtil::delayedRedirect(
+            LinkHandler::getInstance()->getLink(),
+            WCF::getLanguage()->getDynamicVariable($this->message, ['user' => $user]),
+            15
+        );
 
         exit;
     }

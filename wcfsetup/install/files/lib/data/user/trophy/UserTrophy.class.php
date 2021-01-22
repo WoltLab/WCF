@@ -74,7 +74,13 @@ class UserTrophy extends DatabaseObject
         }
 
         if (!$this->trophyUseHtml) {
-            return \nl2br(StringUtil::encodeHTML(\strtr(WCF::getLanguage()->get($this->description), $this->getReplacements())), false);
+            return \nl2br(
+                StringUtil::encodeHTML(\strtr(
+                    WCF::getLanguage()->get($this->description),
+                    $this->getReplacements()
+                )),
+                false
+            );
         }
 
         return \strtr(WCF::getLanguage()->get($this->description), $this->getReplacements());

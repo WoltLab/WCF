@@ -80,8 +80,18 @@ class ContactRecipientEditForm extends ContactRecipientAddForm
         parent::readData();
 
         if (empty($_POST)) {
-            I18nHandler::getInstance()->setOptions('name', 1, $this->recipient->name, 'wcf.contact.recipient.name\d+');
-            I18nHandler::getInstance()->setOptions('email', 1, $this->recipient->email, 'wcf.contact.recipient.email\d+');
+            I18nHandler::getInstance()->setOptions(
+                'name',
+                1,
+                $this->recipient->name,
+                'wcf.contact.recipient.name\d+'
+            );
+            I18nHandler::getInstance()->setOptions(
+                'email',
+                1,
+                $this->recipient->email,
+                'wcf.contact.recipient.email\d+'
+            );
 
             $this->name = $this->recipient->name;
             $this->email = $this->recipient->email;

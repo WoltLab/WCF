@@ -196,7 +196,10 @@ class TagAddForm extends AbstractForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(TagEditForm::class, ['id' => $returnValues['returnValues']->tagID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
+                TagEditForm::class,
+                ['id' => $returnValues['returnValues']->tagID]
+            ),
         ]);
     }
 

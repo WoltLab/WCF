@@ -66,7 +66,12 @@ class CronjobEditForm extends CronjobAddForm
             I18nHandler::getInstance()->remove($this->description);
             $this->description = I18nHandler::getInstance()->getValue('description');
         } else {
-            I18nHandler::getInstance()->save('description', $this->description, 'wcf.acp.cronjob', $this->cronjob->packageID);
+            I18nHandler::getInstance()->save(
+                'description',
+                $this->description,
+                'wcf.acp.cronjob',
+                $this->cronjob->packageID
+            );
         }
 
         // update cronjob
@@ -97,7 +102,12 @@ class CronjobEditForm extends CronjobAddForm
         parent::readData();
 
         if (empty($_POST)) {
-            I18nHandler::getInstance()->setOptions('description', $this->cronjob->packageID, $this->cronjob->description, 'wcf.acp.cronjob.description.cronjob\d+');
+            I18nHandler::getInstance()->setOptions(
+                'description',
+                $this->cronjob->packageID,
+                $this->cronjob->description,
+                'wcf.acp.cronjob.description.cronjob\d+'
+            );
 
             $this->className = $this->cronjob->className;
             $this->description = $this->cronjob->description;

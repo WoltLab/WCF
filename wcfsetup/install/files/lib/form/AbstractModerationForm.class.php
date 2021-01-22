@@ -121,9 +121,13 @@ abstract class AbstractModerationForm extends AbstractForm
 
         PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.ModerationList');
 
-        $this->commentObjectTypeID = CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.moderation.queue');
-        $this->commentManager = CommentHandler::getInstance()->getObjectType($this->commentObjectTypeID)->getProcessor();
-        $this->commentList = CommentHandler::getInstance()->getCommentList($this->commentManager, $this->commentObjectTypeID, $this->queueID);
+        $this->commentObjectTypeID = CommentHandler::getInstance()
+            ->getObjectTypeID('com.woltlab.wcf.moderation.queue');
+        $this->commentManager = CommentHandler::getInstance()
+            ->getObjectType($this->commentObjectTypeID)
+            ->getProcessor();
+        $this->commentList = CommentHandler::getInstance()
+            ->getCommentList($this->commentManager, $this->commentObjectTypeID, $this->queueID);
 
         // update queue visit
         if ($this->queue->isNew()) {

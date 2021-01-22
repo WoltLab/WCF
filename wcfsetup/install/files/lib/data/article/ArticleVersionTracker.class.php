@@ -115,6 +115,9 @@ class ArticleVersionTracker extends DatabaseObjectDecorator implements IVersionT
      */
     public function getEditLink()
     {
-        return LinkHandler::getInstance()->getLink('ArticleEdit', ['isACP' => true, 'id' => $this->getDecoratedObject()->articleID]);
+        return LinkHandler::getInstance()->getLink(
+            'ArticleEdit',
+            ['isACP' => true, 'id' => $this->getDecoratedObject()->articleID]
+        );
     }
 }

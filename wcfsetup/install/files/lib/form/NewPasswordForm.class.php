@@ -179,7 +179,10 @@ class NewPasswordForm extends AbstractForm
         $this->objectAction->executeAction();
 
         // forward to index page
-        HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), WCF::getLanguage()->getDynamicVariable('wcf.user.newPassword.success', ['user' => $this->user]));
+        HeaderUtil::delayedRedirect(
+            LinkHandler::getInstance()->getLink(),
+            WCF::getLanguage()->getDynamicVariable('wcf.user.newPassword.success', ['user' => $this->user])
+        );
 
         exit;
     }

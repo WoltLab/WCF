@@ -66,8 +66,12 @@ class CategoryNodeTree implements \IteratorAggregate
      * @param   int[]       $excludedCategoryIDs
      * @throws  SystemException
      */
-    public function __construct($objectType, $parentCategoryID = 0, $includeDisabledCategories = false, array $excludedCategoryIDs = [])
-    {
+    public function __construct(
+        $objectType,
+        $parentCategoryID = 0,
+        $includeDisabledCategories = false,
+        array $excludedCategoryIDs = []
+    ) {
         $this->objectType = $objectType;
         $this->parentCategoryID = $parentCategoryID;
         $this->includeDisabledCategories = $includeDisabledCategories;

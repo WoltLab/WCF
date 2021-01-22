@@ -99,7 +99,10 @@ class UninstallPackageAction extends InstallPackageAction
             $applicationAction->executeAction();
         }
 
-        $queueID = $this->installation->nodeBuilder->getQueueByNode($queue->processNo, $this->installation->nodeBuilder->getNextNode());
+        $queueID = $this->installation->nodeBuilder->getQueueByNode(
+            $queue->processNo,
+            $this->installation->nodeBuilder->getNextNode()
+        );
         $this->data = [
             'template' => WCF::getTPL()->fetch($this->templateName),
             'step' => 'uninstall',
@@ -149,7 +152,10 @@ class UninstallPackageAction extends InstallPackageAction
         }
 
         // continue with next node
-        $queueID = $this->installation->nodeBuilder->getQueueByNode($this->installation->queue->processNo, $this->installation->nodeBuilder->getNextNode($this->node));
+        $queueID = $this->installation->nodeBuilder->getQueueByNode(
+            $this->installation->queue->processNo,
+            $this->installation->nodeBuilder->getNextNode($this->node)
+        );
         $this->data = [
             'step' => 'uninstall',
             'node' => $node,
@@ -187,7 +193,10 @@ class UninstallPackageAction extends InstallPackageAction
             // build package name
             $packageName = $this->installation->nodeBuilder->getPackageNameByQueue($queueID);
             $installationType = $this->installation->nodeBuilder->getInstallationTypeByQueue($queueID);
-            $currentAction = WCF::getLanguage()->getDynamicVariable('wcf.acp.package.uninstallation.step.' . $installationType, ['packageName' => $packageName]);
+            $currentAction = WCF::getLanguage()->getDynamicVariable(
+                'wcf.acp.package.uninstallation.step.' . $installationType,
+                ['packageName' => $packageName]
+            );
         }
 
         return $currentAction;

@@ -63,7 +63,11 @@ abstract class AbstractOptionListForm extends AbstractForm
     {
         parent::readParameters();
 
-        $this->optionHandler = new $this->optionHandlerClassName($this->supportI18n, $this->languageItemPattern, $this->categoryName);
+        $this->optionHandler = new $this->optionHandlerClassName(
+            $this->supportI18n,
+            $this->languageItemPattern,
+            $this->categoryName
+        );
         $this->initOptionHandler();
     }
 

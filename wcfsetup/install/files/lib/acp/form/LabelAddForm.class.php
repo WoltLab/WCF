@@ -149,7 +149,10 @@ class LabelAddForm extends AbstractForm
         } elseif (!\in_array($this->cssClassName, $this->availableCssClassNames)) {
             throw new UserInputException('cssClassName', 'invalid');
         } elseif ($this->cssClassName == 'custom') {
-            if (!empty($this->customCssClassName) && !Regex::compile('^-?[_a-zA-Z]+[_a-zA-Z0-9-]+$')->match($this->customCssClassName)) {
+            if (
+                !empty($this->customCssClassName)
+                && !Regex::compile('^-?[_a-zA-Z]+[_a-zA-Z0-9-]+$')->match($this->customCssClassName)
+            ) {
                 throw new UserInputException('cssClassName', 'invalid');
             }
         }

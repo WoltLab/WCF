@@ -76,7 +76,11 @@ class LabelAction extends AbstractDatabaseObjectAction implements ISortableActio
         parent::update();
 
         // update showOrder if required
-        if (\count($this->objects) === 1 && isset($this->parameters['data']['groupID']) && isset($this->parameters['data']['showOrder'])) {
+        if (
+            \count($this->objects) === 1
+            && isset($this->parameters['data']['groupID'])
+            && isset($this->parameters['data']['showOrder'])
+        ) {
             $labelEditor = $this->getObjects()[0];
             if ($labelEditor->groupID != $this->parameters['data']['groupID'] || $labelEditor->showOrder != $this->parameters['data']['showOrder']) {
                 $labelEditor->setShowOrder($this->parameters['data']['groupID'], $this->parameters['data']['showOrder']);

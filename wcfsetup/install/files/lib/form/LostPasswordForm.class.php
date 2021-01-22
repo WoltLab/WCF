@@ -91,16 +91,27 @@ class LostPasswordForm extends AbstractCaptchaForm
 
         // check if using 3rd party
         if ($this->user->authData) {
-            HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(\ucfirst($this->user->getAuthProvider()) . 'Auth'), WCF::getLanguage()->getDynamicVariable('wcf.user.username.error.3rdParty.redirect', [
-                'provider' => WCF::getLanguage()->get('wcf.user.3rdparty.' . $this->user->getAuthProvider()),
-            ]), 5, 'info');
+            HeaderUtil::delayedRedirect(
+                LinkHandler::getInstance()->getLink(\ucfirst($this->user->getAuthProvider()) . 'Auth'),
+                WCF::getLanguage()->getDynamicVariable(
+                    'wcf.user.username.error.3rdParty.redirect',
+                    [
+                        'provider' => WCF::getLanguage()->get('wcf.user.3rdparty.' . $this->user->getAuthProvider()),
+                    ]
+                ),
+                5,
+                'info'
+            );
 
             exit;
         }
 
         // check whether a lost password request was sent in the last 24 hours
         if ($this->user->lastLostPasswordRequestTime && TIME_NOW - 86400 < $this->user->lastLostPasswordRequestTime) {
-            throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.lostPassword.error.tooManyRequests', ['hours' => \ceil(($this->user->lastLostPasswordRequestTime - (TIME_NOW - 86400)) / 3600)]));
+            throw new NamedUserException(WCF::getLanguage()->getDynamicVariable(
+                'wcf.user.lostPassword.error.tooManyRequests',
+                ['hours' => \ceil(($this->user->lastLostPasswordRequestTime - (TIME_NOW - 86400)) / 3600)]
+            ));
         }
     }
 

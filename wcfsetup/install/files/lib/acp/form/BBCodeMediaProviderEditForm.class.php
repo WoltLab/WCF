@@ -64,12 +64,18 @@ class BBCodeMediaProviderEditForm extends BBCodeMediaProviderAddForm
         AbstractForm::save();
 
         // update media-provider
-        $this->objectAction = new BBCodeMediaProviderAction([$this->providerID], 'update', ['data' => \array_merge($this->additionalFields, [
-            'title' => $this->title,
-            'regex' => $this->regex,
-            'html' => $this->html,
-            'className' => $this->className,
-        ])]);
+        $this->objectAction = new BBCodeMediaProviderAction(
+            [$this->providerID],
+            'update',
+            [
+                'data' => \array_merge($this->additionalFields, [
+                    'title' => $this->title,
+                    'regex' => $this->regex,
+                    'html' => $this->html,
+                    'className' => $this->className,
+                ]),
+            ]
+        );
         $this->objectAction->executeAction();
 
         $this->saved();

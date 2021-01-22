@@ -20,7 +20,9 @@ use wcf\system\WCF;
  * @method  LikeableArticle     getObjectByID($objectID)
  * @method  LikeableArticle[]       getObjectsByIDs(array $objectIDs)
  */
-class LikeableArticleProvider extends AbstractObjectTypeProvider implements ILikeObjectTypeProvider, IViewableLikeProvider
+class LikeableArticleProvider extends AbstractObjectTypeProvider implements
+    ILikeObjectTypeProvider,
+    IViewableLikeProvider
 {
     /**
      * @inheritDoc

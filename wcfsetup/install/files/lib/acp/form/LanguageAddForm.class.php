@@ -174,7 +174,10 @@ class LanguageAddForm extends AbstractForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(LanguageEditForm::class, ['id' => $this->language->languageID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
+                LanguageEditForm::class,
+                ['id' => $this->language->languageID]
+            ),
         ]);
 
         // reset values

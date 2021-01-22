@@ -149,7 +149,10 @@ class ObjectTypeCache extends SingletonFactory
      */
     public function getObjectTypeByName($definitionName, $objectTypeName)
     {
-        if (isset($this->groupedObjectTypes[$definitionName]) && isset($this->groupedObjectTypes[$definitionName][$objectTypeName])) {
+        if (
+            isset($this->groupedObjectTypes[$definitionName])
+            && isset($this->groupedObjectTypes[$definitionName][$objectTypeName])
+        ) {
             return $this->groupedObjectTypes[$definitionName][$objectTypeName];
         }
     }

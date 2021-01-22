@@ -138,7 +138,10 @@ class LikeObject extends DatabaseObject
     public function getLikedObject()
     {
         if ($this->likedObject === null) {
-            $this->likedObject = ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID)->getProcessor()->getObjectByID($this->objectID);
+            $this->likedObject = ObjectTypeCache::getInstance()
+                ->getObjectType($this->objectTypeID)
+                ->getProcessor()
+                ->getObjectByID($this->objectID);
         }
 
         return $this->likedObject;

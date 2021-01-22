@@ -80,7 +80,10 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction
     {
         parent::validateCreate();
 
-        if (!isset($this->parameters['subscription']) || !($this->parameters['subscription'] instanceof PaidSubscription)) {
+        if (
+            !isset($this->parameters['subscription'])
+            || !($this->parameters['subscription'] instanceof PaidSubscription)
+        ) {
             throw new UserInputException('subscription');
         }
         if (!isset($this->parameters['user']) || !($this->parameters['user'] instanceof User)) {

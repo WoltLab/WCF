@@ -74,20 +74,34 @@ class UserProfileAction extends UserAction implements IPopoverAction
     public function getMessagePreview()
     {
         $htmlInputProcessor = new HtmlInputProcessor();
-        $htmlInputProcessor->process($this->parameters['data']['message'], 'com.woltlab.wcf.user.signature', WCF::getUser()->userID);
+        $htmlInputProcessor->process(
+            $this->parameters['data']['message'],
+            'com.woltlab.wcf.user.signature',
+            WCF::getUser()->userID
+        );
 
-        BBCodeHandler::getInstance()->setDisallowedBBCodes(ArrayUtil::trim(\explode(',', WCF::getSession()->getPermission('user.signature.disallowedBBCodes'))));
+        BBCodeHandler::getInstance()->setDisallowedBBCodes(ArrayUtil::trim(\explode(
+            ',',
+            WCF::getSession()->getPermission('user.signature.disallowedBBCodes')
+        )));
         $disallowedBBCodes = $htmlInputProcessor->validate();
         if (!empty($disallowedBBCodes)) {
-            throw new UserInputException('message', WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes', [
-                'disallowedBBCodes' => $disallowedBBCodes,
-            ]));
+            throw new UserInputException(
+                'message',
+                WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes', [
+                    'disallowedBBCodes' => $disallowedBBCodes,
+                ])
+            );
         }
 
         MessageEmbeddedObjectManager::getInstance()->registerTemporaryMessage($htmlInputProcessor);
 
         $htmlOutputProcessor = new HtmlOutputProcessor();
-        $htmlOutputProcessor->process($htmlInputProcessor->getHtml(), 'com.woltlab.wcf.user.signature', WCF::getUser()->userID);
+        $htmlOutputProcessor->process(
+            $htmlInputProcessor->getHtml(),
+            'com.woltlab.wcf.user.signature',
+            WCF::getUser()->userID
+        );
 
         return [
             'message' => $htmlOutputProcessor->getHtml(),
@@ -266,7 +280,10 @@ class UserProfileAction extends UserAction implements IPopoverAction
             $this->parameters['values'] = [];
         }
 
-        if (isset($this->parameters['values']['__userTitle']) && !WCF::getSession()->getPermission('user.profile.canEditUserTitle')) {
+        if (
+            isset($this->parameters['values']['__userTitle'])
+            && !WCF::getSession()->getPermission('user.profile.canEditUserTitle')
+        ) {
             throw new PermissionDeniedException();
         }
     }
@@ -569,7 +586,10 @@ class UserProfileAction extends UserAction implements IPopoverAction
             throw new UserInputException('userID');
         } elseif ($this->user->userID == WCF::getUser()->userID && WCF::getUser()->disableCoverPhoto) {
             throw new PermissionDeniedException();
-        } elseif ($this->user->userID != WCF::getUser()->userID && (!$this->user->canEdit() || !WCF::getSession()->getPermission('admin.user.canDisableCoverPhoto'))) {
+        } elseif (
+            $this->user->userID != WCF::getUser()->userID
+            && (!$this->user->canEdit() || !WCF::getSession()->getPermission('admin.user.canDisableCoverPhoto'))
+        ) {
             throw new PermissionDeniedException();
         }
 
@@ -593,16 +613,21 @@ class UserProfileAction extends UserAction implements IPopoverAction
      */
     public function uploadCoverPhoto()
     {
-        $saveStrategy = new UserCoverPhotoUploadFileSaveStrategy((!empty($this->parameters['userID']) ? \intval($this->parameters['userID']) : WCF::getUser()->userID));
+        $saveStrategy = new UserCoverPhotoUploadFileSaveStrategy(
+            (!empty($this->parameters['userID']) ? \intval($this->parameters['userID']) : WCF::getUser()->userID)
+        );
         /** @noinspection PhpUndefinedMethodInspection */
         $this->parameters['__files']->saveFiles($saveStrategy);
 
         if ($this->uploadFile->getValidationErrorType()) {
             return [
                 'filesize' => $this->uploadFile->getFilesize(),
-                'errorMessage' => WCF::getLanguage()->getDynamicVariable('wcf.user.coverPhoto.upload.error.' . $this->uploadFile->getValidationErrorType(), [
-                    'file' => $this->uploadFile,
-                ]),
+                'errorMessage' => WCF::getLanguage()->getDynamicVariable(
+                    'wcf.user.coverPhoto.upload.error.' . $this->uploadFile->getValidationErrorType(),
+                    [
+                        'file' => $this->uploadFile,
+                    ]
+                ),
                 'errorType' => $this->uploadFile->getValidationErrorType(),
             ];
         } else {
@@ -633,7 +658,10 @@ class UserProfileAction extends UserAction implements IPopoverAction
         $this->user = new User($this->parameters['userID']);
         if (!$this->user->userID) {
             throw new UserInputException('userID');
-        } elseif ($this->user->userID != WCF::getUser()->userID && (!$this->user->canEdit() || !WCF::getSession()->getPermission('admin.user.canDisableCoverPhoto'))) {
+        } elseif (
+            $this->user->userID != WCF::getUser()->userID
+            && (!$this->user->canEdit() || !WCF::getSession()->getPermission('admin.user.canDisableCoverPhoto'))
+        ) {
             throw new PermissionDeniedException();
         }
     }

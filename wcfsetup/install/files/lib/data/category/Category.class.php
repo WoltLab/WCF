@@ -216,7 +216,8 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
         }
 
         if (!isset($this->userPermissions[$user->userID])) {
-            $this->userPermissions[$user->userID] = CategoryPermissionHandler::getInstance()->getPermissions($this, $user);
+            $this->userPermissions[$user->userID] = CategoryPermissionHandler::getInstance()
+                ->getPermissions($this, $user);
 
             if ($user->userID == WCF::getUser()->userID) {
                 $this->permissions = $this->userPermissions[$user->userID];

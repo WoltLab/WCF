@@ -198,7 +198,11 @@ class UserQuickSearchAction extends AbstractAction
         $this->executed();
 
         // forward to result page
-        $url = LinkHandler::getInstance()->getLink('UserList', ['id' => $search->searchID], 'sortField=' . \rawurlencode($this->sortField) . '&sortOrder=' . \rawurlencode($this->sortOrder));
+        $url = LinkHandler::getInstance()->getLink(
+            'UserList',
+            ['id' => $search->searchID],
+            'sortField=' . \rawurlencode($this->sortField) . '&sortOrder=' . \rawurlencode($this->sortOrder)
+        );
         HeaderUtil::redirect($url);
 
         exit;

@@ -171,7 +171,8 @@ class MultifactorManageForm extends AbstractFormBuilderForm
      */
     protected function getBackupCodesObjectType(): ObjectType
     {
-        return ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.multifactor', 'com.woltlab.wcf.multifactor.backup');
+        return ObjectTypeCache::getInstance()
+            ->getObjectTypeByName('com.woltlab.wcf.multifactor', 'com.woltlab.wcf.multifactor.backup');
     }
 
     /**
