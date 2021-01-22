@@ -74,7 +74,12 @@ class SQLParser
                     if (\preg_match_all("~(?:\\(|,)\\s*(\\w+)\\s+(\\w+)(?:\\s*\\((\\s*(?:\\d+(?:\\s*,\\s*\\d+)?|'[^']*'(?:\\s*,\\s*'[^']*')*))\\s*\\))?(?:\\s+UNSIGNED)?(?:\\s+(NOT NULL|NULL))?(?:\\s+DEFAULT\\s+(\\d+.\\d+|\\d+|NULL|'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'))?(?:\\s+(AUTO_INCREMENT))?(?:\\s+(UNIQUE|PRIMARY)(?: KEY)?)?~i", $query, $matches)) {
                         for ($i = 0, $j = \count($matches[0]); $i < $j; $i++) {
                             $columName = \strtoupper($matches[1][$i]);
-                            if ($columName == 'UNIQUE' || $columName == 'KEY' || $columName == 'PRIMARY' || $columName == 'FULLTEXT') {
+                            if (
+                                $columName == 'UNIQUE'
+                                || $columName == 'KEY'
+                                || $columName == 'PRIMARY'
+                                || $columName == 'FULLTEXT'
+                            ) {
                                 break;
                             }
 
@@ -178,7 +183,10 @@ class SQLParser
                 }
                 // drop foreign key
                 elseif (\preg_match('~^ALTER\s+TABLE\s+(\w+)\s+DROP\s+FOREIGN KEY\s+(\w+)~is', $query, $match)) {
-                    $this->executeDropForeignKeyStatement($match[1], self::getGenericIndexName($match[1], $match[2], 'fk'));
+                    $this->executeDropForeignKeyStatement(
+                        $match[1],
+                        self::getGenericIndexName($match[1], $match[2], 'fk')
+                    );
                 }
                 // drop column
                 elseif (\preg_match('~^ALTER\s+TABLE\s+(\w+)\s+DROP\s+(?:COLUMN\s+)?(\w+)~is', $query, $match)) {
@@ -190,7 +198,11 @@ class SQLParser
 
             case 'CREATE INDEX':
                 if (\preg_match('~^CREATE\s+(?:(UNIQUE|FULLTEXT)\s+)?INDEX\s+(\w+)\s+ON\s+(\w+)\s+\((\s*\w+\s*(?:,\s*\w+\s*)*)\)~is', $query, $match)) {
-                    $this->executeAddIndexStatement($match[3], ($match[2] ?: self::getGenericIndexName($match[3], $match[4])), ['type' => \strtoupper($match[1]), 'columns' => $match[4]]);
+                    $this->executeAddIndexStatement(
+                        $match[3],
+                        ($match[2] ?: self::getGenericIndexName($match[3], $match[4])),
+                        ['type' => \strtoupper($match[1]), 'columns' => $match[4]]
+                    );
                 } else {
                     throw new SystemException("Unsupported SQL statement '" . $query . "'");
                 }

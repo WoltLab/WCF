@@ -54,7 +54,10 @@ class CategoryPermissionHandler extends SingletonFactory
                 }
             }
 
-            if (isset($this->categoryPermissions[$category->categoryID]['user']) && isset($this->categoryPermissions[$category->categoryID]['user'][$user->userID])) {
+            if (
+                isset($this->categoryPermissions[$category->categoryID]['user'])
+                && isset($this->categoryPermissions[$category->categoryID]['user'][$user->userID])
+            ) {
                 foreach ($this->categoryPermissions[$category->categoryID]['user'][$user->userID] as $optionName => $optionValue) {
                     $permissions[$optionName] = $optionValue;
                 }

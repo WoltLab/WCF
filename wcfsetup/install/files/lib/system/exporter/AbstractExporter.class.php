@@ -91,8 +91,15 @@ abstract class AbstractExporter implements IExporter
     /**
      * @inheritDoc
      */
-    public function setData($databaseHost, $databaseUser, $databasePassword, $databaseName, $databasePrefix, $fileSystemPath, $additionalData)
-    {
+    public function setData(
+        $databaseHost,
+        $databaseUser,
+        $databasePassword,
+        $databaseName,
+        $databasePrefix,
+        $fileSystemPath,
+        $additionalData
+    ) {
         $this->databaseHost = $databaseHost;
         $this->databaseUser = $databaseUser;
         $this->databasePassword = $databasePassword;
@@ -115,7 +122,13 @@ abstract class AbstractExporter implements IExporter
             $port = $matches[2];
         }
 
-        $this->database = new MySQLDatabase($host, $this->databaseUser, $this->databasePassword, $this->databaseName, $port);
+        $this->database = new MySQLDatabase(
+            $host,
+            $this->databaseUser,
+            $this->databasePassword,
+            $this->databaseName,
+            $port
+        );
     }
 
     /**

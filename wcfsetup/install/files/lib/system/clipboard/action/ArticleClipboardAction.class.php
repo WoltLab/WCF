@@ -56,9 +56,15 @@ class ArticleClipboardAction extends AbstractClipboardAction
         // handle actions
         switch ($action->actionName) {
             case 'delete':
-                $item->addInternalData('confirmMessage', WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.com.woltlab.wcf.article.delete.confirmMessage', [
-                    'count' => $item->getCount(),
-                ]));
+                $item->addInternalData(
+                    'confirmMessage',
+                    WCF::getLanguage()->getDynamicVariable(
+                        'wcf.clipboard.item.com.woltlab.wcf.article.delete.confirmMessage',
+                        [
+                            'count' => $item->getCount(),
+                        ]
+                    )
+                );
                 break;
 
             case 'setCategory':
@@ -68,9 +74,15 @@ class ArticleClipboardAction extends AbstractClipboardAction
                 break;
 
             case 'trash':
-                $item->addInternalData('confirmMessage', WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.com.woltlab.wcf.article.trash.confirmMessage', [
-                    'count' => $item->getCount(),
-                ]));
+                $item->addInternalData(
+                    'confirmMessage',
+                    WCF::getLanguage()->getDynamicVariable(
+                        'wcf.clipboard.item.com.woltlab.wcf.article.trash.confirmMessage',
+                        [
+                            'count' => $item->getCount(),
+                        ]
+                    )
+                );
                 break;
         }
 

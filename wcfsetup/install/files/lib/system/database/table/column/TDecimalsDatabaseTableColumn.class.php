@@ -31,7 +31,9 @@ trait TDecimalsDatabaseTableColumn
     public function decimals($decimals)
     {
         if ($this->getMaximumDecimals() !== null && $decimals > $this->getMaximumDecimals()) {
-            throw new \InvalidArgumentException("Given number of decimals is greater than the maximum number '{$this->getMaximumDecimals()}'.");
+            throw new \InvalidArgumentException(
+                "Given number of decimals is greater than the maximum number '{$this->getMaximumDecimals()}'."
+            );
         }
 
         $this->decimals = $decimals;

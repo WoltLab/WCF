@@ -19,7 +19,10 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Core\System\Condition
  * @since       5.4
  */
-class UserMultifactorCondition extends AbstractSingleFieldCondition implements IContentCondition, IObjectListCondition, IUserCondition
+class UserMultifactorCondition extends AbstractSingleFieldCondition implements
+    IContentCondition,
+    IObjectListCondition,
+    IUserCondition
 {
     use TObjectListUserCondition;
 
@@ -141,7 +144,10 @@ HTML;
         }
 
         if (isset($conditionData['multifactorActive'])) {
-            $objectList->getConditionBuilder()->add('user_table.multifactorActive = ?', [$conditionData['multifactorActive']]);
+            $objectList->getConditionBuilder()->add(
+                'user_table.multifactorActive = ?',
+                [$conditionData['multifactorActive']]
+            );
         }
     }
 

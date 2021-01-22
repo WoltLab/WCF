@@ -17,7 +17,10 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Condition
  */
-class UserEmailCondition extends AbstractTextCondition implements IContentCondition, IObjectListCondition, IUserCondition
+class UserEmailCondition extends AbstractTextCondition implements
+    IContentCondition,
+    IObjectListCondition,
+    IUserCondition
 {
     use TObjectListUserCondition;
 
@@ -40,7 +43,10 @@ class UserEmailCondition extends AbstractTextCondition implements IContentCondit
             throw new InvalidObjectArgument($objectList, UserList::class, 'Object list');
         }
 
-        $objectList->getConditionBuilder()->add('user_table.email LIKE ?', ['%' . \addcslashes($conditionData['email'], '_%') . '%']);
+        $objectList->getConditionBuilder()->add(
+            'user_table.email LIKE ?',
+            ['%' . \addcslashes($conditionData['email'], '_%') . '%']
+        );
     }
 
     /**

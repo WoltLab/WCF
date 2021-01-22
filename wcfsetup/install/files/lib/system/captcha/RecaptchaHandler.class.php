@@ -115,7 +115,15 @@ class RecaptchaHandler implements ICaptchaHandler
             throw new \InvalidArgumentException('$type must be either v2 or invisible.');
         }
 
-        $request = new HTTPRequest('https://www.google.com/recaptcha/api/siteverify?secret=' . \rawurlencode($key) . '&response=' . \rawurlencode($this->response) . '&remoteip=' . \rawurlencode(UserUtil::getIpAddress()), ['timeout' => 10]);
+        $request = new HTTPRequest(
+            \sprintf(
+                'https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s&remoteip=%s',
+                \rawurlencode($key),
+                \rawurlencode($this->response),
+                \rawurlencode(UserUtil::getIpAddress())
+            ),
+            ['timeout' => 10]
+        );
 
         try {
             $request->execute();

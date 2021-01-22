@@ -115,7 +115,10 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
      */
     public function setDisallowedBBCodes()
     {
-        BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(',', WCF::getSession()->getPermission($this->permissionDisallowedBBCodes)));
+        BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
+            ',',
+            WCF::getSession()->getPermission($this->permissionDisallowedBBCodes)
+        ));
     }
 
     /**
@@ -266,7 +269,13 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
      */
     final protected function getObjectID($commentOrResponse)
     {
-        if ($commentOrResponse instanceof CommentResponse || ($commentOrResponse instanceof DatabaseObjectDecorator && $commentOrResponse->getDecoratedObject() instanceof CommentResponse)) {
+        if (
+            $commentOrResponse instanceof CommentResponse
+            || (
+                $commentOrResponse instanceof DatabaseObjectDecorator
+                && $commentOrResponse->getDecoratedObject() instanceof CommentResponse
+            )
+        ) {
             return $commentOrResponse->getComment()->objectID;
         } else {
             return $commentOrResponse->objectID;

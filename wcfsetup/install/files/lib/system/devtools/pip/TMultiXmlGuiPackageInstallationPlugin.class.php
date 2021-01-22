@@ -228,7 +228,9 @@ trait TMultiXmlGuiPackageInstallationPlugin
             }
 
             if (!$this->supportsDeleteInstruction() && $addDeleteInstruction) {
-                throw new \InvalidArgumentException("This package installation plugin does not support delete instructions.");
+                throw new \InvalidArgumentException(
+                    "This package installation plugin does not support delete instructions."
+                );
             }
 
             $this->deleteObject($element);

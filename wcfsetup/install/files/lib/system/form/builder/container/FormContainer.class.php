@@ -101,7 +101,9 @@ class FormContainer implements IFormContainer
                 }
             }
         } elseif ($child instanceof ITabFormContainer) {
-            throw new \InvalidArgumentException("Cannot append tab container '{$child->getId()}' to non-tab menu container '{$this->getId()}'.");
+            throw new \InvalidArgumentException(
+                "Cannot append tab container '{$child->getId()}' to non-tab menu container '{$this->getId()}'."
+            );
         }
 
         if ($this instanceof ITabFormContainer && !($child instanceof IFormContainer)) {
@@ -110,7 +112,10 @@ class FormContainer implements IFormContainer
 
         if ($child instanceof ITabMenuFormContainer) {
             $parent = $this;
-            while (!($parent instanceof IFormDocument || $parent instanceof WysiwygFormContainer) && $parent = $parent->getParent()) {
+            while (
+                !($parent instanceof IFormDocument || $parent instanceof WysiwygFormContainer)
+                && $parent = $parent->getParent()
+            ) {
                 if ($parent instanceof ITabMenuFormContainer) {
                     throw new \InvalidArgumentException("A tab menu container may only have another tab menu container as a parent, not as an earlier ancestor.");
                 }

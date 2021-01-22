@@ -231,7 +231,9 @@ class WysiwygFormContainer extends FormContainer
     public function enablePreviewButton($enablePreviewButton = true)
     {
         if ($this->isPopulated) {
-            throw new \BadMethodCallException('Enabling and disabling the preview button is only possible before the form has been built.');
+            throw new \BadMethodCallException(
+                'Enabling and disabling the preview button is only possible before the form has been built.'
+            );
         }
 
         $this->enablePreviewButton = $enablePreviewButton;
@@ -248,7 +250,9 @@ class WysiwygFormContainer extends FormContainer
     public function getAttachmentField()
     {
         if ($this->attachmentField === null) {
-            throw new \BadMethodCallException("Wysiwyg form field can only be requested after the form has been built.");
+            throw new \BadMethodCallException(
+                "Wysiwyg form field can only be requested after the form has been built."
+            );
         }
 
         return $this->attachmentField;
@@ -286,7 +290,9 @@ class WysiwygFormContainer extends FormContainer
     public function getPollContainer()
     {
         if ($this->pollContainer === null) {
-            throw new \BadMethodCallException("Wysiwyg form field can only be requested after the form has been built.");
+            throw new \BadMethodCallException(
+                "Wysiwyg form field can only be requested after the form has been built."
+            );
         }
 
         return $this->pollContainer;
@@ -301,7 +307,9 @@ class WysiwygFormContainer extends FormContainer
     public function getSettingsContainer()
     {
         if ($this->settingsContainer === null) {
-            throw new \BadMethodCallException("Wysiwyg form field can only be requested after the form has been built.");
+            throw new \BadMethodCallException(
+                "Wysiwyg form field can only be requested after the form has been built."
+            );
         }
 
         return $this->settingsContainer;
@@ -316,7 +324,9 @@ class WysiwygFormContainer extends FormContainer
     public function getSmiliesContainer()
     {
         if ($this->smiliesContainer === null) {
-            throw new \BadMethodCallException("Smilies form field container can only be requested after the form has been built.");
+            throw new \BadMethodCallException(
+                "Smilies form field container can only be requested after the form has been built."
+            );
         }
 
         return $this->smiliesContainer;
@@ -331,7 +341,9 @@ class WysiwygFormContainer extends FormContainer
     public function getWysiwygField()
     {
         if ($this->wysiwygField === null) {
-            throw new \BadMethodCallException("Wysiwyg form field can only be requested after the form has been built.");
+            throw new \BadMethodCallException(
+                "Wysiwyg form field can only be requested after the form has been built."
+            );
         }
 
         return $this->wysiwygField;

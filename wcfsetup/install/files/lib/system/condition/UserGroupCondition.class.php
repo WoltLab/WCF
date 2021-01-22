@@ -22,7 +22,10 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Condition
  */
-class UserGroupCondition extends AbstractMultipleFieldsCondition implements IContentCondition, IObjectListCondition, IUserCondition
+class UserGroupCondition extends AbstractMultipleFieldsCondition implements
+    IContentCondition,
+    IObjectListCondition,
+    IUserCondition
 {
     use TObjectListUserCondition;
 
@@ -75,10 +78,16 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements ICon
         }
 
         if (isset($conditionData['groupIDs'])) {
-            $objectList->getConditionBuilder()->add($tableName . '.userID IN (SELECT userID FROM wcf' . WCF_N . '_user_to_group WHERE groupID IN (?) GROUP BY userID HAVING COUNT(userID) = ?)', [$conditionData['groupIDs'], \count($conditionData['groupIDs'])]);
+            $objectList->getConditionBuilder()->add(
+                $tableName . '.userID IN (SELECT userID FROM wcf' . WCF_N . '_user_to_group WHERE groupID IN (?) GROUP BY userID HAVING COUNT(userID) = ?)',
+                [$conditionData['groupIDs'], \count($conditionData['groupIDs'])]
+            );
         }
         if (isset($conditionData['notGroupIDs'])) {
-            $objectList->getConditionBuilder()->add($tableName . '.userID NOT IN (SELECT userID FROM wcf' . WCF_N . '_user_to_group WHERE groupID IN (?))', [$conditionData['notGroupIDs']]);
+            $objectList->getConditionBuilder()->add(
+                $tableName . '.userID NOT IN (SELECT userID FROM wcf' . WCF_N . '_user_to_group WHERE groupID IN (?))',
+                [$conditionData['notGroupIDs']]
+            );
         }
     }
 
@@ -88,11 +97,17 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements ICon
     public function checkUser(Condition $condition, User $user)
     {
         $groupIDs = $user->getGroupIDs();
-        if (!empty($condition->conditionData['groupIDs']) && \count(\array_diff($condition->conditionData['groupIDs'], $groupIDs))) {
+        if (
+            !empty($condition->conditionData['groupIDs'])
+            && \count(\array_diff($condition->conditionData['groupIDs'], $groupIDs))
+        ) {
             return false;
         }
 
-        if (!empty($condition->conditionData['notGroupIDs']) && \count(\array_intersect($condition->conditionData['notGroupIDs'], $groupIDs))) {
+        if (
+            !empty($condition->conditionData['notGroupIDs'])
+            && \count(\array_intersect($condition->conditionData['notGroupIDs'], $groupIDs))
+        ) {
             return false;
         }
 

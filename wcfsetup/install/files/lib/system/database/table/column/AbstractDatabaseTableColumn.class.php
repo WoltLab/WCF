@@ -134,7 +134,9 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
     public function getType()
     {
         if ($this->type === null) {
-            throw new \BadMethodCallException("Type of the database table column " . \get_class($this) . " has not been set yet");
+            throw new \BadMethodCallException(
+                "Type of the database table column " . \get_class($this) . " has not been set yet"
+            );
         }
 
         return $this->type;

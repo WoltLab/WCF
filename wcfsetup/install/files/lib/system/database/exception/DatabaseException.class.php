@@ -23,7 +23,8 @@ class DatabaseException extends \wcf\system\database\DatabaseException
         \Exception::__construct($message, 0, $previous);
 
         // we cannot use the constructor's parameter, because of (http://php.net/manual/en/exception.getcode.php):
-        // > Returns the exception code as integer in Exception but possibly as other type in Exception descendants (for example as string in PDOException).
+        // > Returns the exception code as integer in Exception but possibly as other type in Exception
+        // descendants (for example as string in PDOException).
         if ($previous) {
             $this->code = $previous->code;
         }

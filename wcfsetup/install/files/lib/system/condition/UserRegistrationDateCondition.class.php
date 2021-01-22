@@ -18,7 +18,10 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Condition
  */
-class UserRegistrationDateCondition extends AbstractSingleFieldCondition implements IContentCondition, IObjectListCondition, IUserCondition
+class UserRegistrationDateCondition extends AbstractSingleFieldCondition implements
+    IContentCondition,
+    IObjectListCondition,
+    IUserCondition
 {
     use TObjectListUserCondition;
 
@@ -49,10 +52,16 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
         }
 
         if (isset($conditionData['registrationDateEnd'])) {
-            $objectList->getConditionBuilder()->add('user_table.registrationDate < ?', [\strtotime($conditionData['registrationDateEnd']) + 86400]);
+            $objectList->getConditionBuilder()->add(
+                'user_table.registrationDate < ?',
+                [\strtotime($conditionData['registrationDateEnd']) + 86400]
+            );
         }
         if (isset($conditionData['registrationDateStart'])) {
-            $objectList->getConditionBuilder()->add('user_table.registrationDate >= ?', [\strtotime($conditionData['registrationDateStart'])]);
+            $objectList->getConditionBuilder()->add(
+                'user_table.registrationDate >= ?',
+                [\strtotime($conditionData['registrationDateStart'])]
+            );
         }
     }
 
@@ -172,7 +181,11 @@ HTML;
             }
         }
 
-        if ($registrationDateEnd !== null && $registrationDateStart !== null && $registrationDateEnd < $registrationDateStart) {
+        if (
+            $registrationDateEnd !== null
+            && $registrationDateStart !== null
+            && $registrationDateEnd < $registrationDateStart
+        ) {
             $this->errorMessage = 'wcf.condition.timestamp.error.endBeforeStart';
 
             throw new UserInputException('registrationDate', 'endBeforeStart');

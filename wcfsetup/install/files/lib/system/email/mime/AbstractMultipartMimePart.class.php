@@ -84,7 +84,9 @@ abstract class AbstractMultipartMimePart extends AbstractMimePart implements IRe
             $content .= "\r\n";
             switch ($part->getContentTransferEncoding()) {
                 case 'quoted-printable':
-                    $content .= \quoted_printable_encode(\str_replace("\n", "\r\n", StringUtil::unifyNewlines($part->getContent())));
+                    $content .= \quoted_printable_encode(
+                        \str_replace("\n", "\r\n", StringUtil::unifyNewlines($part->getContent()))
+                    );
                     break;
                 case 'base64':
                     $content .= \chunk_split(\base64_encode($part->getContent()));
@@ -108,7 +110,9 @@ abstract class AbstractMultipartMimePart extends AbstractMimePart implements IRe
     public function getContent()
     {
         $content = "";
-        $content .= StringUtil::wordwrap("This is a MIME encoded email. As you are seeing this your user agent does not support these.");
+        $content .= StringUtil::wordwrap(
+            "This is a MIME encoded email. As you are seeing this your user agent does not support these."
+        );
         $content .= "\r\n\r\n";
 
         $content .= $this->getConcatenatedParts($this->parts);
@@ -130,7 +134,9 @@ abstract class AbstractMultipartMimePart extends AbstractMimePart implements IRe
         foreach ($part->getAdditionalHeaders() as $header) {
             $header[0] = \mb_strtolower($header[0]);
             if ($header[0] == 'content-type' || $header[0] == 'content-transfer-encoding') {
-                throw new \InvalidArgumentException("The header '" . $header[0] . "' may not be set. Use the proper methods.");
+                throw new \InvalidArgumentException(
+                    "The header '" . $header[0] . "' may not be set. Use the proper methods."
+                );
             }
 
             if (!StringUtil::startsWith($header[0], 'x-') && !StringUtil::startsWith($header[0], 'content-')) {

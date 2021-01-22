@@ -17,7 +17,10 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Condition
  */
-class UserIntegerPropertyCondition extends AbstractIntegerCondition implements IContentCondition, IObjectListCondition, IUserCondition
+class UserIntegerPropertyCondition extends AbstractIntegerCondition implements
+    IContentCondition,
+    IObjectListCondition,
+    IUserCondition
 {
     use TObjectListUserCondition;
 
@@ -32,10 +35,16 @@ class UserIntegerPropertyCondition extends AbstractIntegerCondition implements I
 
         if (isset($conditionData['greaterThan'])) {
             /** @noinspection PhpUndefinedFieldInspection */
-            $objectList->getConditionBuilder()->add('user_table.' . $this->getDecoratedObject()->propertyname . ' > ?', [$conditionData['greaterThan']]);
+            $objectList->getConditionBuilder()->add(
+                'user_table.' . $this->getDecoratedObject()->propertyname . ' > ?',
+                [$conditionData['greaterThan']]
+            );
         }
         if (isset($conditionData['lessThan'])) {
-            $objectList->getConditionBuilder()->add('user_table.' . $this->getDecoratedObject()->propertyname . ' < ?', [$conditionData['lessThan']]);
+            $objectList->getConditionBuilder()->add(
+                'user_table.' . $this->getDecoratedObject()->propertyname . ' < ?',
+                [$conditionData['lessThan']]
+            );
         }
     }
 
@@ -44,10 +53,16 @@ class UserIntegerPropertyCondition extends AbstractIntegerCondition implements I
      */
     public function checkUser(Condition $condition, User $user)
     {
-        if ($condition->greaterThan !== null && $user->{$this->getDecoratedObject()->propertyname} <= $condition->greaterThan) {
+        if (
+            $condition->greaterThan !== null
+            && $user->{$this->getDecoratedObject()->propertyname} <= $condition->greaterThan
+        ) {
             return false;
         }
-        if ($condition->lessThan !== null && $user->{$this->getDecoratedObject()->propertyname} >= $condition->lessThan) {
+        if (
+            $condition->lessThan !== null
+            && $user->{$this->getDecoratedObject()->propertyname} >= $condition->lessThan
+        ) {
             return false;
         }
 

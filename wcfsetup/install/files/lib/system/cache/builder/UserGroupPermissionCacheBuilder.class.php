@@ -75,7 +75,10 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
             foreach ($options as $option) {
                 if ($option['enableOptions']) {
                     $typeObj = $this->getTypeObject($option['optionType']);
-                    $disabledOptions = $typeObj->getDisabledOptionNames($option['optionValue'], $option['enableOptions']);
+                    $disabledOptions = $typeObj->getDisabledOptionNames(
+                        $option['optionValue'],
+                        $option['enableOptions']
+                    );
                     if (!empty($disabledOptions)) {
                         $optionBlacklist = \array_merge($optionBlacklist, $disabledOptions);
                     }

@@ -75,7 +75,10 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 
         // check target user settings
         if ($validateWritePermission) {
-            if (!$userProfile->isAccessible('canWriteProfileComments') && $userProfile->userID != WCF::getUser()->userID) {
+            if (
+                !$userProfile->isAccessible('canWriteProfileComments')
+                && $userProfile->userID != WCF::getUser()->userID
+            ) {
                 return false;
             }
 
@@ -137,7 +140,10 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
      */
     public function canDeleteComment(Comment $comment)
     {
-        if ($comment->objectID == WCF::getUser()->userID && WCF::getSession()->getPermission('user.profileComment.canDeleteCommentInOwnProfile')) {
+        if (
+            $comment->objectID == WCF::getUser()->userID
+            && WCF::getSession()->getPermission('user.profileComment.canDeleteCommentInOwnProfile')
+        ) {
             return true;
         }
 
@@ -149,7 +155,10 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
      */
     public function canDeleteResponse(CommentResponse $response)
     {
-        if ($response->getComment()->objectID == WCF::getUser()->userID && WCF::getSession()->getPermission('user.profileComment.canDeleteCommentInOwnProfile')) {
+        if (
+            $response->getComment()->objectID == WCF::getUser()->userID
+            && WCF::getSession()->getPermission('user.profileComment.canDeleteCommentInOwnProfile')
+        ) {
             return true;
         }
 
@@ -165,7 +174,8 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
             return;
         }
 
-        $commentLikeObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.like.likeableObject', 'com.woltlab.wcf.comment');
+        $commentLikeObjectType = ObjectTypeCache::getInstance()
+            ->getObjectTypeByName('com.woltlab.wcf.like.likeableObject', 'com.woltlab.wcf.comment');
 
         $commentIDs = $responseIDs = [];
         foreach ($likes as $like) {
@@ -221,14 +231,17 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
                         $like->setIsAccessible();
 
                         // short output
-                        $text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.user.profileComment', [
-                            'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
-                            'comment' => $comment,
-                            'user' => $users[$comment->objectID],
-                            'reaction' => $like,
-                            // @deprecated 5.3 Use `$reaction` instead
-                            'like' => $like,
-                        ]);
+                        $text = WCF::getLanguage()->getDynamicVariable(
+                            'wcf.like.title.com.woltlab.wcf.user.profileComment',
+                            [
+                                'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
+                                'comment' => $comment,
+                                'user' => $users[$comment->objectID],
+                                'reaction' => $like,
+                                // @deprecated 5.3 Use `$reaction` instead
+                                'like' => $like,
+                            ]
+                        );
                         $like->setTitle($text);
 
                         // output
@@ -245,15 +258,18 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
                         $like->setIsAccessible();
 
                         // short output
-                        $text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.user.profileComment.response', [
-                            'responseAuthor' => $response->userID ? $users[$response->userID] : null,
-                            'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
-                            'user' => $users[$comment->objectID],
-                            'reaction' => $like,
-                            // @deprecated 5.3 Use `$reaction` instead
-                            'like' => $like,
-                            'response' => $response,
-                        ]);
+                        $text = WCF::getLanguage()->getDynamicVariable(
+                            'wcf.like.title.com.woltlab.wcf.user.profileComment.response',
+                            [
+                                'responseAuthor' => $response->userID ? $users[$response->userID] : null,
+                                'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
+                                'user' => $users[$comment->objectID],
+                                'reaction' => $like,
+                                // @deprecated 5.3 Use `$reaction` instead
+                                'like' => $like,
+                                'response' => $response,
+                            ]
+                        );
                         $like->setTitle($text);
 
                         // output

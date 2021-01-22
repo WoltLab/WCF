@@ -19,7 +19,10 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Condition
  */
-class UserOptionsCondition extends AbstractMultipleFieldsCondition implements IContentCondition, IObjectListCondition, IUserCondition
+class UserOptionsCondition extends AbstractMultipleFieldsCondition implements
+    IContentCondition,
+    IObjectListCondition,
+    IUserCondition
 {
     use TObjectListUserCondition;
 
@@ -99,7 +102,9 @@ class UserOptionsCondition extends AbstractMultipleFieldsCondition implements IC
 
             if (isset($optionValues[$option->optionName])) {
                 /** @noinspection PhpUndefinedMethodInspection */
-                $conditionData = $this->optionHandler->getTypeObject($option->optionType)->getConditionData($option, $optionValues[$option->optionName]);
+                $conditionData = $this->optionHandler
+                    ->getTypeObject($option->optionType)
+                    ->getConditionData($option, $optionValues[$option->optionName]);
                 if ($conditionData !== null) {
                     $data[$option->optionName] = $conditionData;
                 }

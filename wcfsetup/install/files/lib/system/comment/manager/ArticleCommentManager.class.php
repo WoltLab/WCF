@@ -109,7 +109,8 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
      */
     public function prepare(array $likes)
     {
-        $commentLikeObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.like.likeableObject', 'com.woltlab.wcf.comment');
+        $commentLikeObjectType = ObjectTypeCache::getInstance()
+            ->getObjectTypeByName('com.woltlab.wcf.like.likeableObject', 'com.woltlab.wcf.comment');
 
         $commentIDs = $responseIDs = [];
         foreach ($likes as $like) {
@@ -171,18 +172,24 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
                 if (isset($comments[$like->objectID])) {
                     $comment = $comments[$like->objectID];
 
-                    if (isset($articleContents[$comment->objectID]) && $articleContents[$comment->objectID]->getArticle()->canRead()) {
+                    if (
+                        isset($articleContents[$comment->objectID])
+                        && $articleContents[$comment->objectID]->getArticle()->canRead()
+                    ) {
                         $like->setIsAccessible();
 
                         // short output
-                        $text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.articleComment', [
-                            'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
-                            'comment' => $comment,
-                            'articleContent' => $articleContents[$comment->objectID],
-                            'reaction' => $like,
-                            // @deprecated 5.3 Use `$reaction` instead
-                            'like' => $like,
-                        ]);
+                        $text = WCF::getLanguage()->getDynamicVariable(
+                            'wcf.like.title.com.woltlab.wcf.articleComment',
+                            [
+                                'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
+                                'comment' => $comment,
+                                'articleContent' => $articleContents[$comment->objectID],
+                                'reaction' => $like,
+                                // @deprecated 5.3 Use `$reaction` instead
+                                'like' => $like,
+                            ]
+                        );
                         $like->setTitle($text);
 
                         // output
@@ -195,19 +202,25 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
                     $response = $responses[$like->objectID];
                     $comment = $comments[$response->commentID];
 
-                    if (isset($articleContents[$comment->objectID]) && $articleContents[$comment->objectID]->getArticle()->canRead()) {
+                    if (
+                        isset($articleContents[$comment->objectID])
+                        && $articleContents[$comment->objectID]->getArticle()->canRead()
+                    ) {
                         $like->setIsAccessible();
 
                         // short output
-                        $text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.articleComment.response', [
-                            'responseAuthor' => $comment->userID ? $users[$response->userID] : null,
-                            'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
-                            'articleContent' => $articleContents[$comment->objectID],
-                            'reaction' => $like,
-                            // @deprecated 5.3 Use `$reaction` instead
-                            'like' => $like,
-                            'response' => $response,
-                        ]);
+                        $text = WCF::getLanguage()->getDynamicVariable(
+                            'wcf.like.title.com.woltlab.wcf.articleComment.response',
+                            [
+                                'responseAuthor' => $comment->userID ? $users[$response->userID] : null,
+                                'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
+                                'articleContent' => $articleContents[$comment->objectID],
+                                'reaction' => $like,
+                                // @deprecated 5.3 Use `$reaction` instead
+                                'like' => $like,
+                                'response' => $response,
+                            ]
+                        );
                         $like->setTitle($text);
 
                         // output
@@ -223,7 +236,8 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
      */
     public function isContentAuthor($commentOrResponse)
     {
-        $articleContent = ViewableArticleContentRuntimeCache::getInstance()->getObject($this->getObjectID($commentOrResponse));
+        $articleContent = ViewableArticleContentRuntimeCache::getInstance()
+            ->getObject($this->getObjectID($commentOrResponse));
 
         return $commentOrResponse->userID && $articleContent->getArticle()->userID == $commentOrResponse->userID;
     }

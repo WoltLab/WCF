@@ -273,24 +273,27 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
         $id = $this->wysiwygId . 'Poll';
 
         // add data handler to group poll data into a sub-array of parameters
-        $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor($id, function (IFormDocument $document, array $parameters) use ($id) {
-            if (!$this->isAvailable()) {
+        $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor(
+            $id,
+            function (IFormDocument $document, array $parameters) use ($id) {
+                if (!$this->isAvailable()) {
+                    return $parameters;
+                }
+
+                $wysiwygId = $this->getWysiwygId();
+
+                foreach (self::FIELD_NAMES as $fieldName) {
+                    $parameters[$wysiwygId . '_pollData'][$fieldName] = $parameters['data'][$id . '_' . $fieldName];
+                    unset($parameters['data'][$id . '_' . $fieldName]);
+                }
+
+                // this will always add a poll array to the parameters but
+                // `PollManager::savePoll()` is capable of correctly detecting
+                // when, based on the given data, nothing has to be done
+
                 return $parameters;
             }
-
-            $wysiwygId = $this->getWysiwygId();
-
-            foreach (self::FIELD_NAMES as $fieldName) {
-                $parameters[$wysiwygId . '_pollData'][$fieldName] = $parameters['data'][$id . '_' . $fieldName];
-                unset($parameters['data'][$id . '_' . $fieldName]);
-            }
-
-            // this will always add a poll array to the parameters but
-            // `PollManager::savePoll()` is capable of correctly detecting
-            // when, based on the given data, nothing has to be done
-
-            return $parameters;
-        }));
+        ));
 
         $this->questionField = TextFormField::create($id . '_question')
             ->label('wcf.poll.question')

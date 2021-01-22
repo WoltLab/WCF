@@ -109,7 +109,9 @@ class DatabaseTableForeignKey
     public function getColumns()
     {
         if ($this->columns === null) {
-            throw new \BadMethodCallException("Before getting the columns, they must be set for foreign key '{$this->getName()}'.");
+            throw new \BadMethodCallException(
+                "Before getting the columns, they must be set for foreign key '{$this->getName()}'."
+            );
         }
 
         return $this->columns;
@@ -176,7 +178,9 @@ class DatabaseTableForeignKey
     public function getReferencedColumns()
     {
         if ($this->referencedColumns === null) {
-            throw new \BadMethodCallException("Before getting the referenced columns, they must be set for foreign key '{$this->getName()}'.");
+            throw new \BadMethodCallException(
+                "Before getting the referenced columns, they must be set for foreign key '{$this->getName()}'."
+            );
         }
 
         return $this->referencedColumns;
@@ -191,7 +195,9 @@ class DatabaseTableForeignKey
     public function getReferencedTable()
     {
         if ($this->referencedTable === null) {
-            throw new \BadMethodCallException("Before getting the referenced table, it must be set for foreign key '{$this->getName()}'.");
+            throw new \BadMethodCallException(
+                "Before getting the referenced table, it must be set for foreign key '{$this->getName()}'."
+            );
         }
 
         return $this->referencedTable;

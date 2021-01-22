@@ -32,7 +32,9 @@ class PreparedStatementConditionBuilder extends ConditionBuilder
             $count = 0;
             $callback = static function () use (&$count, $parameters, $condition) {
                 if (!\array_key_exists($count, $parameters)) {
-                    throw new SystemException("missing parameter for token number " . ($count + 1) . " in condition '" . $condition . "'");
+                    throw new SystemException(
+                        "missing parameter for token number " . ($count + 1) . " in condition '" . $condition . "'"
+                    );
                 } elseif (\is_array($parameters[$count]) && empty($parameters[$count])) {
                     // Only throw an exception if the developer tools are active, preventing this
                     // from triggering an error for queries that are never actually executed.

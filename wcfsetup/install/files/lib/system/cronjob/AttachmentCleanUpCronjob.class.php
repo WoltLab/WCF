@@ -56,7 +56,8 @@ class AttachmentCleanUpCronjob extends AbstractCronjob
                     AND uploadTime < ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
-            ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.attachment.objectType', 'com.woltlab.wcf.contact'),
+            ObjectTypeCache::getInstance()
+                ->getObjectTypeIDByName('com.woltlab.wcf.attachment.objectType', 'com.woltlab.wcf.contact'),
             TIME_NOW - (CONTACT_FORM_PRUNE_ATTACHMENTS * 86400),
         ]);
 

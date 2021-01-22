@@ -78,7 +78,8 @@ class DailyCleanUpCronjob extends AbstractCronjob
         $statement2 = WCF::getDB()->prepareStatement($sql);
 
         WCF::getDB()->beginTransaction();
-        foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.visitTracker.objectType') as $objectType) {
+        $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.visitTracker.objectType');
+        foreach ($objectTypes as $objectType) {
             // get lifetime
             $lifetime = ($objectType->lifetime ?: VisitTracker::DEFAULT_LIFETIME);
 
@@ -178,7 +179,10 @@ class DailyCleanUpCronjob extends AbstractCronjob
 
         // clean up temporary folder
         $tempFolder = FileUtil::getTempFolder();
-        $it = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($tempFolder, \FilesystemIterator::SKIP_DOTS), \RecursiveIteratorIterator::CHILD_FIRST);
+        $it = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($tempFolder, \FilesystemIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::CHILD_FIRST
+        );
         foreach ($it as $file) {
             if ($file->getPathname() === $tempFolder) {
                 continue;
@@ -198,7 +202,10 @@ class DailyCleanUpCronjob extends AbstractCronjob
 
         // clean up proxy images
         if (MODULE_IMAGE_PROXY && IMAGE_PROXY_ENABLE_PRUNE) {
-            $it = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(WCF_DIR . 'images/proxy/', \FilesystemIterator::SKIP_DOTS), \RecursiveIteratorIterator::CHILD_FIRST);
+            $it = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator(WCF_DIR . 'images/proxy/', \FilesystemIterator::SKIP_DOTS),
+                \RecursiveIteratorIterator::CHILD_FIRST
+            );
             foreach ($it as $file) {
                 if ($file->getPathname() === WCF_DIR . 'images/proxy/.htaccess') {
                     continue;

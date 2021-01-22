@@ -63,7 +63,11 @@ class CronjobCLICommand implements IArgumentedCLICommand
      */
     public function getUsage()
     {
-        return \str_replace($_SERVER['argv'][0] . ' [ options ]', 'cronjob [ options ] execute', $this->argv->getUsageMessage());
+        return \str_replace(
+            $_SERVER['argv'][0] . ' [ options ]',
+            'cronjob [ options ] execute',
+            $this->argv->getUsageMessage()
+        );
     }
 
     /**

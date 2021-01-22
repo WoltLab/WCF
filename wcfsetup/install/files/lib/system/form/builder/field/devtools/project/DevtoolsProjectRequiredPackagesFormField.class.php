@@ -34,7 +34,10 @@ class DevtoolsProjectRequiredPackagesFormField extends AbstractFormField
      */
     public function readValue()
     {
-        if ($this->getDocument()->hasRequestData($this->getPrefixedId()) && \is_array($this->getDocument()->getRequestData($this->getPrefixedId()))) {
+        if (
+            $this->getDocument()->hasRequestData($this->getPrefixedId())
+            && \is_array($this->getDocument()->getRequestData($this->getPrefixedId()))
+        ) {
             $this->value = $this->getDocument()->getRequestData($this->getPrefixedId());
         } else {
             $this->value = [];
@@ -52,12 +55,20 @@ class DevtoolsProjectRequiredPackagesFormField extends AbstractFormField
         $packageIdentifiers = [];
         foreach ($this->getValue() as $package) {
             // ensure that all relevant elements are present
-            if (!\is_array($package) || !isset($package['packageIdentifier']) || !isset($package['minVersion']) || !isset($package['file'])) {
+            if (
+                !\is_array($package)
+                || !isset($package['packageIdentifier'])
+                || !isset($package['minVersion'])
+                || !isset($package['file'])
+            ) {
                 continue;
             }
 
             // validate package identifier
-            if (!Package::isValidPackageName($package['packageIdentifier']) || \in_array($package['packageIdentifier'], $packageIdentifiers)) {
+            if (
+                !Package::isValidPackageName($package['packageIdentifier'])
+                || \in_array($package['packageIdentifier'], $packageIdentifiers)
+            ) {
                 continue;
             }
 

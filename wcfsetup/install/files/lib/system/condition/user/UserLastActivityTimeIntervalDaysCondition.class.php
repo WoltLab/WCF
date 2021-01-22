@@ -24,7 +24,9 @@ use wcf\util\ClassUtil;
  * @package     WoltLabSuite\Core\System\Condition\User
  * @since       5.3
  */
-class UserLastActivityTimeIntervalDaysCondition extends AbstractSingleFieldCondition implements IObjectCondition, IObjectListCondition
+class UserLastActivityTimeIntervalDaysCondition extends AbstractSingleFieldCondition implements
+    IObjectCondition,
+    IObjectListCondition
 {
     /**
      * @inheritDoc
@@ -57,10 +59,16 @@ class UserLastActivityTimeIntervalDaysCondition extends AbstractSingleFieldCondi
             $objectList->getConditionBuilder()->add('user_table.lastActivityTime <> ?', [0]);
         }
         if (isset($conditionData['startDays'])) {
-            $objectList->getConditionBuilder()->add('user_table.lastActivityTime <= ?', [TIME_NOW - $conditionData['startDays'] * 24 * 3600]);
+            $objectList->getConditionBuilder()->add(
+                'user_table.lastActivityTime <= ?',
+                [TIME_NOW - $conditionData['startDays'] * 24 * 3600]
+            );
         }
         if (isset($conditionData['endDays'])) {
-            $objectList->getConditionBuilder()->add('user_table.lastActivityTime >= ?', [TIME_NOW - $conditionData['endDays'] * 24 * 3600]);
+            $objectList->getConditionBuilder()->add(
+                'user_table.lastActivityTime >= ?',
+                [TIME_NOW - $conditionData['endDays'] * 24 * 3600]
+            );
         }
     }
 
@@ -85,7 +93,10 @@ class UserLastActivityTimeIntervalDaysCondition extends AbstractSingleFieldCondi
             }
 
             return true;
-        } elseif (isset($conditionData['endDays']) && $object->lastActivityTime < TIME_NOW - $conditionData['endDays'] * 24 * 3600) {
+        } elseif (
+            isset($conditionData['endDays'])
+            && $object->lastActivityTime < TIME_NOW - $conditionData['endDays'] * 24 * 3600
+        ) {
             return false;
         }
 

@@ -76,10 +76,14 @@ trait TLengthDatabaseTableColumn
     protected function validateLength($length)
     {
         if ($this->getMinimumLength() !== null && $length < $this->getMinimumLength()) {
-            throw new \InvalidArgumentException("Given length is smaller than the minimum length '{$this->getMinimumLength()}'.");
+            throw new \InvalidArgumentException(
+                "Given length is smaller than the minimum length '{$this->getMinimumLength()}'."
+            );
         }
         if ($this->getMaximumLength() !== null && $length > $this->getMaximumLength()) {
-            throw new \InvalidArgumentException("Given length is greater than the maximum length '{$this->getMaximumLength()}'.");
+            throw new \InvalidArgumentException(
+                "Given length is greater than the maximum length '{$this->getMaximumLength()}'."
+            );
         }
     }
 }

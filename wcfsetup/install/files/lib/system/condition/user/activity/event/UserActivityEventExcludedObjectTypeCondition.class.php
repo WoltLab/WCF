@@ -45,7 +45,10 @@ class UserActivityEventExcludedObjectTypeCondition extends AbstractMultiSelectCo
             throw new InvalidObjectArgument($objectList, UserActivityEventList::class, 'Object list');
         }
 
-        $objectList->getConditionBuilder()->add('user_activity_event.objectTypeID NOT IN (?)', [$conditionData[$this->fieldName]]);
+        $objectList->getConditionBuilder()->add(
+            'user_activity_event.objectTypeID NOT IN (?)',
+            [$conditionData[$this->fieldName]]
+        );
     }
 
     /**
@@ -57,7 +60,8 @@ class UserActivityEventExcludedObjectTypeCondition extends AbstractMultiSelectCo
 
         $options = [];
         foreach ($objectTypes as $objectType) {
-            $options[$objectType->objectTypeID] = WCF::getLanguage()->getDynamicVariable('wcf.user.recentActivity.' . $objectType->objectType);
+            $options[$objectType->objectTypeID] = WCF::getLanguage()
+                ->getDynamicVariable('wcf.user.recentActivity.' . $objectType->objectType);
         }
 
         return $options;

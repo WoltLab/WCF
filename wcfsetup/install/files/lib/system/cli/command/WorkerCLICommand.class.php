@@ -288,7 +288,8 @@ class WorkerCLICommand implements IArgumentedCLICommand
                 \stream_select($read, $write, $except, 2, null);
 
                 // 3.3) Rerender the progressbars with the updated status information.
-                echo "\033[" . $threads . "A"; // Move up $threads lines to move into the line of the first progress bar.
+                // Move up $threads lines to move into the line of the first progress bar.
+                echo "\033[" . $threads . "A";
                 $cursorOffset = -$threads;
                 foreach ($processes as &$processData) {
                     $status = \proc_get_status($processData['process']);
@@ -321,9 +322,15 @@ class WorkerCLICommand implements IArgumentedCLICommand
                             \fwrite(\STDERR, \str_repeat("=", 20) . "\n");
                             \fwrite(\STDERR, \str_repeat("\n", $threads + $cursorOffset + 1));
                         } elseif (isset($parsedLine['finished'])) {
-                            $processData['progressbar']->update($parsedLine['progress'], $statusPrefix . 'finished');
+                            $processData['progressbar']->update(
+                                $parsedLine['progress'],
+                                $statusPrefix . 'finished'
+                            );
                         } else {
-                            $processData['progressbar']->update($parsedLine['progress'], $statusPrefix . 'loop#' . $parsedLine['iteration']);
+                            $processData['progressbar']->update(
+                                $parsedLine['progress'],
+                                $statusPrefix . 'loop#' . $parsedLine['iteration']
+                            );
                         }
                     } elseif (!$status['running']) {
                         // If the process exited we update the text status to indicate so.
@@ -338,7 +345,9 @@ class WorkerCLICommand implements IArgumentedCLICommand
                     // Check the exit code after processing the status line, to allow for dumping the error message.
                     if (!$status['running'] && $status['exitcode'] != -1) {
                         if ($status['exitcode']) {
-                            throw new \Exception('Unclean exit of thread ' . $processData['threadId'] . ' detected. Exiting.');
+                            throw new \Exception(
+                                'Unclean exit of thread ' . $processData['threadId'] . ' detected. Exiting.'
+                            );
                         }
                     }
                 }
@@ -441,7 +450,11 @@ class WorkerCLICommand implements IArgumentedCLICommand
      */
     public function getUsage()
     {
-        return \str_replace($_SERVER['argv'][0] . ' [ options ]', 'worker [ options ] <worker>', $this->argv->getUsageMessage());
+        return \str_replace(
+            $_SERVER['argv'][0] . ' [ options ]',
+            'worker [ options ] <worker>',
+            $this->argv->getUsageMessage()
+        );
     }
 
     /**

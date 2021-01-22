@@ -68,7 +68,9 @@ class DatabaseTable
         $this->columns = [];
         foreach ($columns as $column) {
             if (!($column instanceof IDatabaseTableColumn)) {
-                throw new \InvalidArgumentException("Added columns have to be instances of '" . IDatabaseTableColumn::class . "'.");
+                throw new \InvalidArgumentException(
+                    "Added columns have to be instances of '" . IDatabaseTableColumn::class . "'."
+                );
             }
 
             if (isset($this->columns[$column->getName()])) {
@@ -93,7 +95,9 @@ class DatabaseTable
         $this->foreignKeys = [];
         foreach ($foreignKeys as $foreignKey) {
             if (!($foreignKey instanceof DatabaseTableForeignKey)) {
-                throw new \InvalidArgumentException("Added foreign keys have to be instances of '" . DatabaseTableForeignKey::class . "'.");
+                throw new \InvalidArgumentException(
+                    "Added foreign keys have to be instances of '" . DatabaseTableForeignKey::class . "'."
+                );
             }
 
             if (empty($foreignKey->getColumns())) {
@@ -184,7 +188,9 @@ class DatabaseTable
         foreach ($dbEditor->getColumns($tableName) as $columnData) {
             $className = 'wcf\system\database\table\column\\' . \ucfirst(\strtolower($columnData['data']['type'])) . 'DatabaseTableColumn';
             if (!\class_exists($className)) {
-                throw new \InvalidArgumentException("Unknown database table column type '{$columnData['data']['type']}'.");
+                throw new \InvalidArgumentException(
+                    "Unknown database table column type '{$columnData['data']['type']}'."
+                );
             }
 
             $columns[$columnData['name']] = $className::createFromData($columnData['name'], $columnData['data']);
@@ -193,7 +199,10 @@ class DatabaseTable
 
         $foreignKeys = [];
         foreach ($dbEditor->getForeignKeys($tableName) as $foreignKeysName => $foreignKeyData) {
-            $foreignKeys[$foreignKeysName] = DatabaseTableForeignKey::createFromData($foreignKeysName, $foreignKeyData);
+            $foreignKeys[$foreignKeysName] = DatabaseTableForeignKey::createFromData(
+                $foreignKeysName,
+                $foreignKeyData
+            );
         }
         $table->foreignKeys($foreignKeys);
 
@@ -220,7 +229,9 @@ class DatabaseTable
         $this->indices = [];
         foreach ($indices as $index) {
             if (!($index instanceof DatabaseTableIndex)) {
-                throw new \InvalidArgumentException("Added indices have to be instances of '" . DatabaseTableIndex::class . "'.");
+                throw new \InvalidArgumentException(
+                    "Added indices have to be instances of '" . DatabaseTableIndex::class . "'."
+                );
             }
 
             if ($index->getName() === '') {

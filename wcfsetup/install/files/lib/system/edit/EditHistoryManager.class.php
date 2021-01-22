@@ -31,7 +31,8 @@ class EditHistoryManager extends SingletonFactory
     protected function init()
     {
         // get available object types
-        $this->availableObjectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.edit.historySavingObject');
+        $this->availableObjectTypes = ObjectTypeCache::getInstance()
+            ->getObjectTypes('com.woltlab.wcf.edit.historySavingObject');
     }
 
     /**
@@ -74,7 +75,17 @@ class EditHistoryManager extends SingletonFactory
                             (objectTypeID, objectID, message, time, obsoletedAt, userID, username, editReason, obsoletedByUserID)
                 VALUES      (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
-        $statement->execute([$this->getObjectTypeID($objectType), $objectID, $message, $time, TIME_NOW, $userID, $username, $editReason, $obsoletedByUserID]);
+        $statement->execute([
+            $this->getObjectTypeID($objectType),
+            $objectID,
+            $message,
+            $time,
+            TIME_NOW,
+            $userID,
+            $username,
+            $editReason,
+            $obsoletedByUserID,
+        ]);
     }
 
     /**

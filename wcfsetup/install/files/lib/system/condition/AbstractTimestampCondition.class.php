@@ -19,7 +19,9 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Core\System\Condition
  * @since   3.0
  */
-abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition implements IObjectCondition, IObjectListCondition
+abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition implements
+    IObjectCondition,
+    IObjectListCondition
 {
     /**
      * name of the relevant database object class
@@ -57,13 +59,22 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
 
         /** @noinspection PhpUndefinedFieldInspection */
         if ($this->object->ignoreZeroTime) {
-            $objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias() . '.' . $this->getPropertyName() . ' <> ?', [0]);
+            $objectList->getConditionBuilder()->add(
+                $objectList->getDatabaseTableAlias() . '.' . $this->getPropertyName() . ' <> ?',
+                [0]
+            );
         }
         if (isset($conditionData['endTime'])) {
-            $objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias() . '.' . $this->getPropertyName() . ' < ?', [\strtotime($conditionData['endTime']) + 86400]);
+            $objectList->getConditionBuilder()->add(
+                $objectList->getDatabaseTableAlias() . '.' . $this->getPropertyName() . ' < ?',
+                [\strtotime($conditionData['endTime']) + 86400]
+            );
         }
         if (isset($conditionData['startTime'])) {
-            $objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias() . '.' . $this->getPropertyName() . ' >= ?', [\strtotime($conditionData['startTime'])]);
+            $objectList->getConditionBuilder()->add(
+                $objectList->getDatabaseTableAlias() . '.' . $this->getPropertyName() . ' >= ?',
+                [\strtotime($conditionData['startTime'])]
+            );
         }
     }
 
@@ -77,10 +88,16 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
             throw new InvalidObjectArgument($object, $className);
         }
 
-        if (isset($conditionData['startTime']) && $object->{$this->getPropertyName()} < \strtotime($conditionData['startTime'])) {
+        if (
+            isset($conditionData['startTime'])
+            && $object->{$this->getPropertyName()} < \strtotime($conditionData['startTime'])
+        ) {
             return false;
         }
-        if (isset($conditionData['endTime']) && $object->{$this->getPropertyName()} >= \strtotime($conditionData['endTime']) + 86400) {
+        if (
+            isset($conditionData['endTime'])
+            && $object->{$this->getPropertyName()} >= \strtotime($conditionData['endTime']) + 86400
+        ) {
             return false;
         }
 

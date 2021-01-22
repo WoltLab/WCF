@@ -36,7 +36,9 @@ class DevtoolsPackageArchive extends PackageArchive
      */
     public function openArchive()
     {
-        $projectDir = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator(\realpath(\dirname($this->packageXmlPath))));
+        $projectDir = FileUtil::addTrailingSlash(
+            FileUtil::unifyDirSeparator(\realpath(\dirname($this->packageXmlPath)))
+        );
         $readFiles = DirectoryUtil::getInstance($projectDir)->getFiles(
             \SORT_ASC,
             // ignore folders whose contents are delivered as archives by default

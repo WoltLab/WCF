@@ -50,7 +50,9 @@ class UploadHandler extends SingletonFactory
     public function registerUploadField(UploadField $field, ?array $requestData = null)
     {
         if (isset($this->fields[$field->getFieldId()])) {
-            throw new \InvalidArgumentException('UploadField with the id "' . $field->getFieldId() . '" is already registered.');
+            throw new \InvalidArgumentException(
+                'UploadField with the id "' . $field->getFieldId() . '" is already registered.'
+            );
         }
 
         if ($requestData === null) {
@@ -58,7 +60,11 @@ class UploadHandler extends SingletonFactory
         }
 
         // read internal identifier
-        if (!empty($requestData) && isset($requestData[$field->getFieldId()]) && $this->isValidInternalId($requestData[$field->getFieldId()])) {
+        if (
+            !empty($requestData)
+            && isset($requestData[$field->getFieldId()])
+            && $this->isValidInternalId($requestData[$field->getFieldId()])
+        ) {
             $field->setInternalId($requestData[$field->getFieldId()]);
 
             $this->fields[$field->getFieldId()] = $field;

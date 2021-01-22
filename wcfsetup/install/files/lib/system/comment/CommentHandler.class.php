@@ -159,11 +159,13 @@ class CommentHandler extends SingletonFactory
 
         // delete activity events
         if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.recentActivityEvent')) {
-            UserActivityEventHandler::getInstance()->removeEvents($objectTypeObj->objectType . '.recentActivityEvent', $commentIDs);
+            UserActivityEventHandler::getInstance()
+                ->removeEvents($objectTypeObj->objectType . '.recentActivityEvent', $commentIDs);
         }
         // delete notifications
         if (UserNotificationHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.notification')) {
-            UserNotificationHandler::getInstance()->removeNotifications($objectTypeObj->objectType . '.notification', $commentIDs);
+            UserNotificationHandler::getInstance()
+                ->removeNotifications($objectTypeObj->objectType . '.notification', $commentIDs);
         }
 
         if (!empty($responseIDs)) {
@@ -173,15 +175,21 @@ class CommentHandler extends SingletonFactory
                 $notificationObjectTypes[] = $objectTypeObj->objectType . '.response.like.notification';
             }
 
-            ReactionHandler::getInstance()->removeReactions('com.woltlab.wcf.comment.response', $responseIDs, $notificationObjectTypes);
+            ReactionHandler::getInstance()->removeReactions(
+                'com.woltlab.wcf.comment.response',
+                $responseIDs,
+                $notificationObjectTypes
+            );
 
             // delete activity events (for responses)
             if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.response.recentActivityEvent')) {
-                UserActivityEventHandler::getInstance()->removeEvents($objectTypeObj->objectType . '.response.recentActivityEvent', $responseIDs);
+                UserActivityEventHandler::getInstance()
+                    ->removeEvents($objectTypeObj->objectType . '.response.recentActivityEvent', $responseIDs);
             }
             // delete notifications (for responses)
             if (UserNotificationHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.response.notification')) {
-                UserNotificationHandler::getInstance()->removeNotifications($objectTypeObj->objectType . '.response.notification', $responseIDs);
+                UserNotificationHandler::getInstance()
+                    ->removeNotifications($objectTypeObj->objectType . '.response.notification', $responseIDs);
             }
         }
 
@@ -250,7 +258,10 @@ class CommentHandler extends SingletonFactory
 
         if (!empty($commentEvents)) {
             $notificationList = new UserNotificationList();
-            $notificationList->getConditionBuilder()->add('user_notification.eventID IN (?)', [\array_keys($commentEvents)]);
+            $notificationList->getConditionBuilder()->add(
+                'user_notification.eventID IN (?)',
+                [\array_keys($commentEvents)]
+            );
             $notificationList->getConditionBuilder()->add('user_notification.userID = ?', [WCF::getUser()->userID]);
             $notificationList->sqlJoins .= "
                 LEFT JOIN   wcf" . WCF_N . "_comment comment
@@ -298,7 +309,10 @@ class CommentHandler extends SingletonFactory
             // the value of the `objectID` property of the notifications is the like object
             // id which is currently unknown, thus it needs to be read from database
             $notificationList = new UserNotificationList();
-            $notificationList->getConditionBuilder()->add('user_notification.eventID IN (?)', [\array_keys($reactionCommentEvents)]);
+            $notificationList->getConditionBuilder()->add(
+                'user_notification.eventID IN (?)',
+                [\array_keys($reactionCommentEvents)]
+            );
             $notificationList->getConditionBuilder()->add('user_notification.userID = ?', [WCF::getUser()->userID]);
             $notificationList->sqlJoins .= "
                 LEFT JOIN   wcf" . WCF_N . "_comment comment
@@ -346,14 +360,20 @@ class CommentHandler extends SingletonFactory
 
         if (!empty($responseEvents)) {
             $notificationList = new UserNotificationList();
-            $notificationList->getConditionBuilder()->add('user_notification.eventID IN (?)', [\array_keys($responseEvents)]);
+            $notificationList->getConditionBuilder()->add(
+                'user_notification.eventID IN (?)',
+                [\array_keys($responseEvents)]
+            );
             $notificationList->getConditionBuilder()->add('user_notification.userID = ?', [WCF::getUser()->userID]);
             $notificationList->sqlJoins .= "
                 LEFT JOIN   wcf" . WCF_N . "_comment_response comment_response
                 ON          (comment_response.responseID = user_notification.objectID)
                 LEFT JOIN   wcf" . WCF_N . "_comment comment
                 ON          (comment.commentID = comment_response.commentID)";
-            $notificationList->getConditionBuilder()->add('comment.objectTypeID IN (?)', [$this->getObjectTypeID($objectType)]);
+            $notificationList->getConditionBuilder()->add(
+                'comment.objectTypeID IN (?)',
+                [$this->getObjectTypeID($objectType)]
+            );
             $notificationList->getConditionBuilder()->add('comment.objectID IN (?)', [$objectIDs]);
             $notificationList->getConditionBuilder()->add('comment_response.time <= ?', [$time]);
             $notificationList->readObjects();
@@ -394,14 +414,20 @@ class CommentHandler extends SingletonFactory
             // the value of the `objectID` property of the notifications is the like object
             // id which is currently unknown, thus it needs to be read from database
             $notificationList = new UserNotificationList();
-            $notificationList->getConditionBuilder()->add('user_notification.eventID IN (?)', [\array_keys($reactionResponseEvents)]);
+            $notificationList->getConditionBuilder()->add(
+                'user_notification.eventID IN (?)',
+                [\array_keys($reactionResponseEvents)]
+            );
             $notificationList->getConditionBuilder()->add('user_notification.userID = ?', [WCF::getUser()->userID]);
             $notificationList->sqlJoins .= "
                 LEFT JOIN   wcf" . WCF_N . "_comment_response comment_response
                 ON          (comment_response.responseID = user_notification.baseObjectID)
                 LEFT JOIN   wcf" . WCF_N . "_comment comment
                 ON          (comment.commentID = comment_response.commentID)";
-            $notificationList->getConditionBuilder()->add('comment.objectTypeID IN (?)', [$this->getObjectTypeID($objectType)]);
+            $notificationList->getConditionBuilder()->add(
+                'comment.objectTypeID IN (?)',
+                [$this->getObjectTypeID($objectType)]
+            );
             $notificationList->getConditionBuilder()->add('comment.objectID IN (?)', [$objectIDs]);
             $notificationList->getConditionBuilder()->add('comment_response.time <= ?', [$time]);
             $notificationList->readObjects();
@@ -496,7 +522,10 @@ class CommentHandler extends SingletonFactory
             // the value of the `objectID` property of the notifications is the like object
             // id which is currently unknown, thus it needs to be read from database
             $notificationList = new UserNotificationList();
-            $notificationList->getConditionBuilder()->add('user_notification.eventID IN (?)', [\array_keys($reactionCommentEvents)]);
+            $notificationList->getConditionBuilder()->add(
+                'user_notification.eventID IN (?)',
+                [\array_keys($reactionCommentEvents)]
+            );
             $notificationList->getConditionBuilder()->add('user_notification.userID = ?', [WCF::getUser()->userID]);
             $notificationList->getConditionBuilder()->add('user_notification.baseObjectID IN (?)', [$commentIDs]);
             $notificationList->readObjects();
@@ -572,8 +601,14 @@ class CommentHandler extends SingletonFactory
                 // the value of the `objectID` property of the notifications is the like object
                 // id which is currently unknown, thus it needs to be read from database
                 $notificationList = new UserNotificationList();
-                $notificationList->getConditionBuilder()->add('user_notification.eventID IN (?)', [\array_keys($reactionResponseEvents)]);
-                $notificationList->getConditionBuilder()->add('user_notification.userID = ?', [WCF::getUser()->userID]);
+                $notificationList->getConditionBuilder()->add(
+                    'user_notification.eventID IN (?)',
+                    [\array_keys($reactionResponseEvents)]
+                );
+                $notificationList->getConditionBuilder()->add(
+                    'user_notification.userID = ?',
+                    [WCF::getUser()->userID]
+                );
                 $notificationList->getConditionBuilder()->add('user_notification.baseObjectID IN (?)', [$responseIDs]);
                 $notificationList->readObjects();
 
@@ -666,7 +701,10 @@ class CommentHandler extends SingletonFactory
             // the value of the `objectID` property of the notifications is the like object
             // id which is currently unknown, thus it needs to be read from database
             $notificationList = new UserNotificationList();
-            $notificationList->getConditionBuilder()->add('user_notification.eventID IN (?)', [\array_keys($reactionResponseEvents)]);
+            $notificationList->getConditionBuilder()->add(
+                'user_notification.eventID IN (?)',
+                [\array_keys($reactionResponseEvents)]
+            );
             $notificationList->getConditionBuilder()->add('user_notification.userID = ?', [WCF::getUser()->userID]);
             $notificationList->getConditionBuilder()->add('user_notification.baseObjectID IN (?)', [$responseIDs]);
             $notificationList->readObjects();
@@ -705,7 +743,13 @@ class CommentHandler extends SingletonFactory
         if (ENABLE_CENSORSHIP) {
             $result = Censorship::getInstance()->test($text);
             if ($result) {
-                throw new UserInputException('text', WCF::getLanguage()->getDynamicVariable('wcf.message.error.censoredWordsFound', ['censoredWords' => $result]));
+                throw new UserInputException(
+                    'text',
+                    WCF::getLanguage()->getDynamicVariable(
+                        'wcf.message.error.censoredWordsFound',
+                        ['censoredWords' => $result]
+                    )
+                );
             }
         }
     }

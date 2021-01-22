@@ -58,7 +58,9 @@ class Mailbox
         // We don't support SMTPUTF8
         for ($i = 0; $i < $atSign; $i++) {
             if (\ord($localpart[$i]) & 0b10000000) {
-                throw new \DomainException("The localpart of the given email address '" . $address . "' contains 8-bit characters.");
+                throw new \DomainException(
+                    "The localpart of the given email address '" . $address . "' contains 8-bit characters."
+                );
             }
         }
 
@@ -79,7 +81,9 @@ class Mailbox
         $this->address = $address;
         $this->name = $name;
         if ($language === null) {
-            $language = LanguageFactory::getInstance()->getLanguage(LanguageFactory::getInstance()->getDefaultLanguageID());
+            $language = LanguageFactory::getInstance()->getLanguage(
+                LanguageFactory::getInstance()->getDefaultLanguageID()
+            );
         }
         $this->language = $language;
     }

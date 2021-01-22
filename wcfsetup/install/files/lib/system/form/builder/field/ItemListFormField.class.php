@@ -16,7 +16,12 @@ use wcf\util\ArrayUtil;
  * @package WoltLabSuite\Core\System\Form\Builder\Field
  * @since   5.2
  */
-class ItemListFormField extends AbstractFormField implements IAttributeFormField, IAutoFocusFormField, ICssClassFormField, IImmutableFormField, IMultipleFormField
+class ItemListFormField extends AbstractFormField implements
+    IAttributeFormField,
+    IAutoFocusFormField,
+    ICssClassFormField,
+    IImmutableFormField,
+    IMultipleFormField
 {
     use TInputAttributeFormField;
     use TAutoFocusFormField;
@@ -133,13 +138,16 @@ class ItemListFormField extends AbstractFormField implements IAttributeFormField
 
         // an array should be passed as a parameter outside of the `data` array
         if ($this->getSaveValueType() === self::SAVE_VALUE_TYPE_ARRAY) {
-            $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor('itemList', function (IFormDocument $document, array $parameters) {
-                if ($this->checkDependencies() && \is_array($this->getValue())) {
-                    $parameters[$this->getObjectProperty()] = $this->getValue();
-                }
+            $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor(
+                'itemList',
+                function (IFormDocument $document, array $parameters) {
+                    if ($this->checkDependencies() && \is_array($this->getValue())) {
+                        $parameters[$this->getObjectProperty()] = $this->getValue();
+                    }
 
-                return $parameters;
-            }));
+                    return $parameters;
+                }
+            ));
         }
 
         return $this;
@@ -248,7 +256,10 @@ class ItemListFormField extends AbstractFormField implements IAttributeFormField
                         'count' => \count($this->getValue()),
                     ]
                 ));
-            } elseif ($this->getMaximumMultiples() !== IMultipleFormField::NO_MAXIMUM_MULTIPLES && \count($this->getValue()) > $this->getMaximumMultiples()) {
+            } elseif (
+                $this->getMaximumMultiples() !== IMultipleFormField::NO_MAXIMUM_MULTIPLES
+                && \count($this->getValue()) > $this->getMaximumMultiples()
+            ) {
                 $this->addValidationError(new FormFieldValidationError(
                     'maximumMultiples',
                     'wcf.form.field.itemList.error.maximumMultiples',

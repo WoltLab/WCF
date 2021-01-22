@@ -23,7 +23,10 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Condition
  */
-class UserTrophyCondition extends AbstractMultipleFieldsCondition implements IContentCondition, IObjectListCondition, IUserCondition
+class UserTrophyCondition extends AbstractMultipleFieldsCondition implements
+    IContentCondition,
+    IObjectListCondition,
+    IUserCondition
 {
     use TObjectListUserCondition;
 
@@ -86,11 +89,17 @@ class UserTrophyCondition extends AbstractMultipleFieldsCondition implements ICo
         $trophies = UserTrophyList::getUserTrophies([$user->getObjectID()], false)[$user->getObjectID()];
         $trophyIDs = \array_keys($trophies);
 
-        if (!empty($condition->conditionData['userTrophyIDs']) && !empty(\array_diff($condition->conditionData['userTrophyIDs'], $trophyIDs))) {
+        if (
+            !empty($condition->conditionData['userTrophyIDs'])
+            && !empty(\array_diff($condition->conditionData['userTrophyIDs'], $trophyIDs))
+        ) {
             return false;
         }
 
-        if (!empty($condition->conditionData['notUserTrophyIDs']) && !empty(\array_intersect($condition->conditionData['notUserTrophyIDs'], $trophyIDs))) {
+        if (
+            !empty($condition->conditionData['notUserTrophyIDs'])
+            && !empty(\array_intersect($condition->conditionData['notUserTrophyIDs'], $trophyIDs))
+        ) {
             return false;
         }
 

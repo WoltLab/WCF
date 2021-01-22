@@ -20,7 +20,10 @@ use wcf\util\ArrayUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Condition
  */
-class UserLanguageCondition extends AbstractSingleFieldCondition implements IContentCondition, IObjectListCondition, IUserCondition
+class UserLanguageCondition extends AbstractSingleFieldCondition implements
+    IContentCondition,
+    IObjectListCondition,
+    IUserCondition
 {
     use TObjectListUserCondition;
 
@@ -52,7 +55,10 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements ICon
      */
     public function checkUser(Condition $condition, User $user)
     {
-        if (!empty($condition->conditionData['languageIDs']) && !\in_array($user->languageID, $condition->languageIDs)) {
+        if (
+            !empty($condition->conditionData['languageIDs'])
+            && !\in_array($user->languageID, $condition->languageIDs)
+        ) {
             return false;
         }
 
@@ -135,7 +141,10 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements ICon
             return $this->checkUser($condition, WCF::getUser());
         }
 
-        if (!empty($condition->conditionData['languageIDs']) && !\in_array(WCF::getLanguage()->languageID, $condition->languageIDs)) {
+        if (
+            !empty($condition->conditionData['languageIDs'])
+            && !\in_array(WCF::getLanguage()->languageID, $condition->languageIDs)
+        ) {
             return false;
         }
 

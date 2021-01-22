@@ -47,9 +47,15 @@ class MediaClipboardAction extends AbstractClipboardAction
         // handle actions
         switch ($action->actionName) {
             case 'delete':
-                $item->addInternalData('confirmMessage', WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.com.woltlab.wcf.media.delete.confirmMessage', [
-                    'count' => $item->getCount(),
-                ]));
+                $item->addInternalData(
+                    'confirmMessage',
+                    WCF::getLanguage()->getDynamicVariable(
+                        'wcf.clipboard.item.com.woltlab.wcf.media.delete.confirmMessage',
+                        [
+                            'count' => $item->getCount(),
+                        ]
+                    )
+                );
                 break;
         }
 

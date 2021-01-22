@@ -28,7 +28,20 @@ class UserClipboardAction extends AbstractClipboardAction
     /**
      * @inheritDoc
      */
-    protected $supportedActions = ['assignToGroup', 'ban', 'confirmEmail', 'delete', 'deleteUserContent', 'enable', 'exportMailAddress', 'merge', 'sendMail', 'sendNewPassword', 'resendActivationMail', 'unconfirmEmail'];
+    protected $supportedActions = [
+        'assignToGroup',
+        'ban',
+        'confirmEmail',
+        'delete',
+        'deleteUserContent',
+        'enable',
+        'exportMailAddress',
+        'merge',
+        'sendMail',
+        'sendNewPassword',
+        'resendActivationMail',
+        'unconfirmEmail',
+    ];
 
     /**
      * @inheritDoc
@@ -48,9 +61,15 @@ class UserClipboardAction extends AbstractClipboardAction
                 break;
 
             case 'delete':
-                $item->addInternalData('confirmMessage', WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage', [
-                    'count' => $item->getCount(),
-                ]));
+                $item->addInternalData(
+                    'confirmMessage',
+                    WCF::getLanguage()->getDynamicVariable(
+                        'wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage',
+                        [
+                            'count' => $item->getCount(),
+                        ]
+                    )
+                );
                 break;
 
             case 'exportMailAddress':
@@ -66,9 +85,15 @@ class UserClipboardAction extends AbstractClipboardAction
                 break;
 
             case 'sendNewPassword':
-                $item->addParameter('confirmMessage', WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage', [
-                    'count' => $item->getCount(),
-                ]));
+                $item->addParameter(
+                    'confirmMessage',
+                    WCF::getLanguage()->getDynamicVariable(
+                        'wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage',
+                        [
+                            'count' => $item->getCount(),
+                        ]
+                    )
+                );
                 break;
         }
 
@@ -297,7 +322,10 @@ class UserClipboardAction extends AbstractClipboardAction
     protected function validateResendActivationMail()
     {
         // check permissions
-        if (!WCF::getSession()->getPermission('admin.user.canEnableUser') || !(REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
+        if (
+            !WCF::getSession()->getPermission('admin.user.canEnableUser')
+            || !(REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)
+        ) {
             return [];
         }
 

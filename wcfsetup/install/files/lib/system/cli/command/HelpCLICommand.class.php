@@ -51,12 +51,18 @@ class HelpCLICommand implements IArgumentedCLICommand
         $commands = CLICommandHandler::getCommands();
 
         if (!isset($commands[$args[0]])) {
-            throw new ArgvException(CLIWCF::getLanguage()->getDynamicVariable('wcf.cli.error.command.notFound', ['command' => $args[0]]), $this->getUsage());
+            throw new ArgvException(
+                CLIWCF::getLanguage()->getDynamicVariable('wcf.cli.error.command.notFound', ['command' => $args[0]]),
+                $this->getUsage()
+            );
         }
 
         $command = $commands[$args[0]];
         if (!($command instanceof IArgumentedCLICommand)) {
-            throw new ArgvException(CLIWCF::getLanguage()->getDynamicVariable('wcf.cli.error.help.noArguments', ['command' => $args[0]]), $this->getUsage());
+            throw new ArgvException(
+                CLIWCF::getLanguage()->getDynamicVariable('wcf.cli.error.help.noArguments', ['command' => $args[0]]),
+                $this->getUsage()
+            );
         }
 
         CLIWCF::getReader()->println($command->getUsage());
@@ -67,7 +73,11 @@ class HelpCLICommand implements IArgumentedCLICommand
      */
     public function getUsage()
     {
-        return \str_replace($_SERVER['argv'][0] . ' [ options ]', 'help [ options ] <command>', $this->argv->getUsageMessage());
+        return \str_replace(
+            $_SERVER['argv'][0] . ' [ options ]',
+            'help [ options ] <command>',
+            $this->argv->getUsageMessage()
+        );
     }
 
     /**

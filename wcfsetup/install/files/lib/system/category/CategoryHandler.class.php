@@ -97,7 +97,10 @@ class CategoryHandler extends SingletonFactory
 
         $categories = [];
         foreach ($this->categories as $category) {
-            if ($category->parentCategoryID == $categoryID && ($categoryID || $category->objectTypeID == $objectTypeID)) {
+            if (
+                $category->parentCategoryID == $categoryID
+                && ($categoryID || $category->objectTypeID == $objectTypeID)
+            ) {
                 $categories[$category->categoryID] = $category;
             }
         }

@@ -172,7 +172,9 @@ class UploadField
     public function setAllowSvgImage($allowSvgImage)
     {
         if (!$this->isImageOnly()) {
-            throw new \BadMethodCallException('Allowing SVG images is only relevant, if the `imageOnly` flag is set to `true`.');
+            throw new \BadMethodCallException(
+                'Allowing SVG images is only relevant, if the `imageOnly` flag is set to `true`.'
+            );
         }
 
         $this->allowSvgImage = $allowSvgImage;

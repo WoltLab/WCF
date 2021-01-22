@@ -135,7 +135,9 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormNode
         $this->objectID = $object->{$object::getDatabaseTableIndexName()};
 
         if ($this->objectID === null) {
-            throw new \UnexpectedValueException("Cannot read object id from object of class '" . \get_class($object) . "'.");
+            throw new \UnexpectedValueException(
+                "Cannot read object id from object of class '" . \get_class($object) . "'."
+            );
         }
 
         return $this;
@@ -148,11 +150,14 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormNode
     {
         parent::populate();
 
-        $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor('acl', function (IFormDocument $document, array $parameters) {
-            $parameters[$this->getObjectProperty() . '_aclObjectTypeID'] = $this->getObjectType()->objectTypeID;
+        $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor(
+            'acl',
+            function (IFormDocument $document, array $parameters) {
+                $parameters[$this->getObjectProperty() . '_aclObjectTypeID'] = $this->getObjectType()->objectTypeID;
 
-            return $parameters;
-        }));
+                return $parameters;
+            }
+        ));
 
         return $this;
     }

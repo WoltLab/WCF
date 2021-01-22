@@ -34,14 +34,18 @@ class ValidateActionException extends \Exception
         $this->errorMessage = $errorMessage;
         if (\mb_strpos($this->errorMessage, '.') === false) {
             if (\preg_match('~^[a-zA-Z0-9-_]+$~', $this->errorMessage)) {
-                $this->errorMessage = WCF::getLanguage()->getDynamicVariable('wcf.global.form.error.' . $this->errorMessage);
+                $this->errorMessage = WCF::getLanguage()
+                    ->getDynamicVariable('wcf.global.form.error.' . $this->errorMessage);
             }
         } else {
             $this->errorMessage = WCF::getLanguage()->getDynamicVariable($this->errorMessage, $variables);
         }
 
         $this->fieldName = $fieldName;
-        $this->message = WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.invalidParameter', ['fieldName' => $this->fieldName]);
+        $this->message = WCF::getLanguage()->getDynamicVariable(
+            'wcf.ajax.error.invalidParameter',
+            ['fieldName' => $this->fieldName]
+        );
     }
 
     /**

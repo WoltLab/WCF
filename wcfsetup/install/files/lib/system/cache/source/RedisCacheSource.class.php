@@ -62,7 +62,8 @@ class RedisCacheSource implements ICacheSource
      */
     public function flushAll()
     {
-        // set flush key to current time if it does not exist yet (this prevents falling back to 0 if the key gets deleted)
+        // set flush key to current time if it does not exist yet
+        // (this prevents falling back to 0 if the key gets deleted)
         $this->redis->setnx('cache:_flush', TIME_NOW);
 
         // atomic increment of flush count

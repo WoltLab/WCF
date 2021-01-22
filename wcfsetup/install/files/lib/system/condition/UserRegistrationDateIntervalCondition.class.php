@@ -19,7 +19,10 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Condition
  */
-class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition implements IContentCondition, IObjectListCondition, IUserCondition
+class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition implements
+    IContentCondition,
+    IObjectListCondition,
+    IUserCondition
 {
     use TObjectListUserCondition;
 
@@ -43,10 +46,16 @@ class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition imp
         }
 
         if (isset($conditionData['greaterThan'])) {
-            $objectList->getConditionBuilder()->add('user_table.registrationDate < ?', [TIME_NOW - $conditionData['greaterThan'] * 86400]);
+            $objectList->getConditionBuilder()->add(
+                'user_table.registrationDate < ?',
+                [TIME_NOW - $conditionData['greaterThan'] * 86400]
+            );
         }
         if (isset($conditionData['lessThan'])) {
-            $objectList->getConditionBuilder()->add('user_table.registrationDate > ?', [TIME_NOW - $conditionData['lessThan'] * 86400]);
+            $objectList->getConditionBuilder()->add(
+                'user_table.registrationDate > ?',
+                [TIME_NOW - $conditionData['lessThan'] * 86400]
+            );
         }
     }
 

@@ -159,7 +159,10 @@ class DevtoolsPip extends DatabaseObjectDecorator
     public function getFirstError()
     {
         if (!$this->classExists()) {
-            return WCF::getLanguage()->getDynamicVariable('wcf.acp.devtools.pip.error.className', ['className' => $this->getDecoratedObject()->className]);
+            return WCF::getLanguage()->getDynamicVariable(
+                'wcf.acp.devtools.pip.error.className',
+                ['className' => $this->getDecoratedObject()->className]
+            );
         } elseif (!$this->isIdempotent()) {
             return WCF::getLanguage()->get('wcf.acp.devtools.pip.error.notIdempotent');
         } elseif (!$this->getDefaultFilename()) {
@@ -392,7 +395,10 @@ class DevtoolsPip extends DatabaseObjectDecorator
 
                 default:
                     if (\strpos($defaultFilename, '*') !== false) {
-                        $tar->registerFile($target, $project->path . \preg_replace('~\*.*$~', $target, $defaultFilename));
+                        $tar->registerFile(
+                            $target,
+                            $project->path . \preg_replace('~\*.*$~', $target, $defaultFilename)
+                        );
                     } else {
                         $tar->registerFile($target, $project->path . $target);
                     }

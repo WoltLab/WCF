@@ -85,13 +85,16 @@ class ButtonFormField extends AbstractFormField implements IAttributeFormField, 
     {
         parent::populate();
 
-        $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor('button', function (IFormDocument $document, array $parameters) {
-            if (!isset($parameters[$this->getObjectProperty()]) && $this->getValue() !== null) {
-                $parameters[$this->getObjectProperty()] = $this->getValue();
-            }
+        $this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor(
+            'button',
+            function (IFormDocument $document, array $parameters) {
+                if (!isset($parameters[$this->getObjectProperty()]) && $this->getValue() !== null) {
+                    $parameters[$this->getObjectProperty()] = $this->getValue();
+                }
 
-            return $parameters;
-        }));
+                return $parameters;
+            }
+        ));
 
         return $this;
     }

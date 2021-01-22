@@ -28,8 +28,12 @@ final class FloodControl extends SingletonFactory
      * time `($time-$interval, $time]` and the earliest time within the period at which content
      * was created.
      */
-    private function countContentByIdentifier(string $objectType, string $identifier, \DateInterval $interval, int $time): array
-    {
+    private function countContentByIdentifier(
+        string $objectType,
+        string $identifier,
+        \DateInterval $interval,
+        int $time
+    ): array {
         $sql = "SELECT  COUNT(*) AS count, MIN(time) AS earliestTime
                 FROM    wcf" . WCF_N . "_flood_control
                 WHERE   objectTypeID = ?
@@ -65,8 +69,12 @@ final class FloodControl extends SingletonFactory
      * of time `($time-$interval, $time]` and the earliest time within the period at which
      * content was created.
      */
-    public function countGuestContent(string $objectType, string $ipAddress, \DateInterval $interval, int $time = TIME_NOW): array
-    {
+    public function countGuestContent(
+        string $objectType,
+        string $ipAddress,
+        \DateInterval $interval,
+        int $time = TIME_NOW
+    ): array {
         return $this->countContentByIdentifier(
             $objectType,
             $this->getGuestIdentifier($objectType, $ipAddress),
@@ -80,8 +88,12 @@ final class FloodControl extends SingletonFactory
      * of time `[$time-$interval, $time]` and the earliest time within the period at which
      * content was created.
      */
-    public function countUserContent(string $objectType, int $userID, \DateInterval $interval, int $time = TIME_NOW): array
-    {
+    public function countUserContent(
+        string $objectType,
+        int $userID,
+        \DateInterval $interval,
+        int $time = TIME_NOW
+    ): array {
         return $this->countContentByIdentifier(
             $objectType,
             $this->getUserIdentifier($objectType, $userID),

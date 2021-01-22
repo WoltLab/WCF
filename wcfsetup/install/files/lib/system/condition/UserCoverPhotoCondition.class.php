@@ -18,7 +18,10 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Core\System\Condition
  * @since   5.3
  */
-class UserCoverPhotoCondition extends AbstractSelectCondition implements IContentCondition, IObjectListCondition, IUserCondition
+class UserCoverPhotoCondition extends AbstractSelectCondition implements
+    IContentCondition,
+    IObjectListCondition,
+    IUserCondition
 {
     use TObjectListUserCondition;
 
@@ -55,11 +58,17 @@ class UserCoverPhotoCondition extends AbstractSelectCondition implements IConten
 
         switch ($conditionData['userCoverPhoto']) {
             case self::NO_COVER_PHOTO:
-                $objectList->getConditionBuilder()->add('(user_table.coverPhotoHash = ? OR user_table.coverPhotoHash IS NULL)', ['']);
+                $objectList->getConditionBuilder()->add(
+                    '(user_table.coverPhotoHash = ? OR user_table.coverPhotoHash IS NULL)',
+                    ['']
+                );
                 break;
 
             case self::COVER_PHOTO:
-                $objectList->getConditionBuilder()->add('(user_table.coverPhotoHash <> ? AND user_table.coverPhotoHash IS NOT NULL)', ['']);
+                $objectList->getConditionBuilder()->add(
+                    '(user_table.coverPhotoHash <> ? AND user_table.coverPhotoHash IS NOT NULL)',
+                    ['']
+                );
                 break;
         }
     }

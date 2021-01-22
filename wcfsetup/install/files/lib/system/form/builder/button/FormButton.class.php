@@ -50,7 +50,9 @@ class FormButton implements IFormButton
             $splitAccessKey = \array_unique(\explode(' ', $accessKey));
             foreach ($splitAccessKey as $accessKey) {
                 if (\mb_strlen($accessKey) !== 1) {
-                    throw new \InvalidArgumentException("The given access key contains an access key longer than one character: '{$accessKey}'.");
+                    throw new \InvalidArgumentException(
+                        "The given access key contains an access key longer than one character: '{$accessKey}'."
+                    );
                 }
             }
         }

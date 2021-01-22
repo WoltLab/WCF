@@ -103,7 +103,8 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
      */
     public function prepare(array $likes)
     {
-        $commentLikeObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.like.likeableObject', 'com.woltlab.wcf.comment');
+        $commentLikeObjectType = ObjectTypeCache::getInstance()
+            ->getObjectTypeByName('com.woltlab.wcf.like.likeableObject', 'com.woltlab.wcf.comment');
 
         $commentIDs = $responseIDs = [];
         foreach ($likes as $like) {
@@ -193,15 +194,18 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
                         $like->setIsAccessible();
 
                         // short output
-                        $text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.pageComment.response', [
-                            'responseAuthor' => $comment->userID ? $users[$response->userID] : null,
-                            'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
-                            'page' => $pages[$comment->objectID],
-                            'reaction' => $like,
-                            // @deprecated 5.3 Use `$reaction` instead
-                            'like' => $like,
-                            'response' => $response,
-                        ]);
+                        $text = WCF::getLanguage()->getDynamicVariable(
+                            'wcf.like.title.com.woltlab.wcf.pageComment.response',
+                            [
+                                'responseAuthor' => $comment->userID ? $users[$response->userID] : null,
+                                'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
+                                'page' => $pages[$comment->objectID],
+                                'reaction' => $like,
+                                // @deprecated 5.3 Use `$reaction` instead
+                                'like' => $like,
+                                'response' => $response,
+                            ]
+                        );
                         $like->setTitle($text);
 
                         // output

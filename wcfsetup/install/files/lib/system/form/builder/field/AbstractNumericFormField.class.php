@@ -13,7 +13,18 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * @package WoltLabSuite\Core\System\Form\Builder\Field
  * @since   5.2
  */
-abstract class AbstractNumericFormField extends AbstractFormField implements IAttributeFormField, IAutoCompleteFormField, IAutoFocusFormField, ICssClassFormField, IImmutableFormField, IInputModeFormField, IMaximumFormField, IMinimumFormField, INullableFormField, IPlaceholderFormField, ISuffixedFormField
+abstract class AbstractNumericFormField extends AbstractFormField implements
+    IAttributeFormField,
+    IAutoCompleteFormField,
+    IAutoFocusFormField,
+    ICssClassFormField,
+    IImmutableFormField,
+    IInputModeFormField,
+    IMaximumFormField,
+    IMinimumFormField,
+    INullableFormField,
+    IPlaceholderFormField,
+    ISuffixedFormField
 {
     use TAttributeFormField {
         getReservedFieldAttributes as private defaultGetReservedFieldAttributes;
@@ -211,9 +222,13 @@ abstract class AbstractNumericFormField extends AbstractFormField implements IAt
             }
 
             if ($this->integerValues && !\is_int($value)) {
-                throw new \InvalidArgumentException("Given value is neither `null` nor an int, " . \gettype($value) . " given.");
+                throw new \InvalidArgumentException(
+                    "Given value is neither `null` nor an int, " . \gettype($value) . " given."
+                );
             } elseif (!$this->integerValues && !\is_numeric($value)) {
-                throw new \InvalidArgumentException("Given value is neither `null` nor a number, " . \gettype($value) . " given.");
+                throw new \InvalidArgumentException(
+                    "Given value is neither `null` nor a number, " . \gettype($value) . " given."
+                );
             }
         }
 

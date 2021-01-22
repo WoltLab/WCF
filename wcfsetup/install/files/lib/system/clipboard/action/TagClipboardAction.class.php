@@ -41,15 +41,26 @@ class TagClipboardAction extends AbstractClipboardAction
         // handle actions
         switch ($action->actionName) {
             case 'delete':
-                $item->addInternalData('confirmMessage', WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.com.woltlab.wcf.tag.delete.confirmMessage', [
-                    'count' => $item->getCount(),
-                ]));
+                $item->addInternalData(
+                    'confirmMessage',
+                    WCF::getLanguage()->getDynamicVariable(
+                        'wcf.clipboard.item.com.woltlab.wcf.tag.delete.confirmMessage',
+                        [
+                            'count' => $item->getCount(),
+                        ]
+                    )
+                );
                 break;
 
             case 'setAsSynonyms':
-                $item->addParameter('template', WCF::getTPL()->fetch('tagSetAsSynonyms', 'wcf', [
-                    'tags' => $this->objects,
-                ]));
+                $item->addParameter(
+                    'template',
+                    WCF::getTPL()->fetch(
+                        'tagSetAsSynonyms',
+                        'wcf',
+                        ['tags' => $this->objects]
+                    )
+                );
                 break;
         }
 

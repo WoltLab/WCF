@@ -508,7 +508,10 @@ class DatabaseTableChangeProcessor
                         // updating index type and index columns is supported with an
                         // explicit index name is given (automatically generated index
                         // names are not deterministic)
-                        if (!$index->hasGeneratedName() && !empty(\array_diff($matchingExistingIndex->getData(), $index->getData()))) {
+                        if (
+                            !$index->hasGeneratedName()
+                            && !empty(\array_diff($matchingExistingIndex->getData(), $index->getData()))
+                        ) {
                             if (!isset($this->indicesToDrop[$tableName])) {
                                 $this->indicesToDrop[$tableName] = [];
                             }
@@ -1078,9 +1081,12 @@ class DatabaseTableChangeProcessor
 
         $errors = $this->validate();
         if (!empty($errors)) {
-            throw new \RuntimeException(WCF::getLanguage()->getDynamicVariable('wcf.acp.package.error.databaseChange', [
-                'errors' => $errors,
-            ]));
+            throw new \RuntimeException(WCF::getLanguage()->getDynamicVariable(
+                'wcf.acp.package.error.databaseChange',
+                [
+                    'errors' => $errors,
+                ]
+            ));
         }
 
         $this->calculateChanges();

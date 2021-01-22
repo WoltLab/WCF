@@ -197,7 +197,9 @@ trait TXmlGuiPackageInstallationPlugin
         }
 
         if (!$this->supportsDeleteInstruction() && $addDeleteInstruction) {
-            throw new \InvalidArgumentException("This package installation plugin does not support delete instructions.");
+            throw new \InvalidArgumentException(
+                "This package installation plugin does not support delete instructions."
+            );
         }
 
         $this->deleteObject($element);
@@ -557,7 +559,9 @@ XML;
     protected function prepareDeleteXmlElement(\DOMElement $element)
     {
         if (!$this->supportsDeleteInstruction()) {
-            throw new \BadMethodCallException("Cannot prepare delete xml element if delete instructions are not supported.");
+            throw new \BadMethodCallException(
+                "Cannot prepare delete xml element if delete instructions are not supported."
+            );
         }
 
         $name = $element->getAttribute('name');

@@ -259,7 +259,10 @@ class ClipboardHandler extends SingletonFactory
         foreach ($data as $objectType => $objectData) {
             /** @var DatabaseObjectList $objectList */
             $objectList = new $objectData['className']();
-            $objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias() . "." . $objectList->getDatabaseTableIndexName() . " IN (?)", [$objectData['objectIDs']]);
+            $objectList->getConditionBuilder()->add(
+                $objectList->getDatabaseTableAlias() . "." . $objectList->getDatabaseTableIndexName() . " IN (?)",
+                [$objectData['objectIDs']]
+            );
             $objectList->readObjects();
 
             $this->markedItems[$objectType] = $objectList->getObjects();

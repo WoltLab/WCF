@@ -63,10 +63,14 @@ class WysiwygSmileyFormContainer extends TabTabMenuFormContainer
                         ->removeClass('tabMenuContent')
                         ->addClass('messageTabMenuContent')
                         ->appendChild(
-                            FormContainer::create($this->getId() . '_smileyCategoryContainer' . $smileyCategory->categoryID)
+                            FormContainer::create(
+                                $this->getId() . '_smileyCategoryContainer' . $smileyCategory->categoryID
+                            )
                                 ->removeClass('section')
                                 ->appendChild(
-                                    WysiwygSmileyFormNode::create($this->getId() . '_smileyCategory' . $smileyCategory->categoryID)
+                                    WysiwygSmileyFormNode::create(
+                                        $this->getId() . '_smileyCategory' . $smileyCategory->categoryID
+                                    )
                                         ->smilies($smilies)
                                 )
                         )

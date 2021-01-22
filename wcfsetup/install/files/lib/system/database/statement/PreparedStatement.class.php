@@ -101,7 +101,10 @@ class PreparedStatement
 
             if (!$result) {
                 $errorInfo = $this->pdoStatement->errorInfo();
-                throw new DatabaseQueryExecutionException("Could not execute statement '" . $this->query . "': " . $errorInfo[0] . ' ' . $errorInfo[2], $parameters);
+                throw new DatabaseQueryExecutionException(
+                    "Could not execute statement '" . $this->query . "': " . $errorInfo[0] . ' ' . $errorInfo[2],
+                    $parameters
+                );
             }
 
             if (WCF::benchmarkIsEnabled()) {
@@ -112,7 +115,11 @@ class PreparedStatement
                 Benchmark::getInstance()->stop();
             }
 
-            throw new DatabaseQueryExecutionException("Could not execute statement '" . $this->query . "'", $parameters, $e);
+            throw new DatabaseQueryExecutionException(
+                "Could not execute statement '" . $this->query . "'",
+                $parameters,
+                $e
+            );
         }
     }
 

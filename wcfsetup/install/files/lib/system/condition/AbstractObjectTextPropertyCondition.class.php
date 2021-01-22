@@ -17,7 +17,9 @@ use wcf\system\exception\InvalidObjectArgument;
  * @package WoltLabSuite\Core\System\Condition
  * @since   3.0
  */
-abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition implements IObjectCondition, IObjectListCondition
+abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition implements
+    IObjectCondition,
+    IObjectListCondition
 {
     /**
      * name of the relevant database object class
@@ -49,9 +51,15 @@ abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition
         }
 
         if ($this->supportsMultipleValues) {
-            $objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias() . '.' . $this->getPropertyName() . ' IN (?)', [$conditionData[$this->fieldName]]);
+            $objectList->getConditionBuilder()->add(
+                $objectList->getDatabaseTableAlias() . '.' . $this->getPropertyName() . ' IN (?)',
+                [$conditionData[$this->fieldName]]
+            );
         } else {
-            $objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias() . '.' . $this->getPropertyName() . ' = ?', [$conditionData[$this->fieldName]]);
+            $objectList->getConditionBuilder()->add(
+                $objectList->getDatabaseTableAlias() . '.' . $this->getPropertyName() . ' = ?',
+                [$conditionData[$this->fieldName]]
+            );
         }
     }
 

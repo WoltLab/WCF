@@ -161,7 +161,12 @@ class DatabaseTableIndex
      */
     public function type($type)
     {
-        if ($type !== static::DEFAULT_TYPE && $type !== static::PRIMARY_TYPE && $type !== static::UNIQUE_TYPE && $type !== static::FULLTEXT_TYPE) {
+        if (
+            $type !== static::DEFAULT_TYPE
+            && $type !== static::PRIMARY_TYPE
+            && $type !== static::UNIQUE_TYPE
+            && $type !== static::FULLTEXT_TYPE
+        ) {
             throw new \InvalidArgumentException("Unknown index type '{$type}'.");
         }
 

@@ -15,7 +15,12 @@ use wcf\util\DateUtil;
  * @package WoltLabSuite\Core\System\Form\Builder\Field
  * @since   5.2
  */
-class DateFormField extends AbstractFormField implements IAttributeFormField, IAutoFocusFormField, ICssClassFormField, IImmutableFormField, INullableFormField
+class DateFormField extends AbstractFormField implements
+    IAttributeFormField,
+    IAutoFocusFormField,
+    ICssClassFormField,
+    IImmutableFormField,
+    INullableFormField
 {
     use TInputAttributeFormField {
         getReservedFieldAttributes as private inputGetReservedFieldAttributes;
@@ -275,7 +280,10 @@ class DateFormField extends AbstractFormField implements IAttributeFormField, IA
      */
     public function readValue()
     {
-        if ($this->getDocument()->hasRequestData($this->getPrefixedId()) && \is_string($this->getDocument()->getRequestData($this->getPrefixedId()))) {
+        if (
+            $this->getDocument()->hasRequestData($this->getPrefixedId())
+            && \is_string($this->getDocument()->getRequestData($this->getPrefixedId()))
+        ) {
             $this->value = $this->getDocument()->getRequestData($this->getPrefixedId());
 
             if ($this->value === '') {

@@ -210,7 +210,10 @@ class ClassNameFormField extends TextFormField
                         ['language' => $language]
                     )
                 );
-            } elseif ($this->getImplementedInterface() !== '' && !\is_subclass_of($text, $this->getImplementedInterface())) {
+            } elseif (
+                $this->getImplementedInterface() !== ''
+                && !\is_subclass_of($text, $this->getImplementedInterface())
+            ) {
                 $this->addValidationError(
                     new FormFieldValidationError(
                         'interface',

@@ -80,8 +80,13 @@ class UploadFile
      * @param       bool         $processed
      * @param       bool         $detectSvgAsImage
      */
-    public function __construct($location, $filename, $viewableImage = true, $processed = false, $detectSvgAsImage = false)
-    {
+    public function __construct(
+        $location,
+        $filename,
+        $viewableImage = true,
+        $processed = false,
+        $detectSvgAsImage = false
+    ) {
         if (!\file_exists($location)) {
             throw new \InvalidArgumentException("File '" . $location . "' could not be found.");
         }

@@ -69,8 +69,11 @@ class CustomFormDataProcessor extends AbstractFormDataProcessor
             $parameterType = $parameters[0]->getType();
             if (
                 !(
-                    ($parameterType instanceof \ReflectionNamedType
-                    && ($parameterType->getName() === IFormDocument::class || \is_subclass_of($parameterType->getName(), IFormDocument::class)))
+                    $parameterType instanceof \ReflectionNamedType
+                    && (
+                        $parameterType->getName() === IFormDocument::class
+                        || \is_subclass_of($parameterType->getName(), IFormDocument::class)
+                    )
                 )
             ) {
                 throw new \InvalidArgumentException(
@@ -86,7 +89,9 @@ class CustomFormDataProcessor extends AbstractFormDataProcessor
                     && ($parameterType->getName() === 'array'))
                 )
             ) {
-                throw new \InvalidArgumentException("The form data processor function's second parameter must be an array.");
+                throw new \InvalidArgumentException(
+                    "The form data processor function's second parameter must be an array."
+                );
             }
 
             $this->formDataProcessor = $formDataProcessor;
@@ -106,8 +111,11 @@ class CustomFormDataProcessor extends AbstractFormDataProcessor
             $parameterType = $parameters[0]->getType();
             if (
                 !(
-                    ($parameterType instanceof \ReflectionNamedType
-                    && ($parameterType->getName() === IFormDocument::class || \is_subclass_of($parameterType->getName(), IFormDocument::class)))
+                    $parameterType instanceof \ReflectionNamedType
+                    && (
+                        $parameterType->getName() === IFormDocument::class
+                        || \is_subclass_of($parameterType->getName(), IFormDocument::class)
+                    )
                 )
             ) {
                 throw new \InvalidArgumentException(

@@ -91,7 +91,9 @@ class DevtoolsInstaller extends Installer
                             break;
                     }
                 } else {
-                    $directory = FileUtil::addTrailingSlash($this->project->path . \pathinfo($archive, \PATHINFO_FILENAME));
+                    $directory = FileUtil::addTrailingSlash(
+                        $this->project->path . \pathinfo($archive, \PATHINFO_FILENAME)
+                    );
                 }
 
                 if ($source == $archive && \is_dir($directory)) {

@@ -62,8 +62,14 @@ class AJAXException extends LoggedException
      * @param   string      $exceptionID
      * @param       \Exception|\Throwable   $previous
      */
-    public function __construct($message, $errorType = self::INTERNAL_ERROR, $stacktrace = null, $returnValues = [], $exceptionID = '', $previous = null)
-    {
+    public function __construct(
+        $message,
+        $errorType = self::INTERNAL_ERROR,
+        $stacktrace = null,
+        $returnValues = [],
+        $exceptionID = '',
+        $previous = null
+    ) {
         if ($stacktrace === null) {
             $stacktrace = $this->getTraceAsString();
         }

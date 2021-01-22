@@ -39,7 +39,9 @@ class RowFormFieldContainer extends FormContainer
     public function appendChild(IFormChildNode $child)
     {
         if ((!$child instanceof IFormField)) {
-            throw new \InvalidArgumentException("'" . static::class . "' only supports '" . IFormField::class . "' instances as children.");
+            throw new \InvalidArgumentException(
+                "'" . static::class . "' only supports '" . IFormField::class . "' instances as children."
+            );
         }
 
         return parent::appendChild($child);

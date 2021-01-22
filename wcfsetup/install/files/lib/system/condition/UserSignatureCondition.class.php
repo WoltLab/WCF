@@ -18,7 +18,10 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Core\System\Condition
  * @since   5.3
  */
-class UserSignatureCondition extends AbstractSelectCondition implements IContentCondition, IObjectListCondition, IUserCondition
+class UserSignatureCondition extends AbstractSelectCondition implements
+    IContentCondition,
+    IObjectListCondition,
+    IUserCondition
 {
     use TObjectListUserCondition;
 

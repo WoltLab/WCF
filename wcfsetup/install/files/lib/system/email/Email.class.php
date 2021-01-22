@@ -195,7 +195,9 @@ class Email
             throw new \DomainException("The given message id '" . $messageID . "' is invalid. Note: You must not specify the part right of the at sign (@).");
         }
         if (\strlen($messageID) > 200) {
-            throw new \DomainException("The given message id '" . $messageID . "' is not allowed. The maximum allowed length is 200 bytes.");
+            throw new \DomainException(
+                "The given message id '" . $messageID . "' is not allowed. The maximum allowed length is 200 bytes."
+            );
         }
 
         $this->messageID = $messageID;
@@ -306,7 +308,9 @@ class Email
             throw new \DomainException("The given list id '" . $listId . "' is invalid.");
         }
         if (\strlen($listId) > 200) {
-            throw new \DomainException("The given list id '" . $listId . "' is not allowed. The maximum allowed length is 200 bytes.");
+            throw new \DomainException(
+                "The given list id '" . $listId . "' is not allowed. The maximum allowed length is 200 bytes."
+            );
         }
         if ($humanReadable !== null) {
             $humanReadable = EmailGrammar::encodeHeader($humanReadable);
@@ -434,7 +438,9 @@ class Email
             case 'bcc':
                 break;
             default:
-                throw new \DomainException("The given type '" . $type . "' is invalid. Must be one of 'to', 'cc', 'bcc'.");
+                throw new \DomainException(
+                    "The given type '" . $type . "' is invalid. Must be one of 'to', 'cc', 'bcc'."
+                );
         }
 
         if (isset($this->recipients[$recipient->getAddress()])) {
@@ -478,7 +484,9 @@ class Email
     {
         $header = \mb_strtolower($header);
         if (!StringUtil::startsWith($header, 'x-')) {
-            throw new \DomainException("The header '" . $header . "' may not be set. You may only set user defined headers (starting with 'X-').");
+            throw new \DomainException(
+                "The header '{$header}' may not be set. You may only set user defined headers (starting with 'X-')."
+            );
         }
 
         $this->extraHeaders[] = [$header, EmailGrammar::encodeQuotedPrintableHeader($value)];
@@ -628,7 +636,9 @@ class Email
 
         switch ($this->body->getContentTransferEncoding()) {
             case 'quoted-printable':
-                return \quoted_printable_encode(\str_replace("\n", "\r\n", StringUtil::unifyNewlines($this->body->getContent())));
+                return \quoted_printable_encode(
+                    \str_replace("\n", "\r\n", StringUtil::unifyNewlines($this->body->getContent()))
+                );
             break;
             case 'base64':
                 return \chunk_split(\base64_encode($this->body->getContent()));

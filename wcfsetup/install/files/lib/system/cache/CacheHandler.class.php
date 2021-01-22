@@ -76,7 +76,10 @@ class CacheHandler extends SingletonFactory
      */
     public function get(ICacheBuilder $cacheBuilder, array $parameters)
     {
-        return $this->getCacheSource()->get($this->getCacheName($cacheBuilder, $parameters), $cacheBuilder->getMaxLifetime());
+        return $this->getCacheSource()->get(
+            $this->getCacheName($cacheBuilder, $parameters),
+            $cacheBuilder->getMaxLifetime()
+        );
     }
 
     /**
@@ -88,7 +91,11 @@ class CacheHandler extends SingletonFactory
      */
     public function set(ICacheBuilder $cacheBuilder, array $parameters, array $data)
     {
-        $this->getCacheSource()->set($this->getCacheName($cacheBuilder, $parameters), $data, $cacheBuilder->getMaxLifetime());
+        $this->getCacheSource()->set(
+            $this->getCacheName($cacheBuilder, $parameters),
+            $data,
+            $cacheBuilder->getMaxLifetime()
+        );
     }
 
     /**

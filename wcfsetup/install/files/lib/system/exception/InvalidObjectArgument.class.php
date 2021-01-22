@@ -19,6 +19,8 @@ class InvalidObjectArgument extends \InvalidArgumentException
      */
     public function __construct(object $object, string $expectedClass, string $objectName = 'Object')
     {
-        parent::__construct("{$objectName} is no instance of '{$expectedClass}', instance of '" . \get_class($object) . "' given.");
+        parent::__construct(
+            "{$objectName} is no instance of '{$expectedClass}', instance of '" . \get_class($object) . "' given."
+        );
     }
 }

@@ -63,7 +63,9 @@ class DevtoolsTar extends Tar
     public function extractToString($index)
     {
         if (!isset($this->files[$index])) {
-            throw new \RuntimeException("DevtoolsTar does not permit reading any files except for the explicitly registered ones.");
+            throw new \RuntimeException(
+                "DevtoolsTar does not permit reading any files except for the explicitly registered ones."
+            );
         }
 
         return \file_get_contents($this->files[$index]);

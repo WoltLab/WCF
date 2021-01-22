@@ -82,9 +82,12 @@ class CaptchaFormField extends AbstractFormField implements IObjectTypeFormNode
         // builder API needs at least one validation error present to detect validation errors.
         // Now, however, we can remove the validation error again.
         if ($this->validationError) {
-            $this->validationErrors = \array_filter($this->validationErrors, function (IFormFieldValidationError $validationError) {
-                return $validationError !== $this->validationError;
-            });
+            $this->validationErrors = \array_filter(
+                $this->validationErrors,
+                function (IFormFieldValidationError $validationError) {
+                    return $validationError !== $this->validationError;
+                }
+            );
         }
 
         return $variables;

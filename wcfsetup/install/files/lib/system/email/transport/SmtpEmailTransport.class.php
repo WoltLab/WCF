@@ -87,8 +87,13 @@ class SmtpEmailTransport implements IEmailTransport
      * @param   string  $starttls   one of 'none', 'may' and 'encrypt'
      * @throws  \InvalidArgumentException
      */
-    public function __construct($host = MAIL_SMTP_HOST, $port = MAIL_SMTP_PORT, $username = MAIL_SMTP_USER, $password = MAIL_SMTP_PASSWORD, $starttls = MAIL_SMTP_STARTTLS)
-    {
+    public function __construct(
+        $host = MAIL_SMTP_HOST,
+        $port = MAIL_SMTP_PORT,
+        $username = MAIL_SMTP_USER,
+        $password = MAIL_SMTP_PASSWORD,
+        $starttls = MAIL_SMTP_STARTTLS
+    ) {
         $this->host = StringUtil::trim($host);
         $this->port = \intval($port);
         $this->username = StringUtil::trim($username);
@@ -101,7 +106,9 @@ class SmtpEmailTransport implements IEmailTransport
                 $this->starttls = $starttls;
                 break;
             default:
-                throw new \InvalidArgumentException("Invalid STARTTLS preference '" . $starttls . "'. Must be one of 'none', 'may' and 'encrypt'.");
+                throw new \InvalidArgumentException(
+                    "Invalid STARTTLS preference '" . $starttls . "'. Must be one of 'none', 'may' and 'encrypt'."
+                );
         }
     }
 
@@ -166,7 +173,12 @@ class SmtpEmailTransport implements IEmailTransport
     protected function read(array $expectedCodes)
     {
         $truncateReply = static function ($reply) {
-            return StringUtil::truncate(\preg_replace('/[\x00-\x1F\x80-\xFF]/', '.', $reply), 80, StringUtil::HELLIP, true);
+            return StringUtil::truncate(
+                \preg_replace('/[\x00-\x1F\x80-\xFF]/', '.', $reply),
+                80,
+                StringUtil::HELLIP,
+                true
+            );
         };
 
         $code = null;
@@ -244,10 +256,15 @@ class SmtpEmailTransport implements IEmailTransport
 
         try {
             $this->write('EHLO ' . Email::getHost());
-            $this->features = \array_map('strtolower', \explode("\n", StringUtil::unifyNewlines($this->read([250])[1])));
+            $this->features = \array_map(
+                'strtolower',
+                \explode("\n", StringUtil::unifyNewlines($this->read([250])[1]))
+            );
         } catch (SystemException $e) {
             if ($this->starttls == 'encrypt') {
-                throw new PermanentFailure("Remote SMTP server does not support EHLO, but \$starttls is set to 'encrypt'.");
+                throw new PermanentFailure(
+                    "Remote SMTP server does not support EHLO, but \$starttls is set to 'encrypt'."
+                );
             }
 
             $this->write('HELO ' . Email::getHost());
@@ -257,13 +274,18 @@ class SmtpEmailTransport implements IEmailTransport
         switch ($this->starttls) {
             case 'encrypt':
                 if (!\in_array('starttls', $this->features)) {
-                    throw new PermanentFailure("Remote SMTP server does not advertise STARTTLS, but \$starttls is set to 'encrypt'.");
+                    throw new PermanentFailure(
+                        "Remote SMTP server does not advertise STARTTLS, but \$starttls is set to 'encrypt'."
+                    );
                 }
 
                 $this->starttls();
 
                 $this->write('EHLO ' . Email::getHost());
-                $this->features = \array_map('strtolower', \explode("\n", StringUtil::unifyNewlines($this->read([250])[1])));
+                $this->features = \array_map(
+                    'strtolower',
+                    \explode("\n", StringUtil::unifyNewlines($this->read([250])[1]))
+                );
                 break;
             case 'may':
                 if (\in_array('starttls', $this->features)) {
@@ -271,7 +293,10 @@ class SmtpEmailTransport implements IEmailTransport
                         $this->starttls();
 
                         $this->write('EHLO ' . Email::getHost());
-                        $this->features = \array_map('strtolower', \explode("\n", StringUtil::unifyNewlines($this->read([250])[1])));
+                        $this->features = \array_map(
+                            'strtolower',
+                            \explode("\n", StringUtil::unifyNewlines($this->read([250])[1]))
+                        );
                     } catch (\Exception $e) {
                         \wcf\functions\exception\logThrowable($e);
                         $this->disconnect();
@@ -368,7 +393,11 @@ class SmtpEmailTransport implements IEmailTransport
         }
 
         // server does not support auth
-        throw new TransientFailure("Remote SMTP server does not support AUTH, but SMTP credentials are specified.", 0, $authException);
+        throw new TransientFailure(
+            "Remote SMTP server does not support AUTH, but SMTP credentials are specified.",
+            0,
+            $authException
+        );
     }
 
     /**

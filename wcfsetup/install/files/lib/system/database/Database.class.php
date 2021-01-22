@@ -117,8 +117,16 @@ abstract class Database
      * @param   bool        $tryToCreateDatabase
      * @param   array       $defaultDriverOptions
      */
-    public function __construct($host, $user, $password, $database, $port, $failsafeTest = false, $tryToCreateDatabase = false, $defaultDriverOptions = [])
-    {
+    public function __construct(
+        $host,
+        $user,
+        $password,
+        $database,
+        $port,
+        $failsafeTest = false,
+        $tryToCreateDatabase = false,
+        $defaultDriverOptions = []
+    ) {
         $this->host = $host;
         $this->port = $port;
         $this->user = $user;
@@ -175,7 +183,10 @@ abstract class Database
                 $result = $this->pdo->beginTransaction();
             } else {
                 if (WCF::benchmarkIsEnabled()) {
-                    Benchmark::getInstance()->start("SAVEPOINT level" . $this->activeTransactions, Benchmark::TYPE_SQL_QUERY);
+                    Benchmark::getInstance()->start(
+                        "SAVEPOINT level" . $this->activeTransactions,
+                        Benchmark::TYPE_SQL_QUERY
+                    );
                 }
                 $result = $this->pdo->exec("SAVEPOINT level" . $this->activeTransactions) !== false;
             }
@@ -213,7 +224,10 @@ abstract class Database
                 $result = $this->pdo->commit();
             } else {
                 if (WCF::benchmarkIsEnabled()) {
-                    Benchmark::getInstance()->start("RELEASE SAVEPOINT level" . $this->activeTransactions, Benchmark::TYPE_SQL_QUERY);
+                    Benchmark::getInstance()->start(
+                        "RELEASE SAVEPOINT level" . $this->activeTransactions,
+                        Benchmark::TYPE_SQL_QUERY
+                    );
                 }
                 $result = $this->pdo->exec("RELEASE SAVEPOINT level" . $this->activeTransactions) !== false;
             }
@@ -249,7 +263,10 @@ abstract class Database
                 $result = $this->pdo->rollBack();
             } else {
                 if (WCF::benchmarkIsEnabled()) {
-                    Benchmark::getInstance()->start("ROLLBACK TO SAVEPOINT level" . $this->activeTransactions, Benchmark::TYPE_SQL_QUERY);
+                    Benchmark::getInstance()->start(
+                        "ROLLBACK TO SAVEPOINT level" . $this->activeTransactions,
+                        Benchmark::TYPE_SQL_QUERY
+                    );
                 }
                 $result = $this->pdo->exec("ROLLBACK TO SAVEPOINT level" . $this->activeTransactions) !== false;
             }
@@ -287,7 +304,11 @@ abstract class Database
             static $requestInformation = null;
             if ($requestInformation === null) {
                 $requestInformation = '';
-                if (\defined('ENABLE_PRODUCTION_DEBUG_MODE') && ENABLE_PRODUCTION_DEBUG_MODE && isset($_SERVER['REQUEST_URI'])) {
+                if (
+                    \defined('ENABLE_PRODUCTION_DEBUG_MODE')
+                    && ENABLE_PRODUCTION_DEBUG_MODE
+                    && isset($_SERVER['REQUEST_URI'])
+                ) {
                     $requestInformation = $_SERVER['REQUEST_URI'];
                     if ($requestId = \wcf\getRequestId()) {
                         $requestInformation = \substr($requestInformation, 0, 70);
@@ -301,7 +322,9 @@ abstract class Database
                 }
             }
 
-            $pdoStatement = $this->pdo->prepare($statement . ($requestInformation ? " -- " . $this->pdo->quote($requestInformation) : ''));
+            $pdoStatement = $this->pdo->prepare(
+                $statement . ($requestInformation ? " -- " . $this->pdo->quote($requestInformation) : '')
+            );
 
             return new $this->preparedStatementClassName($this, $pdoStatement, $statement);
         } catch (\PDOException $e) {
@@ -322,7 +345,12 @@ abstract class Database
     public function handleLimitParameter($query, $limit = 0, $offset = 0)
     {
         if ($limit != 0) {
-            $query = \preg_replace('~(\s+FOR\s+UPDATE\s*)?$~', " LIMIT " . $limit . ($offset ? " OFFSET " . $offset : '') . "\\0", $query, 1);
+            $query = \preg_replace(
+                '~(\s+FOR\s+UPDATE\s*)?$~',
+                " LIMIT " . $limit . ($offset ? " OFFSET " . $offset : '') . "\\0",
+                $query,
+                1
+            );
         }
 
         return $query;
