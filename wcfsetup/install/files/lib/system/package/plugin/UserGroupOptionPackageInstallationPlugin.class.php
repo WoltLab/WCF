@@ -447,13 +447,20 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
                     $unqualifiedClassname = \str_replace('.class.php', '', $fileObject->getFilename());
                     $classname = $application->getAbbreviation() . '\\system\\option\\user\\group\\' . $unqualifiedClassname;
 
-                    if (!\is_subclass_of($classname,
-                            IOptionType::class) || !(new \ReflectionClass($classname))->isInstantiable()) {
+                    if (
+                        !\is_subclass_of(
+                            $classname,
+                            IOptionType::class
+                        ) || !(new \ReflectionClass($classname))->isInstantiable()
+                    ) {
                         continue;
                     }
 
-                    $optionType = \str_replace($optionTypePrefix . 'UserGroupOptionType.class.php', '',
-                        $fileObject->getFilename());
+                    $optionType = \str_replace(
+                        $optionTypePrefix . 'UserGroupOptionType.class.php',
+                        '',
+                        $fileObject->getFilename()
+                    );
 
                     // only make first letter lowercase if the first two letters are not uppercase
                     // relevant cases: `URL` and the `WBB` prefix

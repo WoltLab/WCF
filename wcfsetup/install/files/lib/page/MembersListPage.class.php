@@ -90,8 +90,12 @@ class MembersListPage extends SortablePage
         parent::readParameters();
 
         // letter
-        if (isset($_REQUEST['letter']) && \mb_strlen($_REQUEST['letter']) == 1 && \mb_strpos(self::$availableLetters,
-                $_REQUEST['letter']) !== false) {
+        if (
+            isset($_REQUEST['letter']) && \mb_strlen($_REQUEST['letter']) == 1 && \mb_strpos(
+                self::$availableLetters,
+                $_REQUEST['letter']
+            ) !== false
+        ) {
             $this->letter = $_REQUEST['letter'];
         }
 

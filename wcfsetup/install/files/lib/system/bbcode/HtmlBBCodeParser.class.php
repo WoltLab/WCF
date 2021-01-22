@@ -83,13 +83,16 @@ class HtmlBBCodeParser extends BBCodeParser
     {
         $codeBlocks = [];
         foreach (self::$codeTagNames as $tagName) {
-            $text = \preg_replace_callback('~(<' . $tagName . '[^>]+>)([\s\S]+?)(<\/' . $tagName . ')~',
+            $text = \preg_replace_callback(
+                '~(<' . $tagName . '[^>]+>)([\s\S]+?)(<\/' . $tagName . ')~',
                 static function ($matches) use (&$codeBlocks) {
                     $uuid = StringUtil::getUUID();
                     $codeBlocks[$uuid] = $matches[2];
 
                     return $matches[1] . '###' . $uuid . '###' . $matches[3];
-                }, $text);
+                },
+                $text
+            );
         }
 
         $this->setText($text);

@@ -196,7 +196,8 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 
                 /** @var TextFormField $optionNameField */
                 $optionNameField = $dataContainer->getNodeById('optionName');
-                $optionNameField->addValidator(new FormFieldValidator('uniqueness',
+                $optionNameField->addValidator(new FormFieldValidator(
+                    'uniqueness',
                     function (TextFormField $formField) {
                         if (
                             $formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE
@@ -220,7 +221,8 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
                                 );
                             }
                         }
-                    }));
+                    }
+                ));
 
                 // add `hidden` pseudo-category
                 /** @var SingleSelectionFormField $categoryName */
@@ -272,14 +274,16 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
                 ]);
 
                 // ensure proper normalization of select options
-                $form->getDataHandler()->addProcessor(new CustomFormDataProcessor('selectOptions',
+                $form->getDataHandler()->addProcessor(new CustomFormDataProcessor(
+                    'selectOptions',
                     static function (IFormDocument $document, array $parameters) {
                         if (isset($parameters['data']['selectoptions'])) {
                             $parameters['data']['selectoptions'] = StringUtil::unifyNewlines($parameters['data']['selectoptions']);
                         }
 
                         return $parameters;
-                    }));
+                    }
+                ));
 
                 break;
         }

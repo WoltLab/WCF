@@ -41,9 +41,13 @@ final class HeaderUtil
     {
         $cookieDomain = self::getCookieDomain();
 
-        @\header('Set-Cookie: ' . \rawurlencode(COOKIE_PREFIX . $name) . '=' . \rawurlencode((string)$value) . ($expire ? '; expires=' . \gmdate('D, d-M-Y H:i:s',
-                    $expire) . ' GMT; max-age=' . ($expire - TIME_NOW) : '') . '; path=/' . ($cookieDomain !== null ? '; domain=' . $cookieDomain : '') . (RouteHandler::secureConnection() ? '; secure' : '') . '; HttpOnly',
-            false);
+        @\header(
+            'Set-Cookie: ' . \rawurlencode(COOKIE_PREFIX . $name) . '=' . \rawurlencode((string)$value) . ($expire ? '; expires=' . \gmdate(
+                'D, d-M-Y H:i:s',
+                $expire
+            ) . ' GMT; max-age=' . ($expire - TIME_NOW) : '') . '; path=/' . ($cookieDomain !== null ? '; domain=' . $cookieDomain : '') . (RouteHandler::secureConnection() ? '; secure' : '') . '; HttpOnly',
+            false
+        );
     }
 
     /**
@@ -52,9 +56,13 @@ final class HeaderUtil
     public static function getCookieDomain(): ?string
     {
         $application = ApplicationHandler::getInstance()->getActiveApplication();
-        $addDomain = (\mb_strpos($application->cookieDomain,
-                '.') === false || StringUtil::endsWith($application->cookieDomain,
-                '.lan') || StringUtil::endsWith($application->cookieDomain, '.local')) ? false : true;
+        $addDomain = (\mb_strpos(
+            $application->cookieDomain,
+            '.'
+        ) === false || StringUtil::endsWith(
+            $application->cookieDomain,
+            '.lan'
+        ) || StringUtil::endsWith($application->cookieDomain, '.local')) ? false : true;
 
         if (!$addDomain) {
             return null;

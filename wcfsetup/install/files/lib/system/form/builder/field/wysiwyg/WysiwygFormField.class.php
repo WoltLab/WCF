@@ -254,8 +254,12 @@ class WysiwygFormField extends AbstractFormField implements
      */
     public function quoteData($objectType, $actionClass, array $selectors = [])
     {
-        if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.message.quote',
-                $objectType) === null) {
+        if (
+            ObjectTypeCache::getInstance()->getObjectTypeByName(
+                'com.woltlab.wcf.message.quote',
+                $objectType
+            ) === null
+        ) {
             throw new \InvalidArgumentException("Unknown message quote object type '{$objectType}'.");
         }
 

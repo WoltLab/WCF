@@ -431,8 +431,13 @@ class PackageInstallationDispatcher
                 $this->previousPackageData !== null
                 && $this->getPackage()->package == $this->previousPackageData['package']
             ) {
-                if (Package::compareVersion($this->getPackage()->packageVersion,
-                    $this->previousPackageData['packageVersion'], '<')) {
+                if (
+                    Package::compareVersion(
+                        $this->getPackage()->packageVersion,
+                        $this->previousPackageData['packageVersion'],
+                        '<'
+                    )
+                ) {
                     // fake package to simulate the package version required by current archive
                     $this->getPackage()->setPackageVersion($this->previousPackageData['packageVersion']);
                 }

@@ -125,8 +125,13 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
      */
     protected function validateImport(array $data)
     {
-        CronjobUtil::validate($data['startMinute'], $data['startHour'], $data['startDom'], $data['startMonth'],
-            $data['startDow']);
+        CronjobUtil::validate(
+            $data['startMinute'],
+            $data['startHour'],
+            $data['startDom'],
+            $data['startMonth'],
+            $data['startDow']
+        );
     }
 
     /**
@@ -254,7 +259,8 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
                     ->label('wcf.acp.cronjob.' . $timeProperty)
                     ->description("wcf.acp.cronjob.{$timeProperty}.description")
                     ->required()
-                    ->addValidator(new FormFieldValidator('format',
+                    ->addValidator(new FormFieldValidator(
+                        'format',
                         static function (TextFormField $formField) use ($timeProperty) {
                             try {
                                 CronjobUtil::validateAttribute($timeProperty, $formField->getSaveValue());
@@ -266,7 +272,8 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
                                     )
                                 );
                             }
-                        })),
+                        }
+                    )),
                 'options'
             );
         }

@@ -49,8 +49,10 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
     {
         parent::__construct($object);
 
-        $this->availableUserGroups = UserGroup::getSortedAccessibleGroups([],
-            [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::OWNER, UserGroup::USERS]);
+        $this->availableUserGroups = UserGroup::getSortedAccessibleGroups(
+            [],
+            [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::OWNER, UserGroup::USERS]
+        );
     }
 
     /**

@@ -19,8 +19,9 @@ use wcf\system\like\IViewableLikeProvider;
  * @method  LikeableComment     getObjectByID($objectID)
  * @method  LikeableComment[]   getObjectsByIDs(array $objectIDs)
  */
-class LikeableCommentProvider extends AbstractObjectTypeProvider implements ILikeObjectTypeProvider,
-                                                                            IViewableLikeProvider
+class LikeableCommentProvider extends AbstractObjectTypeProvider implements
+    ILikeObjectTypeProvider,
+    IViewableLikeProvider
 {
     /**
      * @inheritDoc

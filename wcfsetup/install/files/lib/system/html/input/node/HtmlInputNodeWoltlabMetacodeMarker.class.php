@@ -561,8 +561,11 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode
             $content = \array_splice($attributes, $pair['useText'])[0];
         }
 
-        $textNode = $start->ownerDocument->createTextNode(($pair['openSource'] ?: HtmlBBCodeParser::getInstance()->buildBBCodeTag($name,
-                $attributes, true)) . $content);
+        $textNode = $start->ownerDocument->createTextNode(($pair['openSource'] ?: HtmlBBCodeParser::getInstance()->buildBBCodeTag(
+            $name,
+            $attributes,
+            true
+        )) . $content);
         DOMUtil::insertBefore($textNode, $start);
         DOMUtil::removeNode($start);
 

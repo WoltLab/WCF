@@ -75,8 +75,10 @@ class WoltLabSuiteMediaBBCode extends AbstractBBCode
                     return WCF::getTPL()->fetch('mediaBBCodeTag', 'wcf', [
                         'mediaLink' => $this->getLink($media),
                         'removeLinks' => $removeLinks,
-                        'thumbnailLink' => $thumbnailSize !== 'original' ? $this->getThumbnailLink($media,
-                            $thumbnailSize) : '',
+                        'thumbnailLink' => $thumbnailSize !== 'original' ? $this->getThumbnailLink(
+                            $media,
+                            $thumbnailSize
+                        ) : '',
                     ]);
                 }
 

@@ -145,9 +145,15 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
 
         static $databaseTableNames = [];
         if (!isset($databaseTableNames[$className])) {
-            $databaseTableNames[$className] = $classParts[0] . WCF_N . '_' . \strtolower(\implode('_',
-                    \preg_split('~(?=[A-Z](?=[a-z]))~', \array_pop($classParts), -1,
-                        \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY)));
+            $databaseTableNames[$className] = $classParts[0] . WCF_N . '_' . \strtolower(\implode(
+                '_',
+                \preg_split(
+                    '~(?=[A-Z](?=[a-z]))~',
+                    \array_pop($classParts),
+                    -1,
+                    \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY
+                )
+            ));
         }
 
         return $databaseTableNames[$className];
@@ -166,9 +172,15 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
         static $databaseTableAliases = [];
         if (!isset($databaseTableAliases[$className])) {
             $classParts = \explode('\\', $className);
-            $databaseTableAliases[$className] = \strtolower(\implode('_',
-                \preg_split('~(?=[A-Z](?=[a-z]))~', \array_pop($classParts), -1,
-                    \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY)));
+            $databaseTableAliases[$className] = \strtolower(\implode(
+                '_',
+                \preg_split(
+                    '~(?=[A-Z](?=[a-z]))~',
+                    \array_pop($classParts),
+                    -1,
+                    \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY
+                )
+            ));
         }
 
         return $databaseTableAliases[$className];
@@ -194,8 +206,12 @@ abstract class DatabaseObject implements IIDObject, IStorableObject
         static $databaseTableIndexName = null;
         if ($databaseTableIndexName === null) {
             $className = \explode('\\', \get_called_class());
-            $parts = \preg_split('~(?=[A-Z](?=[a-z]))~', \array_pop($className), -1,
-                \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY);
+            $parts = \preg_split(
+                '~(?=[A-Z](?=[a-z]))~',
+                \array_pop($className),
+                -1,
+                \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY
+            );
             $databaseTableIndexName = \strtolower(\array_pop($parts)) . 'ID';
         }
 

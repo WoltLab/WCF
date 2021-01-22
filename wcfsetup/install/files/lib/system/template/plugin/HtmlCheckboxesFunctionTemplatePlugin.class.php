@@ -74,8 +74,10 @@ class HtmlCheckboxesFunctionTemplatePlugin implements IFunctionTemplatePlugin
             if (!empty($html)) {
                 $html .= $tagArgs['separator'];
             }
-            $html .= '<label><input type="checkbox" name="' . $this->encodeHTML($tagArgs['name']) . '[]" value="' . $this->encodeHTML($key) . '"' . (\in_array($key,
-                    $tagArgs['selected']) ? ' checked' : '') . (!empty($tagArgs['disabled']) ? ' disabled' : '') . '> ' . $this->encodeHTML($value) . '</label>';
+            $html .= '<label><input type="checkbox" name="' . $this->encodeHTML($tagArgs['name']) . '[]" value="' . $this->encodeHTML($key) . '"' . (\in_array(
+                $key,
+                $tagArgs['selected']
+            ) ? ' checked' : '') . (!empty($tagArgs['disabled']) ? ' disabled' : '') . '> ' . $this->encodeHTML($value) . '</label>';
         }
 
         return $html;

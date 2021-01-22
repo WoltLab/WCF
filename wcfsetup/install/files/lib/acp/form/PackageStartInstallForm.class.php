@@ -139,8 +139,10 @@ class PackageStartInstallForm extends AbstractForm
             }
 
             // get filename
-            $this->uploadPackage['name'] = FileUtil::getTemporaryFilename('package_',
-                \preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', \basename($this->uploadPackage['name'])));
+            $this->uploadPackage['name'] = FileUtil::getTemporaryFilename(
+                'package_',
+                \preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', \basename($this->uploadPackage['name']))
+            );
 
             if (!@\move_uploaded_file($this->uploadPackage['tmp_name'], $this->uploadPackage['name'])) {
                 throw new UserInputException('uploadPackage', 'uploadFailed');

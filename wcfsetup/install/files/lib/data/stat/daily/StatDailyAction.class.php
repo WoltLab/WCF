@@ -35,14 +35,22 @@ class StatDailyAction extends AbstractDatabaseObjectAction
         WCF::getSession()->checkPermissions(['admin.management.canViewLog']);
 
         // validate start date
-        if (empty($this->parameters['startDate']) || !\preg_match('/^\d{4}\-\d{2}\-\d{2}$/',
-                $this->parameters['startDate'])) {
+        if (
+            empty($this->parameters['startDate']) || !\preg_match(
+                '/^\d{4}\-\d{2}\-\d{2}$/',
+                $this->parameters['startDate']
+            )
+        ) {
             throw new UserInputException('startDate');
         }
 
         // validate end date
-        if (empty($this->parameters['endDate']) || !\preg_match('/^\d{4}\-\d{2}\-\d{2}$/',
-                $this->parameters['endDate'])) {
+        if (
+            empty($this->parameters['endDate']) || !\preg_match(
+                '/^\d{4}\-\d{2}\-\d{2}$/',
+                $this->parameters['endDate']
+            )
+        ) {
             throw new UserInputException('endDate');
         }
 

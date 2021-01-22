@@ -126,8 +126,10 @@ class UserPage extends AbstractPage
         $activeMenuItem = UserProfileMenu::getInstance()->getActiveMenuItem($this->user->userID);
         $contentManager = $activeMenuItem->getContentManager();
         $this->profileContent = $contentManager->getContent($this->user->userID);
-        $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.profileEditableContent',
-            'com.woltlab.wcf.user.profileAbout');
+        $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
+            'com.woltlab.wcf.user.profileEditableContent',
+            'com.woltlab.wcf.user.profileAbout'
+        );
 
         // get followers
         $this->followerList = new UserFollowerList();
@@ -149,13 +151,20 @@ class UserPage extends AbstractPage
             $this->visitorList->readObjects();
         }
 
-        MetaTagHandler::getInstance()->addTag('og:url', 'og:url',
-            LinkHandler::getInstance()->getLink('User', ['object' => $this->user->getDecoratedObject()]), true);
+        MetaTagHandler::getInstance()->addTag(
+            'og:url',
+            'og:url',
+            LinkHandler::getInstance()->getLink('User', ['object' => $this->user->getDecoratedObject()]),
+            true
+        );
         MetaTagHandler::getInstance()->addTag('og:type', 'og:type', 'profile', true);
         MetaTagHandler::getInstance()->addTag('profile:username', 'profile:username', $this->user->username, true);
-        MetaTagHandler::getInstance()->addTag('og:title', 'og:title',
+        MetaTagHandler::getInstance()->addTag(
+            'og:title',
+            'og:title',
             $this->user->username . ' - ' . WCF::getLanguage()->get('wcf.user.members') . ' - ' . WCF::getLanguage()->get(PAGE_TITLE),
-            true);
+            true
+        );
         MetaTagHandler::getInstance()->addTag('og:image', 'og:image', $this->user->getAvatar()->getURL(), true);
     }
 

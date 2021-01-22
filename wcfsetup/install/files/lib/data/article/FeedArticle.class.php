@@ -113,8 +113,11 @@ class FeedArticle extends ViewableArticle implements IFeedEntryWithEnclosure
     {
         if ($this->enclosure === null) {
             if ($this->getImage() !== null) {
-                $this->enclosure = new FeedEnclosure($this->getImage()->getThumbnailLink('small'),
-                    $this->getImage()->smallThumbnailType, $this->getImage()->smallThumbnailSize);
+                $this->enclosure = new FeedEnclosure(
+                    $this->getImage()->getThumbnailLink('small'),
+                    $this->getImage()->smallThumbnailType,
+                    $this->getImage()->smallThumbnailSize
+                );
             }
         }
 

@@ -183,12 +183,14 @@ class ItemListFormField extends AbstractFormField implements
             throw new \BadMethodCallException("Save value type has already been set.");
         }
 
-        if (!\in_array($saveValueType, [
-            self::SAVE_VALUE_TYPE_ARRAY,
-            self::SAVE_VALUE_TYPE_CSV,
-            self::SAVE_VALUE_TYPE_NSV,
-            self::SAVE_VALUE_TYPE_SSV,
-        ])) {
+        if (
+            !\in_array($saveValueType, [
+                self::SAVE_VALUE_TYPE_ARRAY,
+                self::SAVE_VALUE_TYPE_CSV,
+                self::SAVE_VALUE_TYPE_NSV,
+                self::SAVE_VALUE_TYPE_SSV,
+            ])
+        ) {
             throw new \InvalidArgumentException("Unknown save value type '{$saveValueType}'.");
         }
 

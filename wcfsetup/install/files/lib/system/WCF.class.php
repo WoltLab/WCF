@@ -514,8 +514,12 @@ class WCF
         $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
 
         if (\defined('BLACKLIST_IP_ADDRESSES') && BLACKLIST_IP_ADDRESSES != '') {
-            if (!StringUtil::executeWordFilter(UserUtil::convertIPv6To4(UserUtil::getIpAddress()),
-                BLACKLIST_IP_ADDRESSES)) {
+            if (
+                !StringUtil::executeWordFilter(
+                    UserUtil::convertIPv6To4(UserUtil::getIpAddress()),
+                    BLACKLIST_IP_ADDRESSES
+                )
+            ) {
                 if ($isAjax) {
                     throw new AJAXException(
                         self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
@@ -1071,8 +1075,11 @@ class WCF
      */
     public static function getRequestURI()
     {
-        return \preg_replace('~^(https?://[^/]+)(?:/.*)?$~', '$1',
-                self::getTPL()->get('baseHref')) . $_SERVER['REQUEST_URI'];
+        return \preg_replace(
+            '~^(https?://[^/]+)(?:/.*)?$~',
+            '$1',
+            self::getTPL()->get('baseHref')
+        ) . $_SERVER['REQUEST_URI'];
     }
 
     /**
@@ -1275,8 +1282,10 @@ class WCF
                             );
                         }
                     } elseif (!\is_writable($fileInfo->getRealPath())) {
-                        $nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'],
-                                $fileInfo->getPath()) . $fileInfo->getFilename();
+                        $nonWritablePaths[] = FileUtil::getRelativePath(
+                            $_SERVER['DOCUMENT_ROOT'],
+                            $fileInfo->getPath()
+                        ) . $fileInfo->getFilename();
                     }
                 });
         }
@@ -1310,17 +1319,24 @@ class WCF
                             );
                         }
                     } elseif (!\is_writable($fileInfo->getRealPath())) {
-                        $nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'],
-                                $fileInfo->getPath()) . $fileInfo->getFilename();
+                        $nonWritablePaths[] = FileUtil::getRelativePath(
+                            $_SERVER['DOCUMENT_ROOT'],
+                            $fileInfo->getPath()
+                        ) . $fileInfo->getFilename();
                     }
                 });
         }
 
         if (!empty($nonWritablePaths)) {
             $maxPaths = 10;
-            throw new \RuntimeException('The following paths are not writable: ' . \implode(',',
-                    \array_slice($nonWritablePaths, 0,
-                        $maxPaths)) . (\count($nonWritablePaths) > $maxPaths ? ',' . StringUtil::HELLIP : ''));
+            throw new \RuntimeException('The following paths are not writable: ' . \implode(
+                ',',
+                \array_slice(
+                    $nonWritablePaths,
+                    0,
+                    $maxPaths
+                )
+            ) . (\count($nonWritablePaths) > $maxPaths ? ',' . StringUtil::HELLIP : ''));
         }
     }
 }

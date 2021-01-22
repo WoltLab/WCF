@@ -237,8 +237,14 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
         if ($this->parameters['file']->getImageData()['height'] > 128) {
             $adapter = ImageHandler::getInstance()->getAdapter();
             $adapter->loadFile($this->parameters['file']->getLocation());
-            $adapter->resize(0, 0, $this->parameters['file']->getImageData()['height'],
-                $this->parameters['file']->getImageData()['height'], 128, 128);
+            $adapter->resize(
+                0,
+                0,
+                $this->parameters['file']->getImageData()['height'],
+                $this->parameters['file']->getImageData()['height'],
+                128,
+                128
+            );
             $adapter->writeImage($adapter->getImage(), $fileName);
         } else {
             \copy($this->parameters['file']->getLocation(), $fileName);
@@ -248,8 +254,10 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
         @\unlink($this->parameters['file']->getLocation());
 
         // store extension within session variables
-        WCF::getSession()->register('trophyImage-' . $this->parameters['tmpHash'],
-            $this->parameters['file']->getFileExtension());
+        WCF::getSession()->register(
+            'trophyImage-' . $this->parameters['tmpHash'],
+            $this->parameters['file']->getFileExtension()
+        );
 
         if ($this->parameters['trophyID']) {
             $this->updateTrophyImage($this->parameters['trophy']);

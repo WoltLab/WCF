@@ -287,8 +287,12 @@ class BBCodeParser extends SingletonFactory
     {
         if ($definedTagAttribute->validationPattern && isset($tagAttributes[$definedTagAttribute->attributeNo])) {
             // validate attribute
-            if (!\preg_match('~' . \str_replace('~', '\~', $definedTagAttribute->validationPattern) . '~i',
-                $tagAttributes[$definedTagAttribute->attributeNo])) {
+            if (
+                !\preg_match(
+                    '~' . \str_replace('~', '\~', $definedTagAttribute->validationPattern) . '~i',
+                    $tagAttributes[$definedTagAttribute->attributeNo]
+                )
+            ) {
                 return false;
             }
         }
@@ -448,8 +452,12 @@ class BBCodeParser extends SingletonFactory
                     if ($this->isValidTag($openingTag)) {
                         if ($this->bbcodes[$tag['name']]->getProcessor()) {
                             // build tag
-                            $parsedTag = $this->bbcodes[$tag['name']]->getProcessor()->getParsedTag($openingTag,
-                                $buffer, $tag, $this);
+                            $parsedTag = $this->bbcodes[$tag['name']]->getProcessor()->getParsedTag(
+                                $openingTag,
+                                $buffer,
+                                $tag,
+                                $this
+                            );
                         } else {
                             // build tag
                             $parsedTag = $this->buildOpeningTag($openingTag);

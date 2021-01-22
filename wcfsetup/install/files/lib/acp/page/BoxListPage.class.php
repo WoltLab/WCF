@@ -138,12 +138,16 @@ class BoxListPage extends SortablePage
             $this->objectList->getConditionBuilder()->add('box.name LIKE ?', ['%' . $this->name . '%']);
         }
         if (!empty($this->title)) {
-            $this->objectList->getConditionBuilder()->add('box.boxID IN (SELECT boxID FROM wcf' . WCF_N . '_box_content WHERE title LIKE ?)',
-                ['%' . $this->title . '%']);
+            $this->objectList->getConditionBuilder()->add(
+                'box.boxID IN (SELECT boxID FROM wcf' . WCF_N . '_box_content WHERE title LIKE ?)',
+                ['%' . $this->title . '%']
+            );
         }
         if (!empty($this->content)) {
-            $this->objectList->getConditionBuilder()->add('box.boxID IN (SELECT boxID FROM wcf' . WCF_N . '_box_content WHERE content LIKE ?)',
-                ['%' . $this->content . '%']);
+            $this->objectList->getConditionBuilder()->add(
+                'box.boxID IN (SELECT boxID FROM wcf' . WCF_N . '_box_content WHERE content LIKE ?)',
+                ['%' . $this->content . '%']
+            );
         }
         if (!empty($this->position)) {
             $this->objectList->getConditionBuilder()->add('box.position = ?', [$this->position]);

@@ -745,8 +745,10 @@ class PackageArchive
                 // check required package version
                 if (
                     isset($requirements[$row['package']]['minversion'])
-                    && Package::compareVersion($row['packageVersion'],
-                        $requirements[$row['package']]['minversion']) == -1
+                    && Package::compareVersion(
+                        $row['packageVersion'],
+                        $requirements[$row['package']]['minversion']
+                    ) == -1
                 ) {
                     continue;
                 }
@@ -824,8 +826,12 @@ class PackageArchive
                 // package does already exist
                 // maybe an update is necessary
                 if (isset($requirement['minversion'])) {
-                    if (Package::compareVersion($existingPackages[$requirement['name']]['packageVersion'],
-                            $requirement['minversion']) >= 0) {
+                    if (
+                        Package::compareVersion(
+                            $existingPackages[$requirement['name']]['packageVersion'],
+                            $requirement['minversion']
+                        ) >= 0
+                    ) {
                         // package does already exist in needed version
                         // skip installation of requirement
                         continue;

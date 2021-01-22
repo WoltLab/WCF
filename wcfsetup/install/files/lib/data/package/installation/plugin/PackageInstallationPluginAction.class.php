@@ -145,8 +145,10 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction
         return [
             'pluginName' => $this->packageInstallationPlugin->pluginName,
             'target' => $this->parameters['target'],
-            'timeElapsed' => WCF::getLanguage()->getDynamicVariable('wcf.acp.devtools.sync.status.success',
-                ['timeElapsed' => \round(\microtime(true) - $start, 3)]),
+            'timeElapsed' => WCF::getLanguage()->getDynamicVariable(
+                'wcf.acp.devtools.sync.status.success',
+                ['timeElapsed' => \round(\microtime(true) - $start, 3)]
+            ),
         ];
     }
 }

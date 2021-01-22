@@ -97,8 +97,10 @@ class DevtoolsPip extends DatabaseObjectDecorator
      */
     public function supportsGui()
     {
-        return $this->isSupported() && \is_subclass_of($this->getDecoratedObject()->className,
-                IGuiPackageInstallationPlugin::class);
+        return $this->isSupported() && \is_subclass_of(
+            $this->getDecoratedObject()->className,
+            IGuiPackageInstallationPlugin::class
+        );
     }
 
     public function getSyncDependencies($toJson = true)
@@ -145,7 +147,7 @@ class DevtoolsPip extends DatabaseObjectDecorator
 
             $this->pip = new $className(
                 new DevtoolsPackageInstallationDispatcher($this->getProject())
-            // no target
+                // no target
             );
         }
 
@@ -317,8 +319,10 @@ class DevtoolsPip extends DatabaseObjectDecorator
                             }
 
                             $tar->registerFile(
-                                FileUtil::getRelativePath($project->path . $path,
-                                    $item->getPath()) . $item->getFilename(),
+                                FileUtil::getRelativePath(
+                                    $project->path . $path,
+                                    $item->getPath()
+                                ) . $item->getFilename(),
                                 $itemPath
                             );
                         }
@@ -387,8 +391,10 @@ class DevtoolsPip extends DatabaseObjectDecorator
                             }
 
                             $tar->registerFile(
-                                FileUtil::getRelativePath($project->path . $path,
-                                    $item->getPath()) . $item->getFilename(),
+                                FileUtil::getRelativePath(
+                                    $project->path . $path,
+                                    $item->getPath()
+                                ) . $item->getFilename(),
                                 $itemPath
                             );
                         }

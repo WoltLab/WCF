@@ -154,8 +154,10 @@ abstract class CustomOption extends Option implements ITitledObject
                     $day = \intval($optionValue[2]);
                 }
 
-                return DateUtil::format(DateUtil::getDateTimeByTimestamp(\gmmktime(12, 1, 1, $month, $day, $year)),
-                    DateUtil::DATE_FORMAT);
+                return DateUtil::format(
+                    DateUtil::getDateTimeByTimestamp(\gmmktime(12, 1, 1, $month, $day, $year)),
+                    DateUtil::DATE_FORMAT
+                );
 
             case 'float':
                 return StringUtil::formatDouble(\intval($this->optionValue));

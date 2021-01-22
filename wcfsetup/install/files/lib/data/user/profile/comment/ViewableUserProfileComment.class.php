@@ -26,8 +26,10 @@ class ViewableUserProfileComment extends ViewableComment
     public function __get($name)
     {
         if ($name === 'title') {
-            return WCF::getLanguage()->getDynamicVariable('wcf.user.profile.title',
-                ['user' => UserProfileRuntimeCache::getInstance()->getObject($this->objectID)]);
+            return WCF::getLanguage()->getDynamicVariable(
+                'wcf.user.profile.title',
+                ['user' => UserProfileRuntimeCache::getInstance()->getObject($this->objectID)]
+            );
         }
 
         return parent::__get($name);

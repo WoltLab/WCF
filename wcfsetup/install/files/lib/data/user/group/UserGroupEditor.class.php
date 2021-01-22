@@ -171,10 +171,12 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$optionID]);
         while ($row = $statement->fetchArray()) {
-            $valueIDs = \array_filter(\explode(',', $row['optionValue']),
+            $valueIDs = \array_filter(
+                \explode(',', $row['optionValue']),
                 static function ($groupID) use ($ownerGroupID) {
                     return $groupID != $ownerGroupID;
-                });
+                }
+            );
 
             if ($delete) {
                 $valueIDs = \array_filter($valueIDs, static function ($item) use ($groupID) {

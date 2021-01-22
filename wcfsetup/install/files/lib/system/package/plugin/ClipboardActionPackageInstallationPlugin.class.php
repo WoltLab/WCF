@@ -229,10 +229,14 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
                         )
                     ) {
                         $clipboardActionList = new ClipboardActionList();
-                        $clipboardActionList->getConditionBuilder()->add('actionName = ?',
-                            [$actionNameFormField->getSaveValue()]);
-                        $clipboardActionList->getConditionBuilder()->add('actionClassName = ?',
-                            [$formField->getSaveValue()]);
+                        $clipboardActionList->getConditionBuilder()->add(
+                            'actionName = ?',
+                            [$actionNameFormField->getSaveValue()]
+                        );
+                        $clipboardActionList->getConditionBuilder()->add(
+                            'actionClassName = ?',
+                            [$formField->getSaveValue()]
+                        );
 
                         if ($clipboardActionList->countObjects() > 0) {
                             $actionNameFormField->addValidationError(

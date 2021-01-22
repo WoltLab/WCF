@@ -164,8 +164,12 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 
                     // import xml
                     // don't update language files if package is an application
-                    $languageEditor->updateFromXML($xml, $this->installation->getPackageID(),
-                        !$this->installation->getPackage()->isApplication, $updateExistingItems);
+                    $languageEditor->updateFromXML(
+                        $xml,
+                        $this->installation->getPackageID(),
+                        !$this->installation->getPackage()->isApplication,
+                        $updateExistingItems
+                    );
                 }
             }
         }
@@ -481,8 +485,10 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
                             || $this->editedEntries[0]->getAttribute('name') !== $formField->getSaveValue()
                         ) {
                             $languageItemList = new LanguageItemList();
-                            $languageItemList->getConditionBuilder()->add('languageItem = ?',
-                                [$formField->getSaveValue()]);
+                            $languageItemList->getConditionBuilder()->add(
+                                'languageItem = ?',
+                                [$formField->getSaveValue()]
+                            );
 
                             if ($languageItemList->countObjects() > 0) {
                                 $formField->addValidationError(

@@ -102,8 +102,10 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
         $this->readString('tmpHash');
 
         // validate object type
-        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType',
-            $this->parameters['objectType']);
+        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
+            'com.woltlab.wcf.attachment.objectType',
+            $this->parameters['objectType']
+        );
         if ($objectType === null) {
             throw new UserInputException('objectType');
         }
@@ -112,14 +114,21 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
         $processor = $objectType->getProcessor();
 
         // check upload permissions
-        if (!$processor->canUpload((!empty($this->parameters['objectID']) ? \intval($this->parameters['objectID']) : 0),
-            (!empty($this->parameters['parentObjectID']) ? \intval($this->parameters['parentObjectID']) : 0))) {
+        if (
+            !$processor->canUpload(
+                (!empty($this->parameters['objectID']) ? \intval($this->parameters['objectID']) : 0),
+                (!empty($this->parameters['parentObjectID']) ? \intval($this->parameters['parentObjectID']) : 0)
+            )
+        ) {
             throw new PermissionDeniedException();
         }
 
         // check max count of uploads
-        $handler = new AttachmentHandler($this->parameters['objectType'], \intval($this->parameters['objectID']),
-            $this->parameters['tmpHash']);
+        $handler = new AttachmentHandler(
+            $this->parameters['objectType'],
+            \intval($this->parameters['objectID']),
+            $this->parameters['tmpHash']
+        );
         /** @noinspection PhpUndefinedMethodInspection */
         if ($handler->count() + \count($this->parameters['__files']->getFiles()) > $processor->getMaxCount()) {
             throw new UserInputException('files', 'exceededQuota', [
@@ -130,8 +139,10 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 
         // check max filesize, allowed file extensions etc.
         /** @noinspection PhpUndefinedMethodInspection */
-        $this->parameters['__files']->validateFiles(new DefaultUploadFileValidationStrategy($processor->getMaxSize(),
-            $processor->getAllowedExtensions()));
+        $this->parameters['__files']->validateFiles(new DefaultUploadFileValidationStrategy(
+            $processor->getMaxSize(),
+            $processor->getAllowedExtensions()
+        ));
     }
 
     /**
@@ -140,8 +151,10 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
     public function upload()
     {
         // get object type
-        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType',
-            $this->parameters['objectType']);
+        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
+            'com.woltlab.wcf.attachment.objectType',
+            $this->parameters['objectType']
+        );
 
         // save files
         $saveStrategy = new DefaultUploadFileSaveStrategy(self::class, [
@@ -252,8 +265,10 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
         }
 
         // validate object type
-        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType',
-            $this->parameters['objectType']);
+        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
+            'com.woltlab.wcf.attachment.objectType',
+            $this->parameters['objectType']
+        );
         if ($objectType === null) {
             throw new UserInputException('objectType');
         }
@@ -322,10 +337,14 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
      */
     public function copy()
     {
-        $sourceObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType',
-            $this->parameters['sourceObjectType']);
-        $targetObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType',
-            $this->parameters['targetObjectType']);
+        $sourceObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
+            'com.woltlab.wcf.attachment.objectType',
+            $this->parameters['sourceObjectType']
+        );
+        $targetObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
+            'com.woltlab.wcf.attachment.objectType',
+            $this->parameters['targetObjectType']
+        );
 
         $attachmentList = new AttachmentList();
         $attachmentList->getConditionBuilder()->add("attachment.objectTypeID = ?", [$sourceObjectType->objectTypeID]);

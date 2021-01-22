@@ -33,8 +33,10 @@ class ContactAttachmentObjectType extends AbstractAttachmentObjectType
      */
     public function getAllowedExtensions()
     {
-        return ArrayUtil::trim(\explode("\n",
-            WCF::getSession()->getPermission('user.contactForm.attachment.allowedExtensions')));
+        return ArrayUtil::trim(\explode(
+            "\n",
+            WCF::getSession()->getPermission('user.contactForm.attachment.allowedExtensions')
+        ));
     }
 
     /**

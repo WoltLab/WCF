@@ -223,8 +223,11 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 
                     // update storage data
                     if (!$skipCache) {
-                        UserStorageHandler::getInstance()->update($this->userID, 'groupIDs',
-                            \serialize($this->groupIDs));
+                        UserStorageHandler::getInstance()->update(
+                            $this->userID,
+                            'groupIDs',
+                            \serialize($this->groupIDs)
+                        );
                     }
                 } else {
                     $this->groupIDs = \unserialize($data);
@@ -261,8 +264,11 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
                     $this->languageIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
                     // update storage data
-                    UserStorageHandler::getInstance()->update($this->userID, 'languageIDs',
-                        \serialize($this->languageIDs));
+                    UserStorageHandler::getInstance()->update(
+                        $this->userID,
+                        'languageIDs',
+                        \serialize($this->languageIDs)
+                    );
                 } else {
                     $this->languageIDs = \unserialize($data);
                 }

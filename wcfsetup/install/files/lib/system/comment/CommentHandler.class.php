@@ -155,8 +155,11 @@ class CommentHandler extends SingletonFactory
             $notificationObjectTypes[] = $objectTypeObj->objectType . '.like.notification';
         }
 
-        ReactionHandler::getInstance()->removeReactions('com.woltlab.wcf.comment', $commentIDs,
-            $notificationObjectTypes);
+        ReactionHandler::getInstance()->removeReactions(
+            'com.woltlab.wcf.comment',
+            $commentIDs,
+            $notificationObjectTypes
+        );
 
         // delete activity events
         if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.recentActivityEvent')) {

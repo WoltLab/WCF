@@ -80,8 +80,10 @@ class Ad extends DatabaseObject implements IRouteController
         if (WCF::getUser()->userID) {
             $output = \strtr($output, ['{$username}' => StringUtil::encodeHTML(WCF::getUser()->username)]);
         } else {
-            $output = \strtr($output,
-                ['{$username}' => StringUtil::encodeHTML(WCF::getLanguage()->get('wcf.user.guest'))]);
+            $output = \strtr(
+                $output,
+                ['{$username}' => StringUtil::encodeHTML(WCF::getLanguage()->get('wcf.user.guest'))]
+            );
         }
 
         if ($objectType->className && \is_subclass_of($objectType->className, IAdLocation::class)) {

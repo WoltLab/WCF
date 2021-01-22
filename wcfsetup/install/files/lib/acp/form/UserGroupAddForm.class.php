@@ -194,8 +194,12 @@ class UserGroupAddForm extends AbstractOptionListForm
             ]);
         }
         if (!I18nHandler::getInstance()->isPlainValue('groupDescription')) {
-            I18nHandler::getInstance()->save('groupDescription', 'wcf.acp.group.groupDescription' . $groupID,
-                'wcf.acp.group', 1);
+            I18nHandler::getInstance()->save(
+                'groupDescription',
+                'wcf.acp.group.groupDescription' . $groupID,
+                'wcf.acp.group',
+                1
+            );
 
             // update group name
             $groupEditor = new UserGroupEditor($returnValues['returnValues']);
@@ -209,8 +213,10 @@ class UserGroupAddForm extends AbstractOptionListForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(UserGroupEditForm::class,
-                ['id' => $groupID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
+                UserGroupEditForm::class,
+                ['id' => $groupID]
+            ),
         ]);
 
         // reset values

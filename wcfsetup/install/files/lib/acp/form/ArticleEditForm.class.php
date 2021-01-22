@@ -129,8 +129,11 @@ class ArticleEditForm extends ArticleAddForm
             'hasLabels' => (isset($labelIDs[$this->article->articleID]) && !empty($labelIDs[$this->article->articleID])) ? 1 : 0,
         ];
 
-        $this->objectAction = new ArticleAction([$this->article], 'update',
-            ['data' => \array_merge($this->additionalFields, $data), 'content' => $content]);
+        $this->objectAction = new ArticleAction(
+            [$this->article],
+            'update',
+            ['data' => \array_merge($this->additionalFields, $data), 'content' => $content]
+        );
         $this->objectAction->executeAction();
 
         // call saved event
@@ -192,8 +195,10 @@ class ArticleEditForm extends ArticleAddForm
             $this->readImages();
 
             // labels
-            $assignedLabels = ArticleLabelObjectHandler::getInstance()->getAssignedLabels([$this->article->articleID],
-                true);
+            $assignedLabels = ArticleLabelObjectHandler::getInstance()->getAssignedLabels(
+                [$this->article->articleID],
+                true
+            );
             if (isset($assignedLabels[$this->article->articleID])) {
                 foreach ($assignedLabels[$this->article->articleID] as $label) {
                     $this->labelIDs[$label->groupID] = $label->labelID;

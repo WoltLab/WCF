@@ -114,8 +114,13 @@ class Style extends DatabaseObject
                 return '';
             }
 
-            if ($toHex && \preg_match('/^rgba\((\d+), (\d+), (\d+), (1|0?\.\d+)\)$/', $this->variables[$variableName],
-                    $matches)) {
+            if (
+                $toHex && \preg_match(
+                    '/^rgba\((\d+), (\d+), (\d+), (1|0?\.\d+)\)$/',
+                    $this->variables[$variableName],
+                    $matches
+                )
+            ) {
                 $r = $matches[1];
                 $g = $matches[2];
                 $b = $matches[3];
@@ -276,8 +281,10 @@ class Style extends DatabaseObject
     public function getCoverPhotoUrl()
     {
         if ($this->coverPhotoExtension) {
-            return WCF::getPath() . FileUtil::getRelativePath(WCF_DIR,
-                    $this->getAssetPath()) . 'coverPhoto.' . $this->coverPhotoExtension;
+            return WCF::getPath() . FileUtil::getRelativePath(
+                WCF_DIR,
+                $this->getAssetPath()
+            ) . 'coverPhoto.' . $this->coverPhotoExtension;
         }
 
         return WCF::getPath() . 'images/coverPhotos/' . $this->getCoverPhoto();

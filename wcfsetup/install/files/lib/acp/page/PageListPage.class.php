@@ -156,16 +156,22 @@ class PageListPage extends SortablePage
             $this->objectList->getConditionBuilder()->add('page.name LIKE ?', ['%' . $this->name . '%']);
         }
         if (!empty($this->title)) {
-            $this->objectList->getConditionBuilder()->add('page.pageID IN (SELECT pageID FROM wcf' . WCF_N . '_page_content WHERE title LIKE ?)',
-                ['%' . $this->title . '%']);
+            $this->objectList->getConditionBuilder()->add(
+                'page.pageID IN (SELECT pageID FROM wcf' . WCF_N . '_page_content WHERE title LIKE ?)',
+                ['%' . $this->title . '%']
+            );
         }
         if (!empty($this->content)) {
-            $this->objectList->getConditionBuilder()->add('page.pageID IN (SELECT pageID FROM wcf' . WCF_N . '_page_content WHERE content LIKE ?)',
-                ['%' . $this->content . '%']);
+            $this->objectList->getConditionBuilder()->add(
+                'page.pageID IN (SELECT pageID FROM wcf' . WCF_N . '_page_content WHERE content LIKE ?)',
+                ['%' . $this->content . '%']
+            );
         }
         if (!empty($this->applicationPackageID)) {
-            $this->objectList->getConditionBuilder()->add('((page.applicationPackageID = ? AND page.overrideApplicationPackageID IS NULL) OR page.overrideApplicationPackageID = ?)',
-                [$this->applicationPackageID, $this->applicationPackageID]);
+            $this->objectList->getConditionBuilder()->add(
+                '((page.applicationPackageID = ? AND page.overrideApplicationPackageID IS NULL) OR page.overrideApplicationPackageID = ?)',
+                [$this->applicationPackageID, $this->applicationPackageID]
+            );
         }
         if (!empty($this->pageType)) {
             $this->objectList->getConditionBuilder()->add('page.pageType = (?)', [$this->pageType]);
@@ -174,8 +180,10 @@ class PageListPage extends SortablePage
             $this->objectList->getConditionBuilder()->add('page.originIsSystem = ?', [0]);
         }
         if ($this->controllerCustomURL) {
-            $this->objectList->getConditionBuilder()->add("(page.controllerCustomURL <> ? OR page.pageType <> ?)",
-                ['', 'system']);
+            $this->objectList->getConditionBuilder()->add(
+                "(page.controllerCustomURL <> ? OR page.pageType <> ?)",
+                ['', 'system']
+            );
         }
     }
 

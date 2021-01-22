@@ -55,8 +55,10 @@ class EventHandler extends SingletonFactory
      */
     protected function loadActions()
     {
-        $environment = ((\class_exists('wcf\system\WCFACP', false) || \class_exists('wcf\system\CLIWCF',
-                false)) ? 'admin' : 'user');
+        $environment = ((\class_exists('wcf\system\WCFACP', false) || \class_exists(
+            'wcf\system\CLIWCF',
+            false
+        )) ? 'admin' : 'user');
         $cache = EventListenerCacheBuilder::getInstance()->getData();
 
         if (isset($cache['actions'][$environment])) {
@@ -119,13 +121,23 @@ class EventHandler extends SingletonFactory
                                     if (!\class_exists($eventListener->listenerClassName)) {
                                         throw new SystemException("Unable to find class '" . $eventListener->listenerClassName . "'");
                                     }
-                                    if (!\is_subclass_of($eventListener->listenerClassName,
-                                        IParameterizedEventListener::class)) {
+                                    if (
+                                        !\is_subclass_of(
+                                            $eventListener->listenerClassName,
+                                            IParameterizedEventListener::class
+                                        )
+                                    ) {
                                         // legacy event listeners
-                                        if (!\is_subclass_of($eventListener->listenerClassName,
-                                            IEventListener::class)) {
-                                            throw new ImplementationException($eventListener->listenerClassName,
-                                                IParameterizedEventListener::class);
+                                        if (
+                                            !\is_subclass_of(
+                                                $eventListener->listenerClassName,
+                                                IEventListener::class
+                                            )
+                                        ) {
+                                            throw new ImplementationException(
+                                                $eventListener->listenerClassName,
+                                                IParameterizedEventListener::class
+                                            );
                                         }
                                     }
 
@@ -218,8 +230,10 @@ class EventHandler extends SingletonFactory
                         if (!\is_subclass_of($eventListener->listenerClassName, IParameterizedEventListener::class)) {
                             // legacy event listeners
                             if (!\is_subclass_of($eventListener->listenerClassName, IEventListener::class)) {
-                                throw new ImplementationException($eventListener->listenerClassName,
-                                    IParameterizedEventListener::class);
+                                throw new ImplementationException(
+                                    $eventListener->listenerClassName,
+                                    IParameterizedEventListener::class
+                                );
                             }
                         }
 

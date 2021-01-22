@@ -66,12 +66,18 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin
     {
         // first page
         if ($activePage != $pageNo) {
-            return '<li><a href="' . self::insertPageNumber($link,
-                    $pageNo) . '" title="' . WCF::getLanguage()->getDynamicVariable('wcf.page.pageNo',
-                    ['pageNo' => $pageNo]) . '">' . StringUtil::formatInteger($pageNo) . '</a></li>' . "\n";
+            return '<li><a href="' . self::insertPageNumber(
+                $link,
+                $pageNo
+            ) . '" title="' . WCF::getLanguage()->getDynamicVariable(
+                'wcf.page.pageNo',
+                ['pageNo' => $pageNo]
+            ) . '">' . StringUtil::formatInteger($pageNo) . '</a></li>' . "\n";
         } else {
-            return '<li class="active"><span>' . StringUtil::formatInteger($pageNo) . '</span><span class="invisible">' . WCF::getLanguage()->getDynamicVariable('wcf.page.pagePosition',
-                    ['pageNo' => $pageNo, 'pages' => $pages]) . '</span></li>' . "\n";
+            return '<li class="active"><span>' . StringUtil::formatInteger($pageNo) . '</span><span class="invisible">' . WCF::getLanguage()->getDynamicVariable(
+                'wcf.page.pagePosition',
+                ['pageNo' => $pageNo, 'pages' => $pages]
+            ) . '</span></li>' . "\n";
         }
     }
 
@@ -85,8 +91,10 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin
     protected function makePreviousLink($link, $pageNo)
     {
         if ($pageNo > 1) {
-            return '<li class="skip"><a href="' . self::insertPageNumber($link,
-                    $pageNo - 1) . '" title="' . WCF::getLanguage()->getDynamicVariable('wcf.global.page.previous') . '" class="icon icon24 fa-chevron-left jsTooltip" rel="prev"></a></li>' . "\n";
+            return '<li class="skip"><a href="' . self::insertPageNumber(
+                $link,
+                $pageNo - 1
+            ) . '" title="' . WCF::getLanguage()->getDynamicVariable('wcf.global.page.previous') . '" class="icon icon24 fa-chevron-left jsTooltip" rel="prev"></a></li>' . "\n";
         } else {
             return '<li class="skip disabled"><span class="icon icon24 fa-chevron-left"></span></li>' . "\n";
         }
@@ -103,8 +111,10 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin
     protected function makeNextLink($link, $pageNo, $pages)
     {
         if ($pageNo && $pageNo < $pages) {
-            return '<li class="skip"><a href="' . self::insertPageNumber($link,
-                    $pageNo + 1) . '" title="' . WCF::getLanguage()->getDynamicVariable('wcf.global.page.next') . '" class="icon icon24 fa-chevron-right jsTooltip" rel="next"></a></li>' . "\n";
+            return '<li class="skip"><a href="' . self::insertPageNumber(
+                $link,
+                $pageNo + 1
+            ) . '" title="' . WCF::getLanguage()->getDynamicVariable('wcf.global.page.next') . '" class="icon icon24 fa-chevron-right jsTooltip" rel="next"></a></li>' . "\n";
         } else {
             return '<li class="skip disabled"><span class="icon icon24 fa-chevron-right"></span></li>' . "\n";
         }

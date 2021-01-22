@@ -59,8 +59,10 @@ class DevtoolsNotificationTestPage extends AbstractPage
 
         $groupedEvents = [];
         foreach ($this->events as $objectType => $events) {
-            $objectTypeObj = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.notification.objectType',
-                $objectType);
+            $objectTypeObj = ObjectTypeCache::getInstance()->getObjectTypeByName(
+                'com.woltlab.wcf.notification.objectType',
+                $objectType
+            );
             $category = ($objectTypeObj->category ?: $objectType);
 
             if (!isset($groupedEvents[$category])) {

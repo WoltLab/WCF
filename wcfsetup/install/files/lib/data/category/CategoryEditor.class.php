@@ -119,8 +119,11 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
         $parameters['showOrder'] = $parameters['showOrder'] ?? null;
 
         // handle show order
-        $parameters['showOrder'] = static::getShowOrder($parameters['objectTypeID'], $parameters['parentCategoryID'],
-            $parameters['showOrder']);
+        $parameters['showOrder'] = static::getShowOrder(
+            $parameters['objectTypeID'],
+            $parameters['parentCategoryID'],
+            $parameters['showOrder']
+        );
 
         // handle additionalData
         if (!isset($parameters['additionalData'])) {

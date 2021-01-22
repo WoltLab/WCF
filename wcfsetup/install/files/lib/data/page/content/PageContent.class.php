@@ -47,8 +47,10 @@ class PageContent extends DatabaseObject implements ILinkableObject
      */
     public function getFormattedContent()
     {
-        MessageEmbeddedObjectManager::getInstance()->loadObjects('com.woltlab.wcf.page.content',
-            [$this->pageContentID]);
+        MessageEmbeddedObjectManager::getInstance()->loadObjects(
+            'com.woltlab.wcf.page.content',
+            [$this->pageContentID]
+        );
 
         $processor = new HtmlOutputProcessor();
         $processor->enableUgc = false;
@@ -64,11 +66,16 @@ class PageContent extends DatabaseObject implements ILinkableObject
      */
     public function getParsedContent()
     {
-        MessageEmbeddedObjectManager::getInstance()->loadObjects('com.woltlab.wcf.page.content',
-            [$this->pageContentID]);
+        MessageEmbeddedObjectManager::getInstance()->loadObjects(
+            'com.woltlab.wcf.page.content',
+            [$this->pageContentID]
+        );
 
-        return HtmlSimpleParser::getInstance()->replaceTags('com.woltlab.wcf.page.content', $this->pageContentID,
-            $this->content);
+        return HtmlSimpleParser::getInstance()->replaceTags(
+            'com.woltlab.wcf.page.content',
+            $this->pageContentID,
+            $this->content
+        );
     }
 
     /**
@@ -79,8 +86,10 @@ class PageContent extends DatabaseObject implements ILinkableObject
      */
     public function getParsedTemplate($templateName)
     {
-        MessageEmbeddedObjectManager::getInstance()->loadObjects('com.woltlab.wcf.page.content',
-            [$this->pageContentID]);
+        MessageEmbeddedObjectManager::getInstance()->loadObjects(
+            'com.woltlab.wcf.page.content',
+            [$this->pageContentID]
+        );
         HtmlSimpleParser::getInstance()->setContext('com.woltlab.wcf.page.content', $this->pageContentID);
 
         WCF::getTPL()->registerPrefilter(['simpleEmbeddedObject']);

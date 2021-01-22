@@ -386,8 +386,12 @@ final class DOMUtil
      */
     public static function isVoidElement(\DOMElement $element)
     {
-        if (\preg_match('~^(area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$~',
-            $element->nodeName)) {
+        if (
+            \preg_match(
+                '~^(area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$~',
+                $element->nodeName
+            )
+        ) {
             return true;
         }
 

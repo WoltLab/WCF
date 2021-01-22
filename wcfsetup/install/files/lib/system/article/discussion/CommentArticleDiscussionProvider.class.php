@@ -49,8 +49,11 @@ class CommentArticleDiscussionProvider extends AbstractArticleDiscussionProvider
         $commentCanAdd = WCF::getSession()->getPermission('user.article.canAddComment');
         $commentObjectTypeID = CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.articleComment');
         $commentManager = CommentHandler::getInstance()->getObjectType($commentObjectTypeID)->getProcessor();
-        $commentList = CommentHandler::getInstance()->getCommentList($commentManager, $commentObjectTypeID,
-            $this->articleContent->articleContentID);
+        $commentList = CommentHandler::getInstance()->getCommentList(
+            $commentManager,
+            $commentObjectTypeID,
+            $this->articleContent->articleContentID
+        );
 
         WCF::getTPL()->assign([
             'commentCanAdd' => $commentCanAdd,

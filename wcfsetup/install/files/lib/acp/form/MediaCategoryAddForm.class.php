@@ -34,8 +34,10 @@ class MediaCategoryAddForm extends AbstractCategoryAddForm
         parent::save();
 
         WCF::getTPL()->assign([
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(MediaCategoryEditForm::class,
-                ['id' => $this->objectAction->getReturnValues()['returnValues']->categoryID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
+                MediaCategoryEditForm::class,
+                ['id' => $this->objectAction->getReturnValues()['returnValues']->categoryID]
+            ),
         ]);
     }
 }

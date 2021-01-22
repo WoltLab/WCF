@@ -105,8 +105,10 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
             TextFormField::create('definitionName')
                 ->objectProperty('name')
                 ->label('wcf.acp.pip.objectTypeDefinition.definitionName')
-                ->description('wcf.acp.pip.objectTypeDefinition.definitionName.description',
-                    ['project' => $this->installation->getProject()])
+                ->description(
+                    'wcf.acp.pip.objectTypeDefinition.definitionName.description',
+                    ['project' => $this->installation->getProject()]
+                )
                 ->required()
                 ->addValidator(FormFieldValidatorUtil::getDotSeparatedStringValidator(
                     'wcf.acp.pip.objectTypeDefinition.definitionName',

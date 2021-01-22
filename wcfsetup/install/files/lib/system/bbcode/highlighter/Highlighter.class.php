@@ -133,8 +133,10 @@ abstract class Highlighter extends SingletonFactory
         // regex to extract the Highlighter out of the namespaced classname
         $reType = new Regex('\\\\?wcf\\\\system\\\\bbcode\\\\highlighter\\\\(.*)Highlighter', Regex::CASE_INSENSITIVE);
 
-        return WCF::getLanguage()->get('wcf.bbcode.code.' . $reType->replace(\strtolower(\get_class($this)),
-                '\1') . '.title');
+        return WCF::getLanguage()->get('wcf.bbcode.code.' . $reType->replace(
+            \strtolower(\get_class($this)),
+            '\1'
+        ) . '.title');
     }
 
     /**
@@ -195,8 +197,10 @@ abstract class Highlighter extends SingletonFactory
 
         if ($quotesRegEx !== '') {
             $quotesRegEx = '(?:' . $quotesRegEx . ')';
-            $this->quotesRegEx = new Regex($quotesRegEx,
-                $this->allowsNewslinesInQuotes ? Regex::DOT_ALL : Regex::MODIFIER_NONE);
+            $this->quotesRegEx = new Regex(
+                $quotesRegEx,
+                $this->allowsNewslinesInQuotes ? Regex::DOT_ALL : Regex::MODIFIER_NONE
+            );
         }
 
         // cache comment regex
@@ -211,9 +215,13 @@ abstract class Highlighter extends SingletonFactory
 
             $cacheCommentsRegEx .= "(";
             if (!empty($this->commentStart)) {
-                $cacheCommentsRegEx .= '(?:' . \implode('|',
-                        \array_map('preg_quote', $this->commentStart)) . ').*?(?:' . \implode('|',
-                        \array_map('preg_quote', $this->commentEnd)) . ')';
+                $cacheCommentsRegEx .= '(?:' . \implode(
+                    '|',
+                    \array_map('preg_quote', $this->commentStart)
+                ) . ').*?(?:' . \implode(
+                    '|',
+                    \array_map('preg_quote', $this->commentEnd)
+                ) . ')';
 
                 if (!empty($this->singleLineComment)) {
                     $cacheCommentsRegEx .= '|';
@@ -221,8 +229,10 @@ abstract class Highlighter extends SingletonFactory
             }
 
             if (!empty($this->singleLineComment)) {
-                $cacheCommentsRegEx .= "(?:" . \implode('|',
-                        \array_map('preg_quote', $this->singleLineComment)) . ")[^\n]*";
+                $cacheCommentsRegEx .= "(?:" . \implode(
+                    '|',
+                    \array_map('preg_quote', $this->singleLineComment)
+                ) . ")[^\n]*";
             }
 
             $cacheCommentsRegEx .= ")";
@@ -230,8 +240,10 @@ abstract class Highlighter extends SingletonFactory
             $this->cacheCommentsRegEx = new Regex($cacheCommentsRegEx, Regex::DOT_ALL);
         }
 
-        $this->separatorsRegEx = StringUtil::encodeHTML(\implode('|',
-                \array_map('preg_quote', $this->separators))) . '|\s|&nbsp;|^|$|>|<';
+        $this->separatorsRegEx = StringUtil::encodeHTML(\implode(
+            '|',
+            \array_map('preg_quote', $this->separators)
+        )) . '|\s|&nbsp;|^|$|>|<';
     }
 
     /**
@@ -254,8 +266,10 @@ abstract class Highlighter extends SingletonFactory
                 $hash = '';
                 if (!empty($comment)) {
                     // create hash
-                    $hash = StringStack::pushToStringStack('<span class="hlComments">' . StringUtil::encodeHTML($comment) . '</span>',
-                        'highlighterComments');
+                    $hash = StringStack::pushToStringStack(
+                        '<span class="hlComments">' . StringUtil::encodeHTML($comment) . '</span>',
+                        'highlighterComments'
+                    );
                 }
 
                 return $string . $hash;
@@ -275,8 +289,10 @@ abstract class Highlighter extends SingletonFactory
     {
         if ($this->quotesRegEx !== null) {
             $string = $this->quotesRegEx->replace($string, static function (array $matches) {
-                return StringStack::pushToStringStack('<span class="hlQuotes">' . StringUtil::encodeHTML($matches[0]) . '</span>',
-                    'highlighterQuotes');
+                return StringStack::pushToStringStack(
+                    '<span class="hlQuotes">' . StringUtil::encodeHTML($matches[0]) . '</span>',
+                    'highlighterQuotes'
+                );
             });
         }
 
@@ -292,9 +308,14 @@ abstract class Highlighter extends SingletonFactory
     protected function highlightOperators($string)
     {
         if (!empty($this->operators)) {
-            $string = \preg_replace('!(' . StringUtil::encodeHTML(\implode('|',
-                    \array_map('preg_quote', $this->operators))) . ')!i', '<span class="hlOperators">\\0</span>',
-                $string);
+            $string = \preg_replace(
+                '!(' . StringUtil::encodeHTML(\implode(
+                    '|',
+                    \array_map('preg_quote', $this->operators)
+                )) . ')!i',
+                '<span class="hlOperators">\\0</span>',
+                $string
+            );
         }
 
         return $string;
@@ -310,29 +331,46 @@ abstract class Highlighter extends SingletonFactory
     {
         $_this = $this;
         $buildKeywordRegex = static function (array $keywords) use ($_this) {
-            return '!(?<=' . $_this->separatorsRegEx . ')(' . StringUtil::encodeHTML(\implode('|',
-                    \array_map('preg_quote', $keywords))) . ')(?=' . $_this->separatorsRegEx . ')!i';
+            return '!(?<=' . $_this->separatorsRegEx . ')(' . StringUtil::encodeHTML(\implode(
+                '|',
+                \array_map('preg_quote', $keywords)
+            )) . ')(?=' . $_this->separatorsRegEx . ')!i';
         };
 
         if (!empty($this->keywords1)) {
-            $string = \preg_replace($buildKeywordRegex($this->keywords1), '<span class="hlKeywords1">\\0</span>',
-                $string);
+            $string = \preg_replace(
+                $buildKeywordRegex($this->keywords1),
+                '<span class="hlKeywords1">\\0</span>',
+                $string
+            );
         }
         if (!empty($this->keywords2)) {
-            $string = \preg_replace($buildKeywordRegex($this->keywords2), '<span class="hlKeywords2">\\0</span>',
-                $string);
+            $string = \preg_replace(
+                $buildKeywordRegex($this->keywords2),
+                '<span class="hlKeywords2">\\0</span>',
+                $string
+            );
         }
         if (!empty($this->keywords3)) {
-            $string = \preg_replace($buildKeywordRegex($this->keywords3), '<span class="hlKeywords3">\\0</span>',
-                $string);
+            $string = \preg_replace(
+                $buildKeywordRegex($this->keywords3),
+                '<span class="hlKeywords3">\\0</span>',
+                $string
+            );
         }
         if (!empty($this->keywords4)) {
-            $string = \preg_replace($buildKeywordRegex($this->keywords4), '<span class="hlKeywords4">\\0</span>',
-                $string);
+            $string = \preg_replace(
+                $buildKeywordRegex($this->keywords4),
+                '<span class="hlKeywords4">\\0</span>',
+                $string
+            );
         }
         if (!empty($this->keywords5)) {
-            $string = \preg_replace($buildKeywordRegex($this->keywords5), '<span class="hlKeywords5">\\0</span>',
-                $string);
+            $string = \preg_replace(
+                $buildKeywordRegex($this->keywords5),
+                '<span class="hlKeywords5">\\0</span>',
+                $string
+            );
         }
 
         return $string;
@@ -346,8 +384,11 @@ abstract class Highlighter extends SingletonFactory
      */
     protected function highlightNumbers($string)
     {
-        return \preg_replace('!(?<=' . $this->separatorsRegEx . ')(-?\d+)(?=' . $this->separatorsRegEx . ')!i',
-            '<span class="hlNumbers">\\0</span>', $string);
+        return \preg_replace(
+            '!(?<=' . $this->separatorsRegEx . ')(-?\d+)(?=' . $this->separatorsRegEx . ')!i',
+            '<span class="hlNumbers">\\0</span>',
+            $string
+        );
     }
 
     /**

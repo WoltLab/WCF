@@ -87,8 +87,10 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("package_update.packageUpdateServerID IN (?)", [\array_keys($availableUpdateServers)]);
         $searchString = '%' . $this->parameters['searchString'] . '%';
-        $conditions->add("(package_update.package LIKE ? OR package_update.packageDescription LIKE ? OR package_update.packageName LIKE ?)",
-            [$searchString, $searchString, $searchString]);
+        $conditions->add(
+            "(package_update.package LIKE ? OR package_update.packageDescription LIKE ? OR package_update.packageName LIKE ?)",
+            [$searchString, $searchString, $searchString]
+        );
         $conditions->add("package.packageID IS NULL");
 
         // find matching packages
@@ -137,16 +139,25 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         while ($row = $statement->fetchArray()) {
             if (!isset($excludedPackagesOfInstalledPackages[$row['excludedPackage']])) {
                 $excludedPackagesOfInstalledPackages[$row['excludedPackage']] = $row['excludedPackageVersion'];
-            } elseif (Package::compareVersion($excludedPackagesOfInstalledPackages[$row['excludedPackage']],
-                $row['excludedPackageVersion'], '>')) {
+            } elseif (
+                Package::compareVersion(
+                    $excludedPackagesOfInstalledPackages[$row['excludedPackage']],
+                    $row['excludedPackageVersion'],
+                    '>'
+                )
+            ) {
                 $excludedPackagesOfInstalledPackages[$row['excludedPackage']] = $row['excludedPackageVersion'];
             }
         }
 
         $packageUpdates = [];
         foreach ($packageUpdateIDs as $packageUpdateID) {
-            $result = $this->canInstall($packageUpdateID, null, $installedPackages,
-                $excludedPackagesOfInstalledPackages);
+            $result = $this->canInstall(
+                $packageUpdateID,
+                null,
+                $installedPackages,
+                $excludedPackagesOfInstalledPackages
+            );
             if (isset($result[$packageUpdateID])) {
                 $packageUpdates[$packageUpdateID] = $result[$packageUpdateID];
             }
@@ -200,10 +211,12 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
             }
 
             if ($hasTrustedSource) {
-                $possiblePackages[$identifier] = \array_filter($packageSources,
+                $possiblePackages[$identifier] = \array_filter(
+                    $packageSources,
                     static function ($packageUpdateServerID) use ($trustedServerIDs) {
                         return \in_array($packageUpdateServerID, $trustedServerIDs);
-                    });
+                    }
+                );
             }
         }
 
@@ -273,8 +286,10 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
     ) {
         // get excluded packages
         $conditions = new PreparedStatementConditionBuilder();
-        $conditions->add("packageUpdateVersionID IN (SELECT packageUpdateVersionID FROM wcf" . WCF_N . "_package_update_version WHERE packageUpdateID = ?)",
-            [$packageUpdateID]);
+        $conditions->add(
+            "packageUpdateVersionID IN (SELECT packageUpdateVersionID FROM wcf" . WCF_N . "_package_update_version WHERE packageUpdateID = ?)",
+            [$packageUpdateID]
+        );
         $sql = "SELECT  *
                 FROM    wcf" . WCF_N . "_package_update_exclusion
                 " . $conditions;
@@ -288,8 +303,12 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
 
             if (!isset($excludedPackages[$packageUpdateVersionID][$package])) {
                 $excludedPackages[$packageUpdateVersionID][$package] = $packageVersion;
-            } elseif (Package::compareVersion($excludedPackages[$packageUpdateVersionID][$package],
-                    $packageVersion) == 1) {
+            } elseif (
+                Package::compareVersion(
+                    $excludedPackages[$packageUpdateVersionID][$package],
+                    $packageVersion
+                ) == 1
+            ) {
                 $excludedPackages[$packageUpdateVersionID][$package] = $packageVersion;
             }
         }
@@ -318,8 +337,12 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
             if (isset($excludedPackages[$packageUpdateVersionID])) {
                 $isExcluded = false;
                 foreach ($excludedPackages[$packageUpdateVersionID] as $excludedPackage => $excludedPackageVersion) {
-                    if (isset($installedPackages[$excludedPackage]) && Package::compareVersion($excludedPackageVersion,
-                            $installedPackages[$excludedPackage]) <= 0) {
+                    if (
+                        isset($installedPackages[$excludedPackage]) && Package::compareVersion(
+                            $excludedPackageVersion,
+                            $installedPackages[$excludedPackage]
+                        ) <= 0
+                    ) {
                         // excluded, ignore
                         $isExcluded = true;
                         break;
@@ -332,8 +355,13 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
             }
             // check excluded packages of installed packages
             if (isset($excludedPackagesOfInstalledPackages[$row['package']])) {
-                if (Package::compareVersion($packageVersion, $excludedPackagesOfInstalledPackages[$row['package']],
-                    '>=')) {
+                if (
+                    Package::compareVersion(
+                        $packageVersion,
+                        $excludedPackagesOfInstalledPackages[$row['package']],
+                        '>='
+                    )
+                ) {
                     continue;
                 }
             }
@@ -417,8 +445,12 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
                 $package = $row['package'];
                 $minVersion = $row['minversion'];
 
-                if (!isset($installedPackages[$package]) || Package::compareVersion($installedPackages[$package],
-                        $minVersion) == -1) {
+                if (
+                    !isset($installedPackages[$package]) || Package::compareVersion(
+                        $installedPackages[$package],
+                        $minVersion
+                    ) == -1
+                ) {
                     $requirements[$package] = $minVersion;
                 }
             }
@@ -442,8 +474,12 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
                     continue;
                 }
 
-                $result = $this->canInstall($row['packageUpdateID'], $requirements[$row['package']], $installedPackages,
-                    $excludedPackagesOfInstalledPackages);
+                $result = $this->canInstall(
+                    $row['packageUpdateID'],
+                    $requirements[$row['package']],
+                    $installedPackages,
+                    $excludedPackagesOfInstalledPackages
+                );
                 if (!empty($result)) {
                     $index = \array_search($row['package'], $openRequirements);
                     unset($openRequirements[$index]);
@@ -693,9 +729,12 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
     protected function createQueue($queueType)
     {
         if (isset($this->parameters['authData'])) {
-            PackageUpdateServer::storeAuthData($this->parameters['authData']['packageUpdateServerID'],
-                $this->parameters['authData']['username'], $this->parameters['authData']['password'],
-                $this->parameters['authData']['saveCredentials']);
+            PackageUpdateServer::storeAuthData(
+                $this->parameters['authData']['packageUpdateServerID'],
+                $this->parameters['authData']['username'],
+                $this->parameters['authData']['password'],
+                $this->parameters['authData']['saveCredentials']
+            );
         }
 
         $scheduler = new PackageInstallationScheduler($this->parameters['packages']);
@@ -715,8 +754,11 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
             if (!empty($excludedPackages)) {
                 return [
                     'excludedPackages' => true,
-                    'template' => WCF::getTPL()->fetch('packageUpdateExcludedPackages', 'wcf',
-                        ['excludedPackages' => $excludedPackages]),
+                    'template' => WCF::getTPL()->fetch(
+                        'packageUpdateExcludedPackages',
+                        'wcf',
+                        ['excludedPackages' => $excludedPackages]
+                    ),
                 ];
             }
         }

@@ -181,12 +181,14 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject
             if (empty($this->objectIDs)) {
                 return;
             }
+
+            $objectIdPlaceholder = "?" . \str_repeat(',?', \count($this->objectIDs) - 1);
+
             $sql = "SELECT  " . (!empty($this->sqlSelects) ? $this->sqlSelects . ($this->useQualifiedShorthand ? ',' : '') : '') . "
                             " . ($this->useQualifiedShorthand ? $this->getDatabaseTableAlias() . '.*' : '') . "
                     FROM    " . $this->getDatabaseTableName() . " " . $this->getDatabaseTableAlias() . "
                             " . $this->sqlJoins . "
-                    WHERE   " . $this->getDatabaseTableAlias() . "." . $this->getDatabaseTableIndexName() . " IN (?" . \str_repeat(',?',
-                    \count($this->objectIDs) - 1) . ")
+                    WHERE   " . $this->getDatabaseTableAlias() . "." . $this->getDatabaseTableIndexName() . " IN ({$objectIdPlaceholder})
                             " . (!empty($this->sqlOrderBy) ? "ORDER BY " . $this->sqlOrderBy : '');
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($this->objectIDs);

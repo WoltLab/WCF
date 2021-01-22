@@ -230,8 +230,10 @@ class ModerationQueueManager extends SingletonFactory
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("moderation_queue_to_user.userID = ?", [WCF::getUser()->userID]);
             $conditions->add("moderation_queue_to_user.isAffected = ?", [1]);
-            $conditions->add("moderation_queue.status IN (?)",
-                [[ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING]]);
+            $conditions->add(
+                "moderation_queue.status IN (?)",
+                [[ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING]]
+            );
 
             $sql = "SELECT      COUNT(*)
                     FROM        wcf" . WCF_N . "_moderation_queue_to_user moderation_queue_to_user
@@ -269,10 +271,14 @@ class ModerationQueueManager extends SingletonFactory
             $conditions = new PreparedStatementConditionBuilder();
             $conditions->add("moderation_queue_to_user.userID = ?", [WCF::getUser()->userID]);
             $conditions->add("moderation_queue_to_user.isAffected = ?", [1]);
-            $conditions->add("moderation_queue.status IN (?)",
-                [[ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING]]);
-            $conditions->add("moderation_queue.time > ?",
-                [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.moderation.queue')]);
+            $conditions->add(
+                "moderation_queue.status IN (?)",
+                [[ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING]]
+            );
+            $conditions->add(
+                "moderation_queue.time > ?",
+                [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.moderation.queue')]
+            );
             $conditions->add("(moderation_queue.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)");
 
             $sql = "SELECT      COUNT(*)
@@ -320,8 +326,10 @@ class ModerationQueueManager extends SingletonFactory
             foreach ($this->objectTypeNames as $definitionName => $objectTypeIDs) {
                 foreach ($objectTypeIDs as $objectTypeID) {
                     if (isset($queues[$objectTypeID])) {
-                        $this->moderationTypes[$definitionName]->getProcessor()->assignQueues($objectTypeID,
-                            $queues[$objectTypeID]);
+                        $this->moderationTypes[$definitionName]->getProcessor()->assignQueues(
+                            $objectTypeID,
+                            $queues[$objectTypeID]
+                        );
                     }
                 }
             }
@@ -383,9 +391,14 @@ class ModerationQueueManager extends SingletonFactory
         if (!empty($queues)) {
             $queueIDs = [];
             foreach ($queues as $objectTypeID => $objectQueues) {
-                $queueIDs = \array_merge($queueIDs,
-                    $this->getProcessor($this->definitions[$this->objectTypes[$objectTypeID]->definitionID], null,
-                        $objectTypeID)->identifyOrphans($objectQueues));
+                $queueIDs = \array_merge(
+                    $queueIDs,
+                    $this->getProcessor(
+                        $this->definitions[$this->objectTypes[$objectTypeID]->definitionID],
+                        null,
+                        $objectTypeID
+                    )->identifyOrphans($objectQueues)
+                );
             }
 
             $this->removeOrphans($queueIDs);

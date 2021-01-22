@@ -117,8 +117,10 @@ class Menu extends DatabaseObject implements ITitledObject
     protected function getMenuItemNodeTree()
     {
         if ($this->menuItemNodeTree === null) {
-            $this->menuItemNodeTree = new MenuItemNodeTree($this->menuID,
-                MenuCache::getInstance()->getMenuItemsByMenuID($this->menuID));
+            $this->menuItemNodeTree = new MenuItemNodeTree(
+                $this->menuID,
+                MenuCache::getInstance()->getMenuItemsByMenuID($this->menuID)
+            );
         }
 
         return $this->menuItemNodeTree;

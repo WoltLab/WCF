@@ -188,8 +188,10 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
                 }
 
                 $link = $object->getLink();
-                $lastModifiedTime = ($sitemapObject->getLastModifiedColumn() === null) ? null : \date('c',
-                    $object->{$sitemapObject->getLastModifiedColumn()});
+                $lastModifiedTime = ($sitemapObject->getLastModifiedColumn() === null) ? null : \date(
+                    'c',
+                    $object->{$sitemapObject->getLastModifiedColumn()}
+                );
 
                 if ($sitemapObject->canView($object)) {
                     $this->file->write(WCF::getTPL()->fetch('sitemapEntry', 'wcf', [

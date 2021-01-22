@@ -71,8 +71,10 @@ class AttachmentHandler implements \Countable
             throw new SystemException('objectID and tmpHash cannot be empty at the same time');
         }
 
-        $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType',
-            $objectType);
+        $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
+            'com.woltlab.wcf.attachment.objectType',
+            $objectType
+        );
         $this->processor = $this->objectType->getProcessor();
         $this->objectID = $objectID;
         $this->parentObjectID = $parentObjectID;
@@ -149,8 +151,10 @@ class AttachmentHandler implements \Countable
     {
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("objectTypeID = ?", [
-            ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType',
-                $objectType)->objectTypeID,
+            ObjectTypeCache::getInstance()->getObjectTypeByName(
+                'com.woltlab.wcf.attachment.objectType',
+                $objectType
+            )->objectTypeID,
         ]);
         $conditions->add("objectID IN (?)", [$oldObjectIDs]);
         $parameters = $conditions->getParameters();
@@ -173,8 +177,10 @@ class AttachmentHandler implements \Countable
     {
         $attachmentList = new AttachmentList();
         $attachmentList->getConditionBuilder()->add("objectTypeID = ?", [
-            ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType',
-                $objectType)->objectTypeID,
+            ObjectTypeCache::getInstance()->getObjectTypeByName(
+                'com.woltlab.wcf.attachment.objectType',
+                $objectType
+            )->objectTypeID,
         ]);
         $attachmentList->getConditionBuilder()->add("objectID IN (?)", [$objectIDs]);
         $attachmentList->readObjects();
@@ -217,8 +223,12 @@ class AttachmentHandler implements \Countable
         for ($i = 0, $j = \count($extensions); $i < $j; $i++) {
             if (\strpos($extensions[$i], '*') !== false) {
                 for ($k = $j - 1; $k > $i; $k--) {
-                    if (\preg_match('/^' . \str_replace('\*', '.*', \preg_quote($extensions[$i], '/')) . '$/i',
-                        $extensions[$k])) {
+                    if (
+                        \preg_match(
+                            '/^' . \str_replace('\*', '.*', \preg_quote($extensions[$i], '/')) . '$/i',
+                            $extensions[$k]
+                        )
+                    ) {
                         \array_splice($extensions, $k, 1);
                         $j--;
                     }

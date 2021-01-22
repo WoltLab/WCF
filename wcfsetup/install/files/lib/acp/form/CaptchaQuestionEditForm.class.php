@@ -59,10 +59,18 @@ class CaptchaQuestionEditForm extends CaptchaQuestionAddForm
         parent::readData();
 
         if (empty($_POST)) {
-            I18nHandler::getInstance()->setOptions('question', 1, $this->captchaQuestion->question,
-                'wcf.captcha.question.question.question\d+');
-            I18nHandler::getInstance()->setOptions('answers', 1, $this->captchaQuestion->answers,
-                'wcf.captcha.question.question.answers\d+');
+            I18nHandler::getInstance()->setOptions(
+                'question',
+                1,
+                $this->captchaQuestion->question,
+                'wcf.captcha.question.question.question\d+'
+            );
+            I18nHandler::getInstance()->setOptions(
+                'answers',
+                1,
+                $this->captchaQuestion->answers,
+                'wcf.captcha.question.question.answers\d+'
+            );
 
             $this->isDisabled = $this->captchaQuestion->isDisabled;
         }
@@ -96,9 +104,12 @@ class CaptchaQuestionEditForm extends CaptchaQuestionAddForm
                 I18nHandler::getInstance()->remove($this->captchaQuestion->question);
             }
         } else {
-            I18nHandler::getInstance()->save('question',
-                'wcf.captcha.question.question.question' . $this->captchaQuestion->questionID, 'wcf.captcha.question',
-                1);
+            I18nHandler::getInstance()->save(
+                'question',
+                'wcf.captcha.question.question.question' . $this->captchaQuestion->questionID,
+                'wcf.captcha.question',
+                1
+            );
         }
 
         if (I18nHandler::getInstance()->isPlainValue('answers')) {
@@ -106,9 +117,12 @@ class CaptchaQuestionEditForm extends CaptchaQuestionAddForm
                 I18nHandler::getInstance()->remove($this->captchaQuestion->answers);
             }
         } else {
-            I18nHandler::getInstance()->save('answers',
-                'wcf.captcha.question.question.answers' . $this->captchaQuestion->questionID, 'wcf.captcha.question',
-                1);
+            I18nHandler::getInstance()->save(
+                'answers',
+                'wcf.captcha.question.question.answers' . $this->captchaQuestion->questionID,
+                'wcf.captcha.question',
+                1
+            );
         }
 
         $this->objectAction = new CaptchaQuestionAction([$this->captchaQuestion], 'update', [

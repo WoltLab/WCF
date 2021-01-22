@@ -149,8 +149,10 @@ class LostPasswordForm extends AbstractCaptchaForm
         $this->saved();
 
         // forward to index page
-        HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(),
-            WCF::getLanguage()->getDynamicVariable('wcf.user.lostPassword.mail.sent'));
+        HeaderUtil::delayedRedirect(
+            LinkHandler::getInstance()->getLink(),
+            WCF::getLanguage()->getDynamicVariable('wcf.user.lostPassword.mail.sent')
+        );
 
         exit;
     }

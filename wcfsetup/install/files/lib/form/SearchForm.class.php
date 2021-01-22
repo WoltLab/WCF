@@ -316,17 +316,25 @@ class SearchForm extends AbstractCaptchaForm
             $statement->execute($parameters);
             $row = $statement->fetchArray();
             if ($row !== false) {
-                HeaderUtil::redirect(LinkHandler::getInstance()->getLink('SearchResult', ['id' => $row['searchID']],
-                    'highlight=' . \urlencode($this->query)));
+                HeaderUtil::redirect(LinkHandler::getInstance()->getLink(
+                    'SearchResult',
+                    ['id' => $row['searchID']],
+                    'highlight=' . \urlencode($this->query)
+                ));
 
                 exit;
             }
         }
 
         // do search
-        $this->results = SearchEngine::getInstance()->search($this->query, $this->selectedObjectTypes,
-            $this->subjectOnly, $this->searchIndexCondition, $this->additionalConditions,
-            $this->sortField . ' ' . $this->sortOrder);
+        $this->results = SearchEngine::getInstance()->search(
+            $this->query,
+            $this->selectedObjectTypes,
+            $this->subjectOnly,
+            $this->searchIndexCondition,
+            $this->additionalConditions,
+            $this->sortField . ' ' . $this->sortOrder
+        );
 
         // result is empty
         if (empty($this->results)) {
@@ -344,8 +352,10 @@ class SearchForm extends AbstractCaptchaForm
         if (empty($this->query)) {
             throw new NamedUserException(WCF::getLanguage()->get('wcf.search.error.user.noMatches'));
         } else {
-            throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.search.error.noMatches',
-                ['query' => $this->query]));
+            throw new NamedUserException(WCF::getLanguage()->getDynamicVariable(
+                'wcf.search.error.noMatches',
+                ['query' => $this->query]
+            ));
         }
     }
 
@@ -427,8 +437,11 @@ class SearchForm extends AbstractCaptchaForm
         $this->saved();
 
         // forward to result page
-        HeaderUtil::redirect(LinkHandler::getInstance()->getLink('SearchResult', ['id' => $this->searchID],
-            'highlight=' . \urlencode($this->query)));
+        HeaderUtil::redirect(LinkHandler::getInstance()->getLink(
+            'SearchResult',
+            ['id' => $this->searchID],
+            'highlight=' . \urlencode($this->query)
+        ));
 
         exit;
     }
@@ -512,8 +525,10 @@ class SearchForm extends AbstractCaptchaForm
 
         // language
         if (!empty($this->query) && LanguageFactory::getInstance()->multilingualismEnabled() && \count(WCF::getUser()->getLanguageIDs())) {
-            $this->searchIndexCondition->add('(languageID IN (?) OR languageID = 0)',
-                [WCF::getUser()->getLanguageIDs()]);
+            $this->searchIndexCondition->add(
+                '(languageID IN (?) OR languageID = 0)',
+                [WCF::getUser()->getLanguageIDs()]
+            );
         }
 
         foreach ($this->selectedObjectTypes as $key => $objectTypeName) {

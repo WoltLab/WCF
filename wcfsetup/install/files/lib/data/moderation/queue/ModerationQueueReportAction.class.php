@@ -45,8 +45,10 @@ class ModerationQueueReportAction extends ModerationQueueAction
     public function removeContent()
     {
         // mark content as deleted
-        ModerationQueueReportManager::getInstance()->removeContent($this->queue->getDecoratedObject(),
-            $this->parameters['message']);
+        ModerationQueueReportManager::getInstance()->removeContent(
+            $this->queue->getDecoratedObject(),
+            $this->parameters['message']
+        );
 
         $this->queue->markAsConfirmed();
     }
@@ -87,14 +89,22 @@ class ModerationQueueReportAction extends ModerationQueueAction
         }
 
         // validate the combination of object type and object id
-        if (!ModerationQueueReportManager::getInstance()->isValid($this->parameters['objectType'],
-            $this->parameters['objectID'])) {
+        if (
+            !ModerationQueueReportManager::getInstance()->isValid(
+                $this->parameters['objectType'],
+                $this->parameters['objectID']
+            )
+        ) {
             throw new UserInputException('objectID');
         }
 
         // validate if user may read the content (prevent information disclosure by reporting random ids)
-        if (!ModerationQueueReportManager::getInstance()->canReport($this->parameters['objectType'],
-            $this->parameters['objectID'])) {
+        if (
+            !ModerationQueueReportManager::getInstance()->canReport(
+                $this->parameters['objectType'],
+                $this->parameters['objectID']
+            )
+        ) {
             throw new PermissionDeniedException();
         }
     }
@@ -105,13 +115,17 @@ class ModerationQueueReportAction extends ModerationQueueAction
     public function prepareReport()
     {
         // content was already reported
-        $alreadyReported = ModerationQueueReportManager::getInstance()->hasPendingReport($this->parameters['objectType'],
-            $this->parameters['objectID']) ? 1 : 0;
+        $alreadyReported = ModerationQueueReportManager::getInstance()->hasPendingReport(
+            $this->parameters['objectType'],
+            $this->parameters['objectID']
+        ) ? 1 : 0;
 
         WCF::getTPL()->assign([
             'alreadyReported' => $alreadyReported,
-            'object' => ModerationQueueReportManager::getInstance()->getReportedObject($this->parameters['objectType'],
-                $this->parameters['objectID']),
+            'object' => ModerationQueueReportManager::getInstance()->getReportedObject(
+                $this->parameters['objectType'],
+                $this->parameters['objectID']
+            ),
         ]);
 
         return [
@@ -143,8 +157,12 @@ class ModerationQueueReportAction extends ModerationQueueAction
     {
         // if the specified content was already reported, e.g. a different user reported this
         // item meanwhile, silently ignore it. Just display a success and the user is happy :)
-        if (!ModerationQueueReportManager::getInstance()->hasPendingReport($this->parameters['objectType'],
-            $this->parameters['objectID'])) {
+        if (
+            !ModerationQueueReportManager::getInstance()->hasPendingReport(
+                $this->parameters['objectType'],
+                $this->parameters['objectID']
+            )
+        ) {
             ModerationQueueReportManager::getInstance()->addReport(
                 $this->parameters['objectType'],
                 $this->parameters['objectID'],

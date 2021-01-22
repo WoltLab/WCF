@@ -586,13 +586,17 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
             }
 
             $individualScss = Style::splitLessVariables($variables['individualScss']);
-            $variables['individualScss'] = Style::joinLessVariables($styleData['variables']['individualScss'],
-                $individualScss['custom']);
+            $variables['individualScss'] = Style::joinLessVariables(
+                $styleData['variables']['individualScss'],
+                $individualScss['custom']
+            );
             unset($styleData['variables']['individualScss']);
 
             $overrideScss = Style::splitLessVariables($variables['overrideScss']);
-            $variables['overrideScss'] = Style::joinLessVariables($styleData['variables']['overrideScss'],
-                $overrideScss['custom']);
+            $variables['overrideScss'] = Style::joinLessVariables(
+                $styleData['variables']['overrideScss'],
+                $overrideScss['custom']
+            );
             unset($styleData['variables']['overrideScss']);
 
             // import variables that have not been explicitly defined before
@@ -817,12 +821,18 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
         // append style preview image
         if ($this->image && @\file_exists(WCF_DIR . 'images/' . $this->image)) {
-            $styleTar->add(WCF_DIR . 'images/' . $this->image, '',
-                FileUtil::addTrailingSlash(\dirname(WCF_DIR . 'images/' . $this->image)));
+            $styleTar->add(
+                WCF_DIR . 'images/' . $this->image,
+                '',
+                FileUtil::addTrailingSlash(\dirname(WCF_DIR . 'images/' . $this->image))
+            );
         }
         if ($this->image2x && @\file_exists(WCF_DIR . 'images/' . $this->image2x)) {
-            $styleTar->add(WCF_DIR . 'images/' . $this->image2x, '',
-                FileUtil::addTrailingSlash(\dirname(WCF_DIR . 'images/' . $this->image2x)));
+            $styleTar->add(
+                WCF_DIR . 'images/' . $this->image2x,
+                '',
+                FileUtil::addTrailingSlash(\dirname(WCF_DIR . 'images/' . $this->image2x))
+            );
         }
 
         // append cover photo
@@ -843,8 +853,11 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
         // create style info file
         $xml = new XMLWriter();
-        $xml->beginDocument('style', 'http://www.woltlab.com',
-            'http://www.woltlab.com/XSD/' . WSC_API_VERSION . '/style.xsd');
+        $xml->beginDocument(
+            'style',
+            'http://www.woltlab.com',
+            'http://www.woltlab.com/XSD/' . WSC_API_VERSION . '/style.xsd'
+        );
 
         // general block
         $xml->startElement('general');
@@ -899,8 +912,11 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
         $styleTar->addString(self::INFO_FILE, $xml->endDocument());
 
         // create variable list
-        $xml->beginDocument('variables', 'http://www.woltlab.com',
-            'http://www.woltlab.com/XSD/' . WSC_API_VERSION . '/styleVariables.xsd');
+        $xml->beginDocument(
+            'variables',
+            'http://www.woltlab.com',
+            'http://www.woltlab.com/XSD/' . WSC_API_VERSION . '/styleVariables.xsd'
+        );
 
         // get variables
         $sql = "SELECT      variable.variableName, value.variableValue
@@ -1010,8 +1026,12 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
             $packageTar->add($styleTarName, '', FileUtil::addTrailingSlash(\dirname($styleTarName)));
 
             // create package.xml
-            $xml->beginDocument('package', 'http://www.woltlab.com',
-                'http://www.woltlab.com/XSD/' . WSC_API_VERSION . '/package.xsd', ['name' => $packageName]);
+            $xml->beginDocument(
+                'package',
+                'http://www.woltlab.com',
+                'http://www.woltlab.com/XSD/' . WSC_API_VERSION . '/package.xsd',
+                ['name' => $packageName]
+            );
 
             $xml->startElement('packageinformation');
             $xml->writeElement('packagename', $this->styleName);
@@ -1033,8 +1053,11 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
             $xml->endElement();
 
             $xml->startElement('requiredpackages');
-            $xml->writeElement('requiredpackage', 'com.woltlab.wcf',
-                ['minversion' => PackageCache::getInstance()->getPackageByIdentifier('com.woltlab.wcf')->packageVersion]);
+            $xml->writeElement(
+                'requiredpackage',
+                'com.woltlab.wcf',
+                ['minversion' => PackageCache::getInstance()->getPackageByIdentifier('com.woltlab.wcf')->packageVersion]
+            );
             $xml->endElement();
 
             $xml->startElement('excludedpackages');

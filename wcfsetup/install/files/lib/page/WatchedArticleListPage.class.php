@@ -39,8 +39,11 @@ class WatchedArticleListPage extends ArticleListPage
             throw new IllegalLinkException();
         }
 
-        $this->canonicalURL = LinkHandler::getInstance()->getLink('WatchedArticleList', $this->controllerParameters,
-            ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : ''));
+        $this->canonicalURL = LinkHandler::getInstance()->getLink(
+            'WatchedArticleList',
+            $this->controllerParameters,
+            ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : '')
+        );
     }
 
     /**

@@ -112,8 +112,12 @@ class NotificationPresetSettingsForm extends AbstractForm
             }
 
             // ensure 'mailNotificationType' exists
-            if (!isset($settings['mailNotificationType']) || !\in_array($settings['mailNotificationType'],
-                    self::$validMailNotificationTypes)) {
+            if (
+                !isset($settings['mailNotificationType']) || !\in_array(
+                    $settings['mailNotificationType'],
+                    self::$validMailNotificationTypes
+                )
+            ) {
                 $settings['mailNotificationType'] = 'none';
             }
         }
@@ -149,8 +153,10 @@ class NotificationPresetSettingsForm extends AbstractForm
 
         $groupedEvents = [];
         foreach ($this->events as $objectType => $events) {
-            $objectTypeObj = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.notification.objectType',
-                $objectType);
+            $objectTypeObj = ObjectTypeCache::getInstance()->getObjectTypeByName(
+                'com.woltlab.wcf.notification.objectType',
+                $objectType
+            );
             $category = ($objectTypeObj->category ?: $objectType);
 
             if (!isset($groupedEvents[$category])) {
@@ -191,8 +197,10 @@ class NotificationPresetSettingsForm extends AbstractForm
                 }
 
                 if ($event->preset != $preset || $event->presetMailNotificationType != $presetMailNotificationType) {
-                    $editor = new UserNotificationEventEditor(new UserNotificationEvent(null,
-                        ['eventID' => $event->eventID]));
+                    $editor = new UserNotificationEventEditor(new UserNotificationEvent(
+                        null,
+                        ['eventID' => $event->eventID]
+                    ));
                     $editor->update([
                         'preset' => $preset,
                         'presetMailNotificationType' => $presetMailNotificationType,

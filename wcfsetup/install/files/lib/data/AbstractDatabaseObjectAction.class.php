@@ -176,8 +176,12 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
         // validate if user is logged in
         if (!WCF::getUser()->userID && !\in_array($this->getActionName(), $this->allowGuestAccess)) {
             throw new PermissionDeniedException();
-        } elseif (!RequestHandler::getInstance()->isACPRequest() && \in_array($this->getActionName(),
-                $this->requireACP)) {
+        } elseif (
+            !RequestHandler::getInstance()->isACPRequest() && \in_array(
+                $this->getActionName(),
+                $this->requireACP
+            )
+        ) {
             // attempt to invoke method, but origin is not the ACP
             throw new PermissionDeniedException();
         }

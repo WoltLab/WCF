@@ -74,12 +74,16 @@ class UserTrophyCondition extends AbstractMultipleFieldsCondition implements
         }
 
         if (isset($conditionData['userTrophyIDs'])) {
-            $objectList->getConditionBuilder()->add('user_table.userID IN (SELECT userID FROM wcf' . WCF_N . '_user_trophy WHERE trophyID IN (?) GROUP BY userID HAVING COUNT(DISTINCT trophyID) = ?)',
-                [$conditionData['userTrophyIDs'], \count($conditionData['userTrophyIDs'])]);
+            $objectList->getConditionBuilder()->add(
+                'user_table.userID IN (SELECT userID FROM wcf' . WCF_N . '_user_trophy WHERE trophyID IN (?) GROUP BY userID HAVING COUNT(DISTINCT trophyID) = ?)',
+                [$conditionData['userTrophyIDs'], \count($conditionData['userTrophyIDs'])]
+            );
         }
         if (isset($conditionData['notUserTrophyIDs'])) {
-            $objectList->getConditionBuilder()->add('user_table.userID NOT IN (SELECT userID FROM wcf' . WCF_N . '_user_trophy WHERE trophyID IN (?))',
-                [$conditionData['notUserTrophyIDs']]);
+            $objectList->getConditionBuilder()->add(
+                'user_table.userID NOT IN (SELECT userID FROM wcf' . WCF_N . '_user_trophy WHERE trophyID IN (?))',
+                [$conditionData['notUserTrophyIDs']]
+            );
         }
     }
 
@@ -169,8 +173,10 @@ HTML;
         $returnValue = "";
         foreach ($trophies as $trophy) {
             /** @noinspection PhpVariableVariableInspection */
-            $returnValue .= "<label><input type=\"checkbox\" name=\"" . $identifier . "[]\" value=\"" . $trophy->trophyID . "\"" . (\in_array($trophy->trophyID,
-                    $this->{$identifier}) ? ' checked' : "") . "> " . StringUtil::encodeHTML($trophy->getTitle()) . "</label>";
+            $returnValue .= "<label><input type=\"checkbox\" name=\"" . $identifier . "[]\" value=\"" . $trophy->trophyID . "\"" . (\in_array(
+                $trophy->trophyID,
+                $this->{$identifier}
+            ) ? ' checked' : "") . "> " . StringUtil::encodeHTML($trophy->getTitle()) . "</label>";
         }
 
         return $returnValue;

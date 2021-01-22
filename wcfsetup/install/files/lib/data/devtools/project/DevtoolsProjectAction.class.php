@@ -133,8 +133,7 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction
             $path,
             $projectNames,
             $projectPaths,
-            &
-            $projectCount
+            &$projectCount
         ) {
             $projectPath = $path . $directory . '/';
 

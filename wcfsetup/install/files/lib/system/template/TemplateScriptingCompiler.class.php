@@ -1302,8 +1302,13 @@ class TemplateScriptingCompiler
                 $leftParentheses += $leftParenthesis - $rightParenthesis;
                 $value = \mb_substr($values[$i], 0, $leftParenthesis - $rightParenthesis);
 
-                if ($leftParentheses < 0 || \str_replace(')', '',
-                        \mb_substr($values[$i], $leftParenthesis - $rightParenthesis)) != '') {
+                if (
+                    $leftParentheses < 0 || \str_replace(
+                        ')',
+                        '',
+                        \mb_substr($values[$i], $leftParenthesis - $rightParenthesis)
+                    ) != ''
+                ) {
                     throw new SystemException(
                         static::formatSyntaxError(
                             'syntax error in tag {' . ($elseif ? 'elseif' : 'if') . '}',
@@ -1465,8 +1470,10 @@ class TemplateScriptingCompiler
     protected function compileModifier($data)
     {
         if (isset($data['className'])) {
-            return "\$this->pluginObjects['" . $data['className'] . "']->execute([" . \implode(',',
-                    $data['parameter']) . "], \$this)";
+            return "\$this->pluginObjects['" . $data['className'] . "']->execute([" . \implode(
+                ',',
+                $data['parameter']
+            ) . "], \$this)";
         } else {
             return $data['name'] . '(' . \implode(',', $data['parameter']) . ')';
         }

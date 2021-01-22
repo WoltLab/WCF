@@ -84,8 +84,10 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements
     {
         $returnValue = "";
         foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
-            $returnValue .= "<label><input type=\"checkbox\" name=\"languageIDs[]\" value=\"" . $language->languageID . "\"" . (\in_array($language->languageID,
-                    $this->languageIDs) ? ' checked' : "") . "> " . $language->languageName . "</label>";
+            $returnValue .= "<label><input type=\"checkbox\" name=\"languageIDs[]\" value=\"" . $language->languageID . "\"" . (\in_array(
+                $language->languageID,
+                $this->languageIDs
+            ) ? ' checked' : "") . "> " . $language->languageName . "</label>";
         }
 
         return $returnValue;

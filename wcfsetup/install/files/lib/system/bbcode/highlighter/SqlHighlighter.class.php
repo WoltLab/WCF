@@ -82,8 +82,11 @@ class SqlHighlighter extends Highlighter
                     $comment = \str_replace("\\\"", "\"", $comment);
 
                     // create hash
-                    $hash = StringStack::pushToStringStack('<span class="hlComments">' . StringUtil::encodeHTML($comment) . '</span>',
-                        'highlighterComments', "\0\0");
+                    $hash = StringStack::pushToStringStack(
+                        '<span class="hlComments">' . StringUtil::encodeHTML($comment) . '</span>',
+                        'highlighterComments',
+                        "\0\0"
+                    );
                 }
 
                 return $string . $hash;
@@ -100,8 +103,11 @@ class SqlHighlighter extends Highlighter
     {
         if ($this->quotesRegEx !== null) {
             $string = $this->quotesRegEx->replace($string, static function (array $matches) {
-                return StringStack::pushToStringStack('<span class="hlQuotes">' . StringUtil::encodeHTML($matches[0]) . '</span>',
-                    'highlighterQuotes', "\0\0");
+                return StringStack::pushToStringStack(
+                    '<span class="hlQuotes">' . StringUtil::encodeHTML($matches[0]) . '</span>',
+                    'highlighterQuotes',
+                    "\0\0"
+                );
             });
         }
 

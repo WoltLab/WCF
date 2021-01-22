@@ -137,8 +137,12 @@ class IndexPage extends AbstractPage
                 if ($endDate < TIME_NOW) {
                     $pluginStoreFileID = $app->getEvaluationPluginStoreID();
                     $isWoltLab = false;
-                    if ($pluginStoreFileID === 0 && \strpos($application->getPackage()->package,
-                            'com.woltlab.') === 0) {
+                    if (
+                        $pluginStoreFileID === 0 && \strpos(
+                            $application->getPackage()->package,
+                            'com.woltlab.'
+                        ) === 0
+                    ) {
                         $isWoltLab = true;
                     }
 

@@ -492,13 +492,17 @@ class BoxAddForm extends AbstractForm
             if ($this->isMultilingual) {
                 foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                     $this->htmlInputProcessors[$language->languageID] = new HtmlInputProcessor();
-                    $this->htmlInputProcessors[$language->languageID]->process((!empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : ''),
-                        'com.woltlab.wcf.box.content');
+                    $this->htmlInputProcessors[$language->languageID]->process(
+                        (!empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : ''),
+                        'com.woltlab.wcf.box.content'
+                    );
                 }
             } else {
                 $this->htmlInputProcessors[0] = new HtmlInputProcessor();
-                $this->htmlInputProcessors[0]->process((!empty($this->content[0]) ? $this->content[0] : ''),
-                    'com.woltlab.wcf.box.content');
+                $this->htmlInputProcessors[0]->process(
+                    (!empty($this->content[0]) ? $this->content[0] : ''),
+                    'com.woltlab.wcf.box.content'
+                );
             }
         }
 
@@ -623,8 +627,10 @@ class BoxAddForm extends AbstractForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(BoxEditForm::class,
-                ['id' => $box->getObjectID()]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
+                BoxEditForm::class,
+                ['id' => $box->getObjectID()]
+            ),
         ]);
 
         // reset variables
@@ -685,8 +691,10 @@ class BoxAddForm extends AbstractForm
                 }
             }
 
-            $this->aclValues = SimpleAclHandler::getInstance()->getValues('com.woltlab.wcf.box',
-                $this->presetBox->boxID);
+            $this->aclValues = SimpleAclHandler::getInstance()->getValues(
+                'com.woltlab.wcf.box',
+                $this->presetBox->boxID
+            );
 
             $this->readBoxImages();
         }

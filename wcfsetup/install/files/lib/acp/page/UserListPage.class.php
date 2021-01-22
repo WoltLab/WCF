@@ -200,8 +200,11 @@ class UserListPage extends SortablePage
         $this->readUsers();
 
         // build page url
-        $this->url = LinkHandler::getInstance()->getLink('UserList', [],
-            'searchID=' . $this->searchID . '&action=' . \rawurlencode($this->action) . '&pageNo=' . $this->pageNo . '&sortField=' . $this->sortField . '&sortOrder=' . $this->sortOrder);
+        $this->url = LinkHandler::getInstance()->getLink(
+            'UserList',
+            [],
+            'searchID=' . $this->searchID . '&action=' . \rawurlencode($this->action) . '&pageNo=' . $this->pageNo . '&sortField=' . $this->sortField . '&sortOrder=' . $this->sortOrder
+        );
     }
 
     /**
@@ -260,8 +263,11 @@ class UserListPage extends SortablePage
                 " . (isset($this->options[$this->sortField]) ? "LEFT JOIN wcf" . WCF_N . "_user_option_value user_option_value ON (user_option_value.userID = user_table.userID)" : '') . "
                 " . $this->conditions . "
                 ORDER BY    " . (($this->sortField != 'email' && isset($this->options[$this->sortField])) ? 'user_option_value.userOption' . $this->options[$this->sortField]->optionID : $this->sortField) . " " . $this->sortOrder;
-        $statement = WCF::getDB()->prepareStatement($sql, $this->itemsPerPage,
-            ($this->pageNo - 1) * $this->itemsPerPage);
+        $statement = WCF::getDB()->prepareStatement(
+            $sql,
+            $this->itemsPerPage,
+            ($this->pageNo - 1) * $this->itemsPerPage
+        );
         $statement->execute($this->conditions->getParameters());
         $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
@@ -312,18 +318,29 @@ class UserListPage extends SortablePage
                             break;
 
                         case 'registrationDate':
-                            $this->columnValues[$user->userID][$column] = DateUtil::format(DateUtil::getDateTimeByTimestamp($user->{$column}),
-                                DateUtil::DATE_FORMAT);
+                            $this->columnValues[$user->userID][$column] = DateUtil::format(
+                                DateUtil::getDateTimeByTimestamp($user->{$column}),
+                                DateUtil::DATE_FORMAT
+                            );
                             break;
 
                         case 'lastActivityTime':
                             if ($user->{$column}) {
-                                $this->columnValues[$user->userID][$column] = \str_replace('%time%',
-                                    DateUtil::format(DateUtil::getDateTimeByTimestamp($user->{$column}),
-                                        DateUtil::TIME_FORMAT), \str_replace('%date%',
-                                        DateUtil::format(DateUtil::getDateTimeByTimestamp($user->{$column}),
-                                            DateUtil::DATE_FORMAT),
-                                        WCF::getLanguage()->get('wcf.date.dateTimeFormat')));
+                                $this->columnValues[$user->userID][$column] = \str_replace(
+                                    '%time%',
+                                    DateUtil::format(
+                                        DateUtil::getDateTimeByTimestamp($user->{$column}),
+                                        DateUtil::TIME_FORMAT
+                                    ),
+                                    \str_replace(
+                                        '%date%',
+                                        DateUtil::format(
+                                            DateUtil::getDateTimeByTimestamp($user->{$column}),
+                                            DateUtil::DATE_FORMAT
+                                        ),
+                                        WCF::getLanguage()->get('wcf.date.dateTimeFormat')
+                                    )
+                                );
                             }
                             break;
 
@@ -340,8 +357,11 @@ class UserListPage extends SortablePage
 
                                     /** @var IUserOptionOutput $outputObj */
                                     $outputObj = $this->options[$column]->getOutputObject();
-                                    $this->columnValues[$user->userID][$column] = $outputObj->getOutput($user->getDecoratedObject(),
-                                        $this->options[$column]->getDecoratedObject(), $user->{$column});
+                                    $this->columnValues[$user->userID][$column] = $outputObj->getOutput(
+                                        $user->getDecoratedObject(),
+                                        $this->options[$column]->getDecoratedObject(),
+                                        $user->{$column}
+                                    );
                                 } else {
                                     $this->columnValues[$user->userID][$column] = StringUtil::encodeHTML($user->{$column});
                                 }

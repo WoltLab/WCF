@@ -39,8 +39,10 @@ class ArticleCommentListBoxController extends AbstractCommentListBoxController
 
             // apply language filter
             if (LanguageFactory::getInstance()->multilingualismEnabled() && !empty(WCF::getUser()->getLanguageIDs())) {
-                $commentList->getConditionBuilder()->add('(article_content.languageID IN (?) OR article_content.languageID IS NULL)',
-                    [WCF::getUser()->getLanguageIDs()]);
+                $commentList->getConditionBuilder()->add(
+                    '(article_content.languageID IN (?) OR article_content.languageID IS NULL)',
+                    [WCF::getUser()->getLanguageIDs()]
+                );
             }
         } else {
             $commentList->getConditionBuilder()->add('0 = 1');

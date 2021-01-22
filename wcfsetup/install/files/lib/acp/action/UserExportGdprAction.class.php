@@ -175,19 +175,27 @@ class UserExportGdprAction extends AbstractAction
                 'user' => [],
                 'userOptions' => [],
                 'ipAddresses' => [],
-                'paidSubscriptionTransactionLog' => $this->dumpTable('wcf' . WCF_N . '_paid_subscription_transaction_log',
-                    'userID'),
+                'paidSubscriptionTransactionLog' => $this->dumpTable(
+                    'wcf' . WCF_N . '_paid_subscription_transaction_log',
+                    'userID'
+                ),
             ],
         ];
 
         EventHandler::getInstance()->fireAction($this, 'export');
 
-        $this->data['com.woltlab.wcf']['user'] = \array_merge($this->data['com.woltlab.wcf']['user'],
-            $this->exportUser());
-        $this->data['com.woltlab.wcf']['userOptions'] = \array_merge($this->data['com.woltlab.wcf']['userOptions'],
-            $this->exportUserOptions());
-        $this->data['com.woltlab.wcf']['ipAddresses'] = \array_merge($this->data['com.woltlab.wcf']['ipAddresses'],
-            $this->exportSessionIpAddresses());
+        $this->data['com.woltlab.wcf']['user'] = \array_merge(
+            $this->data['com.woltlab.wcf']['user'],
+            $this->exportUser()
+        );
+        $this->data['com.woltlab.wcf']['userOptions'] = \array_merge(
+            $this->data['com.woltlab.wcf']['userOptions'],
+            $this->exportUserOptions()
+        );
+        $this->data['com.woltlab.wcf']['ipAddresses'] = \array_merge(
+            $this->data['com.woltlab.wcf']['ipAddresses'],
+            $this->exportSessionIpAddresses()
+        );
 
         foreach ($this->ipAddresses as $package => $tableNames) {
             if (PackageCache::getInstance()->getPackageByIdentifier($package) === null) {
@@ -196,13 +204,17 @@ class UserExportGdprAction extends AbstractAction
 
             $ipAddresses = [];
             foreach ($tableNames as $tableName) {
-                $ipAddresses = \array_merge($ipAddresses,
-                    $this->exportIpAddresses($tableName, 'ipAddress', 'time', 'userID'));
+                $ipAddresses = \array_merge(
+                    $ipAddresses,
+                    $this->exportIpAddresses($tableName, 'ipAddress', 'time', 'userID')
+                );
             }
 
             if ($package === 'com.woltlab.gallery') {
-                $ipAddresses = \array_merge($ipAddresses,
-                    $this->exportIpAddresses('gallery' . WCF_N . '_image', 'ipAddress', 'uploadTime', 'userID'));
+                $ipAddresses = \array_merge(
+                    $ipAddresses,
+                    $this->exportIpAddresses('gallery' . WCF_N . '_image', 'ipAddress', 'uploadTime', 'userID')
+                );
             }
 
             if (!empty($ipAddresses)) {
@@ -217,8 +229,10 @@ class UserExportGdprAction extends AbstractAction
             if (!isset($this->data['com.woltlab.filebase'])) {
                 $this->data['com.woltlab.filebase'] = [];
             }
-            $this->data['com.woltlab.filebase']['filePaymentLog'] = $this->dumpTable('filebase' . WCF_N . '_file_payment_log',
-                'userID');
+            $this->data['com.woltlab.filebase']['filePaymentLog'] = $this->dumpTable(
+                'filebase' . WCF_N . '_file_payment_log',
+                'userID'
+            );
         }
 
         $this->data['@@generatedAt'] = TIME_NOW;
@@ -301,13 +315,21 @@ class UserExportGdprAction extends AbstractAction
             'acpSessionLog' => [],
         ];
 
-        $data['session'] = $this->exportIpAddresses('wcf' . WCF_N . '_user_session', 'ipAddress', 'lastActivityTime',
-            'userID');
+        $data['session'] = $this->exportIpAddresses(
+            'wcf' . WCF_N . '_user_session',
+            'ipAddress',
+            'lastActivityTime',
+            'userID'
+        );
 
         // we can ignore the wcfN_acp_session_access_log table because it is directly related
         // to the wcfN_acp_session_log table and ACP sessions are bound to the ip address
-        $data['acpSessionLog'] = $this->exportIpAddresses('wcf' . WCF_N . '_acp_session_log', 'ipAddress',
-            'lastActivityTime', 'userID');
+        $data['acpSessionLog'] = $this->exportIpAddresses(
+            'wcf' . WCF_N . '_acp_session_log',
+            'ipAddress',
+            'lastActivityTime',
+            'userID'
+        );
 
         return $data;
     }

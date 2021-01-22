@@ -72,8 +72,11 @@ class UsersOnlineListPage extends SortablePage
         }
 
         if (!empty($_POST)) {
-            HeaderUtil::redirect(LinkHandler::getInstance()->getLink('UsersOnlineList', [],
-                'sortField=' . $this->sortField . '&sortOrder=' . $this->sortOrder));
+            HeaderUtil::redirect(LinkHandler::getInstance()->getLink(
+                'UsersOnlineList',
+                [],
+                'sortField=' . $this->sortField . '&sortOrder=' . $this->sortOrder
+            ));
 
             exit;
         }

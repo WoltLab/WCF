@@ -278,8 +278,10 @@ class UserRankAddForm extends AbstractForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(UserRankEditForm::class,
-                ['id' => $rankID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
+                UserRankEditForm::class,
+                ['id' => $rankID]
+            ),
         ]);
     }
 

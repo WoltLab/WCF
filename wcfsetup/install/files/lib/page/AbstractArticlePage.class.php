@@ -146,8 +146,10 @@ abstract class AbstractArticlePage extends AbstractPage
         if (MODULE_TAGGING && ARTICLE_RELATED_ARTICLES) {
             if (!empty($this->tags)) {
                 $conditionBuilder = new PreparedStatementConditionBuilder();
-                $conditionBuilder->add('tag_to_object.objectTypeID = ?',
-                    [TagEngine::getInstance()->getObjectTypeID('com.woltlab.wcf.article')]);
+                $conditionBuilder->add(
+                    'tag_to_object.objectTypeID = ?',
+                    [TagEngine::getInstance()->getObjectTypeID('com.woltlab.wcf.article')]
+                );
                 $conditionBuilder->add('tag_to_object.tagID IN (?)', [\array_keys($this->tags)]);
                 $conditionBuilder->add('tag_to_object.objectID <> ?', [$this->articleContentID]);
                 $sql = "SELECT      MAX(article.articleID), COUNT(*) AS count
@@ -179,11 +181,17 @@ abstract class AbstractArticlePage extends AbstractPage
         }
 
         // set location
-        PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.CategoryArticleList',
-            $this->article->categoryID, $this->article->getCategory());
+        PageLocationManager::getInstance()->addParentLocation(
+            'com.woltlab.wcf.CategoryArticleList',
+            $this->article->categoryID,
+            $this->article->getCategory()
+        );
         foreach (\array_reverse($this->article->getCategory()->getParentCategories()) as $parentCategory) {
-            PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.CategoryArticleList',
-                $parentCategory->categoryID, $parentCategory);
+            PageLocationManager::getInstance()->addParentLocation(
+                'com.woltlab.wcf.CategoryArticleList',
+                $parentCategory->categoryID,
+                $parentCategory
+            );
         }
     }
 

@@ -105,8 +105,10 @@ class SignatureAttachmentObjectType extends AbstractAttachmentObjectType
      */
     public function getAllowedExtensions()
     {
-        return ArrayUtil::trim(\explode("\n",
-            WCF::getSession()->getPermission('user.signature.attachment.allowedExtensions')));
+        return ArrayUtil::trim(\explode(
+            "\n",
+            WCF::getSession()->getPermission('user.signature.attachment.allowedExtensions')
+        ));
     }
 
     /**

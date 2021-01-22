@@ -40,8 +40,10 @@ class PaidSubscription extends DatabaseObject implements ITitledObject
      */
     public function getPurchaseButtons()
     {
-        $objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.payment.type',
-            'com.woltlab.wcf.payment.type.paidSubscription');
+        $objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName(
+            'com.woltlab.wcf.payment.type',
+            'com.woltlab.wcf.payment.type.paidSubscription'
+        );
         $buttons = [];
         foreach (PaymentMethodHandler::getInstance()->getPaymentMethods() as $paymentMethod) {
             // check if payment method supports recurring payments
@@ -54,11 +56,17 @@ class PaidSubscription extends DatabaseObject implements ITitledObject
                 continue;
             }
 
-            $buttons[] = $paymentMethod->getPurchaseButton($this->cost, $this->currency,
+            $buttons[] = $paymentMethod->getPurchaseButton(
+                $this->cost,
+                $this->currency,
                 WCF::getLanguage()->get($this->title),
                 $objectTypeID . ':' . WCF::getUser()->userID . ':' . $this->subscriptionID,
-                LinkHandler::getInstance()->getLink('PaidSubscriptionReturn'), LinkHandler::getInstance()->getLink(),
-                $this->isRecurring, $this->subscriptionLength, $this->subscriptionLengthUnit);
+                LinkHandler::getInstance()->getLink('PaidSubscriptionReturn'),
+                LinkHandler::getInstance()->getLink(),
+                $this->isRecurring,
+                $this->subscriptionLength,
+                $this->subscriptionLengthUnit
+            );
         }
 
         return $buttons;

@@ -175,8 +175,10 @@ HTML;
         $returnValue = "";
         foreach ($userGroups as $userGroup) {
             /** @noinspection PhpVariableVariableInspection */
-            $returnValue .= "<label><input type=\"checkbox\" name=\"" . $identifier . "[]\" value=\"" . $userGroup->groupID . "\"" . (\in_array($userGroup->groupID,
-                    $this->{$identifier}) ? ' checked' : "") . "> " . StringUtil::encodeHTML($userGroup->getName()) . "</label>";
+            $returnValue .= "<label><input type=\"checkbox\" name=\"" . $identifier . "[]\" value=\"" . $userGroup->groupID . "\"" . (\in_array(
+                $userGroup->groupID,
+                $this->{$identifier}
+            ) ? ' checked' : "") . "> " . StringUtil::encodeHTML($userGroup->getName()) . "</label>";
         }
 
         return $returnValue;

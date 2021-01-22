@@ -118,10 +118,18 @@ class MenuItemEditForm extends MenuItemAddForm
         parent::readData();
 
         if (empty($_POST)) {
-            I18nHandler::getInstance()->setOptions('title', 1, $this->menuItem->title,
-                'wcf.menu.item.' . $this->menuItem->identifier);
-            I18nHandler::getInstance()->setOptions('externalURL', 1, $this->menuItem->externalURL,
-                'wcf.menu.item.externalURL\d+');
+            I18nHandler::getInstance()->setOptions(
+                'title',
+                1,
+                $this->menuItem->title,
+                'wcf.menu.item.' . $this->menuItem->identifier
+            );
+            I18nHandler::getInstance()->setOptions(
+                'externalURL',
+                1,
+                $this->menuItem->externalURL,
+                'wcf.menu.item.externalURL\d+'
+            );
 
             $this->parentItemID = $this->menuItem->parentItemID;
             $this->title = $this->menuItem->title;

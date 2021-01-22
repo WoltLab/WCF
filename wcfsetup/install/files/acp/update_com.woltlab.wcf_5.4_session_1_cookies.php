@@ -73,8 +73,10 @@ do {
 } while (\strpos(\base64_encode($bytes), '+') !== false);
 $xsrfToken = CryptoUtil::createSignedString($bytes);
 WCF::getSession()->register('__SECURITY_TOKEN', $xsrfToken);
-\header('set-cookie: XSRF-TOKEN=' . \rawurlencode($xsrfToken) . '; path=/' . $cookieDomain . (RouteHandler::secureConnection() ? '; secure' : '') . $sameSite,
-    false);
+\header(
+    'set-cookie: XSRF-TOKEN=' . \rawurlencode($xsrfToken) . '; path=/' . $cookieDomain . (RouteHandler::secureConnection() ? '; secure' : '') . $sameSite,
+    false
+);
 
 // 4) Adjust the SECURITY_TOKEN.
 $container = new GroupFormElementContainer();

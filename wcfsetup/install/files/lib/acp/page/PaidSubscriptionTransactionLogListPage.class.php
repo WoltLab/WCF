@@ -108,16 +108,22 @@ class PaidSubscriptionTransactionLogListPage extends SortablePage
         parent::initObjectList();
 
         if ($this->transactionID) {
-            $this->objectList->getConditionBuilder()->add('paid_subscription_transaction_log.transactionID LIKE ?',
-                ['%' . $this->transactionID . '%']);
+            $this->objectList->getConditionBuilder()->add(
+                'paid_subscription_transaction_log.transactionID LIKE ?',
+                ['%' . $this->transactionID . '%']
+            );
         }
         if ($this->username) {
-            $this->objectList->getConditionBuilder()->add('paid_subscription_transaction_log.userID IN (SELECT userID FROM wcf' . WCF_N . '_user WHERE username LIKE ?)',
-                ['%' . $this->username . '%']);
+            $this->objectList->getConditionBuilder()->add(
+                'paid_subscription_transaction_log.userID IN (SELECT userID FROM wcf' . WCF_N . '_user WHERE username LIKE ?)',
+                ['%' . $this->username . '%']
+            );
         }
         if ($this->subscriptionID) {
-            $this->objectList->getConditionBuilder()->add('paid_subscription_transaction_log.subscriptionID = ?',
-                [$this->subscriptionID]);
+            $this->objectList->getConditionBuilder()->add(
+                'paid_subscription_transaction_log.subscriptionID = ?',
+                [$this->subscriptionID]
+            );
         }
 
         $this->objectList->sqlSelects = 'user_table.username, paid_subscription.title';

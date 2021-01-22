@@ -126,8 +126,12 @@ class TodaysBirthdaysBoxController extends AbstractDatabaseObjectListBoxControll
 
                     $birthdayUserOption->setUser($userProfile->getDecoratedObject());
 
-                    if (!$userProfile->isProtected() && $birthdayUserOption->isVisible() && \substr($userProfile->birthday,
-                            5) == $currentDay) {
+                    if (
+                        !$userProfile->isProtected() && $birthdayUserOption->isVisible() && \substr(
+                            $userProfile->birthday,
+                            5
+                        ) == $currentDay
+                    ) {
                         $visibleUserProfiles[] = $userProfile;
                         $i++;
                     }

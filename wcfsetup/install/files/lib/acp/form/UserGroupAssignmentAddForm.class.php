@@ -166,8 +166,10 @@ class UserGroupAssignmentAddForm extends AbstractForm
 
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(UserGroupAssignmentEditForm::class,
-                ['id' => $returnValues['returnValues']->assignmentID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
+                UserGroupAssignmentEditForm::class,
+                ['id' => $returnValues['returnValues']->assignmentID]
+            ),
         ]);
     }
 

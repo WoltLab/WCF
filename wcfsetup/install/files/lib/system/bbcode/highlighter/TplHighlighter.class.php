@@ -23,7 +23,9 @@ class TplHighlighter extends HtmlHighlighter
         $string = parent::highlightComments($string);
 
         // highlight template tags
-        return Regex::compile('\{(?=\S).+?(?<=\S)\}', Regex::DOT_ALL)->replace($string,
-            '<span class="hlKeywords3">\\0</span>');
+        return Regex::compile('\{(?=\S).+?(?<=\S)\}', Regex::DOT_ALL)->replace(
+            $string,
+            '<span class="hlKeywords3">\\0</span>'
+        );
     }
 }

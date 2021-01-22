@@ -162,8 +162,11 @@ class ReactionAction extends AbstractDatabaseObjectAction
      */
     public function react()
     {
-        $reactionData = ReactionHandler::getInstance()->react($this->likeableObject, WCF::getUser(),
-            $this->reactionType->reactionTypeID);
+        $reactionData = ReactionHandler::getInstance()->react(
+            $this->likeableObject,
+            WCF::getUser(),
+            $this->reactionType->reactionTypeID
+        );
 
         // get stats
         return [
@@ -210,8 +213,11 @@ class ReactionAction extends AbstractDatabaseObjectAction
 
         if (!$this->reactionType->isAssignable) {
             // check, if the reaction is reverted
-            $like = Like::getLike($this->likeableObject->getObjectType()->objectTypeID,
-                $this->likeableObject->getObjectID(), WCF::getUser()->userID);
+            $like = Like::getLike(
+                $this->likeableObject->getObjectType()->objectTypeID,
+                $this->likeableObject->getObjectID(),
+                WCF::getUser()->userID
+            );
 
             if (!$like->likeID || $like->reactionTypeID !== $this->reactionType->reactionTypeID) {
                 throw new IllegalLinkException();
@@ -261,8 +267,10 @@ class ReactionAction extends AbstractDatabaseObjectAction
             $likeList->getConditionBuilder()->add("like_table.userID = ?", [$this->parameters['userID']]);
         }
         if ($this->parameters['reactionTypeID']) {
-            $likeList->getConditionBuilder()->add("like_table.reactionTypeID = ?",
-                [$this->parameters['reactionTypeID']]);
+            $likeList->getConditionBuilder()->add(
+                "like_table.reactionTypeID = ?",
+                [$this->parameters['reactionTypeID']]
+            );
         }
         $likeList->readObjects();
 
@@ -286,10 +294,14 @@ class ReactionAction extends AbstractDatabaseObjectAction
      */
     public function copy()
     {
-        $sourceObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.like.likeableObject',
-            $this->parameters['sourceObjectType']);
-        $targetObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.like.likeableObject',
-            $this->parameters['targetObjectType']);
+        $sourceObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
+            'com.woltlab.wcf.like.likeableObject',
+            $this->parameters['sourceObjectType']
+        );
+        $targetObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
+            'com.woltlab.wcf.like.likeableObject',
+            $this->parameters['targetObjectType']
+        );
 
         //
         // step 1) get data
@@ -356,8 +368,10 @@ class ReactionAction extends AbstractDatabaseObjectAction
             ]);
 
             // add activity points
-            UserActivityPointHandler::getInstance()->fireEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes',
-                [$newLikeObject->objectUserID => $count]);
+            UserActivityPointHandler::getInstance()->fireEvents(
+                'com.woltlab.wcf.like.activityPointEvent.receivedLikes',
+                [$newLikeObject->objectUserID => $count]
+            );
         }
     }
 }

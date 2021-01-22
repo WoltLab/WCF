@@ -454,8 +454,12 @@ class PackageInstallationNodeBuilder
         $requiredPackages = $this->installation->getArchive()->getOpenRequirements();
         foreach ($requiredPackages as $packageName => $package) {
             if (!isset($package['file'])) {
-                if (isset(self::$pendingPackages[$packageName]) && (!isset($package['minversion']) || Package::compareVersion(self::$pendingPackages[$packageName],
-                            $package['minversion']) >= 0)) {
+                if (
+                    isset(self::$pendingPackages[$packageName]) && (!isset($package['minversion']) || Package::compareVersion(
+                        self::$pendingPackages[$packageName],
+                        $package['minversion']
+                    ) >= 0)
+                ) {
                     // the package will already be installed and no
                     // minversion is given or the package which will be
                     // installed satisfies the minversion, thus we can
@@ -487,8 +491,10 @@ class PackageInstallationNodeBuilder
                 throw new SystemException("Unable to find required package '" . $package['file'] . "' within archive of package '" . $this->installation->queue->package . "'.");
             }
 
-            $fileName = FileUtil::getTemporaryFilename('package_',
-                \preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', \basename($package['file'])));
+            $fileName = FileUtil::getTemporaryFilename(
+                'package_',
+                \preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', \basename($package['file']))
+            );
             $this->installation->getArchive()->getTar()->extract($index, $fileName);
 
             // get archive data
@@ -501,8 +507,12 @@ class PackageInstallationNodeBuilder
             }
 
             // check if delivered version satisfies minversion
-            if (isset($package['minversion']) && Package::compareVersion($package['minversion'],
-                    $archive->getPackageInfo('version')) > 0) {
+            if (
+                isset($package['minversion']) && Package::compareVersion(
+                    $package['minversion'],
+                    $archive->getPackageInfo('version')
+                ) > 0
+            ) {
                 throw new SystemException("Package '" . $this->installation->getArchive()->getPackageInfo('name') . "' requires package '" . $packageName . "' at least in version " . $package['minversion'] . ", but only delivers version " . $archive->getPackageInfo('version') . ".");
             }
 
@@ -517,8 +527,12 @@ class PackageInstallationNodeBuilder
 
             // check if package will already be installed
             if (isset(self::$pendingPackages[$packageName])) {
-                if (Package::compareVersion(self::$pendingPackages[$packageName],
-                        $archive->getPackageInfo('version')) >= 0) {
+                if (
+                    Package::compareVersion(
+                        self::$pendingPackages[$packageName],
+                        $archive->getPackageInfo('version')
+                    ) >= 0
+                ) {
                     // the version to be installed satisfies the required version
                     continue;
                 } else {
@@ -667,8 +681,10 @@ class PackageInstallationNodeBuilder
                 throw new SystemException("Unable to find required package '" . $package['file'] . "' within archive.");
             }
 
-            $fileName = FileUtil::getTemporaryFilename('package_',
-                \preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', \basename($package['file'])));
+            $fileName = FileUtil::getTemporaryFilename(
+                'package_',
+                \preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', \basename($package['file']))
+            );
             $this->installation->getArchive()->getTar()->extract($index, $fileName);
 
             // get archive data
@@ -737,8 +753,10 @@ class PackageInstallationNodeBuilder
     protected function buildChildQueues()
     {
         $queueList = new PackageInstallationQueueList();
-        $queueList->getConditionBuilder()->add("package_installation_queue.parentQueueID = ?",
-            [$this->installation->queue->queueID]);
+        $queueList->getConditionBuilder()->add(
+            "package_installation_queue.parentQueueID = ?",
+            [$this->installation->queue->queueID]
+        );
         $queueList->getConditionBuilder()->add("package_installation_queue.queueID NOT IN (SELECT queueID FROM wcf" . WCF_N . "_package_installation_node)");
         $queueList->readObjects();
 

@@ -57,54 +57,54 @@ interface IPrintableException
  */
 class SystemException extends \Exception implements IPrintableException
 {
-protected $description;
+    protected $description;
 
-protected $information = '';
+    protected $information = '';
 
-protected $functions = '';
+    protected $functions = '';
 
-/**
- * Creates a new SystemException.
- *
- * @param string $message error message
- * @param int $code error code
- * @param string $description description of the error
- * @param \Exception $previous repacked Exception
- */
-public function __construct($message = '', $code = 0, $description = '', ?Exception $previous = null)
-{
-    parent::__construct((string)$message, (int)$code, $previous);
-    $this->description = $description;
-}
+    /**
+     * Creates a new SystemException.
+     *
+     * @param string $message error message
+     * @param int $code error code
+     * @param string $description description of the error
+     * @param \Exception $previous repacked Exception
+     */
+    public function __construct($message = '', $code = 0, $description = '', ?Exception $previous = null)
+    {
+        parent::__construct((string)$message, (int)$code, $previous);
+        $this->description = $description;
+    }
 
-/**
- * Returns the description of this exception.
- *
- * @return        string
- */
-public function getDescription()
-{
-    return $this->description;
-}
+    /**
+     * Returns the description of this exception.
+     *
+     * @return        string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
 
-/**
- * Prints this exception.
- * This method is called by WCF::handleException().
- */
-public function show()
-{
-/*
-* A notice on the HTML used below:
-*
-* It might appear a bit weird to use <p> all over the place where semantically
-* other elements would fit in way better. The reason behind this is that we avoid
-* inheriting unwanted styles (e.g. exception displayed in an overlay) and that
-* the output needs to be properly readable when copied & pasted somewhere.
-*
-* Besides the visual appearance, the output was built to provide a maximum of
-* compatibility and readability when pasted somewhere else, e.g. a WYSIWYG editor
-* without the potential of messing up the formatting and thus harming the readability.
-*/ ?><!DOCTYPE html>
+    /**
+     * Prints this exception.
+     * This method is called by WCF::handleException().
+     */
+    public function show()
+    {
+        /*
+        * A notice on the HTML used below:
+        *
+        * It might appear a bit weird to use <p> all over the place where semantically
+        * other elements would fit in way better. The reason behind this is that we avoid
+        * inheriting unwanted styles (e.g. exception displayed in an overlay) and that
+        * the output needs to be properly readable when copied & pasted somewhere.
+        *
+        * Besides the visual appearance, the output was built to provide a maximum of
+        * compatibility and readability when pasted somewhere else, e.g. a WYSIWYG editor
+        * without the potential of messing up the formatting and thus harming the readability.
+        */ ?><!DOCTYPE html>
 <html>
 <head>
 	<title>Fatal Error: <?php echo \htmlentities($this->getMessage()); ?></title>
@@ -336,45 +336,47 @@ public function show()
 			<li class="exceptionSystemInformation5">
 				<p class="exceptionFieldTitle">Peak Memory Usage<span class="exceptionColon">:</span>
 				</p>
-				<p class="exceptionFieldValue"><?php echo \round(\memory_get_peak_usage() / 1024 / 1024,
-                                        3); ?>/<?php echo \ini_get('memory_limit'); ?></p>
+				<p class="exceptionFieldValue"><?php echo \round(
+            \memory_get_peak_usage() / 1024 / 1024,
+            3
+        ); ?>/<?php echo \ini_get('memory_limit'); ?></p>
 			</li>
 			<li class="exceptionSystemInformation2">
 				<p class="exceptionFieldTitle">Request URI<span class="exceptionColon">:</span></p>
 				<p class="exceptionFieldValue"><?php if (isset($_SERVER['REQUEST_URI'])) {
-                                        echo \htmlentities($_SERVER['REQUEST_URI']);
-                                    } ?></p>
+                                            echo \htmlentities($_SERVER['REQUEST_URI']);
+                                        } ?></p>
 			</li>
 			<li class="exceptionSystemInformation4">
 				<p class="exceptionFieldTitle">Referrer<span class="exceptionColon">:</span></p>
 				<p class="exceptionFieldValue"><?php if (isset($_SERVER['HTTP_REFERER'])) {
-                                        echo \htmlentities($_SERVER['HTTP_REFERER']);
-                                    } ?></p>
+                                            echo \htmlentities($_SERVER['HTTP_REFERER']);
+                                        } ?></p>
 			</li>
 			<li class="exceptionSystemInformation6">
 				<p class="exceptionFieldTitle">User Agent<span class="exceptionColon">:</span></p>
 				<p class="exceptionFieldValue"><?php if (isset($_SERVER['HTTP_USER_AGENT'])) {
-                                        echo \htmlentities($_SERVER['HTTP_USER_AGENT']);
-                                    } ?></p>
+                                            echo \htmlentities($_SERVER['HTTP_USER_AGENT']);
+                                        } ?></p>
 			</li>
 		</ul>
 	</div>
 
     <?php
     $e = $this;
-    $first = true;
-    do {
-        $trace = $e->getTrace();
-        if (isset($trace[0]['function']) && $trace[0]['function'] === 'handleException') {
-            // ignore repacked exception
-            continue;
-        } ?>
+        $first = true;
+        do {
+            $trace = $e->getTrace();
+            if (isset($trace[0]['function']) && $trace[0]['function'] === 'handleException') {
+                // ignore repacked exception
+                continue;
+            } ?>
 	    <div class="exceptionBoundary">
 		    <p class="exceptionSubtitle"><?php if (!$e->getPrevious() && !$first) {
-                            echo "Original ";
-                        } elseif ($e->getPrevious() && $first) {
-                            echo "Final ";
-                        } ?>Error</p>
+                echo "Original ";
+            } elseif ($e->getPrevious() && $first) {
+                echo "Final ";
+            } ?>Error</p>
                 <?php if (($e instanceof self || $e instanceof \wcf\system\exception\SystemException) && $e->getDescription()) { ?>
 			<p class="exceptionText"><?php echo $e->getDescription(); ?></p>
                 <?php } ?>
@@ -407,24 +409,26 @@ public function show()
 				    <ul class="exceptionStacktrace">
                                         <?php
                                         $trace = $e->getTrace();
-                                        for ($i = 0, $max = \count($trace);
+            for ($i = 0, $max = \count($trace);
                                         $i < $max;
                                         $i++) {
-                                        ?>
+                ?>
 					    <li class="exceptionStacktraceFile"><?php echo '#' . $i . ' ' . \htmlentities($trace[$i]['file']) . ' (' . $trace[$i]['line'] . ')' . ':'; ?></li>
 					    <li class="exceptionStacktraceCall">
                                                 <?php
                                                 echo $trace[$i]['class'] . $trace[$i]['type'] . $trace[$i]['function'] . '(';
-                                                echo \implode(', ', \array_map(static function ($item) {
-                                                    switch (\gettype($item)) {
+                echo \implode(', ', \array_map(static function ($item) {
+                    switch (\gettype($item)) {
                                                         case 'integer':
                                                         case 'double':
                                                             return $item;
                                                         case 'NULL':
                                                             return 'null';
                                                         case 'string':
-                                                            return "'" . \addcslashes(\htmlentities($item),
-                                                                    "\\'") . "'";
+                                                            return "'" . \addcslashes(
+                                                                \htmlentities($item),
+                                                                "\\'"
+                                                            ) . "'";
                                                         case 'boolean':
                                                             return $item ? 'true' : 'false';
                                                         case 'array':
@@ -433,31 +437,33 @@ public function show()
                                                                 return "[ " . \count($keys) . " items ]";
                                                             }
 
-                                                            return '[ ' . \implode(', ',
-                                                                    \array_map(static function ($item) {
+                                                            return '[ ' . \implode(
+                                                                ', ',
+                                                                \array_map(static function ($item) {
                                                                         return $item . ' => ';
-                                                                    }, $keys)) . ']';
+                                                                    }, $keys)
+                                                            ) . ']';
                                                         case 'object':
                                                             return \get_class($item);
                                                     }
 
-                                                    throw new \LogicException('Unreachable');
-                                                }, $trace[$i]['args']));
-                                                echo ')</li>';
-                                                } ?>
+                    throw new \LogicException('Unreachable');
+                }, $trace[$i]['args']));
+                echo ')</li>';
+            } ?>
 				    </ul>
 			    </li>
 		    </ul>
 	    </div>
         <?php
         $first = false;
-    } while ($e = $e->getPrevious()); ?>
+        } while ($e = $e->getPrevious()); ?>
 </div>
 </body>
 </html>
 
 <?php
-}
+    }
 }
 
 /**

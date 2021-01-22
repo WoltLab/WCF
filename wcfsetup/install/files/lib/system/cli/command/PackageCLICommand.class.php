@@ -257,8 +257,12 @@ class PackageCLICommand implements IArgumentedCLICommand
                         $missingPackages++;
                     } elseif (isset($requirement['minversion'])) {
                         // make sure that the delivered version is sufficient
-                        if (Package::compareVersion($requirement['minversion'],
-                                $packageArchive->getPackageInfo('version')) > 0) {
+                        if (
+                            Package::compareVersion(
+                                $requirement['minversion'],
+                                $packageArchive->getPackageInfo('version')
+                            ) > 0
+                        ) {
                             $requirement['deliveredVersion'] = $packageArchive->getPackageInfo('version');
                             $requirement['status'] = 'missingVersion';
                             $missingPackages++;
@@ -350,8 +354,10 @@ class PackageCLICommand implements IArgumentedCLICommand
                     }
 
                     $step_ = $installation->install($node);
-                    $queueID = $installation->nodeBuilder->getQueueByNode($installation->queue->processNo,
-                        $step_->getNode());
+                    $queueID = $installation->nodeBuilder->getQueueByNode(
+                        $installation->queue->processNo,
+                        $step_->getNode()
+                    );
 
                     if ($step_->hasDocument()) {
                         $progress = $installation->nodeBuilder->calculateProgress($node);
@@ -428,8 +434,10 @@ class PackageCLICommand implements IArgumentedCLICommand
             'queue' => $queue,
         ]);
 
-        $queueID = $installation->nodeBuilder->getQueueByNode($queue->processNo,
-            $installation->nodeBuilder->getNextNode());
+        $queueID = $installation->nodeBuilder->getQueueByNode(
+            $queue->processNo,
+            $installation->nodeBuilder->getNextNode()
+        );
         $step = 'uninstall';
         $node = $installation->nodeBuilder->getNextNode();
         $currentAction = CLIWCF::getLanguage()->get('wcf.package.installation.step.uninstalling');
@@ -472,8 +480,10 @@ class PackageCLICommand implements IArgumentedCLICommand
                     }
 
                     // continue with next node
-                    $queueID = $installation->nodeBuilder->getQueueByNode($installation->queue->processNo,
-                        $installation->nodeBuilder->getNextNode($node));
+                    $queueID = $installation->nodeBuilder->getQueueByNode(
+                        $installation->queue->processNo,
+                        $installation->nodeBuilder->getNextNode($node)
+                    );
                     $step = 'uninstall';
                     $progress = $installation->nodeBuilder->calculateProgress($node);
                     $node = $_node;
@@ -496,11 +506,15 @@ class PackageCLICommand implements IArgumentedCLICommand
         Log::error('package.' . $name . ':' . JSON::encode($parameters));
 
         if ($parameters) {
-            throw new ArgvException(CLIWCF::getLanguage()->getDynamicVariable('wcf.acp.package.error.' . $name,
-                $parameters), $this->getUsage());
+            throw new ArgvException(CLIWCF::getLanguage()->getDynamicVariable(
+                'wcf.acp.package.error.' . $name,
+                $parameters
+            ), $this->getUsage());
         } else {
-            throw new ArgvException(CLIWCF::getLanguage()->get('wcf.acp.package.error.' . $name),
-                $this->argv->getUsageMessage());
+            throw new ArgvException(
+                CLIWCF::getLanguage()->get('wcf.acp.package.error.' . $name),
+                $this->argv->getUsageMessage()
+            );
         }
     }
 
@@ -509,8 +523,11 @@ class PackageCLICommand implements IArgumentedCLICommand
      */
     public function getUsage()
     {
-        return \str_replace($_SERVER['argv'][0] . ' [ options ]', 'package [ options ] <install|uninstall> <package>',
-            $this->argv->getUsageMessage());
+        return \str_replace(
+            $_SERVER['argv'][0] . ' [ options ]',
+            'package [ options ] <install|uninstall> <package>',
+            $this->argv->getUsageMessage()
+        );
     }
 
     /**

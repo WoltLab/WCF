@@ -453,8 +453,10 @@ class DatabaseTableChangeProcessor
                             }
                             $this->foreignKeysToDrop[$tableName][] = $foreignKey;
 
-                            $this->splitNodeMessage .= "Dropped foreign key '{$tableName}." . \implode(',',
-                                    $foreignKey->getColumns()) . "'.";
+                            $this->splitNodeMessage .= "Dropped foreign key '{$tableName}." . \implode(
+                                ',',
+                                $foreignKey->getColumns()
+                            ) . "'.";
                             break 2;
                         } elseif (isset($this->foreignKeyPackageIDs[$tableName][$foreignKey->getName()])) {
                             $this->deleteForeignKeyLog($tableName, $foreignKey);
@@ -465,8 +467,10 @@ class DatabaseTableChangeProcessor
                         }
                         $this->foreignKeysToAdd[$tableName][] = $foreignKey;
 
-                        $this->splitNodeMessage .= "Added foreign key '{$tableName}." . \implode(',',
-                                $foreignKey->getColumns()) . "'.";
+                        $this->splitNodeMessage .= "Added foreign key '{$tableName}." . \implode(
+                            ',',
+                            $foreignKey->getColumns()
+                        ) . "'.";
                         break 2;
                     } elseif (!empty(\array_diff($foreignKey->getData(), $matchingExistingForeignKey->getData()))) {
                         if (!isset($this->foreignKeysToDrop[$tableName])) {
@@ -479,8 +483,10 @@ class DatabaseTableChangeProcessor
                         }
                         $this->foreignKeysToAdd[$tableName][] = $foreignKey;
 
-                        $this->splitNodeMessage .= "Replaced foreign key '{$tableName}." . \implode(',',
-                                $foreignKey->getColumns()) . "'.";
+                        $this->splitNodeMessage .= "Replaced foreign key '{$tableName}." . \implode(
+                            ',',
+                            $foreignKey->getColumns()
+                        ) . "'.";
                         break 2;
                     }
                 }
@@ -502,8 +508,10 @@ class DatabaseTableChangeProcessor
                             }
                             $this->indicesToDrop[$tableName][] = $index;
 
-                            $this->splitNodeMessage .= "Dropped index '{$tableName}." . \implode(',',
-                                    $index->getColumns()) . "'.";
+                            $this->splitNodeMessage .= "Dropped index '{$tableName}." . \implode(
+                                ',',
+                                $index->getColumns()
+                            ) . "'.";
                             break 2;
                         } elseif (isset($this->indexPackageIDs[$tableName][$index->getName()])) {
                             $this->deleteIndexLog($tableName, $index);
@@ -532,8 +540,10 @@ class DatabaseTableChangeProcessor
                         }
                         $this->indicesToAdd[$tableName][] = $index;
 
-                        $this->splitNodeMessage .= "Added index '{$tableName}." . \implode(',',
-                                $index->getColumns()) . "'.";
+                        $this->splitNodeMessage .= "Added index '{$tableName}." . \implode(
+                            ',',
+                            $index->getColumns()
+                        ) . "'.";
                         break 2;
                     }
                 }
@@ -1183,8 +1193,12 @@ class DatabaseTableChangeProcessor
                             foreach ($existingForeignKeys as $existingForeignKey) {
                                 if (empty(\array_diff($foreignKey->getData(), $existingForeignKey->getData()))) {
                                     if ($foreignKey->willBeDropped()) {
-                                        if ($this->getForeignKeyPackageID($table,
-                                                $foreignKey) !== $this->package->packageID) {
+                                        if (
+                                            $this->getForeignKeyPackageID(
+                                                $table,
+                                                $foreignKey
+                                            ) !== $this->package->packageID
+                                        ) {
                                             $errors[] = [
                                                 'columnNames' => \implode(',', $existingForeignKey->getColumns()),
                                                 'tableName' => $table->getName(),

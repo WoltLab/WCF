@@ -149,7 +149,9 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
     {
         $value = $this->encodeHTML($value);
 
-        return '<option label="' . $value . '" value="' . $this->encodeHTML($key) . '"' . (\in_array($key,
-                $this->selected) ? ' selected' : '') . '>' . $value . "</option>\n";
+        return '<option label="' . $value . '" value="' . $this->encodeHTML($key) . '"' . (\in_array(
+            $key,
+            $this->selected
+        ) ? ' selected' : '') . '>' . $value . "</option>\n";
     }
 }

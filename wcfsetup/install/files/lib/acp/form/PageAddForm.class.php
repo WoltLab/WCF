@@ -371,13 +371,17 @@ class PageAddForm extends AbstractForm
             if ($this->isMultilingual) {
                 foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
                     $this->htmlInputProcessors[$language->languageID] = new HtmlInputProcessor();
-                    $this->htmlInputProcessors[$language->languageID]->process((!empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : ''),
-                        'com.woltlab.wcf.page.content');
+                    $this->htmlInputProcessors[$language->languageID]->process(
+                        (!empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : ''),
+                        'com.woltlab.wcf.page.content'
+                    );
                 }
             } else {
                 $this->htmlInputProcessors[0] = new HtmlInputProcessor();
-                $this->htmlInputProcessors[0]->process((!empty($this->content[0]) ? $this->content[0] : ''),
-                    'com.woltlab.wcf.page.content');
+                $this->htmlInputProcessors[0]->process(
+                    (!empty($this->content[0]) ? $this->content[0] : ''),
+                    'com.woltlab.wcf.page.content'
+                );
             }
         }
     }
@@ -690,8 +694,10 @@ class PageAddForm extends AbstractForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(PageEditForm::class,
-                ['id' => $page->pageID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
+                PageEditForm::class,
+                ['id' => $page->pageID]
+            ),
         ]);
 
         // reset variables
@@ -755,8 +761,10 @@ class PageAddForm extends AbstractForm
                     }
                 }
 
-                $this->aclValues = SimpleAclHandler::getInstance()->getValues('com.woltlab.wcf.page',
-                    $this->presetPage->pageID);
+                $this->aclValues = SimpleAclHandler::getInstance()->getValues(
+                    'com.woltlab.wcf.page',
+                    $this->presetPage->pageID
+                );
             }
         }
 

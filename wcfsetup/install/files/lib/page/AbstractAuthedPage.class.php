@@ -49,8 +49,12 @@ abstract class AbstractAuthedPage extends AbstractPage
                     }
                 } else {
                     $user = new User($userID);
-                    if ($user->userID && $user->accessToken && \hash_equals($user->accessToken,
-                            $token) && !$user->banned) {
+                    if (
+                        $user->userID && $user->accessToken && \hash_equals(
+                            $user->accessToken,
+                            $token
+                        ) && !$user->banned
+                    ) {
                         // token is valid and user is not banned -> change user
                         SessionHandler::getInstance()->changeUser($user, true);
                     } else {

@@ -120,8 +120,11 @@ class BoxContent extends DatabaseObject
      */
     public function getParsedContent()
     {
-        return HtmlSimpleParser::getInstance()->replaceTags('com.woltlab.wcf.box.content', $this->boxContentID,
-            $this->content);
+        return HtmlSimpleParser::getInstance()->replaceTags(
+            'com.woltlab.wcf.box.content',
+            $this->boxContentID,
+            $this->content
+        );
     }
 
     /**

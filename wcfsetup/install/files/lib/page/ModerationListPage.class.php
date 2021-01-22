@@ -138,17 +138,23 @@ class ModerationListPage extends SortablePage
         if ($this->assignedUserID == 0) {
             $this->objectList->getConditionBuilder()->add("moderation_queue.assignedUserID IS NULL");
         } elseif ($this->assignedUserID > 0) {
-            $this->objectList->getConditionBuilder()->add("moderation_queue.assignedUserID = ?",
-                [$this->assignedUserID]);
+            $this->objectList->getConditionBuilder()->add(
+                "moderation_queue.assignedUserID = ?",
+                [$this->assignedUserID]
+            );
         }
 
         // filter by status
         if ($this->status == ModerationQueue::STATUS_DONE) {
-            $this->objectList->getConditionBuilder()->add("moderation_queue.status IN (?)",
-                [[ModerationQueue::STATUS_DONE, ModerationQueue::STATUS_CONFIRMED, ModerationQueue::STATUS_REJECTED]]);
+            $this->objectList->getConditionBuilder()->add(
+                "moderation_queue.status IN (?)",
+                [[ModerationQueue::STATUS_DONE, ModerationQueue::STATUS_CONFIRMED, ModerationQueue::STATUS_REJECTED]]
+            );
         } else {
-            $this->objectList->getConditionBuilder()->add("moderation_queue.status IN (?)",
-                [[ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING]]);
+            $this->objectList->getConditionBuilder()->add(
+                "moderation_queue.status IN (?)",
+                [[ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING]]
+            );
         }
     }
 

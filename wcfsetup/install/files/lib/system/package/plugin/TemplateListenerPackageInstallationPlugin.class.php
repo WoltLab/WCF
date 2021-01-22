@@ -151,8 +151,13 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
             $templateEvents = [];
             /** @var ACPTemplate|Template $template */
             foreach ($templateList as $template) {
-                if (\preg_match_all("~{$ldq}event\\ name\\=\\'(?<event>[\\w]+)\\'{$rdq}~", $template->getSource(),
-                    $matches)) {
+                if (
+                    \preg_match_all(
+                        "~{$ldq}event\\ name\\=\\'(?<event>[\\w]+)\\'{$rdq}~",
+                        $template->getSource(),
+                        $matches
+                    )
+                ) {
                     $templates[$template->templateName] = $template->templateName;
 
                     foreach ($matches['event'] as $event) {
@@ -388,12 +393,14 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
         ]);
 
         // ensure proper normalization of template code
-        $form->getDataHandler()->addProcessor(new CustomFormDataProcessor('templateCode',
+        $form->getDataHandler()->addProcessor(new CustomFormDataProcessor(
+            'templateCode',
             static function (IFormDocument $document, array $parameters) {
                 $parameters['data']['templatecode'] = StringUtil::unifyNewlines(StringUtil::escapeCDATA($parameters['data']['templatecode']));
 
                 return $parameters;
-            }));
+            }
+        ));
     }
 
     /**

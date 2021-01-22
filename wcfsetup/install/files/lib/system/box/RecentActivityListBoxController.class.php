@@ -160,12 +160,16 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
         if (($this->getBox()->position == 'contentTop' || $this->getBox()->position == 'contentBottom') && $this->filteredByFollowedUsers) {
             if (!$this->filteredByFollowedUsersOverride) {
                 /** @noinspection PhpUndefinedMethodInspection */
-                $this->objectList->getConditionBuilder()->add('user_activity_event.userID IN (?)',
-                    [WCF::getUserProfileHandler()->getFollowingUsers()]);
+                $this->objectList->getConditionBuilder()->add(
+                    'user_activity_event.userID IN (?)',
+                    [WCF::getUserProfileHandler()->getFollowingUsers()]
+                );
             }
         } elseif (!empty(UserProfileHandler::getInstance()->getIgnoredUsers())) {
-            $this->objectList->getConditionBuilder()->add("user_activity_event.userID NOT IN (?)",
-                [UserProfileHandler::getInstance()->getIgnoredUsers()]);
+            $this->objectList->getConditionBuilder()->add(
+                "user_activity_event.userID NOT IN (?)",
+                [UserProfileHandler::getInstance()->getIgnoredUsers()]
+            );
         }
 
         // load more items than necessary to avoid empty list if some items are invisible for current user
@@ -210,8 +214,10 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
         // apply filter
         if (($this->getBox()->position == 'contentTop' || $this->getBox()->position == 'contentBottom') && $this->filteredByFollowedUsers) {
             /** @noinspection PhpUndefinedMethodInspection */
-            $this->objectList->getConditionBuilder()->add('user_activity_event.userID IN (?)',
-                [WCF::getUserProfileHandler()->getFollowingUsers()]);
+            $this->objectList->getConditionBuilder()->add(
+                'user_activity_event.userID IN (?)',
+                [WCF::getUserProfileHandler()->getFollowingUsers()]
+            );
         }
 
         return $this->objectList;

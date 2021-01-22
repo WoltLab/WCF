@@ -75,8 +75,11 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm
         }
 
         // save server
-        $this->objectAction = new PackageUpdateServerAction([$this->packageUpdateServerID], 'update',
-            ['data' => \array_merge($this->additionalFields, $data)]);
+        $this->objectAction = new PackageUpdateServerAction(
+            [$this->packageUpdateServerID],
+            'update',
+            ['data' => \array_merge($this->additionalFields, $data)]
+        );
         $this->objectAction->executeAction();
         $this->saved();
 

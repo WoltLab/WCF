@@ -55,8 +55,10 @@ class BlacklistEntry extends DatabaseObject
                     $ipv6ThreeParts = self::getHash("{$parts[0]}:{$parts[1]}:{$parts[2]}::");
                     $ipv6FourParts = self::getHash("{$parts[0]}:{$parts[1]}:{$parts[2]}:{$parts[3]}::");
 
-                    $conditions->add('(type = ? AND hash IN (?))',
-                        ['ipv6', [$ipv6TwoParts, $ipv6ThreeParts, $ipv6FourParts]]);
+                    $conditions->add(
+                        '(type = ? AND hash IN (?))',
+                        ['ipv6', [$ipv6TwoParts, $ipv6ThreeParts, $ipv6FourParts]]
+                    );
                 }
             }
         }

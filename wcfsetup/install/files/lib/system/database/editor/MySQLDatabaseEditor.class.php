@@ -125,10 +125,14 @@ class MySQLDatabaseEditor extends DatabaseEditor
             $foreignKeys[$information['CONSTRAINT_NAME']] = [
                 'columns' => [],
                 'referencedColumns' => [],
-                'ON DELETE' => \in_array($information['DELETE_RULE'],
-                    $validActions) ? $information['DELETE_RULE'] : null,
-                'ON UPDATE' => \in_array($information['UPDATE_RULE'],
-                    $validActions) ? $information['UPDATE_RULE'] : null,
+                'ON DELETE' => \in_array(
+                    $information['DELETE_RULE'],
+                    $validActions
+                ) ? $information['DELETE_RULE'] : null,
+                'ON UPDATE' => \in_array(
+                    $information['UPDATE_RULE'],
+                    $validActions
+                ) ? $information['UPDATE_RULE'] : null,
             ];
         }
 
@@ -271,8 +275,10 @@ class MySQLDatabaseEditor extends DatabaseEditor
      */
     public function alterColumn($tableName, $oldColumnName, $newColumnName, $newColumnData)
     {
-        $sql = "ALTER TABLE `" . $tableName . "` CHANGE COLUMN `" . $oldColumnName . "` " . $this->buildColumnDefinition($newColumnName,
-                $newColumnData);
+        $sql = "ALTER TABLE `" . $tableName . "` CHANGE COLUMN `" . $oldColumnName . "` " . $this->buildColumnDefinition(
+            $newColumnName,
+            $newColumnData
+        );
         $statement = $this->dbObj->prepareStatement($sql);
         $statement->execute();
     }

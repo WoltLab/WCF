@@ -105,12 +105,16 @@ class LabelGroupListPage extends SortablePage
 
         if ($this->groupName) {
             $languageItemList = new LanguageItemList();
-            $languageItemList->getConditionBuilder()->add('languageCategoryID = ?',
-                [LanguageFactory::getInstance()->getCategory('wcf.acp.label')->languageCategoryID]);
+            $languageItemList->getConditionBuilder()->add(
+                'languageCategoryID = ?',
+                [LanguageFactory::getInstance()->getCategory('wcf.acp.label')->languageCategoryID]
+            );
             $languageItemList->getConditionBuilder()->add('languageID = ?', [WCF::getLanguage()->languageID]);
             $languageItemList->getConditionBuilder()->add('languageItem LIKE ?', ['wcf.acp.label.group%']);
-            $languageItemList->getConditionBuilder()->add('languageItemValue LIKE ?',
-                ['%' . \addcslashes($this->groupName, '_%') . '%']);
+            $languageItemList->getConditionBuilder()->add(
+                'languageItemValue LIKE ?',
+                ['%' . \addcslashes($this->groupName, '_%') . '%']
+            );
             $languageItemList->readObjects();
 
             $labelIDs = [];
@@ -119,17 +123,23 @@ class LabelGroupListPage extends SortablePage
             }
 
             if (!empty($labelIDs)) {
-                $this->objectList->getConditionBuilder()->add('(groupName LIKE ? OR groupID IN (?))',
-                    ['%' . \addcslashes($this->groupName, '_%') . '%', $labelIDs]);
+                $this->objectList->getConditionBuilder()->add(
+                    '(groupName LIKE ? OR groupID IN (?))',
+                    ['%' . \addcslashes($this->groupName, '_%') . '%', $labelIDs]
+                );
             } else {
-                $this->objectList->getConditionBuilder()->add('groupName LIKE ?',
-                    ['%' . \addcslashes($this->groupName, '_%') . '%']);
+                $this->objectList->getConditionBuilder()->add(
+                    'groupName LIKE ?',
+                    ['%' . \addcslashes($this->groupName, '_%') . '%']
+                );
             }
         }
 
         if ($this->groupDescription) {
-            $this->objectList->getConditionBuilder()->add('label_group.groupDescription LIKE ?',
-                ['%' . \addcslashes($this->groupDescription, '_%') . '%']);
+            $this->objectList->getConditionBuilder()->add(
+                'label_group.groupDescription LIKE ?',
+                ['%' . \addcslashes($this->groupDescription, '_%') . '%']
+            );
         }
     }
 

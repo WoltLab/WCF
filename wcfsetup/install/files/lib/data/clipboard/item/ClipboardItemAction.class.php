@@ -157,8 +157,10 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction
      */
     protected function getEditorItems()
     {
-        $data = ClipboardHandler::getInstance()->getEditorItems($this->parameters['pageClassNames'],
-            $this->parameters['pageObjectID']);
+        $data = ClipboardHandler::getInstance()->getEditorItems(
+            $this->parameters['pageClassNames'],
+            $this->parameters['pageObjectID']
+        );
 
         if ($data === null) {
             return [];
@@ -178,8 +180,10 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction
                     'actionName' => $item->getName(),
                     'internalData' => $item->getInternalData(),
                     'parameters' => $item->getParameters(),
-                    'label' => WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.' . $item->getName(),
-                        ['count' => $item->getCount()]),
+                    'label' => WCF::getLanguage()->getDynamicVariable(
+                        'wcf.clipboard.item.' . $item->getName(),
+                        ['count' => $item->getCount()]
+                    ),
                     'url' => $item->getURL(),
                 ];
             }

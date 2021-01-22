@@ -184,7 +184,8 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
                         );
                     }
                 }))
-                ->addValidator(new FormFieldValidator('noClassName',
+                ->addValidator(new FormFieldValidator(
+                    'noClassName',
                     static function (MultilineTextFormField $formField) {
                         /** @var ClassNameFormField $className */
                         $className = $formField->getDocument()->getNodeById('className');
@@ -197,16 +198,19 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
                                 )
                             );
                         }
-                    })),
+                    }
+                )),
         ]);
 
-        $form->getDataHandler()->addProcessor(new CustomFormDataProcessor('unifyNewlines',
+        $form->getDataHandler()->addProcessor(new CustomFormDataProcessor(
+            'unifyNewlines',
             static function (IFormDocument $document, array $parameters) {
                 $parameters['data']['regex'] = StringUtil::unifyNewlines(StringUtil::escapeCDATA($parameters['data']['regex']));
                 $parameters['data']['html'] = StringUtil::unifyNewlines(StringUtil::escapeCDATA($parameters['data']['html']));
 
                 return $parameters;
-            }));
+            }
+        ));
     }
 
     /**

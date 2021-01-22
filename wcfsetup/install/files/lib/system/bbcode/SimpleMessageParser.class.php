@@ -234,8 +234,10 @@ class SimpleMessageParser extends SingletonFactory
     {
         $smileyCount = 0;
         foreach ($this->smilies as $code => $html) {
-            $text = \preg_replace_callback('~(?<=^|\s)' . \preg_quote(StringUtil::encodeHTML($code),
-                    '~') . '(?=$|\s|<br />|<br>)~', static function () use ($code, $html, &$smileyCount) {
+            $text = \preg_replace_callback('~(?<=^|\s)' . \preg_quote(
+                StringUtil::encodeHTML($code),
+                '~'
+            ) . '(?=$|\s|<br />|<br>)~', static function () use ($code, $html, &$smileyCount) {
                 if ($smileyCount === 50) {
                     return $code;
                 }

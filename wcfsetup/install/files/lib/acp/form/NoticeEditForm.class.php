@@ -157,8 +157,12 @@ class NoticeEditForm extends NoticeAddForm
                 I18nHandler::getInstance()->remove($this->notice->notice);
             }
         } else {
-            I18nHandler::getInstance()->save('notice', 'wcf.notice.notice.notice' . $this->notice->noticeID,
-                'wcf.notice', 1);
+            I18nHandler::getInstance()->save(
+                'notice',
+                'wcf.notice.notice.notice' . $this->notice->noticeID,
+                'wcf.notice',
+                1
+            );
         }
 
         // transform conditions array into one-dimensional array
@@ -173,8 +177,11 @@ class NoticeEditForm extends NoticeAddForm
             }
         }
 
-        ConditionHandler::getInstance()->updateConditions($this->notice->noticeID, $this->notice->getConditions(),
-            $conditions);
+        ConditionHandler::getInstance()->updateConditions(
+            $this->notice->noticeID,
+            $this->notice->getConditions(),
+            $conditions
+        );
 
         if ($this->resetIsDismissed) {
             $sql = "DELETE FROM wcf" . WCF_N . "_notice_dismissed

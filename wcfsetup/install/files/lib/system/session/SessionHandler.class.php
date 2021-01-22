@@ -500,8 +500,10 @@ final class SessionHandler extends SingletonFactory
                 $sameSite = '; SameSite=strict';
             }
 
-            \header('set-cookie: XSRF-TOKEN=' . \rawurlencode($xsrfToken) . '; path=/' . $cookieDomain . (RouteHandler::secureConnection() ? '; secure' : '') . $sameSite,
-                false);
+            \header(
+                'set-cookie: XSRF-TOKEN=' . \rawurlencode($xsrfToken) . '; path=/' . $cookieDomain . (RouteHandler::secureConnection() ? '; secure' : '') . $sameSite,
+                false
+            );
         }
 
         $this->xsrfToken = $xsrfToken;

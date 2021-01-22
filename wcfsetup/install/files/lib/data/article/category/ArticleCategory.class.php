@@ -78,8 +78,10 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
         }
 
         if (!isset($this->userPermissions[$user->userID])) {
-            $this->userPermissions[$user->userID] = CategoryPermissionHandler::getInstance()->getPermissions($this->getDecoratedObject(),
-                $user);
+            $this->userPermissions[$user->userID] = CategoryPermissionHandler::getInstance()->getPermissions(
+                $this->getDecoratedObject(),
+                $user
+            );
         }
 
         if (isset($this->userPermissions[$user->userID][$permission])) {
@@ -177,8 +179,11 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
         $labelGroupsToCategories = ArticleCategoryLabelCacheBuilder::getInstance()->getData();
 
         if (isset($labelGroupsToCategories[$this->categoryID])) {
-            return LabelHandler::getInstance()->getLabelGroups($labelGroupsToCategories[$this->categoryID], true,
-                $permission);
+            return LabelHandler::getInstance()->getLabelGroups(
+                $labelGroupsToCategories[$this->categoryID],
+                true,
+                $permission
+            );
         }
 
         return [];
@@ -222,8 +227,11 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
                     self::$subscribedCategories = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
                     // update storage data
-                    UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'articleSubscribedCategories',
-                        \serialize(self::$subscribedCategories));
+                    UserStorageHandler::getInstance()->update(
+                        WCF::getUser()->userID,
+                        'articleSubscribedCategories',
+                        \serialize(self::$subscribedCategories)
+                    );
                 } else {
                     self::$subscribedCategories = \unserialize($data);
                 }

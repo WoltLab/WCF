@@ -226,8 +226,10 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
                     ) {
                         $eventListenerList = new EventListenerList();
                         $eventListenerList->getConditionBuilder()->add('listenerName = ?', [$formField->getValue()]);
-                        $eventListenerList->getConditionBuilder()->add('packageID = ?',
-                            [$this->installation->getPackageID()]);
+                        $eventListenerList->getConditionBuilder()->add(
+                            'packageID = ?',
+                            [$this->installation->getPackageID()]
+                        );
 
                         if ($eventListenerList->countObjects() > 0) {
                             $formField->addValidationError(

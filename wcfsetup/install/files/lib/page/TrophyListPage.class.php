@@ -74,8 +74,11 @@ class TrophyListPage extends MultipleLinkPage
     {
         parent::readParameters();
 
-        $this->canonicalURL = LinkHandler::getInstance()->getLink('TrophyList', [],
-            ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : ''));
+        $this->canonicalURL = LinkHandler::getInstance()->getLink(
+            'TrophyList',
+            [],
+            ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : '')
+        );
 
         if (!\count(TrophyCategoryCache::getInstance()->getEnabledCategories())) {
             throw new IllegalLinkException();

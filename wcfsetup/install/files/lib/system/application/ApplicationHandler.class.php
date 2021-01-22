@@ -119,8 +119,10 @@ class ApplicationHandler extends SingletonFactory
                 $_POST['directories'] = ['wcf' => $documentRoot . FileUtil::removeLeadingSlash(RouteHandler::getPath(['acp']))];
             }
 
-            $path = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator(FileUtil::getRelativePath($documentRoot,
-                $_POST['directories']['wcf']))));
+            $path = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator(FileUtil::getRelativePath(
+                $documentRoot,
+                $_POST['directories']['wcf']
+            ))));
 
             return new Application(null, [
                 'domainName' => $host,
@@ -208,8 +210,11 @@ class ApplicationHandler extends SingletonFactory
         $protocolRegex = new Regex('^https(?=://)');
         if (empty($this->pageURLs)) {
             foreach ($this->getApplications() as $application) {
-                $this->pageURLs[] = \preg_replace('~/$~', '',
-                    $protocolRegex->replace(RouteHandler::getProtocol() . $application->domainName, 'http'));
+                $this->pageURLs[] = \preg_replace(
+                    '~/$~',
+                    '',
+                    $protocolRegex->replace(RouteHandler::getProtocol() . $application->domainName, 'http')
+                );
             }
             $this->pageURLs = \array_unique($this->pageURLs);
         }

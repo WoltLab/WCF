@@ -90,8 +90,13 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
             $htmlOutputProcessor = new HtmlOutputProcessor();
             $htmlOutputProcessor->setOutputType('text/plain');
             $htmlOutputProcessor->enableUgc = false;
-            $htmlOutputProcessor->process($this->content, 'com.woltlab.wcf.article.content', $this->articleContentID,
-                false, $this->languageID);
+            $htmlOutputProcessor->process(
+                $this->content,
+                'com.woltlab.wcf.article.content',
+                $this->articleContentID,
+                false,
+                $this->languageID
+            );
 
             return \nl2br(StringUtil::encodeHTML(StringUtil::truncate($htmlOutputProcessor->getHtml(), 500)), false);
         }
@@ -106,8 +111,13 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
     {
         $processor = new HtmlOutputProcessor();
         $processor->enableUgc = false;
-        $processor->process($this->content, 'com.woltlab.wcf.article.content', $this->articleContentID, false,
-            $this->languageID);
+        $processor->process(
+            $this->content,
+            'com.woltlab.wcf.article.content',
+            $this->articleContentID,
+            false,
+            $this->languageID
+        );
 
         return $processor->getHtml();
     }

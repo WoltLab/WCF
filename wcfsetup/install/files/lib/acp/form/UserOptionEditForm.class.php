@@ -80,10 +80,16 @@ class UserOptionEditForm extends UserOptionAddForm
     {
         AbstractForm::save();
 
-        I18nHandler::getInstance()->save('optionName', 'wcf.user.option.' . $this->userOption->optionName,
-            'wcf.user.option');
-        I18nHandler::getInstance()->save('optionDescription',
-            'wcf.user.option.' . $this->userOption->optionName . '.description', 'wcf.user.option');
+        I18nHandler::getInstance()->save(
+            'optionName',
+            'wcf.user.option.' . $this->userOption->optionName,
+            'wcf.user.option'
+        );
+        I18nHandler::getInstance()->save(
+            'optionDescription',
+            'wcf.user.option.' . $this->userOption->optionName . '.description',
+            'wcf.user.option'
+        );
 
         $additionalData = \is_array($this->userOption->additionalData) ? $this->userOption->additionalData : [];
         if ($this->optionType === 'message' && !isset($additionalData['messageObjectType'])) {
@@ -121,11 +127,18 @@ class UserOptionEditForm extends UserOptionAddForm
     {
         parent::readData();
 
-        I18nHandler::getInstance()->setOptions('optionName', 1, 'wcf.user.option.' . $this->userOption->optionName,
-            'wcf.user.option.option\d+');
-        I18nHandler::getInstance()->setOptions('optionDescription', 1,
+        I18nHandler::getInstance()->setOptions(
+            'optionName',
+            1,
+            'wcf.user.option.' . $this->userOption->optionName,
+            'wcf.user.option.option\d+'
+        );
+        I18nHandler::getInstance()->setOptions(
+            'optionDescription',
+            1,
             'wcf.user.option.' . $this->userOption->optionName . '.description',
-            'wcf.user.option.option\d+.description');
+            'wcf.user.option.option\d+.description'
+        );
 
         if (empty($_POST)) {
             $this->categoryName = $this->userOption->categoryName;

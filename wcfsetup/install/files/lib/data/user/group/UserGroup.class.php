@@ -121,8 +121,12 @@ class UserGroup extends DatabaseObject implements ITitledObject
 
         $groups = [];
         foreach (self::$cache['groups'] as $group) {
-            if ((empty($types) || \in_array($group->groupType, $types)) && !\in_array($group->groupType,
-                    $invalidGroupTypes)) {
+            if (
+                (empty($types) || \in_array($group->groupType, $types)) && !\in_array(
+                    $group->groupType,
+                    $invalidGroupTypes
+                )
+            ) {
                 $groups[$group->groupID] = $group;
             }
         }
@@ -273,8 +277,10 @@ class UserGroup extends DatabaseObject implements ITitledObject
     public static function isAccessibleGroup(array $groupIDs = [])
     {
         if (self::$accessibleGroups === null) {
-            self::$accessibleGroups = \explode(',',
-                WCF::getSession()->getPermission('admin.user.accessibleGroups') ?: '');
+            self::$accessibleGroups = \explode(
+                ',',
+                WCF::getSession()->getPermission('admin.user.accessibleGroups') ?: ''
+            );
         }
 
         if (empty($groupIDs)) {

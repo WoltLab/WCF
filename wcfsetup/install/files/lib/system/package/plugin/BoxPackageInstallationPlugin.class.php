@@ -174,18 +174,20 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
         $isMultilingual = false;
         $position = $data['elements']['position'];
 
-        if (!\in_array($position, [
-            'bottom',
-            'contentBottom',
-            'contentTop',
-            'footer',
-            'footerBoxes',
-            'headerBoxes',
-            'hero',
-            'sidebarLeft',
-            'sidebarRight',
-            'top',
-        ])) {
+        if (
+            !\in_array($position, [
+                'bottom',
+                'contentBottom',
+                'contentTop',
+                'footer',
+                'footerBoxes',
+                'headerBoxes',
+                'hero',
+                'sidebarLeft',
+                'sidebarRight',
+                'top',
+            ])
+        ) {
             throw new SystemException("Unknown box position '{$position}' for box '{$identifier}'");
         }
 
@@ -724,10 +726,16 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 
         $objectTypeData = null;
         if (isset($data['objectType'])) {
-            $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.boxController',
-                $data['objectType']);
-            if ($objectType !== null && \is_subclass_of($objectType->className,
-                    AbstractDatabaseObjectListBoxController::class)) {
+            $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
+                'com.woltlab.wcf.boxController',
+                $data['objectType']
+            );
+            if (
+                $objectType !== null && \is_subclass_of(
+                    $objectType->className,
+                    AbstractDatabaseObjectListBoxController::class
+                )
+            ) {
                 /** @var AbstractDatabaseObjectListBoxController $boxController */
                 $boxController = new $objectType->className();
 
@@ -848,8 +856,10 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 
         foreach ($formData['name_i18n'] as $languageID => $name) {
             $nameElement = $document->createElement('name', $this->getAutoCdataValue($name));
-            $nameElement->setAttribute('language',
-                LanguageFactory::getInstance()->getLanguage($languageID)->languageCode);
+            $nameElement->setAttribute(
+                'language',
+                LanguageFactory::getInstance()->getLanguage($languageID)->languageCode
+            );
 
             $box->appendChild($nameElement);
         }
@@ -918,10 +928,16 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
         }
 
         if (isset($data['objectType'])) {
-            $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.boxController',
-                $data['objectType']);
-            if ($objectType !== null && \is_subclass_of($objectType->className,
-                    AbstractDatabaseObjectListBoxController::class)) {
+            $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
+                'com.woltlab.wcf.boxController',
+                $data['objectType']
+            );
+            if (
+                $objectType !== null && \is_subclass_of(
+                    $objectType->className,
+                    AbstractDatabaseObjectListBoxController::class
+                )
+            ) {
                 /** @var AbstractDatabaseObjectListBoxController $boxController */
                 $boxController = new $objectType->className();
 

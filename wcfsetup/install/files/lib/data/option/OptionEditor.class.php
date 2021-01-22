@@ -148,10 +148,14 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 
         // Secret options cannot be enabled through the regular options, they need to be manually
         // defined in the Core's `config.inc.php` to be activated.
-        $attachmentStorage = new Option(null,
-            ['optionName' => 'attachment_storage', 'optionType' => 'text', 'optionValue' => null]);
-        $enableEnterpriseMode = new Option(null,
-            ['optionName' => 'enable_enterprise_mode', 'optionType' => 'integer', 'optionValue' => 0]);
+        $attachmentStorage = new Option(
+            null,
+            ['optionName' => 'attachment_storage', 'optionType' => 'text', 'optionValue' => null]
+        );
+        $enableEnterpriseMode = new Option(
+            null,
+            ['optionName' => 'enable_enterprise_mode', 'optionType' => 'integer', 'optionValue' => 0]
+        );
         $secretOptions = [
             $attachmentStorage->getConstantName() => $attachmentStorage,
             $enableEnterpriseMode->getConstantName() => $enableEnterpriseMode,

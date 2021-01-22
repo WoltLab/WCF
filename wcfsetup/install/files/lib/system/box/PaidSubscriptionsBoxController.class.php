@@ -66,8 +66,10 @@ class PaidSubscriptionsBoxController extends AbstractBoxController
                 foreach ($userSubscriptionList as $userSubscription) {
                     if ($userSubscription->getSubscription()->excludedSubscriptionIDs) {
                         foreach (
-                            \explode(',',
-                                $userSubscription->getSubscription()->excludedSubscriptionIDs) as $subscriptionID
+                            \explode(
+                                ',',
+                                $userSubscription->getSubscription()->excludedSubscriptionIDs
+                            ) as $subscriptionID
                         ) {
                             if (isset($subscriptions[$subscriptionID])) {
                                 unset($subscriptions[$subscriptionID]);

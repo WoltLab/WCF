@@ -180,13 +180,21 @@ class UserGroupOptionForm extends AbstractForm
                 continue;
             }
 
-            if (WCF::getUser()->hasAdministrativeAccess() && (!ENABLE_ENTERPRISE_MODE || !\in_array($this->userGroupOption->optionName,
-                        UserGroupOption::ENTERPRISE_BLACKLIST))) {
+            if (
+                WCF::getUser()->hasAdministrativeAccess() && (!ENABLE_ENTERPRISE_MODE || !\in_array(
+                    $this->userGroupOption->optionName,
+                    UserGroupOption::ENTERPRISE_BLACKLIST
+                ))
+            ) {
                 continue;
             }
 
-            if ($this->optionType->compare($optionValue,
-                    WCF::getSession()->getPermission($this->userGroupOption->optionName)) == 1) {
+            if (
+                $this->optionType->compare(
+                    $optionValue,
+                    WCF::getSession()->getPermission($this->userGroupOption->optionName)
+                ) == 1
+            ) {
                 $this->errorType[$groupID] = 'exceedsOwnPermission';
             }
         }
@@ -239,8 +247,10 @@ class UserGroupOptionForm extends AbstractForm
                 $this->optionType->setUserGroup($group);
             }
 
-            $this->formElements[$group->groupID] = $this->optionType->getFormElement($this->userGroupOption,
-                $optionValue);
+            $this->formElements[$group->groupID] = $this->optionType->getFormElement(
+                $this->userGroupOption,
+                $optionValue
+            );
         }
     }
 
@@ -251,8 +261,11 @@ class UserGroupOptionForm extends AbstractForm
     {
         parent::save();
 
-        $this->objectAction = new UserGroupOptionAction([$this->userGroupOption], 'updateValues',
-            ['values' => $this->values]);
+        $this->objectAction = new UserGroupOptionAction(
+            [$this->userGroupOption],
+            'updateValues',
+            ['values' => $this->values]
+        );
         $this->objectAction->executeAction();
 
         // fire saved event

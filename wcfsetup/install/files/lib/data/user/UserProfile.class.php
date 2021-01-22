@@ -152,8 +152,11 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
                     $this->followingUserIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
                     // update storage data
-                    UserStorageHandler::getInstance()->update($this->userID, 'followingUserIDs',
-                        \serialize($this->followingUserIDs));
+                    UserStorageHandler::getInstance()->update(
+                        $this->userID,
+                        'followingUserIDs',
+                        \serialize($this->followingUserIDs)
+                    );
                 } else {
                     $this->followingUserIDs = \unserialize($data);
                 }
@@ -187,8 +190,11 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
                     $this->followerUserIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
                     // update storage data
-                    UserStorageHandler::getInstance()->update($this->userID, 'followerUserIDs',
-                        \serialize($this->followerUserIDs));
+                    UserStorageHandler::getInstance()->update(
+                        $this->userID,
+                        'followerUserIDs',
+                        \serialize($this->followerUserIDs)
+                    );
                 } else {
                     $this->followerUserIDs = \unserialize($data);
                 }
@@ -222,8 +228,11 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
                     $this->ignoredUserIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
                     // update storage data
-                    UserStorageHandler::getInstance()->update($this->userID, 'ignoredUserIDs',
-                        \serialize($this->ignoredUserIDs));
+                    UserStorageHandler::getInstance()->update(
+                        $this->userID,
+                        'ignoredUserIDs',
+                        \serialize($this->ignoredUserIDs)
+                    );
                 } else {
                     $this->ignoredUserIDs = \unserialize($data);
                 }
@@ -257,8 +266,11 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
                     $this->ignoredByUserIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
                     // update storage data
-                    UserStorageHandler::getInstance()->update($this->userID, 'ignoredByUserIDs',
-                        \serialize($this->ignoredByUserIDs));
+                    UserStorageHandler::getInstance()->update(
+                        $this->userID,
+                        'ignoredByUserIDs',
+                        \serialize($this->ignoredByUserIDs)
+                    );
                 } else {
                     $this->ignoredByUserIDs = \unserialize($data);
                 }
@@ -327,8 +339,11 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
                             $data = UserStorageHandler::getInstance()->getField('avatar', $this->userID);
                             if ($data === null) {
                                 $this->avatar = new UserAvatar($this->avatarID);
-                                UserStorageHandler::getInstance()->update($this->userID, 'avatar',
-                                    \serialize($this->avatar));
+                                UserStorageHandler::getInstance()->update(
+                                    $this->userID,
+                                    'avatar',
+                                    \serialize($this->avatar)
+                                );
                             } else {
                                 $this->avatar = \unserialize($data);
                             }
@@ -336,16 +351,21 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
                             $this->avatar = new UserAvatar(null, $this->getDecoratedObject()->data);
                         }
                     } elseif (MODULE_GRAVATAR && $this->enableGravatar) {
-                        $this->avatar = new Gravatar($this->userID, $this->email,
-                            ($this->gravatarFileExtension ?: 'png'));
+                        $this->avatar = new Gravatar(
+                            $this->userID,
+                            $this->email,
+                            ($this->gravatarFileExtension ?: 'png')
+                        );
                     } else {
                         $parameters = ['avatar' => null];
                         EventHandler::getInstance()->fireAction($this, 'getAvatar', $parameters);
 
                         if ($parameters['avatar'] !== null) {
                             if (!($parameters['avatar'] instanceof IUserAvatar)) {
-                                throw new ImplementationException(\get_class($parameters['avatar']),
-                                    IUserAvatar::class);
+                                throw new ImplementationException(
+                                    \get_class($parameters['avatar']),
+                                    IUserAvatar::class
+                                );
                             }
 
                             $this->avatar = $parameters['avatar'];
@@ -388,8 +408,11 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
             if ($this->coverPhotoHash) {
                 if ($isACP || !$this->disableCoverPhoto) {
                     if ($this->canSeeCoverPhoto()) {
-                        $this->coverPhoto = new UserCoverPhoto($this->userID, $this->coverPhotoHash,
-                            $this->coverPhotoExtension);
+                        $this->coverPhoto = new UserCoverPhoto(
+                            $this->userID,
+                            $this->coverPhotoHash,
+                            $this->coverPhotoExtension
+                        );
                     }
                 }
             }
@@ -804,8 +827,11 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
         $d = new \DateTime();
         $d->setTimezone(WCF::getUser()->getTimeZone());
         $d->setDate($birthdayYear, $month, $day);
-        $dateFormat = (($showYear && $birthdayYear) ? WCF::getLanguage()->get(DateUtil::DATE_FORMAT) : \str_replace('Y',
-            '', WCF::getLanguage()->get(DateUtil::DATE_FORMAT)));
+        $dateFormat = (($showYear && $birthdayYear) ? WCF::getLanguage()->get(DateUtil::DATE_FORMAT) : \str_replace(
+            'Y',
+            '',
+            WCF::getLanguage()->get(DateUtil::DATE_FORMAT)
+        ));
         $birthday = DateUtil::localizeDate($d->format($dateFormat), $dateFormat, WCF::getLanguage());
 
         if ($showYear) {

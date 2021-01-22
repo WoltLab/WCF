@@ -50,8 +50,10 @@ class ViewableUserActivityEventList extends UserActivityEventList
         parent::__construct();
 
         if (LanguageFactory::getInstance()->multilingualismEnabled() && \count(WCF::getUser()->getLanguageIDs())) {
-            $this->getConditionBuilder()->add('(user_activity_event.languageID IN (?) OR user_activity_event.languageID IS NULL)',
-                [WCF::getUser()->getLanguageIDs()]);
+            $this->getConditionBuilder()->add(
+                '(user_activity_event.languageID IN (?) OR user_activity_event.languageID IS NULL)',
+                [WCF::getUser()->getLanguageIDs()]
+            );
         }
     }
 

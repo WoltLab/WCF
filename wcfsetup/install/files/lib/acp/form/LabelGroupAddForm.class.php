@@ -187,8 +187,12 @@ class LabelGroupAddForm extends AbstractForm
         $returnValues = $this->objectAction->executeAction();
 
         if (!I18nHandler::getInstance()->isPlainValue('groupName')) {
-            I18nHandler::getInstance()->save('groupName',
-                'wcf.acp.label.group' . $returnValues['returnValues']->groupID, 'wcf.acp.label', 1);
+            I18nHandler::getInstance()->save(
+                'groupName',
+                'wcf.acp.label.group' . $returnValues['returnValues']->groupID,
+                'wcf.acp.label',
+                1
+            );
 
             // update group name
             $groupEditor = new LabelGroupEditor($returnValues['returnValues']);
@@ -220,8 +224,10 @@ class LabelGroupAddForm extends AbstractForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(LabelGroupEditForm::class,
-                ['id' => $returnValues['returnValues']->groupID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
+                LabelGroupEditForm::class,
+                ['id' => $returnValues['returnValues']->groupID]
+            ),
         ]);
 
         I18nHandler::getInstance()->reset();

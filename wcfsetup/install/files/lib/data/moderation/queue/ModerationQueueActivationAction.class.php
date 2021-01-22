@@ -63,8 +63,10 @@ class ModerationQueueActivationAction extends ModerationQueueAction
     public function removeContent()
     {
         // mark content as deleted
-        ModerationQueueActivationManager::getInstance()->removeContent($this->queue->getDecoratedObject(),
-            $this->parameters['message']);
+        ModerationQueueActivationManager::getInstance()->removeContent(
+            $this->queue->getDecoratedObject(),
+            $this->parameters['message']
+        );
 
         $this->queue->markAsRejected();
     }

@@ -134,8 +134,10 @@ class DataImportForm extends AbstractForm
 
         // sort exporters by name
         \uksort($this->exporters, static function ($a, $b) {
-            return \strcasecmp(WCF::getLanguage()->get('wcf.acp.dataImport.exporter.' . $a),
-                WCF::getLanguage()->get('wcf.acp.dataImport.exporter.' . $b));
+            return \strcasecmp(
+                WCF::getLanguage()->get('wcf.acp.dataImport.exporter.' . $a),
+                WCF::getLanguage()->get('wcf.acp.dataImport.exporter.' . $b)
+            );
         });
 
         $this->importers = \array_keys(ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.importer'));
@@ -224,8 +226,15 @@ class DataImportForm extends AbstractForm
     {
         parent::validate();
 
-        $this->exporter->setData($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName, $this->dbPrefix,
-            $this->fileSystemPath, $this->additionalData);
+        $this->exporter->setData(
+            $this->dbHost,
+            $this->dbUser,
+            $this->dbPassword,
+            $this->dbName,
+            $this->dbPrefix,
+            $this->fileSystemPath,
+            $this->additionalData
+        );
 
         // validate database Access
         try {

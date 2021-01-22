@@ -92,8 +92,10 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
             );
 
             // fire activity event
-            UserActivityEventHandler::getInstance()->fireEvent('com.woltlab.wcf.user.recentActivityEvent.follow',
-                $this->parameters['data']['userID']);
+            UserActivityEventHandler::getInstance()->fireEvent(
+                'com.woltlab.wcf.user.recentActivityEvent.follow',
+                $this->parameters['data']['userID']
+            );
 
             // reset storage
             UserStorageHandler::getInstance()->reset([$this->parameters['data']['userID']], 'followerUserIDs');
@@ -127,8 +129,10 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
             $followEditor->delete();
 
             // remove activity event
-            UserActivityEventHandler::getInstance()->removeEvent('com.woltlab.wcf.user.recentActivityEvent.follow',
-                $this->parameters['data']['userID']);
+            UserActivityEventHandler::getInstance()->removeEvent(
+                'com.woltlab.wcf.user.recentActivityEvent.follow',
+                $this->parameters['data']['userID']
+            );
         }
 
         // reset storage
@@ -173,8 +177,10 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
         foreach ($this->getObjects() as $follow) {
             $followUserIDs[] = $follow->followUserID;
             // remove activity event
-            UserActivityEventHandler::getInstance()->removeEvents('com.woltlab.wcf.user.recentActivityEvent.follow',
-                [$follow->followUserID]);
+            UserActivityEventHandler::getInstance()->removeEvents(
+                'com.woltlab.wcf.user.recentActivityEvent.follow',
+                [$follow->followUserID]
+            );
         }
 
         // reset storage

@@ -59,8 +59,11 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm
     {
         AbstractForm::save();
 
-        I18nHandler::getInstance()->save('categoryName', 'wcf.user.option.category.' . $this->category->categoryName,
-            'wcf.user.option');
+        I18nHandler::getInstance()->save(
+            'categoryName',
+            'wcf.user.option.category.' . $this->category->categoryName,
+            'wcf.user.option'
+        );
 
         $this->objectAction = new UserOptionCategoryAction([$this->category], 'update', [
             'data' => \array_merge($this->additionalFields, [
@@ -80,8 +83,12 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm
     {
         parent::readData();
 
-        I18nHandler::getInstance()->setOptions('categoryName', 1,
-            'wcf.user.option.category.' . $this->category->categoryName, 'wcf.user.option.category.category\d+');
+        I18nHandler::getInstance()->setOptions(
+            'categoryName',
+            1,
+            'wcf.user.option.category.' . $this->category->categoryName,
+            'wcf.user.option.category.category\d+'
+        );
 
         if (!\count($_POST)) {
             $this->showOrder = $this->category->showOrder;

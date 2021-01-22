@@ -96,8 +96,10 @@ final class HTTPRequest
 
         // set default headers
         $language = WCF::getLanguage();
-        $this->addHeader('user-agent',
-            "HTTP.PHP (HTTPRequest.class.php; WoltLab Suite/" . WCF_VERSION . "; " . ($language ? $language->languageCode : 'en') . ")");
+        $this->addHeader(
+            'user-agent',
+            "HTTP.PHP (HTTPRequest.class.php; WoltLab Suite/" . WCF_VERSION . "; " . ($language ? $language->languageCode : 'en') . ")"
+        );
         $this->addHeader('accept', '*/*');
         if ($language) {
             $this->addHeader('accept-language', $language->getFixedLanguageCode());

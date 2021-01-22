@@ -67,8 +67,10 @@ class ProfileCommentListBoxController extends AbstractCommentListBoxController
                     ]);
                 }
             } else {
-                $commentList->getConditionBuilder()->add("user_option_value.userOption{$optionID} = ?",
-                    [UserProfile::ACCESS_EVERYONE]);
+                $commentList->getConditionBuilder()->add(
+                    "user_option_value.userOption{$optionID} = ?",
+                    [UserProfile::ACCESS_EVERYONE]
+                );
             }
         } else {
             $commentList->getConditionBuilder()->add('0 = 1');

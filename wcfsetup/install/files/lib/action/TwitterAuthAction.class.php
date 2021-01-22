@@ -76,8 +76,10 @@ class TwitterAuthAction extends AbstractAction
                     'oauth_verifier' => $_GET['oauth_verifier'],
                 ];
 
-                $signature = $this->createSignature('https://api.twitter.com/oauth/access_token',
-                    \array_merge($oauthHeader, $postData));
+                $signature = $this->createSignature(
+                    'https://api.twitter.com/oauth/access_token',
+                    \array_merge($oauthHeader, $postData)
+                );
                 $oauthHeader['oauth_signature'] = $signature;
 
                 $request = new HTTPRequest('https://api.twitter.com/oauth/access_token', [], $postData);
@@ -130,8 +132,12 @@ class TwitterAuthAction extends AbstractAction
                             'include_email' => 'true',
                             'skip_status' => 'true',
                         ];
-                        $signature = $this->createSignature('https://api.twitter.com/1.1/account/verify_credentials.json',
-                            \array_merge($oauthHeader, $getData), $data['oauth_token_secret'], 'GET');
+                        $signature = $this->createSignature(
+                            'https://api.twitter.com/1.1/account/verify_credentials.json',
+                            \array_merge($oauthHeader, $getData),
+                            $data['oauth_token_secret'],
+                            'GET'
+                        );
                         $oauthHeader['oauth_signature'] = $signature;
 
                         $request = new HTTPRequest('https://api.twitter.com/1.1/account/verify_credentials.json?skip_status=true&include_email=true');

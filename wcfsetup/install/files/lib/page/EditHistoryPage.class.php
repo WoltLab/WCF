@@ -123,8 +123,10 @@ class EditHistoryPage extends AbstractPage
             $this->objectType = ObjectTypeCache::getInstance()->getObjectType($this->old->objectTypeID);
         } elseif (isset($_REQUEST['objectID']) && isset($_REQUEST['objectType'])) {
             $this->objectID = \intval($_REQUEST['objectID']);
-            $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.edit.historySavingObject',
-                $_REQUEST['objectType']);
+            $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
+                'com.woltlab.wcf.edit.historySavingObject',
+                $_REQUEST['objectType']
+            );
         } else {
             throw new IllegalLinkException();
         }

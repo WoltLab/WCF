@@ -145,8 +145,11 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
      */
     public function getLocation()
     {
-        return $this->getLocationHelper(self::getStorage() . \substr($this->fileHash, 0,
-                2) . '/' . $this->attachmentID . '-' . $this->fileHash);
+        return $this->getLocationHelper(self::getStorage() . \substr(
+            $this->fileHash,
+            0,
+            2
+        ) . '/' . $this->attachmentID . '-' . $this->fileHash);
     }
 
     /**
@@ -165,11 +168,17 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
     public function getThumbnailLocation($size = '')
     {
         if ($size == 'tiny') {
-            $location = self::getStorage() . \substr($this->fileHash, 0,
-                    2) . '/' . $this->attachmentID . '-tiny-' . $this->fileHash;
+            $location = self::getStorage() . \substr(
+                $this->fileHash,
+                0,
+                2
+            ) . '/' . $this->attachmentID . '-tiny-' . $this->fileHash;
         } else {
-            $location = self::getStorage() . \substr($this->fileHash, 0,
-                    2) . '/' . $this->attachmentID . '-thumbnail-' . $this->fileHash;
+            $location = self::getStorage() . \substr(
+                $this->fileHash,
+                0,
+                2
+            ) . '/' . $this->attachmentID . '-thumbnail-' . $this->fileHash;
         }
 
         return $this->getLocationHelper($location);

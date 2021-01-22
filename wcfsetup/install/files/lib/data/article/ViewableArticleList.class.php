@@ -85,8 +85,10 @@ class ViewableArticleList extends ArticleList
         if ($this->contentLoading && !empty($this->objectIDs)) {
             $contentList = new ViewableArticleContentList();
             $contentList->getConditionBuilder()->add('article_content.articleID IN (?)', [$this->objectIDs]);
-            $contentList->getConditionBuilder()->add('(article_content.languageID IS NULL OR article_content.languageID = ?)',
-                [WCF::getLanguage()->languageID]);
+            $contentList->getConditionBuilder()->add(
+                '(article_content.languageID IS NULL OR article_content.languageID = ?)',
+                [WCF::getLanguage()->languageID]
+            );
             $contentList->readObjects();
             foreach ($contentList as $articleContent) {
                 $article = $this->objects[$articleContent->articleID];

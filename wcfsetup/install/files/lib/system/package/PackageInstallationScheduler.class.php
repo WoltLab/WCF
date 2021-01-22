@@ -88,8 +88,13 @@ class PackageInstallationScheduler
     ) {
         // check virtual package version
         if (isset($this->virtualPackageVersions[$package])) {
-            if (!empty($minversion) && Package::compareVersion($this->virtualPackageVersions[$package], $minversion,
-                    '<')) {
+            if (
+                !empty($minversion) && Package::compareVersion(
+                    $this->virtualPackageVersions[$package],
+                    $minversion,
+                    '<'
+                )
+            ) {
                 $stackPosition = -1;
                 // remove installation of older version
                 foreach ($this->packageInstallationStack as $key => $value) {
@@ -100,16 +105,24 @@ class PackageInstallationScheduler
                 }
 
                 // install newer version
-                $this->installPackage($package, ($installOldVersion ? $minversion : ''), $stackPosition,
-                    $validateInstallInstructions);
+                $this->installPackage(
+                    $package,
+                    ($installOldVersion ? $minversion : ''),
+                    $stackPosition,
+                    $validateInstallInstructions
+                );
             }
         } else {
             // check if package is already installed
             $packageID = PackageCache::getInstance()->getPackageID($package);
             if ($packageID === null) {
                 // package is missing -> install
-                $this->installPackage($package, ($installOldVersion ? $minversion : ''), -1,
-                    $validateInstallInstructions);
+                $this->installPackage(
+                    $package,
+                    ($installOldVersion ? $minversion : ''),
+                    -1,
+                    $validateInstallInstructions
+                );
             } else {
                 $package = PackageCache::getInstance()->getPackage($packageID);
                 if (!empty($minversion) && Package::compareVersion($package->packageVersion, $minversion, '<')) {
@@ -209,8 +222,13 @@ class PackageInstallationScheduler
 
                     $packageID = 0;
                     foreach ($installedPackages[$row['package']] as $packageID => $packageVersion) {
-                        if (empty($row['minversion']) || Package::compareVersion($row['minversion'], $packageVersion,
-                                '<=')) {
+                        if (
+                            empty($row['minversion']) || Package::compareVersion(
+                                $row['minversion'],
+                                $packageVersion,
+                                '<='
+                            )
+                        ) {
                             continue 2;
                         }
                     }
@@ -270,16 +288,21 @@ class PackageInstallationScheduler
             try {
                 $request->execute();
             } catch (HTTPUnauthorizedException $e) {
-                throw new PackageUpdateUnauthorizedException($request,
-                    $this->packageUpdateServers[$packageUpdateVersion['packageUpdateServerID']], $packageUpdateVersion);
+                throw new PackageUpdateUnauthorizedException(
+                    $request,
+                    $this->packageUpdateServers[$packageUpdateVersion['packageUpdateServerID']],
+                    $packageUpdateVersion
+                );
             }
 
             $response = $request->getReply();
 
             // check response
             if ($response['statusCode'] != 200) {
-                throw new SystemException(WCF::getLanguage()->getDynamicVariable('wcf.acp.package.error.downloadFailed',
-                        ['__downloadPackage' => $package]) . ' (' . $response['body'] . ')');
+                throw new SystemException(WCF::getLanguage()->getDynamicVariable(
+                    'wcf.acp.package.error.downloadFailed',
+                    ['__downloadPackage' => $package]
+                ) . ' (' . $response['body'] . ')');
             }
 
             // write content to tmp file
@@ -304,8 +327,11 @@ class PackageInstallationScheduler
             $archive->getTar()->close();
 
             // cache download in session
-            PackageUpdateDispatcher::getInstance()->cacheDownload($package, $packageUpdateVersion['packageVersion'],
-                $filename);
+            PackageUpdateDispatcher::getInstance()->cacheDownload(
+                $package,
+                $packageUpdateVersion['packageVersion'],
+                $filename
+            );
 
             return $filename;
         }
@@ -428,8 +454,13 @@ class PackageInstallationScheduler
                     if ($packageInstallation['package'] == $row['excludedPackage']) {
                         if (!empty($row['excludedPackageVersion'])) {
                             // check version
-                            if (Package::compareVersion($packageInstallation['newVersion'],
-                                $row['excludedPackageVersion'], '<')) {
+                            if (
+                                Package::compareVersion(
+                                    $packageInstallation['newVersion'],
+                                    $row['excludedPackageVersion'],
+                                    '<'
+                                )
+                            ) {
                                 continue;
                             }
 
@@ -437,9 +468,13 @@ class PackageInstallationScheduler
                             foreach ($packageInstallations as $packageUpdate) {
                                 if ($packageUpdate['packageID'] == $row['packageID']) {
                                     // check new exclusions
-                                    if (!isset($packageUpdate['excludedPackages']) || !isset($packageUpdate['excludedPackages'][$row['excludedPackage']]) || (!empty($packageUpdate['excludedPackages'][$row['excludedPackage']]['version']) && Package::compareVersion($packageInstallation['newVersion'],
-                                                $packageUpdate['excludedPackages'][$row['excludedPackage']]['version'],
-                                                '<'))) {
+                                    if (
+                                        !isset($packageUpdate['excludedPackages']) || !isset($packageUpdate['excludedPackages'][$row['excludedPackage']]) || (!empty($packageUpdate['excludedPackages'][$row['excludedPackage']]['version']) && Package::compareVersion(
+                                            $packageInstallation['newVersion'],
+                                            $packageUpdate['excludedPackages'][$row['excludedPackage']]['version'],
+                                            '<'
+                                        ))
+                                    ) {
                                         continue 2;
                                     }
                                 }
@@ -561,8 +596,10 @@ class PackageInstallationScheduler
 
         // process update thread
         foreach ($updateThread as $fromversion => $toVersion) {
-            $packageUpdateVersions = PackageUpdateDispatcher::getInstance()->getPackageUpdateVersions($package->package,
-                $toVersion);
+            $packageUpdateVersions = PackageUpdateDispatcher::getInstance()->getPackageUpdateVersions(
+                $package->package,
+                $toVersion
+            );
 
             // resolve requirements
             $this->resolveRequirements($packageUpdateVersions[0]['packageUpdateVersionID']);
@@ -621,10 +658,19 @@ class PackageInstallationScheduler
             $innerUpdateThreadList = [];
             // find matching package versions
             foreach ($packageVersions as $packageVersion) {
-                if (Package::checkFromversion($packageVersion, $fromversion) && Package::compareVersion($packageVersion,
-                        $currentVersion, '>') && Package::compareVersion($packageVersion, $newVersion, '<')) {
-                    $innerUpdateThreadList[] = $this->findShortestUpdateThread($package, $fromversions, $currentVersion,
-                            $packageVersion) + [$packageVersion => $newVersion];
+                if (
+                    Package::checkFromversion($packageVersion, $fromversion) && Package::compareVersion(
+                        $packageVersion,
+                        $currentVersion,
+                        '>'
+                    ) && Package::compareVersion($packageVersion, $newVersion, '<')
+                ) {
+                    $innerUpdateThreadList[] = $this->findShortestUpdateThread(
+                        $package,
+                        $fromversions,
+                        $currentVersion,
+                        $packageVersion
+                    ) + [$packageVersion => $newVersion];
                 }
             }
 
@@ -638,13 +684,15 @@ class PackageInstallationScheduler
         }
 
         if (empty($updateThreadList)) {
-            throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.acp.package.update.path.incoherent',
+            throw new NamedUserException(WCF::getLanguage()->getDynamicVariable(
+                'wcf.acp.package.update.path.incoherent',
                 [
                     'currentVersion' => $currentVersion,
                     'newVersion' => $newVersion,
                     'package' => $package,
                     'packageName' => PackageCache::getInstance()->getPackageByIdentifier($package)->getName(),
-                ]));
+                ]
+            ));
         }
 
         // sort by length

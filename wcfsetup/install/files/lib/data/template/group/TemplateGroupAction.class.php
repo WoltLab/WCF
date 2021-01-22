@@ -115,8 +115,10 @@ class TemplateGroupAction extends AbstractDatabaseObjectAction
 
         // copy over the templates
         $templateList = new TemplateList();
-        $templateList->getConditionBuilder()->add("template.templateGroupID = ?",
-            [$this->templateGroupEditor->templateGroupID]);
+        $templateList->getConditionBuilder()->add(
+            "template.templateGroupID = ?",
+            [$this->templateGroupEditor->templateGroupID]
+        );
         $templateList->readObjects();
 
         /** @var Template $template */

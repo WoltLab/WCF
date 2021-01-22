@@ -161,8 +161,10 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction
     {
         $dir = WCF_DIR . $pathComponent;
         if (\is_dir($dir)) {
-            $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir),
-                \RecursiveIteratorIterator::CHILD_FIRST);
+            $iterator = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($dir),
+                \RecursiveIteratorIterator::CHILD_FIRST
+            );
             foreach ($iterator as $path) {
                 if ($path->isDir()) {
                     @\rmdir($path);
@@ -760,10 +762,16 @@ BROWSERCONFIG;
     {
         // merge definitions
         $variables = $this->styleEditor->getVariables();
-        $variables['individualScss'] = \str_replace("/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n", '',
-            $variables['individualScss']);
-        $variables['overrideScss'] = \str_replace("/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n", '',
-            $variables['overrideScss']);
+        $variables['individualScss'] = \str_replace(
+            "/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n",
+            '',
+            $variables['individualScss']
+        );
+        $variables['overrideScss'] = \str_replace(
+            "/* WCF_STYLE_CUSTOM_USER_MODIFICATIONS */\n",
+            '',
+            $variables['overrideScss']
+        );
         $this->styleEditor->setVariables($variables);
 
         $this->styleEditor->update([

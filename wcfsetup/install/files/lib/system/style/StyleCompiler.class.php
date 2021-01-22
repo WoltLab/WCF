@@ -166,8 +166,11 @@ class StyleCompiler extends SingletonFactory
                 static function ($content) use ($styleName) {
                     $header = "/* stylesheet for '" . $styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT */";
 
-                    return '@charset "UTF-8";' . "\n\n{$header}\n\n" . \preg_replace('~^@charset "UTF-8";\r?\n~', '',
-                            $content);
+                    return '@charset "UTF-8";' . "\n\n{$header}\n\n" . \preg_replace(
+                        '~^@charset "UTF-8";\r?\n~',
+                        '',
+                        $content
+                    );
                 }
             );
         } catch (\Exception $e) {
@@ -265,8 +268,11 @@ class StyleCompiler extends SingletonFactory
             static function ($content) use ($style) {
                 $header = "/* stylesheet for '" . $style->styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT */";
 
-                return '@charset "UTF-8";' . "\n\n{$header}\n\n" . \preg_replace('~^@charset "UTF-8";\r?\n~', '',
-                        $content);
+                return '@charset "UTF-8";' . "\n\n{$header}\n\n" . \preg_replace(
+                    '~^@charset "UTF-8";\r?\n~',
+                    '',
+                    $content
+                );
             }
         );
     }
@@ -324,8 +330,11 @@ class StyleCompiler extends SingletonFactory
 
                 $header = "/* stylesheet for the admin panel, generated on " . \gmdate('r') . " -- DO NOT EDIT */";
 
-                return '@charset "UTF-8";' . "\n\n{$header}\n\n" . \preg_replace('~^@charset "UTF-8";\r?\n~', '',
-                        $content);
+                return '@charset "UTF-8";' . "\n\n{$header}\n\n" . \preg_replace(
+                    '~^@charset "UTF-8";\r?\n~',
+                    '',
+                    $content
+                );
             }
         );
     }

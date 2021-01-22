@@ -158,8 +158,10 @@ class DevtoolsProject extends DatabaseObject
     {
         if ($this->package === null) {
             $packageList = new PackageList();
-            $packageList->getConditionBuilder()->add('package = ?',
-                [$this->getPackageArchive()->getPackageInfo('name')]);
+            $packageList->getConditionBuilder()->add(
+                'package = ?',
+                [$this->getPackageArchive()->getPackageInfo('name')]
+            );
             $packageList->readObjects();
 
             if (\count($packageList)) {
@@ -204,8 +206,10 @@ class DevtoolsProject extends DatabaseObject
             return [];
         }
 
-        return \array_values(DirectoryUtil::getInstance($languageDirectory)->getFiles(\SORT_ASC,
-            Regex::compile('\w+\.xml')));
+        return \array_values(DirectoryUtil::getInstance($languageDirectory)->getFiles(
+            \SORT_ASC,
+            Regex::compile('\w+\.xml')
+        ));
     }
 
     /**

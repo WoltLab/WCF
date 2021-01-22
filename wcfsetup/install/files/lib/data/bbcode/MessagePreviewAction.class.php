@@ -46,30 +46,40 @@ class MessagePreviewAction extends BBCodeAction
         // set disallowed bbcodes first to ensure proper parsing
         $disallowedBBCodesPermission = $this->parameters['disallowedBBCodesPermission'] ?? 'user.message.disallowedBBCodes';
         if ($disallowedBBCodesPermission) {
-            BBCodeHandler::getInstance()->setDisallowedBBCodes(ArrayUtil::trim(\explode(',',
-                WCF::getSession()->getPermission($disallowedBBCodesPermission))));
+            BBCodeHandler::getInstance()->setDisallowedBBCodes(ArrayUtil::trim(\explode(
+                ',',
+                WCF::getSession()->getPermission($disallowedBBCodesPermission)
+            )));
         }
 
         $htmlInputProcessor = new HtmlInputProcessor();
-        $htmlInputProcessor->process($this->parameters['data']['message'], $this->parameters['messageObjectType'],
-            $this->parameters['messageObjectID']);
+        $htmlInputProcessor->process(
+            $this->parameters['data']['message'],
+            $this->parameters['messageObjectType'],
+            $this->parameters['messageObjectID']
+        );
 
         // check if disallowed bbcode are used
         if ($disallowedBBCodesPermission) {
             $disallowedBBCodes = $htmlInputProcessor->validate();
             if (!empty($disallowedBBCodes)) {
-                throw new UserInputException('message',
+                throw new UserInputException(
+                    'message',
                     WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes', [
                         'disallowedBBCodes' => $disallowedBBCodes,
-                    ]));
+                    ])
+                );
             }
         }
 
         MessageEmbeddedObjectManager::getInstance()->registerTemporaryMessage($htmlInputProcessor);
 
         $htmlOutputProcessor = new HtmlOutputProcessor();
-        $htmlOutputProcessor->process($htmlInputProcessor->getHtml(), $this->parameters['messageObjectType'],
-            $this->parameters['messageObjectID']);
+        $htmlOutputProcessor->process(
+            $htmlInputProcessor->getHtml(),
+            $this->parameters['messageObjectType'],
+            $this->parameters['messageObjectID']
+        );
 
         return [
             'message' => $htmlOutputProcessor->getHtml(),

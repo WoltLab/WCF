@@ -217,8 +217,12 @@ class MenuAddForm extends AbstractForm
         ]);
         // save i18n
         if (!I18nHandler::getInstance()->isPlainValue('title')) {
-            I18nHandler::getInstance()->save('title', 'wcf.menu.com.woltlab.wcf.genericMenu' . $menuEditor->menuID,
-                'wcf.menu', 1);
+            I18nHandler::getInstance()->save(
+                'title',
+                'wcf.menu.com.woltlab.wcf.genericMenu' . $menuEditor->menuID,
+                'wcf.menu',
+                1
+            );
 
             // update title
             $menuEditor->update([
@@ -227,8 +231,11 @@ class MenuAddForm extends AbstractForm
         }
 
         // save acl
-        SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.box',
-            $menuEditor->getDecoratedObject()->getBox()->boxID, $this->aclValues);
+        SimpleAclHandler::getInstance()->setValues(
+            'com.woltlab.wcf.box',
+            $menuEditor->getDecoratedObject()->getBox()->boxID,
+            $this->aclValues
+        );
 
         $this->saved();
 
@@ -242,8 +249,10 @@ class MenuAddForm extends AbstractForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(MenuEditForm::class,
-                ['id' => $menuEditor->menuID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
+                MenuEditForm::class,
+                ['id' => $menuEditor->menuID]
+            ),
         ]);
 
         I18nHandler::getInstance()->reset();

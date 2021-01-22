@@ -172,8 +172,12 @@ class BBCodeEditForm extends BBCodeAddForm
         parent::readData();
 
         if (empty($_POST)) {
-            I18nHandler::getInstance()->setOptions('buttonLabel', 1, $this->bbcode->buttonLabel,
-                'wcf.editor.button.button\d+');
+            I18nHandler::getInstance()->setOptions(
+                'buttonLabel',
+                1,
+                $this->bbcode->buttonLabel,
+                'wcf.editor.button.button\d+'
+            );
             $this->buttonLabel = $this->bbcode->buttonLabel;
 
             $this->attributes = BBCodeAttribute::getAttributesByBBCode($this->bbcode);

@@ -538,7 +538,8 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 
                     return $nestedOptions;
                 }, true)
-                ->addValidator(new FormFieldValidator('selfParent',
+                ->addValidator(new FormFieldValidator(
+                    'selfParent',
                     static function (SingleSelectionFormField $formField) {
                         /** @var TextFormField $identifier */
                         $identifier = $formField->getDocument()->getNodeById('identifier');
@@ -551,7 +552,8 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
                                 )
                             );
                         }
-                    })),
+                    }
+                )),
 
             BooleanFormField::create('hasFixedParent')
                 ->label('wcf.acp.pip.page.hasFixedParent')

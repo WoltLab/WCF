@@ -30,8 +30,10 @@ class UserGroupAssignment extends DatabaseObject implements IRouteController
      */
     public function getConditions()
     {
-        return ConditionHandler::getInstance()->getConditions('com.woltlab.wcf.condition.userGroupAssignment',
-            $this->assignmentID);
+        return ConditionHandler::getInstance()->getConditions(
+            'com.woltlab.wcf.condition.userGroupAssignment',
+            $this->assignmentID
+        );
     }
 
     /**

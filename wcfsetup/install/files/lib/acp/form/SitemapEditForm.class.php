@@ -98,8 +98,10 @@ class SitemapEditForm extends AbstractForm
         if (isset($_GET['objectType'])) {
             $this->objectTypeName = $_GET['objectType'];
         }
-        $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.sitemap.object',
-            $this->objectTypeName);
+        $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
+            'com.woltlab.wcf.sitemap.object',
+            $this->objectTypeName
+        );
 
         if ($this->objectType === null) {
             throw new IllegalLinkException();
@@ -114,8 +116,10 @@ class SitemapEditForm extends AbstractForm
         parent::readData();
 
         if (empty($_POST)) {
-            $sitemapData = RegistryHandler::getInstance()->get('com.woltlab.wcf',
-                SitemapRebuildWorker::REGISTRY_PREFIX . $this->objectTypeName);
+            $sitemapData = RegistryHandler::getInstance()->get(
+                'com.woltlab.wcf',
+                SitemapRebuildWorker::REGISTRY_PREFIX . $this->objectTypeName
+            );
             $sitemapData = @\unserialize($sitemapData);
 
             if (\is_array($sitemapData)) {
@@ -182,13 +186,16 @@ class SitemapEditForm extends AbstractForm
     {
         parent::save();
 
-        RegistryHandler::getInstance()->set('com.woltlab.wcf',
-            SitemapRebuildWorker::REGISTRY_PREFIX . $this->objectTypeName, \serialize([
+        RegistryHandler::getInstance()->set(
+            'com.woltlab.wcf',
+            SitemapRebuildWorker::REGISTRY_PREFIX . $this->objectTypeName,
+            \serialize([
                 'priority' => $this->priority,
                 'changeFreq' => $this->changeFreq,
                 'rebuildTime' => $this->rebuildTime,
                 'isDisabled' => $this->isDisabled,
-            ]));
+            ])
+        );
 
         $this->saved();
 

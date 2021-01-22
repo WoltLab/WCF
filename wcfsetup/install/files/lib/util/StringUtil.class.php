@@ -243,8 +243,11 @@ final class StringUtil
     public static function addThousandsSeparator($number)
     {
         if ($number >= 1000 || $number <= -1000) {
-            $number = \preg_replace('~(?<=\d)(?=(\d{3})+(?!\d))~',
-                WCF::getLanguage()->get('wcf.global.thousandsSeparator'), $number);
+            $number = \preg_replace(
+                '~(?<=\d)(?=(\d{3})+(?!\d))~',
+                WCF::getLanguage()->get('wcf.global.thousandsSeparator'),
+                $number
+            );
         }
 
         return $number;
@@ -315,8 +318,12 @@ final class StringUtil
             $endPos = $startPos + \mb_strlen($search);
             $count++;
 
-            return \mb_substr($subject, 0, $startPos) . $replace . self::replaceIgnoreCase($search, $replace,
-                    \mb_substr($subject, $endPos), $count);
+            return \mb_substr($subject, 0, $startPos) . $replace . self::replaceIgnoreCase(
+                $search,
+                $replace,
+                \mb_substr($subject, $endPos),
+                $count
+            );
         }
     }
 
@@ -648,8 +655,12 @@ final class StringUtil
 
         foreach ($tags as $tag) {
             // ignore void elements
-            if (!\preg_match('/^(area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$/s',
-                $tag[2])) {
+            if (
+                !\preg_match(
+                    '/^(area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$/s',
+                    $tag[2]
+                )
+            ) {
                 // look for opening tags
                 if (\preg_match('/<[\w]+[^>]*>/s', $tag[0])) {
                     \array_unshift($openTags, $tag[2]);
@@ -681,8 +692,14 @@ final class StringUtil
 
                 $left = $length - $totalLength;
                 $entitiesLength = 0;
-                if (\preg_match_all('/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6};/i', $tag[3], $entities,
-                    \PREG_OFFSET_CAPTURE)) {
+                if (
+                    \preg_match_all(
+                        '/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6};/i',
+                        $tag[3],
+                        $entities,
+                        \PREG_OFFSET_CAPTURE
+                    )
+                ) {
                     foreach ($entities[0] as $entity) {
                         if ($entity[1] + 1 - $entitiesLength <= $left) {
                             $left--;
@@ -741,8 +758,10 @@ final class StringUtil
             }
         }
 
-        return '<a ' . self::getAnchorTagAttributes($url,
-                $isUgc) . '>' . ($encodeTitle ? self::encodeHTML($title) : $title) . '</a>';
+        return '<a ' . self::getAnchorTagAttributes(
+            $url,
+            $isUgc
+        ) . '>' . ($encodeTitle ? self::encodeHTML($title) : $title) . '</a>';
     }
 
     /**

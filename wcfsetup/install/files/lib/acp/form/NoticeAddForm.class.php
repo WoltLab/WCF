@@ -223,8 +223,12 @@ class NoticeAddForm extends AbstractForm
         $returnValues = $this->objectAction->executeAction();
 
         if (!I18nHandler::getInstance()->isPlainValue('notice')) {
-            I18nHandler::getInstance()->save('notice',
-                'wcf.notice.notice.notice' . $returnValues['returnValues']->noticeID, 'wcf.notice', 1);
+            I18nHandler::getInstance()->save(
+                'notice',
+                'wcf.notice.notice.notice' . $returnValues['returnValues']->noticeID,
+                'wcf.notice',
+                1
+            );
 
             // update notice name
             $noticeEditor = new NoticeEditor($returnValues['returnValues']);
@@ -265,8 +269,10 @@ class NoticeAddForm extends AbstractForm
 
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(NoticeEditForm::class,
-                ['id' => $returnValues['returnValues']->noticeID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
+                NoticeEditForm::class,
+                ['id' => $returnValues['returnValues']->noticeID]
+            ),
         ]);
     }
 

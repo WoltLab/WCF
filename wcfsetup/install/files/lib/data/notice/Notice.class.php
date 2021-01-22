@@ -107,8 +107,11 @@ class Notice extends DatabaseObject implements IRouteController
                         }
                     }
 
-                    UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'dismissedNotices',
-                        \serialize($noticeIDs));
+                    UserStorageHandler::getInstance()->update(
+                        WCF::getUser()->userID,
+                        'dismissedNotices',
+                        \serialize($noticeIDs)
+                    );
                 } else {
                     $dismissedNoticeIDs = @\unserialize($dismissedNotices);
                     $this->isDismissed = \in_array($this->noticeID, $dismissedNoticeIDs);

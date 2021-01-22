@@ -150,14 +150,20 @@ class ArticleListPage extends SortablePage
                 }
             }
 
-            HeaderUtil::redirect(LinkHandler::getInstance()->getLink($this->controllerName, $this->controllerParameters,
-                \rtrim($labelParameters, '&')));
+            HeaderUtil::redirect(LinkHandler::getInstance()->getLink(
+                $this->controllerName,
+                $this->controllerParameters,
+                \rtrim($labelParameters, '&')
+            ));
 
             exit;
         }
 
-        $this->canonicalURL = LinkHandler::getInstance()->getLink('ArticleList', $this->controllerParameters,
-            ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : ''));
+        $this->canonicalURL = LinkHandler::getInstance()->getLink(
+            'ArticleList',
+            $this->controllerParameters,
+            ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : '')
+        );
     }
 
     /**
@@ -193,26 +199,32 @@ class ArticleListPage extends SortablePage
 
         // filter by label
         if (!empty($this->labelIDs)) {
-            $objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.label.object',
-                'com.woltlab.wcf.article')->objectTypeID;
+            $objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeByName(
+                'com.woltlab.wcf.label.object',
+                'com.woltlab.wcf.article'
+            )->objectTypeID;
 
             foreach ($this->labelIDs as $groupID => $labelID) {
                 if ($labelID == -1) {
                     $groupLabelIDs = LabelHandler::getInstance()->getLabelGroup($groupID)->getLabelIDs();
 
                     if (!empty($groupLabelIDs)) {
-                        $this->objectList->getConditionBuilder()->add('article.articleID NOT IN (SELECT objectID FROM wcf' . WCF_N . '_label_object WHERE objectTypeID = ? AND labelID IN (?))',
+                        $this->objectList->getConditionBuilder()->add(
+                            'article.articleID NOT IN (SELECT objectID FROM wcf' . WCF_N . '_label_object WHERE objectTypeID = ? AND labelID IN (?))',
                             [
                                 $objectTypeID,
                                 $groupLabelIDs,
-                            ]);
+                            ]
+                        );
                     }
                 } else {
-                    $this->objectList->getConditionBuilder()->add('article.articleID IN (SELECT objectID FROM wcf' . WCF_N . '_label_object WHERE objectTypeID = ? AND labelID = ?)',
+                    $this->objectList->getConditionBuilder()->add(
+                        'article.articleID IN (SELECT objectID FROM wcf' . WCF_N . '_label_object WHERE objectTypeID = ? AND labelID = ?)',
                         [
                             $objectTypeID,
                             $labelID,
-                        ]);
+                        ]
+                    );
                 }
             }
         }

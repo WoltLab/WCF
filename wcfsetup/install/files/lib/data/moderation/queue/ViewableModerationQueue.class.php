@@ -199,8 +199,12 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
      */
     public function isNew()
     {
-        if ($this->time > \max(VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.moderation.queue'),
-                VisitTracker::getInstance()->getObjectVisitTime('com.woltlab.wcf.moderation.queue', $this->queueID))) {
+        if (
+            $this->time > \max(
+                VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.moderation.queue'),
+                VisitTracker::getInstance()->getObjectVisitTime('com.woltlab.wcf.moderation.queue', $this->queueID)
+            )
+        ) {
             return true;
         }
 

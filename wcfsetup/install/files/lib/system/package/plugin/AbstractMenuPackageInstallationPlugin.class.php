@@ -205,7 +205,8 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
                     return \array_merge($options, $buildOptions());
                 }, true)
                 ->value('')
-                ->addValidator(new FormFieldValidator('selfChildAsParent',
+                ->addValidator(new FormFieldValidator(
+                    'selfChildAsParent',
                     function (SingleSelectionFormField $formField) {
                         if (
                             $formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_UPDATE
@@ -254,7 +255,8 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
                                 $checkChildren($menuItem);
                             }
                         }
-                    })),
+                    }
+                )),
 
             ClassNameFormField::create('menuItemController')
                 ->objectProperty('controller')

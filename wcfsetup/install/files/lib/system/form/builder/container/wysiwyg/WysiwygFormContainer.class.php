@@ -205,8 +205,12 @@ class WysiwygFormContainer extends FormContainer
         if ($objectType === null) {
             $this->attachmentData = null;
         } else {
-            if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType',
-                    $objectType) === null) {
+            if (
+                ObjectTypeCache::getInstance()->getObjectTypeByName(
+                    'com.woltlab.wcf.attachment.objectType',
+                    $objectType
+                ) === null
+            ) {
                 throw new \InvalidArgumentException("Unknown attachment object type '{$objectType}'.");
             }
 
@@ -402,8 +406,12 @@ class WysiwygFormContainer extends FormContainer
      */
     public function messageObjectType($messageObjectType)
     {
-        if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.message',
-                $messageObjectType) === null) {
+        if (
+            ObjectTypeCache::getInstance()->getObjectTypeByName(
+                'com.woltlab.wcf.message',
+                $messageObjectType
+            ) === null
+        ) {
             throw new \InvalidArgumentException("Unknown message object type '{$messageObjectType}'.");
         }
 

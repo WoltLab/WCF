@@ -415,7 +415,8 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
             ->description('wcf.acp.pip.aclOption.objectType.' . $this->entryType . '.description')
             ->options($objectTypes, false, false)
             ->required()
-            ->addValidator(new FormFieldValidator('nameUniqueness',
+            ->addValidator(new FormFieldValidator(
+                'nameUniqueness',
                 function (SingleSelectionFormField $formField) use ($entryType) {
                     /** @var TextFormField $nameField */
                     $nameField = $formField->getDocument()->getNodeById('name');
@@ -431,8 +432,10 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
                                     $nameField->getValue(),
                                 ]);
                                 $categoryList->getConditionBuilder()->add('objectTypeID = ?', [
-                                    ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.acl',
-                                        $formField->getValue())->objectTypeID,
+                                    ObjectTypeCache::getInstance()->getObjectTypeByName(
+                                        'com.woltlab.wcf.acl',
+                                        $formField->getValue()
+                                    )->objectTypeID,
                                 ]);
 
                                 if ($categoryList->countObjects() > 0) {
@@ -451,8 +454,10 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
                                     $nameField->getValue(),
                                 ]);
                                 $optionList->getConditionBuilder()->add('objectTypeID = ?', [
-                                    ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.acl',
-                                        $formField->getValue())->objectTypeID,
+                                    ObjectTypeCache::getInstance()->getObjectTypeByName(
+                                        'com.woltlab.wcf.acl',
+                                        $formField->getValue()
+                                    )->objectTypeID,
                                 ]);
 
                                 if ($optionList->countObjects() > 0) {
@@ -466,7 +471,8 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
                                 break;
                         }
                     }
-                }));
+                }
+            ));
 
         /** @var FormContainer $dataContainer */
         $dataContainer = $form->getNodeById('data');
@@ -489,8 +495,10 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
             }
 
             foreach ($objectTypes as $objectType) {
-                $objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.acl',
-                    $objectType);
+                $objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName(
+                    'com.woltlab.wcf.acl',
+                    $objectType
+                );
 
                 if (isset($categories[$objectTypeID])) {
                     $categoryNameField = SingleSelectionFormField::create('categoryName_' . $objectTypeID)

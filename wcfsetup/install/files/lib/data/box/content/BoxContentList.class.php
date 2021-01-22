@@ -74,8 +74,10 @@ class BoxContentList extends DatabaseObjectList
 
         if ($this->embeddedObjectLoading) {
             if (!empty($embeddedObjectBoxContentIDs)) {
-                MessageEmbeddedObjectManager::getInstance()->loadObjects('com.woltlab.wcf.box.content',
-                    $embeddedObjectBoxContentIDs);
+                MessageEmbeddedObjectManager::getInstance()->loadObjects(
+                    'com.woltlab.wcf.box.content',
+                    $embeddedObjectBoxContentIDs
+                );
             }
         }
     }

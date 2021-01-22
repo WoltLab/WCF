@@ -168,8 +168,10 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction
         }
 
         if (!empty($tagIDs)) {
-            ClipboardHandler::getInstance()->unmark($tagIDs,
-                ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.tag'));
+            ClipboardHandler::getInstance()->unmark(
+                $tagIDs,
+                ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.tag')
+            );
         }
     }
 }

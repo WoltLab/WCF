@@ -143,8 +143,11 @@ class CommentResponse extends DatabaseObject implements IMessage
      */
     public function getTitle()
     {
-        return CommentHandler::getInstance()->getObjectType($this->getComment()->objectTypeID)->getProcessor()->getTitle($this->getComment()->objectTypeID,
-            $this->getComment()->objectID, true);
+        return CommentHandler::getInstance()->getObjectType($this->getComment()->objectTypeID)->getProcessor()->getTitle(
+            $this->getComment()->objectTypeID,
+            $this->getComment()->objectID,
+            true
+        );
     }
 
     /**

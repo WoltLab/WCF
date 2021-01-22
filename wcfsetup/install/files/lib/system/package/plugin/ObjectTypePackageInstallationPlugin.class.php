@@ -508,8 +508,12 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                             }
 
                             foreach ($formField->getValue() as $segment) {
-                                if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.content.userContentProvider',
-                                        $segment) === null) {
+                                if (
+                                    ObjectTypeCache::getInstance()->getObjectTypeByName(
+                                        'com.woltlab.wcf.content.userContentProvider',
+                                        $segment
+                                    ) === null
+                                ) {
                                     $formField->addValidationError(
                                         new FormFieldValidationError(
                                             'unknownObjectType',

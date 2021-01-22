@@ -75,8 +75,12 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm
      */
     protected function readCategories()
     {
-        $this->categoryNodeTree = new CategoryNodeTree($this->objectType->objectType, 0, true,
-            [$this->category->categoryID]);
+        $this->categoryNodeTree = new CategoryNodeTree(
+            $this->objectType->objectType,
+            0,
+            true,
+            [$this->category->categoryID]
+        );
     }
 
     /**
@@ -104,11 +108,19 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm
 
         if (empty($_POST)) {
             if ($this->objectType->getProcessor()->hasDescription()) {
-                I18nHandler::getInstance()->setOptions('description', $this->packageID, $this->category->description,
-                    $this->objectType->getProcessor()->getI18nLangVarPrefix() . '.description.category\d+');
+                I18nHandler::getInstance()->setOptions(
+                    'description',
+                    $this->packageID,
+                    $this->category->description,
+                    $this->objectType->getProcessor()->getI18nLangVarPrefix() . '.description.category\d+'
+                );
             }
-            I18nHandler::getInstance()->setOptions('title', $this->packageID, $this->category->title,
-                $this->objectType->getProcessor()->getI18nLangVarPrefix() . '.title.category\d+');
+            I18nHandler::getInstance()->setOptions(
+                'title',
+                $this->packageID,
+                $this->category->title,
+                $this->objectType->getProcessor()->getI18nLangVarPrefix() . '.title.category\d+'
+            );
 
             $this->additionalData = $this->category->additionalData;
             $this->descriptionUseHtml = $this->category->descriptionUseHtml;
@@ -136,8 +148,12 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm
                 I18nHandler::getInstance()->remove($description);
                 $description = I18nHandler::getInstance()->getValue('description');
             } else {
-                I18nHandler::getInstance()->save('description', $description,
-                    $categoryType->getDescriptionLangVarCategory(), $this->packageID);
+                I18nHandler::getInstance()->save(
+                    'description',
+                    $description,
+                    $categoryType->getDescriptionLangVarCategory(),
+                    $this->packageID
+                );
             }
         }
 
@@ -147,8 +163,12 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm
             I18nHandler::getInstance()->remove($title);
             $title = I18nHandler::getInstance()->getValue('title');
         } else {
-            I18nHandler::getInstance()->save('title', $title, $categoryType->getTitleLangVarCategory(),
-                $this->packageID);
+            I18nHandler::getInstance()->save(
+                'title',
+                $title,
+                $categoryType->getTitleLangVarCategory(),
+                $this->packageID
+            );
         }
 
         // update category
@@ -188,8 +208,10 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm
         parent::validateParentCategory();
 
         // check if new parent category is no child category of the category
-        $childCategories = CategoryHandler::getInstance()->getChildCategories($this->categoryID,
-            $this->objectType->objectTypeID);
+        $childCategories = CategoryHandler::getInstance()->getChildCategories(
+            $this->categoryID,
+            $this->objectType->objectTypeID
+        );
         if (isset($childCategories[$this->parentCategoryID])) {
             throw new UserInputException('parentCategoryID', 'invalid');
         }

@@ -337,8 +337,10 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                     ->label('wcf.acp.devtools.project.apiVersions')
                     ->description('wcf.acp.devtools.project.apiVersions.description')
                     ->options(static function () {
-                        $apiVersions = \array_filter(\array_merge(WCF::getSupportedLegacyApiVersions(),
-                            [WSC_API_VERSION]), static function ($value) {
+                        $apiVersions = \array_filter(\array_merge(
+                            WCF::getSupportedLegacyApiVersions(),
+                            [WSC_API_VERSION]
+                        ), static function ($value) {
                             return $value !== 2017;
                         });
 
@@ -360,7 +362,8 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
             ->description('wcf.acp.devtools.project.requiredPackages.description')
             ->appendChild(
                 DevtoolsProjectRequiredPackagesFormField::create()
-                    ->addValidator(new FormFieldValidator('selfRequirement',
+                    ->addValidator(new FormFieldValidator(
+                        'selfRequirement',
                         static function (DevtoolsProjectRequiredPackagesFormField $formField) {
                             /** @var TextFormField $packageIdentifier */
                             $packageIdentifier = $formField->getDocument()->getNodeById('packageIdentifier');
@@ -376,8 +379,10 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                                     );
                                 }
                             }
-                        }))
-                    ->addValidator(new FormFieldValidator('missingFiles',
+                        }
+                    ))
+                    ->addValidator(new FormFieldValidator(
+                        'missingFiles',
                         function (DevtoolsProjectRequiredPackagesFormField $formField) {
                             /** @var TextFormField $pathField */
                             $pathField = $this->form->getNodeById('path');
@@ -399,7 +404,8 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                                     )
                                 );
                             }
-                        }))
+                        }
+                    ))
             );
         $tabMenu->appendChild(
             TabFormContainer::create('requiredPackagesTab')
@@ -417,7 +423,8 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
             ->description('wcf.acp.devtools.project.optionalPackages.description')
             ->appendChild(
                 DevtoolsProjectOptionalPackagesFormField::create()
-                    ->addValidator(new FormFieldValidator('selfOptional',
+                    ->addValidator(new FormFieldValidator(
+                        'selfOptional',
                         static function (DevtoolsProjectOptionalPackagesFormField $formField) {
                             /** @var TextFormField $packageIdentifier */
                             $packageIdentifier = $formField->getDocument()->getNodeById('packageIdentifier');
@@ -433,8 +440,10 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                                     );
                                 }
                             }
-                        }))
-                    ->addValidator(new FormFieldValidator('requirementOptional',
+                        }
+                    ))
+                    ->addValidator(new FormFieldValidator(
+                        'requirementOptional',
                         static function (DevtoolsProjectOptionalPackagesFormField $formField) {
                             /** @var DevtoolsProjectRequiredPackagesFormField $requiredPackagesField */
                             $requiredPackagesField = $formField->getDocument()->getNodeById('requiredPackages');
@@ -459,8 +468,10 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                                     )
                                 );
                             }
-                        }))
-                    ->addValidator(new FormFieldValidator('exclusionOptional',
+                        }
+                    ))
+                    ->addValidator(new FormFieldValidator(
+                        'exclusionOptional',
                         static function (DevtoolsProjectOptionalPackagesFormField $formField) {
                             /** @var DevtoolsProjectExcludedPackagesFormField $excludedPackagesField */
                             $excludedPackagesField = $formField->getDocument()->getNodeById('excludedPackages');
@@ -485,8 +496,10 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                                     )
                                 );
                             }
-                        }))
-                    ->addValidator(new FormFieldValidator('missingFiles',
+                        }
+                    ))
+                    ->addValidator(new FormFieldValidator(
+                        'missingFiles',
                         function (DevtoolsProjectOptionalPackagesFormField $formField) {
                             /** @var TextFormField $pathField */
                             $pathField = $this->form->getNodeById('path');
@@ -508,7 +521,8 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                                     )
                                 );
                             }
-                        }))
+                        }
+                    ))
             );
         $tabMenu->appendChild(
             TabFormContainer::create('optionalPackagesTab')
@@ -526,7 +540,8 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
             ->description('wcf.acp.devtools.project.excludedPackages.description')
             ->appendChild(
                 DevtoolsProjectExcludedPackagesFormField::create()
-                    ->addValidator(new FormFieldValidator('selfExclusion',
+                    ->addValidator(new FormFieldValidator(
+                        'selfExclusion',
                         static function (DevtoolsProjectExcludedPackagesFormField $formField) {
                             /** @var TextFormField $packageIdentifier */
                             $packageIdentifier = $formField->getDocument()->getNodeById('packageIdentifier');
@@ -542,8 +557,10 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                                     );
                                 }
                             }
-                        }))
-                    ->addValidator(new FormFieldValidator('requirementExclusion',
+                        }
+                    ))
+                    ->addValidator(new FormFieldValidator(
+                        'requirementExclusion',
                         static function (DevtoolsProjectExcludedPackagesFormField $formField) {
                             /** @var DevtoolsProjectRequiredPackagesFormField $requiredPackagesField */
                             $requiredPackagesField = $formField->getDocument()->getNodeById('requiredPackages');
@@ -578,7 +595,8 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                                     )
                                 );
                             }
-                        }))
+                        }
+                    ))
             );
         $tabMenu->appendChild(
             TabFormContainer::create('excludedPackagesTab')
@@ -597,7 +615,8 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
             ->appendChild(
                 DevtoolsProjectInstructionsFormField::create()
                     ->label('wcf.acp.devtools.project.instructions')
-                    ->addValidator(new FormFieldValidator('updateFromPreviousVersion',
+                    ->addValidator(new FormFieldValidator(
+                        'updateFromPreviousVersion',
                         function (DevtoolsProjectInstructionsFormField $formField) {
                             /** @var TextFormField $versionField */
                             $versionField = $this->form->getNodeById('version');
@@ -640,7 +659,8 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                                     );
                                 }
                             }
-                        }))
+                        }
+                    ))
                     ->addValidator($this->getInstructionValuesValidator())
             );
 
@@ -736,8 +756,13 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                             elseif (!\is_dir($path . \substr($value, 0, -4))) {
                                 // ... unless it is an update and an archive
                                 // with updated files only
-                                if ($instructions['type'] === 'update' && \preg_match('~^(.+)_update\.tar$~', $value,
-                                        $match)) {
+                                if (
+                                    $instructions['type'] === 'update' && \preg_match(
+                                        '~^(.+)_update\.tar$~',
+                                        $value,
+                                        $match
+                                    )
+                                ) {
                                     if (!\is_dir($path . $match[1])) {
                                         $formField->addValidationError(
                                             new FormFieldValidationError(
@@ -853,8 +878,11 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                                             }
 
                                             if ($fileApplication === $application) {
-                                                $scriptLocation = $path . \substr($fileSearchValue, 0,
-                                                        -4) . '/' . $instruction['value'];
+                                                $scriptLocation = $path . \substr(
+                                                    $fileSearchValue,
+                                                    0,
+                                                    -4
+                                                ) . '/' . $instruction['value'];
                                                 if (!\is_file($scriptLocation)) {
                                                     $checkedFileLocations[] = $scriptLocation;
                                                 } else {
@@ -902,8 +930,10 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
                                     )
                                 );
                             } elseif (
-                                \is_subclass_of($packageInstallationPlugin->className,
-                                    AbstractXMLPackageInstallationPlugin::class)
+                                \is_subclass_of(
+                                    $packageInstallationPlugin->className,
+                                    AbstractXMLPackageInstallationPlugin::class
+                                )
                                 && \substr($value, -4) !== '.xml'
                             ) {
                                 $formField->addValidationError(

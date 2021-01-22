@@ -100,7 +100,8 @@ class LanguageItemAddForm extends AbstractFormBuilderForm
                             );
                         }
                     }))
-                    ->addValidator(new FormFieldValidator('languageCategory',
+                    ->addValidator(new FormFieldValidator(
+                        'languageCategory',
                         static function (TextFormField $formField) {
                             /** @var RadioButtonFormField $languageCategoryIDMode */
                             $languageCategoryIDMode = $formField->getDocument()->getNodeById('languageCategoryIDMode');
@@ -134,8 +135,12 @@ class LanguageItemAddForm extends AbstractFormBuilderForm
                                     $languageCategoryID = $formField->getDocument()->getNodeById('languageCategoryID');
 
                                     if ($languageCategory = LanguageFactory::getInstance()->getCategoryByID($languageCategoryID->getSaveValue())) {
-                                        if (\strpos($formField->getSaveValue(),
-                                                $languageCategory->languageCategory . '.') !== 0) {
+                                        if (
+                                            \strpos(
+                                                $formField->getSaveValue(),
+                                                $languageCategory->languageCategory . '.'
+                                            ) !== 0
+                                        ) {
                                             $formField->addValidationError(
                                                 new FormFieldValidationError(
                                                     'prefixMismatch',
@@ -147,7 +152,8 @@ class LanguageItemAddForm extends AbstractFormBuilderForm
 
                                     break;
                             }
-                        }))
+                        }
+                    ))
                     ->addValidator(new FormFieldValidator('uniqueness', static function (TextFormField $formField) {
                         $languageItemList = new LanguageItemList();
                         $languageItemList->getConditionBuilder()->add('languageItem = ?', [$formField->getSaveValue()]);
@@ -176,7 +182,8 @@ class LanguageItemAddForm extends AbstractFormBuilderForm
         $this->form->getDataHandler()->addProcessor(new VoidFormDataProcessor('languageCategoryIDMode'));
 
         $this->form->getDataHandler()->addProcessor(
-            new CustomFormDataProcessor('languageItemOriginIsSystem',
+            new CustomFormDataProcessor(
+                'languageItemOriginIsSystem',
                 static function (IFormDocument $document, array $parameters) {
                     $parameters['data']['languageItemOriginIsSystem'] = 0;
                     $parameters['data']['isCustomLanguageItem'] = 1;
@@ -207,7 +214,8 @@ class LanguageItemAddForm extends AbstractFormBuilderForm
                     }
 
                     return $parameters;
-                })
+                }
+            )
         );
 
         /** @var RadioButtonFormField $modeField */

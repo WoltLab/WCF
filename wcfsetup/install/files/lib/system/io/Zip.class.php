@@ -160,8 +160,10 @@ class Zip extends File implements IArchive
 
         do {
             if ($this->read(4) === self::EOF_SIGNATURE) {
-                $eof = \unpack('vdiskNo/vdiskWithCentralDirectory/vdiskEntries/vtotalEntries/VcentralDirectorySize/VcentralDirectoryOffset/vcommentLength',
-                    $this->read(18));
+                $eof = \unpack(
+                    'vdiskNo/vdiskWithCentralDirectory/vdiskEntries/vtotalEntries/VcentralDirectorySize/VcentralDirectoryOffset/vcommentLength',
+                    $this->read(18)
+                );
                 if ($eof['commentLength'] + $this->tell() === $lastOffset) {
                     $this->seek($eof['centralDirectoryOffset']);
                     break;
@@ -210,8 +212,10 @@ class Zip extends File implements IArchive
             $year = (($data['mdate'] >> 9) & ((1 << 7) - 1)) + 1980;
             $data['mtime'] = \gmmktime($hour, $minute, $second, $month, $day, $year);
 
-            $data += \unpack('Vcrc32/VcompressedSize/Vsize/vfilenameLength/vextraFieldLength/vfileCommentLength/vdiskNo/vinternalAttr/vexternalAttr',
-                $this->read(26));
+            $data += \unpack(
+                'Vcrc32/VcompressedSize/Vsize/vfilenameLength/vextraFieldLength/vfileCommentLength/vdiskNo/vinternalAttr/vexternalAttr',
+                $this->read(26)
+            );
             $data['offset'] = $this->readAndUnpack(4, 'V');
             $data['filename'] = $this->read($data['filenameLength']);
             if (\substr($data['filename'], -1) == '/') {
@@ -242,8 +246,10 @@ class Zip extends File implements IArchive
             throw new SystemException('Could not find the end of Central Directory');
         }
 
-        $eof = \unpack('vdiskNo/vdiskWithCentralDirectory/vdiskEntries/vtotalEntries/VcentralDirectorySize',
-            $this->read(12));
+        $eof = \unpack(
+            'vdiskNo/vdiskWithCentralDirectory/vdiskEntries/vtotalEntries/VcentralDirectorySize',
+            $this->read(12)
+        );
         // check size of Central Directory
         if ($size !== $eof['centralDirectorySize']) {
             throw new SystemException('Central Directory size does not match');

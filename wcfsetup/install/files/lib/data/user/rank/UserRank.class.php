@@ -76,8 +76,13 @@ class UserRank extends DatabaseObject implements ITitledObject
     public function getImageFile(): ?UploadFile
     {
         if ($this->rankImage) {
-            return new UploadFile(WCF_DIR . self::RANK_IMAGE_DIR . $this->rankImage, $this->rankImage, true, true,
-                true);
+            return new UploadFile(
+                WCF_DIR . self::RANK_IMAGE_DIR . $this->rankImage,
+                $this->rankImage,
+                true,
+                true,
+                true
+            );
         }
 
         return null;

@@ -145,8 +145,10 @@ class UserMergeForm extends AbstractForm
         $statement->execute(\array_merge([$this->destinationUserID], $conditions->getParameters()));
 
         // profile comments
-        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.comment.commentableContent',
-            'com.woltlab.wcf.user.profileComment');
+        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
+            'com.woltlab.wcf.comment.commentableContent',
+            'com.woltlab.wcf.user.profileComment'
+        );
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("objectTypeID = ?", [$objectType->objectTypeID]);
         $conditions->add("objectID IN (?)", [$this->mergedUserIDs]);

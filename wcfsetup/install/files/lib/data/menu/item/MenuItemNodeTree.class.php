@@ -144,8 +144,11 @@ class MenuItemNodeTree
                 continue;
             }
 
-            $node = new MenuItemNode($parentNode, $menuItem,
-                ($parentNode !== null ? ($parentNode->getDepth() + 1) : 0));
+            $node = new MenuItemNode(
+                $parentNode,
+                $menuItem,
+                ($parentNode !== null ? ($parentNode->getDepth() + 1) : 0)
+            );
             $nodes[] = $node;
 
             // get children

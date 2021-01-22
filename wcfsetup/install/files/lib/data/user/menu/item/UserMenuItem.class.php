@@ -79,8 +79,11 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITitledObject, I
 
         $this->parseController();
 
-        return LinkHandler::getInstance()->getLink($this->controller, ['application' => $this->application],
-            $this->menuItemLink);
+        return LinkHandler::getInstance()->getLink(
+            $this->controller,
+            ['application' => $this->application],
+            $this->menuItemLink
+        );
     }
 
     /**

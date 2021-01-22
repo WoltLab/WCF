@@ -148,8 +148,10 @@ class MessageParser extends BBCodeParser
     {
         foreach ($this->smilies as $code => $html) {
             //$text = preg_replace('~(?<!&\w{2}|&\w{3}|&\w{4}|&\w{5}|&\w{6}|&#\d{2}|&#\d{3}|&#\d{4}|&#\d{5})'.preg_quote((!$enableHtml ? StringUtil::encodeHTML($code) : $code), '~').'(?![^<]*>)~', $html, $text);
-            $text = \preg_replace('~(?<=^|\s|<li>)' . \preg_quote((!$enableHtml ? StringUtil::encodeHTML($code) : $code),
-                    '~') . '(?=$|\s|</li>' . (!$enableHtml ? '|<br />|<br>' : '') . ')~', $html, $text);
+            $text = \preg_replace('~(?<=^|\s|<li>)' . \preg_quote(
+                (!$enableHtml ? StringUtil::encodeHTML($code) : $code),
+                '~'
+            ) . '(?=$|\s|</li>' . (!$enableHtml ? '|<br />|<br>' : '') . ')~', $html, $text);
         }
 
         return $text;
@@ -208,8 +210,12 @@ class MessageParser extends BBCodeParser
         foreach ($this->cachedCodes as $hash => $tag) {
             // build code and insert
             if ($this->bbcodes[$tag['name']]->className) {
-                $replacement = $this->bbcodes[$tag['name']]->getProcessor()->getParsedTag($tag, $tag['content'], $tag,
-                    $this);
+                $replacement = $this->bbcodes[$tag['name']]->getProcessor()->getParsedTag(
+                    $tag,
+                    $tag['content'],
+                    $tag,
+                    $this
+                );
             } else {
                 $replacement = $this->buildOpeningTag($tag) . StringUtil::encodeHTML($tag['content']) . $this->buildClosingTag($tag);
             }
@@ -230,8 +236,12 @@ class MessageParser extends BBCodeParser
         }
 
         // check for cached codes
-        if (isset($tagAttributes[$definedTagAttribute->attributeNo]) && \preg_match('/@@[a-f0-9]{40}@@/',
-                $tagAttributes[$definedTagAttribute->attributeNo])) {
+        if (
+            isset($tagAttributes[$definedTagAttribute->attributeNo]) && \preg_match(
+                '/@@[a-f0-9]{40}@@/',
+                $tagAttributes[$definedTagAttribute->attributeNo]
+            )
+        ) {
             return false;
         }
 

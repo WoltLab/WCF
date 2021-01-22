@@ -282,8 +282,11 @@ class MenuItemAddForm extends AbstractForm
             $data['title'] = 'wcf.menu.item.' . $data['identifier'];
         }
         if (!I18nHandler::getInstance()->isPlainValue('externalURL')) {
-            I18nHandler::getInstance()->save('externalURL', 'wcf.menu.item.externalURL' . $menuItem->itemID,
-                'wcf.menu');
+            I18nHandler::getInstance()->save(
+                'externalURL',
+                'wcf.menu.item.externalURL' . $menuItem->itemID,
+                'wcf.menu'
+            );
             $data['externalURL'] = 'wcf.menu.item.externalURL' . $menuItem->itemID;
         }
 
@@ -297,8 +300,10 @@ class MenuItemAddForm extends AbstractForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(MenuItemEditForm::class,
-                ['id' => $menuItem->itemID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
+                MenuItemEditForm::class,
+                ['id' => $menuItem->itemID]
+            ),
         ]);
 
         // reset variables

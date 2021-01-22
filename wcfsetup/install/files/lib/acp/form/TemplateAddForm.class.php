@@ -163,8 +163,10 @@ class TemplateAddForm extends AbstractForm
         $conditionBuilder->add('templateGroupID = ?', [$this->templateGroupID]);
 
         if ($this->copiedTemplate !== null) {
-            $conditionBuilder->add('(packageID = ? OR application = ?)',
-                [$this->packageID, $this->copiedTemplate->application]);
+            $conditionBuilder->add(
+                '(packageID = ? OR application = ?)',
+                [$this->packageID, $this->copiedTemplate->application]
+            );
         } else {
             $conditionBuilder->add('packageID = ?', [$this->packageID]);
         }
@@ -225,8 +227,10 @@ class TemplateAddForm extends AbstractForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(TemplateEditForm::class,
-                ['id' => $returnValues['returnValues']->templateID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
+                TemplateEditForm::class,
+                ['id' => $returnValues['returnValues']->templateID]
+            ),
         ]);
     }
 

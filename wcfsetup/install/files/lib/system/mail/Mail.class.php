@@ -435,8 +435,11 @@ class Mail
         if (\function_exists('mb_encode_mimeheader')) {
             $string = \mb_encode_mimeheader($string, 'UTF-8', 'Q', self::$lineEnding);
         } else {
-            $string = '=?UTF-8?Q?' . \preg_replace('/[^\r\n]{73}[^=\r\n]{2}/', "$0=\r\n", \str_replace("%", "=",
-                    \str_replace("%0D%0A", "\r\n", \str_replace("%20", " ", \rawurlencode($string))))) . '?=';
+            $string = '=?UTF-8?Q?' . \preg_replace('/[^\r\n]{73}[^=\r\n]{2}/', "$0=\r\n", \str_replace(
+                "%",
+                "=",
+                \str_replace("%0D%0A", "\r\n", \str_replace("%20", " ", \rawurlencode($string)))
+            )) . '?=';
         }
 
         return $string;

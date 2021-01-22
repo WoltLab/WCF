@@ -85,12 +85,16 @@ class PaidSubscriptionUserListPage extends SortablePage
         parent::initObjectList();
 
         if ($this->username) {
-            $this->objectList->getConditionBuilder()->add('paid_subscription_user.userID IN (SELECT userID FROM wcf' . WCF_N . '_user WHERE username LIKE ?)',
-                ['%' . $this->username . '%']);
+            $this->objectList->getConditionBuilder()->add(
+                'paid_subscription_user.userID IN (SELECT userID FROM wcf' . WCF_N . '_user WHERE username LIKE ?)',
+                ['%' . $this->username . '%']
+            );
         }
         if ($this->subscriptionID) {
-            $this->objectList->getConditionBuilder()->add('paid_subscription_user.subscriptionID = ?',
-                [$this->subscriptionID]);
+            $this->objectList->getConditionBuilder()->add(
+                'paid_subscription_user.subscriptionID = ?',
+                [$this->subscriptionID]
+            );
         }
 
         $this->objectList->getConditionBuilder()->add('paid_subscription_user.isActive = ?', [1]);

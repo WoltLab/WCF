@@ -65,8 +65,11 @@ class ContactOptionAddForm extends AbstractCustomOptionForm
         parent::readParameters();
 
         $this->getI18nValue('optionTitle')->setLanguageItem('wcf.contact.option', 'wcf.contact', 'com.woltlab.wcf');
-        $this->getI18nValue('optionDescription')->setLanguageItem('wcf.contact.optionDescription', 'wcf.contact',
-            'com.woltlab.wcf');
+        $this->getI18nValue('optionDescription')->setLanguageItem(
+            'wcf.contact.optionDescription',
+            'wcf.contact',
+            'com.woltlab.wcf'
+        );
     }
 
     /**
@@ -77,8 +80,10 @@ class ContactOptionAddForm extends AbstractCustomOptionForm
         parent::save();
 
         WCF::getTPL()->assign([
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(ContactOptionEditForm::class,
-                ['id' => $this->objectAction->getReturnValues()['returnValues']->getObjectID()]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
+                ContactOptionEditForm::class,
+                ['id' => $this->objectAction->getReturnValues()['returnValues']->getObjectID()]
+            ),
         ]);
     }
 }

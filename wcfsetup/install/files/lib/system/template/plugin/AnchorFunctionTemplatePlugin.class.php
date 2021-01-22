@@ -121,8 +121,11 @@ class AnchorFunctionTemplatePlugin implements IFunctionTemplatePlugin
                 $classes = \explode(' ', $value);
             }
 
-            $additionalParameters .= ' ' . \strtolower(\preg_replace('~([A-Z])~', '-$1',
-                    $name)) . '="' . StringUtil::encodeHTML($value) . '"';
+            $additionalParameters .= ' ' . \strtolower(\preg_replace(
+                '~([A-Z])~',
+                '-$1',
+                $name
+            )) . '="' . StringUtil::encodeHTML($value) . '"';
         }
 
         if (

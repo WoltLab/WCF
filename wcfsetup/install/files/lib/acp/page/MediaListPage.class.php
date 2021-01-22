@@ -124,8 +124,10 @@ class MediaListPage extends SortablePage
             $this->objectList->addSearchConditions($this->query);
         }
         if ($this->username) {
-            $this->objectList->getConditionBuilder()->add('media.username LIKE ?',
-                ['%' . \addcslashes($this->username, '_%') . '%']);
+            $this->objectList->getConditionBuilder()->add(
+                'media.username LIKE ?',
+                ['%' . \addcslashes($this->username, '_%') . '%']
+            );
         }
     }
 

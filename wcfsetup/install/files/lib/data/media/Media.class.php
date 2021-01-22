@@ -173,8 +173,11 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
             throw new \InvalidArgumentException("Unknown thumbnail size '" . $size . "'");
         }
 
-        return self::getStorage() . \substr($this->fileHash, 0,
-                2) . '/' . $this->mediaID . '-' . $size . '-' . $this->fileHash;
+        return self::getStorage() . \substr(
+            $this->fileHash,
+            0,
+            2
+        ) . '/' . $this->mediaID . '-' . $size . '-' . $this->fileHash;
     }
 
     /**

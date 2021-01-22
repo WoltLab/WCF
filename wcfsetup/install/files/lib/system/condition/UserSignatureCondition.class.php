@@ -58,13 +58,17 @@ class UserSignatureCondition extends AbstractSelectCondition implements
 
         switch ($conditionData['userSignature']) {
             case self::NO_SIGNATURE:
-                $objectList->getConditionBuilder()->add('(user_table.signature = ? OR user_table.signature IS NULL)',
-                    ['']);
+                $objectList->getConditionBuilder()->add(
+                    '(user_table.signature = ? OR user_table.signature IS NULL)',
+                    ['']
+                );
                 break;
 
             case self::SIGNATURE:
-                $objectList->getConditionBuilder()->add('(user_table.signature <> ? AND user_table.signature IS NOT NULL)',
-                    ['']);
+                $objectList->getConditionBuilder()->add(
+                    '(user_table.signature <> ? AND user_table.signature IS NOT NULL)',
+                    ['']
+                );
                 break;
         }
     }

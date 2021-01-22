@@ -200,8 +200,12 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 
             // adjust show order
             if ($data['showOrder'] !== null || $this->installation->getAction() != 'update' || $this->getExistingCategory($element->getAttribute('name')) === false) {
-                $data['showOrder'] = $this->getShowOrder($data['showOrder'], $data['parentCategoryName'],
-                    'parentCategoryName', '_category');
+                $data['showOrder'] = $this->getShowOrder(
+                    $data['showOrder'],
+                    $data['parentCategoryName'],
+                    'parentCategoryName',
+                    '_category'
+                );
             }
 
             // validate parent
@@ -370,8 +374,10 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
         if (!\preg_match("/^[\\w\\-\\.]+$/", $data['name'])) {
             $matches = [];
             \preg_match_all("/(\\W)/", $data['name'], $matches);
-            throw new SystemException("The option '" . $data['name'] . "' has at least one non-alphanumeric character (underscore is permitted): (" . \implode("), ( ",
-                    $matches[1]) . ").");
+            throw new SystemException("The option '" . $data['name'] . "' has at least one non-alphanumeric character (underscore is permitted): (" . \implode(
+                "), ( ",
+                $matches[1]
+            ) . ").");
         }
 
         // check if option already exists
@@ -709,7 +715,8 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                 ]);
 
                 // ensure proper normalization of default value and enable options
-                $form->getDataHandler()->addProcessor(new CustomFormDataProcessor('enableOptions',
+                $form->getDataHandler()->addProcessor(new CustomFormDataProcessor(
+                    'enableOptions',
                     static function (IFormDocument $document, array $parameters) {
                         if (isset($parameters['data']['enableoptions'])) {
                             $parameters['data']['enableoptions'] = StringUtil::unifyNewlines($parameters['data']['enableoptions']);
@@ -720,7 +727,8 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                         }
 
                         return $parameters;
-                    }));
+                    }
+                ));
 
                 break;
 
@@ -1130,8 +1138,12 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                     $unqualifiedClassname = \str_replace('.class.php', '', $fileObject->getFilename());
                     $classname = $namespace . '\\' . $unqualifiedClassname;
 
-                    if (!\is_subclass_of($classname,
-                            IOptionType::class) || !(new \ReflectionClass($classname))->isInstantiable()) {
+                    if (
+                        !\is_subclass_of(
+                            $classname,
+                            IOptionType::class
+                        ) || !(new \ReflectionClass($classname))->isInstantiable()
+                    ) {
                         continue;
                     }
 
@@ -1151,8 +1163,12 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
                         $this->selectOptionOptionTypes[] = $optionType;
                     }
 
-                    if ($classname === IntegerOptionType::class || \is_subclass_of($classname,
-                            IntegerOptionType::class)) {
+                    if (
+                        $classname === IntegerOptionType::class || \is_subclass_of(
+                            $classname,
+                            IntegerOptionType::class
+                        )
+                    ) {
                         $this->integerOptionTypes[] = $optionType;
                     }
 

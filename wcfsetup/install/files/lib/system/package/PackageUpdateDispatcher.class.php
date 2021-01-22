@@ -396,8 +396,11 @@ class PackageUpdateDispatcher extends SingletonFactory
                     if ($this->purchasedVersions[$key][$packageName] == '*') {
                         $isAccessible = 1;
                     } else {
-                        $isAccessible = (Package::compareVersion($versionNo,
-                            $this->purchasedVersions[$key][$packageName] . '.99', '<=') ? 1 : 0);
+                        $isAccessible = (Package::compareVersion(
+                            $versionNo,
+                            $this->purchasedVersions[$key][$packageName] . '.99',
+                            '<='
+                        ) ? 1 : 0);
                     }
                 } else {
                     $isAccessible = 0;
@@ -896,8 +899,13 @@ class PackageUpdateDispatcher extends SingletonFactory
                     $updates,
                     $updates[$row['packageID']]['version']['servers'][0]['packageUpdateVersionID']
                 );
-                if (Package::compareVersion($row['minversion'],
-                    $updates[$row['packageID']]['version']['packageVersion'], '>=')) {
+                if (
+                    Package::compareVersion(
+                        $row['minversion'],
+                        $updates[$row['packageID']]['version']['packageVersion'],
+                        '>='
+                    )
+                ) {
                     unset($updates[$row['packageID']]);
                 }
             }

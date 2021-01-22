@@ -141,8 +141,10 @@ class PackageAction extends AbstractDatabaseObjectAction
 
             // any other kind of errors
             default:
-                throw new SystemException(WCF::getLanguage()->getDynamicVariable('wcf.acp.pluginStore.api.error',
-                    ['status' => $code]));
+                throw new SystemException(WCF::getLanguage()->getDynamicVariable(
+                    'wcf.acp.pluginStore.api.error',
+                    ['status' => $code]
+                ));
                 break;
         }
     }

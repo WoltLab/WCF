@@ -379,10 +379,16 @@ class UserOptionAddForm extends AbstractForm
         $userOption = $returnValues['returnValues'];
 
         // save language vars
-        I18nHandler::getInstance()->save('optionName', 'wcf.user.option.option' . $userOption->optionID,
-            'wcf.user.option');
-        I18nHandler::getInstance()->save('optionDescription',
-            'wcf.user.option.option' . $userOption->optionID . '.description', 'wcf.user.option');
+        I18nHandler::getInstance()->save(
+            'optionName',
+            'wcf.user.option.option' . $userOption->optionID,
+            'wcf.user.option'
+        );
+        I18nHandler::getInstance()->save(
+            'optionDescription',
+            'wcf.user.option.option' . $userOption->optionID . '.description',
+            'wcf.user.option'
+        );
         $editor = new UserOptionEditor($userOption);
         $editor->update([
             'optionName' => 'option' . $userOption->optionID,
@@ -401,8 +407,10 @@ class UserOptionAddForm extends AbstractForm
         // show success
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(UserOptionEditForm::class,
-                ['id' => $userOption->optionID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
+                UserOptionEditForm::class,
+                ['id' => $userOption->optionID]
+            ),
         ]);
     }
 

@@ -101,8 +101,11 @@ class UserOptionCategoryAddForm extends AbstractForm
         // update name
         $returnValues = $this->objectAction->getReturnValues();
         $categoryID = $returnValues['returnValues']->categoryID;
-        I18nHandler::getInstance()->save('categoryName', 'wcf.user.option.category.category' . $categoryID,
-            'wcf.user.option');
+        I18nHandler::getInstance()->save(
+            'categoryName',
+            'wcf.user.option.category.category' . $categoryID,
+            'wcf.user.option'
+        );
         $categoryEditor = new UserOptionCategoryEditor($returnValues['returnValues']);
         $categoryEditor->update([
             'categoryName' => 'category' . $categoryID,
@@ -118,8 +121,10 @@ class UserOptionCategoryAddForm extends AbstractForm
         // show success message
         WCF::getTPL()->assign([
             'success' => true,
-            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(UserOptionCategoryEditForm::class,
-                ['id' => $categoryID]),
+            'objectEditLink' => LinkHandler::getInstance()->getControllerLink(
+                UserOptionCategoryEditForm::class,
+                ['id' => $categoryID]
+            ),
         ]);
     }
 

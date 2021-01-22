@@ -174,13 +174,17 @@ class RescueModeForm extends AbstractCaptchaForm
     protected function validateUser()
     {
         try {
-            $this->user = UserAuthenticationFactory::getInstance()->getUserAuthentication()->loginManually($this->username,
-                $this->password);
+            $this->user = UserAuthenticationFactory::getInstance()->getUserAuthentication()->loginManually(
+                $this->username,
+                $this->password
+            );
         } catch (UserInputException $e) {
             if ($e->getField() == 'username') {
                 try {
-                    $this->user = EmailUserAuthentication::getInstance()->loginManually($this->username,
-                        $this->password);
+                    $this->user = EmailUserAuthentication::getInstance()->loginManually(
+                        $this->username,
+                        $this->password
+                    );
                 } catch (UserInputException $e2) {
                     if ($e2->getField() == 'username') {
                         throw $e;
@@ -225,8 +229,10 @@ class RescueModeForm extends AbstractCaptchaForm
 
             if (isset($usedPaths[$domainName])) {
                 if (isset($usedPaths[$domainName][$domainPath])) {
-                    WCF::getTPL()->assign('conflictApplication',
-                        $this->applications[$usedPaths[$domainName][$domainPath]]->getPackage());
+                    WCF::getTPL()->assign(
+                        'conflictApplication',
+                        $this->applications[$usedPaths[$domainName][$domainPath]]->getPackage()
+                    );
                     throw new UserInputException("application_{$packageID}_domainPath", 'conflict');
                 }
             } else {
