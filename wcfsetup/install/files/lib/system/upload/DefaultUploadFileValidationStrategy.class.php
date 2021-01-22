@@ -40,7 +40,12 @@ class DefaultUploadFileValidationStrategy implements IUploadFileValidationStrate
     {
         $this->maxFilesize = $maxFilesize;
         $this->fileExtensions = $fileExtensions;
-        $this->fileExtensionRegex = '/(' . \str_replace("\n", "|", \str_replace('\*', '.*', \preg_quote(\implode("\n", $fileExtensions), '/'))) . ')$/i';
+        $extensions = \str_replace(
+            "\n",
+            "|",
+            \str_replace('\*', '.*', \preg_quote(\implode("\n", $fileExtensions), '/'))
+        );
+        $this->fileExtensionRegex = '/(' . $extensions . ')$/i';
     }
 
     /**

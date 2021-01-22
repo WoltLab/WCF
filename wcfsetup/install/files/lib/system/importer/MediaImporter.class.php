@@ -113,7 +113,13 @@ class MediaImporter extends AbstractImporter
                 VALUES      (?, ?, ?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         foreach ($contents as $languageID => $contentData) {
-            $statement->execute([$media->mediaID, $languageID ?: null, $contentData['title'], $contentData['caption'], $contentData['altText']]);
+            $statement->execute([
+                $media->mediaID,
+                $languageID ?: null,
+                $contentData['title'],
+                $contentData['caption'],
+                $contentData['altText'],
+            ]);
         }
 
         // create thumbnails

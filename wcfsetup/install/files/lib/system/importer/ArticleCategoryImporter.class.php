@@ -24,7 +24,8 @@ class ArticleCategoryImporter extends AbstractCategoryImporter
      */
     public function __construct()
     {
-        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.category', 'com.woltlab.wcf.article.category');
+        $objectType = ObjectTypeCache::getInstance()
+            ->getObjectTypeByName('com.woltlab.wcf.category', 'com.woltlab.wcf.article.category');
         $this->objectTypeID = $objectType->objectTypeID;
     }
 }

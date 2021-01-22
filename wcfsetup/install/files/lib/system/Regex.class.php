@@ -300,7 +300,9 @@ final class Regex
                     break;
             }
 
-            throw new SystemException('Could not execute ' . ($method ? $method . ' on ' : '') . $this->regex . ': ' . $error);
+            throw new SystemException(
+                'Could not execute ' . ($method ? $method . ' on ' : '') . $this->regex . ': ' . $error
+            );
         }
 
         return $result;

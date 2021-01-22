@@ -110,8 +110,12 @@ class QuickReplyManager extends SingletonFactory
      * @throws  ParentClassException
      * @throws  UserInputException
      */
-    public function validateParameters(IMessageQuickReplyAction $object, array &$parameters, $containerClassName, $containerDecoratorClassName = '')
-    {
+    public function validateParameters(
+        IMessageQuickReplyAction $object,
+        array &$parameters,
+        $containerClassName,
+        $containerDecoratorClassName = ''
+    ) {
         if (!isset($parameters['data']['message'])) {
             throw new UserInputException('message');
         }
@@ -119,7 +123,10 @@ class QuickReplyManager extends SingletonFactory
         $parameters['data']['message'] = StringUtil::trim(MessageUtil::stripCrap($parameters['data']['message']));
 
         if (empty($parameters['data']['message'])) {
-            throw new UserInputException('message', WCF::getLanguage()->getDynamicVariable('wcf.global.form.error.empty'));
+            throw new UserInputException(
+                'message',
+                WCF::getLanguage()->getDynamicVariable('wcf.global.form.error.empty')
+            );
         }
 
         $parameters['lastPostTime'] = isset($parameters['lastPostTime']) ? \intval($parameters['lastPostTime']) : 0;
@@ -203,8 +210,15 @@ class QuickReplyManager extends SingletonFactory
      * @param   callable                $callbackCreatedMessage
      * @return  array
      */
-    public function createMessage(IMessageQuickReplyAction $object, array &$parameters, $containerActionClassName, $sortOrder, $templateName, $application = 'wcf', ?callable $callbackCreatedMessage = null)
-    {
+    public function createMessage(
+        IMessageQuickReplyAction $object,
+        array &$parameters,
+        $containerActionClassName,
+        $sortOrder,
+        $templateName,
+        $application = 'wcf',
+        ?callable $callbackCreatedMessage = null
+    ) {
         $additionalFields = [];
         EventHandler::getInstance()->fireAction($this, 'createMessage', $additionalFields);
 
@@ -267,7 +281,10 @@ class QuickReplyManager extends SingletonFactory
             // update visit time (messages shouldn't occur as new upon next visit)
             if (\is_subclass_of($containerActionClassName, IVisitableObjectAction::class)) {
                 /** @var IDatabaseObjectAction $containerAction */
-                $containerAction = new $containerActionClassName([$this->container instanceof DatabaseObjectDecorator ? $this->container->getDecoratedObject() : $this->container], 'markAsRead');
+                $containerAction = new $containerActionClassName(
+                    [$this->container instanceof DatabaseObjectDecorator ? $this->container->getDecoratedObject() : $this->container],
+                    'markAsRead'
+                );
                 $containerAction->executeAction();
             }
 

@@ -33,7 +33,8 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Package\Plugin
  */
-class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin implements IGuiPackageInstallationPlugin
+class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin implements
+    IGuiPackageInstallationPlugin
 {
     /**
      * list of group ids by type

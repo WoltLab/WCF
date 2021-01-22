@@ -133,7 +133,10 @@ class WCFSetup extends WCF
         if (isset($_REQUEST['languageCode']) && isset(self::$availableLanguages[$_REQUEST['languageCode']])) {
             self::$selectedLanguageCode = $_REQUEST['languageCode'];
         } else {
-            self::$selectedLanguageCode = LanguageFactory::getPreferredLanguage(\array_keys(self::$availableLanguages), self::$selectedLanguageCode);
+            self::$selectedLanguageCode = LanguageFactory::getPreferredLanguage(
+                \array_keys(self::$availableLanguages),
+                self::$selectedLanguageCode
+            );
         }
 
         if (isset($_POST['selectedLanguages']) && \is_array($_POST['selectedLanguages'])) {
@@ -153,7 +156,10 @@ class WCFSetup extends WCF
                 self::$directories[$application] = $directory;
 
                 if ($application === 'wcf' && @\file_exists(self::$directories['wcf'])) {
-                    \define('RELATIVE_WCF_DIR', FileUtil::getRelativePath(INSTALL_SCRIPT_DIR, self::$directories['wcf']));
+                    \define(
+                        'RELATIVE_WCF_DIR',
+                        FileUtil::getRelativePath(INSTALL_SCRIPT_DIR, self::$directories['wcf'])
+                    );
                 }
             }
         }
@@ -389,7 +395,10 @@ class WCFSetup extends WCF
         // graphics library
         $system['graphicsLibrary']['result'] = false;
         $system['graphicsLibrary']['value'] = '';
-        if (ImagickImageAdapter::isSupported() && ImagickImageAdapter::supportsAnimatedGIFs(ImagickImageAdapter::getVersion())) {
+        if (
+            ImagickImageAdapter::isSupported()
+            && ImagickImageAdapter::supportsAnimatedGIFs(ImagickImageAdapter::getVersion())
+        ) {
             $system['graphicsLibrary'] = [
                 'result' => true,
                 'value' => 'ImageMagick',
@@ -522,7 +531,10 @@ class WCFSetup extends WCF
         }
 
         $documentRoot = FileUtil::unifyDirSeparator(\realpath($_SERVER['DOCUMENT_ROOT']));
-        if (self::$developerMode && (isset($_ENV['WCFSETUP_USEDEFAULTWCFDIR']) || DevtoolsSetup::getInstance()->useDefaultInstallPath())) {
+        if (
+            self::$developerMode
+            && (isset($_ENV['WCFSETUP_USEDEFAULTWCFDIR']) || DevtoolsSetup::getInstance()->useDefaultInstallPath())
+        ) {
             // resolve path relative to document root
             $relativePath = FileUtil::getRelativePath($documentRoot, INSTALL_SCRIPT_DIR);
             foreach ($packages as $application => $packageData) {
@@ -538,7 +550,9 @@ class WCFSetup extends WCF
             // will trigger in display order rather than the random sort order returned
             // by glob() above
             foreach ($showOrder as $application) {
-                $path = FileUtil::getRealPath($documentRoot . '/' . FileUtil::addTrailingSlash(FileUtil::removeLeadingSlash(self::$directories[$application])));
+                $path = FileUtil::getRealPath(
+                    $documentRoot . '/' . FileUtil::addTrailingSlash(FileUtil::removeLeadingSlash(self::$directories[$application]))
+                );
                 if (!empty($documentRoot) && \strpos($path, $documentRoot) !== 0) {
                     // verify that given path is still within the current document root
                     $errors[$application] = 'outsideDocumentRoot';
@@ -607,7 +621,9 @@ class WCFSetup extends WCF
     {
         // WCF seems to be installed, abort
         if (@\is_file(self::$directories['wcf'] . 'lib/system/WCF.class.php')) {
-            throw new SystemException('Target directory seems to be an existing installation of WCF, unable to continue.');
+            throw new SystemException(
+                'Target directory seems to be an existing installation of WCF, unable to continue.'
+            );
         }
         // WCF not yet installed, install files first
         else {
@@ -741,13 +757,29 @@ class WCFSetup extends WCF
                 // check connection data
                 /** @var \wcf\system\database\Database $db */
                 try {
-                    $db = new MySQLDatabase($dbHostWithoutPort, $dbUser, $dbPassword, $dbName, $dbPort, true, !!(self::$developerMode));
+                    $db = new MySQLDatabase(
+                        $dbHostWithoutPort,
+                        $dbUser,
+                        $dbPassword,
+                        $dbName,
+                        $dbPort,
+                        true,
+                        !!(self::$developerMode)
+                    );
                 } catch (DatabaseException $e) {
                     switch ($e->getPrevious()->getCode()) {
                         // try to manually create non-existing database
                         case 1049:
                             try {
-                                $db = new MySQLDatabase($dbHostWithoutPort, $dbUser, $dbPassword, $dbName, $dbPort, true, true);
+                                $db = new MySQLDatabase(
+                                    $dbHostWithoutPort,
+                                    $dbUser,
+                                    $dbPassword,
+                                    $dbName,
+                                    $dbPort,
+                                    true,
+                                    true
+                                );
                             } catch (DatabaseException $e) {
                                 throw new SystemException("Unknown database '{$dbName}'. Please create the database manually.");
                             }
@@ -1045,7 +1077,9 @@ class WCFSetup extends WCF
         }
 
         // set default language
-        $language = LanguageFactory::getInstance()->getLanguageByCode(\in_array(self::$selectedLanguageCode, self::$selectedLanguages) ? self::$selectedLanguageCode : self::$selectedLanguages[0]);
+        $language = LanguageFactory::getInstance()->getLanguageByCode(
+            \in_array(self::$selectedLanguageCode, self::$selectedLanguages) ? self::$selectedLanguageCode : self::$selectedLanguages[0]
+        );
         LanguageFactory::getInstance()->makeDefault($language->languageID);
 
         // rebuild language cache

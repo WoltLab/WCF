@@ -89,7 +89,10 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
      */
     public function addCondition(UserList $userList, Option $option, $value)
     {
-        $userList->getConditionBuilder()->add('user_option_value.userOption' . $option->optionID . ' = ?', [\intval($value)]);
+        $userList->getConditionBuilder()->add(
+            'user_option_value.userOption' . $option->optionID . ' = ?',
+            [\intval($value)]
+        );
     }
 
     /**

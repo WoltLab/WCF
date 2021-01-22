@@ -18,7 +18,8 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Search\Acp
  */
-class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultProvider implements IACPSearchResultProvider
+class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultProvider implements
+    IACPSearchResultProvider
 {
     /**
      * @inheritDoc
@@ -92,7 +93,10 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
             }
 
             // hide special option for multi-domain setups if not applicable
-            if ($option->optionName === 'desktop_notification_package_id' && !ApplicationHandler::getInstance()->isMultiDomainSetup()) {
+            if (
+                $option->optionName === 'desktop_notification_package_id'
+                && !ApplicationHandler::getInstance()->isMultiDomainSetup()
+            ) {
                 continue;
             }
 
@@ -102,7 +106,10 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
             $categoryName = $option->categoryName;
             $parentCategories = [];
             while (isset($optionCategories[$categoryName])) {
-                \array_unshift($parentCategories, 'wcf.acp.option.category.' . $optionCategories[$categoryName]->categoryName);
+                \array_unshift(
+                    $parentCategories,
+                    'wcf.acp.option.category.' . $optionCategories[$categoryName]->categoryName
+                );
 
                 $categoryName = $optionCategories[$categoryName]->parentCategoryName;
             }
@@ -110,7 +117,10 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
             $results[] = new ACPSearchResult(
                 WCF::getLanguage()->get('wcf.acp.option.' . $option->optionName),
                 $link,
-                WCF::getLanguage()->getDynamicVariable('wcf.acp.search.result.subtitle', ['pieces' => $parentCategories])
+                WCF::getLanguage()->getDynamicVariable(
+                    'wcf.acp.search.result.subtitle',
+                    ['pieces' => $parentCategories]
+                )
             );
         }
 

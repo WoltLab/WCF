@@ -20,7 +20,8 @@ use wcf\util\StyleUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Package\Plugin
  */
-class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin
+class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin implements
+    IIdempotentPackageInstallationPlugin
 {
     /**
      * @inheritDoc
@@ -54,7 +55,12 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin im
         $fileInstaller = $this->installation->extractFiles($packageDir, $sourceFile, $fileHandler);
 
         // if this is an application, write config.inc.php for this package
-        if ($this->installation->getPackage()->isApplication == 1 && $this->installation->getPackage()->package != 'com.woltlab.wcf' && $this->installation->getAction() == 'install' && $abbreviation != 'wcf') {
+        if (
+            $this->installation->getPackage()->isApplication == 1
+            && $this->installation->getPackage()->package != 'com.woltlab.wcf'
+            && $this->installation->getAction() == 'install'
+            && $abbreviation != 'wcf'
+        ) {
             // touch file
             $fileInstaller->touchFile(PackageInstallationDispatcher::CONFIG_FILE);
 

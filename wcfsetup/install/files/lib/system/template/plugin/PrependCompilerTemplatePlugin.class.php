@@ -24,10 +24,22 @@ class PrependCompilerTemplatePlugin implements ICompilerTemplatePlugin
     public function executeStart($tagArgs, TemplateScriptingCompiler $compiler)
     {
         if (!isset($tagArgs['var'])) {
-            throw new SystemException($compiler::formatSyntaxError("missing 'var' argument in prepend tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
+            throw new SystemException(
+                $compiler::formatSyntaxError(
+                    "missing 'var' argument in prepend tag",
+                    $compiler->getCurrentIdentifier(),
+                    $compiler->getCurrentLineNo()
+                )
+            );
         }
         if (!isset($tagArgs['value'])) {
-            throw new SystemException($compiler::formatSyntaxError("missing 'value' argument in prepend tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
+            throw new SystemException(
+                $compiler::formatSyntaxError(
+                    "missing 'value' argument in prepend tag",
+                    $compiler->getCurrentIdentifier(),
+                    $compiler->getCurrentLineNo()
+                )
+            );
         }
 
         return "<?php \$this->prepend(" . $tagArgs['var'] . ", " . $tagArgs['value'] . "); ?>";
@@ -38,6 +50,12 @@ class PrependCompilerTemplatePlugin implements ICompilerTemplatePlugin
      */
     public function executeEnd(TemplateScriptingCompiler $compiler)
     {
-        throw new SystemException($compiler::formatSyntaxError("unknown tag {/prepend}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
+        throw new SystemException(
+            $compiler::formatSyntaxError(
+                "unknown tag {/prepend}",
+                $compiler->getCurrentIdentifier(),
+                $compiler->getCurrentLineNo()
+            )
+        );
     }
 }

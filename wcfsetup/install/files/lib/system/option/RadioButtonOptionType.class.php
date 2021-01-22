@@ -19,7 +19,9 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Option
  */
-class RadioButtonOptionType extends AbstractOptionType implements ISearchableConditionUserOption, ISelectOptionOptionType
+class RadioButtonOptionType extends AbstractOptionType implements
+    ISearchableConditionUserOption,
+    ISelectOptionOptionType
 {
     /**
      * name of the template that contains the form element of this option type
@@ -114,7 +116,10 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableCon
      */
     public function addCondition(UserList $userList, Option $option, $value)
     {
-        $userList->getConditionBuilder()->add('user_option_value.userOption' . $option->optionID . ' = ?', [StringUtil::trim($value)]);
+        $userList->getConditionBuilder()->add(
+            'user_option_value.userOption' . $option->optionID . ' = ?',
+            [StringUtil::trim($value)]
+        );
     }
 
     /**

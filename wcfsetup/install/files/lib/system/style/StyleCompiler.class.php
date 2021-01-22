@@ -107,8 +107,14 @@ class StyleCompiler extends SingletonFactory
      * @return      null|\Exception
      * @since       5.3
      */
-    public function testStyle($testFileDir, $styleName, $apiVersion, $imagePath, array $variables, $customCustomSCSSFile = null)
-    {
+    public function testStyle(
+        $testFileDir,
+        $styleName,
+        $apiVersion,
+        $imagePath,
+        array $variables,
+        $customCustomSCSSFile = null
+    ) {
         $individualScss = '';
         if (isset($variables['individualScss'])) {
             $individualScss = $variables['individualScss'];
@@ -338,7 +344,12 @@ class StyleCompiler extends SingletonFactory
                 $file = WCF_DIR . "style/{$file}/";
                 if ($innerHandle = \opendir($file)) {
                     while (($innerFile = \readdir($innerHandle)) !== false) {
-                        if ($innerFile === '.' || $innerFile === '..' || !\is_file($file . $innerFile) || !\preg_match('~^[a-zA-Z0-9\-\.]+\.scss$~', $innerFile)) {
+                        if (
+                            $innerFile === '.'
+                            || $innerFile === '..'
+                            || !\is_file($file . $innerFile)
+                            || !\preg_match('~^[a-zA-Z0-9\-\.]+\.scss$~', $innerFile)
+                        ) {
                             continue;
                         }
 

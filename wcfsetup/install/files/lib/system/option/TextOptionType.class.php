@@ -82,7 +82,10 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
         if ($value == '') {
             $conditions->add("option_value.userOption" . $option->optionID . " = ?", ['']);
         } else {
-            $conditions->add("option_value.userOption" . $option->optionID . " LIKE ?", ['%' . \addcslashes($value, '_%') . '%']);
+            $conditions->add(
+                "option_value.userOption" . $option->optionID . " LIKE ?",
+                ['%' . \addcslashes($value, '_%') . '%']
+            );
         }
 
         return true;
@@ -139,7 +142,10 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
         if ($value == '') {
             $userList->getConditionBuilder()->add('user_option_value.userOption' . $option->optionID . ' = ?', ['']);
         } else {
-            $userList->getConditionBuilder()->add('user_option_value.userOption' . $option->optionID . ' LIKE ?', ['%' . \addcslashes($value, '_%') . '%']);
+            $userList->getConditionBuilder()->add(
+                'user_option_value.userOption' . $option->optionID . ' LIKE ?',
+                ['%' . \addcslashes($value, '_%') . '%']
+            );
         }
     }
 

@@ -108,7 +108,12 @@ class FontManager extends SingletonFactory
 
                 $css = \str_replace(
                     'url("' . $filename . '")',
-                    'url(getFont("' . \rawurlencode($filename) . '", "' . \rawurlencode($family) . '", "' . TIME_NOW . '"))',
+                    \sprintf(
+                        'url(getFont("%s", "%s", "%d"))',
+                        \rawurlencode($filename),
+                        \rawurlencode($family),
+                        TIME_NOW
+                    ),
                     $css
                 );
             }

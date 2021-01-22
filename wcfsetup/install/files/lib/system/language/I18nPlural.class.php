@@ -490,7 +490,11 @@ class I18nPlural
         if ($mod10 == 0 || ($mod100 >= 11 && $mod100 <= 19) || ($v == 2 && $fMod100 >= 11 && $fMod100 <= 19)) {
             return self::PLURAL_ZERO;
         }
-        if (($mod10 == 1 && $mod100 != 11) || ($v == 2 && $fMod10 == 1 && $fMod100 != 11) || ($v != 2 && $fMod10 == 1)) {
+        if (
+            ($mod10 == 1 && $mod100 != 11)
+            || ($v == 2 && $fMod10 == 1 && $fMod100 != 11)
+            || ($v != 2 && $fMod10 == 1)
+        ) {
             return self::PLURAL_ONE;
         }
     }
@@ -605,7 +609,14 @@ class I18nPlural
         if ($v == 0 && $mod10 >= 2 && $mod10 <= 4 && !($mod100 >= 12 && $mod100 <= 14)) {
             return self::PLURAL_FEW;
         }
-        if ($v == 0 && (($n != 1 && $mod10 >= 0 && $mod10 <= 1) || ($mod10 >= 5 && $mod10 <= 9) || ($mod100 >= 12 && $mod100 <= 14))) {
+        if (
+            $v == 0
+            && (
+                ($n != 1 && $mod10 >= 0 && $mod10 <= 1)
+                || ($mod10 >= 5 && $mod10 <= 9)
+                || ($mod100 >= 12 && $mod100 <= 14)
+            )
+        ) {
             return self::PLURAL_MANY;
         }
     }

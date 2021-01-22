@@ -51,32 +51,49 @@ class AnchorFunctionTemplatePlugin implements IFunctionTemplatePlugin
             $object = $tagArgs['object'];
             unset($tagArgs['object']);
 
-            if (!($object instanceof ITitledLinkObject) && !ClassUtil::isDecoratedInstanceOf($object, ITitledLinkObject::class)) {
-                throw new \InvalidArgumentException("'object' attribute does not implement interface '" . ITitledLinkObject::class . "'.");
+            if (
+                !($object instanceof ITitledLinkObject)
+                && !ClassUtil::isDecoratedInstanceOf($object, ITitledLinkObject::class)
+            ) {
+                throw new \InvalidArgumentException(
+                    "'object' attribute does not implement interface '" . ITitledLinkObject::class . "'."
+                );
             }
 
             $link = $object->getLink();
             $content = $object->getTitle();
         } elseif (isset($tagArgs['link']) && isset($tagArgs['content'])) {
-            if (!($tagArgs['link'] instanceof ILinkableObject) && !ClassUtil::isDecoratedInstanceOf($tagArgs['link'], ILinkableObject::class)) {
-                throw new \InvalidArgumentException("'link' attribute does not implement interface '" . ILinkableObject::class . "'.");
+            if (
+                !($tagArgs['link'] instanceof ILinkableObject)
+                && !ClassUtil::isDecoratedInstanceOf($tagArgs['link'], ILinkableObject::class)
+            ) {
+                throw new \InvalidArgumentException(
+                    "'link' attribute does not implement interface '" . ILinkableObject::class . "'."
+                );
             }
 
             $link = $tagArgs['link']->getLink();
             unset($tagArgs['link']);
 
             if (\is_object($tagArgs['content'])) {
-                if ($tagArgs['content'] instanceof ITitledObject || ClassUtil::isDecoratedInstanceOf($tagArgs['content'], ITitledObject::class)) {
+                if (
+                    $tagArgs['content'] instanceof ITitledObject
+                    || ClassUtil::isDecoratedInstanceOf($tagArgs['content'], ITitledObject::class)
+                ) {
                     $content = $tagArgs['content']->getTitle();
                 } elseif (\method_exists($tagArgs['content'], '__toString')) {
                     $content = (string)$tagArgs['content'];
                 } else {
-                    throw new \InvalidArgumentException("'content' object does not implement " . ITitledObject::class . ".");
+                    throw new \InvalidArgumentException(
+                        "'content' object does not implement " . ITitledObject::class . "."
+                    );
                 }
             } elseif (\is_string($tagArgs['content']) || \is_numeric($tagArgs['content'])) {
                 $content = $tagArgs['content'];
             } else {
-                throw new \InvalidArgumentException("'content' attribute is of invalid type " . \gettype($tagArgs['content']) . ".");
+                throw new \InvalidArgumentException(
+                    "'content' attribute is of invalid type " . \gettype($tagArgs['content']) . "."
+                );
             }
             unset($tagArgs['content']);
         } else {

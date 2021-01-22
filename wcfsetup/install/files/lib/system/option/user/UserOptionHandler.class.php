@@ -220,7 +220,8 @@ class UserOptionHandler extends OptionHandler
                     $optionType->forceSearchOption = $this->optionValues[$option->optionName] == $option->defaultValue;
                 }
 
-                $element = $this->getTypeObject($type)->getSearchFormElement($option, ($this->optionValues[$option->optionName] ?? null));
+                $element = $this->getTypeObject($type)
+                    ->getSearchFormElement($option, ($this->optionValues[$option->optionName] ?? null));
 
                 if ($hasProperty && isset($this->optionValues[$option->optionName])) {
                     $optionType->forceSearchOption = false;
@@ -230,7 +231,8 @@ class UserOptionHandler extends OptionHandler
             }
 
             /** @noinspection PhpUndefinedMethodInspection */
-            return $this->getTypeObject($type)->getSearchFormElement($option, ($this->optionValues[$option->optionName] ?? null));
+            return $this->getTypeObject($type)
+                ->getSearchFormElement($option, ($this->optionValues[$option->optionName] ?? null));
         }
 
         return parent::getFormElement($type, $option);
@@ -247,7 +249,10 @@ class UserOptionHandler extends OptionHandler
 
         if ($option->required && $option->optionType != 'boolean' && empty($this->optionValues[$option->optionName])) {
             // Do not throw an error if the current user is an administrator and is not editing themselves.
-            if (!WCF::getUser()->hasAdministrativeAccess() || ($this->user && $this->user->userID == WCF::getUser()->userID)) {
+            if (
+                !WCF::getUser()->hasAdministrativeAccess()
+                || ($this->user && $this->user->userID == WCF::getUser()->userID)
+            ) {
                 throw new UserInputException($option->optionName);
             }
         }
@@ -289,7 +294,13 @@ class UserOptionHandler extends OptionHandler
         }
 
         // in registration
-        if ($this->inRegistration && !$option->askDuringRegistration && !$option->required && !($option->editable & UserOption::EDITABILITY_OWNER_DURING_REGISTRATION) && ($option->optionName != 'birthday' || !REGISTER_MIN_USER_AGE)) {
+        if (
+            $this->inRegistration
+            && !$option->askDuringRegistration
+            && !$option->required
+            && !($option->editable & UserOption::EDITABILITY_OWNER_DURING_REGISTRATION)
+            && ($option->optionName != 'birthday' || !REGISTER_MIN_USER_AGE)
+        ) {
             return false;
         }
 
@@ -298,7 +309,10 @@ class UserOptionHandler extends OptionHandler
             return false;
         }
 
-        if ($this->conditionMode && (!$this->getTypeObject($option->optionType) instanceof ISearchableConditionUserOption)) {
+        if (
+            $this->conditionMode
+            && (!$this->getTypeObject($option->optionType) instanceof ISearchableConditionUserOption)
+        ) {
             return false;
         }
 
@@ -325,7 +339,13 @@ class UserOptionHandler extends OptionHandler
         // remove options which are not asked during registration
         if ($this->inRegistration && !empty($options)) {
             foreach ($this->options as $option) {
-                if (\array_key_exists($option->optionID, $options) && !$option->askDuringRegistration && !($option->editable & UserOption::EDITABILITY_OWNER_DURING_REGISTRATION) && !$option->required && ($option->optionName != 'birthday' || !REGISTER_MIN_USER_AGE)) {
+                if (
+                    \array_key_exists($option->optionID, $options)
+                    && !$option->askDuringRegistration
+                    && !($option->editable & UserOption::EDITABILITY_OWNER_DURING_REGISTRATION)
+                    && !$option->required
+                    && ($option->optionName != 'birthday' || !REGISTER_MIN_USER_AGE)
+                ) {
                     unset($options[$option->optionID]);
                 }
             }

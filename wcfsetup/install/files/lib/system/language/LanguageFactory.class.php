@@ -197,7 +197,10 @@ class LanguageFactory extends SingletonFactory
                 foreach ($availableLanguageCodes as $availableLanguageCode) {
                     $fixedCode = \strtolower(self::fixLanguageCode($availableLanguageCode));
 
-                    if ($fixedCode == $acceptedLanguage || $fixedCode == \preg_replace('%^([a-z]{2}).*$%i', '$1', $acceptedLanguage)) {
+                    if (
+                        $fixedCode == $acceptedLanguage
+                        || $fixedCode == \preg_replace('%^([a-z]{2}).*$%i', '$1', $acceptedLanguage)
+                    ) {
                         return $availableLanguageCode;
                     }
                 }

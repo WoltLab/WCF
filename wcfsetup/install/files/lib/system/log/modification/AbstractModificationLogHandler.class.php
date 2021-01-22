@@ -40,7 +40,8 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
      */
     protected function init()
     {
-        $this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.modifiableContent', $this->objectTypeName);
+        $this->objectType = ObjectTypeCache::getInstance()
+            ->getObjectTypeByName('com.woltlab.wcf.modifiableContent', $this->objectTypeName);
         if ($this->objectType === null) {
             throw new SystemException("Object type '" . $this->objectTypeName . "' not found within definition 'com.woltlab.wcf.modifiableContent'");
         }
@@ -59,8 +60,16 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
      * @param   int     $hidden
      * @return  ModificationLog
      */
-    public function createLog($action, $objectID, $parentObjectID = null, array $additionalData = [], $time = TIME_NOW, $userID = null, $username = null, $hidden = 1)
-    {
+    public function createLog(
+        $action,
+        $objectID,
+        $parentObjectID = null,
+        array $additionalData = [],
+        $time = TIME_NOW,
+        $userID = null,
+        $username = null,
+        $hidden = 1
+    ) {
         // set default user data
         if ($userID === null) {
             if (WCF::getUser()->userID) {
@@ -150,7 +159,8 @@ abstract class AbstractModificationLogHandler extends SingletonFactory
     {
         // allow parameter for better backwards compatibility with ModificationLogHandler
         if ($objectType !== null) {
-            return ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.modifiableContent', $objectType);
+            return ObjectTypeCache::getInstance()
+                ->getObjectTypeByName('com.woltlab.wcf.modifiableContent', $objectType);
         }
 
         return $this->objectType;

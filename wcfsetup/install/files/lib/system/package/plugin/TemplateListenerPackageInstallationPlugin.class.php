@@ -35,7 +35,8 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Package\Plugin
  */
-class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin
+class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
+    IGuiPackageInstallationPlugin
 {
     use TXmlGuiPackageInstallationPlugin {
         setEntryData as defaultSetEntryData;

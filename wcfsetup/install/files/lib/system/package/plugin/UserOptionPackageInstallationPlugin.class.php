@@ -328,7 +328,8 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
                     ->description('wcf.acp.pip.userOption.options.messageObjectType.description')
                     ->options(static function () {
                         $options = [];
-                        foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.message') as $objectType) {
+                        $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.message');
+                        foreach ($objectTypes as $objectType) {
                             $options[$objectType->objectType] = $objectType->objectType;
                         }
 

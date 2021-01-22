@@ -70,7 +70,9 @@ class UserContentRemoveWorker extends AbstractWorker
             if ($userList->count() !== \count($this->parameters['userIDs'])) {
                 $diff = \array_diff($this->parameters['userIDs'], \array_column($userList->getObjects(), 'userID'));
 
-                throw new \InvalidArgumentException('The parameter `userIDs` contains unknown values (' . \implode(', ', $diff) . ').');
+                throw new \InvalidArgumentException(
+                    'The parameter `userIDs` contains unknown values (' . \implode(', ', $diff) . ').'
+                );
             }
 
             foreach ($userList as $user) {
@@ -93,7 +95,10 @@ class UserContentRemoveWorker extends AbstractWorker
 
             $unknownContentProvider = \array_diff(
                 $this->parameters['contentProvider'],
-                \array_column(ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.content.userContentProvider'), 'objectType')
+                \array_column(
+                    ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.content.userContentProvider'),
+                    'objectType'
+                )
             );
             if (!empty($unknownContentProvider)) {
                 throw new \InvalidArgumentException('The parameter `contentProvider` contains unknown objectTypes (' . \implode(', ', $unknownContentProvider) . ').');

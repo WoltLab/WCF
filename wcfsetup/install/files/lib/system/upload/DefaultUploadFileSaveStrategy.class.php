@@ -169,7 +169,9 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
                 EventHandler::getInstance()->fireAction($this, 'save', $parameters);
 
                 if (!\is_array($parameters['updateData'])) {
-                    throw new \UnexpectedValueException('$updateData is no longer an array after being manipulated by event listeners.');
+                    throw new \UnexpectedValueException(
+                        '$updateData is no longer an array after being manipulated by event listeners.'
+                    );
                 } else {
                     $updateData = $parameters['updateData'];
                 }

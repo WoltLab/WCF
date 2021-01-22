@@ -135,7 +135,10 @@ class MysqlSearchEngine extends AbstractSearchEngine
             $q = $this->parseSearchQuery($q);
 
             $fulltextCondition = new PreparedStatementConditionBuilder(false);
-            $fulltextCondition->add("MATCH (subject" . (!$subjectOnly ? ', message, metaData' : '') . ") AGAINST (? IN BOOLEAN MODE)", [$q]);
+            $fulltextCondition->add(
+                "MATCH (subject" . (!$subjectOnly ? ', message, metaData' : '') . ") AGAINST (? IN BOOLEAN MODE)",
+                [$q]
+            );
 
             if ($orderBy == 'relevance ASC' || $orderBy == 'relevance DESC') {
                 $relevanceCalc = "MATCH (subject" . (!$subjectOnly ? ', message, metaData' : '') . ") AGAINST ('" . escapeString($q) . "') + (5 / (1 + POW(LN(1 + (" . TIME_NOW . " - time) / 2592000), 2))) AS relevance";

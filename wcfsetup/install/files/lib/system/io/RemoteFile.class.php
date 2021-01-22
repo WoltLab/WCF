@@ -66,7 +66,14 @@ class RemoteFile extends File
 
         $context = \stream_context_create($options);
         try {
-            $this->resource = \stream_socket_client($this->host . ':' . $this->port, $this->errorNumber, $this->errorDesc, $timeout, \STREAM_CLIENT_CONNECT, $context);
+            $this->resource = \stream_socket_client(
+                $this->host . ':' . $this->port,
+                $this->errorNumber,
+                $this->errorDesc,
+                $timeout,
+                \STREAM_CLIENT_CONNECT,
+                $context
+            );
             if ($this->resource === false) {
                 throw new \Exception('stream_socket_client returned false: ' . $this->errorDesc, $this->errorNumber);
             }

@@ -25,7 +25,8 @@ class ArticleCommentImporter extends AbstractCommentImporter
      */
     public function __construct()
     {
-        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.comment.commentableContent', 'com.woltlab.wcf.articleComment');
+        $objectType = ObjectTypeCache::getInstance()
+            ->getObjectTypeByName('com.woltlab.wcf.comment.commentableContent', 'com.woltlab.wcf.articleComment');
         $this->objectTypeID = $objectType->objectTypeID;
     }
 
@@ -34,7 +35,8 @@ class ArticleCommentImporter extends AbstractCommentImporter
      */
     public function import($oldID, array $data, array $additionalData = [])
     {
-        $articleID = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.article', $data['objectID'] ?? $additionalData['articleID']);
+        $articleID = ImportHandler::getInstance()
+            ->getNewID('com.woltlab.wcf.article', $data['objectID'] ?? $additionalData['articleID']);
         if (!$articleID) {
             return 0;
         }

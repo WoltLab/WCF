@@ -176,7 +176,8 @@ class MessageEmbeddedObjectManager extends SingletonFactory
      */
     public function registerSimpleObjects($messageObjectType, $messageID, array $embeddedContent)
     {
-        $messageObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType);
+        $messageObjectTypeID = ObjectTypeCache::getInstance()
+            ->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType);
 
         // delete existing assignments
         $this->removeObjects($messageObjectType, [$messageID]);
@@ -212,7 +213,10 @@ class MessageEmbeddedObjectManager extends SingletonFactory
     public function removeObjects($messageObjectType, array $messageIDs)
     {
         $conditionBuilder = new PreparedStatementConditionBuilder();
-        $conditionBuilder->add('messageObjectTypeID = ?', [ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType)]);
+        $conditionBuilder->add(
+            'messageObjectTypeID = ?',
+            [ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType)]
+        );
         $conditionBuilder->add('messageID IN (?)', [$messageIDs]);
 
         $sql = "DELETE FROM wcf" . WCF_N . "_message_embedded_object
@@ -231,7 +235,8 @@ class MessageEmbeddedObjectManager extends SingletonFactory
      */
     public function loadObjects($messageObjectType, array $messageIDs, $contentLanguageID = null)
     {
-        $messageObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType);
+        $messageObjectTypeID = ObjectTypeCache::getInstance()
+            ->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType);
         if ($messageObjectTypeID === null) {
             throw new InvalidObjectTypeException($messageObjectType, 'com.woltlab.wcf.message');
         }
@@ -297,7 +302,8 @@ class MessageEmbeddedObjectManager extends SingletonFactory
      */
     public function setActiveMessage($messageObjectType, $messageID, $languageID = null)
     {
-        $this->activeMessageObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType);
+        $this->activeMessageObjectTypeID = ObjectTypeCache::getInstance()
+            ->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType);
         $this->activeMessageID = $messageID;
         $this->activeMessageLanguageID = $languageID;
     }
@@ -320,7 +326,8 @@ class MessageEmbeddedObjectManager extends SingletonFactory
      */
     public function getObjects($embeddedObjectType)
     {
-        $embeddedObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message.embeddedObject', $embeddedObjectType);
+        $embeddedObjectTypeID = ObjectTypeCache::getInstance()
+            ->getObjectTypeIDByName('com.woltlab.wcf.message.embeddedObject', $embeddedObjectType);
         $returnValue = [];
         if (!empty($this->messageEmbeddedObjects[$this->activeMessageObjectTypeID][$this->activeMessageID][$embeddedObjectTypeID])) {
             foreach ($this->messageEmbeddedObjects[$this->activeMessageObjectTypeID][$this->activeMessageID][$embeddedObjectTypeID] as $embeddedObjectID) {
@@ -342,7 +349,8 @@ class MessageEmbeddedObjectManager extends SingletonFactory
      */
     public function getObject($embeddedObjectType, $objectID)
     {
-        $embeddedObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message.embeddedObject', $embeddedObjectType);
+        $embeddedObjectTypeID = ObjectTypeCache::getInstance()
+            ->getObjectTypeIDByName('com.woltlab.wcf.message.embeddedObject', $embeddedObjectType);
         if (!empty($this->messageEmbeddedObjects[$this->activeMessageObjectTypeID][$this->activeMessageID][$embeddedObjectTypeID])) {
             foreach ($this->messageEmbeddedObjects[$this->activeMessageObjectTypeID][$this->activeMessageID][$embeddedObjectTypeID] as $embeddedObjectID) {
                 if ($embeddedObjectID == $objectID) {
@@ -391,7 +399,11 @@ class MessageEmbeddedObjectManager extends SingletonFactory
         $handlers = [];
         foreach ($this->getEmbeddedObjectHandlers() as $handler) {
             if ($handler instanceof ISimpleMessageEmbeddedObjectHandler) {
-                $name = \lcfirst(\preg_replace('~^.*\\\\([A-Z][a-zA-Z]+)MessageEmbeddedObjectHandler$~', '$1', \get_class($handler)));
+                $name = \lcfirst(\preg_replace(
+                    '~^.*\\\\([A-Z][a-zA-Z]+)MessageEmbeddedObjectHandler$~',
+                    '$1',
+                    \get_class($handler)
+                ));
                 $handlers[$name] = $handler;
             }
         }
@@ -434,6 +446,8 @@ class MessageEmbeddedObjectManager extends SingletonFactory
      */
     public function parseTemporaryMessage()
     {
-        throw new \BadMethodCallException("parseTemporaryMessage() has been removed, please use registerTemporaryMessage() instead.");
+        throw new \BadMethodCallException(
+            "parseTemporaryMessage() has been removed, please use registerTemporaryMessage() instead."
+        );
     }
 }

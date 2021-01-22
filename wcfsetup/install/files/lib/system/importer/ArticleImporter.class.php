@@ -56,7 +56,8 @@ class ArticleImporter extends AbstractImporter
 
             $teaserImageID = null;
             if (!empty($contentData['teaserImageID'])) {
-                $teaserImageID = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.media', $contentData['teaserImageID']);
+                $teaserImageID = ImportHandler::getInstance()
+                    ->getNewID('com.woltlab.wcf.media', $contentData['teaserImageID']);
             }
 
             $contents[$languageID] = [
@@ -86,7 +87,8 @@ class ArticleImporter extends AbstractImporter
         // category
         $categoryID = 0;
         if (!empty($data['categoryID'])) {
-            $categoryID = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.article.category', $data['categoryID']);
+            $categoryID = ImportHandler::getInstance()
+                ->getNewID('com.woltlab.wcf.article.category', $data['categoryID']);
         }
         if (!$categoryID) {
             $categoryID = $this->getImportCategoryID();
@@ -115,7 +117,12 @@ class ArticleImporter extends AbstractImporter
 
             // save tags
             if (!empty($contentData['tags'])) {
-                TagEngine::getInstance()->addObjectTags('com.woltlab.wcf.article', $articleContent->articleContentID, $contentData['tags'], $languageID ?: LanguageFactory::getInstance()->getDefaultLanguageID());
+                TagEngine::getInstance()->addObjectTags(
+                    'com.woltlab.wcf.article',
+                    $articleContent->articleContentID,
+                    $contentData['tags'],
+                    $languageID ?: LanguageFactory::getInstance()->getDefaultLanguageID()
+                );
             }
         }
 
@@ -132,7 +139,8 @@ class ArticleImporter extends AbstractImporter
     private function getImportCategoryID()
     {
         if (!$this->importCategoryID) {
-            $objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.category', 'com.woltlab.wcf.article.category');
+            $objectTypeID = ObjectTypeCache::getInstance()
+                ->getObjectTypeIDByName('com.woltlab.wcf.category', 'com.woltlab.wcf.article.category');
 
             $sql = "SELECT      categoryID
                     FROM        wcf" . WCF_N . "_category

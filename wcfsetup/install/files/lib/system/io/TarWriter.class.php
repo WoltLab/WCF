@@ -217,7 +217,15 @@ class TarWriter extends Tar
             $size = \filesize($filename);
         }
 
-        return $this->writeHeaderBlock($storedFilename, $size, $mtime, $permissions, $typeFlag, $fileInfo[4], $fileInfo[5]);
+        return $this->writeHeaderBlock(
+            $storedFilename,
+            $size,
+            $mtime,
+            $permissions,
+            $typeFlag,
+            $fileInfo[4],
+            $fileInfo[5]
+        );
     }
 
     /**

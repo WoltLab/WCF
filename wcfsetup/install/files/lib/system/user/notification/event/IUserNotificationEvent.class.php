@@ -126,7 +126,12 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor
      * @param   UserProfile         $author
      * @param   array               $additionalData
      */
-    public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = []);
+    public function setObject(
+        UserNotification $notification,
+        IUserNotificationObject $object,
+        UserProfile $author,
+        array $additionalData = []
+    );
 
     /**
      * Sets the language for the event

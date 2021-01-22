@@ -12,7 +12,8 @@ namespace wcf\system\log\modification;
  * @package     WoltLabSuite\Core\System\Log\Modification
  * @since       5.2
  */
-abstract class AbstractExtendedModificationLogHandler extends AbstractModificationLogHandler implements IExtendedModificationLogHandler
+abstract class AbstractExtendedModificationLogHandler extends AbstractModificationLogHandler implements
+    IExtendedModificationLogHandler
 {
     /**
      * @inheritDoc

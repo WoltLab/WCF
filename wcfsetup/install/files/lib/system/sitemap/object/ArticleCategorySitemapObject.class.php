@@ -56,6 +56,12 @@ class ArticleCategorySitemapObject extends AbstractSitemapObjectObjectType
      */
     public function isAvailableType()
     {
-        return MODULE_ARTICLE && PageCache::getInstance()->getPageByIdentifier('com.woltlab.wcf.CategoryArticleList')->allowSpidersToIndex;
+        if (!MODULE_ARTICLE) {
+            return false;
+        }
+
+        return PageCache::getInstance()
+            ->getPageByIdentifier('com.woltlab.wcf.CategoryArticleList')
+            ->allowSpidersToIndex;
     }
 }

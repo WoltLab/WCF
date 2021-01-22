@@ -65,11 +65,20 @@ class ModificationLogHandler extends SingletonFactory
      * @throws  SystemException
      */
     // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
-    protected function _add($objectType, $objectID, $action, array $additionalData = [], $time = TIME_NOW, $userID = null, $username = null)
-    {
+    protected function _add(
+        $objectType,
+        $objectID,
+        $action,
+        array $additionalData = [],
+        $time = TIME_NOW,
+        $userID = null,
+        $username = null
+    ) {
         $objectTypeObj = $this->getObjectType($objectType);
         if ($objectTypeObj === null) {
-            throw new SystemException("Object type '" . $objectType . "' not found within definition 'com.woltlab.wcf.modifiableContent'");
+            throw new SystemException(
+                "Object type '" . $objectType . "' not found within definition 'com.woltlab.wcf.modifiableContent'"
+            );
         }
 
         if ($userID === null) {
@@ -114,7 +123,9 @@ class ModificationLogHandler extends SingletonFactory
     {
         $objectTypeObj = $this->getObjectType($objectType);
         if ($objectTypeObj === null) {
-            throw new SystemException("Object type '" . $objectType . "' not found within definition 'com.woltlab.wcf.modifiableContent'");
+            throw new SystemException(
+                "Object type '" . $objectType . "' not found within definition 'com.woltlab.wcf.modifiableContent'"
+            );
         }
 
         $conditions = new PreparedStatementConditionBuilder();

@@ -62,7 +62,7 @@ class PackageUpdateUnauthorizedException extends UserException
         $serverReply = $this->request->getReply();
 
         WCF::getTPL()->assign([
-            'authInsufficient' => (isset($serverReply['httpHeaders']['wcf-update-server-auth'][0]) && $serverReply['httpHeaders']['wcf-update-server-auth'][0] === 'unauthorized'),
+            'authInsufficient' => (($serverReply['httpHeaders']['wcf-update-server-auth'][0] ?? '') === 'unauthorized'),
             'packageUpdateVersion' => $this->packageUpdateVersion,
             'request' => $this->request,
             'updateServer' => $this->updateServer,

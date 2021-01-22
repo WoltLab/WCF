@@ -182,7 +182,11 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
                             return;
                         }
 
-                        $aliases = $this->editedEntry ? $this->editedEntry->getElementsByTagName('aliases')->item(0) : null;
+                        $aliases = null;
+                        if ($this->editedEntry) {
+                            $aliases = $this->editedEntry->getElementsByTagName('aliases')->item(0);
+                        }
+
                         if (
                             $formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE
                             || $aliases === null

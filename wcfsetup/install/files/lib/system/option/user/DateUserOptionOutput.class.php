@@ -33,7 +33,12 @@ class DateUserOptionOutput implements IUserOptionOutput
 
         $date = self::splitDate($value);
 
-        return DateUtil::format(DateUtil::getDateTimeByTimestamp(\gmmktime(12, 1, 1, $date['month'], $date['day'], $date['year'])), $this->dateFormat);
+        return DateUtil::format(
+            DateUtil::getDateTimeByTimestamp(
+                \gmmktime(12, 1, 1, $date['month'], $date['day'], $date['year'])
+            ),
+            $this->dateFormat
+        );
     }
 
     /**

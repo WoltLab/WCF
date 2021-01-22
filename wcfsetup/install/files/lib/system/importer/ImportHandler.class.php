@@ -98,7 +98,10 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction
         }
         $objectTypeID = $this->objectTypes[$type]->objectTypeID;
 
-        if (!isset($this->idMappingCache[$objectTypeID]) || !\array_key_exists($oldID, $this->idMappingCache[$objectTypeID])) {
+        if (
+            !isset($this->idMappingCache[$objectTypeID])
+            || !\array_key_exists($oldID, $this->idMappingCache[$objectTypeID])
+        ) {
             $this->idMappingCache[$objectTypeID][$oldID] = null;
             $importer = $this->getImporter($type);
             $tableName = $indexName = '';

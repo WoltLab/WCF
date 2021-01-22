@@ -38,7 +38,11 @@ class ACPMenu extends TreeMenu
             return false;
         }
 
-        if (ENABLE_ENTERPRISE_MODE && !WCF::getUser()->hasOwnerAccess() && \in_array($item->menuItem, $this->enterpriseBlacklist)) {
+        if (
+            ENABLE_ENTERPRISE_MODE
+            && !WCF::getUser()->hasOwnerAccess()
+            && \in_array($item->menuItem, $this->enterpriseBlacklist)
+        ) {
             return false;
         }
 

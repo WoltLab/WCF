@@ -98,7 +98,8 @@ class ArticleCommentUserNotificationEvent extends AbstractSharedUserNotification
             'application' => 'wcf',
             'variables' => [
                 'commentID' => $this->getUserNotificationObject()->commentID,
-                'article' => ViewableArticleContentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID),
+                'article' => ViewableArticleContentRuntimeCache::getInstance()
+                    ->getObject($this->getUserNotificationObject()->objectID),
                 'languageVariablePrefix' => 'wcf.user.notification.articleComment',
             ],
         ];
@@ -126,7 +127,9 @@ class ArticleCommentUserNotificationEvent extends AbstractSharedUserNotification
     protected static function getTestCommentObjectData(UserProfile $recipient, UserProfile $author)
     {
         return [
-            'objectID' => self::getTestArticle(self::createTestCategory(ArticleCategory::OBJECT_TYPE_NAME), $author)->getArticleContent()->articleContentID,
+            'objectID' => self::getTestArticle(self::createTestCategory(ArticleCategory::OBJECT_TYPE_NAME), $author)
+                ->getArticleContent()
+                ->articleContentID,
             'objectTypeID' => CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.articleComment'),
         ];
     }

@@ -211,7 +211,11 @@ class I18nHandler extends SingletonFactory
     public function setValue($elementID, $plainValue, $forceAsPlainValue = false)
     {
         if (!\is_string($plainValue)) {
-            throw new SystemException('Invalid argument for parameter $plainValue', 0, 'Expected string. ' . \ucfirst(\gettype($plainValue)) . ' given.');
+            throw new SystemException(
+                'Invalid argument for parameter $plainValue',
+                0,
+                'Expected string. ' . \ucfirst(\gettype($plainValue)) . ' given.'
+            );
         }
 
         if (!$this->isPlainValue($elementID) && !$forceAsPlainValue) {
@@ -236,7 +240,11 @@ class I18nHandler extends SingletonFactory
     public function setValues($elementID, array $i18nValues)
     {
         if (empty($i18nValues)) {
-            throw new SystemException('Invalid argument for parameter $i18nValues', 0, 'Expected filled array as second argument. Empty array given.');
+            throw new SystemException(
+                'Invalid argument for parameter $i18nValues',
+                0,
+                'Expected filled array as second argument. Empty array given.'
+            );
         }
         if (!$this->isPlainValue($elementID)) {
             $this->i18nValues[$elementID] = $i18nValues;
@@ -456,10 +464,12 @@ class I18nHandler extends SingletonFactory
                     }
                 }
             } else {
-                $isI18n = Regex::compile('^' . $this->elementOptions[$elementID]['pattern'] . '$')->match($this->elementOptions[$elementID]['value']);
+                $isI18n = Regex::compile('^' . $this->elementOptions[$elementID]['pattern'] . '$')
+                    ->match($this->elementOptions[$elementID]['value']);
                 if (!$isI18n) {
                     // check if it's a regular language variable
-                    $isI18n = Regex::compile('^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$')->match($this->elementOptions[$elementID]['value']);
+                    $isI18n = Regex::compile('^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$')
+                        ->match($this->elementOptions[$elementID]['value']);
                 }
 
                 if ($isI18n) {

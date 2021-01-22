@@ -66,7 +66,9 @@ abstract class SingletonFactory
             self::$__singletonObjects[$className] = false;
             self::$__singletonObjects[$className] = new $className();
         } elseif (self::$__singletonObjects[$className] === false) {
-            throw new SystemException("Infinite loop detected while trying to retrieve object for '" . $className . "'");
+            throw new SystemException(
+                "Infinite loop detected while trying to retrieve object for '" . $className . "'"
+            );
         }
 
         return self::$__singletonObjects[$className];

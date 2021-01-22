@@ -53,7 +53,11 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
      */
     public function identifyOrphans(array $queues)
     {
-        if (empty($this->className) || !\class_exists($this->className) || !\is_subclass_of($this->className, DatabaseObject::class)) {
+        if (
+            empty($this->className)
+            || !\class_exists($this->className)
+            || !\is_subclass_of($this->className, DatabaseObject::class)
+        ) {
             throw new SystemException("DatabaseObject class name '" . $this->className . "' is missing or invalid");
         }
 
@@ -80,7 +84,8 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
      */
     public function removeQueues(array $objectIDs)
     {
-        $objectTypeID = ModerationQueueManager::getInstance()->getObjectTypeID($this->definitionName, $this->objectType);
+        $objectTypeID = ModerationQueueManager::getInstance()
+            ->getObjectTypeID($this->definitionName, $this->objectType);
         if ($objectTypeID === null) {
             throw new InvalidObjectTypeException($this->objectType, $this->definitionName);
         }

@@ -44,7 +44,8 @@ class UploadHandler
             ];
             $i = 0;
             foreach (\array_keys($rawFileData['name']) as $internalFileID) {
-                $newRawFileData['name'][$i] = '__wcf_' . $internalFileID . '_' . $rawFileData['name'][$internalFileID]; // __wcf_X_filename.ext
+                // __wcf_X_filename.ext
+                $newRawFileData['name'][$i] = '__wcf_' . $internalFileID . '_' . $rawFileData['name'][$internalFileID];
                 $newRawFileData['type'][$i] = $rawFileData['type'][$internalFileID];
                 $newRawFileData['tmp_name'][$i] = $rawFileData['tmp_name'][$internalFileID];
                 $newRawFileData['error'][$i] = $rawFileData['error'][$internalFileID];
@@ -56,12 +57,17 @@ class UploadHandler
 
             // multiple uploads
             for ($i = 0, $l = \count($rawFileData['name']); $i < $l; $i++) {
+                $mimeType = '';
+                if ($rawFileData['tmp_name'][$i]) {
+                    $mimeType = self::getMimeType($rawFileData['tmp_name'][$i], $rawFileData['type'][$i]);
+                }
+
                 $this->files[] = new UploadFile(
                     $rawFileData['name'][$i],
                     $rawFileData['tmp_name'][$i],
                     $rawFileData['size'][$i],
                     $rawFileData['error'][$i],
-                    ($rawFileData['tmp_name'][$i] ? self::getMimeType($rawFileData['tmp_name'][$i], $rawFileData['type'][$i]) : '')
+                    $mimeType
                 );
             }
         } else {

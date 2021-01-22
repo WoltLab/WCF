@@ -24,7 +24,8 @@ class PackageValidationException extends SystemException
     protected $details = [];
 
     /**
-     * missing archive, expects the detail 'archive' and optionally 'targetArchive' (extracting archive from the archive)
+     * missing archive, expects the detail 'archive' and optionally 'targetArchive'
+     * (extracting archive from the archive)
      * @var int
      */
     const FILE_NOT_FOUND = 1;
@@ -54,7 +55,8 @@ class PackageValidationException extends SystemException
     const NO_INSTALL_PATH = 5;
 
     /**
-     * package is already installed and cannot be updated using current archive, expects the details 'packageName', 'packageVersion' and 'deliveredPackageVersion'
+     * package is already installed and cannot be updated using current archive, expects the
+     * details 'packageName', 'packageVersion' and 'deliveredPackageVersion'
      * @var int
      */
     const NO_UPDATE_PATH = 6;
@@ -72,13 +74,15 @@ class PackageValidationException extends SystemException
     const EXCLUDED_PACKAGES = 8;
 
     /**
-     * package version is lower than the request version, expects the details 'packageName', 'packageVersion' and 'deliveredPackageVersion'
+     * package version is lower than the request version, expects the
+     * details 'packageName', 'packageVersion' and 'deliveredPackageVersion'
      * @var int
      */
     const INSUFFICIENT_VERSION = 9;
 
     /**
-     * requirement is set but neither installed nor provided, expects the details 'packageName', 'packageVersion' and 'package' (must be
+     * requirement is set but neither installed nor provided, expects the
+     * details 'packageName', 'packageVersion' and 'package' (must be
      * an instance of \wcf\data\package\Package or null if not installed)
      * @var int
      */
@@ -164,7 +168,10 @@ class PackageValidationException extends SystemException
             return $this->details['legacyMessage'];
         }
 
-        return WCF::getLanguage()->getDynamicVariable('wcf.acp.package.validation.errorCode.' . ($code === null ? $this->getCode() : $code), $this->getDetails());
+        return WCF::getLanguage()->getDynamicVariable(
+            'wcf.acp.package.validation.errorCode.' . ($code === null ? $this->getCode() : $code),
+            $this->getDetails()
+        );
     }
 
     /**

@@ -68,7 +68,13 @@ class ImportWorker extends AbstractWorker
         ImportHandler::getInstance()->setUserMergeMode($this->importData['userMergeMode']);
 
         // set import hash
-        ImportHandler::getInstance()->setImportHash(\substr(StringUtil::getHash($this->importData['dbHost'] . $this->importData['dbName'] . $this->importData['dbPrefix']), 0, 8));
+        ImportHandler::getInstance()->setImportHash(\substr(
+            StringUtil::getHash(
+                $this->importData['dbHost'] . $this->importData['dbName'] . $this->importData['dbPrefix']
+            ),
+            0,
+            8
+        ));
     }
 
     /**

@@ -252,7 +252,11 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
             && \file_exists(self::getSitemapPath() . $object->objectType . '.xml')
             && \filectime(self::getSitemapPath() . $object->objectType . '.xml') > TIME_NOW - (($object->rebuildTime !== null) ? $object->rebuildTime : 60 * 60 * 24 * 7)
         ) {
-            foreach (\array_merge(\glob(self::getSitemapPath() . $object->objectType . '_*'), [self::getSitemapPath() . $object->objectType . '.xml']) as $filename) {
+            $filenames = \array_merge(
+                \glob(self::getSitemapPath() . $object->objectType . '_*'),
+                [self::getSitemapPath() . $object->objectType . '.xml']
+            );
+            foreach ($filenames as $filename) {
                 $this->workerData['sitemaps'][] = self::getSitemapURL() . \basename($filename);
             }
 
@@ -461,14 +465,18 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
     }
 
     /**
-     * Reads the columns changed by the user for this sitemap object from the registry and modifies the object accordingly.
+     * Reads the columns changed by the user for this sitemap object from the registry and
+     * modifies the object accordingly.
      *
      * @param       ObjectType      $object
      * @since       5.3
      */
     public static function prepareSitemapObject(ObjectType $object)
     {
-        $sitemapData = RegistryHandler::getInstance()->get('com.woltlab.wcf', self::REGISTRY_PREFIX . $object->objectType);
+        $sitemapData = RegistryHandler::getInstance()->get(
+            'com.woltlab.wcf',
+            self::REGISTRY_PREFIX . $object->objectType
+        );
 
         if ($sitemapData !== null) {
             $sitemapData = @\unserialize($sitemapData);

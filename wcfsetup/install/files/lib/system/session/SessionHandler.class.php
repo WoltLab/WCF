@@ -410,8 +410,8 @@ final class SessionHandler extends SingletonFactory
         $this->defineConstants();
 
         // assign language and style id
-        $this->languageID = ($this->getVar('languageID') === null) ? $this->user->languageID : $this->getVar('languageID');
-        $this->styleID = ($this->getVar('styleID') === null) ? $this->user->styleID : $this->getVar('styleID');
+        $this->languageID = $this->getVar('languageID') ?: $this->user->languageID;
+        $this->styleID = $this->getVar('styleID') ?: $this->user->styleID;
 
         // https://github.com/WoltLab/WCF/issues/2568
         if ($this->getVar('__wcfIsFirstVisit') === true) {
@@ -446,7 +446,10 @@ final class SessionHandler extends SingletonFactory
             \define('SECURITY_TOKEN', $this->getSecurityToken());
         }
         if (!\defined('SECURITY_TOKEN_INPUT_TAG')) {
-            \define('SECURITY_TOKEN_INPUT_TAG', '<input type="hidden" name="t" value="' . $this->getSecurityToken() . '">');
+            \define(
+                'SECURITY_TOKEN_INPUT_TAG',
+                '<input type="hidden" name="t" value="' . $this->getSecurityToken() . '">'
+            );
         }
     }
 

@@ -44,7 +44,10 @@ class MessageOptionType extends TextareaOptionType
         }
 
         $permission = $option->disallowedbbcodepermission ?: 'user.message.disallowedBBCodes';
-        BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(',', ArrayUtil::trim(WCF::getSession()->getPermission($permission))));
+        BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
+            ',',
+            ArrayUtil::trim(WCF::getSession()->getPermission($permission))
+        ));
 
         $this->htmlInputProcessor = new HtmlInputProcessor();
 
@@ -61,7 +64,10 @@ class MessageOptionType extends TextareaOptionType
     public function getFormElement(Option $option, $value)
     {
         $permission = $option->disallowedbbcodepermission ?: 'user.message.disallowedBBCodes';
-        BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(',', ArrayUtil::trim(WCF::getSession()->getPermission($permission))));
+        BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
+            ',',
+            ArrayUtil::trim(WCF::getSession()->getPermission($permission))
+        ));
 
         WCF::getTPL()->assign([
             'defaultSmilies' => SmileyCache::getInstance()->getCategorySmilies(),

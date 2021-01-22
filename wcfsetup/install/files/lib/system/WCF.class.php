@@ -350,7 +350,16 @@ class WCF
         require(WCF_DIR . 'config.inc.php');
 
         // create database connection
-        self::$dbObj = new MySQLDatabase($dbHost, $dbUser, $dbPassword, $dbName, $dbPort, false, false, $defaultDriverOptions);
+        self::$dbObj = new MySQLDatabase(
+            $dbHost,
+            $dbUser,
+            $dbPassword,
+            $dbName,
+            $dbPort,
+            false,
+            false,
+            $defaultDriverOptions
+        );
     }
 
     /**
@@ -507,13 +516,19 @@ class WCF
         if (\defined('BLACKLIST_IP_ADDRESSES') && BLACKLIST_IP_ADDRESSES != '') {
             if (!StringUtil::executeWordFilter(UserUtil::convertIPv6To4(UserUtil::getIpAddress()), BLACKLIST_IP_ADDRESSES)) {
                 if ($isAjax) {
-                    throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
+                    throw new AJAXException(
+                        self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
+                        AJAXException::INSUFFICIENT_PERMISSIONS
+                    );
                 } else {
                     throw new PermissionDeniedException();
                 }
             } elseif (!StringUtil::executeWordFilter(UserUtil::getIpAddress(), BLACKLIST_IP_ADDRESSES)) {
                 if ($isAjax) {
-                    throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
+                    throw new AJAXException(
+                        self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
+                        AJAXException::INSUFFICIENT_PERMISSIONS
+                    );
                 } else {
                     throw new PermissionDeniedException();
                 }
@@ -522,7 +537,10 @@ class WCF
         if (\defined('BLACKLIST_USER_AGENTS') && BLACKLIST_USER_AGENTS != '') {
             if (!StringUtil::executeWordFilter(UserUtil::getUserAgent(), BLACKLIST_USER_AGENTS)) {
                 if ($isAjax) {
-                    throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
+                    throw new AJAXException(
+                        self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
+                        AJAXException::INSUFFICIENT_PERMISSIONS
+                    );
                 } else {
                     throw new PermissionDeniedException();
                 }
@@ -531,7 +549,10 @@ class WCF
         if (\defined('BLACKLIST_HOSTNAMES') && BLACKLIST_HOSTNAMES != '') {
             if (!StringUtil::executeWordFilter(@\gethostbyaddr(UserUtil::getIpAddress()), BLACKLIST_HOSTNAMES)) {
                 if ($isAjax) {
-                    throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
+                    throw new AJAXException(
+                        self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
+                        AJAXException::INSUFFICIENT_PERMISSIONS
+                    );
                 } else {
                     throw new PermissionDeniedException();
                 }
@@ -541,7 +562,10 @@ class WCF
         // handle banned users
         if (self::getUser()->userID && self::getUser()->banned && !self::getUser()->hasOwnerAccess()) {
             if ($isAjax) {
-                throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'), AJAXException::INSUFFICIENT_PERMISSIONS);
+                throw new AJAXException(
+                    self::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'),
+                    AJAXException::INSUFFICIENT_PERMISSIONS
+                );
             } else {
                 self::$forceLogout = true;
 
@@ -681,7 +705,10 @@ class WCF
             // init application and assign it as template variable
             self::$applicationObjects[$application->packageID] = \call_user_func([$className, 'getInstance']);
             static::getTPL()->assign('__' . $abbreviation, self::$applicationObjects[$application->packageID]);
-            EmailTemplateEngine::getInstance()->assign('__' . $abbreviation, self::$applicationObjects[$application->packageID]);
+            EmailTemplateEngine::getInstance()->assign(
+                '__' . $abbreviation,
+                self::$applicationObjects[$application->packageID]
+            );
         } else {
             unset(self::$autoloadDirectories[$abbreviation]);
             throw new SystemException("Unable to run '" . $package->package . "', '" . $className . "' is missing or does not implement '" . IApplication::class . "'.");
@@ -1204,7 +1231,10 @@ class WCF
     protected function initCronjobs()
     {
         if (PACKAGE_ID) {
-            self::getTPL()->assign('executeCronjobs', CronjobScheduler::getInstance()->getNextExec() < TIME_NOW && \defined('OFFLINE') && !OFFLINE);
+            self::getTPL()->assign(
+                'executeCronjobs',
+                CronjobScheduler::getInstance()->getNextExec() < TIME_NOW && \defined('OFFLINE') && !OFFLINE
+            );
         }
     }
 
@@ -1233,15 +1263,19 @@ class WCF
                 continue;
             }
 
-            DirectoryUtil::getInstance($path, false)->executeCallback(static function ($file, \SplFileInfo $fileInfo) use (&$nonWritablePaths) {
-                if ($fileInfo instanceof \DirectoryIterator) {
-                    if (!\is_writable($fileInfo->getPath())) {
-                        $nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $fileInfo->getPath());
+            DirectoryUtil::getInstance($path, false)
+                ->executeCallback(static function ($file, \SplFileInfo $fileInfo) use (&$nonWritablePaths) {
+                    if ($fileInfo instanceof \DirectoryIterator) {
+                        if (!\is_writable($fileInfo->getPath())) {
+                            $nonWritablePaths[] = FileUtil::getRelativePath(
+                                $_SERVER['DOCUMENT_ROOT'],
+                                $fileInfo->getPath()
+                            );
+                        }
+                    } elseif (!\is_writable($fileInfo->getRealPath())) {
+                        $nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $fileInfo->getPath()) . $fileInfo->getFilename();
                     }
-                } elseif (!\is_writable($fileInfo->getRealPath())) {
-                    $nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $fileInfo->getPath()) . $fileInfo->getFilename();
-                }
-            });
+                });
         }
 
         $recursiveDirectories = [
@@ -1263,15 +1297,19 @@ class WCF
                 continue;
             }
 
-            DirectoryUtil::getInstance($path)->executeCallback(static function ($file, \SplFileInfo $fileInfo) use (&$nonWritablePaths) {
-                if ($fileInfo instanceof \DirectoryIterator) {
-                    if (!\is_writable($fileInfo->getPath())) {
-                        $nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $fileInfo->getPath());
+            DirectoryUtil::getInstance($path)
+                ->executeCallback(static function ($file, \SplFileInfo $fileInfo) use (&$nonWritablePaths) {
+                    if ($fileInfo instanceof \DirectoryIterator) {
+                        if (!\is_writable($fileInfo->getPath())) {
+                            $nonWritablePaths[] = FileUtil::getRelativePath(
+                                $_SERVER['DOCUMENT_ROOT'],
+                                $fileInfo->getPath()
+                            );
+                        }
+                    } elseif (!\is_writable($fileInfo->getRealPath())) {
+                        $nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $fileInfo->getPath()) . $fileInfo->getFilename();
                     }
-                } elseif (!\is_writable($fileInfo->getRealPath())) {
-                    $nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $fileInfo->getPath()) . $fileInfo->getFilename();
-                }
-            });
+                });
         }
 
         if (!empty($nonWritablePaths)) {

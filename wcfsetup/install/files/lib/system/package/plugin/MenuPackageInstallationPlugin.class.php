@@ -39,7 +39,8 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Core\Acp\Package\Plugin
  * @since   3.0
  */
-class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin
+class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
+    IGuiPackageInstallationPlugin
 {
     use TXmlGuiPackageInstallationPlugin;
 

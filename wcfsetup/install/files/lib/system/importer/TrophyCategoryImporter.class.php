@@ -25,7 +25,8 @@ class TrophyCategoryImporter extends AbstractCategoryImporter
      */
     public function __construct()
     {
-        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.category', $this->objectTypeName);
+        $objectType = ObjectTypeCache::getInstance()
+            ->getObjectTypeByName('com.woltlab.wcf.category', $this->objectTypeName);
         $this->objectTypeID = $objectType->objectTypeID;
     }
 }

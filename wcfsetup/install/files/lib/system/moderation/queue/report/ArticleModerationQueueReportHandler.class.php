@@ -20,7 +20,8 @@ use wcf\system\WCF;
  * @package WoltLabSuite\Suite\System\Moderation\Queue\Report
  * @since       5.2
  */
-class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler implements IModerationQueueReportHandler
+class ArticleModerationQueueReportHandler extends AbstractModerationQueueHandler implements
+    IModerationQueueReportHandler
 {
     /**
      * @inheritDoc

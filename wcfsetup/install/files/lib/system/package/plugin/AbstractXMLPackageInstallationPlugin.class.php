@@ -366,7 +366,9 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
         // Search the xml-file in the package archive.
         // Abort installation in case no file was found.
         if (($fileIndex = $this->installation->getArchive()->getTar()->getIndexByFilename($filename)) === false) {
-            throw new SystemException("xml file '" . $filename . "' not found in '" . $this->installation->getArchive()->getArchive() . "'");
+            throw new SystemException(
+                "xml file '" . $filename . "' not found in '" . $this->installation->getArchive()->getArchive() . "'"
+            );
         }
 
         // Extract acpmenu file and parse XML

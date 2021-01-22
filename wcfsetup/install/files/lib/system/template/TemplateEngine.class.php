@@ -772,7 +772,8 @@ class TemplateEngine extends SingletonFactory
     protected function loadTemplateListenerCode()
     {
         if (!$this->templateListenersLoaded) {
-            $this->templateListeners = TemplateListenerCodeCacheBuilder::getInstance()->getData(['environment' => $this->environment]);
+            $this->templateListeners = TemplateListenerCodeCacheBuilder::getInstance()
+                ->getData(['environment' => $this->environment]);
             $this->templateListenersLoaded = true;
         }
     }

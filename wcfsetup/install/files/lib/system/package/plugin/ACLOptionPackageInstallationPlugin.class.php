@@ -30,7 +30,8 @@ use wcf\util\DOMUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Package\Plugin
  */
-class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin implements IGuiPackageInstallationPlugin
+class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin implements
+    IGuiPackageInstallationPlugin
 {
     /**
      * @inheritDoc

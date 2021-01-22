@@ -24,7 +24,8 @@ class SmileyCategoryImporter extends AbstractCategoryImporter
      */
     public function __construct()
     {
-        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.category', 'com.woltlab.wcf.bbcode.smiley');
+        $objectType = ObjectTypeCache::getInstance()
+            ->getObjectTypeByName('com.woltlab.wcf.category', 'com.woltlab.wcf.bbcode.smiley');
         $this->objectTypeID = $objectType->objectTypeID;
     }
 }

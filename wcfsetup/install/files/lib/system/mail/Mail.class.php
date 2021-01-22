@@ -64,8 +64,17 @@ class Mail
      * @param   int|string  $priority
      * @param   string      $header
      */
-    public function __construct($to = '', $subject = '', $message = '', $from = '', $cc = '', $bcc = '', $attachments = [], $priority = '', $header = '')
-    {
+    public function __construct(
+        $to = '',
+        $subject = '',
+        $message = '',
+        $from = '',
+        $cc = '',
+        $bcc = '',
+        $attachments = [],
+        $priority = '',
+        $header = ''
+    ) {
         $this->email = new Email();
 
         if (empty($from)) {

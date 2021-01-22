@@ -46,7 +46,9 @@ class MediaReplaceUploadFileValidationStrategy extends MediaUploadFileValidation
             return false;
         }
 
-        if (\strtolower(\pathinfo($this->media->filename, \PATHINFO_EXTENSION)) !== \strtolower($uploadFile->getFileExtension())) {
+        $currentExtension = \strtolower(\pathinfo($this->media->filename, \PATHINFO_EXTENSION));
+        $newExtension = \strtolower($uploadFile->getFileExtension());
+        if ($currentExtension !== $newExtension) {
             $uploadFile->setValidationErrorType('differentFileExtension');
 
             return false;

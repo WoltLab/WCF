@@ -45,7 +45,8 @@ use wcf\util\XML;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Package\Plugin
  */
-abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin
+abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
+    IIdempotentPackageInstallationPlugin
 {
     // we do no implement `IGuiPackageInstallationPlugin` but instead just
     // provide the default implementation to ensure backwards compatibility

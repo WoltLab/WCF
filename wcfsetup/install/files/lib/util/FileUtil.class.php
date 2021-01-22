@@ -439,8 +439,13 @@ final class FileUtil
      * @deprecated  This method currently only is a wrapper around \wcf\util\HTTPRequest. Please use
      *      HTTPRequest from now on, as this method may be removed in the future.
      */
-    public static function downloadFileFromHttp($httpUrl, $prefix = 'package', array $options = [], array $postParameters = [], &$headers = [])
-    {
+    public static function downloadFileFromHttp(
+        $httpUrl,
+        $prefix = 'package',
+        array $options = [],
+        array $postParameters = [],
+        &$headers = []
+    ) {
         $request = new HTTPRequest($httpUrl, $options, $postParameters);
         $request->execute();
         $reply = $request->getReply();
@@ -688,9 +693,11 @@ final class FileUtil
             // excel
             'xls' => 'excel', 'ods' => 'excel', 'xlsx' => 'excel',
             // image
-            'gif' => 'image', 'jpg' => 'image', 'jpeg' => 'image', 'png' => 'image', 'bmp' => 'image', 'webp' => 'image',
+            'gif' => 'image', 'jpg' => 'image', 'jpeg' => 'image', 'png' => 'image',
+            'bmp' => 'image', 'webp' => 'image',
             // video
-            'avi' => 'video', 'wmv' => 'video', 'mov' => 'video', 'mp4' => 'video', 'mpg' => 'video', 'mpeg' => 'video', 'flv' => 'video',
+            'avi' => 'video', 'wmv' => 'video', 'mov' => 'video', 'mp4' => 'video', 'mpg' => 'video',
+            'mpeg' => 'video', 'flv' => 'video',
             // pdf
             'pdf' => 'pdf',
             // powerpoint

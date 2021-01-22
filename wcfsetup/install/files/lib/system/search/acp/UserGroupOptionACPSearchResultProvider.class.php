@@ -17,7 +17,8 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Search\Acp
  */
-class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultProvider implements IACPSearchResultProvider
+class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultProvider implements
+    IACPSearchResultProvider
 {
     /**
      * @inheritDoc
@@ -89,7 +90,10 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
             $categoryName = $userGroupOption->categoryName;
             $parentCategories = [];
             while (isset($optionCategories[$categoryName])) {
-                \array_unshift($parentCategories, 'wcf.acp.group.option.category.' . $optionCategories[$categoryName]->categoryName);
+                \array_unshift(
+                    $parentCategories,
+                    'wcf.acp.group.option.category.' . $optionCategories[$categoryName]->categoryName
+                );
 
                 $categoryName = $optionCategories[$categoryName]->parentCategoryName;
             }
@@ -103,7 +107,10 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
             $results[] = new ACPSearchResult(
                 WCF::getLanguage()->getDynamicVariable($languageItem),
                 $link,
-                WCF::getLanguage()->getDynamicVariable('wcf.acp.search.result.subtitle', ['pieces' => $parentCategories])
+                WCF::getLanguage()->getDynamicVariable(
+                    'wcf.acp.search.result.subtitle',
+                    ['pieces' => $parentCategories]
+                )
             );
         }
 

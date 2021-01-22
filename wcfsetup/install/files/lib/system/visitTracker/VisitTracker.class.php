@@ -42,7 +42,8 @@ class VisitTracker extends SingletonFactory
     protected function init()
     {
         // get available object types
-        $this->availableObjectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.visitTracker.objectType');
+        $this->availableObjectTypes = ObjectTypeCache::getInstance()
+            ->getObjectTypes('com.woltlab.wcf.visitTracker.objectType');
     }
 
     /**
@@ -85,7 +86,11 @@ class VisitTracker extends SingletonFactory
                     $this->userVisits = $statement->fetchMap('objectTypeID', 'visitTime');
 
                     // update storage data
-                    UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'trackedUserVisits', \serialize($this->userVisits));
+                    UserStorageHandler::getInstance()->update(
+                        WCF::getUser()->userID,
+                        'trackedUserVisits',
+                        \serialize($this->userVisits)
+                    );
                 } else {
                     $this->userVisits = @\unserialize($data);
                 }
@@ -201,7 +206,10 @@ class VisitTracker extends SingletonFactory
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->getObjectTypeID($objectType), $objectID, WCF::getUser()->userID, $time]);
         } elseif (WCF::getSession()->spiderID === null) {
-            WCF::getSession()->register('trackedUserVisit_' . $this->getObjectTypeID($objectType) . '_' . $objectID, $time);
+            WCF::getSession()->register(
+                'trackedUserVisit_' . $this->getObjectTypeID($objectType) . '_' . $objectID,
+                $time
+            );
         }
     }
 

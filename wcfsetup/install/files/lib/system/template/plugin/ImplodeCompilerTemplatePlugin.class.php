@@ -34,12 +34,20 @@ class ImplodeCompilerTemplatePlugin implements ICompilerTemplatePlugin
 
         if (!isset($tagArgs['from'])) {
             throw new SystemException(
-                $compiler::formatSyntaxError("missing 'from' argument in implode tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo())
+                $compiler::formatSyntaxError(
+                    "missing 'from' argument in implode tag",
+                    $compiler->getCurrentIdentifier(),
+                    $compiler->getCurrentLineNo()
+                )
             );
         }
         if (!isset($tagArgs['item'])) {
             throw new SystemException(
-                $compiler::formatSyntaxError("missing 'item' argument in implode tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo())
+                $compiler::formatSyntaxError(
+                    "missing 'item' argument in implode tag",
+                    $compiler->getCurrentIdentifier(),
+                    $compiler->getCurrentLineNo()
+                )
             );
         }
 

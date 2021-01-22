@@ -141,7 +141,11 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin
                 $parameters['application'] = $tagArgs['application'];
             }
 
-            $link = StringUtil::encodeHTML(LinkHandler::getInstance()->getLink($tagArgs['controller'], $parameters, $tagArgs['link']));
+            $link = StringUtil::encodeHTML(LinkHandler::getInstance()->getLink(
+                $tagArgs['controller'],
+                $parameters,
+                $tagArgs['link']
+            ));
 
             if (!isset($tagArgs['page'])) {
                 if (($tagArgs['page'] = $tplObj->get('pageNo')) === null) {

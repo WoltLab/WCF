@@ -86,7 +86,8 @@ class SmileyImporter extends AbstractImporter
 
         // get category id
         if (!empty($data['categoryID'])) {
-            $data['categoryID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.smiley.category', $data['categoryID']);
+            $data['categoryID'] = ImportHandler::getInstance()
+                ->getNewID('com.woltlab.wcf.smiley.category', $data['categoryID']);
         }
 
         // save smiley

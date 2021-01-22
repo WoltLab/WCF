@@ -114,7 +114,9 @@ class FileOptionType extends AbstractOptionType
         if ($option->filevalidation) {
             $fileValidation = new $option->filevalidation();
             if (!($fileValidation instanceof IUploadFileValidationStrategy)) {
-                throw new SystemException("The file validation class needs to implement '" . IUploadFileValidationStrategy::class . "'");
+                throw new SystemException(
+                    "The file validation class needs to implement '" . IUploadFileValidationStrategy::class . "'"
+                );
             }
 
             if (!$this->uploadHandlers[$option->optionName]->validateFiles($fileValidation)) {

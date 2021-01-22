@@ -24,7 +24,8 @@ class UserCommentImporter extends AbstractCommentImporter
      */
     public function __construct()
     {
-        $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.comment.commentableContent', 'com.woltlab.wcf.user.profileComment');
+        $objectType = ObjectTypeCache::getInstance()
+            ->getObjectTypeByName('com.woltlab.wcf.comment.commentableContent', 'com.woltlab.wcf.user.profileComment');
         $this->objectTypeID = $objectType->objectTypeID;
     }
 

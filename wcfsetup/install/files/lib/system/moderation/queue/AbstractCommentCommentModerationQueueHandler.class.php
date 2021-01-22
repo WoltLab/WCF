@@ -114,7 +114,9 @@ class AbstractCommentCommentModerationQueueHandler extends AbstractModerationQue
     protected function getCommentManager(Comment $comment)
     {
         if (!isset(self::$commentManagers[$comment->objectTypeID])) {
-            self::$commentManagers[$comment->objectTypeID] = ObjectTypeCache::getInstance()->getObjectType($comment->objectTypeID)->getProcessor();
+            self::$commentManagers[$comment->objectTypeID] = ObjectTypeCache::getInstance()
+                ->getObjectType($comment->objectTypeID)
+                ->getProcessor();
         }
 
         return self::$commentManagers[$comment->objectTypeID];

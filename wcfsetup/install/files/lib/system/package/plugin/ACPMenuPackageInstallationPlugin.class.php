@@ -22,7 +22,8 @@ use wcf\system\form\builder\IFormDocument;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Package\Plugin
  */
-class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPlugin implements IGuiPackageInstallationPlugin
+class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPlugin implements
+    IGuiPackageInstallationPlugin
 {
     /**
      * @inheritDoc
@@ -109,17 +110,23 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 
         /** @var TextFormField $menuItemControllerFormField */
         $menuItemControllerFormField = $form->getNodeById('menuItemController');
-        $menuItemControllerFormField->addValidator(new FormFieldValidator('acpController', static function (TextFormField $formField) {
-            // the controller must be an ACP controller
-            if ($formField->getSaveValue() !== '' && !\preg_match("~^[a-z]+\\\\acp\\\\~", $formField->getSaveValue())) {
-                $formField->addValidationError(
-                    new FormFieldValidationError(
-                        'noAcpController',
-                        'wcf.acp.pip.acpMenu.menuItemController.error.noAcpController'
-                    )
-                );
+        $menuItemControllerFormField->addValidator(new FormFieldValidator(
+            'acpController',
+            static function (TextFormField $formField) {
+                // the controller must be an ACP controller
+                if (
+                    $formField->getSaveValue() !== ''
+                    && !\preg_match("~^[a-z]+\\\\acp\\\\~", $formField->getSaveValue())
+                ) {
+                    $formField->addValidationError(
+                        new FormFieldValidationError(
+                            'noAcpController',
+                            'wcf.acp.pip.acpMenu.menuItemController.error.noAcpController'
+                        )
+                    );
+                }
             }
-        }));
+        ));
 
         // add dependencies to default fields
 

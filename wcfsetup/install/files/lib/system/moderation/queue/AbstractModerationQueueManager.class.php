@@ -30,7 +30,9 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
      */
     public function assignQueues($objectTypeID, array $queues)
     {
-        ModerationQueueManager::getInstance()->getProcessor($this->definitionName, null, $objectTypeID)->assignQueues($queues);
+        ModerationQueueManager::getInstance()
+            ->getProcessor($this->definitionName, null, $objectTypeID)
+            ->assignQueues($queues);
     }
 
     /**
@@ -62,7 +64,9 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
      */
     public function populate($objectTypeID, array $objects)
     {
-        ModerationQueueManager::getInstance()->getProcessor($this->definitionName, null, $objectTypeID)->populate($objects);
+        ModerationQueueManager::getInstance()
+            ->getProcessor($this->definitionName, null, $objectTypeID)
+            ->populate($objects);
     }
 
     /**

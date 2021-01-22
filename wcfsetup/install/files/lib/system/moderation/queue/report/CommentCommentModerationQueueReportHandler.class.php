@@ -13,7 +13,8 @@ use wcf\system\moderation\queue\AbstractCommentCommentModerationQueueHandler;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Moderation\Queue
  */
-class CommentCommentModerationQueueReportHandler extends AbstractCommentCommentModerationQueueHandler implements IModerationQueueReportHandler
+class CommentCommentModerationQueueReportHandler extends AbstractCommentCommentModerationQueueHandler implements
+    IModerationQueueReportHandler
 {
     /**
      * @inheritDoc

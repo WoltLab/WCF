@@ -27,7 +27,8 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Package\Plugin
  */
-class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin
+class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
+    IGuiPackageInstallationPlugin
 {
     use TXmlGuiPackageInstallationPlugin;
 
@@ -171,7 +172,10 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
             TextFormField::create('providerName')
                 ->objectProperty('name')
                 ->label('wcf.acp.pip.acpSearchProvider.providerName')
-                ->description('wcf.acp.pip.acpSearchProvider.providerName.description', ['project' => $this->installation->getProject()])
+                ->description(
+                    'wcf.acp.pip.acpSearchProvider.providerName.description',
+                    ['project' => $this->installation->getProject()]
+                )
                 ->required()
                 ->addValidator(FormFieldValidatorUtil::getDotSeparatedStringValidator(
                     'wcf.acp.pip.acpSearchProvider.providerName',

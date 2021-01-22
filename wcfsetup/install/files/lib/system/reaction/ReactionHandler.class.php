@@ -192,11 +192,16 @@ class ReactionHandler extends SingletonFactory
         }
 
         if (!isset($this->likeableObjectsCache[$objectTypeName][$objectID])) {
-            throw new \InvalidArgumentException("Object with the object id '{$objectID}' for object type '{$objectTypeName}' is unknown.");
+            throw new \InvalidArgumentException(
+                "Object with the object id '{$objectID}' for object type '{$objectTypeName}' is unknown."
+            );
         }
 
         if (!($this->likeableObjectsCache[$objectTypeName][$objectID] instanceof ILikeObject)) {
-            throw new ImplementationException(\get_class($this->likeableObjectsCache[$objectTypeName][$objectID]), ILikeObject::class);
+            throw new ImplementationException(
+                \get_class($this->likeableObjectsCache[$objectTypeName][$objectID]),
+                ILikeObject::class
+            );
         }
 
         return $this->likeableObjectsCache[$objectTypeName][$objectID];
@@ -347,7 +352,11 @@ class ReactionHandler extends SingletonFactory
                 $like = $returnValues['returnValues'];
 
                 if ($likeable->getUserID()) {
-                    UserActivityPointHandler::getInstance()->fireEvent('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $like->likeID, $likeable->getUserID());
+                    UserActivityPointHandler::getInstance()->fireEvent(
+                        'com.woltlab.wcf.like.activityPointEvent.receivedLikes',
+                        $like->likeID,
+                        $likeable->getUserID()
+                    );
                 }
             } else {
                 (new ReactionAction([$like], 'update', ['data' => [
@@ -357,7 +366,10 @@ class ReactionHandler extends SingletonFactory
                 ]]))->executeAction();
 
                 if ($likeable->getUserID()) {
-                    UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', [$likeable->getUserID() => 1]);
+                    UserActivityPointHandler::getInstance()->removeEvents(
+                        'com.woltlab.wcf.like.activityPointEvent.receivedLikes',
+                        [$likeable->getUserID() => 1]
+                    );
                 }
             }
 
@@ -373,14 +385,28 @@ class ReactionHandler extends SingletonFactory
 
             // update recent activity
             if (UserActivityEventHandler::getInstance()->getObjectTypeID($likeable->getObjectType()->objectType . '.recentActivityEvent')) {
-                $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.recentActivityEvent', $likeable->getObjectType()->objectType . '.recentActivityEvent');
+                $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
+                    'com.woltlab.wcf.user.recentActivityEvent',
+                    $likeable->getObjectType()->objectType . '.recentActivityEvent'
+                );
 
                 if ($objectType->supportsReactions) {
                     if ($like->likeID) {
-                        UserActivityEventHandler::getInstance()->removeEvent($likeable->getObjectType()->objectType . '.recentActivityEvent', $likeable->getObjectID(), $user->userID);
+                        UserActivityEventHandler::getInstance()->removeEvent(
+                            $likeable->getObjectType()->objectType . '.recentActivityEvent',
+                            $likeable->getObjectID(),
+                            $user->userID
+                        );
                     }
 
-                    UserActivityEventHandler::getInstance()->fireEvent($likeable->getObjectType()->objectType . '.recentActivityEvent', $likeable->getObjectID(), $likeable->getLanguageID(), $user->userID, TIME_NOW, ['reactionType' => $reaction]);
+                    UserActivityEventHandler::getInstance()->fireEvent(
+                        $likeable->getObjectType()->objectType . '.recentActivityEvent',
+                        $likeable->getObjectID(),
+                        $likeable->getLanguageID(),
+                        $user->userID,
+                        TIME_NOW,
+                        ['reactionType' => $reaction]
+                    );
                 }
             }
 
@@ -412,8 +438,12 @@ class ReactionHandler extends SingletonFactory
      * @param   ReactionType    $reactionType
      * @return  array
      */
-    private function updateLikeObject(ILikeObject $likeable, LikeObject $likeObject, Like $like, ReactionType $reactionType)
-    {
+    private function updateLikeObject(
+        ILikeObject $likeable,
+        LikeObject $likeObject,
+        Like $like,
+        ReactionType $reactionType
+    ) {
         // update existing object
         if ($likeObject->likeObjectID) {
             $cumulativeLikes = $likeObject->cumulativeLikes;
@@ -492,8 +522,12 @@ class ReactionHandler extends SingletonFactory
      * @param   Like        $like
      * @param   ReactionType    $reactionType
      */
-    private function updateUsersLikeCounter(ILikeObject $likeable, LikeObject $likeObject, Like $like, ?ReactionType $reactionType = null)
-    {
+    private function updateUsersLikeCounter(
+        ILikeObject $likeable,
+        LikeObject $likeObject,
+        Like $like,
+        ?ReactionType $reactionType = null
+    ) {
         if ($likeable->getUserID()) {
             $likesReceived = 0;
             if ($like->likeID) {
@@ -537,7 +571,10 @@ class ReactionHandler extends SingletonFactory
             (new ReactionAction([$like], 'delete'))->executeAction();
 
             if ($likeable->getUserID()) {
-                UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', [$likeable->getUserID() => 1]);
+                UserActivityPointHandler::getInstance()->removeEvents(
+                    'com.woltlab.wcf.like.activityPointEvent.receivedLikes',
+                    [$likeable->getUserID() => 1]
+                );
             }
 
             // update object's like counter
@@ -545,7 +582,11 @@ class ReactionHandler extends SingletonFactory
 
             // delete recent activity
             if (UserActivityEventHandler::getInstance()->getObjectTypeID($likeable->getObjectType()->objectType . '.recentActivityEvent')) {
-                UserActivityEventHandler::getInstance()->removeEvent($likeable->getObjectType()->objectType . '.recentActivityEvent', $likeable->getObjectID(), $user->userID);
+                UserActivityEventHandler::getInstance()->removeEvent(
+                    $likeable->getObjectType()->objectType . '.recentActivityEvent',
+                    $likeable->getObjectID(),
+                    $user->userID
+                );
             }
 
             WCF::getDB()->commitTransaction();
@@ -680,14 +721,17 @@ class ReactionHandler extends SingletonFactory
             // delete like notifications
             if (!empty($notificationObjectTypes)) {
                 foreach ($notificationObjectTypes as $notificationObjectType) {
-                    UserNotificationHandler::getInstance()->removeNotifications($notificationObjectType, $likeList->getObjectIDs());
+                    UserNotificationHandler::getInstance()
+                        ->removeNotifications($notificationObjectType, $likeList->getObjectIDs());
                 }
             } elseif (UserNotificationHandler::getInstance()->getObjectTypeID($objectType . '.notification')) {
-                UserNotificationHandler::getInstance()->removeNotifications($objectType . '.notification', $likeList->getObjectIDs());
+                UserNotificationHandler::getInstance()
+                    ->removeNotifications($objectType . '.notification', $likeList->getObjectIDs());
             }
 
             // revoke activity points
-            UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $activityPoints);
+            UserActivityPointHandler::getInstance()
+                ->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $activityPoints);
 
             // delete likes
             (new ReactionAction(\array_keys($likeData), 'delete'))->executeAction();
@@ -700,7 +744,8 @@ class ReactionHandler extends SingletonFactory
 
         // delete activity events
         if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType . '.recentActivityEvent')) {
-            UserActivityEventHandler::getInstance()->removeEvents($objectTypeObj->objectType . '.recentActivityEvent', $objectIDs);
+            UserActivityEventHandler::getInstance()
+                ->removeEvents($objectTypeObj->objectType . '.recentActivityEvent', $objectIDs);
         }
     }
 

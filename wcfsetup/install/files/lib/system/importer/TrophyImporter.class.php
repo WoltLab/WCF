@@ -36,7 +36,8 @@ class TrophyImporter extends AbstractImporter
     public function import($oldID, array $data, array $additionalData = [])
     {
         if (isset($data['categoryID'])) {
-            $data['categoryID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.trophy.category', $data['categoryID']);
+            $data['categoryID'] = ImportHandler::getInstance()
+                ->getNewID('com.woltlab.wcf.trophy.category', $data['categoryID']);
         }
 
         if (!$data['categoryID']) {
@@ -110,7 +111,8 @@ class TrophyImporter extends AbstractImporter
     private function getImportCategoryID()
     {
         if (!$this->importCategoryID) {
-            $objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.category', 'com.woltlab.wcf.trophy.category');
+            $objectTypeID = ObjectTypeCache::getInstance()
+                ->getObjectTypeIDByName('com.woltlab.wcf.category', 'com.woltlab.wcf.trophy.category');
 
             $sql = "SELECT      categoryID
                     FROM        wcf" . WCF_N . "_category

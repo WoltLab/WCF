@@ -53,11 +53,17 @@ class LookupRequestRoute implements IRequestRoute
             $application = ApplicationHandler::getInstance()->getActiveApplication()->getAbbreviation();
             if (!empty($matches['id'])) {
                 // check for static controller URLs
-                $this->routeData = ControllerMap::getInstance()->resolveCustomController($application, FileUtil::removeTrailingSlash($matches['controller']));
+                $this->routeData = ControllerMap::getInstance()->resolveCustomController(
+                    $application,
+                    FileUtil::removeTrailingSlash($matches['controller'])
+                );
 
                 // lookup WCF controllers unless initial request targeted WCF itself
                 if (empty($this->routeData) && $application !== 'wcf') {
-                    $this->routeData = ControllerMap::getInstance()->resolveCustomController('wcf', FileUtil::removeTrailingSlash($matches['controller']));
+                    $this->routeData = ControllerMap::getInstance()->resolveCustomController(
+                        'wcf',
+                        FileUtil::removeTrailingSlash($matches['controller'])
+                    );
                 }
 
                 if (!empty($this->routeData)) {
@@ -73,11 +79,17 @@ class LookupRequestRoute implements IRequestRoute
 
             if (empty($this->routeData)) {
                 // try to match the entire url
-                $this->routeData = ControllerMap::getInstance()->resolveCustomController($application, FileUtil::removeTrailingSlash($requestURL));
+                $this->routeData = ControllerMap::getInstance()->resolveCustomController(
+                    $application,
+                    FileUtil::removeTrailingSlash($requestURL)
+                );
 
                 // lookup WCF controllers unless initial request targeted WCF itself
                 if (empty($this->routeData) && $application !== 'wcf') {
-                    $this->routeData = ControllerMap::getInstance()->resolveCustomController('wcf', FileUtil::removeTrailingSlash($requestURL));
+                    $this->routeData = ControllerMap::getInstance()->resolveCustomController(
+                        'wcf',
+                        FileUtil::removeTrailingSlash($requestURL)
+                    );
                 }
             }
         }
@@ -113,7 +125,9 @@ class LookupRequestRoute implements IRequestRoute
      */
     public function buildLink(array $components)
     {
-        throw new \BadMethodCallException('LookupRequestRoute cannot build links, please verify capabilities by calling canHandle() first.');
+        throw new \BadMethodCallException(
+            'LookupRequestRoute cannot build links, please verify capabilities by calling canHandle() first.'
+        );
     }
 
     /**

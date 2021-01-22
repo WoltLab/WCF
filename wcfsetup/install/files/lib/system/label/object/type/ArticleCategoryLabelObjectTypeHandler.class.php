@@ -43,11 +43,23 @@ class ArticleCategoryLabelObjectTypeHandler extends AbstractLabelObjectTypeHandl
         $this->container = new LabelObjectTypeContainer($this->objectTypeID);
         /** @var ArticleCategoryNode $category */
         foreach ($this->categoryList as $category) {
-            $this->container->add(new LabelObjectType($category->getTitle(), $category->categoryID, 0));
+            $this->container->add(new LabelObjectType(
+                $category->getTitle(),
+                $category->categoryID,
+                0
+            ));
             foreach ($category as $subCategory) {
-                $this->container->add(new LabelObjectType($subCategory->getTitle(), $subCategory->categoryID, 1));
+                $this->container->add(new LabelObjectType(
+                    $subCategory->getTitle(),
+                    $subCategory->categoryID,
+                    1
+                ));
                 foreach ($subCategory as $subSubCategory) {
-                    $this->container->add(new LabelObjectType($subSubCategory->getTitle(), $subSubCategory->categoryID, 2));
+                    $this->container->add(new LabelObjectType(
+                        $subSubCategory->getTitle(),
+                        $subSubCategory->categoryID,
+                        2
+                    ));
                 }
             }
         }

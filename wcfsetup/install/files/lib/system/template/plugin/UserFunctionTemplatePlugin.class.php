@@ -52,7 +52,9 @@ class UserFunctionTemplatePlugin implements IFunctionTemplatePlugin
                 $type = "'" . \get_class($object) . "' object";
             }
 
-            throw new \InvalidArgumentException("'object' attribute is no '" . UserProfile::class . "' object, instead {$type} given.");
+            throw new \InvalidArgumentException(
+                "'object' attribute is no '" . UserProfile::class . "' object, instead {$type} given."
+            );
         }
 
         $additionalParameters = '';

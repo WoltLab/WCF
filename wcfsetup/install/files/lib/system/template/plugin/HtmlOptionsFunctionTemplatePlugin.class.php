@@ -54,7 +54,10 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
             }
         }
 
-        if (!isset($tagArgs['options']) || (!\is_array($tagArgs['options']) && !($tagArgs['options'] instanceof DatabaseObjectList))) {
+        if (
+            !isset($tagArgs['options'])
+            || (!\is_array($tagArgs['options']) && !($tagArgs['options'] instanceof DatabaseObjectList))
+        ) {
             throw new SystemException("missing 'options' or 'object' argument in htmlOptions tag");
         }
 
@@ -79,7 +82,14 @@ class HtmlOptionsFunctionTemplatePlugin extends HtmlCheckboxesFunctionTemplatePl
         // create also a 'select' tag
         if (isset($tagArgs['name'])) {
             // unset all system vars
-            unset($tagArgs['object'], $tagArgs['options'], $tagArgs['selected'], $tagArgs['output'], $tagArgs['values'], $tagArgs['disableEncoding']);
+            unset(
+                $tagArgs['object'],
+                $tagArgs['options'],
+                $tagArgs['selected'],
+                $tagArgs['output'],
+                $tagArgs['values'],
+                $tagArgs['disableEncoding']
+            );
 
             // generate 'select' parameters
             $params = '';

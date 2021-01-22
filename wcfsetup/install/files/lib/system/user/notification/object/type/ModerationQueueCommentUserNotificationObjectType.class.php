@@ -15,7 +15,8 @@ use wcf\system\user\notification\object\CommentUserNotificationObject;
  * @package WoltLabSuite\Core\System\User\Notification\Object\Type
  * @since   3.0
  */
-class ModerationQueueCommentUserNotificationObjectType extends AbstractUserNotificationObjectType implements IMultiRecipientCommentUserNotificationObjectType
+class ModerationQueueCommentUserNotificationObjectType extends AbstractUserNotificationObjectType implements
+    IMultiRecipientCommentUserNotificationObjectType
 {
     use TMultiRecipientModerationQueueCommentUserNotificationObjectType;
 

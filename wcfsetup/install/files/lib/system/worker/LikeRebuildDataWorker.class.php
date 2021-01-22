@@ -149,7 +149,12 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker
                         $data['objectUserID'],
                         $existingRow['likes'] + $data['likes'],
                         $existingRow['cumulativeLikes'] + $data['cumulativeLikes'],
-                        \serialize($this->mergeCachedReactions(@\unserialize($existingRow['cachedReactions']), $data['cachedReactions'])),
+                        \serialize(
+                            $this->mergeCachedReactions(
+                                @\unserialize($existingRow['cachedReactions']),
+                                $data['cachedReactions']
+                            )
+                        ),
                         $objectTypeID,
                         $objectID,
                     ]);

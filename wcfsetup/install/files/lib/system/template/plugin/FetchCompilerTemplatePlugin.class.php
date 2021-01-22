@@ -26,7 +26,13 @@ class FetchCompilerTemplatePlugin implements ICompilerTemplatePlugin
     public function executeStart($tagArgs, TemplateScriptingCompiler $compiler)
     {
         if (!isset($tagArgs['file'])) {
-            throw new SystemException($compiler::formatSyntaxError("missing 'file' argument in fetch tag", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
+            throw new SystemException(
+                $compiler::formatSyntaxError(
+                    "missing 'file' argument in fetch tag",
+                    $compiler->getCurrentIdentifier(),
+                    $compiler->getCurrentLineNo()
+                )
+            );
         }
 
         if (isset($tagArgs['assign'])) {
@@ -41,6 +47,12 @@ class FetchCompilerTemplatePlugin implements ICompilerTemplatePlugin
      */
     public function executeEnd(TemplateScriptingCompiler $compiler)
     {
-        throw new SystemException($compiler::formatSyntaxError("unknown tag {/fetch}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));
+        throw new SystemException(
+            $compiler::formatSyntaxError(
+                "unknown tag {/fetch}",
+                $compiler->getCurrentIdentifier(),
+                $compiler->getCurrentLineNo()
+            )
+        );
     }
 }

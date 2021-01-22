@@ -275,7 +275,11 @@ class ControllerMap extends SingletonFactory
                 if (
                     isset($this->customUrls['lookup']['wcf'])
                     && isset($this->customUrls['lookup']['wcf'][''])
-                    && \preg_match('~^__WCF_CMS__\d+\-(?P<languageID>\d+)$~', $this->customUrls['lookup']['wcf'][''], $match)
+                    && \preg_match(
+                        '~^__WCF_CMS__\d+\-(?P<languageID>\d+)$~',
+                        $this->customUrls['lookup']['wcf'][''],
+                        $match
+                    )
                 ) {
                     $languageID = $match['languageID'];
                 }
