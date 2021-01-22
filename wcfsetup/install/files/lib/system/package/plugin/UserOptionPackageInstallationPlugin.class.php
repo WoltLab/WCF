@@ -370,7 +370,9 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
                 'selectOptions',
                 static function (IFormDocument $document, array $parameters) {
                     if (isset($parameters['data']['selectoptions'])) {
-                        $parameters['data']['selectoptions'] = StringUtil::unifyNewlines($parameters['data']['selectoptions']);
+                        $parameters['data']['selectoptions'] = StringUtil::unifyNewlines(
+                            $parameters['data']['selectoptions']
+                        );
                     }
 
                     return $parameters;

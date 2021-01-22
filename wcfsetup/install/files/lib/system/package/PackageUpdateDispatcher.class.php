@@ -163,7 +163,10 @@ class PackageUpdateDispatcher extends SingletonFactory
         $apiVersion = $updateServer->apiVersion;
         if (\in_array($apiVersion, ['2.1', '3.1'])) {
             // skip etag check for WoltLab servers when an auth code is provided
-            if (!\preg_match('~^https?://(?:update|store)\.woltlab\.com\/~', $updateServer->serverURL) || !PACKAGE_SERVER_AUTH_CODE) {
+            if (
+                !\preg_match('~^https?://(?:update|store)\.woltlab\.com\/~', $updateServer->serverURL)
+                || !PACKAGE_SERVER_AUTH_CODE
+            ) {
                 $metaData = $updateServer->getMetaData();
                 if (isset($metaData['list']['etag'])) {
                     $request->addHeader('if-none-match', $metaData['list']['etag']);
@@ -186,7 +189,8 @@ class PackageUpdateDispatcher extends SingletonFactory
             // status code 0 is a connection timeout
             if (!$statusCode && $secureConnection) {
                 if (\preg_match('~https?://(?:update|store)\.woltlab\.com\/~', $updateServer->serverURL)) {
-                    // woltlab.com servers are most likely to be available, thus we assume that SSL connections are dropped
+                    // woltlab.com servers are most likely to be available,
+                    // thus we assume that SSL connections are dropped
                     RemoteFile::disableSSL();
                 }
 
@@ -196,7 +200,9 @@ class PackageUpdateDispatcher extends SingletonFactory
                 return;
             }
 
-            throw new SystemException(WCF::getLanguage()->get('wcf.acp.package.update.error.listNotFound') . ' (' . $statusCode . ')');
+            throw new SystemException(
+                WCF::getLanguage()->get('wcf.acp.package.update.error.listNotFound') . ' (' . $statusCode . ')'
+            );
         }
 
         $data = [
@@ -314,8 +320,12 @@ class PackageUpdateDispatcher extends SingletonFactory
      * @return      array
      * @throws      PackageValidationException
      */
-    protected function parsePackageUpdateXMLBlock(PackageUpdateServer $updateServer, \DOMXPath $xpath, \DOMElement $package, $apiVersion)
-    {
+    protected function parsePackageUpdateXMLBlock(
+        PackageUpdateServer $updateServer,
+        \DOMXPath $xpath,
+        \DOMElement $package,
+        $apiVersion
+    ) {
         // define default values
         $packageInfo = [
             'author' => '',
@@ -472,7 +482,10 @@ class PackageUpdateDispatcher extends SingletonFactory
                                 $versionNumber = $compatibleVersion->getAttribute('version');
                                 if (!\preg_match('~^(?:201[7-9]|20[2-9][0-9])$~', $versionNumber)) {
                                     if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
-                                        throw new PackageValidationException(PackageValidationException::INVALID_API_VERSION, ['version' => $versionNumber]);
+                                        throw new PackageValidationException(
+                                            PackageValidationException::INVALID_API_VERSION,
+                                            ['version' => $versionNumber]
+                                        );
                                     } else {
                                         continue;
                                     }
@@ -497,7 +510,7 @@ class PackageUpdateDispatcher extends SingletonFactory
      */
     protected function savePackageUpdates(array &$allNewPackages, $packageUpdateServerID)
     {
-        $excludedPackagesParameters = $fromversionParameters = $insertParameters = $optionalInserts = $requirementInserts = $compatibilityInserts = [];
+        $excludedPackagesParameters = $optionalInserts = $requirementInserts = $compatibilityInserts = [];
         $sql = "INSERT INTO wcf" . WCF_N . "_package_update
                             (packageUpdateServerID, package, packageName, packageDescription, author, authorURL, isApplication, pluginStoreFileID)
                 VALUES      (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -621,15 +634,19 @@ class PackageUpdateDispatcher extends SingletonFactory
                         $excludeCore60 = '6.0.0 Alpha 1';
 
                         $coreExclude = null;
-                        $versionData['excludedPackages'] = \array_filter($versionData['excludedPackages'], static function ($excludedPackage, $excludedVersion) use (&$coreExclude) {
-                            if ($excludedPackage === 'com.woltlab.wcf') {
-                                $coreExclude = $excludedVersion;
+                        $versionData['excludedPackages'] = \array_filter(
+                            $versionData['excludedPackages'],
+                            static function ($excludedPackage, $excludedVersion) use (&$coreExclude) {
+                                if ($excludedPackage === 'com.woltlab.wcf') {
+                                    $coreExclude = $excludedVersion;
 
-                                return false;
-                            }
+                                    return false;
+                                }
 
-                            return true;
-                        }, \ARRAY_FILTER_USE_BOTH);
+                                return true;
+                            },
+                            \ARRAY_FILTER_USE_BOTH
+                        );
 
                         if ($coreExclude === null || Package::compareVersion($coreExclude, $excludeCore60, '>')) {
                             $versionData['excludedPackages'][] = [
@@ -819,7 +836,10 @@ class PackageUpdateDispatcher extends SingletonFactory
             foreach ($existingPackages as $identifier => $instances) {
                 foreach ($instances as $instance) {
                     if ($instance['isApplication'] && isset($updates[$instance['packageID']])) {
-                        $updates = $this->removeUpdateRequirements($updates, $updates[$instance['packageID']]['version']['servers'][0]['packageUpdateVersionID']);
+                        $updates = $this->removeUpdateRequirements(
+                            $updates,
+                            $updates[$instance['packageID']]['version']['servers'][0]['packageUpdateVersionID']
+                        );
                     }
                 }
             }
@@ -871,7 +891,10 @@ class PackageUpdateDispatcher extends SingletonFactory
         $statement->execute([$packageUpdateVersionID]);
         while ($row = $statement->fetchArray()) {
             if (isset($updates[$row['packageID']])) {
-                $updates = $this->removeUpdateRequirements($updates, $updates[$row['packageID']]['version']['servers'][0]['packageUpdateVersionID']);
+                $updates = $this->removeUpdateRequirements(
+                    $updates,
+                    $updates[$row['packageID']]['version']['servers'][0]['packageUpdateVersionID']
+                );
                 if (Package::compareVersion($row['minversion'], $updates[$row['packageID']]['version']['packageVersion'], '>=')) {
                     unset($updates[$row['packageID']]);
                 }

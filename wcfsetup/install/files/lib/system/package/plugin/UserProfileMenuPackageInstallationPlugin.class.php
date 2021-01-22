@@ -28,7 +28,8 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Package\Plugin
  */
-class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin
+class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
+    IGuiPackageInstallationPlugin
 {
     use TXmlGuiPackageInstallationPlugin;
 
@@ -138,9 +139,15 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
                     }
                 }))
                 ->addValidator(new FormFieldValidator('uniqueness', function (TextFormField $formField) {
-                    if ($formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE || $this->editedEntry->getAttribute('name') !== $formField->getValue()) {
+                    if (
+                        $formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE
+                        || $this->editedEntry->getAttribute('name') !== $formField->getValue()
+                    ) {
                         $menuItemList = new UserProfileMenuItemList();
-                        $menuItemList->getConditionBuilder()->add('user_profile_menu_item.menuItem = ?', [$formField->getValue()]);
+                        $menuItemList->getConditionBuilder()->add(
+                            'user_profile_menu_item.menuItem = ?',
+                            [$formField->getValue()]
+                        );
 
                         if ($menuItemList->countObjects() > 0) {
                             $formField->addValidationError(

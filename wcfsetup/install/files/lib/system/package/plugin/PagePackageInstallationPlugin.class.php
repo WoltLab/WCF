@@ -49,7 +49,8 @@ use wcf\util\StringUtil;
  * @package WoltLabSuite\Core\Acp\Package\Plugin
  * @since   3.0
  */
-class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin
+class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
+    IGuiPackageInstallationPlugin
 {
     use TXmlGuiPackageInstallationPlugin;
 

@@ -27,7 +27,8 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Package\Plugin
  */
-class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin
+class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
+    IGuiPackageInstallationPlugin
 {
     use TXmlGuiPackageInstallationPlugin;
 
@@ -146,21 +147,24 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
                 ->description('wcf.acp.pip.smiley.smileyCode.description')
                 ->required()
                 ->maximumLength(255)
-                ->addValidator(new FormFieldValidator('uniqueness', function (TextFormField $formField) use ($smileyCodes) {
-                    if (
-                        $formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE
-                        || $this->editedEntry->getAttribute('name') !== $formField->getSaveValue()
-                    ) {
-                        if (\in_array($formField->getValue(), $smileyCodes)) {
-                            $formField->addValidationError(
-                                new FormFieldValidationError(
-                                    'notUnique',
-                                    'wcf.acp.pip.smiley.smileyCode.error.notUnique'
-                                )
-                            );
+                ->addValidator(new FormFieldValidator(
+                    'uniqueness',
+                    function (TextFormField $formField) use ($smileyCodes) {
+                        if (
+                            $formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE
+                            || $this->editedEntry->getAttribute('name') !== $formField->getSaveValue()
+                        ) {
+                            if (\in_array($formField->getValue(), $smileyCodes)) {
+                                $formField->addValidationError(
+                                    new FormFieldValidationError(
+                                        'notUnique',
+                                        'wcf.acp.pip.smiley.smileyCode.error.notUnique'
+                                    )
+                                );
+                            }
                         }
                     }
-                })),
+                )),
 
             TitleFormField::create('smileyTitle')
                 ->objectProperty('title')
@@ -171,35 +175,38 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
                 ->label('wcf.acp.pip.smiley.aliases')
                 ->description('wcf.acp.pip.smiley.aliases.description')
                 ->saveValueType(ItemListFormField::SAVE_VALUE_TYPE_NSV)
-                ->addValidator(new FormFieldValidator('uniqueness', function (ItemListFormField $formField) use ($smileyCodes) {
-                    if (empty($formField->getValue())) {
-                        return;
-                    }
+                ->addValidator(new FormFieldValidator(
+                    'uniqueness',
+                    function (ItemListFormField $formField) use ($smileyCodes) {
+                        if (empty($formField->getValue())) {
+                            return;
+                        }
 
-                    $aliases = $this->editedEntry ? $this->editedEntry->getElementsByTagName('aliases')->item(0) : null;
-                    if (
-                        $formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE
-                        || $aliases === null
-                        || $aliases->nodeValue !== $formField->getSaveValue()
-                    ) {
-                        $notUniqueCodes = [];
-                        foreach ($formField->getValue() as $alias) {
-                            if (\in_array($alias, $smileyCodes)) {
-                                $notUniqueCodes[] = $alias;
+                        $aliases = $this->editedEntry ? $this->editedEntry->getElementsByTagName('aliases')->item(0) : null;
+                        if (
+                            $formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE
+                            || $aliases === null
+                            || $aliases->nodeValue !== $formField->getSaveValue()
+                        ) {
+                            $notUniqueCodes = [];
+                            foreach ($formField->getValue() as $alias) {
+                                if (\in_array($alias, $smileyCodes)) {
+                                    $notUniqueCodes[] = $alias;
+                                }
+                            }
+
+                            if (!empty($notUniqueCodes)) {
+                                $formField->addValidationError(
+                                    new FormFieldValidationError(
+                                        'notUnique',
+                                        'wcf.acp.pip.smiley.aliases.error.notUnique',
+                                        ['notUniqueCodes' => $notUniqueCodes]
+                                    )
+                                );
                             }
                         }
-
-                        if (!empty($notUniqueCodes)) {
-                            $formField->addValidationError(
-                                new FormFieldValidationError(
-                                    'notUnique',
-                                    'wcf.acp.pip.smiley.aliases.error.notUnique',
-                                    ['notUniqueCodes' => $notUniqueCodes]
-                                )
-                            );
-                        }
                     }
-                })),
+                )),
 
             IntegerFormField::create('showOrder')
                 ->objectProperty('showorder')
@@ -224,11 +231,16 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         ]);
 
         // ensure proper normalization of template code
-        $form->getDataHandler()->addProcessor(new CustomFormDataProcessor('templateCode', static function (IFormDocument $document, array $parameters) {
-            $parameters['data']['aliases'] = StringUtil::unifyNewlines(StringUtil::escapeCDATA($parameters['data']['aliases']));
+        $form->getDataHandler()->addProcessor(new CustomFormDataProcessor(
+            'templateCode',
+            static function (IFormDocument $document, array $parameters) {
+                $parameters['data']['aliases'] = StringUtil::unifyNewlines(
+                    StringUtil::escapeCDATA($parameters['data']['aliases'])
+                );
 
-            return $parameters;
-        }));
+                return $parameters;
+            }
+        ));
     }
 
     /**

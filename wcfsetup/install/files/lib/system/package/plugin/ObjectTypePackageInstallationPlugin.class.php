@@ -47,7 +47,8 @@ use wcf\util\DirectoryUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Package\Plugin
  */
-class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin
+class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements
+    IGuiPackageInstallationPlugin
 {
     use TXmlGuiPackageInstallationPlugin {
         setEntryData as defaultSetEntryData;
@@ -196,7 +197,9 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
     protected function fetchElementData(\DOMElement $element, $saveData)
     {
         $data = [
-            'definitionID' => $this->getDefinitionID($element->getElementsByTagName('definitionname')->item(0)->nodeValue),
+            'definitionID' => $this->getDefinitionID(
+                $element->getElementsByTagName('definitionname')->item(0)->nodeValue
+            ),
             'objectType' => $element->getElementsByTagName('name')->item(0)->nodeValue,
             'packageID' => $this->installation->getPackage()->packageID,
         ];
@@ -259,7 +262,9 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                 ->label('wcf.acp.pip.objectType.objectType')
                 ->description('wcf.acp.pip.objectType.objectType.description')
                 ->required()
-                ->addValidator(FormFieldValidatorUtil::getDotSeparatedStringValidator('wcf.acp.pip.objectType.objectType', 4))
+                ->addValidator(
+                    FormFieldValidatorUtil::getDotSeparatedStringValidator('wcf.acp.pip.objectType.objectType', 4)
+                )
                 ->addValidator(new FormFieldValidator('uniqueness', function (TextFormField $formField) {
                     /** @var SingleSelectionFormField $definitionIDField */
                     $definitionIDField = $formField->getDocument()->getNodeById('definitionID');
@@ -297,25 +302,28 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                 ->objectProperty('classname')
                 ->description('<!-- will be replaced by JavaScript -->')
                 ->required()
-                ->addValidator(new FormFieldValidator('implementsInterface', static function (TextFormField $formField) {
-                    /** @var SingleSelectionFormField $definitionIDField */
-                    $definitionIDField = $formField->getDocument()->getNodeById('definitionID');
+                ->addValidator(new FormFieldValidator(
+                    'implementsInterface',
+                    static function (TextFormField $formField) {
+                        /** @var SingleSelectionFormField $definitionIDField */
+                        $definitionIDField = $formField->getDocument()->getNodeById('definitionID');
 
-                    $definitionID = $definitionIDField->getSaveValue();
-                    if ($definitionID) {
-                        $definition = ObjectTypeCache::getInstance()->getDefinition($definitionID);
+                        $definitionID = $definitionIDField->getSaveValue();
+                        if ($definitionID) {
+                            $definition = ObjectTypeCache::getInstance()->getDefinition($definitionID);
 
-                        if (!\is_subclass_of($formField->getValue(), $definition->interfaceName)) {
-                            $formField->addValidationError(
-                                new FormFieldValidationError(
-                                    'interface',
-                                    'wcf.form.field.className.error.interface',
-                                    ['interface' => $definition->interfaceName]
-                                )
-                            );
+                            if (!\is_subclass_of($formField->getValue(), $definition->interfaceName)) {
+                                $formField->addValidationError(
+                                    new FormFieldValidationError(
+                                        'interface',
+                                        'wcf.form.field.className.error.interface',
+                                        ['interface' => $definition->interfaceName]
+                                    )
+                                );
+                            }
                         }
                     }
-                }))
+                ))
                 ->addDependency(
                     ValueFormFieldDependency::create('definitionID')
                         ->fieldId('definitionID')
@@ -408,8 +416,16 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
         $this->addBulkProcessingActionFields($form, 'com.woltlab.wcf.bulkProcessing.user.action');
 
         // com.woltlab.wcf.bulkProcessing.user.condition
-        $bulkProcessingUserConditionContainer = $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.bulkProcessing.user.condition');
-        $this->addConditionFields($bulkProcessingUserConditionContainer, 'com.woltlab.wcf.bulkProcessing.user.condition', false, true);
+        $bulkProcessingUserConditionContainer = $this->getObjectTypeDefinitionDataContainer(
+            $form,
+            'com.woltlab.wcf.bulkProcessing.user.condition'
+        );
+        $this->addConditionFields(
+            $bulkProcessingUserConditionContainer,
+            'com.woltlab.wcf.bulkProcessing.user.condition',
+            false,
+            true
+        );
 
         // com.woltlab.wcf.category
         $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.category')
@@ -446,11 +462,17 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
         $this->addConditionFields($conditionAdContainer, 'com.woltlab.wcf.condition.trophy', false, true);
 
         // com.woltlab.wcf.condition.userGroupAssignment
-        $conditionAdContainer = $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.condition.userGroupAssignment');
+        $conditionAdContainer = $this->getObjectTypeDefinitionDataContainer(
+            $form,
+            'com.woltlab.wcf.condition.userGroupAssignment'
+        );
         $this->addConditionFields($conditionAdContainer, 'com.woltlab.wcf.condition.userGroupAssignment', false, true);
 
         // com.woltlab.wcf.condition.userSearch
-        $conditionAdContainer = $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.condition.userSearch');
+        $conditionAdContainer = $this->getObjectTypeDefinitionDataContainer(
+            $form,
+            'com.woltlab.wcf.condition.userSearch'
+        );
         $this->addConditionFields($conditionAdContainer, 'com.woltlab.wcf.condition.userSearch', false, true);
 
         // com.woltlab.wcf.content.userContentProvider
@@ -459,36 +481,45 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                 IntegerFormField::create('userContentProviderNiceValue')
                     ->objectProperty('nicevalue')
                     ->label('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.niceValue')
-                    ->description('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.niceValue.description')
+                    ->description(
+                        'wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.niceValue.description'
+                    )
                     ->nullable(),
 
                 BooleanFormField::create('userContentProviderHidden')
                     ->objectProperty('hidden')
                     ->label('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.hidden')
-                    ->description('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.hidden.description'),
+                    ->description(
+                        'wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.hidden.description'
+                    ),
 
                 ItemListFormField::create('userContentProviderRequiredObjectType')
                     ->objectProperty('requiredobjecttype')
                     ->saveValueType(ItemListFormField::SAVE_VALUE_TYPE_CSV)
                     ->label('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.requiredObjectType')
-                    ->description('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.requiredObjectType.description')
-                    ->addValidator(new FormFieldValidator('objectTypeValue', static function (ItemListFormField $formField) {
-                        if ($formField->getValue() === null) {
-                            return;
-                        }
+                    ->description(
+                        'wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.requiredObjectType.description'
+                    )
+                    ->addValidator(new FormFieldValidator(
+                        'objectTypeValue',
+                        static function (ItemListFormField $formField) {
+                            if ($formField->getValue() === null) {
+                                return;
+                            }
 
-                        foreach ($formField->getValue() as $segment) {
-                            if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.content.userContentProvider', $segment) === null) {
-                                $formField->addValidationError(
-                                    new FormFieldValidationError(
-                                        'unknownObjectType',
-                                        'wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.error.unknownObjectType',
-                                        ['objectType' => $segment]
-                                    )
-                                );
+                            foreach ($formField->getValue() as $segment) {
+                                if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.content.userContentProvider', $segment) === null) {
+                                    $formField->addValidationError(
+                                        new FormFieldValidationError(
+                                            'unknownObjectType',
+                                            'wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.error.unknownObjectType',
+                                            ['objectType' => $segment]
+                                        )
+                                    );
+                                }
                             }
                         }
-                    })),
+                    )),
             ]);
         $this->definitionElementChildren['com.woltlab.wcf.content.userContentProvider'] = [
             'nicevalue' => null,
@@ -502,28 +533,33 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                 UserGroupOptionFormField::create('messageObjectDisallowedBBCodesPermission')
                     ->objectProperty('disallowedBBCodesPermission')
                     ->label('wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission')
-                    ->description('wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission.description')
+                    ->description(
+                        'wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission.description'
+                    )
                     ->multiple(false)
-                    ->addValidator(new FormFieldValidator('optionType', static function (UserGroupOptionFormField $formField) {
-                        $value = $formField->getValue();
-                        if (empty($value)) {
-                            return;
-                        }
+                    ->addValidator(new FormFieldValidator(
+                        'optionType',
+                        static function (UserGroupOptionFormField $formField) {
+                            $value = $formField->getValue();
+                            if (empty($value)) {
+                                return;
+                            }
 
-                        $sql = "SELECT  optionType
-                                FROM    wcf" . WCF_N . "_user_group_option
-                                WHERE   optionName = ?";
-                        $statement = WCF::getDB()->prepareStatement($sql);
-                        $statement->execute([\reset($value)]);
-                        if ($statement->fetchSingleColumn() !== 'BBCodeSelect') {
-                            $formField->addValidationError(
-                                new FormFieldValidationError(
-                                    'optionType',
-                                    'wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission.error.optionType'
-                                )
-                            );
+                            $sql = "SELECT  optionType
+                                    FROM    wcf" . WCF_N . "_user_group_option
+                                    WHERE   optionName = ?";
+                            $statement = WCF::getDB()->prepareStatement($sql);
+                            $statement->execute([\reset($value)]);
+                            if ($statement->fetchSingleColumn() !== 'BBCodeSelect') {
+                                $formField->addValidationError(
+                                    new FormFieldValidationError(
+                                        'optionType',
+                                        'wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission.error.optionType'
+                                    )
+                                );
+                            }
                         }
-                    })),
+                    )),
 
                 BooleanFormField::create('messageObjectTypeEnableToc')
                     ->objectProperty('enableToc')
@@ -550,7 +586,9 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                 BooleanFormField::create('notificationObjectTypeSupportsReactions')
                     ->objectProperty('supportsReactions')
                     ->label('wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.supportsReactions')
-                    ->description('wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.supportsReactions.description'),
+                    ->description(
+                        'wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.supportsReactions.description'
+                    ),
             ]);
         $this->definitionElementChildren['com.woltlab.wcf.notification.objectType'] = [
             'category' => 0,
@@ -673,7 +711,9 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 
                 UserGroupOptionFormField::create('taggingTaggableObjectPermissions')
                     ->objectProperty('permissions')
-                    ->description('wcf.acp.pip.objectType.com.woltlab.wcf.tagging.taggableObject.permissions.description')
+                    ->description(
+                        'wcf.acp.pip.objectType.com.woltlab.wcf.tagging.taggableObject.permissions.description'
+                    )
                     ->packageIDs(\array_merge(
                         [$this->installation->getPackage()->packageID],
                         \array_keys($this->installation->getPackage()->getAllRequiredPackages())
@@ -702,7 +742,9 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                 BooleanFormField::create('userRecentActivityEventSupportsReactions')
                     ->objectProperty('supportsReactions')
                     ->label('wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions')
-                    ->description('wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions.description')
+                    ->description(
+                        'wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions.description'
+                    )
             );
         $this->definitionElementChildren['com.woltlab.wcf.user.recentActivityEvent'] = ['supportsReactions' => 0];
 
@@ -740,7 +782,9 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 
                             if (empty($tableName->getValidationErrors())) {
                                 // table name has already been validated and table exists
-                                $columns = WCF::getDB()->getEditor()->getColumns(ApplicationHandler::insertRealDatabaseTableNames($tableName->getValue()));
+                                $columns = WCF::getDB()->getEditor()->getColumns(
+                                    ApplicationHandler::insertRealDatabaseTableNames($tableName->getValue())
+                                );
 
                                 foreach ($columns as $column) {
                                     if ($column['name'] === $formField->getValue()) {
@@ -833,7 +877,9 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 
         $definitionPieces = \explode('.', $definitionName);
 
-        $formContainer = FormContainer::create(\lcfirst(\implode('', \array_map('ucfirst', $definitionPieces))) . 'Fields')
+        $formContainer = FormContainer::create(
+            \lcfirst(\implode('', \array_map('ucfirst', $definitionPieces))) . 'Fields'
+        )
             ->label('wcf.acp.pip.objectType.' . $definitionName . '.data.title')
             ->addDependency(
                 ValueFormFieldDependency::create('definitionID')
@@ -940,8 +986,12 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
      * @param   bool            $addConditionGroup
      * @since   5.2
      */
-    public function addConditionFields(IFormContainer $dataContainer, $objectTypeDefinition, $addConditionObject = true, $addConditionGroup = true)
-    {
+    public function addConditionFields(
+        IFormContainer $dataContainer,
+        $objectTypeDefinition,
+        $addConditionObject = true,
+        $addConditionGroup = true
+    ) {
         $prefix = \preg_replace('~Fields$~', '', $dataContainer->getId());
 
         if (!isset($this->definitionElementChildren[$objectTypeDefinition])) {
@@ -1097,8 +1147,13 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
      * @param   bool        $lowercase      is `true`, if `propertyname` should be used, otherwise `propertyName` is used
      * @return  TextFormField
      */
-    public function getIntegerConditionPropertyNameField(TextFormField $classNameField, $conditionClass, $id, $databaseTableName, $lowercase = true)
-    {
+    public function getIntegerConditionPropertyNameField(
+        TextFormField $classNameField,
+        $conditionClass,
+        $id,
+        $databaseTableName,
+        $lowercase = true
+    ) {
         return TextFormField::create($id)
             ->objectProperty($lowercase ? 'propertyname' : 'propertyName')
             ->label('wcf.acp.pip.objectType.integerCondition.propertyName')
@@ -1111,31 +1166,34 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
                     ->field($classNameField)
                     ->values([$conditionClass])
             )
-            ->addValidator(new FormFieldValidator('userTableIntegerColumn', static function (TextFormField $formField) use ($databaseTableName) {
-                if ($formField->getSaveValue()) {
-                    $columns = WCF::getDB()->getEditor()->getColumns($databaseTableName);
+            ->addValidator(new FormFieldValidator(
+                'userTableIntegerColumn',
+                static function (TextFormField $formField) use ($databaseTableName) {
+                    if ($formField->getSaveValue()) {
+                        $columns = WCF::getDB()->getEditor()->getColumns($databaseTableName);
 
-                    foreach ($columns as $column) {
-                        if ($column['name'] === $formField->getValue()) {
-                            if ($column['data']['type'] !== 'int') {
-                                $formField->addValidationError(new FormFieldValidationError(
-                                    'noIntegerColumn',
-                                    'wcf.acp.pip.objectType.integerCondition.propertyName.error.noIntegerColumn',
-                                    ['tableName' => $databaseTableName]
-                                ));
+                        foreach ($columns as $column) {
+                            if ($column['name'] === $formField->getValue()) {
+                                if ($column['data']['type'] !== 'int') {
+                                    $formField->addValidationError(new FormFieldValidationError(
+                                        'noIntegerColumn',
+                                        'wcf.acp.pip.objectType.integerCondition.propertyName.error.noIntegerColumn',
+                                        ['tableName' => $databaseTableName]
+                                    ));
+                                }
+
+                                return;
                             }
-
-                            return;
                         }
-                    }
 
-                    $formField->addValidationError(new FormFieldValidationError(
-                        'nonExistent',
-                        'wcf.acp.pip.objectType.integerCondition.propertyName.error.nonExistent',
-                        ['tableName' => $databaseTableName]
-                    ));
+                        $formField->addValidationError(new FormFieldValidationError(
+                            'nonExistent',
+                            'wcf.acp.pip.objectType.integerCondition.propertyName.error.nonExistent',
+                            ['tableName' => $databaseTableName]
+                        ));
+                    }
                 }
-            }));
+            ));
     }
 
     /**
