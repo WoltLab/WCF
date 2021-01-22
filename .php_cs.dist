@@ -1,7 +1,10 @@
 <?php
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__.'/wcfsetup/')
-    ->notPath('lib/system/api');
+    ->notPath('lib/system/api')
+    ->notPath('test.php')
+    ->notPath('install.php')
+    ->notPath('core.functions.php');
 
 return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
