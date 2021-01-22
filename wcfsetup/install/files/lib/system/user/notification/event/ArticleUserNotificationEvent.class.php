@@ -48,9 +48,11 @@ class ArticleUserNotificationEvent extends AbstractUserNotificationEvent impleme
     public function getEmailMessage($notificationType = 'instant')
     {
         if ($this->getUserNotificationObject()->isMultilingual) {
-            $articleContent = $this->getUserNotificationObject()->getArticleContents()[$this->getLanguage()->languageID];
+            $articleContent = $this->getUserNotificationObject()
+                ->getArticleContents()[$this->getLanguage()->languageID];
         } else {
-            $articleContent = $this->getUserNotificationObject()->getArticleContents()[0];
+            $articleContent = $this->getUserNotificationObject()
+                ->getArticleContents()[0];
         }
 
         return [
@@ -95,6 +97,10 @@ class ArticleUserNotificationEvent extends AbstractUserNotificationEvent impleme
      */
     public static function getTestObjects(UserProfile $recipient, UserProfile $author)
     {
-        return [new ArticleUserNotificationObject(self::getTestArticle(self::createTestCategory(ArticleCategory::OBJECT_TYPE_NAME), $author))];
+        return [
+            new ArticleUserNotificationObject(
+                self::getTestArticle(self::createTestCategory(ArticleCategory::OBJECT_TYPE_NAME), $author)
+            ),
+        ];
     }
 }

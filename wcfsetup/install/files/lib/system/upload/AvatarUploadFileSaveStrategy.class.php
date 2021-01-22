@@ -70,7 +70,12 @@ class AvatarUploadFileSaveStrategy implements IUploadFileSaveStrategy
 
             // shrink avatar if necessary
             try {
-                $fileLocation = ImageUtil::enforceDimensions($fileLocation, UserAvatar::AVATAR_SIZE, UserAvatar::AVATAR_SIZE, false);
+                $fileLocation = ImageUtil::enforceDimensions(
+                    $fileLocation,
+                    UserAvatar::AVATAR_SIZE,
+                    UserAvatar::AVATAR_SIZE,
+                    false
+                );
             }
             /** @noinspection PhpRedundantCatchClauseInspection */
             catch (SystemException $e) {

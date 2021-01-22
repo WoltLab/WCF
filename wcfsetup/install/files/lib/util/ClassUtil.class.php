@@ -49,9 +49,13 @@ final class ClassUtil
         if (!\is_string($className)) {
             return false;
         } elseif (!\class_exists($className)) {
-            throw new SystemException("Cannot determine class inheritance, class '" . $className . "' does not exist");
+            throw new SystemException(
+                "Cannot determine class inheritance, class '" . $className . "' does not exist"
+            );
         } elseif (!\class_exists($targetClass) && !\interface_exists($targetClass)) {
-            throw new SystemException("Cannot determine class inheritance, reference class '" . $targetClass . "' does not exist");
+            throw new SystemException(
+                "Cannot determine class inheritance, reference class '" . $targetClass . "' does not exist"
+            );
         }
 
         return \is_subclass_of($className, $targetClass);

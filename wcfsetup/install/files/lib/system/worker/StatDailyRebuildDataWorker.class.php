@@ -78,8 +78,8 @@ class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker
                 break;
             }
 
-            // get object types
-            foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.statDailyHandler') as $objectType) {
+            $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.statDailyHandler');
+            foreach ($objectTypes as $objectType) {
                 $data = $objectType->getProcessor()->getData($d->getTimestamp());
                 $statement->execute([$objectType->objectTypeID, $d->format('Y-m-d'), $data['counter'], $data['total']]);
             }

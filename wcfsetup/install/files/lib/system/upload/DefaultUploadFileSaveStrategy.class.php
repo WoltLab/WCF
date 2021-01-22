@@ -224,13 +224,22 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
                                     $adapter->writeImage($object->getLocation());
 
                                     // update width, height and filesize of the object
-                                    if ($newImage !== null && ($orientation == ExifUtil::ORIENTATION_90_ROTATE || $orientation == ExifUtil::ORIENTATION_270_ROTATE)) {
+                                    if (
+                                            $newImage !== null
+                                        && (
+                                            $orientation == ExifUtil::ORIENTATION_90_ROTATE
+                                            || $orientation == ExifUtil::ORIENTATION_270_ROTATE
+                                        )
+                                    ) {
                                         $updateData = \array_merge($updateData, [
                                             'height' => $object->width,
                                             'width' => $object->height,
                                             'filesize' => \filesize($object->getLocation()),
                                         ]);
-                                    } elseif ($newImage !== null && $orientation == ExifUtil::ORIENTATION_180_ROTATE) {
+                                    } elseif (
+                                        $newImage !== null
+                                        && $orientation == ExifUtil::ORIENTATION_180_ROTATE
+                                    ) {
                                         $updateData = \array_merge($updateData, [
                                             'filesize' => \filesize($object->getLocation()),
                                         ]);
@@ -320,7 +329,11 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
             }
 
             if ($file->width > $sizeData['width'] || $file->height > $sizeData['height']) {
-                $thumbnail = $adapter->createThumbnail($sizeData['width'], $sizeData['height'], $sizeData['retainDimensions'] ?? true);
+                $thumbnail = $adapter->createThumbnail(
+                    $sizeData['width'],
+                    $sizeData['height'],
+                    $sizeData['retainDimensions'] ?? true
+                );
                 $adapter->writeImage($thumbnail, $thumbnailLocation);
                 // Clear thumbnail as soon as possible to free up the memory for the next size.
                 $thumbnail = null;
@@ -342,7 +355,9 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy
         EventHandler::getInstance()->fireAction($this, 'generateThumbnails', $parameters);
 
         if (!\is_array($parameters['updateData'])) {
-            throw new \UnexpectedValueException('$updateData is no longer an array after being manipulated by event listeners.');
+            throw new \UnexpectedValueException(
+                '$updateData is no longer an array after being manipulated by event listeners.'
+            );
         } else {
             $updateData = $parameters['updateData'];
         }

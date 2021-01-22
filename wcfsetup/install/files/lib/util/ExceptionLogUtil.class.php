@@ -86,7 +86,11 @@ final class ExceptionLogUtil
                         ['allowed_classes' => false]
                     );
                 } catch (SystemException $e) {
-                    throw new \InvalidArgumentException('The additional information section of the given entry is malformed.', 0, $e);
+                    throw new \InvalidArgumentException(
+                        'The additional information section of the given entry is malformed.',
+                        0,
+                        $e
+                    );
                 }
             }
 

@@ -90,7 +90,8 @@ class UserProfileCommentUserNotificationEvent extends AbstractSharedUserNotifica
             'application' => 'wcf',
             'variables' => [
                 'commentID' => $this->getUserNotificationObject()->commentID,
-                'owner' => UserProfileRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID),
+                'owner' => UserProfileRuntimeCache::getInstance()
+                    ->getObject($this->getUserNotificationObject()->objectID),
                 'languageVariablePrefix' => 'wcf.user.notification.comment',
             ],
         ];

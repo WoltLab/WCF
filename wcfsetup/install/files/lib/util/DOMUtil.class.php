@@ -405,9 +405,13 @@ final class DOMUtil
     public static function moveNodesInto(\DOMElement $container, \DOMElement $lastElement, \DOMElement $commonAncestor)
     {
         if (!self::contains($commonAncestor, $container)) {
-            throw new \InvalidArgumentException("The container element must be a child of the common ancestor element.");
+            throw new \InvalidArgumentException(
+                "The container element must be a child of the common ancestor element."
+            );
         } elseif ($lastElement->parentNode !== $commonAncestor) {
-            throw new \InvalidArgumentException("The last element must be a direct child of the common ancestor element.");
+            throw new \InvalidArgumentException(
+                "The last element must be a direct child of the common ancestor element."
+            );
         }
 
         $relativePosition = self::getRelativePosition($container, $lastElement);

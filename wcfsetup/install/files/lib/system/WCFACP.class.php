@@ -149,11 +149,18 @@ class WCFACP extends WCF
 
                 exit;
             }
-        } elseif (empty($pathInfo) || !\preg_match('~^/?(login|(full-)?logout|multifactor-authentication|reauthentication)/~i', $pathInfo)) {
+        } elseif (
+            empty($pathInfo)
+            || !\preg_match('~^/?(login|(full-)?logout|multifactor-authentication|reauthentication)/~i', $pathInfo)
+        ) {
             if (WCF::getUser()->userID == 0) {
                 // work-around for AJAX-requests within ACP
                 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
-                    throw new AJAXException(WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.sessionExpired'), AJAXException::SESSION_EXPIRED, '');
+                    throw new AJAXException(
+                        WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.sessionExpired'),
+                        AJAXException::SESSION_EXPIRED,
+                        ''
+                    );
                 }
 
                 // build redirect path
@@ -175,7 +182,11 @@ class WCFACP extends WCF
                     try {
                         WCF::getSession()->checkPermissions(['admin.general.canUseAcp']);
                     } catch (PermissionDeniedException $e) {
-                        throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS, $e->getTraceAsString());
+                        throw new AJAXException(
+                            self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
+                            AJAXException::INSUFFICIENT_PERMISSIONS,
+                            $e->getTraceAsString()
+                        );
                     }
                 } else {
                     WCF::getSession()->checkPermissions(['admin.general.canUseAcp']);
@@ -230,7 +241,9 @@ class WCFACP extends WCF
         // available acp search providers
         $availableAcpSearchProviders = [];
         foreach (ACPSearchProviderCacheBuilder::getInstance()->getData() as $searchProvider) {
-            $availableAcpSearchProviders[$searchProvider->providerName] = self::getLanguage()->get('wcf.acp.search.provider.' . $searchProvider->providerName);
+            $availableAcpSearchProviders[$searchProvider->providerName] = self::getLanguage()->get(
+                'wcf.acp.search.provider.' . $searchProvider->providerName
+            );
         }
         \asort($availableAcpSearchProviders);
 
@@ -256,7 +269,11 @@ class WCFACP extends WCF
      */
     public static function checkMasterPassword()
     {
-        if (\defined('MODULE_MASTER_PASSWORD') && MODULE_MASTER_PASSWORD == 1 && !WCF::getSession()->getVar('masterPassword')) {
+        if (
+            \defined('MODULE_MASTER_PASSWORD')
+            && MODULE_MASTER_PASSWORD == 1
+            && !WCF::getSession()->getVar('masterPassword')
+        ) {
             if (ENABLE_ENTERPRISE_MODE && WCF::getUser()->hasOwnerAccess()) {
                 return;
             }

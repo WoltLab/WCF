@@ -92,8 +92,14 @@ class UserNotificationHandler extends SingletonFactory
      * @param   int             $baseObjectID
      * @throws  SystemException
      */
-    public function fireEvent($eventName, $objectType, IUserNotificationObject $notificationObject, array $recipientIDs, array $additionalData = [], $baseObjectID = 0)
-    {
+    public function fireEvent(
+        $eventName,
+        $objectType,
+        IUserNotificationObject $notificationObject,
+        array $recipientIDs,
+        array $additionalData = [],
+        $baseObjectID = 0
+    ) {
         // check given object type and event name
         if (!isset($this->availableEvents[$objectType][$eventName])) {
             throw new SystemException("Unknown event " . $objectType . "-" . $eventName . " given");
@@ -131,7 +137,8 @@ class UserNotificationHandler extends SingletonFactory
             'userProfile' => $userProfile,
             'event' => $event,
         ];
-        // @deprecated 5.2 This event exposes incomplete data and should not be used, please use the following events instead.
+        // @deprecated 5.2 This event exposes incomplete data and should not
+        // be used, please use the following events instead.
         EventHandler::getInstance()->fireAction($this, 'fireEvent', $parameters);
 
         // find existing notifications
@@ -271,9 +278,18 @@ class UserNotificationHandler extends SingletonFactory
                 foreach ($recipients as $recipient) {
                     if ($recipient->mailNotificationType == 'instant') {
                         if (isset($notifications[$recipient->userID]) && $notifications[$recipient->userID]['isNew']) {
-                            $event->setObject($notifications[$recipient->userID]['object'], $notificationObject, $userProfile, $additionalData);
+                            $event->setObject(
+                                $notifications[$recipient->userID]['object'],
+                                $notificationObject,
+                                $userProfile,
+                                $additionalData
+                            );
                             $event->setAuthors([$userProfile->userID => $userProfile]);
-                            $this->sendInstantMailNotification($notifications[$recipient->userID]['object'], $recipient, $event);
+                            $this->sendInstantMailNotification(
+                                $notifications[$recipient->userID]['object'],
+                                $recipient,
+                                $event
+                            );
                         }
                     }
                 }
@@ -317,7 +333,11 @@ class UserNotificationHandler extends SingletonFactory
                     $this->notificationCount = $statement->fetchSingleColumn();
 
                     // update storage data
-                    UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'userNotificationCount', \serialize($this->notificationCount));
+                    UserStorageHandler::getInstance()->update(
+                        WCF::getUser()->userID,
+                        'userNotificationCount',
+                        \serialize($this->notificationCount)
+                    );
                 } else {
                     $this->notificationCount = \unserialize($data);
                 }
@@ -480,7 +500,10 @@ class UserNotificationHandler extends SingletonFactory
 
         // load authors
         $authors = UserProfile::getUserProfiles($authorIDs);
-        $unknownAuthor = new UserProfile(new User(null, ['userID' => null, 'username' => WCF::getLanguage()->get('wcf.user.guest')]));
+        $unknownAuthor = new UserProfile(new User(
+            null,
+            ['userID' => null, 'username' => WCF::getLanguage()->get('wcf.user.guest')]
+        ));
 
         // load objects associated with each object type
         foreach ($objectTypes as $objectType => $objectData) {
@@ -692,8 +715,11 @@ class UserNotificationHandler extends SingletonFactory
      * @param   User                $user
      * @param   IUserNotificationEvent      $event
      */
-    public function sendInstantMailNotification(UserNotification $notification, User $user, IUserNotificationEvent $event)
-    {
+    public function sendInstantMailNotification(
+        UserNotification $notification,
+        User $user,
+        IUserNotificationEvent $event
+    ) {
         // no notifications for disabled or banned users
         if (!$user->isEmailConfirmed()) {
             return;
@@ -720,7 +746,9 @@ class UserNotificationHandler extends SingletonFactory
             'title' => $event->getEmailTitle(),
         ]));
         $email->addRecipient(new UserMailbox($user));
-        $humanReadableListId = $user->getLanguage()->getDynamicVariable('wcf.user.notification.' . $event->objectType . '.' . $event->eventName);
+        $humanReadableListId = $user
+            ->getLanguage()
+            ->getDynamicVariable('wcf.user.notification.' . $event->objectType . '.' . $event->eventName);
         $email->setListID($event->eventName . '.' . $event->objectType . '.instant.notification', $humanReadableListId);
         $email->setListUnsubscribe(LinkHandler::getInstance()->getControllerLink(NotificationUnsubscribeForm::class, [
             // eventID is not part of the parameter list, because we can't communicate that
@@ -805,7 +833,8 @@ class UserNotificationHandler extends SingletonFactory
     public function removeNotifications($objectType, array $objectIDs)
     {
         // check given object type
-        $objectTypeObj = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.notification.objectType', $objectType);
+        $objectTypeObj = ObjectTypeCache::getInstance()
+            ->getObjectTypeByName('com.woltlab.wcf.notification.objectType', $objectType);
         if ($objectTypeObj === null) {
             throw new SystemException("Unknown object type " . $objectType . " given");
         }
@@ -1012,7 +1041,10 @@ class UserNotificationHandler extends SingletonFactory
                 return [
                     'title' => \strip_tags($event->getTitle()),
                     'message' => \strip_tags($event->getMessage()),
-                    'link' => LinkHandler::getInstance()->getLink('NotificationConfirm', ['id' => $event->getNotification()->notificationID]),
+                    'link' => LinkHandler::getInstance()->getLink(
+                        'NotificationConfirm',
+                        ['id' => $event->getNotification()->notificationID]
+                    ),
                 ];
             }
         }

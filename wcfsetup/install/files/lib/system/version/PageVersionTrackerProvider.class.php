@@ -128,10 +128,17 @@ class PageVersionTrackerProvider extends AbstractVersionTrackerProvider
         $properties = $this->getTrackedProperties();
         $content = [];
         foreach ($object->getPageContents() as $pageContent) {
-            $content[$pageContent->languageID ?: 0] = $entry->getPayloadForProperties($properties, $pageContent->languageID ?: 0);
+            $content[$pageContent->languageID ?: 0] = $entry->getPayloadForProperties(
+                $properties,
+                $pageContent->languageID ?: 0
+            );
         }
 
-        $action = new PageAction([$object->getDecoratedObject()], 'update', ['content' => $content, 'isRevert' => true]);
+        $action = new PageAction(
+            [$object->getDecoratedObject()],
+            'update',
+            ['content' => $content, 'isRevert' => true]
+        );
         $action->executeAction();
     }
 }

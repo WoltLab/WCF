@@ -328,7 +328,10 @@ class TemplateEngine extends SingletonFactory
         $metaData = $this->getMetaData($templateName, $metaDataFilename);
 
         // check if compilation is necessary
-        if (($metaData === null) || !$this->isCompiled($templateName, $sourceFilename, $compiledFilename, $application, $metaData)) {
+        if (
+            $metaData === null
+            || !$this->isCompiled($templateName, $sourceFilename, $compiledFilename, $application, $metaData)
+        ) {
             // compile
             $this->compileTemplate($templateName, $sourceFilename, $compiledFilename, [
                 'application' => $application,

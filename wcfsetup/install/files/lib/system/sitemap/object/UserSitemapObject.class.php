@@ -38,6 +38,10 @@ class UserSitemapObject extends AbstractSitemapObjectObjectType
      */
     public function isAvailableType()
     {
-        return WCF::getSession()->getPermission('user.profile.canViewUserProfile') && PageCache::getInstance()->getPageByIdentifier('com.woltlab.wcf.User')->allowSpidersToIndex;
+        if (!WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {
+            return false;
+        }
+
+        return PageCache::getInstance()->getPageByIdentifier('com.woltlab.wcf.User')->allowSpidersToIndex;
     }
 }

@@ -148,7 +148,11 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
             foreach ($users as $user) {
                 BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
                     ',',
-                    $this->getBulkUserPermissionValue($userPermissions, $user->userID, 'user.signature.disallowedBBCodes')
+                    $this->getBulkUserPermissionValue(
+                        $userPermissions,
+                        $user->userID,
+                        'user.signature.disallowedBBCodes'
+                    )
                 ));
 
                 if (!$user->signatureEnableHtml) {
@@ -171,7 +175,11 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
                 if ($user->aboutMe) {
                     BBCodeHandler::getInstance()->setDisallowedBBCodes(\explode(
                         ',',
-                        $this->getBulkUserPermissionValue($userPermissions, $user->userID, 'user.message.disallowedBBCodes')
+                        $this->getBulkUserPermissionValue(
+                            $userPermissions,
+                            $user->userID,
+                            'user.message.disallowedBBCodes'
+                        )
                     ));
 
                     if (!$user->signatureEnableHtml) {

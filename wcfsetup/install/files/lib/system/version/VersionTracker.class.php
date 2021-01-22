@@ -217,7 +217,9 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction
             }
         }
 
-        throw new \InvalidArgumentException("Unknown object type '" . $name . "' for definition 'com.woltlab.wcf.versionTracker.objectType'.");
+        throw new \InvalidArgumentException(
+            "Unknown object type '" . $name . "' for definition 'com.woltlab.wcf.versionTracker.objectType'."
+        );
     }
 
     /**
