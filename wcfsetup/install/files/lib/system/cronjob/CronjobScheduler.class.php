@@ -5,7 +5,6 @@ namespace wcf\system\cronjob;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobEditor;
 use wcf\data\cronjob\log\CronjobLogEditor;
-use function wcf\functions\exception\logThrowable;
 use wcf\system\cache\builder\CronjobCacheBuilder;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
@@ -286,7 +285,7 @@ class CronjobScheduler extends SingletonFactory
     protected function logResult(CronjobLogEditor $logEditor, $exception = null)
     {
         if ($exception !== null) {
-            logThrowable($exception);
+            \wcf\functions\exception\logThrowable($exception);
 
             $errString = \implode("\n", [
                 $exception->getMessage(),

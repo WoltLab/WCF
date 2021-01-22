@@ -4,7 +4,6 @@ namespace wcf\data\devtools\missing\language\item;
 
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IDeleteAction;
-use function wcf\functions\exception\sanitizeStacktrace;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
 use wcf\util\JSON;
@@ -33,7 +32,7 @@ class DevtoolsMissingLanguageItemAction extends AbstractDatabaseObjectAction imp
      */
     public function logLanguageItem()
     {
-        $stackTraceData = sanitizeStacktrace(new \Exception(), true);
+        $stackTraceData = \wcf\functions\exception\sanitizeStacktrace(new \Exception(), true);
         // Remove stack entries related to logging.
         \array_shift($stackTraceData);
         \array_shift($stackTraceData);

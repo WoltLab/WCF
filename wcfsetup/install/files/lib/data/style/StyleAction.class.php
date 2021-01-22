@@ -614,7 +614,7 @@ BROWSERCONFIG;
                 SELECT      " . $newStyle->styleID . " AS styleID, value.variableID, value.variableValue
                 FROM        wcf" . WCF_N . "_style_variable_value value
                 WHERE       value.styleID = ?";
-            $statement = WCF::getDB()->prepareStatement($sql);
+        $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->styleEditor->styleID]);
 
         // copy preview image
