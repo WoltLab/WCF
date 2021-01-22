@@ -78,8 +78,8 @@ abstract class AbstractMultipartMimePart extends AbstractMimePart implements IRe
 
             if ($part->getAdditionalHeaders()) {
                 $content .= \implode("\r\n", \array_map(static function ($item) {
-                    return \implode(': ', $item);
-                }, $part->getAdditionalHeaders())) . "\r\n";
+                        return \implode(': ', $item);
+                    }, $part->getAdditionalHeaders())) . "\r\n";
             }
             $content .= "\r\n";
             switch ($part->getContentTransferEncoding()) {

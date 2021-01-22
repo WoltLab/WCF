@@ -152,11 +152,11 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
             /** @var ACPTemplate|Template $template */
             foreach ($templateList as $template) {
                 if (
-                    \preg_match_all(
-                        "~{$ldq}event\\ name\\=\\'(?<event>[\\w]+)\\'{$rdq}~",
-                        $template->getSource(),
-                        $matches
-                    )
+                \preg_match_all(
+                    "~{$ldq}event\\ name\\=\\'(?<event>[\\w]+)\\'{$rdq}~",
+                    $template->getSource(),
+                    $matches
+                )
                 ) {
                     $templates[$template->templateName] = $template->templateName;
 

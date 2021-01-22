@@ -165,9 +165,9 @@ class WorkerCLICommand implements IArgumentedCLICommand
                 $progressbar->update($progress);
                 if ($output) {
                     $output->write(JSON::encode([
-                        'iteration' => $i,
-                        'progress' => $progress,
-                    ]) . "\n");
+                            'iteration' => $i,
+                            'progress' => $progress,
+                        ]) . "\n");
                 }
             }
         } catch (\Exception $e) {
@@ -180,9 +180,9 @@ class WorkerCLICommand implements IArgumentedCLICommand
         }
         if ($output) {
             $output->write(JSON::encode([
-                'finished' => true,
-                'progress' => $progress,
-            ]) . "\n");
+                    'finished' => true,
+                    'progress' => $progress,
+                ]) . "\n");
             $output->close();
         }
         $progressbar->update($progress);
@@ -265,9 +265,9 @@ class WorkerCLICommand implements IArgumentedCLICommand
             // 2) Start processing in all processes.
             foreach ($processes as $processData) {
                 $workerCommand = 'worker --threads=' . $threads . ' --threadId=' . $processData['threadId'] . ' "' . \addcslashes(
-                    \get_class($worker),
-                    "\\\""
-                );
+                        \get_class($worker),
+                        "\\\""
+                    );
                 \fwrite($processData['pipes'][0], $workerCommand . "\n");
                 \fclose($processData['pipes'][0]);
             }

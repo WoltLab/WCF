@@ -102,9 +102,9 @@ class UserContentRemoveWorker extends AbstractWorker
             );
             if (!empty($unknownContentProvider)) {
                 throw new \InvalidArgumentException('The parameter `contentProvider` contains unknown objectTypes (' . \implode(
-                    ', ',
-                    $unknownContentProvider
-                ) . ').');
+                        ', ',
+                        $unknownContentProvider
+                    ) . ').');
             }
 
             $this->contentProviders = $this->parameters['contentProvider'];

@@ -94,11 +94,11 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode
             $child = $element->childNodes->item(0);
             if ($child->nodeType === \XML_ELEMENT_NODE && $child->nodeName === 'img') {
                 if (
-                    \preg_match(
-                        '~\b(?P<className>messageFloatObject(?:Left|Right))\b~',
-                        $child->getAttribute('class'),
-                        $match
-                    )
+                \preg_match(
+                    '~\b(?P<className>messageFloatObject(?:Left|Right))\b~',
+                    $child->getAttribute('class'),
+                    $match
+                )
                 ) {
                     $element->setAttribute('class', $element->getAttribute('class') . ' ' . $match['className']);
                 }

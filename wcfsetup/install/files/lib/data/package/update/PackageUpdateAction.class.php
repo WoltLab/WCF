@@ -140,11 +140,11 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
             if (!isset($excludedPackagesOfInstalledPackages[$row['excludedPackage']])) {
                 $excludedPackagesOfInstalledPackages[$row['excludedPackage']] = $row['excludedPackageVersion'];
             } elseif (
-                Package::compareVersion(
-                    $excludedPackagesOfInstalledPackages[$row['excludedPackage']],
-                    $row['excludedPackageVersion'],
-                    '>'
-                )
+            Package::compareVersion(
+                $excludedPackagesOfInstalledPackages[$row['excludedPackage']],
+                $row['excludedPackageVersion'],
+                '>'
+            )
             ) {
                 $excludedPackagesOfInstalledPackages[$row['excludedPackage']] = $row['excludedPackageVersion'];
             }
@@ -356,11 +356,11 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
             // check excluded packages of installed packages
             if (isset($excludedPackagesOfInstalledPackages[$row['package']])) {
                 if (
-                    Package::compareVersion(
-                        $packageVersion,
-                        $excludedPackagesOfInstalledPackages[$row['package']],
-                        '>='
-                    )
+                Package::compareVersion(
+                    $packageVersion,
+                    $excludedPackagesOfInstalledPackages[$row['package']],
+                    '>='
+                )
                 ) {
                     continue;
                 }

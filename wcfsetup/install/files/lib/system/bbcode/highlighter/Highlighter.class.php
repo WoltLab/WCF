@@ -134,9 +134,9 @@ abstract class Highlighter extends SingletonFactory
         $reType = new Regex('\\\\?wcf\\\\system\\\\bbcode\\\\highlighter\\\\(.*)Highlighter', Regex::CASE_INSENSITIVE);
 
         return WCF::getLanguage()->get('wcf.bbcode.code.' . $reType->replace(
-            \strtolower(\get_class($this)),
-            '\1'
-        ) . '.title');
+                \strtolower(\get_class($this)),
+                '\1'
+            ) . '.title');
     }
 
     /**
@@ -216,12 +216,12 @@ abstract class Highlighter extends SingletonFactory
             $cacheCommentsRegEx .= "(";
             if (!empty($this->commentStart)) {
                 $cacheCommentsRegEx .= '(?:' . \implode(
-                    '|',
-                    \array_map('preg_quote', $this->commentStart)
-                ) . ').*?(?:' . \implode(
-                    '|',
-                    \array_map('preg_quote', $this->commentEnd)
-                ) . ')';
+                        '|',
+                        \array_map('preg_quote', $this->commentStart)
+                    ) . ').*?(?:' . \implode(
+                        '|',
+                        \array_map('preg_quote', $this->commentEnd)
+                    ) . ')';
 
                 if (!empty($this->singleLineComment)) {
                     $cacheCommentsRegEx .= '|';
@@ -230,9 +230,9 @@ abstract class Highlighter extends SingletonFactory
 
             if (!empty($this->singleLineComment)) {
                 $cacheCommentsRegEx .= "(?:" . \implode(
-                    '|',
-                    \array_map('preg_quote', $this->singleLineComment)
-                ) . ")[^\n]*";
+                        '|',
+                        \array_map('preg_quote', $this->singleLineComment)
+                    ) . ")[^\n]*";
             }
 
             $cacheCommentsRegEx .= ")";
@@ -241,9 +241,9 @@ abstract class Highlighter extends SingletonFactory
         }
 
         $this->separatorsRegEx = StringUtil::encodeHTML(\implode(
-            '|',
-            \array_map('preg_quote', $this->separators)
-        )) . '|\s|&nbsp;|^|$|>|<';
+                '|',
+                \array_map('preg_quote', $this->separators)
+            )) . '|\s|&nbsp;|^|$|>|<';
     }
 
     /**
@@ -332,9 +332,9 @@ abstract class Highlighter extends SingletonFactory
         $_this = $this;
         $buildKeywordRegex = static function (array $keywords) use ($_this) {
             return '!(?<=' . $_this->separatorsRegEx . ')(' . StringUtil::encodeHTML(\implode(
-                '|',
-                \array_map('preg_quote', $keywords)
-            )) . ')(?=' . $_this->separatorsRegEx . ')!i';
+                    '|',
+                    \array_map('preg_quote', $keywords)
+                )) . ')(?=' . $_this->separatorsRegEx . ')!i';
         };
 
         if (!empty($this->keywords1)) {

@@ -90,20 +90,20 @@ class ModerationQueueReportAction extends ModerationQueueAction
 
         // validate the combination of object type and object id
         if (
-            !ModerationQueueReportManager::getInstance()->isValid(
-                $this->parameters['objectType'],
-                $this->parameters['objectID']
-            )
+        !ModerationQueueReportManager::getInstance()->isValid(
+            $this->parameters['objectType'],
+            $this->parameters['objectID']
+        )
         ) {
             throw new UserInputException('objectID');
         }
 
         // validate if user may read the content (prevent information disclosure by reporting random ids)
         if (
-            !ModerationQueueReportManager::getInstance()->canReport(
-                $this->parameters['objectType'],
-                $this->parameters['objectID']
-            )
+        !ModerationQueueReportManager::getInstance()->canReport(
+            $this->parameters['objectType'],
+            $this->parameters['objectID']
+        )
         ) {
             throw new PermissionDeniedException();
         }
@@ -158,10 +158,10 @@ class ModerationQueueReportAction extends ModerationQueueAction
         // if the specified content was already reported, e.g. a different user reported this
         // item meanwhile, silently ignore it. Just display a success and the user is happy :)
         if (
-            !ModerationQueueReportManager::getInstance()->hasPendingReport(
-                $this->parameters['objectType'],
-                $this->parameters['objectID']
-            )
+        !ModerationQueueReportManager::getInstance()->hasPendingReport(
+            $this->parameters['objectType'],
+            $this->parameters['objectID']
+        )
         ) {
             ModerationQueueReportManager::getInstance()->addReport(
                 $this->parameters['objectType'],

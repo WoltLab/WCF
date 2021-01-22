@@ -417,18 +417,18 @@ if (isset($_GET['language']) && \in_array($_GET['language'], ['de', 'en'])) {
 			    <li class="success"><?= getPhrase('php_version_success', [\PHP_VERSION]) ?></li>
                     <?php } else { ?>
 			    <li class="failure"><?= getPhrase(
-                'php_version_failure',
-                [\PHP_VERSION, $requiredPHPVersion]
-            ) ?></li>
+                                    'php_version_failure',
+                                    [\PHP_VERSION, $requiredPHPVersion]
+                                ) ?></li>
                     <?php } ?>
 
                     <?php foreach ($requiredExtensions as $extension) {
-                                        if (\extension_loaded($extension)) { ?>
+                        if (\extension_loaded($extension)) { ?>
 				<li class="success"><?= getPhrase('php_extension_success', [$extension]) ?></li>
                         <?php } else { ?>
 				<li class="failure"><?= getPhrase('php_extension_failure', [$extension]) ?></li>
                         <?php }
-                                    } ?>
+                    } ?>
 
                     <?php if (\extension_loaded('imagick')) { ?>
 			    <li class="success"><?= getPhrase('php_extension_success', ['Imagick']) ?></li>
@@ -446,14 +446,14 @@ if (isset($_GET['language']) && \in_array($_GET['language'], ['de', 'en'])) {
 
                     <?php if (checkMemoryLimit()) { ?>
 			    <li class="success"><?= getPhrase(
-                                        'php_memory_limit_success',
-                                        [\ini_get('memory_limit')]
-                                    ) ?></li>
+                                    'php_memory_limit_success',
+                                    [\ini_get('memory_limit')]
+                                ) ?></li>
                     <?php } else { ?>
 			    <li class="failure"><?= getPhrase(
-                                        'php_memory_limit_failure',
-                                        [\ini_get('memory_limit')]
-                                    ) ?></li>
+                                    'php_memory_limit_failure',
+                                    [\ini_get('memory_limit')]
+                                ) ?></li>
                     <?php } ?>
 
                     <?php if (!checkOpcache()) { ?>

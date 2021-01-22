@@ -47,11 +47,11 @@ class SQLParser
     {
         foreach ($this->queryArray as $query) {
             if (
-                \preg_match(
-                    '~^(ALTER\s+TABLE|CREATE\s+INDEX|CREATE\s+TABLE|DROP\s+INDEX|DROP\s+TABLE|INSERT|UPDATE|DELETE)~i',
-                    $query,
-                    $match
-                )
+            \preg_match(
+                '~^(ALTER\s+TABLE|CREATE\s+INDEX|CREATE\s+TABLE|DROP\s+INDEX|DROP\s+TABLE|INSERT|UPDATE|DELETE)~i',
+                $query,
+                $match
+            )
             ) {
                 $statement = \strtoupper(\preg_replace('~\s+~', ' ', $match[0]));
 
@@ -78,11 +78,11 @@ class SQLParser
 
                     // find columns
                     if (
-                        \preg_match_all(
-                            "~(?:\\(|,)\\s*(\\w+)\\s+(\\w+)(?:\\s*\\((\\s*(?:\\d+(?:\\s*,\\s*\\d+)?|'[^']*'(?:\\s*,\\s*'[^']*')*))\\s*\\))?(?:\\s+UNSIGNED)?(?:\\s+(NOT NULL|NULL))?(?:\\s+DEFAULT\\s+(\\d+.\\d+|\\d+|NULL|'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'))?(?:\\s+(AUTO_INCREMENT))?(?:\\s+(UNIQUE|PRIMARY)(?: KEY)?)?~i",
-                            $query,
-                            $matches
-                        )
+                    \preg_match_all(
+                        "~(?:\\(|,)\\s*(\\w+)\\s+(\\w+)(?:\\s*\\((\\s*(?:\\d+(?:\\s*,\\s*\\d+)?|'[^']*'(?:\\s*,\\s*'[^']*')*))\\s*\\))?(?:\\s+UNSIGNED)?(?:\\s+(NOT NULL|NULL))?(?:\\s+DEFAULT\\s+(\\d+.\\d+|\\d+|NULL|'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'))?(?:\\s+(AUTO_INCREMENT))?(?:\\s+(UNIQUE|PRIMARY)(?: KEY)?)?~i",
+                        $query,
+                        $matches
+                    )
                     ) {
                         for ($i = 0, $j = \count($matches[0]); $i < $j; $i++) {
                             $columName = \strtoupper($matches[1][$i]);
@@ -109,11 +109,11 @@ class SQLParser
                                     $column['data']['values'] = $matches[3][$i];
                                 } else {
                                     if (
-                                        \preg_match(
-                                            '~^(\d+)(?:\s*,\s*(\d+))?$~',
-                                            StringUtil::trim($matches[3][$i]),
-                                            $match2
-                                        )
+                                    \preg_match(
+                                        '~^(\d+)(?:\s*,\s*(\d+))?$~',
+                                        StringUtil::trim($matches[3][$i]),
+                                        $match2
+                                    )
                                     ) {
                                         $column['data']['length'] = $match2[1];
                                         if (!empty($match2[2])) {
@@ -133,11 +133,11 @@ class SQLParser
 
                     // find indices
                     if (
-                        \preg_match_all(
-                            '~(?:\(|,)\s*(?:(?:(?:(UNIQUE|FULLTEXT)(?:\s+(?:INDEX|KEY))?|(?:INDEX|KEY))(?:\s+(\w+))?)|(PRIMARY) KEY)\s+\((\s*\w+\s*(?:,\s*\w+\s*)*)\)~is',
-                            $query,
-                            $matches
-                        )
+                    \preg_match_all(
+                        '~(?:\(|,)\s*(?:(?:(?:(UNIQUE|FULLTEXT)(?:\s+(?:INDEX|KEY))?|(?:INDEX|KEY))(?:\s+(\w+))?)|(PRIMARY) KEY)\s+\((\s*\w+\s*(?:,\s*\w+\s*)*)\)~is',
+                        $query,
+                        $matches
+                    )
                     ) {
                         for ($i = 0, $j = \count($matches[0]); $i < $j; $i++) {
                             $index = ['name' => $matches[2][$i], 'data' => []];
@@ -154,11 +154,11 @@ class SQLParser
             case 'ALTER TABLE':
                 // add index
                 if (
-                    \preg_match(
-                        '~^ALTER\s+TABLE\s+(\w+)\s+ADD\s+(?:(UNIQUE|FULLTEXT)\s+)?(?:INDEX|KEY)\s+(?:(\w+)\s*)?\((\s*\w+\s*(?:,\s*\w+\s*)*)\)~is',
-                        $query,
-                        $match
-                    )
+                \preg_match(
+                    '~^ALTER\s+TABLE\s+(\w+)\s+ADD\s+(?:(UNIQUE|FULLTEXT)\s+)?(?:INDEX|KEY)\s+(?:(\w+)\s*)?\((\s*\w+\s*(?:,\s*\w+\s*)*)\)~is',
+                    $query,
+                    $match
+                )
                 ) {
                     $this->executeAddIndexStatement(
                         $match[1],
@@ -167,11 +167,11 @@ class SQLParser
                     );
                 } // add foreign key
                 elseif (
-                    \preg_match(
-                        '~^ALTER\s+TABLE\s+(\w+)\s+ADD\s+FOREIGN KEY\s+(?:(\w+)\s*)?\((\s*\w+\s*(?:,\s*\w+\s*)*)\)\s+REFERENCES\s+(\w+)\s+\((\s*\w+\s*(?:,\s*\w+\s*)*)\)(?:\s+ON\s+DELETE\s+(CASCADE|SET NULL|NO ACTION))?(?:\s+ON\s+UPDATE\s+(CASCADE|SET NULL|NO ACTION))?~is',
-                        $query,
-                        $match
-                    )
+                \preg_match(
+                    '~^ALTER\s+TABLE\s+(\w+)\s+ADD\s+FOREIGN KEY\s+(?:(\w+)\s*)?\((\s*\w+\s*(?:,\s*\w+\s*)*)\)\s+REFERENCES\s+(\w+)\s+\((\s*\w+\s*(?:,\s*\w+\s*)*)\)(?:\s+ON\s+DELETE\s+(CASCADE|SET NULL|NO ACTION))?(?:\s+ON\s+UPDATE\s+(CASCADE|SET NULL|NO ACTION))?~is',
+                    $query,
+                    $match
+                )
                 ) {
                     $this->executeAddForeignKeyStatement(
                         $match[1],
@@ -186,11 +186,11 @@ class SQLParser
                     );
                 } // add/change column
                 elseif (
-                    \preg_match(
-                        "~^ALTER\\s+TABLE\\s+(\\w+)\\s+(?:(ADD)\\s+(?:COLUMN\\s+)?|(CHANGE)\\s+(?:COLUMN\\s+)?(\\w+)\\s+)(\\w+)\\s+(\\w+)(?:\\s*\\((\\s*(?:\\d+(?:\\s*,\\s*\\d+)?|'[^']*'(?:\\s*,\\s*'[^']*')*))\\s*\\))?(?:\\s+UNSIGNED)?(?:\\s+(NOT NULL|NULL))?(?:\\s+DEFAULT\\s+(-?\\d+.\\d+|-?\\d+|NULL|'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'))?(?:\\s+(AUTO_INCREMENT))?(?:\\s+(UNIQUE|PRIMARY)(?: KEY)?)?~is",
-                        $query,
-                        $match
-                    )
+                \preg_match(
+                    "~^ALTER\\s+TABLE\\s+(\\w+)\\s+(?:(ADD)\\s+(?:COLUMN\\s+)?|(CHANGE)\\s+(?:COLUMN\\s+)?(\\w+)\\s+)(\\w+)\\s+(\\w+)(?:\\s*\\((\\s*(?:\\d+(?:\\s*,\\s*\\d+)?|'[^']*'(?:\\s*,\\s*'[^']*')*))\\s*\\))?(?:\\s+UNSIGNED)?(?:\\s+(NOT NULL|NULL))?(?:\\s+DEFAULT\\s+(-?\\d+.\\d+|-?\\d+|NULL|'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'))?(?:\\s+(AUTO_INCREMENT))?(?:\\s+(UNIQUE|PRIMARY)(?: KEY)?)?~is",
+                    $query,
+                    $match
+                )
                 ) {
                     $columnType = \strtolower($match[6]);
                     $columnData = [
@@ -242,11 +242,11 @@ class SQLParser
 
             case 'CREATE INDEX':
                 if (
-                    \preg_match(
-                        '~^CREATE\s+(?:(UNIQUE|FULLTEXT)\s+)?INDEX\s+(\w+)\s+ON\s+(\w+)\s+\((\s*\w+\s*(?:,\s*\w+\s*)*)\)~is',
-                        $query,
-                        $match
-                    )
+                \preg_match(
+                    '~^CREATE\s+(?:(UNIQUE|FULLTEXT)\s+)?INDEX\s+(\w+)\s+ON\s+(\w+)\s+\((\s*\w+\s*(?:,\s*\w+\s*)*)\)~is',
+                    $query,
+                    $match
+                )
                 ) {
                     $this->executeAddIndexStatement(
                         $match[3],

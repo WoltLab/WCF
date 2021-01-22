@@ -59,14 +59,14 @@ class ImplodeCompilerTemplatePlugin implements ICompilerTemplatePlugin
         $phpCode .= "\$_length" . $hash . " = count(" . $tagArgs['from'] . ");\n";
         $phpCode .= "\$_i" . $hash . " = 0;\n";
         $phpCode .= "foreach (" . $tagArgs['from'] . " as " . (isset($tagArgs['key']) ? (\mb_substr(
-            $tagArgs['key'],
-            0,
-            1
-        ) != '$' ? "\$this->v[" . $tagArgs['key'] . "]" : $tagArgs['key']) . " => " : '') . (\mb_substr(
-            $tagArgs['item'],
-            0,
-            1
-        ) != '$' ? "\$this->v[" . $tagArgs['item'] . "]" : $tagArgs['item']) . ") { ?>";
+                    $tagArgs['key'],
+                    0,
+                    1
+                ) != '$' ? "\$this->v[" . $tagArgs['key'] . "]" : $tagArgs['key']) . " => " : '') . (\mb_substr(
+                $tagArgs['item'],
+                0,
+                1
+            ) != '$' ? "\$this->v[" . $tagArgs['item'] . "]" : $tagArgs['item']) . ") { ?>";
 
         return $phpCode;
     }

@@ -879,10 +879,10 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm
 
                                             if ($fileApplication === $application) {
                                                 $scriptLocation = $path . \substr(
-                                                    $fileSearchValue,
-                                                    0,
-                                                    -4
-                                                ) . '/' . $instruction['value'];
+                                                        $fileSearchValue,
+                                                        0,
+                                                        -4
+                                                    ) . '/' . $instruction['value'];
                                                 if (!\is_file($scriptLocation)) {
                                                     $checkedFileLocations[] = $scriptLocation;
                                                 } else {

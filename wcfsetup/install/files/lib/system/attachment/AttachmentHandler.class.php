@@ -224,10 +224,10 @@ class AttachmentHandler implements \Countable
             if (\strpos($extensions[$i], '*') !== false) {
                 for ($k = $j - 1; $k > $i; $k--) {
                     if (
-                        \preg_match(
-                            '/^' . \str_replace('\*', '.*', \preg_quote($extensions[$i], '/')) . '$/i',
-                            $extensions[$k]
-                        )
+                    \preg_match(
+                        '/^' . \str_replace('\*', '.*', \preg_quote($extensions[$i], '/')) . '$/i',
+                        $extensions[$k]
+                    )
                     ) {
                         \array_splice($extensions, $k, 1);
                         $j--;

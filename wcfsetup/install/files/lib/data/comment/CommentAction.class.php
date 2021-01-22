@@ -633,10 +633,10 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 
         $responses = $this->comment->responses;
         if (
-            $this->commentProcessor->canModerate(
-                $this->parameters['data']['objectTypeID'],
-                $this->parameters['data']['objectID']
-            )
+        $this->commentProcessor->canModerate(
+            $this->parameters['data']['objectTypeID'],
+            $this->parameters['data']['objectID']
+        )
         ) {
             $responses = $this->comment->unfilteredResponses;
         }

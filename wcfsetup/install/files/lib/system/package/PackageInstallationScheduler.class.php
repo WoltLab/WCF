@@ -300,9 +300,9 @@ class PackageInstallationScheduler
             // check response
             if ($response['statusCode'] != 200) {
                 throw new SystemException(WCF::getLanguage()->getDynamicVariable(
-                    'wcf.acp.package.error.downloadFailed',
-                    ['__downloadPackage' => $package]
-                ) . ' (' . $response['body'] . ')');
+                        'wcf.acp.package.error.downloadFailed',
+                        ['__downloadPackage' => $package]
+                    ) . ' (' . $response['body'] . ')');
             }
 
             // write content to tmp file
@@ -455,11 +455,11 @@ class PackageInstallationScheduler
                         if (!empty($row['excludedPackageVersion'])) {
                             // check version
                             if (
-                                Package::compareVersion(
-                                    $packageInstallation['newVersion'],
-                                    $row['excludedPackageVersion'],
-                                    '<'
-                                )
+                            Package::compareVersion(
+                                $packageInstallation['newVersion'],
+                                $row['excludedPackageVersion'],
+                                '<'
+                            )
                             ) {
                                 continue;
                             }
@@ -470,10 +470,10 @@ class PackageInstallationScheduler
                                     // check new exclusions
                                     if (
                                         !isset($packageUpdate['excludedPackages']) || !isset($packageUpdate['excludedPackages'][$row['excludedPackage']]) || (!empty($packageUpdate['excludedPackages'][$row['excludedPackage']]['version']) && Package::compareVersion(
-                                            $packageInstallation['newVersion'],
-                                            $packageUpdate['excludedPackages'][$row['excludedPackage']]['version'],
-                                            '<'
-                                        ))
+                                                $packageInstallation['newVersion'],
+                                                $packageUpdate['excludedPackages'][$row['excludedPackage']]['version'],
+                                                '<'
+                                            ))
                                     ) {
                                         continue 2;
                                     }
@@ -666,11 +666,11 @@ class PackageInstallationScheduler
                     ) && Package::compareVersion($packageVersion, $newVersion, '<')
                 ) {
                     $innerUpdateThreadList[] = $this->findShortestUpdateThread(
-                        $package,
-                        $fromversions,
-                        $currentVersion,
-                        $packageVersion
-                    ) + [$packageVersion => $newVersion];
+                            $package,
+                            $fromversions,
+                            $currentVersion,
+                            $packageVersion
+                        ) + [$packageVersion => $newVersion];
                 }
             }
 

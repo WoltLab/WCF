@@ -34,8 +34,8 @@ class TimeModifierTemplatePlugin implements IModifierTemplatePlugin
         $dateTime = DateUtil::getRelativeTime($dateTimeObject, $timestamp, $date, $time, $isFutureDate);
 
         return '<time datetime="' . DateUtil::format(
-            $dateTimeObject,
-            'c'
-        ) . '" class="datetime" data-timestamp="' . $timestamp . '" data-date="' . StringUtil::encodeHTML($date) . '" data-time="' . StringUtil::encodeHTML($time) . '" data-offset="' . $dateTimeObject->getOffset() . '"' . ($isFutureDate ? ' data-is-future-date="true"' : '') . '>' . $dateTime . '</time>';
+                $dateTimeObject,
+                'c'
+            ) . '" class="datetime" data-timestamp="' . $timestamp . '" data-date="' . StringUtil::encodeHTML($date) . '" data-time="' . StringUtil::encodeHTML($time) . '" data-offset="' . $dateTimeObject->getOffset() . '"' . ($isFutureDate ? ' data-is-future-date="true"' : '') . '>' . $dateTime . '</time>';
     }
 }

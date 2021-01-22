@@ -79,15 +79,15 @@ class PHPInfoPage extends AbstractPage
             static function ($match) {
                 $ret = '<td class="e">disable_' . $match['t'] . '</td>';
                 $ret .= '<td class="v">' . \str_replace(
-                    ' ',
-                    ', ',
-                    \rtrim(\wordwrap(\str_replace(',', ' ', $match['l'])))
-                ) . '</td>';
+                        ' ',
+                        ', ',
+                        \rtrim(\wordwrap(\str_replace(',', ' ', $match['l'])))
+                    ) . '</td>';
                 $ret .= '<td class="v">' . \str_replace(
-                    ' ',
-                    ', ',
-                    \rtrim(\wordwrap(\str_replace(',', ' ', $match['m'])))
-                ) . '</td>';
+                        ' ',
+                        ', ',
+                        \rtrim(\wordwrap(\str_replace(',', ' ', $match['m'])))
+                    ) . '</td>';
 
                 return $ret;
             },

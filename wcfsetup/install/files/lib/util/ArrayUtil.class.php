@@ -229,9 +229,9 @@ final class ArrayUtil
 
         // compare the arrays
         return (\count(\call_user_func_array($function, $params1)) === 0) && (\count(\call_user_func_array(
-            $function,
-            $params2
-        )) === 0);
+                    $function,
+                    $params2
+                )) === 0);
     }
 
     /**

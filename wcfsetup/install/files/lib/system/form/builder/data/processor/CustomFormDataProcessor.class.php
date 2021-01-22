@@ -68,13 +68,13 @@ class CustomFormDataProcessor extends AbstractFormDataProcessor
             /** @var \ReflectionType $parameterType */
             $parameterType = $parameters[0]->getType();
             if (
-                !(
-                    $parameterType instanceof \ReflectionNamedType
+            !(
+                $parameterType instanceof \ReflectionNamedType
                 && (
                     $parameterType->getName() === IFormDocument::class
                     || \is_subclass_of($parameterType->getName(), IFormDocument::class)
                 )
-                )
+            )
             ) {
                 throw new \InvalidArgumentException(
                     "The form data processor function's first parameter must be an instance of '" . IFormDocument::class . "', instead "
@@ -84,10 +84,10 @@ class CustomFormDataProcessor extends AbstractFormDataProcessor
 
             $parameterType = $parameters[1]->getType();
             if (
-                !(
-                    ($parameterType instanceof \ReflectionNamedType
+            !(
+            ($parameterType instanceof \ReflectionNamedType
                 && ($parameterType->getName() === 'array'))
-                )
+            )
             ) {
                 throw new \InvalidArgumentException(
                     "The form data processor function's second parameter must be an array."
@@ -110,13 +110,13 @@ class CustomFormDataProcessor extends AbstractFormDataProcessor
             /** @var \ReflectionType $parameterType */
             $parameterType = $parameters[0]->getType();
             if (
-                !(
-                    $parameterType instanceof \ReflectionNamedType
+            !(
+                $parameterType instanceof \ReflectionNamedType
                 && (
                     $parameterType->getName() === IFormDocument::class
                     || \is_subclass_of($parameterType->getName(), IFormDocument::class)
                 )
-                )
+            )
             ) {
                 throw new \InvalidArgumentException(
                     "The object data processor function's first parameter must be an instance of '" . IFormDocument::class . "', instead "
@@ -126,20 +126,20 @@ class CustomFormDataProcessor extends AbstractFormDataProcessor
 
             $parameterType = $parameters[1]->getType();
             if (
-                !(
-                    ($parameterType instanceof \ReflectionNamedType
+            !(
+            ($parameterType instanceof \ReflectionNamedType
                 && ($parameterType->getName() === 'array'))
-                )
+            )
             ) {
                 throw new \InvalidArgumentException("The object data processor function's second parameter must be an array.");
             }
 
             $parameterType = $parameters[2]->getType();
             if (
-                !(
-                    ($parameterType instanceof \ReflectionNamedType
+            !(
+            ($parameterType instanceof \ReflectionNamedType
                 && ($parameterType->getName() === IStorableObject::class))
-                )
+            )
             ) {
                 throw new \InvalidArgumentException("The object data processor function's third parameter must be an instance of '" . IStorableObject::class . "', instead " . @($parameterType === null ? 'any' : "'" . $parameterType . "'") . " parameter is expected.");
             }

@@ -454,9 +454,9 @@ class DatabaseTableChangeProcessor
                             $this->foreignKeysToDrop[$tableName][] = $foreignKey;
 
                             $this->splitNodeMessage .= "Dropped foreign key '{$tableName}." . \implode(
-                                ',',
-                                $foreignKey->getColumns()
-                            ) . "'.";
+                                    ',',
+                                    $foreignKey->getColumns()
+                                ) . "'.";
                             break 2;
                         } elseif (isset($this->foreignKeyPackageIDs[$tableName][$foreignKey->getName()])) {
                             $this->deleteForeignKeyLog($tableName, $foreignKey);
@@ -468,9 +468,9 @@ class DatabaseTableChangeProcessor
                         $this->foreignKeysToAdd[$tableName][] = $foreignKey;
 
                         $this->splitNodeMessage .= "Added foreign key '{$tableName}." . \implode(
-                            ',',
-                            $foreignKey->getColumns()
-                        ) . "'.";
+                                ',',
+                                $foreignKey->getColumns()
+                            ) . "'.";
                         break 2;
                     } elseif (!empty(\array_diff($foreignKey->getData(), $matchingExistingForeignKey->getData()))) {
                         if (!isset($this->foreignKeysToDrop[$tableName])) {
@@ -484,9 +484,9 @@ class DatabaseTableChangeProcessor
                         $this->foreignKeysToAdd[$tableName][] = $foreignKey;
 
                         $this->splitNodeMessage .= "Replaced foreign key '{$tableName}." . \implode(
-                            ',',
-                            $foreignKey->getColumns()
-                        ) . "'.";
+                                ',',
+                                $foreignKey->getColumns()
+                            ) . "'.";
                         break 2;
                     }
                 }
@@ -509,9 +509,9 @@ class DatabaseTableChangeProcessor
                             $this->indicesToDrop[$tableName][] = $index;
 
                             $this->splitNodeMessage .= "Dropped index '{$tableName}." . \implode(
-                                ',',
-                                $index->getColumns()
-                            ) . "'.";
+                                    ',',
+                                    $index->getColumns()
+                                ) . "'.";
                             break 2;
                         } elseif (isset($this->indexPackageIDs[$tableName][$index->getName()])) {
                             $this->deleteIndexLog($tableName, $index);
@@ -541,9 +541,9 @@ class DatabaseTableChangeProcessor
                         $this->indicesToAdd[$tableName][] = $index;
 
                         $this->splitNodeMessage .= "Added index '{$tableName}." . \implode(
-                            ',',
-                            $index->getColumns()
-                        ) . "'.";
+                                ',',
+                                $index->getColumns()
+                            ) . "'.";
                         break 2;
                     }
                 }

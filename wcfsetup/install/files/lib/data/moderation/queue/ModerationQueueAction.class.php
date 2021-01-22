@@ -254,10 +254,10 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
             // get handler
             $objectType = ObjectTypeCache::getInstance()->getObjectType($this->moderationQueueEditor->objectTypeID);
             if (
-                !$objectType->getProcessor()->isAffectedUser(
-                    $this->moderationQueueEditor->getDecoratedObject(),
-                    $this->user->userID
-                )
+            !$objectType->getProcessor()->isAffectedUser(
+                $this->moderationQueueEditor->getDecoratedObject(),
+                $this->user->userID
+            )
             ) {
                 throw new UserInputException('assignedUsername', 'notAffected');
             }

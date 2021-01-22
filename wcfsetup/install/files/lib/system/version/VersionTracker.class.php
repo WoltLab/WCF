@@ -308,7 +308,8 @@ class VersionTracker extends SingletonFactory implements IAJAXInvokeAction
         }
 
         $columns = [
-            ['name' => 'versionID',
+            [
+                'name' => 'versionID',
                 'data' => [
                     'length' => 10,
                     'notNull' => true,

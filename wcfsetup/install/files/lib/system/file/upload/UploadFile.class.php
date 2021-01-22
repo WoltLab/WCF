@@ -101,9 +101,9 @@ class UploadFile
 
         if (
             @\getimagesize($location) !== false || ($detectSvgAsImage && \in_array(FileUtil::getMimeType($location), [
-                'image/svg',
-                'image/svg+xml',
-            ]))
+                    'image/svg',
+                    'image/svg+xml',
+                ]))
         ) {
             $this->isImage = true;
         }

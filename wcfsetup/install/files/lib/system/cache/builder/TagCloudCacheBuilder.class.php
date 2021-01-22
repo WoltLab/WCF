@@ -101,7 +101,7 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder
             // get tags
             if (!empty($tagIDs)) {
                 $conditionBuilder = new PreparedStatementConditionBuilder();
-                $conditionBuilder->add('tagID IN (?)', [ \array_keys($tagIDs) ]);
+                $conditionBuilder->add('tagID IN (?)', [\array_keys($tagIDs)]);
                 $sql = "SELECT  *
                         FROM    wcf" . WCF_N . "_tag
                         " . $conditionBuilder;

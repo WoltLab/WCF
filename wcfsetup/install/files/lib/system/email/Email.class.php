@@ -778,8 +778,8 @@ class Email
             } elseif ($body instanceof mime\AttachmentMimePart) {
                 $result .= "<fieldset><legend><h" . $depth . ">" . \get_class($body) . "</h" . $depth . "></legend>";
                 $result .= "<dl>" . \implode('', \array_map(static function ($item) {
-                    return "<dt>" . $item[0] . "</dt><dd>" . $item[1] . "</dd>";
-                }, $body->getAdditionalHeaders())) . "</dl>";
+                        return "<dt>" . $item[0] . "</dt><dd>" . $item[1] . "</dd>";
+                    }, $body->getAdditionalHeaders())) . "</dl>";
                 $result .= "<" . \strlen($body->getContent()) . " Bytes>";
                 $result .= '</fieldset>';
             } else {

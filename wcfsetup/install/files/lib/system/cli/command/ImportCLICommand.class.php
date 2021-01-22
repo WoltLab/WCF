@@ -429,12 +429,12 @@ class ImportCLICommand implements ICLICommand
                     $supportedDataSelection[$selectedObjectType][$supportedDataIndex++] = $objectType;
                 }
                 CLIWCF::getReader()->println('  ' . WCF::getLanguage()->getDynamicVariable(
-                    'wcf.acp.dataImport.cli.selection',
-                    [
-                        'minSelection' => 0,
-                        'maxSelection' => $supportedDataIndex - 1,
-                    ]
-                ));
+                        'wcf.acp.dataImport.cli.selection',
+                        [
+                            'minSelection' => 0,
+                            'maxSelection' => $supportedDataIndex - 1,
+                        ]
+                    ));
 
                 while (true) {
                     // read index of selected secondary import data type
