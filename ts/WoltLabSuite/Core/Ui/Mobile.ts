@@ -24,7 +24,7 @@ interface MainMenuMorePayload {
 }
 
 let _dropdownMenu: HTMLUListElement | null = null;
-let _dropdownMenuMessage = null;
+let _dropdownMenuMessage: HTMLElement | null = null;
 let _enabled = false;
 let _enabledLGTouchNavigation = false;
 let _enableMobileMenu = false;
@@ -35,18 +35,18 @@ let _pageMenuUser: UiPageMenuUser;
 let _messageGroups: HTMLCollection | null = null;
 const _sidebars: HTMLElement[] = [];
 
-function _init(): void {
+function init(): void {
   _enabled = true;
 
   initSearchBar();
-  _initButtonGroupNavigation();
-  _initMessages();
-  _initMobileMenu();
+  initButtonGroupNavigation();
+  initMessages();
+  initMobileMenu();
 
-  UiCloseOverlay.add("WoltLabSuite/Core/Ui/Mobile", _closeAllMenus);
+  UiCloseOverlay.add("WoltLabSuite/Core/Ui/Mobile", closeAllMenus);
   DomChangeListener.add("WoltLabSuite/Core/Ui/Mobile", () => {
-    _initButtonGroupNavigation();
-    _initMessages();
+    initButtonGroupNavigation();
+    initMessages();
   });
 }
 
@@ -88,7 +88,7 @@ function initSearchBar(): void {
   });
 }
 
-function _initButtonGroupNavigation(): void {
+function initButtonGroupNavigation(): void {
   document.querySelectorAll(".buttonGroupNavigation").forEach((navigation) => {
     if (navigation.classList.contains("jsMobileButtonGroupNavigation")) {
       return;
@@ -125,7 +125,7 @@ function _initButtonGroupNavigation(): void {
   });
 }
 
-function _initMessages(): void {
+function initMessages(): void {
   document.querySelectorAll(".message").forEach((message: HTMLElement) => {
     if (_knownMessages.has(message)) {
       return;
@@ -142,7 +142,7 @@ function _initMessages(): void {
         }, 10);
       });
 
-      const quickOptions = message.querySelector(".messageQuickOptions");
+      const quickOptions = message.querySelector(".messageQuickOptions") as HTMLElement;
       if (quickOptions && navigation.childElementCount) {
         quickOptions.classList.add("active");
         quickOptions.addEventListener("click", (event) => {
@@ -152,7 +152,7 @@ function _initMessages(): void {
             event.preventDefault();
             event.stopPropagation();
 
-            _toggleMobileNavigation(message, quickOptions, navigation);
+            toggleMobileNavigation(message, quickOptions, navigation);
           }
         });
       }
@@ -161,14 +161,14 @@ function _initMessages(): void {
   });
 }
 
-function _initMobileMenu(): void {
+function initMobileMenu(): void {
   if (_enableMobileMenu) {
     _pageMenuMain = new UiPageMenuMain();
     _pageMenuUser = new UiPageMenuUser();
   }
 }
 
-function _closeAllMenus(): void {
+function closeAllMenus(): void {
   document.querySelectorAll(".jsMobileButtonGroupNavigation.open, .jsMobileNavigation.open").forEach((menu) => {
     menu.classList.remove("open");
   });
@@ -178,18 +178,18 @@ function _closeAllMenus(): void {
   }
 }
 
-function _enableMobileSidebar(): void {
+function enableMobileSidebar(): void {
   _mobileSidebarEnabled = true;
 }
 
-function _disableMobileSidebar(): void {
+function disableMobileSidebar(): void {
   _mobileSidebarEnabled = false;
   _sidebars.forEach(function (sidebar) {
     sidebar.classList.remove("open");
   });
 }
 
-function _setupMobileSidebar(): void {
+function setupMobileSidebar(): void {
   _sidebars.forEach(function (sidebar) {
     sidebar.addEventListener("mousedown", function (event) {
       if (_mobileSidebarEnabled && event.target === sidebar) {
@@ -205,7 +205,7 @@ function closeDropdown(): void {
   _dropdownMenu!.classList.remove("dropdownOpen");
 }
 
-function _toggleMobileNavigation(message, quickOptions, navigation): void {
+function toggleMobileNavigation(message: HTMLElement, quickOptions: HTMLElement, navigation: HTMLElement): void {
   if (_dropdownMenu === null) {
     _dropdownMenu = document.createElement("ul");
     _dropdownMenu.className = "dropdownMenu";
@@ -219,13 +219,13 @@ function _toggleMobileNavigation(message, quickOptions, navigation): void {
   }
   _dropdownMenu.innerHTML = "";
   UiCloseOverlay.execute();
-  _rebuildMobileNavigation(navigation);
-  const previousNavigation = navigation.previousElementSibling;
+  rebuildMobileNavigation(navigation);
+  const previousNavigation = navigation.previousElementSibling as HTMLElement;
   if (previousNavigation && previousNavigation.classList.contains("messageFooterButtonsExtra")) {
     const divider = document.createElement("li");
     divider.className = "dropdownDivider";
     _dropdownMenu.appendChild(divider);
-    _rebuildMobileNavigation(previousNavigation);
+    rebuildMobileNavigation(previousNavigation);
   }
   UiAlignment.set(_dropdownMenu, quickOptions, {
     horizontal: "right",
@@ -235,7 +235,7 @@ function _toggleMobileNavigation(message, quickOptions, navigation): void {
   _dropdownMenuMessage = message;
 }
 
-function _setupLGTouchNavigation(): void {
+function setupLGTouchNavigation(): void {
   _enabledLGTouchNavigation = true;
   document.querySelectorAll(".boxMenuHasChildren > a").forEach((element: HTMLElement) => {
     element.addEventListener("touchstart", function (event) {
@@ -280,15 +280,15 @@ function _setupLGTouchNavigation(): void {
   });
 }
 
-function _enableLGTouchNavigation(): void {
+function enableLGTouchNavigation(): void {
   _enabledLGTouchNavigation = true;
 }
 
-function _disableLGTouchNavigation(): void {
+function disableLGTouchNavigation(): void {
   _enabledLGTouchNavigation = false;
 }
 
-function _rebuildMobileNavigation(navigation: HTMLElement): void {
+function rebuildMobileNavigation(navigation: HTMLElement): void {
   navigation.querySelectorAll(".button").forEach((button: HTMLElement) => {
     if (button.classList.contains("ignoreMobileNavigation")) {
       // The reaction button was hidden up until 5.2.2, but was enabled again in 5.2.3. This check
@@ -344,7 +344,7 @@ export function setup(enableMobileMenu: boolean): void {
   UiScreen.on("screen-md-down", {
     match: enable,
     unmatch: disable,
-    setup: _init,
+    setup: init,
   });
   UiScreen.on("screen-sm-down", {
     match: enableShadow,
@@ -352,9 +352,9 @@ export function setup(enableMobileMenu: boolean): void {
     setup: enableShadow,
   });
   UiScreen.on("screen-md-down", {
-    match: _enableMobileSidebar,
-    unmatch: _disableMobileSidebar,
-    setup: _setupMobileSidebar,
+    match: enableMobileSidebar,
+    unmatch: disableMobileSidebar,
+    setup: setupMobileSidebar,
   });
 
   // On the large tablets (e.g. iPad Pro) the navigation is not usable, because there is not the mobile
@@ -363,9 +363,9 @@ export function setup(enableMobileMenu: boolean): void {
   // display the submenu here after a single click and only follow the link after another click.
   if (Environment.touch() && (Environment.platform() === "ios" || Environment.platform() === "android")) {
     UiScreen.on("screen-lg", {
-      match: _enableLGTouchNavigation,
-      unmatch: _disableLGTouchNavigation,
-      setup: _setupLGTouchNavigation,
+      match: enableLGTouchNavigation,
+      unmatch: disableLGTouchNavigation,
+      setup: setupLGTouchNavigation,
     });
   }
 }

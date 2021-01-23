@@ -31,16 +31,16 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
     let _pageMenuUser;
     let _messageGroups = null;
     const _sidebars = [];
-    function _init() {
+    function init() {
         _enabled = true;
         initSearchBar();
-        _initButtonGroupNavigation();
-        _initMessages();
-        _initMobileMenu();
-        CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/Mobile", _closeAllMenus);
+        initButtonGroupNavigation();
+        initMessages();
+        initMobileMenu();
+        CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/Mobile", closeAllMenus);
         Listener_1.default.add("WoltLabSuite/Core/Ui/Mobile", () => {
-            _initButtonGroupNavigation();
-            _initMessages();
+            initButtonGroupNavigation();
+            initMessages();
         });
     }
     function initSearchBar() {
@@ -74,7 +74,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
             }
         });
     }
-    function _initButtonGroupNavigation() {
+    function initButtonGroupNavigation() {
         document.querySelectorAll(".buttonGroupNavigation").forEach((navigation) => {
             if (navigation.classList.contains("jsMobileButtonGroupNavigation")) {
                 return;
@@ -105,7 +105,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
             navigation.insertBefore(button, navigation.firstChild);
         });
     }
-    function _initMessages() {
+    function initMessages() {
         document.querySelectorAll(".message").forEach((message) => {
             if (_knownMessages.has(message)) {
                 return;
@@ -127,7 +127,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
                         if (_enabled && UiScreen.is("screen-sm-down") && target.nodeName !== "LABEL" && target.nodeName !== "INPUT") {
                             event.preventDefault();
                             event.stopPropagation();
-                            _toggleMobileNavigation(message, quickOptions, navigation);
+                            toggleMobileNavigation(message, quickOptions, navigation);
                         }
                     });
                 }
@@ -135,13 +135,13 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
             _knownMessages.add(message);
         });
     }
-    function _initMobileMenu() {
+    function initMobileMenu() {
         if (_enableMobileMenu) {
             _pageMenuMain = new Main_1.default();
             _pageMenuUser = new User_1.default();
         }
     }
-    function _closeAllMenus() {
+    function closeAllMenus() {
         document.querySelectorAll(".jsMobileButtonGroupNavigation.open, .jsMobileNavigation.open").forEach((menu) => {
             menu.classList.remove("open");
         });
@@ -149,16 +149,16 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
             closeDropdown();
         }
     }
-    function _enableMobileSidebar() {
+    function enableMobileSidebar() {
         _mobileSidebarEnabled = true;
     }
-    function _disableMobileSidebar() {
+    function disableMobileSidebar() {
         _mobileSidebarEnabled = false;
         _sidebars.forEach(function (sidebar) {
             sidebar.classList.remove("open");
         });
     }
-    function _setupMobileSidebar() {
+    function setupMobileSidebar() {
         _sidebars.forEach(function (sidebar) {
             sidebar.addEventListener("mousedown", function (event) {
                 if (_mobileSidebarEnabled && event.target === sidebar) {
@@ -172,7 +172,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
     function closeDropdown() {
         _dropdownMenu.classList.remove("dropdownOpen");
     }
-    function _toggleMobileNavigation(message, quickOptions, navigation) {
+    function toggleMobileNavigation(message, quickOptions, navigation) {
         if (_dropdownMenu === null) {
             _dropdownMenu = document.createElement("ul");
             _dropdownMenu.className = "dropdownMenu";
@@ -187,13 +187,13 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
         }
         _dropdownMenu.innerHTML = "";
         CloseOverlay_1.default.execute();
-        _rebuildMobileNavigation(navigation);
+        rebuildMobileNavigation(navigation);
         const previousNavigation = navigation.previousElementSibling;
         if (previousNavigation && previousNavigation.classList.contains("messageFooterButtonsExtra")) {
             const divider = document.createElement("li");
             divider.className = "dropdownDivider";
             _dropdownMenu.appendChild(divider);
-            _rebuildMobileNavigation(previousNavigation);
+            rebuildMobileNavigation(previousNavigation);
         }
         UiAlignment.set(_dropdownMenu, quickOptions, {
             horizontal: "right",
@@ -202,7 +202,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
         _dropdownMenu.classList.add("dropdownOpen");
         _dropdownMenuMessage = message;
     }
-    function _setupLGTouchNavigation() {
+    function setupLGTouchNavigation() {
         _enabledLGTouchNavigation = true;
         document.querySelectorAll(".boxMenuHasChildren > a").forEach((element) => {
             element.addEventListener("touchstart", function (event) {
@@ -232,13 +232,13 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
             });
         });
     }
-    function _enableLGTouchNavigation() {
+    function enableLGTouchNavigation() {
         _enabledLGTouchNavigation = true;
     }
-    function _disableLGTouchNavigation() {
+    function disableLGTouchNavigation() {
         _enabledLGTouchNavigation = false;
     }
-    function _rebuildMobileNavigation(navigation) {
+    function rebuildMobileNavigation(navigation) {
         navigation.querySelectorAll(".button").forEach((button) => {
             if (button.classList.contains("ignoreMobileNavigation")) {
                 // The reaction button was hidden up until 5.2.2, but was enabled again in 5.2.3. This check
@@ -289,7 +289,7 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
         UiScreen.on("screen-md-down", {
             match: enable,
             unmatch: disable,
-            setup: _init,
+            setup: init,
         });
         UiScreen.on("screen-sm-down", {
             match: enableShadow,
@@ -297,9 +297,9 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
             setup: enableShadow,
         });
         UiScreen.on("screen-md-down", {
-            match: _enableMobileSidebar,
-            unmatch: _disableMobileSidebar,
-            setup: _setupMobileSidebar,
+            match: enableMobileSidebar,
+            unmatch: disableMobileSidebar,
+            setup: setupMobileSidebar,
         });
         // On the large tablets (e.g. iPad Pro) the navigation is not usable, because there is not the mobile
         // layout displayed, but the normal one for the desktop. The navigation reacts to a hover status if a
@@ -307,9 +307,9 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
         // display the submenu here after a single click and only follow the link after another click.
         if (Environment.touch() && (Environment.platform() === "ios" || Environment.platform() === "android")) {
             UiScreen.on("screen-lg", {
-                match: _enableLGTouchNavigation,
-                unmatch: _disableLGTouchNavigation,
-                setup: _setupLGTouchNavigation,
+                match: enableLGTouchNavigation,
+                unmatch: disableLGTouchNavigation,
+                setup: setupLGTouchNavigation,
             });
         }
     }
