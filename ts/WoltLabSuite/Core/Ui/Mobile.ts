@@ -24,7 +24,7 @@ interface MainMenuMorePayload {
 }
 
 let _dropdownMenu: HTMLUListElement | null = null;
-let _dropdownMenuMessage: HTMLElement | null = null;
+let _dropdownMenuMessage: HTMLElement | null = null;
 let _enabled = false;
 let _enabledLGTouchNavigation = false;
 let _enableMobileMenu = false;
