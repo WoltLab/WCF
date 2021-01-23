@@ -76,7 +76,8 @@ class AvatarUploadFileSaveStrategy implements IUploadFileSaveStrategy
                     UserAvatar::AVATAR_SIZE,
                     false
                 );
-            } /** @noinspection PhpRedundantCatchClauseInspection */
+            }
+            /** @noinspection PhpRedundantCatchClauseInspection */
             catch (SystemException $e) {
                 $uploadFile->setValidationErrorType('tooLarge');
 
@@ -105,14 +106,20 @@ class AvatarUploadFileSaveStrategy implements IUploadFileSaveStrategy
 
             // check avatar directory
             // and create subdirectory if necessary
-            $dir = \dirname($this->avatar->getLocation());
+            $dir = \dirname($this->avatar->getLocation(null, false));
             if (!@\file_exists($dir)) {
                 FileUtil::makePath($dir);
             }
 
             // move uploaded file
-            if (@\copy($fileLocation, $this->avatar->getLocation())) {
+            if (@\copy($fileLocation, $this->avatar->getLocation(null, false))) {
                 @\unlink($fileLocation);
+
+                // Create the WebP variant or the JPEG fallback of the avatar.
+                $avatarEditor = new UserAvatarEditor($this->avatar);
+                if ($avatarEditor->createAvatarVariant()) {
+                    $this->avatar = new UserAvatar($this->avatar->avatarID);
+                }
 
                 // delete old avatar
                 if ($this->user->avatarID) {

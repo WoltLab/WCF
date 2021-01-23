@@ -199,6 +199,33 @@ final class ImageUtil
     }
 
     /**
+     * Examines the `accept` header to determine if the browser
+     * supports WebP images.
+     * 
+     * @since 5.4
+     */
+    public static function browserSupportsWebP(): bool
+    {
+        static $supportsWebP = null;
+
+        if ($supportsWebP === null) {
+            $supportsWebP = false;
+            if (!empty($_SERVER["HTTP_ACCEPT"])) {
+                $acceptableMimeTypes = array_map(function ($acceptableMimeType) {
+                    [$mimeType] = ArrayUtil::trim(explode(";", $acceptableMimeType));
+                    return $mimeType;
+                }, explode(",", $_SERVER["HTTP_ACCEPT"]));
+
+                if (in_array("image/webp", $acceptableMimeTypes)) {
+                    $supportsWebP = true;
+                }
+            }
+        }
+
+        return $supportsWebP;
+    }
+
+    /**
      * Forbid creation of ImageUtil objects.
      */
     private function __construct()
