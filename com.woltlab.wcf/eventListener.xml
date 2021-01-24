@@ -33,5 +33,11 @@
 			<listenerclassname>wcf\system\event\listener\ArticleLinkHtmlInputNodeProcessorListener</listenerclassname>
 			<environment>admin</environment>
 		</eventlistener>
+		<eventlistener name="userLinkhtmlInputNodeProcessor">
+			<eventclassname>wcf\system\html\input\node\HtmlInputNodeProcessor</eventclassname>
+			<eventname>afterProcess</eventname>
+			<listenerclassname>wcf\system\event\listener\UserLinkHtmlInputNodeProcessorListener</listenerclassname>
+			<environment>all</environment>
+		</eventlistener>
 	</import>
 </data>
