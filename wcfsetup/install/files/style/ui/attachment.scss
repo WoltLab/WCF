@@ -270,6 +270,7 @@
     padding: 8px;
     row-gap: 1px;
 
+    &:focus,
     &:hover {
         color: inherit;
 
@@ -278,7 +279,7 @@
         }
     }
 
-    &:not(:hover) {
+    &:not(:focus):not(:hover) {
         .messageAttachmentIconDownload {
             display: none;
         }
