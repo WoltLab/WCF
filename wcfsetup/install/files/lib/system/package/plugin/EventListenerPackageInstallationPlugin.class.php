@@ -29,7 +29,7 @@ use wcf\util\StringUtil;
  * Installs, updates and deletes event listeners.
  *
  * @author  Matthias Schmidt, Marcel Werk
- * @copyright   2001-2019 WoltLab GmbH
+ * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Package\Plugin
  */
@@ -267,6 +267,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
                 ->options([
                     'admin' => 'admin',
                     'user' => 'user',
+                    'all' => 'all',
                 ])
                 ->value('user'),
 
