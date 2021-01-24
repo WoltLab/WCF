@@ -576,7 +576,7 @@ DROP TABLE IF EXISTS wcf1_event_listener;
 CREATE TABLE wcf1_event_listener (
 	listenerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	packageID INT(10) NOT NULL,
-	environment ENUM('user', 'admin') NOT NULL DEFAULT 'user',
+	environment ENUM('user', 'admin', 'all') NOT NULL DEFAULT 'user',
 	listenerName VARCHAR(191) NOT NULL,
 	eventClassName VARCHAR(255) NOT NULL DEFAULT '',
 	eventName TEXT,
