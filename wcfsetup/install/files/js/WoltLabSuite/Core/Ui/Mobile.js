@@ -240,13 +240,8 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "../
     }
     function rebuildMobileNavigation(navigation) {
         navigation.querySelectorAll(".button").forEach((button) => {
-            if (button.classList.contains("ignoreMobileNavigation")) {
-                // The reaction button was hidden up until 5.2.2, but was enabled again in 5.2.3. This check
-                // exists to make sure that there is no unexpected behavior in 3rd party apps or plugins that
-                // used the same code and hid the reaction button via a CSS class in the template.
-                if (!button.classList.contains("reactButton")) {
-                    return;
-                }
+            if (button.classList.contains("ignoreMobileNavigation") || button.classList.contains("reactButton")) {
+                return;
             }
             const item = document.createElement("li");
             if (button.classList.contains("active")) {
