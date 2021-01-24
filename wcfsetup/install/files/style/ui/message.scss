@@ -520,17 +520,15 @@
 		}
 		
 		@include screen-sm-down {
-			display: block;
-			margin-top: 0 !important;
-			pointer-events: none;
-			position: absolute;
-			right: -1px;
-			top: 9px;
-			
-			> li {
-				height: 0;
-				overflow: hidden;
-			}
+            margin-left: auto;
+
+            .button:not(.reactButton) {
+                display: none;
+            }
+
+            .button.reactButton {
+                border-radius: 2px;
+            }
 		}
 	}
 	
@@ -584,10 +582,10 @@
 		opacity: 1;
 	}
 }
-	
+
 .messageFooterButtons,
 .messageFooterButtonsExtra {
-	@extend .buttonGroup;
+    @extend .buttonGroup;
 	
 	justify-content: flex-end;
 	
