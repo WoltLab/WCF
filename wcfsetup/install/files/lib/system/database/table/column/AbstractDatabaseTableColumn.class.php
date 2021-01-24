@@ -182,7 +182,7 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn
      * @inheritDoc
      * @since       5.4
      */
-    public function renameTo(string $newName): self
+    public function renameTo(string $newName)
     {
         if ($newName === $this->getName()) {
             throw new \InvalidArgumentException("'{$newName}' is the current name of the column.");

@@ -90,8 +90,9 @@ interface IDatabaseTableColumn
      * Sets the new name of the column and returns the column.
      *
      * @since       5.4
+     * @return $this
      */
-    public function renameTo(string $newName): self;
+    public function renameTo(string $newName);
 
     /**
      * Returns `true` if the column will be dropped.
