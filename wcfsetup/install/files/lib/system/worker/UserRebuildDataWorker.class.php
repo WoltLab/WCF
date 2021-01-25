@@ -211,8 +211,16 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
             $avatarList = new UserAvatarList();
             $avatarList->getConditionBuilder()->add('user_avatar.userID IN (?)', [$userIDs]);
             $avatarList->getConditionBuilder()->add(
-                '(user_avatar.width <> ? OR user_avatar.height <> ?)',
-                [UserAvatar::AVATAR_SIZE, UserAvatar::AVATAR_SIZE]
+                '(
+                    (user_avatar.width <> ? OR user_avatar.height <> ?)
+                    OR (user_avatar.hasWebP = ? AND user_avatar.avatarExtension <> ?)
+                )',
+                [
+                    UserAvatar::AVATAR_SIZE,
+                    UserAvatar::AVATAR_SIZE,
+                    1,
+                    "gif",
+                ]
             );
             $avatarList->readObjects();
             foreach ($avatarList as $avatar) {
@@ -260,6 +268,8 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
                     $adapter->writeImage($adapter->getImage(), $avatar->getLocation());
                     $width = $height = UserAvatar::AVATAR_SIZE;
                 }
+
+                $editor->createAvatarVariant();
 
                 $editor->update([
                     'width' => $width,

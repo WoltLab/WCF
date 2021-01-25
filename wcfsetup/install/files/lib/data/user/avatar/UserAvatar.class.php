@@ -4,6 +4,7 @@ namespace wcf\data\user\avatar;
 
 use wcf\data\DatabaseObject;
 use wcf\system\WCF;
+use wcf\util\ImageUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -14,13 +15,14 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\User\Avatar
  *
- * @property-read   int $avatarID       unique id of the user avatar
- * @property-read   string $avatarName     name of the original avatar file
- * @property-read   string $avatarExtension    extension of the avatar file
- * @property-read   int $width          width of the user avatar image
- * @property-read   int $height         height of the user avatar image
- * @property-read   int|null $userID         id of the user to which the user avatar belongs or null
- * @property-read   string $fileHash       SHA1 hash of the original avatar file
+ * @property-read int $avatarID unique id of the user avatar
+ * @property-read string $avatarName name of the original avatar file
+ * @property-read string $avatarExtension extension of the avatar file
+ * @property-read int $width width of the user avatar image
+ * @property-read int $height height of the user avatar image
+ * @property-read int|null $userID id of the user to which the user avatar belongs or null
+ * @property-read string $fileHash SHA1 hash of the original avatar file
+ * @property-read int $hasWebP `1` if there is a WebP variant, else `0`
  */
 class UserAvatar extends DatabaseObject implements IUserAvatar
 {
@@ -55,26 +57,41 @@ class UserAvatar extends DatabaseObject implements IUserAvatar
      * Returns the physical location of this avatar.
      *
      * @param int $size
-     * @return  string
+     * @param bool|null $forceWebP
+     * @return string
      */
-    public function getLocation($size = null)
+    public function getLocation($size = null, ?bool $forceWebP = null)
     {
-        return WCF_DIR . 'images/avatars/' . $this->getFilename($size);
+        return WCF_DIR . 'images/avatars/' . $this->getFilename($size, $forceWebP);
     }
 
     /**
      * Returns the file name of this avatar.
      *
      * @param int $size
-     * @return  string
+     * @param bool|null $forceWebP
+     * @return string
      */
-    public function getFilename($size = null)
+    public function getFilename($size = null, ?bool $forceWebP = null)
     {
-        return \substr(
-            $this->fileHash,
-            0,
-            2
-        ) . '/' . $this->avatarID . '-' . $this->fileHash . ($size !== null ? ('-' . $size) : '') . '.' . $this->avatarExtension;
+        if (
+            $forceWebP === true
+            || ($forceWebP === null && $this->hasWebP && ImageUtil::browserSupportsWebP())
+        ) {
+            $fileExtension = "webp";
+        } else {
+            $fileExtension = $this->avatarExtension;
+        }
+
+        $directory = \substr($this->fileHash, 0, 2);
+
+        return \sprintf(
+            '%s/%d-%s.%s',
+            $directory,
+            $this->avatarID,
+            $this->fileHash . ($size !== null ? ('-' . $size) : ''),
+            $fileExtension
+        );
     }
 
     /**
