@@ -28,7 +28,7 @@ $tables = [
     PartialDatabaseTable::create('wcf1_event_listener')
         ->columns([
             EnumDatabaseTableColumn::create('environment')
-                ->enumValues(['user', 'admin', 'all'])
+                ->enumValues(['user', 'admin', 'all']),
         ]),
 
     DatabaseTable::create('wcf1_flood_control')
