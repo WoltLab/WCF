@@ -15,16 +15,16 @@ use wcf\system\WCF;
  */
 
 $tables = [
-    PartialDatabaseTable::create('wcf1_event_listener')
-        ->columns([
-            EnumDatabaseTableColumn::create('environment')
-                ->enumValues(['user', 'admin', 'all'])
-        ]),
+	PartialDatabaseTable::create('wcf1_event_listener')
+		->columns([
+			EnumDatabaseTableColumn::create('environment')
+				->enumValues(['user', 'admin', 'all'])
+		]),
 ];
 
 (new DatabaseTableChangeProcessor(
 /** @var ScriptPackageInstallationPlugin $this */
-    $this->installation->getPackage(),
-    $tables,
-    WCF::getDB()->getEditor())
+	$this->installation->getPackage(),
+	$tables,
+	WCF::getDB()->getEditor())
 )->process();
