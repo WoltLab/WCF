@@ -115,7 +115,7 @@ class StyleExportForm extends AbstractForm
         ));
 
         // send headers
-        \header('Content-Type: application/x-gzip; charset=utf-8');
+        \header('Content-Type: application/gzip');
 
         if ($this->exportAsPackage) {
             \header('Content-Disposition: attachment; filename="' . $this->style->packageName . '.tar.gz"');
