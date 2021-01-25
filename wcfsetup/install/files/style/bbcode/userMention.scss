@@ -2,9 +2,9 @@
 	background-color: $wcfSidebarBackground;
 	border-radius: 2px;
 	padding: 1px 5px;
-	
+
 	&::before {
-		content: '@';
+		content: "@";
 		/* avoids breaks between the '@' and the username, but still allows
 		   wrapping inside the username itself */
 		display: inline-block;

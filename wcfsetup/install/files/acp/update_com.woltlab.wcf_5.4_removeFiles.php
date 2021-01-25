@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Removes obsolete files.
+ *
+ * @author  Tim Duesterhus
+ * @copyright   2001-2021 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package WoltLabSuite\Core
+ */
+
 use wcf\data\package\PackageCache;
 use wcf\system\WCF;
 

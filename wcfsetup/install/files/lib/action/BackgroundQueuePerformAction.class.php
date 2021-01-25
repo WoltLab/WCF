@@ -29,7 +29,7 @@ class BackgroundQueuePerformAction extends AbstractAction
     {
         parent::execute();
 
-        \header('Content-type: application/json');
+        \header('Content-type: application/json; charset=UTF-8');
         for ($i = 0; $i < self::$jobsPerRun; $i++) {
             if (BackgroundQueueHandler::getInstance()->performNextJob() === false) {
                 // there were no more jobs

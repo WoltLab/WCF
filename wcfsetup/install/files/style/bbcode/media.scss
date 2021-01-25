@@ -1,7 +1,7 @@
 .mediaBBCode {
 	display: inline-table;
 	max-width: 100%;
-	
+
 	.mediaBBCodeCaption {
 		color: $wcfContentDimmedText;
 		// https://stackoverflow.com/a/11652170/782822
@@ -9,16 +9,16 @@
 		caption-side: bottom;
 		margin-top: 5px;
 		text-align: center;
-		
+
 		@include wcfFontSmall;
-		
+
 		.mediaBBCodeCaptionAlignment {
 			// https://stackoverflow.com/a/43627669/782822
 			display: inline-block;
 			text-align: justify;
 		}
 	}
-	
+
 	video {
 		max-width: 100%;
 	}

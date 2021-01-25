@@ -154,7 +154,7 @@ class AJAXFileUploadAction extends AbstractSecureAction
         $json = JSON::encode($data);
 
         // send JSON response
-        \header('Content-type: application/json');
+        \header('Content-type: application/json; charset=UTF-8');
         echo $json;
 
         exit;

@@ -13,14 +13,14 @@
 .embeddedContentCategory {
 	color: $wcfContentDimmedText;
 	text-transform: uppercase;
-	
+
 	@include wcfFontSmall;
 }
 
 .embeddedContentTitle {
 	color: $wcfContentHeadlineText;
 	margin-bottom: 20px;
-	
+
 	@include wcfFontHeadline;
 	@include wcfFontBold;
 }
@@ -47,7 +47,7 @@
 	color: $wcfContentDimmedText;
 	display: flex;
 	padding: 10px;
-	
+
 	@include wcfFontSmall;
 }
 
@@ -62,10 +62,10 @@
 
 .embeddedContentMetaAuthor {
 	color: $wcfContentText;
-	
+
 	> a {
 		color: inherit;
-		
+
 		&:hover {
 			text-decoration: underline;
 		}

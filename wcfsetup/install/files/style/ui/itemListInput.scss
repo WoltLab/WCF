@@ -1,21 +1,21 @@
 .inputItemList {
 	@include input;
-	
+
 	display: flex;
 	flex-wrap: wrap;
 	padding-bottom: 0;
 	padding-top: 5px;
-	
+
 	> .item,
 	> .input {
 		flex: 0 0 auto;
 		margin-bottom: 5px;
-		
+
 		&:not(:last-child) {
 			margin-right: 5px;
 		}
 	}
-	
+
 	> .item {
 		background-color: $wcfButtonBackground;
 		border-radius: 2px;
@@ -23,24 +23,24 @@
 		cursor: default;
 		max-width: 100%;
 		padding: 1px 5px;
-		
+
 		.icon {
 			color: inherit;
 		}
-		
+
 		&.active {
 			background-color: $wcfButtonBackgroundActive;
 			color: $wcfButtonTextActive;
 		}
 	}
-	
+
 	&:not(.disabled) {
 		> item:hover {
 			background-color: $wcfButtonBackgroundActive;
 			color: $wcfButtonTextActive;
 		}
 	}
-	
+
 	> .input > input {
 		background-color: transparent !important;
 		border-width: 0 !important;
@@ -52,7 +52,7 @@
 .inputItemListLimitReached {
 	color: $wcfContentDimmedText;
 	vertical-align: middle;
-	
+
 	/* The input field does not have a distinct appearance, making the text unselectable
 	   will prevent the browser from displaying a potentially misleading caret cursor. */
 	-webkit-user-select: none;

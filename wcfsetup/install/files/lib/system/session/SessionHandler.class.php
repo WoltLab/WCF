@@ -85,12 +85,6 @@ final class SessionHandler extends SingletonFactory
     private $sessionID;
 
     /**
-     * session object
-     * @var \wcf\data\acp\session\ACPSession
-     */
-    protected $session;
-
-    /**
      * @var LegacySession
      */
     protected $legacySession;

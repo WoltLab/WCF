@@ -1,22 +1,24 @@
 /* style for content area */
 /* content header */
 .contentHeader,
-.boxHeadline { // deprecated
+.boxHeadline {
+	// deprecated
 	color: $wcfContentHeadlineText;
-	
+
 	.contentTitle,
-	> h1 { // deprecated
+	> h1 {
+		// deprecated
 		@include wcfFontTitle;
-		
+
 		.badge {
 			top: -2px;
-			
+
 			@include wcfLineHeight;
 		}
-		
+
 		a {
 			color: $wcfContentHeadlineLink;
-			
+
 			&:hover {
 				color: $wcfContentHeadlineLinkActive;
 			}
@@ -29,17 +31,17 @@
 		color: $wcfContentDimmedText;
 		margin-top: 5px;
 	}
-	
+
 	.contentHeaderMetaData {
 		color: $wcfContentDimmedText;
 		margin-top: 5px;
-		
+
 		&.inlineList {
 			> li:not(:last-child) {
 				margin-right: 10px;
 			}
 		}
-		
+
 		> li {
 			a,
 			a:hover,
@@ -48,64 +50,64 @@
 			}
 		}
 	}
-	
+
 	.contentTitle + .inlineDataList {
 		margin-top: 5px;
 	}
-	
+
 	.inlineDataList {
 		color: $wcfContentDimmedText;
 	}
-	
+
 	@include screen-sm-down {
 		.contentHeaderIcon {
 			display: none;
 		}
 	}
-	
+
 	@include screen-sm {
 		.contentHeaderNavigation > ul {
 			@include inlineList;
-			
+
 			align-items: flex-start;
 			justify-content: flex-end;
 			margin-top: 20px;
 		}
 	}
-	
+
 	@include screen-md-up {
 		display: flex;
 		align-items: flex-start;
-		
+
 		.contentHeaderIcon {
 			flex: 0 0 64px;
-			margin-right: 15px
+			margin-right: 15px;
 		}
-		
+
 		.contentHeaderTitle {
 			flex: 1 1 0%;
 		}
-		
+
 		.contentHeaderNavigation {
 			flex: 0 0 auto;
 			margin-left: 15px;
 			max-width: 50%;
-			
+
 			> ul {
 				@include inlineList;
-				
+
 				align-items: flex-start;
 				flex-wrap: wrap;
 				justify-content: flex-end;
 				margin-top: -5px;
-				
+
 				> li {
 					margin-top: 5px;
-					
+
 					&:not(:last-child) {
 						margin-right: 0;
 					}
-					
+
 					&:not(:first-child) {
 						margin-left: 5px;
 					}
@@ -119,20 +121,20 @@
 .boxHeadline.boxSubHeadline {
 	margin-top: 40px;
 	margin-bottom: 20px;
-	
+
 	> h2 {
 		color: $wcfContentHeadlineText;
-		
+
 		@include wcfFontSection;
-		
+
 		a {
 			color: $wcfContentHeadlineLink;
-			
+
 			&:hover {
 				color: $wcfContentHeadlineLinkActive;
 			}
 		}
-		
+
 		.badge {
 			top: -2px;
 		}
@@ -142,42 +144,42 @@
 /* content sections */
 .section {
 	margin-top: 40px;
-	
+
 	> :first-child {
 		margin-top: 0;
 	}
-	
+
 	.sectionTitle {
 		color: $wcfContentHeadlineText;
-		
+
 		@include wcfFontSection;
-		
+
 		a {
 			color: $wcfContentHeadlineLink;
-			
+
 			&:hover {
 				color: $wcfContentHeadlineLinkActive;
 			}
 		}
-		
+
 		.badge {
 			top: -2px;
 		}
 	}
-	
+
 	.sectionDescription {
 		color: $wcfContentDimmedText;
 	}
-	
+
 	> .sectionHeader,
 	> .sectionTitle {
 		margin-bottom: 20px;
-		
+
 		+ .section {
 			margin-top: 20px;
 		}
 	}
-	
+
 	&:not(.sectionContainerList) {
 		> .sectionHeader,
 		> .sectionTitle {
@@ -185,14 +187,14 @@
 			padding-bottom: 10px;
 		}
 	}
-	
+
 	&.sectionContainerList {
 		> .sectionHeader,
 		> .sectionTitle {
 			margin-bottom: 10px;
 		}
 	}
-	
+
 	&.tabularBox {
 		> .sectionHeader,
 		> .sectionTitle {
@@ -200,18 +202,18 @@
 			margin-bottom: 0;
 		}
 	}
-	
+
 	.section {
 		margin-top: 30px;
-		
+
 		&:first-child {
 			margin-top: 20px;
 		}
-		
+
 		.sectionTitle {
 			@include wcfFontHeadline;
 		}
-		
+
 		> .sectionHeader,
 		> .sectionTitle {
 			margin-bottom: 15px;
@@ -222,7 +224,7 @@
 /* fieldset styling (old sections / deprecated) */
 fieldset {
 	margin-top: 40px;
-	
+
 	> legend {
 		border-bottom: 1px solid $wcfContentBorderInner;
 		color: $wcfContentHeadlineText;
@@ -230,25 +232,25 @@ fieldset {
 		margin-bottom: 20px;
 		padding-bottom: 10px;
 		width: 100%;
-		
+
 		@include wcfFontSection;
-		
+
 		a {
 			color: $wcfContentHeadlineLink;
-			
+
 			&:hover {
 				color: $wcfContentHeadlineLinkActive;
 			}
 		}
-		
+
 		.badge {
 			top: -2px;
 		}
-		
-		&+ * {
+
+		& + * {
 			clear: left;
 		}
-		
+
 		+ small {
 			color: $wcfContentDimmedText;
 			position: relative;
@@ -259,10 +261,10 @@ fieldset {
 .section {
 	fieldset {
 		margin-top: 20px;
-		
+
 		> legend {
 			margin-bottom: 15px;
-			
+
 			@include wcfFontHeadline;
 		}
 	}
@@ -272,12 +274,12 @@ fieldset {
 .containerHeadline {
 	> h3 {
 		@include wcfFontHeadline;
-		
+
 		> .badge {
 			top: -2px;
 		}
 	}
-	
+
 	~ .containerContent {
 		margin-top: 10px;
 	}
@@ -288,11 +290,11 @@ fieldset {
 	& + .section {
 		margin-top: 30px;
 	}
-	
+
 	@include screen-sm-down {
 		ul {
 			margin-top: 30px;
-			
+
 			> li {
 				> .button {
 					display: block;
@@ -301,52 +303,52 @@ fieldset {
 				}
 			}
 		}
-		
+
 		> nav:not(.pagination) > ul > li + li {
 			margin-top: 10px;
 		}
 	}
-	
+
 	@include screen-md-up {
 		align-items: center;
 		display: flex;
-		
+
 		// align <nav> to the right side
 		justify-content: flex-end;
-		
+
 		> nav {
 			flex: 0 0 auto;
 			margin-top: 30px;
 			order: 3;
-			
+
 			&.pagination {
 				order: 1;
-				
+
 				// use up maximum space, causing it to stick to the left while all other
 				// <nav> elements will still be aligned to the right side
 				flex: 1 1 auto;
 			}
-			
+
 			&.jsClipboardEditor {
 				margin-right: 5px;
 				order: 2;
 			}
-			
+
 			& + nav {
 				flex: 0 0 auto;
 			}
-			
+
 			&:not(.pagination) {
 				text-align: right;
 			}
 		}
-		
+
 		ul {
 			display: inline-flex;
-			
+
 			> li {
 				flex: 0 0 auto;
-				
+
 				&:not(:last-child) {
 					margin-right: 5px;
 				}
@@ -357,7 +359,7 @@ fieldset {
 
 .paginationTop {
 	margin-top: 40px;
-	
+
 	& + .section {
 		margin-top: 20px;
 	}
@@ -371,40 +373,40 @@ fieldset {
 	@include screen-xs {
 		> .contentFooterNavigation {
 			margin-top: 20px;
-			
+
 			> ul > li {
 				&:not(:first-child) {
 					margin-top: 10px;
 				}
 			}
-			
+
 			.button {
 				display: block;
 				padding: 7px 10px;
 				text-align: center;
-				
+
 				&:not(:first-child) {
 					margin-top: 10px;
 				}
 			}
 		}
 	}
-	
+
 	@include screen-sm-up {
 		display: flex;
-		
+
 		> .paginationBottom {
 			flex: 0 0 auto;
 		}
-		
+
 		> .contentFooterNavigation {
 			flex: 1 1 auto;
 			margin: 20px 0 0 20px;
 			text-align: right;
-			
+
 			> ul {
 				@include inlineList;
-				
+
 				display: inline-flex;
 				flex-wrap: nowrap;
 			}
@@ -416,17 +418,17 @@ fieldset {
 @include screen-xs {
 	.contentHeader > .contentHeaderNavigation > ul {
 		margin-top: 30px;
-		
+
 		> li {
 			&:not(:first-child) {
 				margin-top: 10px;
 			}
-			
+
 			> .button {
 				display: block;
 				padding: 7px 10px;
 				text-align: center;
-				
+
 				> .invisible {
 					display: inline;
 				}
@@ -439,22 +441,22 @@ fieldset {
 	body:not(.mobileShowPaginationTop) {
 		.paginationTop {
 			display: none;
-			
+
 			& + .section {
 				margin-top: 30px;
 			}
 		}
 	}
-	
+
 	/* DEPRECATED */
 	.contentNavigation > .pagination {
 		display: none;
 	}
-	
+
 	/* DEPRECATED */
 	.section ~ .contentNavigation > .pagination {
 		display: block;
-		
+
 		& + nav {
 			// gap between pagination and navigation buttons
 			margin-top: 10px;
@@ -467,7 +469,7 @@ fieldset {
 	.sidebar + .content:not(:last-child) {
 		.contentHeaderNavigation {
 			flex: 1 1 0%;
-			
+
 			> ul {
 				flex-wrap: wrap !important;
 				justify-content: flex-end;

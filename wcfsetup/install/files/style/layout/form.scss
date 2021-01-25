@@ -23,29 +23,35 @@ input[type="search"],
 input[type="tel"],
 input[type="text"],
 input[type="url"] {
-	&::-webkit-input-placeholder { /* WebKit browsers */
+	&::-webkit-input-placeholder {
+		/* WebKit browsers */
 		color: $wcfInputPlaceholder;
 	}
-	&::-moz-placeholder { /* Mozilla Firefox 19+ */
+	&::-moz-placeholder {
+		/* Mozilla Firefox 19+ */
 		color: $wcfInputPlaceholder;
 	}
-	&:-ms-input-placeholder { /* Internet Explorer 10+ */
+	&:-ms-input-placeholder {
+		/* Internet Explorer 10+ */
 		color: $wcfInputPlaceholder;
 	}
-	
+
 	&:focus,
 	&:hover {
-		&::-webkit-input-placeholder { /* WebKit browsers */
+		&::-webkit-input-placeholder {
+			/* WebKit browsers */
 			color: $wcfInputPlaceholderActive;
 		}
-		&::-moz-placeholder { /* Mozilla Firefox 19+ */
+		&::-moz-placeholder {
+			/* Mozilla Firefox 19+ */
 			color: $wcfInputPlaceholderActive;
 		}
-		&:-ms-input-placeholder { /* Internet Explorer 10+ */
+		&:-ms-input-placeholder {
+			/* Internet Explorer 10+ */
 			color: $wcfInputPlaceholderActive;
 		}
 	}
-	
+
 	&[disabled],
 	&[readonly] {
 		background-color: $wcfInputDisabledBackground !important;
@@ -81,9 +87,9 @@ textarea {
 	font-weight: 400;
 	vertical-align: top;
 	width: 100%;
-	
+
 	@include wcfFontDefault;
-	
+
 	&[disabled],
 	&[readonly] {
 		background-color: $wcfInputDisabledBackground !important;
@@ -105,7 +111,7 @@ select {
 	// scrollbar instead. Setting a `max-width` will cause the browser to respect the page
 	// boundaries and nicely wrap the displayed value instead.
 	max-width: 100%;
-	
+
 	&.fullWidth {
 		width: 100%;
 	}
@@ -113,11 +119,11 @@ select {
 
 .formSubmit {
 	text-align: center;
-	
+
 	&:not(:first-child) {
 		margin-top: 30px;
 	}
-	
+
 	@include screen-xs {
 		> .button,
 		> button,
@@ -125,18 +131,18 @@ select {
 			display: block;
 			padding: 7px 10px;
 			width: 100%;
-			
+
 			&:not(:first-child) {
 				margin-top: 10px;
 			}
 		}
 	}
-	
+
 	@include screen-sm-up {
 		/* the `margin-bottom` styles are required to deal with buttons wrapping
 		   into the next row, also requires some changes to `.dialogFormSubmit`! */
 		margin-bottom: -10px;
-		
+
 		> button,
 		> input[type="button"],
 		> input[type="reset"],
@@ -145,7 +151,7 @@ select {
 		> a.button {
 			margin-bottom: 10px;
 		}
-		
+
 		> :not(:first-child) {
 			margin-left: 10px;
 		}
@@ -154,21 +160,21 @@ select {
 
 .inputAddon {
 	display: flex;
-	
+
 	&:not(:last-child) {
 		margin-bottom: 5px;
 	}
-	
+
 	> .inputPrefix,
 	> .inputSuffix {
 		align-items: center;
 		display: flex;
 		flex: 0 0 auto;
-		
+
 		&.button {
 			border-radius: 0;
 		}
-		
+
 		&:not(.button) {
 			background-color: $wcfButtonBackground;
 			border: 1px solid $wcfInputBorder;
@@ -177,24 +183,24 @@ select {
 			padding: 3px 5px;
 		}
 	}
-	
+
 	> .inputPrefix {
 		border-right-width: 0 !important;
 	}
-	
+
 	> .inputSuffix {
 		&.button {
 			margin-left: 5px;
 		}
-		
+
 		&:not(.button) {
 			border-left-width: 0 !important;
 		}
 	}
-	
+
 	input {
 		flex: 1 auto;
-		
+
 		& + .inputPrefix {
 			margin-left: 5px;
 		}
@@ -203,16 +209,16 @@ select {
 
 .inputAddonTextarea {
 	flex-wrap: wrap;
-	
+
 	> .inputPrefix.button {
 		border-bottom-width: 0;
 		border-radius: 0;
 	}
-	
+
 	> textarea {
 		flex: 0 0 100%;
 	}
-	
+
 	> .redactor-box {
 		flex: 0 0 100%;
 		margin-top: 0 !important;
@@ -225,29 +231,29 @@ input {
 		flex-grow: 0;
 		width: 80px;
 	}
-	
+
 	&.long {
 		width: 100%;
 	}
-	
+
 	@include screen-xs {
 		&.short {
 			flex-grow: 0;
 			width: 150px;
 		}
-		
+
 		&.medium {
 			width: 100%;
 		}
 	}
-	
+
 	@include screen-sm-up {
 		&.short {
 			flex-grow: 0;
 			min-width: 80px;
 			width: 10%;
 		}
-		
+
 		&.medium {
 			flex-grow: 0;
 			min-width: 150px;
@@ -260,7 +266,7 @@ input {
 	dt {
 		color: rgba(204, 0, 1, 1) !important;
 	}
-	
+
 	input,
 	select,
 	textarea {
@@ -273,7 +279,7 @@ input {
 	dt {
 		display: none;
 	}
-	
+
 	select {
 		width: 100%;
 	}
@@ -287,7 +293,7 @@ input {
 /* password strength estimator */
 .inputAddonPasswordStrength {
 	align-items: flex-start;
-	
+
 	@include screen-xs {
 		flex-direction: column;
 	}
@@ -295,11 +301,11 @@ input {
 
 .passwordStrengthRating {
 	flex: 0 0 auto;
-	
+
 	@include screen-sm-up {
 		margin-left: 10px;
 	}
-	
+
 	@include screen-xs {
 		margin-top: 5px;
 		width: 100%;
@@ -313,7 +319,7 @@ input {
 	height: 10px;
 	overflow: hidden;
 	position: relative;
-	
+
 	&::before {
 		background-color: transparent;
 		bottom: 0;
@@ -321,28 +327,28 @@ input {
 		left: 0;
 		position: absolute;
 		top: 0;
-		transition: background-color .12s linear, width .12s linear;
+		transition: background-color 0.12s linear, width 0.12s linear;
 		width: 0;
 	}
-	
+
 	&[data-score="0"]::before {
-		background-color: #DD2C00;
+		background-color: #dd2c00;
 		width: 5%;
 	}
 	&[data-score="1"]::before {
-		background-color: #FF9100;
+		background-color: #ff9100;
 		width: 20%;
 	}
 	&[data-score="2"]::before {
-		background-color: #CDDC39;
+		background-color: #cddc39;
 		width: 50%;
 	}
 	&[data-score="3"]::before {
-		background-color: #64DD17;
+		background-color: #64dd17;
 		width: 85%;
 	}
 	&[data-score="4"]::before {
-		background-color: #2E7D32;
+		background-color: #2e7d32;
 		width: 100%;
 	}
 }

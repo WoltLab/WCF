@@ -17,6 +17,7 @@ use wcf\system\WCF;
  *
  * @method  ACPSession  getDecoratedObject()
  * @mixin   ACPSession
+ * @deprecated  5.4 Distinct ACP sessions have been removed. This class is preserved due to its use in legacy sessions.
  */
 class ACPSessionEditor extends DatabaseObjectEditor
 {

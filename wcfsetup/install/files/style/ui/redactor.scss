@@ -1,15 +1,15 @@
 .redactor-box {
 	background-color: $wcfContentBackground;
 	position: relative;
-	
+
 	&:not(:first-child):not(.redactorBoxFullscreen) {
 		margin-top: 20px;
 	}
-	
+
 	& + .messageTabMenu {
 		padding: 0;
 	}
-	
+
 	& + .innerError,
 	& + .innerSuccess,
 	& + .innerWarning,
@@ -21,7 +21,7 @@
 		display: block;
 		margin-top: -1px;
 	}
-	
+
 	> .innerError,
 	> .innerSuccess,
 	> .innerWarning {
@@ -37,13 +37,13 @@
 	position: relative;
 	outline: none;
 	overflow: auto;
-	
+
 	* {
 		// setting min-width to "0" inside contenteditable causes
 		// IE11 to do all sort of funny things
 		min-width: auto;
 	}
-	
+
 	&.redactor-placeholder::after {
 		color: $wcfContentDimmedText;
 		content: attr(placeholder);
@@ -51,72 +51,72 @@
 		pointer-events: none;
 		position: absolute;
 	}
-	
+
 	& + textarea {
 		border-width: 0;
 		box-shadow: none;
 		outline: none;
 		padding: 10px;
 		resize: vertical;
-		
+
 		&:focus {
 			box-shadow: none;
 		}
 	}
-	
+
 	// enforce styles used in messages
 	@extend .htmlContent;
-	
+
 	> :not(p) {
 		&:first-child {
 			margin-top: 10px !important;
 		}
-		
+
 		&:last-child {
 			margin-bottom: 20px !important;
 		}
 	}
-	
+
 	// remove margin top for the first paragraph in the editor to avoid a weird looking offset a the top
 	> p:first-child {
 		margin-top: 0;
 	}
-	
+
 	img {
 		max-width: 100%;
-		
+
 		&:not(.smiley) {
 			// show cursor to indicate editing capability excluding smilies
 			cursor: pointer;
 		}
-		
+
 		/* prevent flicker from pasted images */
 		&[src^="data:image"] {
 			display: none !important;
 		}
 	}
-	
+
 	table {
 		border-collapse: collapse;
 		line-height: 1.6em;
-		
+
 		th {
 			border: 1px solid #ddd;
 			border-bottom: 2px solid currentColor;
 		}
-		
+
 		td {
 			border: 1px solid #ddd;
 			padding: 5px;
 			vertical-align: top;
-			
+
 			&:empty::before {
 				content: "";
 				display: inline-block;
 			}
 		}
 	}
-	
+
 	/* This is a rather hacky work-around for Safari that makes the bottom margin clickable
 	   in order to recognize clicks in between two block elements. See #2533 */
 	&.jsSafariMarginClickTarget {
@@ -129,17 +129,17 @@
 				left: 0;
 				position: absolute;
 				right: 0;
-				
+
 				@include screen-md-up {
 					transform: translateY(20px); // this is the value of `padding-bottom`
 				}
-				
+
 				@include screen-sm-down {
 					transform: translateY(10px); // this is the value of `padding-bottom`
 				}
 			}
 		}
-		
+
 		pre::after {
 			/* parent is `position: relative` */
 			bottom: 0;
@@ -149,21 +149,20 @@
 
 .redactor-dropdown-menu {
 	@include screen-lg {
-		
 	}
-	
+
 	> li:hover {
 		background-color: transparent !important;
 	}
-	
+
 	a:hover {
 		background-color: $wcfDropdownBackgroundActive;
 	}
-	
+
 	.redactor-dropdown-link-inactive {
 		cursor: default;
-		opacity: .6;
-		
+		opacity: 0.6;
+
 		> a:hover {
 			background-color: $wcfDropdownBackground !important;
 			color: $wcfDropdownText !important;
@@ -184,42 +183,42 @@
 	background-color: $wcfHeaderBackground;
 	display: flex;
 	flex-wrap: wrap;
-	
+
 	> li {
 		flex: 0 0 auto;
-		
+
 		> a {
 			color: $wcfHeaderMenuLink;
 			display: block;
 			outline: none;
 			padding: 10px;
 			text-align: center;
-			
+
 			@include wcfFontSmall;
-			
+
 			&.redactor-button-disabled {
 				background-color: transparent !important;
 				color: $wcfButtonDisabledText !important;
 				cursor: default;
 				pointer-events: none;
 			}
-			
+
 			&.redactor-act,
 			&.dropact {
 				background-color: $wcfHeaderMenuLinkBackgroundActive;
 				color: $wcfHeaderMenuLinkActive;
 			}
-			
+
 			.icon {
 				color: inherit;
 				cursor: inherit !important;
-				
+
 				&.redactorButtonImage {
 					background: no-repeat center center;
 					background-size: contain;
 				}
 			}
-			
+
 			@include screen-lg {
 				// hover-styles on mobile are misleading as they stay much longer
 				// due to the click-like behavior
@@ -228,61 +227,61 @@
 					color: $wcfHeaderMenuLinkActive;
 				}
 			}
-			
+
 			&:focus {
 				background-color: $wcfHeaderMenuLinkBackgroundActive;
 				color: $wcfHeaderMenuLinkActive;
 			}
 		}
-		
+
 		@include screen-sm-up {
 			&.redactor-toolbar-separator {
 				margin-left: 11px;
 				position: relative;
-				
+
 				&::before {
 					bottom: 7px;
 					border-left: 1px solid $wcfHeaderMenuLink;
 					content: "";
 					left: -6px;
-					opacity: .6;
+					opacity: 0.6;
 					position: absolute;
 					top: 7px;
 				}
 			}
 		}
 	}
-	
+
 	@include screen-xs {
 		&:not(.redactorToolbarOverride) > li {
 			&[data-show-on-mobile="false"] {
 				display: none;
 			}
 		}
-		
+
 		&.redactorToolbarOverride > .redactor-toolbar-separator {
 			position: relative;
-			
+
 			&::before {
 				bottom: 7px;
 				border-left: 1px solid $wcfHeaderMenuLink;
 				content: "";
 				left: 0;
-				opacity: .6;
+				opacity: 0.6;
 				position: absolute;
 				top: 7px;
 			}
 		}
-		
+
 		.redactorToolbarToggle {
 			position: relative;
-			
+
 			&::before {
 				bottom: 7px;
 				border-left: 1px solid $wcfHeaderMenuLink;
 				content: "";
 				left: 0;
-				opacity: .6;
+				opacity: 0.6;
 				position: absolute;
 				top: 7px;
 			}
@@ -292,7 +291,7 @@
 
 .redactor-toolbar-tooltip {
 	@extend .balloonTooltip;
-	
+
 	opacity: 1;
 	visibility: visible;
 }
@@ -306,14 +305,14 @@
 
 .redactor-dropdown-menu-fontcolor {
 	width: 200px;
-	
+
 	> li.redactorColorPallet {
 		padding: 0 4px;
-		
+
 		&:hover {
 			background-color: $wcfDropdownBackground !important;
 		}
-		
+
 		> a {
 			border: 2px solid rgba(255, 255, 255, 1);
 			border-bottom-width: 0;
@@ -339,17 +338,17 @@
 	position: absolute;
 	right: 0;
 	z-index: 10;
-	
+
 	@include wcfFontSection;
-	
+
 	&::before {
 		content: attr(data-drop-here);
 	}
-	
+
 	&.active {
 		background-color: $wcfStatusSuccessBackground;
 		color: $wcfStatusSuccessText;
-		
+
 		&::before {
 			content: attr(data-drop-now);
 		}
@@ -359,12 +358,12 @@
 .redactor-link-tooltip {
 	background-color: $wcfTooltipBackground;
 	border-radius: 2px;
-	box-shadow: 0 0 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 	color: $wcfTooltipText;
 	padding: 5px 10px 7px;
 	position: absolute;
 	z-index: 800;
-	
+
 	> a {
 		color: $wcfTooltipText;
 	}
@@ -395,7 +394,7 @@
 /* alignment plugin / custom value */
 .text-justify {
 	text-align: justify !important;
-	
+
 	-webkit-hyphens: auto;
 	-moz-hyphens: auto;
 	-ms-hyphens: auto;
@@ -407,17 +406,17 @@
 	display: flex !important;
 	flex-wrap: wrap;
 	width: 272px;
-	
+
 	> .dropdownDivider,
 	> .dropdownDivider + li {
 		flex: 0 0 100%;
 	}
-	
+
 	.woltlab-color-selection {
 		flex: 0 0 30px;
 		margin: 2px;
 		overflow: hidden;
-		
+
 		> a {
 			background-color: currentColor !important;
 			display: block;
@@ -428,13 +427,27 @@
 }
 
 /* font size */
-.woltlab-size-8 { font-size: 8pt; }
-.woltlab-size-10 { font-size: 10pt; }
-.woltlab-size-12 { font-size: 12pt; }
-.woltlab-size-14 { font-size: 14pt; }
-.woltlab-size-18 { font-size: 18pt; }
-.woltlab-size-24 { font-size: 24pt; }
-.woltlab-size-36 { font-size: 36pt; }
+.woltlab-size-8 {
+	font-size: 8pt;
+}
+.woltlab-size-10 {
+	font-size: 10pt;
+}
+.woltlab-size-12 {
+	font-size: 12pt;
+}
+.woltlab-size-14 {
+	font-size: 14pt;
+}
+.woltlab-size-18 {
+	font-size: 18pt;
+}
+.woltlab-size-24 {
+	font-size: 24pt;
+}
+.woltlab-size-36 {
+	font-size: 36pt;
+}
 
 /* image float */
 .messageFloatObjectLeft {
@@ -476,16 +489,16 @@
 
 .messageQuickReplyCollapsed {
 	border-bottom-width: 0 !important;
-	
+
 	@include screen-sm-down {
 		margin-left: -10px;
 		margin-right: -10px;
 	}
-	
+
 	.messageSidebar {
 		display: none;
 	}
-	
+
 	.messageQuickReplyContent {
 		background-color: $wcfSidebarBackground;
 		cursor: pointer;
@@ -496,11 +509,11 @@
 		padding: 10px 20px;
 		position: relative;
 		width: 100% !important;
-		
+
 		@include screen-md-up {
 			border-radius: 2px;
 		}
-		
+
 		&::before {
 			color: $wcfSidebarText;
 			content: $fa-var-reply;
@@ -512,18 +525,18 @@
 			width: 32px;
 			vertical-align: -5px;
 		}
-		
+
 		&::after {
 			color: $wcfSidebarText;
 			content: attr(data-placeholder);
 		}
-		
+
 		> .messageBody {
 			left: 200%;
 			position: absolute;
 			top: -100%;
 		}
-		
+
 		> .messageFooter {
 			display: none;
 		}
@@ -538,39 +551,39 @@
 	opacity: 0;
 	position: absolute;
 	right: 1px;
-	transition: opacity .12s linear, visibility 0s linear .12s;
+	transition: opacity 0.12s linear, visibility 0s linear 0.12s;
 	visibility: hidden;
-	
+
 	&.active {
 		opacity: 1;
 		transition-delay: 0s;
 		visibility: visible;
 	}
-	
+
 	> a {
 		border-left: 1px solid $wcfContentBorderInner;
 		flex: 0 0 auto;
 		padding: 10px;
 	}
-	
+
 	> span {
 		color: $wcfContentDimmedText;
 		flex: 1 1 auto;
 		padding: 10px;
 	}
-	
+
 	@include screen-sm-up {
 		border-left: 1px solid $wcfContentBorderInner;
 		border-top-left-radius: 2px;
-		
+
 		> span {
 			padding: 10px 20px;
 		}
 	}
-	
+
 	@include screen-xs {
 		left: 1px;
-		
+
 		> span {
 			text-align: center;
 		}
@@ -586,11 +599,11 @@
 	right: 0;
 	top: 0;
 	z-index: 310;
-	
+
 	.redactor-toolbar-box {
 		flex: 0 auto;
 	}
-	
+
 	.redactor-layer,
 	.redactor-layer + textarea {
 		flex: 1 auto;
@@ -601,8 +614,8 @@
 
 .editorImageBlocked {
 	filter: brightness(25%);
-	transition: filter .12s linear;
-	
+	transition: filter 0.12s linear;
+
 	&:hover {
 		filter: brightness(75%);
 	}

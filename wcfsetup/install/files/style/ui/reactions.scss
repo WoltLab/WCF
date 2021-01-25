@@ -1,30 +1,30 @@
 .reactionPopover {
-	animation: wcfPopoverOut .3s;
+	animation: wcfPopoverOut 0.3s;
 	animation-fill-mode: forwards;
 	background-color: $wcfContentBackground;
 	border-radius: 2px;
-	box-shadow: 0 2px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 	overflow: hidden;
 	position: absolute;
 	top: 0;
 	vertical-align: middle;
 	visibility: hidden;
 	z-index: 60;
-	
+
 	&.active {
-		animation: wcfPopover .3s;
+		animation: wcfPopover 0.3s;
 		animation-fill-mode: forwards;
 	}
-	
+
 	&.forceHide {
 		animation: 0;
 		visibility: hidden;
 	}
-	
+
 	> .elementPointer {
 		display: none;
 	}
-	
+
 	@include screen-xs {
 		&.inverseOrder .reactionTypeButtonList {
 			flex-direction: column;
@@ -41,12 +41,12 @@
 	display: inline-flex;
 	flex-wrap: wrap;
 	margin: -5px -5px 0 0;
-	
+
 	&.reactionSummaryListTiny .reactionType {
 		width: 16px;
 		height: 16px;
 	}
-	
+
 	&:hover {
 		.reactCountButton {
 			color: $wcfContentText;
@@ -54,13 +54,13 @@
 	}
 }
 
-.reactionCount{
+.reactionCount {
 	@include wcfFontSmall;
-	
+
 	vertical-align: middle;
-	
+
 	&::before {
-		content: '\202f×\202f';
+		content: "\202f×\202f";
 	}
 }
 
@@ -75,28 +75,28 @@
 	background-color: $wcfContentBackground;
 	border-radius: 3px;
 	color: $wcfContentText;
-	
+
 	a {
 		color: $wcfContentLink;
-		
+
 		&:hover {
 			color: $wcfContentLinkActive;
 		}
 	}
-	
+
 	.reactionTypeButton > img {
 		width: 24px;
 		height: 24px;
-		
+
 		&:hover {
 			transform: scale(1.2);
 		}
 	}
-	
+
 	@include screen-xs {
 		max-height: 200px;
 		overflow: auto;
-		
+
 		&::after,
 		&::before {
 			content: "";
@@ -106,9 +106,9 @@
 			pointer-events: none;
 			position: absolute;
 			right: 0;
-			transition: opacity .12s linear;
+			transition: opacity 0.12s linear;
 		}
-		
+
 		&::after {
 			background-image: linear-gradient(to bottom, transparent, $wcfContentBackground);
 			bottom: 0;
@@ -116,7 +116,7 @@
 		&.overflowBottom::after {
 			opacity: 1;
 		}
-		
+
 		&::before {
 			background-image: linear-gradient(to top, transparent, $wcfContentBackground);
 			top: 0;
@@ -125,54 +125,53 @@
 			opacity: 1;
 		}
 	}
-	
+
 	@include screen-md-down {
 		padding: 5px 0;
-		
+
 		.reactionTypeButton {
 			margin: 0;
 			display: block;
 			padding: 5px 25px;
-			
+
 			&.active {
 				background-color: $wcfContentBorderInner;
 			}
-			
+
 			> .reactionTypeButtonTitle {
 				vertical-align: middle;
 				padding-left: 5px;
 			}
 		}
 	}
-	
+
 	@include screen-lg {
 		padding: 5px 15px;
-		
+
 		.reactionTypeButton {
 			display: inline-block;
 			padding-top: 10px;
 			padding-bottom: 10px;
 			cursor: pointer;
 			margin-left: 10px;
-			
+
 			&:first-child {
 				margin-left: 0;
 			}
-			
+
 			&.active {
 				padding-left: 5px;
 				padding-right: 5px;
-				
+
 				> img {
 					transform: scale(1.4);
-					
+
 					&:hover {
 						transform: scale(1.2);
 					}
 				}
-				
 			}
-			
+
 			> .reactionTypeButtonTitle {
 				display: none;
 			}
@@ -184,7 +183,7 @@
 	html.touch .reactionPopoverContent .reactionTypeButton {
 		display: block;
 		margin-left: 0;
-		
+
 		> .reactionTypeButtonTitle {
 			display: inline;
 			margin-left: 10px;
@@ -209,14 +208,14 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: flex-end;
-	
+
 	.buttonGroup {
 		margin-bottom: 0;
-		
+
 		li {
 			display: flex;
 			justify-content: stretch;
-			
+
 			a {
 				display: flex;
 				align-items: center;

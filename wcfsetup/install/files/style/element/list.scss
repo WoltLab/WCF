@@ -6,7 +6,7 @@
 /* restores the native styling for lists */
 .nativeList {
 	margin: 1em 0 1em 40px;
-	
+
 	li {
 		margin: 7px 0;
 	}
@@ -21,16 +21,16 @@ ol.nativeList {
 /* tag cloud list */
 .tagList {
 	@include inlineList;
-	
+
 	align-items: baseline;
 	margin-bottom: -4px;
 	margin-right: -8px;
-	
+
 	> li {
 		margin-bottom: 4px;
 		margin-right: 8px;
 	}
-	
+
 	.tag {
 		background-color: $wcfButtonBackground;
 		color: $wcfButtonText;
@@ -40,10 +40,10 @@ ol.nativeList {
 		position: relative;
 		text-decoration: none;
 		text-transform: uppercase;
-		
+
 		@include wcfFontSmall;
 		@include wcfFontBold;
-		
+
 		&::before {
 			border: 11px solid transparent;
 			border-left-width: 0;
@@ -54,42 +54,42 @@ ol.nativeList {
 			position: absolute;
 			top: 0;
 		}
-		
+
 		&:hover {
 			background-color: $wcfButtonPrimaryBackgroundActive;
 			color: $wcfButtonPrimaryTextActive;
 			text-decoration: none;
-			
+
 			&::before {
 				border-right-color: $wcfButtonPrimaryBackgroundActive;
 			}
 		}
 	}
-	
+
 	.tagWeight1 {
 		font-size: 12px;
 	}
-	
+
 	.tagWeight2 {
 		font-size: 14px;
 	}
-	
+
 	.tagWeight3 {
 		font-size: 16px;
 	}
-	
+
 	.tagWeight4 {
 		font-size: 18px;
 	}
-	
+
 	.tagWeight5 {
 		font-size: 20px;
 	}
-	
+
 	.tagWeight6 {
 		font-size: 23px;
 	}
-	
+
 	.tagWeight7 {
 		font-size: 28px;
 	}
@@ -98,10 +98,10 @@ ol.nativeList {
 /* list of smileys */
 .smileyList {
 	align-items: center;
-	
+
 	@include screen-lg {
 		margin-bottom: -5px;
-		
+
 		> li {
 			margin-bottom: 5px;
 		}
@@ -113,7 +113,7 @@ ol.dataList,
 ul.dataList {
 	@include inlineList;
 	@include wcfFontSmall;
-	
+
 	> li {
 		&:not(:last-child):after {
 			content: ",";

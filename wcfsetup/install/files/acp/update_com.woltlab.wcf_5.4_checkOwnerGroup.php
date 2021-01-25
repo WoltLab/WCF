@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Checks that an owner group has been selected.
+ *
+ * @author  Tim Duesterhus
+ * @copyright   2001-2021 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package WoltLabSuite\Core
+ */
+
 use wcf\data\user\group\UserGroup;
 use wcf\system\WCF;
 

@@ -15,6 +15,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @method  ACPSession      create()
  * @method  ACPSessionEditor[]  getObjects()
  * @method  ACPSessionEditor    getSingleObject()
+ * @deprecated  5.4 Distinct ACP sessions have been removed. This class is preserved due to its use in legacy sessions.
  */
 class ACPSessionAction extends AbstractDatabaseObjectAction
 {

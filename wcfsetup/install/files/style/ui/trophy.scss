@@ -19,25 +19,25 @@
 .trophyIcon {
 	display: inline-block;
 	border-radius: 50%;
-	
+
 	&.icon {
 		/* Factor: 0.5625 */
 		&.icon16 {
 			font-size: 9px;
 		}
-		
+
 		&.icon32 {
 			font-size: 18px;
 		}
-		
+
 		&.icon48 {
 			font-size: 27px;
 		}
-		
+
 		&.icon64 {
 			font-size: 36px;
 		}
-		
+
 		&.icon144 {
 			font-size: 81px;
 		}
@@ -47,15 +47,15 @@
 .specialTrophyList {
 	display: flex;
 	flex-wrap: wrap;
-	
+
 	> li {
-		width: 300px; 
+		width: 300px;
 		padding-bottom: 5px;
-		
+
 		> label {
-			display: flex; 
+			display: flex;
 			align-items: center;
-			
+
 			.trophyIcon,
 			> span:last-child {
 				margin-left: 5px;
@@ -72,14 +72,14 @@
 /* trophies in message sidebar */
 .specialTrophyContainer {
 	margin-top: 10px;
-	
+
 	> ul {
 		display: flex;
 		justify-content: center;
 		flex-wrap: wrap;
 		margin-bottom: -5px;
 		margin-right: -5px;
-		
+
 		> li {
 			margin-bottom: 5px;
 			margin-right: 5px;
@@ -100,7 +100,7 @@
 	flex-wrap: wrap;
 	margin-right: -5px;
 	margin-top: -15px;
-	
+
 	> li {
 		margin-bottom: 5px;
 		margin-right: 5px;

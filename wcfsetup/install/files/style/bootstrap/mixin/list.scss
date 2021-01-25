@@ -1,12 +1,12 @@
 @mixin nativeList {
 	margin: 1em 0 1em 40px;
-	
+
 	ul,
 	ol {
 		margin-bottom: 0;
 		margin-top: 0;
 	}
-	
+
 	li {
 		margin: 5px 0;
 	}
@@ -33,20 +33,20 @@
 @mixin inlineList {
 	display: flex;
 	flex-wrap: wrap;
-	
+
 	> li {
 		flex: 0 1 auto;
-		
+
 		&:not(:last-child) {
 			margin-right: 5px;
 		}
 	}
-	
+
 	/* adds a comma after each list item */
 	&.commaSeparated {
 		@include commaSeparated;
 	}
-	
+
 	/* adds a dot after each list item */
 	&.dotSeparated {
 		@include dotSeparated;

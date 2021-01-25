@@ -1,109 +1,109 @@
 .containerList {
 	> li {
 		position: relative;
-		transition: background-color .2s;
-		
+		transition: background-color 0.2s;
+
 		@include screen-md-down {
 			padding: 10px 0;
 		}
-		
+
 		@include screen-lg {
 			padding: 20px;
 		}
-		
+
 		&:not(:last-child) {
 			border-bottom: 1px solid $wcfContentBorderInner;
 		}
-		
+
 		&:first-child {
 			border-top: 1px solid $wcfContentBorder;
 		}
-		
+
 		&:last-child {
 			border-bottom: 1px solid $wcfContentBorder;
 		}
-		
+
 		&:hover {
 			background-color: $wcfTabularBoxBackgroundActive;
 		}
-		
+
 		&.showMore {
 			text-align: center;
-			
+
 			&:hover {
 				background-color: transparent;
 			}
 		}
-		
+
 		.containerHeadline {
 			position: relative;
-			
+
 			> .containerContentType {
 				color: $wcfContentDimmedText;
 				position: absolute;
 				top: 5px;
 				right: 0;
-				
+
 				@include screen-xs {
 					display: none;
 				}
 			}
 		}
-		
+
 		&.containerListButtonGroup {
 			text-align: right;
-			
+
 			&:hover {
 				background-color: transparent;
 			}
-			
+
 			> .buttonGroup {
 				display: inline-flex;
-				
+
 				&:not(:first-child) {
 					margin-left: 5px;
 				}
 			}
-			
+
 			> .recentActivityFollowedNoResults {
 				text-align: left;
 			}
 		}
-		
+
 		@include screen-md-down {
 			.hasMobileNavigation > .containerHeadline > h3 {
 				padding-right: 30px;
 			}
-			
+
 			.buttonGroupNavigation {
 				position: absolute;
 				right: 0;
 				top: 14px;
-				
+
 				&.open {
 					left: 0;
-					
+
 					// dropdown is contained within this element, required to have it stand
 					// above any succeeding siblings
 					z-index: 10;
-					
+
 					> .buttonList {
 						display: block;
 						visibility: visible;
 					}
 				}
-				
+
 				> .dropdownLabel {
 					left: calc(100% - 24px);
 					position: relative;
 				}
-				
+
 				> .buttonList {
 					@include dropdownMenu;
-					
+
 					position: static !important;
 					top: 0;
-					
+
 					> li {
 						.invisible {
 							display: inline;
@@ -113,41 +113,41 @@
 				}
 			}
 		}
-		
+
 		@include screen-lg {
 			.buttonGroupNavigation {
 				opacity: 0;
 				position: absolute;
 				right: 20px;
 				top: 15px;
-				transition: opacity .12s;
-				
+				transition: opacity 0.12s;
+
 				> .dropdownLabel {
 					display: none;
 				}
-				
+
 				> ul {
 					background-color: $wcfContentBackground;
-					border: 1px solid rgba(0, 0, 0, .15);
+					border: 1px solid rgba(0, 0, 0, 0.15);
 					border-radius: 6px;
-					
+
 					> li {
 						margin-right: 0;
-						
+
 						&:not(:last-child) {
-							border-right: 1px solid rgba(0, 0, 0, .15);
+							border-right: 1px solid rgba(0, 0, 0, 0.15);
 						}
-						
+
 						> a {
 							display: inline-block;
 							padding: 3px 5px;
-							
+
 							> .icon,
 							> .invisible {
-								color: rgba(0, 0, 0, .5);
+								color: rgba(0, 0, 0, 0.5);
 							}
 						}
-						
+
 						&.active,
 						&:hover {
 							> a {
@@ -160,13 +160,13 @@
 					}
 				}
 			}
-			
+
 			&:hover .buttonGroupNavigation {
 				opacity: 1;
 			}
 		}
 	}
-	
+
 	@include screen-sm-down {
 		&.doubleColumned,
 		&.tripleColumned {
@@ -175,58 +175,58 @@
 			}
 		}
 	}
-	
+
 	@include screen-md-up {
 		&.doubleColumned,
 		&.tripleColumned {
 			display: flex;
 			flex-wrap: wrap;
-			
+
 			> li {
 				// this will cause the mobile drop-down menu to be cut-off
 				// overflow: hidden;
 				padding-right: 15px;
-				
+
 				.containerBoxContent {
 					overflow: hidden;
-					
+
 					h3 {
 						overflow: hidden;
 						text-overflow: ellipsis;
 						white-space: nowrap;
 					}
 				}
-				
+
 				&:first-child {
 					border-top: none;
 				}
-				
+
 				&:last-child {
 					border-bottom: none;
 				}
 			}
-			
+
 			border-top: 1px solid $wcfContentBorder;
 			border-bottom: 1px solid $wcfContentBorder;
 		}
-		
+
 		&.doubleColumned > li {
 			flex: 0 0 50%;
 			max-width: 50%;
-			
-			&:nth-child(2n+1):nth-last-child(-n+2) {
+
+			&:nth-child(2n + 1):nth-last-child(-n + 2) {
 				border-bottom: none;
 			}
 		}
-		
+
 		&.tripleColumned > li {
 			/* The `flex` shorthand fails in IE11 if `calc()` is used. */
 			flex-grow: 0;
 			flex-shrink: 0;
 			flex-basis: calc(100% / 3);
-			
-			&:nth-child(3n+1):nth-last-child(-n+3),
-			&:nth-child(3n+1):nth-last-child(-n+3) ~ li {
+
+			&:nth-child(3n + 1):nth-last-child(-n + 3),
+			&:nth-child(3n + 1):nth-last-child(-n + 3) ~ li {
 				border-bottom: none;
 			}
 		}
@@ -242,22 +242,22 @@
 			}
 		}
 	}
-	
+
 	@include screen-md-up {
 		&.doubleColumned,
 		&.tripleColumned {
 			display: flex;
 			flex-wrap: wrap;
 			margin-bottom: -15px;
-			
+
 			> li {
 				overflow: hidden;
 				padding-right: 15px;
 				margin-bottom: 15px;
-				
+
 				.containerBoxContent {
 					overflow: hidden;
-					
+
 					h3 {
 						overflow: hidden;
 						text-overflow: ellipsis;
@@ -266,12 +266,12 @@
 				}
 			}
 		}
-		
+
 		&.doubleColumned > li {
 			flex: 0 0 50%;
 			max-width: 50%;
 		}
-		
+
 		&.tripleColumned > li {
 			/* The `flex` shorthand fails in IE11 if `calc()` is used. */
 			flex-grow: 0;
@@ -285,7 +285,7 @@
 	.box48 {
 		max-height: 500px;
 		overflow: hidden;
-		
+
 		> a:first-child {
 			align-self: flex-start;
 		}
@@ -293,24 +293,24 @@
 }
 
 .flexibleCategoryList {
-    position: relative;
-    
-    > li {
-        margin-bottom: 14px;
-        
-        > ol {
-            margin-left: 21px;
-        }
-        
-        > ol > li > ol {
-            margin-bottom: 7px;
-            margin-left: 21px;
-            
-            > li {
-                font-size: $wcfFontSizeSmall;
-            }
-        }
-    }
+	position: relative;
+
+	> li {
+		margin-bottom: 14px;
+
+		> ol {
+			margin-left: 21px;
+		}
+
+		> ol > li > ol {
+			margin-bottom: 7px;
+			margin-left: 21px;
+
+			> li {
+				font-size: $wcfFontSizeSmall;
+			}
+		}
+	}
 }
 
 .containerListDisplayOptions {
@@ -334,7 +334,7 @@
 
 .containerListSortOptions {
 	flex: 1 auto;
-	
+
 	> .dropdown {
 		margin-left: 10px;
 	}
@@ -346,41 +346,41 @@
 }
 
 @include screen-md-up {
-    .flexibleCategoryList:not(.flexibleCategoryListDisabled) {
-        /* WebKit */
-        -webkit-column-count: 2;
-        
-        /* Firefox */
-        -moz-column-count: 2;
-        
-        /* CSS 3 / Internet Explorer */
-        column-count: 2;
-        
-        > li {
-            /* WebKit */
-            -webkit-column-break-inside: avoid;
-            
-            /* CSS 3 / Internet Explorer */
-            break-inside: avoid;
-            
-            > ol > li > ol {
-                font-size: 0;
-                
-                > li {
-                    display: inline-block;
-                    @include wcfFontSmall;
-                }
-            }
-        }
-    }
-    
-    /* Firefox */
-    @-moz-document url-prefix() {
-        .flexibleCategoryList:not(.flexibleCategoryListDisabled) > li {
-            display: block;
-            overflow: hidden;
-        }
-    }
+	.flexibleCategoryList:not(.flexibleCategoryListDisabled) {
+		/* WebKit */
+		-webkit-column-count: 2;
+
+		/* Firefox */
+		-moz-column-count: 2;
+
+		/* CSS 3 / Internet Explorer */
+		column-count: 2;
+
+		> li {
+			/* WebKit */
+			-webkit-column-break-inside: avoid;
+
+			/* CSS 3 / Internet Explorer */
+			break-inside: avoid;
+
+			> ol > li > ol {
+				font-size: 0;
+
+				> li {
+					display: inline-block;
+					@include wcfFontSmall;
+				}
+			}
+		}
+	}
+
+	/* Firefox */
+	@-moz-document url-prefix() {
+		.flexibleCategoryList:not(.flexibleCategoryListDisabled) > li {
+			display: block;
+			overflow: hidden;
+		}
+	}
 }
 
 @include screen-md-down {

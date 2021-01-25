@@ -5,14 +5,14 @@
 
 .sortableNode {
 	cursor: move;
-	
+
 	&:not(:last-child) {
 		border-bottom: 1px solid $wcfContentBorderInner;
 	}
-	
+
 	> .sortableList {
 		//padding-left: 20px;
-		
+
 		&:not(:empty) {
 			border-top: 1px solid $wcfContentBorderInner;
 		}
@@ -22,41 +22,41 @@
 .sortableNodeLabel {
 	align-items: center;
 	padding: 10px;
-	
+
 	/* `display:flex` acts weird inside lists with a visible list-style */
 	display: inline-flex;
 	width: 100%;
-	
+
 	&:hover {
-		background-color: $wcfTabularBoxBackgroundActive
+		background-color: $wcfTabularBoxBackgroundActive;
 	}
-	
+
 	&:not(.sortableNodeStaticItem) {
 		cursor: move;
 	}
-	
+
 	> .icon,
 	> a {
 		margin-right: 5px;
 	}
-	
+
 	> .icon {
 		flex: 0 0 auto;
 	}
-	
+
 	> a {
 		flex: 0 1 auto;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
-	
+
 	> .statusDisplay {
 		align-items: center;
 		display: flex;
 		flex: 1 0 auto;
 		justify-content: flex-end;
-		
+
 		> a,
 		> span {
 			cursor: pointer;
@@ -71,7 +71,7 @@
 	border: 1px solid $wcfStatusWarningBorder;
 	color: $wcfStatusWarningText;
 	padding: 10px;
-	
+
 	&.sortableInvalidTarget {
 		background-color: $wcfStatusErrorBackground;
 		border-color: $wcfStatusErrorBorder;

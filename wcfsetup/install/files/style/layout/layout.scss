@@ -1,19 +1,20 @@
 html.disableScrolling {
 	overflow: hidden !important;
-	
+
 	body {
 		overflow: hidden !important;
-		
+
 		@include screen-md-down {
 			position: fixed !important;
 		}
 	}
 }
 
-html, body {
+html,
+body {
 	font-weight: 400;
 	height: 100%;
-	
+
 	@include wcfLineHeight;
 	@include wcfFontDefault;
 }
@@ -31,7 +32,7 @@ a {
 	color: $wcfContentLink;
 	cursor: pointer;
 	text-decoration: none;
-	
+
 	&:hover {
 		color: $wcfContentLinkActive;
 		text-decoration: none;
@@ -57,17 +58,17 @@ a {
 
 .main {
 	flex: 1 0 auto;
-	
+
 	@include screen-xs {
 		padding: 20px 0;
 		width: 100%;
 	}
-	
+
 	@include screen-sm-md {
 		padding: 40px 0;
 		width: 100%;
 	}
-	
+
 	@include screen-lg {
 		padding: 60px 0;
 	}
@@ -78,33 +79,33 @@ a {
 	.main > div {
 		display: flex;
 	}
-	
+
 	.content {
 		flex: 1 1 0px;
-		
+
 		// sidebar follows
 		&:not(:last-child) {
 			flex-basis: calc(100% - 340px);
 			max-width: calc(100% - 340px); // IE fix
 		}
-		
+
 		& + .sidebar {
 			margin-left: 30px;
 		}
 	}
-	
+
 	.sidebar {
 		flex: 0 0 310px;
 		overflow: hidden;
-		
+
 		&:first-child {
 			margin-right: 30px;
 		}
-		
+
 		& + .content {
 			flex-basis: calc(100% - 340px);
 			max-width: calc(100% - 340px); // IE fix
-			
+
 			// sidebar follows
 			&:not(:last-child) {
 				flex-basis: calc(100% - 680px);
@@ -128,7 +129,7 @@ a {
 	.sidebar {
 		margin: 0 -10px;
 	}
-	
+
 	.sidebar + .content,
 	.content + .sidebar {
 		// gap between sidebars and content
@@ -138,17 +139,17 @@ a {
 
 .sideBySide {
 	margin-top: 20px;
-	
+
 	@include screen-md-up {
 		display: table;
 		table-layout: fixed;
 		width: 100%;
-		
+
 		> .section {
 			display: table-cell;
 			vertical-align: top;
 			width: 49%;
-			
+
 			& + .section {
 				padding-left: 2%;
 			}

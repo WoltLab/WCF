@@ -68,7 +68,8 @@ class ReauthenticationForm extends AbstractFormBuilderForm
             TemplateFormNode::create('loginAs')
                 ->templateName('__reauthenticationLoginAs'),
             UserPasswordField::create()
-                ->required(),
+                ->required()
+                ->autoFocus(),
         ]);
     }
 

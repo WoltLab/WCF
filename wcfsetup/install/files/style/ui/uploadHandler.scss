@@ -3,18 +3,18 @@
 		display: flex;
 		flex-wrap: wrap;
 		margin-left: 0 !important;
-		
+
 		> li {
 			display: flex;
 			flex: 0 0 100%;
 			margin-bottom: 20px;
 		}
 	}
-	
+
 	@include screen-md-up {
 		> .formUploadHandlerList {
 			margin-right: -20px;
-			
+
 			> li {
 				/* Safari sometimes trips over fractional values, causing two
 				   items to be exactly 1 pixel wider than the available space.
@@ -44,7 +44,7 @@
 		overflow: hidden;
 		position: relative;
 	}
-	
+
 	.uploadButton {
 		> input {
 			bottom: 0;
