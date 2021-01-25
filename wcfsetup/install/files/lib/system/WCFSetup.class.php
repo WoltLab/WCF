@@ -1415,6 +1415,7 @@ class WCFSetup extends WCF
         SessionHandler::getInstance()->register('__wcfSetup_developerMode', self::$developerMode);
         SessionHandler::getInstance()->register('__wcfSetup_directories', self::$directories);
         SessionHandler::getInstance()->register('__wcfSetup_imagick', ImagickImageAdapter::isSupported());
+        SessioNHandler::getInstance()->registerReauthentication();
         SessionHandler::getInstance()->update();
 
         // print page

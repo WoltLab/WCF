@@ -259,7 +259,6 @@ class PackageInstallationDispatcher
                             )
                         )
                     );
-                    WCF::getSession()->registerReauthentication();
 
                     if (WCF::getSession()->getVar('__wcfSetup_developerMode')) {
                         $statement->execute([
