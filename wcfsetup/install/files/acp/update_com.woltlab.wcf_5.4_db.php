@@ -3,6 +3,7 @@
 use wcf\system\database\table\column\BigintDatabaseTableColumn;
 use wcf\system\database\table\column\BinaryDatabaseTableColumn;
 use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
+use wcf\system\database\table\column\EnumDatabaseTableColumn;
 use wcf\system\database\table\column\IntDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullInt10DatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
@@ -19,6 +20,17 @@ use wcf\system\package\plugin\ScriptPackageInstallationPlugin;
 use wcf\system\WCF;
 
 $tables = [
+    // This update script was added with 5.3.3. We need to ensure that the change is applied
+    // when someone attempts to upgrade from an older 5.3.x for whatever reason.
+    // If the database already has the proper state this will be a simple noop.
+    //
+    // see: https://github.com/WoltLab/WCF/commit/d836d365d30d44c6140dda17f82b9bd245db03e9
+    PartialDatabaseTable::create('wcf1_event_listener')
+        ->columns([
+            EnumDatabaseTableColumn::create('environment')
+                ->enumValues(['user', 'admin', 'all'])
+        ]),
+
     DatabaseTable::create('wcf1_flood_control')
         ->columns([
             BigintDatabaseTableColumn::create('logID')
