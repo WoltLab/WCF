@@ -112,14 +112,14 @@ class UserAvatarEditor extends DatabaseObjectEditor
         // If the uploaded avatar is already a WebP image, then create a JPEG
         // as a fallback image and flip the image data to match the JPEG.
         if ($this->avatarExtension === "webp") {
-            $filenameJpeg = preg_replace('~\.webp$~', '.jpeg', $filenameWebP);
+            $filenameJpeg = \preg_replace('~\.webp$~', '.jpeg', $filenameWebP);
 
             $imageAdapter->saveImageAs($image, $filenameJpeg, "jpeg", 80);
 
             // The new file has a different SHA1 hash, which means that apart from
             // updating the `fileHash` we also need to move it to a different physical
             // location.
-            $newFileHash = sha1_file($filenameJpeg);
+            $newFileHash = \sha1_file($filenameJpeg);
 
             $tmpAvatar = clone $this;
             $tmpAvatar->data["avatarExtension"] = "jpeg";

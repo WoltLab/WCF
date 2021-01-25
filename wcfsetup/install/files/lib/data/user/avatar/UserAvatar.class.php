@@ -84,6 +84,7 @@ class UserAvatar extends DatabaseObject implements IUserAvatar
         }
 
         $directory = \substr($this->fileHash, 0, 2);
+
         return \sprintf(
             '%s/%d-%s.%s',
             $directory,
