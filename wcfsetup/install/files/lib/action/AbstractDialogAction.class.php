@@ -75,7 +75,7 @@ abstract class AbstractDialogAction extends AbstractSecureAction
         $this->executed();
 
         // send JSON-encoded response
-        \header('Content-type: application/json');
+        \header('Content-type: application/json; charset=UTF-8');
         echo JSON::encode($this->data);
 
         exit;
