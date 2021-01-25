@@ -2355,7 +2355,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.acpSearchProvider.providerName.error.tooFewSegments"><![CDATA[Der angegebene Name enthält nur {#$segmentCount} Abschnitt{if $segmentCount > 1}e{/if}.]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.showOrder.description"><![CDATA[Der angegebene Wert bestimmt in welcher Reihenfolge die verschiedenen Arten von Suchergebnisse angezeigt werden.]]></item>
 		<item name="wcf.acp.pip.eventListener.environment"><![CDATA[Umgebung]]></item>
-		<item name="wcf.acp.pip.eventListener.environment.description"><![CDATA[Die Umgebung entscheidet, ob der Event-Listener im Frontend (<kbd>user</kbd>), in der Administrationsoberfläche (<kbd>admin</kbd>) oder in beiden Umgebungen (<kbd>all</kbd>) ausgeführt wird.]]></item>
+		<item name="wcf.acp.pip.eventListener.environment.description"><![CDATA[Die Umgebung entscheidet, ob der Event-Listener im Frontend (<kbd>user</kbd>) oder in der Administrationsoberfläche (<kbd>admin</kbd>) ausgeführt wird.]]></item>
 		<item name="wcf.acp.pip.eventListener.eventClassName"><![CDATA[PHP-Event-Klasse]]></item>
 		<item name="wcf.acp.pip.eventListener.eventClassName.description"><![CDATA[Die angegebene Klasse (ohne Backslash als erstes Zeichen) feuert das Event ab. Alternativ erbt die angegebene Klasse von der Klasse, die das Event abfeuert,]]></item>
 		<item name="wcf.acp.pip.eventListener.eventName"><![CDATA[Eventnamen]]></item>
