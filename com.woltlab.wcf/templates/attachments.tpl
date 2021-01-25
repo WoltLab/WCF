@@ -1,7 +1,7 @@
 {if $attachmentList && $attachmentList->getGroupedObjects($objectID)|count}
 	{hascontent}
 		<section class="section attachmentThumbnailList">
-			<h2 class="sectionTitle">{lang}wcf.attachment.images{/lang}</h2>
+			<h2 class="messageSectionTitle">{lang}wcf.attachment.images{/lang}</h2>
 			
 			<ul class="inlineList">
 				{content}
@@ -9,7 +9,7 @@
 						{if $attachment->showAsImage() && !$attachment->isEmbedded()}
 							<li class="attachmentThumbnail" data-attachment-id="{@$attachment->attachmentID}">
 								{if $attachment->hasThumbnail()}
-									<a href="{$attachment->getLink()}"{if $attachment->canDownload()} class="jsImageViewer" title="{$attachment->filename}"{/if}>
+									<a href="{$attachment->getLink()}"{if $attachment->canDownload()} class="jsImageViewer jsTooltip" title="{lang}wcf.attachment.image.title{/lang}"{/if}>
 								{/if}
 								
 								<div class="attachmentThumbnailContainer">
@@ -54,24 +54,24 @@
 	
 	{hascontent}
 		<section class="section attachmentFileList">
-			<h2 class="sectionTitle">{lang}wcf.attachment.files{/lang}</h2>
-				
-			<ul class="inlineList">
+			<h2 class="messageSectionTitle">{lang}wcf.attachment.files{/lang}</h2>
+
+			<div class="messageAttachmentList">
 				{content}
 					{foreach from=$attachmentList->getGroupedObjects($objectID) item=attachment}
 						{if $attachment->showAsFile() && !$attachment->isEmbedded()}
-							<li class="box32" data-attachment-id="{@$attachment->attachmentID}">
-								<a href="{$attachment->getLink()}"><span class="icon icon32 fa-{@$attachment->getIconName()}"></span></a>
-								
-								<div>
-									<p><a href="{$attachment->getLink()}">{$attachment->filename}</a></p>
-									<small>{lang}wcf.attachment.file.info{/lang}</small>
-								</div>
-							</li>
-						{/if}
-					{/foreach}
-				{/content}
-			</ul>
+							<a href="{$attachment->getLink()}" class="messageAttachment jsTooltip" title="{lang}wcf.attachment.file.title{/lang}">
+								<span class="messageAttachmentIcon">
+									<span class="messageAttachmentIconDefault icon icon32 fa-{@$attachment->getIconName()}"></span>
+									<span class="messageAttachmentIconDownload icon icon32 fa-download"></span>
+								</span>
+								<span class="messageAttachmentFilename">{$attachment->filename}</span>
+								<span class="messageAttachmentMeta">{lang}wcf.attachment.file.info{/lang}</span>
+							</a>
+							{/if}
+						{/foreach}
+					{/content}
+			</div>
 		</section>
 	{/hascontent}
 {/if}
