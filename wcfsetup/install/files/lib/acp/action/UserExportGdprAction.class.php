@@ -238,7 +238,7 @@ class UserExportGdprAction extends AbstractAction
         $this->data['@@generatedAt'] = TIME_NOW;
 
         // header
-        @\header('Content-type: application/json');
+        @\header('Content-type: application/json; charset=UTF-8');
         @\header('Content-disposition: attachment; filename="user-export-gdpr-' . $this->user->userID . '.json"');
 
         // no cache headers

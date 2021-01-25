@@ -167,7 +167,7 @@ class AJAXException extends LoggedException
         }
 
         \header($statusHeader);
-        \header('Content-type: application/json');
+        \header('Content-type: application/json; charset=UTF-8');
         echo JSON::encode($responseData);
 
         exit;

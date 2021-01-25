@@ -151,7 +151,7 @@ class AJAXInvokeAction extends AbstractSecureAction
      */
     protected function sendResponse()
     {
-        \header('Content-type: application/json');
+        \header('Content-type: application/json; charset=UTF-8');
         echo JSON::encode($this->response);
 
         exit;

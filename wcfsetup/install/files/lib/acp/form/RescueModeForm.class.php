@@ -96,7 +96,7 @@ class RescueModeForm extends AbstractCaptchaForm
                 case 'css':
                     $file = WCF_DIR . 'acp/style/style.css';
 
-                    \header('Content-Type: text/css');
+                    \header('Content-Type: text/css; charset=UTF-8');
                     break;
 
                 case 'logo':

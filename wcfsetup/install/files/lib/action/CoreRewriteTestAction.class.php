@@ -40,7 +40,7 @@ class CoreRewriteTestAction extends AbstractAction
         parent::execute();
 
         \header('Access-Control-Allow-Origin: *');
-        \header('Content-type: application/json');
+        \header('Content-type: application/json; charset=UTF-8');
         echo JSON::encode(['core_rewrite_test' => 'passed']);
 
         exit;

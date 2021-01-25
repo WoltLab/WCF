@@ -27,7 +27,7 @@ $types = [
 function badRequest($reason)
 {
     \header("HTTP/1.1 400 Bad Request");
-    \header("Content-Type: text/plain");
+    \header("Content-Type: text/plain; charset=UTF-8");
 
     exit($reason);
 }
@@ -35,7 +35,7 @@ function badRequest($reason)
 function notFound($reason = "Unable to find font.")
 {
     \header("HTTP/1.1 404 Not Found");
-    \header("Content-Type: text/plain");
+    \header("Content-Type: text/plain; charset=UTF-8");
 
     exit($reason);
 }

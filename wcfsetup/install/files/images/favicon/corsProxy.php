@@ -11,7 +11,7 @@
 $types = [
     'manifest' => [
         'filename' => 'manifest.json',
-        'type' => 'application/json',
+        'type' => 'application/json; charset=UTF-8',
     ],
 ];
 if (!empty($_GET['type']) || !isset($types[$_GET['type']])) {
