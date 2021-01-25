@@ -3,7 +3,6 @@
 namespace wcf\data\comment\response;
 
 use wcf\data\DatabaseObjectDecorator;
-use wcf\data\TLegacyUserPropertyAccess;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 
@@ -20,8 +19,6 @@ use wcf\system\cache\runtime\UserProfileRuntimeCache;
  */
 class ViewableCommentResponse extends DatabaseObjectDecorator
 {
-    use TLegacyUserPropertyAccess;
-
     /**
      * @inheritDoc
      */
