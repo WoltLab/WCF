@@ -1,7 +1,7 @@
 @mixin dropdownMenu {
 	background-color: $wcfDropdownBackground;
 	border-radius: 2px;
-	box-shadow: 0 0 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 	color: $wcfDropdownText;
 	display: none;
 	min-width: 160px;
@@ -11,51 +11,51 @@
 	text-align: left;
 	visibility: hidden;
 	z-index: 450;
-	
+
 	&.dropdownMenuPageSearch {
 		border-top-left-radius: 0;
 		border-top-right-radius: 0;
 	}
-	
+
 	&.dropdownOpen {
 		display: block;
 		visibility: visible;
 	}
-	
+
 	li {
 		display: block;
-		
+
 		&:hover:not(.dropdownDivider):not(.dropdownList):not(.dropdownText),
 		&.dropdownList > li:hover:not(.dropdownDivider),
 		&.dropdownNavigationItem,
 		&.active {
 			background-color: $wcfDropdownBackgroundActive;
 			color: $wcfDropdownLinkActive;
-			
+
 			> a {
 				color: $wcfDropdownLinkActive;
 			}
 		}
-		
+
 		&.dropdownDivider {
 			border-top: 1px solid $wcfDropdownBorderInner;
 			margin: 3px 0;
 		}
-		
+
 		&.dropdownText {
 			padding: 5px 20px;
-			
+
 			@include wcfFontSmall;
 		}
-		
+
 		&.boxFlag {
 			padding-top: 2px;
 		}
-		
+
 		&.missingValue > span {
 			padding-right: 40px;
 			position: relative;
-			
+
 			&:after {
 				color: $wcfStatusErrorText;
 				content: $fa-var-exclamation-triangle;
@@ -65,15 +65,15 @@
 				top: 5px;
 			}
 		}
-		
+
 		&.disabled {
 			color: $wcfContentDimmedText;
-			
+
 			> span {
 				cursor: not-allowed !important;
 			}
 		}
-		
+
 		> a,
 		> span {
 			clear: both;
@@ -86,68 +86,68 @@
 			text-overflow: ellipsis;
 			white-space: nowrap;
 			word-wrap: normal;
-			
+
 			> div > h3 {
 				overflow: hidden;
 				text-overflow: ellipsis;
 			}
 		}
-		
+
 		> a {
 			color: $wcfDropdownLink;
 		}
-		
+
 		> a > small {
 			display: block;
 		}
-		
+
 		> a + span.badge {
 			display: none;
 		}
-		
+
 		> .box16 {
 			align-items: center;
 			cursor: pointer;
 			min-height: 0;
 			padding: 5px 10px;
 		}
-		
+
 		> label {
 			display: block;
 		}
-		
+
 		.containerHeadline {
 			margin-bottom: 0;
-			
+
 			> p {
 				@include wcfFontSmall;
 			}
 		}
-		
+
 		.icon {
 			color: inherit;
 		}
 	}
-	
+
 	.scrollableDropdownMenu {
 		max-height: 300px;
 		overflow: auto;
-		
+
 		&.forceScrollbar {
 			overflow-y: scroll;
 			overflow-x: hidden;
 		}
 	}
-	
+
 	@include screen-xs {
 		left: 0 !important;
 		right: 0 !important;
 	}
-	
+
 	@include screen-md-down {
 		li {
 			overflow: hidden;
-			
+
 			> a,
 			> span {
 				max-width: none;
@@ -155,7 +155,7 @@
 			}
 		}
 	}
-	
+
 	@include screen-md-up {
 		.dropdownMenu.pageHeaderSearchDropdown {
 			transform: translateY(-10px);

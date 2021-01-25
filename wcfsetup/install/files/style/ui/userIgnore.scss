@@ -1,12 +1,12 @@
 /* reduces the visual impact of content by ignored users */
 .ignoredUserContent {
 	/* no grayscale filter in IE11 due to completely lacking support */
-	
+
 	-webkit-filter: grayscale(100%) !important; /* Chrome, Safari, Opera */
 	filter: grayscale(100%) !important; /* Firefox, Edge */
-		
+
 	&:not(:hover) {
-		opacity: .5 !important;
+		opacity: 0.5 !important;
 	}
 }
 
@@ -16,19 +16,18 @@
 		border-left: 5px solid $wcfStatusInfoBorder !important;
 		color: $wcfStatusInfoText !important;
 		cursor: pointer !important;
-		
+
 		&::before {
 			content: attr(data-ignored-user-message);
 			padding: 10px 20px;
-			
 		}
-	}	
-	
+	}
+
 	@include screen-sm-down {
 		border-top: 1px solid $wcfContentBorder;
 		margin: 0 -10px;
 		padding-top: 30px;
-		
+
 		&::before {
 			background-color: $wcfStatusInfoBackground !important;
 			border-left: 5px solid $wcfStatusInfoBorder !important;
@@ -39,7 +38,7 @@
 			padding: 10px;
 		}
 	}
-	
+
 	> * {
 		display: none;
 	}

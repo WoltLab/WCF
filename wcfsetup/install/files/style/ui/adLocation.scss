@@ -7,7 +7,7 @@
 		float: right;
 		margin-left: 30px;
 	}
-	
+
 	@include screen-md-down {
 		display: none;
 	}
@@ -27,7 +27,7 @@
 .wcfAdLocationSidebarTop,
 .wcfAdLocationSidebarBottom {
 	text-align: center;
-	
+
 	> div {
 		display: inline-block;
 		text-align: left;
@@ -51,7 +51,7 @@
 			height: 50px;
 			width: 320px;
 		}
-		
+
 		@include screen-sm-up {
 			// banner
 			height: 60px;
@@ -66,13 +66,13 @@
 		height: 60px;
 		width: 468px;
 	}
-	
+
 	@include screen-md {
 		// leaderboard
 		height: 90px;
 		width: 728px;
 	}
-	
+
 	@include screen-lg {
 		// large leaderboard
 		height: 90px;
@@ -88,7 +88,7 @@
 			height: 250px;
 			width: 300px;
 		}
-		
+
 		@include screen-lg {
 			// wide skyscraper
 			height: 600px;

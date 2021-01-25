@@ -1,57 +1,57 @@
 .messageTabMenu {
 	> .messageTabMenuContent {
 		display: none;
-		
+
 		&:not(.messageTabMenu) {
 			> nav.menu {
 				display: none;
 			}
 		}
-		
+
 		&.active {
 			background-color: $wcfContentBackground;
 			display: block;
 			margin-top: 0;
 		}
-		
+
 		> .section:first-child {
 			margin-top: 0;
 		}
 	}
-	
+
 	// prevent double formatting with nested tab menus
 	&:not(.messageTabMenuContent) > .messageTabMenuContent.active {
 		border: 1px solid $wcfContentBorderInner;
 		border-top-width: 0;
 		padding: 20px;
 	}
-	
+
 	// sub tab menu
 	&.messageTabMenuContent > nav {
 		border-bottom: 1px solid $wcfContentBorderInner;
 		margin: -20px -20px 20px -20px;
 		padding: 5px 20px;
-		
+
 		> ul {
 			@include inlineList;
-			
+
 			border: 0;
-			
+
 			> li {
 				outline: 0;
-				
+
 				&:not(:last-child) {
 					margin-right: 20px;
 				}
-				
+
 				&.active > a {
 					color: $wcfContentLinkActive;
 				}
-				
+
 				> a {
 					display: block;
 					outline: 0;
-					
+
 					@include userSelectNone;
 					@include wcfFontSmall;
 				}
@@ -73,20 +73,20 @@
 		background-color: $wcfContentBackground;
 		border: 1px solid $wcfContentBorderInner;
 		border-top-width: 0;
-		
+
 		@include inlineList;
-		
+
 		> li {
 			border-right: 1px solid $wcfContentBorderInner;
-			
+
 			&:not(:last-child) {
 				margin-right: 0;
 			}
-			
+
 			&.active > a {
 				color: $wcfContentLinkActive;
 				position: relative;
-				
+
 				&::after {
 					border-bottom: 1px solid $wcfContentBackground;
 					bottom: -1px;
@@ -97,25 +97,25 @@
 					right: 0;
 				}
 			}
-			
+
 			> a {
 				display: block;
 				padding: 10px 20px;
-				
+
 				@include userSelectNone;
 				@include wcfFontDefault;
-				
+
 				@include screen-md-up {
 					> .icon {
 						display: none;
 					}
 				}
-				
+
 				@include screen-sm-down {
 					> .icon {
 						display: block;
 					}
-					
+
 					> span:not(.icon) {
 						display: none;
 					}
@@ -123,7 +123,7 @@
 			}
 		}
 	}
-	
+
 	> span {
 		display: none;
 	}
@@ -140,7 +140,7 @@
 .uploadButton {
 	overflow: hidden;
 	position: relative;
-	
+
 	> input {
 		bottom: 0;
 		left: 0;

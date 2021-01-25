@@ -1,11 +1,11 @@
 .tableOfContentsContainer {
 	border: 1px solid $wcfContentBorderInner;
 	padding: 10px;
-	
+
 	&.open .jsTableOfContentsShow {
 		display: none;
 	}
-	
+
 	&:not(.open) {
 		.jsTableOfContentsHide,
 		.tableOfContents {
@@ -25,15 +25,15 @@
 	.tableOfContentsWrapper {
 		margin-bottom: 10px;
 	}
-	
+
 	.tableOfContentsContainer {
 		display: inline-block;
-		
+
 		&.mobileForceHide {
 			.jsTableOfContentsShow {
 				display: initial !important;
 			}
-			
+
 			.jsTableOfContentsHide,
 			.tableOfContents {
 				display: none;
@@ -54,11 +54,11 @@
 .messageBody > .messageText {
 	.tableOfContents {
 		margin-left: 15px;
-		
+
 		&.tocLevel2 {
 			list-style-type: lower-alpha;
 		}
-		
+
 		&.tocLevel3 {
 			list-style-type: lower-roman;
 		}

@@ -6,61 +6,61 @@
 .interactiveDropdown {
 	background-color: $wcfContentBackground;
 	border-radius: 2px;
-	box-shadow: 0 2px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 	color: $wcfContentText;
 	pointer-events: all;
 	position: absolute;
 	visibility: hidden;
 	z-index: 450;
-	
+
 	/* prevent dropdown from flickering during calculation */
 	left: -200%;
-	
+
 	> .elementPointer {
 		display: none;
 	}
-	
+
 	&.interactiveDropdownUserMenu {
 		> .interactiveDropdownItemsContainer {
 			overflow: visible;
 			max-height: none;
-			
+
 			a {
 				color: $wcfContentLink;
-				
+
 				&:hover {
 					color: $wcfContentLinkActive;
 				}
 			}
 		}
 	}
-	
+
 	@include screen-sm-md {
 		display: flex;
 		flex-direction: column;
 		position: fixed;
 		width: 350px;
-		
+
 		// override JS positioning
 		bottom: 0 !important;
 		left: auto !important;
 		top: 0 !important;
 		right: 0 !important;
-		
+
 		> .interactiveDropdownHeader,
 		> .interactiveDropdownShowAll {
 			flex: 0 0 auto;
 		}
-		
+
 		> .interactiveDropdownItemsContainer {
 			flex: 1 1 auto;
 			max-height: none;
 			overflow: auto;
-			
+
 			-webkit-overflow-scrolling: touch;
 		}
 	}
-	
+
 	@include screen-lg {
 		position: fixed;
 		top: 50px !important;
@@ -74,28 +74,28 @@
 	color: $wcfSidebarHeadlineText;
 	display: flex;
 	padding: 10px;
-	
+
 	a {
 		color: $wcfSidebarHeadlineLink;
-		
+
 		&:hover {
 			color: $wcfSidebarHeadlineLinkActive;
-			
+
 			text-decoration: underline;
 		}
 	}
-	
+
 	.interactiveDropdownTitle {
 		flex: 1 1 auto;
-		
+
 		@include wcfFontHeadline;
 	}
-	
+
 	.interactiveDropdownLinks {
 		flex: 0 0 auto;
 		margin-left: 5px;
 	}
-	
+
 	@include screen-sm-down {
 		padding: 10px;
 	}
@@ -105,13 +105,13 @@
 .interactiveDropdownItemsContainer {
 	border: 1px solid $wcfContentBorderInner;
 	border-width: 1px 0;
-	
+
 	&.ps-container {
 		> .interactiveDropdownItems {
 			position: relative;
 			z-index: 100;
 		}
-		
+
 		> .ps-scrollbar-y-rail {
 			z-index: 200;
 		}
@@ -123,59 +123,59 @@
 	> li {
 		padding: 10px;
 		position: relative;
-		
+
 		&:not(:last-child) {
 			border-bottom: 1px solid $wcfContentBorderInner;
 		}
-		
+
 		&:hover {
 			background-color: $wcfTabularBoxBackgroundActive;
 		}
-		
+
 		a {
 			color: inherit;
-			
+
 			&:hover {
 				color: inherit;
 			}
 		}
-		
+
 		h3 a {
 			font-weight: 600;
 		}
-		
+
 		.box48 {
 			align-items: center;
 			overflow: hidden;
 		}
-		
+
 		small {
 			align-items: center;
 			color: $wcfContentDimmedText;
 			display: flex;
 			margin-top: 3px;
-			
+
 			.separatorLeft {
 				margin-left: 0.25em;
 			}
 		}
-		
+
 		@include screen-sm-down {
 			padding: 10px;
 		}
 	}
-	
+
 	.loading,
 	.noItems {
 		align-items: center;
 		display: flex;
 		justify-content: center;
 		padding: 20px 10px;
-		
+
 		> .fa-spinner {
 			margin-right: 5px;
 		}
-		
+
 		@include wcfFontHeadline;
 	}
 }
@@ -183,11 +183,11 @@
 /* outstanding / unread item */
 .interactiveDropdownItemOutstanding {
 	display: flex;
-	
+
 	> .box48 {
 		flex: 1 1 auto;
 	}
-	
+
 	small::after {
 		background-color: rgb(49, 138, 220);
 		border-radius: 50%;
@@ -203,7 +203,7 @@
 	align-self: center;
 	flex: 0 0 auto;
 	margin-left: 5px;
-	
+
 	a {
 		pointer-events: all;
 	}
@@ -216,13 +216,13 @@
 	> .box48 {
 		position: relative;
 	}
-	
+
 	> .box48,
 	> .interactiveDropdownItemMarkAsRead {
 		pointer-events: none;
 		z-index: 20;
 	}
-	
+
 	> .interactiveDropdownItemShadowLink {
 		bottom: 0;
 		left: 0;
@@ -240,7 +240,7 @@
 	display: block;
 	padding: 10px;
 	text-align: center;
-	
+
 	&:hover {
 		color: $wcfSidebarHeadlineText;
 		text-decoration: underline;
@@ -251,13 +251,13 @@
 	.interactiveDropdown {
 		min-width: 350px;
 	}
-	
+
 	.interactiveDropdownItemsContainer {
 		max-height: 400px;
 		overflow: hidden;
 		position: relative;
 	}
-	
+
 	.interactiveDropdownItems:not(.interactiveDropdownItemsUserMenu) > li {
 		max-width: 400px;
 	}
@@ -272,44 +272,44 @@
 		position: fixed;
 		right: 0;
 	}
-	
+
 	.interactiveDropdownHeader {
 		flex: 0 0 auto;
 	}
-	
+
 	.interactiveDropdownItemsContainer {
 		flex: 1 1 auto;
 		overflow: auto;
-		
+
 		-webkit-overflow-scrolling: touch;
-		
+
 		/* increase the clickable area of the mark as read icon */
 		.interactiveDropdownItemOutstanding {
 			padding-right: 41px;
 		}
-		
+
 		.interactiveDropdownItemMarkAsRead {
 			bottom: 0;
 			position: absolute;
 			right: 0;
 			top: 0;
 			width: 36px; /* 16px icon + 2x 10px padding */
-			
+
 			> a {
 				display: block;
 				height: 100%;
 				text-align: center;
-				
+
 				> .icon {
 					position: relative;
 					top: 50%;
-					
+
 					transform: translateY(-50%);
 				}
 			}
 		}
 	}
-	
+
 	.interactiveDropdownShowAll {
 		flex: 0 0 auto;
 	}

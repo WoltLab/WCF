@@ -1,22 +1,22 @@
 .pageHeaderContainer {
 	color: $wcfHeaderText;
 	z-index: 100;
-	
+
 	a {
 		color: $wcfHeaderLink;
-		
+
 		&:hover {
 			color: $wcfHeaderLinkActive;
 		}
 	}
-	
+
 	.icon {
 		color: $wcfHeaderText;
 	}
-	
+
 	/* reserved space for `.pageHeaderPanel` */
 	padding-top: 50px;
-	
+
 	@include screen-lg {
 		background-color: $wcfHeaderBackground;
 	}
@@ -28,19 +28,19 @@
 	right: 0;
 	top: 0;
 	z-index: 300;
-	
+
 	> .layoutBoundary {
 		display: flex;
 	}
-	
+
 	@include screen-md-down {
 		background-color: $wcfHeaderBackground;
-		
+
 		> .layoutBoundary {
 			padding: 9px 10px;
 		}
 	}
-	
+
 	@include screen-lg {
 		background-color: $wcfHeaderMenuBackground;
 	}
@@ -51,17 +51,17 @@
 		// page header without user-panel (during setup)
 		margin-top: -50px;
 	}
-	
+
 	> .layoutBoundary {
 		align-items: center;
 		display: flex;
-		
+
 		@include screen-lg {
 			align-items: center;
 			padding-bottom: 30px;
 			padding-top: 30px;
 		}
-		
+
 		@include screen-md-down {
 			height: 50px;
 			-webkit-justify-content: center;
@@ -82,18 +82,18 @@
 	flex: 1;
 	margin-right: 20px;
 	position: relative;
-	
+
 	.boxMenu {
 		display: flex;
 		overflow: hidden;
-		
+
 		> li {
 			flex: 0 0 auto;
-			
+
 			&:first-child {
-				transition: margin-left .24s ease-in-out;
+				transition: margin-left 0.24s ease-in-out;
 			}
-			
+
 			> a {
 				background: $wcfHeaderMenuLinkBackground;
 				align-items: center;
@@ -101,38 +101,38 @@
 				display: flex;
 				height: 50px;
 				padding: 0 15px;
-				
+
 				> span {
 					flex: 0 0 auto;
 				}
-				
+
 				> .boxMenuLinkOutstandingItems {
 					margin-left: 5px;
 				}
 			}
-			
+
 			> span {
 				cursor: default;
 			}
-			
+
 			&.active > a,
 			&:hover > a {
 				background: $wcfHeaderMenuLinkBackgroundActive;
 				color: $wcfHeaderMenuLinkActive;
 			}
 		}
-		
+
 		> .boxMenuHasChildren {
 			&:hover .boxMenuDepth1,
 			> a[aria-expanded="true"] ~ .boxMenuDepth1 {
 				visibility: visible;
 			}
-			
+
 			> a {
 				&::after {
 					content: $fa-var-angle-down;
 					display: block;
-					font-family: 'FontAwesome';
+					font-family: "FontAwesome";
 					font-size: 14px;
 					height: 24px;
 					line-height: 24px;
@@ -141,29 +141,28 @@
 				}
 			}
 		}
-		
+
 		.boxMenuDepth1 {
 			background-color: $wcfHeaderMenuDropdownBackground;
 			border-radius: 0 0 3px 3px;
 			padding: 5px 0;
 			position: absolute;
 			visibility: hidden;
-			
+
 			@include wcfFontDefault;
-			
+
 			> li {
-				
 				> a {
 					color: $wcfHeaderMenuDropdownLink;
 				}
-				
+
 				> a,
 				> span {
 					display: block;
 					padding: 7px 20px;
 					white-space: nowrap;
 				}
-				
+
 				&.active > a,
 				> a:hover {
 					background-color: $wcfHeaderMenuDropdownBackgroundActive;
@@ -172,7 +171,7 @@
 				}
 			}
 		}
-		
+
 		.boxMenuDepth2 li {
 			> a {
 				color: $wcfHeaderMenuDropdownLink;
@@ -180,7 +179,7 @@
 				padding: 5px 20px 5px 40px;
 				white-space: nowrap;
 			}
-			
+
 			&.active > a,
 			> a:hover {
 				background-color: $wcfHeaderMenuDropdownBackgroundActive;
@@ -189,7 +188,7 @@
 			}
 		}
 	}
-	
+
 	.mainMenuShowPrevious,
 	.mainMenuShowNext {
 		align-items: center;
@@ -198,22 +197,22 @@
 		opacity: 0;
 		position: absolute;
 		top: 0;
-		transition: opacity .24s linear, visibility 0s linear .24s;
+		transition: opacity 0.24s linear, visibility 0s linear 0.24s;
 		visibility: hidden;
 		width: 50px;
-		
+
 		&.active {
 			opacity: 1;
 			transition-delay: 0s;
 			visibility: visible;
 		}
 	}
-	
+
 	.mainMenuShowPrevious {
 		background: linear-gradient(to left, transparent 0%, $wcfHeaderMenuBackground 75%);
 		left: 0;
 	}
-	
+
 	.mainMenuShowNext {
 		background: linear-gradient(to right, transparent 0%, $wcfHeaderMenuBackground 75%);
 		justify-content: flex-end;
@@ -222,21 +221,26 @@
 }
 
 /* Hack for a font rendering issue in Safari on menu hover */
-@include only_safari_no_ios('.pageHeaderPanel > .layoutBoundary', (transform: translateZ(0)));
+@include only_safari_no_ios(
+	".pageHeaderPanel > .layoutBoundary",
+	(
+		transform: translateZ(0),
+	)
+);
 
 /* user panel */
 .userPanel {
 	flex: 0 0 auto;
-	
+
 	> ul {
 		display: flex;
 		justify-content: flex-end;
-		
+
 		> li {
 			align-items: center;
 			display: flex;
 			flex: 0 0 auto;
-			
+
 			> a {
 				align-items: center;
 				background: $wcfHeaderMenuLinkBackground;
@@ -246,38 +250,39 @@
 				height: 50px;
 				padding: 0 15px;
 				position: relative;
-				
+
 				/* hide icon label */
 				> span:not(.icon):not(.badge) {
 					display: none;
 				}
-				
+
 				/* special styling for update badge */
 				> .badgeUpdate {
-					box-shadow: -1px 2px 3px rgba(0, 0, 0, .3), inset 0 2px 5px rgba(225, 225, 225, .3);
+					box-shadow: -1px 2px 3px rgba(0, 0, 0, 0.3),
+						inset 0 2px 5px rgba(225, 225, 225, 0.3);
 					left: 31px;
 					padding: 1px 6px;
 					position: absolute;
 					top: 4px;
 					z-index: 101;
 				}
-				
+
 				.icon {
 					color: $wcfHeaderMenuLink;
 				}
 			}
-			
+
 			&.dropdownOpen > a,
 			&.open > a,
 			&:hover > a {
 				background: $wcfHeaderMenuLinkBackgroundActive;
 				color: $wcfHeaderMenuLinkActive;
-				
+
 				.icon {
 					color: $wcfHeaderMenuLinkActive;
 				}
 			}
-			
+
 			/* ringing animation for notification icon */
 			&#userNotifications:not([data-count="0"]) {
 				> a > .icon {
@@ -287,7 +292,7 @@
 			}
 		}
 	}
-	
+
 	.userPanelAvatar {
 		display: none;
 	}
@@ -297,29 +302,29 @@
 .pageHeaderLogo {
 	@include screen-lg {
 		flex: 1 1 auto;
-		
+
 		.pageHeaderLogoLarge {
 			max-width: 100%;
 		}
-		
+
 		.pageHeaderLogoSmall {
 			display: none;
 		}
-		
+
 		> a {
 			display: block;
 			padding: 10px 0;
 		}
 	}
-	
+
 	@include screen-md-down {
 		.pageHeaderLogoLarge {
 			display: none;
 		}
-		
+
 		.pageHeaderLogoSmall {
 			max-height: 30px;
-			
+
 			/* prevent over-sized logos from overlapping the user panel buttons */
 			max-width: 100%;
 		}
@@ -334,17 +339,17 @@
 
 .searchBarOpen .pageHeaderSearch {
 	display: block;
-	
+
 	/* required for Edge */
 	z-index: 100;
 }
 
 .pageHeaderSearchInputContainer {
 	display: flex;
-	
+
 	.pageHeaderSearchType {
 		display: flex;
-		
+
 		> .button {
 			align-items: center;
 			background-color: $wcfHeaderMenuLinkBackground;
@@ -357,7 +362,7 @@
 			position: relative;
 			text-align: left;
 			text-transform: none;
-			
+
 			&::after {
 				color: inherit;
 				content: $fa-var-caret-down;
@@ -366,7 +371,7 @@
 				margin-left: 10px;
 				text-align: right;
 			}
-			
+
 			> .pageHeaderSearchTypeLabel {
 				flex: 0 auto;
 				overflow: hidden;
@@ -374,14 +379,14 @@
 				white-space: nowrap;
 			}
 		}
-		
+
 		> .button:hover,
 		&.dropdownOpen > .button {
 			background: $wcfHeaderMenuLinkBackgroundActive;
 			color: $wcfHeaderMenuLinkActive;
 		}
 	}
-	
+
 	.pageHeaderSearchInput {
 		background-color: $wcfHeaderSearchBoxBackground;
 		border-width: 0;
@@ -389,52 +394,58 @@
 		padding-bottom: 8px;
 		padding-top: 8px;
 		width: 250px;
-		
+
 		&:focus,
 		&:hover {
 			background-color: $wcfHeaderSearchBoxBackgroundActive;
 			color: $wcfHeaderSearchBoxTextActive;
-			
+
 			/* set placeholder color, do not chain these with a comma
 			   as an unrecognized value causes the instruction to be
 			   discarded in entirety */
-			&::-webkit-input-placeholder { /* WebKit browsers */
+			&::-webkit-input-placeholder {
+				/* WebKit browsers */
 				color: $wcfHeaderSearchBoxPlaceholderActive;
 			}
-			&::-moz-placeholder { /* Mozilla Firefox 19+ */
+			&::-moz-placeholder {
+				/* Mozilla Firefox 19+ */
 				color: $wcfHeaderSearchBoxPlaceholderActive;
 			}
-			&:-ms-input-placeholder { /* Internet Explorer 10+ */
+			&:-ms-input-placeholder {
+				/* Internet Explorer 10+ */
 				color: $wcfHeaderSearchBoxPlaceholderActive;
 			}
 		}
-		
+
 		/* set placeholder color, do not chain these with a comma
 		   as an unrecognized value causes the instruction to be
 		   discarded in entirety */
-		&::-webkit-input-placeholder { /* WebKit browsers */
+		&::-webkit-input-placeholder {
+			/* WebKit browsers */
 			color: $wcfHeaderSearchBoxPlaceholder;
 		}
-		&::-moz-placeholder { /* Mozilla Firefox 19+ */
+		&::-moz-placeholder {
+			/* Mozilla Firefox 19+ */
 			color: $wcfHeaderSearchBoxPlaceholder;
 		}
-		&:-ms-input-placeholder { /* Internet Explorer 10+ */
+		&:-ms-input-placeholder {
+			/* Internet Explorer 10+ */
 			color: $wcfHeaderSearchBoxPlaceholder;
 		}
-		
+
 		/* remove broken cancel-button (webkit) */
 		&::-webkit-search-cancel-button {
 			display: none;
 		}
 	}
-	
+
 	/* Increases the specificity to overrule the CSS for <button>. */
 	.pageHeaderSearchInputButton.pageHeaderSearchInputButton {
 		background-color: $wcfHeaderMenuLinkBackground;
 		border-radius: 0 0 2px 0;
 		color: $wcfHeaderMenuLink;
 		padding: 4px 9px;
-		
+
 		&:hover {
 			background-color: $wcfHeaderMenuLinkBackgroundActive;
 			color: $wcfHeaderMenuLinkActive;
@@ -448,36 +459,36 @@
 		-webkit-justify-content: space-between;
 		justify-content: space-between;
 	}
-	
+
 	.userPanel {
 		flex: 0 0 auto;
-		
+
 		> .userPanelItems {
 			display: none;
 		}
-		
+
 		.userPanelAvatar {
 			display: block;
 			padding: 0 5px;
 		}
 	}
-	
+
 	.mainMenu {
 		flex: 0 0 auto;
-		
+
 		&::before {
 			content: $fa-var-bars;
 		}
-		
+
 		> .boxContent {
 			display: none;
 		}
 	}
-	
+
 	.mainMenu,
 	.userPanel {
 		position: relative;
-		
+
 		&.pageMenuMobileButtonHasContent::after {
 			background-color: rgb(244, 67, 54);
 			border: 2px solid $wcfHeaderBackground;
@@ -490,7 +501,7 @@
 			width: 14px;
 		}
 	}
-	
+
 	.mainMenu,
 	.userPanel:not(.userPanelLoggedIn) {
 		&::before {
@@ -500,34 +511,34 @@
 			line-height: 32px;
 			padding: 5px 5px;
 		}
-		
+
 		&:hover::before {
 			color: $wcfHeaderLinkActive;
 		}
 	}
-	
+
 	.userPanel:not(.userPanelLoggedIn) {
 		&::before {
 			content: $fa-var-user;
 		}
 	}
-	
+
 	.userPanel.hideUserPanel::before {
 		visibility: hidden !important;
 	}
-	
+
 	.pageHeaderSearch {
 		left: 0 !important;
 		right: 0 !important;
-		
+
 		.pageHeaderSearchInputContainer {
 			border-radius: 0;
 			display: flex;
 			flex-wrap: wrap;
-			
+
 			.pageHeaderSearchType {
 				flex: 0 0 100%;
-				
+
 				> .button {
 					border-radius: 0;
 					max-width: unset;
@@ -537,16 +548,16 @@
 					width: 100%;
 				}
 			}
-			
+
 			.pageHeaderSearchInput {
 				flex: 1 1 auto;
 			}
-			
+
 			.pageHeaderSearchInputButton {
 				border-radius: 0;
 			}
 		}
-		
+
 		&:not(.open) {
 			display: none;
 		}
@@ -556,9 +567,9 @@
 @include screen-xs {
 	.pageHeaderPanel,
 	.pageHeaderFacade > .layoutBoundary {
-		transition: transform .12s linear;
+		transition: transform 0.12s linear;
 	}
-	
+
 	.redactorActive {
 		.pageHeaderPanel,
 		.pageHeaderFacade > .layoutBoundary {

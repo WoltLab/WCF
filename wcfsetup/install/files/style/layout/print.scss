@@ -10,8 +10,7 @@
 		opacity: 1 !important;
 		text-shadow: none !important;
 	}
-	
-	
+
 	/** hide obsolete elements **/
 	/* general elements */
 	.pageHeaderContainer,
@@ -55,60 +54,60 @@
 	.containerListButtonGroup {
 		display: none !important;
 	}
-	
+
 	/** minor optimizations **/
 	.main {
 		padding: 20px 0;
 	}
-	
+
 	.content {
 		flex-basis: auto !important;
 		max-width: none !important;
 	}
-	
+
 	.pageNavigation {
 		display: block;
 		padding-top: 10px;
-		
+
 		.breadcrumbs {
 			margin-left: 0;
 		}
 	}
-	
+
 	.badge {
 		padding: 0 !important;
-		
+
 		&::before {
 			content: "[";
 		}
-		
+
 		&::after {
 			content: "]";
 		}
 	}
-	
+
 	.userProfileUser {
 		position: static !important;
 	}
-	
+
 	a.externalURL::after {
 		content: " (" attr(href) ")";
 	}
-	
+
 	.messageList,
 	.messageList > li:not(:first-child) {
 		border-top: 1px solid $wcfContentBorder;
 	}
-	
+
 	.messageList > li {
 		padding-top: 20px;
 	}
-	
+
 	.messageSidebar {
 		margin: 0 !important;
 		padding: 0 !important;
 	}
-	
+
 	/* see https://bugzilla.mozilla.org/show_bug.cgi?id=939897 */
 	.pageContainer,
 	.main > div {

@@ -1,74 +1,74 @@
 dl {
 	&:not(.plain) {
 		display: block;
-		
+
 		&:not(:first-child) {
 			margin-top: 20px;
 		}
-		
+
 		> dt {
 			color: $wcfInputLabel;
-			
+
 			display: block;
-			
+
 			&:not(:empty) {
 				margin-bottom: 5px;
 			}
 		}
-		
+
 		> dd {
 			display: block;
-			
+
 			&:not(:last-child) {
 				margin-bottom: 20px;
 			}
-			
+
 			> small:not(.innerError):not(.innerInfo):not(.innerSuccess):not(.innerWarning) {
 				color: $wcfContentDimmedText;
 				display: block;
 				margin-top: 3px;
 			}
-			
+
 			> label {
 				display: block;
-				
+
 				/* indentation for checkbox descriptions */
 				+ small:not(.innerError):not(.innerInfo):not(.innerSuccess):not(.innerWarning) {
 					margin-left: 24px;
 				}
 			}
-			
+
 			> label:not(:first-child) {
 				margin-top: 5px;
 			}
-			
+
 			&.floated {
 				display: flex;
 				flex-wrap: wrap;
-				
+
 				> label {
 					flex: 0 0 auto;
 					margin: 0 10px 5px 0;
-					
+
 					&:last-child {
 						margin-right: 0;
 					}
-					
+
 					+ small:not(.innerError):not(.innerInfo):not(.innerSuccess):not(.innerWarning) {
 						margin-left: 0;
 					}
 				}
-				
+
 				small {
 					flex: 1 1 100%;
 				}
 			}
 		}
-		
+
 		&.wide > dt {
 			display: none;
 		}
-		
+
 		/* The option */
 		dt.checkboxList + dd,
 		dd.checkboxList {
@@ -77,100 +77,100 @@ dl {
 				clear: both;
 				display: table;
 			}
-			
+
 			label {
 				float: left;
 				clear: both;
 			}
-			
+
 			small {
 				clear: both;
 			}
 		}
 	}
-	
+
 	&.floated > dd {
 		display: flex;
 		flex-wrap: wrap;
-		
+
 		> label {
 			flex: 0 0 auto;
 			margin: 0 10px 5px 0;
-			
+
 			&:last-child {
 				margin-right: 0;
 			}
-			
+
 			&:not(:first-child) {
 				margin-top: 0;
 			}
-			
+
 			+ small:not(.innerError):not(.innerInfo):not(.innerSuccess):not(.innerWarning) {
 				margin-left: 0;
 			}
 		}
-		
+
 		small {
 			flex: 1 1 100%;
 		}
 	}
-	
+
 	&.dataList {
 		overflow: hidden;
-		
+
 		@include clearfix;
-		
+
 		> dt {
 			clear: right;
 			color: $wcfContentDimmedText;
 			float: left;
 			margin-right: 4px;
 			text-align: left;
-			
+
 			&:after {
 				content: ":";
 			}
 		}
-		
+
 		> dd {
 			float: right;
 			min-height: 20px;
 			text-align: right;
-			
+
 			&:not(:last-child) {
 				margin-bottom: 3px;
 			}
 		}
 	}
-	
+
 	&.inlineDataList {
 		> dt {
 			display: inline-block;
 			vertical-align: middle;
-			
+
 			&:after {
 				content: ":";
 				padding-left: 1px;
 			}
 		}
-		
+
 		> dd {
 			display: inline-block;
 			vertical-align: middle;
-			
+
 			&:not(:last-of-type):after {
 				content: ",";
 				padding-left: 1px;
 			}
 		}
 	}
-	
+
 	&.statsDataList {
 		align-items: center;
 		display: flex;
 		flex-direction: row-reverse;
 		flex-wrap: wrap;
-		
+
 		> dt {
 			color: $wcfContentDimmedText;
 			flex: 0 0 60%;
@@ -178,14 +178,14 @@ dl {
 			overflow: hidden;
 			text-align: left;
 			white-space: nowrap;
-			
+
 			@include wcfFontSmall;
 		}
-		
+
 		> dd {
 			flex: 0 0 auto;
 			width: calc(40% - 5px); /* IE work-around */
-			
+
 			overflow: hidden;
 			text-align: right;
 			text-overflow: ellipsis;

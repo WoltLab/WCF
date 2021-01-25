@@ -2,7 +2,7 @@
 	@include screen-md-up {
 		font-size: $wcfFontSizeDefault;
 	}
-	
+
 	@include screen-sm-down {
 		font-size: 14px;
 	}
@@ -10,11 +10,11 @@
 
 @mixin wcfFontSmall {
 	font-weight: 400;
-	
+
 	@include screen-md-up {
 		font-size: $wcfFontSizeSmall;
 	}
-	
+
 	@include screen-sm-down {
 		font-size: 12px;
 	}
@@ -27,11 +27,11 @@
 @mixin wcfFontHeadline {
 	font-weight: 400;
 	line-height: 1.28;
-	
+
 	@include screen-md-up {
 		font-size: $wcfFontSizeHeadline;
 	}
-	
+
 	@include screen-sm-down {
 		font-size: 18px;
 	}
@@ -40,11 +40,11 @@
 @mixin wcfFontSection {
 	font-weight: 300;
 	line-height: 1.28;
-	
+
 	@include screen-md-up {
 		font-size: $wcfFontSizeSection;
 	}
-	
+
 	@include screen-sm-down {
 		font-size: 20px;
 	}
@@ -53,11 +53,11 @@
 @mixin wcfFontTitle {
 	font-weight: 300;
 	line-height: 1.05;
-	
+
 	@include screen-md-up {
 		font-size: $wcfFontSizeTitle;
 	}
-	
+
 	@include screen-sm-down {
 		font-size: 23px;
 	}

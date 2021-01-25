@@ -10,7 +10,7 @@
 .googleMapsCustomControlContainer {
 	cursor: pointer !important;
 	margin-top: 5px;
-	
+
 	.googleMapsCustomControl {
 		text-align: center;
 		position: relative;
@@ -23,12 +23,12 @@
 		border: 1px solid rgba(0, 0, 0, 0.14902);
 		box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
 		min-width: 29px;
-		
+
 		&:hover {
 			background-color: rgb(235, 235, 235);
 			color: rgb(0, 0, 0);
 		}
-		
+
 		&.active {
 			color: rgb(0, 0, 0);
 			font-weight: 500;
@@ -43,13 +43,13 @@
 .googleMapsDirectionsContainer {
 	@include screen-lg {
 		display: flex;
-		
+
 		.googleMap,
 		.googleMapsDirections {
 			flex: 0 0 50%;
 		}
 	}
-	
+
 	.googleMapsDirections {
 		height: 400px;
 		padding-left: 10px;

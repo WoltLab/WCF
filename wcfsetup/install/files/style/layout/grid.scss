@@ -14,12 +14,34 @@
 	display: flex;
 	margin-right: -10px;
 	margin-left: -10px;
-	
+
 	flex-wrap: wrap;
 }
 
-.col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12,
-.col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+.col-xs-1,
+.col-xs-2,
+.col-xs-3,
+.col-xs-4,
+.col-xs-5,
+.col-xs-6,
+.col-xs-7,
+.col-xs-8,
+.col-xs-9,
+.col-xs-10,
+.col-xs-11,
+.col-xs-12,
+.col-md-1,
+.col-md-2,
+.col-md-3,
+.col-md-4,
+.col-md-5,
+.col-md-6,
+.col-md-7,
+.col-md-8,
+.col-md-9,
+.col-md-10,
+.col-md-11,
+.col-md-12 {
 	position: relative;
 	min-height: 1px;
 	padding-right: 10px;
@@ -364,12 +386,34 @@
 /* vertical gap between wrapped columns */
 .rowColGap {
 	margin-bottom: -20px;
-	
-	> .col-xs-1, > .col-xs-2, > .col-xs-3, > .col-xs-4, > .col-xs-5, > .col-xs-6, > .col-xs-7, > .col-xs-8, > .col-xs-9, > .col-xs-10, > .col-xs-11, > .col-xs-12,
-	> .col-md-1, > .col-md-2, > .col-md-3, > .col-md-4, > .col-md-5, > .col-md-6, > .col-md-7, > .col-md-8, > .col-md-9, > .col-md-10, > .col-md-11, > .col-md-12 {
+
+	> .col-xs-1,
+	> .col-xs-2,
+	> .col-xs-3,
+	> .col-xs-4,
+	> .col-xs-5,
+	> .col-xs-6,
+	> .col-xs-7,
+	> .col-xs-8,
+	> .col-xs-9,
+	> .col-xs-10,
+	> .col-xs-11,
+	> .col-xs-12,
+	> .col-md-1,
+	> .col-md-2,
+	> .col-md-3,
+	> .col-md-4,
+	> .col-md-5,
+	> .col-md-6,
+	> .col-md-7,
+	> .col-md-8,
+	> .col-md-9,
+	> .col-md-10,
+	> .col-md-11,
+	> .col-md-12 {
 		margin-bottom: 20px !important;
 	}
-	
+
 	&:not(:first-child) {
 		margin-top: 20px;
 	}

@@ -6,7 +6,7 @@
 		display: table;
 		content: "";
 	}
-	
+
 	&::after {
 		clear: both;
 	}
@@ -34,8 +34,7 @@
 @mixin textShadow($backgroundColor) {
 	@if (lightness($backgroundColor) >= 40) {
 		text-shadow: 0 1px 0 $wcfTextShadowDark;
-	}
-	@else {
+	} @else {
 		text-shadow: 0 -1px 0 $wcfTextShadowLight;
 	}
 }
@@ -50,7 +49,7 @@
 @mixin linearGradientNative($parameters) {
 	background-image: linear-gradient($parameters);
 }
-@mixin transition($property, $duration, $type:linear) {
+@mixin transition($property, $duration, $type: linear) {
 	transition: $property $duration $type;
 }
 @mixin boxShadow($leftOffset, $topOffset, $color, $blurriness: 5px, $shadowHeight: 0) {

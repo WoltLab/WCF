@@ -7,10 +7,10 @@
 	position: absolute;
 	top: 0;
 	z-index: 320;
-	
+
 	&.open {
 		display: block;
-		
+
 		@include screen-sm-up {
 			+ .menuOverlayMobileBackdrop {
 				display: block;
@@ -21,15 +21,15 @@
 	&.androidMenuTouchEnd {
 		display: block;
 		position: fixed;
-		transition: transform .24s cubic-bezier(.25, .46, .45, .94);
-		
+		transition: transform 0.24s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
 		&.pageMainMenuMobile:not(.open) {
 			transform: translateX(-100vw);
 		}
 		&.pageUserMenuMobile:not(.open) {
 			transform: translateX(100vw);
 		}
-		
+
 		@include screen-sm-up {
 			&.pageMainMenuMobile:not(.open) {
 				transform: translateX(-350px);
@@ -37,28 +37,29 @@
 			&.pageUserMenuMobile:not(.open) {
 				transform: translateX(350px);
 			}
-			
+
 			+ .menuOverlayMobileBackdrop {
-				transition: left .24s cubic-bezier(.25, .46, .45, .94), right .24s cubic-bezier(.25, .46, .45, .94);
+				transition: left 0.24s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+					right 0.24s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 			}
 		}
 	}
-	
+
 	> .menuOverlayItemList {
 		// we use `transform: translateX()` for performance reasons
-		transition: transform .24s cubic-bezier(.25, .46, .45, .94);
-		
+		transition: transform 0.24s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
 		/* work-around to avoid setting explicit visibility */
 		visibility: visible;
 	}
-	
+
 	&.allowScroll {
 		.menuOverlayItemList:not(.hidden) {
 			overflow: auto;
 			-webkit-overflow-scrolling: touch;
 		}
 	}
-	
+
 	&:not(.allowScroll) {
 		// block UI while switching between menus
 		&::before {
@@ -71,41 +72,41 @@
 			z-index: 500;
 		}
 	}
-	
+
 	@include screen-xs {
 		left: 0;
 		max-width: 100vw;
 		right: 0;
-		
+
 		.menuOverlayItemList {
 			right: 0;
 		}
 	}
-	
+
 	@include screen-sm-up {
 		width: 350px;
-		
+
 		&.pageMainMenuMobile {
 			left: 0;
-			
+
 			& + .menuOverlayMobileBackdrop {
-				box-shadow: inset 5px 0 10px -5px rgba(0, 0, 0, .6);
+				box-shadow: inset 5px 0 10px -5px rgba(0, 0, 0, 0.6);
 				left: 350px;
 			}
-			
+
 			.menuOverlayItemList {
 				left: 0;
 			}
 		}
-		
+
 		&.pageUserMenuMobile {
 			right: 0;
-			
+
 			& + .menuOverlayMobileBackdrop {
-				box-shadow: inset -5px 0 10px -5px rgba(0, 0, 0, .6);
+				box-shadow: inset -5px 0 10px -5px rgba(0, 0, 0, 0.6);
 				right: 350px;
 			}
-			
+
 			.menuOverlayItemList {
 				right: 0;
 			}
@@ -114,7 +115,7 @@
 }
 
 .menuOverlayMobileBackdrop {
-	background-color: rgba(0, 0, 0, .4);
+	background-color: rgba(0, 0, 0, 0.4);
 	bottom: 0;
 	display: none;
 	left: 0;
@@ -127,7 +128,7 @@
 .menuOverlayItemWrapper {
 	display: flex;
 	justify-content: flex-end;
-	
+
 	> .menuOverlayItemLink {
 		flex: 1 1 auto;
 	}
@@ -145,11 +146,11 @@
 	bottom: 0;
 	width: calc(100vw + 1px);
 	z-index: 450;
-	
+
 	@include screen-sm-up {
 		width: 350px;
 	}
-	
+
 	&:not(.activeList) {
 		display: none;
 	}
@@ -157,7 +158,7 @@
 
 .menuOverlayItemSpacer {
 	margin-top: 25px;
-	
+
 	/* avoid successive spacers piling up */
 	& + .menuOverlayItemSpacer {
 		display: none;
@@ -166,9 +167,9 @@
 
 .menuOverlayItem {
 	&:not(:last-child) {
-		margin-bottom: 1px
+		margin-bottom: 1px;
 	}
-	
+
 	/* nested item list */
 	> .menuOverlayItemList {
 		margin-left: 100%;
@@ -193,21 +194,21 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	
+
 	.icon::before {
 		color: $wcfHeaderMenuLink;
 	}
-	
+
 	&:hover {
 		color: $wcfHeaderMenuLinkActive;
 	}
-	
+
 	/* wrapper class for links containing an additional badge */
 	&.menuOverlayItemBadge {
 		align-items: center;
 		display: flex;
 		padding-right: 10px;
-		
+
 		/* different padding if there is no additional icon after the link,
 		   ensures proper alignment for links with badges containing a child
 		   item list */
@@ -216,16 +217,16 @@
 			/* icon = 2x 10px padding + 16px width */
 			padding-right: 55px;
 		}
-		
+
 		> .menuOverlayItemTitle {
 			flex: 1 1 auto;
 		}
-		
+
 		> .badge {
 			flex: 0 0 auto;
 		}
 	}
-	
+
 	&.menuOverlayItemLinkMore::after {
 		color: $wcfHeaderMenuLink;
 		content: $fa-var-angle-right;
@@ -237,7 +238,7 @@
 		top: 50%;
 		transform: translateY(-50%);
 	}
-	
+
 	.menuOverlayItemTitle {
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -264,11 +265,11 @@ html[dir="rtl"] .menuOverlayItemLink.menuOverlayItemLinkMore::after {
 }
 
 .menuOverlayTitle {
-	color: rgba($wcfHeaderMenuLink, .7);
+	color: rgba($wcfHeaderMenuLink, 0.7);
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	
+
 	&:not(:first-child) {
 		margin-top: 10px;
 	}
@@ -280,18 +281,18 @@ html[dir="rtl"] .menuOverlayItemLink.menuOverlayItemLinkMore::after {
 	flex: 0 0 auto;
 	margin-left: 1px;
 	padding: 10px;
-	
+
 	/* force explicit dimensions because no each .icon24 is of equal height/width */
 	height: 44px;
 	width: 44px;
-	
+
 	> .icon::before {
 		color: $wcfHeaderMenuLink;
 	}
 }
 
 .menuOverlayBackLink::before {
-	color: rgba($wcfHeaderMenuLink, .7);
+	color: rgba($wcfHeaderMenuLink, 0.7);
 	content: $fa-var-angle-left;
 	display: block;
 	font-family: FontAwesome;
@@ -306,7 +307,7 @@ html[dir="rtl"] .menuOverlayItemLink.menuOverlayItemLinkMore::after {
 	flex: 1 1 auto;
 	padding: 5px;
 	display: flex;
-	
+
 	.menuOverlayLogo {
 		flex: 1 1 auto;
 		background-size: contain;

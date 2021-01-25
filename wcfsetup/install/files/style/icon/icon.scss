@@ -1,70 +1,71 @@
 /* do NOT reference fonts directly, always make use of 'getFont.php' */
 @font-face {
-	font-family: 'FontAwesome';
-	src: url(getFont('fontawesome-webfont.eot', '', '4.7.0'));
-	src: url(getFont('fontawesome-webfont.eot', '', '4.7.0') + "#iefix") format('embedded-opentype'),
-	url(getFont('fontawesome-webfont.woff2', '', '4.7.0')) format('woff2'),
-	url(getFont('fontawesome-webfont.woff', '', '4.7.0')) format('woff'),
-	url(getFont('fontawesome-webfont.ttf', '', '4.7.0')) format('truetype');
+	font-family: "FontAwesome";
+	src: url(getFont("fontawesome-webfont.eot", "", "4.7.0"));
+	src: url(getFont("fontawesome-webfont.eot", "", "4.7.0") + "#iefix") format("embedded-opentype"),
+		url(getFont("fontawesome-webfont.woff2", "", "4.7.0")) format("woff2"),
+		url(getFont("fontawesome-webfont.woff", "", "4.7.0")) format("woff"),
+		url(getFont("fontawesome-webfont.ttf", "", "4.7.0")) format("truetype");
 	font-weight: normal;
 	font-style: normal;
 }
 
-.icon, .fa {
+.icon,
+.fa {
 	color: $wcfContentText;
 	display: inline-block;
 	font-family: FontAwesome;
 	font-weight: normal !important;
 	font-style: normal !important;
 	text-align: center;
-	
+
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
-	
+
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
-	
+
 	&.disabled {
-		opacity: .3;
+		opacity: 0.3;
 	}
 	&:hover {
 		text-decoration: none;
 	}
-	
+
 	/* default icon colors */
 	&.green {
 		color: rgba(0, 153, 0, 1);
 	}
-	
+
 	&.red {
 		color: rgba(204, 0, 0, 1);
 	}
-	
+
 	&.black {
 		color: #333;
 	}
-	
+
 	&.brown {
 		color: #c63;
 	}
-	
+
 	&.orange {
 		color: #f90;
 	}
-	
+
 	&.yellow {
 		color: #ff0;
 	}
-	
+
 	&.blue {
 		color: #369;
 	}
-	
+
 	&.purple {
 		color: #c0f;
 	}
-	
+
 	&.pink {
 		color: #f0c;
 	}
@@ -141,7 +142,7 @@ a > span.fa:not(.pointer) {
 
 // spinner animation
 .fa-spinner {
-	animation: wcfSpinner .6s linear infinite;
+	animation: wcfSpinner 0.6s linear infinite;
 	border: 2px solid rgb(204, 204, 204);
 	border-top-color: rgb(79, 129, 189);
 	border-radius: 50%;
@@ -155,20 +156,32 @@ a > span.fa:not(.pointer) {
 }
 
 @-webkit-keyframes wcfSpinner {
-	to { -webkit-transform: rotate(360deg); }
+	to {
+		-webkit-transform: rotate(360deg);
+	}
 }
 
 @keyframes wcfSpinner {
-	to { transform: rotate(360deg); }
+	to {
+		transform: rotate(360deg);
+	}
 }
 
 @-webkit-keyframes spin {
-	0% { -webkit-transform: rotate(0deg); }
-	100% { -webkit-transform: rotate(359deg); }
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(359deg);
+	}
 }
 @keyframes spin {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(359deg); }
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(359deg);
+	}
 }
 
 .fa-rotate-90 {
@@ -198,17 +211,40 @@ a > span.fa:not(.pointer) {
 
 /* ringing animation for fa-bell */
 @keyframes fa-bell-ring {
-	0% { transform:rotate(-15deg) }
-	2% { transform:rotate(15deg) }
-	4% { transform:rotate(-18deg) }
-	6% { transform:rotate(18deg) }
-	8% { transform:rotate(-22deg) }
-	10% { transform:rotate(22deg) }
-	12% { transform:rotate(-18deg) }
-	14% { transform:rotate(18deg) }
-	16% { transform:rotate(-12deg) }
-	18% { transform:rotate(12deg) }
-	20%, 100% { transform:rotate(0deg) }
+	0% {
+		transform: rotate(-15deg);
+	}
+	2% {
+		transform: rotate(15deg);
+	}
+	4% {
+		transform: rotate(-18deg);
+	}
+	6% {
+		transform: rotate(18deg);
+	}
+	8% {
+		transform: rotate(-22deg);
+	}
+	10% {
+		transform: rotate(22deg);
+	}
+	12% {
+		transform: rotate(-18deg);
+	}
+	14% {
+		transform: rotate(18deg);
+	}
+	16% {
+		transform: rotate(-12deg);
+	}
+	18% {
+		transform: rotate(12deg);
+	}
+	20%,
+	100% {
+		transform: rotate(0deg);
+	}
 }
 
 /* EmojiOne's Emoji Keyboard (2016) for Chrome uses an excessively high `z-index` value */
@@ -218,14 +254,30 @@ a > span.fa:not(.pointer) {
 
 /* This icon is too wide and overflows its boundaries. */
 .fa-free-code-camp {
-	&.icon16 { font-size: 10px; }
-	&.icon24 { font-size: 16px; }
-	&.icon32 { font-size: 22px; }
-	&.icon48 { font-size: 34px; }
-	&.icon64 { font-size: 46px; }
-	&.icon96 { font-size: 70px; }
-	&.icon128 { font-size: 94px; }
-	&.icon144 { font-size: 108px; }
+	&.icon16 {
+		font-size: 10px;
+	}
+	&.icon24 {
+		font-size: 16px;
+	}
+	&.icon32 {
+		font-size: 22px;
+	}
+	&.icon48 {
+		font-size: 34px;
+	}
+	&.icon64 {
+		font-size: 46px;
+	}
+	&.icon96 {
+		font-size: 70px;
+	}
+	&.icon128 {
+		font-size: 94px;
+	}
+	&.icon144 {
+		font-size: 108px;
+	}
 }
 
 @import "variables";
