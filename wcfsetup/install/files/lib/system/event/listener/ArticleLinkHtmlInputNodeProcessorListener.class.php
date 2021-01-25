@@ -59,7 +59,7 @@ class ArticleLinkHtmlInputNodeProcessorListener extends AbstractHtmlInputNodePro
                     }
                 }
 
-                $this->setObjectTitles($eventObj, $regex, $articleContents);
+                $this->replaceLinks($eventObj, $articleContents);
             }
         }
     }
