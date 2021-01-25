@@ -1433,8 +1433,8 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.category.user.password"><![CDATA[Password]]></item>
 		<item name="wcf.acp.option.category.user.ban"><![CDATA[Filter]]></item>
 		<item name="wcf.acp.option.category.user.3rdPartyAuth"><![CDATA[Third-Party Authentication]]></item>
-		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatars]]></item>
-		<item name="wcf.acp.option.module_gravatar.description"><![CDATA[Enables support for Gravatars (“Global Recognized Avatar”).]]></item>
+		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatars (Not Recommended)]]></item>
+		<item name="wcf.acp.option.module_gravatar.description"><![CDATA[Enabling Gravatar support is not recommended due to privacy concerns. Gravatar support will be removed in a future version.]]></item>
 		<item name="wcf.acp.option.module_users_online"><![CDATA[Users online list]]></item>
 		<item name="wcf.acp.option.module_user_rank"><![CDATA[User ranks]]></item>
 		<item name="wcf.acp.option.module_user_signature"><![CDATA[Signatures]]></item>
