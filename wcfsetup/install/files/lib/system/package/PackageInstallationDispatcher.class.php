@@ -247,7 +247,7 @@ class PackageInstallationDispatcher
                     ]);
                     \define('SIGNATURE_SECRET', $signatureSecret);
                     HeaderUtil::setCookie(
-                        'acp_session',
+                        'user_session',
                         // We do not use the cache-timing safe class Hex, because we run the
                         // function during the setup.
                         CryptoUtil::createSignedString(
