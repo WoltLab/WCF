@@ -116,11 +116,11 @@
 		.attachmentFilename {
 			opacity: 0;
 		}
-    }
-    
-    > a {
-        display: block;
-    }
+	}
+
+	> a {
+		display: block;
+	}
 }
 
 /* attachments tab in editor */
@@ -232,85 +232,85 @@
 }
 
 .messageSectionTitle {
-    align-items: center;
-    display: flex;
-    margin-bottom: 10px;
+	align-items: center;
+	display: flex;
+	margin-bottom: 10px;
 
-    &::before {
-        border-top: 1px solid $wcfContentBorderInner;
-        content: "";
-        flex: 0 0 20px;
-        margin-right: 10px;
-    }
+	&::before {
+		border-top: 1px solid $wcfContentBorderInner;
+		content: "";
+		flex: 0 0 20px;
+		margin-right: 10px;
+	}
 
-    &::after {
-        border-top: 1px solid $wcfContentBorderInner;
-        content: "";
-        flex: 1 0 auto;
-        margin-left: 10px;
-    }
+	&::after {
+		border-top: 1px solid $wcfContentBorderInner;
+		content: "";
+		flex: 1 0 auto;
+		margin-left: 10px;
+	}
 }
 
 .messageAttachmentList {
-    display: grid;
-    gap: 10px;
-    grid-template-columns: repeat(auto-fill, 300px);
+	display: grid;
+	gap: 10px;
+	grid-template-columns: repeat(auto-fill, 300px);
 
-    @include screen-xs {
-        grid-template-columns: 1fr;
-    }
+	@include screen-xs {
+		grid-template-columns: 1fr;
+	}
 }
 
 .messageAttachment {
-    border: 1px solid $wcfContentBorderInner;
-    border-radius: 3px;
-    color: inherit;
-    column-gap: 8px;
-    display: grid;
-    grid-template-areas:
-        "icon filename"
-        "icon meta";
-    grid-template-columns: 32px auto;
-    padding: 8px;
-    row-gap: 1px;
+	border: 1px solid $wcfContentBorderInner;
+	border-radius: 3px;
+	color: inherit;
+	column-gap: 8px;
+	display: grid;
+	grid-template-areas:
+		"icon filename"
+		"icon meta";
+	grid-template-columns: 32px auto;
+	padding: 8px;
+	row-gap: 1px;
 
-    &:focus,
-    &:hover {
-        color: inherit;
+	&:focus,
+	&:hover {
+		color: inherit;
 
-        .messageAttachmentIconDefault {
-            display: none;
-        }
-    }
+		.messageAttachmentIconDefault {
+			display: none;
+		}
+	}
 
-    &:not(:focus):not(:hover) {
-        .messageAttachmentIconDownload {
-            display: none;
-        }
-    }
+	&:not(:focus):not(:hover) {
+		.messageAttachmentIconDownload {
+			display: none;
+		}
+	}
 }
 
 .messageAttachmentIcon {
-    align-self: center;
-    grid-area: icon;
+	align-self: center;
+	grid-area: icon;
 }
 
 .messageAttachmentIconDefault,
 .messageAttachmentIconDownload {
-    cursor: inherit !important;
+	cursor: inherit !important;
 }
 
 .messageAttachmentFilename {
-    font-weight: 600;
-    grid-area: filename;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+	font-weight: 600;
+	grid-area: filename;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .messageAttachmentMeta {
-    @include wcfFontSmall;
+	@include wcfFontSmall;
 
-    color: $wcfContentDimmedText;
-    grid-area: meta;
+	color: $wcfContentDimmedText;
+	grid-area: meta;
 }
