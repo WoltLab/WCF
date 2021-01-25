@@ -609,6 +609,8 @@
 		<item name="wcf.acp.devtools.missingLanguageItem.showStackTrace"><![CDATA[Stacktrace anzeigen]]></item>
 		<item name="wcf.acp.devtools.missingLanguageItem.clearLog"><![CDATA[Alle Einträge löschen]]></item>
 		<item name="wcf.acp.devtools.missingLanguageItem.clearLog.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich alle Einträge löschen?]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.clearExistingLog"><![CDATA[Vorhandene Einträge löschen]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.clearExistingLog.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich alle Einträge löschen, für die es mittlerweile Texte gibt?]]></item>
 		<item name="wcf.acp.devtools.missingLanguageItem.stackTrace.toggleOutputFormat"><![CDATA[Zeilenumbrüche einschalten/ausschalten]]></item>
 	</category>
 	<category name="wcf.acp.email">

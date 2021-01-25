@@ -89,4 +89,36 @@ class DevtoolsMissingLanguageItemAction extends AbstractDatabaseObjectAction imp
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
     }
+
+    /**
+     * Validates the `clearExistingLog` action.
+     *
+     * @since   5.4
+     */
+    public function validateClearExistingLog(): void
+    {
+        if (!ENABLE_DEVELOPER_TOOLS || !LOG_MISSING_LANGUAGE_ITEMS) {
+            throw new IllegalLinkException();
+        }
+
+        WCF::getSession()->checkPermissions(['admin.configuration.package.canInstallPackage']);
+    }
+
+    /**
+     * Removes the entries from the missing language item log for which a language item exists now.
+     *
+     * @since   5.4
+     */
+    public function clearExistingLog(): void
+    {
+        $sql = "DELETE      devtools_missing_language_item
+                FROM        wcf" . WCF_N . "_devtools_missing_language_item devtools_missing_language_item
+                INNER JOIN  wcf" . WCF_N . "_language_item language_item
+                ON          (
+                                language_item.languageItem = devtools_missing_language_item.languageItem
+                                AND language_item.languageID = devtools_missing_language_item.languageID
+                            )";
+        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement->execute();
+    }
 }

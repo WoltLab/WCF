@@ -585,6 +585,8 @@
 		<item name="wcf.acp.devtools.missingLanguageItem.showStackTrace"><![CDATA[Show Stacktrace]]></item>
 		<item name="wcf.acp.devtools.missingLanguageItem.clearLog"><![CDATA[Delete all entries]]></item>
 		<item name="wcf.acp.devtools.missingLanguageItem.clearLog.confirmMessage"><![CDATA[Do you really want to delete all entries?]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.clearExistingLog"><![CDATA[Delete existing entries]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.clearExistingLog.confirmMessage"><![CDATA[Do you really want to delete all entries for which the phrases exist now?]]></item>
 		<item name="wcf.acp.devtools.missingLanguageItem.stackTrace.toggleOutputFormat"><![CDATA[Toggle line breaks]]></item>
 	</category>
 	<category name="wcf.acp.email">
