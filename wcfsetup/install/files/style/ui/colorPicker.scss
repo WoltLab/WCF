@@ -1,6 +1,6 @@
 #colorPickerGradient {
 	background-color: #f00;
-	background-image: url('../images/colorPickerGradient.png');
+	background-image: url("../images/colorPickerGradient.png");
 	background-repeat: no-repeat;
 	border: 1px solid rgba(0, 0, 0, 1);
 	cursor: default;
@@ -9,7 +9,7 @@
 	overflow: hidden;
 	position: relative;
 	width: 256px;
-	
+
 	> span {
 		border: 1px solid rgba(0, 0, 0, 1);
 		border-radius: 10px;
@@ -19,7 +19,7 @@
 		position: absolute;
 		top: -4px;
 		width: 10px;
-		
+
 		> span {
 			border: 1px solid rgba(255, 255, 255, 1);
 			border-radius: 10px;
@@ -31,7 +31,7 @@
 }
 
 #colorPickerBar {
-	background-image: url('../images/colorPickerBar.png');
+	background-image: url("../images/colorPickerBar.png");
 	background-repeat: repeat-x;
 	border: 1px solid rgba(0, 0, 0, 1);
 	cursor: default;
@@ -40,7 +40,7 @@
 	margin-left: 10px;
 	position: relative;
 	width: 16px;
-	
+
 	> span {
 		display: inline-block;
 		height: 1px;
@@ -48,7 +48,7 @@
 		position: absolute;
 		top: 27px;
 		width: 16px;
-		
+
 		&::after,
 		&::before {
 			content: "";
@@ -58,7 +58,7 @@
 			top: 0;
 			width: 0;
 		}
-		
+
 		&::after {
 			border-bottom: 5px solid transparent;
 			border-right: 5px solid rgba(0, 0, 0, 1);
@@ -66,7 +66,7 @@
 			right: -7px;
 			top: -5px;
 		}
-		
+
 		&::before {
 			border-bottom: 5px solid transparent;
 			border-left: 5px solid rgba(0, 0, 0, 1);
@@ -83,10 +83,10 @@
 	position: relative;
 	text-align: center;
 	width: 100px;
-	
+
 	> .colors {
 		margin-left: 2px;
-		
+
 		> .new,
 		> .old {
 			background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEX////MzMw46qqDAAAAD0lEQVQI12P4z4Ad4ZAAAH6/D/Hgw85/AAAAAElFTkSuQmCC);
@@ -94,40 +94,40 @@
 			box-sizing: content-box;
 			display: block;
 			height: 24px;
-			
+
 			> span {
 				display: block;
 				height: 24px;
 			}
 		}
-		
+
 		> .old {
 			background-position: 8px 0;
 			border-top-width: 0;
 		}
 	}
-	
+
 	> .hex {
 		margin-top: 20px;
 	}
-	
+
 	> .rgba {
 		margin-top: 20px;
-		
+
 		> li.a {
 			margin-top: 10px;
 		}
-		
+
 		> li.g,
 		> li.b {
 			margin-top: 2px;
 		}
 	}
-	
+
 	> .rgba > li,
 	> .hex > li {
 		text-align: right;
-		
+
 		input {
 			margin-left: 5px;
 			width: 80px;
@@ -139,7 +139,7 @@
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEX////MzMw46qqDAAAAD0lEQVQI12P4z4Ad4ZAAAH6/D/Hgw85/AAAAAElFTkSuQmCC);
 	border: 1px solid $wcfContentBorderInner;
 	display: inline-block;
-	
+
 	> div {
 		border: 2px solid $wcfContentBackground;
 		cursor: pointer;

@@ -2,30 +2,30 @@
 	border: 1px solid $wcfContentBorderInner;
 	max-height: 540px;
 	overflow: auto;
-	
+
 	@media only screen and (min-height: 700px) and (max-height: 800px) {
 		max-height: 450px;
 	}
-	
+
 	> li {
 		display: inline-flex;
 		flex-wrap: wrap;
 		justify-content: center;
 		padding: 10px 0;
 		width: 150px;
-		
+
 		&:hover {
 			background-color: $wcfButtonBackgroundActive;
 			color: $wcfButtonTextActive;
 			cursor: pointer;
-			
+
 			> .icon,
 			> small {
 				color: inherit;
 				cursor: pointer;
 			}
 		}
-		
+
 		> small {
 			color: $wcfContentDimmedText;
 			flex: 0 0 100%;

@@ -2,24 +2,24 @@
 	background-color: $wcfFooterCopyrightBackground;
 	color: $wcfFooterCopyrightText;
 	text-align: center;
-	
+
 	@include screen-md-up {
 		padding: 20px 0;
 	}
-	
+
 	@include screen-sm-down {
 		padding: 20px 0;
-		
+
 		@include wcfFontSmall;
 	}
-	
+
 	> .layoutBoundary > div:not(:first-child) {
 		margin-top: 10px;
 	}
-	
+
 	a {
 		color: $wcfFooterCopyrightLink;
-		
+
 		&:hover {
 			color: $wcfFooterCopyrightLinkActive;
 			text-decoration: underline;

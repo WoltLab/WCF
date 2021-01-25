@@ -1,20 +1,20 @@
 .userProfileUser {
 	.contentHeaderIcon {
 		position: relative;
-		
+
 		a {
 			display: block;
 		}
 	}
-	
+
 	.contentHeaderIcon a {
 		display: block;
 	}
-	
+
 	.contentHeaderDescription {
 		margin-top: 20px;
 	}
-	
+
 	@include screen-sm-md {
 		.contentHeaderNavigation {
 			.button {
@@ -24,28 +24,28 @@
 			}
 		}
 	}
-	
+
 	@include screen-sm-down {
 		display: flex;
 		flex-wrap: wrap;
-		
+
 		.contentHeaderNavigation {
 			flex: 0 0 100%;
 		}
 	}
-	
+
 	@include screen-sm {
 		.contentHeaderIcon {
 			display: block;
 			flex: 0 0 96px;
 			margin-right: 15px;
-			
+
 			img {
 				width: 96px !important;
 				height: 96px !important;
 			}
 		}
-		
+
 		.contentHeaderTitle {
 			/* The `flex` shorthand fails in IE11 if `calc()` is used. */
 			flex-grow: 0;
@@ -54,38 +54,38 @@
 			max-width: calc(100% - 11px);
 		}
 	}
-	
+
 	@include screen-xs {
 		.contentHeaderIcon {
 			display: block;
 			flex: 0 0 48px;
 			margin-right: 10px;
-			
+
 			img {
 				width: 48px !important;
 				height: 48px !important;
 			}
 		}
-		
+
 		.contentHeaderTitle {
 			/* The `flex` shorthand fails in IE11 if `calc()` is used. */
 			flex-grow: 0;
 			flex-shrink: 0;
 			flex-basis: calc(100% - 58px);
 		}
-		
+
 		.contentHeaderNavigation {
 			.userProfileButtonContainer {
 				display: flex;
-				
+
 				> li {
 					flex: 1 1 auto;
 					margin-top: 0 !important;
-					
+
 					&:not(:last-child) {
 						margin-right: 1px;
 					}
-					
+
 					.invisible {
 						display: none !important;
 					}
@@ -93,7 +93,7 @@
 			}
 		}
 	}
-	
+
 	@include screen-md-up {
 		.contentHeaderIcon {
 			flex: 0 0 128px;
@@ -106,7 +106,7 @@
 .userProfileUserWithCoverPhoto {
 	padding-top: 165px;
 	position: relative;
-	
+
 	.userProfileCoverPhoto {
 		background: no-repeat center;
 		background-size: cover;
@@ -116,9 +116,9 @@
 		position: absolute;
 		right: 0;
 		top: 0;
-		
+
 		&::after {
-			background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, .5) 100%);
+			background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0.5) 100%);
 			border-bottom-left-radius: 3px;
 			border-bottom-right-radius: 3px;
 			bottom: 0;
@@ -130,103 +130,103 @@
 			right: 0;
 			top: 0;
 		}
-		
+
 		.userProfileManageCoverPhoto {
 			position: absolute;
 			right: 10px;
 			top: 10px;
 		}
 	}
-	
+
 	.contentHeaderTitle {
 		/* avoid being covered by the photo */
 		z-index: 10;
 	}
-	
+
 	.userProfileUsername {
 		color: #fff;
 		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
 	}
-	
+
 	@include screen-md-up {
 		.contentHeaderIcon {
 			flex: 0 0 138px;
 			margin-top: -29px; /* 35px photo overlap - (128px height / 2) */
 			padding-left: 10px;
 		}
-		
+
 		.contentHeaderDescription {
 			margin-top: 15px !important;
 		}
-		
+
 		.contentHeaderNavigation {
 			padding-top: 45px;
 		}
 	}
-	
+
 	@include screen-sm-up {
 		.contentHeaderIcon .badgeOnline {
 			left: 10px !important;
 		}
-		
+
 		.userProfileUsername + .badge {
 			margin-left: 5px;
 		}
 	}
-	
+
 	@include screen-sm {
 		padding-top: 170px;
-		
+
 		.contentHeaderIcon {
 			margin-top: -18px; /* 30px photo overlap - (96px height / 2) */
 			padding-left: 5px;
 		}
-		
+
 		.contentHeaderDescription {
 			margin-top: 10px !important;
 		}
 	}
-	
+
 	@include screen-xs {
 		padding-top: 120px;
-		
+
 		.userProfileCoverPhoto {
 			height: 150px;
 		}
-		
+
 		.contentHeaderIcon {
 			margin-top: 6px; /* 30px photo overlap - (48px height / 2) */
 			padding-left: 5px;
 		}
-		
+
 		.contentTitle {
 			margin-bottom: 35px;
 			position: relative;
 		}
-		
+
 		.userProfileUsername {
 			display: block;
 		}
-		
+
 		.userProfileUsername + .badge {
 			margin-left: 0;
 			position: absolute;
 			top: 35px !important;
 		}
-		
+
 		.userProfileUsername + .userRankImage {
 			position: absolute;
 			top: 32px;
 		}
-		
+
 		.userProfileUsername + .badge + .userRankImage {
 			position: relative;
-			
+
 			> img {
 				transform: translateY(32px);
 			}
 		}
-		
+
 		.contentHeaderDescription {
 			margin-left: -58px;
 		}
@@ -248,33 +248,33 @@
 	display: flex;
 	flex-wrap: wrap;
 	margin-bottom: -10px;
-	
+
 	> li {
 		flex: 0 0 48px;
 		margin-bottom: 10px;
 		text-align: center;
-		
+
 		&:not(:last-child) {
 			margin-right: -12px;
 		}
-		
+
 		> a {
 			display: block;
-			
+
 			> img {
 				border: 2px solid #fff;
 			}
 		}
 	}
-	
+
 	&.small {
 		> li {
 			flex: 0 0 24px;
-			
+
 			&:not(:last-child) {
 				margin-right: -6px;
 			}
-			
+
 			> a {
 				> img {
 					border: 1px solid #fff;
@@ -292,11 +292,11 @@
 
 .userProfilePreview {
 	position: relative;
-	
+
 	.userInformation {
 		margin-bottom: 20px;
 	}
-	
+
 	.buttonGroupNavigation {
 		position: absolute;
 		bottom: 0;
@@ -308,7 +308,7 @@
    data list provided by the `userInformation` template */
 .userProfilePreview dl.inlineDataList {
 	margin-top: 10px;
-	
+
 	@include wcfFontSmall;
 }
 
@@ -317,11 +317,11 @@
 	&.notificationUnconfirmed {
 		align-items: center;
 		display: flex;
-		
+
 		> .box32 {
 			flex: 1 1 auto;
 		}
-		
+
 		> .notificationItemMarkAsConfirmed {
 			flex: 0 0 auto;
 		}
@@ -339,17 +339,17 @@
 	left: 0;
 	pointer-events: none;
 	position: absolute;
-	
+
 	@include screen-md-up {
 		bottom: 0;
 	}
-	
+
 	@include screen-sm-down {
 		color: transparent;
 		padding: 0;
 		top: 0;
 		width: 0;
-		
+
 		&::before {
 			background-color: inherit;
 			border: 1px solid rgba(255, 255, 255, 1);

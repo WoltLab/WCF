@@ -9,14 +9,14 @@
 			background-color: $wcfTabularBoxBackgroundActive;
 		}
 	}
-	
+
 	.redactor-layer table {
 		th,
 		td {
 			border-color: $wcfEditorTableBorder !important;
 		}
 	}
-	
+
 	.mainMenu .mainMenuShowPrevious.active {
 		/* The button is otherwise partially overlapped by the menu items. */
 		z-index: 1;

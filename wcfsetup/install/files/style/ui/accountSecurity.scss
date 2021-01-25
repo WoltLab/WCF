@@ -38,28 +38,28 @@ input.multifactorBackupCode {
 	display: flex;
 	flex-direction: column;
 	margin-top: 20px;
-	
+
 	.totpSecretContainer {
 		text-align: center;
-		
+
 		canvas {
 			width: 200px;
 			height: 200px;
 		}
 	}
-	
+
 	.totpSecret {
 		display: inline-block;
 		margin-top: 10px;
 	}
-	
+
 	.multifactorTotpNewDeviceFields {
 		flex: 1 1 auto;
 	}
-	
+
 	@include screen-md-up {
 		flex-direction: row;
-		
+
 		.totpSecretContainer {
 			width: 250px;
 			margin: 0 5px;

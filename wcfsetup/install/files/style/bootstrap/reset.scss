@@ -6,35 +6,75 @@
  * modifyed to meet the needs of WoltLab
  */
 
-html, body, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-address, big, cite, code, q,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-canvas, embed, 
-figure, figcaption,
-audio, video {
+html,
+body,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+address,
+big,
+cite,
+code,
+q,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+canvas,
+embed,
+figure,
+figcaption,
+audio,
+video {
 	margin: 0;
 	padding: 0;
 	border: 0;
-	
 }
 
 img {
 	border: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
 	font-weight: normal;
 	font-size: 100%;
 }
 
-ol, ul {
+ol,
+ul {
 	list-style: none;
 }
 
-blockquote, q {
+blockquote,
+q {
 	quotes: none;
 }
 
@@ -42,7 +82,7 @@ blockquote::before,
 blockquote::after,
 q::before,
 q::after {
-	content: '';
+	content: "";
 	content: none;
 }
 

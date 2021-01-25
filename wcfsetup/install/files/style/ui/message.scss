@@ -2,34 +2,34 @@
 	&:not(.messageReducedList) {
 		@include screen-md-up {
 			border-top: 1px solid $wcfContentBorder;
-			
+
 			> li {
 				border-bottom: 1px solid $wcfContentBorder;
 				padding: 30px 0;
-				
+
 				&.messageListPagination:last-child {
 					border-bottom-width: 0;
 				}
 			}
 		}
-		
+
 		@include screen-sm-down {
 			.messageSidebar {
 				border-top: 1px solid $wcfContentBorder;
 			}
-			
+
 			> .messageListPagination {
 				border-top: 1px solid $wcfContentBorder;
 				margin: 0 -10px;
 				padding: 20px 10px;
 			}
 		}
-		
+
 		> .messageListNotice > .info {
 			margin-top: 0;
 		}
 	}
-	
+
 	&.messageReducedList {
 		@include screen-md-up {
 			> li:not(:last-child) {
@@ -37,25 +37,25 @@
 			}
 		}
 	}
-	
+
 	> .anchorFixedHeader:not(.disableAnchorFixedHeader):target {
 		margin-top: -49px;
 		pointer-events: none;
 		position: relative;
 		z-index: 10;
-		
+
 		&::after {
 			content: "";
 			display: block;
 			height: 50px;
 		}
-		
+
 		> .message {
 			pointer-events: all;
 			transform: translateY(49px);
 		}
 	}
-	
+
 	@include screen-sm-down {
 		> li:not(:last-child) {
 			padding-bottom: 30px;
@@ -67,14 +67,14 @@
 	cursor: pointer;
 	display: block;
 	position: relative;
-	
+
 	&::before {
 		content: $fa-var-square-o;
 		display: block;
 		font-family: FontAwesome;
 		position: absolute;
 	}
-	
+
 	&::after {
 		color: rgb(0, 150, 0);
 		content: $fa-var-check;
@@ -82,7 +82,7 @@
 		font-family: FontAwesome;
 		position: absolute;
 	}
-	
+
 	> input[type="checkbox"] {
 		display: none;
 	}
@@ -92,20 +92,20 @@
 	@include screen-md-up {
 		display: flex;
 	}
-	
+
 	.messageClipboardCheckbox {
 		height: 24px;
 		width: 24px;
-		
+
 		@extend .messageCheckboxLabel;
-		
+
 		&::before {
 			font-size: 25px;
 			left: 2px;
 			top: -6px;
 		}
 	}
-	
+
 	&.jsMarked .messageClipboardCheckbox::after {
 		display: block;
 		font-size: 14px;
@@ -119,56 +119,56 @@
 	background-color: $wcfSidebarBackground;
 	color: $wcfSidebarText;
 	position: relative;
-	
+
 	@include screen-md-up {
 		align-self: flex-start;
 		border-radius: 3px;
 		flex: 0 0 240px;
 		padding: 20px;
 		text-align: center;
-		
+
 		& + .messageContent {
 			flex-basis: calc(100% - 270px);
 			margin-left: 30px;
 			max-width: calc(100% - 270px);
 		}
-		
+
 		.username {
 			/* required to fix wrapping behavior in combination with
 			   `overflow-wrap` / `word-wrap` */
 			display: block;
 		}
 	}
-	
+
 	@include screen-sm-down {
 		margin: 0 -10px;
 		padding: 10px;
-		
+
 		.messageAuthor {
 			flex: 0 0 auto;
 			/* equals the height of the avatar */
 			min-height: 48px;
 			position: relative;
-			
+
 			.userAvatar {
 				display: block;
 				margin: 0;
 				position: absolute;
 				top: 50%;
 				transform: translateY(-50%);
-				
+
 				.userAvatarImage {
 					max-height: 48px;
 					max-width: 48px;
 				}
 			}
-			
+
 			.messageAuthorContainer,
 			.userTitle,
 			.userRank {
 				margin-left: 58px;
 			}
-			
+
 			/* force username to be vertically centered for quick reply */
 			.messageAuthorContainer:last-child {
 				align-items: center;
@@ -177,59 +177,59 @@
 				position: absolute;
 			}
 		}
-		
+
 		.userCredits {
 			display: none;
 		}
-		
+
 		+ .messageContent {
 			margin-top: 20px;
 		}
 	}
-	
+
 	a {
 		color: $wcfSidebarLink;
-		
+
 		&:hover {
 			color: $wcfSidebarLinkActive;
 		}
 	}
-	
+
 	.dataList {
 		@include wcfFontSmall;
 	}
-	
+
 	.userAvatar {
 		display: inline-block;
 		position: relative;
 		margin-bottom: 10px;
-		
+
 		> a {
 			display: inline-block;
 		}
 	}
-	
+
 	.username {
 		display: inline-block;
-		
+
 		@include wcfFontHeadline;
 	}
-	
+
 	.badgeOnline {
 		left: 0;
 		pointer-events: none;
 		position: absolute;
-		
+
 		@include screen-md-up {
 			bottom: 0;
 		}
-		
+
 		@include screen-sm-down {
 			color: transparent;
 			padding: 0;
 			top: 0;
 			width: 0;
-			
+
 			&::before {
 				background-color: inherit;
 				border: 1px solid rgba(255, 255, 255, 1);
@@ -242,7 +242,7 @@
 			}
 		}
 	}
-	
+
 	.userTitle + .userRank {
 		margin-top: 3px;
 	}
@@ -250,7 +250,7 @@
 
 .messageAuthor + * {
 	margin-top: 20px;
-	
+
 	&:before {
 		content: "";
 		left: 0;
@@ -276,11 +276,11 @@
 	.messageContent {
 		order: 1;
 	}
-	
+
 	.messageSidebar {
 		order: 2;
 	}
-	
+
 	.messageSidebar + .messageContent {
 		margin-left: 20px;
 		margin-right: 30px;
@@ -292,17 +292,17 @@
 	@include screen-sm-down {
 		position: relative;
 	}
-	
+
 	@include screen-md-up {
 		display: flex;
 		/* do not use `flex: 1 1 0%` as it causes Mobile Safari to fail */
 		flex: 1;
 		flex-direction: column;
 	}
-	
+
 	&.loading {
 		position: relative;
-		
+
 		> .messageContentLoadingOverlay {
 			align-items: center;
 			background-color: $wcfContentBackground;
@@ -313,7 +313,7 @@
 			position: absolute;
 			right: 0;
 			top: 0;
-			
+
 			> .icon {
 				flex: 0 0 auto;
 			}
@@ -325,19 +325,19 @@
 .messageHeader {
 	display: flex;
 	justify-content: flex-end;
-	
+
 	@include screen-md-up {
 		flex: 0 0 auto;
 	}
-		
+
 	+ .messageBody {
 		margin-top: 20px;
 	}
-	
+
 	> .messageQuickOptions {
 		flex: 0 0 auto;
 	}
-	
+
 	> .messageHeaderWrapper {
 		align-items: center;
 		flex: 1 1 auto;
@@ -349,11 +349,11 @@
 	display: flex;
 	flex: 1 1 auto;
 	flex-wrap: wrap;
-	
+
 	> .messageTitle {
 		flex: 0 0 100%;
 	}
-	
+
 	> .messageHeaderMetaData,
 	> .messageStatus {
 		flex: 0 0 auto;
@@ -362,10 +362,10 @@
 
 .messageTitle {
 	color: $wcfContentHeadlineText;
-		
+
 	a {
 		color: $wcfContentHeadlineLink;
-			
+
 		&:hover {
 			color: $wcfContentHeadlineLinkActive;
 		}
@@ -374,15 +374,15 @@
 
 .messageHeaderMetaData {
 	align-items: center;
-	
+
 	@include inlineList;
 	@include dotSeparated;
 	@include wcfFontSmall;
-	
+
 	.messagePublicationTime {
 		color: $wcfContentDimmedText;
 	}
-	
+
 	+ .messageStatus {
 		margin-left: 5px;
 	}
@@ -390,7 +390,7 @@
 
 .messageStatus {
 	align-items: center;
-	
+
 	@include inlineList;
 	@include wcfFontSmall;
 }
@@ -399,15 +399,15 @@
 	@include screen-md-up {
 		@include inlineList;
 	}
-	
+
 	@include screen-sm-down {
 		flex: 0 0 24px !important;
 		height: 1.5em;
 		opacity: 0;
 		position: relative;
-		transition: opacity .12s linear, visibility 0s linear .12s;
+		transition: opacity 0.12s linear, visibility 0s linear 0.12s;
 		visibility: hidden;
-		
+
 		&::before {
 			content: $fa-var-ellipsis-v;
 			font-family: FontAwesome;
@@ -419,13 +419,13 @@
 			top: -2px;
 			width: 24px;
 		}
-		
+
 		&.active {
 			opacity: 1;
 			transition-delay: 0s;
 			visibility: visible;
 		}
-		
+
 		> li {
 			display: none;
 		}
@@ -437,30 +437,30 @@
 	@include screen-md-up {
 		flex: 1 1 auto;
 	}
-	
+
 	&.editor {
 		align-items: center;
 		display: flex;
 		justify-content: center;
-		
+
 		> .icon {
 			flex: 0 0 auto;
 		}
-		
+
 		> .editorContainer {
 			flex: 1 1 auto;
 		}
 	}
-	
+
 	> .messageText {
 		@extend .htmlContent;
-		
+
 		img {
 			height: auto !important;
 			max-width: 100%;
 		}
 	}
-	
+
 	> *:first-child {
 		margin-top: 0;
 	}
@@ -471,7 +471,7 @@
 	@include screen-md-up {
 		flex: 0 0 auto;
 	}
-	
+
 	.formSubmit {
 		margin-top: 20px;
 	}
@@ -482,12 +482,12 @@
 	color: $wcfContentDimmedText;
 	margin-top: 20px;
 	padding: 5px 10px;
-	
+
 	@include wcfFontSmall;
-	
+
 	a {
 		color: $wcfContentDimmedLink;
-		
+
 		&:hover {
 			color: $wcfContentDimmedLinkActive;
 			text-decoration: underline;
@@ -499,7 +499,7 @@
 	align-items: center;
 	display: flex;
 	flex-wrap: wrap;
-	
+
 	&:not(:first-child) {
 		> .reactionSummaryList,
 		> .messageFooterButtons,
@@ -507,44 +507,44 @@
 			margin-top: 20px;
 		}
 	}
-	
+
 	> .reactionSummaryList {
 		flex: 0 1 auto;
-		
+
 		@include wcfFontSmall;
 	}
-	
+
 	> .messageFooterButtons {
 		@include screen-md-up {
 			flex: 1 1 auto;
 		}
-		
+
 		@include screen-sm-down {
-            margin-left: auto;
+			margin-left: auto;
 
-            .button:not(.reactButton) {
-                display: none;
-            }
+			.button:not(.reactButton) {
+				display: none;
+			}
 
-            .button.reactButton {
-                border-radius: 2px;
-            }
+			.button.reactButton {
+				border-radius: 2px;
+			}
 		}
 	}
-	
+
 	> .messageFooterButtonsExtra {
 		@include screen-md-up {
 			flex: 1 1 auto;
-			
+
 			& + .messageFooterButtons {
 				flex: 0 auto;
-				
+
 				> li:first-child {
 					margin-left: 20px;
 				}
 			}
 		}
-		
+
 		@include screen-sm-down {
 			display: none;
 		}
@@ -570,14 +570,14 @@
 	.messageSignature {
 		border-top: 1px solid $wcfContentBorderInner;
 		margin-top: 20px;
-		opacity: .6;
+		opacity: 0.6;
 		padding-top: 10px;
-		transition: opacity .12s linear;
-		
+		transition: opacity 0.12s linear;
+
 		/* fix flicker in Safari on message hover */
 		transform: translateZ(0);
 	}
-	
+
 	.message:hover .messageSignature {
 		opacity: 1;
 	}
@@ -585,19 +585,19 @@
 
 .messageFooterButtons,
 .messageFooterButtonsExtra {
-    @extend .buttonGroup;
-	
+	@extend .buttonGroup;
+
 	justify-content: flex-end;
-	
+
 	> li {
 		display: flex;
-		
+
 		> a {
 			align-items: center;
 		}
 	}
-	
-	.icon + span:not(.invisible)  {
+
+	.icon + span:not(.invisible) {
 		margin-left: 5px;
 	}
 }
@@ -614,29 +614,29 @@
 	.messageHeader {
 		background-color: $wcfSidebarBackground;
 		color: $wcfSidebarText;
-		
+
 		@include screen-sm-down {
 			margin: 0 -10px;
-			padding: 10px
+			padding: 10px;
 		}
-		
+
 		@include screen-md-up {
 			padding: 10px 20px;
 		}
 	}
-	
+
 	.messageTitle {
 		color: $wcfSidebarHeadlineText;
-		
+
 		a {
 			color: $wcfSidebarHeadlineLink;
-			
+
 			&:hover {
 				color: $wcfSidebarHeadlineLinkActive;
 			}
 		}
 	}
-	
+
 	@include screen-md-up {
 		.messageBody,
 		.messageFooter {
@@ -655,19 +655,19 @@
 	   and `.messageText` */
 	list-style-type: none !important;
 	margin-left: 0 !important;
-	
+
 	> li {
 		display: flex;
-		
+
 		> span {
 			flex: 0 0 auto;
 			margin-right: 10px;
 		}
-		
+
 		> .jsQuote {
 			flex: 1 1 auto;
 		}
-		
+
 		> .jsFullQuote {
 			display: none;
 		}

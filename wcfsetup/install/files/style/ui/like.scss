@@ -2,7 +2,7 @@
 	color: $wcfContentDimmedText;
 	cursor: pointer;
 	flex: 0 0 auto;
-	
+
 	> .icon {
 		color: $wcfContentDimmedText;
 		margin-right: 5px;
@@ -11,11 +11,11 @@
 
 .wcfLikeCounter {
 	color: $wcfContentDimmedText;
-	
+
 	.icon {
 		color: inherit !important;
 	}
-	
+
 	&.likeCounterLiked {
 		color: #060 !important;
 	}

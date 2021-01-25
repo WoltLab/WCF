@@ -16,29 +16,29 @@
 	/* work-around for IE 11 to properly align the image if overflowing */
 	display: flex;
 	flex-wrap: wrap;
-	
+
 	.articleImageWrapper,
 	.contentCoverPhotoImageWrapper {
 		align-items: center;
 		border-radius: 3px;
-		box-shadow: 0 0 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+		box-shadow: 0 0 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 		display: flex;
 		max-height: 300px;
 		overflow: hidden;
 		width: 100%;
-		
+
 		img {
 			height: auto !important;
 			width: 100% !important;
 		}
 	}
-	
+
 	figcaption {
 		color: $wcfContentDimmedText;
 		flex: 1 0 100%;
 		margin-top: 5px;
 		text-align: center;
-		
+
 		@include wcfFontSmall;
 	}
 }
@@ -47,24 +47,24 @@
 	.articleTagList {
 		margin-top: 20px;
 	}
-	
+
 	.articleLikeSection {
 		align-items: center;
 	}
-	
+
 	.articleLikeButtons {
 		justify-content: flex-end;
-		
+
 		.invisible {
 			display: inline;
 		}
 	}
-	
+
 	.articleLikesSummery:not(:empty),
 	.articleLikeButtons:not(:empty) {
 		margin-top: 20px;
 	}
-	
+
 	.anchorFixedHeader:target::before {
 		content: "";
 		display: block;
@@ -77,14 +77,14 @@
 	.articleAboutAuthorText {
 		font-style: italic;
 	}
-	
+
 	.articleAboutAuthorUsername {
 		margin-top: 5px;
-		
+
 		.username {
 			@include wcfFontHeadline;
 		}
-		
+
 		.userTitleBadge {
 			top: -2px;
 		}
@@ -97,19 +97,19 @@
 			display: flex;
 		}
 	}
-	
+
 	.previousArticleButton,
 	.nextArticleButton {
 		display: flex;
-		
+
 		@include screen-md-up {
 			flex: 0 0 50%;
 		}
-		
+
 		> a {
 			color: $wcfContentText;
 			display: flex;
-			
+
 			&::before {
 				align-self: center;
 				display: block;
@@ -117,43 +117,43 @@
 				font-family: FontAwesome;
 				font-size: 36px;
 			}
-			
+
 			> div {
 				flex: 1 1 auto;
 			}
-			
+
 			.articleNavigationEntityName,
 			.articleNavigationArticleTitle {
 				display: block;
 			}
-			
+
 			.articleNavigationEntityName {
 				text-transform: uppercase;
 			}
-			
+
 			.articleNavigationArticleTitle {
 				margin-top: 3px;
-				
+
 				@include wcfFontHeadline;
 			}
-			
+
 			.articleNavigationArticleImage {
 				> img {
 					border-radius: 2px;
-					opacity: .85;
-					transition: .2s ease opacity;
+					opacity: 0.85;
+					transition: 0.2s ease opacity;
 				}
 			}
-			
+
 			&:hover {
 				&::before {
 					color: $wcfContentLinkActive;
 				}
-				
+
 				.articleNavigationArticleTitle {
 					color: $wcfContentLinkActive;
 				}
-				
+
 				.articleNavigationArticleImage {
 					> img {
 						opacity: 1;
@@ -162,55 +162,55 @@
 			}
 		}
 	}
-	
+
 	.previousArticleButton {
 		@include screen-md-up {
 			padding-right: 10px;
 		}
-		
+
 		> a {
 			&::before {
 				content: $fa-var-chevron-left;
 			}
-			
+
 			> div {
 				margin-left: 10px;
 			}
 		}
 	}
-	
+
 	.nextArticleButton {
 		justify-content: flex-end;
 		text-align: right;
-		
+
 		@include screen-md-up {
 			margin-left: 50%;
 			padding-left: 10px;
 		}
-		
+
 		.articleNavigationArticleImage {
 			order: 1;
 			margin-left: 15px;
 			margin-right: 0;
 		}
-		
+
 		> a {
 			&::before {
 				content: $fa-var-chevron-right;
 				order: 1;
 			}
-			
+
 			> div {
 				margin-right: 10px;
 			}
 		}
 	}
-	
+
 	.previousArticleButton + .nextArticleButton {
 		@include screen-sm-down {
 			margin-top: 20px;
 		}
-		
+
 		@include screen-md-up {
 			margin-left: 0;
 		}
@@ -227,7 +227,7 @@ html[dir="rtl"] {
 				}
 			}
 		}
-		
+
 		.nextArticleButton {
 			> a {
 				&::before {
@@ -242,43 +242,43 @@ html[dir="rtl"] {
 	.articleListMetaData {
 		color: $wcfContentDimmedText;
 		margin-top: 2px;
-		
+
 		.icon {
 			color: inherit;
 		}
 	}
-	
+
 	a {
 		color: inherit;
-		
+
 		&:hover {
 			color: inherit;
-			
+
 			.articleListImage > img {
 				opacity: 1;
 			}
-			
+
 			.articleListTitle {
 				color: $wcfContentLinkActive;
 			}
 		}
 	}
-	
+
 	.articleListImage > img {
 		border-radius: 2px;
-		opacity: .85;
-		transition: .2s ease opacity;
+		opacity: 0.85;
+		transition: 0.2s ease opacity;
 	}
-	
+
 	> li:not(:first-child) {
 		margin-top: 30px;
 	}
-	
+
 	@include screen-xs {
 		.box128 > .articleListImage {
 			margin-right: 10px;
 		}
-		
+
 		.articleListImage > img {
 			height: 64px !important;
 			width: 64px !important;
@@ -291,26 +291,26 @@ html[dir="rtl"] {
 		display: flex;
 		flex-wrap: wrap;
 		margin: 0 -5px -20px -5px;
-		
+
 		> li {
 			margin: 0 5px 20px 5px;
 		}
-		
+
 		.articleListImage > img {
 			height: auto !important;
 			max-width: 280px;
 			width: 100% !important;
 		}
-		
+
 		.articleListImage + .articleListTitle {
 			margin-top: 5px;
 		}
-		
+
 		.articleListMetaData {
 			display: none;
 		}
 	}
-	
+
 	@include screen-lg {
 		.articleList {
 			> li {
@@ -332,7 +332,7 @@ html[dir="rtl"] {
 			}
 		}
 	}
-	
+
 	@include screen-sm-up {
 		.articleList {
 			> li {
@@ -343,11 +343,11 @@ html[dir="rtl"] {
 			}
 		}
 	}
-	
+
 	@include screen-xs {
 		.articleList {
 			justify-content: center;
-			
+
 			> li {
 				width: 280px;
 			}
