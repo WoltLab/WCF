@@ -10,6 +10,7 @@
 			<ul>
 				{content}
 					{if $items}
+						<li><a href="#" id="clearExisingMissingLanguageItemLog" class="button"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.acp.devtools.missingLanguageItem.clearExistingLog{/lang}</span></a></li>
 						<li><a href="#" id="clearMissingLanguageItemLog" class="button"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.acp.devtools.missingLanguageItem.clearLog{/lang}</span></a></li>
 					{/if}
 					
@@ -78,47 +79,16 @@
 	</footer>
 	
 	<script data-relocate="true">
-		require(['Ajax', 'Ui/Confirmation', 'Ui/Dialog'], function(Ajax, UiConfirmation, UiDialog) {
+		require(['Ajax', 'Language', 'WoltLabSuite/Core/Acp/Ui/Devtools/Missing/Language/Item/List'], function(Ajax, Language, UiDevtoolsMissingLanguageItemList) {
+			Language.addObject({
+				'wcf.acp.devtools.missingLanguageItem.stackTrace': '{jslang}wcf.acp.devtools.missingLanguageItem.stackTrace{/jslang}',
+				'wcf.acp.devtools.missingLanguageItem.clearLog.confirmMessage': '{jslang}wcf.acp.devtools.missingLanguageItem.clearLog.confirmMessage{/jslang}',
+				'wcf.acp.devtools.missingLanguageItem.clearExistingLog.confirmMessage': '{jslang}wcf.acp.devtools.missingLanguageItem.clearExistingLog.confirmMessage{/jslang}',
+			});
+			
+			new UiDevtoolsMissingLanguageItemList.default();
+			
 			new WCF.Action.Delete('wcf\\data\\devtools\\missing\\language\\item\\DevtoolsMissingLanguageItemAction', '.jsObjectRow');
-			
-			elBySelAll('.jsStackTraceButton', undefined, function(button) {
-				button.addEventListener('click', function(event) {
-					var dialog = UiDialog.openStatic(
-						'logEntryStackTrace',
-						elData(event.currentTarget, 'stack-trace'),
-						{
-							title: '{jslang}wcf.acp.devtools.missingLanguageItem.stackTrace{/jslang}',
-						}
-					);
-					
-					elBySel('.jsOutputFormatToggle', dialog.dialog).addEventListener('click', function(event) {
-						var pre = event.currentTarget.nextElementSibling;
-						if (pre.style.whiteSpace) {
-							pre.style.whiteSpace = '';
-						}
-						else {
-							pre.style.whiteSpace = 'pre-wrap';
-						}
-					});
-				});
-			});
-			
-			elById('clearMissingLanguageItemLog').addEventListener('click', function() {
-				UiConfirmation.show({
-					'confirm': function() {
-						Ajax.apiOnce({
-							data: {
-								actionName: 'clearLog',
-								className: 'wcf\\data\\devtools\\missing\\language\\item\\DevtoolsMissingLanguageItemAction',
-							},
-							success: function() {
-								window.location.reload();
-							}
-						});
-					},
-					'message': '{jslang}wcf.acp.devtools.missingLanguageItem.clearLog.confirmMessage{/jslang}',
-				});
-			});
 			
 			var options = { };
 			{if $pages > 1}
