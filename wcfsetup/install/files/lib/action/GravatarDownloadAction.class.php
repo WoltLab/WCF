@@ -18,6 +18,7 @@ use wcf\util\HTTPRequest;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Action
+ * @deprecated 5.4 Gravatar is questionable from a privacy perspective.
  */
 class GravatarDownloadAction extends AbstractAction
 {

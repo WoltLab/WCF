@@ -1454,8 +1454,8 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.category.user.password"><![CDATA[Kennwort]]></item>
 		<item name="wcf.acp.option.category.user.ban"><![CDATA[Filter]]></item>
 		<item name="wcf.acp.option.category.user.3rdPartyAuth"><![CDATA[Authentifizierung über Drittanbieter]]></item>
-		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatare]]></item>
-		<item name="wcf.acp.option.module_gravatar.description"><![CDATA[Aktiviert die Unterstützung für Gravatare („Global Recognized Avatar“).]]></item>
+		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatare (Obsolet)]]></item>
+		<item name="wcf.acp.option.module_gravatar.description"><![CDATA[Aus Datenschutzgründen ist die Verwendung von Gravataren nicht empfohlen. Sie wird in einer zukünftigen Version entfernt.]]></item>
 		<item name="wcf.acp.option.module_users_online"><![CDATA[„Benutzer online“-Anzeige]]></item>
 		<item name="wcf.acp.option.module_user_rank"><![CDATA[Benutzerränge]]></item>
 		<item name="wcf.acp.option.module_user_signature"><![CDATA[Signaturen]]></item>
