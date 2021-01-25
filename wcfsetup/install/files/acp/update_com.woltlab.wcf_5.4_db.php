@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Makes non-critical database adjustments (i.e. everything that is not related
+ * to sessions).
+ *
+ * @author  Tim Duesterhus
+ * @copyright   2001-2021 WoltLab GmbH
+ * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package WoltLabSuite\Core
+ */
+
 use wcf\system\database\table\column\BigintDatabaseTableColumn;
 use wcf\system\database\table\column\BinaryDatabaseTableColumn;
 use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
