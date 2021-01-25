@@ -16,6 +16,7 @@ use wcf\data\DatabaseObjectList;
  * @method  ACPSession[]        getObjects()
  * @method  ACPSession|null     search($objectID)
  * @property    ACPSession[] $objects
+ * @deprecated  5.4 Distinct ACP sessions have been removed. This class is preserved due to its use in legacy sessions.
  */
 class ACPSessionList extends DatabaseObjectList
 {
