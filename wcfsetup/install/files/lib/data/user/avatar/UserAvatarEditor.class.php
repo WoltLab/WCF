@@ -84,7 +84,7 @@ class UserAvatarEditor extends DatabaseObjectEditor
      * Creates a WebP variant of the avatar, unless it is a GIF image. If the
      * user uploads a WebP image, this method will create a JPEG variant as a
      * fallback for ancient clients.
-     * 
+     *
      * Will return `true` if a variant has been created.
      *
      * @since 5.4

@@ -201,7 +201,7 @@ final class ImageUtil
     /**
      * Examines the `accept` header to determine if the browser
      * supports WebP images.
-     * 
+     *
      * @since 5.4
      */
     public static function browserSupportsWebP(): bool
