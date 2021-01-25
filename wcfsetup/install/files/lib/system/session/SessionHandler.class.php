@@ -384,7 +384,7 @@ final class SessionHandler extends SingletonFactory
         $cookieData = $this->getParsedCookieData();
 
         // No refresh is needed if the timestep matches up.
-        if ($cookieData['timestep'] === $this->getCookieTimestep()) {
+        if (isset($cookieData['timestep']) && $cookieData['timestep'] === $this->getCookieTimestep()) {
             return;
         }
 
@@ -1037,6 +1037,11 @@ final class SessionHandler extends SingletonFactory
     {
         if (!$this->getUser()->userID) {
             throw new \BadMethodCallException('The current user is a guest.');
+        }
+
+        // Workaround during WCFSetup.
+        if (PACKAGE_ID) {
+            return false;
         }
 
         // Reauthentication for third party authentication is not supported.
