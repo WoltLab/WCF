@@ -211,12 +211,12 @@ final class ImageUtil
         if ($supportsWebP === null) {
             $supportsWebP = false;
             if (!empty($_SERVER["HTTP_ACCEPT"])) {
-                $acceptableMimeTypes = array_map(function ($acceptableMimeType) {
-                    [$mimeType] = ArrayUtil::trim(explode(";", $acceptableMimeType));
+                $acceptableMimeTypes = \array_map(function ($acceptableMimeType) {
+                    [$mimeType] = ArrayUtil::trim(\explode(";", $acceptableMimeType));
                     return $mimeType;
-                }, explode(",", $_SERVER["HTTP_ACCEPT"]));
+                }, \explode(",", $_SERVER["HTTP_ACCEPT"]));
 
-                if (in_array("image/webp", $acceptableMimeTypes)) {
+                if (\in_array("image/webp", $acceptableMimeTypes)) {
                     $supportsWebP = true;
                 }
             }
