@@ -6,7 +6,7 @@ use wcf\data\like\Like;
 use wcf\data\like\object\ILikeObject;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserRuntimeCache;
-use wcf\system\like\LikeHandler;
+use wcf\system\reaction\ReactionHandler;
 use wcf\system\user\notification\object\IUserNotificationObject;
 use wcf\system\user\notification\object\LikeUserNotificationObject;
 use wcf\system\WCF;
@@ -51,15 +51,15 @@ trait TTestableLikeUserNotificationEvent
 
         WCF::getSession()->changeUser(UserRuntimeCache::getInstance()->getObject($object->userID), true);
 
-        LikeHandler::getInstance()->loadLikeObjects(
-            LikeHandler::getInstance()->getObjectType(self::getTestLikeableObjectTypeName()),
+        ReactionHandler::getInstance()->loadLikeObjects(
+            ReactionHandler::getInstance()->getObjectType(self::getTestLikeableObjectTypeName()),
             [$object->objectID]
         );
 
         WCF::getSession()->changeUser($oldUser, true);
 
-        return LikeHandler::getInstance()->getLikeObject(
-            LikeHandler::getInstance()->getObjectType(self::getTestLikeableObjectTypeName()),
+        return ReactionHandler::getInstance()->getLikeObject(
+            ReactionHandler::getInstance()->getObjectType(self::getTestLikeableObjectTypeName()),
             $object->objectID
         )->getLikedObject();
     }
@@ -72,10 +72,10 @@ trait TTestableLikeUserNotificationEvent
     {
         /** @var ILikeObject $likeObject */
         $likeObject = self::createTestLikeObject($recipient, $author);
-        $likeObject->setObjectType(LikeHandler::getInstance()->getObjectType(self::getTestLikeableObjectTypeName()));
+        $likeObject->setObjectType(ReactionHandler::getInstance()->getObjectType(self::getTestLikeableObjectTypeName()));
 
         /** @var Like $like */
-        $like = LikeHandler::getInstance()->like(
+        $like = ReactionHandler::getInstance()->react(
             $likeObject,
             $author->getDecoratedObject(),
             Like::LIKE

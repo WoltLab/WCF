@@ -10,6 +10,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\like\LikeHandler;
+use wcf\system\reaction\ReactionHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\GroupedUserList;
 use wcf\system\WCF;
@@ -214,7 +215,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
         $this->readInteger('objectID', false, 'data');
         $this->readString('objectType', false, 'data');
 
-        $this->objectType = LikeHandler::getInstance()->getObjectType($this->parameters['data']['objectType']);
+        $this->objectType = ReactionHandler::getInstance()->getObjectType($this->parameters['data']['objectType']);
         if ($this->objectType === null) {
             throw new UserInputException('objectType');
         }
