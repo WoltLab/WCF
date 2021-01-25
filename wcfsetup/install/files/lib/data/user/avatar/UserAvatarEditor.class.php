@@ -127,11 +127,11 @@ class UserAvatarEditor extends DatabaseObjectEditor
             $newLocation = $tmpAvatar->getLocation(null, false);
 
             $dir = \dirname($newLocation);
-            if (!@\file_exists($dir)) {
+            if (!\file_exists($dir)) {
                 FileUtil::makePath($dir);
             }
 
-            @\rename($filenameJpeg, $newLocation);
+            \rename($filenameJpeg, $newLocation);
 
             $data = [
                 "avatarExtension" => "jpeg",

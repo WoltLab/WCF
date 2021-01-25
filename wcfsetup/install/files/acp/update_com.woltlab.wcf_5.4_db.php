@@ -51,6 +51,11 @@ $tables = [
             DefaultFalseBooleanDatabaseTableColumn::create('multifactorActive'),
         ]),
 
+    PartialDatabaseTable::create('wcf1_user_avatar')
+        ->columns([
+            DefaultFalseBooleanDatabaseTableColumn::create("hasWebP"),
+        ]),
+
     DatabaseTable::create('wcf1_user_multifactor')
         ->columns([
             ObjectIdDatabaseTableColumn::create('setupID'),
@@ -149,9 +154,8 @@ $tables = [
 ];
 
 (new DatabaseTableChangeProcessor(
-/** @var ScriptPackageInstallationPlugin $this */
+    /** @var ScriptPackageInstallationPlugin $this */
     $this->installation->getPackage(),
     $tables,
     WCF::getDB()->getEditor()
-)
-)->process();
+))->process();

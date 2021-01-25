@@ -74,7 +74,10 @@ class UserAvatar extends DatabaseObject implements IUserAvatar
      */
     public function getFilename($size = null, ?bool $forceWebP = null)
     {
-        if ($forceWebP === true || ($forceWebP === null && $this->hasWebP && ImageUtil::browserSupportsWebP())) {
+        if (
+            $forceWebP === true
+            || ($forceWebP === null && $this->hasWebP && ImageUtil::browserSupportsWebP())
+        ) {
             $fileExtension = "webp";
         } else {
             $fileExtension = $this->avatarExtension;

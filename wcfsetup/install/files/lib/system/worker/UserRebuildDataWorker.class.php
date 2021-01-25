@@ -212,9 +212,9 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
             $avatarList->getConditionBuilder()->add('user_avatar.userID IN (?)', [$userIDs]);
             $avatarList->getConditionBuilder()->add(
                 '(
-					(user_avatar.width <> ? OR user_avatar.height <> ?)
-					OR (user_avatar.hasWebP = ? AND user_avatar.avatarExtension <> ?)
-				)',
+                    (user_avatar.width <> ? OR user_avatar.height <> ?)
+                    OR (user_avatar.hasWebP = ? AND user_avatar.avatarExtension <> ?)
+                )',
                 [
                     UserAvatar::AVATAR_SIZE,
                     UserAvatar::AVATAR_SIZE,
