@@ -486,6 +486,8 @@ class ImagickImageAdapter implements IImageAdapter
             throw new \InvalidArgumentException("Given image is not a valid Imagick-object.");
         }
 
+        $image->setImageCompressionQuality($quality);
+
         // Greatly reduces the time required to create the image and drastically
         // reduces the filesize to more reasonable levels without a visible
         // quality loss.
