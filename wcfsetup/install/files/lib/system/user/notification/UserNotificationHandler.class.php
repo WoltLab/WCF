@@ -499,7 +499,7 @@ class UserNotificationHandler extends SingletonFactory
         }
 
         // load authors
-        $authors = UserProfile::getUserProfiles($authorIDs);
+        $authors = UserProfileRuntimeCache::getInstance()->getObjects($authorIDs);
         $unknownAuthor = new UserProfile(new User(
             null,
             ['userID' => null, 'username' => WCF::getLanguage()->get('wcf.user.guest')]

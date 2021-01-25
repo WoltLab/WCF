@@ -3,6 +3,7 @@
 namespace wcf\system\user;
 
 use wcf\data\user\UserProfile;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\WCF;
 
 /**
@@ -119,9 +120,11 @@ class GroupedUserList implements \Countable, \Iterator
 
         // load user profiles
         if (!empty($userIDs)) {
-            $userProfiles = UserProfile::getUserProfiles($userIDs);
+            $userProfiles = UserProfileRuntimeCache::getInstance()->getObjects($userIDs);
             foreach ($userProfiles as $userID => $userProfile) {
-                self::$users[$userID] = $userProfile;
+                if ($userProfile) {
+                    self::$users[$userID] = $userProfile;
+                }
             }
         }
     }
