@@ -3291,8 +3291,10 @@ freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if
 		<item name="wcf.article.like.notification.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Artikel <strong>{$article->getTitle()}</strong> reagiert ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
 	</category>
 	<category name="wcf.attachment">
-		<item name="wcf.attachment.file.info"><![CDATA[{@$attachment->filesize|filesize} – {plural value=$attachment->downloads one="1 Download" other="# Downloads"}]]></item>
+		<item name="wcf.attachment.file.info"><![CDATA[{@$attachment->filesize|filesize} – {plural value=$attachment->downloads 1="1 Download" other="# Downloads"}]]></item>
+		<item name="wcf.attachment.file.title"><![CDATA[Datei „{$attachment->filename}“ herunterladen]]></item>
 		<item name="wcf.attachment.image.info"><![CDATA[{@$attachment->filesize|filesize}, {#$attachment->width}×{#$attachment->height}, {#$attachment->downloads} Mal angesehen]]></item>
+        <item name="wcf.attachment.image.title"><![CDATA[Bild „{$attachment->filename}“ anzeigen]]></item>
 		<item name="wcf.attachment.files"><![CDATA[Dateien]]></item>
 		<item name="wcf.attachment.images"><![CDATA[Bilder]]></item>
 		<item name="wcf.attachment.attachments"><![CDATA[Dateianhänge]]></item>

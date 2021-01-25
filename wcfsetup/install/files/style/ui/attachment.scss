@@ -116,7 +116,11 @@
 		.attachmentFilename {
 			opacity: 0;
 		}
-	}
+    }
+    
+    > a {
+        display: block;
+    }
 }
 
 /* attachments tab in editor */
