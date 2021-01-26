@@ -90,6 +90,11 @@ class UserGroupAddForm extends AbstractOptionListForm
     protected $allowMention = 0;
 
     /**
+     * @var int
+     */
+    protected $requireMultifactor = 0;
+
+    /**
      * @inheritDoc
      */
     public function readParameters()
@@ -127,6 +132,9 @@ class UserGroupAddForm extends AbstractOptionListForm
         }
         if (isset($_POST['allowMention'])) {
             $this->allowMention = \intval($_POST['allowMention']);
+        }
+        if (isset($_POST['requireMultifactor'])) {
+            $this->requireMultifactor = \intval($_POST['requireMultifactor']);
         }
     }
 
@@ -176,6 +184,7 @@ class UserGroupAddForm extends AbstractOptionListForm
                 'userOnlineMarking' => $this->userOnlineMarking,
                 'showOnTeamPage' => $this->showOnTeamPage,
                 'allowMention' => $this->allowMention ? 1 : 0,
+                'requireMultifactor' => $this->requireMultifactor ? 1 : 0,
             ]),
             'options' => $optionValues,
         ];
@@ -222,7 +231,7 @@ class UserGroupAddForm extends AbstractOptionListForm
         // reset values
         $this->groupName = '';
         $this->userOnlineMarking = '%s';
-        $this->allowMention = $this->priority = $this->showOnTeamPage = 0;
+        $this->requireMultifactor = $this->allowMention = $this->priority = $this->showOnTeamPage = 0;
 
         I18nHandler::getInstance()->reset();
     }
@@ -260,6 +269,7 @@ class UserGroupAddForm extends AbstractOptionListForm
             'groupIsGuest' => false,
             'isBlankForm' => empty($_POST),
             'allowMention' => $this->allowMention,
+            'requireMultifactor' => $this->requireMultifactor,
         ]);
     }
 

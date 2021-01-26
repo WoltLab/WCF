@@ -143,6 +143,17 @@
 			</dl>
 		{/if}
 		
+		{if $action == 'add' || $group->groupType > 3}
+			<dl>
+				<dt></dt>
+				<dd>
+					<label><input type="checkbox" id="requireMultifactor" name="requireMultifactor" value="1"{if $requireMultifactor} checked{/if}> {lang}wcf.acp.group.requireMultifactor{/lang}</label>
+					
+					<small>{lang}wcf.acp.group.requireMultifactor.description{/lang}</small>
+				</dd>
+			</dl>
+		{/if}
+		
 		{if MODULE_TEAM_PAGE && ($action == 'add' || $group->groupType > 3)}
 			<dl>
 				<dt></dt>

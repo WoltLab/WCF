@@ -78,6 +78,11 @@ $tables = [
             DefaultFalseBooleanDatabaseTableColumn::create("hasWebP"),
         ]),
 
+    PartialDatabaseTable::create('wcf1_user_group')
+        ->columns([
+            DefaultFalseBooleanDatabaseTableColumn::create('requireMultifactor'),
+        ]),
+
     DatabaseTable::create('wcf1_user_multifactor')
         ->columns([
             ObjectIdDatabaseTableColumn::create('setupID'),

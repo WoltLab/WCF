@@ -883,6 +883,8 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.group.option.user.signature.attachment.allowedExtensions"><![CDATA[Allowed Attachment File Extensions]]></item>
 		<item name="wcf.acp.group.option.user.signature.attachment.allowedExtensions.description"><![CDATA[Enter one extension per line.]]></item>
 		<item name="wcf.acp.group.option.user.signature.attachment.maxCount"><![CDATA[Maximum Attachments]]></item>
+		<item name="wcf.acp.group.requireMultifactor"><![CDATA[Require Multi-factor Authentication]]></item>
+		<item name="wcf.acp.group.requireMultifactor.description"><![CDATA[Users that are members of this user group may not disable multi-factor authentication. They will also be required to set up multi-factor authentication before they may enter protected areas.]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.credits"><![CDATA[About WoltLab Suite&trade;]]></item>

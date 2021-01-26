@@ -1571,7 +1571,8 @@ CREATE TABLE wcf1_user_group (
 	priority MEDIUMINT(8) NOT NULL DEFAULT 0,
 	userOnlineMarking VARCHAR(255) NOT NULL DEFAULT '%s',
 	showOnTeamPage TINYINT(1) NOT NULL DEFAULT 0,
-	allowMention TINYINT(1) NOT NULL DEFAULT 0
+	allowMention TINYINT(1) NOT NULL DEFAULT 0,
+	requireMultifactor TINYINT(1) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_user_group_assignment;
