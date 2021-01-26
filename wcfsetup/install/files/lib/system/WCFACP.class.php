@@ -17,6 +17,7 @@ use wcf\system\request\RouteHandler;
 use wcf\system\session\ACPSessionFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\template\ACPTemplateEngine;
+use wcf\system\user\multifactor\TMultifactorRequirementEnforcer;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 
@@ -199,6 +200,16 @@ class WCFACP extends WCF
 
                     exit;
                 }
+
+                // The autoloader is not available during the definition of `WCFACP`,
+                // thus we are unable to use the trait directly.
+                //
+                // Workaround this issue by using an anonymous class.
+                (new class {
+                    use TMultifactorRequirementEnforcer {
+                        enforceMultifactorAuthentication as public enforce;
+                    }
+                })->enforce();
 
                 // force debug mode if in ACP and authenticated
                 self::$overrideDebugMode = true;
