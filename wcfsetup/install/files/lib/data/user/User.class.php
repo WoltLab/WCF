@@ -272,8 +272,6 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
                 } else {
                     $this->languageIDs = \unserialize($data);
                 }
-            } elseif (!WCF::getSession()->spiderID) {
-                $this->languageIDs[] = WCF::getLanguage()->languageID;
             }
         }
 
