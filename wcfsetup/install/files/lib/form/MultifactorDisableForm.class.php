@@ -101,20 +101,20 @@ class MultifactorDisableForm extends AbstractFormBuilderForm
     {
         parent::createForm();
 
+        $remaining = $this->setupsWithoutDisableRequest(
+            $this->setupsWithoutBackupCodes($this->setups)
+        );
+
         $this->form->appendChildren([
             LanguageItemFormNode::create('explanation')
                 ->languageItem('wcf.user.security.multifactor.disable.explanation')
                 ->variables([
-                    'remaining' => $this->setupsWithoutDisableRequest(
-                        $this->setupsWithoutBackupCodes($this->setups)
-                    ),
+                    'remaining' => $remaining,
                     'setup' => $this->setup,
                 ]),
             BooleanFormField::create('confirm')
                 ->label('wcf.user.security.multifactor.disable.confirm', [
-                    'remaining' => $this->setupsWithoutDisableRequest(
-                        $this->setupsWithoutBackupCodes($this->setups)
-                    ),
+                    'remaining' => $remaining,
                     'setup' => $this->setup,
                 ])
                 ->addValidator(new FormFieldValidator('confirm', static function (BooleanFormField $formField) {
