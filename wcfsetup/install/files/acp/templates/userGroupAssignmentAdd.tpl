@@ -37,7 +37,7 @@
 		<dl{if $errorField == 'groupID'} class="formError"{/if}>
 			<dt><label for="groupID">{lang}wcf.user.group{/lang}</label></dt>
 			<dd>
-				{htmlOptions name='groupID' options=$userGroups selected=$groupID}
+				{htmlOptions name='groupID' id='groupID' options=$userGroups selected=$groupID}
 				{if $errorField == 'groupID'}
 					{if $errorType == 'noValidSelection'}
 						<small class="innerError">{lang}wcf.global.form.error.noValidSelection{/lang}</small>
