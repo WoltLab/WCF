@@ -1039,11 +1039,6 @@ final class SessionHandler extends SingletonFactory
             throw new \BadMethodCallException('The current user is a guest.');
         }
 
-        // Workaround during WCFSetup.
-        if (PACKAGE_ID) {
-            return false;
-        }
-
         // Reauthentication for third party authentication is not supported.
         if ($this->getUser()->authData) {
             return false;
