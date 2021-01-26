@@ -748,6 +748,21 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
     }
 
     /**
+     * Returns true if the user is a member of a user group that requires
+     * multi-factor authentication to be enabled.
+     */
+    public function requiresMultifactor(): bool
+    {
+        foreach (UserGroup::getGroupsByIDs($this->getGroupIDs()) as $group) {
+            if ($group->requireMultifactor) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @inheritDoc
      */
     public function getPopoverLinkClass()
