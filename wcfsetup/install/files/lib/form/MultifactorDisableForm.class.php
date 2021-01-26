@@ -8,6 +8,7 @@ use wcf\page\AccountSecurityPage;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\RejectEverythingFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\LanguageItemFormNode;
@@ -105,6 +106,20 @@ class MultifactorDisableForm extends AbstractFormBuilderForm
             $this->setupsWithoutBackupCodes($this->setups)
         );
 
+        if (WCF::getUser()->requiresMultifactor() && empty($remaining)) {
+            $this->form->addDefaultButton(false);
+            $this->form->appendChildren([
+                LanguageItemFormNode::create('requireMultifactor')
+                    ->languageItem('wcf.user.security.multifactor.disable.requireMultifactor')
+                    ->variables([
+                        'setup' => $this->setup,
+                    ]),
+                RejectEverythingFormField::create(),
+            ]);
+
+            return;
+        }
+
         $this->form->appendChildren([
             LanguageItemFormNode::create('explanation')
                 ->languageItem('wcf.user.security.multifactor.disable.explanation')
@@ -148,6 +163,10 @@ class MultifactorDisableForm extends AbstractFormBuilderForm
         $remaining = $this->setupsWithoutBackupCodes($setups);
 
         if (empty($remaining)) {
+            if (WCF::getUser()->requiresMultifactor()) {
+                throw new \LogicException('The user requires multi-factor authentication.');
+            }
+
             foreach ($setups as $setup) {
                 $setup->delete();
             }

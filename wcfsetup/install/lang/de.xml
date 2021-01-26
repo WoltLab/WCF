@@ -4916,6 +4916,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 {else}
 <p>Die Deaktivierung des Verfahrens wird die Mehrfaktor-Authentifizierung für {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto vollständig deaktivieren, da es das einzige aktive Verfahren ist.</p>
 {/if}]]></item>
+		<item name="wcf.user.security.multifactor.disable.requireMultifactor"><![CDATA[<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Du bist{else}Sie sind{/if} Mitglied einer Benutzergruppe, die verpflichtet ist, die Mehrfaktor-Authentifizierung zu nutzen. Aus diesem Grund {if LANGUAGE_USE_INFORMAL_VARIANT}darfst du dein{else}dürfen Sie Ihr{/if} letztes Verfahren zur Mehrfaktor-Authentifizierung (<strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong>) nicht deaktivieren.</p>]]></item>
 		<item name="wcf.user.security.multifactor.disable.success"><![CDATA[Das Verfahren <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> wurde erfolgreich deaktiviert.]]></item>
 		<item name="wcf.user.security.multifactor.disable.success.full"><![CDATA[Die Mehrfaktor-Authentifizierung wurde erfolgreich deaktiviert.]]></item>
 		<item name="wcf.user.security.multifactor.email.body.html"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Einmalcode lautet: <pre>{$code}</pre>]]></item>

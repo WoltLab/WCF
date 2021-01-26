@@ -4913,6 +4913,7 @@ You can manage multi-factor authentication within the Account Security page [URL
 {else}
 <p>Disabling <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> will fully disable the use of multi-factor authentication for your account as it is the only active method.</p>
 {/if}]]></item>
+		<item name="wcf.user.security.multifactor.disable.requireMultifactor"><![CDATA[<p>You are a member of a user group that is required to use multi-factor authentication. For this reason you are not allowed to disable your last multi-factor method (<strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong>).</p>]]></item>
 		<item name="wcf.user.security.multifactor.disable.success"><![CDATA[The <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> method has successfully been disabled.]]></item>
 		<item name="wcf.user.security.multifactor.disable.success.full"><![CDATA[The multi-factor authentication has successfully been disabled.]]></item>
 		<item name="wcf.user.security.multifactor.email.body.html"><![CDATA[Your one time code is: <pre>{$code}</pre>]]></item>
