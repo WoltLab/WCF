@@ -571,20 +571,13 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
      */
     public function hasOwnerAccess()
     {
-        static $isOwner;
-
-        if ($isOwner === null) {
-            $isOwner = false;
-
-            foreach (UserGroup::getGroupsByIDs($this->getGroupIDs()) as $group) {
-                if ($group->isOwner()) {
-                    $isOwner = true;
-                    break;
-                }
+        foreach (UserGroup::getGroupsByIDs($this->getGroupIDs()) as $group) {
+            if ($group->isOwner()) {
+                return true;
             }
         }
 
-        return $isOwner;
+        return false;
     }
 
     /**

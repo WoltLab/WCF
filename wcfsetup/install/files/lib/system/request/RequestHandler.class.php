@@ -79,9 +79,9 @@ class RequestHandler extends SingletonFactory
             if (
                 $isACPRequest
                 && ENABLE_ENTERPRISE_MODE
-                && !WCF::getUser()->hasOwnerAccess()
                 && \defined($this->activeRequest->getClassName() . '::BLACKLISTED_IN_ENTERPRISE_MODE')
                 && \constant($this->activeRequest->getClassName() . '::BLACKLISTED_IN_ENTERPRISE_MODE')
+                && !WCF::getUser()->hasOwnerAccess()
             ) {
                 throw new IllegalLinkException();
             }
