@@ -33,7 +33,7 @@ final class Phpbb3 implements IPasswordAlgorithm
         $algorithms = \explode('\\', $matches[1]);
 
         // Strip the type prefix.
-        $hash = \substr($hash, strlen($matches[0]));
+        $hash = \substr($hash, \strlen($matches[0]));
 
         // The following loop only supports the multi-hash variant.
         // Everything else should already be handled at this point.
@@ -53,11 +53,11 @@ final class Phpbb3 implements IPasswordAlgorithm
             switch ($algorithm) {
                 case 'H':
                 case 'P':
-                    $password = str_replace($settings, '', $this->hashPhpass($password, $settings));
+                    $password = \str_replace($settings, '', $this->hashPhpass($password, $settings));
                     break;
                 case '2a':
                 case '2y':
-                    $password = str_replace($settings, '', \crypt($password, $settings));
+                    $password = \str_replace($settings, '', \crypt($password, $settings));
                     break;
             }
         }
