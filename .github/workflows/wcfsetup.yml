@@ -1,0 +1,28 @@
+name: WCFSetup
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+
+jobs:
+  buildWcfSetup:
+    name: Build WCFSetup.tar.gz
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build WCFSetup.tar.gz
+        run: |
+          tar cf com.woltlab.wcf/templates.tar -C com.woltlab.wcf/templates/ --transform 's~^\./~~' .
+          tar cf wcfsetup/install/packages/com.woltlab.wcf.tar -C com.woltlab.wcf --transform 's~^\./~~' --exclude='./templates/*' .
+          tar czf wcfsetup/WCFSetup.tar.gz -C wcfsetup install/ setup/
+      - uses: actions/upload-artifact@v2
+        with:
+          name: setup
+          path: |
+            wcfsetup/WCFSetup.tar.gz
+            wcfsetup/install.php
+            wcfsetup/test.php
+          if-no-files-found: error
