@@ -94,7 +94,21 @@ class PreparedStatement
 
         try {
             if (WCF::benchmarkIsEnabled()) {
-                Benchmark::getInstance()->start($this->query, Benchmark::TYPE_SQL_QUERY);
+                $benchmarkParameters = \array_slice($parameters, 0, 30);
+                Benchmark::getInstance()->start(
+                    \preg_replace_callback(
+                        '/\?/',
+                        static function ($matches) use (&$benchmarkParameters) {
+                            if (empty($benchmarkParameters)) {
+                                return $matches[0];
+                            }
+
+                            return "'" . \substr(\array_shift($benchmarkParameters), 0, 100) . "'";
+                        },
+                        $this->query
+                    ),
+                    Benchmark::TYPE_SQL_QUERY
+                );
             }
 
             $result = $this->pdoStatement->execute($parameters);
