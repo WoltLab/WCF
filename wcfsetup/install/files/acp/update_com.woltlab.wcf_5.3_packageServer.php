@@ -6,7 +6,7 @@ use wcf\system\WCF;
 // Do not use the `PackageUpdateServer` classes because we need to access
 // the raw server URL that is implicitly rewritten in 5.3.
 $sql = "SELECT  *
-	FROM    wcf1_package_update_server
+	FROM    wcf" . WCF_N . "_package_update_server
 	WHERE	LOWER(serverURL) REGEXP 'https?://(store|update)\.woltlab\.com/.*'";
 $statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute();
