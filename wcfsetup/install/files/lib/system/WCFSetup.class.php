@@ -1123,7 +1123,8 @@ class WCFSetup extends WCF
                     $confirmPassword = $_POST['confirmPassword'];
                 }
             } else {
-                $username = $password = $confirmPassword = 'root';
+                $username = 'dev';
+                $password = $confirmPassword = 'root';
                 $email = $confirmEmail = 'wsc-developer-mode@example.com';
             }
 
