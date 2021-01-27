@@ -16,6 +16,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\package\PackageCache;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
+use wcf\system\package\SplitNodeException;
 use wcf\system\user\authentication\password\algorithm\Wcf1;
 use wcf\system\user\authentication\password\PasswordAlgorithmManager;
 use wcf\system\user\multifactor\Setup;
@@ -48,12 +49,17 @@ $sql = "SELECT  DISTINCT userID
                     FROM    wcf" . WCF_N . "_user_multifactor
                     WHERE   objectTypeID = ?
                 )";
-$statement = WCF::getDB()->prepareStatement($sql);
+$statement = WCF::getDB()->prepareStatement($sql, 30);
 $statement->execute([
     'totp',
     $totpMethod->objectTypeID,
 ]);
 $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
+
+// Check whether we processed all users.
+if (empty($userIDs)) {
+    return;
+}
 
 // Prepare the statements for use in user processing.
 $sql = "SELECT      name, secret, time
@@ -77,7 +83,6 @@ $sql = "INSERT INTO wcf" . WCF_N . "_user_multifactor_backup
         VALUES      (?, ?, ?, ?)";
 $createBackupStatement = WCF::getDB()->prepareStatement($sql);
 
-// TODO: Do we need to split this across multiple requests?
 foreach ($userIDs as $userID) {
     WCF::getDB()->beginTransaction();
 
@@ -153,3 +158,8 @@ foreach ($userIDs as $userID) {
 
     WCF::getDB()->commitTransaction();
 }
+
+// If we reached this location we processed at least one user.
+// If this was the final user the next iteration will abort this
+// script early, thus not splitting the node.
+throw new SplitNodeException();
