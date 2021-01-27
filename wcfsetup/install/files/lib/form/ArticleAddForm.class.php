@@ -1,6 +1,7 @@
 <?php
 namespace wcf\form;
 use wcf\data\article\Article;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 
@@ -34,6 +35,12 @@ class ArticleAddForm extends \wcf\acp\form\ArticleAddForm {
 		if ($article->publicationStatus == Article::PUBLISHED) {
 			HeaderUtil::redirect($article->getLink());
 			exit;
+		}
+		else {
+			WCF::getTPL()->assign([
+				// We need to reassign the link here because otherwise it will lead to the admin panel.
+				'objectEditLink' => LinkHandler::getInstance()->getControllerLink(ArticleEditForm::class, ['id' => $article->getObjectID()]),
+			]);
 		}
 	}
 }
