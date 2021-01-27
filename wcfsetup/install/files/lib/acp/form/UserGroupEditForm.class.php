@@ -117,6 +117,7 @@ class UserGroupEditForm extends UserGroupAddForm
             $this->userOnlineMarking = $this->group->userOnlineMarking;
             $this->showOnTeamPage = $this->group->showOnTeamPage;
             $this->allowMention = $this->group->allowMention;
+            $this->requireMultifactor = $this->group->requireMultifactor;
         }
 
         parent::readData();
@@ -194,6 +195,7 @@ class UserGroupEditForm extends UserGroupAddForm
                 'userOnlineMarking' => $this->userOnlineMarking,
                 'showOnTeamPage' => $this->showOnTeamPage,
                 'allowMention' => $this->allowMention,
+                'requireMultifactor' => $this->requireMultifactor,
             ]),
             'options' => $optionValues,
         ]);

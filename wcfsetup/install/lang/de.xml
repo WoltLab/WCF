@@ -906,6 +906,8 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.group.option.user.signature.attachment.allowedExtensions"><![CDATA[Erlaubte Dateiendungen]]></item>
 		<item name="wcf.acp.group.option.user.signature.attachment.allowedExtensions.description"><![CDATA[Eine Dateiendung pro Zeile]]></item>
 		<item name="wcf.acp.group.option.user.signature.attachment.maxCount"><![CDATA[Maximale Dateianhänge]]></item>
+		<item name="wcf.acp.group.requireMultifactor"><![CDATA[Mehrfaktor-Authentifizierung erzwingen]]></item>
+		<item name="wcf.acp.group.requireMultifactor.description"><![CDATA[Benutzer, die Mitglied dieser Benutzergruppe sind, können die Mehrfaktor-Authentifizierung nicht deaktivieren und können besonders geschützte Bereiche erst betreten, wenn sie die Mehrfaktor-Authentifizierung eingerichtet haben.]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.credits"><![CDATA[Über WoltLab Suite&trade;]]></item>
@@ -4918,6 +4920,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 {else}
 <p>Die Deaktivierung des Verfahrens wird die Mehrfaktor-Authentifizierung für {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto vollständig deaktivieren, da es das einzige aktive Verfahren ist.</p>
 {/if}]]></item>
+		<item name="wcf.user.security.multifactor.disable.requireMultifactor"><![CDATA[<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Du bist{else}Sie sind{/if} Mitglied einer Benutzergruppe, die verpflichtet ist, die Mehrfaktor-Authentifizierung zu nutzen. Aus diesem Grund {if LANGUAGE_USE_INFORMAL_VARIANT}darfst du dein{else}dürfen Sie Ihr{/if} letztes Verfahren zur Mehrfaktor-Authentifizierung (<strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong>) nicht deaktivieren.</p>]]></item>
 		<item name="wcf.user.security.multifactor.disable.success"><![CDATA[Das Verfahren <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> wurde erfolgreich deaktiviert.]]></item>
 		<item name="wcf.user.security.multifactor.disable.success.full"><![CDATA[Die Mehrfaktor-Authentifizierung wurde erfolgreich deaktiviert.]]></item>
 		<item name="wcf.user.security.multifactor.email.body.html"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Einmalcode lautet: <pre>{$code}</pre>]]></item>
@@ -4976,6 +4979,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.security.multifactor.totp.success.add"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Smartphone <strong>{$deviceName}</strong> wurde erfolgreich hinterlegt.]]></item>
 		<item name="wcf.user.security.multifactor.totp.success.delete"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Smartphone <strong>{$deviceName}</strong> wurde erfolgreich entfernt.]]></item>
 		<item name="wcf.user.security.multifactor.totp.useTime"><![CDATA[Zuletzt Benutzt]]></item>
+		<item name="wcf.user.security.requiresMultifactor"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du bist{else}Sie sind{/if} Mitglied einer Benutzergruppe, die verpflichtet ist, die Mehrfaktor-Authentifizierung zu nutzen. Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} auf diese Seite zugreifen {if LANGUAGE_USE_INFORMAL_VARIANT}darfst, musst du{else}dürfen, müssen Sie{/if} <a href="{link controller='AccountSecurity' forceFrontend=true}{/link}">die Mehrfaktor-Authentifizierung aktivieren</a>.]]></item>
 		<item name="wcf.user.security.sessionName"><![CDATA[{if $session->getUserAgent()->getBrowser()}{$session->getUserAgent()->getBrowser()}{if $session->getUserAgent()->getOS()} auf {$session->getUserAgent()->getOS()}{/if}{else}Unbekanntes Gerät{/if}]]></item>
 	</category>
 	<category name="wcf.user.trophy">

@@ -883,6 +883,8 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.group.option.user.signature.attachment.allowedExtensions"><![CDATA[Allowed Attachment File Extensions]]></item>
 		<item name="wcf.acp.group.option.user.signature.attachment.allowedExtensions.description"><![CDATA[Enter one extension per line.]]></item>
 		<item name="wcf.acp.group.option.user.signature.attachment.maxCount"><![CDATA[Maximum Attachments]]></item>
+		<item name="wcf.acp.group.requireMultifactor"><![CDATA[Require Multi-factor Authentication]]></item>
+		<item name="wcf.acp.group.requireMultifactor.description"><![CDATA[Users that are members of this user group may not disable multi-factor authentication. They will also be required to set up multi-factor authentication before they may enter protected areas.]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.credits"><![CDATA[About WoltLab Suite&trade;]]></item>
@@ -4915,6 +4917,7 @@ You can manage multi-factor authentication within the Account Security page [URL
 {else}
 <p>Disabling <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> will fully disable the use of multi-factor authentication for your account as it is the only active method.</p>
 {/if}]]></item>
+		<item name="wcf.user.security.multifactor.disable.requireMultifactor"><![CDATA[<p>You are a member of a user group that is required to use multi-factor authentication. For this reason you are not allowed to disable your last multi-factor method (<strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong>).</p>]]></item>
 		<item name="wcf.user.security.multifactor.disable.success"><![CDATA[The <strong>{lang}wcf.user.security.multifactor.{$setup->getObjectType()->objectType}{/lang}</strong> method has successfully been disabled.]]></item>
 		<item name="wcf.user.security.multifactor.disable.success.full"><![CDATA[The multi-factor authentication has successfully been disabled.]]></item>
 		<item name="wcf.user.security.multifactor.email.body.html"><![CDATA[Your one time code is: <pre>{$code}</pre>]]></item>
@@ -4973,6 +4976,7 @@ You also received a list of emergency codes to use when your second factor becom
 		<item name="wcf.user.security.multifactor.totp.success.add"><![CDATA[Your smartphone <strong>{$deviceName}</strong> has successfully been added.]]></item>
 		<item name="wcf.user.security.multifactor.totp.success.delete"><![CDATA[Your smartphone <strong>{$deviceName}</strong> has successfully been removed.]]></item>
 		<item name="wcf.user.security.multifactor.totp.useTime"><![CDATA[Last Used]]></item>
+		<item name="wcf.user.security.requiresMultifactor"><![CDATA[You are a member of a user group that is required to use multi-factor authentication. Before you may access this page you must <a href="{link controller='AccountSecurity' forceFrontend=true}{/link}">enable multi-factor authentication</a>.]]></item>
 		<item name="wcf.user.security.sessionName"><![CDATA[{if $session->getUserAgent()->getBrowser()}{$session->getUserAgent()->getBrowser()}{if $session->getUserAgent()->getOS()} on {$session->getUserAgent()->getOS()}{/if}{else}Unknown Device{/if}]]></item>
 	</category>
 	<category name="wcf.user.trophy">

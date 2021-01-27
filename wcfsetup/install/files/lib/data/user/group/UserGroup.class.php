@@ -32,6 +32,8 @@ use wcf\system\WCF;
  *                should be shown on the team page, otherwise `0`
  * @property-read       int $allowMention           is `1` if the user group can be mentioned in messages,
  *                      otherwise `0`
+ * @property-read       int $requireMultifactor           is `1` if group members need to set up multi-factor
+ *                      authentcation, otherwise `0`
  */
 class UserGroup extends DatabaseObject implements ITitledObject
 {
