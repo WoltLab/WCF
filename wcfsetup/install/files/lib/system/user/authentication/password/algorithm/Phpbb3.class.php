@@ -20,7 +20,8 @@ final class Phpbb3 implements IPasswordAlgorithm
         hash as phpassHash;
     }
 
-    public function verify(string $password, string $hash): bool {
+    public function verify(string $password, string $hash): bool
+    {
         if ($this->phpassVerify($password, $hash)) {
             return true;
         }
@@ -64,11 +65,13 @@ final class Phpbb3 implements IPasswordAlgorithm
         return \hash_equals($hash, $password);
     }
 
-    public function needsRehash(string $hash): bool {
+    public function needsRehash(string $hash): bool
+    {
         return false;
     }
 
-    public function hash(string $password): string {
+    public function hash(string $password): string
+    {
         return '';
     }
 }
