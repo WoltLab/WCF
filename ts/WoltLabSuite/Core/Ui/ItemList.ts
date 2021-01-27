@@ -36,6 +36,7 @@ function createUI(element: ItemListInputElement, options: ItemListOptions): UiDa
   const listItem = document.createElement("li");
   listItem.className = "input";
   list.appendChild(listItem);
+  element.addEventListener("input", input);
   element.addEventListener("keydown", keyDown);
   element.addEventListener("keypress", keyPress);
   element.addEventListener("keyup", keyUp);
@@ -153,10 +154,11 @@ function keyDown(event: KeyboardEvent): void {
 }
 
 /**
- * Handles the `[ENTER]` and `[,]` key to add an item to the list unless it is restricted.
+ * Detects the Enter key to add an item to the list. This must not be
+ * part of the `keydown` handler to prevent conflicts with the suggestions.
  */
 function keyPress(event: KeyboardEvent): void {
-  if (event.key === "Enter" || event.key === ",") {
+  if (event.key === "Enter") {
     event.preventDefault();
 
     const input = event.currentTarget as HTMLInputElement;
@@ -167,6 +169,30 @@ function keyPress(event: KeyboardEvent): void {
     const value = input.value.trim();
     if (value.length) {
       addItem(input.id, { objectId: 0, value: value });
+    }
+  }
+}
+
+/**
+ * Detects changes to the value of an input element to find a comma. This was
+ * previously checked in the `keypress` event, but Chromium on Android cripples
+ * the event to not expose any key whatsoever.
+ */
+function input(event: InputEvent): void {
+  const input = event.currentTarget as HTMLInputElement;
+  if (_data.get(input.id)!.options.restricted) {
+    // restricted item lists only allow results from the dropdown to be picked
+    return;
+  }
+
+  let value = input.value;
+  if (value.includes(",")) {
+    // Remove the comma and forward it.
+    value = value.replace(/,/g, "");
+    if (value.length) {
+      addItem(input.id, { objectId: 0, value: value });
+    } else {
+      input.value = value;
     }
   }
 }
