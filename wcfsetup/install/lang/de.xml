@@ -1911,6 +1911,9 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.update.excludedPackages.excluding.package"><![CDATA[„{$excludedPackage[packageName]}“ in Version „{$excludedPackage[packageVersion]}“ ist mit dem bereits installieren Paket „{$excludedPackage[existingPackageName]}“ nicht kompatibel]]></item>
 		<item name="wcf.acp.package.update.path.incoherent"><![CDATA[Das Update erfordert eine Aktualisierung des Paketes „{$packageName}“ (installierte Version: {$currentVersion}) auf Version {$newVersion}, es wurden aber keine passenden Updates gefunden.]]></item>
 		<item name="wcf.acp.package.update.path.unknown"><![CDATA[Das Update erfordert eine Aktualisierung des Paketes „{$packageName}“ (installierte Version: {$currentVersion}) auf Version {$newVersion}, es wurden aber keine verfügbaren Updates gefunden. Möglicherweise fehlt der passende Paket-Server?]]></item>
+		<item name="wcf.acp.package.update.purchaseRequired"><![CDATA[Kostenpflichtiges Paket]]></item>
+		<item name="wcf.acp.package.update.purchaseRequired.button.purchase"><![CDATA[Im Plugin-Store anzeigen]]></item>
+		<item name="wcf.acp.package.update.purchaseRequired.description"><![CDATA[Das Paket „{$packageName}“ ist kostenpflichtig und muss zuvor im Plugin-Store erworben werden.]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.package.packageDir.input"><![CDATA[Installationsverzeichnis]]></item>
 		<item name="wcf.acp.package.upload"><![CDATA[Paket hochladen]]></item>
