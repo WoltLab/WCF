@@ -1351,7 +1351,7 @@ CREATE TABLE wcf1_tag_to_object (
 	languageID INT(10) NOT NULL,
 	UNIQUE KEY (objectTypeID, objectID, tagID),
 	KEY (objectTypeID, tagID),
-	KEY (tagID, objectTypeID)
+	KEY (tagID)
 );
 
 DROP TABLE IF EXISTS wcf1_template;
