@@ -61,8 +61,18 @@ class PackageUpdateUnauthorizedException extends UserException
     {
         $serverReply = $this->request->getReply();
 
+        $authInsufficient = (($serverReply['httpHeaders']['wcf-update-server-auth'][0] ?? '') === 'unauthorized');
+        if (ENABLE_ENTERPRISE_MODE && $authInsufficient && !empty($this->packageUpdateVersion['pluginStoreFileID'])) {
+            WCF::getTPL()->assign([
+                'packageName' => $this->packageUpdateVersion['packageName'],
+                'pluginStoreFileID' => $this->packageUpdateVersion['pluginStoreFileID'],
+            ]);
+
+            return WCF::getTPL()->fetch('packageUpdateUnauthorizedPurchaseRequired');
+        }
+
         WCF::getTPL()->assign([
-            'authInsufficient' => (($serverReply['httpHeaders']['wcf-update-server-auth'][0] ?? '') === 'unauthorized'),
+            'authInsufficient' => $authInsufficient,
             'packageUpdateVersion' => $this->packageUpdateVersion,
             'request' => $this->request,
             'updateServer' => $this->updateServer,
