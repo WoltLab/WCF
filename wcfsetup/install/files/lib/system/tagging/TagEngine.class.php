@@ -41,10 +41,13 @@ class TagEngine extends SingletonFactory
 
         // remove tags prior to apply the new ones (prevents duplicate entries)
         if ($replace) {
-            $sql = "DELETE FROM wcf" . WCF_N . "_tag_to_object
-                    WHERE       objectTypeID = ?
-                            AND objectID = ?
-                            AND languageID = ?";
+            $sql = "DELETE      tag_to_object
+                    FROM        wcf" . WCF_N . "_tag_to_object tag_to_object
+                    INNER JOIN  wcf" . WCF_N . "_tag tag
+                            ON  tag.tagID = tag_to_object.tagID
+                    WHERE       tag_to_object.objectTypeID = ?
+                            AND tag_to_object.objectID = ?
+                            AND tag.languageID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 $objectTypeID,
@@ -111,10 +114,13 @@ class TagEngine extends SingletonFactory
     {
         $objectTypeID = $this->getObjectTypeID($objectType);
 
-        $sql = "DELETE FROM wcf" . WCF_N . "_tag_to_object
-                WHERE       objectTypeID = ?
-                        AND objectID = ?
-                        " . ($languageID !== null ? "AND languageID = ?" : "");
+        $sql = "DELETE      tag_to_object
+                FROM        wcf" . WCF_N . "_tag_to_object tag_to_object
+                INNER JOIN  wcf" . WCF_N . "_tag tag
+                        ON  tag.tagID = tag_to_object.tagID
+                WHERE       tag_to_object.objectTypeID = ?
+                        AND tag_to_object.objectID = ?
+                        " . ($languageID !== null ? "AND tag.languageID = ?" : "");
         $statement = WCF::getDB()->prepareStatement($sql);
         $parameters = [
             $objectTypeID,
