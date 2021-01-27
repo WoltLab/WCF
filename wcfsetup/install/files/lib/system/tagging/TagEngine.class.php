@@ -199,7 +199,7 @@ class TagEngine extends SingletonFactory
                 }
             }
 
-            $conditions->add("tag_to_object.languageID IN (?)", [$languageIDs]);
+            $conditions->add("tag.languageID IN (?)", [$languageIDs]);
         }
 
         $sql = "SELECT      tag.*, tag_to_object.objectID
