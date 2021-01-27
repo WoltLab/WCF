@@ -7,9 +7,9 @@ use wcf\data\user\UserProfileAction;
 use wcf\system\WCF;
 
 // set default landing page
-$sql = "UPDATE	wcf" . WCF_N . "_page
-	SET	isLandingPage = ?
-	WHERE	identifier = ?";
+$sql = "UPDATE  wcf" . WCF_N . "_page
+        SET     isLandingPage = ?
+        WHERE   identifier = ?";
 $statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute([
     1,

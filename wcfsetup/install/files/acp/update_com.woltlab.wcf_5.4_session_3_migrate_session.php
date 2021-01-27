@@ -12,9 +12,9 @@
 use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 
-$sql = "INSERT INTO	wcf" . WCF_N . "_user_session
-			(sessionID, userID, userAgent, ipAddress, lastActivityTime, sessionVariables)
-	VALUES		(?, ?, ?, ?, ?, ?)";
+$sql = "INSERT INTO wcf" . WCF_N . "_user_session
+                    (sessionID, userID, userAgent, ipAddress, lastActivityTime, sessionVariables)
+        VALUES      (?, ?, ?, ?, ?, ?)";
 $statement = WCF::getDB()->prepareStatement($sql);
 
 $klass = new \ReflectionClass(SessionHandler::getInstance());

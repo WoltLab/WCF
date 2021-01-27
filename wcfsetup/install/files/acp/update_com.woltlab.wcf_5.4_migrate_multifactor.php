@@ -40,14 +40,14 @@ $hashAlgorithm = new Wcf1();
 $hashAlgorithmName = PasswordAlgorithmManager::getInstance()->getNameFromAlgorithm($hashAlgorithm);
 
 // Fetch the affected user IDs.
-$sql = "SELECT	DISTINCT userID
-	FROM	wcf" . WCF_N . "_user_authenticator
-	WHERE		type = ?
-		AND	userID NOT IN (
-			SELECT	userID
-			FROM 	wcf" . WCF_N . "_user_multifactor
-			WHERE	objectTypeID = ?
-		)";
+$sql = "SELECT  DISTINCT userID
+        FROM    wcf" . WCF_N . "_user_authenticator
+        WHERE   type = ?
+            AND userID NOT IN (
+                    SELECT  userID
+                    FROM    wcf" . WCF_N . "_user_multifactor
+                    WHERE   objectTypeID = ?
+                )";
 $statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute([
     'totp',
@@ -56,25 +56,25 @@ $statement->execute([
 $userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
 // Prepare the statements for use in user processing.
-$sql = "SELECT	name, secret, time
-	FROM	wcf" . WCF_N . "_user_authenticator
-	WHERE		type = ?
-		AND	userID = ?
-	FOR UPDATE";
+$sql = "SELECT      name, secret, time
+        FROM        wcf" . WCF_N . "_user_authenticator
+        WHERE       type = ?
+                AND userID = ?
+        FOR UPDATE";
 $existingTotpAuthenticatorStatement = WCF::getDB()->prepareStatement($sql);
-$sql = "SELECT	backupCode
-	FROM	wcf" . WCF_N . "_user_backup_code
-	WHERE	userID = ?
-	FOR UPDATE";
+$sql = "SELECT      backupCode
+        FROM        wcf" . WCF_N . "_user_backup_code
+        WHERE       userID = ?
+        FOR UPDATE";
 $existingBackupStatement = WCF::getDB()->prepareStatement($sql);
 
-$sql = "INSERT INTO	wcf" . WCF_N . "_user_multifactor_totp
-			(setupID, deviceID, deviceName, secret, minCounter, createTime)
-	VALUES		(?, ?, ?, ?, ?, ?)";
+$sql = "INSERT INTO wcf" . WCF_N . "_user_multifactor_totp
+                    (setupID, deviceID, deviceName, secret, minCounter, createTime)
+        VALUES      (?, ?, ?, ?, ?, ?)";
 $createTotpStatement = WCF::getDB()->prepareStatement($sql);
-$sql = "INSERT INTO	wcf" . WCF_N . "_user_multifactor_backup
-			(setupID, identifier, code, createTime)
-	VALUES		(?, ?, ?, ?)";
+$sql = "INSERT INTO wcf" . WCF_N . "_user_multifactor_backup
+                    (setupID, identifier, code, createTime)
+        VALUES      (?, ?, ?, ?)";
 $createBackupStatement = WCF::getDB()->prepareStatement($sql);
 
 // TODO: Do we need to split this across multiple requests?

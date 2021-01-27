@@ -18,13 +18,13 @@ $files = [
 ];
 
 $sql = "SELECT  packageID
-	FROM    wcf" . WCF_N . "_package_installation_file_log
-	WHERE   filename = ?";
+        FROM    wcf" . WCF_N . "_package_installation_file_log
+        WHERE   filename = ?";
 $searchStatement = WCF::getDB()->prepareStatement($sql);
 
-$sql = "DELETE FROM     wcf" . WCF_N . "_package_installation_file_log
-	WHERE           packageID = ?
-	                AND filename = ?";
+$sql = "DELETE FROM wcf" . WCF_N . "_package_installation_file_log
+        WHERE       packageID = ?
+                AND filename = ?";
 $deletionStatement = WCF::getDB()->prepareStatement($sql);
 
 $packageID = $this->installation->getPackageID();
