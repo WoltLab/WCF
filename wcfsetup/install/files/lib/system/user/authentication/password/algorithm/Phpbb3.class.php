@@ -2,6 +2,7 @@
 
 namespace wcf\system\user\authentication\password\algorithm;
 
+use wcf\system\exception\NotImplementedException;
 use wcf\system\user\authentication\password\IPasswordAlgorithm;
 
 /**
@@ -72,6 +73,6 @@ final class Phpbb3 implements IPasswordAlgorithm
 
     public function hash(string $password): string
     {
-        return '';
+        throw new NotImplementedException();
     }
 }
