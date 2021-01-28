@@ -1026,6 +1026,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.masterPassword.example.set"><![CDATA[Use Suggestion]]></item>
 		<item name="wcf.acp.masterPassword.init"><![CDATA[Set Master Password]]></item>
 		<item name="wcf.acp.masterPassword.init.description"><![CDATA[The master password is the last line of defense, protecting both critical settings and sensitive data. One should choose a rather strong password which is neither known to any 3rd party person nor re-used on other web pages.]]></item>
+		<item name="wcf.acp.masterPassword.enter.deprecated"><![CDATA[Support for the master password is discouraged and will be removed in a future version. The <a href="{link controller='AccountSecurity' forceFrontend=true application='wcf'}{/link}">Multi-factor Authentication</a> protects accounts more reliably and in all areas. If desired, specific user groups can be required to set up multi-factor authentication, before they are able to enter sensitive areas, such as the Administration Control Panel.]]></item>
 	</category>
 	<category name="wcf.acp.menu">
 		<item name="wcf.acp.menu.link.management"><![CDATA[Management]]></item>

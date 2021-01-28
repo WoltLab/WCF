@@ -1049,6 +1049,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.masterPassword.example.set"><![CDATA[Vorschlag übernehmen]]></item>
 		<item name="wcf.acp.masterPassword.init"><![CDATA[Hauptkennwort festlegen]]></item>
 		<item name="wcf.acp.masterPassword.init.description"><![CDATA[Das Hauptkennwort ist ein zusätzlicher Schutz für sicherheitskritische Funktionen. {if LANGUAGE_USE_INFORMAL_VARIANT}Du solltest{else}Sie sollten{/if} ein möglichst sicheres Kennwort verwenden, dass sich von {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} regulären Administrator-Kennwort unterscheidet, Dritten nicht bekannt ist und auch nicht auf anderen Internetseiten verwendet wird.]]></item>
+		<item name="wcf.acp.masterPassword.enter.deprecated"><![CDATA[Die Unterstützung für das Hauptkennwort ist obsolet und wird in einer zukünftigen Version entfernt. Die <a href="{link controller='AccountSecurity' forceFrontend=true application='wcf'}{/link}">Mehrfaktor-Authentifizierung</a> schützt Benutzerkonten zuverlässiger und in allen Bereichen. Falls gewünscht, können einzelne Benutzergruppen verpflichtet werden, die Mehrfaktor-Authentifizierung einzurichten, bevor diese sensible Bereiche, wie beispielsweise die Administrationsoberfläche betreten können.]]></item>
 	</category>
 	<category name="wcf.acp.menu">
 		<item name="wcf.acp.menu.link.management"><![CDATA[Verwaltung]]></item>

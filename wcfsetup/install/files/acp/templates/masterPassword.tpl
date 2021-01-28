@@ -10,6 +10,10 @@
 	<h1 class="contentTitle">{lang}wcf.acp.masterPassword.enter{/lang}</h1>
 </header>
 
+<p class="warning">
+	{lang}wcf.acp.masterPassword.enter.deprecated{/lang}
+</p>
+
 {include file='formError'}
 
 <form method="post" action="{link controller='MasterPassword'}{/link}">
