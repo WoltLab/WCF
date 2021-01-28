@@ -121,6 +121,7 @@ namespace wcf {
 namespace wcf\functions\exception {
 	use wcf\system\WCF;
 	use wcf\system\exception\IExtraInformationException;
+	use wcf\system\exception\ILoggingAwareException;
 	use wcf\system\exception\SystemException;
 	use wcf\util\FileUtil;
 	use wcf\util\StringUtil;
@@ -184,7 +185,13 @@ namespace wcf\functions\exception {
 		file_put_contents($logFile, $entry, FILE_APPEND);
 
 		// let the Exception know it has been logged
-		if (method_exists($e, 'finalizeLog') && is_callable([$e, 'finalizeLog'])) $e->finalizeLog($exceptionID, $logFile);
+		if (
+			$e instanceof ILoggingAwareException
+			|| (method_exists($e, 'finalizeLog') && is_callable([$e, 'finalizeLog']))
+		) {
+			/** @var ILoggingAwareException $e */
+			$e->finalizeLog($exceptionID, $logFile);
+		}
 
 		return $exceptionID;
 	}
