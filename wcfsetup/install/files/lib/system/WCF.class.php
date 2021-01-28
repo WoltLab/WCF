@@ -556,7 +556,6 @@ class WCF
             }
         }
 
-
         // handle banned users
         if (self::getUser()->userID && self::getUser()->banned && !self::getUser()->hasOwnerAccess()) {
             if ($isAjax) {
