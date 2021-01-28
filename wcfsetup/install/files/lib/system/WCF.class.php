@@ -419,6 +419,10 @@ class WCF
         // https://github.com/WoltLab/WCF/issues/3674
         \define('REGISTER_ADMIN_NOTIFICATION', 0);
 
+        // The hostname blocklist was removed in 5.4.
+        // https://github.com/WoltLab/WCF/issues/3909
+        \define('BLACKLIST_HOSTNAMES', '');
+
         $filename = WCF_DIR . 'options.inc.php';
 
         // create options file if doesn't exist
@@ -541,18 +545,6 @@ class WCF
         }
         if (\defined('BLACKLIST_USER_AGENTS') && BLACKLIST_USER_AGENTS != '') {
             if (!StringUtil::executeWordFilter(UserUtil::getUserAgent(), BLACKLIST_USER_AGENTS)) {
-                if ($isAjax) {
-                    throw new AJAXException(
-                        self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),
-                        AJAXException::INSUFFICIENT_PERMISSIONS
-                    );
-                } else {
-                    throw new PermissionDeniedException();
-                }
-            }
-        }
-        if (\defined('BLACKLIST_HOSTNAMES') && BLACKLIST_HOSTNAMES != '') {
-            if (!StringUtil::executeWordFilter(@\gethostbyaddr(UserUtil::getIpAddress()), BLACKLIST_HOSTNAMES)) {
                 if ($isAjax) {
                     throw new AJAXException(
                         self::getLanguage()->getDynamicVariable('wcf.ajax.error.permissionDenied'),

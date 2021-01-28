@@ -1230,12 +1230,10 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.notice.showOrder.description"><![CDATA[Choose display order of notices.]]></item>
 	</category>
 	<category name="wcf.acp.option">
-		<item name="wcf.acp.option.blacklist_hostnames"><![CDATA[Block by Hostname]]></item>
-		<item name="wcf.acp.option.blacklist_hostnames.description"><![CDATA[You can specify which hostnames will be blacklisted. Enter one hostname per line.]]></item>
-		<item name="wcf.acp.option.blacklist_ip_addresses"><![CDATA[Block by IP Address]]></item>
-		<item name="wcf.acp.option.blacklist_ip_addresses.description"><![CDATA[You can specify which IP addresses will be blacklisted. Enter one IP address per line.]]></item>
-		<item name="wcf.acp.option.blacklist_user_agents"><![CDATA[Block by User-Agent]]></item>
-		<item name="wcf.acp.option.blacklist_user_agents.description"><![CDATA[You can specify which user-agents will be blacklisted. Enter one user-agent per line.]]></item>
+		<item name="wcf.acp.option.blacklist_ip_addresses"><![CDATA[Block by IP Address (Not Recommended)]]></item>
+		<item name="wcf.acp.option.blacklist_ip_addresses.description"><![CDATA[Blocking IP Addresses is more reliably and performant achieved at the web server level. Use of this blocklist is not recommended and this option will be removed in a future version.]]></item>
+		<item name="wcf.acp.option.blacklist_user_agents"><![CDATA[Block by User-Agent (Not Recommended)]]></item>
+		<item name="wcf.acp.option.blacklist_user_agents.description"><![CDATA[User-Agents are easily faked by an attacker and not a reliable indicator of the client’s identity. If a block based on the User-Agent is desired nonetheless, it is achieve more performant at the web server level. Use of this blocklist is not recommended and this option will be removed in a future version.]]></item>
 		<item name="wcf.acp.option.cache_source_memcached_host"><![CDATA[Memcached-Server]]></item>
 		<item name="wcf.acp.option.cache_source_memcached_host.description"/>
 		<item name="wcf.acp.option.cache_source_redis_host"><![CDATA[Redis-Server]]></item>
