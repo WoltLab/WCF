@@ -649,13 +649,13 @@ class StyleAddForm extends AbstractForm
                 if ($imageData[0] > $maxWidth) {
                     throw new UserInputException($field, 'maxWidth');
                 }
-                if ($imageData[0] > $maxHeight) {
+                if ($imageData[1] > $maxHeight) {
                     throw new UserInputException($field, 'maxHeight');
                 }
                 if ($imageData[0] < $minWidth) {
                     throw new UserInputException($field, 'minWidth');
                 }
-                if ($imageData[0] < $minHeight) {
+                if ($imageData[1] < $minHeight) {
                     throw new UserInputException($field, 'minHeight');
                 }
             }
