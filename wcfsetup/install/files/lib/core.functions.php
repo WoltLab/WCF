@@ -107,13 +107,13 @@ namespace {
 }
 
 namespace wcf {
-	function getRequestId() {
+	function getRequestId(): string {
 		if (!defined('WCF_REQUEST_ID_HEADER') || !WCF_REQUEST_ID_HEADER) return '';
 		
 		return $_SERVER[WCF_REQUEST_ID_HEADER] ?? '';
 	}
 	
-	function getMinorVersion() {
+	function getMinorVersion(): string {
 		return preg_replace('/^(\d+\.\d+)\..*$/', '\\1', WCF_VERSION);
 	}
 }
@@ -128,11 +128,10 @@ namespace wcf\functions\exception {
 	/**
 	 * Logs the given Throwable.
 	 * 
-	 * @param	\Throwable|\Exception	$e
 	 * @param	string			$logFile	The log file to use. If set to `null` the default log file will be used and the variable contents will be replaced by the actual path.
 	 * @return	string					The ID of the log entry.
 	 */
-	function logThrowable($e, &$logFile = null) {
+	function logThrowable(\Throwable $e, &$logFile = null): string {
 		if ($logFile === null) $logFile = WCF_DIR . 'log/' . gmdate('Y-m-d', TIME_NOW) . '.txt';
 		touch($logFile);
 		
@@ -194,10 +193,9 @@ namespace wcf\functions\exception {
 	 * Pretty prints the given Throwable. It is recommended to `exit;`
 	 * the request after calling this function.
 	 * 
-	 * @param	\Throwable|\Exception	$e
 	 * @throws	\Exception
 	 */
-	function printThrowable($e) {
+	function printThrowable(\Throwable $e) {
 		$exceptionID = logThrowable($e, $logFile);
 		if (\wcf\getRequestId()) $exceptionID .= '/'.\wcf\getRequestId();
 		
@@ -604,11 +602,10 @@ EXPLANATION;
 	 * Returns the stack trace of the given Throwable with sensitive
 	 * information removed.
 	 * 
-	 * @param	\Throwable|\Exception	$e
 	 * @param	bool			$ignorePaths	If set to `true`: Don't call `sanitizePath`.
 	 * @return	mixed[]
 	 */
-	function sanitizeStacktrace($e, $ignorePaths = false) {
+	function sanitizeStacktrace(\Throwable $e, bool $ignorePaths = false) {
 		$trace = $e->getTrace();
 
 		return array_map(function ($item) use ($ignorePaths) {
@@ -652,7 +649,7 @@ EXPLANATION;
 	 * @param	string		$path
 	 * @return	string
 	 */
-	function sanitizePath($path) {
+	function sanitizePath(string $path): string {
 		if (WCF::debugModeIsEnabled() && defined('EXCEPTION_PRIVACY') && EXCEPTION_PRIVACY === 'public') {
 			return $path;
 		}
