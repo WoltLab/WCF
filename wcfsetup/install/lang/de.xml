@@ -1364,8 +1364,8 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.meta_description"><![CDATA[Meta Description]]></item>
 		<item name="wcf.acp.option.og_image"><![CDATA[Standardwert „Open Graph“-Bild]]></item>
 		<item name="wcf.acp.option.og_image.description"><![CDATA[Pfad zur Bilddatei, die beim Verlinken von Inhalten auf Facebook, Twitter und anderen „Social Media“-Seiten standardmäßig eingebunden wird.]]></item>
-		<item name="wcf.acp.option.module_master_password"><![CDATA[Hauptkennwort aktivieren]]></item>
-		<item name="wcf.acp.option.module_master_password.description"><![CDATA[Aktiviert die zusätzliche Eingabe eines Kennworts beim Aufruf von sicherheitskritischen Bereichen.]]></item>
+		<item name="wcf.acp.option.module_master_password"><![CDATA[Hauptkennwort aktivieren (obsolet)]]></item>
+		<item name="wcf.acp.option.module_master_password.description"><![CDATA[Von der Verwendung des Hauptkennworts wird abgeraten. Stattdessen sollte die Mehrfaktor-Authentifizierung genutzt werden. Diese schützt Benutzerkonten zuverlässiger und in allen Bereichen. Die Unterstützung für das Hauptkennwort wird in einer zukünftigen Version entfernt.]]></item>
 		<item name="wcf.acp.option.page_description"><![CDATA[Seitenbeschreibung]]></item>
 		<item name="wcf.acp.option.page_title"><![CDATA[Titel der Seite]]></item>
 		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
