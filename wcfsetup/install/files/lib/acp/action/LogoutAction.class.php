@@ -30,6 +30,7 @@ class LogoutAction extends AbstractSecureAction
         parent::execute();
 
         WCF::getSession()->clearReauthentication();
+	WCF::getSession()->unregister('masterPassword');
 
         $this->executed();
 
