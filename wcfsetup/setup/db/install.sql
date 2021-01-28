@@ -1477,6 +1477,7 @@ CREATE TABLE wcf1_user (
 	trophyPoints INT(10) NOT NULL DEFAULT 0,
 	coverPhotoHash CHAR(40) DEFAULT NULL,
 	coverPhotoExtension VARCHAR(4) NOT NULL DEFAULT '',
+	coverPhotoHasWebP TINYINT(1) NOT NULL DEFAULT 0,
 	disableCoverPhoto TINYINT(1) NOT NULL DEFAULT 0,
 	disableCoverPhotoReason TEXT,
 	disableCoverPhotoExpires INT(10) NOT NULL DEFAULT 0,

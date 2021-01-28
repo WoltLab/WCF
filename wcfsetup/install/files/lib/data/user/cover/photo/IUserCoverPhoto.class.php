@@ -19,22 +19,16 @@ interface IUserCoverPhoto
 
     /**
      * Returns the physical location of this cover photo.
-     *
-     * @return  string
      */
-    public function getLocation();
+    public function getLocation(?bool $forceWebP = null): string;
 
     /**
      * Returns the url to this cover photo.
-     *
-     * @return  string
      */
-    public function getURL();
+    public function getURL(?bool $forceWebP = null): string;
 
     /**
      * Returns the file name of this cover photo.
-     *
-     * @return  string
      */
-    public function getFilename();
+    public function getFilename(?bool $forceWebP = null): string;
 }

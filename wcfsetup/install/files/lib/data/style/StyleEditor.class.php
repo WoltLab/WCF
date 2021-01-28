@@ -1146,6 +1146,10 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
         StyleCompiler::getInstance()->compile($this->getDecoratedObject());
     }
 
+    public function createCoverPhotoVariant(): void
+    {
+    }
+
     /**
      * @inheritDoc
      * @return  Style

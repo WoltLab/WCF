@@ -25,24 +25,24 @@ class DefaultUserCoverPhoto implements IUserCoverPhoto
     /**
      * @inheritDoc
      */
-    public function getLocation()
+    public function getLocation(?bool $forceWebP = null): string
     {
-        return StyleHandler::getInstance()->getStyle()->getCoverPhotoLocation();
+        return StyleHandler::getInstance()->getStyle()->getCoverPhotoLocation($forceWebP);
     }
 
     /**
      * @inheritDoc
      */
-    public function getURL()
+    public function getURL(?bool $forceWebP = null): string
     {
-        return StyleHandler::getInstance()->getStyle()->getCoverPhotoUrl();
+        return StyleHandler::getInstance()->getStyle()->getCoverPhotoUrl($forceWebP);
     }
 
     /**
      * @inheritDoc
      */
-    public function getFilename()
+    public function getFilename(?bool $forceWebP = null): string
     {
-        return StyleHandler::getInstance()->getStyle()->getCoverPhoto();
+        return StyleHandler::getInstance()->getStyle()->getCoverPhoto($forceWebP);
     }
 }

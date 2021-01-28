@@ -70,6 +70,7 @@ $tables = [
 
     PartialDatabaseTable::create('wcf1_user')
         ->columns([
+            DefaultFalseBooleanDatabaseTableColumn::create('coverPhotoHasWebP'),
             DefaultFalseBooleanDatabaseTableColumn::create('multifactorActive'),
         ]),
 

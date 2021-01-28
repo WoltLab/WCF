@@ -27,6 +27,11 @@ class UserCoverPhoto implements IUserCoverPhoto
     protected $coverPhotoHash;
 
     /**
+     * @var int
+     */
+    protected $coverPhotoHasWebP = 0;
+
+    /**
      * user id
      * @var int
      */
@@ -47,11 +52,12 @@ class UserCoverPhoto implements IUserCoverPhoto
      * @param string $coverPhotoHash
      * @param string $coverPhotoExtension
      */
-    public function __construct($userID, $coverPhotoHash, $coverPhotoExtension)
+    public function __construct($userID, $coverPhotoHash, $coverPhotoExtension, int $coverPhotoHasWebP)
     {
         $this->userID = $userID;
         $this->coverPhotoHash = $coverPhotoHash;
         $this->coverPhotoExtension = $coverPhotoExtension;
+        $this->coverPhotoHasWebP = $coverPhotoHasWebP;
     }
 
     /**
@@ -67,7 +73,7 @@ class UserCoverPhoto implements IUserCoverPhoto
     /**
      * @inheritDoc
      */
-    public function getLocation()
+    public function getLocation(?bool $forceWebP = null): string
     {
         return WCF_DIR . 'images/coverPhotos/' . $this->getFilename();
     }
@@ -75,7 +81,7 @@ class UserCoverPhoto implements IUserCoverPhoto
     /**
      * @inheritDoc
      */
-    public function getURL()
+    public function getURL(?bool $forceWebP = null): string
     {
         return WCF::getPath() . 'images/coverPhotos/' . $this->getFilename();
     }
@@ -83,7 +89,7 @@ class UserCoverPhoto implements IUserCoverPhoto
     /**
      * @inheritDoc
      */
-    public function getFilename()
+    public function getFilename(?bool $forceWebP = null): string
     {
         return \substr(
             $this->coverPhotoHash,

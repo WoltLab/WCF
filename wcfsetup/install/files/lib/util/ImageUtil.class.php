@@ -227,6 +227,49 @@ final class ImageUtil
     }
 
     /**
+     * Creates a WebP variant of the source image. Returns `true` if a
+     * `webp` file was created, `false` if a jpeg was create dand `null`
+     * if no action was taken.
+     */
+    public static function createWebpVariant(string $sourceLocation, string $outputFilenameWithoutExtension): ?bool
+    {
+        $imageData = \getimagesize($sourceLocation);
+        if ($imageData === false) {
+            throw new \InvalidArgumentException("The source location is not a valid image.");
+        }
+
+        $extension = self::getExtensionByMimeType($imageData['mime']);
+        switch ($extension) {
+            case 'gif':
+                // GIFs are not processed.
+                return null;
+
+            case 'jpg':
+            case 'png':
+            case 'webp':
+                break;
+
+            default:
+                throw new \InvalidArgumentException("Unsupported image format, expecting one of 'gif', 'jpg', 'png' or 'webp'.");
+        }
+
+        $imageAdapter = ImageHandler::getInstance()->getAdapter();
+        $imageAdapter->loadFile($sourceLocation);
+        $image = $imageAdapter->getImage();
+
+        // The source file is a webp, create a fallback jpeg instead.
+        if ($imageData[2] === 'webp') {
+            $imageAdapter->saveImageAs($image, "{$outputFilenameWithoutExtension}.jpg", "jpeg", 80);
+
+            return false;
+        } else {
+            $imageAdapter->saveImageAs($image, "{$outputFilenameWithoutExtension}.webp", "webp", 80);
+
+            return true;
+        }
+    }
+
+    /**
      * Forbid creation of ImageUtil objects.
      */
     private function __construct()
