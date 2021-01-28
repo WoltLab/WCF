@@ -722,10 +722,6 @@ block:wcf.acp.option.blacklist_sfs_action.block]]></selectoptions>
 				<categoryname>security.blacklist.custom</categoryname>
 				<optiontype>textarea</optiontype>
 			</option>
-			<option name="blacklist_hostnames">
-				<categoryname>security.blacklist.custom</categoryname>
-				<optiontype>textarea</optiontype>
-			</option>
 			<!-- /security.blacklist.custom -->
 			<!-- security.antispam.captcha -->
 			<option name="captcha_type">
@@ -1704,5 +1700,6 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		<option name="session_validate_ip_address" />
 		<option name="session_validate_user_agent" />
 		<option name="session_enable_virtualization" />
+		<option name="blacklist_hostnames" />
 	</delete>
 </data>

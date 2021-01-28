@@ -80,7 +80,6 @@ define('USER_AUTHENTICATION_FAILURE_EXPIRATION', 30);
 define('SIGNATURE_SECRET', '');
 define('BLACKLIST_IP_ADDRESSES', '');
 define('BLACKLIST_USER_AGENTS', '');
-define('BLACKLIST_HOSTNAMES', '');
 define('CAPTCHA_TYPE', 'com.woltlab.wcf.recaptcha');
 define('REGISTER_USE_CAPTCHA', 1);
 define('LOST_PASSWORD_USE_CAPTCHA', 1);
