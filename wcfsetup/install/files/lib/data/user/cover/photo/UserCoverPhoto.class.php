@@ -3,6 +3,7 @@
 namespace wcf\data\user\cover\photo;
 
 use wcf\system\WCF;
+use wcf\util\ImageUtil;
 
 /**
  * Represents a user's cover photo.
@@ -65,8 +66,12 @@ class UserCoverPhoto implements IUserCoverPhoto
      */
     public function delete()
     {
-        if (\file_exists($this->getLocation())) {
-            @\unlink($this->getLocation());
+        if (\file_exists($this->getLocation(false))) {
+            @\unlink($this->getLocation(false));
+        }
+
+        if (\file_exists($this->getLocation(true))) {
+            @\unlink($this->getLocation(true));
         }
     }
 
@@ -91,11 +96,13 @@ class UserCoverPhoto implements IUserCoverPhoto
      */
     public function getFilename(?bool $forceWebP = null): string
     {
+        $useWebP = $forceWebP || ($forceWebP === null && ImageUtil::browserSupportsWebP());
+
         return \substr(
             $this->coverPhotoHash,
             0,
             2
-        ) . '/' . $this->userID . '-' . $this->coverPhotoHash . '.' . $this->coverPhotoExtension;
+        ) . '/' . $this->userID . '-' . $this->coverPhotoHash . '.' . ($useWebP ? 'webp' : $this->coverPhotoExtension);
     }
 
     /**

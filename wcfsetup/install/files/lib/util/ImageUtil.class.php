@@ -228,7 +228,7 @@ final class ImageUtil
 
     /**
      * Creates a WebP variant of the source image. Returns `true` if a
-     * `webp` file was created, `false` if a jpeg was create dand `null`
+     * `webp` file was created, `false` if a jpeg was created and `null`
      * if no action was taken.
      */
     public static function createWebpVariant(string $sourceLocation, string $outputFilenameWithoutExtension): ?bool
