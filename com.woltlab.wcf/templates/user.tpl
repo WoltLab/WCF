@@ -139,7 +139,7 @@
 {/capture}
 
 {capture assign='contentHeader'}
-	<header class="contentHeader userProfileUser{if MODULE_USER_COVER_PHOTO} userProfileUserWithCoverPhoto{/if}" data-object-id="{@$user->userID}"{if $isAccessible}
+	<header class="contentHeader userProfileUser userProfileUserWithCoverPhoto" data-object-id="{@$user->userID}"{if $isAccessible}
 		{if $__wcf->session->getPermission('admin.user.canBanUser')}
 			data-banned="{@$user->banned}"
 		{/if}
@@ -149,28 +149,26 @@
 		{if $__wcf->session->getPermission('admin.user.canDisableSignature')}
 			data-disable-signature="{@$user->disableSignature}"
 		{/if}
-		{if MODULE_USER_COVER_PHOTO && $__wcf->session->getPermission('admin.user.canDisableCoverPhoto')}
+		{if $__wcf->session->getPermission('admin.user.canDisableCoverPhoto')}
 			data-disable-cover-photo="{@$user->disableCoverPhoto}"
 		{/if}
 		{if $__wcf->session->getPermission('admin.user.canEnableUser')}
 			data-is-disabled="{if $user->activationCode}true{else}false{/if}"
 		{/if}
 		{/if}>
-		{if MODULE_USER_COVER_PHOTO}
-			<div class="userProfileCoverPhoto" style="background-image: url({$user->getCoverPhoto()->getURL()})">
-				{if ($user->userID == $__wcf->user->userID || $user->canEdit()) && ($__wcf->getSession()->getPermission('user.profile.coverPhoto.canUploadCoverPhoto') || $user->coverPhotoHash)}
-					<div class="userProfileManageCoverPhoto dropdown jsOnly">
-						<a href="#" class="button small dropdownToggle"><span class="icon icon16 fa-pencil"></span> {lang}wcf.user.coverPhoto.edit{/lang}</a>
-						<ul class="dropdownMenu">
-							{if $__wcf->getSession()->getPermission('user.profile.coverPhoto.canUploadCoverPhoto')}
-								<li><a href="#" class="jsButtonUploadCoverPhoto jsStaticDialog" data-dialog-id="userProfileCoverPhotoUpload">{lang}wcf.user.coverPhoto.upload{/lang}</a></li>
-							{/if}
-							<li{if !$user->coverPhotoHash} style="display:none;"{/if}><a href="#" class="jsButtonDeleteCoverPhoto">{lang}wcf.user.coverPhoto.delete{/lang}</a></li>
-						</ul>
-					</div>
-				{/if}
-			</div>
-		{/if}
+		<div class="userProfileCoverPhoto" style="background-image: url({$user->getCoverPhoto()->getURL()})">
+			{if ($user->userID == $__wcf->user->userID || $user->canEdit()) && ($__wcf->getSession()->getPermission('user.profile.coverPhoto.canUploadCoverPhoto') || $user->coverPhotoHash)}
+				<div class="userProfileManageCoverPhoto dropdown jsOnly">
+					<a href="#" class="button small dropdownToggle"><span class="icon icon16 fa-pencil"></span> {lang}wcf.user.coverPhoto.edit{/lang}</a>
+					<ul class="dropdownMenu">
+						{if $__wcf->getSession()->getPermission('user.profile.coverPhoto.canUploadCoverPhoto')}
+							<li><a href="#" class="jsButtonUploadCoverPhoto jsStaticDialog" data-dialog-id="userProfileCoverPhotoUpload">{lang}wcf.user.coverPhoto.upload{/lang}</a></li>
+						{/if}
+						<li{if !$user->coverPhotoHash} style="display:none;"{/if}><a href="#" class="jsButtonDeleteCoverPhoto">{lang}wcf.user.coverPhoto.delete{/lang}</a></li>
+					</ul>
+				</div>
+			{/if}
+		</div>
 		<div class="contentHeaderIcon">
 			{if $user->userID == $__wcf->user->userID}
 				<a href="{link controller='AvatarEdit'}{/link}" class="jsTooltip" title="{lang}wcf.user.avatar.edit{/lang}">{@$user->getAvatar()->getImageTag(128)}</a>
@@ -307,7 +305,7 @@
 									{if $__wcf->session->getPermission('admin.user.canBanUser')}<li><a href="#" class="jsButtonUserBan">{lang}wcf.user.{if $user->banned}un{/if}ban{/lang}</a></li>{/if}
 									{if $__wcf->session->getPermission('admin.user.canDisableAvatar')}<li><a href="#" class="jsButtonUserDisableAvatar">{lang}wcf.user.{if $user->disableAvatar}enable{else}disable{/if}Avatar{/lang}</a></li>{/if}
 									{if $__wcf->session->getPermission('admin.user.canDisableSignature')}<li><a href="#" class="jsButtonUserDisableSignature">{lang}wcf.user.{if $user->disableSignature}enable{else}disable{/if}Signature{/lang}</a></li>{/if}
-									{if MODULE_USER_COVER_PHOTO && $__wcf->session->getPermission('admin.user.canDisableCoverPhoto')}<li><a href="#" class="jsButtonUserDisableCoverPhoto">{lang}wcf.user.{if $user->disableCoverPhoto}enable{else}disable{/if}CoverPhoto{/lang}</a></li>{/if}
+									{if $__wcf->session->getPermission('admin.user.canDisableCoverPhoto')}<li><a href="#" class="jsButtonUserDisableCoverPhoto">{lang}wcf.user.{if $user->disableCoverPhoto}enable{else}disable{/if}CoverPhoto{/lang}</a></li>{/if}
 									{if $__wcf->session->getPermission('admin.user.canEnableUser')}<li><a href="#" class="jsButtonUserEnable">{lang}wcf.acp.user.{if $user->pendingActivation()}enable{else}disable{/if}{/lang}</a></li>{/if}
 									
 									{if $__wcf->session->getPermission('admin.general.canUseAcp') && $__wcf->session->getPermission('admin.user.canEditUser')}<li><a href="{link controller='UserEdit' object=$user isACP=true}{/link}" class="jsUserInlineEditor">{lang}wcf.user.edit{/lang}</a></li>{/if}
@@ -354,7 +352,7 @@
 	<p class="info" role="status">{lang}wcf.user.profile.protected{/lang}</p>
 {/if}
 
-{if MODULE_USER_COVER_PHOTO && ($user->userID == $__wcf->user->userID || $user->canEdit())}
+{if $user->userID == $__wcf->user->userID || $user->canEdit()}
 	{if $__wcf->getSession()->getPermission('user.profile.coverPhoto.canUploadCoverPhoto')}
 		<div id="userProfileCoverPhotoUpload" class="jsStaticDialogContent" data-title="{lang}wcf.user.coverPhoto.upload{/lang}">
 			{if $__wcf->user->disableCoverPhoto}

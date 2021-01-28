@@ -423,6 +423,10 @@ class WCF
         // https://github.com/WoltLab/WCF/issues/3909
         \define('BLACKLIST_HOSTNAMES', '');
 
+        // Cover photos are always enabled since 5.4.
+        // https://github.com/WoltLab/WCF/issues/3902
+        \define('MODULE_USER_COVER_PHOTO', 1);
+
         $filename = WCF_DIR . 'options.inc.php';
 
         // create options file if doesn't exist

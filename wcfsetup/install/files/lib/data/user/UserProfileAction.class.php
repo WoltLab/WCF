@@ -569,10 +569,6 @@ class UserProfileAction extends UserAction implements IPopoverAction
      */
     public function validateUploadCoverPhoto()
     {
-        if (!MODULE_USER_COVER_PHOTO) {
-            throw new PermissionDeniedException();
-        }
-
         WCF::getSession()->checkPermissions(['user.profile.coverPhoto.canUploadCoverPhoto']);
 
         $this->readInteger('userID', true);
@@ -645,10 +641,6 @@ class UserProfileAction extends UserAction implements IPopoverAction
      */
     public function validateDeleteCoverPhoto()
     {
-        if (!MODULE_USER_COVER_PHOTO) {
-            throw new PermissionDeniedException();
-        }
-
         $this->readInteger('userID', true);
         // The `userID` parameter did not exist in 3.1, defaulting to the own user for backwards compatibility.
         if (!$this->parameters['userID']) {
