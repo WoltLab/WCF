@@ -11,6 +11,7 @@ use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\UserMailbox;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\UserInputException;
+use wcf\system\flood\FloodControl;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -27,6 +28,8 @@ use wcf\util\StringUtil;
 class LostPasswordForm extends AbstractCaptchaForm
 {
     const AVAILABLE_DURING_OFFLINE_MODE = true;
+
+    private const ALLOWED_RESETS_PER_24H = 5;
 
     /**
      * username
@@ -72,6 +75,14 @@ class LostPasswordForm extends AbstractCaptchaForm
     public function validate()
     {
         parent::validate();
+
+        $requests = FloodControl::getInstance()->countContent(
+            'com.woltlab.wcf.lostPasswordForm',
+            new \DateInterval('PT24H')
+        );
+        if ($requests['count'] >= self::ALLOWED_RESETS_PER_24H) {
+            throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.lostPassword.error.flood'));
+        }
 
         if (empty($this->username) && empty($this->email)) {
             throw new UserInputException('username');
@@ -147,6 +158,8 @@ class LostPasswordForm extends AbstractCaptchaForm
         $email->send();
 
         $this->saved();
+
+        FloodControl::getInstance()->registerContent('com.woltlab.wcf.lostPasswordForm');
 
         // forward to index page
         HeaderUtil::delayedRedirect(

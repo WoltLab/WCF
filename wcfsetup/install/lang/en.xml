@@ -4602,6 +4602,7 @@ Attachments:
 		<item name="wcf.user.lostPassword.description"><![CDATA[You must provide your username or email address to request a new password. Contact the site’s administrator if you need assistance.]]></item>
 		<item name="wcf.user.lostPassword.email.error.notFound"><![CDATA[“{$email}” is not used by any account.]]></item>
 		<item name="wcf.user.lostPassword.error.tooManyRequests"><![CDATA[The password has been requested at least once in the past 24 hours. For security reasons you must wait at least {#$hours} hour{if $hours != 1}s{/if} before requesting it again.]]></item>
+		<item name="wcf.user.lostPassword.error.flood"><![CDATA[You have requested too many passwords. The function has therefore been temporarily deactivated for security reasons. Please try again later.]]></item>
 		<item name="wcf.user.lostPassword.mail.subject"><![CDATA[Lost Password for Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.lostPassword.mail.plaintext"><![CDATA[Dear {@$mailbox->getUser()->username},
 
