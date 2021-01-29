@@ -6,6 +6,7 @@ use wcf\data\DatabaseObject;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\ImageUtil;
 
 /**
  * Represents a style.
@@ -248,46 +249,63 @@ class Style extends DatabaseObject
 
     /**
      * Returns the cover photo filename.
-     *
-     * @return      string
      * @since 3.1
      */
-    public function getCoverPhoto()
+    public function getCoverPhoto(?bool $forceWebP = null): string
     {
+        $useWebP = $this->useWebP($forceWebP);
+
         if ($this->coverPhotoExtension) {
-            return 'coverPhoto.' . $this->coverPhotoExtension;
+            return 'coverPhoto.' . ($useWebP ? 'webp' : $this->coverPhotoExtension);
         }
 
-        return 'default.jpg';
+        return 'default.' . ($useWebP ? 'webp' : 'jpg');
     }
 
     /**
-     * @return string
      * @since 5.2
      */
-    public function getCoverPhotoLocation()
+    public function getCoverPhotoLocation(?bool $forceWebP = null): string
     {
+        $useWebP = $this->useWebP($forceWebP);
+
         if ($this->coverPhotoExtension) {
-            return $this->getAssetPath() . 'coverPhoto.' . $this->coverPhotoExtension;
+            return $this->getAssetPath() . 'coverPhoto.' . ($useWebP ? 'webp' : $this->coverPhotoExtension);
         }
 
-        return WCF_DIR . 'images/coverPhotos/default.jpg';
+        return WCF_DIR . 'images/coverPhotos/default.' . ($useWebP ? 'webp' : 'jpg');
     }
 
     /**
-     * @return string
      * @since 5.2
      */
-    public function getCoverPhotoUrl()
+    public function getCoverPhotoUrl(?bool $forceWebP = null): string
     {
+        $useWebP = $this->useWebP($forceWebP);
+
         if ($this->coverPhotoExtension) {
             return WCF::getPath() . FileUtil::getRelativePath(
                 WCF_DIR,
                 $this->getAssetPath()
-            ) . 'coverPhoto.' . $this->coverPhotoExtension;
+            ) . 'coverPhoto.' . ($useWebP ? 'webp' : $this->coverPhotoExtension);
         }
 
         return WCF::getPath() . 'images/coverPhotos/' . $this->getCoverPhoto();
+    }
+
+    /**
+     * Serve the WebP variant of the cover photo if the browser supports
+     * it and the original cover photo is not a GIF.
+     *
+     * @since 5.4
+     */
+    protected function useWebP($forceWebP = null): bool
+    {
+        if ($this->coverPhotoExtension === "gif") {
+            return false;
+        }
+
+        return $forceWebP || ($forceWebP === null && ImageUtil::browserSupportsWebP());
     }
 
     /**

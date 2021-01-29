@@ -411,7 +411,8 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
                         $this->coverPhoto = new UserCoverPhoto(
                             $this->userID,
                             $this->coverPhotoHash,
-                            $this->coverPhotoExtension
+                            $this->coverPhotoExtension,
+                            $this->coverPhotoHasWebP
                         );
                     }
                 }

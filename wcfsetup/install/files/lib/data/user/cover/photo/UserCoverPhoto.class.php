@@ -3,6 +3,7 @@
 namespace wcf\data\user\cover\photo;
 
 use wcf\system\WCF;
+use wcf\util\ImageUtil;
 
 /**
  * Represents a user's cover photo.
@@ -27,6 +28,11 @@ class UserCoverPhoto implements IUserCoverPhoto
     protected $coverPhotoHash;
 
     /**
+     * @var int
+     */
+    protected $coverPhotoHasWebP = 0;
+
+    /**
      * user id
      * @var int
      */
@@ -47,11 +53,12 @@ class UserCoverPhoto implements IUserCoverPhoto
      * @param string $coverPhotoHash
      * @param string $coverPhotoExtension
      */
-    public function __construct($userID, $coverPhotoHash, $coverPhotoExtension)
+    public function __construct($userID, $coverPhotoHash, $coverPhotoExtension, int $coverPhotoHasWebP)
     {
         $this->userID = $userID;
         $this->coverPhotoHash = $coverPhotoHash;
         $this->coverPhotoExtension = $coverPhotoExtension;
+        $this->coverPhotoHasWebP = $coverPhotoHasWebP;
     }
 
     /**
@@ -59,15 +66,19 @@ class UserCoverPhoto implements IUserCoverPhoto
      */
     public function delete()
     {
-        if (\file_exists($this->getLocation())) {
-            @\unlink($this->getLocation());
+        if (\file_exists($this->getLocation(false))) {
+            @\unlink($this->getLocation(false));
+        }
+
+        if (\file_exists($this->getLocation(true))) {
+            @\unlink($this->getLocation(true));
         }
     }
 
     /**
      * @inheritDoc
      */
-    public function getLocation()
+    public function getLocation(?bool $forceWebP = null): string
     {
         return WCF_DIR . 'images/coverPhotos/' . $this->getFilename();
     }
@@ -75,7 +86,7 @@ class UserCoverPhoto implements IUserCoverPhoto
     /**
      * @inheritDoc
      */
-    public function getURL()
+    public function getURL(?bool $forceWebP = null): string
     {
         return WCF::getPath() . 'images/coverPhotos/' . $this->getFilename();
     }
@@ -83,13 +94,15 @@ class UserCoverPhoto implements IUserCoverPhoto
     /**
      * @inheritDoc
      */
-    public function getFilename()
+    public function getFilename(?bool $forceWebP = null): string
     {
+        $useWebP = $forceWebP || ($forceWebP === null && ImageUtil::browserSupportsWebP());
+
         return \substr(
             $this->coverPhotoHash,
             0,
             2
-        ) . '/' . $this->userID . '-' . $this->coverPhotoHash . '.' . $this->coverPhotoExtension;
+        ) . '/' . $this->userID . '-' . $this->coverPhotoHash . '.' . ($useWebP ? 'webp' : $this->coverPhotoExtension);
     }
 
     /**

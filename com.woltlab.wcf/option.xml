@@ -346,11 +346,6 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			<option name="module_user_cover_photo">
-				<categoryname>module.user</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
 			<option name="module_like">
 				<categoryname>module.community</categoryname>
 				<optiontype>boolean</optiontype>
@@ -1701,5 +1696,6 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		<option name="session_validate_user_agent" />
 		<option name="session_enable_virtualization" />
 		<option name="blacklist_hostnames" />
+		<option name="module_user_cover_photo" />
 	</delete>
 </data>

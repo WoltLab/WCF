@@ -446,10 +446,14 @@ BROWSERCONFIG;
                     throw new \InvalidArgumentException('The given coverPhoto is not an image');
                 }
                 $extension = ImageUtil::getExtensionByMimeType($imageData['mime']);
-                $newLocation = $style->getAssetPath() . 'coverPhoto.' . $extension;
+                $outputFilenameWithoutExtension = $style->getAssetPath() . 'coverPhoto';
+                $newLocation = "{$outputFilenameWithoutExtension}.{$extension}";
                 \rename($fileLocation, $newLocation);
+
+                $result = ImageUtil::createWebpVariant($newLocation, $outputFilenameWithoutExtension);
+
                 (new StyleEditor($style))->update([
-                    'coverPhotoExtension' => $extension,
+                    'coverPhotoExtension' => ($result === false) ? 'jpg' : $extension,
                 ]);
 
                 $file->setProcessed($newLocation);

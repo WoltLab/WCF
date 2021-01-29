@@ -27,6 +27,7 @@ use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
 use wcf\util\FileUtil;
+use wcf\util\ImageUtil;
 use wcf\util\StringUtil;
 use wcf\util\XML;
 use wcf\util\XMLWriter;
@@ -171,6 +172,16 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
         }
 
         return $variableNames;
+    }
+
+    public function createCoverPhotoVariant(?string $sourceLocation = null): void
+    {
+        if ($sourceLocation === null) {
+            $sourceLocation = $this->getCoverPhotoLocation(false);
+        }
+
+        $outputFilenameWithoutExtension = \preg_replace('~\.[a-z]+$~', '', $sourceLocation);
+        ImageUtil::createWebpVariant($sourceLocation, $outputFilenameWithoutExtension);
     }
 
     /**
@@ -694,18 +705,23 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
             $fileExtension = \pathinfo($data['coverPhoto'], \PATHINFO_EXTENSION);
             $index = $tar->getIndexByFilename($data['coverPhoto']);
             if ($index !== false && \in_array($fileExtension, self::VALID_IMAGE_EXTENSIONS)) {
-                $filename = $style->getAssetPath() . 'coverPhoto.' . $fileExtension;
-                $tar->extract($index, $filename);
-                FileUtil::makeWritable($filename);
+                $coverPhoto = "{$style->getAssetPath()}coverPhoto.{$fileExtension}";
+                $tar->extract($index, $coverPhoto);
+                FileUtil::makeWritable($coverPhoto);
 
-                if (\file_exists($filename)) {
+                if (\file_exists($coverPhoto)) {
                     try {
-                        if (($imageData = \getimagesize($filename)) !== false) {
+                        if (($imageData = \getimagesize($coverPhoto)) !== false) {
                             switch ($imageData[2]) {
                                 case \IMAGETYPE_PNG:
                                 case \IMAGETYPE_JPEG:
                                 case \IMAGETYPE_GIF:
                                     $style->update(['coverPhotoExtension' => $fileExtension]);
+
+                                    // Reload the style editor to include the cover photo.
+                                    $style = new self(new Style($style->styleID));
+                                    $style->createCoverPhotoVariant();
+                                    break;
                             }
                         }
                     } catch (SystemException $e) {
@@ -836,7 +852,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
         }
 
         // append cover photo
-        $coverPhoto = ($this->coverPhotoExtension) ? $this->getAssetPath() . 'coverPhoto.' . $this->coverPhotoExtension : '';
+        $coverPhoto = $this->coverPhotoExtension ? $this->getCoverPhotoLocation(false) : '';
         if ($coverPhoto && @\file_exists($coverPhoto)) {
             $styleTar->add($coverPhoto, '', FileUtil::addTrailingSlash(\dirname($coverPhoto)));
         }

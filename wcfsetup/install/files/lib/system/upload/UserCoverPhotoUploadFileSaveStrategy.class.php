@@ -75,7 +75,8 @@ class UserCoverPhotoUploadFileSaveStrategy implements IUploadFileSaveStrategy
                     UserCoverPhoto::MAX_WIDTH,
                     UserCoverPhoto::MAX_HEIGHT
                 );
-            } /** @noinspection PhpRedundantCatchClauseInspection */
+            }
+            /** @noinspection PhpRedundantCatchClauseInspection */
             catch (SystemException $e) {
                 $uploadFile->setValidationErrorType('maxSize');
 
@@ -118,13 +119,14 @@ class UserCoverPhotoUploadFileSaveStrategy implements IUploadFileSaveStrategy
             $this->coverPhoto = $userProfile->getCoverPhoto();
 
             // check images directory and create subdirectory if necessary
-            $dir = \dirname($this->coverPhoto->getLocation());
+            $coverPhoto = $this->coverPhoto->getLocation(false);
+            $dir = \dirname($coverPhoto);
             if (!@\file_exists($dir)) {
                 FileUtil::makePath($dir);
             }
 
             // move uploaded file
-            if (!@\copy($fileLocation, $this->coverPhoto->getLocation())) {
+            if (!@\copy($fileLocation, $coverPhoto)) {
                 // copy failed
                 @\unlink($fileLocation);
                 (new UserEditor($this->user))->update([
@@ -132,6 +134,24 @@ class UserCoverPhotoUploadFileSaveStrategy implements IUploadFileSaveStrategy
                     'coverPhotoExtension' => '',
                 ]);
                 $uploadFile->setValidationErrorType('uploadFailed');
+            }
+
+            $outputFilenameWithoutExtension = \preg_replace('~\.[a-z]+$~', '', $coverPhoto);
+            $result = ImageUtil::createWebpVariant($coverPhoto, $outputFilenameWithoutExtension);
+            if ($result !== null) {
+                $data = ['coverPhotoHasWebP' => 1];
+
+                // A fallback jpeg image was just created.
+                if ($result === false) {
+                    $data['coverPhotoExtension'] = 'jpg';
+                }
+
+                (new UserEditor($this->user))->update($data);
+
+                // force-reload the user profile to use a predictable code-path to fetch the cover photo
+                UserProfileRuntimeCache::getInstance()->removeObject($this->user->userID);
+                $userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->user->userID);
+                $this->coverPhoto = $userProfile->getCoverPhoto();
             }
 
             @\unlink($fileLocation);

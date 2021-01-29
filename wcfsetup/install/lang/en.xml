@@ -1691,8 +1691,6 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.desktop_notification_package_id.description"><![CDATA[Desktop Notifications will be enabled for the selected app only, including all other apps that use the exact same domain.]]></item>
 		<item name="wcf.acp.option.page_logo_link_to_app_default"><![CDATA[Page logo links to the start page of the active app]]></item>
 		<item name="wcf.acp.option.page_logo_link_to_app_default.description"><![CDATA[Disabling this option will cause the link to always point to the global landing page instead. This option enforces the behavior known from previous versions when disabled.]]></item>
-		<item name="wcf.acp.option.module_user_cover_photo"><![CDATA[Enable user cover photos]]></item>
-		<item name="wcf.acp.option.module_user_cover_photo.description"><![CDATA[Enables the display and upload of user profile cover photos.]]></item>
 		<item name="wcf.acp.option.image_allow_external_source"><![CDATA[Allow images from external sites]]></item>
 		<item name="wcf.acp.option.image_external_source_whitelist"><![CDATA[Allowed images from external sites]]></item>
 		<item name="wcf.acp.option.image_external_source_whitelist.description"><![CDATA[The listed domains will be exempt from blocking. Hostnames are exact matches only, a leading wildcard can be used to exclude an entire domain: <kbd>*.example.com</kbd> matches <kbd>example.com</kbd> and subdomains such as <kbd>foo.example.com</kbd> or <kbd>www.example.com</kbd>.<br>Enter one domain per line only.]]></item>
@@ -2814,7 +2812,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.copyStyle.confirmMessage"><![CDATA[Do you really want to duplicate the style <span class="confirmationObject">{$style->styleName}</span>?]]></item>
 		<item name="wcf.acp.style.coverPhoto"><![CDATA[Default Cover Photo]]></item>
 		<item name="wcf.acp.style.coverPhoto.delete.confirmMessage"><![CDATA[Do you really want to delete the default cover photo? Once deleted, the global default photo will be used instead.]]></item>
-		<item name="wcf.acp.style.coverPhoto.description"><![CDATA[The image must be at least {$coverPhotoMinWidth}×{$coverPhotoMinHeight} pixels large, acceptable image types are GIF, JPG, JPEG and PNG.]]></item>
+		<item name="wcf.acp.style.coverPhoto.description"><![CDATA[The image must be at least {$coverPhotoMinWidth}×{$coverPhotoMinHeight} pixels large, acceptable image types are GIF, JPG, JPEG, PNG and WEBP.]]></item>
 		<item name="wcf.acp.style.customAssets"><![CDATA[Additional Images]]></item>
 		<item name="wcf.acp.style.customAssets.description"><![CDATA[{literal}The uploaded images will be stored with the same file name within the <kbd>custom/</kbd> folder in the style’s image folder. You can retrieve the folder’s path within the CSS by using <kbd>#{$style_image_path}custom/</kbd>.{/literal}]]></item>
 		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[Do you really want to delete the style <span class="confirmationObject">{$style->styleName}</span>?]]></item>

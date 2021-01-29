@@ -296,7 +296,9 @@ class StyleAddForm extends AbstractForm
             'coverPhoto' => [
                 'size' => [
                     'minWidth' => UserCoverPhoto::MIN_WIDTH,
+                    'maxWidth' => UserCoverPhoto::MAX_WIDTH,
                     'minHeight' => UserCoverPhoto::MIN_HEIGHT,
+                    'maxHeight' => UserCoverPhoto::MAX_HEIGHT,
                 ],
             ],
             'favicon' => [
@@ -993,7 +995,9 @@ class StyleAddForm extends AbstractForm
             'newVariables' => $this->newVariables,
             'scrollOffsets' => $this->scrollOffsets,
             'coverPhotoMinHeight' => UserCoverPhoto::MIN_HEIGHT,
+            'coverPhotoMaxHeight' => UserCoverPhoto::MAX_HEIGHT,
             'coverPhotoMinWidth' => UserCoverPhoto::MIN_WIDTH,
+            'coverPhotoMaxWidth' => UserCoverPhoto::MAX_WIDTH,
         ]);
     }
 

@@ -1707,8 +1707,6 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.desktop_notification_package_id.description"><![CDATA[Desktop-Benachrichtigungen werden nur für die ausgewählte App aktiviert, einschließlich aller anderen Apps die auf der identischen Domain laufen.]]></item>
 		<item name="wcf.acp.option.page_logo_link_to_app_default"><![CDATA[Seitenlogo verlinkt auf die Startseite der aktiven App]]></item>
 		<item name="wcf.acp.option.page_logo_link_to_app_default.description"><![CDATA[Deaktiviere{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} diese Option, damit das Logo stets auf die globale Startseite verlinkt. Die Deaktivierung entspricht dem Verhalten in früheren Versionen.]]></item>
-		<item name="wcf.acp.option.module_user_cover_photo"><![CDATA[Titelbilder aktivieren]]></item>
-		<item name="wcf.acp.option.module_user_cover_photo.description"><![CDATA[Aktiviert die Darstellung und die Verwaltung von Titelbildern.]]></item>
 		<item name="wcf.acp.option.image_allow_external_source"><![CDATA[Bilder von externen Seiten erlauben]]></item>
 		<item name="wcf.acp.option.image_external_source_whitelist"><![CDATA[Erlaubte Bilder von externen Seiten]]></item>
 		<item name="wcf.acp.option.image_external_source_whitelist.description"><![CDATA[Die aufgeführten Domains sind von der Blockade ausgenommen. Der Abgleich erfolgt auf Basis der strikten Übereinstimmung, optional können Subdomains mit einem Platzhalter berücksichtigt werden: <kbd>*.example.com</kbd> umfasst sowohl <kbd>example.com</kbd> als auch Subdomains wie <kbd>foo.example.com</kbd> oder <kbd>www.example.com</kbd>.<br>Bitte nur eine Domain pro Zeile eingeben.]]></item>
@@ -2886,7 +2884,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.style.copyStyle.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Stil <span class="confirmationObject">{$style->styleName}</span> wirklich duplizieren?]]></item>
 		<item name="wcf.acp.style.coverPhoto"><![CDATA[Standard-Titelbild]]></item>
 		<item name="wcf.acp.style.coverPhoto.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Standard-Titelbild dieses Stils wirklich löschen? Nach dem Löschen wird das allgemeine, Stil-unabhängige Standard-Titelbild verwendet.]]></item>
-		<item name="wcf.acp.style.coverPhoto.description"><![CDATA[Das Bild muss mindestens {$coverPhotoMinWidth}×{$coverPhotoMinHeight} Pixel groß sein, als Bildformate sind GIF, JPG, JPEG und PNG zulässig.]]></item>
+		<item name="wcf.acp.style.coverPhoto.description"><![CDATA[Das Bild muss mindestens {$coverPhotoMinWidth}×{$coverPhotoMinHeight} Pixel groß sein, als Bildformate sind GIF, JPG, JPEG, PNG und WEBP zulässig.]]></item>
 		<item name="wcf.acp.style.customAssets"><![CDATA[Zusätzliche Bilder]]></item>
 		<item name="wcf.acp.style.customAssets.description"><![CDATA[{literal}Die hochgeladenen Bilder werden unter demselben Dateinamen im <kbd>custom/</kbd>-Ordner innerhalb des Stil-Ordners gespeichert. Im CSS muss der Ordner mit der Variable <kbd>#{$style_image_path}custom/</kbd> verlinkt werden.{/literal}]]></item>
 		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Stil <span class="confirmationObject">{$style->styleName}</span> wirklich löschen?]]></item>
