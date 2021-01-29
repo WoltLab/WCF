@@ -138,7 +138,7 @@ abstract class CustomOption extends Option implements ITitledObject {
 				return DateUtil::format(DateUtil::getDateTimeByTimestamp(gmmktime(12, 1, 1, $month, $day, $year)), DateUtil::DATE_FORMAT);
 			
 			case 'float':
-				return StringUtil::formatDouble(intval($this->optionValue));
+				return StringUtil::formatDouble(doubleval($this->optionValue));
 				
 			case 'integer':
 				return StringUtil::formatInteger(intval($this->optionValue));
