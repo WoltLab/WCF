@@ -88,6 +88,12 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 		<!-- Non-critical database adjustments. -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_db.php</instruction>
 		
+		<!-- Index updates for `wcf1_tag_to_object`. -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step1.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step2.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step3.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step4.php</instruction>
+		
 		<!-- Cleanup of the filesystem. -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_removeFiles.php</instruction>
 		
