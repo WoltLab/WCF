@@ -238,7 +238,7 @@ class DatabaseTable
                 $index->generatedName(\md5($this->getName() . '_' . $index->getColumns()[0]));
             }
 
-            if (isset($this->foreignKeys[$index->getName()])) {
+            if (isset($this->indices[$index->getName()])) {
                 throw new \InvalidArgumentException("Duplicate index with name '{$index->getName()}'.");
             }
 
