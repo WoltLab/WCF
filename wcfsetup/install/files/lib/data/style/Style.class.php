@@ -296,7 +296,7 @@ class Style extends DatabaseObject
     /**
      * Serve the WebP variant of the cover photo if the browser supports
      * it and the original cover photo is not a GIF.
-     * 
+     *
      * @since 5.4
      */
     protected function useWebP($forceWebP = null): bool
