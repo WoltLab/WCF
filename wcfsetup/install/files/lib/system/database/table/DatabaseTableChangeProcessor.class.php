@@ -506,7 +506,7 @@ class DatabaseTableChangeProcessor
                             if (!isset($this->indicesToDrop[$tableName])) {
                                 $this->indicesToDrop[$tableName] = [];
                             }
-                            $this->indicesToDrop[$tableName][] = $index;
+                            $this->indicesToDrop[$tableName][] = $matchingExistingIndex;
 
                             $this->splitNodeMessage .= "Dropped index '{$tableName}." . \implode(
                                 ',',
