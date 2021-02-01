@@ -10,6 +10,7 @@ use wcf\form\AbstractForm;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
@@ -76,6 +77,11 @@ class UserMergeForm extends AbstractForm
         $this->users = ClipboardHandler::getInstance()->getMarkedItems($this->objectTypeID);
         if (empty($this->users) || \count($this->users) < 2) {
             throw new IllegalLinkException();
+        }
+        foreach ($this->users as $user) {
+            if (!$user->canEdit()) {
+                throw new PermissionDeniedException();
+            }
         }
         $this->userIDs = \array_keys($this->users);
     }
