@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "596e3570b2867b29d0b01279d2e862d6",
+    "content-hash": "e4709905ac8ea201053fb79a4a25e0da",
     "packages": [
         {
             "name": "chrisjean/php-ico",
@@ -144,16 +144,16 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "dev-6.5-windows",
+            "version": "dev-6.5-woltlab",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WoltLab/guzzle",
-                "reference": "40e0ba7d933ec47237adb4f35ba363c3d8ffe453"
+                "reference": "6298db12d08c3c65c80971bb1b9f6f98e8a43c35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WoltLab/guzzle/zipball/40e0ba7d933ec47237adb4f35ba363c3d8ffe453",
-                "reference": "40e0ba7d933ec47237adb4f35ba363c3d8ffe453",
+                "url": "https://api.github.com/repos/WoltLab/guzzle/zipball/6298db12d08c3c65c80971bb1b9f6f98e8a43c35",
+                "reference": "6298db12d08c3c65c80971bb1b9f6f98e8a43c35",
                 "shasum": ""
             },
             "require": {
@@ -211,7 +211,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2020-10-09T13:06:06+00:00"
+            "time": "2021-02-01T09:42:51+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -1018,5 +1018,5 @@
         "php": "7.0.22",
         "ext-gd": "0"
     },
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }
