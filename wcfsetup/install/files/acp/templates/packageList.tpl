@@ -1,9 +1,5 @@
 {include file='header' pageTitle='wcf.acp.package.list'}
 
-<style>
-	.upgradeAvailable .icon { color: inherit; }
-</style>
-
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.addObject({
@@ -58,7 +54,12 @@
 	{/hascontent}
 </header>
 
-<p class="success upgradeAvailable"><span class="icon icon16 fa-arrow-circle-up"></span> {lang}wcf.acp.package.upgradeAvailable{/lang}</p>
+{if TIME_NOW < 1614600000}
+	{assign var='__supportExpired' value='warning'}
+{else}
+	{assign var='__supportExpired' value='error'}
+{/if}
+<div class="{$__supportExpired}">{lang}wcf.acp.package.upgradeRequired.{$__supportExpired}{/lang}</div>
 
 {hascontent}
 	<div class="paginationTop">
