@@ -504,7 +504,7 @@ class MySQLDatabaseEditor extends DatabaseEditor
         }
 
         // index name
-        if (!empty($indexName)) {
+        if (!empty($indexName) && $indexData['type'] !== 'PRIMARY') {
             $definition .= " `" . $indexName . "`";
         }
         // columns
