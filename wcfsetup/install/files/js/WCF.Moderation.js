@@ -667,14 +667,30 @@ if (COMPILER_TARGET_DEFAULT) {
 		/**
 		 * @see        WCF.Moderation.Management.init()
 		 */
-		init: function (queueID, redirectURL) {
-			this._buttonSelector = '#removeContent, #removeReport';
+		init: function (queueID, redirectURL, isMarkedAsConfirmed) {
+			this._buttonSelector = '#removeContent, #removeReport, #changeJustifiedStatus';
 			this._className = 'wcf\\data\\moderation\\queue\\ModerationQueueReportAction';
 			
 			this._super(queueID, redirectURL, 'wcf.moderation.report.{actionName}.confirmMessage');
 			
 			this._confirmationTemplate.removeContent = $('<div class="section"><dl><dt><label for="message">' + WCF.Language.get('wcf.moderation.report.removeContent.reason') + '</label></dt><dd><textarea name="message" id="message" cols="40" rows="3" /></dd></dl></div>');
 			this._confirmationTemplate.removeReport = $('<div class="section"><dl><dt></dt><dd><label><input type="checkbox" name="markAsJustified" id="markAsJustified" value="1"> ' + WCF.Language.get('wcf.moderation.report.removeReport.markAsJustified') + '</label></dd></dl></div>');
+			this._confirmationTemplate.changeJustifiedStatus = $('<div class="section"><dl><dt></dt><dd><label><input type="checkbox" name="markAsJustified" id="markAsJustified" value="1"' + (isMarkedAsConfirmed ? ' checked="checked"' : '') + '> ' + WCF.Language.get('wcf.moderation.report.changeJustifiedStatus.markAsJustified') + '</label></dd></dl></div>');
+		},
+
+		/**
+		 * @see        WCF.Moderation.Management._success()
+		 */
+		_success: function (data, textStatus, jqXHR) {
+			if (data.actionName === 'changeJustifiedStatus') {
+				var notification = new WCF.System.Notification();
+				notification.show(() => {
+					window.location.reload();
+				});
+			}
+			else {
+				this._super(data, textStatus, jqXHR);
+			}
 		}
 	});
 	

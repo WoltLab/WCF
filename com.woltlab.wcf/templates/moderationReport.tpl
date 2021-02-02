@@ -40,6 +40,9 @@
 							{if $queueManager->canRemoveContent($queue->getDecoratedObject())}<li class="jsOnly"><a id="removeContent" class="button"><span class="icon icon16 fa-times"></span> <span>{lang}wcf.moderation.report.removeContent{/lang}</span></a></li>{/if}
 							<li class="jsOnly"><a id="removeReport" class="button"><span class="icon icon16 fa-check"></span> <span>{lang}wcf.moderation.report.removeReport{/lang}</span></a></li>
 						{/if}
+						{if $queue->canChangeJustifiedStatus()}
+							<li class="jsOnly"><a id="changeJustifiedStatus" class="button"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.moderation.report.changeJustifiedStatus{/lang}</span></a></li>
+						{/if}
 						{if $queue->getAffectedObject()}<li><a href="{$queue->getAffectedObject()->getLink()}" class="button"><span class="icon icon16 fa-arrow-right"></span> <span>{lang}wcf.moderation.jumpToContent{/lang}</span></a></li>{/if}
 						
 						{event name='contentHeaderNavigation'}
@@ -114,12 +117,19 @@
 			'wcf.moderation.report.removeContent.reason': '{jslang}wcf.moderation.report.removeContent.reason{/jslang}',
 			'wcf.moderation.report.removeReport.confirmMessage': '{jslang}wcf.moderation.report.removeReport.confirmMessage{/jslang}',
 			'wcf.moderation.report.removeReport.markAsJustified': '{jslang}wcf.moderation.report.removeReport.markAsJustified{/jslang}',
+			'wcf.moderation.report.removeReport.confirmMessage': '{jslang}wcf.moderation.report.removeReport.confirmMessage{/jslang}',
+			'wcf.moderation.report.changeJustifiedStatus.markAsJustified': '{jslang}wcf.moderation.report.changeJustifiedStatus.markAsJustified{/jslang}',
+			'wcf.moderation.report.changeJustifiedStatus.confirmMessage': '{jslang}wcf.moderation.report.changeJustifiedStatus.confirmMessage{/jslang}',
 			'wcf.moderation.status.outstanding': '{jslang}wcf.moderation.status.outstanding{/jslang}',
 			'wcf.moderation.status.processing': '{jslang}wcf.moderation.status.processing{/jslang}',
 			'wcf.user.username.error.notFound': '{jslang __literal=true}wcf.user.username.error.notFound{/jslang}'
 		});
 		
-		new WCF.Moderation.Report.Management({@$queue->queueID}, '{link controller='ModerationList' encode=false}{/link}');
+		new WCF.Moderation.Report.Management(
+			{@$queue->queueID},
+			'{link controller='ModerationList' encode=false}{/link}',
+			{if $queue->markAsJustified}true{else}false{/if}
+		);
 	});
 </script>
 

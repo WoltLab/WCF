@@ -137,4 +137,14 @@ class ModerationQueue extends DatabaseObject
                 break;
         }
     }
+
+    /**
+     * Returns `true` if the `justified` status can be changed.
+     *
+     * @since   5.4
+     */
+    public function canChangeJustifiedStatus(): bool
+    {
+        return \in_array($this->status, [self::STATUS_REJECTED, self::STATUS_CONFIRMED]);
+    }
 }
