@@ -176,7 +176,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction
         }
 
         $data = [
-            'avatarName' => mb_substr($tmp['basename'], 0, 255),
+            'avatarName' => \mb_substr($tmp['basename'], 0, 255),
             'avatarExtension' => $tmp['extension'],
             'width' => $imageData[0],
             'height' => $imageData[1],
