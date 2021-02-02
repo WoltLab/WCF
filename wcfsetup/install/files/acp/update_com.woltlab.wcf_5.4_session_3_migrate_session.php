@@ -12,6 +12,19 @@
 use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 
+$sql = "SELECT  userID
+        FROM    wcf" . WCF_N . "_user_session
+        WHERE   sessionID = ?";
+$statement = WCF::getDB()->prepareStatement($sql);
+$statement->execute([
+    SessionHandler::getInstance()->sessionID,
+]);
+
+// Check if a matching session already exists.
+if ($statement->fetchSingleColumn() == SessionHandler::getInstance()->userID) {
+    return;
+}
+
 $sql = "INSERT INTO wcf" . WCF_N . "_user_session
                     (sessionID, userID, userAgent, ipAddress, lastActivityTime, sessionVariables)
         VALUES      (?, ?, ?, ?, ?, ?)";
