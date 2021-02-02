@@ -4314,6 +4314,9 @@ Dateianhänge:
 		<item name="wcf.moderation.report.reportedBy"><![CDATA[Gemeldet von]]></item>
 		<item name="wcf.moderation.report.reportedContent"><![CDATA[Gemeldeter Inhalt]]></item>
 		<item name="wcf.moderation.report.success"><![CDATA[Der Inhalt wurde den Moderatoren gemeldet.]]></item>
+		<item name="wcf.moderation.report.changeJustifiedStatus"><![CDATA[„Berechtigt“-Status ändern]]></item>
+		<item name="wcf.moderation.report.changeJustifiedStatus.markAsJustified"><![CDATA[Meldung als „Berechtigt“ markieren]]></item>
+		<item name="wcf.moderation.report.changeJustifiedStatus.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den „Berechtigt“-Status dieser Meldung wirklich ändern?]]></item>
 	</category>
 	<category name="wcf.notice">
 		<item name="wcf.notice.button.dismiss"><![CDATA[Hinweis dauerhaft ausblenden]]></item>

@@ -174,4 +174,35 @@ class ModerationQueueReportAction extends ModerationQueueAction
             'reported' => 1,
         ];
     }
+
+    /**
+     * Validates the `changeJustifiedStatus` action.
+     *
+     * @since   5.4
+     */
+    public function validateChangeJustifiedStatus(): void
+    {
+        $this->queue = $this->getSingleObject();
+        if (!$this->queue->canEdit() || !$this->queue->canChangeJustifiedStatus()) {
+            throw new PermissionDeniedException();
+        }
+
+        $this->readBoolean('markAsJustified', true);
+    }
+
+    /**
+     * Updates the `markAsJustified` status.
+     */
+    public function changeJustifiedStatus(): void
+    {
+        $additionalData = $this->queue->additionalData;
+        if (!\is_array($additionalData)) {
+            $additionalData = [];
+        }
+        $additionalData['markAsJustified'] = $this->parameters['markAsJustified'];
+
+        $this->queue->update([
+            'additionalData' => \serialize($additionalData),
+        ]);
+    }
 }
