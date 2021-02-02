@@ -4,6 +4,7 @@ namespace wcf\system\worker;
 
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\exception\SystemException;
+use wcf\system\exporter\IExporter;
 use wcf\system\importer\ImportHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -46,13 +47,21 @@ class ImportWorker extends AbstractWorker
         if ($this->importData === null) {
             throw new SystemException("import data missing");
         }
+    }
 
-        // get exporter
+    /**
+     * Initializes the exporter.
+     */
+    protected function bootstrap(): void
+    {
+        if ($this->exporter) {
+            throw new \BadMethodCallException('The exporter is already bootstrapped.');
+        }
+
         $this->exporter = ObjectTypeCache::getInstance()
             ->getObjectTypeByName('com.woltlab.wcf.exporter', $this->importData['exporterName'])
             ->getProcessor();
 
-        // set data
         $this->exporter->setData(
             $this->importData['dbHost'],
             $this->importData['dbUser'],
@@ -64,10 +73,8 @@ class ImportWorker extends AbstractWorker
         );
         $this->exporter->init();
 
-        // set user merge mode
         ImportHandler::getInstance()->setUserMergeMode($this->importData['userMergeMode']);
 
-        // set import hash
         ImportHandler::getInstance()->setImportHash(\substr(
             StringUtil::getHash(
                 $this->importData['dbHost'] . $this->importData['dbName'] . $this->importData['dbPrefix']
@@ -78,11 +85,24 @@ class ImportWorker extends AbstractWorker
     }
 
     /**
+     * Returns the exporter instance.
+     */
+    protected function getExporter(): IExporter
+    {
+        if (!$this->exporter) {
+            $this->bootstrap();
+            \assert($this->exporter);
+        }
+
+        return $this->exporter;
+    }
+
+    /**
      * @inheritDoc
      */
     protected function countObjects()
     {
-        $this->count = $this->exporter->countLoops($this->parameters['objectType']);
+        $this->count = $this->getExporter()->countLoops($this->parameters['objectType']);
     }
 
     /**
@@ -118,7 +138,7 @@ class ImportWorker extends AbstractWorker
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
 
-        $this->exporter->exportData($this->parameters['objectType'], $this->loopCount);
+        $this->getExporter()->exportData($this->parameters['objectType'], $this->loopCount);
     }
 
     /**
