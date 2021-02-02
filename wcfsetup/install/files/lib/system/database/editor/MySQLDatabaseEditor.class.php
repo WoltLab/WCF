@@ -402,7 +402,10 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 		else $definition = "KEY";
 		
 		// index name
-		if (!empty($indexName)) $definition .= " `".$indexName."`";
+		if (!empty($indexName) && $indexData['type'] !== 'PRIMARY') {
+			$definition .= " `".$indexName."`";
+		}
+		
 		// columns
 		$definition .= " (`".str_replace(',', '`,`', preg_replace('/\s+/', '', $indexData['columns']))."`)";
 		
