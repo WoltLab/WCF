@@ -19,19 +19,13 @@ use wcf\util\StyleUtil;
 /**
  * Provides access to the SCSS PHP compiler.
  *
- * @author  Alexander Ebert
- * @copyright   2001-2020 WoltLab GmbH
+ * @author  Tim Duesterhus, Alexander Ebert
+ * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Style
  */
-class StyleCompiler extends SingletonFactory
+final class StyleCompiler extends SingletonFactory
 {
-    /**
-     * SCSS compiler object
-     * @var Compiler
-     */
-    protected $compiler;
-
     /**
      * Contains all files, which are compiled for a style.
      * @var string[]
@@ -62,11 +56,22 @@ class StyleCompiler extends SingletonFactory
     protected function init()
     {
         require_once(WCF_DIR . 'lib/system/style/scssphp/scss.inc.php');
-        $this->compiler = new Compiler();
+    }
+
+    /**
+     * Returns a fresh instance of the scssphp compiler.
+     */
+    protected function makeCompiler(): Compiler
+    {
+        $compiler = new Compiler();
         // Disable Unicode support because of its horrible performance (7x slowdown)
         // https://github.com/WoltLab/WCF/pull/2736#issuecomment-416084079
-        $this->compiler->setEncoding('iso8859-1');
-        $this->compiler->setImportPaths([WCF_DIR]);
+        $compiler->setEncoding('iso8859-1');
+        $compiler->setImportPaths([WCF_DIR]);
+
+        $compiler->setOutputStyle(OutputStyle::COMPRESSED);
+
+        return $compiler;
     }
 
     /**
@@ -157,22 +162,23 @@ class StyleCompiler extends SingletonFactory
             $files[] = $customCustomSCSSFile;
         }
 
-        try {
-            $this->compileStylesheet(
-                FileUtil::addTrailingSlash($testFileDir) . 'style',
-                $files,
-                $variables,
-                $individualScss . (!empty($parameters['scss']) ? "\n" . $parameters['scss'] : ''),
-                static function ($content) use ($styleName) {
-                    $header = "/* stylesheet for '" . $styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT */";
+        $scss = "/*!\n\nstylesheet for '" . $styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
+        $scss .= $this->bootstrap($variables);
+        foreach ($files as $file) {
+            $scss .= $this->prepareFile($file);
+        }
+        $scss .= $individualScss;
+        if (!empty($parameters['scss'])) {
+            $scss .= "\n" . $parameters['scss'];
+        }
 
-                    return '@charset "UTF-8";' . "\n\n{$header}\n\n" . \preg_replace(
-                        '~^@charset "UTF-8";\r?\n~',
-                        '',
-                        $content
-                    );
-                }
+        try {
+            $css = $this->compileStylesheet(
+                $scss,
+                $variables
             );
+
+            $this->writeCss(FileUtil::addTrailingSlash($testFileDir) . 'style', $css);
         } catch (\Exception $e) {
             return $e;
         }
@@ -260,21 +266,22 @@ class StyleCompiler extends SingletonFactory
         $parameters = ['scss' => ''];
         EventHandler::getInstance()->fireAction($this, 'compile', $parameters);
 
-        $this->compileStylesheet(
-            $this->getFilenameForStyle($style),
-            $this->getFiles(),
-            $variables,
-            $individualScss . (!empty($parameters['scss']) ? "\n" . $parameters['scss'] : ''),
-            static function ($content) use ($style) {
-                $header = "/* stylesheet for '" . $style->styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT */";
+        $scss = "/*!\n\nstylesheet for '" . $style->styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
+        $scss .= $this->bootstrap($variables);
+        foreach ($this->getFiles() as $file) {
+            $scss .= $this->prepareFile($file);
+        }
+        $scss .= $individualScss;
+        if (!empty($parameters['scss'])) {
+            $scss .= "\n" . $parameters['scss'];
+        }
 
-                return '@charset "UTF-8";' . "\n\n{$header}\n\n" . \preg_replace(
-                    '~^@charset "UTF-8";\r?\n~',
-                    '',
-                    $content
-                );
-            }
+        $css = $this->compileStylesheet(
+            $scss,
+            $variables
         );
+
+        $this->writeCss($this->getFilenameForStyle($style), $css);
     }
 
     /**
@@ -310,33 +317,25 @@ class StyleCompiler extends SingletonFactory
             $variables[$row['variableName']] = $value;
         }
 
-        $variables['wcfFontFamily'] = $variables['wcfFontFamilyFallback'];
-        if (!empty($variables['wcfFontFamilyGoogle'])) {
-            $variables['wcfFontFamily'] = '"' . $variables['wcfFontFamilyGoogle'] . '", ' . $variables['wcfFontFamily'];
-        }
-
         $variables['style_image_path'] = "'../images/'";
 
-        $this->compileStylesheet(
-            WCF_DIR . 'acp/style/style',
-            $files,
-            $variables,
-            '',
-            static function ($content) {
-                // fix relative paths
-                $content = \str_replace('../font/', '../../font/', $content);
-                $content = \str_replace('../icon/', '../../icon/', $content);
-                $content = \preg_replace('~\.\./images/~', '../../images/', $content);
+        $scss = "/*!\n\nstylesheet for the admin panel, generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
+        $scss .= $this->bootstrap($variables);
+        foreach ($files as $file) {
+            $scss .= $this->prepareFile($file);
+        }
 
-                $header = "/* stylesheet for the admin panel, generated on " . \gmdate('r') . " -- DO NOT EDIT */";
-
-                return '@charset "UTF-8";' . "\n\n{$header}\n\n" . \preg_replace(
-                    '~^@charset "UTF-8";\r?\n~',
-                    '',
-                    $content
-                );
-            }
+        $css = $this->compileStylesheet(
+            $scss,
+            $variables
         );
+
+        // fix relative paths
+        $css = \str_replace('../font/', '../../font/', $css);
+        $css = \str_replace('../icon/', '../../icon/', $css);
+        $css = \preg_replace('~\.\./images/~', '../../images/', $css);
+
+        $this->writeCss(WCF_DIR . 'acp/style/style', $css);
     }
 
     /**
@@ -406,18 +405,13 @@ class StyleCompiler extends SingletonFactory
     }
 
     /**
-     * Prepares the style compiler by adding variables to environment.
-     *
-     * @param string[] $variables
-     * @return  string
+     * Reads in the SCSS files that form the foundation of the stylesheet. This includes
+     * the CSS reset and mixins.
      */
-    protected function bootstrap(array $variables)
+    protected function bootstrap(array $variables): string
     {
         // add reset like a boss
         $content = $this->prepareFile(WCF_DIR . 'style/bootstrap/reset.scss');
-
-        // apply style variables
-        $this->compiler->setVariables($variables);
 
         // add mixins
         $content .= $this->prepareFile(WCF_DIR . 'style/bootstrap/mixin.scss');
@@ -448,12 +442,8 @@ EOT;
 EOT;
         }
 
-        // add google fonts
-        if (!empty($variables['wcfFontFamilyGoogle']) && PACKAGE_ID) {
-            $cssFile = FontManager::getInstance()->getCssFilename(\substr($variables['wcfFontFamilyGoogle'], 1, -1));
-            if (\is_readable($cssFile)) {
-                $content .= \file_get_contents($cssFile);
-            }
+        if (!empty($variables['wcfFontFamilyGoogle'])) {
+            $content .= $this->getGoogleFontScss($variables['wcfFontFamilyGoogle']);
         }
 
         return $content;
@@ -479,16 +469,11 @@ EOT;
     }
 
     /**
-     * Compiles SCSS stylesheets into one CSS-stylesheet and writes them
-     * to filesystem. Please be aware not to append '.css' within $filename!
+     * Compiles the given SCSS into one CSS stylesheet and returns it.
      *
-     * @param string $filename
-     * @param string[] $files
      * @param string[] $variables
-     * @param string $individualScss
-     * @param callable $callback
      */
-    protected function compileStylesheet($filename, array $files, array $variables, $individualScss, callable $callback)
+    protected function compileStylesheet(string $scss, array $variables): string
     {
         foreach ($variables as &$value) {
             if (StringUtil::startsWith($value, '../')) {
@@ -530,43 +515,65 @@ EOT;
         // convert into numeric value for comparison, e.g. `3.1` -> `31`
         $variables['apiVersion'] = \str_replace('.', '', $variables['apiVersion']);
 
-        // build SCSS bootstrap
-        $scss = $this->bootstrap($variables);
-        foreach ($files as $file) {
-            $scss .= $this->prepareFile($file);
-        }
-
-        // append individual CSS/SCSS
-        if ($individualScss) {
-            $scss .= $individualScss;
-        }
+        $compiler = $this->makeCompiler();
+        $compiler->setVariables($variables);
 
         try {
-            $this->compiler->setOutputStyle(OutputStyle::COMPRESSED);
-            $content = $this->compiler->compile($scss);
+            return $compiler->compile($scss);
         } catch (\Exception $e) {
             throw new SystemException("Could not compile SCSS: " . $e->getMessage(), 0, '', $e);
         }
+    }
 
-        $content = $callback($content);
-
-        // write stylesheet
-        \file_put_contents($filename . '.css', $content);
-        FileUtil::makeWritable($filename . '.css');
-
-        // convert stylesheet to RTL
-        $content = StyleUtil::convertCSSToRTL($content);
+    /**
+     * Converts the given CSS into the RTL variant.
+     *
+     * This method differs from StyleUtil::convertCSSToRTL() in that it includes some fixes
+     * for elements that need to remain LTR.
+     *
+     * @see StyleUtil::convertCSSToRTL()
+     */
+    private function convertToRtl(string $css): string
+    {
+        $css = StyleUtil::convertCSSToRTL($css);
 
         // force code boxes to be always LTR
-        $content .= "\n/* RTL fix for code boxes */\n";
-        $content .= ".redactor-layer pre { direction: ltr; text-align: left; }\n";
-        $content .= ".codeBoxCode { direction: ltr; } \n";
-        $content .= ".codeBox .codeBoxCode { padding-left: 7ch; padding-right: 0; } \n";
-        $content .= ".codeBox .codeBoxCode > code .codeBoxLine > a { margin-left: -7ch; margin-right: 0; text-align: right; } \n";
+        $css .= "\n/* RTL fix for code boxes */\n";
+        $css .= ".redactor-layer pre { direction: ltr; text-align: left; }\n";
+        $css .= ".codeBoxCode { direction: ltr; } \n";
+        $css .= ".codeBox .codeBoxCode { padding-left: 7ch; padding-right: 0; } \n";
+        $css .= ".codeBox .codeBoxCode > code .codeBoxLine > a { margin-left: -7ch; margin-right: 0; text-align: right; } \n";
 
-        // write stylesheet for RTL
-        \file_put_contents($filename . '-rtl.css', $content);
-        FileUtil::makeWritable($filename . '-rtl.css');
+        return $css;
+    }
+
+    /**
+     * Writes the given css into the file with the given prefix.
+     */
+    private function writeCss(string $filePrefix, string $css): void
+    {
+        \file_put_contents($filePrefix . '.css', $css);
+        FileUtil::makeWritable($filePrefix . '.css');
+
+        \file_put_contents($filePrefix . '-rtl.css', $this->convertToRtl($css));
+        FileUtil::makeWritable($filePrefix . '-rtl.css');
+    }
+
+    /**
+     * Returns the SCSS required to load a Google font.
+     */
+    private function getGoogleFontScss(string $font): string
+    {
+        if (!PACKAGE_ID) {
+            return '';
+        }
+
+        $cssFile = FontManager::getInstance()->getCssFilename($font);
+        if (!\is_readable($cssFile)) {
+            return '';
+        }
+
+        return \file_get_contents($cssFile);
     }
 
     /**
