@@ -163,7 +163,7 @@ final class StyleCompiler extends SingletonFactory
         }
 
         $scss = "/*!\n\nstylesheet for '" . $styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
-        $scss .= $this->bootstrap();
+        $scss .= $this->bootstrap($variables);
         foreach ($files as $file) {
             $scss .= $this->prepareFile($file);
         }
@@ -267,7 +267,7 @@ final class StyleCompiler extends SingletonFactory
         EventHandler::getInstance()->fireAction($this, 'compile', $parameters);
 
         $scss = "/*!\n\nstylesheet for '" . $style->styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
-        $scss .= $this->bootstrap();
+        $scss .= $this->bootstrap($variables);
         foreach ($this->getFiles() as $file) {
             $scss .= $this->prepareFile($file);
         }
@@ -325,7 +325,7 @@ final class StyleCompiler extends SingletonFactory
         $variables['style_image_path'] = "'../images/'";
 
         $scss = "/*!\n\nstylesheet for the admin panel, generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
-        $scss .= $this->bootstrap();
+        $scss .= $this->bootstrap($variables);
         foreach ($files as $file) {
             $scss .= $this->prepareFile($file);
         }
@@ -413,7 +413,7 @@ final class StyleCompiler extends SingletonFactory
      * Reads in the SCSS files that form the foundation of the stylesheet. This includes
      * the CSS reset and mixins.
      */
-    protected function bootstrap(): string
+    protected function bootstrap(array $variables): string
     {
         // add reset like a boss
         $content = $this->prepareFile(WCF_DIR . 'style/bootstrap/reset.scss');
@@ -447,12 +447,8 @@ EOT;
 EOT;
         }
 
-        // add google fonts
-        if (!empty($variables['wcfFontFamilyGoogle']) && PACKAGE_ID) {
-            $cssFile = FontManager::getInstance()->getCssFilename(\substr($variables['wcfFontFamilyGoogle'], 1, -1));
-            if (\is_readable($cssFile)) {
-                $content .= \file_get_contents($cssFile);
-            }
+        if (!empty($variables['wcfFontFamilyGoogle'])) {
+            $content .= $this->getGoogleFontScss($variables['wcfFontFamilyGoogle']);
         }
 
         return $content;
@@ -566,6 +562,23 @@ EOT;
 
         \file_put_contents($filePrefix . '-rtl.css', $this->convertToRtl($css));
         FileUtil::makeWritable($filePrefix . '-rtl.css');
+    }
+
+    /**
+     * Returns the SCSS required to load a Google font.
+     */
+    private function getGoogleFontScss(string $font): string
+    {
+        if (!PACKAGE_ID) {
+            return '';
+        }
+
+        $cssFile = FontManager::getInstance()->getCssFilename($font);
+        if (!\is_readable($cssFile)) {
+            return '';
+        }
+
+        return \file_get_contents($cssFile);
     }
 
     /**
