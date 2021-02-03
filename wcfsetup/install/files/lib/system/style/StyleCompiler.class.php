@@ -19,8 +19,8 @@ use wcf\util\StyleUtil;
 /**
  * Provides access to the SCSS PHP compiler.
  *
- * @author  Alexander Ebert
- * @copyright   2001-2020 WoltLab GmbH
+ * @author  Tim Duesterhus, Alexander Ebert
+ * @copyright   2001-2021 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Style
  */
@@ -162,11 +162,19 @@ final class StyleCompiler extends SingletonFactory
             $files[] = $customCustomSCSSFile;
         }
 
+        $scss = $this->bootstrap();
+        foreach ($files as $file) {
+            $scss .= $this->prepareFile($file);
+        }
+        $scss .= $individualScss;
+        if (!empty($parameters['scss'])) {
+            $scss .= "\n" . $parameters['scss'];
+        }
+
         try {
             $css = $this->compileStylesheet(
-                $files,
-                $variables,
-                $individualScss . (!empty($parameters['scss']) ? "\n" . $parameters['scss'] : ''),
+                $scss,
+                $variables
             );
 
             $header = "/* stylesheet for '" . $styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT */";
@@ -261,10 +269,18 @@ final class StyleCompiler extends SingletonFactory
         $parameters = ['scss' => ''];
         EventHandler::getInstance()->fireAction($this, 'compile', $parameters);
 
+        $scss = $this->bootstrap();
+        foreach ($this->getFiles() as $file) {
+            $scss .= $this->prepareFile($file);
+        }
+        $scss .= $individualScss;
+        if (!empty($parameters['scss'])) {
+            $scss .= "\n" . $parameters['scss'];
+        }
+
         $css = $this->compileStylesheet(
-            $this->getFiles(),
-            $variables,
-            $individualScss . (!empty($parameters['scss']) ? "\n" . $parameters['scss'] : '')
+            $scss,
+            $variables
         );
 
         $header = "/* stylesheet for '" . $style->styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT */";
@@ -314,10 +330,14 @@ final class StyleCompiler extends SingletonFactory
 
         $variables['style_image_path'] = "'../images/'";
 
+        $scss = $this->bootstrap();
+        foreach ($files as $file) {
+            $scss .= $this->prepareFile($file);
+        }
+
         $css = $this->compileStylesheet(
-            $files,
-            $variables,
-            ''
+            $scss,
+            $variables
         );
 
         // fix relative paths
@@ -479,13 +499,11 @@ EOT;
     }
 
     /**
-     * Compiles the given SCSS files into one CSS stylesheet and returns it.
+     * Compiles the given SCSS into one CSS stylesheet and returns it.
      *
-     * @param string[] $files
      * @param string[] $variables
-     * @param string $individualScss
      */
-    protected function compileStylesheet(array $files, array $variables, $individualScss): string
+    protected function compileStylesheet(string $scss, array $variables): string
     {
         foreach ($variables as &$value) {
             if (StringUtil::startsWith($value, '../')) {
@@ -527,19 +545,8 @@ EOT;
         // convert into numeric value for comparison, e.g. `3.1` -> `31`
         $variables['apiVersion'] = \str_replace('.', '', $variables['apiVersion']);
 
-        // build SCSS bootstrap
         $compiler = $this->makeCompiler();
         $compiler->setVariables($variables);
-
-        $scss = $this->bootstrap();
-        foreach ($files as $file) {
-            $scss .= $this->prepareFile($file);
-        }
-
-        // append individual CSS/SCSS
-        if ($individualScss) {
-            $scss .= $individualScss;
-        }
 
         try {
             return $compiler->compile($scss);
