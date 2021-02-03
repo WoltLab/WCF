@@ -162,7 +162,7 @@ final class StyleUtil
     }
 
     /**
-     * Updates the acp style file.
+     * @deprecated 5.4 Call StyleCompiler::compileACP() directly.
      */
     public static function updateStyleFile()
     {
