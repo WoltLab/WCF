@@ -163,17 +163,17 @@ final class StyleCompiler extends SingletonFactory
         }
 
         try {
-            $this->compileStylesheet(
-                FileUtil::addTrailingSlash($testFileDir) . 'style',
+            $css = $this->compileStylesheet(
                 $files,
                 $variables,
                 $individualScss . (!empty($parameters['scss']) ? "\n" . $parameters['scss'] : ''),
-                function ($css) use ($styleName) {
-                    $header = "/* stylesheet for '" . $styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT */";
-
-                    return $this->injectHeader($header, $css);
-                }
             );
+
+            $header = "/* stylesheet for '" . $styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT */";
+
+            $css = $this->injectHeader($header, $css);
+
+            $this->writeCss(FileUtil::addTrailingSlash($testFileDir) . 'style', $css);
         } catch (\Exception $e) {
             return $e;
         }
@@ -261,17 +261,17 @@ final class StyleCompiler extends SingletonFactory
         $parameters = ['scss' => ''];
         EventHandler::getInstance()->fireAction($this, 'compile', $parameters);
 
-        $this->compileStylesheet(
-            $this->getFilenameForStyle($style),
+        $css = $this->compileStylesheet(
             $this->getFiles(),
             $variables,
-            $individualScss . (!empty($parameters['scss']) ? "\n" . $parameters['scss'] : ''),
-            function ($css) use ($style) {
-                $header = "/* stylesheet for '" . $style->styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT */";
-
-                return $this->injectHeader($header, $css);
-            }
+            $individualScss . (!empty($parameters['scss']) ? "\n" . $parameters['scss'] : '')
         );
+
+        $header = "/* stylesheet for '" . $style->styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT */";
+
+        $css = $this->injectHeader($header, $css);
+
+        $this->writeCss($this->getFilenameForStyle($style), $css);
     }
 
     /**
@@ -314,22 +314,22 @@ final class StyleCompiler extends SingletonFactory
 
         $variables['style_image_path'] = "'../images/'";
 
-        $this->compileStylesheet(
-            WCF_DIR . 'acp/style/style',
+        $css = $this->compileStylesheet(
             $files,
             $variables,
-            '',
-            function ($css) {
-                // fix relative paths
-                $css = \str_replace('../font/', '../../font/', $css);
-                $css = \str_replace('../icon/', '../../icon/', $css);
-                $css = \preg_replace('~\.\./images/~', '../../images/', $css);
-
-                $header = "/* stylesheet for the admin panel, generated on " . \gmdate('r') . " -- DO NOT EDIT */";
-
-                return $this->injectHeader($header, $css);
-            }
+            ''
         );
+
+        // fix relative paths
+        $css = \str_replace('../font/', '../../font/', $css);
+        $css = \str_replace('../icon/', '../../icon/', $css);
+        $css = \preg_replace('~\.\./images/~', '../../images/', $css);
+
+        $header = "/* stylesheet for the admin panel, generated on " . \gmdate('r') . " -- DO NOT EDIT */";
+
+        $css = $this->injectHeader($header, $css);
+
+        $this->writeCss(WCF_DIR . 'acp/style/style', $css);
     }
 
     /**
@@ -479,16 +479,13 @@ EOT;
     }
 
     /**
-     * Compiles SCSS stylesheets into one CSS-stylesheet and writes them
-     * to filesystem. Please be aware not to append '.css' within $filename!
+     * Compiles the given SCSS files into one CSS stylesheet and returns it.
      *
-     * @param string $filename
      * @param string[] $files
      * @param string[] $variables
      * @param string $individualScss
-     * @param callable $callback
      */
-    protected function compileStylesheet($filename, array $files, array $variables, $individualScss, callable $callback)
+    protected function compileStylesheet(array $files, array $variables, $individualScss): string
     {
         foreach ($variables as &$value) {
             if (StringUtil::startsWith($value, '../')) {
@@ -545,14 +542,10 @@ EOT;
         }
 
         try {
-            $content = $compiler->compile($scss);
+            return $compiler->compile($scss);
         } catch (\Exception $e) {
             throw new SystemException("Could not compile SCSS: " . $e->getMessage(), 0, '', $e);
         }
-
-        $content = $callback($content);
-
-        $this->writeCss($filename, $content);
     }
 
     /**
