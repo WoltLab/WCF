@@ -168,14 +168,10 @@ final class StyleCompiler extends SingletonFactory
                 $files,
                 $variables,
                 $individualScss . (!empty($parameters['scss']) ? "\n" . $parameters['scss'] : ''),
-                static function ($content) use ($styleName) {
+                function ($css) use ($styleName) {
                     $header = "/* stylesheet for '" . $styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT */";
 
-                    return '@charset "UTF-8";' . "\n\n{$header}\n\n" . \preg_replace(
-                        '~^@charset "UTF-8";\r?\n~',
-                        '',
-                        $content
-                    );
+                    return $this->injectHeader($header, $css);
                 }
             );
         } catch (\Exception $e) {
@@ -270,14 +266,10 @@ final class StyleCompiler extends SingletonFactory
             $this->getFiles(),
             $variables,
             $individualScss . (!empty($parameters['scss']) ? "\n" . $parameters['scss'] : ''),
-            static function ($content) use ($style) {
+            function ($css) use ($style) {
                 $header = "/* stylesheet for '" . $style->styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT */";
 
-                return '@charset "UTF-8";' . "\n\n{$header}\n\n" . \preg_replace(
-                    '~^@charset "UTF-8";\r?\n~',
-                    '',
-                    $content
-                );
+                return $this->injectHeader($header, $css);
             }
         );
     }
@@ -327,21 +319,29 @@ final class StyleCompiler extends SingletonFactory
             $files,
             $variables,
             '',
-            static function ($content) {
+            function ($css) {
                 // fix relative paths
-                $content = \str_replace('../font/', '../../font/', $content);
-                $content = \str_replace('../icon/', '../../icon/', $content);
-                $content = \preg_replace('~\.\./images/~', '../../images/', $content);
+                $css = \str_replace('../font/', '../../font/', $css);
+                $css = \str_replace('../icon/', '../../icon/', $css);
+                $css = \preg_replace('~\.\./images/~', '../../images/', $css);
 
                 $header = "/* stylesheet for the admin panel, generated on " . \gmdate('r') . " -- DO NOT EDIT */";
 
-                return '@charset "UTF-8";' . "\n\n{$header}\n\n" . \preg_replace(
-                    '~^@charset "UTF-8";\r?\n~',
-                    '',
-                    $content
-                );
+                return $this->injectHeader($header, $css);
             }
         );
+    }
+
+    /**
+     * Injects the given header string into the given css while ensuring
+     * that the charset at-rule remains at the beginning.
+     */
+    private function injectHeader(string $header, string $css): string
+    {
+        // Strip charset at-rule.
+        $css = \preg_replace('~^@charset "UTF-8";\r?\n~', '', $css);
+
+        return '@charset "UTF-8";' . "\n\n{$header}\n\n{$css}";
     }
 
     /**
