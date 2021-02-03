@@ -317,11 +317,6 @@ final class StyleCompiler extends SingletonFactory
             $variables[$row['variableName']] = $value;
         }
 
-        $variables['wcfFontFamily'] = $variables['wcfFontFamilyFallback'];
-        if (!empty($variables['wcfFontFamilyGoogle'])) {
-            $variables['wcfFontFamily'] = '"' . $variables['wcfFontFamilyGoogle'] . '", ' . $variables['wcfFontFamily'];
-        }
-
         $variables['style_image_path'] = "'../images/'";
 
         $scss = "/*!\n\nstylesheet for the admin panel, generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
