@@ -382,7 +382,7 @@ class I18nPlural
     {
         $f = self::getF($n);
 
-        if ($f === 0 && $n % 10 === 1 && !($n % 100 === 11) || !($f === 0)) {
+        if (($f === 0 && $n % 10 === 1 && !($n % 100 === 11)) || !($f === 0)) {
             return self::PLURAL_ONE;
         }
     }
