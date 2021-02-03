@@ -552,15 +552,7 @@ EOT;
 
         $content = $callback($content);
 
-        // write stylesheet
-        \file_put_contents($filename . '.css', $content);
-        FileUtil::makeWritable($filename . '.css');
-
-        $content = $this->convertToRtl($content);
-
-        // write stylesheet for RTL
-        \file_put_contents($filename . '-rtl.css', $content);
-        FileUtil::makeWritable($filename . '-rtl.css');
+        $this->writeCss($filename, $content);
     }
 
     /**
@@ -583,6 +575,18 @@ EOT;
         $css .= ".codeBox .codeBoxCode > code .codeBoxLine > a { margin-left: -7ch; margin-right: 0; text-align: right; } \n";
 
         return $css;
+    }
+
+    /**
+     * Writes the given css into the file with the given prefix.
+     */
+    private function writeCss(string $filePrefix, string $css): void
+    {
+        \file_put_contents($filePrefix . '.css', $css);
+        FileUtil::makeWritable($filePrefix . '.css');
+
+        \file_put_contents($filePrefix . '-rtl.css', $this->convertToRtl($css));
+        FileUtil::makeWritable($filePrefix . '-rtl.css');
     }
 
     /**
