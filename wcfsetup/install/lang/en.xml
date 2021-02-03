@@ -1372,10 +1372,10 @@
 		<item name="wcf.acp.package.validation.failed"><![CDATA[The package cannot be installed, please review the validation results below.]]></item>
 		<item name="wcf.acp.package.upgradeRequired.warning"><![CDATA[<p style="font-size: 18px; font-weight: 600">The security support is expiring!</p>
 <p><br></p>
-<p>This version is severely outdated and will only receive security updates until <strong>March 1, 2020</strong> before this version is permanently discontinued. It is strongly recommended to upgrade to a newer version to continue benefiting from security updates and support for newer PHP versions.</p>]]></item>
+<p>This version is severely outdated and will only receive security updates until <strong>March 1, 2021</strong> before this version is permanently discontinued. It is strongly recommended to upgrade to a newer version to continue benefiting from security updates and support for newer PHP versions.</p>]]></item>
 		<item name="wcf.acp.package.upgradeRequired.error"><![CDATA[<p style="font-size: 18px; font-weight: 600">The security support has expired!</p>
 <p><br></p>
-<p>This version is severely outdated and will no longer receive security updates since <strong>March 1, 2020</strong>! It is strongly recommended to upgrade to a newer version to continue benefiting from security updates and support for newer PHP versions.</p>]]></item>
+<p>This version is severely outdated and will no longer receive security updates since <strong>March 1, 2021</strong>! It is strongly recommended to upgrade to a newer version to continue benefiting from security updates and support for newer PHP versions.</p>]]></item>
 	</category>
 	
 	<category name="wcf.acp.paidSubscription">
