@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Language
  * @since   5.3
- * @see https://unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html
+ * @see https://unicode-org.github.io/cldr-staging/charts/latest/supplemental/language_plural_rules.html
  */
 class I18nPlural
 {
