@@ -556,19 +556,33 @@ EOT;
         \file_put_contents($filename . '.css', $content);
         FileUtil::makeWritable($filename . '.css');
 
-        // convert stylesheet to RTL
-        $content = StyleUtil::convertCSSToRTL($content);
-
-        // force code boxes to be always LTR
-        $content .= "\n/* RTL fix for code boxes */\n";
-        $content .= ".redactor-layer pre { direction: ltr; text-align: left; }\n";
-        $content .= ".codeBoxCode { direction: ltr; } \n";
-        $content .= ".codeBox .codeBoxCode { padding-left: 7ch; padding-right: 0; } \n";
-        $content .= ".codeBox .codeBoxCode > code .codeBoxLine > a { margin-left: -7ch; margin-right: 0; text-align: right; } \n";
+        $content = $this->convertToRtl($content);
 
         // write stylesheet for RTL
         \file_put_contents($filename . '-rtl.css', $content);
         FileUtil::makeWritable($filename . '-rtl.css');
+    }
+
+    /**
+     * Converts the given CSS into the RTL variant.
+     *
+     * This method differs from StyleUtil::convertCSSToRTL() in that it includes some fixes
+     * for elements that need to remain LTR.
+     *
+     * @see StyleUtil::convertCSSToRTL()
+     */
+    private function convertToRtl(string $css): string
+    {
+        $css = StyleUtil::convertCSSToRTL($css);
+
+        // force code boxes to be always LTR
+        $css .= "\n/* RTL fix for code boxes */\n";
+        $css .= ".redactor-layer pre { direction: ltr; text-align: left; }\n";
+        $css .= ".codeBoxCode { direction: ltr; } \n";
+        $css .= ".codeBox .codeBoxCode { padding-left: 7ch; padding-right: 0; } \n";
+        $css .= ".codeBox .codeBoxCode > code .codeBoxLine > a { margin-left: -7ch; margin-right: 0; text-align: right; } \n";
+
+        return $css;
     }
 
     /**
