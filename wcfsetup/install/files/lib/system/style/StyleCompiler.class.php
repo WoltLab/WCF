@@ -27,12 +27,6 @@ use wcf\util\StyleUtil;
 final class StyleCompiler extends SingletonFactory
 {
     /**
-     * SCSS compiler object
-     * @var Compiler
-     */
-    protected $compiler;
-
-    /**
      * Contains all files, which are compiled for a style.
      * @var string[]
      */
@@ -62,11 +56,22 @@ final class StyleCompiler extends SingletonFactory
     protected function init()
     {
         require_once(WCF_DIR . 'lib/system/style/scssphp/scss.inc.php');
-        $this->compiler = new Compiler();
+    }
+
+    /**
+     * Returns a fresh instance of the scssphp compiler.
+     */
+    protected function makeCompiler(): Compiler
+    {
+        $compiler = new Compiler();
         // Disable Unicode support because of its horrible performance (7x slowdown)
         // https://github.com/WoltLab/WCF/pull/2736#issuecomment-416084079
-        $this->compiler->setEncoding('iso8859-1');
-        $this->compiler->setImportPaths([WCF_DIR]);
+        $compiler->setEncoding('iso8859-1');
+        $compiler->setImportPaths([WCF_DIR]);
+
+        $compiler->setOutputStyle(OutputStyle::COMPRESSED);
+
+        return $compiler;
     }
 
     /**
@@ -406,18 +411,13 @@ final class StyleCompiler extends SingletonFactory
     }
 
     /**
-     * Prepares the style compiler by adding variables to environment.
-     *
-     * @param string[] $variables
-     * @return  string
+     * Reads in the SCSS files that form the foundation of the stylesheet. This includes
+     * the CSS reset and mixins.
      */
-    protected function bootstrap(array $variables)
+    protected function bootstrap(): string
     {
         // add reset like a boss
         $content = $this->prepareFile(WCF_DIR . 'style/bootstrap/reset.scss');
-
-        // apply style variables
-        $this->compiler->setVariables($variables);
 
         // add mixins
         $content .= $this->prepareFile(WCF_DIR . 'style/bootstrap/mixin.scss');
@@ -531,7 +531,10 @@ EOT;
         $variables['apiVersion'] = \str_replace('.', '', $variables['apiVersion']);
 
         // build SCSS bootstrap
-        $scss = $this->bootstrap($variables);
+        $compiler = $this->makeCompiler();
+        $compiler->setVariables($variables);
+
+        $scss = $this->bootstrap();
         foreach ($files as $file) {
             $scss .= $this->prepareFile($file);
         }
@@ -542,8 +545,7 @@ EOT;
         }
 
         try {
-            $this->compiler->setOutputStyle(OutputStyle::COMPRESSED);
-            $content = $this->compiler->compile($scss);
+            $content = $compiler->compile($scss);
         } catch (\Exception $e) {
             throw new SystemException("Could not compile SCSS: " . $e->getMessage(), 0, '', $e);
         }
