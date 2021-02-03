@@ -24,7 +24,7 @@ use wcf\util\StyleUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Style
  */
-class StyleCompiler extends SingletonFactory
+final class StyleCompiler extends SingletonFactory
 {
     /**
      * SCSS compiler object
