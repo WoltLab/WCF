@@ -530,13 +530,13 @@ class StyleAddForm extends AbstractForm
             $this->parseOverrides();
         }
 
+        $this->downloadGoogleFont();
+
         $this->validateIndividualScss();
 
         $this->validateApiVersion();
 
         $this->validateUploads();
-
-        $this->downloadGoogleFont();
     }
 
     /**
