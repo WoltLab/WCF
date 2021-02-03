@@ -162,7 +162,8 @@ final class StyleCompiler extends SingletonFactory
             $files[] = $customCustomSCSSFile;
         }
 
-        $scss = $this->bootstrap();
+        $scss = "/*!\n\nstylesheet for '" . $styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
+        $scss .= $this->bootstrap();
         foreach ($files as $file) {
             $scss .= $this->prepareFile($file);
         }
@@ -176,10 +177,6 @@ final class StyleCompiler extends SingletonFactory
                 $scss,
                 $variables
             );
-
-            $header = "/* stylesheet for '" . $styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT */";
-
-            $css = $this->injectHeader($header, $css);
 
             $this->writeCss(FileUtil::addTrailingSlash($testFileDir) . 'style', $css);
         } catch (\Exception $e) {
@@ -269,7 +266,8 @@ final class StyleCompiler extends SingletonFactory
         $parameters = ['scss' => ''];
         EventHandler::getInstance()->fireAction($this, 'compile', $parameters);
 
-        $scss = $this->bootstrap();
+        $scss = "/*!\n\nstylesheet for '" . $style->styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
+        $scss .= $this->bootstrap();
         foreach ($this->getFiles() as $file) {
             $scss .= $this->prepareFile($file);
         }
@@ -282,10 +280,6 @@ final class StyleCompiler extends SingletonFactory
             $scss,
             $variables
         );
-
-        $header = "/* stylesheet for '" . $style->styleName . "', generated on " . \gmdate('r') . " -- DO NOT EDIT */";
-
-        $css = $this->injectHeader($header, $css);
 
         $this->writeCss($this->getFilenameForStyle($style), $css);
     }
@@ -330,7 +324,8 @@ final class StyleCompiler extends SingletonFactory
 
         $variables['style_image_path'] = "'../images/'";
 
-        $scss = $this->bootstrap();
+        $scss = "/*!\n\nstylesheet for the admin panel, generated on " . \gmdate('r') . " -- DO NOT EDIT\n\n*/\n";
+        $scss .= $this->bootstrap();
         foreach ($files as $file) {
             $scss .= $this->prepareFile($file);
         }
@@ -345,23 +340,7 @@ final class StyleCompiler extends SingletonFactory
         $css = \str_replace('../icon/', '../../icon/', $css);
         $css = \preg_replace('~\.\./images/~', '../../images/', $css);
 
-        $header = "/* stylesheet for the admin panel, generated on " . \gmdate('r') . " -- DO NOT EDIT */";
-
-        $css = $this->injectHeader($header, $css);
-
         $this->writeCss(WCF_DIR . 'acp/style/style', $css);
-    }
-
-    /**
-     * Injects the given header string into the given css while ensuring
-     * that the charset at-rule remains at the beginning.
-     */
-    private function injectHeader(string $header, string $css): string
-    {
-        // Strip charset at-rule.
-        $css = \preg_replace('~^@charset "UTF-8";\r?\n~', '', $css);
-
-        return '@charset "UTF-8";' . "\n\n{$header}\n\n{$css}";
     }
 
     /**
