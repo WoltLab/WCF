@@ -57,7 +57,7 @@ class BooleanUserGroupOptionType extends BooleanOptionType implements IUserGroup
         }
 
         // don't save if values are equal or $defaultValue is better
-        if ($defaultValue == $groupValue || $defaultValue && !$groupValue) {
+        if ($defaultValue == $groupValue || ($defaultValue && !$groupValue)) {
             return;
         }
 
