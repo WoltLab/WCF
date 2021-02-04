@@ -179,6 +179,16 @@ $tables = [
                 ->referencedColumns(['setupID'])
                 ->onDelete('CASCADE'),
         ]),
+
+    PartialDatabaseTable::create('wcf1_box')
+        ->columns([
+            DefaultFalseBooleanDatabaseTableColumn::create('invertPermissions'),
+        ]),
+
+    PartialDatabaseTable::create('wcf1_page')
+        ->columns([
+            DefaultFalseBooleanDatabaseTableColumn::create('invertPermissions'),
+        ]),
 ];
 
 (new DatabaseTableChangeProcessor(

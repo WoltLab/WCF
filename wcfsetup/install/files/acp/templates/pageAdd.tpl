@@ -527,7 +527,7 @@
 		
 		{if $action != 'edit' || $page->pageType != 'system'}
 			<div id="acl" class="tabMenuContent">
-				{include file='aclSimple'}
+				{include file='aclSimple' __supportsInvertedPermissions=true}
 			</div>
 		{/if}
 		

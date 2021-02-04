@@ -206,6 +206,7 @@ class PageEditForm extends PageAddForm
             'availableDuringOfflineMode' => $this->availableDuringOfflineMode,
             'allowSpidersToIndex' => $this->allowSpidersToIndex,
             'enableShareButtons' => $this->enableShareButtons,
+            'invertPermissions' => $this->invertPermissions,
         ];
 
         if ($this->pageType == 'system') {
@@ -326,6 +327,7 @@ class PageEditForm extends PageAddForm
             }
 
             $this->aclValues = SimpleAclHandler::getInstance()->getValues('com.woltlab.wcf.page', $this->page->pageID);
+            $this->invertPermissions = $this->page->invertPermissions;
         }
     }
 

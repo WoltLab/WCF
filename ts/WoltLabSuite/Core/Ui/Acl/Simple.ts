@@ -17,15 +17,21 @@ class UiAclSimple {
     this.inputName = inputName || "aclValues";
 
     const container = document.getElementById(this.prefix + "aclInputContainer")!;
-
+    const invertPermissionsDl = document.getElementById(this.prefix + "invertPermissionsDl");
     const allowAll = document.getElementById(this.prefix + "aclAllowAll") as HTMLInputElement;
     allowAll.addEventListener("change", () => {
       DomUtil.hide(container);
+      if (invertPermissionsDl) {
+        DomUtil.hide(invertPermissionsDl);
+      }
     });
 
     const denyAll = document.getElementById(this.prefix + "aclAllowAll_no")!;
     denyAll.addEventListener("change", () => {
       DomUtil.show(container);
+      if (invertPermissionsDl) {
+        DomUtil.show(invertPermissionsDl);
+      }
     });
 
     this.list = document.getElementById(this.prefix + "aclAccessList") as HTMLUListElement;
@@ -47,6 +53,27 @@ class UiAclSimple {
     );
 
     this.aclListContainer = document.getElementById(this.prefix + "aclListContainer")!;
+
+    const invertPermission = document.getElementById(this.prefix + "invertPermissions") as HTMLInputElement | null;
+    if (invertPermission) {
+      invertPermission.addEventListener("change", () => {
+        this.invertPermissions(true);
+      });
+    }
+
+    const normalPermission = document.getElementById(this.prefix + "invertPermissions_no") as HTMLInputElement | null;
+    if (normalPermission) {
+      normalPermission.addEventListener("change", () => {
+        this.invertPermissions(false);
+      });
+    }
+
+    const invertPermissionRadioButton = document.getElementById(
+      this.prefix + "invertPermissions",
+    ) as HTMLInputElement | null;
+    if (invertPermissionRadioButton) {
+      this.invertPermissions(!!invertPermissionRadioButton.value);
+    }
 
     DomChangeListener.trigger();
   }
@@ -94,6 +121,14 @@ class UiAclSimple {
         DomUtil.hide(this.aclListContainer);
       }
     }
+  }
+
+  private invertPermissions(invert: boolean): void {
+    const aclListContainerDt = document.getElementById(this.prefix + "aclListContainerDt");
+    const aclSearchInputLabel = document.getElementById(this.prefix + "aclSearchInputLabel");
+
+    aclListContainerDt!.textContent = Language.get(invert ? "wcf.acl.access.denied" : "wcf.acl.access.granted");
+    aclSearchInputLabel!.textContent = Language.get(invert ? "wcf.acl.access.deny" : "wcf.acl.access.grant");
   }
 }
 

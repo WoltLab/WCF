@@ -209,6 +209,12 @@ class PageAddForm extends AbstractForm
     public $presetPage;
 
     /**
+     * @var bool
+     * @since   5.4
+     */
+    public $invertPermissions;
+
+    /**
      * @inheritDoc
      */
     public function readParameters()
@@ -341,6 +347,9 @@ class PageAddForm extends AbstractForm
 
         if (isset($_POST['aclValues']) && \is_array($_POST['aclValues'])) {
             $this->aclValues = $_POST['aclValues'];
+        }
+        if (isset($_POST['invertPermissions'])) {
+            $this->invertPermissions = $_POST['invertPermissions'];
         }
     }
 
@@ -622,6 +631,7 @@ class PageAddForm extends AbstractForm
                 'isMultilingual' => $this->isMultilingual,
                 'identifier' => '',
                 'packageID' => 1,
+                'invertPermissions' => $this->invertPermissions,
             ]),
             'content' => $content,
             'boxToPage' => $this->getBoxToPage(),
@@ -765,6 +775,7 @@ class PageAddForm extends AbstractForm
                     'com.woltlab.wcf.page',
                     $this->presetPage->pageID
                 );
+                $this->invertPermissions = $this->presetPage->invertPermissions;
             }
         }
 
@@ -825,6 +836,7 @@ class PageAddForm extends AbstractForm
             'parentMenuItemID' => $this->parentMenuItemID,
             'menuItemNodeList' => $this->menuItems->getNodeList(),
             'enableShareButtons' => $this->enableShareButtons,
+            'invertPermissions' => $this->invertPermissions,
         ]);
     }
 }

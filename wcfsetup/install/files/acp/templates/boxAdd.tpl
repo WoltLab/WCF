@@ -473,7 +473,7 @@
 		</div>
 		
 		<div id="acl" class="tabMenuContent">
-			{include file='aclSimple'}
+			{include file='aclSimple' __supportsInvertedPermissions=true}
 		</div>
 		
 		{event name='tabMenuContents'}

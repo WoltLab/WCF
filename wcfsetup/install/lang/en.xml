@@ -3,7 +3,11 @@
 	<category name="wcf.acl">
 		<item name="wcf.acl.access"><![CDATA[Restricted Access]]></item>
 		<item name="wcf.acl.access.grant"><![CDATA[Allow Access]]></item>
+		<item name="wcf.acl.access.deny"><![CDATA[Deny Access]]></item>
 		<item name="wcf.acl.access.granted"><![CDATA[Granted Access for Users and User-Groups]]></item>
+		<item name="wcf.acl.access.denied"><![CDATA[Denied Access for Users and User-Groups]]></item>
+		<item name="wcf.acl.access.invertPermissions"><![CDATA[Invert Permissions]]></item>
+		<item name="wcf.acl.access.invertPermissions.description"><![CDATA[If selected, all users except selected users and user groups are allowed to see the object by default.]]></item>
 		<item name="wcf.acl.allowAll"><![CDATA[Content Can be Accessed by Everyone]]></item>
 		<item name="wcf.acl.option.deny"><![CDATA[Deny]]></item>
 		<item name="wcf.acl.option.fullAccess"><![CDATA[Full Access]]></item>
