@@ -73,7 +73,7 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_3_migrate_session.php</instruction>
 		
 		<!-- New application code. -->
-		<instruction type="file" skipStyleUpdate="true" />
+		<instruction type="file" />
 		<instruction type="acpTemplate" />
 		<instruction type="template" />
 		
@@ -90,9 +90,6 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 		
 		<!-- Cleanup of the filesystem. -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_removeFiles.php</instruction>
-		
-		<!-- Update of the styles that was skipped during the deployment of the new application code. -->
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_updateStyle.php</instruction>
 		
 		<!-- Misc. PIPs. -->
 		<instruction type="objectTypeDefinition" />

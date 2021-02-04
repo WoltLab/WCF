@@ -9,8 +9,8 @@ use wcf\system\exception\SystemException;
 use wcf\system\package\FilesFileHandler;
 use wcf\system\package\PackageArchive;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
-use wcf\util\StyleUtil;
 
 /**
  * Installs, updates and deletes files.
@@ -90,10 +90,7 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin im
         // delete temporary sourceArchive
         @\unlink($sourceFile);
 
-        if (!isset($this->instruction['attributes']['skipStyleUpdate'])) {
-            // update acp style file
-            StyleUtil::updateStyleFile();
-        }
+        StyleHandler::resetStylesheets(true);
     }
 
     /**
