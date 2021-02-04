@@ -142,7 +142,9 @@ class PageSearch extends AbstractSearchableObjectType
      */
     public function getJoins()
     {
-        return 'INNER JOIN wcf' . WCF_N . '_page ON wcf' . WCF_N . '_page.pageID = ' . $this->getTableName() . '.pageID';
+        return '
+            INNER JOIN  wcf' . WCF_N . '_page
+            ON          wcf' . WCF_N . '_page.pageID = ' . $this->getTableName() . '.pageID';
     }
 
     /**

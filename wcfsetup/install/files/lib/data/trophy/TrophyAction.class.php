@@ -85,8 +85,11 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
         if (!empty($userTrophyList->sqlJoins)) {
             $userTrophyList->sqlJoins .= ' ';
         }
-        $userTrophyList->sqlJoins .= 'LEFT JOIN wcf' . WCF_N . '_trophy trophy ON user_trophy.trophyID = trophy.trophyID';
-        $userTrophyList->sqlJoins .= ' LEFT JOIN wcf' . WCF_N . '_category category ON trophy.categoryID = category.categoryID';
+        $userTrophyList->sqlJoins .= '
+            LEFT JOIN   wcf' . WCF_N . '_trophy trophy
+            ON          user_trophy.trophyID = trophy.trophyID
+            LEFT JOIN   wcf' . WCF_N . '_category category
+            ON          trophy.categoryID = category.categoryID';
 
         $userTrophyList->getConditionBuilder()->add('trophy.isDisabled = ?', [0]);
         $userTrophyList->getConditionBuilder()->add('category.isDisabled = ?', [0]);

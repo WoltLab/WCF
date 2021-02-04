@@ -96,8 +96,11 @@ class TagListPage extends SortablePage
         $this->objectList->sqlSelects .= ", language.languageName, language.languageCode";
         $this->objectList->sqlSelects .= ", synonym.name AS synonymName";
 
-        $this->objectList->sqlJoins = "LEFT JOIN wcf" . WCF_N . "_language language ON tag.languageID = language.languageID";
-        $this->objectList->sqlJoins .= " LEFT JOIN wcf" . WCF_N . "_tag synonym ON tag.synonymFor = synonym.tagID";
+        $this->objectList->sqlJoins = "
+            LEFT JOIN   wcf" . WCF_N . "_language language
+            ON          tag.languageID = language.languageID
+            LEFT JOIN   wcf" . WCF_N . "_tag synonym
+            ON          tag.synonymFor = synonym.tagID";
 
         if ($this->search !== '') {
             $this->objectList->getConditionBuilder()->add('tag.name LIKE ?', [$this->search . '%']);

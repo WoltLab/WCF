@@ -133,7 +133,9 @@ class TrophyConditionHandler extends SingletonFactory
     private function getUserIDs(Trophy $trophy)
     {
         $userList = new UserList();
-        $userList->sqlConditionJoins .= " LEFT JOIN wcf" . WCF_N . "_user_option_value user_option_value ON user_option_value.userID = user_table.userID";
+        $userList->sqlConditionJoins .= "
+            LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option_value
+            ON          user_option_value.userID = user_table.userID";
 
         $conditions = $trophy->getConditions();
         foreach ($conditions as $condition) {
@@ -196,7 +198,9 @@ class TrophyConditionHandler extends SingletonFactory
         $userList->sqlJoins = $pseudoUserList->sqlJoins;
 
         // We joining the user_trophy table to receive the userTrophyID, which should be deleted.
-        $userList->sqlJoins .= " LEFT JOIN wcf" . WCF_N . "_user_trophy user_trophy ON user_table.userID = user_trophy.userID";
+        $userList->sqlJoins .= "
+            LEFT JOIN   wcf" . WCF_N . "_user_trophy user_trophy
+            ON          user_table.userID = user_trophy.userID";
 
         // We do not need the complete user object, but only the userTrophyID.
         // So that the UserList object can also assign the users (which is used

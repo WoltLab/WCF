@@ -76,12 +76,20 @@ class UserTrophyListBoxController extends AbstractDatabaseObjectListBoxControlle
         if (!empty($list->sqlConditionJoins)) {
             $list->sqlConditionJoins .= ' ';
         }
-        $list->sqlJoins .= 'LEFT JOIN wcf' . WCF_N . '_trophy trophy ON user_trophy.trophyID = trophy.trophyID';
-        $list->sqlConditionJoins .= 'LEFT JOIN wcf' . WCF_N . '_trophy trophy ON user_trophy.trophyID = trophy.trophyID';
+        $list->sqlJoins .= '
+            LEFT JOIN   wcf' . WCF_N . '_trophy trophy
+            ON          user_trophy.trophyID = trophy.trophyID';
+        $list->sqlConditionJoins .= '
+            LEFT JOIN   wcf' . WCF_N . '_trophy trophy
+            ON          user_trophy.trophyID = trophy.trophyID';
 
         // trophy category join
-        $list->sqlJoins .= ' LEFT JOIN wcf' . WCF_N . '_category category ON trophy.categoryID = category.categoryID';
-        $list->sqlConditionJoins .= ' LEFT JOIN wcf' . WCF_N . '_category category ON trophy.categoryID = category.categoryID';
+        $list->sqlJoins .= '
+            LEFT JOIN   wcf' . WCF_N . '_category category
+            ON          trophy.categoryID = category.categoryID';
+        $list->sqlConditionJoins .= '
+            LEFT JOIN   wcf' . WCF_N . '_category category
+            ON          trophy.categoryID = category.categoryID';
 
         $list->getConditionBuilder()->add('trophy.isDisabled = ?', [0]);
         $list->getConditionBuilder()->add('category.isDisabled = ?', [0]);

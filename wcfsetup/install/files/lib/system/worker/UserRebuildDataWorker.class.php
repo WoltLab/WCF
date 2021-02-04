@@ -47,7 +47,9 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
         parent::initObjectList();
 
         $this->objectList->sqlSelects = 'user_option_value.userOption' . User::getUserOptionID('aboutMe') . ' AS aboutMe';
-        $this->objectList->sqlJoins = "LEFT JOIN wcf" . WCF_N . "_user_option_value user_option_value ON user_option_value.userID = user_table.userID";
+        $this->objectList->sqlJoins = "
+            LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option_value
+            ON          user_option_value.userID = user_table.userID";
         $this->objectList->sqlOrderBy = 'user_table.userID';
     }
 

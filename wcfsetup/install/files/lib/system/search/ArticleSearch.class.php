@@ -134,7 +134,9 @@ class ArticleSearch extends AbstractSearchableObjectType
      */
     public function getJoins()
     {
-        return 'INNER JOIN wcf' . WCF_N . '_article ON wcf' . WCF_N . '_article.articleID = ' . $this->getTableName() . '.articleID';
+        return '
+            INNER JOIN  wcf' . WCF_N . '_article
+            ON          wcf' . WCF_N . '_article.articleID = ' . $this->getTableName() . '.articleID';
     }
 
     /**

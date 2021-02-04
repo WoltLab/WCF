@@ -307,7 +307,10 @@ class ModerationQueueManager extends SingletonFactory
     protected function forceUserAssignment()
     {
         $queueList = new ModerationQueueList();
-        $queueList->sqlJoins = "LEFT JOIN wcf" . WCF_N . "_moderation_queue_to_user moderation_queue_to_user ON moderation_queue_to_user.queueID = moderation_queue.queueID AND moderation_queue_to_user.userID = " . WCF::getUser()->userID;
+        $queueList->sqlJoins = "
+            LEFT JOIN   wcf" . WCF_N . "_moderation_queue_to_user moderation_queue_to_user
+            ON          moderation_queue_to_user.queueID = moderation_queue.queueID
+                    AND moderation_queue_to_user.userID = " . WCF::getUser()->userID;
         $queueList->getConditionBuilder()->add("moderation_queue_to_user.queueID IS NULL");
         $queueList->readObjects();
 

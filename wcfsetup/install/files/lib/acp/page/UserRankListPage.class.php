@@ -55,6 +55,8 @@ class UserRankListPage extends SortablePage
         parent::initObjectList();
 
         $this->objectList->sqlSelects = 'user_group.groupName';
-        $this->objectList->sqlJoins = 'LEFT JOIN wcf' . WCF_N . '_user_group user_group ON user_group.groupID = user_rank.groupID';
+        $this->objectList->sqlJoins = '
+            LEFT JOIN   wcf' . WCF_N . '_user_group user_group
+            ON          user_group.groupID = user_rank.groupID';
     }
 }
