@@ -151,7 +151,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
             }
 
             // check whether we should rebuild it
-            if (!isset($this->parameters['forceRebuild']) || !$this->parameters['forceRebuild'] && !$this->workerData['finished']) {
+            if ((!isset($this->parameters['forceRebuild']) || !$this->parameters['forceRebuild']) && !$this->workerData['finished']) {
                 $this->checkCache();
             }
 
