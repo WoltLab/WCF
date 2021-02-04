@@ -11,13 +11,20 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../St
             this.prefix = prefix || "";
             this.inputName = inputName || "aclValues";
             const container = document.getElementById(this.prefix + "aclInputContainer");
+            const invertPermissionsDl = document.getElementById(this.prefix + "invertPermissionsDl");
             const allowAll = document.getElementById(this.prefix + "aclAllowAll");
             allowAll.addEventListener("change", () => {
                 Util_1.default.hide(container);
+                if (invertPermissionsDl) {
+                    Util_1.default.hide(invertPermissionsDl);
+                }
             });
             const denyAll = document.getElementById(this.prefix + "aclAllowAll_no");
             denyAll.addEventListener("change", () => {
                 Util_1.default.show(container);
+                if (invertPermissionsDl) {
+                    Util_1.default.show(invertPermissionsDl);
+                }
             });
             this.list = document.getElementById(this.prefix + "aclAccessList");
             this.list.addEventListener("click", this.removeItem.bind(this));
@@ -32,6 +39,22 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../St
                 preventSubmit: true,
             });
             this.aclListContainer = document.getElementById(this.prefix + "aclListContainer");
+            const invertPermission = document.getElementById(this.prefix + "invertPermissions");
+            if (invertPermission) {
+                invertPermission.addEventListener("change", () => {
+                    this.invertPermissions(true);
+                });
+            }
+            const normalPermission = document.getElementById(this.prefix + "invertPermissions_no");
+            if (normalPermission) {
+                normalPermission.addEventListener("change", () => {
+                    this.invertPermissions(false);
+                });
+            }
+            const invertPermissionRadioButton = document.getElementById(this.prefix + "invertPermissions");
+            if (invertPermissionRadioButton) {
+                this.invertPermissions(!!invertPermissionRadioButton.value);
+            }
             Listener_1.default.trigger();
         }
         select(listItem) {
@@ -68,6 +91,12 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../St
                     Util_1.default.hide(this.aclListContainer);
                 }
             }
+        }
+        invertPermissions(invert) {
+            const aclListContainerDt = document.getElementById(this.prefix + "aclListContainerDt");
+            const aclSearchInputLabel = document.getElementById(this.prefix + "aclSearchInputLabel");
+            aclListContainerDt.textContent = Language.get(invert ? "wcf.acl.access.denied" : "wcf.acl.access.granted");
+            aclSearchInputLabel.textContent = Language.get(invert ? "wcf.acl.access.deny" : "wcf.acl.access.grant");
         }
     }
     Core.enableLegacyInheritance(UiAclSimple);
