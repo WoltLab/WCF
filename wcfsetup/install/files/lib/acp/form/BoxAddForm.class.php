@@ -217,6 +217,12 @@ class BoxAddForm extends AbstractForm
     public $presetBox;
 
     /**
+     * @var bool
+     * @since   5.4
+     */
+    public $invertPermissions;
+
+    /**
      * @inheritDoc
      */
     public function readParameters()
@@ -365,6 +371,9 @@ class BoxAddForm extends AbstractForm
         }
         if (isset($_POST['aclValues']) && \is_array($_POST['aclValues'])) {
             $this->aclValues = $_POST['aclValues'];
+        }
+        if (isset($_POST['invertPermissions'])) {
+            $this->invertPermissions = $_POST['invertPermissions'];
         }
 
         if (WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
@@ -590,6 +599,7 @@ class BoxAddForm extends AbstractForm
             'linkPageObjectID' => $this->linkPageObjectID ?: 0,
             'externalURL' => $this->externalURL,
             'identifier' => '',
+            'invertPermissions' => $this->invertPermissions,
         ];
         if ($this->boxControllerID) {
             $data['objectTypeID'] = $this->boxControllerID;
@@ -636,7 +646,7 @@ class BoxAddForm extends AbstractForm
         // reset variables
         $this->cssClassName = $this->name = '';
         $this->position = 'contentTop';
-        $this->showOrder = $this->boxControllerID = $this->isDisabled = 0;
+        $this->showOrder = $this->boxControllerID = $this->isDisabled = $this->invertPermissions = 0;
         $this->visibleEverywhere = $this->showHeader = 1;
         $this->title = $this->content = $this->images = $this->imageID = $this->pageIDs = $this->aclValues = [];
         $this->boxController = null;
@@ -738,6 +748,7 @@ class BoxAddForm extends AbstractForm
             'pageHandlers' => $this->pageHandlers,
             'aclValues' => SimpleAclHandler::getInstance()->getOutputValues($this->aclValues),
             'availableBoxPositions' => $this->availableBoxPositions,
+            'invertPermissions' => $this->invertPermissions,
         ]);
     }
 }

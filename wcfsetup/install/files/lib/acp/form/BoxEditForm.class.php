@@ -123,6 +123,7 @@ class BoxEditForm extends BoxAddForm
             'linkPageID' => $this->linkPageID,
             'linkPageObjectID' => $this->linkPageObjectID ?: 0,
             'externalURL' => $this->externalURL,
+            'invertPermissions' => $this->invertPermissions,
         ];
         if ($this->boxControllerID) {
             $data['objectTypeID'] = $this->boxControllerID;
@@ -234,6 +235,8 @@ class BoxEditForm extends BoxAddForm
             }
 
             $this->aclValues = SimpleAclHandler::getInstance()->getValues('com.woltlab.wcf.box', $this->box->boxID);
+
+            $this->invertPermissions = $this->box->invertPermissions;
 
             $this->readBoxImages();
         }

@@ -312,6 +312,7 @@ CREATE TABLE wcf1_box (
 	linkPageObjectID INT(10) NOT NULL DEFAULT 0,
 	externalURL VARCHAR(255) NOT NULL DEFAULT '',
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+	invertPermissions TINYINT(1) NOT NULL DEFAULT 0,
 	additionalData TEXT
 );
 
