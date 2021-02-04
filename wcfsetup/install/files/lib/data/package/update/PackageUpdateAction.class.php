@@ -97,7 +97,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         $sql = "SELECT      package_update.packageUpdateID
                 FROM        wcf" . WCF_N . "_package_update package_update
                 LEFT JOIN   wcf" . WCF_N . "_package package
-                ON          (package.package = package_update.package)
+                ON          package.package = package_update.package
                 " . $conditions . "
                 ORDER BY    package_update.packageName ASC";
         $statement = WCF::getDB()->prepareStatement($sql, 1000);
@@ -319,7 +319,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         $sql = "SELECT      pu.package, puv.packageUpdateVersionID, puv.packageUpdateID, puv.packageVersion, puv.isAccessible
                 FROM        wcf" . WCF_N . "_package_update_version puv
                 LEFT JOIN   wcf" . WCF_N . "_package_update pu
-                ON          (pu.packageUpdateID = puv.packageUpdateID)
+                ON          pu.packageUpdateID = puv.packageUpdateID
                 " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());

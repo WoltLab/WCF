@@ -316,7 +316,7 @@ class PackageValidationArchive implements \RecursiveIterator
         $sql = "SELECT      package.*, package_exclusion.*
                 FROM        wcf" . WCF_N . "_package_exclusion package_exclusion
                 LEFT JOIN   wcf" . WCF_N . "_package package
-                ON          (package.packageID = package_exclusion.packageID)
+                ON          package.packageID = package_exclusion.packageID
                 WHERE       excludedPackage = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->getArchive()->getPackageInfo('name')]);

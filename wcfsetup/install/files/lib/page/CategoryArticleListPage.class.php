@@ -97,12 +97,10 @@ class CategoryArticleListPage extends ArticleListPage
         if ($this->category->sortField === 'title') {
             $this->objectList->sqlJoins .= '
                 LEFT JOIN   wcf' . WCF_N . '_article_content article_content
-                ON          (
-                                    article_content.articleID = article.articleID
-                                AND (
-                                        article_content.languageID IS NULL
-                                     OR article_content.languageID = ' . WCF::getLanguage()->languageID . '
-                                )
+                ON          article_content.articleID = article.articleID
+                        AND (
+                                article_content.languageID IS NULL
+                             OR article_content.languageID = ' . WCF::getLanguage()->languageID . '
                             )';
         }
 

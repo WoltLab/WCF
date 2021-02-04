@@ -165,7 +165,7 @@ class MessageUtil
             $sql = "SELECT      user_table.username
                     FROM        wcf" . WCF_N . "_user_to_group user_to_group
                     LEFT JOIN   wcf" . WCF_N . "_user user_table
-                    ON          (user_table.userID = user_to_group.userID)
+                    ON          user_table.userID = user_to_group.userID
                     " . $conditions;
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute($conditions->getParameters());

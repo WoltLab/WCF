@@ -205,7 +205,7 @@ class TagEngine extends SingletonFactory
         $sql = "SELECT      tag.*, tag_to_object.objectID
                 FROM        wcf" . WCF_N . "_tag_to_object tag_to_object
                 LEFT JOIN   wcf" . WCF_N . "_tag tag
-                ON          (tag.tagID = tag_to_object.tagID)
+                ON          tag.tagID = tag_to_object.tagID
                 " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());

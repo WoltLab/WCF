@@ -129,7 +129,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
             $sql = "SELECT      user_option_value.*, user_table.*
                     FROM        wcf" . WCF_N . "_user user_table
                     LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option_value
-                    ON          (user_option_value.userID = user_table.userID)
+                    ON          user_option_value.userID = user_table.userID
                     WHERE       user_table.userID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$id]);
@@ -354,7 +354,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
         $sql = "SELECT      user_option_value.*, user_table.*
                 FROM        wcf" . WCF_N . "_user user_table
                 LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option_value
-                ON          (user_option_value.userID = user_table.userID)
+                ON          user_option_value.userID = user_table.userID
                 WHERE       user_table.username = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$username]);
@@ -377,7 +377,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
         $sql = "SELECT      user_option_value.*, user_table.*
                 FROM        wcf" . WCF_N . "_user user_table
                 LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option_value
-                ON          (user_option_value.userID = user_table.userID)
+                ON          user_option_value.userID = user_table.userID
                 WHERE       user_table.email = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$email]);
@@ -400,7 +400,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
         $sql = "SELECT      user_option_value.*, user_table.*
                 FROM        wcf" . WCF_N . "_user user_table
                 LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option_value
-                ON          (user_option_value.userID = user_table.userID)
+                ON          user_option_value.userID = user_table.userID
                 WHERE       user_table.authData = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$authData]);

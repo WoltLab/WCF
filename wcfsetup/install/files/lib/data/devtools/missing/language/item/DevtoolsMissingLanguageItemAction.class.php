@@ -114,10 +114,8 @@ class DevtoolsMissingLanguageItemAction extends AbstractDatabaseObjectAction imp
         $sql = "DELETE      devtools_missing_language_item
                 FROM        wcf" . WCF_N . "_devtools_missing_language_item devtools_missing_language_item
                 INNER JOIN  wcf" . WCF_N . "_language_item language_item
-                ON          (
-                                language_item.languageItem = devtools_missing_language_item.languageItem
-                                AND language_item.languageID = devtools_missing_language_item.languageID
-                            )";
+                ON          language_item.languageItem = devtools_missing_language_item.languageItem
+                        AND language_item.languageID = devtools_missing_language_item.languageID";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
     }

@@ -57,10 +57,8 @@ abstract class I18nDatabaseObjectList extends DatabaseObjectList
                 $this->sqlSelects .= (!empty($this->sqlSelects) ? ', ' : '') . "COALESCE(" . $matchTable . ".languageItemValue, " . $this->getDatabaseTableAlias() . "." . $key . ") AS " . $value;
                 $this->sqlJoins .= "
                     LEFT JOIN   wcf" . WCF_N . "_language_item " . $matchTable . "
-                    ON          (
-                                        " . $matchTable . ".languageItem = " . $this->getDatabaseTableAlias() . "." . $key . "
-                                    AND " . $matchTable . ".languageID = " . $languageID . "
-                                )";
+                    ON          " . $matchTable . ".languageItem = " . $this->getDatabaseTableAlias() . "." . $key . "
+                            AND " . $matchTable . ".languageID = " . $languageID;
             }
         }
     }

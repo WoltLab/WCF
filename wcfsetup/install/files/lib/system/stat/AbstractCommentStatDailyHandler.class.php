@@ -42,7 +42,7 @@ abstract class AbstractCommentStatDailyHandler extends AbstractStatDailyHandler
                     SELECT      COUNT(*)
                     FROM        wcf" . WCF_N . "_comment_response comment_response
                     LEFT JOIN   wcf" . WCF_N . "_comment comment
-                    ON          (comment.commentID = comment_response.commentID)
+                    ON          comment.commentID = comment_response.commentID
                     WHERE       comment.objectTypeID = ?
                             AND comment_response.time BETWEEN ? AND ?
                 )";
@@ -66,7 +66,7 @@ abstract class AbstractCommentStatDailyHandler extends AbstractStatDailyHandler
                     SELECT      COUNT(*)
                     FROM        wcf" . WCF_N . "_comment_response comment_response
                     LEFT JOIN   wcf" . WCF_N . "_comment comment
-                    ON          (comment.commentID = comment_response.commentID)
+                    ON          comment.commentID = comment_response.commentID
                     WHERE       comment.objectTypeID = ?
                             AND comment_response.time < ?
                 )";

@@ -61,7 +61,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder
         $sql = "SELECT      option_table.optionName, option_table.optionType, option_value.optionValue, option_value.groupID, option_table.enableOptions
                 FROM        wcf" . WCF_N . "_user_group_option_value option_value
                 LEFT JOIN   wcf" . WCF_N . "_user_group_option option_table
-                ON          (option_table.optionID = option_value.optionID)
+                ON          option_table.optionID = option_value.optionID
                 " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());

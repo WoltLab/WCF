@@ -71,9 +71,9 @@ class DailyMailNotificationCronjob extends AbstractCronjob
         $sql = "SELECT      notification.*, notification_event.eventID, object_type.objectType
                 FROM        wcf" . WCF_N . "_user_notification notification
                 LEFT JOIN   wcf" . WCF_N . "_user_notification_event notification_event
-                ON          (notification_event.eventID = notification.eventID)
+                ON          notification_event.eventID = notification.eventID
                 LEFT JOIN   wcf" . WCF_N . "_object_type object_type
-                ON          (object_type.objectTypeID = notification_event.objectTypeID)
+                ON          object_type.objectTypeID = notification_event.objectTypeID
                 " . $conditions . "
                 ORDER BY    notification.time";
         $statement = WCF::getDB()->prepareStatement($sql);

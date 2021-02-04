@@ -127,8 +127,8 @@ class PaidSubscriptionTransactionLogListPage extends SortablePage
         }
 
         $this->objectList->sqlSelects = 'user_table.username, paid_subscription.title';
-        $this->objectList->sqlJoins = "LEFT JOIN wcf" . WCF_N . "_user user_table ON (user_table.userID = paid_subscription_transaction_log.userID)";
-        $this->objectList->sqlJoins .= " LEFT JOIN wcf" . WCF_N . "_paid_subscription paid_subscription ON (paid_subscription.subscriptionID = paid_subscription_transaction_log.subscriptionID)";
+        $this->objectList->sqlJoins = "LEFT JOIN wcf" . WCF_N . "_user user_table ON user_table.userID = paid_subscription_transaction_log.userID";
+        $this->objectList->sqlJoins .= " LEFT JOIN wcf" . WCF_N . "_paid_subscription paid_subscription ON paid_subscription.subscriptionID = paid_subscription_transaction_log.subscriptionID";
     }
 
     /**

@@ -46,7 +46,7 @@ class UserProfileVisitorList extends DatabaseObjectList
         $this->sqlSelects .= "user_table.username, user_table.email, user_table.disableAvatar, user_table.enableGravatar, user_table.gravatarFileExtension";
         $this->sqlSelects .= ", user_avatar.*";
 
-        $this->sqlJoins .= " LEFT JOIN wcf" . WCF_N . "_user user_table ON (user_table.userID = user_profile_visitor.userID)";
-        $this->sqlJoins .= " LEFT JOIN wcf" . WCF_N . "_user_avatar user_avatar ON (user_avatar.avatarID = user_table.avatarID)";
+        $this->sqlJoins .= " LEFT JOIN wcf" . WCF_N . "_user user_table ON user_table.userID = user_profile_visitor.userID";
+        $this->sqlJoins .= " LEFT JOIN wcf" . WCF_N . "_user_avatar user_avatar ON user_avatar.avatarID = user_table.avatarID";
     }
 }

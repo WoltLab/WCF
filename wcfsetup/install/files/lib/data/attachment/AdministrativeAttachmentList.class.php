@@ -33,7 +33,7 @@ class AdministrativeAttachmentList extends AttachmentList
         parent::__construct();
 
         $this->sqlSelects = 'user_table.username';
-        $this->sqlJoins = " LEFT JOIN wcf" . WCF_N . "_user user_table ON (user_table.userID = attachment.userID)";
+        $this->sqlJoins = " LEFT JOIN wcf" . WCF_N . "_user user_table ON user_table.userID = attachment.userID";
     }
 
     /**

@@ -47,7 +47,7 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
         parent::initObjectList();
 
         $this->objectList->sqlSelects = 'user_option_value.userOption' . User::getUserOptionID('aboutMe') . ' AS aboutMe';
-        $this->objectList->sqlJoins = "LEFT JOIN wcf" . WCF_N . "_user_option_value user_option_value ON (user_option_value.userID = user_table.userID)";
+        $this->objectList->sqlJoins = "LEFT JOIN wcf" . WCF_N . "_user_option_value user_option_value ON user_option_value.userID = user_table.userID";
         $this->objectList->sqlOrderBy = 'user_table.userID';
     }
 
@@ -114,9 +114,9 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
                                     SELECT      COUNT(*)
                                     FROM        wcf" . WCF_N . "_user_trophy user_trophy
                                     LEFT JOIN   wcf" . WCF_N . "_trophy trophy
-                                    ON          (user_trophy.trophyID = trophy.trophyID)
+                                    ON          user_trophy.trophyID = trophy.trophyID
                                     LEFT JOIN   wcf" . WCF_N . "_category trophy_category
-                                    ON          (trophy.categoryID = trophy_category.categoryID)
+                                    ON          trophy.categoryID = trophy_category.categoryID
                                     WHERE           user_trophy.userID = user_table.userID
                                                 AND trophy.isDisabled = 0
                                                 AND trophy_category.isDisabled = 0

@@ -114,7 +114,7 @@ trait TDecoratedCategoryLookupPageHandler
         $sql = "SELECT      DISTINCT categoryID
                 FROM        wcf" . WCF_N . "_category category
                 LEFT JOIN   wcf" . WCF_N . "_language_item language_item
-                ON          (language_item.languageItem = category.title)
+                ON          language_item.languageItem = category.title
                 " . $conditionBuilder;
         $statement = WCF::getDB()->prepareStatement($sql, 10);
         $statement->execute($conditionBuilder->getParameters());

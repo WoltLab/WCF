@@ -38,8 +38,8 @@ class MultilingualPageSitemapObject extends AbstractSitemapObjectObjectType
         /** @var $pageList PageContentList */
         $pageList = parent::getObjectList();
 
-        $pageList->sqlConditionJoins = 'LEFT JOIN wcf' . WCF_N . '_page page ON (page_content.pageID = page.pageID)';
-        $pageList->sqlJoins = 'LEFT JOIN wcf' . WCF_N . '_page page ON (page_content.pageID = page.pageID)';
+        $pageList->sqlConditionJoins = 'LEFT JOIN wcf' . WCF_N . '_page page ON page_content.pageID = page.pageID';
+        $pageList->sqlJoins = 'LEFT JOIN wcf' . WCF_N . '_page page ON page_content.pageID = page.pageID';
         $pageList->getConditionBuilder()->add('page.isMultilingual = ?', [1]);
         $pageList->getConditionBuilder()->add('page.allowSpidersToIndex = ?', [1]);
 

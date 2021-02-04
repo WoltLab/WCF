@@ -48,7 +48,7 @@ class TeamList extends UserProfileList
                 FROM        wcf" . WCF_N . "_user_group user_group,
                             wcf" . WCF_N . "_user_to_group user_to_group
                 LEFT JOIN   wcf" . WCF_N . "_user user_table
-                ON          (user_table.userID = user_to_group.userID)
+                ON          user_table.userID = user_to_group.userID
                 WHERE       user_to_group.groupID = user_group.groupID
                         AND user_group.showOnTeamPage = 1
                 ORDER BY    user_group.priority DESC" . (!empty($this->sqlOrderBy) ? ", " . $this->sqlOrderBy : '');
@@ -68,7 +68,7 @@ class TeamList extends UserProfileList
                 FROM        wcf" . WCF_N . "_user_group user_group,
                             wcf" . WCF_N . "_user_to_group user_to_group
                 LEFT JOIN   wcf" . WCF_N . "_user user_table
-                ON          (user_table.userID = user_to_group.userID)
+                ON          user_table.userID = user_to_group.userID
                 WHERE       user_to_group.groupID = user_group.groupID
                         AND user_group.showOnTeamPage = 1
                 ORDER BY    user_group.priority DESC" . (!empty($this->sqlOrderBy) ? ", " . $this->sqlOrderBy : '');

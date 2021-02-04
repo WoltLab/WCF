@@ -43,9 +43,9 @@ class Template extends DatabaseObject
                                 package.package
                     FROM        wcf" . WCF_N . "_template template
                     LEFT JOIN   wcf" . WCF_N . "_template_group template_group
-                    ON          (template_group.templateGroupID = template.templateGroupID)
+                    ON          template_group.templateGroupID = template.templateGroupID
                     LEFT JOIN   wcf" . WCF_N . "_package package
-                    ON          (package.packageID = template.packageID)
+                    ON          package.packageID = template.packageID
                     WHERE       template.templateID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$id]);

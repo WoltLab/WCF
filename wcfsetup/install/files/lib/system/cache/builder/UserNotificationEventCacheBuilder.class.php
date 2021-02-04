@@ -26,7 +26,7 @@ class UserNotificationEventCacheBuilder extends AbstractCacheBuilder
         $sql = "SELECT      event.*, object_type.objectType
                 FROM        wcf" . WCF_N . "_user_notification_event event
                 LEFT JOIN   wcf" . WCF_N . "_object_type object_type
-                ON          (object_type.objectTypeID = event.objectTypeID)";
+                ON          object_type.objectTypeID = event.objectTypeID";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         while ($row = $statement->fetchArray()) {
