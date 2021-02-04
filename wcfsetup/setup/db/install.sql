@@ -1098,7 +1098,8 @@ CREATE TABLE wcf1_page (
 	excludeFromLandingPage TINYINT(1) NOT NULL DEFAULT 0,
 	enableShareButtons TINYINT(1) NOT NULL DEFAULT 0,
 	permissions TEXT NULL,
-	options TEXT NULL
+	options TEXT NULL,
+	invertPermissions TINYINT(1) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_page_box_order;

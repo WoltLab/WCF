@@ -53,6 +53,7 @@ use wcf\system\WCF;
  * @property-read   string $enableShareButtons             is `1` if the page should display share buttons, otherwise `0`
  * @property-read   string $permissions                comma separated list of user group permissions of which the active user needs to have at least one to access the page
  * @property-read   string $options                comma separated list of options of which at least one needs to be enabled for the page to be accessible
+ * @property-read   bool $invertPermissions                is `1` if the permissions are inverted
  */
 class Page extends DatabaseObject implements ILinkableObject, ITitledObject
 {
@@ -264,7 +265,13 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject
      */
     public function isAccessible()
     {
-        return SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.page', $this->pageID);
+        $canAccess = SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.page', $this->pageID);
+
+        if ($this->invertPermissions) {
+            $canAccess = !$canAccess;
+        }
+
+        return $canAccess;
     }
 
     /**

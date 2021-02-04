@@ -183,6 +183,11 @@ $tables = [
         ->columns([
             DefaultFalseBooleanDatabaseTableColumn::create('invertPermissions'),
         ]),
+
+    PartialDatabaseTable::create('wcf1_page')
+        ->columns([
+            DefaultFalseBooleanDatabaseTableColumn::create('invertPermissions'),
+        ]),
 ];
 
 (new DatabaseTableChangeProcessor(
