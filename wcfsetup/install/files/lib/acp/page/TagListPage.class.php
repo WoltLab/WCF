@@ -88,7 +88,11 @@ class TagListPage extends SortablePage
     {
         parent::initObjectList();
 
-        $this->objectList->sqlSelects = "(SELECT COUNT(*) FROM wcf" . WCF_N . "_tag_to_object t2o WHERE t2o.tagID = tag.tagID) AS usageCount";
+        $this->objectList->sqlSelects = "(
+            SELECT  COUNT(*)
+            FROM    wcf" . WCF_N . "_tag_to_object t2o
+            WHERE   t2o.tagID = tag.tagID
+        ) AS usageCount";
         $this->objectList->sqlSelects .= ", language.languageName, language.languageCode";
         $this->objectList->sqlSelects .= ", synonym.name AS synonymName";
 

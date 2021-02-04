@@ -86,7 +86,11 @@ class PaidSubscriptionUserListPage extends SortablePage
 
         if ($this->username) {
             $this->objectList->getConditionBuilder()->add(
-                'paid_subscription_user.userID IN (SELECT userID FROM wcf' . WCF_N . '_user WHERE username LIKE ?)',
+                'paid_subscription_user.userID IN (
+                    SELECT  userID
+                    FROM    wcf' . WCF_N . '_user
+                    WHERE   username LIKE ?
+                )',
                 ['%' . $this->username . '%']
             );
         }

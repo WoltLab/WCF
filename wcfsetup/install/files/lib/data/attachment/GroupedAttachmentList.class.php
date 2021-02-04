@@ -52,7 +52,14 @@ class GroupedAttachmentList extends AttachmentList
         $this->getConditionBuilder()->add('attachment.objectTypeID = ?', [$this->objectType->objectTypeID]);
 
         $this->getConditionBuilder()->add(
-            '(SELECT embeddedObjectID FROM wcf' . WCF_N . '_message_embedded_object WHERE messageObjectTypeID = ? AND messageID = attachment.objectID AND embeddedObjectTypeID = ? AND embeddedObjectID = attachment.attachmentID) IS NULL',
+            '(
+                SELECT  embeddedObjectID
+                FROM    wcf' . WCF_N . '_message_embedded_object
+                WHERE   messageObjectTypeID = ?
+                    AND messageID = attachment.objectID
+                    AND embeddedObjectTypeID = ?
+                    AND embeddedObjectID = attachment.attachmentID
+            ) IS NULL',
             [
                 ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $objectType),
                 ObjectTypeCache::getInstance()->getObjectTypeIDByName(

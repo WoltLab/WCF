@@ -105,7 +105,11 @@ class UserGroupAssignmentHandler extends SingletonFactory
     {
         $userList = new UserList();
         $userList->getConditionBuilder()->add(
-            'user_table.userID NOT IN (SELECT userID FROM wcf' . WCF_N . '_user_to_group WHERE groupID = ?)',
+            'user_table.userID NOT IN (
+                SELECT  userID
+                FROM    wcf' . WCF_N . '_user_to_group
+                WHERE   groupID = ?
+            )',
             [$assignment->groupID]
         );
         if ($maxUsers !== null) {

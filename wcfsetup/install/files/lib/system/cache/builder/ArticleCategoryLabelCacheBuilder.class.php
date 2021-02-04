@@ -31,7 +31,11 @@ class ArticleCategoryLabelCacheBuilder extends AbstractCacheBuilder
             )->objectTypeID,
         ]);
         $conditionBuilder->add(
-            'objectID IN (SELECT categoryID FROM wcf' . WCF_N . '_category WHERE objectTypeID = ?)',
+            'objectID IN (
+                SELECT  categoryID
+                FROM    wcf' . WCF_N . '_category
+                WHERE   objectTypeID = ?
+            )',
             [CategoryHandler::getInstance()->getObjectTypeByName('com.woltlab.wcf.article.category')->objectTypeID]
         );
 

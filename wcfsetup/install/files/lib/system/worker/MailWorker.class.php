@@ -75,7 +75,11 @@ class MailWorker extends AbstractWorker
 
             if ($this->mailData['action'] == 'group') {
                 $this->conditions->add(
-                    "user.userID IN (SELECT userID FROM wcf" . WCF_N . "_user_to_group WHERE groupID IN (?))",
+                    "user.userID IN (
+                        SELECT  userID
+                        FROM    wcf" . WCF_N . "_user_to_group
+                        WHERE   groupID IN (?)
+                    )",
                     [$this->mailData['groupIDs']]
                 );
             }

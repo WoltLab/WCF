@@ -142,7 +142,11 @@ class TrophyConditionHandler extends SingletonFactory
 
         // prevent multiple awards from a trophy for a user
         $userList->getConditionBuilder()->add(
-            'user_table.userID NOT IN (SELECT userID FROM wcf' . WCF_N . '_user_trophy WHERE trophyID IN (?))',
+            'user_table.userID NOT IN (
+                SELECT  userID
+                FROM    wcf' . WCF_N . '_user_trophy
+                WHERE   trophyID IN (?)
+            )',
             [$trophy->trophyID]
         );
         $userList->readObjectIDs();
@@ -211,7 +215,11 @@ class TrophyConditionHandler extends SingletonFactory
         // In order not to get all users who do not fulfill the conditions (in case of
         // doubt there can be many), we filter for users who have received the trophy.
         $userList->getConditionBuilder()->add(
-            'user_table.userID IN (SELECT userID FROM wcf' . WCF_N . '_user_trophy WHERE trophyID IN (?))',
+            'user_table.userID IN (
+                SELECT  userID
+                FROM    wcf' . WCF_N . '_user_trophy
+                WHERE   trophyID IN (?)
+            )',
             [$trophy->trophyID]
         );
 

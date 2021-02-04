@@ -44,7 +44,11 @@ class ArticleCommentUserActivityEvent extends SingletonFactory implements IUserA
         if (!empty($articleContentIDs)) {
             $articleList = new ViewableArticleList();
             $articleList->getConditionBuilder()->add(
-                "article.articleID IN (SELECT articleID FROM wcf" . WCF_N . "_article_content WHERE articleContentID IN (?))",
+                "article.articleID IN (
+                    SELECT  articleID
+                    FROM    wcf" . WCF_N . "_article_content
+                    WHERE   articleContentID IN (?)
+                )",
                 [$articleContentIDs]
             );
             $articleList->readObjects();

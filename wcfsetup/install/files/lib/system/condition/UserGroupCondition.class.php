@@ -79,13 +79,23 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements
 
         if (isset($conditionData['groupIDs'])) {
             $objectList->getConditionBuilder()->add(
-                $tableName . '.userID IN (SELECT userID FROM wcf' . WCF_N . '_user_to_group WHERE groupID IN (?) GROUP BY userID HAVING COUNT(userID) = ?)',
+                $tableName . '.userID IN (
+                    SELECT      userID
+                    FROM        wcf' . WCF_N . '_user_to_group
+                    WHERE       groupID IN (?)
+                    GROUP BY    userID
+                    HAVING      COUNT(userID) = ?
+                )',
                 [$conditionData['groupIDs'], \count($conditionData['groupIDs'])]
             );
         }
         if (isset($conditionData['notGroupIDs'])) {
             $objectList->getConditionBuilder()->add(
-                $tableName . '.userID NOT IN (SELECT userID FROM wcf' . WCF_N . '_user_to_group WHERE groupID IN (?))',
+                $tableName . '.userID NOT IN (
+                    SELECT  userID
+                    FROM    wcf' . WCF_N . '_user_to_group
+                    WHERE   groupID IN (?)
+                )',
                 [$conditionData['notGroupIDs']]
             );
         }

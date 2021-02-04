@@ -287,7 +287,11 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction
         // get excluded packages
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add(
-            "packageUpdateVersionID IN (SELECT packageUpdateVersionID FROM wcf" . WCF_N . "_package_update_version WHERE packageUpdateID = ?)",
+            "packageUpdateVersionID IN (
+                SELECT  packageUpdateVersionID
+                FROM    wcf" . WCF_N . "_package_update_version
+                WHERE   packageUpdateID = ?
+            )",
             [$packageUpdateID]
         );
         $sql = "SELECT  *

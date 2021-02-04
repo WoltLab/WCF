@@ -72,7 +72,11 @@ class UserGroupListPage extends SortablePage
         if (!empty($this->objectList->sqlSelects)) {
             $this->objectList->sqlSelects .= ',';
         }
-        $this->objectList->sqlSelects .= "(SELECT COUNT(*) FROM wcf" . WCF_N . "_user_to_group WHERE groupID = user_group.groupID) AS members";
+        $this->objectList->sqlSelects .= "(
+            SELECT  COUNT(*)
+            FROM    wcf" . WCF_N . "_user_to_group
+            WHERE   groupID = user_group.groupID
+        ) AS members";
     }
 
     /**

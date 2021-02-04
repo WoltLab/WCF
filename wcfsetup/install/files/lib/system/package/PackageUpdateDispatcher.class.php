@@ -779,7 +779,10 @@ class PackageUpdateDispatcher extends SingletonFactory
         // get all update versions
         $conditions = new PreparedStatementConditionBuilder();
         $conditions->add("pu.packageUpdateServerID IN (?)", [$packageUpdateServerIDs]);
-        $conditions->add("package IN (SELECT DISTINCT package FROM wcf" . WCF_N . "_package)");
+        $conditions->add("package IN (
+            SELECT  DISTINCT package
+            FROM    wcf" . WCF_N . "_package
+        )");
 
         $sql = "SELECT      pu.packageUpdateID, pu.packageUpdateServerID, pu.package,
                             puv.packageUpdateVersionID, puv.packageDate, puv.filename, puv.packageVersion
