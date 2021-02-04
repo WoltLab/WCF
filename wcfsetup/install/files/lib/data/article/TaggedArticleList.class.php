@@ -27,22 +27,14 @@ class TaggedArticleList extends AccessibleArticleList
 
         $this->sqlOrderBy = 'article.time ' . ARTICLE_SORT_ORDER;
 
-        $tagIDs = TagEngine::getInstance()->getTagIDs($tags);
+        $subselect = TagEngine::getInstance()->getSubselectForObjectsByTags(
+            'com.woltlab.wcf.article',
+            $tags
+        );
         $this->getConditionBuilder()->add("article.articleID IN (
             SELECT  articleID
             FROM    wcf" . WCF_N . "_article_content
-            WHERE   articleContentID IN (
-                SELECT      objectID
-                FROM        wcf" . WCF_N . "_tag_to_object
-                WHERE       objectTypeID = ?
-                        AND tagID IN (?)
-                GROUP BY    objectID
-                HAVING      COUNT(objectID) = ?
-            )
-        )", [
-            TagEngine::getInstance()->getObjectTypeID('com.woltlab.wcf.article'),
-            $tagIDs,
-            \count($tagIDs),
-        ]);
+            WHERE   articleContentID IN ({$subselect['sql']})
+        )", $subselect['parameters']);
     }
 }
