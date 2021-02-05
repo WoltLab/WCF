@@ -17,7 +17,7 @@ const _languageItems = new Map<string, string | Template>();
  */
 export function addObject(object: LanguageItems): void {
   Object.keys(object).forEach((key) => {
-    _languageItems.set(key, object[key]);
+    add(key, object[key]);
   });
 }
 

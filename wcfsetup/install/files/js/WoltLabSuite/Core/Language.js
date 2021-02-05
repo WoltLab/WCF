@@ -18,7 +18,7 @@ define(["require", "exports", "tslib", "./Template"], function (require, exports
      */
     function addObject(object) {
         Object.keys(object).forEach((key) => {
-            _languageItems.set(key, object[key]);
+            add(key, object[key]);
         });
     }
     exports.addObject = addObject;
