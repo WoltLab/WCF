@@ -22,8 +22,7 @@ use wcf\util\StringUtil;
 class MysqlSearchEngine extends AbstractSearchEngine
 {
     /**
-     * MySQL's minimum word length for fulltext indices
-     * @var int
+     * @deprecated 5.4 - This property is used for the deprecated getFulltextMinimumWordLength().
      */
     protected $ftMinWordLen;
 
@@ -457,12 +456,12 @@ class MysqlSearchEngine extends AbstractSearchEngine
     }
 
     /**
-     * @inheritDoc
+     * @deprecated 5.4 - This method was required for use in parseSearchQuery().
      */
     protected function getFulltextMinimumWordLength()
     {
         if ($this->ftMinWordLen === null) {
-            $sql = "SHOW VARIABLES LIKE 'ft_min_word_len'";
+            $sql = "SHOW VARIABLES LIKE 'innodb_ft_min_token_size'";
 
             try {
                 $statement = WCF::getDB()->prepareStatement($sql);
@@ -470,7 +469,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
                 $row = $statement->fetchArray();
             } catch (DatabaseException $e) {
                 // fallback if user is disallowed to issue 'SHOW VARIABLES'
-                $row = ['Value' => 4];
+                $row = ['Value' => 3];
             }
 
             $this->ftMinWordLen = $row['Value'];
