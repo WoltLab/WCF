@@ -1,8 +1,5 @@
 /**
- * WoltLabSuite/Core/Template provides a template scripting compiler similar
- * to the PHP one of WoltLab Suite Core. It supports a limited
- * set of useful commands and compiles templates down to a pure
- * JavaScript Function.
+ * Provides a high level wrapper around the Template/Compiler.
  *
  * @author  Tim Duesterhus
  * @copyright  2001-2019 WoltLab GmbH
@@ -11,10 +8,10 @@
  */
 
 import * as Core from "./Core";
-import * as parser from "./Template.grammar";
-import * as StringUtil from "./StringUtil";
-import * as Language from "./Language";
 import * as I18nPlural from "./I18n/Plural";
+import * as LanguageStore from "./Language/Store";
+import * as StringUtil from "./StringUtil";
+import { compile, CompiledTemplate } from "./Template/Compiler";
 
 // @todo: still required?
 // work around bug in AMD module generation of Jison
@@ -27,33 +24,11 @@ parser.Parser = Parser;
 parser = new Parser();*/
 
 class Template {
+  private compiled: CompiledTemplate;
+
   constructor(template: string) {
-    if (Language === undefined) {
-      // @ts-expect-error: This is required due to a circular dependency.
-      Language = require("./Language");
-    }
-    if (StringUtil === undefined) {
-      // @ts-expect-error: This is required due to a circular dependency.
-      StringUtil = require("./StringUtil");
-    }
-
     try {
-      template = parser.parse(template) as string;
-      template =
-        "var tmp = {};\n" +
-        "for (var key in v) tmp[key] = v[key];\n" +
-        "v = tmp;\n" +
-        "v.__wcf = window.WCF; v.__window = window;\n" +
-        "return " +
-        template;
-
-      // eslint-disable-next-line @typescript-eslint/no-implied-eval
-      this.fetch = new Function("StringUtil", "Language", "I18nPlural", "v", template).bind(
-        undefined,
-        StringUtil,
-        Language,
-        I18nPlural,
-      );
+      this.compiled = compile(template);
     } catch (e) {
       console.debug(e.message);
       throw e;
@@ -63,9 +38,8 @@ class Template {
   /**
    * Evaluates the Template using the given parameters.
    */
-  fetch(_v: object): string {
-    // this will be replaced in the init function
-    throw new Error("This Template is not initialized.");
+  fetch(v: object): string {
+    return this.compiled(StringUtil, LanguageStore, I18nPlural, v);
   }
 }
 
