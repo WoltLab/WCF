@@ -23,6 +23,12 @@ interface ElementBoundaries {
   top: number;
 }
 
+// see WCF.Message.Quote.Manager
+interface WCFMessageQuoteManager {
+  supportPaste: () => boolean;
+  updateCount: (number, object) => void;
+}
+
 export class UiMessageQuote implements AjaxCallbackObject {
   private activeMessageId = "";
 
@@ -46,13 +52,13 @@ export class UiMessageQuote implements AjaxCallbackObject {
 
   private isMouseDown = false;
 
-  private readonly quoteManager: any;
+  private readonly quoteManager: WCFMessageQuoteManager;
 
   /**
    * Initializes the quote handler for given object type.
    */
   constructor(
-    quoteManager: any, // TODO
+    quoteManager: WCFMessageQuoteManager,
     className: string,
     objectType: string,
     containerSelector: string,

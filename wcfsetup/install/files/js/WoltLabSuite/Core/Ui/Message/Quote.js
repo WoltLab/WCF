@@ -12,8 +12,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Event/
         /**
          * Initializes the quote handler for given object type.
          */
-        constructor(quoteManager, // TODO
-        className, objectType, containerSelector, messageBodySelector, messageContentSelector, supportDirectInsert) {
+        constructor(quoteManager, className, objectType, containerSelector, messageBodySelector, messageContentSelector, supportDirectInsert) {
             this.activeMessageId = "";
             this.containers = new Map();
             this.containerSelector = "";
