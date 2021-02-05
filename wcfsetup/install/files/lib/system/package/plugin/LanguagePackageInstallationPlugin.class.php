@@ -515,6 +515,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
                 MultilineTextFormField::create($language->languageCode)
                     ->label($language->languageName)
                     ->description($description)
+                    ->addFieldClass('monospace')
             );
         }
     }
