@@ -24,7 +24,7 @@ parser.Parser = Parser;
 parser = new Parser();*/
 
 class Template {
-  private compiled: CompiledTemplate;
+  private readonly compiled: CompiledTemplate;
 
   constructor(template: string) {
     try {
