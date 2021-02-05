@@ -7,18 +7,18 @@
  * @module  Language (alias)
  * @module  WoltLabSuite/Core/Language
  */
-define(["require", "exports", "tslib", "./Template"], function (require, exports, tslib_1, Template_1) {
+define(["require", "exports", "tslib", "./Template", "./Language/Store", "./Language/Store"], function (require, exports, tslib_1, Template_1, Store_1, Store_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.get = exports.add = exports.addObject = void 0;
+    exports.add = exports.addObject = exports.get = void 0;
     Template_1 = tslib_1.__importDefault(Template_1);
-    const _languageItems = new Map();
+    Object.defineProperty(exports, "get", { enumerable: true, get: function () { return Store_2.get; } });
     /**
      * Adds all the language items in the given object to the store.
      */
     function addObject(object) {
-        Object.keys(object).forEach((key) => {
-            _languageItems.set(key, object[key]);
+        Object.entries(object).forEach(([key, value]) => {
+            add(key, value);
         });
     }
     exports.addObject = addObject;
@@ -26,41 +26,21 @@ define(["require", "exports", "tslib", "./Template"], function (require, exports
      * Adds a single language item to the store.
      */
     function add(key, value) {
-        _languageItems.set(key, value);
+        Store_1.add(key, compile(value));
     }
     exports.add = add;
     /**
-     * Fetches the language item specified by the given key.
-     * If the language item is a string it will be evaluated as
-     * WoltLabSuite/Core/Template with the given parameters.
-     *
-     * @param  {string}  key    Language item to return.
-     * @param  {Object=}  parameters  Parameters to provide to WoltLabSuite/Core/Template.
-     * @return  {string}
+     * Compiles the given value into a phrase.
      */
-    function get(key, parameters) {
-        let value = _languageItems.get(key);
-        if (value === undefined) {
-            return key;
+    function compile(value) {
+        try {
+            const template = new Template_1.default(value);
+            return template.fetch.bind(template);
         }
-        if (Template_1.default === undefined) {
-            // @ts-expect-error: This is required due to a circular dependency.
-            Template_1.default = require("./Template");
+        catch (e) {
+            return function () {
+                return value;
+            };
         }
-        if (typeof value === "string") {
-            // lazily convert to WCF.Template
-            try {
-                _languageItems.set(key, new Template_1.default(value));
-            }
-            catch (e) {
-                _languageItems.set(key, new Template_1.default("{literal}" + value.replace(/{\/literal}/g, "{/literal}{ldelim}/literal}{literal}") + "{/literal}"));
-            }
-            value = _languageItems.get(key);
-        }
-        if (value instanceof Template_1.default) {
-            value = value.fetch(parameters || {});
-        }
-        return value;
     }
-    exports.get = get;
 });

@@ -1,21 +1,17 @@
 /**
- * WoltLabSuite/Core/Template provides a template scripting compiler similar
- * to the PHP one of WoltLab Suite Core. It supports a limited
- * set of useful commands and compiles templates down to a pure
- * JavaScript Function.
+ * Provides a high level wrapper around the Template/Compiler.
  *
  * @author  Tim Duesterhus
  * @copyright  2001-2019 WoltLab GmbH
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Template
  */
-define(["require", "exports", "tslib", "./Core", "./Template.grammar", "./StringUtil", "./Language", "./I18n/Plural"], function (require, exports, tslib_1, Core, parser, StringUtil, Language, I18nPlural) {
+define(["require", "exports", "tslib", "./Core", "./I18n/Plural", "./Language/Store", "./StringUtil", "./Template/Compiler"], function (require, exports, tslib_1, Core, I18nPlural, LanguageStore, StringUtil, Compiler_1) {
     "use strict";
     Core = tslib_1.__importStar(Core);
-    parser = tslib_1.__importStar(parser);
-    StringUtil = tslib_1.__importStar(StringUtil);
-    Language = tslib_1.__importStar(Language);
     I18nPlural = tslib_1.__importStar(I18nPlural);
+    LanguageStore = tslib_1.__importStar(LanguageStore);
+    StringUtil = tslib_1.__importStar(StringUtil);
     // @todo: still required?
     // work around bug in AMD module generation of Jison
     /*function Parser() {
@@ -27,25 +23,8 @@ define(["require", "exports", "tslib", "./Core", "./Template.grammar", "./String
     parser = new Parser();*/
     class Template {
         constructor(template) {
-            if (Language === undefined) {
-                // @ts-expect-error: This is required due to a circular dependency.
-                Language = require("./Language");
-            }
-            if (StringUtil === undefined) {
-                // @ts-expect-error: This is required due to a circular dependency.
-                StringUtil = require("./StringUtil");
-            }
             try {
-                template = parser.parse(template);
-                template =
-                    "var tmp = {};\n" +
-                        "for (var key in v) tmp[key] = v[key];\n" +
-                        "v = tmp;\n" +
-                        "v.__wcf = window.WCF; v.__window = window;\n" +
-                        "return " +
-                        template;
-                // eslint-disable-next-line @typescript-eslint/no-implied-eval
-                this.fetch = new Function("StringUtil", "Language", "I18nPlural", "v", template).bind(undefined, StringUtil, Language, I18nPlural);
+                this.compiled = Compiler_1.compile(template);
             }
             catch (e) {
                 console.debug(e.message);
@@ -55,9 +34,8 @@ define(["require", "exports", "tslib", "./Core", "./Template.grammar", "./String
         /**
          * Evaluates the Template using the given parameters.
          */
-        fetch(_v) {
-            // this will be replaced in the init function
-            throw new Error("This Template is not initialized.");
+        fetch(v) {
+            return this.compiled(StringUtil, LanguageStore, I18nPlural, v);
         }
     }
     Object.defineProperty(Template, "callbacks", {

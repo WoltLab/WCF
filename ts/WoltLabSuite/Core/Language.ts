@@ -10,14 +10,16 @@
 
 import Template from "./Template";
 
-const _languageItems = new Map<string, string | Template>();
+import { add as addToStore, Phrase } from "./Language/Store";
+
+export { get } from "./Language/Store";
 
 /**
  * Adds all the language items in the given object to the store.
  */
 export function addObject(object: LanguageItems): void {
-  Object.keys(object).forEach((key) => {
-    _languageItems.set(key, object[key]);
+  Object.entries(object).forEach(([key, value]) => {
+    add(key, value);
   });
 }
 
@@ -25,49 +27,21 @@ export function addObject(object: LanguageItems): void {
  * Adds a single language item to the store.
  */
 export function add(key: string, value: string): void {
-  _languageItems.set(key, value);
+  addToStore(key, compile(value));
 }
 
 /**
- * Fetches the language item specified by the given key.
- * If the language item is a string it will be evaluated as
- * WoltLabSuite/Core/Template with the given parameters.
- *
- * @param  {string}  key    Language item to return.
- * @param  {Object=}  parameters  Parameters to provide to WoltLabSuite/Core/Template.
- * @return  {string}
+ * Compiles the given value into a phrase.
  */
-export function get(key: string, parameters?: object): string {
-  let value = _languageItems.get(key);
-  if (value === undefined) {
-    return key;
+function compile(value: string): Phrase {
+  try {
+    const template = new Template(value);
+    return template.fetch.bind(template);
+  } catch (e) {
+    return function () {
+      return value;
+    };
   }
-
-  if (Template === undefined) {
-    // @ts-expect-error: This is required due to a circular dependency.
-    Template = require("./Template");
-  }
-
-  if (typeof value === "string") {
-    // lazily convert to WCF.Template
-    try {
-      _languageItems.set(key, new Template(value));
-    } catch (e) {
-      _languageItems.set(
-        key,
-        new Template(
-          "{literal}" + value.replace(/{\/literal}/g, "{/literal}{ldelim}/literal}{literal}") + "{/literal}",
-        ),
-      );
-    }
-    value = _languageItems.get(key);
-  }
-
-  if (value instanceof Template) {
-    value = value.fetch(parameters || {});
-  }
-
-  return value as string;
 }
 
 interface LanguageItems {
