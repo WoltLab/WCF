@@ -419,9 +419,11 @@ trait TI18nFormField
      */
     public function validate()
     {
-        // if i18n is required for a non-required field and the field is
-        // empty, that is no error
-        if ($this->isI18n() && (!empty(ArrayUtil::trim($this->getValue()))) || $this->isRequired()) {
+        // If i18n is required for a non-required field and the field is
+        // empty in all languages, `I18nHandler::validateValue()` will mark
+        // as invalid even though it is a valid state for this form field,
+        // thus the additional condition.
+        if ($this->isI18n() && (!empty(ArrayUtil::trim($this->getValue())) || $this->isRequired())) {
             if (
                 !I18nHandler::getInstance()->validateValue(
                     $this->getPrefixedId(),
