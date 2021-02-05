@@ -280,11 +280,9 @@ class ReactionHandler extends SingletonFactory
                                 COALESCE(like_table.likeValue, 0) AS liked
                     FROM        wcf" . WCF_N . "_like_object like_object
                     LEFT JOIN   wcf" . WCF_N . "_like like_table
-                    ON          (
-                                        like_table.objectTypeID = like_object.objectTypeID
-                                    AND like_table.objectID = like_object.objectID
-                                    AND like_table.userID = ?
-                                )
+                    ON          like_table.objectTypeID = like_object.objectTypeID
+                            AND like_table.objectID = like_object.objectID
+                            AND like_table.userID = ?
                     " . $conditions;
 
             \array_unshift($parameters, WCF::getUser()->userID);
@@ -769,11 +767,9 @@ class ReactionHandler extends SingletonFactory
                             COALESCE(like_table.likeValue, 0) AS liked
                 FROM        wcf" . WCF_N . "_like_object like_object
                 LEFT JOIN   wcf" . WCF_N . "_like like_table
-                ON          (
-                                    like_table.objectTypeID = ?
-                                AND like_table.objectID = like_object.objectID
-                                AND like_table.userID = ?
-                            )
+                ON          like_table.objectTypeID = ?
+                        AND like_table.objectID = like_object.objectID
+                        AND like_table.userID = ?
                 WHERE   like_object.likeObjectID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([

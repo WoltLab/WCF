@@ -160,13 +160,21 @@ class ArticleListPage extends SortablePage
         }
         if (!empty($this->title)) {
             $this->objectList->getConditionBuilder()->add(
-                'article.articleID IN (SELECT articleID FROM wcf' . WCF_N . '_article_content WHERE title LIKE ?)',
+                'article.articleID IN (
+                    SELECT  articleID
+                    FROM    wcf' . WCF_N . '_article_content
+                    WHERE   title LIKE ?
+                )',
                 ['%' . $this->title . '%']
             );
         }
         if (!empty($this->content)) {
             $this->objectList->getConditionBuilder()->add(
-                'article.articleID IN (SELECT articleID FROM wcf' . WCF_N . '_article_content WHERE content LIKE ?)',
+                'article.articleID IN (
+                    SELECT  articleID
+                    FROM    wcf' . WCF_N . '_article_content
+                    WHERE   content LIKE ?
+                )',
                 ['%' . $this->content . '%']
             );
         }
@@ -180,7 +188,16 @@ class ArticleListPage extends SortablePage
             }
         }
 
-        $this->objectList->sqlSelects = "(SELECT title FROM wcf" . WCF_N . "_article_content WHERE articleID = article.articleID AND (languageID IS NULL OR languageID = " . WCF::getLanguage()->languageID . ") LIMIT 1) AS title";
+        $this->objectList->sqlSelects = "(
+            SELECT  title
+            FROM    wcf" . WCF_N . "_article_content
+            WHERE   articleID = article.articleID
+                AND (
+                        languageID IS NULL
+                     OR languageID = " . WCF::getLanguage()->languageID . "
+                    )
+            LIMIT   1
+        ) AS title";
 
         if ($this->publicationStatus != -1) {
             $this->objectList->getConditionBuilder()->add('article.publicationStatus = ?', [$this->publicationStatus]);

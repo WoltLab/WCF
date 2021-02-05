@@ -260,7 +260,10 @@ class UserListPage extends SortablePage
         // get user ids
         $sql = "SELECT      user_table.userID
                 FROM        wcf" . WCF_N . "_user user_table
-                " . (isset($this->options[$this->sortField]) ? "LEFT JOIN wcf" . WCF_N . "_user_option_value user_option_value ON (user_option_value.userID = user_table.userID)" : '') . "
+                " . (isset($this->options[$this->sortField]) ? "
+                    LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option_value
+                    ON          user_option_value.userID = user_table.userID
+                    " : '') . "
                 " . $this->conditions . "
                 ORDER BY    " . (($this->sortField != 'email' && isset($this->options[$this->sortField])) ? 'user_option_value.userOption' . $this->options[$this->sortField]->optionID : $this->sortField) . " " . $this->sortOrder;
         $statement = WCF::getDB()->prepareStatement(
@@ -287,9 +290,9 @@ class UserListPage extends SortablePage
             $sql = "SELECT      user_avatar.*, option_value.*, user_table.*
                     FROM        wcf" . WCF_N . "_user user_table
                     LEFT JOIN   wcf" . WCF_N . "_user_option_value option_value
-                    ON          (option_value.userID = user_table.userID)
+                    ON          option_value.userID = user_table.userID
                     LEFT JOIN   wcf" . WCF_N . "_user_avatar user_avatar
-                    ON          (user_avatar.avatarID = user_table.avatarID)
+                    ON          user_avatar.avatarID = user_table.avatarID
                     " . $conditions . "
                     ORDER BY    " . (($this->sortField != 'email' && isset($this->options[$this->sortField])) ? 'option_value.userOption' . $this->options[$this->sortField]->optionID : 'user_table.' . $this->sortField) . " " . $this->sortOrder;
             $statement = WCF::getDB()->prepareStatement($sql);

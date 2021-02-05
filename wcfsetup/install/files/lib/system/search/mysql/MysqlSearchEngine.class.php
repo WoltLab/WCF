@@ -66,7 +66,7 @@ class MysqlSearchEngine extends AbstractSearchEngine
                                 " . ($orderBy == 'relevance ASC' || $orderBy == 'relevance DESC' ? ',search_index.relevance' : '') . "
                     FROM        " . $objectType->getTableName() . "
                     INNER JOIN  ({WCF_SEARCH_INNER_JOIN}) search_index
-                    ON          (" . $objectType->getIDFieldName() . " = search_index.objectID)
+                    ON          " . $objectType->getIDFieldName() . " = search_index.objectID
                     " . $objectType->getJoins() . "
                     " . ($additionalConditions[$objectTypeName] ?? '');
             }

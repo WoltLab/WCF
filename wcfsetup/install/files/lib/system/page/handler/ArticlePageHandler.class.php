@@ -54,9 +54,22 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
     public function lookup($searchString)
     {
         $articleList = new ViewableArticleList();
-        $articleList->sqlSelects = "(SELECT title FROM wcf" . WCF_N . "_article_content WHERE articleID = article.articleID AND (languageID IS NULL OR languageID = " . WCF::getLanguage()->languageID . ") LIMIT 1) AS title";
+        $articleList->sqlSelects = "(
+            SELECT  title
+            FROM    wcf" . WCF_N . "_article_content
+            WHERE   articleID = article.articleID
+                AND (
+                        languageID IS NULL
+                     OR languageID = " . WCF::getLanguage()->languageID . "
+                     )
+            LIMIT   1
+        ) AS title";
         $articleList->getConditionBuilder()->add(
-            'article.articleID IN (SELECT articleID FROM wcf' . WCF_N . '_article_content WHERE title LIKE ?)',
+            'article.articleID IN (
+                SELECT  articleID
+                FROM    wcf' . WCF_N . '_article_content
+                WHERE   title LIKE ?
+            )',
             ['%' . $searchString . '%']
         );
         $articleList->sqlLimit = 10;

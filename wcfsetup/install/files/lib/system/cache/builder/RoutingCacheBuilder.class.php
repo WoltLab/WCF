@@ -252,7 +252,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder
         $sql = "SELECT      page_content.customURL AS controllerCustomURL, page_content.pageID, page_content.languageID, page.applicationPackageID
                 FROM        wcf" . WCF_N . "_page_content page_content
                 LEFT JOIN   wcf" . WCF_N . "_page page
-                ON          (page.pageID = page_content.pageID)";
+                ON          page.pageID = page_content.pageID";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute();
         while ($row = $statement->fetchArray()) {

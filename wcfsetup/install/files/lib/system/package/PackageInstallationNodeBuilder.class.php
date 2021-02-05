@@ -757,7 +757,10 @@ class PackageInstallationNodeBuilder
             "package_installation_queue.parentQueueID = ?",
             [$this->installation->queue->queueID]
         );
-        $queueList->getConditionBuilder()->add("package_installation_queue.queueID NOT IN (SELECT queueID FROM wcf" . WCF_N . "_package_installation_node)");
+        $queueList->getConditionBuilder()->add("package_installation_queue.queueID NOT IN (
+            SELECT  queueID
+            FROM    wcf" . WCF_N . "_package_installation_node
+        )");
         $queueList->readObjects();
 
         foreach ($queueList as $queue) {

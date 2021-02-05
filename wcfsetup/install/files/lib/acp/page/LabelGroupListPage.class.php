@@ -101,7 +101,11 @@ class LabelGroupListPage extends SortablePage
     {
         parent::initObjectList();
 
-        $this->objectList->sqlSelects .= '(SELECT COUNT(*) FROM wcf' . WCF_N . '_label WHERE groupID = label_group.groupID) AS labels';
+        $this->objectList->sqlSelects .= '(
+            SELECT  COUNT(*)
+            FROM    wcf' . WCF_N . '_label
+            WHERE   groupID = label_group.groupID
+        ) AS labels';
 
         if ($this->groupName) {
             $languageItemList = new LanguageItemList();

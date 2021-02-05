@@ -157,13 +157,21 @@ class PageListPage extends SortablePage
         }
         if (!empty($this->title)) {
             $this->objectList->getConditionBuilder()->add(
-                'page.pageID IN (SELECT pageID FROM wcf' . WCF_N . '_page_content WHERE title LIKE ?)',
+                'page.pageID IN (
+                    SELECT  pageID
+                    FROM    wcf' . WCF_N . '_page_content
+                    WHERE   title LIKE ?
+                )',
                 ['%' . $this->title . '%']
             );
         }
         if (!empty($this->content)) {
             $this->objectList->getConditionBuilder()->add(
-                'page.pageID IN (SELECT pageID FROM wcf' . WCF_N . '_page_content WHERE content LIKE ?)',
+                'page.pageID IN (
+                    SELECT  pageID
+                    FROM    wcf' . WCF_N . '_page_content
+                    WHERE   content LIKE ?
+                )',
                 ['%' . $this->content . '%']
             );
         }

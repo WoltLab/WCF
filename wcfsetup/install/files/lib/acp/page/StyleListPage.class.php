@@ -49,6 +49,10 @@ class StyleListPage extends MultipleLinkPage
     {
         parent::initObjectList();
 
-        $this->objectList->sqlSelects = "(SELECT COUNT(*) FROM wcf" . WCF_N . "_user WHERE styleID = style.styleID) AS users";
+        $this->objectList->sqlSelects = "(
+            SELECT  COUNT(*)
+            FROM    wcf" . WCF_N . "_user
+            WHERE   styleID = style.styleID
+        ) AS users";
     }
 }

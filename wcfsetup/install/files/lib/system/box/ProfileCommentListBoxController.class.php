@@ -33,7 +33,9 @@ class ProfileCommentListBoxController extends AbstractCommentListBoxController
 
         if (WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {
             $optionID = User::getUserOptionID('canViewProfile');
-            $commentList->sqlJoins .= ' INNER JOIN wcf' . WCF_N . '_user_option_value user_option_value ON (user_option_value.userID = comment.objectID)';
+            $commentList->sqlJoins .= '
+                INNER JOIN  wcf' . WCF_N . '_user_option_value user_option_value
+                ON          user_option_value.userID = comment.objectID';
 
             if (WCF::getUser()->userID) {
                 $followers = UserProfileHandler::getInstance()->getFollowers();

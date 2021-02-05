@@ -21,7 +21,9 @@ class CategoryCacheBuilder extends AbstractCacheBuilder
     {
         $list = new CategoryList();
         $list->sqlSelects = "object_type.objectType";
-        $list->sqlJoins = "LEFT JOIN wcf" . WCF_N . "_object_type object_type ON (object_type.objectTypeID = category.objectTypeID)";
+        $list->sqlJoins = "
+            LEFT JOIN   wcf" . WCF_N . "_object_type object_type
+            ON          object_type.objectTypeID = category.objectTypeID";
         $list->sqlOrderBy = "category.showOrder ASC";
         $list->readObjects();
 

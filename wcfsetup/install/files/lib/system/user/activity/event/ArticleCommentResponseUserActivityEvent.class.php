@@ -31,7 +31,11 @@ class ArticleCommentResponseUserActivityEvent extends SingletonFactory implement
         if (!empty($this->commentObjectIDs)) {
             $articleList = new ViewableArticleList();
             $articleList->getConditionBuilder()->add(
-                "article.articleID IN (SELECT articleID FROM wcf" . WCF_N . "_article_content WHERE articleContentID IN (?))",
+                "article.articleID IN (
+                    SELECT  articleID
+                    FROM    wcf" . WCF_N . "_article_content
+                    WHERE   articleContentID IN (?)
+                )",
                 [$this->commentObjectIDs]
             );
             $articleList->readObjects();

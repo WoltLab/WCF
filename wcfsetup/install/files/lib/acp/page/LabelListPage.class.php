@@ -110,7 +110,9 @@ class LabelListPage extends SortablePage
         parent::initObjectList();
 
         $this->objectList->sqlSelects = "label_group.groupName, label_group.groupDescription";
-        $this->objectList->sqlJoins = "LEFT JOIN wcf" . WCF_N . "_label_group label_group ON (label_group.groupID = label.groupID)";
+        $this->objectList->sqlJoins = "
+            LEFT JOIN   wcf" . WCF_N . "_label_group label_group
+            ON          label_group.groupID = label.groupID";
         if ($this->labelGroup) {
             $this->objectList->getConditionBuilder()->add('label.groupID = ?', [$this->labelGroup->groupID]);
 

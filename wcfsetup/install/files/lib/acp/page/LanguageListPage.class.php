@@ -50,9 +50,20 @@ class LanguageListPage extends SortablePage
     {
         parent::initObjectList();
 
-        $this->objectList->sqlSelects = "(SELECT COUNT(*) FROM wcf" . WCF_N . "_user user WHERE languageID = language.languageID) AS users,";
-        $this->objectList->sqlSelects .= "(SELECT COUNT(*) FROM wcf" . WCF_N . "_language_item WHERE languageID = language.languageID) AS variables,";
-        $this->objectList->sqlSelects .= "(SELECT COUNT(*) FROM wcf" . WCF_N . "_language_item WHERE languageID = language.languageID AND languageCustomItemValue IS NOT NULL) AS customVariables";
+        $this->objectList->sqlSelects = "(
+            SELECT  COUNT(*)
+            FROM    wcf" . WCF_N . "_user user
+            WHERE   languageID = language.languageID
+        ) AS users, (
+            SELECT  COUNT(*)
+            FROM    wcf" . WCF_N . "_language_item
+            WHERE   languageID = language.languageID
+        ) AS variables, (
+            SELECT  COUNT(*)
+            FROM    wcf" . WCF_N . "_language_item
+            WHERE   languageID = language.languageID
+                AND languageCustomItemValue IS NOT NULL
+        ) AS customVariables";
     }
 
     /**

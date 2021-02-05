@@ -115,7 +115,11 @@ class PaidSubscriptionTransactionLogListPage extends SortablePage
         }
         if ($this->username) {
             $this->objectList->getConditionBuilder()->add(
-                'paid_subscription_transaction_log.userID IN (SELECT userID FROM wcf' . WCF_N . '_user WHERE username LIKE ?)',
+                'paid_subscription_transaction_log.userID IN (
+                    SELECT  userID
+                    FROM    wcf' . WCF_N . '_user
+                    WHERE   username LIKE ?
+                )',
                 ['%' . $this->username . '%']
             );
         }
@@ -127,8 +131,11 @@ class PaidSubscriptionTransactionLogListPage extends SortablePage
         }
 
         $this->objectList->sqlSelects = 'user_table.username, paid_subscription.title';
-        $this->objectList->sqlJoins = "LEFT JOIN wcf" . WCF_N . "_user user_table ON (user_table.userID = paid_subscription_transaction_log.userID)";
-        $this->objectList->sqlJoins .= " LEFT JOIN wcf" . WCF_N . "_paid_subscription paid_subscription ON (paid_subscription.subscriptionID = paid_subscription_transaction_log.subscriptionID)";
+        $this->objectList->sqlJoins = "
+            LEFT JOIN   wcf" . WCF_N . "_user user_table
+            ON          user_table.userID = paid_subscription_transaction_log.userID
+            LEFT JOIN   wcf" . WCF_N . "_paid_subscription paid_subscription
+            ON          paid_subscription.subscriptionID = paid_subscription_transaction_log.subscriptionID";
     }
 
     /**

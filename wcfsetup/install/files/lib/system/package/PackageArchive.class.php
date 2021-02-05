@@ -710,7 +710,7 @@ class PackageArchive
             $sql = "SELECT      package.*
                     FROM        wcf" . WCF_N . "_package_requirement requirement
                     LEFT JOIN   wcf" . WCF_N . "_package package
-                    ON          (package.packageID = requirement.requirement)
+                    ON          package.packageID = requirement.requirement
                     WHERE       requirement.packageID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->package->packageID]);
@@ -921,7 +921,7 @@ class PackageArchive
         $sql = "SELECT      package.*, package_exclusion.*
                 FROM        wcf" . WCF_N . "_package_exclusion package_exclusion
                 LEFT JOIN   wcf" . WCF_N . "_package package
-                ON          (package.packageID = package_exclusion.packageID)
+                ON          package.packageID = package_exclusion.packageID
                 WHERE       excludedPackage = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->packageInfo['name']]);

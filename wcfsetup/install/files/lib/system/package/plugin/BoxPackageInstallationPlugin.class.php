@@ -214,7 +214,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
                 $sql = "SELECT      objectTypeID
                         FROM        wcf" . WCF_N . "_object_type object_type
                         LEFT JOIN   wcf" . WCF_N . "_object_type_definition object_type_definition
-                        ON          (object_type_definition.definitionID = object_type.definitionID)
+                        ON          object_type_definition.definitionID = object_type.definitionID
                         WHERE       objectType = ?
                                 AND definitionName = ?";
                 $statement = WCF::getDB()->prepareStatement($sql);

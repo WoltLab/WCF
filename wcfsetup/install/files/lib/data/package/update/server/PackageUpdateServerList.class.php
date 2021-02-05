@@ -32,7 +32,11 @@ class PackageUpdateServerList extends DatabaseObjectList
         if (!empty($this->sqlSelects)) {
             $this->sqlSelects .= ',';
         }
-        $this->sqlSelects .= "(SELECT COUNT(*) FROM wcf" . WCF_N . "_package_update WHERE packageUpdateServerID = " . $this->getDatabaseTableAlias() . ".packageUpdateServerID) AS packages";
+        $this->sqlSelects .= "(
+            SELECT  COUNT(*)
+            FROM    wcf" . WCF_N . "_package_update
+            WHERE   packageUpdateServerID = " . $this->getDatabaseTableAlias() . ".packageUpdateServerID
+        ) AS packages";
 
         parent::readObjects();
     }

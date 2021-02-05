@@ -112,7 +112,10 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction
 
             $sql = "SELECT  import_mapping.newID
                     FROM    wcf" . WCF_N . "_import_mapping import_mapping
-                    " . ($tableName ? "LEFT JOIN " . $tableName . " object_table ON (object_table." . $indexName . " = import_mapping.newID)" : '') . "
+                    " . ($tableName ? "
+                        LEFT JOIN   " . $tableName . " object_table
+                        ON          object_table." . $indexName . " = import_mapping.newID
+                        " : '') . "
                     WHERE   import_mapping.importHash = ?
                         AND import_mapping.objectTypeID = ?
                         AND import_mapping.oldID = ?

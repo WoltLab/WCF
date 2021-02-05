@@ -42,8 +42,8 @@ class ACPSessionLogList extends DatabaseObjectList
             ) AS accesses";
 
         $this->sqlJoins .= "
-            LEFT JOIN wcf" . WCF_N . "_user user_table
-            ON  (user_table.userID = " . $this->getDatabaseTableAlias() . ".userID)";
+            LEFT JOIN   wcf" . WCF_N . "_user user_table
+            ON          user_table.userID = " . $this->getDatabaseTableAlias() . ".userID";
 
         parent::readObjects();
     }

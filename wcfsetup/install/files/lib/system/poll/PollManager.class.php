@@ -431,7 +431,10 @@ class PollManager extends SingletonFactory
         // check for user votes
         if (WCF::getUser()->userID) {
             $optionList->sqlSelects = "CASE WHEN poll_option_vote.optionID IS NULL THEN '0' ELSE '1' END AS voted";
-            $optionList->sqlJoins = "LEFT JOIN wcf" . WCF_N . "_poll_option_vote poll_option_vote ON (poll_option_vote.optionID = poll_option.optionID AND poll_option_vote.userID = " . WCF::getUser()->userID . ")";
+            $optionList->sqlJoins = "
+                LEFT JOIN   wcf" . WCF_N . "_poll_option_vote poll_option_vote
+                ON          poll_option_vote.optionID = poll_option.optionID
+                        AND poll_option_vote.userID = " . WCF::getUser()->userID;
         } else {
             $optionList->sqlSelects = "'0' AS voted";
         }

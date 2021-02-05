@@ -156,7 +156,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
                             languageCategory
                 FROM        wcf" . WCF_N . "_language_item language_item
                 LEFT JOIN   wcf" . WCF_N . "_language_category language_category
-                ON          (language_category.languageCategoryID = language_item.languageCategoryID)
+                ON          language_category.languageCategoryID = language_item.languageCategoryID
                 " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());

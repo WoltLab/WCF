@@ -100,7 +100,7 @@ class UserQuickSearchAction extends AbstractAction
                 $sql = "SELECT      user_table.userID
                         FROM        wcf" . WCF_N . "_user user_table
                         LEFT JOIN   wcf" . WCF_N . "_user_option_value option_value
-                        ON          (option_value.userID = user_table.userID)
+                        ON          option_value.userID = user_table.userID
                         WHERE       banned = ?";
                 $statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
                 $statement->execute([1]);
@@ -114,7 +114,7 @@ class UserQuickSearchAction extends AbstractAction
                 $sql = "SELECT      user_table.userID
                         FROM        wcf" . WCF_N . "_user user_table
                         LEFT JOIN   wcf" . WCF_N . "_user_option_value option_value
-                        ON          (option_value.userID = user_table.userID)
+                        ON          option_value.userID = user_table.userID
                         ORDER BY    user_table.registrationDate DESC";
                 $statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
                 $statement->execute();
@@ -127,7 +127,7 @@ class UserQuickSearchAction extends AbstractAction
                 $sql = "SELECT      user_table.userID
                         FROM        wcf" . WCF_N . "_user user_table
                         LEFT JOIN   wcf" . WCF_N . "_user_option_value option_value
-                        ON          (option_value.userID = user_table.userID)
+                        ON          option_value.userID = user_table.userID
                         WHERE       activationCode <> ?
                         ORDER BY    user_table.registrationDate DESC";
                 $statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
@@ -147,7 +147,7 @@ class UserQuickSearchAction extends AbstractAction
                 $sql = "SELECT      user_table.userID
                         FROM        wcf" . WCF_N . "_user user_table
                         LEFT JOIN   wcf" . WCF_N . "_user_option_value option_value
-                        ON          (option_value.userID = user_table.userID)
+                        ON          option_value.userID = user_table.userID
                         " . $conditionBuilder . "
                         ORDER BY    user_table.registrationDate DESC";
                 $statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
@@ -159,7 +159,7 @@ class UserQuickSearchAction extends AbstractAction
                 $sql = "SELECT      user_table.userID
                         FROM        wcf" . WCF_N . "_user user_table
                         LEFT JOIN   wcf" . WCF_N . "_user_option_value option_value
-                        ON          (option_value.userID = user_table.userID)
+                        ON          option_value.userID = user_table.userID
                         WHERE       disableAvatar = ?";
                 $statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
                 $statement->execute([1]);
@@ -170,7 +170,7 @@ class UserQuickSearchAction extends AbstractAction
                 $sql = "SELECT      user_table.userID
                         FROM        wcf" . WCF_N . "_user user_table
                         LEFT JOIN   wcf" . WCF_N . "_user_option_value option_value
-                        ON          (option_value.userID = user_table.userID)
+                        ON          option_value.userID = user_table.userID
                         WHERE       disableSignature = ?";
                 $statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
                 $statement->execute([1]);

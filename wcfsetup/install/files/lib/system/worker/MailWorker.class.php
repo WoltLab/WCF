@@ -75,7 +75,11 @@ class MailWorker extends AbstractWorker
 
             if ($this->mailData['action'] == 'group') {
                 $this->conditions->add(
-                    "user.userID IN (SELECT userID FROM wcf" . WCF_N . "_user_to_group WHERE groupID IN (?))",
+                    "user.userID IN (
+                        SELECT  userID
+                        FROM    wcf" . WCF_N . "_user_to_group
+                        WHERE   groupID IN (?)
+                    )",
                     [$this->mailData['groupIDs']]
                 );
             }
@@ -141,7 +145,7 @@ class MailWorker extends AbstractWorker
         $sql = "SELECT      user_option.*, user.*
                 FROM        wcf" . WCF_N . "_user user
                 LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option
-                ON          (user_option.userID = user.userID)
+                ON          user_option.userID = user.userID
                 " . $this->conditions . "
                 ORDER BY    user.userID";
         $statement = WCF::getDB()->prepareStatement($sql, $this->limit, $this->limit * $this->loopCount);

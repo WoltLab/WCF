@@ -48,7 +48,9 @@ class ExpiringPaidSubscriptionUserCronjob extends AbstractCronjob
         );
 
         $paidSubscriptionUserList = new PaidSubscriptionUserList();
-        $paidSubscriptionUserList->sqlJoins .= " LEFT JOIN wcf" . WCF_N . "_paid_subscription paid_subscription ON (paid_subscription.subscriptionID = paid_subscription_user.subscriptionID)";
+        $paidSubscriptionUserList->sqlJoins .= "
+            LEFT JOIN   wcf" . WCF_N . "_paid_subscription paid_subscription
+            ON          paid_subscription.subscriptionID = paid_subscription_user.subscriptionID";
         $paidSubscriptionUserList->getConditionBuilder()->add('paid_subscription_user.endDate <> ?', [0]);
         $paidSubscriptionUserList->getConditionBuilder()->add(
             '(' . $conditionBuilder . ')',

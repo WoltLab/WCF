@@ -76,26 +76,53 @@ class UserTrophyListBoxController extends AbstractDatabaseObjectListBoxControlle
         if (!empty($list->sqlConditionJoins)) {
             $list->sqlConditionJoins .= ' ';
         }
-        $list->sqlJoins .= 'LEFT JOIN wcf' . WCF_N . '_trophy trophy ON user_trophy.trophyID = trophy.trophyID';
-        $list->sqlConditionJoins .= 'LEFT JOIN wcf' . WCF_N . '_trophy trophy ON user_trophy.trophyID = trophy.trophyID';
+        $list->sqlJoins .= '
+            LEFT JOIN   wcf' . WCF_N . '_trophy trophy
+            ON          user_trophy.trophyID = trophy.trophyID';
+        $list->sqlConditionJoins .= '
+            LEFT JOIN   wcf' . WCF_N . '_trophy trophy
+            ON          user_trophy.trophyID = trophy.trophyID';
 
         // trophy category join
-        $list->sqlJoins .= ' LEFT JOIN wcf' . WCF_N . '_category category ON trophy.categoryID = category.categoryID';
-        $list->sqlConditionJoins .= ' LEFT JOIN wcf' . WCF_N . '_category category ON trophy.categoryID = category.categoryID';
+        $list->sqlJoins .= '
+            LEFT JOIN   wcf' . WCF_N . '_category category
+            ON          trophy.categoryID = category.categoryID';
+        $list->sqlConditionJoins .= '
+            LEFT JOIN   wcf' . WCF_N . '_category category
+            ON          trophy.categoryID = category.categoryID';
 
         $list->getConditionBuilder()->add('trophy.isDisabled = ?', [0]);
         $list->getConditionBuilder()->add('category.isDisabled = ?', [0]);
 
         if (!WCF::getUser()->userID) {
-            $list->getConditionBuilder()->add('user_trophy.userID IN (SELECT userID FROM wcf' . WCF_N . '_user_option_value WHERE userOption' . UserOptionCacheBuilder::getInstance()->getData()['options']['canViewTrophies']->optionID . ' = 0)');
+            $list->getConditionBuilder()->add('user_trophy.userID IN (
+                SELECT  userID
+                FROM    wcf' . WCF_N . '_user_option_value
+                WHERE   userOption' . UserOptionCacheBuilder::getInstance()->getData()['options']['canViewTrophies']->optionID . ' = 0
+            )');
         } elseif (!WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions')) {
             $conditionBuilder = new PreparedStatementConditionBuilder(false, 'OR');
-            $conditionBuilder->add('user_trophy.userID IN (SELECT userID FROM wcf' . WCF_N . '_user_option_value WHERE (userOption' . UserOptionCacheBuilder::getInstance()->getData()['options']['canViewTrophies']->optionID . ' = 0 OR userOption' . UserOptionCacheBuilder::getInstance()->getData()['options']['canViewTrophies']->optionID . ' = 1))');
+            $conditionBuilder->add('user_trophy.userID IN (
+                SELECT  userID
+                FROM    wcf' . WCF_N . '_user_option_value
+                WHERE   (
+                            userOption' . UserOptionCacheBuilder::getInstance()->getData()['options']['canViewTrophies']->optionID . ' = 0
+                         OR userOption' . UserOptionCacheBuilder::getInstance()->getData()['options']['canViewTrophies']->optionID . ' = 1
+                        )
+            )');
 
             $friendshipConditionBuilder = new PreparedStatementConditionBuilder(false);
-            $friendshipConditionBuilder->add('user_trophy.userID IN (SELECT userID FROM wcf' . WCF_N . '_user_option_value WHERE userOption' . UserOptionCacheBuilder::getInstance()->getData()['options']['canViewTrophies']->optionID . ' = 2)');
+            $friendshipConditionBuilder->add('user_trophy.userID IN (
+                SELECT  userID
+                FROM    wcf' . WCF_N . '_user_option_value
+                WHERE   userOption' . UserOptionCacheBuilder::getInstance()->getData()['options']['canViewTrophies']->optionID . ' = 2
+            )');
             $friendshipConditionBuilder->add(
-                'user_trophy.userID IN (SELECT userID FROM wcf' . WCF_N . '_user_follow WHERE followUserID = ?)',
+                'user_trophy.userID IN (
+                    SELECT  userID
+                    FROM    wcf' . WCF_N . '_user_follow
+                    WHERE   followUserID = ?
+                )',
                 [WCF::getUser()->userID]
             );
             $conditionBuilder->add(

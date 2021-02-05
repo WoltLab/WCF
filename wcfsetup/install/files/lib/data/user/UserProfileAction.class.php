@@ -395,7 +395,7 @@ class UserProfileAction extends UserAction implements IPopoverAction
             $sql = "SELECT      user_rank.rankID
                     FROM        wcf" . WCF_N . "_user_rank user_rank
                     LEFT JOIN   wcf" . WCF_N . "_user_group user_group
-                    ON          (user_group.groupID = user_rank.groupID)
+                    ON          user_group.groupID = user_rank.groupID
                     " . $conditionBuilder . "
                     ORDER BY    user_group.priority DESC, user_rank.requiredPoints DESC, user_rank.requiredGender DESC";
             $statement = WCF::getDB()->prepareStatement($sql, 1);

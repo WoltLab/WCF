@@ -133,7 +133,9 @@ class TrophyConditionHandler extends SingletonFactory
     private function getUserIDs(Trophy $trophy)
     {
         $userList = new UserList();
-        $userList->sqlConditionJoins .= " LEFT JOIN wcf" . WCF_N . "_user_option_value user_option_value ON (user_option_value.userID = user_table.userID)";
+        $userList->sqlConditionJoins .= "
+            LEFT JOIN   wcf" . WCF_N . "_user_option_value user_option_value
+            ON          user_option_value.userID = user_table.userID";
 
         $conditions = $trophy->getConditions();
         foreach ($conditions as $condition) {
@@ -142,7 +144,11 @@ class TrophyConditionHandler extends SingletonFactory
 
         // prevent multiple awards from a trophy for a user
         $userList->getConditionBuilder()->add(
-            'user_table.userID NOT IN (SELECT userID FROM wcf' . WCF_N . '_user_trophy WHERE trophyID IN (?))',
+            'user_table.userID NOT IN (
+                SELECT  userID
+                FROM    wcf' . WCF_N . '_user_trophy
+                WHERE   trophyID IN (?)
+            )',
             [$trophy->trophyID]
         );
         $userList->readObjectIDs();
@@ -192,7 +198,9 @@ class TrophyConditionHandler extends SingletonFactory
         $userList->sqlJoins = $pseudoUserList->sqlJoins;
 
         // We joining the user_trophy table to receive the userTrophyID, which should be deleted.
-        $userList->sqlJoins .= " LEFT JOIN wcf" . WCF_N . "_user_trophy user_trophy ON (user_table.userID = user_trophy.userID)";
+        $userList->sqlJoins .= "
+            LEFT JOIN   wcf" . WCF_N . "_user_trophy user_trophy
+            ON          user_table.userID = user_trophy.userID";
 
         // We do not need the complete user object, but only the userTrophyID.
         // So that the UserList object can also assign the users (which is used
@@ -211,7 +219,11 @@ class TrophyConditionHandler extends SingletonFactory
         // In order not to get all users who do not fulfill the conditions (in case of
         // doubt there can be many), we filter for users who have received the trophy.
         $userList->getConditionBuilder()->add(
-            'user_table.userID IN (SELECT userID FROM wcf' . WCF_N . '_user_trophy WHERE trophyID IN (?))',
+            'user_table.userID IN (
+                SELECT  userID
+                FROM    wcf' . WCF_N . '_user_trophy
+                WHERE   trophyID IN (?)
+            )',
             [$trophy->trophyID]
         );
 

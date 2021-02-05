@@ -52,7 +52,7 @@ class AbstractCommentResponseModerationQueueHandler extends AbstractCommentComme
         $sql = "SELECT      comment_response.responseID, comment.commentID, comment.objectTypeID, comment.objectID
                 FROM        wcf" . WCF_N . "_comment_response comment_response
                 LEFT JOIN   wcf" . WCF_N . "_comment comment
-                ON          (comment.commentID = comment_response.commentID)
+                ON          comment.commentID = comment_response.commentID
                 " . $conditions;
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditions->getParameters());

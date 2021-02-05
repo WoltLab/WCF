@@ -155,10 +155,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
         $sql = "SELECT      variable.variableName
                 FROM        wcf" . WCF_N . "_style_variable variable
                 LEFT JOIN   wcf" . WCF_N . "_style_variable_value variable_value
-                ON          (
-                                    variable_value.variableID = variable.variableID
-                                AND variable_value.styleID = ?
-                            )
+                ON          variable_value.variableID = variable.variableID
+                        AND variable_value.styleID = ?
                 WHERE       variable.variableName LIKE ?
                         AND variable_value.variableValue IS NULL";
         $statement = WCF::getDB()->prepareStatement($sql);
@@ -861,7 +859,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
         $sql = "SELECT      language.languageCode, language_item.languageItemValue
                 FROM        wcf" . WCF_N . "_language_item language_item
                 LEFT JOIN   wcf" . WCF_N . "_language language
-                ON          (language.languageID = language_item.languageID)
+                ON          language.languageID = language_item.languageID
                 WHERE       language_item.languageItem = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->styleDescription]);
@@ -938,7 +936,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
         $sql = "SELECT      variable.variableName, value.variableValue
                 FROM        wcf" . WCF_N . "_style_variable_value value
                 LEFT JOIN   wcf" . WCF_N . "_style_variable variable
-                ON          (variable.variableID = value.variableID)
+                ON          variable.variableID = value.variableID
                 WHERE       value.styleID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$this->styleID]);
@@ -962,7 +960,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
             $sql = "SELECT      template.*, package.package
                     FROM        wcf" . WCF_N . "_template template
                     LEFT JOIN   wcf" . WCF_N . "_package package
-                    ON          (package.packageID = template.packageID)
+                    ON          package.packageID = template.packageID
                     WHERE       template.templateGroupID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([$this->templateGroupID]);

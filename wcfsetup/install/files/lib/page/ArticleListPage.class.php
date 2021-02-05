@@ -187,7 +187,16 @@ class ArticleListPage extends SortablePage
         $this->applyFilters();
 
         if ($this->sortField === 'title') {
-            $this->objectList->sqlSelects = "(SELECT title FROM wcf" . WCF_N . "_article_content WHERE articleID = article.articleID AND (languageID IS NULL OR languageID = " . WCF::getLanguage()->languageID . ") LIMIT 1) AS title";
+            $this->objectList->sqlSelects = "(
+                SELECT  title
+                FROM    wcf" . WCF_N . "_article_content
+                WHERE   articleID = article.articleID
+                    AND (
+                            languageID IS NULL
+                         OR languageID = " . WCF::getLanguage()->languageID . "
+                         )
+                LIMIT   1
+            ) AS title";
         }
     }
 
@@ -210,7 +219,12 @@ class ArticleListPage extends SortablePage
 
                     if (!empty($groupLabelIDs)) {
                         $this->objectList->getConditionBuilder()->add(
-                            'article.articleID NOT IN (SELECT objectID FROM wcf' . WCF_N . '_label_object WHERE objectTypeID = ? AND labelID IN (?))',
+                            'article.articleID NOT IN (
+                                SELECT  objectID
+                                FROM    wcf' . WCF_N . '_label_object
+                                WHERE   objectTypeID = ?
+                                    AND labelID IN (?)
+                            )',
                             [
                                 $objectTypeID,
                                 $groupLabelIDs,
@@ -219,7 +233,12 @@ class ArticleListPage extends SortablePage
                     }
                 } else {
                     $this->objectList->getConditionBuilder()->add(
-                        'article.articleID IN (SELECT objectID FROM wcf' . WCF_N . '_label_object WHERE objectTypeID = ? AND labelID = ?)',
+                        'article.articleID IN (
+                            SELECT  objectID
+                            FROM    wcf' . WCF_N . '_label_object
+                            WHERE   objectTypeID = ?
+                                AND labelID = ?
+                        )',
                         [
                             $objectTypeID,
                             $labelID,

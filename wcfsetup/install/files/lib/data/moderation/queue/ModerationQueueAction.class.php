@@ -130,13 +130,11 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction
         $sql = "SELECT      moderation_queue.queueID
                 FROM        wcf" . WCF_N . "_moderation_queue_to_user moderation_queue_to_user
                 LEFT JOIN   wcf" . WCF_N . "_moderation_queue moderation_queue
-                ON          (moderation_queue.queueID = moderation_queue_to_user.queueID)
+                ON          moderation_queue.queueID = moderation_queue_to_user.queueID
                 LEFT JOIN   wcf" . WCF_N . "_tracked_visit tracked_visit
-                ON          (
-                                    tracked_visit.objectTypeID = " . VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.moderation.queue') . "
-                                AND tracked_visit.objectID = moderation_queue.queueID
-                                AND tracked_visit.userID = " . WCF::getUser()->userID . "
-                            )
+                ON          tracked_visit.objectTypeID = " . VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.moderation.queue') . "
+                        AND tracked_visit.objectID = moderation_queue.queueID
+                        AND tracked_visit.userID = " . WCF::getUser()->userID . "
                 " . $conditions . "
                 ORDER BY    moderation_queue.lastChangeTime DESC";
         $statement = WCF::getDB()->prepareStatement($sql, $MAX_ITEMS);

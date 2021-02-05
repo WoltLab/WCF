@@ -19,7 +19,9 @@ class UserNotificationEventRecipientList extends UserList
      */
     public function __construct()
     {
-        $this->sqlJoins = "LEFT JOIN wcf" . WCF_N . "_user user_table ON (user_table.userID = event_to_user.userID)";
+        $this->sqlJoins = "
+            LEFT JOIN   wcf" . WCF_N . "_user user_table
+            ON          user_table.userID = event_to_user.userID";
         $this->sqlSelects = 'user_table.*';
 
         parent::__construct();

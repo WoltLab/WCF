@@ -92,7 +92,11 @@ class TrophyListPage extends MultipleLinkPage
     {
         parent::initObjectList();
 
-        $this->objectList->sqlSelects = '(SELECT COUNT(*) FROM wcf' . WCF_N . '_user_trophy WHERE trophyID = trophy.trophyID) AS awarded';
+        $this->objectList->sqlSelects = '(
+            SELECT  COUNT(*)
+            FROM    wcf' . WCF_N . '_user_trophy
+            WHERE   trophyID = trophy.trophyID
+        ) AS awarded';
         $this->objectList->getConditionBuilder()->add('isDisabled = ?', [0]);
         $this->objectList->getConditionBuilder()->add('categoryID IN (?)', [
             \array_map(static function ($category) {

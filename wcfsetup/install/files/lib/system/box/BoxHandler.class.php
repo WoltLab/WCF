@@ -84,7 +84,7 @@ class BoxHandler extends SingletonFactory
         $sql = "SELECT      objectTypeID
                 FROM        wcf" . WCF_N . "_object_type object_type
                 INNER JOIN  wcf" . WCF_N . "_object_type_definition object_type_definition
-                ON          (object_type.definitionID = object_type_definition.definitionID)
+                ON          object_type.definitionID = object_type_definition.definitionID
                 WHERE       objectType = ?
                         AND definitionName = ?";
         $statement = WCF::getDB()->prepareStatement($sql);

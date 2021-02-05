@@ -504,7 +504,7 @@ class UserGroup extends DatabaseObject implements ITitledObject
                 $sql = "SELECT      group_option.optionName, option_value.optionValue
                         FROM        wcf" . WCF_N . "_user_group_option_value option_value
                         LEFT JOIN   wcf" . WCF_N . "_user_group_option group_option
-                        ON          (group_option.optionID = option_value.optionID)
+                        ON          group_option.optionID = option_value.optionID
                         " . $conditions;
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute($conditions->getParameters());
