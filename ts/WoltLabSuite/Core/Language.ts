@@ -18,8 +18,8 @@ export { get } from "./Language/Store";
  * Adds all the language items in the given object to the store.
  */
 export function addObject(object: LanguageItems): void {
-  Object.keys(object).forEach((key) => {
-    add(key, object[key]);
+  Object.entries(object).forEach(([key, value]) => {
+    add(key, value);
   });
 }
 

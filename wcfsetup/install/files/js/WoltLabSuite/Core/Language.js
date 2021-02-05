@@ -17,8 +17,8 @@ define(["require", "exports", "tslib", "./Template", "./Language/Store", "./Lang
      * Adds all the language items in the given object to the store.
      */
     function addObject(object) {
-        Object.keys(object).forEach((key) => {
-            add(key, object[key]);
+        Object.entries(object).forEach(([key, value]) => {
+            add(key, value);
         });
     }
     exports.addObject = addObject;
