@@ -34,7 +34,7 @@ class UploadFormField extends AbstractFormField
 
     /**
      * This flag indicates whether only images can uploaded via this field.
-     * <strong>Heads up:</strong> SVG images can contain bad code, therefore do not
+     * <strong>Attention</strong>: SVG images can contain bad code, therefore do not
      * use this option, outside the acp or check the file whether remote code is contained.
      * @var bool
      */
@@ -723,7 +723,7 @@ class UploadFormField extends AbstractFormField
      * image only (if this field is not image only, this method will
      * throw an exception).
      *
-     * <strong>Heads up:</strong> SVG images can contain bad code, therefore do not
+     * <strong>Attention</strong>: SVG images can contain bad code, therefore do not
      * use this option, outside the acp or check the file whether remote code is contained.
      *
      * @param bool $allowSvgImages
@@ -767,7 +767,7 @@ class UploadFormField extends AbstractFormField
     /**
      * Specifies acceptable file types. Use null to not specify any restrictions.
      *
-     * <strong>Heads up:</strong> This feature is used to improve user experience, by removing
+     * <strong>Attention</strong>: This feature is used to improve user experience, by removing
      * unacceptable files from the file picker. It does not validate the type of the uploaded
      * file. You are responsible to perform (proper) validation on the server side.
      *

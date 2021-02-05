@@ -145,7 +145,7 @@
 		<item name="wcf.acp.bbcode.htmlClose"><![CDATA[Closing HTML tag]]></item>
 		<item name="wcf.acp.bbcode.htmlOpen"><![CDATA[Opening HTML tag]]></item>
 		<item name="wcf.acp.bbcode.isBlockElement"><![CDATA[BBCode represents a block element]]></item>
-		<item name="wcf.acp.bbcode.isBlockElement.description"><![CDATA[Block elements are treated differently when processed. They can contain line breaks and paragraphs, and generally take up the entire available width. Common examples for block elements include quotes and lists.<br>Heads up! You must not set this option for inline elements such as bold or links.]]></item>
+		<item name="wcf.acp.bbcode.isBlockElement.description"><![CDATA[Block elements are treated differently when processed. They can contain line breaks and paragraphs, and generally take up the entire available width. Common examples for block elements include quotes and lists.<br><strong>Attention</strong>: You must not set this option for inline elements such as bold or links.]]></item>
 		<item name="wcf.acp.bbcode.isSourceCode"><![CDATA[Content represents source code]]></item>
 		<item name="wcf.acp.bbcode.isSourceCode.description"><![CDATA[Disables conversion of BBCodes and smilies.]]></item>
 		<item name="wcf.acp.bbcode.list"><![CDATA[BBCodes]]></item>
@@ -3160,7 +3160,7 @@ Your account on the website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/li
 		<item name="wcf.acp.user.bulkProcessing.removeFromUserGroups"><![CDATA[Remove from User Groups]]></item>
 		<item name="wcf.acp.user.bulkProcessing.sendMail"><![CDATA[Send Email to Users]]></item>
 		<item name="wcf.acp.user.bulkProcessing.success"><![CDATA[The selected action has been executed and affected {#$affectedObjectCount} user{if $affectedObjectCount != 1}s{/if}.]]></item>
-		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Heads up! The bulk processing executes all actions below on all users matching the selected conditions without any further confirmation prompt!]]></item>
+		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[<strong>Attention</strong>: The bulk processing executes all actions below on all users matching the selected conditions without any further confirmation prompt!]]></item>
 		<item name="wcf.acp.user.profileMenu.sort"><![CDATA[User Profile Menu Show Order]]></item>
 		<item name="wcf.acp.user.action.sendMail"><![CDATA[Send Email]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword"><![CDATA[Send New Password]]></item>
@@ -3174,7 +3174,7 @@ Your account on the website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/li
 		<item name="wcf.acp.user.security.multifactor.active.description"><![CDATA[This user account is protected by a second factor.]]></item>
 		<item name="wcf.acp.user.security.multifactor.disable"><![CDATA[Completely Disable Multi-factor Authentication]]></item>
 		<item name="wcf.acp.user.security.multifactor.disable.description"><![CDATA[Completely disables multi-factor authentication for the account <strong>{$user->username}</strong>. The user will need to setup up multi-factor authentication from scratch if this checkbox is checked.<br>
-<strong>Heads up:</strong> Multi-factor authentication is actively set up by users to better protect their accounts. Please make sure to properly authenticate the user before disabling multi-factor authentication for their account.]]></item>
+<strong>Attention</strong>: Multi-factor authentication is actively set up by users to better protect their accounts. Please make sure to properly authenticate the user before disabling multi-factor authentication for their account.]]></item>
 	</category>
 	<category name="wcf.acp.worker">
 		<item name="wcf.acp.worker.abort.confirmMessage"><![CDATA[Do you really want to terminate the execution?]]></item>
@@ -3466,7 +3466,7 @@ Attachments:
 		<item name="wcf.acp.content.removeContent"><![CDATA[Delete User’s Content]]></item>
 		<item name="wcf.acp.content.provider.removeContentSectionTitle"><![CDATA[Content]]></item>
 		<item name="wcf.acp.content.provider.removeContentInfo"><![CDATA[Select which types of content created by {if $users|count == 1}“<a href="{link controller='UserEdit' id=$user->userID}{/link}">{$user->username}</a>”{else}{#$users|count} users{/if} should be deleted.]]></item>
-		<item name="wcf.acp.content.provider.removeContentWarning"><![CDATA[<strong>Heads up</strong>: The content will be deleted irrevocably and without any further confirmation prompt!]]></item>
+		<item name="wcf.acp.content.provider.removeContentWarning"><![CDATA[<strong>Attention</strong>: The content will be deleted irrevocably and without any further confirmation prompt!]]></item>
 		<item name="wcf.acp.content.provider.com.woltlab.wcf.comment"><![CDATA[Comments]]></item>
 		<item name="wcf.acp.content.provider.com.woltlab.wcf.commentResponse"><![CDATA[Comment Responses]]></item>
 		<item name="wcf.acp.content.provider.com.woltlab.wcf.article"><![CDATA[Articles]]></item>

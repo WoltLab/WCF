@@ -293,7 +293,7 @@ class UploadHandler extends SingletonFactory
     /**
      * Registers files for the given internalId.
      *
-     * HEADS UP: Deletes all uploaded files and overwrites them with
+     * <strong>Attention</strong>: Deletes all uploaded files and overwrites them with
      * the given files. If you want to add a file, use the addFileForInternalId method.
      *
      * @param string $internalId
@@ -333,7 +333,7 @@ class UploadHandler extends SingletonFactory
     /**
      * Register files for the field with the given fieldId.
      *
-     * HEADS UP: Deletes all uploaded files and overwrites them with
+     * <strong>Attention</strong>: Deletes all uploaded files and overwrites them with
      * the given files. If you want to add a file, use the addFileForField method.
      *
      * @param string $fieldId

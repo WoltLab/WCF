@@ -427,7 +427,7 @@ class UserAgent
 
     /**
      * Checks if the User Agent gives an indicator about a tablet device.
-     * Heads up: This is only a basic test and can easily be falsified by the user.
+     * <strong>Attention</strong>: This is only a basic test and can easily be falsified by the user.
      */
     public function isTablet(): bool
     {
@@ -440,7 +440,7 @@ class UserAgent
 
     /**
      * Checks if the User Agent gives an indicator about a mobile device.
-     * Heads up: This is only a basic test and can easily be falsified by the user.
+     * <strong>Attention</strong>: This is only a basic test and can easily be falsified by the user.
      */
     public function isMobileBrowser(): bool
     {
