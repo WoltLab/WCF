@@ -3,7 +3,7 @@
 namespace wcf\system\box;
 
 use wcf\data\user\trophy\UserTrophyList;
-use wcf\system\cache\builder\UserOptionCacheBuilder;
+use wcf\data\user\User;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
@@ -94,11 +94,12 @@ class UserTrophyListBoxController extends AbstractDatabaseObjectListBoxControlle
         $list->getConditionBuilder()->add('trophy.isDisabled = ?', [0]);
         $list->getConditionBuilder()->add('category.isDisabled = ?', [0]);
 
+        $canViewTrophiesOptionID = User::getUserOptionID('canViewTrophies');
         if (!WCF::getUser()->userID) {
             $list->getConditionBuilder()->add('user_trophy.userID IN (
                 SELECT  userID
                 FROM    wcf' . WCF_N . '_user_option_value
-                WHERE   userOption' . UserOptionCacheBuilder::getInstance()->getData()['options']['canViewTrophies']->optionID . ' = 0
+                WHERE   userOption' . $canViewTrophiesOptionID . ' = 0
             )');
         } elseif (!WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions')) {
             $conditionBuilder = new PreparedStatementConditionBuilder(false, 'OR');
@@ -106,8 +107,8 @@ class UserTrophyListBoxController extends AbstractDatabaseObjectListBoxControlle
                 SELECT  userID
                 FROM    wcf' . WCF_N . '_user_option_value
                 WHERE   (
-                            userOption' . UserOptionCacheBuilder::getInstance()->getData()['options']['canViewTrophies']->optionID . ' = 0
-                         OR userOption' . UserOptionCacheBuilder::getInstance()->getData()['options']['canViewTrophies']->optionID . ' = 1
+                            userOption' . $canViewTrophiesOptionID . ' = 0
+                         OR userOption' . $canViewTrophiesOptionID . ' = 1
                         )
             )');
 
@@ -115,7 +116,7 @@ class UserTrophyListBoxController extends AbstractDatabaseObjectListBoxControlle
             $friendshipConditionBuilder->add('user_trophy.userID IN (
                 SELECT  userID
                 FROM    wcf' . WCF_N . '_user_option_value
-                WHERE   userOption' . UserOptionCacheBuilder::getInstance()->getData()['options']['canViewTrophies']->optionID . ' = 2
+                WHERE   userOption' . $canViewTrophiesOptionID . ' = 2
             )');
             $friendshipConditionBuilder->add(
                 'user_trophy.userID IN (

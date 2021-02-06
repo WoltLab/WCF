@@ -7,6 +7,7 @@ use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyCache;
 use wcf\data\user\trophy\UserTrophy;
 use wcf\data\user\trophy\UserTrophyList;
+use wcf\data\user\User;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -143,20 +144,21 @@ class TrophyPage extends MultipleLinkPage
 
         $this->objectList->getConditionBuilder()->add('user_trophy.trophyID = ?', [$this->trophy->getObjectID()]);
         $canViewTrophyDefaultValue = UserOptionCacheBuilder::getInstance()->getData()['options']['canViewTrophies']->defaultValue;
+	    $canViewTrophiesOptionID = User::getUserOptionID('canViewTrophies');
 
         if (!WCF::getUser()->userID) {
             $this->objectList->getConditionBuilder()->add('user_trophy.userID IN (
                 SELECT  userID
                 FROM    wcf' . WCF_N . '_user_option_value
-                WHERE   COALESCE(userOption' . UserOptionCacheBuilder::getInstance()->getData()['options']['canViewTrophies']->optionID . ', ' . $canViewTrophyDefaultValue . ') = 0)');
+                WHERE   COALESCE(userOption' . $canViewTrophiesOptionID . ', ' . $canViewTrophyDefaultValue . ') = 0)');
         } elseif (!WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions')) {
             $conditionBuilder = new PreparedStatementConditionBuilder(false, 'OR');
             $conditionBuilder->add('user_trophy.userID IN (
                 SELECT  userID
                 FROM    wcf' . WCF_N . '_user_option_value
                 WHERE   (
-                            COALESCE(userOption' . UserOptionCacheBuilder::getInstance()->getData()['options']['canViewTrophies']->optionID . ', ' . $canViewTrophyDefaultValue . ') = 0
-                         OR COALESCE(userOption' . UserOptionCacheBuilder::getInstance()->getData()['options']['canViewTrophies']->optionID . ', ' . $canViewTrophyDefaultValue . ') = 1
+                            COALESCE(userOption' . $canViewTrophiesOptionID . ', ' . $canViewTrophyDefaultValue . ') = 0
+                         OR COALESCE(userOption' . $canViewTrophiesOptionID . ', ' . $canViewTrophyDefaultValue . ') = 1
                         )
             )');
 
@@ -164,7 +166,7 @@ class TrophyPage extends MultipleLinkPage
             $friendshipConditionBuilder->add('user_trophy.userID IN (
                 SELECT  userID
                 FROM    wcf' . WCF_N . '_user_option_value
-                WHERE   COALESCE(userOption' . UserOptionCacheBuilder::getInstance()->getData()['options']['canViewTrophies']->optionID . ', ' . $canViewTrophyDefaultValue . ') = 2
+                WHERE   COALESCE(userOption' . $canViewTrophiesOptionID . ', ' . $canViewTrophyDefaultValue . ') = 2
             )');
             $friendshipConditionBuilder->add(
                 'user_trophy.userID IN (
