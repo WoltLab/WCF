@@ -74,6 +74,12 @@ $tables = [
             DefaultFalseBooleanDatabaseTableColumn::create('multifactorActive'),
         ]),
 
+    PartialDatabaseTable::create('wcf1_user_authentication_failure')
+        ->columns([
+            NotNullVarchar255DatabaseTableColumn::create('validationError')
+                ->defaultValue(''),
+        ]),
+
     PartialDatabaseTable::create('wcf1_user_avatar')
         ->columns([
             DefaultFalseBooleanDatabaseTableColumn::create("hasWebP"),

@@ -261,6 +261,7 @@ class RescueModeForm extends AbstractCaptchaForm
                         'time' => TIME_NOW,
                         'ipAddress' => UserUtil::getIpAddress(),
                         'userAgent' => UserUtil::getUserAgent(),
+                        'validationError' => 'invalid' . \ucfirst($this->errorField),
                     ],
                 ]);
                 $action->executeAction();
