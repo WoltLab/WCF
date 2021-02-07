@@ -212,7 +212,7 @@ class PageAddForm extends AbstractForm
      * @var bool
      * @since   5.4
      */
-    public $invertPermissions;
+    public $invertPermissions = 0;
 
     /**
      * @inheritDoc
