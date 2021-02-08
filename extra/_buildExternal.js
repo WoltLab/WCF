@@ -39,12 +39,12 @@ fs.readdirSync("./")
 
                     return false;
                 })
-                .forEach(filename => {
-                    [true, false].forEach(COMPILER_TARGET_DEFAULT => {
+                .forEach(async filename => {
+                    for (const COMPILER_TARGET_DEFAULT of [true, false]) {
                         let outFilename = filename.replace(/\.js$/, (COMPILER_TARGET_DEFAULT ? "" : ".tiny") + ".min.js");
                         console.time(outFilename);
                         {
-                            let output = compiler.compile(fs.readFileSync(path + filename, 'utf-8'), {
+                            let output = await compiler.compile(fs.readFileSync(path + filename, 'utf-8'), {
                                 compress: {
                                     global_defs: {
                                         COMPILER_TARGET_DEFAULT: COMPILER_TARGET_DEFAULT
@@ -55,18 +55,18 @@ fs.readdirSync("./")
                             fs.writeFileSync(path + outFilename, output.code);
                         }
                         console.timeEnd(outFilename);
-                    });
+                    };
                 });
         }
     });
 
 const rjsCmd = (process.platform === "win32") ? "r.js.cmd" : "r.js";
-rjsPaths.forEach(path => {
+rjsPaths.forEach(async path => {
     let buildConfig = `${path}require.build.js`;
     let outFilename = require(process.cwd() + `/${buildConfig}`).out;
 
-    [true, false].forEach(COMPILER_TARGET_DEFAULT => {
-        let overrides = "uglify2.compress.global_defs.COMPILER_TARGET_DEFAULT=" + (COMPILER_TARGET_DEFAULT ? "true" : "false");
+    for (const COMPILER_TARGET_DEFAULT of [true, false]) {
+        let overrides = "";
         if (!COMPILER_TARGET_DEFAULT) {
             outFilename = outFilename.replace(/\.min\.js$/, '.tiny.min.js');
             overrides += " out=" + outFilename;
@@ -77,6 +77,8 @@ rjsPaths.forEach(path => {
             cwd: path,
             stdio: [0, 1, 2]
         });
+        const output = await compiler.compile(fs.readFileSync(path + '/' + outFilename, "utf-8"));
+        fs.writeFileSync(path + '/' + outFilename, output.code);
         console.timeEnd(outFilename);
-    });
+    };
 });

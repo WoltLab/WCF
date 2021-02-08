@@ -1,7 +1,8 @@
 const fs = require("fs");
-const uglify = require("uglify-js");
+const terser = require("terser");
+const merge = require('deepmerge')
 
-const uglifyJsConfig = {
+const terserConfig = {
     compress: {
         sequences: true,
         properties: true,
@@ -18,15 +19,20 @@ const uglifyJsConfig = {
         global_defs: {
             COMPILER_TARGET_DEFAULT: false
         }
+    },
+    format: {
+        comments: false,
     }
 };
 
 module.exports = {
     compile: (filename, overrides) => {
         if (overrides === undefined) overrides = {};
+        const config = merge(terserConfig, overrides);
 
-        return uglify.minify(
+        return terser.minify(
             filename,
-            Object.assign(uglifyJsConfig, overrides));
+            config
+        );
     }
 }
