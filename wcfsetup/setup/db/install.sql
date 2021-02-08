@@ -1532,6 +1532,7 @@ CREATE TABLE wcf1_user_authentication_failure (
 	time INT(10) NOT NULL DEFAULT 0,
 	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
 	userAgent VARCHAR(255) NOT NULL DEFAULT '',
+	validationError VARCHAR(255) NOT NULL DEFAULT '',
 	KEY (ipAddress, time),
 	KEY (time)
 );
