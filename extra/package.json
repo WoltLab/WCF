@@ -1,8 +1,9 @@
 {
   "dependencies": {
+    "deepmerge": "^4.2.2",
     "requirejs": "^2.3.6",
-    "ts-node": "^8.10.2",
-    "uglify-js": "^3.10.1"
+    "terser": "^5.6.0-beta",
+    "ts-node": "^8.10.2"
   },
   "devDependencies": {
     "@types/md5-file": "^4.0.2",
