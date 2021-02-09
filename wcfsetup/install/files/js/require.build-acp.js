@@ -6,8 +6,7 @@
 		out: "WCF.ACP.min.js",
 		useStrict: true,
 		preserveLicenseComments: false,
-		optimize: 'uglify2',
-		uglify2: {},
+		optimize: 'none',
 		excludeShallow: [
 			'WoltLabSuite/_Meta'
 		],
