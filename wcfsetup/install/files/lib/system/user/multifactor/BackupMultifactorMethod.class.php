@@ -106,7 +106,7 @@ final class BackupMultifactorMethod implements IMultifactorMethod
                     ];
 
                     while (\count($code['chunks']) < self::CHUNKS) {
-                        $code['chunks'][] = \str_repeat("\xE2\x80\xA2", self::CHUNK_LENGTH);
+                        $code['chunks'][] = \str_repeat("\u{2022}", self::CHUNK_LENGTH);
                     }
                 }
 
