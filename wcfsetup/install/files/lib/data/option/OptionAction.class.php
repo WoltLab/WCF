@@ -203,7 +203,7 @@ RewriteRule ^{$path}(.*)$ {$path}index.php?$1 [L,QSA]
 
 SNIPPET;
                 if (empty($rules['apache'][$htaccess])) {
-                    $rules['apache'][$htaccess] = $content;
+                    $rules['apache'][$htaccess] = "RewriteEngine On\n\n{$content}";
                 } else {
                     $rules['apache'][$htaccess] .= $content;
                 }
