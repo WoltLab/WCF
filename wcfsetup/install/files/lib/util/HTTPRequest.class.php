@@ -6,6 +6,7 @@ use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\TooManyRedirectsException;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\RequestOptions;
 use ParagonIE\ConstantTime\Hex;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -188,20 +189,20 @@ final class HTTPRequest
 
         $options = [
             // No overall timeout
-            'timeout' => 0,
-            'connect_timeout' => $this->options['timeout'],
-            'read_timeout' => $this->options['timeout'],
-            'allow_redirects' => [
+            RequestOptions::TIMEOUT => 0,
+            RequestOptions::CONNECT_TIMEOUT => $this->options['timeout'],
+            RequestOptions::READ_TIMEOUT => $this->options['timeout'],
+            RequestOptions::ALLOW_REDIRECTS => [
                 'max' => $this->options['maxDepth'],
                 'track_redirects' => true,
                 'on_redirect' => $redirectHandler,
             ],
         ];
         if (isset($this->options['maxLength'])) {
-            $options['stream'] = true;
+            $options[RequestOptions::STREAM] = true;
         }
         if (isset($this->options['auth'])) {
-            $options['auth'] = [
+            $options[RequestOptions::AUTH] = [
                 $this->options['auth']['username'],
                 $this->options['auth']['password'],
             ];

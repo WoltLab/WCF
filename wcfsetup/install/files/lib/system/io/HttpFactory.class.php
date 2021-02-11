@@ -4,6 +4,7 @@ namespace wcf\system\io;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\RequestOptions;
 
 /**
  * Factory for HTTP Clients.
@@ -61,9 +62,9 @@ final class HttpFactory
     public static function makeClient(array $options = [])
     {
         $defaults = [
-            'proxy' => PROXY_SERVER_HTTP,
-            'headers' => [],
-            'timeout' => 60,
+            RequestOptions::PROXY => PROXY_SERVER_HTTP,
+            RequestOptions::HEADERS => [],
+            RequestOptions::TIMEOUT => 60,
         ];
 
         foreach ($defaults as $key => $value) {
@@ -73,14 +74,14 @@ final class HttpFactory
         }
 
         $foundUserAgent = false;
-        foreach ($options['headers'] as $headerName => $value) {
+        foreach ($options[RequestOptions::HEADERS] as $headerName => $value) {
             if (\strtolower($headerName) === 'user-agent') {
                 $foundUserAgent = true;
                 break;
             }
         }
         if (!$foundUserAgent) {
-            $options['headers']['user-agent'] = self::getDefaultUserAgent();
+            $options[RequestOptions::HEADERS]['user-agent'] = self::getDefaultUserAgent();
         }
 
         return new Client($options);

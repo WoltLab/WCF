@@ -4,6 +4,7 @@ namespace wcf\action;
 
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\RequestOptions;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
@@ -105,7 +106,7 @@ class ImageProxyAction extends AbstractAction
                     // download image
                     try {
                         $client = HttpFactory::makeClient([
-                            'timeout' => 10,
+                            RequestOptions::TIMEOUT => 10,
                         ]);
                         $request = new Request('GET', $url, [
                             'via' => '1.1 wsc',

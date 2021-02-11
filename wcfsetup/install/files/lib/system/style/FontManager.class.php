@@ -6,6 +6,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\RequestOptions;
 use wcf\system\io\AtomicWriter;
 use wcf\system\io\HttpFactory;
 use wcf\system\SingletonFactory;
@@ -36,7 +37,7 @@ class FontManager extends SingletonFactory
     {
         $this->http = HttpFactory::makeClient([
             'base_uri' => 'https://fonts.woltlab.com/',
-            'timeout' => 10,
+            RequestOptions::TIMEOUT => 10,
         ]);
     }
 

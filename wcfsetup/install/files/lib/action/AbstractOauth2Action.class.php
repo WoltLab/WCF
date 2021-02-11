@@ -4,6 +4,7 @@ namespace wcf\action;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\RequestOptions;
 use ParagonIE\ConstantTime\Hex;
 use Psr\Http\Client\ClientExceptionInterface;
 use wcf\system\exception\NamedUserException;
@@ -52,7 +53,7 @@ abstract class AbstractOauth2Action extends AbstractAction
     {
         if (!$this->httpClient) {
             $this->httpClient = HttpFactory::makeClient([
-                'timeout' => 5,
+                RequestOptions::TIMEOUT => 5,
             ]);
         }
 
