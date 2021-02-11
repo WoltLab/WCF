@@ -13,6 +13,7 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util\Exception
  * @since	3.0
+ * @deprecated	5.3 This exception is intimately tied to HTTPRequest which is deprecated.
  */
 class HTTPException extends SystemException implements IExtraInformationException {
 	/**
