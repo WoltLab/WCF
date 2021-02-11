@@ -238,6 +238,8 @@
 				<label><input name="enableComments" type="checkbox" value="1"{if $enableComments} checked{/if}> {lang}wcf.acp.article.enableComments{/lang}</label>
 			</dd>
 		</dl>
+		
+		{event name='dataFields'}
 	</div>
 	
 	{if !$isMultilingual}
