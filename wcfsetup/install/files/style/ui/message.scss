@@ -376,7 +376,6 @@
 	align-items: center;
 
 	@include inlineList;
-	@include dotSeparated;
 	@include wcfFontSmall;
 
 	.messagePublicationTime {
