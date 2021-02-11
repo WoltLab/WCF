@@ -18,6 +18,7 @@ use wcf\util\PasswordUtil;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Acp\Form
+ * @deprecated 5.4 The master password is deprecated in favor of proper MFA (https://github.com/WoltLab/WCF/issues/3698).
  */
 class MasterPasswordInitForm extends MasterPasswordForm
 {
