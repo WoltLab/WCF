@@ -4,7 +4,6 @@ namespace wcf\action;
 
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\RequestOptions;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;

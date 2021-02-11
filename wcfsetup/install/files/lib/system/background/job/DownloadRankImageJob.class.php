@@ -3,7 +3,6 @@
 namespace wcf\system\background\job;
 
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\RequestOptions;
 use wcf\data\user\rank\UserRank;
 use wcf\data\user\rank\UserRankEditor;
 use wcf\system\io\HttpFactory;
