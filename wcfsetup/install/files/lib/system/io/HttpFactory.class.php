@@ -28,20 +28,16 @@ final class HttpFactory
 
     /**
      * Returns a RFC 7231#5.5.3 compatible user agent.
-     *
-     * @return string
      */
-    public static function getDefaultUserAgent()
+    public static function getDefaultUserAgent(): string
     {
         return 'WoltLabSuite/' . \wcf\getMinorVersion();
     }
 
     /**
      * Returns a reference to the default HTTP client.
-     *
-     * @return ClientInterface
      */
-    public static function getDefaultClient()
+    public static function getDefaultClient(): ClientInterface
     {
         if (self::$defaultClient === null) {
             self::$defaultClient = static::makeClient();
@@ -56,10 +52,9 @@ final class HttpFactory
      * The HTTP proxy will automatically be enabled, unless
      * specifically removed by passing appropriate options.
      *
-     * @return ClientInterface
      * @see Client
      */
-    public static function makeClient(array $options = [])
+    public static function makeClient(array $options = []): ClientInterface
     {
         $defaults = [
             RequestOptions::PROXY => PROXY_SERVER_HTTP,
