@@ -9,6 +9,7 @@ namespace wcf\system\exception;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Exception
+ * @deprecated 5.3 This exception was created for use with HTTPRequest which is deprecated.
  */
 class HTTPUnauthorizedException extends SystemException
 {
