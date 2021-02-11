@@ -64,9 +64,7 @@ class DownloadRankImageJob extends AbstractBackgroundJob
 
         $extension = \pathinfo(Url::parse($rank->rankImage)['path'], \PATHINFO_EXTENSION);
         if (\in_array($extension, ['gif', 'png', 'jpg', 'jpeg', 'svg', 'webp'])) {
-            $http = HttpFactory::makeClient([
-                RequestOptions::TIMEOUT => 10,
-            ]);
+            $http = HttpFactory::makeClientWithTimeout(10);
 
             $imageDest = WCF_DIR . UserRank::RANK_IMAGE_DIR . $rank->rankID . '-rankImage.' . $extension;
             $http->send(new Request('GET', $rank->rankImage), [

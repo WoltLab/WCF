@@ -52,9 +52,7 @@ abstract class AbstractOauth2Action extends AbstractAction
     final protected function getHttpClient(): ClientInterface
     {
         if (!$this->httpClient) {
-            $this->httpClient = HttpFactory::makeClient([
-                RequestOptions::TIMEOUT => 5,
-            ]);
+            $this->httpClient = HttpFactory::makeClientWithTimeout(5);
         }
 
         return $this->httpClient;
