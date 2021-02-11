@@ -3,9 +3,9 @@
 namespace wcf\action;
 
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 use ParagonIE\ConstantTime\Hex;
+use Psr\Http\Client\ClientExceptionInterface;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\io\HttpFactory;
@@ -148,7 +148,7 @@ abstract class AbstractOauth2Action extends AbstractAction
             // access_token to invalidate 'code'.
             //
             // Validation is happening within the `finally` so that the StateValidationException
-            // overwrites any GuzzleException (improving the error message).
+            // overwrites any HTTP exception (improving the error message).
             if ($this->supportsState()) {
                 $this->validateState();
             }
@@ -229,7 +229,7 @@ abstract class AbstractOauth2Action extends AbstractAction
             $exceptionID = \wcf\functions\exception\logThrowable($e);
 
             $type = 'genericException';
-            if ($e instanceof GuzzleException) {
+            if ($e instanceof ClientExceptionInterface) {
                 $type = 'httpError';
             }
 

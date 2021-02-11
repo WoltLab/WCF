@@ -2,8 +2,8 @@
 
 namespace wcf\action;
 
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
+use Psr\Http\Client\ClientExceptionInterface;
 use wcf\data\user\User;
 use wcf\form\RegisterForm;
 use wcf\system\exception\NamedUserException;
@@ -162,7 +162,7 @@ final class GithubAuthAction extends AbstractOauth2Action
                         }
                     }
                     $oauthUser["__email"] = $email;
-                } catch (GuzzleException $e) {
+                } catch (ClientExceptionInterface $e) {
                 }
 
                 WCF::getSession()->register('__oauthUser', $oauthUser);

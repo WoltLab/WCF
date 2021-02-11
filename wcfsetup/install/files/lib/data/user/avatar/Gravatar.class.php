@@ -2,8 +2,8 @@
 
 namespace wcf\data\user\avatar;
 
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
+use Psr\Http\Client\ClientExceptionInterface;
 use wcf\system\io\HttpFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -119,7 +119,7 @@ class Gravatar extends DefaultAvatar
             if ($response->getStatusCode() === 200) {
                 return true;
             }
-        } catch (GuzzleException $e) {
+        } catch (ClientExceptionInterface $e) {
             // Ignore exception, because we return false anyways.
         }
 
