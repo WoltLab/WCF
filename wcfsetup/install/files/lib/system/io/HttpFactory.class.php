@@ -47,6 +47,20 @@ final class HttpFactory
     }
 
     /**
+     * Creates a new HTTP client with the given $timeout as the maximum
+     * total transfer duration.
+     *
+     * @since 5.4
+     * @see HttpFactory::makeClient()
+     */
+    public static function makeClientWithTimeout(float $timeout): ClientInterface
+    {
+        return static::makeClient([
+            RequestOptions::TIMEOUT => $timeout,
+        ]);
+    }
+
+    /**
      * Creates a new HTTP client.
      *
      * The HTTP proxy will automatically be enabled, unless
