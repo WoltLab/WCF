@@ -106,6 +106,11 @@ class VisitTracker extends SingletonFactory
         $lifetime = ($this->availableObjectTypes[$objectType]->lifetime) ?: self::DEFAULT_LIFETIME;
         $minimum = TIME_NOW - $lifetime;
 
+        if (WCF::getUser()->userID) {
+            // Mark everything before the registration date as read.
+            $minimum = \max($minimum, WCF::getUser()->registrationDate);
+        }
+
         if (isset($this->userVisits[$objectTypeID])) {
             // double times the lifetime period for existing visit data;
             // equals 2 weeks for the default lifetime of 7 days
