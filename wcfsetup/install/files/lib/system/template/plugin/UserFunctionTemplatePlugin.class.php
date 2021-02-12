@@ -74,12 +74,14 @@ class UserFunctionTemplatePlugin implements IFunctionTemplatePlugin
 
         // default case
         if ($content === '') {
-            $additionalParameters = ' data-object-id="' . $object->getObjectID() . '"';
             $content = $object->getFormattedUsername();
-            if (isset($tagArgs['class'])) {
-                $tagArgs['class'] = 'userLink ' . $tagArgs['class'];
-            } else {
-                $tagArgs['class'] = 'userLink';
+            if ($object->getObjectID()) {
+                $additionalParameters = ' data-object-id="' . $object->getObjectID() . '"';
+                if (isset($tagArgs['class'])) {
+                    $tagArgs['class'] = 'userLink ' . $tagArgs['class'];
+                } else {
+                    $tagArgs['class'] = 'userLink';
+                }
             }
         }
 
@@ -100,6 +102,10 @@ class UserFunctionTemplatePlugin implements IFunctionTemplatePlugin
 
             $additionalParameters .= ' ' . \strtolower(\preg_replace('~([A-Z])~', '-$1', $name))
                 . '="' . StringUtil::encodeHTML($value) . '"';
+        }
+
+        if (!$object->getObjectID()) {
+            return '<span' . $additionalParameters . '>' . $content . '</span>';
         }
 
         return '<a href="' . StringUtil::encodeHTML($object->getLink() . $append) . '"' . $additionalParameters . '>' . $content . '</a>';
