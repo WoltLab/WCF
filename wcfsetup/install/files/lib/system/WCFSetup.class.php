@@ -72,12 +72,6 @@ class WCFSetup extends WCF
     protected static $selectedLanguageCode = 'en';
 
     /**
-     * selected languages to be installed
-     * @var string[]
-     */
-    protected static $selectedLanguages = [];
-
-    /**
      * list of installed files
      * @var string[]
      */
@@ -138,10 +132,6 @@ class WCFSetup extends WCF
                 self::$selectedLanguageCode
             );
         }
-
-        if (isset($_POST['selectedLanguages']) && \is_array($_POST['selectedLanguages'])) {
-            self::$selectedLanguages = $_POST['selectedLanguages'];
-        }
     }
 
     /**
@@ -197,7 +187,6 @@ class WCFSetup extends WCF
             '__wcf' => $this,
             'tmpFilePrefix' => TMP_FILE_PREFIX,
             'languageCode' => self::$selectedLanguageCode,
-            'selectedLanguages' => self::$selectedLanguages,
             'directories' => self::$directories,
             'developerMode' => self::$developerMode,
         ]);
@@ -234,7 +223,7 @@ class WCFSetup extends WCF
     protected function calcProgress($currentStep)
     {
         // calculate progress
-        $progress = \round((100 / 25) * ++$currentStep, 0);
+        $progress = \round((100 / 24) * ++$currentStep, 0);
         self::getTPL()->assign(['progress' => $progress]);
     }
 
@@ -295,18 +284,13 @@ class WCFSetup extends WCF
                 $this->unzipFiles();
                 break;
 
-            case 'selectLanguages':
-                $this->calcProgress(5);
-                $this->selectLanguages();
-                break;
-
             case 'configureDB':
-                $this->calcProgress(6);
+                $this->calcProgress(5);
                 $this->configureDB();
                 break;
 
             case 'createDB':
-                $currentStep = 7;
+                $currentStep = 6;
                 if (isset($_POST['offset'])) {
                     $currentStep += \intval($_POST['offset']);
                 }
@@ -316,22 +300,22 @@ class WCFSetup extends WCF
                 break;
 
             case 'logFiles':
-                $this->calcProgress(21);
+                $this->calcProgress(20);
                 $this->logFiles();
                 break;
 
             case 'installLanguage':
-                $this->calcProgress(22);
+                $this->calcProgress(21);
                 $this->installLanguage();
                 break;
 
             case 'createUser':
-                $this->calcProgress(23);
+                $this->calcProgress(22);
                 $this->createUser();
                 break;
 
             case 'installPackages':
-                $this->calcProgress(24);
+                $this->calcProgress(23);
                 $this->installPackages();
                 break;
         }
@@ -632,67 +616,8 @@ class WCFSetup extends WCF
         else {
             static::installFiles();
 
-            $this->gotoNextStep('selectLanguages');
-        }
-    }
-
-    /**
-     * Shows the page for choosing the installed languages.
-     */
-    protected function selectLanguages()
-    {
-        $errorField = $errorType = '';
-
-        // skip step in developer mode
-        // select all available languages automatically
-        if (self::$developerMode) {
-            self::$selectedLanguages = [];
-            foreach (self::$availableLanguages as $languageCode => $language) {
-                self::$selectedLanguages[] = $languageCode;
-            }
-
-            self::getTPL()->assign(['selectedLanguages' => self::$selectedLanguages]);
             $this->gotoNextStep('configureDB');
-
-            exit;
         }
-
-        // start error handling
-        if (isset($_POST['send'])) {
-            try {
-                // no languages selected
-                if (empty(self::$selectedLanguages)) {
-                    throw new UserInputException('selectedLanguages');
-                }
-
-                // illegal selection
-                foreach (self::$selectedLanguages as $language) {
-                    if (!isset(self::$availableLanguages[$language])) {
-                        throw new UserInputException('selectedLanguages');
-                    }
-                }
-
-                // no errors
-                // go to next step
-                $this->gotoNextStep('configureDB');
-
-                exit;
-            } catch (UserInputException $e) {
-                $errorField = $e->getField();
-                $errorType = $e->getType();
-            }
-        } else {
-            self::$selectedLanguages[] = self::$selectedLanguageCode;
-            WCF::getTPL()->assign(['selectedLanguages' => self::$selectedLanguages]);
-        }
-
-        WCF::getTPL()->assign([
-            'errorField' => $errorField,
-            'errorType' => $errorType,
-            'availableLanguages' => self::$availableLanguages,
-            'nextStep' => 'selectLanguages',
-        ]);
-        WCF::getTPL()->display('stepSelectLanguages');
     }
 
     /**
@@ -1061,7 +986,8 @@ class WCFSetup extends WCF
     {
         $this->initDB();
 
-        foreach (self::$selectedLanguages as $language) {
+        $languageCodes = \array_keys(self::$availableLanguages);
+        foreach ($languageCodes as $language) {
             // get language.xml file name
             $filename = TMP_DIR . 'install/lang/' . $language . '.xml';
 
@@ -1082,8 +1008,8 @@ class WCFSetup extends WCF
         $language = LanguageFactory::getInstance()->getLanguageByCode(
             \in_array(
                 self::$selectedLanguageCode,
-                self::$selectedLanguages
-            ) ? self::$selectedLanguageCode : self::$selectedLanguages[0]
+                $languageCodes
+            ) ? self::$selectedLanguageCode : $languageCodes[0]
         );
         LanguageFactory::getInstance()->makeDefault($language->languageID);
 

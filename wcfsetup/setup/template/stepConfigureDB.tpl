@@ -57,9 +57,6 @@
 		{foreach from=$directories key=application item=directory}
 			<input type="hidden" name="directories[{$application}]" value="{$directory}">
 		{/foreach}
-		{foreach from=$selectedLanguages item=language}
-			<input type="hidden" name="selectedLanguages[]" value="{$language}">
-		{/foreach}
 	</div>
 </form>
 <script>
