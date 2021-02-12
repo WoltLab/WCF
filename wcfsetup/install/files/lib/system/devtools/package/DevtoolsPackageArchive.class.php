@@ -41,7 +41,7 @@ class DevtoolsPackageArchive extends PackageArchive
         $it = new \RecursiveIteratorIterator(
             new \RecursiveCallbackFilterIterator(
                 new \RecursiveDirectoryIterator($projectDir),
-                static function (\SplFileInfo $current, string $key, \RecursiveDirectoryIterator $it) {
+                static function (\SplFileInfo $current, string $key, \RecursiveDirectoryIterator $it): bool {
                     // Skip '.' and '..'.
                     if ($it->isDot()) {
                         return false;
@@ -83,7 +83,7 @@ class DevtoolsPackageArchive extends PackageArchive
                 }
             )
         );
-        $readFiles = \array_map(static function (\SplFileInfo $f) {
+        $readFiles = \array_map(static function (\SplFileInfo $f): string {
             return $f->getPathname();
         }, \iterator_to_array($it));
 
