@@ -1259,7 +1259,7 @@
 			<definitionname>com.woltlab.wcf.bulkProcessing.user.action</definitionname>
 			<classname>wcf\system\bulk\processing\user\ExportMailAddressUserBulkProcessingAction</classname>
 			<action>exportMailAddress</action>
-			<permissions>admin.user.canMailUser</permissions>
+			<permissions>admin.user.canEditMailAddress</permissions>
 		</type>
 		<!-- /user bulk processing actions -->
 		<!-- user bulk processing conditions -->
