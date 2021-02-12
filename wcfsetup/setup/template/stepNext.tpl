@@ -15,9 +15,6 @@
 			{foreach from=$directories key=application item=directory}
 				<input type="hidden" name="directories[{$application}]" value="{$directory}">
 			{/foreach}
-			{foreach from=$selectedLanguages item=language}
-				<input type="hidden" name="selectedLanguages[]" value="{$language}">
-			{/foreach}
 			{if $__additionalParameters|isset}
 				{foreach from=$__additionalParameters key=__name item=__value}
 					<input type="hidden" name="{@$__name}" value="{@$__value}">

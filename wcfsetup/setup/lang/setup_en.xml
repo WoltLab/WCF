@@ -49,10 +49,6 @@
 		<item name="wcf.global.systemRequirements.cookie.description"><![CDATA[The web browser must send cookies back to the web server.]]></item>
 		<item name="wcf.global.next"><![CDATA[Loading next step …]]></item>
 		<item name="wcf.global.next.description"><![CDATA[The installation is currently loading the next step, please wait.]]></item>
-		<item name="wcf.global.languages"><![CDATA[Choose languages to install]]></item>
-		<item name="wcf.global.languages.description"><![CDATA[This software can support multiple languages. Please choose the languages you would like to install.]]></item>
-		<item name="wcf.global.languages.languages"><![CDATA[Languages]]></item>
-		<item name="wcf.global.languages.error.empty"><![CDATA[Please choose at least one language!]]></item>
 		<item name="wcf.global.configureDB"><![CDATA[Configure Database Access]]></item>
 		<item name="wcf.global.configureDB.description"><![CDATA[The data for this software needs to be stored in a MySQL or MariaDB-database. Please enter your database access information!]]></item>
 		<item name="wcf.global.configureDB.host"><![CDATA[Hostname]]></item>
