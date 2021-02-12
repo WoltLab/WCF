@@ -6,8 +6,6 @@ use wcf\system\package\PackageArchive;
 use wcf\system\package\plugin\ACPTemplatePackageInstallationPlugin;
 use wcf\system\package\plugin\FilePackageInstallationPlugin;
 use wcf\system\package\plugin\TemplatePackageInstallationPlugin;
-use wcf\system\Regex;
-use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
 
 /**
@@ -39,13 +37,55 @@ class DevtoolsPackageArchive extends PackageArchive
         $projectDir = FileUtil::addTrailingSlash(
             FileUtil::unifyDirSeparator(\realpath(\dirname($this->packageXmlPath)))
         );
-        $readFiles = DirectoryUtil::getInstance($projectDir)->getFiles(
-            \SORT_ASC,
-            // ignore folders whose contents are delivered as archives by default
-            // and ignore dotfiles and dotdirectories
-            Regex::compile('^' . \preg_quote($projectDir) . '(acptemplates|files|templates|\.)'),
-            true
+
+        $it = new \RecursiveIteratorIterator(
+            new \RecursiveCallbackFilterIterator(
+                new \RecursiveDirectoryIterator($projectDir),
+                static function (\SplFileInfo $current, string $key, \RecursiveDirectoryIterator $it): bool {
+                    // Skip '.' and '..'.
+                    if ($it->isDot()) {
+                        return false;
+                    }
+
+                    // Skip hidden files.
+                    if ($current->getFilename()[0] === '.') {
+                        return false;
+                    }
+
+                    if ($current->isDir()) {
+                        // Check if we are in the project root.
+                        if ($it->getSubPath() === '') {
+                            // Skip acptemplates / files / templates.
+                            if (
+                                \preg_match(
+                                    '/^(acptemplates|files|templates)(_[a-z0-9]+)?$/',
+                                    $current->getFilename()
+                                )
+                            ) {
+                                return false;
+                            }
+
+                            // Skip node_modules and vendor.
+                            if (\preg_match('/^(node_modules|vendor)$/', $current->getFilename())) {
+                                return false;
+                            }
+
+                            // Skip TypeScript source files.
+                            if (\preg_match('/^ts$/', $current->getFilename())) {
+                                return false;
+                            }
+                        }
+
+                        return true;
+                    }
+
+                    return true;
+                }
+            )
         );
+        $readFiles = \array_map(static function (\SplFileInfo $f): string {
+            return $f->getPathname();
+        }, \iterator_to_array($it));
 
         $files = [];
         foreach ($readFiles as $file) {
