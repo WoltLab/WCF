@@ -223,6 +223,34 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
                         }
                     }
                 ));
+                $optionNameField->addValidator(new FormFieldValidator(
+                    'lowercase',
+                    static function (TextFormField $formField) {
+                        $value = $formField->getValue();
+                        if ($value !== \strtolower($value)) {
+                            $formField->addValidationError(
+                                new FormFieldValidationError(
+                                    'notLowercase',
+                                    'wcf.acp.pip.option.optionName.error.notLowercase'
+                                )
+                            );
+                        }
+                    }
+                ));
+                $optionNameField->addValidator(new FormFieldValidator(
+                    'pattern',
+                    static function (TextFormField $formField) {
+                        $value = $formField->getValue();
+                        if (!\preg_match('/^[a-z][a-z0-9_]*[a-z]$/', $value)) {
+                            $formField->addValidationError(
+                                new FormFieldValidationError(
+                                    'pattern',
+                                    'wcf.acp.pip.option.optionName.error.pattern'
+                                )
+                            );
+                        }
+                    }
+                ));
 
                 // add `hidden` pseudo-category
                 /** @var SingleSelectionFormField $categoryName */
