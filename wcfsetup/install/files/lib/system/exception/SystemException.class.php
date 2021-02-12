@@ -10,7 +10,7 @@ namespace wcf\system\exception;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Exception
  */
-class SystemException extends LoggedException
+class SystemException extends LoggedException implements IExtraInformationException
 {
     /**
      * error description
@@ -52,6 +52,16 @@ class SystemException extends LoggedException
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getExtraInformation()
+    {
+        return [
+            ['Description', $this->description],
+        ];
     }
 
     /**
