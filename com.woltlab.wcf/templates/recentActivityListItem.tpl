@@ -1,7 +1,7 @@
 {foreach from=$eventList item=event}
 	<li>
 		<div class="box48{if $__wcf->getUserProfileHandler()->isIgnoredUser($event->getUserProfile()->userID)} ignoredUserContent{/if}">
-			{user object=$event->getUserProfile() type='avatar48' ariaHidden='true'}
+			{user object=$event->getUserProfile() type='avatar48' ariaHidden='true' tabindex='-1'}
 			
 			<div>
 				<div class="containerHeadline">

@@ -1,7 +1,7 @@
 <ul class="sidebarItemList">
 	{foreach from=$boxUsers item=boxUser}
 		<li class="box24">
-			{user object=$boxUser type='avatar24' ariaHidden='true'}
+			{user object=$boxUser type='avatar24' ariaHidden='true' tabindex='-1'}
 			
 			<div class="sidebarItemTitle">
 				<h3>{user object=$boxUser}</h3>

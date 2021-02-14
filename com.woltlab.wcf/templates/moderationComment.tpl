@@ -2,7 +2,7 @@
 	<section class="messageContent">
 		<header class="messageHeader">
 			<div class="box32 messageHeaderWrapper">
-				{user object=$message->getUserProfile() type='avatar32' ariaHidden='true'}
+				{user object=$message->getUserProfile() type='avatar32' ariaHidden='true' tabindex='-1'}
 				
 				<div class="messageHeaderBox">
 					<h2 class="messageTitle">

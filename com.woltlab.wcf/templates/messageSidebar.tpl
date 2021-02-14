@@ -17,7 +17,7 @@
 			
 			{if $userProfile->getAvatar()}
 				<div class="userAvatar">
-					{user object=$userProfile type='avatar128' ariaHidden='true'}
+					{user object=$userProfile type='avatar128' ariaHidden='true' tabindex='-1'}
 					
 					{if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && !$isReply && $userProfile->isOnline()}<span class="badge green badgeOnline" title="{lang}wcf.user.online.title{/lang}">{lang}wcf.user.online{/lang}</span>{/if}
 				</div>

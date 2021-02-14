@@ -61,7 +61,7 @@
 	<h2 class="sectionTitle">{lang}wcf.moderation.report.reportedBy{/lang}</h2>
 	
 	<div class="box32">
-		{user object=$reportUser type='avatar32'}
+		{user object=$reportUser type='avatar32' ariaHidden='true' tabindex='-1'}
 		
 		<div>
 			<div class="containerHeadline">

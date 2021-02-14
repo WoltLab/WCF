@@ -1,7 +1,7 @@
 {foreach from=$likeList item=like}
 	<li>
 		<div class="box48">
-			{user object=$like->getUserProfile() type='avatar48' ariaHidden='true'}
+			{user object=$like->getUserProfile() type='avatar48' ariaHidden='true' tabindex='-1'}
 			
 			<div>
 				<div class="containerHeadline">

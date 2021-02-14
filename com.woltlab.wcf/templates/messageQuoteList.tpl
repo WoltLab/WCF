@@ -5,7 +5,7 @@
 			<header class="messageHeader">
 				<div class="box32 messageHeaderWrapper">
 					{if $userProfiles[$message->getUserID()]|isset}
-						{user object=$userProfiles[$message->getUserID()] type='avatar32' ariaHidden='true'}
+						{user object=$userProfiles[$message->getUserID()] type='avatar32' ariaHidden='true' tabindex='-1'}
 					{else}
 						<span><img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage" style="width: 32px; height: 32px"></span>
 					{/if}

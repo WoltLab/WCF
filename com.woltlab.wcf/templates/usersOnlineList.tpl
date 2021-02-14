@@ -109,7 +109,7 @@
 		{capture append=usersOnlineList}
 			<li>
 				<div class="box48">
-					{user object=$user type='avatar48' title=$user->username ariaHidden='true'}
+					{user object=$user type='avatar48' ariaHidden='true' tabindex='-1'}
 					
 					<div class="details userInformation">
 						<div class="containerHeadline">

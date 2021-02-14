@@ -13,7 +13,7 @@
 			data-responses="{@$comment->responses}" data-last-response-time="{if $commentLastResponseTime|empty}{@$comment->getLastResponseTime()}{else}{@$commentLastResponseTime}{/if}" data-is-disabled="{@$comment->isDisabled}"
 		>
 			<div class="box48{if $__wcf->getUserProfileHandler()->isIgnoredUser($comment->userID)} ignoredUserContent{/if}">
-				{user object=$comment->getUserProfile() type='avatar48'}
+				{user object=$comment->getUserProfile() type='avatar48' ariaHidden='true' tabindex='-1'}
 				
 				<div class="commentContentContainer" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
 					<div class="commentContent">

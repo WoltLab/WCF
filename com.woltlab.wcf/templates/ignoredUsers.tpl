@@ -16,7 +16,7 @@
 			{foreach from=$objects item=user}
 				<li class="jsIgnoredUser">
 					<div class="box48">
-						{user object=$user type='avatar48' title=$user->username}
+						{user object=$user type='avatar48' ariaHidden='true' tabindex='-1'}
 						
 						<div class="details userInformation">
 							{include file='userInformationHeadline'}

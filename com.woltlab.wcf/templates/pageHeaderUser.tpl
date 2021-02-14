@@ -24,7 +24,7 @@
 						<ul class="interactiveDropdownItems interactiveDropdownItemsUserMenu">
 							<li>
 								<div class="box48">
-									{user object=$__wcf->getUserProfileHandler()->getUserProfile() type='avatar48' ariaHidden='true'}
+									{user object=$__wcf->getUserProfileHandler()->getUserProfile() type='avatar48' ariaHidden='true' tabindex='-1'}
 									
 									<div class="containerHeadline">
 										<h3>
