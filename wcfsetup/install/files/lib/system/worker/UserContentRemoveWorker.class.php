@@ -178,7 +178,9 @@ class UserContentRemoveWorker extends AbstractWorker {
 		$objectList = $processor->getContentListForUser($this->user);
 		$objectList->sqlLimit = $this->limit;
 		$objectList->readObjectIDs();
-		$processor->deleteContent($objectList->objectIDs);
+		if (!empty($objectList->objectIDs)) {
+			$processor->deleteContent($objectList->objectIDs);
+		}
 		
 		$this->data['provider'][$providerObjectType]['count'] -= $this->limit;
 		
