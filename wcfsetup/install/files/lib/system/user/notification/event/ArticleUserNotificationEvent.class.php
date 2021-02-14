@@ -63,6 +63,7 @@ class ArticleUserNotificationEvent extends AbstractUserNotificationEvent impleme
                 'article' => $this->getUserNotificationObject(),
                 'articleContent' => $articleContent,
                 'languageVariablePrefix' => 'wcf.user.notification.article',
+                'author' => $this->author,
             ],
         ];
     }
