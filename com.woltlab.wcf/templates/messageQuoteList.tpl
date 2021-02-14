@@ -16,13 +16,7 @@
 						</h2>
 						
 						<ul class="messageHeaderMetaData">
-							<li>
-								{if $userProfiles[$message->getUserID()]|isset}
-									{user object=$userProfiles[$message->getUserID()]}
-								{else}
-									<span class="username">{$message->getUsername()}</span>
-								{/if}
-							</li>
+							<li>{if $userProfiles[$message->getUserID()]|isset}{user object=$userProfiles[$message->getUserID()]}{else}<span class="username">{$message->getUsername()}</span>{/if}</li>
 							<li><span class="messagePublicationTime">{@$message->getTime()|time}</span></li>
 							
 							{event name='messageHeaderMetaData'}

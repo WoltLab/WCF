@@ -61,21 +61,12 @@
 	<h2 class="sectionTitle">{lang}wcf.moderation.report.reportedBy{/lang}</h2>
 	
 	<div class="box32">
-		{if $reportUser->userID}
-			{user object=$reportUser type='avatar32' title=$reportUser->username}
-		{else}
-			<span>{@$reportUser->getAvatar()->getImageTag(32)}</span>
-		{/if}
+		{user object=$reportUser type='avatar32'}
 		
 		<div>
 			<div class="containerHeadline">
 				<h3>
-					{if $reportUser->userID}
-						{user object=$reportUser}
-					{else}
-						{lang}wcf.user.guest{/lang}
-					{/if}
-					
+					{user object=$reportUser}
 					<small class="separatorLeft">{@$queue->time|time}</small>
 				</h3>
 			</div>

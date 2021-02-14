@@ -44,11 +44,7 @@
 				
 				<div class="contentItemMetaContent">
 					<div class="contentItemMetaAuthor">
-						{if $article->userID}
-							{user object=$article->getUserProfile()}
-						{else}
-							{$article->username}
-						{/if}
+						{user object=$article->getUserProfile()}
 					</div>
 					<div class="contentItemMetaTime">
 						{@$article->time|time}

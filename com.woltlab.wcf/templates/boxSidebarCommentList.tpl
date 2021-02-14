@@ -9,7 +9,7 @@
 				<small>{@$boxComment->getExcerpt(50)}</small>
 			</div>
 			<div>
-				<small>{if $boxComment->userID}{user object=$boxComment->getUserProfile()}{else}{$boxComment->username}{/if} <span class="separatorLeft">{@$boxComment->time|time}</span></small>
+				<small>{user object=$boxComment->getUserProfile()} <span class="separatorLeft">{@$boxComment->time|time}</span></small>
 			</div>
 		</li>
 	{/foreach}

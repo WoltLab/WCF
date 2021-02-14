@@ -5,11 +5,7 @@
 		<div>
 			<div class="containerHeadline">
 				<h3>
-					{if $userProfile->userID}
-						{user object=$userProfile}
-					{else}
-						{$userProfile->username}
-					{/if}
+					{user object=$userProfile}
 				</h3>
 				{if MODULE_USER_RANK}
 					{if $userProfile->getUserTitle()}

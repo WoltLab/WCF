@@ -7,11 +7,7 @@
 					{assign var=_messageCustomIcon value=$customIcons[$_messageObjectHash]}
 					{if $_messageCustomIcon === ''}
 						{if $message->getUserProfile()}
-							{if $message->getUserProfile()->userID}
-								{user object=$message->getUserProfile() type='avatar48' title=$message->getUserProfile()->username ariaHidden='true'}
-							{else}
-								<p>{@$message->getUserProfile()->getAvatar()->getImageTag(48)}</p>
-							{/if}
+							{user object=$message->getUserProfile() type='avatar48' ariaHidden='true'}
 						{else}
 							<p><span class="icon icon48 fa-file-o"></span></p>
 						{/if}
@@ -28,13 +24,7 @@
 							{if $message->getUserProfile() || $message->getTime() || $message->getContainerTitle()}
 								<ul class="inlineList dotSeparated">
 									{if $message->getUserProfile()}
-										<li>
-											{if $message->getUserProfile()->userID}
-												{user object=$message->getUserProfile()}
-											{else}
-												{$message->getUserProfile()->username}
-											{/if}
-										</li>
+										<li>{user object=$message->getUserProfile()}</li>
 									{/if}
 									{if $message->getTime()}
 										<li><small>{@$message->getTime()|time}</small></li>

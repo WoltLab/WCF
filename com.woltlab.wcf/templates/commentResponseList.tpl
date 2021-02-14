@@ -6,11 +6,7 @@
 	{else}
 		<li class="commentResponse jsCommentResponse" data-response-id="{@$response->responseID}" {@$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.comment.response', $response->responseID)} data-can-edit="{if $response->isEditable()}true{else}false{/if}" data-can-delete="{if $response->isDeletable()}true{else}false{/if}" data-user-id="{@$response->userID}">
 			<div class="box32{if $__wcf->getUserProfileHandler()->isIgnoredUser($response->userID)} ignoredUserContent{/if}">
-				{if $response->userID}
-					{user object=$response->getUserProfile() type='avatar48' title=$response->getUserProfile()->username}
-				{else}
-					{@$response->getUserProfile()->getAvatar()->getImageTag(32)}
-				{/if}
+				{user object=$response->getUserProfile() type='avatar48'}
 				
 				<div class="commentContent commentResponseContent" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
 					<meta itemprop="dateCreated" content="{@$response->time|date:'c'}">

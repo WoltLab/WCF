@@ -4,7 +4,7 @@
 			{foreach from=$users item=user}
 				<li data-object-id="{@$user->userID}">
 					<div class="box48">
-						{user object=$user type='avatar48' title=$user->username ariaHidden='true'}
+						{user object=$user type='avatar48' ariaHidden='true'}
 						
 						<div class="details userInformation">
 							<div class="containerHeadline">
