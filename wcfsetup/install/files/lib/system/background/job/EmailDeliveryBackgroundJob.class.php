@@ -2,9 +2,12 @@
 
 namespace wcf\system\background\job;
 
+use wcf\data\email\log\entry\EmailLogEntry;
+use wcf\data\email\log\entry\EmailLogEntryAction;
 use wcf\system\email\Email;
 use wcf\system\email\Mailbox;
 use wcf\system\email\transport\exception\PermanentFailure;
+use wcf\system\email\UserMailbox;
 
 /**
  * Delivers the given email to the given mailbox.
@@ -41,6 +44,11 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob
     protected $envelopeTo;
 
     /**
+     * @var int
+     */
+    protected $emailLogEntryId;
+
+    /**
      * instance of the default transport
      * @var \wcf\system\email\transport\IEmailTransport
      */
@@ -59,6 +67,24 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob
         $this->email = $email;
         $this->envelopeFrom = $envelopeFrom;
         $this->envelopeTo = $envelopeTo;
+
+        $this->emailLogEntryId = $this->createLog()->entryID;
+    }
+
+    /**
+     * Creates the email log entry.
+     */
+    final private function createLog(): EmailLogEntry
+    {
+        return (new EmailLogEntryAction([], 'create', [
+            'data' => [
+                'time' => \TIME_NOW,
+                'messageID' => $this->email->getMessageID(),
+                'recipient' => $this->envelopeTo->getAddress(),
+                'recipientID' => ($this->envelopeTo instanceof UserMailbox) ? $this->envelopeTo->getUser()->userID : null,
+                'status' => EmailLogEntry::STATUS_NEW,
+            ]
+        ]))->executeAction()['returnValues'];
     }
 
     /**
