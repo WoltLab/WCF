@@ -125,6 +125,12 @@ class SendNewPasswordWorker extends AbstractWorker
     protected function sendLink(User $user)
     {
         $email = new Email();
+        $email->setMessageID(\sprintf(
+            'com.woltlab.wcf.sendNewPassword/%d/%d/%s',
+            $user->userID,
+            TIME_NOW,
+            \bin2hex(\random_bytes(8))
+        ));
         $email->addRecipient(new UserMailbox($user));
         $email->setSubject($user->getLanguage()->getDynamicVariable('wcf.acp.user.sendNewPassword.mail.subject'));
         $email->setBody(new MimePartFacade([
