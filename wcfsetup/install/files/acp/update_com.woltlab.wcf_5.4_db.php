@@ -30,6 +30,32 @@ use wcf\system\package\plugin\ScriptPackageInstallationPlugin;
 use wcf\system\WCF;
 
 $tables = [
+    DatabaseTable::create('wcf1_email_log_entry')
+        ->columns([
+            ObjectIdDatabaseTableColumn::create('entryID'),
+            NotNullInt10DatabaseTableColumn::create('time'),
+            NotNullVarchar255DatabaseTableColumn::create('messageID'),
+            NotNullVarchar255DatabaseTableColumn::create('recipient'),
+            IntDatabaseTableColumn::create('recipientID')
+                ->length(10)
+                ->notNull(false),
+            NotNullVarchar255DatabaseTableColumn::create('status'),
+            TextDatabaseTableColumn::create('message'),
+        ])
+        ->indices([
+            DatabaseTablePrimaryIndex::create()
+                ->columns(['entryID']),
+            DatabaseTableIndex::create('time')
+                ->columns(['time']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['recipientID'])
+                ->referencedTable('wcf1_user')
+                ->referencedColumns(['userID'])
+                ->onDelete('SET NULL'),
+        ]),
+
     // This update script was added with 5.3.3. We need to ensure that the change is applied
     // when someone attempts to upgrade from an older 5.3.x for whatever reason.
     // If the database already has the proper state this will be a simple noop.
