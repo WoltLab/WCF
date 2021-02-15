@@ -35,6 +35,7 @@ $tables = [
             ObjectIdDatabaseTableColumn::create('entryID'),
             NotNullInt10DatabaseTableColumn::create('time'),
             NotNullVarchar255DatabaseTableColumn::create('messageID'),
+            NotNullVarchar255DatabaseTableColumn::create('subject'),
             NotNullVarchar255DatabaseTableColumn::create('recipient'),
             IntDatabaseTableColumn::create('recipientID')
                 ->length(10)

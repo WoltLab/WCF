@@ -606,7 +606,7 @@
 		<item name="wcf.acp.email.smtp.test.error.notTlsSupport"><![CDATA[The server does not support encryption.]]></item>
 		<item name="wcf.acp.email.smtp.test.error.tlsFailed"><![CDATA[Unable to establish a secure connection.]]></item>
 		<item name="wcf.acp.email.log"><![CDATA[Emails Sent]]></item>
-		<item name="wcf.acp.email.log.messageID"><![CDATA[Message-ID]]></item>
+		<item name="wcf.acp.email.log.subject"><![CDATA[Subject]]></item>
 		<item name="wcf.acp.email.log.time"><![CDATA[Created]]></item>
 		<item name="wcf.acp.email.log.status"><![CDATA[Status]]></item>
 		<item name="wcf.acp.email.log.status.success"><![CDATA[Successfully Sent]]></item>

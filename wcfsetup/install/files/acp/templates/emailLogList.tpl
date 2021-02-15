@@ -28,7 +28,7 @@
 			<thead>
 				<tr>
 					<th class="columnID columnEntryID{if $sortField == 'entryID'} active {@$sortOrder}{/if}"><a href="{link controller='EmailLogList'}pageNo={@$pageNo}&sortField=entryID&sortOrder={if $sortField == 'entryID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
-					<th class="columnTitle columnMessageID{if $sortField == 'messageID'} active {@$sortOrder}{/if}">{lang}wcf.acp.email.log.messageID{/lang}</th>
+					<th class="columnTitle columnSubject{if $sortField == 'subject'} active {@$sortOrder}{/if}">{lang}wcf.acp.email.log.subject{/lang}</th>
 					<th class="columnText columnRecipient{if $sortField == 'recipient'} active {@$sortOrder}{/if}">{lang}wcf.user.email{/lang}</th>
 					<th class="columnDate columnTime{if $sortField == 'time'} active {@$sortOrder}{/if}"><a href="{link controller='EmailLogList'}pageNo={@$pageNo}&sortField=time&sortOrder={if $sortField == 'execTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.email.log.time{/lang}</a></th>
 					<th class="columnText columnStatusMessage{if $sortField == 'status'} active {@$sortOrder}{/if}"><a href="{link controller='EmailLogList'}pageNo={@$pageNo}&sortField=status&sortOrder={if $sortField == 'success' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.email.log.status{/lang}</a></th>
@@ -42,7 +42,8 @@
 					<tr class="jsEmailLogEntry">
 						<td class="columnID columnEntryID">{@$entry->entryID}</td>
 						<td class="columnTitle columnMessageID">
-							<kbd title="{$entry->messageID}">{$entry->getFormattedMessageId()|truncate:50}</kbd>
+							{$entry->subject}<br>
+							<small><kbd title="{$entry->messageID}">{$entry->getFormattedMessageId()|truncate:50}</kbd></small>
 						</td>
 						<td class="columnText columnRecipient">
 							{if $__wcf->session->getPermission('admin.user.canEditMailAddress')}

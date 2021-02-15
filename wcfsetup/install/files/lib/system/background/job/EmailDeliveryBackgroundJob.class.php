@@ -9,6 +9,7 @@ use wcf\system\email\Mailbox;
 use wcf\system\email\transport\exception\PermanentFailure;
 use wcf\system\email\transport\IStatusReportingEmailTransport;
 use wcf\system\email\UserMailbox;
+use wcf\util\StringUtil;
 
 /**
  * Delivers the given email to the given mailbox.
@@ -86,6 +87,7 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob
             'data' => [
                 'time' => \TIME_NOW,
                 'messageID' => $this->email->getMessageID(),
+                'subject' => StringUtil::truncate($this->email->getSubject(), 30),
                 'recipient' => $this->envelopeTo->getAddress(),
                 'recipientID' => ($this->envelopeTo instanceof UserMailbox) ? $this->envelopeTo->getUser()->userID : null,
                 'status' => EmailLogEntry::STATUS_NEW,
