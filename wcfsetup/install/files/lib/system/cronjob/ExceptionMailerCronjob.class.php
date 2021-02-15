@@ -89,6 +89,11 @@ class ExceptionMailerCronjob extends AbstractCronjob
         $language = LanguageFactory::getInstance()->getDefaultLanguage();
 
         $email = new Email();
+        $email->setMessageID(\sprintf(
+            'com.woltlab.wcf.exceptionMailer/%d/%s',
+            $timestamp,
+            \bin2hex(\random_bytes(8))
+        ));
         $email->addRecipient(new Mailbox(MAIL_ADMIN_ADDRESS, null, $language));
         $email->setSubject($language->getDynamicVariable('wcf.acp.exceptionLog.email.subject', [
             'date' => $timestamp,
