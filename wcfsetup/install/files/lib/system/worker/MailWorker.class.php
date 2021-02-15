@@ -59,6 +59,15 @@ class MailWorker extends AbstractWorker
         }
 
         $this->mailData = $userMailData[$this->parameters['mailID']];
+        if (!isset($this->mailData['message-id'])) {
+            $this->mailData['message-id'] = \sprintf(
+                'com.woltlab.wcf.mailWorker/%d/%s',
+                TIME_NOW,
+                \bin2hex(\random_bytes(8))
+            );
+            $userMailData[$this->parameters['mailID']] = $this->mailData;
+            WCF::getSession()->register('userMailData', $userMailData);
+        }
     }
 
     /**
@@ -121,6 +130,7 @@ class MailWorker extends AbstractWorker
     public function execute()
     {
         $email = new Email();
+        $email->setMessageID($this->mailData['message-id']);
         $email->setSubject($this->mailData['subject']);
         $from = new Mailbox(
             $this->mailData['from'],
