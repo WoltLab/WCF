@@ -764,6 +764,12 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
         if (empty($this->parameters['skipNotification'])) {
             foreach ($this->getObjects() as $user) {
                 $email = new Email();
+                $email->setMessageID(\sprintf(
+                    'com.woltlab.wcf.adminActivation/%d/%d/%s',
+                    $user->userID,
+                    TIME_NOW,
+                    \bin2hex(\random_bytes(8))
+                ));
                 $email->addRecipient(new UserMailbox($user->getDecoratedObject()));
                 $email->setSubject($user->getLanguage()->getDynamicVariable('wcf.acp.user.activation.mail.subject'));
                 $email->setBody(new MimePartFacade([
