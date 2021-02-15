@@ -3,6 +3,7 @@
 namespace wcf\data\email\log\entry;
 
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\WCF;
 
 /**
  * Executes email log entry-related actions.
@@ -22,4 +23,21 @@ class EmailLogEntryAction extends AbstractDatabaseObjectAction
      * @inheritDoc
      */
     protected $className = EmailLogEntryEditor::class;
+
+    /**
+     * Deletes old log entries.
+     */
+    public function prune()
+    {
+        $sql = "SELECT  entryID
+                FROM    wcf" . WCF_N . "_email_log_entry
+                WHERE   time < ?";
+        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement->execute([
+            (\TIME_NOW - EmailLogEntry::LIFETIME),
+        ]);
+        $entryIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
+
+        (new self($entryIDs, 'delete'))->executeAction();
+    }
 }

@@ -26,6 +26,8 @@ use wcf\system\email\Email;
  */
 class EmailLogEntry extends DatabaseObject
 {
+    public const LIFETIME = 30 * 86400;
+
     public const STATUS_NEW = 'new';
 
     public const STATUS_SUCCESS = 'success';
