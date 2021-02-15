@@ -629,6 +629,15 @@
 		<item name="wcf.acp.email.smtp.test.error.hostUnknown"><![CDATA[Der Server antwortet nicht.]]></item>
 		<item name="wcf.acp.email.smtp.test.error.notTlsSupport"><![CDATA[Der Server unterstützt keine Verschlüsselung.]]></item>
 		<item name="wcf.acp.email.smtp.test.error.tlsFailed"><![CDATA[Der Aufbau einer verschlüsselten Verbindung war nicht möglich.]]></item>
+		<item name="wcf.acp.email.log"><![CDATA[Versendete E-Mails]]></item>
+		<item name="wcf.acp.email.log.messageID"><![CDATA[Message-ID]]></item>
+		<item name="wcf.acp.email.log.time"><![CDATA[Erzeugt]]></item>
+		<item name="wcf.acp.email.log.status"><![CDATA[Status]]></item>
+		<item name="wcf.acp.email.log.status.success"><![CDATA[Erfolgreich versendet]]></item>
+		<item name="wcf.acp.email.log.status.transient_failure"><![CDATA[Vorübergehendes Problem]]></item>
+		<item name="wcf.acp.email.log.status.permanent_failure"><![CDATA[Endgültig fehlgeschlagen]]></item>
+		<item name="wcf.acp.email.log.status.new"><![CDATA[Wartend]]></item>
+		<item name="wcf.acp.email.log.statusMessage.title"><![CDATA[Status-Nachricht]]></item>
 	</category>
 	<category name="wcf.acp.exceptionLog">
 		<item name="wcf.acp.exceptionLog"><![CDATA[Protokollierte Fehler]]></item>
@@ -1212,6 +1221,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.menu.link.language.item.add"><![CDATA[Text hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.systemCheck"><![CDATA[Systemüberprüfung]]></item>
 		<item name="wcf.acp.menu.link.devtools.missingLanguageItem.list"><![CDATA[Fehlende Texte]]></item>
+		<item name="wcf.acp.menu.link.log.email"><![CDATA[E-Mails]]></item>
 	</category>
 	<category name="wcf.acp.modificationLog">
 		<item name="wcf.acp.modificationLog.list"><![CDATA[Globales Änderungsprotokoll]]></item>

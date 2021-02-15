@@ -3,6 +3,9 @@
 namespace wcf\data\email\log\entry;
 
 use wcf\data\DatabaseObject;
+use wcf\data\user\User;
+use wcf\system\cache\runtime\UserRuntimeCache;
+use wcf\system\email\Email;
 
 /**
  * Represents an email log entry.
@@ -30,4 +33,48 @@ class EmailLogEntry extends DatabaseObject
     public const STATUS_TRANSIENT_FAILURE = 'transient_failure';
 
     public const STATUS_PERMANENT_FAILURE = 'permanent_failure';
+
+    /**
+     * Returns the formatted 'Message-ID', stripping useless information.
+     */
+    public function getFormattedMessageId(): string
+    {
+        return \preg_replace_callback(
+            '/^\<((.*)@(.*))\>$/',
+            static function ($matches) {
+                if ($matches[3] === Email::getHost()) {
+                    return $matches[2] . '@';
+                } else {
+                    return $matches[1];
+                }
+            },
+            $this->messageID
+        );
+    }
+
+    /**
+     * Returns the recipient.
+     *
+     * @see EmailLogEntry::$recipient
+     */
+    public function getRecipient(): ?User
+    {
+        if (!$this->recipientID) {
+            return null;
+        }
+
+        return UserRuntimeCache::getInstance()->getObject($this->recipientID);
+    }
+
+    /**
+     * Returns the redacted recipient address.
+     */
+    public function getRedactedRecipientAddress(): string
+    {
+        $atSign = \strrpos($this->recipient, '@');
+        $localpart = \substr($this->recipient, 0, $atSign);
+        $domain = \substr($this->recipient, $atSign + 1);
+
+        return \substr($localpart, 0, 1) . "\u{2022}\u{2022}\u{2022}\u{2022}@{$domain}";
+    }
 }

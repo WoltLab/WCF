@@ -605,6 +605,15 @@
 		<item name="wcf.acp.email.smtp.test.error.hostUnknown"><![CDATA[The server is not responding.]]></item>
 		<item name="wcf.acp.email.smtp.test.error.notTlsSupport"><![CDATA[The server does not support encryption.]]></item>
 		<item name="wcf.acp.email.smtp.test.error.tlsFailed"><![CDATA[Unable to establish a secure connection.]]></item>
+		<item name="wcf.acp.email.log"><![CDATA[Emails Sent]]></item>
+		<item name="wcf.acp.email.log.messageID"><![CDATA[Message-ID]]></item>
+		<item name="wcf.acp.email.log.time"><![CDATA[Created]]></item>
+		<item name="wcf.acp.email.log.status"><![CDATA[Status]]></item>
+		<item name="wcf.acp.email.log.status.success"><![CDATA[Successfully Sent]]></item>
+		<item name="wcf.acp.email.log.status.transient_failure"><![CDATA[Transient Failure]]></item>
+		<item name="wcf.acp.email.log.status.permanent_failure"><![CDATA[Ultimately Failed]]></item>
+		<item name="wcf.acp.email.log.status.new"><![CDATA[Pending]]></item>
+		<item name="wcf.acp.email.log.statusMessage.title"><![CDATA[Status Message]]></item>
 	</category>
 	<category name="wcf.acp.exceptionLog">
 		<item name="wcf.acp.exceptionLog"><![CDATA[Logged errors]]></item>
@@ -1189,6 +1198,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.menu.link.language.item.add"><![CDATA[Add Phrase]]></item>
 		<item name="wcf.acp.menu.link.systemCheck"><![CDATA[System Check]]></item>
 		<item name="wcf.acp.menu.link.devtools.missingLanguageItem.list"><![CDATA[Missing Phrases]]></item>
+		<item name="wcf.acp.menu.link.log.email"><![CDATA[Emails]]></item>
 	</category>
 	<category name="wcf.acp.modificationLog">
 		<item name="wcf.acp.modificationLog.list"><![CDATA[Global Modification Log]]></item>
