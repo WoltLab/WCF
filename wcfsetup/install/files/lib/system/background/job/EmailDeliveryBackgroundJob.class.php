@@ -80,7 +80,7 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob
     /**
      * Creates the email log entry.
      */
-    final private function createLog(): EmailLogEntry
+    private function createLog(): EmailLogEntry
     {
         return (new EmailLogEntryAction([], 'create', [
             'data' => [
@@ -96,7 +96,7 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob
     /**
      * Updates the status of the log entry.
      */
-    final private function updateStatus(string $status, string $message = ''): void
+    private function updateStatus(string $status, string $message = ''): void
     {
         (new EmailLogEntryAction([$this->emailLogEntryId], 'update', [
             'data' => [
