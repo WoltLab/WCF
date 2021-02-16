@@ -345,10 +345,9 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
             }
 
             if (
-                \array_key_exists(
-                    'password',
-                    $this->parameters['data']
-                ) && $this->parameters['data']['password'] !== ''
+                isset($this->parameters['data'])
+                && \array_key_exists('password', $this->parameters['data'])
+                && $this->parameters['data']['password'] !== ''
             ) {
                 foreach ($this->getObjects() as $object) {
                     SessionHandler::getInstance()->deleteUserSessionsExcept(
