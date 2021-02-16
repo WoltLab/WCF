@@ -452,6 +452,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Dom/Change/List
          * Rebuilds the mark state for each item.
          */
         rebuildMarkings(data, objectIds) {
+            var _a;
             let markAll = true;
             Array.from(data.checkboxes).forEach((checkbox) => {
                 const clipboardObject = checkbox.closest(".jsClipboardObject");
@@ -471,7 +472,7 @@ define(["require", "exports", "tslib", "../Ajax", "../Core", "../Dom/Change/List
             if (data.markAll !== null) {
                 data.markAll.checked = markAll;
                 this.setParentAsMarked(data.markAll, markAll);
-                const parent = data.markAll.closest(".columnMark");
+                const parent = (_a = data.markAll.closest(".columnMark")) === null || _a === void 0 ? void 0 : _a.parentNode;
                 if (parent) {
                     if (markAll) {
                         parent.classList.add("jsMarked");

@@ -616,7 +616,7 @@ class ControllerClipboard {
 
       this.setParentAsMarked(data.markAll, markAll);
 
-      const parent = data.markAll.closest(".columnMark");
+      const parent = data.markAll.closest(".columnMark")?.parentNode as HTMLElement | null;
       if (parent) {
         if (markAll) {
           parent.classList.add("jsMarked");
