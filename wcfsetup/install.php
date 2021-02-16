@@ -100,8 +100,8 @@ class SystemException extends \Exception implements IPrintableException {
 ?><!DOCTYPE html>
 <html>
 <head>
-	<title>Fatal Error: <?php echo htmlentities($this->getMessage()); ?></title>
 	<meta charset="utf-8">
+	<title>Fatal Error: <?php echo htmlentities($this->getMessage()); ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style>
 		.exceptionBody {
