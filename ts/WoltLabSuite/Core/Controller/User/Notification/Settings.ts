@@ -29,6 +29,7 @@ function stateChange(event: Event): void {
 
 function click(event: Event): void {
   event.preventDefault();
+  event.stopPropagation();
 
   const button = event.currentTarget as HTMLAnchorElement;
   _objectId = ~~button.dataset.objectId!;
