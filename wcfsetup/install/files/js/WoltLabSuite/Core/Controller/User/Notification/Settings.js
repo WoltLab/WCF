@@ -29,6 +29,7 @@ define(["require", "exports", "tslib", "../../../Language", "../../../Ui/Dropdow
     }
     function click(event) {
         event.preventDefault();
+        event.stopPropagation();
         const button = event.currentTarget;
         _objectId = ~~button.dataset.objectId;
         createDropDown();
