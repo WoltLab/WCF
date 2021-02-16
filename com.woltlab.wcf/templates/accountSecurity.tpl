@@ -2,7 +2,7 @@
 
 {include file='header' __disableAds=true __sidebarLeftHasMenu=true}
 
-<section class="section" id="multifactor">
+<section class="section" id="section_multifactor">
 	<header class="sectionHeader">
 		<h2 class="sectionTitle">{lang}wcf.user.security.multifactor{/lang}</h2>
 		<p class="sectionDescription">{lang}wcf.user.security.multifactor.description{/lang}</p>
@@ -59,7 +59,7 @@
 	</ul>
 </section>
 
-<section class="section" id="activeSessions">
+<section class="section" id="section_activeSessions">
 	<header class="sectionHeader">
 		<h2 class="sectionTitle">{lang}wcf.user.security.activeSessions{/lang}</h2>
 		<p class="sectionDescription">{lang}wcf.user.security.activeSessions.description{/lang}</p>

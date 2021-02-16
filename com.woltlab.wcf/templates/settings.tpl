@@ -15,7 +15,7 @@
 <form method="post" action="{link controller='Settings'}{/link}">
 	{if $category == 'general'}
 		{if $availableLanguages|count > 1}
-			<section class="section" id="language">
+			<section class="section" id="section_language">
 				<h2 class="sectionTitle">{lang}wcf.user.language{/lang}</h2>
 				
 				<dl>
@@ -69,7 +69,7 @@
 		{/if}
 		
 		{if $availableStyles|count > 1}
-			<section class="section" id="style">
+			<section class="section" id="section_style">
 				<h2 class="sectionTitle">{lang}wcf.user.styles{/lang}</h2>
 				
 				<dl>
@@ -90,7 +90,7 @@
 		{/if}
 		
 		{if MODULE_TROPHY && $__wcf->getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies') > 0 && $availableTrophies|count}
-			<section class="section" id="trophy">
+			<section class="section" id="section_trophy">
 				<h2 class="sectionTitle">{lang}wcf.user.trophy.trophies{/lang}</h2>
 				<dl{if $errorField == 'specialTrophies'} class="formError"{/if}>
 					<dt>{lang}wcf.user.trophy.specialTrophies{/lang}</dt>
