@@ -145,6 +145,28 @@ class PackageStartInstallForm extends AbstractForm {
 			}
 		}
 		
+		$requirements = PackageValidationManager::getInstance()->getPackageValidationArchive()->getArchive()->getOpenRequirements();
+		foreach ($requirements as $requirement) {
+			if ($requirement['name'] !== 'com.woltlab.wcf') {
+				continue;
+			}
+			if ($requirement['action'] !== 'update') {
+				continue;
+			}
+			if (!isset($requirement['file'])) {
+				continue;
+			}
+
+			$existingVersion = explode('.', $requirement['existingVersion']);
+			$minversion = explode('.', $requirement['minversion']);
+			if (
+				$existingVersion[0] !== $minversion[0]
+				|| $existingVersion[1] !== $minversion[1]
+			) {
+				throw new UserInputException('uploadPackage', 'majorUpgrade');
+			}
+		}
+
 		$this->package = PackageValidationManager::getInstance()->getPackageValidationArchive()->getPackage();
 	}
 	

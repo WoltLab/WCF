@@ -1506,6 +1506,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.package.error.uniqueAlreadyInstalled"><![CDATA[Dieses Paket ist bereits installiert und kann nicht mehrfach installiert werden.]]></item>
 		<item name="wcf.acp.package.error.noValidInstall"><![CDATA[Das angegebene Paket lässt keine Neuinstallation zu.]]></item>
 		<item name="wcf.acp.package.error.noValidUpdate"><![CDATA[Paket „{$package->packageName|language}“ kann mit dem angegebenen Archiv nicht aktualisiert werden.]]></item>
+		<item name="wcf.acp.package.error.majorUpgrade"><![CDATA[Das Paket aktualisiert die Installation auf eine neue Major-Version. Aus Stabilitätsgründen können Major-Upgrades ausschließlich über die Paketserver durchgeführt werden. Detaillierte Informationen zur Durchführung des Upgrades finden sich <a href="https://manual.woltlab.com/de/updates/" class="externalURL">in unserem Handbuch</a>.]]></item>
 		<item name="wcf.acp.package.identifier"><![CDATA[Bezeichner]]></item>
 		<item name="wcf.acp.package.information.properties"><![CDATA[Eigenschaften]]></item>
 		<item name="wcf.acp.package.information.title"><![CDATA[Informationen]]></item>
