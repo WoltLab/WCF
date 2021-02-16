@@ -252,12 +252,12 @@ EXPLANATION;
 	?><!DOCTYPE html>
 	<html>
 		<head>
+			<meta charset="utf-8">
 			<?php if (!defined('EXCEPTION_PRIVACY') || EXCEPTION_PRIVACY !== 'private') { ?>
 			<title>Fatal Error: <?php echo StringUtil::encodeHTML($e->getMessage()); ?></title>
 			<?php } else { ?>
 			<title>Fatal Error</title>
 			<?php } ?>
-			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 			<style>
 				.exceptionBody {
