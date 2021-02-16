@@ -96,6 +96,7 @@ class ImageProxyAction extends AbstractAction {
 					try {
 						$client = HttpFactory::makeClient([
 							'timeout' => 10,
+							'stream' => true,
 						]);
 						$request = new Request('GET', $url, [
 							'via' => '1.1 wsc',
