@@ -92,7 +92,7 @@ class PackageInstallationConfirmPage extends AbstractPage
 
         $this->packageInstallationDispatcher = new PackageInstallationDispatcher($this->queue);
 
-        // validate the package and all it's requirements
+        // validate the package and all its requirements
         $this->validationPassed = PackageValidationManager::getInstance()->validate($this->queue->archive, true);
     }
 
