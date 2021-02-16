@@ -1,6 +1,7 @@
 {include file='documentHeader'}
 
 <head>
+	<meta charset="utf-8">
 	{if !$pageTitle|isset}
 		{assign var='pageTitle' value=''}
 		{if (!$__wcf->isLandingPage() || !USE_PAGE_TITLE_ON_LANDING_PAGE) && $__wcf->getActivePage() != null && $__wcf->getActivePage()->getTitle()}
