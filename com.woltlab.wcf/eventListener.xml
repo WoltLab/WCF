@@ -39,5 +39,17 @@
 			<listenerclassname>wcf\system\event\listener\UserLinkHtmlInputNodeProcessorListener</listenerclassname>
 			<environment>all</environment>
 		</eventlistener>
+		<eventlistener name="userLoggedInEmailNotification">
+			<eventclassname>wcf\system\user\authentication\UserLoggedIn</eventclassname>
+			<eventname>:default</eventname>
+			<listenerclassname>wcf\system\event\listener\UserLoggedInEmailNotificationListener</listenerclassname>
+			<environment>all</environment>
+		</eventlistener>
+		<eventlistener name="userMultifactorSucceededEmailNotification">
+			<eventclassname>wcf\system\user\authentication\UserMultifactorSucceeded</eventclassname>
+			<eventname>:default</eventname>
+			<listenerclassname>wcf\system\event\listener\UserMultifactorSucceededEmailNotificationListener</listenerclassname>
+			<environment>all</environment>
+		</eventlistener>
 	</import>
 </data>
