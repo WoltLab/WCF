@@ -13,14 +13,6 @@ namespace wcf\data\user\avatar;
 interface IUserAvatar
 {
     /**
-     * Returns true if this avatar can be cropped.
-     *
-     * @return  bool
-     * @deprecated  3.0
-     */
-    public function canCrop();
-
-    /**
      * Returns the url to this avatar.
      *
      * @param int $size
@@ -35,15 +27,6 @@ interface IUserAvatar
      * @return  string
      */
     public function getImageTag($size = null);
-
-    /**
-     * Returns the image tag used for cropping.
-     *
-     * @param int $size
-     * @return  string
-     * @deprecated  3.0
-     */
-    public function getCropImageTag($size = null);
 
     /**
      * Returns the width of this avatar.

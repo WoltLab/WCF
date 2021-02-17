@@ -113,14 +113,6 @@ class UserAvatar extends DatabaseObject implements IUserAvatar
     /**
      * @inheritDoc
      */
-    public function getCropImageTag($size = null)
-    {
-        return '';
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function getWidth()
     {
         return $this->width;
@@ -135,7 +127,15 @@ class UserAvatar extends DatabaseObject implements IUserAvatar
     }
 
     /**
-     * @inheritDoc
+     * @deprecated  3.0
+     */
+    public function getCropImageTag($size = null)
+    {
+        return '';
+    }
+
+    /**
+     * @deprecated  3.0
      */
     public function canCrop()
     {

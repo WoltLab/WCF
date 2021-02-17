@@ -105,7 +105,7 @@ SVG;
     }
 
     /**
-     * @inheritDoc
+     * @deprecated  3.0
      */
     public function canCrop()
     {
@@ -113,7 +113,7 @@ SVG;
     }
 
     /**
-     * @inheritDoc
+     * @deprecated  3.0
      */
     public function getCropImageTag($size = null)
     {
