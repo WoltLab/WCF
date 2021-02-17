@@ -4,11 +4,13 @@ namespace wcf\action;
 
 use ParagonIE\ConstantTime\Hex;
 use wcf\data\user\User;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\authentication\UserLoggedIn;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\HTTPRequest;
@@ -104,6 +106,7 @@ class TwitterAuthAction extends AbstractAction
                 } // perform login
                 else {
                     WCF::getSession()->changeUser($user);
+                    EventHandler::getInstance()->fire(new UserLoggedIn($user));
                     WCF::getSession()->update();
                     HeaderUtil::redirect(LinkHandler::getInstance()->getLink());
                 }

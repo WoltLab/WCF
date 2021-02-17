@@ -8,6 +8,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\form\AbstractCaptchaForm;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
@@ -15,6 +16,8 @@ use wcf\system\request\RequestHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\user\authentication\EmailUserAuthentication;
 use wcf\system\user\authentication\UserAuthenticationFactory;
+use wcf\system\user\authentication\UserLoggedIn;
+use wcf\system\user\authentication\UserMultifactorRequested;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
@@ -224,6 +227,12 @@ class LoginForm extends AbstractCaptchaForm
 
         // change user
         $needsMultifactor = WCF::getSession()->changeUserAfterMultifactorAuthentication($this->user);
+        if ($needsMultifactor) {
+            EventHandler::getInstance()->fire(new UserMultifactorRequested($this->user));
+        } else {
+            EventHandler::getInstance()->fire(new UserLoggedIn($this->user));
+        }
+
         if (!$needsMultifactor) {
             WCF::getSession()->registerReauthentication();
         }
