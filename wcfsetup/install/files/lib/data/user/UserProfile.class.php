@@ -6,6 +6,7 @@ use wcf\data\DatabaseObjectDecorator;
 use wcf\data\ITitledLinkObject;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyCache;
+use wcf\data\user\avatar\AvatarDecorator;
 use wcf\data\user\avatar\DefaultAvatar;
 use wcf\data\user\avatar\Gravatar;
 use wcf\data\user\avatar\IUserAvatar;
@@ -71,8 +72,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     protected $followingUserIDs;
 
     /**
-     * user avatar
-     * @var IUserAvatar
+     * @var AvatarDecorator
      */
     protected $avatar;
 
@@ -327,7 +327,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns the user's avatar.
      *
-     * @return  IUserAvatar
+     * @return  AvatarDecorator
      */
     public function getAvatar()
     {
@@ -378,6 +378,8 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
             if ($this->avatar === null) {
                 $this->avatar = new DefaultAvatar($this->username ?: '');
             }
+
+            $this->avatar = new AvatarDecorator($this->avatar);
         }
 
         return $this->avatar;
