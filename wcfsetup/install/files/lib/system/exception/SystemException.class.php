@@ -59,9 +59,13 @@ class SystemException extends LoggedException implements IExtraInformationExcept
      */
     public function getExtraInformation()
     {
-        return [
-            ['Description', $this->description],
-        ];
+        if ($this->description) {
+            return [
+                ['Description', $this->description],
+            ];
+        }
+
+        return [];
     }
 
     /**
