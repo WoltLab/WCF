@@ -102,6 +102,14 @@ class Gravatar extends DefaultAvatar
     }
 
     /**
+     * @inheritDoc
+     */
+    public function getSafeURL(?int $size = null): string
+    {
+        return $this->getURL($size);
+    }
+
+    /**
      * Checks a given email address for gravatar support.
      *
      * @param string $email
