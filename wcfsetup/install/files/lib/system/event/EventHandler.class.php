@@ -21,6 +21,11 @@ use wcf\system\SingletonFactory;
 class EventHandler extends SingletonFactory
 {
     /**
+     * @since 5.5
+     */
+    public const DEFAULT_EVENT_NAME = ':default';
+
+    /**
      * registered actions
      * @var array
      */
@@ -258,6 +263,17 @@ class EventHandler extends SingletonFactory
                 $actionObj->execute($eventObj, $className, $eventName);
             }
         }
+    }
+
+    /**
+     * Calls fireAction() for the given event with the `:default` event name.
+     *
+     * @see EventHandler::fireAction()
+     * @since 5.5
+     */
+    public function fire(IEvent $event): void
+    {
+        $this->fireAction($event, self::DEFAULT_EVENT_NAME);
     }
 
     /**
