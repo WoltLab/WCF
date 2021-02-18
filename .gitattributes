@@ -2,3 +2,4 @@ wcfsetup/install/files/js/WoltLabSuite/**/*.js linguist-generated
 wcfsetup/install/files/lib/system/api/** linguist-vendored
 wcfsetup/install/files/lib/system/api/composer.json -linguist-vendored
 ts/WoltLabSuite/Core/Template.grammar.js linguist-generated
+*.php diff=php
