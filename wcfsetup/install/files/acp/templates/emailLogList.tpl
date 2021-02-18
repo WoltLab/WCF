@@ -16,9 +16,55 @@
 	{/hascontent}
 </header>
 
+<form method="post" action="{link controller='EmailLogList'}{/link}">
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
+		
+		<div class="row rowColGap formGrid">
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<input
+						class="long"
+						name="filter[username]"
+						placeholder="{lang}wcf.user.username{/lang}"
+						type="text"
+						value="{$filter[username]}"
+					>
+
+					<script data-relocate="true">
+						require(['WoltLabSuite/Core/Ui/User/Search/Input'], (UiUserSearchInput) => {
+							new UiUserSearchInput(elBySel('input[name="filter[username]"]'));
+						});
+					</script>
+				</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<select name="filter[status]" aria-label="{lang}wcf.acp.email.log.status{/lang}">
+						<option value="">{lang}wcf.acp.email.log.status{/lang}</option>
+						<option value="new"{if $filter[status] == 'new'} selected{/if}>{lang}wcf.acp.email.log.status.new{/lang}</option>
+						<option value="success"{if $filter[status] == 'success'} selected{/if}>{lang}wcf.acp.email.log.status.success{/lang}</option>
+						<option value="transient_failure"{if $filter[status] == 'transient_failure'} selected{/if}>{lang}wcf.acp.email.log.status.transient_failure{/lang}</option>
+						<option value="permanent_failure"{if $filter[status] == 'permanent_failure'} selected{/if}>{lang}wcf.acp.email.log.status.permanent_failure{/lang}</option>
+					</select>
+				</dd>
+			</dl>
+		</div>
+		
+		<div class="formSubmit">
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+		</div>
+	</section>
+</form>
+
 {hascontent}
 	<div class="paginationTop">
-		{content}{pages print=true assign=pagesLinks controller="EmailLogList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}{/content}
+		{content}
+			{pages print=true assign=pagesLinks controller="EmailLogList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder&$filterParameter"}
+		{/content}
 	</div>
 {/hascontent}
 
@@ -27,11 +73,11 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th class="columnID columnEntryID{if $sortField == 'entryID'} active {@$sortOrder}{/if}"><a href="{link controller='EmailLogList'}pageNo={@$pageNo}&sortField=entryID&sortOrder={if $sortField == 'entryID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
+					<th class="columnID columnEntryID{if $sortField == 'entryID'} active {@$sortOrder}{/if}"><a href="{link controller='EmailLogList'}pageNo={@$pageNo}&sortField=entryID&sortOrder={if $sortField == 'entryID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}&{@$filterParameter}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
 					<th class="columnTitle columnSubject{if $sortField == 'subject'} active {@$sortOrder}{/if}">{lang}wcf.acp.email.log.subject{/lang}</th>
 					<th class="columnText columnRecipient{if $sortField == 'recipient'} active {@$sortOrder}{/if}">{lang}wcf.user.email{/lang}</th>
-					<th class="columnDate columnTime{if $sortField == 'time'} active {@$sortOrder}{/if}"><a href="{link controller='EmailLogList'}pageNo={@$pageNo}&sortField=time&sortOrder={if $sortField == 'execTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.email.log.time{/lang}</a></th>
-					<th class="columnText columnStatusMessage{if $sortField == 'status'} active {@$sortOrder}{/if}"><a href="{link controller='EmailLogList'}pageNo={@$pageNo}&sortField=status&sortOrder={if $sortField == 'success' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.email.log.status{/lang}</a></th>
+					<th class="columnDate columnTime{if $sortField == 'time'} active {@$sortOrder}{/if}"><a href="{link controller='EmailLogList'}pageNo={@$pageNo}&sortField=time&sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}&{@$filterParameter}{/link}">{lang}wcf.acp.email.log.time{/lang}</a></th>
+					<th class="columnText columnStatusMessage{if $sortField == 'status'} active {@$sortOrder}{/if}"><a href="{link controller='EmailLogList'}pageNo={@$pageNo}&sortField=status&sortOrder={if $sortField == 'success' && $sortOrder == 'ASC'}DESC{else}ASC{/if}&{@$filterParameter}{/link}">{lang}wcf.acp.email.log.status{/lang}</a></th>
 					
 					{event name='columnHeads'}
 				</tr>
@@ -52,7 +98,7 @@
 								{$entry->getRedactedRecipientAddress()}
 							{/if}
 							{if $entry->getRecipient()}
-								(<a href="{link controller='UserEdit' id=$entry->getRecipient()->getObjectID()}{/link}">{$entry->getRecipient()->getTitle()}</a>)
+								(<a href="{link controller='EmailLogList'}filter[username]={$entry->getRecipient()->username}{/link}">{$entry->getRecipient()->getTitle()}</a>)
 							{/if}
 						</td>
 						<td class="columnDate columnTime">{@$entry->time|time}</td>
