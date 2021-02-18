@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\contact\recipient;
 use wcf\data\DatabaseObject;
+use wcf\system\email\Mailbox;
 use wcf\system\WCF;
 
 /**
@@ -37,7 +38,7 @@ class ContactRecipient extends DatabaseObject {
 	 * @inheritDoc
 	 */
 	public function __toString() {
-		return WCF::getLanguage()->get($this->name);
+		return $this->getName();
 	}
 	
 	/**
@@ -48,5 +49,35 @@ class ContactRecipient extends DatabaseObject {
 		if (!empty($this->data['isAdministrator'])) {
 			$this->data['isAdministrator'] = MAIL_ADMIN_ADDRESS;
 		}
+	}
+	
+	/**
+	 * Returns the localized name of this recipient.
+	 * 
+	 * @since 5.3
+	 */
+	public function getName(): string {
+		return WCF::getLanguage()->get($this->name);
+	}
+	
+	/**
+	 * Returns the localized email address of this recipient.
+	 * 
+	 * @since 5.3
+	 */
+	public function getEmail(): string {
+		return WCF::getLanguage()->get($this->email);
+	}
+	
+	/**
+	 * Returns a localized Mailbox for this recipient.
+	 * 
+	 * @since 5.3
+	 */
+	public function getMailbox(): Mailbox {
+		return new Mailbox(
+			$this->getEmail(),
+			$this->getName()
+		);
 	}
 }
