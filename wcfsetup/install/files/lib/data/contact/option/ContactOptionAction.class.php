@@ -123,7 +123,7 @@ class ContactOptionAction extends CustomOptionAction implements ISortableAction
         ]));
 
         // add reply-to tag
-        $email->setReplyTo(new Mailbox($this->parameters['email']));
+        $email->setReplyTo(new Mailbox($this->parameters['email'], $this->parameters['name']));
 
         // send mail
         $email->send();
