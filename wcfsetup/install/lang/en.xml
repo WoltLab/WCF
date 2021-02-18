@@ -1030,7 +1030,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.masterPassword.example.set"><![CDATA[Use Suggestion]]></item>
 		<item name="wcf.acp.masterPassword.init"><![CDATA[Set Master Password]]></item>
 		<item name="wcf.acp.masterPassword.init.description"><![CDATA[The master password is the last line of defense, protecting both critical settings and sensitive data. One should choose a rather strong password which is neither known to any 3rd party person nor re-used on other web pages.]]></item>
-		<item name="wcf.acp.masterPassword.enter.deprecated"><![CDATA[Support for the master password is discouraged and will be removed in a future version without further notice. The <a href="{link controller='AccountSecurity' forceFrontend=true application='wcf'}{/link}">Multi-factor Authentication</a> protects accounts more reliably and in all areas. If desired, specific user groups can be required to set up multi-factor authentication, before they are able to enter sensitive areas, such as the Administration Control Panel.]]></item>
+		<item name="wcf.acp.masterPassword.enter.deprecated"><![CDATA[Support for the master password is discouraged and will be removed in a future version without further notice. The <a href="{link controller='AccountSecurity' forceFrontend=true application='wcf'}#section_multifactor{/link}">Multi-factor Authentication</a> protects accounts more reliably and in all areas. If desired, specific user groups can be required to set up multi-factor authentication, before they are able to enter sensitive areas, such as the Administration Control Panel.]]></item>
 	</category>
 	<category name="wcf.acp.menu">
 		<item name="wcf.acp.menu.link.management"><![CDATA[Management]]></item>
@@ -4883,12 +4883,12 @@ Open the link below to access the user profile:
 
 <p>You used the emergency code <code>{$usedCode[identifier]}</code> for multi-factor authentication. This code no longer is valid. {plural value=$remaining 0='<b>You don't have any remaining codes.</b>' 1='You have one remaining code.' other='You have # remaining codes.'}</p>
 
-<p>You can manage multi-factor authentication within the <a href="{link controller='AccountSecurity' isHtmlEmail=true}{/link}">Account Security</a> page. Within account security you can generate new emergency codes or disable multi-factor authentication.</p>]]></item>
+<p>You can manage multi-factor authentication within the <a href="{link controller='AccountSecurity' isHtmlEmail=true}#section_multifactor{/link}">Account Security</a> page. Within account security you can generate new emergency codes or disable multi-factor authentication.</p>]]></item>
 		<item name="wcf.user.security.multifactor.backup.authenticationEmail.body.plain"><![CDATA[Dear {$setup->getUser()->username},
 
 You used the emergency code “{$usedCode[identifier]}” for multi-factor authentication. This code no longer is valid. {plural value=$remaining 0='**You don't have any remaining codes.**' 1='You have one remaining code.' other='You have # remaining codes.'} {* this line ends with a space *}
 
-You can manage multi-factor authentication within the Account Security page [URL:{link controller='AccountSecurity' isEmail=true}{/link}]. Within account security you can generate new emergency codes or disable multi-factor authentication.]]></item>
+You can manage multi-factor authentication within the Account Security page [URL:{link controller='AccountSecurity' isEmail=true}#section_multifactor{/link}]. Within account security you can generate new emergency codes or disable multi-factor authentication.]]></item>
 		<item name="wcf.user.security.multifactor.backup.authenticationEmail.subject"><![CDATA[Authentication using emergency code on {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.security.multifactor.backup.code"><![CDATA[Emergency Code]]></item>
 		<item name="wcf.user.security.multifactor.backup.code.description"><![CDATA[An emergency code consists of 20 digits and may only be used once.]]></item>
@@ -4937,7 +4937,7 @@ You can manage multi-factor authentication within the Account Security page [URL
 		<item name="wcf.user.security.multifactor.email.enable.description"><![CDATA[<p>With enabled confirmation via email you will receive a one time code via email whenever you login. You will need to have access to your email inbox to be able to login successfully.</p>]]></item>
 		<item name="wcf.user.security.multifactor.email.enabled"><![CDATA[Emails Enabled]]></item>
 		<item name="wcf.user.security.multifactor.email.enabled.description"><![CDATA[<p>Multi-factor authentication via email is enabled for your account. You will receive a one time code via email whenever you login.</p>
-<p>Use the <a href="{link controller='AccountSecurity'}{/link}">Overview in Account Security</a> if you want to disable multi-factor authentication.</p>]]></item>
+<p>Use the <a href="{link controller='AccountSecurity'}#section_multifactor{/link}">Overview in Account Security</a> if you want to disable multi-factor authentication.</p>]]></item>
 		<item name="wcf.user.security.multifactor.email.subject"><![CDATA[{$code} is your one time code for {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.security.multifactor.email.success"><![CDATA[The additional authentication via email has successfully been enabled.]]></item>
 		<item name="wcf.user.security.multifactor.error.invalidCode"><![CDATA[The given code is invalid.]]></item>
@@ -4969,7 +4969,7 @@ You also received a list of emergency codes to use when your second factor becom
 		<item name="wcf.user.security.multifactor.totp.deviceName.placeholder"><![CDATA[{$__wcf->user->username}’s Smartphone]]></item>
 		<item name="wcf.user.security.multifactor.totp.devices"><![CDATA[Active Smartphones]]></item>
 		<item name="wcf.user.security.multifactor.totp.error.flood"><![CDATA[Please try again later.]]></item>
-		<item name="wcf.user.security.multifactor.totp.lastDevice"><![CDATA[Please add your new device before removing your last device <strong>{$deviceName}</strong> if you want to switch phones. Use the <a href="{link controller='AccountSecurity'}{/link}">Overview in Account Security</a> if you want to disable multi-factor authentication.]]></item>
+		<item name="wcf.user.security.multifactor.totp.lastDevice"><![CDATA[Please add your new device before removing your last device <strong>{$deviceName}</strong> if you want to switch phones. Use the <a href="{link controller='AccountSecurity'}#section_multifactor{/link}">Overview in Account Security</a> if you want to disable multi-factor authentication.]]></item>
 		<item name="wcf.user.security.multifactor.totp.lastDevice.title"><![CDATA[Last Device]]></item>
 		<item name="wcf.user.security.multifactor.totp.newDevice"><![CDATA[Add Smartphone]]></item>
 		<item name="wcf.user.security.multifactor.totp.newDevice.description"><![CDATA[<p>Authenticate using an app on your smartphone.</p>
@@ -4985,7 +4985,7 @@ You also received a list of emergency codes to use when your second factor becom
 		<item name="wcf.user.security.multifactor.totp.success.add"><![CDATA[Your smartphone <strong>{$deviceName}</strong> has successfully been added.]]></item>
 		<item name="wcf.user.security.multifactor.totp.success.delete"><![CDATA[Your smartphone <strong>{$deviceName}</strong> has successfully been removed.]]></item>
 		<item name="wcf.user.security.multifactor.totp.useTime"><![CDATA[Last Used]]></item>
-		<item name="wcf.user.security.requiresMultifactor"><![CDATA[You are a member of a user group that is required to use multi-factor authentication. Before you may access this page you must <a href="{link controller='AccountSecurity' forceFrontend=true}{/link}">enable multi-factor authentication</a>.]]></item>
+		<item name="wcf.user.security.requiresMultifactor"><![CDATA[You are a member of a user group that is required to use multi-factor authentication. Before you may access this page you must <a href="{link controller='AccountSecurity' forceFrontend=true}#section_multifactor{/link}">enable multi-factor authentication</a>.]]></item>
 		<item name="wcf.user.security.sessionName"><![CDATA[{if $session->getUserAgent()->getBrowser()}{$session->getUserAgent()->getBrowser()}{if $session->getUserAgent()->getOS()} on {$session->getUserAgent()->getOS()}{/if}{else}Unknown Device{/if}]]></item>
 	</category>
 	<category name="wcf.user.trophy">
