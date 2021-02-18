@@ -42,14 +42,7 @@ class BoxList extends DatabaseObjectList
 
         // get box content
         if ($this->contentLoading) {
-            $boxIDs = [];
-            foreach ($this->getObjects() as $box) {
-                if ($box->boxType != 'system' && $box->boxType != 'menu') {
-                    $boxIDs[] = $box->boxID;
-                }
-            }
-
-            if (!empty($boxIDs)) {
+            if (!empty($this->objectIDs)) {
                 $contentList = new BoxContentList();
                 $contentList->enableImageLoading();
                 $contentList->enableEmbeddedObjectLoading();
