@@ -602,6 +602,7 @@
 			<controller>wcf\form\ContactForm</controller>
 			<name language="de">Kontaktformular</name>
 			<name language="en">Contact Form</name>
+			<handler>wcf\system\page\handler\ContactFormPageHandler</handler>
 			<options>module_contact_form</options>
 			<content language="en">
 				<title>Contact</title>

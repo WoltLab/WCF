@@ -92,7 +92,7 @@ class ContactForm extends AbstractCaptchaForm
         $this->recipientList->getConditionBuilder()->add("contact_recipient.isDisabled = ?", [0]);
         $this->recipientList->readObjects();
 
-        if (\count($this->recipientList) < 0) {
+        if (!\count($this->recipientList)) {
             throw new IllegalLinkException();
         }
 

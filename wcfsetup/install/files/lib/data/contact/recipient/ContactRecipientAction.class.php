@@ -71,12 +71,6 @@ class ContactRecipientAction extends AbstractDatabaseObjectAction implements ISo
     public function validateToggle()
     {
         parent::validateUpdate();
-
-        foreach ($this->getObjects() as $object) {
-            if ($object->isAdministrator) {
-                throw new PermissionDeniedException();
-            }
-        }
     }
 
     /**
