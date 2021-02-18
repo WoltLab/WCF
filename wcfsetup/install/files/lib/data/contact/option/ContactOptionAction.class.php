@@ -115,7 +115,7 @@ class ContactOptionAction extends CustomOptionAction implements ISortableAction
 
         // build mail
         $email = new Email();
-        $email->addRecipient(new Mailbox($recipient->email));
+        $email->addRecipient($recipient->getMailbox());
         $email->setSubject($defaultLanguage->get('wcf.contact.mail.subject'));
         $email->setBody(new MimePartFacade([
             new RecipientAwareTextMimePart('text/html', 'email_contact', 'wcf', $messageData),
