@@ -97,11 +97,7 @@
 						
 						<span class="statusDisplay sortableButtonContainer">
 							<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
-							{if $recipient->isAdministrator}
-								<span class="icon icon16 fa-check-square-o disabled"></span>
-							{else}
-								<span class="icon icon16 fa-{if !$recipient->isDisabled}check-square-o{else}square-o{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $recipient->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$recipient->recipientID}"></span>
-							{/if}
+							<span class="icon icon16 fa-{if !$recipient->isDisabled}check-square-o{else}square-o{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $recipient->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$recipient->recipientID}"></span>
 							<a href="{link controller='ContactRecipientEdit' id=$recipient->recipientID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 fa-pencil"></a>
 							{if $recipient->originIsSystem}
 								<span class="icon icon16 fa-times disabled"></span>
