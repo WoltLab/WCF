@@ -2,9 +2,14 @@
 
 namespace wcf\system\background\job;
 
+use wcf\data\email\log\entry\EmailLogEntry;
+use wcf\data\email\log\entry\EmailLogEntryAction;
 use wcf\system\email\Email;
 use wcf\system\email\Mailbox;
 use wcf\system\email\transport\exception\PermanentFailure;
+use wcf\system\email\transport\IStatusReportingEmailTransport;
+use wcf\system\email\UserMailbox;
+use wcf\util\StringUtil;
 
 /**
  * Delivers the given email to the given mailbox.
@@ -41,6 +46,16 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob
     protected $envelopeTo;
 
     /**
+     * @var int
+     */
+    protected $emailLogEntryId;
+
+    /**
+     * @var string
+     */
+    private $lastErrorMessage = '';
+
+    /**
      * instance of the default transport
      * @var \wcf\system\email\transport\IEmailTransport
      */
@@ -59,6 +74,54 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob
         $this->email = $email;
         $this->envelopeFrom = $envelopeFrom;
         $this->envelopeTo = $envelopeTo;
+
+        $this->emailLogEntryId = $this->createLog()->entryID;
+    }
+
+    /**
+     * Creates the email log entry.
+     */
+    private function createLog(): EmailLogEntry
+    {
+        return (new EmailLogEntryAction([], 'create', [
+            'data' => [
+                'time' => \TIME_NOW,
+                'messageID' => $this->email->getMessageID(),
+                'subject' => StringUtil::truncate($this->email->getSubject(), 20),
+                'recipient' => $this->envelopeTo->getAddress(),
+                'recipientID' => ($this->envelopeTo instanceof UserMailbox) ? $this->envelopeTo->getUser()->userID : null,
+                'status' => EmailLogEntry::STATUS_NEW,
+            ],
+        ]))->executeAction()['returnValues'];
+    }
+
+    /**
+     * Updates the status of the log entry.
+     */
+    private function updateStatus(string $status, string $message = ''): void
+    {
+        (new EmailLogEntryAction([$this->emailLogEntryId], 'update', [
+            'data' => [
+                'status' => $status,
+                'message' => $message,
+            ],
+        ]))->executeAction();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function onFailure()
+    {
+        $this->updateStatus(EmailLogEntry::STATUS_TRANSIENT_FAILURE, $this->lastErrorMessage);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function onFinalFailure()
+    {
+        $this->updateStatus(EmailLogEntry::STATUS_PERMANENT_FAILURE, $this->lastErrorMessage);
     }
 
     /**
@@ -115,9 +178,34 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob
         }
 
         try {
-            self::$transport->deliver($this->email, $this->envelopeFrom, $this->envelopeTo);
+            try {
+                $return = self::$transport->deliver($this->email, $this->envelopeFrom, $this->envelopeTo);
+                if (self::$transport instanceof IStatusReportingEmailTransport) {
+                    $successMessage = $return;
+                } else {
+                    $successMessage = '';
+                }
+            } catch (\Throwable $e) {
+                // This is a hack, because we can't add additional optional parameters to on(Final)?Failure
+                // in AbstractBackgroundJob for compatibility reasons.
+
+                $this->lastErrorMessage = $e->getMessage();
+                throw $e;
+            }
         } catch (PermanentFailure $e) {
             // no need for retrying. Eat Exception and log the error.
+            \wcf\functions\exception\logThrowable($e);
+            $this->onFinalFailure();
+
+            return;
+        }
+
+        // At this point the email delivery succeeded.
+
+        try {
+            $this->updateStatus(EmailLogEntry::STATUS_SUCCESS, $successMessage);
+        } catch (\Throwable $e) {
+            // Ignore all errors, otherwise we might deliver the email multiple times.
             \wcf\functions\exception\logThrowable($e);
         }
     }

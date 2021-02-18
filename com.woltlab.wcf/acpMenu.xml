@@ -759,6 +759,11 @@
 			<parent>wcf.acp.menu.link.log</parent>
 			<permissions>admin.management.canManageCronjob</permissions>
 		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.log.email">
+			<controller>wcf\acp\page\EmailLogListPage</controller>
+			<parent>wcf.acp.menu.link.log</parent>
+			<permissions>admin.management.canViewLog</permissions>
+		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.log.exception">
 			<controller>wcf\acp\page\ExceptionLogViewPage</controller>
 			<parent>wcf.acp.menu.link.log</parent>

@@ -774,6 +774,12 @@ class UserNotificationHandler extends SingletonFactory
 
             if (isset($message['message-id'])) {
                 $email->setMessageID($message['message-id']);
+            } else {
+                $email->setMessageID(\sprintf(
+                    'com.woltlab.wcf.genericNotification/%d/%d',
+                    $notification->notificationID,
+                    TIME_NOW
+                ));
             }
             if (isset($message['in-reply-to'])) {
                 foreach ($message['in-reply-to'] as $inReplyTo) {

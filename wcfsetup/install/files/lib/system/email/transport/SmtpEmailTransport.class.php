@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  * @package WoltLabSuite\Core\System\Email\Transport
  * @since   3.0
  */
-class SmtpEmailTransport implements IEmailTransport
+class SmtpEmailTransport implements IStatusReportingEmailTransport
 {
     /**
      * SMTP connection
@@ -426,7 +426,7 @@ class SmtpEmailTransport implements IEmailTransport
      * @throws  \Exception
      * @throws  PermanentFailure
      */
-    public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo)
+    public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo): string
     {
         // delivery is locked
         if ($this->locked instanceof \Exception) {
@@ -468,6 +468,8 @@ class SmtpEmailTransport implements IEmailTransport
             return $item;
         }, \explode("\r\n", $email->getEmail()))) . "\r\n");
         $this->write(".");
-        $this->read([250]);
+        [, $message] = $this->read([250]);
+
+        return $message;
     }
 }

@@ -551,6 +551,20 @@ CREATE TABLE wcf1_edit_history_entry (
 	KEY (obsoletedAt, obsoletedByUserID)
 );
 
+DROP TABLE IF EXISTS wcf1_email_log_entry;
+CREATE TABLE wcf1_email_log_entry (
+	entryID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	time INT(10) NOT NULL,
+	messageID VARCHAR(255) NOT NULL,
+	subject VARCHAR(255) NOT NULL,
+	recipient VARCHAR(255) NOT NULL,
+	recipientID INT(10) DEFAULT NULL,
+	status VARCHAR(255) NOT NULL,
+	message TEXT,
+	
+	KEY time (time)
+);
+
 DROP TABLE IF EXISTS wcf1_event_listener;
 CREATE TABLE wcf1_event_listener (
 	listenerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1994,6 +2008,8 @@ ALTER TABLE wcf1_devtools_missing_language_item ADD FOREIGN KEY (languageID) REF
 ALTER TABLE wcf1_edit_history_entry ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_edit_history_entry ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 ALTER TABLE wcf1_edit_history_entry ADD FOREIGN KEY (obsoletedByUserID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
+
+ALTER TABLE wcf1_email_log_entry ADD FOREIGN KEY (recipientID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_event_listener ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
