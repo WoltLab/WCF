@@ -100,6 +100,8 @@ class AcpUiWorker implements AjaxCallbackObject, DialogCallbackObject {
         parameters: data.parameters,
       });
     } else {
+      UiDialog.setCallback(this, "onClose", () => {});
+
       const spinner = content.querySelector(".fa-spinner") as HTMLSpanElement;
       spinner.classList.remove("fa-spinner");
       spinner.classList.add("fa-check", "green");
