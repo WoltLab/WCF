@@ -26,7 +26,7 @@
 	</div>
 	
 	{if $collapseQuote}
-		<span class="toggleButton" data-title-collapse="{lang}wcf.bbcode.button.collapse{/lang}" data-title-expand="{lang}wcf.bbcode.button.showAll{/lang}">{lang}wcf.bbcode.button.showAll{/lang}</span>
+		<span class="toggleButton" data-title-collapse="{lang}wcf.bbcode.button.collapse{/lang}" data-title-expand="{lang}wcf.bbcode.button.showAll{/lang}" role="button" tabindex="0">{lang}wcf.bbcode.button.showAll{/lang}</span>
 		
 		<script data-relocate="true">
 			require(['WoltLabSuite/Core/Bbcode/Collapsible'], function(BbcodeCollapsible) {

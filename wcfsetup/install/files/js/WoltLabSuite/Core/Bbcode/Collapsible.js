@@ -14,6 +14,12 @@ define(["require", "exports"], function (require, exports) {
         toggleButtons.forEach((toggleButton) => {
             toggleButton.classList.add("jsToggleButtonEnabled");
             toggleButton.addEventListener("click", (ev) => toggleContainer(container, toggleButtons, ev));
+            toggleButton.addEventListener("keydown", (event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    toggleContainer(container, toggleButtons);
+                }
+            });
         });
         // expand boxes that are initially scrolled
         if (overflowContainer.scrollTop !== 0) {

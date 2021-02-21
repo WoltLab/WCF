@@ -62,12 +62,23 @@ class Code {
     }
 
     const button = document.createElement("span");
+    button.tabIndex = 0;
+    button.setAttribute("role", "button");
     button.className = "icon icon24 fa-files-o pointer jsTooltip";
     button.setAttribute("title", Language.get("wcf.message.bbcode.code.copy"));
-    button.addEventListener("click", async () => {
+
+    const clickCallback = async () => {
       await Clipboard.copyElementTextToClipboard(this.codeContainer);
 
       UiNotification.show(Language.get("wcf.message.bbcode.code.copy.success"));
+    };
+    button.addEventListener("click", clickCallback);
+    button.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+
+        void clickCallback();
+      }
     });
 
     header.appendChild(button);
