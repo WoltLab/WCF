@@ -333,6 +333,29 @@ const UiDialog = {
   },
 
   /**
+   * Clears a callback function on runtime.
+   */
+  removeCallback(id: ElementIdOrCallbackObject, key: string): void {
+    if (typeof id === "object") {
+      const dialogData = _dialogObjects.get(id);
+      if (dialogData !== undefined) {
+        id = dialogData.id;
+      }
+    }
+
+    const data = _dialogs.get(id as string);
+    if (data === undefined) {
+      throw new Error(`Expected a valid dialog id, '${id as string}' does not match any active dialog.`);
+    }
+
+    if (_validCallbacks.indexOf(key) === -1) {
+      throw new Error("Invalid callback identifier, '" + key + "' is not recognized.");
+    }
+
+    data[key] = undefined;
+  },
+
+  /**
    * Creates the DOM for a new dialog and opens it.
    */
   _createDialog(id: string, html: DialogHtml, options: InternalDialogOptions): void {

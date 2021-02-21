@@ -57,7 +57,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Langua
                 });
             }
             else {
-                Dialog_1.default.setCallback(this, "onClose", () => { });
+                Dialog_1.default.removeCallback(this, "onClose");
                 const spinner = content.querySelector(".fa-spinner");
                 spinner.classList.remove("fa-spinner");
                 spinner.classList.add("fa-check", "green");

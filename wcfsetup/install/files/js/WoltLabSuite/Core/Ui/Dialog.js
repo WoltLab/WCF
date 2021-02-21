@@ -276,6 +276,25 @@ define(["require", "exports", "tslib", "../Core", "../Dom/Change/Listener", "./S
             data[key] = value;
         },
         /**
+         * Clears a callback function on runtime.
+         */
+        removeCallback(id, key) {
+            if (typeof id === "object") {
+                const dialogData = _dialogObjects.get(id);
+                if (dialogData !== undefined) {
+                    id = dialogData.id;
+                }
+            }
+            const data = _dialogs.get(id);
+            if (data === undefined) {
+                throw new Error(`Expected a valid dialog id, '${id}' does not match any active dialog.`);
+            }
+            if (_validCallbacks.indexOf(key) === -1) {
+                throw new Error("Invalid callback identifier, '" + key + "' is not recognized.");
+            }
+            data[key] = undefined;
+        },
+        /**
          * Creates the DOM for a new dialog and opens it.
          */
         _createDialog(id, html, options) {
