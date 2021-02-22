@@ -54,6 +54,8 @@ interface AjaxResponse {
 const availableReactions = Object.values(window.REACTION_TYPES);
 
 class UiReactionHandler {
+  protected activeButton?: HTMLElement | undefined = undefined;
+  protected readonly callbackFocus: (event: Event) => void;
   readonly countButtons: CountButtons;
   protected readonly _cache = new Map<string, unknown>();
   protected readonly _containers = new Map<string, ElementData>();
@@ -63,6 +65,7 @@ class UiReactionHandler {
   protected _popoverCurrentObjectId = 0;
   protected _popover: HTMLElement | null;
   protected _popoverContent: HTMLElement | null;
+  protected wasInsideReactions: boolean;
 
   /**
    * Initializes the reaction handler.
@@ -101,6 +104,8 @@ class UiReactionHandler {
 
     DomChangeListener.add(`WoltLabSuite/Core/Ui/Reaction/Handler-${objectType}`, () => this.initReactButtons());
     UiCloseOverlay.add("WoltLabSuite/Core/Ui/Reaction/Handler", () => this._closePopover());
+
+    this.callbackFocus = (event: Event) => this.maintainFocus(event);
   }
 
   /**
@@ -161,8 +166,21 @@ class UiReactionHandler {
       textSpan.textContent = reaction.title;
     }
 
+    elementData.reactButton.setAttribute("role", "button");
+    if (availableReactions.length > 1) {
+      elementData.reactButton.setAttribute("aria-haspopup", "true");
+      elementData.reactButton.setAttribute("aria-expanded", "false");
+    }
+
     elementData.reactButton.addEventListener("click", (ev) => {
       this._toggleReactPopover(elementData.objectId, elementData.reactButton!, ev);
+    });
+    elementData.reactButton.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+
+        this._toggleReactPopover(elementData.objectId, elementData.reactButton!, null);
+      }
     });
   }
 
@@ -194,7 +212,10 @@ class UiReactionHandler {
 
     //  Clear the old active state.
     const popover = this._getPopover();
-    popover.querySelectorAll(".reactionTypeButton.active").forEach((el) => el.classList.remove("active"));
+    popover.querySelectorAll(".reactionTypeButton.active").forEach((element: HTMLElement) => {
+      element.classList.remove("active");
+      element.removeAttribute("aria-selected");
+    });
 
     const scrollableContainer = popover.querySelector(".reactionPopoverContent") as HTMLElement;
     if (reactionTypeID) {
@@ -202,6 +223,7 @@ class UiReactionHandler {
         `.reactionTypeButton[data-reaction-type-id="${reactionTypeID!}"]`,
       ) as HTMLElement;
       reactionTypeButton.classList.add("active");
+      reactionTypeButton.setAttribute("aria-selected", "true");
 
       if (~~reactionTypeButton.dataset.isAssignable! === 0) {
         DomUtil.show(reactionTypeButton);
@@ -239,7 +261,7 @@ class UiReactionHandler {
   /**
    * Toggle the visibility of the react popover.
    */
-  protected _toggleReactPopover(objectId: number, element: HTMLElement, event: MouseEvent): void {
+  protected _toggleReactPopover(objectId: number, element: HTMLElement, event: MouseEvent | null): void {
     if (event !== null) {
       event.preventDefault();
       event.stopPropagation();
@@ -298,6 +320,12 @@ class UiReactionHandler {
 
     popover.classList.remove("forceHide");
     popover.classList.add("active");
+
+    this.activeButton = element;
+    if (availableReactions.length > 1) {
+      this.activeButton.setAttribute("aria-expanded", "true");
+      document.body.addEventListener("focus", this.callbackFocus, { capture: true });
+    }
   }
 
   /**
@@ -316,6 +344,8 @@ class UiReactionHandler {
 
       this._getSortedReactionTypes().forEach((reactionType) => {
         const reactionTypeItem = document.createElement("li");
+        reactionTypeItem.tabIndex = 0;
+        reactionTypeItem.setAttribute("role", "button");
         reactionTypeItem.className = "reactionTypeButton jsTooltip";
         reactionTypeItem.dataset.reactionTypeId = reactionType.reactionTypeID.toString();
         reactionTypeItem.dataset.title = reactionType.title;
@@ -332,6 +362,7 @@ class UiReactionHandler {
         reactionTypeItem.appendChild(reactionTypeItemSpan);
 
         reactionTypeItem.addEventListener("click", () => this._react(reactionType.reactionTypeID));
+        reactionTypeItem.addEventListener("keydown", (ev) => this.keydown(ev));
 
         if (!reactionType.isAssignable) {
           DomUtil.hide(reactionTypeItem);
@@ -356,6 +387,25 @@ class UiReactionHandler {
     }
 
     return this._popover;
+  }
+
+  protected keydown(event: KeyboardEvent): void {
+    if (event.key === "Enter" || event.key === " " || event.key === "Escape") {
+      event.preventDefault();
+
+      const activeButton = this.activeButton!;
+
+      if (event.key === "Escape") {
+        this._closePopover();
+      } else {
+        const reactionTypeItem = event.currentTarget as HTMLElement;
+        const reactionTypeId = ~~reactionTypeItem.dataset.reactionTypeId!;
+
+        this._react(reactionTypeId);
+      }
+
+      activeButton.focus();
+    }
   }
 
   protected _rebuildOverflowIndicator(): void {
@@ -400,6 +450,12 @@ class UiReactionHandler {
         });
       }
 
+      if (availableReactions.length > 1) {
+        this.activeButton!.setAttribute("aria-expanded", "false");
+        document.body.removeEventListener("focus", this.callbackFocus, { capture: true });
+      }
+
+      this.activeButton = undefined;
       this._popoverCurrentObjectId = 0;
     }
   }
@@ -438,6 +494,27 @@ class UiReactionHandler {
         className: "\\wcf\\data\\reaction\\ReactionAction",
       },
     };
+  }
+
+  protected maintainFocus(event: Event): void {
+    // Ignore a focus shift that was not the result of a keyboard interaction.
+    if (document.activeElement && !document.activeElement.classList.contains("focus-visible")) {
+      return;
+    }
+
+    const popover = this._getPopover();
+
+    if (!popover.contains(event.target as Element)) {
+      if (this.wasInsideReactions) {
+        this.activeButton!.focus();
+        this.wasInsideReactions = false;
+      } else {
+        const firstReaction = popover.querySelector(".reactionTypeButton") as HTMLElement;
+        firstReaction.focus();
+      }
+    } else {
+      this.wasInsideReactions = true;
+    }
   }
 }
 

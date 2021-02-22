@@ -23,6 +23,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
          * Initializes the reaction handler.
          */
         constructor(objectType, opts) {
+            this.activeButton = undefined;
             this._cache = new Map();
             this._containers = new Map();
             this._objects = new Map();
@@ -48,6 +49,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             this.countButtons = new CountButtons_1.default(this._objectType, this._options);
             Listener_1.default.add(`WoltLabSuite/Core/Ui/Reaction/Handler-${objectType}`, () => this.initReactButtons());
             CloseOverlay_1.default.add("WoltLabSuite/Core/Ui/Reaction/Handler", () => this._closePopover());
+            this.callbackFocus = (event) => this.maintainFocus(event);
         }
         /**
          * Initializes all applicable react buttons with the given selector.
@@ -96,8 +98,19 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                 const textSpan = elementData.reactButton.querySelector(".invisible");
                 textSpan.textContent = reaction.title;
             }
+            elementData.reactButton.setAttribute("role", "button");
+            if (availableReactions.length > 1) {
+                elementData.reactButton.setAttribute("aria-haspopup", "true");
+                elementData.reactButton.setAttribute("aria-expanded", "false");
+            }
             elementData.reactButton.addEventListener("click", (ev) => {
                 this._toggleReactPopover(elementData.objectId, elementData.reactButton, ev);
+            });
+            elementData.reactButton.addEventListener("keydown", (event) => {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    this._toggleReactPopover(elementData.objectId, elementData.reactButton, null);
+                }
             });
         }
         _updateReactButton(objectID, reactionTypeID) {
@@ -126,11 +139,15 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             }
             //  Clear the old active state.
             const popover = this._getPopover();
-            popover.querySelectorAll(".reactionTypeButton.active").forEach((el) => el.classList.remove("active"));
+            popover.querySelectorAll(".reactionTypeButton.active").forEach((element) => {
+                element.classList.remove("active");
+                element.removeAttribute("aria-selected");
+            });
             const scrollableContainer = popover.querySelector(".reactionPopoverContent");
             if (reactionTypeID) {
                 const reactionTypeButton = popover.querySelector(`.reactionTypeButton[data-reaction-type-id="${reactionTypeID}"]`);
                 reactionTypeButton.classList.add("active");
+                reactionTypeButton.setAttribute("aria-selected", "true");
                 if (~~reactionTypeButton.dataset.isAssignable === 0) {
                     Util_1.default.show(reactionTypeButton);
                 }
@@ -218,6 +235,11 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
             this._rebuildOverflowIndicator();
             popover.classList.remove("forceHide");
             popover.classList.add("active");
+            this.activeButton = element;
+            if (availableReactions.length > 1) {
+                this.activeButton.setAttribute("aria-expanded", "true");
+                document.body.addEventListener("focus", this.callbackFocus, { capture: true });
+            }
         }
         /**
          * Returns the react popover element.
@@ -232,6 +254,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                 popoverContentHTML.className = "reactionTypeButtonList";
                 this._getSortedReactionTypes().forEach((reactionType) => {
                     const reactionTypeItem = document.createElement("li");
+                    reactionTypeItem.tabIndex = 0;
+                    reactionTypeItem.setAttribute("role", "button");
                     reactionTypeItem.className = "reactionTypeButton jsTooltip";
                     reactionTypeItem.dataset.reactionTypeId = reactionType.reactionTypeID.toString();
                     reactionTypeItem.dataset.title = reactionType.title;
@@ -243,6 +267,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                     reactionTypeItem.innerHTML = reactionType.renderedIcon;
                     reactionTypeItem.appendChild(reactionTypeItemSpan);
                     reactionTypeItem.addEventListener("click", () => this._react(reactionType.reactionTypeID));
+                    reactionTypeItem.addEventListener("keydown", (ev) => this.keydown(ev));
                     if (!reactionType.isAssignable) {
                         Util_1.default.hide(reactionTypeItem);
                     }
@@ -259,6 +284,21 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                 Listener_1.default.trigger();
             }
             return this._popover;
+        }
+        keydown(event) {
+            if (event.key === "Enter" || event.key === " " || event.key === "Escape") {
+                event.preventDefault();
+                const activeButton = this.activeButton;
+                if (event.key === "Escape") {
+                    this._closePopover();
+                }
+                else {
+                    const reactionTypeItem = event.currentTarget;
+                    const reactionTypeId = ~~reactionTypeItem.dataset.reactionTypeId;
+                    this._react(reactionTypeId);
+                }
+                activeButton.focus();
+            }
         }
         _rebuildOverflowIndicator() {
             const popoverContent = this._popoverContent;
@@ -298,6 +338,11 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                         elementData.reactButton.closest("nav").style.cssText = "";
                     });
                 }
+                if (availableReactions.length > 1) {
+                    this.activeButton.setAttribute("aria-expanded", "false");
+                    document.body.removeEventListener("focus", this.callbackFocus, { capture: true });
+                }
+                this.activeButton = undefined;
                 this._popoverCurrentObjectId = 0;
             }
         }
@@ -329,6 +374,26 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ch
                     className: "\\wcf\\data\\reaction\\ReactionAction",
                 },
             };
+        }
+        maintainFocus(event) {
+            // Ignore a focus shift that was not the result of a keyboard interaction.
+            if (document.activeElement && !document.activeElement.classList.contains("focus-visible")) {
+                return;
+            }
+            const popover = this._getPopover();
+            if (!popover.contains(event.target)) {
+                if (this.wasInsideReactions) {
+                    this.activeButton.focus();
+                    this.wasInsideReactions = false;
+                }
+                else {
+                    const firstReaction = popover.querySelector(".reactionTypeButton");
+                    firstReaction.focus();
+                }
+            }
+            else {
+                this.wasInsideReactions = true;
+            }
         }
     }
     Core.enableLegacyInheritance(UiReactionHandler);
