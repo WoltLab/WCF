@@ -5578,10 +5578,19 @@ if (COMPILER_TARGET_DEFAULT) {
 						return;
 					}
 					
+					$trigger[0].addEventListener("keydown", (event) => {
+						if (event.key === "Enter") {
+							event.preventDefault();
+							$trigger[0].dataset.isKeyboardClick = "true";
+
+							self._show(event);
+						}
+					});
 					$trigger.on('click', $.proxy(self._show, self)).data(
 						'elementID',
 						$elementID
 					);
+					$trigger[0].dataset.requiresSynthethicClick = true;
 					if (self._quickOption) {
 						// simulate click on target action
 						$trigger.disableSelection().data(

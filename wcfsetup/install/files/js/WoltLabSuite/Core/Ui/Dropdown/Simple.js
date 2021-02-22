@@ -86,13 +86,20 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
      * Toggles the drop-down's state between open and close.
      */
     function toggle(event, targetId, alternateElement, disableAutoFocus) {
+        let isKeyboardClick = false;
         if (event !== null) {
             event.preventDefault();
             event.stopPropagation();
             const target = event.currentTarget;
             targetId = target.dataset.target;
             if (disableAutoFocus === undefined && event instanceof MouseEvent) {
-                disableAutoFocus = true;
+                if (Core.stringToBool(target.dataset.isKeyboardClick || "")) {
+                    isKeyboardClick = true;
+                    delete target.dataset.isKeyboardClick;
+                }
+                else {
+                    disableAutoFocus = true;
+                }
             }
         }
         let dropdown = _dropdowns.get(targetId);
@@ -206,6 +213,9 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
                 UiDropdownSimple.setAlignment(dropdown, menu, alternateElement);
                 if (firstListItem !== null) {
                     firstListItem.focus();
+                    if (isKeyboardClick) {
+                        firstListItem.classList.add("focus-visible");
+                    }
                 }
             }
         });
@@ -221,7 +231,13 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
         }
         if (event.key === "Enter" || event.key === "Space") {
             event.preventDefault();
-            toggle(event);
+            if (target.dataset.requiresSynthethicClick) {
+                target.dataset.isKeyboardClick = "true";
+                target.click();
+            }
+            else {
+                toggle(event);
+            }
         }
     }
     function dropdownMenuKeyDown(event) {

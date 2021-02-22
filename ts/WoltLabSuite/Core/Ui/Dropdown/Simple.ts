@@ -94,6 +94,7 @@ function toggle(
   alternateElement?: HTMLElement,
   disableAutoFocus?: boolean,
 ): boolean {
+  let isKeyboardClick = false;
   if (event !== null) {
     event.preventDefault();
     event.stopPropagation();
@@ -102,7 +103,12 @@ function toggle(
     targetId = target.dataset.target;
 
     if (disableAutoFocus === undefined && event instanceof MouseEvent) {
-      disableAutoFocus = true;
+      if (Core.stringToBool(target.dataset.isKeyboardClick || "")) {
+        isKeyboardClick = true;
+        delete target.dataset.isKeyboardClick;
+      } else {
+        disableAutoFocus = true;
+      }
     }
   }
 
@@ -235,6 +241,10 @@ function toggle(
 
       if (firstListItem !== null) {
         firstListItem.focus();
+
+        if (isKeyboardClick) {
+          (firstListItem as HTMLLIElement).classList.add("focus-visible");
+        }
       }
     }
   });
@@ -254,7 +264,13 @@ function handleKeyDown(event: KeyboardEvent): void {
 
   if (event.key === "Enter" || event.key === "Space") {
     event.preventDefault();
-    toggle(event);
+
+    if (target.dataset.requiresSynthethicClick) {
+      target.dataset.isKeyboardClick = "true";
+      target.click();
+    } else {
+      toggle(event);
+    }
   }
 }
 
