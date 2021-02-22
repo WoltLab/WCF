@@ -115,7 +115,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 		$handler = new AttachmentHandler($this->parameters['objectType'], intval($this->parameters['objectID']), $this->parameters['tmpHash']);
 		/** @noinspection PhpUndefinedMethodInspection */
 		if ($handler->count() + count($this->parameters['__files']->getFiles()) > $processor->getMaxCount()) {
-			throw new UserInputException('files', 'exceededQuota', [
+			throw new UserInputException('files', 'reachedLimit', [
 				'current' => $handler->count(),
 				'quota' => $processor->getMaxCount()
 			]);
