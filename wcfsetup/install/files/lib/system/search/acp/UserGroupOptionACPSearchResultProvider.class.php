@@ -30,6 +30,10 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
      */
     public function search($query)
     {
+        if (!WCF::getSession()->getPermission('admin.user.canEditGroup')) {
+            return [];
+        }
+
         $results = [];
 
         // search by language item

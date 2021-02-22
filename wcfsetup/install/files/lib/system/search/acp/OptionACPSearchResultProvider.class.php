@@ -31,6 +31,10 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
      */
     public function search($query)
     {
+        if (!WCF::getSession()->getPermission('admin.configuration.canEditOption')) {
+            return [];
+        }
+
         $results = [];
 
         // search by language item

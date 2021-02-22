@@ -328,6 +328,8 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * Reads message field input and triggers an AJAX request.
 		 */
 		_click: function (event) {
+			event.preventDefault();
+			
 			var $message = this._getMessage();
 			if ($message === null) {
 				console.debug("[WCF.Message.Preview] Unable to access Redactor instance of '" + this._messageFieldID + "'");
