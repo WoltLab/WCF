@@ -207,7 +207,9 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
             }
 
             if ($this->workerData['dataCount'] + $this->limit > self::SITEMAP_OBJECT_LIMIT) {
-                $this->finishSitemap($this->sitemapObjects[$this->workerData['sitemap']]->objectType . '_' . $this->workerData['sitemapLoopCount'] . '.xml');
+                $packageID = $this->sitemapObjects[$this->workerData['sitemap']]->packageID;
+                $filename = $this->sitemapObjects[$this->workerData['sitemap']]->objectType . '.xml';
+                $this->finishSitemap($filename, $packageID);
 
                 $this->generateTmpFile(false);
 
@@ -218,7 +220,9 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
             // finish sitemap
             if (\count($objectList) < $this->limit) {
                 if ($this->workerData['dataCount'] > 0) {
-                    $this->finishSitemap($this->sitemapObjects[$this->workerData['sitemap']]->objectType . '.xml');
+                    $packageID = $this->sitemapObjects[$this->workerData['sitemap']]->packageID;
+                    $filename = $this->sitemapObjects[$this->workerData['sitemap']]->objectType . '.xml';
+                    $this->finishSitemap($filename, $packageID);
                     $this->generateTmpFile(false);
                 }
 
@@ -304,6 +308,8 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
         if ($this->workerData['tmpFile'] && \file_exists($this->workerData['tmpFile'])) {
             \unlink($this->workerData['tmpFile']);
         }
+
+        $this->registerSitemapFiles();
     }
 
     /**
@@ -351,8 +357,9 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
      * $filename defines the sitemap filename.
      *
      * @param string $filename
+     * @param int $packageID
      */
-    protected function finishSitemap($filename)
+    protected function finishSitemap($filename, $packageID)
     {
         $this->file->write(WCF::getTPL()->fetch('sitemapEnd'));
         $this->file->close();
@@ -361,6 +368,32 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
 
         // add sitemap to the successfully built sitemaps
         $this->workerData['sitemaps'][] = self::getSitemapURL() . $filename;
+
+        // Register sitemap for the package installation file log.
+        if (!isset($this->workerData['filesToPackage'][$packageID])) {
+            $this->workerData['filesToPackage'][$packageID] = [];
+        }
+        $this->workerData['filesToPackage'][$packageID][] = 'sitemaps/' . $filename;
+    }
+
+    private function registerSitemapFiles()
+    {
+        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_package_installation_file_log
+                                    (packageID, filename, application)
+                VALUES              (?, ?, ?)";
+        $statement = WCF::getDB()->prepareStatement($sql);
+
+        WCF::getDB()->beginTransaction();
+        foreach ($this->workerData['filesToPackage'] as $packageID => $files) {
+            foreach ($files as $file) {
+                $statement->execute([
+                    $packageID,
+                    $file,
+                    'wcf',
+                ]);
+            }
+        }
+        WCF::getDB()->commitTransaction();
     }
 
     /**
@@ -386,6 +419,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker
                 'tmpFile' => '',
                 'sitemaps' => [],
                 'finished' => false,
+                'filesToPackage' => [],
             ];
 
             $this->generateTmpFile();
