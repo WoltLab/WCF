@@ -56,7 +56,7 @@ class ContactRecipient extends DatabaseObject {
 	 * 
 	 * @since 5.3
 	 */
-	public function getName(): string {
+	public function getName() {
 		return WCF::getLanguage()->get($this->name);
 	}
 	
@@ -65,7 +65,7 @@ class ContactRecipient extends DatabaseObject {
 	 * 
 	 * @since 5.3
 	 */
-	public function getEmail(): string {
+	public function getEmail() {
 		return WCF::getLanguage()->get($this->email);
 	}
 	
@@ -74,7 +74,7 @@ class ContactRecipient extends DatabaseObject {
 	 * 
 	 * @since 5.3
 	 */
-	public function getMailbox(): Mailbox {
+	public function getMailbox() {
 		return new Mailbox(
 			$this->getEmail(),
 			$this->getName()
