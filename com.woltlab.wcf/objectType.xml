@@ -1199,6 +1199,11 @@
 			<definitionname>com.woltlab.wcf.message.embeddedObject</definitionname>
 			<classname>wcf\system\message\embedded\object\ArticleMessageEmbeddedObjectHandler</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.unfurlUrl</name>
+			<definitionname>com.woltlab.wcf.message.embeddedObject</definitionname>
+			<classname>wcf\system\message\embedded\object\UnfurlUrlEmbeddedObjectHandler</classname>
+		</type>
 		<!-- embedded object handlers -->
 		<type>
 			<name>com.woltlab.wcf.payment.method.paypal</name>
