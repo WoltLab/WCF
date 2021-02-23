@@ -2,10 +2,12 @@
 
 namespace wcf\system\html\input\node;
 
+use wcf\data\unfurl\url\UnfurlUrlAction;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\html\node\HtmlNodePlainLink;
+use wcf\system\html\node\HtmlNodeUnfurlLink;
 use wcf\system\html\node\IHtmlNode;
 use wcf\util\DOMUtil;
 use wcf\util\StringUtil;
@@ -742,5 +744,11 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
         }
 
         EventHandler::getInstance()->fireAction($this, 'convertPlainLinks');
+
+        foreach ($this->plainLinks as $plainLink) {
+            if ($plainLink->isPristine()) {
+                HtmlNodeUnfurlLink::setUnfurl($plainLink);
+            }
+        }
     }
 }
