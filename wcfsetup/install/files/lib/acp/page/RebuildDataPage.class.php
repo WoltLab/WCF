@@ -44,16 +44,7 @@ class RebuildDataPage extends AbstractPage
 
         // sort object types
         \uasort($this->objectTypes, static function ($a, $b) {
-            $niceValueA = ($a->nicevalue ?: 0);
-            $niceValueB = ($b->nicevalue ?: 0);
-
-            if ($niceValueA < $niceValueB) {
-                return -1;
-            } elseif ($niceValueA > $niceValueB) {
-                return 1;
-            }
-
-            return 0;
+            return ($a->nicevalue ?: 0) <=> ($b->nicevalue ?: 0);
         });
     }
 
