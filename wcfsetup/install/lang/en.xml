@@ -622,7 +622,7 @@
 the following errors have been logged on your website {@PAGE_TITLE|language} since {$date|plainTime}:
 
 {foreach from=$files key=file item=data}
-log/{$file}.txt ({#$data[count]} error{if $data[count] > 1}s{/if}) {* this line ends with a space *}
+log/{$file}.txt{if !$data[verdict]|isset} ({#$data[count]} error{if $data[count] > 1}s{/if}){/if} {* this line ends with a space *}
 ==================
 {if $data[verdict]|isset}
 {if $data[verdict] == 'corrupt'}
