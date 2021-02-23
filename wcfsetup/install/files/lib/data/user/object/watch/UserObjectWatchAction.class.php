@@ -101,7 +101,7 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction
         if ($this->parameters['subscribe']) {
             // newly subscribed
             if ($this->userObjectWatch === null) {
-                UserObjectWatchEditor::create([
+                UserObjectWatchEditor::createOrIgnore([
                     'notification' => $this->parameters['enableNotification'] ? 1 : 0,
                     'objectID' => $this->parameters['objectID'],
                     'objectTypeID' => $this->objectType->objectTypeID,

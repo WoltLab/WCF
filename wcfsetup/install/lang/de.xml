@@ -661,7 +661,7 @@
 die folgenden Fehlermeldungen auf Ihrer Website {@PAGE_TITLE|language} wurden seit dem {$date|plainTime} protokolliert:
 
 {foreach from=$files key=file item=data}
-log/{$file}.txt ({#$data[count]} Fehlermeldung{if $data[count] > 1}en{/if}) {* this line ends with a space *}
+log/{$file}.txt{if !$data[verdict]|isset} ({#$data[count]} Fehlermeldung{if $data[count] > 1}en{/if}){/if} {* this line ends with a space *}
 ==================
 {if $data[verdict]|isset}
 {if $data[verdict] == 'corrupt'}

@@ -31,6 +31,10 @@ final class ExceptionLogUtil
         $split = new Regex('(?:^|\n<<<<\n\n)(?:<<<<<<<<([a-f0-9]{40})<<<<\n|$)');
         $contents = $split->split($contents, Regex::SPLIT_NON_EMPTY_ONLY | Regex::CAPTURE_SPLIT_DELIMITER);
 
+        if (empty($contents)) {
+            return [];
+        }
+
         // even items become keys, odd items become values
         return \array_merge(...\array_map(
             static function ($v) {
