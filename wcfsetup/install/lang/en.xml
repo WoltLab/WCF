@@ -898,6 +898,8 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.group.option.user.signature.attachment.maxCount"><![CDATA[Maximum Attachments]]></item>
 		<item name="wcf.acp.group.requireMultifactor"><![CDATA[Require Multi-factor Authentication]]></item>
 		<item name="wcf.acp.group.requireMultifactor.description"><![CDATA[Users that are members of this user group may not disable multi-factor authentication. They will also be required to set up multi-factor authentication before they may enter protected areas.]]></item>
+		<item name="wcf.acp.group.option.admin.user.canExportGdprData"><![CDATA[Can export personal data (GDPR)]]></item>
+		<item name="wcf.acp.group.option.admin.user.canExportGdprData.description"><![CDATA[The export according to the European General Data Protection Regulation (GDPR) contains detailed personal data of the respective user. The export <strong>will not</strong> be filtered according to the administrator’s permissions and may contain information that would be inaccessible otherwise.]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.credits"><![CDATA[About WoltLab Suite&trade;]]></item>
