@@ -543,6 +543,8 @@ if (COMPILER_TARGET_DEFAULT) {
 					}
 					
 					this._dropdown.close();
+
+					WCF.System.Event.fireEvent('com.woltlab.wcf.UserMenuMobile', 'close');
 				}).bind(this));
 			}.bind(this)));
 		}
