@@ -103,7 +103,12 @@ class PreparedStatement
                                 return $matches[0];
                             }
 
-                            return "'" . \substr(\array_shift($benchmarkParameters), 0, 100) . "'";
+                            $parameter = \array_shift($benchmarkParameters);
+                            if ($parameter === null) {
+                                return 'NULL';
+                            }
+
+                            return "'" . \substr($parameter, 0, 100) . "'";
                         },
                         $this->query
                     ),
