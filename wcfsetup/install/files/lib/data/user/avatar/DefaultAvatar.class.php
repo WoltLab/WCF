@@ -13,7 +13,7 @@ use wcf\util\StringUtil;
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\Data\User\Avatar
  */
-class DefaultAvatar implements IUserAvatar
+class DefaultAvatar implements IUserAvatar, ISafeFormatAvatar
 {
     /**
      * image size
@@ -66,6 +66,22 @@ SVG;
         } else {
             $this->src = WCF::getPath() . 'images/avatars/avatar-default.svg';
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSafeURL(?int $size = null): string
+    {
+        return WCF::getPath() . 'images/avatars/avatar-default.png';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSafeImageTag(?int $size = null): string
+    {
+        return '<img src="' . StringUtil::encodeHTML($this->getSafeURL($size)) . '" width="' . $size . '" height="' . $size . '" alt="" class="userAvatarImage">';
     }
 
     /**

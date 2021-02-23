@@ -24,7 +24,7 @@ use wcf\util\StringUtil;
  * @property-read string $fileHash SHA1 hash of the original avatar file
  * @property-read int $hasWebP `1` if there is a WebP variant, else `0`
  */
-class UserAvatar extends DatabaseObject implements IUserAvatar
+class UserAvatar extends DatabaseObject implements IUserAvatar, ISafeFormatAvatar
 {
     /**
      * needed avatar thumbnail sizes
@@ -105,9 +105,25 @@ class UserAvatar extends DatabaseObject implements IUserAvatar
     /**
      * @inheritDoc
      */
+    public function getSafeURL(?int $size = null): string
+    {
+        return WCF::getPath() . 'images/avatars/' . $this->getFilename(null, false);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getImageTag($size = null)
     {
         return '<img src="' . StringUtil::encodeHTML($this->getURL($size)) . '" width="' . $size . '" height="' . $size . '" alt="" class="userAvatarImage">';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSafeImageTag(?int $size = null): string
+    {
+        return '<img src="' . StringUtil::encodeHTML($this->getSafeURL($size)) . '" width="' . $size . '" height="' . $size . '" alt="" class="userAvatarImage">';
     }
 
     /**
