@@ -922,7 +922,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.group.requireMultifactor"><![CDATA[Mehrfaktor-Authentifizierung erzwingen]]></item>
 		<item name="wcf.acp.group.requireMultifactor.description"><![CDATA[Benutzer, die Mitglied dieser Benutzergruppe sind, können die Mehrfaktor-Authentifizierung nicht deaktivieren und können besonders geschützte Bereiche erst betreten, wenn sie die Mehrfaktor-Authentifizierung eingerichtet haben.]]></item>
 		<item name="wcf.acp.group.option.admin.user.canExportGdprData"><![CDATA[Kann persönliche Daten (DSGVO) exportieren]]></item>
-		<item name="wcf.acp.group.option.admin.user.canExportGdprData.description"><![CDATA[Der Export gemäß der europäischen Datenschutzgrundverordnung (DSGVO) enthält detaillierte persönliche Daten des jeweiligen Benutzers. Eine Filterung der im Export enthaltenen Information auf Basis der Zugriffsrechte des Administrators findet <strong>nicht</strong> statt und kann unter Umständen Informationen enthalten, die einem Administrator auf andere Weise nicht zugänglich wären.]]></item>
+		<item name="wcf.acp.group.option.admin.user.canExportGdprData.description"><![CDATA[Der Export gemäß der europäischen Datenschutz-Grundverordnung (DSGVO) enthält detaillierte persönliche Daten des jeweiligen Benutzers. Eine Filterung der im Export enthaltenen Information auf Basis der Zugriffsrechte des Administrators findet <strong>nicht</strong> statt und kann unter Umständen Informationen enthalten, die einem Administrator auf andere Weise nicht zugänglich wären.]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.credits"><![CDATA[Über WoltLab Suite&trade;]]></item>
