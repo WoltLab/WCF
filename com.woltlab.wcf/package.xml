@@ -52,8 +52,18 @@
 	
 	<instructions type="update" fromversion="5.3.*">
 		<!--
+tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
+	acp/update_com.woltlab.wcf_5.4_checkSystemRequirements.php \
+	acp/update_com.woltlab.wcf_5.4_checkOwnerGroup.php
+		-->
+		<instruction type="file" run="standalone">files_pre_check.tar</instruction>
+		
+		<!-- Checks that need to happen before the upgrade starts. -->
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_checkSystemRequirements.php</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_checkOwnerGroup.php</instruction>
+
+		<!--
 tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
-	acp/update_com.woltlab.wcf_5.4_checkOwnerGroup.php \
 	acp/update_com.woltlab.wcf_5.4_session_1_cookies.php \
 	acp/update_com.woltlab.wcf_5.4_session_2_user_session.php \
 	acp/update_com.woltlab.wcf_5.4_session_3_migrate_session.php \
@@ -63,10 +73,7 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 	lib/system/package/plugin/FilePackageInstallationPlugin.class.php
 		-->
 		<instruction type="file" run="standalone">files_pre.tar</instruction>
-		
-		<!-- Checks that need to happen before the upgrade starts. -->
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_checkOwnerGroup.php</instruction>
-		
+
 		<!-- Preparations for the new session system. -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_1_cookies.php</instruction>
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_2_user_session.php</instruction>
