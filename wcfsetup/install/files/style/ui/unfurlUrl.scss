@@ -1,0 +1,90 @@
+.unfurlCard {
+	background-color: $wcfContentBackground;
+	box-shadow: 0 0 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+	display: inline-block;
+	margin: 20px 0;
+	white-space: nowrap;
+	
+	@include screen-md-up {
+		max-width: 700px;
+	}
+	
+	@include screen-sm-down {
+		max-width: 100%;
+	}
+	
+	> a {
+		color: $wcfContentText;
+		
+		.unfurlInformation {
+			position: relative;
+			padding: 10px 20px 20px;
+		}
+		
+		.urlTitle {
+			display: block;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			
+			@include wcfFontHeadline;
+		}
+		
+		.urlDescription {
+			white-space: normal;
+		}
+		
+		.urlHost {
+			@include wcfFontSmall;
+			float: right;
+			color: $wcfContentDimmedText;
+			bottom: 5px;
+			position: absolute;
+			right: 5px;
+			
+			img {
+				height: 12px !important;
+			}
+		}
+	}
+	
+	&.unfurlLargeContentImage {
+		min-width: 300px;
+		
+		> a > :first-child:not(:last-child) {
+			min-height: 150px;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			position: relative;
+		}
+	}
+	
+	&.unfurlSquaredContentImage {
+		> a {
+			display: flex;
+			
+			> :first-child:not(:last-child) {
+				flex: 0 0 auto;
+				height: 128px !important;
+				width: 128px !important;
+				margin: 10px;
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				position: relative;
+			}
+			
+			> :last-child {
+				flex: 1 1 auto;
+				overflow: hidden;
+				padding-left: 10px;
+			}
+			
+			@include screen-sm-down {
+				> :first-child:not(:last-child) {
+					display: none;
+				}
+			}
+		}
+	}
+}
