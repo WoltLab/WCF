@@ -132,7 +132,7 @@
 										{/if}
 									{/if}
 									
-									{if $user->editable}
+									{if $user->accessible && $__wcf->session->getPermission('admin.user.canExportGdprData')}
 										<li><a href="{link controller='UserExportGdpr' id=$user->userID}{/link}">{lang}wcf.acp.user.exportGdpr{/lang}</a></li>
 									{/if}
 									

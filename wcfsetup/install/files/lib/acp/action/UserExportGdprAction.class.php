@@ -100,7 +100,7 @@ class UserExportGdprAction extends AbstractAction
     /**
      * @inheritDoc
      */
-    public $neededPermissions = ['admin.user.canEditUser'];
+    public $neededPermissions = ['admin.user.canExportGdprData'];
 
     /**
      * list of user option names that are excluded from the output, any option that begins with

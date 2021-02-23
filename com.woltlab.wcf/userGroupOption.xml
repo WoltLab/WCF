@@ -1055,9 +1055,18 @@ webp</defaultvalue>
 				<defaultvalue>1</defaultvalue>
 				<options>module_tagging</options>
 			</option>
+			<option name="admin.user.canExportGdprData">
+				<categoryname>admin.user.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+				<moddefaultvalue>0</moddefaultvalue>
+				<userdefaultvalue>0</userdefaultvalue>
+				<usersonly>1</usersonly>
+			</option>
 		</options>
 	</import>
 	<delete>
-		<option name="user.profile.canMail" />
+		<option name="user.profile.canMail"/>
 	</delete>
 </data>
