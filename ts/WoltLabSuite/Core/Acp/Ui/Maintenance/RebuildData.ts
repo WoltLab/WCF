@@ -1,3 +1,12 @@
+/**
+ * Handles worker execution for the RebuildDataPage.
+ *
+ * @author  Tim Duesterhus
+ * @copyright  2001-2021 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Acp/Ui/Maintenance/RebuildData
+ */
+
 import Worker from "../Worker";
 import * as Language from "../../../Language";
 

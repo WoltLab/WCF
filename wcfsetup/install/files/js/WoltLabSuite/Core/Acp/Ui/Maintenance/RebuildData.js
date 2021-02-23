@@ -1,3 +1,11 @@
+/**
+ * Handles worker execution for the RebuildDataPage.
+ *
+ * @author  Tim Duesterhus
+ * @copyright  2001-2021 WoltLab GmbH
+ * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module  WoltLabSuite/Core/Acp/Ui/Maintenance/RebuildData
+ */
 define(["require", "exports", "tslib", "../Worker", "../../../Language"], function (require, exports, tslib_1, Worker_1, Language) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
