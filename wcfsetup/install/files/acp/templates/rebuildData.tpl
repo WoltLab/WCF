@@ -1,34 +1,19 @@
 {include file='header' pageTitle='wcf.acp.rebuildData'}
 
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Worker'], function (Language, AcpUiWorker) {
-		Language.add('wcf.acp.worker.abort.confirmMessage', '{jslang}wcf.acp.worker.abort.confirmMessage{/jslang}');
+	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Maintenance/RebuildData'], (Language, RebuildData) => {
+		Language.addObject({
+			'wcf.acp.worker.abort.confirmMessage': '{jslang}wcf.acp.worker.abort.confirmMessage{/jslang}',
+			'wcf.acp.worker.success': '{jslang}wcf.acp.worker.success{/jslang}',
+		});
 		
-		elBySelAll('.jsRebuildDataWorker', undefined, function (button) {
-			if (button.classList.contains('disabled')) return;
-			
-			button.addEventListener('click', function (event) {
-				event.preventDefault();
-				
-				new AcpUiWorker({
-					// dialog
-					dialogId: 'cache',
-					dialogTitle: button.textContent,
-					
-					// ajax
-					className: elData(button, 'class-name'),
-					
-					// callbacks
-					callbackAbort: null,
-					callbackSuccess: () => {
-						var span = button.nextElementSibling;
-						if (span && span.nodeName === 'SPAN') elRemove(span);
-							
-						span = elCreate('span');
-						span.innerHTML = ' <span class="icon icon16 fa-check green"></span> {lang}wcf.acp.worker.success{/lang}';
-						button.parentNode.insertBefore(span, button.nextElementSibling);
-					}
-				});
+		document.querySelectorAll('.jsRebuildDataWorker').forEach((button) => {
+			RebuildData.register(button);
+		});
+		document.querySelectorAll('.jsRebuildAll').forEach((button) => {
+			button.addEventListener('click', (ev) => {
+				ev.preventDefault();
+				void RebuildData.runAllWorkers();
 			});
 		});
 	});
@@ -39,13 +24,12 @@
 		<h1 class="contentTitle">{lang}wcf.acp.rebuildData{/lang}</h1>
 	</div>
 	
-	{hascontent}
-		<nav class="contentHeaderNavigation">
-			<ul>
-				{content}{event name='contentHeaderNavigation'}{/content}
-			</ul>
-		</nav>
-	{/hascontent}
+	<nav class="contentHeaderNavigation">
+		<ul>
+			<li><a href="#" class="button jsRebuildAll"><span class="icon icon16 fa-long-arrow-down"></span> <span>{lang}wcf.acp.rebuildData.rebuildAll{/lang}</span></a></li>
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 {event name='afterContentHeader'}
@@ -61,7 +45,9 @@
 			<dd>
 				<a href="#"
 				   class="button small jsRebuildDataWorker"
-				   data-class-name="{$objectType->className}" data-object-type="{$objectType->objectType}"
+				   data-class-name="{$objectType->className}"
+				   data-object-type="{$objectType->objectType}"
+				   data-nicevalue="{if $objectType->nicevalue}{$objectType->nicevalue}{else}0{/if}"
 				>{lang}wcf.acp.rebuildData.{@$objectType->objectType}{/lang}</a>
 				<small>{lang}wcf.acp.rebuildData.{@$objectType->objectType}.description{/lang}</small>
 			</dd>

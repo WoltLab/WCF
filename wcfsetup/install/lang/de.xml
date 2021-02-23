@@ -2670,6 +2670,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.activityPointItems.description"><![CDATA[Berechnet Anzahl an Aktivitäten neu, für die Benutzer Punkte erhalten; aktualisiert Benutzerränge]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.searchEngineConvertInnoDb.description"><![CDATA[Stellt die Tabellen des Suchindex auf die InnoDB-Engine um.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.searchEngineConvertInnoDb"><![CDATA[Suchindex auf InnoDB umstellen]]></item>
+		<item name="wcf.acp.rebuildData.rebuildAll"><![CDATA[Alle aktualisieren]]></item>
 	</category>
 	<category name="wcf.acp.rescueMode">
 		<item name="wcf.acp.rescueMode"><![CDATA[Systemwiederherstellung]]></item>

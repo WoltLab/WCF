@@ -2598,6 +2598,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.activityPointItems.description"><![CDATA[Recalculates the number of activities for which users get points and rebuilds user ranks.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.searchEngineConvertInnoDb.description"><![CDATA[Migrates the search engine tables to the InnoDB storage engine.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.searchEngineConvertInnoDb"><![CDATA[Migrate Search Index to InnoDB]]></item>
+		<item name="wcf.acp.rebuildData.rebuildAll"><![CDATA[Rebuild All]]></item>
 	</category>
 	<category name="wcf.acp.rescueMode">
 		<item name="wcf.acp.rescueMode"><![CDATA[Rescue Mode]]></item>
