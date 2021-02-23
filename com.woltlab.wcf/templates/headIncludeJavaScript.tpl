@@ -162,6 +162,12 @@ window.addEventListener('pageshow', function(event) {
 
 {include file='__devtoolsLanguageChooser'}
 
+{if ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS}
+<script data-relocate="true">
+	require(["WoltLabSuite/Core/Devtools/Style/LiveReload"], (LiveReload) => LiveReload.watch());
+</script>
+{/if}
+
 {js application='wcf' lib='jquery' hasTiny=true}
 {js application='wcf' lib='jquery-ui' hasTiny=true}
 {js application='wcf' lib='jquery-ui' file='touchPunch' bundle='WCF.Combined' hasTiny=true}

@@ -19,6 +19,10 @@
 
 {if $success|isset}
 	<p class="success">{lang}wcf.global.success{/lang}</p>
+
+	<script data-relocate="true">
+		require(["WoltLabSuite/Core/Devtools/Style/LiveReload"], (LiveReload) => LiveReload.notify());
+	</script>
 {/if}
 
 <form method="post" action="{link controller='StyleGlobalValues'}{/link}">
