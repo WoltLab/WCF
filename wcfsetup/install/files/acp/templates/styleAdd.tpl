@@ -65,6 +65,12 @@
 
 {include file='formNotice'}
 
+{if $success|isset}
+<script data-relocate="true">
+	require(["WoltLabSuite/Core/Devtools/Style/LiveReload"], (LiveReload) => LiveReload.notify());
+</script>
+{/if}
+
 <form method="post" action="{if $action == 'add'}{link controller='StyleAdd'}{/link}{else}{link controller='StyleEdit' id=$styleID}{/link}{/if}">
 	<div class="section tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem" id="styleTabMenuContainer">
 		<nav class="tabMenu">
