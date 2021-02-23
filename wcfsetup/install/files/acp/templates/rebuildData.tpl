@@ -21,17 +21,12 @@
 					// callbacks
 					callbackAbort: null,
 					callbackSuccess: () => {
-						{if $convertEncoding}
-							var span = button.nextElementSibling;
-							if (span && span.nodeName === 'SPAN') elRemove(span);
-								
-							span = elCreate('span');
-							span.innerHTML = ' <span class="icon icon16 fa-check green"></span> {lang}wcf.acp.worker.success{/lang}';
-							button.parentNode.insertBefore(span, button.nextElementSibling);
-						{else}
-							// force reload after converting the database encoding
-							window.location.reload();
-						{/if}
+						var span = button.nextElementSibling;
+						if (span && span.nodeName === 'SPAN') elRemove(span);
+							
+						span = elCreate('span');
+						span.innerHTML = ' <span class="icon icon16 fa-check green"></span> {lang}wcf.acp.worker.success{/lang}';
+						button.parentNode.insertBefore(span, button.nextElementSibling);
 					}
 				});
 			});
@@ -62,15 +57,10 @@
 	</header>
 	
 	{foreach from=$objectTypes item=objectType}
-		{assign var=_allowRebuild value=true}
-		{if !$convertEncoding && $objectType->objectType != 'com.woltlab.wcf.databaseConvertEncoding'}
-			{assign var=_allowRebuild value=false}
-		{/if}
-		
 		<dl class="wide">
 			<dd>
 				<a href="#"
-				   class="button small jsRebuildDataWorker{if !$_allowRebuild} disabled{/if}"
+				   class="button small jsRebuildDataWorker"
 				   data-class-name="{$objectType->className}" data-object-type="{$objectType->objectType}"
 				>{lang}wcf.acp.rebuildData.{@$objectType->objectType}{/lang}</a>
 				<small>{lang}wcf.acp.rebuildData.{@$objectType->objectType}.description{/lang}</small>
