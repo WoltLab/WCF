@@ -271,6 +271,7 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker
                     $width = $height = UserAvatar::AVATAR_SIZE;
                 }
 
+                $editor->deleteLegacyThumbnails();
                 $editor->createAvatarVariant();
 
                 $editor->update([
