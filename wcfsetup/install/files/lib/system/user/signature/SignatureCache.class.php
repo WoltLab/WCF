@@ -47,7 +47,6 @@ class SignatureCache extends SingletonFactory {
 				$this->cacheUserSignature([$user->userID]);
 			}
 			
-			$this->htmlOutputProcessor->setContext('com.woltlab.wcf.user.signature', $user->userID);
 			$this->htmlOutputProcessor->process($user->signature, 'com.woltlab.wcf.user.signature', $user->userID);
 			$this->signatures[$user->userID] = $this->htmlOutputProcessor->getHtml();
 		}
