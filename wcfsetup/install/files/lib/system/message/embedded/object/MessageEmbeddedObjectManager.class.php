@@ -306,7 +306,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 * Restores the internal state in case of nested message processing.
 	 */
 	public function reset() {
-		$newState = array_pop($this->activeMessageHistory);
+		$newState = \array_pop($this->activeMessageHistory);
 		if ($newState === null) {
 			$newState = [
 				'activeMessageID' => null,
