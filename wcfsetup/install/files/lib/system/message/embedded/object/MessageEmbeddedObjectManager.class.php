@@ -71,7 +71,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 * A list of previous active message settings used to restore
 	 * the internal state in case of nested message processing.
 	 */
-	protected $acitveMessageHistory = [];
+	protected $activeMessageHistory = [];
 	
 	/**
 	 * Registers the embedded objects found in given message.
@@ -290,7 +290,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 */
 	public function setActiveMessage($messageObjectType, $messageID, $languageID = null) {
 		if ($this->activeMessageObjectTypeID) {
-			$this->acitveMessageHistory[] = [
+			$this->activeMessageHistory[] = [
 				'activeMessageID' => $this->activeMessageID,
 				'activeMessageLanguageID' => $this->activeMessageLanguageID,
 				'activeMessageObjectTypeID' => $this->activeMessageObjectTypeID,
@@ -306,7 +306,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 * Restores the internal state in case of nested message processing.
 	 */
 	public function reset() {
-		$newState = array_pop($this->acitveMessageHistory);
+		$newState = array_pop($this->activeMessageHistory);
 		if ($newState === null) {
 			$newState = [
 				'activeMessageID' => null,
