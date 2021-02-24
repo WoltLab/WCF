@@ -70,10 +70,16 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor
         $this->languageID = $languageID;
         $this->setContext($objectType, $objectID);
 
-        $this->getHtmlOutputNodeProcessor()->setOutputType($this->outputType);
-        $this->getHtmlOutputNodeProcessor()->enableKeywordHighlighting($doKeywordHighlighting);
-        $this->getHtmlOutputNodeProcessor()->load($this, $html);
-        $this->getHtmlOutputNodeProcessor()->process();
+        MessageEmbeddedObjectManager::getInstance()->setActiveMessage($objectType, $objectID, $this->languageID);
+
+        try {
+            $this->getHtmlOutputNodeProcessor()->setOutputType($this->outputType);
+            $this->getHtmlOutputNodeProcessor()->enableKeywordHighlighting($doKeywordHighlighting);
+            $this->getHtmlOutputNodeProcessor()->load($this, $html);
+            $this->getHtmlOutputNodeProcessor()->process();
+        } finally {
+            MessageEmbeddedObjectManager::getInstance()->reset();
+        }
     }
 
     /**
@@ -98,7 +104,16 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor
      */
     public function getHtml()
     {
-        return $this->getHtmlOutputNodeProcessor()->getHtml();
+        $context = $this->getContext();
+        MessageEmbeddedObjectManager::getInstance()->setActiveMessage($context['objectType'], $context['objectID'], $this->languageID);
+
+        try {
+            $html = $this->getHtmlOutputNodeProcessor()->getHtml();
+        } finally {
+            MessageEmbeddedObjectManager::getInstance()->reset();
+        }
+
+        return $html;
     }
 
     /**
@@ -109,7 +124,6 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor
     {
         parent::setContext($objectType, $objectID);
 
-        MessageEmbeddedObjectManager::getInstance()->setActiveMessage($objectType, $objectID, $this->languageID);
         $objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.message', $objectType);
         if ($this->enableToc === null) {
             $this->enableToc = (!empty($objectType->additionalData['enableToc']));
