@@ -90,7 +90,11 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 	 * @inheritDoc
 	 */
 	public function getHtml() {
-		return $this->getHtmlOutputNodeProcessor()->getHtml();
+		$html = $this->getHtmlOutputNodeProcessor()->getHtml();
+
+		MessageEmbeddedObjectManager::getInstance()->reset();
+
+		return $html;
 	}
 	
 	/**
