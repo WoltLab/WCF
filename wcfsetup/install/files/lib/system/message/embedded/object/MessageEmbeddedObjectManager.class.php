@@ -66,6 +66,12 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 		'insert' => [],
 		'remove' => []
 	];
+
+	/**
+	 * A list of previous active message settings used to restore
+	 * the internal state in case of nested message processing.
+	 */
+	protected $activeMessageHistory = [];
 	
 	/**
 	 * Registers the embedded objects found in given message.
@@ -283,9 +289,35 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 * @param	integer		$languageID
 	 */
 	public function setActiveMessage($messageObjectType, $messageID, $languageID = null) {
+		if ($this->activeMessageObjectTypeID) {
+			$this->activeMessageHistory[] = [
+				'activeMessageID' => $this->activeMessageID,
+				'activeMessageLanguageID' => $this->activeMessageLanguageID,
+				'activeMessageObjectTypeID' => $this->activeMessageObjectTypeID,
+			];
+		}
+
 		$this->activeMessageObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType);
 		$this->activeMessageID = $messageID;
 		$this->activeMessageLanguageID = $languageID;
+	}
+
+	/**
+	 * Restores the internal state in case of nested message processing.
+	 */
+	public function reset() {
+		$newState = \array_pop($this->activeMessageHistory);
+		if ($newState === null) {
+			$newState = [
+				'activeMessageID' => null,
+				'activeMessageLanguageID' => null,
+				'activeMessageObjectTypeID' => null,
+			];
+		}
+
+		$this->activeMessageID = $newState['activeMessageID'];
+		$this->activeMessageLanguageID = $newState['activeMessageLanguageID'];
+		$this->activeMessageObjectTypeID = $newState['activeMessageObjectTypeID'];
 	}
 	
 	/**
