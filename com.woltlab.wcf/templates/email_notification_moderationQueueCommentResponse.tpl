@@ -15,7 +15,7 @@
 	{capture assign='commentContent'}
 	<table cellpadding="0" cellspacing="0" border="0">
 		<tr>
-			<td><a href="{link controller='User' object=$user isHtmlEmail=true}{/link}" title="{$comment->username}">{@$user->getAvatar()->getImageTag($avatarSize)}</a></td>
+			<td><a href="{link controller='User' object=$user isHtmlEmail=true}{/link}" title="{$comment->username}">{@$user->getAvatar()->getSafeImageTag($avatarSize)}</a></td>
 			<td class="boxContent">
 				<div class="containerHeadline">
 					<h3>
