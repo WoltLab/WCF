@@ -2097,10 +2097,10 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pluginStore.api.noSSL"><![CDATA[Die Abfrage der erworbenen Produkte aus dem Plugin-Store kann nur über eine sichere Verbindung erfolgen.<br><br>{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} PHP-Version wurde ohne Unterstützung für OpenSSL kompiliert und kann daher keine sicheren Verbindungen aufbauen, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich an deinen{else}wenden Sie sich an Ihren{/if} Anbieter oder System-Administrator, um diesen Umstand zu korrigieren.]]></item>
 		<item name="wcf.acp.pluginStore.authorization"><![CDATA[Autorisierung erforderlich]]></item>
 		<item name="wcf.acp.pluginStore.authorization.credentials"><![CDATA[Zugangsdaten]]></item>
-		<item name="wcf.acp.pluginStore.authorization.credentials.description"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}gib{else}geben Sie{/if} Benutzername und Kennwort für {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} WoltLab.com-Benutzerkonto ein.]]></item>
+		<item name="wcf.acp.pluginStore.authorization.credentials.description"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}gib{else}geben Sie{/if} Lizenz- und Seriennummer einer {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Lizenzen auf WoltLab.com ein.]]></item>
 		<item name="wcf.acp.pluginStore.authorization.credentials.rejected"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Zugangsdaten wurden vom Server abgewiesen, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}überprüfe{else}überprüfen Sie{/if} Benutzername und Kennwort!]]></item>
-		<item name="wcf.acp.pluginStore.authorization.username"><![CDATA[Benutzername]]></item>
-		<item name="wcf.acp.pluginStore.authorization.password"><![CDATA[Kennwort]]></item>
+		<item name="wcf.acp.pluginStore.authorization.username"><![CDATA[Lizenznummer]]></item>
+		<item name="wcf.acp.pluginStore.authorization.password"><![CDATA[Seriennummer]]></item>
 		<item name="wcf.acp.pluginStore.authorization.saveCredentials"><![CDATA[Zugangsdaten für aktuelle Sitzung speichern]]></item>
 		<item name="wcf.acp.pluginStore.file"><![CDATA[WoltLab® Plugin-Store]]></item>
 		<item name="wcf.acp.pluginStore.file.link"><![CDATA[Eintrag im Plugin-Store anzeigen]]></item>
