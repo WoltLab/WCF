@@ -69,7 +69,11 @@ final class StyleCompiler extends SingletonFactory
         $compiler->setEncoding('iso8859-1');
         $compiler->setImportPaths([WCF_DIR]);
 
-        $compiler->setOutputStyle(OutputStyle::COMPRESSED);
+        if (\ENABLE_DEBUG_MODE && \ENABLE_DEVELOPER_TOOLS) {
+            $compiler->setOutputStyle(OutputStyle::EXPANDED);
+        } else {
+            $compiler->setOutputStyle(OutputStyle::COMPRESSED);
+        }
 
         return $compiler;
     }
