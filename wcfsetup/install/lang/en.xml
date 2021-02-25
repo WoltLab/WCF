@@ -2026,10 +2026,10 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pluginStore.api.noSSL"><![CDATA[Querying the Plugin-Store to fetch the purchased products requires a secure connection.<br><br>Your PHP version has been compiled without OpenSSL support, it is required to establish secure connections, please contact your hosting company or system-administrator to resolve this shortcoming.]]></item>
 		<item name="wcf.acp.pluginStore.authorization"><![CDATA[Authorization Required]]></item>
 		<item name="wcf.acp.pluginStore.authorization.credentials"><![CDATA[Credentials]]></item>
-		<item name="wcf.acp.pluginStore.authorization.credentials.description"><![CDATA[Please enter your WoltLab.com username and password.]]></item>
+		<item name="wcf.acp.pluginStore.authorization.credentials.description"><![CDATA[Please enter the license and serial number of one of your licenses on WoltLab.com.]]></item>
 		<item name="wcf.acp.pluginStore.authorization.credentials.rejected"><![CDATA[Your provided credentials are invalid, please check your username and password!]]></item>
-		<item name="wcf.acp.pluginStore.authorization.username"><![CDATA[Username]]></item>
-		<item name="wcf.acp.pluginStore.authorization.password"><![CDATA[Password]]></item>
+		<item name="wcf.acp.pluginStore.authorization.username"><![CDATA[License Number]]></item>
+		<item name="wcf.acp.pluginStore.authorization.password"><![CDATA[Serial Number]]></item>
 		<item name="wcf.acp.pluginStore.authorization.saveCredentials"><![CDATA[Save credentials for this session only]]></item>
 		<item name="wcf.acp.pluginStore.file"><![CDATA[WoltLab® Plugin-Store]]></item>
 		<item name="wcf.acp.pluginStore.file.link"><![CDATA[Show listing in the Plugin-Store]]></item>
