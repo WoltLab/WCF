@@ -295,4 +295,14 @@ class Language extends DatabaseObject
     {
         $this->packageID = PACKAGE_ID;
     }
+
+    /**
+     * Returns true if this language can be deleted.
+     *
+     * @since   5.4
+     */
+    public function isDeletable(): bool
+    {
+        return !$this->isDefault && $this->languageCode !== 'de' && $this->languageCode !== 'en';
+    }
 }

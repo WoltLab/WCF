@@ -90,4 +90,18 @@ class LanguageAction extends AbstractDatabaseObjectAction implements IToggleActi
             }
         }
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function validateDelete()
+    {
+        parent::validateDelete();
+
+        foreach ($this->getObjects() as $language) {
+            if (!$language->isDeletable()) {
+                throw new UserInputException('objectIDs');
+            }
+        }
+    }
 }
