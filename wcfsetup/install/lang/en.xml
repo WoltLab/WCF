@@ -1329,7 +1329,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.log_ip_address"><![CDATA[Store IP addresses]]></item>
 		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Stores IP addresses indefinitely for user-created content, e.g. profiles or forum posts.]]></item>
 		<item name="wcf.acp.option.mail_admin_address"><![CDATA[Administrator’s Email]]></item>
-		<item name="wcf.acp.option.mail_admin_address.description"><![CDATA[Enter the administrator’s email address here.]]></item>
+		<item name="wcf.acp.option.mail_admin_address.description"><![CDATA[The administrator’s email is the contact for general matters regarding the community. It is being used as the recipient and reply address for system mails, as well as being the default contact within the contact form. The entered email address should point to a mailbox that is capable of receiving incoming mail and should be checked regularly.]]></item>
 		<item name="wcf.acp.option.mail_from_address"><![CDATA[Sender’s Email]]></item>
 		<item name="wcf.acp.option.mail_from_address.description"><![CDATA[The sender’s email address for all generated emails.]]></item>
 		<item name="wcf.acp.option.mail_from_name"><![CDATA[Sender’s Name]]></item>
