@@ -13,8 +13,10 @@ use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\JSON;
 use wcf\util\StringUtil;
 use wcf\util\StyleUtil;
+use wcf\util\Url;
 
 /**
  * Provides access to the SCSS PHP compiler.
@@ -285,7 +287,90 @@ final class StyleCompiler extends SingletonFactory
             $variables
         );
 
-        $this->writeCss($this->getFilenameForStyle($style), $css);
+        $preloadManifest = $this->buildPreloadManifest(
+            $this->extractPreloadRequests($css)
+        );
+
+        $this->writeCss($this->getFilenameForStyle($style), $css, $preloadManifest);
+    }
+
+    /**
+     * Builds the preload manifest from the given iterable containing
+     * preload requests.
+     *
+     * @see StyleCompiler::extractPreloadRequests()
+     * @since 5.4
+     */
+    private function buildPreloadManifest(iterable $requests): array
+    {
+        $preloadManifest = ['http' => [], 'html' => []];
+
+        foreach ($requests as $request) {
+            if (Url::is($request['filename'])) {
+                $filename = $request['filename'];
+            } else {
+                $filename = WCF::getPath() . FileUtil::getRealPath('style/' . $request['filename']);
+            }
+
+            $http = "<{$filename}>; rel=preload; as={$request['as']}";
+            $html = \sprintf(
+                '<link rel="preload" href="%s" as="%s"',
+                StringUtil::encodeHTML($filename),
+                StringUtil::encodeHTML($request['as'])
+            );
+            if ($request['crossorigin']) {
+                $http .= "; crossorigin";
+                $html .= " crossorigin";
+            }
+            if ($request['type']) {
+                $http .= \sprintf('; type="%s"', \addslashes($request['type']));
+                $html .= \sprintf(' type="%s"', StringUtil::encodeHTML($request['type']));
+            }
+            $html .= '>';
+            $preloadManifest['http'][] = $http;
+            $preloadManifest['html'][] = $html;
+        }
+
+        return $preloadManifest;
+    }
+
+    /**
+     * Extracts preload requests from the given CSS string.
+     *
+     * @since 5.4
+     */
+    private function extractPreloadRequests(string $css): iterable
+    {
+        $regex = '/--woltlab-suite-preload:\\s*preload_dummy\\(((?:"(?:\\\\.|[^\\\\"])*"|[^")])+)\\);/';
+        if (!\preg_match_all($regex, $css, $requests)) {
+            return [];
+        }
+
+        foreach ($requests[1] as $request) {
+            $regex = '/\s*("(?:\\\\.|[^\\\\"])*"|[^",]+)\s*(?:,|$)\s*/';
+            if (!\preg_match_all($regex, $request, $parameters)) {
+                continue;
+            }
+            $parameters = $parameters[1];
+            if (\count($parameters) < 4) {
+                continue;
+            }
+            $parameters = \array_map(static function (string $parameter) {
+                if ($parameter[0] === '"') {
+                    return \stripslashes(\substr($parameter, 1, -1));
+                }
+
+                return $parameter;
+            }, $parameters);
+            [$filename, $as, $crossorigin, $type] = $parameters;
+
+            yield [
+                'filename' => $filename,
+                'as' => $as,
+                'crossorigin' => !!$crossorigin,
+                'type' => $type ?: null,
+            ];
+        }
     }
 
     /**
@@ -425,6 +510,16 @@ final class StyleCompiler extends SingletonFactory
             $content .= $this->prepareFile($mixin);
         }
 
+        $content .= <<<'EOT'
+            @function preload($filename, $as, $crossorigin: false, $type: "") {
+                @if $crossorigin {
+                    @return preload_dummy($filename, $as, 1, $type);
+                } @else {
+                    @return preload_dummy($filename, $as, 0, $type);
+                }
+            }
+EOT;
+
         if (ApplicationHandler::getInstance()->isMultiDomainSetup()) {
             $content .= <<<'EOT'
                 @function getFont($filename, $family: "/", $version: "") {
@@ -554,13 +649,16 @@ EOT;
     /**
      * Writes the given css into the file with the given prefix.
      */
-    private function writeCss(string $filePrefix, string $css): void
+    private function writeCss(string $filePrefix, string $css, ?array $preloadManifest = null): void
     {
         \file_put_contents($filePrefix . '.css', $css);
         FileUtil::makeWritable($filePrefix . '.css');
 
         \file_put_contents($filePrefix . '-rtl.css', $this->convertToRtl($css));
         FileUtil::makeWritable($filePrefix . '-rtl.css');
+
+        \file_put_contents($filePrefix . '-preload.json', JSON::encode($preloadManifest));
+        FileUtil::makeWritable($filePrefix . '-preload.json');
     }
 
     /**
