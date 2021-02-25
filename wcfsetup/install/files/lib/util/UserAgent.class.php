@@ -402,6 +402,22 @@ class UserAgent
     }
 
     /**
+     * Returns the raw user agent string.
+     */
+    public function getUserAgent(): string
+    {
+        return $this->userAgent;
+    }
+
+    /**
+     * @see UserAgent::getUserAgent()
+     */
+    public function __toString(): string
+    {
+        return $this->getUserAgent();
+    }
+
+    /**
      * Returns the browser based on the user agent or null, if no browser can be determined.
      */
     public function getBrowser(): ?string
