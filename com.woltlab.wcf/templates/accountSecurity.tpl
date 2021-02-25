@@ -74,7 +74,7 @@
 				
 				<div class="accountSecurityContainer">
 					<div class="containerHeadline accountSecurityInformation">
-						<h3>{lang}wcf.user.security.sessionName{/lang}</h3>
+						<h3 title="{$session->getUserAgent()}">{lang}wcf.user.security.sessionName{/lang}</h3>
 						
 						<dl class="plain inlineDataList small">
 							<dt>{lang}wcf.user.security.lastActivity{/lang}</dt>
