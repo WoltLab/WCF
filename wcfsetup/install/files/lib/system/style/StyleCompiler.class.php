@@ -423,22 +423,22 @@ final class StyleCompiler extends SingletonFactory
 
         if (ApplicationHandler::getInstance()->isMultiDomainSetup()) {
             $content .= <<<'EOT'
-				@function getFont($filename, $family: "/", $version: "") {
-					@return "../font/getFont.php?family=" + $family + "&filename=" + $filename + "&v=" + $version;
-				}
+                @function getFont($filename, $family: "/", $version: "") {
+                    @return "../font/getFont.php?family=" + $family + "&filename=" + $filename + "&v=" + $version;
+                }
 EOT;
         } else {
             $content .= <<<'EOT'
-				@function getFont($filename, $family: "/", $version: "") {
-					@if ($family != "") {
-						$family: "families/" + $family + "/";
-					}
-					@if ($version != "") {
-						$version: "?v=" + $version;
-					}
-					
-					@return "../font/" + $family + $filename + $version;
-				}
+                @function getFont($filename, $family: "/", $version: "") {
+                    @if ($family != "") {
+                        $family: "families/" + $family + "/";
+                    }
+                    @if ($version != "") {
+                        $version: "?v=" + $version;
+                    }
+                    
+                    @return "../font/" + $family + $filename + $version;
+                }
 EOT;
         }
 
