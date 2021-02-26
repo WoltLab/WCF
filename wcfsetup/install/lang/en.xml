@@ -1028,6 +1028,8 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.language.item.languageCategory.description"><![CDATA[The entered language category identifier is used to group phrases.]]></item>
 		<item name="wcf.acp.language.item.languageCategory.error.notUnique"><![CDATA[The entered identifier is already used by an existing language category.]]></item>
 		<item name="wcf.acp.language.item.languageCategory.error.tooFewSegments"><![CDATA[The entered category contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
+		<item name="wcf.acp.language.add.package"><![CDATA[Package]]></item>
+		<item name="wcf.acp.language.add.package.description"><![CDATA[The imported phrases will be assigned to the selected package.]]></item>
 	</category>
 	<category name="wcf.acp.masterPassword">
 		<item name="wcf.acp.masterPassword"><![CDATA[Master Password]]></item>

@@ -1051,6 +1051,8 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.language.item.languageCategory.error.notUnique"><![CDATA[Der angegebene Bezeichner wird bereits für eine vorhandene Sprachvariablen-Kategorie verwendet.]]></item>
 		<item name="wcf.acp.language.item.languageCategory.error.tooFewSegments"><![CDATA[Die angegebene Kategorie enthält {#$segmentCount} Abschnitt{if $segmentCount > 1}e{/if}.]]></item>
 		<item name="wcf.acp.language.item.languageCategoryID.mode.new"><![CDATA[Neue Sprachvariablen-Kategorie]]></item>
+		<item name="wcf.acp.language.add.package"><![CDATA[Paket]]></item>
+		<item name="wcf.acp.language.add.package.description"><![CDATA[Die importierten Texte werden dem ausgewählten Paket zugeordnet.]]></item>
 	</category>
 	<category name="wcf.acp.masterPassword">
 		<item name="wcf.acp.masterPassword"><![CDATA[Hauptkennwort]]></item>
