@@ -294,8 +294,16 @@ input {
 .inputAddonPasswordStrength {
 	align-items: flex-start;
 
+	input.medium {
+		align-self: stretch;
+	}
+
 	@include screen-xs {
-		flex-direction: column;
+		flex-wrap: wrap;
+
+		input.medium {
+			width: auto;
+		}
 	}
 }
 

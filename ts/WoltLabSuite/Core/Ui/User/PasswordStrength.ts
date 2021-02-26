@@ -54,7 +54,7 @@ class PasswordStrength {
   private staticDictionary: StaticDictionary;
   private feedbacker: zxcvbn.Feedback;
 
-  private readonly wrapper = document.createElement("div");
+  private wrapper: HTMLDivElement;
   private readonly score = document.createElement("span");
   private readonly verdictResult = document.createElement("input");
 
@@ -71,9 +71,13 @@ class PasswordStrength {
 
       this.feedbacker = initializeFeedbacker(zxcvbn.Feedback);
 
-      this.wrapper.className = "inputAddon inputAddonPasswordStrength";
-      this.input.parentNode!.insertBefore(this.wrapper, this.input);
-      this.wrapper.appendChild(this.input);
+      const wrapper: HTMLDivElement | null = this.input.closest(".inputAddon");
+      if (wrapper === null) {
+        throw new Error("Expected a parent with `.inputAddon`.");
+      }
+
+      this.wrapper = wrapper;
+      this.wrapper.classList.add("inputAddonPasswordStrength");
 
       const rating = document.createElement("div");
       rating.className = "passwordStrengthRating";
