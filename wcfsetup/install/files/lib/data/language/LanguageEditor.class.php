@@ -387,6 +387,10 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
                     $itemData[] = $itemValue;
                     $itemData[] = $categoryID;
                     if ($packageID) {
+                        if ($packageID == -1) {
+                            throw new \BadMethodCallException('Specifying `-1` as the packageID is no longer supported.');
+                        }
+
                         $itemData[] = ($packageID == -1) ? PACKAGE_ID : $packageID;
                     }
 
