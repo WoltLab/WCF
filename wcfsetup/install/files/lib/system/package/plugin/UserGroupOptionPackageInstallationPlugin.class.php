@@ -37,6 +37,11 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
     IGuiPackageInstallationPlugin
 {
     /**
+     * @inheritDoc
+     */
+    public $className = UserGroupOptionEditor::class;
+
+    /**
      * list of group ids by type
      * @var int[][]
      */
