@@ -970,7 +970,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 	<category name="wcf.acp.language">
 		<item name="wcf.acp.language.add"><![CDATA[Add Language]]></item>
 		<item name="wcf.acp.language.add.languageCode.error.notUnique"><![CDATA[The language code is already in use by an installed language.]]></item>
-		<item name="wcf.acp.language.add.source"><![CDATA[Origin]]></item>
+		<item name="wcf.acp.language.add.source"><![CDATA[Blueprint]]></item>
 		<item name="wcf.acp.language.code"><![CDATA[ISO Language-Code]]></item>
 		<item name="wcf.acp.language.code.description"><![CDATA[Please enter the <strong>ISO 639-1</strong> language code, you can look up the language code at <a href="https://en.wikipedia.org/wiki/ISO_639-1" class="externalURL">https://en.wikipedia.org/wiki/ISO_639-1</a>.]]></item>
 		<item name="wcf.acp.language.countryCode"><![CDATA[ISO Country-Code]]></item>
@@ -1005,7 +1005,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.language.item.customValues"><![CDATA[Customized values]]></item>
 		<item name="wcf.acp.language.item.disabledCustomValues"><![CDATA[Disabled customized values]]></item>
 		<item name="wcf.acp.language.name.description"><![CDATA[Language Name]]></item>
-		<item name="wcf.acp.language.add.source.description"><![CDATA[The selected language will be used as origin, all phrases will be copied into the new language.]]></item>
+		<item name="wcf.acp.language.add.source.description"><![CDATA[If the uploaded language file contains a completely new language the selected language will be used as a blueprint. Any missing phrases will be copied from the blueprint into the new language.]]></item>
 		<item name="wcf.acp.language.item.oldValue"><![CDATA[Original Content]]></item>
 		<item name="wcf.acp.language.item.oldValue.description"><![CDATA[Your custom value was based on the original content that has changed{if $item->languageCustomItemDisableTime} on {$item->languageCustomItemDisableTime|date}{/if}.]]></item>
 		<item name="wcf.acp.language.item.recentlyDisabledCustomValues"><![CDATA[Recently disabled customized values (past 7 days)]]></item>
@@ -1028,6 +1028,8 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.language.item.languageCategory.description"><![CDATA[The entered language category identifier is used to group phrases.]]></item>
 		<item name="wcf.acp.language.item.languageCategory.error.notUnique"><![CDATA[The entered identifier is already used by an existing language category.]]></item>
 		<item name="wcf.acp.language.item.languageCategory.error.tooFewSegments"><![CDATA[The entered category contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
+		<item name="wcf.acp.language.add.package"><![CDATA[Package]]></item>
+		<item name="wcf.acp.language.add.package.description"><![CDATA[The imported phrases will be assigned to the selected package.]]></item>
 	</category>
 	<category name="wcf.acp.masterPassword">
 		<item name="wcf.acp.masterPassword"><![CDATA[Master Password]]></item>

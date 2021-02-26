@@ -1028,7 +1028,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.language.item.customValues"><![CDATA[Veränderte Inhalte finden]]></item>
 		<item name="wcf.acp.language.item.disabledCustomValues"><![CDATA[Deaktivierte veränderte Inhalte finden]]></item>
 		<item name="wcf.acp.language.name.description"><![CDATA[Name der Sprache]]></item>
-		<item name="wcf.acp.language.add.source.description"><![CDATA[Die ausgewählte Sprache wird als Vorlage benutzt. Alle Sprachvariablen werden in die neue Sprache kopiert.]]></item>
+		<item name="wcf.acp.language.add.source.description"><![CDATA[Falls die hochgeladene Sprachdatei eine komplett neue Sprache enthält, wird die ausgewählte Sprache als Vorlage benutzt. Fehlende Texte werden aus der Vorlage in die neue Sprache übernommen.]]></item>
 		<item name="wcf.acp.language.item.oldValue"><![CDATA[Ursprünglicher Inhalt]]></item>
 		<item name="wcf.acp.language.item.oldValue.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} veränderte Fassung basierte auf dem unten stehenden Stand{if $item->languageCustomItemDisableTime} vom {$item->languageCustomItemDisableTime|date}{/if}.]]></item>
 		<item name="wcf.acp.language.item.recentlyDisabledCustomValues"><![CDATA[Kürzlich deaktivierte Inhalte finden (Letzten 7 Tagen)]]></item>
@@ -1051,6 +1051,8 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.language.item.languageCategory.error.notUnique"><![CDATA[Der angegebene Bezeichner wird bereits für eine vorhandene Sprachvariablen-Kategorie verwendet.]]></item>
 		<item name="wcf.acp.language.item.languageCategory.error.tooFewSegments"><![CDATA[Die angegebene Kategorie enthält {#$segmentCount} Abschnitt{if $segmentCount > 1}e{/if}.]]></item>
 		<item name="wcf.acp.language.item.languageCategoryID.mode.new"><![CDATA[Neue Sprachvariablen-Kategorie]]></item>
+		<item name="wcf.acp.language.add.package"><![CDATA[Paket]]></item>
+		<item name="wcf.acp.language.add.package.description"><![CDATA[Die importierten Texte werden dem ausgewählten Paket zugeordnet.]]></item>
 	</category>
 	<category name="wcf.acp.masterPassword">
 		<item name="wcf.acp.masterPassword"><![CDATA[Hauptkennwort]]></item>

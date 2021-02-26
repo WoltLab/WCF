@@ -58,6 +58,28 @@
 				<small>{lang}wcf.acp.language.add.source.description{/lang}</small>
 			</dd>
 		</dl>
+
+		<dl{if $errorField == 'packageID'} class="formError"{/if}>
+			<dt><label for="packageID">{lang}wcf.acp.language.add.package{/lang}</label></dt>
+			<dd>
+				<select id="packageID" name="packageID">
+					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
+					{foreach from=$packages item=package}
+						<option value="{$package->packageID}"{if $package->packageID == $packageID} selected{/if}>{$package->getName()} ({$package->package})</option>
+					{/foreach}
+				</select>
+				{if $errorField == 'packageID'}
+					<small class="innerError">
+						{if $errorType == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.acp.language.add.package.error.{@$errorType}{/lang}
+						{/if}
+					</small>
+				{/if}
+				<small>{lang}wcf.acp.language.add.package.description{/lang}</small>
+			</dd>
+		</dl>
 		
 		{event name='fields'}
 	</div>
