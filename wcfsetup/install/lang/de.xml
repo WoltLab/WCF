@@ -3988,6 +3988,8 @@ Dateianhänge:
 		<item name="wcf.global.form.error.greaterThan.javaScript"><![CDATA[{literal}Der eingegebene Wert muss größer sein als {#$greaterThan}.{/literal}]]></item>
 		<!-- /deprecated since 2.1 -->
 		<item name="wcf.global.form.required"><![CDATA[Benötigte Angaben]]></item>
+		<item name="wcf.global.form.password.button.hide"><![CDATA[Verbergen]]></item>
+		<item name="wcf.global.form.password.button.show"><![CDATA[Anzeigen]]></item>
 	</category>
 	<category name="wcf.form">
 		<item name="wcf.form.field.className"><![CDATA[Klasse]]></item>
