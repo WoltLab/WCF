@@ -8,7 +8,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Bootstrap
  */
-define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Date/Time/Relative", "./Devtools", "./Dom/Change/Listener", "./Environment", "./Event/Handler", "./Language", "./StringUtil", "./Ui/Dialog", "./Ui/Dropdown/Simple", "./Ui/Mobile", "./Ui/Page/Action", "./Ui/TabMenu", "./Ui/Tooltip", "./Ui/Page/JumpTo"], function (require, exports, tslib_1, Core, Picker_1, DateTimeRelative, Devtools_1, Listener_1, Environment, EventHandler, Language, StringUtil, Dialog_1, Simple_1, UiMobile, UiPageAction, UiTabMenu, UiTooltip, UiPageJumpTo) {
+define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Date/Time/Relative", "./Devtools", "./Dom/Change/Listener", "./Environment", "./Event/Handler", "./Language", "./StringUtil", "./Ui/Dialog", "./Ui/Dropdown/Simple", "./Ui/Mobile", "./Ui/Page/Action", "./Ui/TabMenu", "./Ui/Tooltip", "./Ui/Page/JumpTo", "./Ui/Password"], function (require, exports, tslib_1, Core, Picker_1, DateTimeRelative, Devtools_1, Listener_1, Environment, EventHandler, Language, StringUtil, Dialog_1, Simple_1, UiMobile, UiPageAction, UiTabMenu, UiTooltip, UiPageJumpTo, UiPassword) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -28,6 +28,7 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Date/Time/R
     UiTabMenu = tslib_1.__importStar(UiTabMenu);
     UiTooltip = tslib_1.__importStar(UiTooltip);
     UiPageJumpTo = tslib_1.__importStar(UiPageJumpTo);
+    UiPassword = tslib_1.__importStar(UiPassword);
     // non strict equals by intent
     if (window.WCF == null) {
         window.WCF = {};
@@ -74,6 +75,7 @@ define(["require", "exports", "tslib", "./Core", "./Date/Picker", "./Date/Time/R
         UiTabMenu.setup();
         Dialog_1.default.setup();
         UiTooltip.setup();
+        UiPassword.setup();
         // Convert forms with `method="get"` into `method="post"`
         document.querySelectorAll("form[method=get]").forEach((form) => {
             form.method = "post";

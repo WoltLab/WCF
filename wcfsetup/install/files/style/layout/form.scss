@@ -173,6 +173,10 @@ select {
 
 		&.button {
 			border-radius: 0;
+
+			.icon {
+				cursor: inherit;
+			}
 		}
 
 		&:not(.button) {
@@ -294,8 +298,16 @@ input {
 .inputAddonPasswordStrength {
 	align-items: flex-start;
 
+	input.medium {
+		align-self: stretch;
+	}
+
 	@include screen-xs {
-		flex-direction: column;
+		flex-wrap: wrap;
+
+		input.medium {
+			width: auto;
+		}
 	}
 }
 
