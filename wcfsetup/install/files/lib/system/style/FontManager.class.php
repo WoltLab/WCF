@@ -126,7 +126,7 @@ class FontManager extends SingletonFactory
 
                 if (\in_array($filename, $preload)) {
                     $preloadRequests .= \sprintf(
-<<<'EOT'
+                        <<<'EOT'
                     --woltlab-suite-preload: #{preload(
                         %s,
                         $as: "font",
@@ -144,7 +144,7 @@ EOT
                 }
             }
 
-            $css .= "woltlab-suite-preload:root { ${preloadRequests} }";
+            $css .= "woltlab-suite-preload:root { {$preloadRequests} }";
 
             \file_put_contents($this->getCssFilename($family), $css);
 
