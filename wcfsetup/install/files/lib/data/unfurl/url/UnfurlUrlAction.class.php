@@ -28,7 +28,11 @@ class UnfurlUrlAction extends AbstractDatabaseObjectAction
         /** @var UnfurlUrl $object */
         $object = parent::create();
         
-        // @TODO enqueue job
+        BackgroundQueueHandler::getInstance()->enqueueIn([
+            new UnfurlURLJob($object),
+        ]);
+
+        BackgroundQueueHandler::getInstance()->forceCheck();
         
         return $object;
     }
