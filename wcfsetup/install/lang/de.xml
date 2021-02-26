@@ -1028,7 +1028,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.language.item.customValues"><![CDATA[Veränderte Inhalte finden]]></item>
 		<item name="wcf.acp.language.item.disabledCustomValues"><![CDATA[Deaktivierte veränderte Inhalte finden]]></item>
 		<item name="wcf.acp.language.name.description"><![CDATA[Name der Sprache]]></item>
-		<item name="wcf.acp.language.add.source.description"><![CDATA[Die ausgewählte Sprache wird als Vorlage benutzt. Alle Sprachvariablen werden in die neue Sprache kopiert.]]></item>
+		<item name="wcf.acp.language.add.source.description"><![CDATA[Falls die hochgeladene Sprachdatei eine komplett neue Sprache enthält, wird die ausgewählte Sprache als Vorlage benutzt. Fehlende Texte werden aus der Vorlage in die neue Sprache übernommen.]]></item>
 		<item name="wcf.acp.language.item.oldValue"><![CDATA[Ursprünglicher Inhalt]]></item>
 		<item name="wcf.acp.language.item.oldValue.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} veränderte Fassung basierte auf dem unten stehenden Stand{if $item->languageCustomItemDisableTime} vom {$item->languageCustomItemDisableTime|date}{/if}.]]></item>
 		<item name="wcf.acp.language.item.recentlyDisabledCustomValues"><![CDATA[Kürzlich deaktivierte Inhalte finden (Letzten 7 Tagen)]]></item>
