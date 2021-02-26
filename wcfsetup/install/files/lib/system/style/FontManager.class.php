@@ -92,6 +92,12 @@ class FontManager extends SingletonFactory
 
             $css = $manifest['css'];
 
+            $preload = [];
+            if (isset($manifest['preload']) && \is_array($manifest['preload'])) {
+                $preload = $manifest['preload'];
+            }
+
+            $preloadRequests = "";
             foreach ($manifest['font_files'] as $filename) {
                 if ($filename !== \basename($filename)) {
                     throw new \InvalidArgumentException("Invalid filename '" . $filename . "' given.");
@@ -117,7 +123,28 @@ class FontManager extends SingletonFactory
                     ),
                     $css
                 );
+
+                if (\in_array($filename, $preload)) {
+                    $preloadRequests .= \sprintf(
+<<<'EOT'
+                    --woltlab-suite-preload: #{preload(
+                        %s,
+                        $as: "font",
+                        $crossorigin: true
+                    )};
+EOT
+                        ,
+                        \sprintf(
+                            'getFont("%s", "%s", "%d")',
+                            \rawurlencode($filename),
+                            \rawurlencode($family),
+                            TIME_NOW
+                        )
+                    );
+                }
             }
+
+            $css .= "woltlab-suite-preload:root { ${preloadRequests} }";
 
             \file_put_contents($this->getCssFilename($family), $css);
 
