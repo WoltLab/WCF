@@ -335,8 +335,9 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				// As our resizer is based on Pica it will use multiple workers per image if possible.
 				promise = Array.prototype.reduce.call(files, (function (acc, file) {
 					return acc.then((function (arr) {
-						// Ignore anything that is not one of the 4 basic image types.
-						if (['image/png', 'image/gif', 'image/jpeg', 'image/webp'].indexOf(file.type) === -1) {
+						// Ignore anything that is not a widely used mimetype for static images.
+						// GIFs are not supported due to the support for animations.
+						if (['image/png', 'image/jpeg', 'image/webp'].indexOf(file.type) === -1) {
 							arr.push(file);
 							return arr;
 						}
