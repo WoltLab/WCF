@@ -1,3 +1,12 @@
+/**
+ * Visibility toggle for password input fields.
+ *
+ * @author Marcel Werk
+ * @copyright	2001-2021 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	WoltLabSuite/Core/Ui/Password
+ */
+
 import DomChangeListener from "../Dom/Change/Listener";
 import * as Language from "../Language";
 
@@ -48,10 +57,15 @@ function initElement(input: HTMLInputElement): void {
 }
 
 function toggle(input: HTMLInputElement, button: HTMLElement, icon: HTMLElement): void {
-  icon.classList.toggle("fa-eye");
-  icon.classList.toggle("fa-eye-slash");
-  button.dataset.tooltip = Language.get(
-    "wcf.global.form.password.button." + (input.type === "password" ? "hide" : "show"),
-  );
-  input.type = input.type === "password" ? "text" : "password";
+  if (input.type === "password") {
+    icon.classList.add("fa-eye");
+    icon.classList.remove("fa-eye-slash");
+    button.dataset.tooltip = Language.get("wcf.global.form.password.button.hide");
+    input.type = "text";
+  } else {
+    icon.classList.remove("fa-eye");
+    icon.classList.add("fa-eye-slash");
+    button.dataset.tooltip = Language.get("wcf.global.form.password.button.show");
+    input.type = "password";
+  }
 }
