@@ -25,6 +25,7 @@ import * as UiPageAction from "./Ui/Page/Action";
 import * as UiTabMenu from "./Ui/TabMenu";
 import * as UiTooltip from "./Ui/Tooltip";
 import * as UiPageJumpTo from "./Ui/Page/JumpTo";
+import * as UiPassword from "./Ui/Password";
 
 // perfectScrollbar does not need to be bound anywhere, it just has to be loaded for WCF.js
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -89,6 +90,7 @@ export function setup(options: BoostrapOptions): void {
   UiTabMenu.setup();
   UiDialog.setup();
   UiTooltip.setup();
+  UiPassword.setup();
 
   // Convert forms with `method="get"` into `method="post"`
   document.querySelectorAll("form[method=get]").forEach((form: HTMLFormElement) => {

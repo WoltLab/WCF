@@ -130,7 +130,9 @@ window.addEventListener('pageshow', function(event) {
 			'wcf.date.datePicker.month': '{jslang}wcf.date.datePicker.month{/jslang}',
 			'wcf.date.datePicker.year': '{jslang}wcf.date.datePicker.year{/jslang}',
 			'wcf.date.datePicker.hour': '{jslang}wcf.date.datePicker.hour{/jslang}',
-			'wcf.date.datePicker.minute': '{jslang}wcf.date.datePicker.minute{/jslang}'
+			'wcf.date.datePicker.minute': '{jslang}wcf.date.datePicker.minute{/jslang}',
+			'wcf.global.form.password.button.hide': '{jslang}wcf.global.form.password.button.hide{/jslang}',
+			'wcf.global.form.password.button.show': '{jslang}wcf.global.form.password.button.show{/jslang}'
 			{if MODULE_LIKE}
 				,'wcf.like.button.like': '{jslang}wcf.like.button.like{/jslang}',
 				'wcf.like.button.dislike': '{jslang}wcf.like.button.dislike{/jslang}',

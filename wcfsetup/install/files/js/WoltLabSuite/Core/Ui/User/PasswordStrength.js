@@ -40,7 +40,6 @@ define(["require", "exports", "tslib", "../../Language", "../../Dom/Util"], func
     class PasswordStrength {
         constructor(input, options) {
             this.input = input;
-            this.wrapper = document.createElement("div");
             this.score = document.createElement("span");
             this.verdictResult = document.createElement("input");
             void new Promise((resolve_1, reject_1) => { require(["zxcvbn"], resolve_1, reject_1); }).then(tslib_1.__importStar).then(({ default: zxcvbn }) => {
@@ -52,9 +51,12 @@ define(["require", "exports", "tslib", "../../Language", "../../Dom/Util"], func
                     this.staticDictionary = options.staticDictionary;
                 }
                 this.feedbacker = initializeFeedbacker(zxcvbn.Feedback);
-                this.wrapper.className = "inputAddon inputAddonPasswordStrength";
-                this.input.parentNode.insertBefore(this.wrapper, this.input);
-                this.wrapper.appendChild(this.input);
+                const wrapper = this.input.closest(".inputAddon");
+                if (wrapper === null) {
+                    throw new Error("Expected a parent with `.inputAddon`.");
+                }
+                this.wrapper = wrapper;
+                this.wrapper.classList.add("inputAddonPasswordStrength");
                 const rating = document.createElement("div");
                 rating.className = "passwordStrengthRating";
                 const ratingLabel = document.createElement("small");
