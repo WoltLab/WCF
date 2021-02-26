@@ -1,4 +1,4 @@
-{if ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS && $__wcf->user->userID}
+{if ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS && $__wcf->user->userID && $__isLogin|empty}
 	<script data-relocate="true">
 		require(['Ajax', 'WoltLabSuite/Core/Language/Chooser'], function(Ajax, LanguageChooser) {
 			var item = elCreate('li');

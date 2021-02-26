@@ -183,7 +183,7 @@
 		$(function() {
 			if (jQuery.browser.touch) $('html').addClass('touch');
 			
-			{if $__wcf->user->userID}
+			{if $__wcf->user->userID && $__isLogin|empty}
 				new WCF.ACP.Search();
 			{/if}
 			
@@ -227,7 +227,7 @@
 			{if $_sectionMenuItem->menuItem|in_array:$_activeMenuItems}{assign var=_acpPageSubMenuActive value=true}{/if}
 		{/foreach}
 	{/if}
-	<div id="pageContainer" class="pageContainer{if !PACKAGE_ID || !$__wcf->user->userID} acpPageHiddenMenu{elseif $_acpPageSubMenuActive} acpPageSubMenuActive{/if}">
+	<div id="pageContainer" class="pageContainer{if !PACKAGE_ID || !$__wcf->user->userID || !$__isLogin|empty} acpPageHiddenMenu{elseif $_acpPageSubMenuActive} acpPageSubMenuActive{/if}">
 		{event name='beforePageHeader'}
 		
 		{include file='pageHeader'}
