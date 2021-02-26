@@ -13,6 +13,25 @@ use wcf\data\package\PackageCache;
 use wcf\system\WCF;
 
 $files = [
+    'acp/pre_update_com.woltlab.wcf_2.1.php',
+    'acp/update_com.woltlab.wcf_3.0.14.php',
+    'acp/update_com.woltlab.wcf_3.0_noop.php',
+    'acp/update_com.woltlab.wcf_3.0_pre_sql.php',
+    'acp/update_com.woltlab.wcf_3.1.14.php',
+    'acp/update_com.woltlab.wcf_3.1.2.php',
+    'acp/update_com.woltlab.wcf_3.1_addColumn.php',
+    'acp/update_com.woltlab.wcf_3.1_preUpdate.php',
+    'acp/update_com.woltlab.wcf_5.2.10_orphanedComments.php',
+    'acp/update_com.woltlab.wcf_5.2.php',
+    'acp/update_com.woltlab.wcf_5.2_deleteRecentActivity.php',
+    'acp/update_com.woltlab.wcf_5.2_prePhpApi.php',
+    'acp/update_com.woltlab.wcf_5.2_preUpdate.php',
+    'acp/update_com.woltlab.wcf_5.2_reactionUpdate.php',
+    'acp/update_com.woltlab.wcf_5.2_reloadOptions.php',
+    'acp/update_com.woltlab.wcf_5.3.1_style.php',
+    'acp/update_com.woltlab.wcf_5.3.php',
+    'acp/update_com.woltlab.wcf_5.3_packageServer.php',
+    'acp/update_com.woltlab.wcf_5.3_preUpdate.php',
     'lib/acp/form/UserGroupPromoteOwnerForm.class.php',
     'lib/system/database/table/DatabaseTableUtil.class.php',
 ];
