@@ -139,6 +139,8 @@ class StyleHandler extends SingletonFactory
      */
     public function getStylesheet($isACP = false)
     {
+        $preload = '';
+
         if ($isACP) {
             // ACP
             $filename = 'acp/style/style' . (WCF::getLanguage()->get('wcf.global.pageDirection') == 'rtl' ? '-rtl' : '') . '.css';
@@ -151,9 +153,16 @@ class StyleHandler extends SingletonFactory
             if (!\file_exists(WCF_DIR . $filename)) {
                 StyleCompiler::getInstance()->compile($this->getStyle()->getDecoratedObject());
             }
+
+            if (\is_readable(WCF_DIR . 'style/style-' . $this->getStyle()->styleID . '-preload.json')) {
+                $decoded = JSON::decode(\file_get_contents(WCF_DIR . 'style/style-' . $this->getStyle()->styleID . '-preload.json'));
+                if (isset($decoded['html']) && \is_array($decoded['html'])) {
+                    $preload = \implode('', $decoded['html']);
+                }
+            }
         }
 
-        return '<link rel="stylesheet" type="text/css" href="' . WCF::getPath() . $filename . '?m=' . \filemtime(WCF_DIR . $filename) . '">';
+        return '<link rel="stylesheet" type="text/css" href="' . WCF::getPath() . $filename . '?m=' . \filemtime(WCF_DIR . $filename) . '">' . $preload;
     }
 
     /**
