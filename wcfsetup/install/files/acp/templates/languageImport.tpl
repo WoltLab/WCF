@@ -63,7 +63,7 @@
 			<dt><label for="packageID">{lang}wcf.acp.language.add.package{/lang}</label></dt>
 			<dd>
 				<select id="packageID" name="packageID">
-					<option value="0"></option>
+					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 					{foreach from=$packages item=package}
 						<option value="{$package->packageID}"{if $package->packageID == $packageID} selected{/if}>{$package->getName()} ({$package->package})</option>
 					{/foreach}
