@@ -1,6 +1,10 @@
 .sortableList:not(.tabularList) {
 	list-style: decimal outside;
 	margin-left: 20px;
+
+	.sortableList {
+		margin-left: 30px;
+	}
 }
 
 .sortableNode {
