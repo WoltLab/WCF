@@ -253,7 +253,7 @@ define(["require", "exports", "tslib", "./Status", "../Core", "../Dom/Change/Lis
         getErrorHtml(data, xhr) {
             let details = "";
             let message;
-            if (data !== null) {
+            if (data !== null && Object.keys(data).length > 0) {
                 if (data.returnValues && data.returnValues.description) {
                     details += `<br><p>Description:</p><p>${data.returnValues.description}</p>`;
                 }

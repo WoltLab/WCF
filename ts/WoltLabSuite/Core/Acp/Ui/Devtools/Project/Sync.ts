@@ -225,7 +225,7 @@ class AcpUiDevtoolsProjectSync {
 
     this.buttonSyncAll!.classList.remove("disabled");
 
-    return false;
+    return true;
   }
 
   _ajaxSetup(): ReturnType<AjaxCallbackSetup> {

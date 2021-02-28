@@ -303,7 +303,7 @@ class AjaxRequest {
     let details = "";
     let message: string;
 
-    if (data !== null) {
+    if (data !== null && Object.keys(data).length > 0) {
       if (data.returnValues && data.returnValues.description) {
         details += `<br><p>Description:</p><p>${data.returnValues.description}</p>`;
       }

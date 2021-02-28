@@ -151,7 +151,7 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
                 Dialog_1.default.open(this, Ajax.getRequestObject(this).getErrorHtml(data, xhr));
             });
             this.buttonSyncAll.classList.remove("disabled");
-            return false;
+            return true;
         }
         _ajaxSetup() {
             return {
