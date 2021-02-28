@@ -9,18 +9,18 @@
 		<provider name="youtube-playlist">
 			<title>YouTube Playlist</title>
 			<regex><![CDATA[https?://(?:.+?\.)?youtu(?:\.be/|be\.com/)playlist\?(?:.*?&)?list=(?P<ID>[a-zA-Z0-9_-]+)]]></regex>
-			<html><![CDATA[<div class="videoContainer"><iframe src="https://www.youtube.com/embed/videoseries?list={$ID}" allowfullscreen></iframe></div>]]></html>
+			<html><![CDATA[<div class="messageVideoContainer"><iframe src="https://www.youtube.com/embed/videoseries?list={$ID}" width="560" height="315" allowfullscreen></iframe></div>]]></html>
 		</provider>
 		<provider name="vimeo">
 			<title>Vimeo</title>
 			<regex><![CDATA[https?://vimeo\.com/(?:channels/[^/]+/)?(?P<ID>\d+)
 https?://vimeo\.com/groups/[^/]+/videos/(?P<ID>\d+)]]></regex>
-			<html><![CDATA[<div class="videoContainer"><iframe src="https://player.vimeo.com/video/{$ID}" allowfullscreen></iframe></div>]]></html>
+			<html><![CDATA[<div class="messageVideoContainer"><iframe src="https://player.vimeo.com/video/{$ID}" width="640" height="360" allowfullscreen></iframe></div>]]></html>
 		</provider>
 		<provider name="dailymotion">
 			<title>Dailymotion</title>
 			<regex><![CDATA[https?://(?:www\.)?dailymotion\.com/video/(?P<ID>[a-zA-Z0-9_-]+)]]></regex>
-			<html><![CDATA[<div class="videoContainer"><iframe src="//www.dailymotion.com/embed/video/{$ID}"></iframe></div>]]></html>
+			<html><![CDATA[<div class="messageVideoContainer"><iframe src="//www.dailymotion.com/embed/video/{$ID}" width="560" height="315"></iframe></div>]]></html>
 		</provider>
 		<provider name="github-gist">
 			<title>GitHub Gist</title>

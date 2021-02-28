@@ -40,7 +40,7 @@ class TwitchBBCodeMediaProvider implements IBBCodeMediaProvider
         }
 
         if (!empty($src)) {
-            return '<div class="videoContainer"><iframe src="' . $src . '&amp;parent=' . self::getParent() . '&amp;autoplay=false" allowfullscreen></iframe></div>';
+            return '<div class="messageVideoContainer"><iframe src="' . $src . '&amp;parent=' . self::getParent() . '&amp;autoplay=false" width="620" height="378" allowfullscreen></iframe></div>';
         }
 
         return '';
