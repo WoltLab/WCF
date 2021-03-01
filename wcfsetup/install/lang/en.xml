@@ -1885,6 +1885,7 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.package.uninstallation.step.prepare"><![CDATA[Preparing uninstallation …]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Update Date]]></item>
 		<item name="wcf.acp.package.update.credentials"><![CDATA[Credentials]]></item>
+		<item name="wcf.acp.package.update.credentials.description"><![CDATA[You can find your license and serial number in the <a class="externalURL" href="https://www.woltlab.com/license-list/"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>customer area on woltlab.com</a>.]]></item>
 		<item name="wcf.acp.package.update.error.listNotFound"><![CDATA[The package list could not be retrieved.]]></item>
 		<item name="wcf.acp.package.update.error.outstandingUpdates"><![CDATA[Please install all outstanding updates before attempting to migrate to a newer version.]]></item>
 		<item name="wcf.acp.package.update.errorCode.401"><![CDATA[Your credentials are invalid, please verify {if $updateServer->requiresLicense()}license and serial number{else}username and password{/if}.]]></item>
