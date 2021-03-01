@@ -27,7 +27,12 @@
 </section>
 
 <section class="section">
-	<h2 class="sectionTitle">{lang}wcf.acp.package.update.credentials{/lang}</h2>
+	<header class="sectionHeader">
+		<h2 class="sectionTitle">{lang}wcf.acp.package.update.credentials{/lang}</h2>
+		{if $updateServer->isWoltLabUpdateServer()}
+			<p class="sectionDescription">{lang}wcf.acp.package.update.credentials.description{/lang}</p>
+		{/if}
+	</header>
 	
 	<dl>
 		<dt><label for="packageUpdateServerUsername">{lang}wcf.acp.package.update.{if $updateServer->requiresLicense()}licenseNo{else}username{/if}{/lang}</label></dt>

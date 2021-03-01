@@ -1901,6 +1901,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.uninstallation.step.prepare"><![CDATA[Deinstallation wird vorbereitet …]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Aktualisierungsdatum]]></item>
 		<item name="wcf.acp.package.update.credentials"><![CDATA[Zugangsdaten]]></item>
+		<item name="wcf.acp.package.update.credentials.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Lizenz- und Seriennummer {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} im <a class="externalURL" href="https://www.woltlab.com/license-list/"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>Kundenbereich auf woltlab.com</a>.]]></item>
 		<item name="wcf.acp.package.update.error.listNotFound"><![CDATA[Die Paketliste konnte nicht abgerufen werden]]></item>
 		<item name="wcf.acp.package.update.error.outstandingUpdates"><![CDATA[Bitte installiere{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} zuerst alle ausstehenden Updates, bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} auf eine neue Version {if LANGUAGE_USE_INFORMAL_VARIANT}umsteigst{else}umsteigen{/if}.]]></item>
 		<item name="wcf.acp.package.update.errorCode.401"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Angaben sind ungültig, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}überprüfe{else}überprüfen Sie{/if} {if $updateServer->requiresLicense()}Lizenz- und Seriennummer{else}Benutzername und Kennwort{/if}.]]></item>
