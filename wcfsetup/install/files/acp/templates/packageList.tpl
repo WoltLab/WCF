@@ -1,9 +1,5 @@
 {include file='header' pageTitle='wcf.acp.package.list'}
 
-<style>
-	.success.upgradeAvailable::after { content: "\f01b" !important; }
-</style>
-
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {
@@ -42,7 +38,7 @@
 	<h1>{lang}wcf.acp.package.list{/lang}</h1>
 </header>
 
-<p class="success upgradeAvailable">{lang}wcf.acp.package.upgradeAvailable{/lang}</p>
+<div class="error">{lang}wcf.acp.package.upgradeRequired.error{/lang}</div>
 
 <div class="contentNavigation">
 	{pages print=true assign=pagesLinks controller='PackageList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
