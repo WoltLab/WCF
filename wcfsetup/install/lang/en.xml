@@ -1203,6 +1203,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.menu.link.systemCheck"><![CDATA[System Check]]></item>
 		<item name="wcf.acp.menu.link.devtools.missingLanguageItem.list"><![CDATA[Missing Phrases]]></item>
 		<item name="wcf.acp.menu.link.log.email"><![CDATA[Emails]]></item>
+		<item name="wcf.acp.menu.item.button.choose"><![CDATA[Choose Menu Item]]></item>
 	</category>
 	<category name="wcf.acp.modificationLog">
 		<item name="wcf.acp.modificationLog.list"><![CDATA[Global Modification Log]]></item>
