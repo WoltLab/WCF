@@ -4,12 +4,7 @@
 	<h1 class="contentTitle">{lang}wcf.global.acp{/lang}</h1>
 </header>
 
-{if TIME_NOW < 1614600000}
-	{assign var='__supportExpired' value='warning'}
-{else}
-	{assign var='__supportExpired' value='error'}
-{/if}
-<div class="{$__supportExpired}">{lang}wcf.acp.package.upgradeRequired.{$__supportExpired}{/lang}</div>
+<div class="error">{lang}wcf.acp.package.upgradeRequired.error{/lang}</div>
 
 {if TMP_DIR !== WCF_DIR|concat:'tmp/'}
 	<p class="error">{lang}wcf.acp.index.tmpBroken{/lang}</p>

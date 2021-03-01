@@ -1366,12 +1366,11 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.validation.errorCode.10"><![CDATA[Benötigt das Paket {if $package === null}„{$packageName}“{else}„{$package}“{/if} in Version „{$packageVersion}“ oder höher, {if $package === null}dies ist aber weder installiert noch wird es mitgeliefert.{else}es ist aber nur Version „{$package->packageVersion}“ installiert.{/if}]]></item>
 		<item name="wcf.acp.package.validation.errorCode.11"><![CDATA[Die {if $type == 'install'}Installations{else}Update{/if}-Anweisungen geben für das Package Installation Plugin „{$pip}“ die Datei „{$value}“ an, diese ist jedoch nicht im Archiv enthalten. Mögliche Ursachen:<ul class="nativeList"><li>Die Datei wurde dem Archiv nicht hinzugefügt</li><li>Die Datei existiert, jedoch sind der Dateiname und die Angabe in den Anweisungen abweichend (Tippfehler)</li></ul>]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[Das hochgeladene Paket kann nicht installiert werden, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}beachte{else}beachten Sie{/if} das unten stehende Prüfungsergebnis.]]></item>
-		<item name="wcf.acp.package.upgradeRequired.warning"><![CDATA[<p style="font-size: 18px; font-weight: 600">Die Sicherheitsunterstützung läuft aus!</p>
-<p><br></p>
-<p>Diese Version ist stark veraltet und erhält nur noch bis zum <strong>1. März 2021</strong> Sicherheitsupdates, bevor diese Version endgültig eingestellt wird. Es wird dringend empfohlen, auf eine neuere Version umzusteigen, um weiterhin von Sicherheitsupdates und der Unterstützung neuer PHP-Versionen zu profitieren.</p>]]></item>
 		<item name="wcf.acp.package.upgradeRequired.error"><![CDATA[<p style="font-size: 18px; font-weight: 600">Die Sicherheitsunterstützung wurde eingestellt!</p>
 <p><br></p>
-<p>Diese Version ist stark veraltet und erhält seit dem <strong>1. März 2021</strong> keine Sicherheitsupdates mehr! Es wird dringend empfohlen, auf eine neuere Version umzusteigen, um weiterhin von Sicherheitsupdates und der Unterstützung neuer PHP-Versionen zu profitieren.</p>]]></item>
+<p>Diese Version ist stark veraltet und erhält seit dem <strong>1. März 2021</strong> keine Sicherheitsupdates mehr! Es wird dringend empfohlen, auf eine neuere Version umzusteigen, um weiterhin von Sicherheitsupdates und der Unterstützung neuer PHP-Versionen zu profitieren.</p>
+<p><br></p>
+<p>Kennen Sie schon unser Managed Hosting-Angebot? Wir übernehmen den technischen Betrieb Ihres Forums für Sie, halten die Software aktuell und die Lizenzkosten sind bereits inklusive. Erfahren Sie mehr unter <a href="https://www.woltlab.com/de/">woltlab.com</a> und sprechen Sie uns bei Interesse gerne an!</p>]]></item>
 	</category>
 	
 	<category name="wcf.acp.page">

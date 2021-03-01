@@ -1371,12 +1371,11 @@
 		<item name="wcf.acp.package.validation.errorCode.10"><![CDATA[Requires the package {if $package === null}“{$packageName}”{else}“{$package}”{/if} in version “{$packageVersion}” or higher, {if $package === null}but it is neither installed nor shipped.{else}but only version “{$package->packageVersion}” is installed.{/if}]]></item>
 		<item name="wcf.acp.package.validation.errorCode.11"><![CDATA[The {if $type == 'install'}install{else}update{/if}-instructions specify the file “{$value}” for the Package Installation Plugin “{$pip}”, but it cannot be found in the specified location. Possible causes:<ul class="nativeList"><li>The file has not been added to the archive at all</li><li>The file exists but under a (slightly) different name (typo)</li></ul>]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[The package cannot be installed, please review the validation results below.]]></item>
-		<item name="wcf.acp.package.upgradeRequired.warning"><![CDATA[<p style="font-size: 18px; font-weight: 600">The security support is expiring!</p>
-<p><br></p>
-<p>This version is severely outdated and will only receive security updates until <strong>March 1, 2021</strong> before this version is permanently discontinued. It is strongly recommended to upgrade to a newer version to continue benefiting from security updates and support for newer PHP versions.</p>]]></item>
 		<item name="wcf.acp.package.upgradeRequired.error"><![CDATA[<p style="font-size: 18px; font-weight: 600">The security support has expired!</p>
 <p><br></p>
-<p>This version is severely outdated and will no longer receive security updates since <strong>March 1, 2021</strong>! It is strongly recommended to upgrade to a newer version to continue benefiting from security updates and support for newer PHP versions.</p>]]></item>
+<p>This version is severely outdated and will no longer receive security updates since <strong>March 1, 2021</strong>! It is strongly recommended to upgrade to a newer version to continue benefiting from security updates and support for newer PHP versions.</p>
+<p><br></p>
+<p>Have you heard about our managed hosting offer? We will handle the technical operation of your forum for you, keep the software up to date and the license fees are already included. Learn more at <a href="https://www.woltlab.com/">woltlab.com</a> and contact us if you are interested!</p>]]></item>
 	</category>
 	
 	<category name="wcf.acp.paidSubscription">
