@@ -4797,7 +4797,7 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.status.blacklistMatches"><![CDATA[Der Benutzer wurde aufgrund eines Treffers in der Datenbank von „Stop Forum Spam“ automatisch deaktiviert (Übereinstimmungen: {implode glue=', ' from=$user->getBlacklistMatchesTitle() item=matchLabel}{$matchLabel}{/implode}).]]></item>
 		<item name="wcf.user.reauthentication"><![CDATA[Erneute Authentifizierung]]></item>
 		<item name="wcf.user.reauthentication.explanation"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du betrittst einen besonders geschützten Bereich. Aus Sicherheitsgründen ist es notwendig, dass du dich durch Eingabe deines Kennworts erneut authentifizierst.{else}Sie betreten einen besonders geschützten Bereich. Aus Sicherheitsgründen ist es notwendig, dass Sie sich durch Eingabe Ihres Kennworts erneut authentifizieren.{/if}]]></item>
-		<item name="wcf.user.reauthentication.loginAs"><![CDATA[Eingeloggt als]]></item>
+		<item name="wcf.user.reauthentication.loginAs"><![CDATA[Angemeldet als]]></item>
 		<item name="wcf.user.reauthentication.logoutAndChangeUser"><![CDATA[Nicht {$__wcf->user->username}? <a href="{link controller='FullLogout' application='wcf'}t={csrfToken type='url'}{/link}">Abmelden und Benutzer wechseln</a>.]]></item>
 	</category>
 	<category name="wcf.user.menu">

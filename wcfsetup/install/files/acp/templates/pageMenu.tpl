@@ -1,4 +1,4 @@
-{if PACKAGE_ID && $__wcf->user->userID}
+{if PACKAGE_ID && $__wcf->user->userID && $__isLogin|empty}
 	{assign var=_activeMenuItems value=$__wcf->getACPMenu()->getActiveMenuItems()}
 	
 	<nav id="acpPageMenu" class="acpPageMenu">
