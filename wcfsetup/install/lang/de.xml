@@ -1226,6 +1226,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.menu.link.systemCheck"><![CDATA[Systemüberprüfung]]></item>
 		<item name="wcf.acp.menu.link.devtools.missingLanguageItem.list"><![CDATA[Fehlende Texte]]></item>
 		<item name="wcf.acp.menu.link.log.email"><![CDATA[E-Mails]]></item>
+		<item name="wcf.acp.menu.item.button.choose"><![CDATA[Menüpunkt wählen]]></item>
 	</category>
 	<category name="wcf.acp.modificationLog">
 		<item name="wcf.acp.modificationLog.list"><![CDATA[Globales Änderungsprotokoll]]></item>
