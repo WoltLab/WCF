@@ -1658,6 +1658,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.article_related_articles_match_threshold.description"><![CDATA[The minimum amount of tags that both articles have in common.]]></item>
 		<item name="wcf.acp.option.article_show_about_author"><![CDATA[Display “about the author” box]]></item>
 		<item name="wcf.acp.option.category.message.general.image"><![CDATA[Images]]></item>
+		<item name="wcf.acp.option.category.message.general.imageProxy"><![CDATA[Image Proxy]]></item>
 		<item name="wcf.acp.option.module_article"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.option.message_force_secure_images"><![CDATA[Allow secure images only]]></item>
 		<item name="wcf.acp.option.message_force_secure_images.description"><![CDATA[Images may only be embedded using the encrypted “https”-protocol. Images in already existing messages will be force-rewritten to use the secure protocol.]]></item>
