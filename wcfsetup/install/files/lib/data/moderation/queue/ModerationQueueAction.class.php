@@ -207,7 +207,9 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	 * Validates parameters to assign a user.
 	 */
 	public function validateAssignUser() {
-		$this->moderationQueueEditor = $this->getSingleObject();
+		// To assign a user we need to be able to fetch the assignment form.
+		$this->validateGetAssignUserForm();
+		
 		$this->readInteger('assignedUserID', true);
 		
 		if ($this->parameters['assignedUserID'] && $this->parameters['assignedUserID'] != -1) {
