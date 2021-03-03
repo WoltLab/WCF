@@ -22,7 +22,7 @@ class HtmlOutputUnfurlUrlNode extends AbstractHtmlOutputNode
      * @inheritDoc
      */
     protected $tagName = 'a';
-    
+
     /**
      * @inheritDoc
      */
@@ -31,17 +31,19 @@ class HtmlOutputUnfurlUrlNode extends AbstractHtmlOutputNode
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
             $attribute = $element->getAttribute(HtmlNodeUnfurlLink::UNFURL_URL_ID_ATTRIBUTE_NAME);
-            if ($this->outputType === 'text/html'
+            if (
+                $this->outputType === 'text/html'
                 && !empty($attribute)
-                && MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.unfurlUrl', $attribute) !== null) {
+                && MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.unfurlUrl', $attribute) !== null
+            ) {
                 $nodeIdentifier = StringUtil::getRandomID();
                 $htmlNodeProcessor->addNodeData($this, $nodeIdentifier, ['urlId' => $attribute]);
-                
+
                 $htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
             }
         }
     }
-    
+
     /**
      * @inheritDoc
      */

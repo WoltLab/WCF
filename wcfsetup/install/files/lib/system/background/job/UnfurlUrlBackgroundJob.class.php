@@ -4,7 +4,6 @@ namespace wcf\system\background\job;
 
 use wcf\data\unfurl\url\UnfurlUrl;
 use wcf\data\unfurl\url\UnfurlUrlAction;
-use function wcf\functions\exception\logThrowable;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 use wcf\util\UnfurlUrlUtil;
@@ -18,13 +17,13 @@ use wcf\util\UnfurlUrlUtil;
  * @package     WoltLabSuite\Core\System\Background\Job
  * @since       5.4
  */
-class UnfurlURLJob extends AbstractBackgroundJob
+class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
 {
     /**
      * @var UnfurlUrl
      */
     private $url;
-    
+
     /**
      * UnfurlURLJob constructor.
      *
@@ -34,7 +33,7 @@ class UnfurlURLJob extends AbstractBackgroundJob
     {
         $this->url = $url;
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -52,7 +51,7 @@ class UnfurlURLJob extends AbstractBackgroundJob
                 return 2 * 60 * 60;
         }
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -60,7 +59,7 @@ class UnfurlURLJob extends AbstractBackgroundJob
     {
         try {
             $url = new UnfurlUrlUtil($this->url->url);
-            
+
             if (empty(StringUtil::trim($url->getTitle()))) {
                 $urlAction = new UnfurlUrlAction([$this->url], 'update', [
                     'data' => [
@@ -78,17 +77,19 @@ class UnfurlURLJob extends AbstractBackgroundJob
                     'description' => $description !== null ? StringUtil::truncate($description, 500) : '',
                     'status' => UnfurlUrl::STATUS_SUCCESSFUL,
                 ];
-                
+
                 if ($url->getImageUrl()) {
                     $image = UnfurlUrlUtil::downloadImageFromUrl($url->getImageUrl());
 
                     if ($image !== null) {
                         $imageData = @\getimagesizefromstring($image);
-                        
+
                         // filter images which are too large or too small
                         $isSquared = $imageData[0] === $imageData[1];
-                        if ((!$isSquared && ($imageData[0] < 300 && $imageData[1] < 150))
-                            || \min($imageData[0], $imageData[1]) < 50) {
+                        if (
+                            (!$isSquared && ($imageData[0] < 300 && $imageData[1] < 150))
+                            || \min($imageData[0], $imageData[1]) < 50
+                        ) {
                             $data['imageType'] = UnfurlUrl::IMAGE_NO_IMAGE;
                         } else {
                             if ($imageData[0] === $imageData[1]) {
@@ -98,7 +99,7 @@ class UnfurlURLJob extends AbstractBackgroundJob
                                 $data['imageUrl'] = $url->getImageUrl();
                                 $data['imageType'] = UnfurlUrl::IMAGE_COVER;
                             }
-                            
+
                             // Download image, if there is no image proxy or external source images allowed.
                             if (!(MODULE_IMAGE_PROXY || IMAGE_ALLOW_EXTERNAL_SOURCE)) {
                                 if (isset($data['imageType'])) {
@@ -115,33 +116,33 @@ class UnfurlURLJob extends AbstractBackgroundJob
                                         default:
                                             throw new \RuntimeException();
                                     }
-                                    
+
                                     $data['imageHash'] = \sha1($image) . '.' . $extension;
-                                    
+
                                     $path = WCF_DIR . 'images/unfurlUrl/' . \substr($data['imageHash'], 0, 2);
                                     FileUtil::makePath($path);
-                                    
+
                                     $fileLocation = $path . '/' . $data['imageHash'];
-                                    
+
                                     \file_put_contents($fileLocation, $image);
-                                    
+
                                     @\touch($fileLocation);
                                 }
                             }
                         }
                     }
                 }
-                
+
                 $urlAction = new UnfurlUrlAction([$this->url], 'update', [
                     'data' => $data,
                 ]);
                 $urlAction->executeAction();
             }
         } catch (\InvalidArgumentException $e) {
-            logThrowable($e);
+            \wcf\functions\exception\logThrowable($e);
         }
     }
-    
+
     /**
      * @inheritDoc
      */

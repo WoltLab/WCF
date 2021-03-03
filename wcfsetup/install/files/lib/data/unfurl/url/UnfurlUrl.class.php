@@ -11,11 +11,11 @@ use wcf\util\Url;
 /**
  * Represents an unfurl url object in the database.
  *
- * @author 		Joshua Ruesweg
+ * @author      Joshua Ruesweg
  * @copyright   2001-2021 WoltLab GmbH
- * @license 	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package 	WoltLabSuite\Core\Data\Unfurl\Url
- * @since   	5.4
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package     WoltLabSuite\Core\Data\Unfurl\Url
+ * @since       5.4
  *
  * @property-read string $url
  * @property-read string $urlHash
@@ -27,51 +27,55 @@ use wcf\util\Url;
  */
 class UnfurlUrl extends DatabaseObject
 {
-	public const IMAGE_SQUARED = "SQUARED";
-	public const IMAGE_COVER = "COVER";
-	public const IMAGE_NO_IMAGE = "NOIMAGE";
+    public const IMAGE_SQUARED = "SQUARED";
 
-	public const STATUS_PENDING = "PENDING";
-	public const STATUS_SUCCESSFUL = "SUCCESSFUL";
-	public const STATUS_REJECTED = "REJECTED";
+    public const IMAGE_COVER = "COVER";
+
+    public const IMAGE_NO_IMAGE = "NOIMAGE";
+
+    public const STATUS_PENDING = "PENDING";
+
+    public const STATUS_SUCCESSFUL = "SUCCESSFUL";
+
+    public const STATUS_REJECTED = "REJECTED";
 
     /**
      * Renders the unfurl url card and returns the template.
      *
      * @return string
      */
-    public function render() : string
+    public function render(): string
     {
         return WCF::getTPL()->fetch('unfurlUrl', 'wcf', [
             'object' => $this,
         ]);
     }
-    
+
     /**
      * Returns the hostname of the url.
      *
      * @return string
      */
-    public function getHost() : string
+    public function getHost(): string
     {
         $url = Url::parse($this->url);
-        
+
         return $url['host'];
     }
-    
+
     /**
      * Returns the image url for the url.
      *
      * @throws \wcf\system\exception\SystemException
      */
-    public function getImageUrl() : ?string
+    public function getImageUrl(): ?string
     {
         if (!empty($this->imageHash)) {
             return WCF::getPath() . 'images/unfurlUrl/' . \substr($this->imageHash, 0, 2) . '/' . $this->imageHash;
         } elseif (!empty($this->imageUrl)) {
             if (MODULE_IMAGE_PROXY) {
                 $key = CryptoUtil::createSignedString($this->imageUrl);
-                
+
                 return LinkHandler::getInstance()->getLink('ImageProxy', [
                     'key' => $key,
                 ]);
@@ -80,20 +84,20 @@ class UnfurlUrl extends DatabaseObject
             }
         }
 
-		return null;
+        return null;
     }
-    
+
     /**
      * Returns the unfurl url object for a given url.
      *
      * @throws \InvalidArgumentException If the given URL is invalid.
      */
-    public static function getByUrl(string $url) : UnfurlUrl
+    public static function getByUrl(string $url): self
     {
         if (!Url::is($url)) {
             throw new \InvalidArgumentException("Given URL is not a valid URL.");
         }
-        
+
         $sql = "SELECT		unfurl_url.*
 				FROM		wcf" . WCF_N . "_unfurl_url unfurl_url
 				WHERE		unfurl_url.urlHash = ?";
@@ -103,7 +107,7 @@ class UnfurlUrl extends DatabaseObject
         if (!$row) {
             $row = [];
         }
-        
+
         return new self(null, $row);
     }
 }

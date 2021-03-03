@@ -2,7 +2,6 @@
 
 namespace wcf\system\html\input\node;
 
-use wcf\data\unfurl\url\UnfurlUrlAction;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;

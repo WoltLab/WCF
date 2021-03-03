@@ -34,28 +34,28 @@ final class UnfurlUrlUtil
      * @var string
      */
     private $url;
-    
+
     /**
      * @var string
      */
     private $body;
-    
+
     /**
      * @var \DOMDocument
      */
     private $domDocument;
-    
+
     public function __construct(string $url)
     {
         if (!Url::is($url)) {
             throw new \InvalidArgumentException('Given URL "' . $url . '" is not a valid URL.');
         }
-        
+
         $this->url = $url;
-        
+
         $this->fetchUrl();
     }
-    
+
     /**
      * Fetches the body of the given url and converts the body to utf-8.
      */
@@ -70,7 +70,7 @@ final class UnfurlUrlUtil
                 'range' => \sprintf('bytes=%d-%d', 0, self::MAX_SIZE - 1),
             ]);
             $response = $client->send($request);
-            
+
             $this->body = "";
             while (!$response->getBody()->eof()) {
                 $this->body .= $response->getBody()->read(8192);
@@ -80,7 +80,7 @@ final class UnfurlUrlUtil
                 }
             }
             $response->getBody()->close();
-            
+
             if (\mb_detect_encoding($this->body) !== 'UTF-8') {
                 $this->body = StringUtil::convertEncoding(\mb_detect_encoding($this->body), 'UTF-8', $this->body);
             }
@@ -88,7 +88,7 @@ final class UnfurlUrlUtil
             // Ignore these exceptions.
         }
     }
-    
+
     /**
      * Returns the dom document of the website.
      */
@@ -99,10 +99,10 @@ final class UnfurlUrlUtil
             $this->domDocument = new \DOMDocument();
             $this->domDocument->loadHTML('<?xml version="1.0" encoding="UTF-8"?>' . $this->body);
         }
-        
+
         return $this->domDocument;
     }
-    
+
     /**
      * Determines the title of the website.
      */
@@ -110,7 +110,7 @@ final class UnfurlUrlUtil
     {
         if (!empty($this->body)) {
             $metaTags = $this->getDomDocument()->getElementsByTagName('meta');
-            
+
             // og
             foreach ($metaTags as $metaTag) {
                 foreach ($metaTag->attributes as $attr) {
@@ -123,7 +123,7 @@ final class UnfurlUrlUtil
                     }
                 }
             }
-            
+
             // title tag
             $title = $this->getDomDocument()->getElementsByTagName('title');
             if ($title->length) {
@@ -133,7 +133,7 @@ final class UnfurlUrlUtil
 
         return null;
     }
-    
+
     /**
      * Determines the description of the website.
      */
@@ -158,7 +158,7 @@ final class UnfurlUrlUtil
 
         return null;
     }
-    
+
     /**
      * Returns the image url for the current url.
      */
@@ -166,7 +166,7 @@ final class UnfurlUrlUtil
     {
         if (!empty($this->body)) {
             $metaTags = $this->getDomDocument()->getElementsByTagName('meta');
-            
+
             // og:image
             foreach ($metaTags as $metaTag) {
                 foreach ($metaTag->attributes as $attr) {
@@ -183,7 +183,7 @@ final class UnfurlUrlUtil
 
         return null;
     }
-    
+
     /**
      * Downloads the image from a url and returns the image body.
      */

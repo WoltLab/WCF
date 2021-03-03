@@ -9,11 +9,11 @@ use wcf\system\html\node\HtmlNodeUnfurlLink;
 /**
  * Represents the unfurl url embedded object handlers.
  *
- * @author 		Joshua Ruesweg
+ * @author      Joshua Ruesweg
  * @copyright   2001-2021 WoltLab GmbH
- * @license 	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package 	WoltLabSuite\Core\System\Message\Embedded\Object
- * @since   	5.4
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package     WoltLabSuite\Core\System\Message\Embedded\Object
+ * @since       5.4
  */
 class UnfurlUrlEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHandler
 {
@@ -28,7 +28,7 @@ class UnfurlUrlEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHandle
 
         return $urlList->getObjects();
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -37,13 +37,13 @@ class UnfurlUrlEmbeddedObjectHandler extends AbstractMessageEmbeddedObjectHandle
         $unfurlUrlIDs = [];
         foreach ($htmlInputProcessor->getHtmlInputNodeProcessor()->getDocument()->getElementsByTagName('a') as $element) {
             /** @var \DOMElement $element */
-            $id = intval($element->getAttribute(HtmlNodeUnfurlLink::UNFURL_URL_ID_ATTRIBUTE_NAME));
-            
+            $id = \intval($element->getAttribute(HtmlNodeUnfurlLink::UNFURL_URL_ID_ATTRIBUTE_NAME));
+
             if (!empty($id)) {
                 $unfurlUrlIDs[] = $id;
             }
         }
-        
+
         return $unfurlUrlIDs;
     }
 }

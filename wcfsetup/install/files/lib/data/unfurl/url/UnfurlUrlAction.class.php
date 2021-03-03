@@ -4,19 +4,19 @@ namespace wcf\data\unfurl\url;
 
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\background\BackgroundQueueHandler;
-use wcf\system\background\job\UnfurlURLJob;
+use wcf\system\background\job\UnfurlUrlBackgroundJob;
 
 /**
  * Contains all dbo actions for unfurl url objects.
  *
- * @author 		Joshua Ruesweg
+ * @author      Joshua Ruesweg
  * @copyright   2001-2021 WoltLab GmbH
- * @license 	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package 	WoltLabSuite\Core\Data\Unfurl\Url
- * @since   	5.4
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package     WoltLabSuite\Core\Data\Unfurl\Url
+ * @since       5.4
  *
- * @method	UnfurlUrlEditor[]	getObjects()
- * @method	UnfurlUrlEditor	        getSingleObject()
+ * @method  UnfurlUrlEditor[]   getObjects()
+ * @method  UnfurlUrlEditor     getSingleObject()
  */
 class UnfurlUrlAction extends AbstractDatabaseObjectAction
 {
@@ -27,16 +27,16 @@ class UnfurlUrlAction extends AbstractDatabaseObjectAction
     {
         /** @var UnfurlUrl $object */
         $object = parent::create();
-        
+
         BackgroundQueueHandler::getInstance()->enqueueIn([
-            new UnfurlURLJob($object),
+            new UnfurlUrlBackgroundJob($object),
         ]);
 
         BackgroundQueueHandler::getInstance()->forceCheck();
-        
+
         return $object;
     }
-    
+
     /**
      * Returns the unfurl url object to a given url.
      *
@@ -45,7 +45,7 @@ class UnfurlUrlAction extends AbstractDatabaseObjectAction
     public function findOrCreate()
     {
         $object = UnfurlUrl::getByUrl($this->parameters['data']['url']);
-        
+
         if (!$object->urlID) {
             $returnValues = (new self([], 'create', [
                 'data' => [
@@ -53,10 +53,10 @@ class UnfurlUrlAction extends AbstractDatabaseObjectAction
                     'urlHash' => \sha1($this->parameters['data']['url']),
                 ],
             ]))->executeAction();
-            
+
             return $returnValues['returnValues'];
         }
-        
+
         return $object;
     }
 }
