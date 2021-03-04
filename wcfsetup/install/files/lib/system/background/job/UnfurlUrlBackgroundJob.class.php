@@ -2,11 +2,16 @@
 
 namespace wcf\system\background\job;
 
+use BadMethodCallException;
+use GuzzleHttp\Psr7\Response;
 use wcf\data\unfurl\url\UnfurlUrl;
 use wcf\data\unfurl\url\UnfurlUrlAction;
+use wcf\system\message\unfurl\DownloadFailed;
+use wcf\system\message\unfurl\ParsingFailed;
+use wcf\system\message\unfurl\UnfurlResponse;
+use wcf\system\message\unfurl\UrlInaccessible;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
-use wcf\util\UnfurlUrlUtil;
 
 /**
  * Represents a background job to get information for an url.
@@ -17,12 +22,12 @@ use wcf\util\UnfurlUrlUtil;
  * @package     WoltLabSuite\Core\System\Background\Job
  * @since       5.4
  */
-class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
+final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
 {
     /**
-     * @var UnfurlUrl
+     * @var int
      */
-    private $url;
+    private $urlID;
 
     /**
      * UnfurlURLJob constructor.
@@ -31,7 +36,7 @@ class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
      */
     public function __construct(UnfurlUrl $url)
     {
-        $this->url = $url;
+        $this->urlID = $url->urlID;
     }
 
     /**
@@ -57,90 +62,170 @@ class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
      */
     public function perform()
     {
+        $unfurlUrl = new UnfurlUrl($this->urlID);
+
         try {
-            $url = new UnfurlUrlUtil($this->url->url);
+            $unfurlResponse = UnfurlResponse::fetch($unfurlUrl->url);
 
-            if (empty(StringUtil::trim($url->getTitle()))) {
-                $urlAction = new UnfurlUrlAction([$this->url], 'update', [
-                    'data' => [
-                        'title' => '',
-                        'description' => '',
-                        'status' => UnfurlUrl::STATUS_REJECTED,
-                    ],
-                ]);
-                $urlAction->executeAction();
+            if (empty(StringUtil::trim($unfurlResponse->getTitle()))) {
+                $this->save(UnfurlUrl::STATUS_REJECTED);
             } else {
-                $title = StringUtil::truncate($url->getTitle(), 255);
-                $description = $url->getDescription();
-                $data = [
-                    'title' => $title,
-                    'description' => $description !== null ? StringUtil::truncate($description, 500) : '',
-                    'status' => UnfurlUrl::STATUS_SUCCESSFUL,
-                ];
-
-                if ($url->getImageUrl()) {
-                    $image = UnfurlUrlUtil::downloadImageFromUrl($url->getImageUrl());
-
-                    if ($image !== null) {
-                        $imageData = @\getimagesizefromstring($image);
-
-                        // filter images which are too large or too small
-                        $isSquared = $imageData[0] === $imageData[1];
-                        if (
-                            (!$isSquared && ($imageData[0] < 300 && $imageData[1] < 150))
-                            || \min($imageData[0], $imageData[1]) < 50
-                        ) {
-                            $data['imageType'] = UnfurlUrl::IMAGE_NO_IMAGE;
-                        } else {
-                            if ($imageData[0] === $imageData[1]) {
-                                $data['imageUrl'] = $url->getImageUrl();
-                                $data['imageType'] = UnfurlUrl::IMAGE_SQUARED;
-                            } else {
-                                $data['imageUrl'] = $url->getImageUrl();
-                                $data['imageType'] = UnfurlUrl::IMAGE_COVER;
-                            }
-
-                            // Download image, if there is no image proxy or external source images allowed.
-                            if (!(MODULE_IMAGE_PROXY || IMAGE_ALLOW_EXTERNAL_SOURCE)) {
-                                if (isset($data['imageType'])) {
-                                    switch ($imageData[2]) {
-                                        case \IMAGETYPE_PNG:
-                                            $extension = 'png';
-                                            break;
-                                        case \IMAGETYPE_GIF:
-                                            $extension = 'gif';
-                                            break;
-                                        case \IMAGETYPE_JPEG:
-                                            $extension = 'jpg';
-                                            break;
-                                        default:
-                                            throw new \RuntimeException();
-                                    }
-
-                                    $data['imageHash'] = \sha1($image) . '.' . $extension;
-
-                                    $path = WCF_DIR . 'images/unfurlUrl/' . \substr($data['imageHash'], 0, 2);
-                                    FileUtil::makePath($path);
-
-                                    $fileLocation = $path . '/' . $data['imageHash'];
-
-                                    \file_put_contents($fileLocation, $image);
-
-                                    @\touch($fileLocation);
-                                }
-                            }
-                        }
-                    }
+                $title = StringUtil::truncate($unfurlResponse->getTitle(), 255);
+                if ($unfurlResponse->getDescription() !== null) {
+                    $description = StringUtil::truncate($unfurlResponse->getDescription(), 500);
+                } else {
+                    $description = "";
                 }
 
-                $urlAction = new UnfurlUrlAction([$this->url], 'update', [
-                    'data' => $data,
-                ]);
-                $urlAction->executeAction();
+                if ($unfurlResponse->getImageUrl()) {
+                    try {
+                        $image = $this->downloadImage($unfurlResponse->getImage());
+                        $imageData = \getimagesizefromstring($image);
+                        if ($imageData !== false) {
+                            $imageType = $this->validateImage($imageData);
+                            if (!(MODULE_IMAGE_PROXY || IMAGE_ALLOW_EXTERNAL_SOURCE)) {
+                                $imageHash = $this->saveImage($imageData, $image);
+                            } else {
+                                $imageHash = "";
+                            }
+                        } else {
+                            $imageType = UnfurlUrl::IMAGE_NO_IMAGE;
+                        }
+
+                        if ($imageType === UnfurlUrl::IMAGE_NO_IMAGE) {
+                            $imageUrl = $imageHash = "";
+                        } else {
+                            $imageUrl = $unfurlResponse->getImageUrl();
+                        }
+                    } catch (UrlInaccessible | DownloadFailed $e) {
+                        $imageType = UnfurlUrl::IMAGE_NO_IMAGE;
+                        $imageUrl = $imageHash = "";
+                    }
+                } else {
+                    $imageType = UnfurlUrl::IMAGE_NO_IMAGE;
+                    $imageUrl = $imageHash = "";
+                }
+
+                $this->save(
+                    UnfurlUrl::STATUS_SUCCESSFUL,
+                    $title,
+                    $description,
+                    $imageType,
+                    $imageUrl,
+                    $imageHash
+                );
             }
-        } catch (\InvalidArgumentException $e) {
-            \wcf\functions\exception\logThrowable($e);
+        } catch (UrlInaccessible | ParsingFailed $e) {
+            if (\ENABLE_DEBUG_MODE) {
+                \wcf\functions\exception\logThrowable($e);
+            }
+
+            $this->save(UnfurlUrl::STATUS_REJECTED);
         }
+    }
+
+    private function downloadImage(Response $imageResponse): string
+    {
+        $image = "";
+        while (!$imageResponse->getBody()->eof()) {
+            $image .= $imageResponse->getBody()->read(8192);
+
+            if ($imageResponse->getBody()->tell() >= UnfurlResponse::MAX_IMAGE_SIZE) {
+                break;
+            }
+        }
+        $imageResponse->getBody()->close();
+
+        return $image;
+    }
+
+    private function validateImage(array $imageData): string
+    {
+        $isSquared = $imageData[0] === $imageData[1];
+        if (
+            (!$isSquared && ($imageData[0] < 300 && $imageData[1] < 150))
+            || \min($imageData[0], $imageData[1]) < 50
+        ) {
+            return UnfurlUrl::IMAGE_NO_IMAGE;
+        } else {
+            if ($isSquared) {
+                return UnfurlUrl::IMAGE_SQUARED;
+            } else {
+                return UnfurlUrl::IMAGE_COVER;
+            }
+        }
+    }
+
+    private function saveImage(array $imageData, string $image): string
+    {
+        switch ($imageData[2]) {
+            case \IMAGETYPE_PNG:
+                $extension = 'png';
+                break;
+            case \IMAGETYPE_GIF:
+                $extension = 'gif';
+                break;
+            case \IMAGETYPE_JPEG:
+                $extension = 'jpg';
+                break;
+
+            default:
+                throw new DownloadFailed();
+        }
+
+        $imageHash = sha1($image);
+
+        $path = WCF_DIR . 'images/unfurlUrl/' . \substr($imageHash, 0, 2);
+        FileUtil::makePath($path);
+
+        $fileLocation = $path . '/' . $imageHash . '.' . $extension;
+
+        \file_put_contents($fileLocation, $image);
+
+        @\touch($fileLocation);
+
+        return $imageHash . '.' . $extension;
+    }
+
+    private function save(
+        string $status,
+        string $title = "",
+        string $description = "",
+        string $imageType = UnfurlUrl::IMAGE_NO_IMAGE,
+        string $imageUrl = "",
+        string $imageHash = ""
+    ): void {
+        switch ($status) {
+            case UnfurlUrl::STATUS_PENDING:
+            case UnfurlUrl::STATUS_REJECTED:
+            case UnfurlUrl::STATUS_SUCCESSFUL:
+                break;
+
+            default:
+                throw new BadMethodCallException("Invalid status '{$status}' given.");
+        }
+
+        switch ($imageType) {
+            case UnfurlUrl::IMAGE_COVER:
+            case UnfurlUrl::IMAGE_NO_IMAGE:
+            case UnfurlUrl::IMAGE_SQUARED:
+                break;
+
+            default:
+                throw new BadMethodCallException("Invalid imageType '{$imageType}' given.");
+        }
+
+        $urlAction = new UnfurlUrlAction([$this->urlID], 'update', [
+            'data' => [
+                'status' => $status,
+                'title' => $title,
+                'description' => $description,
+                'imageType' => $imageType,
+                'imageUrl' => $imageUrl,
+                'imageHash' => $imageHash,
+            ],
+        ]);
+        $urlAction->executeAction();
     }
 
     /**
@@ -148,13 +233,6 @@ class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
      */
     public function onFinalFailure()
     {
-        $urlAction = new UnfurlUrlAction([$this->url], 'update', [
-            'data' => [
-                'title' => '',
-                'description' => '',
-                'status' => 'REJECTED',
-            ],
-        ]);
-        $urlAction->executeAction();
+        $this->save(UnfurlUrl::STATUS_REJECTED);
     }
 }
