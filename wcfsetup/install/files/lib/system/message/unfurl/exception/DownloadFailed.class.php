@@ -2,8 +2,6 @@
 
 namespace wcf\system\message\unfurl\exception;
 
-use Exception;
-
 /**
  * Denotes a (temporary) download failed. It can be retried later.
  *
@@ -13,6 +11,6 @@ use Exception;
  * @package     WoltLabSuite\Core\System\Message\Unfurl
  * @since       5.4
  */
-class DownloadFailed extends Exception
+class DownloadFailed extends \Exception
 {
 }

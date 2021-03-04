@@ -69,52 +69,52 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
 
             if (empty(StringUtil::trim($unfurlResponse->getTitle()))) {
                 $this->save(UnfurlUrl::STATUS_REJECTED);
-            } else {
-                $title = StringUtil::truncate($unfurlResponse->getTitle(), 255);
-                if ($unfurlResponse->getDescription() !== null) {
-                    $description = StringUtil::truncate($unfurlResponse->getDescription(), 500);
-                } else {
-                    $description = "";
-                }
+                return;
+            }
 
-                if ($unfurlResponse->getImageUrl()) {
-                    try {
-                        $image = $this->downloadImage($unfurlResponse->getImage());
-                        $imageData = \getimagesizefromstring($image);
-                        if ($imageData !== false) {
-                            $imageType = $this->validateImage($imageData);
-                            if (!(MODULE_IMAGE_PROXY || IMAGE_ALLOW_EXTERNAL_SOURCE)) {
-                                $imageHash = $this->saveImage($imageData, $image);
-                            } else {
-                                $imageHash = "";
-                            }
-                        } else {
-                            $imageType = UnfurlUrl::IMAGE_NO_IMAGE;
-                        }
+            $title = StringUtil::truncate($unfurlResponse->getTitle(), 255);
+            $description = "";
+            if ($unfurlResponse->getDescription()) {
+                $description = StringUtil::truncate($unfurlResponse->getDescription());
+            }
 
-                        if ($imageType === UnfurlUrl::IMAGE_NO_IMAGE) {
-                            $imageUrl = $imageHash = "";
+            if ($unfurlResponse->getImageUrl()) {
+                try {
+                    $image = $this->downloadImage($unfurlResponse->getImage());
+                    $imageData = \getimagesizefromstring($image);
+                    if ($imageData !== false) {
+                        $imageType = $this->validateImage($imageData);
+                        if (!(MODULE_IMAGE_PROXY || IMAGE_ALLOW_EXTERNAL_SOURCE)) {
+                            $imageHash = $this->saveImage($imageData, $image);
                         } else {
-                            $imageUrl = $unfurlResponse->getImageUrl();
+                            $imageHash = "";
                         }
-                    } catch (UrlInaccessible | DownloadFailed $e) {
+                    } else {
                         $imageType = UnfurlUrl::IMAGE_NO_IMAGE;
-                        $imageUrl = $imageHash = "";
                     }
-                } else {
+
+                    if ($imageType === UnfurlUrl::IMAGE_NO_IMAGE) {
+                        $imageUrl = $imageHash = "";
+                    } else {
+                        $imageUrl = $unfurlResponse->getImageUrl();
+                    }
+                } catch (UrlInaccessible | DownloadFailed $e) {
                     $imageType = UnfurlUrl::IMAGE_NO_IMAGE;
                     $imageUrl = $imageHash = "";
                 }
-
-                $this->save(
-                    UnfurlUrl::STATUS_SUCCESSFUL,
-                    $title,
-                    $description,
-                    $imageType,
-                    $imageUrl,
-                    $imageHash
-                );
+            } else {
+                $imageType = UnfurlUrl::IMAGE_NO_IMAGE;
+                $imageUrl = $imageHash = "";
             }
+
+            $this->save(
+                UnfurlUrl::STATUS_SUCCESSFUL,
+                $title,
+                $description,
+                $imageType,
+                $imageUrl,
+                $imageHash
+            );
         } catch (UrlInaccessible | ParsingFailed $e) {
             if (\ENABLE_DEBUG_MODE) {
                 \wcf\functions\exception\logThrowable($e);

@@ -2,8 +2,6 @@
 
 namespace wcf\system\message\unfurl\exception;
 
-use Exception;
-
 /**
  * Denotes a permanent failing url, because the url is inaccessible.
  *
@@ -13,6 +11,6 @@ use Exception;
  * @package     WoltLabSuite\Core\System\Message\Unfurl
  * @since       5.4
  */
-class UrlInaccessible extends Exception
+class UrlInaccessible extends \Exception
 {
 }

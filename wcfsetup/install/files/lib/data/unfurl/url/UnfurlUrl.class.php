@@ -92,7 +92,7 @@ class UnfurlUrl extends DatabaseObject
      *
      * @throws \InvalidArgumentException If the given URL is invalid.
      */
-    public static function getByUrl(string $url): self
+    public static function getByUrl(string $url): ?self
     {
         if (!Url::is($url)) {
             throw new \InvalidArgumentException("Given URL is not a valid URL.");
@@ -105,7 +105,7 @@ class UnfurlUrl extends DatabaseObject
         $statement->execute([\sha1($url)]);
         $row = $statement->fetchArray();
         if (!$row) {
-            $row = [];
+            return null;
         }
 
         return new self(null, $row);

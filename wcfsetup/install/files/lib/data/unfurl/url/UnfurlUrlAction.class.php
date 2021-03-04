@@ -46,7 +46,7 @@ class UnfurlUrlAction extends AbstractDatabaseObjectAction
     {
         $object = UnfurlUrl::getByUrl($this->parameters['data']['url']);
 
-        if (!$object->urlID) {
+        if (!$object) {
             $returnValues = (new self([], 'create', [
                 'data' => [
                     'url' => $this->parameters['data']['url'],
