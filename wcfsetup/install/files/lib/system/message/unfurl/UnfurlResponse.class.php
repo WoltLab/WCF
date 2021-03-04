@@ -52,6 +52,11 @@ final class UnfurlResponse
     private $response;
 
     /**
+     * @var string
+     */
+    private $responseCharset = "UTF-8";
+
+    /**
      * @var \DOMDocument
      */
     private $domDocument;
@@ -118,6 +123,8 @@ final class UnfurlResponse
      */
     private function readBody(): void
     {
+        $this->validateHeaders();
+
         $this->body = "";
         while (!$this->response->getBody()->eof()) {
             $this->body .= $this->response->getBody()->read(8192);
@@ -128,9 +135,9 @@ final class UnfurlResponse
         }
         $this->response->getBody()->close();
 
-        if ($this->getCharset() !== 'UTF-8') {
+        if ($this->responseCharset !== 'UTF-8') {
             try {
-                $this->body = StringUtil::convertEncoding($this->getCharset(), 'UTF-8', $this->body);
+                $this->body = StringUtil::convertEncoding($this->responseCharset, 'UTF-8', $this->body);
             } catch (Exception $e) {
                 throw new ParsingFailed(
                     "Could not parse body, due an invalid charset.",
@@ -141,7 +148,7 @@ final class UnfurlResponse
         }
     }
 
-    private function getCharset(): string
+    private function validateHeaders(): void
     {
         $headers = $this->response->getHeader('content-type');
         if (\count($headers) !== 1) {
@@ -153,6 +160,7 @@ final class UnfurlResponse
         if ($contentType !== 'text/html') {
             throw new ParsingFailed("Expected 'text/html' as the 'content-type'.");
         }
+
         $charset = null;
         foreach ($pieces as $parameter) {
             $parts = ArrayUtil::trim(\explode('=', $parameter, 2));
@@ -167,11 +175,9 @@ final class UnfurlResponse
             }
         }
 
-        if (!$charset) {
-            $charset = 'UTF-8';
+        if ($charset) {
+            $this->responseCharset = \mb_strtoupper($charset);
         }
-
-        return \mb_strtoupper($charset);
     }
 
     /**
