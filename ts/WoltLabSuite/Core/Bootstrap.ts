@@ -28,8 +28,7 @@ import * as UiPageJumpTo from "./Ui/Page/JumpTo";
 import * as UiPassword from "./Ui/Password";
 
 // perfectScrollbar does not need to be bound anywhere, it just has to be loaded for WCF.js
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import perfectScrollbar from "perfect-scrollbar";
+import "perfect-scrollbar";
 
 // non strict equals by intent
 if (window.WCF == null) {
