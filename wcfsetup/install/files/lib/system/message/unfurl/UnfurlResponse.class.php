@@ -6,12 +6,12 @@ use BadMethodCallException;
 use Exception;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\BadResponseException;
-use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Client\ClientExceptionInterface;
 use wcf\system\io\HttpFactory;
+use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 use wcf\util\Url;
 
@@ -71,6 +71,7 @@ final class UnfurlResponse
 
         try {
             $request = new Request('GET', $url, [
+                'accept' => 'text/html',
                 'range' => \sprintf('bytes=%d-%d', 0, self::MAX_SIZE - 1),
             ]);
             $response = self::getHttpClient()->send($request);
@@ -85,6 +86,7 @@ final class UnfurlResponse
                 case 402: // Payment Required
                 case 403: // Forbidden
                 case 404: // Not Found
+                case 406: // Not Acceptable
                     $message = "Request failed with status code {$response->getStatusCode()}.";
 
                     throw new UrlInaccessible($message, $response->getStatusCode(), $e);
@@ -126,17 +128,50 @@ final class UnfurlResponse
         }
         $this->response->getBody()->close();
 
-        if (\mb_detect_encoding($this->body) !== 'UTF-8') {
+        if ($this->getCharset() !== 'UTF-8') {
             try {
-                $this->body = StringUtil::convertEncoding(\mb_detect_encoding($this->body), 'UTF-8', $this->body);
+                $this->body = StringUtil::convertEncoding($this->getCharset(), 'UTF-8', $this->body);
             } catch (Exception $e) {
                 throw new ParsingFailed(
-                    "Could not parse body, due an invalid charset. The Url could be an image.",
+                    "Could not parse body, due an invalid charset.",
                     0,
                     $e
                 );
             }
         }
+    }
+
+    private function getCharset(): string
+    {
+        $headers = $this->response->getHeader('content-type');
+        if (\count($headers) !== 1) {
+            throw new ParsingFailed("Expected exactly 1 'content-type' header.");
+        }
+        $header = $headers[0];
+        $pieces = ArrayUtil::trim(\explode(';', $header));
+        $contentType = \array_shift($pieces);
+        if ($contentType !== 'text/html') {
+            throw new ParsingFailed("Expected 'text/html' as the 'content-type'.");
+        }
+        $charset = null;
+        foreach ($pieces as $parameter) {
+            $parts = ArrayUtil::trim(\explode('=', $parameter, 2));
+            if (\count($parts) !== 2) {
+                throw new ParsingFailed("Invalid 'content-type' header: Invalid parameter.");
+            }
+            if ($parts[0] === 'charset') {
+                if ($charset) {
+                    throw new ParsingFailed("Invalid 'content-type' header: Duplicate charset.");
+                }
+                $charset = $parts[1];
+            }
+        }
+
+        if (!$charset) {
+            $charset = 'UTF-8';
+        }
+
+        return \mb_strtoupper($charset);
     }
 
     /**
@@ -263,6 +298,7 @@ final class UnfurlResponse
                 case 402: // Payment Required
                 case 403: // Forbidden
                 case 404: // Not Found
+                case 406: // Not Acceptable
                     $message = "Request failed with status code {$response->getStatusCode()}.";
 
                     throw new UrlInaccessible($message, $response->getStatusCode(), $e);
