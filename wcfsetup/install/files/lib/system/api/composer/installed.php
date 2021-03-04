@@ -49,12 +49,12 @@
     ),
     'guzzlehttp/guzzle' => 
     array (
-      'pretty_version' => '7.2.0',
-      'version' => '7.2.0.0',
+      'pretty_version' => 'dev-proxy-stream',
+      'version' => 'dev-proxy-stream',
       'aliases' => 
       array (
       ),
-      'reference' => '0aa74dfb41ae110835923ef10a9d803a22d50e79',
+      'reference' => '4b5ae5a75ebad957902452f5bab984781bcd75a3',
     ),
     'guzzlehttp/promises' => 
     array (

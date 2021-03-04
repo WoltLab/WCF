@@ -150,17 +150,17 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.2.0",
-            "version_normalized": "7.2.0.0",
+            "version": "dev-proxy-stream",
+            "version_normalized": "dev-proxy-stream",
             "source": {
                 "type": "git",
-                "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "0aa74dfb41ae110835923ef10a9d803a22d50e79"
+                "url": "https://github.com/WoltLab/guzzle",
+                "reference": "4b5ae5a75ebad957902452f5bab984781bcd75a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/0aa74dfb41ae110835923ef10a9d803a22d50e79",
-                "reference": "0aa74dfb41ae110835923ef10a9d803a22d50e79",
+                "url": "https://api.github.com/repos/WoltLab/guzzle/zipball/4b5ae5a75ebad957902452f5bab984781bcd75a3",
+                "reference": "4b5ae5a75ebad957902452f5bab984781bcd75a3",
                 "shasum": ""
             },
             "require": {
@@ -184,7 +184,7 @@
                 "ext-intl": "Required for Internationalized Domain Name (IDN) support",
                 "psr/log": "Required for using the Log middleware"
             },
-            "time": "2020-10-10T11:47:56+00:00",
+            "time": "2021-02-01T10:18:22+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -200,7 +200,11 @@
                     "src/functions_include.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "GuzzleHttp\\Tests\\": "tests/"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -219,33 +223,15 @@
             "description": "Guzzle is a PHP HTTP client library",
             "homepage": "http://guzzlephp.org/",
             "keywords": [
+                "HTTP client",
+                "PSR-18",
+                "PSR-7",
                 "client",
                 "curl",
                 "framework",
                 "http",
-                "http client",
-                "psr-18",
-                "psr-7",
                 "rest",
                 "web service"
-            ],
-            "funding": [
-                {
-                    "url": "https://github.com/GrahamCampbell",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/Nyholm",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/alexeyshockov",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/gmponos",
-                    "type": "github"
-                }
             ],
             "install-path": "../guzzlehttp/guzzle"
         },
