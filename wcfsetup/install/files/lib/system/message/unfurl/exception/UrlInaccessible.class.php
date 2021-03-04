@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\system\message\unfurl;
+namespace wcf\system\message\unfurl\exception;
 
 use Exception;
 

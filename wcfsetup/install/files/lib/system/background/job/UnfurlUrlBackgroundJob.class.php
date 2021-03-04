@@ -6,10 +6,10 @@ use BadMethodCallException;
 use GuzzleHttp\Psr7\Response;
 use wcf\data\unfurl\url\UnfurlUrl;
 use wcf\data\unfurl\url\UnfurlUrlAction;
-use wcf\system\message\unfurl\DownloadFailed;
-use wcf\system\message\unfurl\ParsingFailed;
+use wcf\system\message\unfurl\exception\DownloadFailed;
+use wcf\system\message\unfurl\exception\ParsingFailed;
+use wcf\system\message\unfurl\exception\UrlInaccessible;
 use wcf\system\message\unfurl\UnfurlResponse;
-use wcf\system\message\unfurl\UrlInaccessible;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 

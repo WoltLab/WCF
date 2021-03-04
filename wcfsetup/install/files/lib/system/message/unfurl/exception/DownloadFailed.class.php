@@ -1,11 +1,11 @@
 <?php
 
-namespace wcf\system\message\unfurl;
+namespace wcf\system\message\unfurl\exception;
 
 use Exception;
 
 /**
- * Denotes a permanent parsing body failed. It should not be retried later.
+ * Denotes a (temporary) download failed. It can be retried later.
  *
  * @author      Joshua Ruesweg
  * @copyright   2001-2021 WoltLab GmbH
@@ -13,6 +13,6 @@ use Exception;
  * @package     WoltLabSuite\Core\System\Message\Unfurl
  * @since       5.4
  */
-class ParsingFailed extends Exception
+class DownloadFailed extends Exception
 {
 }
