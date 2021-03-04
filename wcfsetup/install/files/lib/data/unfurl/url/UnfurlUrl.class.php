@@ -17,6 +17,7 @@ use wcf\util\Url;
  * @package     WoltLabSuite\Core\Data\Unfurl\Url
  * @since       5.4
  *
+ * @property-read int $urlID
  * @property-read string $url
  * @property-read string $urlHash
  * @property-read string $title
@@ -24,6 +25,7 @@ use wcf\util\Url;
  * @property-read string $imageHash
  * @property-read string $imageUrl
  * @property-read string $imageType
+ * @property-read int $lastFetch
  */
 class UnfurlUrl extends DatabaseObject
 {

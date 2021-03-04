@@ -223,6 +223,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
                 'imageType' => $imageType,
                 'imageUrl' => $imageUrl,
                 'imageHash' => $imageHash,
+                'lastFetch' => TIME_NOW,
             ],
         ]);
         $urlAction->executeAction();
