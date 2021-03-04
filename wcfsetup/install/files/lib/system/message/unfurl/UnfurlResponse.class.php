@@ -88,20 +88,12 @@ final class UnfurlResponse
         } catch (BadResponseException $e) {
             $response = $e->getResponse();
 
-            switch ($response->getStatusCode()) {
-                case 400: // Bad Request
-                case 401: // Unauthorized
-                case 402: // Payment Required
-                case 403: // Forbidden
-                case 404: // Not Found
-                case 406: // Not Acceptable
-                    $message = "Request failed with status code {$response->getStatusCode()}.";
+            if (self::isUrlInaccessible($response)) {
+                $message = "Request failed with status code {$response->getStatusCode()}.";
 
-                    throw new UrlInaccessible($message, $response->getStatusCode(), $e);
-                    break;
-
-                default:
-                    throw new DownloadFailed("Could not download content.", $response->getStatusCode(), $e);
+                throw new UrlInaccessible($message, $response->getStatusCode(), $e);
+            } else {
+                throw new DownloadFailed("Could not download content.", $response->getStatusCode(), $e);
             }
         } catch (ClientExceptionInterface $e) {
             throw new DownloadFailed("Could not download content.", 0, $e);
@@ -310,24 +302,32 @@ final class UnfurlResponse
         } catch (BadResponseException $e) {
             $response = $e->getResponse();
 
-            switch ($response->getStatusCode()) {
-                case 400: // Bad Request
-                case 401: // Unauthorized
-                case 402: // Payment Required
-                case 403: // Forbidden
-                case 404: // Not Found
-                case 406: // Not Acceptable
-                    $message = "Request failed with status code {$response->getStatusCode()}.";
+            if (self::isUrlInaccessible($response)) {
+                $message = "Request failed with status code {$response->getStatusCode()}.";
 
-                    throw new UrlInaccessible($message, $response->getStatusCode(), $e);
-                    break;
-
-                default:
-                    throw new DownloadFailed("Could not download content.", $response->getStatusCode(), $e);
+                throw new UrlInaccessible($message, $response->getStatusCode(), $e);
+            } else {
+                throw new DownloadFailed("Could not download content.", $response->getStatusCode(), $e);
             }
         } catch (ClientExceptionInterface $e) {
             throw new DownloadFailed("Could not download content.", 0, $e);
         }
+    }
+
+    private static function isUrlInaccessible(Response $response): bool
+    {
+        switch ($response->getStatusCode()) {
+            case 400: // Bad Request
+            case 401: // Unauthorized
+            case 402: // Payment Required
+            case 403: // Forbidden
+            case 404: // Not Found
+            case 406: // Not Acceptable
+                return true;
+                break;
+        }
+
+        return false;
     }
 
     /**
