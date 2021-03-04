@@ -1,7 +1,7 @@
 <?php
 
 /**
-     * Makes non-critical database adjustments (i.e. everything that is not related
+ * Makes non-critical database adjustments (i.e. everything that is not related
  * to sessions).
  *
  * @author  Tim Duesterhus
@@ -243,7 +243,7 @@ return [
             NotNullVarchar255DatabaseTableColumn::create('status')
                 ->defaultValue('PENDING'),
             NotNullInt10DatabaseTableColumn::create('lastFetch')
-                ->defaultValue(0)
+                ->defaultValue(0),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()

@@ -69,6 +69,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
 
             if (empty(StringUtil::trim($unfurlResponse->getTitle()))) {
                 $this->save(UnfurlUrl::STATUS_REJECTED);
+
                 return;
             }
 
@@ -173,7 +174,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
                 throw new DownloadFailed();
         }
 
-        $imageHash = sha1($image);
+        $imageHash = \sha1($image);
 
         $path = WCF_DIR . 'images/unfurlUrl/' . \substr($imageHash, 0, 2);
         FileUtil::makePath($path);
