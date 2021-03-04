@@ -182,14 +182,15 @@ HTML;
     {
         $userGroups = $this->getUserGroups();
 
-        $returnValue = "";
+        $returnValue = '<ul class="scrollableCheckboxList">';
         foreach ($userGroups as $userGroup) {
             /** @noinspection PhpVariableVariableInspection */
-            $returnValue .= "<label><input type=\"checkbox\" name=\"" . $identifier . "[]\" value=\"" . $userGroup->groupID . "\"" . (\in_array(
+            $returnValue .= "<li><label><input type=\"checkbox\" name=\"" . $identifier . "[]\" value=\"" . $userGroup->groupID . "\"" . (\in_array(
                 $userGroup->groupID,
                 $this->{$identifier}
-            ) ? ' checked' : "") . "> " . StringUtil::encodeHTML($userGroup->getName()) . "</label>";
+            ) ? ' checked' : "") . "> " . StringUtil::encodeHTML($userGroup->getName()) . "</label></li>";
         }
+        $returnValue .= '</ul>';
 
         return $returnValue;
     }
