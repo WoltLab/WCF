@@ -1130,6 +1130,11 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
         // consider all applications for potential object types
         foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
             $optionDir = $application->getPackage()->getAbsolutePackageDir() . 'lib/system/option';
+
+            if (!\is_dir($optionDir)) {
+                continue;
+            }
+
             $directoryUtil = DirectoryUtil::getInstance($optionDir);
 
             foreach ($directoryUtil->getFileObjects() as $fileObject) {
