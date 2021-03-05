@@ -189,9 +189,6 @@ final class UnfurlResponse
             if (!$this->domDocument->loadHTML('<?xml version="1.0" encoding="UTF-8"?>' . $this->body)) {
                 throw new ParsingFailed("DOMDocument::loadHTML() failed");
             }
-            foreach (\libxml_get_errors() as $error) {
-                throw new ParsingFailed("libxml error: {$error->message}.", $error->code);
-            }
         } finally {
             \libxml_use_internal_errors($useInternalErrors);
             \libxml_clear_errors();
