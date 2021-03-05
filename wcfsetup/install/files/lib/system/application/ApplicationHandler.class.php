@@ -8,12 +8,14 @@ use wcf\data\application\ApplicationList;
 use wcf\data\package\Package;
 use wcf\data\package\PackageList;
 use wcf\system\cache\builder\ApplicationCacheBuilder;
-use wcf\system\Regex;
 use wcf\system\request\RequestHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 use wcf\util\FileUtil;
+use wcf\util\StringUtil;
+use wcf\util\Url;
 
 /**
  * Handles multi-application environments.
@@ -207,30 +209,25 @@ class ApplicationHandler extends SingletonFactory
      */
     public function isInternalURL($url)
     {
-        $protocolRegex = new Regex('^https(?=://)');
         if (empty($this->pageURLs)) {
             foreach ($this->getApplications() as $application) {
-                $this->pageURLs[] = \preg_replace(
-                    '~/$~',
-                    '',
-                    $protocolRegex->replace(RouteHandler::getProtocol() . $application->domainName, 'http')
-                );
+                $this->pageURLs[] = $application->domainName;
             }
-            $this->pageURLs = \array_unique($this->pageURLs);
+
+            $this->pageURLs = \array_unique(\array_merge(
+                $this->pageURLs,
+                ArrayUtil::trim(\explode("\n", StringUtil::unifyNewlines(\INTERNAL_HOSTNAMES)))
+            ));
         }
 
-        foreach ($this->pageURLs as $pageURL) {
-            if (\stripos($protocolRegex->replace($url, 'http'), $pageURL) === 0) {
-                return true;
-            }
-        }
+        $host = Url::parse($url)['host'];
 
-        // relative urls contain no protocol, including implied
-        if (!\preg_match('~^([a-zA-Z0-9]+)?://~', $url)) {
+        // Relative URLs are internal.
+        if (!$host) {
             return true;
         }
 
-        return false;
+        return Url::getHostnameMatcher($this->pageURLs)($host);
     }
 
     /**
