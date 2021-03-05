@@ -65,6 +65,9 @@ class ImageProxyAction extends AbstractAction
         return HttpFactory::makeClient([
             RequestOptions::TIMEOUT => 10,
             RequestOptions::STREAM => true,
+            RequestOptions::HEADERS => [
+                'user-agent' => HttpFactory::getDefaultUserAgent("Image Proxy"),
+            ],
         ]);
     }
 
