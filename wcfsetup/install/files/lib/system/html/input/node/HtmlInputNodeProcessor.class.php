@@ -8,6 +8,7 @@ use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\html\node\HtmlNodePlainLink;
 use wcf\system\html\node\HtmlNodeUnfurlLink;
 use wcf\system\html\node\IHtmlNode;
+use wcf\system\worker\AbstractWorker;
 use wcf\util\DOMUtil;
 use wcf\util\StringUtil;
 
@@ -744,9 +745,12 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
 
         EventHandler::getInstance()->fireAction($this, 'convertPlainLinks');
 
-        foreach ($this->plainLinks as $plainLink) {
-            if ($plainLink->isPristine()) {
-                HtmlNodeUnfurlLink::setUnfurl($plainLink);
+        $isWorkerAction = \class_exists(AbstractWorker::class, false);
+        if (!$isWorkerAction) {
+            foreach ($this->plainLinks as $plainLink) {
+                if ($plainLink->isPristine()) {
+                    HtmlNodeUnfurlLink::setUnfurl($plainLink);
+                }
             }
         }
     }
