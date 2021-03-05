@@ -101,9 +101,9 @@ class UnfurlUrl extends DatabaseObject
             throw new \InvalidArgumentException("Given URL is not a valid URL.");
         }
 
-        $sql = "SELECT		unfurl_url.*
-				FROM		wcf" . WCF_N . "_unfurl_url unfurl_url
-				WHERE		unfurl_url.urlHash = ?";
+        $sql = "SELECT      unfurl_url.*
+                FROM        wcf" . WCF_N . "_unfurl_url unfurl_url
+                WHERE       unfurl_url.urlHash = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([\sha1($url)]);
         $row = $statement->fetchArray();
