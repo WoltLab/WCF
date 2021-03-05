@@ -262,7 +262,7 @@ final class UnfurlResponse
             // og:image
             foreach ($metaTags as $metaTag) {
                 foreach ($metaTag->attributes as $attr) {
-                    if ($attr->nodeName == 'property' && $attr->value == 'og:image') {
+                    if ($attr->nodeName == 'property' && ($attr->value == 'og:image' || $attr->value == 'og:image:url')) {
                         foreach ($attr->parentNode->attributes as $attr) {
                             if ($attr->nodeName == 'content') {
                                 return $attr->value;
