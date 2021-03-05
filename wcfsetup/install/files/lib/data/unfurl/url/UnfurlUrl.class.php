@@ -90,6 +90,16 @@ class UnfurlUrl extends DatabaseObject
         return null;
     }
 
+    public function hasCoverImage(): bool
+    {
+        return $this->imageType == self::IMAGE_COVER && !empty($this->getImageUrl());
+    }
+
+    public function hasSquaredImage(): bool
+    {
+        return $this->imageType == self::IMAGE_SQUARED && !empty($this->getImageUrl());
+    }
+
     /**
      * Returns the unfurl url object for a given url.
      *
