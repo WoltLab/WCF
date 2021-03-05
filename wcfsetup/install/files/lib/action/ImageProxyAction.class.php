@@ -2,6 +2,7 @@
 
 namespace wcf\action;
 
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
@@ -56,6 +57,18 @@ class ImageProxyAction extends AbstractAction
     }
 
     /**
+     * Returns the HTTP Client used for downloading images.
+     * @since 5.4
+     */
+    private function getHttpClient(): ClientInterface
+    {
+        return HttpFactory::makeClient([
+            RequestOptions::TIMEOUT => 10,
+            RequestOptions::STREAM => true,
+        ]);
+    }
+
+    /**
      * @inheritDoc
      */
     public function execute()
@@ -107,15 +120,11 @@ class ImageProxyAction extends AbstractAction
                     $file = null;
                     $response = null;
                     try {
-                        $client = HttpFactory::makeClient([
-                            RequestOptions::TIMEOUT => 10,
-                            RequestOptions::STREAM => true,
-                        ]);
                         $request = new Request('GET', $url, [
                             'via' => '1.1 wsc',
                             'accept' => 'image/*',
                         ]);
-                        $response = $client->send($request);
+                        $response = $this->getHttpClient()->send($request);
 
                         $file = new File($tmp);
                         while (!$response->getBody()->eof()) {
