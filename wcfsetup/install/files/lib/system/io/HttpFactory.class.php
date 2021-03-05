@@ -5,6 +5,8 @@ namespace wcf\system\io;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\RequestOptions;
+use InvalidArgumentException;
+use wcf\system\Regex;
 
 /**
  * Factory for HTTP Clients.
@@ -29,9 +31,17 @@ final class HttpFactory
     /**
      * Returns a RFC 7231#5.5.3 compatible user agent.
      */
-    public static function getDefaultUserAgent(): string
+    public static function getDefaultUserAgent(?string $comment = null): string
     {
-        return 'WoltLabSuite/' . \wcf\getMinorVersion();
+        if ($comment) {
+            if (!Regex::compile("^[a-zA-Z0-9_:/\\. -]+$")->match($comment)) {
+                throw new InvalidArgumentException("Invalid comment for user agent given.");
+            }
+
+            return \sprintf('WoltLabSuite/%s (%s)', \wcf\getMinorVersion(), $comment);
+        }
+
+        return \sprintf('WoltLabSuite/%s', \wcf\getMinorVersion());
     }
 
     /**
