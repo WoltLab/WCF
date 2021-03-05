@@ -3,6 +3,7 @@
 namespace wcf\system\html\node;
 
 use wcf\data\unfurl\url\UnfurlUrlAction;
+use wcf\util\Url;
 
 /**
  * Helper class to unfurl link objects.
@@ -22,7 +23,7 @@ class HtmlNodeUnfurlLink extends HtmlNodePlainLink
      */
     public static function setUnfurl(HtmlNodePlainLink $link): void
     {
-        if ($link->isStandalone()) {
+        if ($link->isStandalone() && Url::is($link->href)) {
             $object = new UnfurlUrlAction([], 'findOrCreate', [
                 'data' => [
                     'url' => $link->href,
