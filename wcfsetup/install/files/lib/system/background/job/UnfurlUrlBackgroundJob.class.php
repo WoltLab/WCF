@@ -128,14 +128,17 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
     private function downloadImage(Response $imageResponse): string
     {
         $image = "";
-        while (!$imageResponse->getBody()->eof()) {
-            $image .= $imageResponse->getBody()->read(8192);
+        try {
+            while (!$imageResponse->getBody()->eof()) {
+                $image .= $imageResponse->getBody()->read(8192);
 
-            if ($imageResponse->getBody()->tell() >= UnfurlResponse::MAX_IMAGE_SIZE) {
-                break;
+                if ($imageResponse->getBody()->tell() >= UnfurlResponse::MAX_IMAGE_SIZE) {
+                    throw new DownloadFailed("Image is too large.");
+                }
             }
+        } finally {
+            $imageResponse->getBody()->close();
         }
-        $imageResponse->getBody()->close();
 
         return $image;
     }

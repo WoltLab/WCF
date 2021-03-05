@@ -292,7 +292,6 @@ final class UnfurlResponse
         try {
             $request = new Request('GET', $this->getImageUrl(), [
                 'accept' => 'image/*',
-                'range' => 'bytes=0-' . (self::MAX_IMAGE_SIZE - 1),
             ]);
 
             return self::getHttpClient()->send($request);
