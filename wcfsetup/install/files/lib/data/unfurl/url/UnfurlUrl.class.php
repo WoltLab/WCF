@@ -2,6 +2,7 @@
 
 namespace wcf\data\unfurl\url;
 
+use wcf\action\ImageProxyAction;
 use wcf\data\DatabaseObject;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -78,7 +79,7 @@ class UnfurlUrl extends DatabaseObject
             if (MODULE_IMAGE_PROXY) {
                 $key = CryptoUtil::createSignedString($this->imageUrl);
 
-                return LinkHandler::getInstance()->getLink('ImageProxy', [
+                return LinkHandler::getInstance()->getControllerLink(ImageProxyAction::class, [
                     'key' => $key,
                 ]);
             } elseif (IMAGE_ALLOW_EXTERNAL_SOURCE) {
