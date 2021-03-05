@@ -11,11 +11,8 @@
 	width: 600px;
 
 	&.unfurlUrlCardCoverImage {
-		> :first-child:not(:last-child) {
+		.unfurlUrlImage {
 			min-height: 150px;
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: cover;
 			position: relative;
 		}
 	}
@@ -23,29 +20,43 @@
 	&.unfurlUrlCardSquaredImage {
 		display: flex;
 
-		> :first-child:not(:last-child) {
+		.unfurlUrlImage {
+			border-radius: 3px;
 			flex: 0 0 auto;
-			height: 128px !important;
-			width: 128px !important;
+			height: 128px;
 			margin: 10px;
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: cover;
-			position: relative;
+			width: 128px;
+
+			@include screen-sm {
+				height: 64px;
+				width: 64px;
+			}
+
+			@include screen-xs {
+				height: 24px;
+				position: absolute;
+				width: 24px;
+			}
 		}
 
-		> :last-child {
-			flex: 1 1 auto;
+		.unfurlUrlInformation {
+			flex: 1 auto;
 			overflow: hidden;
 			padding-left: 10px;
 		}
 
-		@include screen-sm-down {
-			> :first-child:not(:last-child) {
-				display: none;
+		@include screen-xs {
+			.unfurlUrlTitle {
+				padding-left: 30px;
 			}
 		}
 	}
+}
+
+.unfurlUrlImage {
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 .unfurlUrlInformation {
@@ -65,7 +76,7 @@
 
 .unfurlUrlDescription {
 	color: $wcfContentDimmedText;
-	margin-top: 10px;
+	margin-top: 5px;
 }
 
 .unfurlUrlHost {
@@ -82,7 +93,7 @@
 	}
 }
 
-.unfurlUrlLink {
+.unfurlUrlLinkShadow {
 	bottom: 0;
 	left: 0;
 	position: absolute;
