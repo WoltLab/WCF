@@ -1,16 +1,16 @@
 /*
 	This table was moved up here, because it must be created during the first iteration
-	
+
 	DO *NOT* MOVE IT BACK!
 */
 DROP TABLE IF EXISTS wcf1_package_installation_sql_log;
-CREATE TABLE wcf1_package_installation_sql_log ( 
-	packageID INT(10), 
-	sqlTable VARCHAR(100) NOT NULL DEFAULT '', 
-	sqlColumn VARCHAR(100) NOT NULL DEFAULT '', 
+CREATE TABLE wcf1_package_installation_sql_log (
+	packageID INT(10),
+	sqlTable VARCHAR(100) NOT NULL DEFAULT '',
+	sqlColumn VARCHAR(100) NOT NULL DEFAULT '',
 	sqlIndex VARCHAR(100) NOT NULL DEFAULT '',
 	isDone TINYINT(1) NOT NULL DEFAULT 1,
-	UNIQUE KEY packageID (packageID, sqlTable, sqlColumn, sqlIndex) 
+	UNIQUE KEY packageID (packageID, sqlTable, sqlColumn, sqlIndex)
 );
 
 /* tables */
@@ -162,7 +162,7 @@ CREATE TABLE wcf1_article (
 	cumulativeLikes MEDIUMINT(7) NOT NULL DEFAULT 0,
 	isDeleted TINYINT(1) NOT NULL DEFAULT 0,
 	hasLabels TINYINT(1) NOT NULL DEFAULT 0,
-	
+
 	KEY (time)
 );
 
@@ -179,7 +179,7 @@ CREATE TABLE wcf1_article_content (
 	hasEmbeddedObjects TINYINT(1) NOT NULL DEFAULT 0,
 	metaTitle VARCHAR(255) NOT NULL DEFAULT '',
 	metaDescription VARCHAR(255) NOT NULL DEFAULT '',
-	
+
 	UNIQUE KEY (articleID, languageID)
 );
 
@@ -194,21 +194,21 @@ CREATE TABLE wcf1_attachment (
 	filesize INT(10) NOT NULL DEFAULT 0,
 	fileType VARCHAR(255) NOT NULL DEFAULT '',
 	fileHash VARCHAR(40) NOT NULL DEFAULT '',
-	
+
 	isImage TINYINT(1) NOT NULL DEFAULT 0,
 	width SMALLINT(5) NOT NULL DEFAULT 0,
 	height SMALLINT(5) NOT NULL DEFAULT 0,
-	
+
 	tinyThumbnailType VARCHAR(255) NOT NULL DEFAULT '',
 	tinyThumbnailSize INT(10) NOT NULL DEFAULT 0,
 	tinyThumbnailWidth SMALLINT(5) NOT NULL DEFAULT 0,
 	tinyThumbnailHeight SMALLINT(5) NOT NULL DEFAULT 0,
-	
+
 	thumbnailType VARCHAR(255) NOT NULL DEFAULT '',
 	thumbnailSize INT(10) NOT NULL DEFAULT 0,
 	thumbnailWidth SMALLINT(5) NOT NULL DEFAULT 0,
 	thumbnailHeight SMALLINT(5) NOT NULL DEFAULT 0,
-	
+
 	downloads INT(10) NOT NULL DEFAULT 0,
 	lastDownloadTime INT(10) NOT NULL DEFAULT 0,
 	uploadTime INT(10) NOT NULL DEFAULT 0,
@@ -276,7 +276,7 @@ CREATE TABLE wcf1_blacklist_status (
 	delta2 TINYINT(1) NOT NULL DEFAULT 0,
 	delta3 TINYINT(1) NOT NULL DEFAULT 0,
 	delta4 TINYINT(1) NOT NULL DEFAULT 0,
-	
+
 	UNIQUE KEY day (date)
 );
 
@@ -286,7 +286,7 @@ CREATE TABLE wcf1_blacklist_entry (
 	hash BINARY(32),
 	lastSeen DATETIME NOT NULL,
 	occurrences SMALLINT(5) NOT NULL,
-	
+
 	UNIQUE KEY entry (type, hash),
 	KEY numberOfReports (type, occurrences)
 );
@@ -325,7 +325,7 @@ CREATE TABLE wcf1_box_content (
 	content MEDIUMTEXT,
 	imageID INT(10),
 	hasEmbeddedObjects TINYINT(1) NOT NULL DEFAULT 0,
-	
+
 	UNIQUE KEY (boxID, languageID)
 );
 
@@ -334,7 +334,7 @@ CREATE TABLE wcf1_box_to_page (
 	boxID INT(10) NOT NULL,
 	pageID INT(10) NOT NULL,
 	visible TINYINT(1) NOT NULL DEFAULT 1,
-	
+
 	UNIQUE KEY (pageID, boxID),
 	KEY (pageID, visible)
 );
@@ -410,7 +410,7 @@ CREATE TABLE wcf1_comment (
 	unfilteredResponseIDs VARCHAR(255) NOT NULL DEFAULT '',
 	enableHtml TINYINT(1) NOT NULL DEFAULT 0,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
-	
+
 	KEY (objectTypeID, objectID, isDisabled, time),
 	KEY lastCommentTime (userID, time)
 );
@@ -425,7 +425,7 @@ CREATE TABLE wcf1_comment_response (
 	message MEDIUMTEXT NOT NULL,
 	enableHtml TINYINT(1) NOT NULL DEFAULT 0,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
-	
+
 	KEY (commentID, isDisabled, time),
 	KEY lastResponseTime (userID, time)
 );
@@ -501,7 +501,7 @@ CREATE TABLE wcf1_cronjob (
 	state TINYINT(1) NOT NULL DEFAULT 0,
 	failCount TINYINT(1) NOT NULL DEFAULT 0,
 	options TEXT,
-	
+
 	UNIQUE KEY cronjobName (cronjobName, packageID)
 );
 
@@ -519,7 +519,7 @@ CREATE TABLE wcf1_devtools_project (
 	projectID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(191) NOT NULL,
 	path TEXT,
-	
+
 	UNIQUE KEY name (name)
 );
 
@@ -530,7 +530,7 @@ CREATE TABLE wcf1_devtools_missing_language_item (
 	languageItem VARCHAR(191) NOT NULL,
 	lastTime INT(10) NOT NULL,
 	stackTrace MEDIUMTEXT NOT NULL,
-	
+
 	UNIQUE KEY (languageID, languageItem)
 );
 
@@ -546,7 +546,7 @@ CREATE TABLE wcf1_edit_history_entry (
 	obsoletedByUserID INT(10),
 	message MEDIUMTEXT,
 	editReason TEXT,
-	
+
 	KEY (objectTypeID, objectID),
 	KEY (obsoletedAt, obsoletedByUserID)
 );
@@ -561,7 +561,7 @@ CREATE TABLE wcf1_email_log_entry (
 	recipientID INT(10) DEFAULT NULL,
 	status VARCHAR(255) NOT NULL,
 	message TEXT,
-	
+
 	KEY time (time)
 );
 
@@ -578,7 +578,7 @@ CREATE TABLE wcf1_event_listener (
 	niceValue TINYINT(3) NOT NULL DEFAULT 0,
 	permissions TEXT,
 	options TEXT,
-	
+
 	UNIQUE KEY listenerName (listenerName, packageID)
 );
 
@@ -633,7 +633,7 @@ CREATE TABLE wcf1_label_object (
 	labelID INT(10) NOT NULL,
 	objectTypeID INT(10) NOT NULL,
 	objectID INT(10) NOT NULL,
-	
+
 	KEY (objectTypeID, labelID),
 	KEY (objectTypeID, objectID)
 );
@@ -671,14 +671,14 @@ CREATE TABLE wcf1_language_item (
 	languageItemOldValue MEDIUMTEXT,
 	languageCustomItemDisableTime INT(10),
 	isCustomLanguageItem TINYINT(1) NOT NULL DEFAULT 0,
-	
+
 	UNIQUE KEY languageItem (languageItem, languageID),
 	KEY languageItemOriginIsSystem (languageItemOriginIsSystem)
 );
 
 DROP TABLE IF EXISTS wcf1_like;
 CREATE TABLE wcf1_like (
-	likeID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+	likeID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	objectID INT(10) NOT NULL DEFAULT 0,
 	objectTypeID INT(10) NOT NULL,
 	objectUserID INT(10),
@@ -693,7 +693,7 @@ DROP TABLE IF EXISTS wcf1_like_object;
 CREATE TABLE wcf1_like_object (
 	likeObjectID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	objectTypeID INT(10) NOT NULL,
-	objectID INT(10) NOT NULL DEFAULT 0, 
+	objectID INT(10) NOT NULL DEFAULT 0,
 	objectUserID INT(10),
 	likes MEDIUMINT(7) NOT NULL DEFAULT 0,
 	dislikes MEDIUMINT(7) NOT NULL DEFAULT 0,
@@ -707,7 +707,7 @@ DROP TABLE IF EXISTS wcf1_media;
 CREATE TABLE wcf1_media (
 	mediaID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	categoryID INT(10),
-	
+
 	filename VARCHAR(255) NOT NULL DEFAULT '',
 	filesize INT(10) NOT NULL DEFAULT 0,
 	fileType VARCHAR(255) NOT NULL DEFAULT '',
@@ -719,31 +719,31 @@ CREATE TABLE wcf1_media (
 	languageID INT(10),
 	isMultilingual TINYINT(1) NOT NULL DEFAULT 0,
 	captionEnableHtml TINYINT(1) NOT NULL DEFAULT 0,
-	
+
 	isImage TINYINT(1) NOT NULL DEFAULT 0,
 	width SMALLINT(5) NOT NULL DEFAULT 0,
 	height SMALLINT(5) NOT NULL DEFAULT 0,
-	
+
 	tinyThumbnailType VARCHAR(255) NOT NULL DEFAULT '',
 	tinyThumbnailSize INT(10) NOT NULL DEFAULT 0,
 	tinyThumbnailWidth SMALLINT(5) NOT NULL DEFAULT 0,
 	tinyThumbnailHeight SMALLINT(5) NOT NULL DEFAULT 0,
-	
+
 	smallThumbnailType VARCHAR(255) NOT NULL DEFAULT '',
 	smallThumbnailSize INT(10) NOT NULL DEFAULT 0,
 	smallThumbnailWidth SMALLINT(5) NOT NULL DEFAULT 0,
 	smallThumbnailHeight SMALLINT(5) NOT NULL DEFAULT 0,
-	
+
 	mediumThumbnailType VARCHAR(255) NOT NULL DEFAULT '',
 	mediumThumbnailSize INT(10) NOT NULL DEFAULT 0,
 	mediumThumbnailWidth SMALLINT(5) NOT NULL DEFAULT 0,
 	mediumThumbnailHeight SMALLINT(5) NOT NULL DEFAULT 0,
-	
+
 	largeThumbnailType VARCHAR(255) NOT NULL DEFAULT '',
 	largeThumbnailSize INT(10) NOT NULL DEFAULT 0,
 	largeThumbnailWidth SMALLINT(5) NOT NULL DEFAULT 0,
 	largeThumbnailHeight SMALLINT(5) NOT NULL DEFAULT 0,
-	
+
 	downloads INT(10) NOT NULL DEFAULT 0,
 	lastDownloadTime INT(10) NOT NULL DEFAULT 0
 );
@@ -789,7 +789,7 @@ CREATE TABLE wcf1_message_embedded_object (
 	messageID INT(10) NOT NULL,
 	embeddedObjectTypeID INT(10) NOT NULL,
 	embeddedObjectID INT(10) NOT NULL,
-	
+
 	KEY (messageObjectTypeID, messageID)
 );
 
@@ -801,16 +801,16 @@ CREATE TABLE wcf1_moderation_queue (
 	containerID INT(10) NOT NULL DEFAULT 0,
 	userID INT(10) NULL,
 	time INT(10) NOT NULL DEFAULT 0,
-	
+
 	-- internal
 	assignedUserID INT(10) NULL,
 	status TINYINT(1) NOT NULL DEFAULT 0,
 	comments SMALLINT(5) NOT NULL DEFAULT 0,
 	lastChangeTime INT(10) NOT NULL DEFAULT 0,
-	
+
 	-- additional data, e.g. message if reporting content
 	additionalData TEXT,
-	
+
 	KEY objectTypeAndID (objectTypeID, objectID)
 );
 
@@ -819,7 +819,7 @@ CREATE TABLE wcf1_moderation_queue_to_user (
 	queueID INT(10) NOT NULL,
 	userID INT(10) NOT NULL,
 	isAffected TINYINT(1) NOT NULL DEFAULT 0,
-	
+
 	UNIQUE KEY queue (queueID, userID),
 	KEY affected (queueID, userID, isAffected)
 );
@@ -836,7 +836,7 @@ CREATE TABLE wcf1_modification_log (
 	action VARCHAR(80) NOT NULL,
 	hidden TINYINT(1) NOT NULL DEFAULT 1,
 	additionalData MEDIUMTEXT,
-	
+
 	KEY objectTypeAndID (objectTypeID, objectID)
 );
 
@@ -898,7 +898,7 @@ CREATE TABLE wcf1_option (
 	supportI18n TINYINT(1) NOT NULL DEFAULT 0,
 	requireI18n TINYINT(1) NOT NULL DEFAULT 0,
 	additionalData MEDIUMTEXT,
-	
+
 	UNIQUE KEY optionName (optionName)
 );
 
@@ -1134,7 +1134,7 @@ CREATE TABLE wcf1_page_content (
 	metaDescription TEXT,
 	customURL VARCHAR(255) NOT NULL,
 	hasEmbeddedObjects TINYINT(1) NOT NULL DEFAULT 0,
-	
+
 	UNIQUE KEY (pageID, languageID)
 );
 
@@ -1163,7 +1163,7 @@ CREATE TABLE wcf1_paid_subscription_user (
 	endDate INT(10) NOT NULL DEFAULT 0,
 	isActive TINYINT(1) NOT NULL DEFAULT 1,
 	sentExpirationNotification TINYINT(1) NOT NULL DEFAULT 0,
-	
+
 	UNIQUE KEY (subscriptionID, userID),
 	KEY (isActive)
 );
@@ -1211,17 +1211,17 @@ CREATE TABLE wcf1_poll_option_vote (
 	pollID INT(10) NOT NULL,
 	optionID INT(10) NOT NULL,
 	userID INT(10) NOT NULL,
-	
+
 	KEY (optionID, userID),
 	UNIQUE KEY vote (pollID, optionID, userID)
 );
 
-DROP TABLE IF EXISTS wcf1_reaction_type; 
+DROP TABLE IF EXISTS wcf1_reaction_type;
 CREATE TABLE wcf1_reaction_type (
-	reactionTypeID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
-	title VARCHAR(255) NOT NULL, 
+	reactionTypeID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	title VARCHAR(255) NOT NULL,
 	showOrder INT(10) NOT NULL DEFAULT 0,
-	iconFile VARCHAR(255) NOT NULL DEFAULT '', 
+	iconFile VARCHAR(255) NOT NULL DEFAULT '',
 	isAssignable TINYINT(1) NOT NULL DEFAULT 1
 );
 
@@ -1230,7 +1230,7 @@ CREATE TABLE wcf1_registry (
 	packageID INT(10) NOT NULL,
 	field VARCHAR(191) NOT NULL,
 	fieldValue MEDIUMTEXT,
-	
+
 	UNIQUE KEY uniqueField (packageID, field)
 );
 
@@ -1305,7 +1305,7 @@ CREATE TABLE wcf1_stat_daily (
 	date DATE NOT NULL,
 	counter INT(10) NOT NULL DEFAULT 0,
 	total INT(10) NOT NULL DEFAULT 0,
-	
+
 	UNIQUE KEY (objectTypeID, date)
 );
 
@@ -1331,7 +1331,7 @@ CREATE TABLE wcf1_style (
 	isTainted TINYINT(1) NOT NULL DEFAULT 0,
 	hasFavicon TINYINT(1) NOT NULL DEFAULT 0,
 	coverPhotoExtension VARCHAR(4) NOT NULL DEFAULT '',
-	apiVersion ENUM('3.0', '3.1', '5.2') NOT NULL DEFAULT '3.0' 
+	apiVersion ENUM('3.0', '3.1', '5.2') NOT NULL DEFAULT '3.0'
 );
 
 DROP TABLE IF EXISTS wcf1_style_variable;
@@ -1402,7 +1402,7 @@ CREATE TABLE wcf1_template_listener (
 	niceValue TINYINT(3) NOT NULL DEFAULT 0,
 	permissions TEXT,
 	options TEXT,
-	
+
 	KEY templateName (environment, templateName)
 );
 
@@ -1431,10 +1431,10 @@ DROP TABLE IF EXISTS wcf1_trophy;
 CREATE TABLE wcf1_trophy(
 	trophyID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	title VARCHAR(255),
-	description MEDIUMTEXT,	
+	description MEDIUMTEXT,
 	categoryID INT(10) NOT NULL,
 	type SMALLINT(1) DEFAULT 1,
-	iconFile MEDIUMTEXT, 
+	iconFile MEDIUMTEXT,
 	iconName VARCHAR(255),
 	iconColor VARCHAR(255),
 	badgeColor VARCHAR(255),
@@ -1499,7 +1499,7 @@ CREATE TABLE wcf1_user (
 	disableCoverPhotoExpires INT(10) NOT NULL DEFAULT 0,
 	articles INT(10) NOT NULL DEFAULT 0,
 	blacklistMatches VARCHAR(255) NOT NULL DEFAULT '',
-	
+
 	UNIQUE KEY username (username),
 	KEY email (email),
 	KEY registrationDate (registrationDate),
@@ -1521,7 +1521,7 @@ CREATE TABLE wcf1_user_activity_event (
 	userID INT(10) NOT NULL,
 	time INT(10) NOT NULL,
 	additionalData TEXT,
-	
+
 	KEY (time),
 	KEY (userID, time),
 	KEY (objectTypeID, objectID)
@@ -1698,7 +1698,7 @@ CREATE TABLE wcf1_user_multifactor_backup (
 	code VARCHAR(255) NOT NULL,
 	createTime INT(10) NOT NULL,
 	useTime INT(10) DEFAULT NULL,
-	
+
 	UNIQUE KEY (setupID, identifier)
 );
 
@@ -1707,7 +1707,7 @@ CREATE TABLE wcf1_user_multifactor_email (
 	setupID INT(10) NOT NULL,
 	code VARCHAR(255) NOT NULL,
 	createTime INT(10) NOT NULL,
-	
+
 	UNIQUE KEY (setupID, code)
 );
 
@@ -1720,7 +1720,7 @@ CREATE TABLE wcf1_user_multifactor_totp (
 	minCounter INT(10) NOT NULL,
 	createTime INT(10) NOT NULL,
 	useTime INT(10) DEFAULT NULL,
-	
+
 	UNIQUE KEY (setupID, deviceID)
 );
 
@@ -1795,7 +1795,7 @@ CREATE TABLE wcf1_user_object_watch (
 	objectID INT(10) NOT NULL,
 	userID INT(10) NOT NULL,
 	notification TINYINT(1) NOT NULL DEFAULT 0,
-	
+
 	UNIQUE KEY (objectTypeID, userID, objectID),
 	KEY (objectTypeID, objectID)
 );
@@ -1814,8 +1814,8 @@ CREATE TABLE wcf1_user_option (
 	labeledUrl MEDIUMTEXT,
 	required TINYINT(1) NOT NULL DEFAULT 0,
 	askDuringRegistration TINYINT(1) NOT NULL DEFAULT 0,
-	editable TINYINT(1) NOT NULL DEFAULT 0, 
-	visible TINYINT(1) NOT NULL DEFAULT 0, 
+	editable TINYINT(1) NOT NULL DEFAULT 0,
+	visible TINYINT(1) NOT NULL DEFAULT 0,
 	outputClass VARCHAR(255) NOT NULL DEFAULT '',
 	searchable TINYINT(1) NOT NULL DEFAULT 0,
 	showOrder INT(10) NOT NULL DEFAULT 0,
@@ -2247,7 +2247,7 @@ ALTER TABLE wcf1_moderation_queue_to_user ADD FOREIGN KEY (userID) REFERENCES wc
 ALTER TABLE wcf1_like ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_like ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_like ADD FOREIGN KEY (objectUserID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
-ALTER TABLE wcf1_like ADD FOREIGN KEY (reactionTypeID) REFERENCES wcf1_reaction_type (reactionTypeID) ON DELETE CASCADE; 
+ALTER TABLE wcf1_like ADD FOREIGN KEY (reactionTypeID) REFERENCES wcf1_reaction_type (reactionTypeID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_like_object ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_like_object ADD FOREIGN KEY (objectUserID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
@@ -2466,7 +2466,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTooltip
 
 -- Email template group
 INSERT INTO wcf1_template_group (parentTemplateGroupID, templateGroupName, templateGroupFolderName) VALUES (NULL, 'wcf.acp.template.group.email', '_wcf_email/');
-	
+
 -- default priorities
 UPDATE wcf1_user_group SET priority = 10 WHERE groupID = 3;
 UPDATE wcf1_user_group SET priority = 1000 WHERE groupID = 4;
