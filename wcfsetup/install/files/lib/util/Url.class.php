@@ -168,4 +168,56 @@ final class Url implements \ArrayAccess
 
         throw new \RuntimeException("Unknown url component offset '" . $property . "'.");
     }
+
+    /**
+     * Returns a matcher that decides whether the URL matches the given list of hostnames. Hostnames may contain an
+     * optional wildcard prefix (`*.`).
+     *
+     * @since 5.4
+     */
+    public static function getHostnameMatcher(array $hostnames): callable
+    {
+        $hosts = [];
+        foreach ($hostnames as $host) {
+            $isWildcard = false;
+            if (\mb_strpos($host, '*') !== false) {
+                $host = \preg_replace('~^(\*\.)+~', '', $host);
+                if (\mb_strpos($host, '*') !== false || $host === '') {
+                    // bad host
+                    continue;
+                }
+
+                $isWildcard = true;
+            }
+
+            $host = \mb_strtolower($host);
+            if (!isset($hosts[$host])) {
+                $hosts[$host] = $isWildcard;
+            }
+        }
+
+        return static function ($hostname) use ($hosts) {
+            static $validHosts = [];
+
+            $hostname = \mb_strtolower($hostname);
+            if (isset($hosts[$hostname]) || isset($validHosts[$hostname])) {
+                return true;
+            } else {
+                // check wildcard hosts
+                foreach ($hosts as $host => $isWildcard) {
+                    if ($isWildcard && \mb_strpos($hostname, $host) !== false) {
+                        // the prepended dot will ensure that `example.com` matches only
+                        // on domains like `foo.example.com` but not on `bar-example.com`
+                        if (StringUtil::endsWith($hostname, '.' . $host)) {
+                            $validHosts[$hostname] = $hostname;
+
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        };
+    }
 }

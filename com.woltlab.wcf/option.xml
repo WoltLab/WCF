@@ -488,6 +488,10 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			<option name="internal_hostnames">
+				<categoryname>general.page</categoryname>
+				<optiontype>textarea</optiontype>
+			</option>
 			<option name="head_code">
 				<categoryname>general.page</categoryname>
 				<optiontype>textarea</optiontype>
@@ -1691,14 +1695,14 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		</options>
 	</import>
 	<delete>
-		<option name="http_enable_gzip" />
-		<option name="meta_keywords" />
-		<option name="register_admin_notification" />
-		<option name="session_timeout" />
-		<option name="session_validate_ip_address" />
-		<option name="session_validate_user_agent" />
-		<option name="session_enable_virtualization" />
-		<option name="blacklist_hostnames" />
-		<option name="module_user_cover_photo" />
+		<option name="http_enable_gzip"/>
+		<option name="meta_keywords"/>
+		<option name="register_admin_notification"/>
+		<option name="session_timeout"/>
+		<option name="session_validate_ip_address"/>
+		<option name="session_validate_user_agent"/>
+		<option name="session_enable_virtualization"/>
+		<option name="blacklist_hostnames"/>
+		<option name="module_user_cover_photo"/>
 	</delete>
 </data>
