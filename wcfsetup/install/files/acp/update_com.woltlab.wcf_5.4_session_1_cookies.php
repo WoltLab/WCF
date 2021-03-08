@@ -32,7 +32,17 @@ if (!empty($_COOKIE[COOKIE_PREFIX . "user_session"])) {
 
 $hasValidXsrfToken = false;
 if (!empty($_COOKIE['XSRF-TOKEN'])) {
-    if (CryptoUtil::validateSignedString($_COOKIE['XSRF-TOKEN'])) {
+    if (
+        // Check that the XSRF-TOKEN cookie is correctly signed.
+        CryptoUtil::validateSignedString($_COOKIE['XSRF-TOKEN'])
+        // Check that the current session value matches the cookie value.
+        && WCF::getSession()->checkSecurityToken($_COOKIE['XSRF-TOKEN'])
+        // Check that the 't' used for this request matches the cookie value.
+        && (
+            !empty($_REQUEST['t'])
+            && \hash_equals($_COOKIE['XSRF-TOKEN'], $_REQUEST['t'])
+        )
+    ) {
         $hasValidXsrfToken = true;
     }
 }
