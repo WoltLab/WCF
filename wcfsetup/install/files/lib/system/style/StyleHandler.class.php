@@ -178,6 +178,8 @@ class StyleHandler extends SingletonFactory
                 @\unlink($stylesheet);
             }
         }
+
+        @\unlink(WCF_DIR . 'style/style-' . $style->styleID . '-preload.json');
     }
 
     /**
@@ -198,19 +200,27 @@ class StyleHandler extends SingletonFactory
     public static function resetStylesheets($resetACP = true)
     {
         // frontend stylesheets
-        $stylesheets = \glob(WCF_DIR . 'style/style-*.css');
-        if ($stylesheets !== false) {
-            foreach ($stylesheets as $stylesheet) {
-                @\unlink($stylesheet);
+        $files = \glob(WCF_DIR . 'style/style-*.css');
+        if ($files !== false) {
+            foreach ($files as $file) {
+                @\unlink($file);
+            }
+        }
+
+        // preload data
+        $files = \glob(WCF_DIR . 'style/style-*-preload.json');
+        if ($files !== false) {
+            foreach ($files as $file) {
+                @\unlink($file);
             }
         }
 
         // ACP stylesheets
         if ($resetACP) {
-            $stylesheets = \glob(WCF_DIR . 'acp/style/style*.css');
-            if ($stylesheets !== false) {
-                foreach ($stylesheets as $stylesheet) {
-                    @\unlink($stylesheet);
+            $files = \glob(WCF_DIR . 'acp/style/style*.css');
+            if ($files !== false) {
+                foreach ($files as $file) {
+                    @\unlink($file);
                 }
             }
         }

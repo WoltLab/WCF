@@ -98,6 +98,9 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject
             }
         }
 
+        // delete preload data
+        @\unlink(WCF_DIR . 'style/style-' . $this->styleID . '-preload.json');
+
         // delete preview image
         if ($this->image) {
             @\unlink(WCF_DIR . 'images/' . $this->image);
