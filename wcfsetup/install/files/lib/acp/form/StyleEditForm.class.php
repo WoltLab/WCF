@@ -339,6 +339,9 @@ class StyleEditForm extends StyleAddForm
             $styleFilename = StyleCompiler::getFilenameForStyle($this->style);
             \rename($this->styleTestFileDir . '/style.css', $styleFilename . '.css');
             \rename($this->styleTestFileDir . '/style-rtl.css', $styleFilename . '-rtl.css');
+            if (\file_exists($this->styleTestFileDir . '/style-preload.json')) {
+                \rename($this->styleTestFileDir . '/style-preload.json', $styleFilename . '-preload.json');
+            }
 
             \rmdir($this->styleTestFileDir);
         }

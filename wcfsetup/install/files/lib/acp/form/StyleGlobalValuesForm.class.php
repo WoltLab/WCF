@@ -150,10 +150,18 @@ class StyleGlobalValuesForm extends AbstractForm
 
         // save compiled style
         $defaultStyle = StyleHandler::getInstance()->getDefaultStyle();
-        if ($defaultStyle !== null && $this->styleTestFileDir && \file_exists($this->styleTestFileDir . '/style.css') && \file_exists($this->styleTestFileDir . '/style-rtl.css')) {
+        if (
+            $defaultStyle !== null
+            && $this->styleTestFileDir
+            && \file_exists($this->styleTestFileDir . '/style.css')
+            && \file_exists($this->styleTestFileDir . '/style-rtl.css')
+        ) {
             $styleFilename = StyleCompiler::getFilenameForStyle($defaultStyle);
             \rename($this->styleTestFileDir . '/style.css', $styleFilename . '.css');
             \rename($this->styleTestFileDir . '/style-rtl.css', $styleFilename . '-rtl.css');
+            if (\file_exists($this->styleTestFileDir . '/style-preload.json')) {
+                \rename($this->styleTestFileDir . '/style-preload.json', $styleFilename . '-preload.json');
+            }
 
             \rmdir($this->styleTestFileDir);
         }

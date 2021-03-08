@@ -926,9 +926,16 @@ class StyleAddForm extends AbstractForm
         ]);
 
         // Do not save the compiled style, because the image path was unknown during the style generation.
-        if ($this->styleTestFileDir && \file_exists($this->styleTestFileDir . '/style.css') && \file_exists($this->styleTestFileDir . '/style-rtl.css')) {
-            \unlink($this->styleTestFileDir . '/style.css');
-            \unlink($this->styleTestFileDir . '/style-rtl.css');
+        if ($this->styleTestFileDir) {
+            if (\file_exists($this->styleTestFileDir . '/style.css')) {
+                \unlink($this->styleTestFileDir . '/style.css');
+            }
+            if (\file_exists($this->styleTestFileDir . '/style-rtl.css')) {
+                \unlink($this->styleTestFileDir . '/style-rtl.css');
+            }
+            if (\file_exists($this->styleTestFileDir . '/style-preload.json')) {
+                \unlink($this->styleTestFileDir . '/style-preload.json');
+            }
 
             \rmdir($this->styleTestFileDir);
         }
