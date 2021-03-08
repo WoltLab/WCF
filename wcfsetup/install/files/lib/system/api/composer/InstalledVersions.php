@@ -73,12 +73,13 @@ private static $installed = array (
     ),
     'guzzlehttp/guzzle' => 
     array (
-      'pretty_version' => 'dev-proxy-stream',
-      'version' => 'dev-proxy-stream',
+      'pretty_version' => 'dev-master',
+      'version' => 'dev-master',
       'aliases' => 
       array (
+        0 => '7.1.x-dev',
       ),
-      'reference' => '4b5ae5a75ebad957902452f5bab984781bcd75a3',
+      'reference' => 'da94ef2e433d77af516d69c0f7d3c1b8ecd566dc',
     ),
     'guzzlehttp/promises' => 
     array (

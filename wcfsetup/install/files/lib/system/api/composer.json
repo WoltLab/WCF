@@ -15,13 +15,13 @@
         "true/punycode": "~2.0",
         "pear/net_idna2": "^0.2.0",
         "scssphp/scssphp": "^1.4",
-        "guzzlehttp/guzzle": "dev-proxy-stream",
+        "guzzlehttp/guzzle": "dev-master",
         "paragonie/constant_time_encoding": "^2.3"
     },
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/WoltLab/guzzle",
+            "url": "https://github.com/guzzle/guzzle",
             "no-api": true
         }
     ]

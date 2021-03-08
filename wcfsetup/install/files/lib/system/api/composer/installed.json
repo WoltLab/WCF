@@ -150,17 +150,17 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "dev-proxy-stream",
-            "version_normalized": "dev-proxy-stream",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/WoltLab/guzzle",
-                "reference": "4b5ae5a75ebad957902452f5bab984781bcd75a3"
+                "url": "https://github.com/guzzle/guzzle",
+                "reference": "da94ef2e433d77af516d69c0f7d3c1b8ecd566dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WoltLab/guzzle/zipball/4b5ae5a75ebad957902452f5bab984781bcd75a3",
-                "reference": "4b5ae5a75ebad957902452f5bab984781bcd75a3",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/da94ef2e433d77af516d69c0f7d3c1b8ecd566dc",
+                "reference": "da94ef2e433d77af516d69c0f7d3c1b8ecd566dc",
                 "shasum": ""
             },
             "require": {
@@ -184,7 +184,8 @@
                 "ext-intl": "Required for Internationalized Domain Name (IDN) support",
                 "psr/log": "Required for using the Log middleware"
             },
-            "time": "2021-02-01T10:18:22+00:00",
+            "time": "2021-03-07T12:07:08+00:00",
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
