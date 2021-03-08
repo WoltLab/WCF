@@ -657,8 +657,10 @@ EOT;
         \file_put_contents($filePrefix . '-rtl.css', $this->convertToRtl($css));
         FileUtil::makeWritable($filePrefix . '-rtl.css');
 
-        \file_put_contents($filePrefix . '-preload.json', JSON::encode($preloadManifest));
-        FileUtil::makeWritable($filePrefix . '-preload.json');
+        if ($preloadManifest) {
+            \file_put_contents($filePrefix . '-preload.json', JSON::encode($preloadManifest));
+            FileUtil::makeWritable($filePrefix . '-preload.json');
+        }
     }
 
     /**
