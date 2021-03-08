@@ -5,6 +5,7 @@ namespace wcf\data\user\option;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\user\User;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\option\user\IUserOptionOutput;
@@ -63,6 +64,10 @@ class ViewableUserOption extends DatabaseObjectDecorator
         } else {
             $this->optionValue = StringUtil::encodeHTML($optionValue);
         }
+
+        // allow option manipulation
+        $data = ['user' => $user, 'optionValue' => $optionValue];
+        EventHandler::getInstance()->fireAction($this, 'setOptionValue', $data);
     }
 
     /**
