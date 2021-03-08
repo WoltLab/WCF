@@ -3,6 +3,7 @@
 namespace wcf\system\user\signature;
 
 use wcf\data\user\User;
+use wcf\system\event\EventHandler;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\SingletonFactory;
@@ -26,7 +27,7 @@ class SignatureCache extends SingletonFactory
      * cached signatures
      * @var string
      */
-    protected $signatures = [];
+    public $signatures = [];
 
     /**
      * The userIDs which are cached by the message embedded object manager.
@@ -54,6 +55,9 @@ class SignatureCache extends SingletonFactory
             $this->htmlOutputProcessor->process($user->signature, 'com.woltlab.wcf.user.signature', $user->userID);
             $this->signatures[$user->userID] = $this->htmlOutputProcessor->getHtml();
         }
+
+        $data = ['user' => $user];
+        EventHandler::getInstance()->fireAction($this, 'getSignature', $data);
 
         return $this->signatures[$user->userID];
     }
