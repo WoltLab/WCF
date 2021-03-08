@@ -178,6 +178,8 @@ class StyleHandler extends SingletonFactory
                 @\unlink($stylesheet);
             }
         }
+
+        @\unlink(WCF_DIR . 'style/style-' . $style->styleID . '-preload.json');
     }
 
     /**
