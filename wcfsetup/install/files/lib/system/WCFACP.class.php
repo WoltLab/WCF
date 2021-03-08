@@ -178,8 +178,9 @@ class WCFACP extends WCF
 
                 exit;
             } else {
+                $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
                 // work-around for AJAX-requests within ACP
-                if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+                if ($isAjax) {
                     try {
                         WCF::getSession()->checkPermissions(['admin.general.canUseAcp']);
                     } catch (PermissionDeniedException $e) {
@@ -194,6 +195,13 @@ class WCFACP extends WCF
                 }
 
                 if (WCF::getSession()->needsReauthentication()) {
+                    if ($isAjax) {
+                        throw new AJAXException(
+                            self::getLanguage()->getDynamicVariable('wcf.user.reauthentication.explanation'),
+                            AJAXException::SESSION_EXPIRED
+                        );
+                    }
+
                     HeaderUtil::redirect(LinkHandler::getInstance()->getLink('Reauthentication', [
                         'url' => RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . WCF::getSession()->requestURI,
                     ]));
