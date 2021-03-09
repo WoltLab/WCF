@@ -1990,6 +1990,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		Unknown error.
 	{/if}
 {/implode}]]></item>
+		<item name="wcf.acp.package.application.isTainted"><![CDATA[The app{if $taintedApplication|isset} <strong>{$taintedApplication->getPackage()->getTitle()}</strong>{/if} is not fully installed. You need to uninstall and then reinstall the app to be able to use it.]]></item>
 	</category>
 	<category name="wcf.acp.paidSubscription">
 		<item name="wcf.acp.paidSubscription.list"><![CDATA[Paid Subscriptions]]></item>

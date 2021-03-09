@@ -11,6 +11,10 @@
 	<div class="warning">{lang evaluationEndDate=$evaluationEndDate}wcf.acp.package.evaluation.pending{/lang}</div>
 {/foreach}
 
+{foreach from=$taintedApplications item=$taintedApplication}
+	<div class="error">{lang}wcf.acp.package.application.isTainted{/lang}</div>
+{/foreach}
+
 {if TMP_DIR !== WCF_DIR|concat:'tmp/'}
 	<p class="error">{lang}wcf.acp.index.tmpBroken{/lang}</p>
 {/if}

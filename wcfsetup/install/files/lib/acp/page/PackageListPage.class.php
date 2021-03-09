@@ -4,6 +4,7 @@ namespace wcf\acp\page;
 
 use wcf\data\package\PackageList;
 use wcf\page\SortablePage;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
@@ -95,9 +96,19 @@ class PackageListPage extends SortablePage
     {
         parent::assignVariables();
 
+        $taintedApplications = [];
+        foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+            if (!$application->isTainted) {
+                continue;
+            }
+
+            $taintedApplications[$application->getPackage()->packageID] = $application;
+        }
+
         WCF::getTPL()->assign([
             'recentlyDisabledCustomValues' => LanguageFactory::getInstance()->countRecentlyDisabledCustomValues(),
             'packageID' => $this->packageID,
+            'taintedApplications' => $taintedApplications,
         ]);
     }
 
