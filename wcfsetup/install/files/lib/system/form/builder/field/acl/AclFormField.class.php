@@ -150,7 +150,7 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormNode {
 	 * @inheritDoc
 	 */
 	public function readValue() {
-		$valueSource = $_POST;
+		$valueSource = $_POST[$this->getPrefixedId()] ?? [];
 		if ($this->getDocument()->isAjax()) {
 			$valueSource = [];
 			if (
