@@ -79,8 +79,9 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * @param        string                categoryName
 		 * @param        integer                objectID
 		 * @param        boolean                includeUserGroups
+		 * @param        string|undefined       aclValuesFieldName
 		 */
-		init: function (containerSelector, objectTypeID, categoryName, objectID, includeUserGroups, initialPermissions) {
+		init: function (containerSelector, objectTypeID, categoryName, objectID, includeUserGroups, initialPermissions, aclValuesFieldName) {
 			this._objectID = objectID || 0;
 			this._objectTypeID = objectTypeID;
 			this._categoryName = categoryName;
@@ -91,6 +92,7 @@ if (COMPILER_TARGET_DEFAULT) {
 				group: {},
 				user: {}
 			};
+			this._aclValuesFieldName = aclValuesFieldName || 'aclValues';
 			
 			this._proxy = new WCF.Action.Proxy({
 				showLoadingOverlay: false,
@@ -595,7 +597,7 @@ if (COMPILER_TARGET_DEFAULT) {
 					var $object = this._values[$type][$objectID];
 					
 					for (var $optionID in $object) {
-						$('<input type="hidden" name="aclValues[' + $type + '][' + $objectID + '][' + $optionID + ']" value="' + $object[$optionID] + '" />').appendTo($form);
+						$('<input type="hidden" name="' + this._aclValuesFieldName + '[' + $type + '][' + $objectID + '][' + $optionID + ']" value="' + $object[$optionID] + '" />').appendTo($form);
 					}
 				}
 			}

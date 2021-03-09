@@ -24,9 +24,7 @@ define(['Core', './Field', 'WoltLabSuite/Core/Ui/ItemList'], function(Core, Form
 			var values = UiItemList.getValues(this._fieldId);
 			var usernames = [];
 			for (var i = 0, length = values.length; i < length; i++) {
-				if (values[i].objectId) {
-					usernames.push(values[i].value);
-				}
+				usernames.push(values[i].value);
 			}
 			
 			var data = {};
