@@ -117,11 +117,11 @@ export function format(date: Date, format: string): string {
         break;
       case "l":
         // `Monday` through `Sunday` (localized)
-        char = Language.get("__days")[date.getDay()];
+        char = ((Language.get("__days") as any) as string[])[date.getDay()];
         break;
       case "D":
         // `Mon` through `Sun` (localized)
-        char = Language.get("__daysShort")[date.getDay()];
+        char = ((Language.get("__daysShort") as any) as string[])[date.getDay()];
         break;
       case "S":
         // ignore english ordinal suffix
@@ -139,11 +139,11 @@ export function format(date: Date, format: string): string {
         break;
       case "F":
         // `January` through `December` (localized)
-        char = Language.get("__months")[date.getMonth()];
+        char = ((Language.get("__months") as any) as string[])[date.getMonth()];
         break;
       case "M":
         // `Jan` through `Dec` (localized)
-        char = Language.get("__monthsShort")[date.getMonth()];
+        char = ((Language.get("__monthsShort") as any) as string[])[date.getMonth()];
         break;
 
       // year

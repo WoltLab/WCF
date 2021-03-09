@@ -75,7 +75,7 @@ function createPicker() {
   monthYearContainer.appendChild(_dateMonth);
 
   let months = "";
-  const monthNames = Language.get("__monthsShort");
+  const monthNames = (Language.get("__monthsShort") as any) as string[];
   for (let i = 0; i < 12; i++) {
     months += `<option value="${i}">${monthNames[i]}</option>`;
   }
@@ -106,7 +106,7 @@ function createPicker() {
   item.className = "weekdays";
   _dateGrid.appendChild(item);
 
-  const weekdays = Language.get("__daysShort");
+  const weekdays = (Language.get("__daysShort") as any) as string[];
   for (let i = 0; i < 7; i++) {
     let day = i + _firstDayOfWeek;
     if (day > 6) {

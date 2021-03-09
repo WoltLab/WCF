@@ -26,7 +26,20 @@ define(["require", "exports", "tslib", "./Template", "./Language/Store", "./Lang
      * Adds a single language item to the store.
      */
     function add(key, value) {
-        Store_1.add(key, compile(value));
+        if (typeof value === "string") {
+            Store_1.add(key, compile(value));
+        }
+        else {
+            // Historically a few items that are added to the language store do not represent actual phrases, but
+            // instead contain a collection (i.e. Array) of items. Most notably these are entries related to date
+            // processing, containg lists of localized month / weekday names.
+            //
+            // Despite this method technically only taking `string`s as the `value` we need to correctly handle
+            // them which we do by simply storing a function that returns the value as-is.
+            Store_1.add(key, function () {
+                return value;
+            });
+        }
     }
     exports.add = add;
     /**

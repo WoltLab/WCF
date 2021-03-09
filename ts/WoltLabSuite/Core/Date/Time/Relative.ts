@@ -86,7 +86,7 @@ function rebuild(element: HTMLTimeElement, date: Date, timestamp: number): void 
     // get day of week
     const dateObj = DateUtil.getTimezoneDate(elTimestamp * 1000, parseInt(elOffset, 10) * 1000);
     const dow = dateObj.getDay();
-    const day = Language.get("__days")[dow];
+    const day = ((Language.get("__days") as any) as string[])[dow];
 
     element.textContent = Language.get("wcf.date.relative.pastDays", { days: days, day: day, time: elTime });
   }
