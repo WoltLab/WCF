@@ -556,6 +556,7 @@ class PackageInstallationDispatcher
                     'domainPath' => $path,
                     'cookieDomain' => $host,
                     'packageID' => $package->packageID,
+                    'isTainted' => 1,
                 ]);
             }
         }
@@ -1011,10 +1012,13 @@ class PackageInstallationDispatcher
 
                 $domainPath = FileUtil::addLeadingSlash($domainPath);
 
-                // update application path
+                // update application path and untaint application
                 $application = new Application($this->getPackage()->packageID);
                 $applicationEditor = new ApplicationEditor($application);
-                $applicationEditor->update(['domainPath' => $domainPath]);
+                $applicationEditor->update([
+                    'domainPath' => $domainPath,
+                    'isTainted' => 0,
+                ]);
 
                 // create directory and set permissions
                 @\mkdir($packageDir, 0777, true);
