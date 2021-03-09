@@ -15,15 +15,7 @@ import * as UiItemList from "../../../Ui/ItemList";
 
 class User extends Field {
   protected _getData(): FormBuilderData {
-    const usernames = UiItemList.getValues(this._fieldId)
-      .map((item) => {
-        if (item.objectId) {
-          return item.value;
-        }
-
-        return null;
-      })
-      .filter((v) => v !== null) as string[];
+    const usernames = UiItemList.getValues(this._fieldId).map((item) => item.value);
 
     return {
       [this._fieldId]: usernames.join(","),

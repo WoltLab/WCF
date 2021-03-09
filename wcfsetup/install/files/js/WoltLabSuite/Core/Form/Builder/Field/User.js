@@ -14,14 +14,7 @@ define(["require", "exports", "tslib", "./Field", "../../../Core", "../../../Ui/
     UiItemList = tslib_1.__importStar(UiItemList);
     class User extends Field_1.default {
         _getData() {
-            const usernames = UiItemList.getValues(this._fieldId)
-                .map((item) => {
-                if (item.objectId) {
-                    return item.value;
-                }
-                return null;
-            })
-                .filter((v) => v !== null);
+            const usernames = UiItemList.getValues(this._fieldId).map((item) => item.value);
             return {
                 [this._fieldId]: usernames.join(","),
             };

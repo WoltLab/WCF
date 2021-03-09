@@ -88,7 +88,15 @@
 			{/if}
 		{/if}
 		
-		var aclList = new {if $aclListClassName|isset}{@$aclListClassName}{else}WCF.ACL.List{/if}($('#{@$containerID}'), {@$objectTypeID}, {if $categoryName|isset}'{@$categoryName}'{else}null{/if}, {if $objectID|isset}{@$objectID}{else}0{/if}, {if !$includeUserGroups|isset || $includeUserGroups}true{else}false{/if}{if $aclValues[$objectTypeID]|isset}, initialPermissions{/if});
+		var aclList = new {if $aclListClassName|isset}{@$aclListClassName}{else}WCF.ACL.List{/if}(
+			$('#{@$containerID}'),
+			{@$objectTypeID},
+			{if $categoryName|isset}'{@$categoryName}'{else}null{/if},
+			{if $objectID|isset}{@$objectID}{else}0{/if},
+			{if !$includeUserGroups|isset || $includeUserGroups}true{else}false{/if},
+			{if $aclValues[$objectTypeID]|isset}initialPermissions{else}undefined{/if},
+			{if $aclValuesFieldName|isset}'{@$aclValuesFieldName}'{else}undefined{/if}
+		);
 		
 		{if !$aclFormBuilderMode|empty}
 			require(['WoltLabSuite/Core/Form/Builder/Manager'], function(FormBuilderManager) {
