@@ -86,7 +86,7 @@ final class ExifUtil
     public static function getExifData($filename)
     {
         if (\function_exists('exif_read_data')) {
-            $exifData = @exif_read_data($filename, '', true);
+            $exifData = @\exif_read_data($filename, '', true);
             if ($exifData !== false) {
                 return $exifData;
             }

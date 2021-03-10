@@ -86,8 +86,8 @@ class GDImageAdapter implements IImageAdapter
         $this->image = $image;
         $this->type = $type;
 
-        $this->height = imagesy($this->image);
-        $this->width = imagesx($this->image);
+        $this->height = \imagesy($this->image);
+        $this->width = \imagesx($this->image);
     }
 
     /**
@@ -99,12 +99,12 @@ class GDImageAdapter implements IImageAdapter
 
         switch ($this->type) {
             case \IMAGETYPE_GIF:
-                $this->image = imagecreatefromgif($file);
+                $this->image = \imagecreatefromgif($file);
                 break;
 
             case \IMAGETYPE_JPEG:
                 // suppress warnings and properly handle errors
-                $this->image = @imagecreatefromjpeg($file);
+                $this->image = @\imagecreatefromjpeg($file);
                 if ($this->image === false) {
                     throw new SystemException("Could not read jpeg image '" . $file . "'.");
                 }
@@ -112,7 +112,7 @@ class GDImageAdapter implements IImageAdapter
 
             case \IMAGETYPE_PNG:
                 // suppress warnings and properly handle errors
-                $this->image = @imagecreatefrompng($file);
+                $this->image = @\imagecreatefrompng($file);
                 if ($this->image === false) {
                     throw new SystemException("Could not read png image '" . $file . "'.");
                 }
@@ -120,7 +120,7 @@ class GDImageAdapter implements IImageAdapter
 
             case \IMAGETYPE_WEBP:
                 // suppress warnings and properly handle errors
-                $this->image = @imagecreatefromwebp($file);
+                $this->image = @\imagecreatefromwebp($file);
                 if ($this->image === false) {
                     throw new SystemException("Could not read webp image '" . $file . "'.");
                 }
@@ -136,7 +136,7 @@ class GDImageAdapter implements IImageAdapter
      */
     public function createEmptyImage($width, $height)
     {
-        $this->image = imagecreate($width, $height);
+        $this->image = \imagecreate($width, $height);
         $this->type = \IMAGETYPE_PNG;
         $this->setColor(0xFF, 0xFF, 0xFF);
         $this->color = null;
@@ -178,9 +178,9 @@ class GDImageAdapter implements IImageAdapter
         }
 
         // resize image
-        $image = imagecreatetruecolor((int)$width, (int)$height);
-        imagealphablending($image, false);
-        imagecopyresampled(
+        $image = \imagecreatetruecolor((int)$width, (int)$height);
+        \imagealphablending($image, false);
+        \imagecopyresampled(
             $image,
             $this->image,
             0,
@@ -192,7 +192,7 @@ class GDImageAdapter implements IImageAdapter
             (int)$sourceWidth,
             (int)$sourceHeight
         );
-        imagesavealpha($image, true);
+        \imagesavealpha($image, true);
 
         return $image;
     }
@@ -202,11 +202,11 @@ class GDImageAdapter implements IImageAdapter
      */
     public function clip($originX, $originY, $width, $height)
     {
-        $image = imagecreatetruecolor($width, $height);
-        imagealphablending($image, false);
+        $image = \imagecreatetruecolor($width, $height);
+        \imagealphablending($image, false);
 
-        imagecopy($image, $this->image, 0, 0, (int)$originX, (int)$originY, (int)$width, (int)$height);
-        imagesavealpha($image, true);
+        \imagecopy($image, $this->image, 0, 0, (int)$originX, (int)$originY, (int)$width, (int)$height);
+        \imagesavealpha($image, true);
 
         // reload image to update image resource, width and height
         $this->load($image, $this->type);
@@ -217,10 +217,10 @@ class GDImageAdapter implements IImageAdapter
      */
     public function resize($originX, $originY, $originWidth, $originHeight, $targetWidth = 0, $targetHeight = 0)
     {
-        $image = imagecreatetruecolor($targetWidth, $targetHeight);
-        imagealphablending($image, false);
+        $image = \imagecreatetruecolor($targetWidth, $targetHeight);
+        \imagealphablending($image, false);
 
-        imagecopyresampled(
+        \imagecopyresampled(
             $image,
             $this->image,
             0,
@@ -232,7 +232,7 @@ class GDImageAdapter implements IImageAdapter
             (int)$originWidth,
             (int)$originHeight
         );
-        imagesavealpha($image, true);
+        \imagesavealpha($image, true);
 
         // reload image to update image resource, width and height
         $this->load($image, $this->type);
@@ -243,7 +243,7 @@ class GDImageAdapter implements IImageAdapter
      */
     public function drawRectangle($startX, $startY, $endX, $endY)
     {
-        imagefilledrectangle($this->image, $startX, $startY, $endX, $endY, $this->color);
+        \imagefilledrectangle($this->image, $startX, $startY, $endX, $endY, $this->color);
     }
 
     /**
@@ -252,7 +252,7 @@ class GDImageAdapter implements IImageAdapter
     public function drawText($text, $x, $y, $font, $size, $opacity = 1.0)
     {
         // set opacity
-        $color = imagecolorallocatealpha(
+        $color = \imagecolorallocatealpha(
             $this->image,
             $this->colorData['red'],
             $this->colorData['green'],
@@ -261,7 +261,7 @@ class GDImageAdapter implements IImageAdapter
         );
 
         // draw text
-        imagettftext($this->image, $size, 0, $x, $y, $color, $font, $text);
+        \imagettftext($this->image, $size, 0, $x, $y, $color, $font, $text);
     }
 
     /**
@@ -273,8 +273,8 @@ class GDImageAdapter implements IImageAdapter
         $lines = \explode("\n", StringUtil::unifyNewlines($text));
 
         // calc text width, height and first line height
-        $box = imagettfbbox($size, 0, $font, $text);
-        $firstLineBox = imagettfbbox($size, 0, $font, $lines[0]);
+        $box = \imagettfbbox($size, 0, $font, $text);
+        $firstLineBox = \imagettfbbox($size, 0, $font, $lines[0]);
         $textWidth = \abs($box[0] - $box[2]);
         $textHeight = \abs($box[7] - $box[1]);
         $firstLineHeight = \abs($firstLineBox[7] - $firstLineBox[1]);
@@ -331,7 +331,7 @@ class GDImageAdapter implements IImageAdapter
      */
     public function textFitsImage($text, $margin, $font, $size)
     {
-        $box = imagettfbbox($size, 0, $font, $text);
+        $box = \imagettfbbox($size, 0, $font, $text);
 
         $textWidth = \abs($box[0] - $box[2]);
         $textHeight = \abs($box[7] - $box[1]);
@@ -352,7 +352,7 @@ class GDImageAdapter implements IImageAdapter
      */
     public function setColor($red, $green, $blue)
     {
-        $this->color = imagecolorallocate($this->image, $red, $green, $blue);
+        $this->color = \imagecolorallocate($this->image, $red, $green, $blue);
 
         // save data of the color
         $this->colorData = [
@@ -376,8 +376,8 @@ class GDImageAdapter implements IImageAdapter
     public function setTransparentColor($red, $green, $blue)
     {
         if ($this->type == \IMAGETYPE_PNG) {
-            $color = imagecolorallocate($this->image, $red, $green, $blue);
-            imagecolortransparent($this->image, $color);
+            $color = \imagecolorallocate($this->image, $red, $green, $blue);
+            \imagecolortransparent($this->image, $color);
         }
     }
 
@@ -394,17 +394,17 @@ class GDImageAdapter implements IImageAdapter
 
         // fix PNG alpha channel handling
         // see http://php.net/manual/en/function.imagecopymerge.php#92787
-        imagealphablending($image, false);
-        imagesavealpha($image, true);
+        \imagealphablending($image, false);
+        \imagesavealpha($image, true);
 
         if ($this->type == \IMAGETYPE_GIF) {
-            imagegif($image);
+            \imagegif($image);
         } elseif ($this->type == \IMAGETYPE_PNG) {
-            imagepng($image);
+            \imagepng($image);
         } elseif ($this->type == \IMAGETYPE_WEBP) {
-            imagewebp($image);
+            \imagewebp($image);
         } elseif (\function_exists('imageJPEG')) {
-            imagejpeg($image, null, 90);
+            \imagejpeg($image, null, 90);
         }
 
         $stream = \ob_get_contents();
@@ -451,7 +451,7 @@ class GDImageAdapter implements IImageAdapter
     public function rotate($degrees)
     {
         // imagerotate interpretes degrees as counter-clockwise
-        return imagerotate($this->image, 360.0 - $degrees, ($this->color ?: 0));
+        return \imagerotate($this->image, 360.0 - $degrees, ($this->color ?: 0));
     }
 
     /**
@@ -464,12 +464,12 @@ class GDImageAdapter implements IImageAdapter
 
         // fix PNG alpha channel handling
         // see http://php.net/manual/en/function.imagecopymerge.php#92787
-        $cut = imagecreatetruecolor($overlayImage->getWidth(), $overlayImage->getHeight());
-        imagealphablending($cut, false);
-        imagesavealpha($cut, true);
+        $cut = \imagecreatetruecolor($overlayImage->getWidth(), $overlayImage->getHeight());
+        \imagealphablending($cut, false);
+        \imagesavealpha($cut, true);
 
-        imagecopy($cut, $this->image, 0, 0, $x, $y, $overlayImage->getWidth(), $overlayImage->getHeight());
-        imagecopy($cut, $overlayImage->image, 0, 0, 0, 0, $overlayImage->getWidth(), $overlayImage->getHeight());
+        \imagecopy($cut, $this->image, 0, 0, $x, $y, $overlayImage->getWidth(), $overlayImage->getHeight());
+        \imagecopy($cut, $overlayImage->image, 0, 0, 0, 0, $overlayImage->getWidth(), $overlayImage->getHeight());
 
         $this->imagecopymerge_alpha(
             $this->image,
@@ -508,15 +508,15 @@ class GDImageAdapter implements IImageAdapter
         }
         $pct /= 100;
         // Get image width and height
-        $w = imagesx($src_im);
-        $h = imagesy($src_im);
+        $w = \imagesx($src_im);
+        $h = \imagesy($src_im);
         // Turn alpha blending off
-        imagealphablending($src_im, false);
+        \imagealphablending($src_im, false);
         // Find the most opaque pixel in the image (the one with the smallest alpha value)
         $minalpha = 127;
         for ($x = 0; $x < $w; $x++) {
             for ($y = 0; $y < $h; $y++) {
-                $alpha = (imagecolorat($src_im, $x, $y) >> 24) & 0xFF;
+                $alpha = (\imagecolorat($src_im, $x, $y) >> 24) & 0xFF;
                 if ($alpha < $minalpha) {
                     $minalpha = $alpha;
                 }
@@ -526,7 +526,7 @@ class GDImageAdapter implements IImageAdapter
         for ($x = 0; $x < $w; $x++) {
             for ($y = 0; $y < $h; $y++) {
                 // get current alpha value (represents the TANSPARENCY!)
-                $colorxy = imagecolorat($src_im, $x, $y);
+                $colorxy = \imagecolorat($src_im, $x, $y);
                 $alpha = ($colorxy >> 24) & 0xFF;
                 // calculate new alpha
                 if ($minalpha !== 127) {
@@ -535,7 +535,7 @@ class GDImageAdapter implements IImageAdapter
                     $alpha += 127 * $pct;
                 }
                 // get the color index with new alpha
-                $alphacolorxy = imagecolorallocatealpha(
+                $alphacolorxy = \imagecolorallocatealpha(
                     $src_im,
                     ($colorxy >> 16) & 0xFF,
                     ($colorxy >> 8) & 0xFF,
@@ -543,13 +543,13 @@ class GDImageAdapter implements IImageAdapter
                     $alpha
                 );
                 // set pixel with the new color + opacity
-                if (!imagesetpixel($src_im, $x, $y, $alphacolorxy)) {
+                if (!\imagesetpixel($src_im, $x, $y, $alphacolorxy)) {
                     return false;
                 }
             }
         }
         // The image copy
-        imagecopy($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h);
+        \imagecopy($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h);
 
         return true;
     }
@@ -575,25 +575,25 @@ class GDImageAdapter implements IImageAdapter
 
         // fix PNG alpha channel handling
         // see http://php.net/manual/en/function.imagecopymerge.php#92787
-        imagealphablending($image, false);
-        imagesavealpha($image, true);
+        \imagealphablending($image, false);
+        \imagesavealpha($image, true);
 
         switch ($type) {
             case "gif":
-                imagegif($image);
+                \imagegif($image);
                 break;
 
             case "jpg":
             case "jpeg":
-                imagejpeg($image, null, $quality);
+                \imagejpeg($image, null, $quality);
                 break;
 
             case "png":
-                imagepng($image, null, $quality);
+                \imagepng($image, null, $quality);
                 break;
 
             case "webp":
-                imagewebp($image, null, $quality);
+                \imagewebp($image, null, $quality);
                 break;
 
             default:

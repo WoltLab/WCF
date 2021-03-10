@@ -220,7 +220,7 @@ class FileReader
         // in more readable filenames for Umlauts, because they will be converted
         // into the base character instead of an underscore.
         if (\function_exists('transliterator_transliterate')) {
-            return transliterator_transliterate('Latin-ASCII', $filename);
+            return \transliterator_transliterate('Latin-ASCII', $filename);
         } else {
             return \preg_replace('/[^\x20-\x7E]/', '_', $filename);
         }
