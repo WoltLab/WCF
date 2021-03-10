@@ -10,8 +10,10 @@ use wcf\system\message\unfurl\exception\DownloadFailed;
 use wcf\system\message\unfurl\exception\ParsingFailed;
 use wcf\system\message\unfurl\exception\UrlInaccessible;
 use wcf\system\message\unfurl\UnfurlResponse;
+use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
+use wcf\util\Url;
 
 /**
  * Represents a background job to get information for an url.
@@ -79,42 +81,22 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
                 $description = StringUtil::truncate($unfurlResponse->getDescription());
             }
 
-            if ($unfurlResponse->getImageUrl()) {
-                try {
-                    $image = $this->downloadImage($unfurlResponse->getImage());
-                    $imageData = \getimagesizefromstring($image);
-                    if ($imageData !== false) {
-                        $imageType = $this->validateImage($imageData);
-                        if (!(MODULE_IMAGE_PROXY || IMAGE_ALLOW_EXTERNAL_SOURCE)) {
-                            $imageHash = $this->saveImage($imageData, $image);
-                        } else {
-                            $imageHash = "";
-                        }
-                    } else {
-                        $imageType = UnfurlUrl::IMAGE_NO_IMAGE;
-                    }
+            $imageData = [];
+            $imageID = null;
+            if ($unfurlResponse->getImageUrl() && Url::is($unfurlResponse->getImageUrl())) {
+                $imageID = self::getImageIdByUrl($unfurlResponse->getImageUrl());
 
-                    if ($imageType === UnfurlUrl::IMAGE_NO_IMAGE) {
-                        $imageUrl = $imageHash = "";
-                    } else {
-                        $imageUrl = $unfurlResponse->getImageUrl();
-                    }
-                } catch (UrlInaccessible | DownloadFailed $e) {
-                    $imageType = UnfurlUrl::IMAGE_NO_IMAGE;
-                    $imageUrl = $imageHash = "";
+                if ($imageID === null) {
+                    $imageData = $this->getImageData($unfurlResponse);
                 }
-            } else {
-                $imageType = UnfurlUrl::IMAGE_NO_IMAGE;
-                $imageUrl = $imageHash = "";
             }
 
             $this->save(
                 UnfurlUrl::STATUS_SUCCESSFUL,
                 $title,
                 $description,
-                $imageType,
-                $imageUrl,
-                $imageHash
+                $imageID,
+                $imageData
             );
         } catch (UrlInaccessible | ParsingFailed $e) {
             if (\ENABLE_DEBUG_MODE) {
@@ -123,6 +105,54 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
 
             $this->save(UnfurlUrl::STATUS_REJECTED);
         }
+    }
+
+    private function getImageData(UnfurlResponse $unfurlResponse): array
+    {
+        $imageSaveData = [];
+
+        if (empty($unfurlResponse->getImageUrl()) || !Url::is($unfurlResponse->getImageUrl())) {
+            throw new BadMethodCallException("Invalid image given.");
+        }
+
+        try {
+            $imageResponse = $unfurlResponse->getImage();
+            $image = $this->downloadImage($imageResponse);
+            $imageData = \getimagesizefromstring($image);
+
+            if ($imageData !== false) {
+                if ($this->validateImage($imageData)) {
+                    $imageSaveData['imageUrl'] = $unfurlResponse->getImageUrl();
+                    $imageSaveData['width'] = $imageData[0];
+                    $imageSaveData['height'] = $imageData[1];
+                    if (!(MODULE_IMAGE_PROXY || IMAGE_ALLOW_EXTERNAL_SOURCE)) {
+                        $imageSaveData['imageHash'] = $this->saveImage($imageData, $image);
+                        $imageSaveData['imageExtension'] = $this->getImageExtension($imageData);
+                    }
+                }
+            }
+        } catch (UrlInaccessible | DownloadFailed $e) {
+            $imageSaveData = [];
+        }
+
+        return $imageSaveData;
+    }
+
+    private static function getImageIdByUrl(string $url): ?int
+    {
+        $sql = "SELECT  imageID
+                FROM    wcf" . WCF_N . "_unfurl_url_image
+                WHERE   imageUrl = ?";
+        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement->execute([$url]);
+
+        $imageID = $statement->fetchSingleColumn();
+
+        if ($imageID === false) {
+            return null;
+        }
+
+        return $imageID;
     }
 
     private function downloadImage(Response $imageResponse): string
@@ -143,44 +173,31 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
         return $image;
     }
 
-    private function validateImage(array $imageData): string
+    private function validateImage(array $imageData): bool
     {
         $isSquared = $imageData[0] === $imageData[1];
         if (
             (!$isSquared && ($imageData[0] < 300 && $imageData[1] < 150))
             || \min($imageData[0], $imageData[1]) < 50
         ) {
-            return UnfurlUrl::IMAGE_NO_IMAGE;
-        } else {
-            if ($isSquared) {
-                return UnfurlUrl::IMAGE_SQUARED;
-            } else {
-                return UnfurlUrl::IMAGE_COVER;
-            }
+            return false;
         }
+
+        if (!$this->getImageExtension($imageData)) {
+            return false;
+        }
+
+        return true;
     }
 
     private function saveImage(array $imageData, string $image): string
     {
-        switch ($imageData[2]) {
-            case \IMAGETYPE_PNG:
-                $extension = 'png';
-                break;
-            case \IMAGETYPE_GIF:
-                $extension = 'gif';
-                break;
-            case \IMAGETYPE_JPEG:
-                $extension = 'jpg';
-                break;
-
-            default:
-                throw new DownloadFailed();
-        }
-
         $imageHash = \sha1($image);
 
         $path = WCF_DIR . 'images/unfurlUrl/' . \substr($imageHash, 0, 2);
         FileUtil::makePath($path);
+
+        $extension = $this->getImageExtension($imageData);
 
         $fileLocation = $path . '/' . $imageHash . '.' . $extension;
 
@@ -188,16 +205,33 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
 
         @\touch($fileLocation);
 
-        return $imageHash . '.' . $extension;
+        return $imageHash;
+    }
+
+    private function getImageExtension(array $imageData): ?string
+    {
+        switch ($imageData[2]) {
+            case \IMAGETYPE_PNG:
+                return 'png';
+                break;
+            case \IMAGETYPE_GIF:
+                return 'gif';
+                break;
+            case \IMAGETYPE_JPEG:
+                return 'jpg';
+                break;
+
+            default:
+                return null;
+        }
     }
 
     private function save(
         string $status,
         string $title = "",
         string $description = "",
-        string $imageType = UnfurlUrl::IMAGE_NO_IMAGE,
-        string $imageUrl = "",
-        string $imageHash = ""
+        ?int $imageID = null,
+        array $imageData = []
     ): void {
         switch ($status) {
             case UnfurlUrl::STATUS_PENDING:
@@ -209,14 +243,8 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
                 throw new BadMethodCallException("Invalid status '{$status}' given.");
         }
 
-        switch ($imageType) {
-            case UnfurlUrl::IMAGE_COVER:
-            case UnfurlUrl::IMAGE_NO_IMAGE:
-            case UnfurlUrl::IMAGE_SQUARED:
-                break;
-
-            default:
-                throw new BadMethodCallException("Invalid imageType '{$imageType}' given.");
+        if ($imageID !== null && !empty($imageData)) {
+            throw new BadMethodCallException("You cannot pass an imageID and imageData at the same time.");
         }
 
         $urlAction = new UnfurlUrlAction([$this->urlID], 'update', [
@@ -224,11 +252,10 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
                 'status' => $status,
                 'title' => $title,
                 'description' => $description,
-                'imageType' => $imageType,
-                'imageUrl' => $imageUrl,
-                'imageHash' => $imageHash,
+                'imageID' => $imageID,
                 'lastFetch' => TIME_NOW,
             ],
+            'imageData' => $imageData,
         ]);
         $urlAction->executeAction();
     }

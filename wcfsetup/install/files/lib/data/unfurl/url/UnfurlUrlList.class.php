@@ -20,4 +20,19 @@ use wcf\data\DatabaseObjectList;
  */
 class UnfurlUrlList extends DatabaseObjectList
 {
+    /**
+     * @inheritDoc
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        if (!empty($this->sqlSelects)) {
+            $this->sqlSelects .= ',';
+        }
+        $this->sqlSelects .= "unfurl_url_image.*";
+        $this->sqlJoins .= "
+            LEFT JOIN   wcf" . WCF_N . "_unfurl_url_image unfurl_url_image
+            ON          unfurl_url_image.imageID = unfurl_url.imageID";
+    }
 }

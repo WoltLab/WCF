@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Makes non-critical database adjustments (i.e. everything that is not related
+     * Makes non-critical database adjustments (i.e. everything that is not related
  * to sessions).
  *
  * @author  Tim Duesterhus
@@ -221,6 +221,27 @@ return [
             DefaultFalseBooleanDatabaseTableColumn::create('invertPermissions'),
         ]),
 
+    DatabaseTable::create('wcf1_unfurl_url_image')
+        ->columns([
+            ObjectIdDatabaseTableColumn::create('imageID'),
+            TextDatabaseTableColumn::create('imageUrl')
+                ->notNull(),
+            VarcharDatabaseTableColumn::create('imageHash')
+                ->notNull()
+                ->length(40),
+            NotNullInt10DatabaseTableColumn::create('width'),
+            NotNullInt10DatabaseTableColumn::create('height'),
+            VarcharDatabaseTableColumn::create('imageExtension')
+                ->length(4),
+        ])
+        ->indices([
+            DatabaseTablePrimaryIndex::create()
+                ->columns(['imageID']),
+            DatabaseTableIndex::create('imageHash')
+                ->type(DatabaseTableIndex::UNIQUE_TYPE)
+                ->columns(['imageHash']),
+        ]),
+
     DatabaseTable::create('wcf1_unfurl_url')
         ->columns([
             ObjectIdDatabaseTableColumn::create('urlID'),
@@ -232,14 +253,8 @@ return [
             NotNullVarchar255DatabaseTableColumn::create('title'),
             TextDatabaseTableColumn::create('description')
                 ->notNull(),
-            TextDatabaseTableColumn::create('imageUrl')
-                ->notNull()
-                ->defaultValue(''),
-            NotNullVarchar255DatabaseTableColumn::create('imageType')
-                ->defaultValue('NOIMAGE'),
-            VarcharDatabaseTableColumn::create('imageHash')
-                ->notNull()
-                ->length(45),
+            IntDatabaseTableColumn::create('imageID')
+                ->length(10),
             NotNullVarchar255DatabaseTableColumn::create('status')
                 ->defaultValue('PENDING'),
             NotNullInt10DatabaseTableColumn::create('lastFetch')
@@ -251,5 +266,12 @@ return [
             DatabaseTableIndex::create('urlHash')
                 ->type(DatabaseTableIndex::UNIQUE_TYPE)
                 ->columns(['urlHash']),
+        ])
+        ->foreignKeys([
+            DatabaseTableForeignKey::create()
+                ->columns(['imageID'])
+                ->referencedTable('wcf1_unfurl_url_image')
+                ->referencedColumns(['imageID'])
+                ->onDelete('SET NULL'),
         ]),
 ];
