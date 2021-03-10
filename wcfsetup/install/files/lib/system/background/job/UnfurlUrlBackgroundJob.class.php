@@ -78,7 +78,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
             $title = StringUtil::truncate($unfurlResponse->getTitle(), 255);
             $description = "";
             if ($unfurlResponse->getDescription()) {
-                $description = StringUtil::truncate($unfurlResponse->getDescription());
+                $description = StringUtil::truncate($unfurlResponse->getDescription(), 160);
             }
 
             $imageData = [];
