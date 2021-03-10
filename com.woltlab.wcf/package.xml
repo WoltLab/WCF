@@ -73,6 +73,9 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 	lib/system/package/plugin/FilePackageInstallationPlugin.class.php
 		-->
 		<instruction type="file" run="standalone">files_pre.tar</instruction>
+		
+		<!-- Deploy some of the options before running the upgrade to not brick the login if the upgrade aborts. -->
+		<instruction type="option" run="standalone">option_5.4.xml</instruction>
 
 		<!-- Preparations for the new session system. -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_1_cookies.php</instruction>
@@ -84,7 +87,7 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 		<instruction type="acpTemplate" />
 		<instruction type="template" />
 		
-		<!-- Make the new options available as early as possible. -->
+		<!-- Make all the new options available as early as possible. -->
 		<instruction type="option" run="standalone" />
 		
 		<!-- Cleanup for the new session system. -->
