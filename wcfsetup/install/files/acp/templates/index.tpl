@@ -4,16 +4,16 @@
 	<h1 class="contentTitle">{lang}wcf.global.acp{/lang}</h1>
 </header>
 
-{if !$evaluationExpired|empty}
-	{foreach from=$evaluationExpired item=$expiredApp}
-		<p class="error">{lang packageName=$expiredApp[packageName] isWoltLab=$expiredApp[isWoltLab] pluginStoreFileID=$expiredApp[pluginStoreFileID]}wcf.acp.package.evaluation.expired{/lang}</p>
-	{/foreach}
-{/if}
-{if !$evaluationPending|empty}
-	{foreach from=$evaluationPending key=$evaluationEndDate item=$pendingApps}
-		<div class="warning">{lang evaluationEndDate=$evaluationEndDate}wcf.acp.package.evaluation.pending{/lang}</div>
-	{/foreach}
-{/if}
+{foreach from=$evaluationExpired item=$expiredApp}
+	<p class="error">{lang packageName=$expiredApp[packageName] isWoltLab=$expiredApp[isWoltLab] pluginStoreFileID=$expiredApp[pluginStoreFileID]}wcf.acp.package.evaluation.expired{/lang}</p>
+{/foreach}
+{foreach from=$evaluationPending key=$evaluationEndDate item=$pendingApps}
+	<div class="warning">{lang evaluationEndDate=$evaluationEndDate}wcf.acp.package.evaluation.pending{/lang}</div>
+{/foreach}
+
+{foreach from=$taintedApplications item=$taintedApplication}
+	<div class="error">{lang}wcf.acp.package.application.isTainted{/lang}</div>
+{/foreach}
 
 {if TMP_DIR !== WCF_DIR|concat:'tmp/'}
 	<p class="error">{lang}wcf.acp.index.tmpBroken{/lang}</p>

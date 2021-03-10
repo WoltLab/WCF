@@ -2006,6 +2006,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		Unbekannter Fehler.
 	{/if}
 {/implode}]]></item>
+		<item name="wcf.acp.package.application.isTainted"><![CDATA[Die App{if $taintedApplication|isset} <strong>{$taintedApplication->getPackage()->getTitle()}</strong>{/if} ist nicht vollständig installiert. Für eine weitere Verwendung der App ist eine Deinstallation mit anschließender Neuinstallation von Nöten.]]></item>
 	</category>
 	<category name="wcf.acp.page">
 		<item name="wcf.acp.page.add"><![CDATA[Seite hinzufügen]]></item>

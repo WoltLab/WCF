@@ -58,6 +58,10 @@
 	{/hascontent}
 </header>
 
+{foreach from=$taintedApplications item=$taintedApplication}
+	<div class="error">{lang}wcf.acp.package.application.isTainted{/lang}</div>
+{/foreach}
+
 {if $recentlyDisabledCustomValues > 0}
 	<p class="warning">{lang}wcf.acp.language.item.hasRecentlyDisabledCustomValues{/lang}</p>
 {/if}
@@ -98,6 +102,12 @@
 						<td class="columnID">{@$package->packageID}</td>
 						<td id="packageName{@$package->packageID}" class="columnTitle" title="{$package->getDescription()}">
 							<a href="{link controller='Package' id=$package->packageID}{/link}"><span>{$package}</span></a>
+							{if $taintedApplications[$package->packageID]|isset}
+								<span
+									class="icon icon16 fa-warning jsTooltip"
+									title="{lang taintedApplication=null}wcf.acp.package.application.isTainted{/lang}"
+								></span>
+							{/if}
 						</td>
 						<td class="columnText">{if $package->authorURL}<a href="{$package->authorURL}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</td>
 						<td class="columnText">{$package->packageVersion}</td>
