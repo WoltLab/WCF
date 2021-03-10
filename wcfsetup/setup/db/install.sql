@@ -1672,6 +1672,7 @@ CREATE TABLE wcf1_user_ignore (
 	userID INT(10) NOT NULL,
 	ignoreUserID INT(10) NOT NULL,
 	time INT(10) NOT NULL DEFAULT 0,
+	type TINYINT(1) NOT NULL DEFAULT 1,
 	UNIQUE KEY (userID, ignoreUserID)
 );
 
