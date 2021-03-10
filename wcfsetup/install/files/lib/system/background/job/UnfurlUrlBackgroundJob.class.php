@@ -85,10 +85,14 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
             $imageData = [];
             $imageID = null;
             if ($unfurlResponse->getImageUrl()) {
-                $imageUrl = StringUtil::trim($unfurlResponse->getImageUrl());
+                $imageUrl = $unfurlResponse->getImageUrl();
 
-                if (Url::is($imageUrl)) {
-                    $imageID = self::getImageIdByUrl($unfurlResponse->getImageUrl());
+                if (
+                    \strpos($imageUrl, '\\') === false
+                    && \strpos($imageUrl, "'") === false
+                    && Url::is($imageUrl)
+                ) {
+                    $imageID = self::getImageIdByUrl($imageUrl);
 
                     if ($imageID === null) {
                         $imageData = $this->getImageData($unfurlResponse);
