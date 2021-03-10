@@ -14,9 +14,77 @@
 	{/hascontent}
 </header>
 
+<form method="post" action="{link controller='UserAuthenticationFailureList'}{/link}">
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
+
+		<div class="row rowColGap formGrid">
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<select name="filter[environment]" id="environment">
+						<option value="">{lang}wcf.acp.user.authentication.failure.environment{/lang}</option>
+						<option value="admin"{if $filter[environment] === 'admin'} selected{/if}>{lang}wcf.acp.user.authentication.failure.environment.admin{/lang}</option>
+						<option value="user"{if $filter[environment] === 'user'} selected{/if}>{lang}wcf.acp.user.authentication.failure.environment.user{/lang}</option>
+					</select>
+				</dd>
+			</dl>
+
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<input type="text" id="username" name="filter[username]" value="{$filter[username]}" placeholder="{lang}wcf.user.username{/lang}" class="long">
+				</dd>
+			</dl>
+
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<select name="filter[validationError]" id="validationError">
+						<option value="">{lang}wcf.acp.user.authentication.failure.validationError{/lang}</option>
+						<option value="invalidPassword"{if $filter[validationError] === 'invalidPassword'} selected{/if}>{lang}wcf.acp.user.authentication.failure.validationError.invalidPassword{/lang}</option>
+						<option value="invalidUsername"{if $filter[validationError] === 'invalidUsername'} selected{/if}>{lang}wcf.acp.user.authentication.failure.validationError.invalidUsername{/lang}</option>
+						{event name='validationErrorFilterOptions'}
+					</select>
+				</dd>
+			</dl>
+
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<input type="date" id="startDate" name="filter[startDate]" value="{$filter[startDate]}" data-placeholder="{lang}wcf.acp.user.authentication.failure.time.start{/lang}">
+				</dd>
+			</dl>
+
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<input type="date" id="endDate" name="filter[endDate]" value="{$filter[endDate]}" data-placeholder="{lang}wcf.acp.user.authentication.failure.time.end{/lang}">
+				</dd>
+			</dl>
+
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<input type="text" id="userAgent" name="filter[userAgent]" value="{$filter[userAgent]}" placeholder="{lang}wcf.user.userAgent{/lang}" class="long">
+				</dd>
+			</dl>
+
+			{event name='filterFields'}
+		</div>
+
+		<div class="formSubmit">
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+			{csrfToken}
+		</div>
+	</section>
+</form>
+
 {hascontent}
 	<div class="paginationTop">
-		{content}{pages print=true assign=pagesLinks controller='UserAuthenticationFailureList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}{/content}
+		{content}
+			{pages print=true assign=pagesLinks controller='UserAuthenticationFailureList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$filterLinkParameters"}
+		{/content}
 	</div>
 {/hascontent}
 
