@@ -194,7 +194,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
     {
         $imageHash = \sha1($image);
 
-        $path = WCF_DIR . 'images/unfurlUrl/' . \substr($imageHash, 0, 2);
+        $path = WCF_DIR . UnfurlUrl::IMAGE_DIR . \substr($imageHash, 0, 2);
         FileUtil::makePath($path);
 
         $extension = $this->getImageExtension($imageData);
