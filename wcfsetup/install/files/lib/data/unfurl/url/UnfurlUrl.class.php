@@ -130,6 +130,11 @@ class UnfurlUrl extends DatabaseObject
         return $this->getImageType() === self::IMAGE_SQUARED && !empty($this->getImageUrl());
     }
 
+    public function isPlainUrl(): bool
+    {
+        return empty($this->description) && empty($this->imageID);
+    }
+
     private function getImageType(): string
     {
         if (!$this->imageID) {
