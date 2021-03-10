@@ -75,19 +75,23 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
                 return;
             }
 
-            $title = StringUtil::truncate($unfurlResponse->getTitle(), 255);
+            $title = StringUtil::truncate(StringUtil::trim($unfurlResponse->getTitle()), 255);
             $description = "";
             if ($unfurlResponse->getDescription()) {
-                $description = StringUtil::truncate($unfurlResponse->getDescription(), 160);
+                $description = StringUtil::truncate(StringUtil::trim($unfurlResponse->getDescription()), 160);
             }
 
             $imageData = [];
             $imageID = null;
-            if ($unfurlResponse->getImageUrl() && Url::is($unfurlResponse->getImageUrl())) {
-                $imageID = self::getImageIdByUrl($unfurlResponse->getImageUrl());
+            if ($unfurlResponse->getImageUrl()) {
+                $imageUrl = StringUtil::trim($unfurlResponse->getImageUrl());
 
-                if ($imageID === null) {
-                    $imageData = $this->getImageData($unfurlResponse);
+                if (Url::is($imageUrl)) {
+                    $imageID = self::getImageIdByUrl($unfurlResponse->getImageUrl());
+
+                    if ($imageID === null) {
+                        $imageData = $this->getImageData($unfurlResponse);
+                    }
                 }
             }
 
@@ -122,7 +126,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
 
             if ($imageData !== false) {
                 if ($this->validateImage($imageData)) {
-                    $imageSaveData['imageUrl'] = $unfurlResponse->getImageUrl();
+                    $imageSaveData['imageUrl'] = StringUtil::trim($unfurlResponse->getImageUrl());
                     $imageSaveData['width'] = $imageData[0];
                     $imageSaveData['height'] = $imageData[1];
                     if (!(MODULE_IMAGE_PROXY || IMAGE_ALLOW_EXTERNAL_SOURCE)) {
