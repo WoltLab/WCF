@@ -207,8 +207,6 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
 
         \file_put_contents($fileLocation, $image);
 
-        @\touch($fileLocation);
-
         return $imageHash;
     }
 
