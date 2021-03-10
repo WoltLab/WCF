@@ -122,12 +122,12 @@ class UnfurlUrl extends DatabaseObject
 
     public function hasCoverImage(): bool
     {
-        return $this->getImageType() == self::IMAGE_COVER && !empty($this->getImageUrl());
+        return $this->getImageType() === self::IMAGE_COVER && !empty($this->getImageUrl());
     }
 
     public function hasSquaredImage(): bool
     {
-        return $this->getImageType() == self::IMAGE_SQUARED && !empty($this->getImageUrl());
+        return $this->getImageType() === self::IMAGE_SQUARED && !empty($this->getImageUrl());
     }
 
     private function getImageType(): string
@@ -136,7 +136,7 @@ class UnfurlUrl extends DatabaseObject
             return self::IMAGE_NO_IMAGE;
         }
 
-        if ($this->width == $this->height) {
+        if ($this->width === $this->height) {
             return self::IMAGE_SQUARED;
         }
 

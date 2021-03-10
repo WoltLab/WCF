@@ -12,6 +12,7 @@ use wcf\system\message\unfurl\exception\UrlInaccessible;
 use wcf\system\message\unfurl\UnfurlResponse;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\ImageUtil;
 use wcf\util\StringUtil;
 use wcf\util\Url;
 
@@ -116,7 +117,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
         $imageSaveData = [];
 
         if (empty($unfurlResponse->getImageUrl()) || !Url::is($unfurlResponse->getImageUrl())) {
-            throw new BadMethodCallException("Invalid image given.");
+            throw new \InvalidArgumentException("The given response does not have an image.");
         }
 
         try {
@@ -212,15 +213,13 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
 
     private function getImageExtension(array $imageData): ?string
     {
-        switch ($imageData[2]) {
-            case \IMAGETYPE_PNG:
-                return 'png';
-
-            case \IMAGETYPE_GIF:
-                return 'gif';
-
-            case \IMAGETYPE_JPEG:
-                return 'jpg';
+        $extension = ImageUtil::getExtensionByMimeType($imageData['mime']);
+        switch ($extension) {
+            case 'gif':
+            case 'jpg':
+            case 'png':
+            case 'webp':
+                return $extension;
 
             default:
                 return null;
@@ -241,7 +240,7 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
                 break;
 
             default:
-                throw new BadMethodCallException("Invalid status '{$status}' given.");
+                throw new \InvalidArgumentException("Invalid status '{$status}' given.");
         }
 
         if ($imageID !== null && !empty($imageData)) {

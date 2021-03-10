@@ -1,7 +1,7 @@
 <?php
 
 /**
-     * Makes non-critical database adjustments (i.e. everything that is not related
+ * Makes non-critical database adjustments (i.e. everything that is not related
  * to sessions).
  *
  * @author  Tim Duesterhus
