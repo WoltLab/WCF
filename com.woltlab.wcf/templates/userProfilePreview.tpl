@@ -52,16 +52,10 @@
 				$(function() {
 					WCF.Language.addObject({
 						'wcf.user.button.follow': '{jslang}wcf.user.button.follow{/jslang}',
-						'wcf.user.button.ignore': '{jslang}wcf.user.button.ignore{/jslang}',
 						'wcf.user.button.unfollow': '{jslang}wcf.user.button.unfollow{/jslang}',
-						'wcf.user.button.unignore': '{jslang}wcf.user.button.unignore{/jslang}'
 					});
 					
 					new WCF.User.Action.Follow($('.userInformation'));
-					
-					{if !$user->getPermission('user.profile.cannotBeIgnored')}
-						new WCF.User.Action.Ignore($('.userInformation'));
-					{/if}
 				});
 			</script>
 		{/if}
