@@ -213,13 +213,12 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
         switch ($imageData[2]) {
             case \IMAGETYPE_PNG:
                 return 'png';
-                break;
+
             case \IMAGETYPE_GIF:
                 return 'gif';
-                break;
+
             case \IMAGETYPE_JPEG:
                 return 'jpg';
-                break;
 
             default:
                 return null;
