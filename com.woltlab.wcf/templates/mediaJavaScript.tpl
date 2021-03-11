@@ -5,7 +5,6 @@
 			'wcf.media.button.replaceFile': '{jslang}wcf.media.button.replaceFile{/jslang}',
 			'wcf.media.button.select': '{jslang}wcf.media.button.select{/jslang}',
 			'wcf.media.delete.confirmMessage': '{jslang __encode=true __literal=true}wcf.media.delete.confirmMessage{/jslang}',
-			'wcf.media.imageDimensions.value': '{jslang __literal=true}wcf.media.imageDimensions.value{/jslang}',
 			'wcf.media.insert': '{jslang}wcf.media.insert{/jslang}',
 			'wcf.media.insert.imageSize': '{jslang}wcf.media.insert.imageSize{/jslang}',
 			'wcf.media.insert.imageSize.small': '{jslang}wcf.media.insert.imageSize.small{/jslang}',
