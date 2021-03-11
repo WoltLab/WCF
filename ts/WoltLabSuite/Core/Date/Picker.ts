@@ -794,7 +794,7 @@ const DatePicker = {
           if (!disableClear) {
             const button = document.createElement("a");
             button.className = "inputSuffix button";
-            button.addEventListener("click", this.clear.bind(this, element));
+            button.addEventListener("click", () => this.clear(element));
             if (isEmpty) {
               button.style.setProperty("visibility", "hidden", "");
             }
