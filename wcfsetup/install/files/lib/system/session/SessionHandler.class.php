@@ -659,7 +659,7 @@ final class SessionHandler extends SingletonFactory
         $this->legacySession = $statement->fetchSingleObject(LegacySession::class);
 
         if (!$this->legacySession) {
-            $this->createLegacySession();
+            $this->legacySession = $this->createLegacySession();
         }
 
         return true;
@@ -717,11 +717,11 @@ final class SessionHandler extends SingletonFactory
         }
 
         if (!$this->legacySession) {
-            $this->createLegacySession();
+            $this->legacySession = $this->createLegacySession();
         }
     }
 
-    private function createLegacySession()
+    private function createLegacySession(): LegacySession
     {
         $spiderID = $this->getSpiderID(UserUtil::getUserAgent());
 
@@ -737,7 +737,7 @@ final class SessionHandler extends SingletonFactory
             'spiderID' => $spiderID,
         ];
 
-        $this->legacySession = SessionEditor::create($sessionData);
+        return SessionEditor::create($sessionData);
     }
 
     /**
