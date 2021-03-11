@@ -1021,11 +1021,13 @@ final class SessionHandler extends SingletonFactory
 
             // ... perform the login ...
             $sql = "UPDATE  wcf" . WCF_N . "_user_session
-                    SET     userID = ?
+                    SET     userID = ?,
+                            spiderID = ?
                     WHERE   sessionID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 $user->userID,
+                null,
                 $this->sessionID,
             ]);
 
