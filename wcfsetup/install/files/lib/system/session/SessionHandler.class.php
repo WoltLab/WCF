@@ -659,7 +659,7 @@ final class SessionHandler extends SingletonFactory
         $this->legacySession = $statement->fetchSingleObject(LegacySession::class);
 
         if (!$this->legacySession) {
-            $this->createLegacySession();
+            $this->legacySession = $this->createLegacySession();
         }
 
         return true;
@@ -700,10 +700,28 @@ final class SessionHandler extends SingletonFactory
         );
 
         // Maintain legacy session table for users online list.
-        $this->createLegacySession();
+        $this->legacySession = null;
+
+        // Try to find an existing spider session. Order by lastActivityTime to maintain a
+        // stable selection in case duplicates exist for some reason.
+        $spiderID = $this->getSpiderID(UserUtil::getUserAgent());
+        if ($spiderID) {
+            $sql = "SELECT      *
+                    FROM        wcf" . WCF_N . "_session
+                    WHERE       spiderID = ?
+                            AND userID IS NULL
+                    ORDER BY    lastActivityTime DESC";
+            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement->execute([$spiderID]);
+            $this->legacySession = $statement->fetchSingleObject(LegacySession::class);
+        }
+
+        if (!$this->legacySession) {
+            $this->legacySession = $this->createLegacySession();
+        }
     }
 
-    private function createLegacySession()
+    private function createLegacySession(): LegacySession
     {
         $spiderID = $this->getSpiderID(UserUtil::getUserAgent());
 
@@ -716,13 +734,10 @@ final class SessionHandler extends SingletonFactory
             'lastActivityTime' => TIME_NOW,
             'requestURI' => UserUtil::getRequestURI(),
             'requestMethod' => !empty($_SERVER['REQUEST_METHOD']) ? \substr($_SERVER['REQUEST_METHOD'], 0, 7) : '',
+            'spiderID' => $spiderID,
         ];
 
-        if ($spiderID !== null) {
-            $sessionData['spiderID'] = $spiderID;
-        }
-
-        $this->legacySession = SessionEditor::create($sessionData);
+        return SessionEditor::create($sessionData);
     }
 
     /**
@@ -1006,11 +1021,13 @@ final class SessionHandler extends SingletonFactory
 
             // ... perform the login ...
             $sql = "UPDATE  wcf" . WCF_N . "_user_session
-                    SET     userID = ?
+                    SET     userID = ?,
+                            spiderID = ?
                     WHERE   sessionID = ?";
             $statement = WCF::getDB()->prepareStatement($sql);
             $statement->execute([
                 $user->userID,
+                null,
                 $this->sessionID,
             ]);
 
@@ -1326,20 +1343,19 @@ final class SessionHandler extends SingletonFactory
 
     /**
      * Returns the spider id for given user agent.
-     *
-     * @param string $userAgent
-     * @return  mixed
      */
-    protected function getSpiderID($userAgent)
+    protected function getSpiderID(string $userAgent): ?int
     {
         $spiderList = SpiderCacheBuilder::getInstance()->getData();
         $userAgent = \strtolower($userAgent);
 
         foreach ($spiderList as $spider) {
             if (\strpos($userAgent, $spider->spiderIdentifier) !== false) {
-                return $spider->spiderID;
+                return \intval($spider->spiderID);
             }
         }
+
+        return null;
     }
 
     /**
