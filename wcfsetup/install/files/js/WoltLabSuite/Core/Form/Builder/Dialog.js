@@ -13,6 +13,17 @@ define(["require", "exports", "tslib", "../../Core", "../../Ui/Dialog", "../../A
     Dialog_1 = tslib_1.__importDefault(Dialog_1);
     Ajax = tslib_1.__importStar(Ajax);
     FormBuilderManager = tslib_1.__importStar(FormBuilderManager);
+    function isDialogResponse(val) {
+        return val.dialog !== undefined && val.formId !== undefined;
+    }
+    function assertDialogResponse(val) {
+        if (val.dialog === undefined) {
+            throw new Error("Missing dialog template in return data.");
+        }
+        else if (val.formId === undefined) {
+            throw new Error("Missing form id in return data.");
+        }
+    }
     class FormBuilderDialog {
         constructor(dialogId, className, actionName, options) {
             this.init(dialogId, className, actionName, options);
@@ -54,17 +65,12 @@ define(["require", "exports", "tslib", "../../Core", "../../Ui/Dialog", "../../A
                     if (data.returnValues === undefined) {
                         throw new Error("Missing return data.");
                     }
-                    else if (data.returnValues.dialog === undefined) {
-                        throw new Error("Missing dialog template in return data.");
-                    }
-                    else if (data.returnValues.formId === undefined) {
-                        throw new Error("Missing form id in return data.");
-                    }
+                    assertDialogResponse(data.returnValues);
                     this._openDialogContent(data.returnValues.formId, data.returnValues.dialog);
                     break;
                 case this._options.submitActionName:
                     // If the validation failed, the dialog is shown again.
-                    if (data.returnValues && data.returnValues.formId && data.returnValues.dialog) {
+                    if (data.returnValues && isDialogResponse(data.returnValues)) {
                         if (data.returnValues.formId !== this._formId) {
                             throw new Error("Mismatch between form ids: expected '" + this._formId + "' but got '" + data.returnValues.formId + "'.");
                         }

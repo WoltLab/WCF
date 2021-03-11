@@ -14,10 +14,27 @@ import { DialogCallbackObject, DialogCallbackSetup, DialogData } from "../../Ui/
 import * as Ajax from "../../Ajax";
 import { AjaxCallbackObject, AjaxCallbackSetup, DatabaseObjectActionResponse, RequestOptions } from "../../Ajax/Data";
 import * as FormBuilderManager from "./Manager";
-import { AjaxResponseReturnValues, FormBuilderData, FormBuilderDialogOptions } from "./Data";
+import { FormBuilderData, FormBuilderDialogOptions } from "./Data";
+
+interface DialogResponse {
+  dialog: string;
+  formId: string;
+}
+
+function isDialogResponse(val: any): val is DialogResponse {
+  return val.dialog !== undefined && val.formId !== undefined;
+}
+
+function assertDialogResponse(val: any): asserts val is DialogResponse {
+  if (val.dialog === undefined) {
+    throw new Error("Missing dialog template in return data.");
+  } else if (val.formId === undefined) {
+    throw new Error("Missing form id in return data.");
+  }
+}
 
 interface AjaxResponse extends DatabaseObjectActionResponse {
-  returnValues: AjaxResponseReturnValues;
+  returnValues: DialogResponse | DatabaseObjectActionResponse["returnValues"];
 }
 
 class FormBuilderDialog implements AjaxCallbackObject, DialogCallbackObject {
@@ -82,11 +99,9 @@ class FormBuilderDialog implements AjaxCallbackObject, DialogCallbackObject {
       case this._actionName:
         if (data.returnValues === undefined) {
           throw new Error("Missing return data.");
-        } else if (data.returnValues.dialog === undefined) {
-          throw new Error("Missing dialog template in return data.");
-        } else if (data.returnValues.formId === undefined) {
-          throw new Error("Missing form id in return data.");
         }
+
+        assertDialogResponse(data.returnValues);
 
         this._openDialogContent(data.returnValues.formId, data.returnValues.dialog);
 
@@ -94,7 +109,7 @@ class FormBuilderDialog implements AjaxCallbackObject, DialogCallbackObject {
 
       case this._options.submitActionName:
         // If the validation failed, the dialog is shown again.
-        if (data.returnValues && data.returnValues.formId && data.returnValues.dialog) {
+        if (data.returnValues && isDialogResponse(data.returnValues)) {
           if (data.returnValues.formId !== this._formId) {
             throw new Error(
               "Mismatch between form ids: expected '" + this._formId + "' but got '" + data.returnValues.formId + "'.",

@@ -5,11 +5,6 @@ interface InternalFormBuilderData {
   [key: string]: any;
 }
 
-export interface AjaxResponseReturnValues {
-  dialog: string;
-  formId: string;
-}
-
 export type FormBuilderData = InternalFormBuilderData | Promise<InternalFormBuilderData>;
 
 export interface FormBuilderDialogOptions {
