@@ -716,11 +716,8 @@ final class SessionHandler extends SingletonFactory
             'lastActivityTime' => TIME_NOW,
             'requestURI' => UserUtil::getRequestURI(),
             'requestMethod' => !empty($_SERVER['REQUEST_METHOD']) ? \substr($_SERVER['REQUEST_METHOD'], 0, 7) : '',
+            'spiderID' => $spiderID,
         ];
-
-        if ($spiderID !== null) {
-            $sessionData['spiderID'] = $spiderID;
-        }
 
         $this->legacySession = SessionEditor::create($sessionData);
     }
