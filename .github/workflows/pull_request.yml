@@ -25,6 +25,7 @@ jobs:
           checkAllCommitMessages: 'true'
           accessToken: ${{ secrets.GITHUB_TOKEN }}
       - name: Check for unsquashed `fixup!` commits.
+        if: ${{ ! github.event.pull_request.draft }}
         uses: gsactions/commit-message-checker@c61c81192182bbc0d5e41b4796e3b71684228c77
         with:
           pattern: '^(?!fixup!(\s|$))'
