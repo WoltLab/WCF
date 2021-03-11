@@ -1323,20 +1323,19 @@ final class SessionHandler extends SingletonFactory
 
     /**
      * Returns the spider id for given user agent.
-     *
-     * @param string $userAgent
-     * @return  mixed
      */
-    protected function getSpiderID($userAgent)
+    protected function getSpiderID(string $userAgent): ?int
     {
         $spiderList = SpiderCacheBuilder::getInstance()->getData();
         $userAgent = \strtolower($userAgent);
 
         foreach ($spiderList as $spider) {
             if (\strpos($userAgent, $spider->spiderIdentifier) !== false) {
-                return $spider->spiderID;
+                return \intval($spider->spiderID);
             }
         }
+
+        return null;
     }
 
     /**
