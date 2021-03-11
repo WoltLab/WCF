@@ -700,7 +700,25 @@ final class SessionHandler extends SingletonFactory
         );
 
         // Maintain legacy session table for users online list.
-        $this->createLegacySession();
+        $this->legacySession = null;
+
+        // Try to find an existing spider session. Order by lastActivityTime to maintain a
+        // stable selection in case duplicates exist for some reason.
+        $spiderID = $this->getSpiderID(UserUtil::getUserAgent());
+        if ($spiderID) {
+            $sql = "SELECT      *
+                    FROM        wcf" . WCF_N . "_session
+                    WHERE       spiderID = ?
+                            AND userID IS NULL
+                    ORDER BY    lastActivityTime DESC";
+            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement->execute([$spiderID]);
+            $this->legacySession = $statement->fetchSingleObject(LegacySession::class);
+        }
+
+        if (!$this->legacySession) {
+            $this->createLegacySession();
+        }
     }
 
     private function createLegacySession()
