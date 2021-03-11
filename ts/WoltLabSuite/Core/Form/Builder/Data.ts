@@ -1,4 +1,5 @@
 import { DialogOptions } from "../../Ui/Dialog/Data";
+import { DatabaseObjectActionResponse } from "../../Ajax/Data";
 
 interface InternalFormBuilderData {
   [key: string]: any;
@@ -20,7 +21,7 @@ export interface FormBuilderDialogOptions {
   dialog: DialogOptions;
   onSubmit: (formData: FormBuilderData, submitButton: HTMLButtonElement) => void;
   submitActionName?: string;
-  successCallback: (returnValues: AjaxResponseReturnValues) => void;
+  successCallback: (returnValues: DatabaseObjectActionResponse["returnValues"]) => void;
   usesDboAction: boolean;
 }
 
