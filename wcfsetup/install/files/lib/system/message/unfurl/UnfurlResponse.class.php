@@ -211,11 +211,8 @@ final class UnfurlResponse
             // og:title
             $list = $this->domXPath->query("//meta[@property='og:title']");
             foreach ($list as $node) {
-                foreach ($node->attributes as $attribute) {
-                    if ($attribute->nodeName === 'content') {
-                        return $attribute->nodeValue;
-                    }
-                }
+                /** @var \DOMElement $node */
+                return $node->getAttribute("content");
             }
 
             // title tag
@@ -237,11 +234,8 @@ final class UnfurlResponse
             // og:description
             $list = $this->domXPath->query("//meta[@property='og:description']");
             foreach ($list as $node) {
-                foreach ($node->attributes as $attribute) {
-                    if ($attribute->nodeName === 'content') {
-                        return $attribute->nodeValue;
-                    }
-                }
+                /** @var \DOMElement $node */
+                return $node->getAttribute("content");
             }
         }
 
@@ -257,11 +251,8 @@ final class UnfurlResponse
             // og:image
             $list = $this->domXPath->query("//meta[@property='og:image']");
             foreach ($list as $node) {
-                foreach ($node->attributes as $attribute) {
-                    if ($attribute->nodeName === 'content') {
-                        return $attribute->nodeValue;
-                    }
-                }
+                /** @var \DOMElement $node */
+                return $node->getAttribute("content");
             }
         }
 
