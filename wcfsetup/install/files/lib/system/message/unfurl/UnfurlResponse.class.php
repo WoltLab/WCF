@@ -65,6 +65,11 @@ final class UnfurlResponse
     private $domDocument;
 
     /**
+     * @var \DomXPath
+     */
+    private $domXPath;
+
+    /**
      * Fetches a given Url and returns an UnfurlResponse instance.
      *
      * @throws ParsingFailed If the body cannot be parsed (e.g. the url is an image).
@@ -189,6 +194,8 @@ final class UnfurlResponse
             if (!$this->domDocument->loadHTML('<?xml version="1.0" encoding="UTF-8"?>' . $this->body)) {
                 throw new ParsingFailed("DOMDocument::loadHTML() failed");
             }
+
+            $this->domXPath = new \DOMXPath($this->domDocument);
         } finally {
             \libxml_use_internal_errors($useInternalErrors);
             \libxml_clear_errors();
@@ -201,25 +208,20 @@ final class UnfurlResponse
     public function getTitle(): ?string
     {
         if (!empty($this->body)) {
-            $metaTags = $this->domDocument->getElementsByTagName('meta');
-
-            // og
-            foreach ($metaTags as $metaTag) {
-                foreach ($metaTag->attributes as $attr) {
-                    if ($attr->nodeName == 'property' && $attr->value == 'og:title') {
-                        foreach ($attr->parentNode->attributes as $attr) {
-                            if ($attr->nodeName == 'content') {
-                                return $attr->value;
-                            }
-                        }
+            // og:title
+            $list = $this->domXPath->query("//meta[@property='og:title']");
+            foreach ($list as $node) {
+                foreach ($node->attributes as $attribute) {
+                    if ($attribute->nodeName === 'content') {
+                        return $attribute->nodeValue;
                     }
                 }
             }
 
             // title tag
-            $title = $this->domDocument->getElementsByTagName('title');
-            if ($title->length) {
-                return $title->item(0)->nodeValue;
+            $list = $this->domXPath->query("//title");
+            foreach ($list as $node) {
+                return $node->nodeValue;
             }
         }
 
@@ -232,17 +234,12 @@ final class UnfurlResponse
     public function getDescription(): ?string
     {
         if (!empty($this->body)) {
-            $metaTags = $this->domDocument->getElementsByTagName('meta');
-
             // og:description
-            foreach ($metaTags as $metaTag) {
-                foreach ($metaTag->attributes as $attr) {
-                    if ($attr->nodeName == 'property' && $attr->value == 'og:description') {
-                        foreach ($attr->parentNode->attributes as $attr) {
-                            if ($attr->nodeName == 'content') {
-                                return $attr->value;
-                            }
-                        }
+            $list = $this->domXPath->query("//meta[@property='og:description']");
+            foreach ($list as $node) {
+                foreach ($node->attributes as $attribute) {
+                    if ($attribute->nodeName === 'content') {
+                        return $attribute->nodeValue;
                     }
                 }
             }
@@ -257,17 +254,12 @@ final class UnfurlResponse
     public function getImageUrl(): ?string
     {
         if (!empty($this->body)) {
-            $metaTags = $this->domDocument->getElementsByTagName('meta');
-
             // og:image
-            foreach ($metaTags as $metaTag) {
-                foreach ($metaTag->attributes as $attr) {
-                    if ($attr->nodeName == 'property' && ($attr->value == 'og:image' || $attr->value == 'og:image:url')) {
-                        foreach ($attr->parentNode->attributes as $attr) {
-                            if ($attr->nodeName == 'content') {
-                                return $attr->value;
-                            }
-                        }
+            $list = $this->domXPath->query("//meta[@property='og:image']");
+            foreach ($list as $node) {
+                foreach ($node->attributes as $attribute) {
+                    if ($attribute->nodeName === 'content') {
+                        return $attribute->nodeValue;
                     }
                 }
             }
