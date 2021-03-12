@@ -104,8 +104,6 @@ export function platform(): string {
  * Returns true if browser is potentially used with a touchscreen.
  *
  * Warning: Detecting touch is unreliable and should be avoided at all cost.
- *
- * @deprecated  3.0 - exists for backward-compatibility only, will be removed in the future
  */
 export function touch(): boolean {
   return _touch;
