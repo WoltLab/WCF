@@ -4,6 +4,7 @@ namespace wcf\system\background\job;
 
 use BadMethodCallException;
 use GuzzleHttp\Psr7\Response;
+use LogicException;
 use wcf\data\unfurl\url\UnfurlUrl;
 use wcf\data\unfurl\url\UnfurlUrlAction;
 use wcf\system\message\unfurl\exception\DownloadFailed;
@@ -34,8 +35,6 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
 
     /**
      * UnfurlURLJob constructor.
-     *
-     * @param UnfurlUrl $url
      */
     public function __construct(UnfurlUrl $url)
     {
@@ -70,23 +69,22 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
         try {
             $unfurlResponse = UnfurlResponse::fetch($unfurlUrl->url);
 
-            if (empty(StringUtil::trim($unfurlResponse->getTitle()))) {
+            if (empty($unfurlResponse->getTitle())) {
                 $this->save(UnfurlUrl::STATUS_REJECTED);
 
                 return;
             }
 
-            $title = StringUtil::truncate(StringUtil::trim($unfurlResponse->getTitle()), 255);
+            $title = StringUtil::truncate($unfurlResponse->getTitle(), 255);
             $description = "";
             if ($unfurlResponse->getDescription()) {
-                $description = StringUtil::truncate(StringUtil::trim($unfurlResponse->getDescription()), 160);
+                $description = StringUtil::truncate($unfurlResponse->getDescription(), 160);
             }
 
             $imageData = [];
             $imageID = null;
-            if ($unfurlResponse->getImageUrl()) {
-                $imageUrl = $unfurlResponse->getImageUrl();
-
+            $imageUrl = $unfurlResponse->getImageUrl();
+            if ($imageUrl) {
                 if (
                     \strpos($imageUrl, '\\') === false
                     && \strpos($imageUrl, "'") === false
@@ -118,8 +116,6 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
 
     private function getImageData(UnfurlResponse $unfurlResponse): array
     {
-        $imageSaveData = [];
-
         if (empty($unfurlResponse->getImageUrl()) || !Url::is($unfurlResponse->getImageUrl())) {
             throw new \InvalidArgumentException("The given response does not have an image.");
         }
@@ -129,24 +125,33 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
             $image = $this->downloadImage($imageResponse);
             $imageData = \getimagesizefromstring($image);
 
-            if ($imageData !== false) {
-                if ($this->validateImage($imageData)) {
-                    $imageSaveData['imageUrl'] = $unfurlResponse->getImageUrl();
-                    $imageSaveData['imageUrlHash'] = \sha1($unfurlResponse->getImageUrl());
-                    $imageSaveData['width'] = $imageData[0];
-                    $imageSaveData['height'] = $imageData[1];
-                    if (!(MODULE_IMAGE_PROXY || IMAGE_ALLOW_EXTERNAL_SOURCE)) {
-                        $this->saveImage($imageData, $image, $imageSaveData['imageUrlHash']);
-                        $imageSaveData['imageExtension'] = $this->getImageExtension($imageData);
-                        $imageSaveData['isStored'] = 1;
-                    }
-                }
+            if ($imageData === false) {
+                return [];
             }
+
+            if (!$this->validateImage($imageData)) {
+                return [];
+            }
+
+            $imageSaveData = [
+                'imageUrl' => $unfurlResponse->getImageUrl(),
+                'imageUrlHash' => \sha1($unfurlResponse->getImageUrl()),
+                'width' => $imageData[0],
+                'height' => $imageData[1],
+            ];
+
+            if (!(MODULE_IMAGE_PROXY || IMAGE_ALLOW_EXTERNAL_SOURCE)) {
+                $this->saveImage($imageData, $image, $imageSaveData['imageUrlHash']);
+                $imageSaveData['imageExtension'] = $this->getImageExtension($imageData);
+                $imageSaveData['isStored'] = 1;
+            }
+
+            return $imageSaveData;
         } catch (UrlInaccessible | DownloadFailed $e) {
-            $imageSaveData = [];
+            return [];
         }
 
-        return $imageSaveData;
+        throw new LogicException("Unreachable");
     }
 
     private static function getImageIdByUrl(string $url): ?int

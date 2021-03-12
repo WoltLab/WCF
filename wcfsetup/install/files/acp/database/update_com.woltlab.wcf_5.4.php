@@ -233,7 +233,7 @@ return [
             NotNullInt10DatabaseTableColumn::create('height'),
             VarcharDatabaseTableColumn::create('imageExtension')
                 ->length(4),
-            DefaultFalseBooleanDatabaseTableColumn::create('isStored')
+            DefaultFalseBooleanDatabaseTableColumn::create('isStored'),
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()

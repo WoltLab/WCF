@@ -212,13 +212,13 @@ final class UnfurlResponse
             $list = $this->domXPath->query("//meta[@property='og:title']");
             foreach ($list as $node) {
                 /** @var \DOMElement $node */
-                return $node->getAttribute("content");
+                return StringUtil::trim($node->getAttribute("content"));
             }
 
             // title tag
             $list = $this->domXPath->query("//title");
             foreach ($list as $node) {
-                return $node->nodeValue;
+                return StringUtil::trim($node->nodeValue);
             }
         }
 
@@ -235,7 +235,7 @@ final class UnfurlResponse
             $list = $this->domXPath->query("//meta[@property='og:description']");
             foreach ($list as $node) {
                 /** @var \DOMElement $node */
-                return $node->getAttribute("content");
+                return StringUtil::trim($node->getAttribute("content"));
             }
         }
 
