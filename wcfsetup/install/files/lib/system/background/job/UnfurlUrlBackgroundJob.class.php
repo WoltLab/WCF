@@ -201,14 +201,17 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
 
     private function saveImage(array $imageData, string $image): string
     {
-        $imageHash = \sha1($image);
+        do {
+            $imageHash = StringUtil::getRandomID();
 
-        $path = WCF_DIR . UnfurlUrl::IMAGE_DIR . \substr($imageHash, 0, 2);
+            $path = WCF_DIR . UnfurlUrl::IMAGE_DIR . \substr($imageHash, 0, 2) . '/';
+        } while (!empty(glob($path . $imageHash . '.*')));
+
         FileUtil::makePath($path);
 
         $extension = $this->getImageExtension($imageData);
 
-        $fileLocation = $path . '/' . $imageHash . '.' . $extension;
+        $fileLocation = $path . $imageHash . '.' . $extension;
 
         \file_put_contents($fileLocation, $image);
 
