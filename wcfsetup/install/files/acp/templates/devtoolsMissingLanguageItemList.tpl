@@ -43,7 +43,7 @@
 				</tr>
 			</thead>
 			
-			<tbody>
+			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=logEntry}
 					<tr class="jsObjectRow">
 						<td class="columnIcon">
@@ -89,17 +89,6 @@
 			new UiDevtoolsMissingLanguageItemList.default();
 			
 			new WCF.Action.Delete('wcf\\data\\devtools\\missing\\language\\item\\DevtoolsMissingLanguageItemAction', '.jsObjectRow');
-			
-			var options = { };
-			{if $pages > 1}
-				options.refreshPage = true;
-				{if $pages == $pageNo}
-					options.updatePageNumber = -1;
-				{/if}
-			{else}
-				options.emptyMessage = '{jslang}wcf.global.noItems{/jslang}';
-			{/if}
-			new WCF.Table.EmptyTableHandler($('#missingLanguageItemTable'), 'jsObjectRow', options);
 		});
 	</script>
 {else}

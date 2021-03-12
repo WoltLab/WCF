@@ -4,18 +4,6 @@
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\user\\group\\assignment\\UserGroupAssignmentAction', '.jsUserGroupAssignmentRow');
 		new WCF.Action.Toggle('wcf\\data\\user\\group\\assignment\\UserGroupAssignmentAction', '.jsUserGroupAssignmentRow');
-		
-		var options = { };
-		{if $pages > 1}
-			options.refreshPage = true;
-			{if $pages == $pageNo}
-				options.updatePageNumber = -1;
-			{/if}
-		{else}
-			options.emptyMessage = '{jslang}wcf.global.noItems{/jslang}';
-		{/if}
-		
-		new WCF.Table.EmptyTableHandler($('#userGroupAssignmentTableContainer'), 'jsUserGroupAssignmentRow', options);
 	});
 </script>
 
@@ -52,7 +40,7 @@
 				</tr>
 			</thead>
 			
-			<tbody>
+			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item='assignment'}
 					<tr class="jsUserGroupAssignmentRow">
 						<td class="columnIcon">

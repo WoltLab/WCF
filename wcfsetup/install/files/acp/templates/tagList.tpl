@@ -75,7 +75,7 @@
 				</tr>
 			</thead>
 			
-			<tbody>
+			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=tag}
 					<tr class="jsTagRow jsClipboardObject">
 						<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$tag->tagID}"></td>

@@ -3,18 +3,6 @@
 <script data-relocate="true">
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\template\\group\\TemplateGroupAction', '.jsTemplateGroupRow');
-		
-		var options = { };
-		{if $pages > 1}
-			options.refreshPage = true;
-			{if $pages == $pageNo}
-				options.updatePageNumber = -1;
-			{/if}
-		{else}
-			options.emptyMessage = '{jslang}wcf.global.noItems{/jslang}';
-		{/if}
-		
-		new WCF.Table.EmptyTableHandler($('#templateGroupTableContainer'), 'jsTemplateGroupRow', options);
 	});
 </script>
 
@@ -53,7 +41,7 @@
 				</tr>
 			</thead>
 			
-			<tbody>
+			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=templateGroup}
 					<tr class="jsTemplateGroupRow">
 						<td class="columnIcon">

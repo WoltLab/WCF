@@ -3,18 +3,6 @@
 <script data-relocate="true">
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\label\\group\\LabelGroupAction', '.jsLabelGroupRow');
-		
-		var options = { };
-		{if $pages > 1}
-			options.refreshPage = true;
-			{if $pages == $pageNo}
-				options.updatePageNumber = -1;
-			{/if}
-		{else}
-			options.emptyMessage = '{jslang}wcf.global.noItems{/jslang}';
-		{/if}
-		
-		new WCF.Table.EmptyTableHandler($('#labelGroupTableContainer'), 'jsLabelGroupRow', options);
 	});
 </script>
 
@@ -92,7 +80,7 @@
 				</tr>
 			</thead>
 			
-			<tbody>
+			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=group}
 					<tr class="jsLabelGroupRow">
 						<td class="columnIcon">

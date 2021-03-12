@@ -15,13 +15,6 @@
 		
 		WCF.Clipboard.init('wcf\\acp\\page\\UserListPage', {@$hasMarkedItems}, actionObjects);
 		
-		var options = { };
-		{if $pages > 1}
-			options.refreshPage = true;
-		{/if}
-		
-		new WCF.Table.EmptyTableHandler($('#userTableContainer'), 'jsUserRow', options);
-		
 		WCF.Language.addObject({
 			'wcf.acp.user.banReason': '{jslang}wcf.acp.user.banReason{/jslang}',
 			'wcf.acp.user.banReason.description': '{jslang}wcf.acp.user.banReason.description{/jslang}',
@@ -107,7 +100,7 @@
 				</tr>
 			</thead>
 			
-			<tbody>
+			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$users item=user}
 					<tr class="jsUserRow jsClipboardObject" data-object-id="{@$user->userID}" data-banned="{if $user->banned}true{else}false{/if}" data-enabled="{if !$user->activationCode}true{else}false{/if}" data-email-confirmed="{if $user->isEmailConfirmed()}true{else}false{/if}">
 						<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$user->userID}"></td>
