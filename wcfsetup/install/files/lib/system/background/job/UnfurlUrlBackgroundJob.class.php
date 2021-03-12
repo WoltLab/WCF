@@ -131,12 +131,14 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
 
             if ($imageData !== false) {
                 if ($this->validateImage($imageData)) {
-                    $imageSaveData['imageUrl'] = StringUtil::trim($unfurlResponse->getImageUrl());
+                    $imageSaveData['imageUrl'] = $unfurlResponse->getImageUrl();
+                    $imageSaveData['imageUrlHash'] = \sha1($unfurlResponse->getImageUrl());
                     $imageSaveData['width'] = $imageData[0];
                     $imageSaveData['height'] = $imageData[1];
                     if (!(MODULE_IMAGE_PROXY || IMAGE_ALLOW_EXTERNAL_SOURCE)) {
-                        $imageSaveData['imageHash'] = $this->saveImage($imageData, $image);
+                        $this->saveImage($imageData, $image, $imageSaveData['imageUrlHash']);
                         $imageSaveData['imageExtension'] = $this->getImageExtension($imageData);
+                        $imageSaveData['isStored'] = 1;
                     }
                 }
             }
@@ -151,9 +153,9 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
     {
         $sql = "SELECT  imageID
                 FROM    wcf" . WCF_N . "_unfurl_url_image
-                WHERE   imageUrl = ?";
+                WHERE   imageUrlHash = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
-        $statement->execute([$url]);
+        $statement->execute([\sha1($url)]);
 
         $imageID = $statement->fetchSingleColumn();
 
@@ -199,13 +201,9 @@ final class UnfurlUrlBackgroundJob extends AbstractBackgroundJob
         return true;
     }
 
-    private function saveImage(array $imageData, string $image): string
+    private function saveImage(array $imageData, string $image, string $imageHash): string
     {
-        do {
-            $imageHash = StringUtil::getRandomID();
-
-            $path = WCF_DIR . UnfurlUrl::IMAGE_DIR . \substr($imageHash, 0, 2) . '/';
-        } while (!empty(glob($path . $imageHash . '.*')));
+        $path = WCF_DIR . UnfurlUrl::IMAGE_DIR . \substr($imageHash, 0, 2) . '/';
 
         FileUtil::makePath($path);
 

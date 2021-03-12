@@ -226,20 +226,21 @@ return [
             ObjectIdDatabaseTableColumn::create('imageID'),
             TextDatabaseTableColumn::create('imageUrl')
                 ->notNull(),
-            VarcharDatabaseTableColumn::create('imageHash')
+            VarcharDatabaseTableColumn::create('imageUrlHash')
                 ->notNull()
                 ->length(40),
             NotNullInt10DatabaseTableColumn::create('width'),
             NotNullInt10DatabaseTableColumn::create('height'),
             VarcharDatabaseTableColumn::create('imageExtension')
                 ->length(4),
+            DefaultFalseBooleanDatabaseTableColumn::create('isStored')
         ])
         ->indices([
             DatabaseTablePrimaryIndex::create()
                 ->columns(['imageID']),
-            DatabaseTableIndex::create('imageHash')
+            DatabaseTableIndex::create('imageUrlHash')
                 ->type(DatabaseTableIndex::UNIQUE_TYPE)
-                ->columns(['imageHash']),
+                ->columns(['imageUrlHash']),
         ]),
 
     DatabaseTable::create('wcf1_unfurl_url')

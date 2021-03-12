@@ -1464,12 +1464,13 @@ DROP TABLE IF EXISTS wcf1_unfurl_url_image;
 CREATE TABLE wcf1_unfurl_url_image (
 	imageID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	imageUrl TEXT NOT NULL,
-	imageHash VARCHAR(40) DEFAULT NULL,
+	imageUrlHash VARCHAR(40) DEFAULT NULL,
 	width INT(10) NOT NULL,
 	height INT(10) NOT NULL,
 	imageExtension VARCHAR(4) DEFAULT NULL,
+	isStored TINYINT(1) NOT NULL DEFAULT 0,
 
-	UNIQUE KEY imageHash (imageHash)
+	UNIQUE KEY imageUrlHash (imageUrlHash)
 );
 
 DROP TABLE IF EXISTS wcf1_user;
