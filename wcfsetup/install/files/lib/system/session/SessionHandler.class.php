@@ -723,7 +723,10 @@ final class SessionHandler extends SingletonFactory
 
     private function createLegacySession(): LegacySession
     {
-        $spiderID = $this->getSpiderID(UserUtil::getUserAgent());
+        $spiderID = null;
+        if (!$this->user->userID) {
+            $spiderID = $this->getSpiderID(UserUtil::getUserAgent());
+        }
 
         // save session
         $sessionData = [
