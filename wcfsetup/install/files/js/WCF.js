@@ -3926,6 +3926,8 @@ WCF.Table = { };
 
 /**
  * Handles empty tables which can be used in combination with WCF.Action.Proxy.
+ * 
+ * @deprecated  5.4 - please use `WoltLabSuite/Core/Ui/Empty` instead
  */
 WCF.Table.EmptyTableHandler = Class.extend({
 	/**
