@@ -29,6 +29,8 @@ $tables = [
                 ->notNull(),
             IntDatabaseTableColumn::create('userID')
                 ->length(10),
+            IntDatabaseTableColumn::create('spiderID')
+                ->length(10),
             NotNullVarchar255DatabaseTableColumn::create('userAgent')
                 ->defaultValue(''),
             VarcharDatabaseTableColumn::create('ipAddress')
@@ -52,6 +54,11 @@ $tables = [
                 ->columns(['userID'])
                 ->referencedTable('wcf1_user')
                 ->referencedColumns(['userID'])
+                ->onDelete('CASCADE'),
+            DatabaseTableForeignKey::create()
+                ->columns(['spiderID'])
+                ->referencedTable('wcf1_spider')
+                ->referencedColumns(['spiderID'])
                 ->onDelete('CASCADE'),
         ]),
 ];
