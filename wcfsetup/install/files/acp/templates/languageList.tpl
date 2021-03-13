@@ -52,7 +52,7 @@
 				</tr>
 			</thead>
 			
-			<tbody>
+			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=language}
 					<tr class="jsLanguageRow">
 						<td class="columnIcon">

@@ -39,7 +39,7 @@
 				</tr>
 			</thead>
 			
-			<tbody>
+			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=bbcode}
 					<tr class="jsBBCodeRow">
 						<td class="columnIcon">

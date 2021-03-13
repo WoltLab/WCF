@@ -96,7 +96,7 @@
 				</tr>
 			</thead>
 			
-			<tbody>
+			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=attachment}
 					<tr class="jsAttachmentRow">
 						<td class="columnIcon">

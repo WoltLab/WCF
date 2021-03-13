@@ -81,7 +81,7 @@
 				</tr>
 			</thead>
 			
-			<tbody>
+			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=subscriptionUser}
 					<tr class="jsPaidSubscriptionUserRow">
 						<td class="columnIcon">

@@ -42,7 +42,7 @@
 				</tr>
 			</thead>
 			
-			<tbody>
+			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=option}
 					<tr class="jsOptionRow">
 						<td class="columnIcon">

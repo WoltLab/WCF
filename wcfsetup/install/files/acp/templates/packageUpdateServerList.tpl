@@ -44,7 +44,7 @@
 				</tr>
 			</thead>
 			
-			<tbody>
+			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=updateServer}
 					<tr class="jsUpdateServerRow">
 						<td class="columnIcon">

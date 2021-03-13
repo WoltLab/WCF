@@ -39,7 +39,7 @@
 				</tr>
 			</thead>
 			
-			<tbody>
+			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item='mediaProvider'}
 					<tr class="jsMediaProviderRow">
 						<td class="columnIcon">

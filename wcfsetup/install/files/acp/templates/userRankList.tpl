@@ -58,7 +58,7 @@
 				</tr>
 			</thead>
 			
-			<tbody>
+			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=userRank}
 					<tr class="jsUserRankRow">
 						<td class="columnIcon">

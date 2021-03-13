@@ -38,7 +38,7 @@
 
 {if $objects|count}
 	<div class="section sortableListContainer" id="trophyList">
-		<ol class="sortableList" data-object-id="0" start="{@($pageNo - 1) * $itemsPerPage + 1}">
+		<ol class="sortableList jsReloadPageWhenEmpty" data-object-id="0" start="{@($pageNo - 1) * $itemsPerPage + 1}">
 			{foreach from=$objects item='trophy'}
 				<li class="sortableNode sortableNoNesting trophyRow" data-object-id="{@$trophy->trophyID}">
 					<span class="sortableNodeLabel">
