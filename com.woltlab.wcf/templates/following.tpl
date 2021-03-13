@@ -12,7 +12,7 @@
 
 {if $objects|count}
 	<div class="section sectionContainerList">
-		<ol class="containerList userList">
+		<ol class="containerList userList jsReloadPageWhenEmpty">
 			{foreach from=$objects item=user}
 				<li class="jsFollowing">
 					<div class="box48">
