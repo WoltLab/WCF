@@ -9,19 +9,9 @@
  * @package WoltLabSuite\Core
  */
 
-use wcf\system\database\table\DatabaseTableChangeProcessor;
 use wcf\system\database\table\PartialDatabaseTable;
-use wcf\system\WCF;
 
-$tables = [
+return [
     PartialDatabaseTable::create('wcf1_acp_session')
         ->drop(),
 ];
-
-(new DatabaseTableChangeProcessor(
-/** @var ScriptPackageInstallationPlugin $this */
-    $this->installation->getPackage(),
-    $tables,
-    WCF::getDB()->getEditor()
-)
-)->process();

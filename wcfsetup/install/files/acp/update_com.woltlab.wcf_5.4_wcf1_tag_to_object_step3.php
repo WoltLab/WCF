@@ -9,14 +9,11 @@
  * @package WoltLabSuite\Core
  */
 
-use wcf\system\database\table\DatabaseTableChangeProcessor;
 use wcf\system\database\table\index\DatabaseTableForeignKey;
 use wcf\system\database\table\index\DatabaseTablePrimaryIndex;
 use wcf\system\database\table\PartialDatabaseTable;
-use wcf\system\package\plugin\ScriptPackageInstallationPlugin;
-use wcf\system\WCF;
 
-$tables = [
+return [
     PartialDatabaseTable::create('wcf1_tag_to_object')
         ->foreignKeys([
             DatabaseTableForeignKey::create()
@@ -40,10 +37,3 @@ $tables = [
                 ->columns(['objectTypeID', 'objectID', 'tagID']),
         ]),
 ];
-
-(new DatabaseTableChangeProcessor(
-    /** @var ScriptPackageInstallationPlugin $this */
-    $this->installation->getPackage(),
-    $tables,
-    WCF::getDB()->getEditor()
-))->process();

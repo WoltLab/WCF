@@ -21,15 +21,12 @@ use wcf\system\database\table\column\ObjectIdDatabaseTableColumn;
 use wcf\system\database\table\column\TextDatabaseTableColumn;
 use wcf\system\database\table\column\VarbinaryDatabaseTableColumn;
 use wcf\system\database\table\DatabaseTable;
-use wcf\system\database\table\DatabaseTableChangeProcessor;
 use wcf\system\database\table\index\DatabaseTableForeignKey;
 use wcf\system\database\table\index\DatabaseTableIndex;
 use wcf\system\database\table\index\DatabaseTablePrimaryIndex;
 use wcf\system\database\table\PartialDatabaseTable;
-use wcf\system\package\plugin\ScriptPackageInstallationPlugin;
-use wcf\system\WCF;
 
-$tables = [
+return [
     DatabaseTable::create('wcf1_email_log_entry')
         ->columns([
             ObjectIdDatabaseTableColumn::create('entryID'),
@@ -223,10 +220,3 @@ $tables = [
             DefaultFalseBooleanDatabaseTableColumn::create('invertPermissions'),
         ]),
 ];
-
-(new DatabaseTableChangeProcessor(
-    /** @var ScriptPackageInstallationPlugin $this */
-    $this->installation->getPackage(),
-    $tables,
-    WCF::getDB()->getEditor()
-))->process();
