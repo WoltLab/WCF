@@ -31,5 +31,6 @@
 		<pip name="menu">wcf\system\package\plugin\MenuPackageInstallationPlugin</pip>
 		<pip name="menuItem">wcf\system\package\plugin\MenuItemPackageInstallationPlugin</pip>
 		<pip name="mediaProvider">wcf\system\package\plugin\MediaProviderPackageInstallationPlugin</pip>
+		<pip name="database">wcf\system\package\plugin\DatabasePackageInstallationPlugin</pip>
 	</import>
 </data>
