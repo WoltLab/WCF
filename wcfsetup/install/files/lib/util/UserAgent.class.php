@@ -2,6 +2,8 @@
 
 namespace wcf\util;
 
+use wcf\system\event\EventHandler;
+
 /**
  * Represents the user agent.
  *
@@ -309,6 +311,15 @@ class UserAgent
 
             return;
         }
+
+        $parameters = [];
+        EventHandler::getInstance()->fireAction($this, 'detectBrowser', $parameters);
+        if (!empty($parameters['browser'])) {
+            $this->browser = $parameters['browser'];
+        }
+        if (!empty($parameters['browserVersion'])) {
+            $this->browserVersion = $parameters['browserVersion'];
+        }
     }
 
     /**
@@ -398,6 +409,12 @@ class UserAgent
             $this->os = "macOS";
 
             return;
+        }
+
+        $parameters = [];
+        EventHandler::getInstance()->fireAction($this, 'detectOs', $parameters);
+        if (!empty($parameters['os'])) {
+            $this->os = $parameters['os'];
         }
     }
 

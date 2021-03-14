@@ -2,6 +2,7 @@
 
 namespace wcf\system\session;
 
+use wcf\system\event\EventHandler;
 use wcf\util\UserAgent;
 use wcf\util\UserUtil;
 
@@ -80,7 +81,10 @@ final class Session
             return 'mobile';
         }
 
-        return 'laptop';
+        $parameters = ['icon' => 'laptop'];
+        EventHandler::getInstance()->fireAction($this, 'getDeviceIcon', $parameters);
+
+        return $parameters['icon'];
     }
 
     /**
