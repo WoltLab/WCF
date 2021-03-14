@@ -11,6 +11,7 @@ use wcf\data\session\SessionEditor;
  * @copyright   2001-2019 WoltLab GmbH
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package WoltLabSuite\Core\System\Session
+ * @deprecated 5.4 Use `SessionHandler` directly
  */
 class SessionFactory extends ACPSessionFactory
 {
