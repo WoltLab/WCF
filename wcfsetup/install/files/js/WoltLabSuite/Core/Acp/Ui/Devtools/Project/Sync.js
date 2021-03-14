@@ -139,7 +139,12 @@ define(["require", "exports", "tslib", "../../../../Ajax", "../../../../Language
             const identifier = this.getButtonIdentifier(data.returnValues.pluginName, data.returnValues.target);
             this.buttons.get(identifier).disabled = false;
             this.buttonStatus.get(identifier).innerHTML = data.returnValues.timeElapsed;
-            this.syncNext();
+            if (data.returnValues.invokeAgain) {
+                this.sync(data.returnValues.pluginName, data.returnValues.target);
+            }
+            else {
+                this.syncNext();
+            }
         }
         _ajaxFailure(data, responseText, xhr, requestData) {
             const identifier = this.getButtonIdentifier(requestData.parameters.pluginName, requestData.parameters.target);

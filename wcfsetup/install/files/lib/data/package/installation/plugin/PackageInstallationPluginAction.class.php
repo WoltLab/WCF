@@ -107,10 +107,15 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction
 
         $start = \microtime(true);
 
+        $invokeAgain = false;
         try {
             $pip->update();
         } catch (SplitNodeException $e) {
-            throw new \RuntimeException("PIP '{$this->packageInstallationPlugin->pluginName}' is not allowed to throw a 'SplitNodeException'.");
+            if ($this->parameters['pluginName'] !== 'database') {
+                throw new \RuntimeException("PIP '{$this->packageInstallationPlugin->pluginName}' is not allowed to throw a 'SplitNodeException'.");
+            }
+
+            $invokeAgain = true;
         }
 
         SearchIndexManager::getInstance()->createSearchIndices();
@@ -143,6 +148,7 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction
         }
 
         return [
+            'invokeAgain' => $invokeAgain,
             'pluginName' => $this->packageInstallationPlugin->pluginName,
             'target' => $this->parameters['target'],
             'timeElapsed' => WCF::getLanguage()->getDynamicVariable(
