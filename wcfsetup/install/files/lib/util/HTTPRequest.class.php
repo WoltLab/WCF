@@ -11,6 +11,7 @@ use ParagonIE\ConstantTime\Hex;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\HTTPNotFoundException;
 use wcf\system\exception\HTTPServerErrorException;
 use wcf\system\exception\HTTPUnauthorizedException;
@@ -97,9 +98,10 @@ final class HTTPRequest
 
         // set default headers
         $language = WCF::getLanguage();
+        $domain = ApplicationHandler::getInstance()->getApplicationByID(1)->domainName;
         $this->addHeader(
             'user-agent',
-            "HTTP.PHP (HTTPRequest.class.php; WoltLab Suite/" . WCF_VERSION . "; " . ($language ? $language->languageCode : 'en') . ")"
+            "HTTP.PHP (HTTPRequest.class.php; WoltLab Suite/" . WCF_VERSION . "; " . ($language ? $language->languageCode : 'en') . "; " . $domain . ")"
         );
         $this->addHeader('accept', '*/*');
         if ($language) {

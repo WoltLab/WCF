@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\RequestOptions;
 use InvalidArgumentException;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\Regex;
 
 /**
@@ -33,15 +34,16 @@ final class HttpFactory
      */
     public static function getDefaultUserAgent(?string $comment = null): string
     {
+        $domain = ApplicationHandler::getInstance()->getApplicationByID(1)->domainName;
         if ($comment) {
             if (!Regex::compile("^[a-zA-Z0-9_:/\\. -]+$")->match($comment)) {
                 throw new InvalidArgumentException("Invalid comment for user agent given.");
             }
 
-            return \sprintf('WoltLabSuite/%s (%s)', \wcf\getMinorVersion(), $comment);
+            return \sprintf('WoltLabSuite/%s %s (%s)', \wcf\getMinorVersion(), $domain, $comment);
         }
 
-        return \sprintf('WoltLabSuite/%s', \wcf\getMinorVersion());
+        return \sprintf('WoltLabSuite/%s %s', $domain, \wcf\getMinorVersion());
     }
 
     /**
