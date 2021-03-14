@@ -369,8 +369,10 @@ final class SessionHandler extends SingletonFactory
         } else {
             $this->create();
         }
-	
-        if (!\defined('NO_IMPORTS')) EventHandler::getInstance()->fireAction($this, 'afterLoadFromCookie');
+
+        if (!\defined('NO_IMPORTS')) {
+            EventHandler::getInstance()->fireAction($this, 'afterLoadFromCookie');
+        }
     }
 
     /**
@@ -414,8 +416,10 @@ final class SessionHandler extends SingletonFactory
             $this->firstVisit = true;
             $this->unregister('__wcfIsFirstVisit');
         }
-	
-        if (!\defined('NO_IMPORTS')) EventHandler::getInstance()->fireAction($this, 'afterInitSession');
+
+        if (!\defined('NO_IMPORTS')) {
+            EventHandler::getInstance()->fireAction($this, 'afterInitSession');
+        }
     }
 
     /**
