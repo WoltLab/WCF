@@ -191,7 +191,7 @@ class UserSearchForm extends UserOptionListForm
         }
 
         // do search
-        $statement = WCF::getDB()->prepareStatement($sql . $this->conditions, $this->maxResults);
+        $statement = WCF::getDB()->prepareStatement($sql . " " . $this->conditions, $this->maxResults);
         $statement->execute($this->conditions->getParameters());
         $this->matches = $statement->fetchAll(\PDO::FETCH_COLUMN);
     }
