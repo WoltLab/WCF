@@ -273,6 +273,8 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
                 } else {
                     $this->languageIDs = \unserialize($data);
                 }
+            } else {
+                $this->languageIDs = LanguageFactory::getInstance()->getContentLanguageIDs();
             }
         }
 
