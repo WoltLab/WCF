@@ -4,6 +4,7 @@ namespace wcf\system\importer;
 
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\CacheHandler;
+use wcf\system\database\exception\DatabaseException;
 use wcf\system\exception\SystemException;
 use wcf\system\IAJAXInvokeAction;
 use wcf\system\SingletonFactory;
@@ -140,13 +141,27 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction
      */
     public function saveNewID($type, $oldID, $newID)
     {
+        static $statement = null;
+
         $objectTypeID = $this->objectTypes[$type]->objectTypeID;
 
-        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_import_mapping
-                                    (importHash, objectTypeID, oldID, newID)
-                VALUES              (?, ?, ?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
-        $statement->execute([$this->importHash, $objectTypeID, $oldID, $newID]);
+        if ($statement === null) {
+            $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_import_mapping
+                                        (importHash, objectTypeID, oldID, newID)
+                    VALUES              (?, ?, ?, ?)";
+            $statement = WCF::getDB()->prepareStatement($sql);
+        }
+
+        try {
+            $statement->execute([$this->importHash, $objectTypeID, $oldID, $newID]);
+        } catch (DatabaseException $e) {
+            // Re-prepare the statement once.
+            $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_import_mapping
+                                        (importHash, objectTypeID, oldID, newID)
+                    VALUES              (?, ?, ?, ?)";
+            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement->execute([$this->importHash, $objectTypeID, $oldID, $newID]);
+        }
 
         unset($this->idMappingCache[$objectTypeID][$oldID]);
     }
