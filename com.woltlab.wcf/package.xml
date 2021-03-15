@@ -79,7 +79,7 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 
 		<!-- Preparations for the new session system. -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_1_cookies.php</instruction>
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_2_user_session.php</instruction>
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_5.4_session_2_user_session.php</instruction>
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_3_migrate_session.php</instruction>
 		
 		<!-- New application code. -->
@@ -91,12 +91,12 @@ tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 		<instruction type="option" run="standalone" />
 		
 		<!-- Cleanup for the new session system. -->
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_4_drop_virtual.php</instruction>
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_5_drop_acp.php</instruction>
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_session_6_clean_session.php</instruction>
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_5.4_session_4_drop_virtual.php</instruction>
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_5.4_session_5_drop_acp.php</instruction>
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_5.4_session_6_clean_session.php</instruction>
 		
 		<!-- Non-critical database adjustments. -->
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_db.php</instruction>
+		<instruction type="database" run="standalone">acp/database/update_com.woltlab.wcf_5.4.php</instruction>
 		
 		<!-- Index updates for `wcf1_tag_to_object`. -->
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.4_wcf1_tag_to_object_step1.php</instruction>

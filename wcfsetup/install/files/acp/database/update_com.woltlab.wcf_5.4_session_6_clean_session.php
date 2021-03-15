@@ -11,11 +11,9 @@
 
 use wcf\system\database\table\column\MediumblobDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
-use wcf\system\database\table\DatabaseTableChangeProcessor;
 use wcf\system\database\table\PartialDatabaseTable;
-use wcf\system\WCF;
 
-$tables = [
+return [
     PartialDatabaseTable::create('wcf1_acp_session_access_log')
         ->columns([
             NotNullVarchar255DatabaseTableColumn::create('requestMethod')
@@ -26,11 +24,3 @@ $tables = [
             MediumblobDatabaseTableColumn::create('sessionVariables')->drop(),
         ]),
 ];
-
-(new DatabaseTableChangeProcessor(
-/** @var ScriptPackageInstallationPlugin $this */
-    $this->installation->getPackage(),
-    $tables,
-    WCF::getDB()->getEditor()
-)
-)->process();

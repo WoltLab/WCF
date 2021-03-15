@@ -15,6 +15,7 @@ type PendingPip = [string, string];
 
 interface AjaxResponse {
   returnValues: {
+    invokeAgain: boolean;
     pluginName: string;
     target: string;
     timeElapsed: string;
@@ -203,7 +204,11 @@ class AcpUiDevtoolsProjectSync {
     this.buttons.get(identifier)!.disabled = false;
     this.buttonStatus.get(identifier)!.innerHTML = data.returnValues.timeElapsed;
 
-    this.syncNext();
+    if (data.returnValues.invokeAgain) {
+      this.sync(data.returnValues.pluginName, data.returnValues.target);
+    } else {
+      this.syncNext();
+    }
   }
 
   _ajaxFailure(

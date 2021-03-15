@@ -6,6 +6,7 @@ use wcf\data\DatabaseObjectDecorator;
 use wcf\data\devtools\project\DevtoolsProject;
 use wcf\data\package\installation\plugin\PackageInstallationPlugin;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\package\plugin\DatabasePackageInstallationPlugin;
 use wcf\system\package\plugin\IPackageInstallationPlugin;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -200,6 +201,16 @@ class DevtoolsPip extends DatabaseObjectDecorator
                     // these pips are satisfied by definition
                     return [$defaultFilename];
 
+                case 'database':
+                    foreach (\glob("{$path}wcfsetup/install/files/{$defaultFilename}") as $file) {
+                        $targets[] = \basename($file);
+                    }
+
+                    // `glob()` returns files in an arbitrary order
+                    \sort($targets, \SORT_NATURAL);
+
+                    return $targets;
+
                 case 'language':
                     foreach (\glob($path . 'wcfsetup/install/lang/*.xml') as $file) {
                         $targets[] = \basename($file);
@@ -327,6 +338,13 @@ class DevtoolsPip extends DatabaseObjectDecorator
                             );
                         }
                     }
+
+                    break;
+
+                case 'database':
+                    $instructions['value'] = DatabasePackageInstallationPlugin::SCRIPT_DIR . $target;
+
+                    $tar->registerFile($instructions['value'], $project->path . 'wcfsetup/install/files/' . $target);
 
                     break;
 
