@@ -12,6 +12,7 @@ use wcf\util\CryptoUtil;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
+use wcf\util\Url;
 
 /**
  * Proxies requests for embedded images.
@@ -82,14 +83,18 @@ class ImageProxyAction extends AbstractAction {
 				
 				try {
 					// rewrite schemaless URLs to https
-					$scheme = parse_url($url, PHP_URL_SCHEME);
+					$scheme = Url::parse($url)['scheme'];
 					if (!$scheme) {
 						if (StringUtil::startsWith($url, '//')) {
 							$url = 'https:'.$url;
 						}
 						else {
-							throw new \DomainException();
+							throw new \DomainException("Refusing to proxy a schemaless URL that does not start with //");
 						}
+					}
+					
+					if (Url::parse($url)['port']) {
+						throw new \DomainException("Refusing to proxy non-standard ports.");
 					}
 					
 					// download image
