@@ -41,7 +41,7 @@
 				</tr>
 			</thead>
 			
-			<tbody>
+			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=menu}
 					<tr class="jsMenuRow">
 						<td class="columnIcon">

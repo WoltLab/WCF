@@ -45,7 +45,7 @@
 			</tr>
 		</thead>
 		
-		<tbody>
+		<tbody class="jsReloadPageWhenEmpty">
 			{foreach from=$objects item=group}
 				<tr id="groupContainer{@$group->groupID}" class="jsUserGroupRow">
 					<td class="columnIcon">

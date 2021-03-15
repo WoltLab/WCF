@@ -120,7 +120,7 @@
 				</tr>
 			</thead>
 			
-			<tbody>
+			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=box}
 					<tr class="jsBoxRow">
 						<td class="columnIcon">

@@ -48,7 +48,7 @@
 				</tr>
 			</thead>
 			
-			<tbody>
+			<tbody class="jsReloadPageWhenEmpty">
 				{content}
 					{foreach from=$objects item=cronjob}
 						<tr class="jsCronjobRow">

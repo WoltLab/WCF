@@ -42,7 +42,7 @@
 				</tr>
 			</thead>
 			
-			<tbody>
+			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=subscription}
 					<tr class="jsPaidSubscriptionRow">
 						<td class="columnIcon">

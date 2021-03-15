@@ -90,7 +90,7 @@
 			</tr>
 			</thead>
 
-			<tbody>
+			<tbody class="jsReloadPageWhenEmpty">
 			{foreach from=$objects item=userTrophy}
 				<tr class="userTrophyRow">
 					<td class="columnIcon">

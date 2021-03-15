@@ -51,7 +51,7 @@
 
 {hascontent}
 	<div id="menuItemList" class="section sortableListContainer">
-		<ol class="sortableList" data-object-id="0">
+		<ol class="sortableList jsReloadPageWhenEmpty" data-object-id="0">
 			{content}
 				{foreach from=$menuItemNodeList item=menuItemNode}
 					<li class="sortableNode" data-object-id="{@$menuItemNode->itemID}">

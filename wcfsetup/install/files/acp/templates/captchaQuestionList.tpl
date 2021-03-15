@@ -4,18 +4,6 @@
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\captcha\\question\\CaptchaQuestionAction', '.jsQuestionRow');
 		new WCF.Action.Toggle('wcf\\data\\captcha\\question\\CaptchaQuestionAction', '.jsQuestionRow');
-		
-		var options = { };
-		{if $pages > 1}
-			options.refreshPage = true;
-			{if $pages == $pageNo}
-				options.updatePageNumber = -1;
-			{/if}
-		{else}
-			options.emptyMessage = '{jslang}wcf.global.noItems{/jslang}';
-		{/if}
-		
-		new WCF.Table.EmptyTableHandler($('#captchaQuestionTabelContainer'), 'jsQuestionRow', options);
 	});
 </script>
 
@@ -51,7 +39,7 @@
 				</tr>
 			</thead>
 			
-			<tbody>
+			<tbody class="jsReloadPageWhenEmpty">
 				{content}
 					{foreach from=$objects item='question'}
 						<tr class="jsQuestionRow">

@@ -3,18 +3,6 @@
 <script data-relocate="true">
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\template\\TemplateAction', '.jsTemplateRow');
-		
-		var options = { };
-		{if $pages > 1}
-			options.refreshPage = true;
-			{if $pages == $pageNo}
-				options.updatePageNumber = -1;
-			{/if}
-		{else}
-			options.emptyMessage = '{jslang}wcf.global.noItems{/jslang}';
-		{/if}
-		
-		new WCF.Table.EmptyTableHandler($('#templateTableContainer'), 'jsTemplateRow', options);
 	});
 </script>
 
@@ -108,7 +96,7 @@
 				</tr>
 			</thead>
 			
-			<tbody>
+			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=template}
 					{if $template->canCopy()}
 						<tr class="jsTemplateRow">

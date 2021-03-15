@@ -37,7 +37,7 @@
 
 {if $objects|count}
 	<div class="section sortableListContainer" id="adList">
-		<ol class="sortableList" data-object-id="0" start="{@($pageNo - 1) * $itemsPerPage + 1}">
+		<ol class="sortableList jsReloadPageWhenEmpty" data-object-id="0" start="{@($pageNo - 1) * $itemsPerPage + 1}">
 			{foreach from=$objects item='ad'}
 				<li class="sortableNode sortableNoNesting jsAd" data-object-id="{@$ad->adID}">
 					<span class="sortableNodeLabel">
