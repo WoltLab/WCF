@@ -171,10 +171,6 @@ class UserSearchForm extends UserOptionListForm
     protected function search()
     {
         $this->matches = [];
-        $sql = "SELECT      user_table.userID
-                FROM        wcf" . WCF_N . "_user user_table
-                LEFT JOIN   wcf" . WCF_N . "_user_option_value option_value
-                ON          option_value.userID = user_table.userID";
 
         // build search condition
         $this->conditions = new PreparedStatementConditionBuilder();
@@ -190,8 +186,13 @@ class UserSearchForm extends UserOptionListForm
             return;
         }
 
-        // do search
-        $statement = WCF::getDB()->prepareStatement($sql . "\n". $this->conditions, $this->maxResults);
+        // perform search
+        $sql = "SELECT      user_table.userID
+                FROM        wcf" . WCF_N . "_user user_table
+                LEFT JOIN   wcf" . WCF_N . "_user_option_value option_value
+                ON          option_value.userID = user_table.userID
+                {$this->conditions}";
+        $statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
         $statement->execute($this->conditions->getParameters());
         $this->matches = $statement->fetchAll(\PDO::FETCH_COLUMN);
     }
