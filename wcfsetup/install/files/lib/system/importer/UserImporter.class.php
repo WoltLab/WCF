@@ -224,19 +224,17 @@ class UserImporter extends AbstractImporter
             $groupIDs,
             $this->defaultGroups[$user->pendingActivation() ? 'notActivated' : 'activated']
         );
-        if (!empty($groupIDs)) {
-            $placeholders = '(?,?)' . \str_repeat(',(?,?)', \count($groupIDs) - 1);
-            $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_user_to_group
-                                        (userID, groupID)
-                    VALUES              {$placeholders}";
-            $statement = WCF::getDB()->prepareStatement($sql);
-            $parameters = [];
-            foreach ($groupIDs as $groupID) {
-                $parameters[] = $user->userID;
-                $parameters[] = $groupID;
-            }
-            $statement->execute($parameters);
+        $placeholders = '(?,?)' . \str_repeat(',(?,?)', \count($groupIDs) - 1);
+        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_user_to_group
+                                    (userID, groupID)
+                VALUES              {$placeholders}";
+        $statement = WCF::getDB()->prepareStatement($sql);
+        $parameters = [];
+        foreach ($groupIDs as $groupID) {
+            $parameters[] = $user->userID;
+            $parameters[] = $groupID;
         }
+        $statement->execute($parameters);
 
         // save languages
         $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_user_to_language
