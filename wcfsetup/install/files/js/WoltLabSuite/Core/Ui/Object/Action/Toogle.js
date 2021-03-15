@@ -16,16 +16,12 @@ define(["require", "exports", "tslib", "../../../Language", "./Handler"], functi
         const toggleButton = objectElement.querySelector('.jsObjectAction[data-object-action="toggle"]');
         if (toggleButton.classList.contains("fa-square-o")) {
             toggleButton.classList.replace("fa-square-o", "fa-check-square-o");
-            const newTitle = toggleButton.dataset.disableTitle
-                ? toggleButton.dataset.disableTitle
-                : Language.get("wcf.global.button.disable");
+            const newTitle = toggleButton.dataset.disableTitle || Language.get("wcf.global.button.disable");
             toggleButton.title = newTitle;
         }
         else {
             toggleButton.classList.replace("fa-check-square-o", "fa-square-o");
-            const newTitle = toggleButton.dataset.enableTitle
-                ? toggleButton.dataset.enableTitle
-                : Language.get("wcf.global.button.enable");
+            const newTitle = toggleButton.dataset.enableTitle || Language.get("wcf.global.button.enable");
             toggleButton.title = newTitle;
         }
     }

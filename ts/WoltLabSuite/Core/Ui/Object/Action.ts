@@ -36,16 +36,26 @@ function executeAction(event: Event): void {
   }
 
   // Collect additional request parameters.
-  // TODO: Is still untested.
   const parameters = {};
   Object.entries(actionElement.dataset).forEach(([key, value]) => {
-    if (/^objectActionParameterData.+/.exec(key)) {
-      if (!("data" in parameters)) {
+    let matches = /^objectActionParameterData(.+)/.exec(key);
+    if (matches) {
+      if (!Object.prototype.hasOwnProperty.call(parameters, "data")) {
         parameters["data"] = {};
       }
-      parameters[StringUtil.lcfirst(key.replace(/^objectActionParameterData/, ""))] = value;
-    } else if (/^objectActionParameter.+/.exec(key)) {
-      parameters[StringUtil.lcfirst(key.replace(/^objectActionParameter/, ""))] = value;
+      parameters["data"][StringUtil.lcfirst(matches[1])] = value;
+    } else {
+      matches = /^objectActionParameter(.+)/.exec(key);
+
+      if (matches) {
+        const key = StringUtil.lcfirst(matches[1]);
+
+        if (key === "data") {
+          throw new Error("Additional object action parameters may not use 'data' as key.");
+        }
+
+        parameters[key] = value;
+      }
     }
   });
 

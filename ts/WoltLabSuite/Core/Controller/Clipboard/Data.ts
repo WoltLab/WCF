@@ -40,7 +40,7 @@ export interface AjaxResponse extends DatabaseObjectActionResponse {
   returnValues: {
     action: string;
     items?: {
-      // They key is the `typeName`
+      // The key is the `typeName`
       [key: string]: ClipboardItemData;
     };
     markedItems?: AjaxResponseMarkedItems;
