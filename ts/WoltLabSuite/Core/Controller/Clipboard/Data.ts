@@ -1,4 +1,4 @@
-import { DatabaseObjectActionResponse } from "../Ajax/Data";
+import { DatabaseObjectActionResponse } from "../../Ajax/Data";
 
 export interface ClipboardOptions {
   hasMarkedItems: boolean;

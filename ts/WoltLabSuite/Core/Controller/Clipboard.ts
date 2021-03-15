@@ -18,7 +18,7 @@ import * as UiConfirmation from "../Ui/Confirmation";
 import UiDropdownSimple from "../Ui/Dropdown/Simple";
 import * as UiPageAction from "../Ui/Page/Action";
 import * as UiScreen from "../Ui/Screen";
-import { ClipboardOptions, ContainerData, ClipboardActionData, AjaxResponse } from "./ClipboardData";
+import { ClipboardOptions, ContainerData, ClipboardActionData, AjaxResponse } from "./Clipboard/Data";
 
 const _specialCheckboxSelector =
   '.messageCheckboxLabel > input[type="checkbox"], .message .messageClipboardCheckbox > input[type="checkbox"], .messageGroupList .columnMark > label > input[type="checkbox"]';
