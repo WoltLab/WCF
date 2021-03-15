@@ -32,6 +32,15 @@ class UserImporter extends AbstractImporter
     protected $eventIDs = [];
 
     /**
+     * @since 5.4
+     * @var array
+     */
+    protected $defaultGroups = [
+        'notActivated' => [],
+        'activated' => [],
+    ];
+
+    /**
      * list of user options
      * @var UserOption[]
      */
@@ -57,6 +66,11 @@ class UserImporter extends AbstractImporter
         $userOptionList = new UserOptionList();
         $userOptionList->readObjects();
         $this->userOptions = $userOptionList->getObjects();
+
+        $this->defaultGroups = [
+            'notActivated' => UserGroup::getGroupIDsByType([UserGroup::EVERYONE, UserGroup::GUESTS]),
+            'activated' => UserGroup::getGroupIDsByType([UserGroup::EVERYONE, UserGroup::USERS]),
+        ];
     }
 
     /**
@@ -206,25 +220,21 @@ class UserImporter extends AbstractImporter
             }
         }
 
-        if (!$user->pendingActivation()) {
-            $defaultGroupIDs = UserGroup::getGroupIDsByType([UserGroup::EVERYONE, UserGroup::USERS]);
-        } else {
-            $defaultGroupIDs = UserGroup::getGroupIDsByType([UserGroup::EVERYONE, UserGroup::GUESTS]);
-        }
-
-        $groupIDs = \array_merge($groupIDs, $defaultGroupIDs);
+        $groupIDs = \array_merge(
+            $groupIDs,
+            $this->defaultGroups[$user->pendingActivation() ? 'notActivated' : 'activated']
+        );
+        $placeholders = '(?,?)' . \str_repeat(',(?,?)', \count($groupIDs) - 1);
         $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_user_to_group
                                     (userID, groupID)
-                VALUES              (?, ?)";
+                VALUES              {$placeholders}";
         $statement = WCF::getDB()->prepareStatement($sql);
-        WCF::getDB()->beginTransaction();
+        $parameters = [];
         foreach ($groupIDs as $groupID) {
-            $statement->execute([
-                $user->userID,
-                $groupID,
-            ]);
+            $parameters[] = $user->userID;
+            $parameters[] = $groupID;
         }
-        WCF::getDB()->commitTransaction();
+        $statement->execute($parameters);
 
         // save languages
         $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_user_to_language
@@ -238,19 +248,20 @@ class UserImporter extends AbstractImporter
             ]);
         }
 
-        // save default user events
-        $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_user_notification_event_to_user
-                                    (userID, eventID)
-                VALUES              (?, ?)";
-        $statement = WCF::getDB()->prepareStatement($sql);
-        WCF::getDB()->beginTransaction();
-        foreach ($this->eventIDs as $eventID) {
-            $statement->execute([
-                $user->userID,
-                $eventID,
-            ]);
+        if (!empty($this->eventIDs)) {
+            // save default user events
+            $placeholders = '(?,?)' . \str_repeat(',(?,?)', \count($this->eventIDs) - 1);
+            $sql = "INSERT IGNORE INTO  wcf" . WCF_N . "_user_notification_event_to_user
+                                        (userID, eventID)
+                    VALUES              {$placeholders}";
+            $statement = WCF::getDB()->prepareStatement($sql);
+            $parameters = [];
+            foreach ($this->eventIDs as $eventID) {
+                $parameters[] = $user->userID;
+                $parameters[] = $eventID;
+            }
+            $statement->execute($parameters);
         }
-        WCF::getDB()->commitTransaction();
 
         // save mapping
         ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.user', $oldID, $user->userID);
