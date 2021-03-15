@@ -248,8 +248,17 @@ class DevtoolsPip extends DatabaseObjectDecorator
                 }
             } else {
                 if (\strpos($defaultFilename, '*') !== false) {
-                    foreach (\glob($path . $defaultFilename) as $file) {
-                        $targets[] = \basename($file);
+                    if ($this->pluginName === 'database') {
+                        foreach (\glob("{$path}/files/{$defaultFilename}") as $file) {
+                            $targets[] = \basename($file);
+                        }
+                        foreach (\glob("{$path}/files_wcf/{$defaultFilename}") as $file) {
+                            $targets[] = \basename($file);
+                        }
+                    } else {
+                        foreach (\glob($path . $defaultFilename) as $file) {
+                            $targets[] = \basename($file);
+                        }
                     }
 
                     // `glob()` returns files in an arbitrary order
@@ -417,6 +426,18 @@ class DevtoolsPip extends DatabaseObjectDecorator
                             );
                         }
                     }
+
+                    break;
+
+                case 'database':
+                    $instructions['value'] = DatabasePackageInstallationPlugin::SCRIPT_DIR . $target;
+
+                    $path = "{$project->path}files/{$instructions['value']}";
+                    if (!\is_file($path)) {
+                        $path = "{$project->path}files_wcf/{$instructions['value']}";
+                    }
+
+                    $tar->registerFile($instructions['value'], $path);
 
                     break;
 
