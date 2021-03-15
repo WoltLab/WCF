@@ -182,10 +182,14 @@ class ImportCLICommand implements ICLICommand
         ]);
 
         // step 8) import data
-        CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.started'));
+        CLIWCF::getReader()->println(
+            \sprintf("[%s] %s", \date('c'), WCF::getLanguage()->get('wcf.acp.dataImport.started'))
+        );
 
         foreach ($queue as $objectType) {
-            CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.data.' . $objectType));
+            CLIWCF::getReader()->println(
+                \sprintf("[%s] %s", \date('c'), WCF::getLanguage()->get('wcf.acp.dataImport.data.' . $objectType))
+            );
             $workerCommand = CLICommandHandler::getCommand('worker');
             $workerCommand->execute([
                 '--objectType=' . $objectType,
@@ -193,7 +197,9 @@ class ImportCLICommand implements ICLICommand
             ]);
         }
 
-        CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.completed'));
+        CLIWCF::getReader()->println(
+            \sprintf("[%s] %s", \date('c'), WCF::getLanguage()->get('wcf.acp.dataImport.completed'))
+        );
 
         CLIWCF::getReader()->setHistoryEnabled(true);
     }
