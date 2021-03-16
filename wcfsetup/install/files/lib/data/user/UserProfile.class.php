@@ -998,9 +998,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     }
 
     /**
-     * Returns true if the current user is connected with Facebook.
-     *
-     * @return  bool
+     * @deprecated 5.4 This method is unused internally and redundant with `User::getAuthProvider()`.
      */
     public function isConnectedWithFacebook()
     {
@@ -1008,9 +1006,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     }
 
     /**
-     * Returns true if the current user is connected with GitHub.
-     *
-     * @return  bool
+     * @deprecated 5.4 This method is unused internally and redundant with `User::getAuthProvider()`.
      */
     public function isConnectedWithGithub()
     {
@@ -1018,9 +1014,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     }
 
     /**
-     * Returns true if the current user is connected with Google Plus.
-     *
-     * @return  bool
+     * @deprecated 5.4 This method is unused internally and redundant with `User::getAuthProvider()`.
      */
     public function isConnectedWithGoogle()
     {
@@ -1028,9 +1022,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     }
 
     /**
-     * Returns true if the current user is connected with Twitter.
-     *
-     * @return  bool
+     * @deprecated 5.4 This method is unused internally and redundant with `User::getAuthProvider()`.
      */
     public function isConnectedWithTwitter()
     {
