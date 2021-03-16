@@ -15,6 +15,7 @@ use wcf\data\user\cover\photo\DefaultUserCoverPhoto;
 use wcf\data\user\cover\photo\IUserCoverPhoto;
 use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\data\user\group\UserGroup;
+use wcf\data\user\ignore\UserIgnore;
 use wcf\data\user\online\UserOnline;
 use wcf\data\user\option\ViewableUserOption;
 use wcf\data\user\rank\UserRank;
@@ -207,9 +208,10 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns a list of ignored user ids.
      *
+     * @param  ?int  $type One of the UserIgnore::TYPE_* constants.
      * @return  int[]
      */
-    public function getIgnoredUsers()
+    public function getIgnoredUsers(?int $type = null)
     {
         if ($this->ignoredUserIDs === null) {
             $this->ignoredUserIDs = [];
@@ -220,12 +222,12 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
 
                 // cache does not exist or is outdated
                 if ($data === null) {
-                    $sql = "SELECT  ignoreUserID
+                    $sql = "SELECT  ignoreUserID, type
                             FROM    wcf" . WCF_N . "_user_ignore
                             WHERE   userID = ?";
                     $statement = WCF::getDB()->prepareStatement($sql);
                     $statement->execute([$this->userID]);
-                    $this->ignoredUserIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
+                    $this->ignoredUserIDs = $statement->fetchMap('ignoreUserID', 'type');
 
                     // update storage data
                     UserStorageHandler::getInstance()->update(
@@ -239,15 +241,26 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
             }
         }
 
-        return $this->ignoredUserIDs;
+        return \array_keys(\array_filter($this->ignoredUserIDs, static function ($userType) use ($type) {
+            if ($type === null) {
+                return true;
+            } elseif ($type === UserIgnore::TYPE_BLOCK_DIRECT_CONTACT) {
+                return \in_array($userType, [UserIgnore::TYPE_BLOCK_DIRECT_CONTACT, UserIgnore::TYPE_HIDE_MESSAGES]);
+            } elseif ($type === UserIgnore::TYPE_HIDE_MESSAGES) {
+                return $userType === UserIgnore::TYPE_HIDE_MESSAGES;
+            } else {
+                return false;
+            }
+        }));
     }
 
     /**
      * Returns a list of user ids that are ignoring this user.
      *
+     * @param  ?int  $type One of the UserIgnore::TYPE_* constants.
      * @return  int[]
      */
-    public function getIgnoredByUsers()
+    public function getIgnoredByUsers(?int $type = null)
     {
         if ($this->ignoredByUserIDs === null) {
             $this->ignoredByUserIDs = [];
@@ -258,12 +271,12 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
 
                 // cache does not exist or is outdated
                 if ($data === null) {
-                    $sql = "SELECT  userID
+                    $sql = "SELECT  userID, type
                             FROM    wcf" . WCF_N . "_user_ignore
                             WHERE   ignoreUserID = ?";
                     $statement = WCF::getDB()->prepareStatement($sql);
                     $statement->execute([$this->userID]);
-                    $this->ignoredByUserIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
+                    $this->ignoredByUserIDs = $statement->fetchMap('userID', 'type');
 
                     // update storage data
                     UserStorageHandler::getInstance()->update(
@@ -277,7 +290,17 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
             }
         }
 
-        return $this->ignoredByUserIDs;
+        return \array_keys(\array_filter($this->ignoredByUserIDs, static function ($userType) use ($type) {
+            if ($type === null) {
+                return true;
+            } elseif ($type === UserIgnore::TYPE_BLOCK_DIRECT_CONTACT) {
+                return \in_array($userType, [UserIgnore::TYPE_BLOCK_DIRECT_CONTACT, UserIgnore::TYPE_HIDE_MESSAGES]);
+            } elseif ($type === UserIgnore::TYPE_HIDE_MESSAGES) {
+                return $userType === UserIgnore::TYPE_HIDE_MESSAGES;
+            } else {
+                return false;
+            }
+        }));
     }
 
     /**
@@ -306,22 +329,24 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      * Returns true if given user is ignored.
      *
      * @param int $userID
+     * @param  ?int  $type One of the UserIgnore::TYPE_* constants.
      * @return  bool
      */
-    public function isIgnoredUser($userID)
+    public function isIgnoredUser($userID, ?int $type = null)
     {
-        return \in_array($userID, $this->getIgnoredUsers());
+        return \in_array($userID, $this->getIgnoredUsers($type));
     }
 
     /**
      * Returns true if the given user ignores the current user.
      *
      * @param int $userID
+     * @param  ?int  $type One of the UserIgnore::TYPE_* constants.
      * @return  bool
      */
-    public function isIgnoredByUser($userID)
+    public function isIgnoredByUser($userID, ?int $type = null)
     {
-        return \in_array($userID, $this->getIgnoredByUsers());
+        return \in_array($userID, $this->getIgnoredByUsers($type));
     }
 
     /**
