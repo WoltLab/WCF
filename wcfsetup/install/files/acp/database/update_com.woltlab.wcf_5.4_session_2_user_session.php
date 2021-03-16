@@ -32,6 +32,7 @@ return [
             VarcharDatabaseTableColumn::create('ipAddress')
                 ->length(39)
                 ->defaultValue(''),
+            NotNullInt10DatabaseTableColumn::create('creationTime'),
             NotNullInt10DatabaseTableColumn::create('lastActivityTime')
                 ->defaultValue(0),
             MediumblobDatabaseTableColumn::create('sessionVariables'),

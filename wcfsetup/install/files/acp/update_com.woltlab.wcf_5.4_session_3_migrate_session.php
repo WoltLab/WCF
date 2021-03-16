@@ -26,8 +26,8 @@ if ($statement->fetchSingleColumn() == SessionHandler::getInstance()->userID) {
 }
 
 $sql = "INSERT INTO wcf" . WCF_N . "_user_session
-                    (sessionID, userID, userAgent, ipAddress, lastActivityTime, sessionVariables)
-        VALUES      (?, ?, ?, ?, ?, ?)";
+                    (sessionID, userID, userAgent, ipAddress, creationTime, lastActivityTime, sessionVariables)
+        VALUES      (?, ?, ?, ?, ?, ?, ?)";
 $statement = WCF::getDB()->prepareStatement($sql);
 
 $klass = new \ReflectionClass(SessionHandler::getInstance());
@@ -45,7 +45,8 @@ $statement->execute([
     SessionHandler::getInstance()->userID,
     SessionHandler::getInstance()->userAgent,
     SessionHandler::getInstance()->ipAddress,
-    SessionHandler::getInstance()->lastActivityTime,
+    TIME_NOW,
+    TIME_NOW,
     \serialize([
         'acp' => $variables,
         'frontend' => [],

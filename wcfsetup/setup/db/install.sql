@@ -1886,6 +1886,7 @@ CREATE TABLE wcf1_user_session (
 	userID INT(10),
 	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
 	userAgent VARCHAR(255) NOT NULL DEFAULT '',
+	creationTime INT(10) NOT NULL,
 	lastActivityTime INT(10) NOT NULL DEFAULT 0,
 	sessionVariables MEDIUMBLOB,
 	KEY (userID),
