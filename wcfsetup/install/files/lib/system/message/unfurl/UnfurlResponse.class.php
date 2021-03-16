@@ -254,6 +254,13 @@ final class UnfurlResponse
                 /** @var \DOMElement $node */
                 return $node->getAttribute("content");
             }
+
+            // og:image:url
+            $list = $this->domXPath->query("//meta[@property='og:image:url']");
+            foreach ($list as $node) {
+                /** @var \DOMElement $node */
+                return $node->getAttribute("content");
+            }
         }
 
         return null;
