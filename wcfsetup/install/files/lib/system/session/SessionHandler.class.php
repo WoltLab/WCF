@@ -134,6 +134,8 @@ final class SessionHandler extends SingletonFactory
 
     private const USER_SESSION_LIFETIME = 60 * 86400;
 
+    private const USER_SESSION_LIMIT = 30;
+
     private const CHANGE_USER_AFTER_MULTIFACTOR_KEY = self::class . "\0__changeUserAfterMultifactor__";
 
     private const PENDING_USER_LIFETIME = 15 * 60;
@@ -1032,6 +1034,28 @@ final class SessionHandler extends SingletonFactory
                 $user->userID,
                 $this->sessionID,
             ]);
+
+            // ... delete any user sessions exceeding the limit ...
+            $sql = "SELECT  all_sessions.sessionID
+                    FROM    wcf" . WCF_N . "_user_session all_sessions
+                    LEFT JOIN (
+                        SELECT      sessionID
+                        FROM        wcf" . WCF_N . "_user_session
+                        WHERE       userID = ?
+                        ORDER BY    lastActivityTime DESC
+                        LIMIT       " . self::USER_SESSION_LIMIT . "
+                    ) newest_sessions
+                    ON      newest_sessions.sessionID = all_sessions.sessionID
+                    WHERE   all_sessions.userID = ?
+                        AND newest_sessions.sessionID IS NULL";
+            $statement = WCF::getDB()->prepareStatement($sql);
+            $statement->execute([
+                $user->userID,
+                $user->userID,
+            ]);
+            foreach ($statement->fetchAll(\PDO::FETCH_COLUMN) as $sessionID) {
+                $this->deleteUserSession($sessionID);
+            }
 
             // ... and reload the session with the updated information.
             $hasSession = $this->getExistingSession($this->sessionID);
