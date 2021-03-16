@@ -65,7 +65,7 @@ tar cvf com.woltlab.wcf/files_pre_check.tar -C wcfsetup/install/files/ \
 		<!--
 tar cvf com.woltlab.wcf/files_pre.tar -C wcfsetup/install/files/ \
 	acp/update_com.woltlab.wcf_5.4_session_1_cookies.php \
-	acp/update_com.woltlab.wcf_5.4_session_2_user_session.php \
+	acp/database/update_com.woltlab.wcf_5.4_session_2_user_session.php \
 	acp/update_com.woltlab.wcf_5.4_session_3_migrate_session.php \
 	lib/util/HeaderUtil.class.php \
 	lib/system/package/plugin/AbstractPackageInstallationPlugin.class.php \
