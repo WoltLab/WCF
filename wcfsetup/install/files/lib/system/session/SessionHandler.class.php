@@ -679,13 +679,14 @@ final class SessionHandler extends SingletonFactory
 
         // Create new session.
         $sql = "INSERT INTO wcf" . WCF_N . "_user_session
-                            (sessionID, ipAddress, userAgent, lastActivityTime, sessionVariables)
-                VALUES      (?, ?, ?, ?, ?)";
+                            (sessionID, ipAddress, userAgent, creationTime, lastActivityTime, sessionVariables)
+                VALUES      (?, ?, ?, ?, ?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([
             $this->sessionID,
             UserUtil::getIpAddress(),
             UserUtil::getUserAgent(),
+            TIME_NOW,
             TIME_NOW,
             \serialize($variables),
         ]);
