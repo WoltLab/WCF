@@ -24,7 +24,7 @@ class HtmlNodeUnfurlLink extends HtmlNodePlainLink
      */
     public static function setUnfurl(HtmlNodePlainLink $link): void
     {
-        if ($link->isStandalone() && Url::is($link->href)) {
+        if ($link->isStandalone() && Url::is($link->href) && !Url::parse($link->href)['port']) {
             self::removeStyling($link);
 
             $object = new UnfurlUrlAction([], 'findOrCreate', [
