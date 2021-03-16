@@ -27,14 +27,17 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener"], function (requ
             }
         });
     });
-    function setup() {
+    function observeElements() {
         document.querySelectorAll(".jsReloadPageWhenEmpty").forEach((el) => {
             el.classList.remove("jsReloadPageWhenEmpty");
             observer.observe(el, {
                 childList: true,
             });
         });
-        Listener_1.default.add("WoltLabSuite/Core/Ui/Empty", () => setup());
+    }
+    function setup() {
+        observeElements();
+        Listener_1.default.add("WoltLabSuite/Core/Ui/Empty", () => observeElements());
     }
     exports.setup = setup;
 });

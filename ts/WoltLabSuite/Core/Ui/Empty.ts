@@ -28,13 +28,15 @@ const observer = new MutationObserver((mutations) => {
   });
 });
 
-export function setup(): void {
+function observeElements(): void {
   document.querySelectorAll(".jsReloadPageWhenEmpty").forEach((el) => {
     el.classList.remove("jsReloadPageWhenEmpty");
     observer.observe(el, {
       childList: true,
     });
   });
-
-  DomChangeListener.add("WoltLabSuite/Core/Ui/Empty", () => setup());
+}
+export function setup(): void {
+  observeElements();
+  DomChangeListener.add("WoltLabSuite/Core/Ui/Empty", () => observeElements());
 }
