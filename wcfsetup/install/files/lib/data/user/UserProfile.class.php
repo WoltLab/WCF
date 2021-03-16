@@ -998,7 +998,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     }
 
     /**
-     * @deprecated 5.4 This method is unused internally and redundant with User:.getAuthProvider()
+     * @deprecated 5.4 This method is unused internally and redundant with `User::getAuthProvider()`.
      */
     public function isConnectedWithFacebook()
     {
@@ -1006,7 +1006,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     }
 
     /**
-     * @deprecated 5.4 This method is unused internally and redundant with User:.getAuthProvider()
+     * @deprecated 5.4 This method is unused internally and redundant with `User::getAuthProvider()`.
      */
     public function isConnectedWithGithub()
     {
@@ -1014,7 +1014,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     }
 
     /**
-     * @deprecated 5.4 This method is unused internally and redundant with User:.getAuthProvider()
+     * @deprecated 5.4 This method is unused internally and redundant with `User::getAuthProvider()`.
      */
     public function isConnectedWithGoogle()
     {
@@ -1022,7 +1022,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     }
 
     /**
-     * @deprecated 5.4 This method is unused internally and redundant with User:.getAuthProvider()
+     * @deprecated 5.4 This method is unused internally and redundant with `User::getAuthProvider()`.
      */
     public function isConnectedWithTwitter()
     {
