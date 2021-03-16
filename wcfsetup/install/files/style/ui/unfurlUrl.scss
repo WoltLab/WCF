@@ -1,0 +1,102 @@
+.unfurlUrlCard {
+	background-color: $wcfContentBackground;
+	border-radius: 3px;
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+	color: $wcfContentText;
+	display: inline-block;
+	margin: 10px 0;
+	max-width: 100%;
+	overflow: hidden;
+	position: relative;
+	width: 600px;
+
+	&.unfurlUrlCardCoverImage {
+		.unfurlUrlImage {
+			min-height: 150px;
+			position: relative;
+		}
+	}
+
+	&.unfurlUrlCardSquaredImage {
+		display: flex;
+
+		.unfurlUrlImage {
+			border-radius: 3px;
+			flex: 0 0 auto;
+			height: 128px;
+			margin: 10px;
+			width: 128px;
+
+			@include screen-sm {
+				height: 64px;
+				width: 64px;
+			}
+
+			@include screen-xs {
+				height: 24px;
+				position: absolute;
+				width: 24px;
+			}
+		}
+
+		.unfurlUrlInformation {
+			flex: 1 auto;
+			overflow: hidden;
+			padding-left: 10px;
+		}
+
+		@include screen-xs {
+			.unfurlUrlTitle {
+				padding-left: 30px;
+			}
+		}
+	}
+}
+
+.unfurlUrlImage {
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.unfurlUrlInformation {
+	position: relative;
+	padding: 10px 10px 25px 10px;
+}
+
+.unfurlUrlTitle {
+	@include wcfFontHeadline;
+	@include wcfFontBold;
+
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.unfurlUrlDescription {
+	color: $wcfContentDimmedText;
+	margin-top: 5px;
+}
+
+.unfurlUrlHost {
+	@include wcfFontSmall;
+
+	bottom: 5px;
+	color: $wcfContentDimmedText;
+	float: right;
+	position: absolute;
+	right: 5px;
+
+	img {
+		height: 12px !important;
+	}
+}
+
+.unfurlUrlLinkShadow {
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+}

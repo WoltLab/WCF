@@ -1446,6 +1446,33 @@ CREATE TABLE wcf1_trophy(
 	KEY(categoryID)
 );
 
+DROP TABLE IF EXISTS wcf1_unfurl_url;
+CREATE TABLE wcf1_unfurl_url (
+	urlID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	url TEXT NOT NULL,
+	urlHash VARCHAR(40) NOT NULL,
+	title VARCHAR(255) NOT NULL DEFAULT '',
+	description TEXT,
+	imageID INT(10),
+	status VARCHAR(255) NOT NULL DEFAULT 'PENDING',
+	lastFetch INT(10) NOT NULL DEFAULT 0,
+
+	UNIQUE KEY urlHash (urlHash)
+);
+
+DROP TABLE IF EXISTS wcf1_unfurl_url_image;
+CREATE TABLE wcf1_unfurl_url_image (
+	imageID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	imageUrl TEXT NOT NULL,
+	imageUrlHash VARCHAR(40) DEFAULT NULL,
+	width INT(10) NOT NULL,
+	height INT(10) NOT NULL,
+	imageExtension VARCHAR(4) DEFAULT NULL,
+	isStored TINYINT(1) NOT NULL DEFAULT 0,
+
+	UNIQUE KEY imageUrlHash (imageUrlHash)
+);
+
 DROP TABLE IF EXISTS wcf1_user;
 CREATE TABLE wcf1_user (
 	userID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -2167,6 +2194,8 @@ ALTER TABLE wcf1_tracked_visit ADD FOREIGN KEY (userID) REFERENCES wcf1_user (us
 
 ALTER TABLE wcf1_tracked_visit_type ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_tracked_visit_type ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_unfurl_url ADD FOREIGN KEY (imageID) REFERENCES wcf1_unfurl_url_image (imageID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_user ADD FOREIGN KEY (avatarID) REFERENCES wcf1_user_avatar (avatarID) ON DELETE SET NULL;
 ALTER TABLE wcf1_user ADD FOREIGN KEY (rankID) REFERENCES wcf1_user_rank (rankID) ON DELETE SET NULL;
