@@ -7,6 +7,7 @@ use wcf\data\comment\CommentList;
 use wcf\data\comment\response\CommentResponse;
 use wcf\data\comment\response\CommentResponseList;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\ignore\UserIgnore;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\like\IViewableLikeProvider;
 use wcf\system\request\LinkHandler;
@@ -82,7 +83,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
                 return false;
             }
 
-            if ($userProfile->isIgnoredUser(WCF::getUser()->userID)) {
+            if ($userProfile->isIgnoredUser(WCF::getUser()->userID, UserIgnore::TYPE_BLOCK_DIRECT_CONTACT)) {
                 return false;
             }
         }
