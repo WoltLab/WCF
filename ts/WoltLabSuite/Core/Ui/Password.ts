@@ -28,6 +28,8 @@ function initElements(): void {
 function initElement(input: HTMLInputElement): void {
   _knownElements.add(input);
 
+  const activeElement = document.activeElement;
+
   const inputAddon = document.createElement("div");
   inputAddon.classList.add("inputAddon");
   input.insertAdjacentElement("beforebegin", inputAddon);
@@ -54,6 +56,10 @@ function initElement(input: HTMLInputElement): void {
       toggle(input, button, icon);
     }
   });
+
+  if (activeElement === input) {
+    input.focus();
+  }
 }
 
 function toggle(input: HTMLInputElement, button: HTMLElement, icon: HTMLElement): void {

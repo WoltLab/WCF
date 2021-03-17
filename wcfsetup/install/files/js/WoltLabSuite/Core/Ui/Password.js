@@ -27,6 +27,7 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Language"],
     }
     function initElement(input) {
         _knownElements.add(input);
+        const activeElement = document.activeElement;
         const inputAddon = document.createElement("div");
         inputAddon.classList.add("inputAddon");
         input.insertAdjacentElement("beforebegin", inputAddon);
@@ -50,6 +51,9 @@ define(["require", "exports", "tslib", "../Dom/Change/Listener", "../Language"],
                 toggle(input, button, icon);
             }
         });
+        if (activeElement === input) {
+            input.focus();
+        }
     }
     function toggle(input, button, icon) {
         if (input.type === "password") {
