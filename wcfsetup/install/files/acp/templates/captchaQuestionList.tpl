@@ -37,9 +37,9 @@
 					{foreach from=$objects item='question'}
 						<tr class="jsQuestionRow jsObjectActionObject" data-object-id="{@$question->getObjectID()}">
 							<td class="columnIcon">
-								<span class="icon icon16 fa-{if !$question->isDisabled}check-{/if}square-o jsObjectAction jsTooltip pointer" title="{lang}wcf.global.button.{if $question->isDisabled}enable{else}disable{/if}{/lang}" data-object-action="toggle"></span>
+								{include file='__objectActionToogleIcon' object=$question}
 								<a href="{link controller='CaptchaQuestionEdit' id=$question->questionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-								<span class="icon icon16 fa-times jsObjectAction jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-action="delete" data-confirm-message="{lang __encode=true}wcf.acp.captcha.question.delete.confirmMessage{/lang}"></span>
+								{include file='__objectActionDeleteIcon' objectActionConfirmMessage='wcf.acp.captcha.question.delete.confirmMessage'}
 								
 								{event name='rowButtons'}
 							</td>

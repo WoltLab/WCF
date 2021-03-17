@@ -50,10 +50,10 @@
 				{foreach from=$optionList item=option}
 					<tr class="sortableNode jsOptionRow jsObjectActionObject" data-object-id="{@$option->optionID}">
 						<td class="columnIcon">
-							<span class="icon icon16 fa-{if !$option->isDisabled}check-{/if}square-o jsObjectAction jsTooltip pointer" title="{lang}wcf.global.button.{if $option->isDisabled}enable{else}disable{/if}{/lang}" data-object-action="toggle"></span>
+							{include file='__objectActionToogleIcon' object=$option}
 							<a href="{link controller='ContactOptionEdit' id=$option->optionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 							{if $option->canDelete()}
-								<span class="icon icon16 fa-times jsObjectAction jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-action="delete"  data-confirm-message="{lang __encode=true}wcf.acp.customOption.delete.confirmMessage{/lang}"></span>
+								{include file='__objectActionDeleteIcon' objectActionConfirmMessage='wcf.acp.customOption.delete.confirmMessage'}
 							{else}
 								<span class="icon icon16 fa-times disabled"></span>
 							{/if}
@@ -89,12 +89,12 @@
 						
 						<span class="statusDisplay sortableButtonContainer">
 							<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
-							<span class="icon icon16 fa-{if !$recipient->isDisabled}check-square-o{else}square-o{/if} jsObjectAction jsTooltip pointer" title="{lang}wcf.global.button.{if $recipient->isDisabled}enable{else}disable{/if}{/lang}" data-object-action="toggle"></span>
+							{include file='__objectActionToogleIcon' object=$recipient}
 							<a href="{link controller='ContactRecipientEdit' id=$recipient->recipientID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 fa-pencil"></a>
 							{if $recipient->originIsSystem}
 								<span class="icon icon16 fa-times disabled"></span>
 							{else}
-								<span title="{lang}wcf.global.button.delete{/lang}" class="jsObjectAction jsTooltip icon icon16 fa-times pointer" data-object-action="delete" data-confirm-message="{lang __encode=true}wcf.acp.contact.recipient.delete.confirmMessage{/lang}">
+								{include file='__objectActionDeleteIcon' objectActionConfirmMessage='wcf.acp.contact.recipient.delete.confirmMessage'}
 							{/if}
 							
 							{event name='itemButtons'}

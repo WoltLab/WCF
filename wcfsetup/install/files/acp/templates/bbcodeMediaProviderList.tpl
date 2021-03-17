@@ -36,9 +36,9 @@
 				{foreach from=$objects item='mediaProvider'}
 					<tr class="jsMediaProviderRow jsObjectActionObject" data-object-id="{@$mediaProvider->getObjectID()}">
 						<td class="columnIcon">
-							<span class="icon icon16 fa-{if !$mediaProvider->isDisabled}check-{/if}square-o jsObjectAction jsTooltip pointer" title="{lang}wcf.global.button.{if !$mediaProvider->isDisabled}disable{else}enable{/if}{/lang}" data-object-action="toggle"></span>
+							{include file='__objectActionToogleIcon' object=$mediaProvider}
 							<a href="{link controller='BBCodeMediaProviderEdit' object=$mediaProvider}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-							<span class="icon icon16 fa-times jsObjectAction jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-action="delete" data-confirm-message="{lang __encode=true}wcf.acp.bbcode.mediaProvider.delete.sure{/lang}"></span>
+							{include file='__objectActionDeleteIcon' objectActionConfirmMessage='wcf.acp.bbcode.mediaProvider.delete.sure'}
 							
 							{event name='rowButtons'}
 						</td>

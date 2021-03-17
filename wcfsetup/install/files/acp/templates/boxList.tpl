@@ -117,10 +117,11 @@
 				{foreach from=$objects item=box}
 					<tr class="jsBoxRow jsObjectActionObject" data-object-id="{@$box->getObjectID()}">
 						<td class="columnIcon">
-							<span class="icon icon16 fa-{if !$box->isDisabled}check-{/if}square-o jsObjectAction jsTooltip pointer" title="{lang}wcf.global.button.{if !$box->isDisabled}disable{else}enable{/if}{/lang}" data-object-action="toggle"></span>
+							{include file='__objectActionToogleIcon' object=$box}
 							<a href="{link controller='BoxEdit' id=$box->boxID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 							{if $box->canDelete()}
-								<span class="icon icon16 fa-times jsObjectAction jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-action="delete" data-confirm-message="{lang __encode=true}wcf.acp.box.delete.confirmMessage{/lang}"></span>
+								{include file='__objectActionDeleteIcon' objectActionConfirmMessage='wcf.acp.box.delete.confirmMessage'}
+
 							{else}
 								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 							{/if}

@@ -48,7 +48,7 @@
 							</td>
 							<td class="columnIcon">
 								<a href="{link controller='DevtoolsProjectEdit' id=$object->getObjectID()}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-								<span class="icon icon16 fa-times jsObjectAction jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-action="delete" data-confirm-message="{lang __encode=true}wcf.acp.devtools.project.delete.confirmMessage{/lang}"></span>
+								{include file='__objectActionDeleteIcon' objectActionConfirmMessage='wcf.acp.devtools.project.delete.confirmMessage'}
 							</td>
 							<td class="columnID">{@$object->getObjectID()}</td>
 							<td class="columnText"><a href="{link controller='DevtoolsProjectEdit' id=$object->getObjectID()}{/link}">{$object->name}</a></td>

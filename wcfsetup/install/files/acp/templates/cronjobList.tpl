@@ -53,7 +53,7 @@
 								<span class="icon icon16 fa-play jsExecuteButton jsTooltip pointer" title="{lang}wcf.acp.cronjob.execute{/lang}" data-object-id="{@$cronjob->cronjobID}"></span>
 								
 								{if $cronjob->canBeDisabled()}
-									<span class="icon icon16 fa-{if !$cronjob->isDisabled}check-{/if}square-o jsObjectAction jsTooltip pointer" title="{lang}wcf.global.button.{if !$cronjob->isDisabled}disable{else}enable{/if}{/lang}" data-object-action="toggle"></span>
+									{include file='__objectActionToogleIcon' object=$cronjob}
 								{else}
 									{if !$cronjob->isDisabled}
 										<span class="icon icon16 fa-check-square-o disabled" title="{lang}wcf.global.button.disable{/lang}"></span>
@@ -68,7 +68,7 @@
 									<span class="icon icon16 fa-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>
 								{/if}
 								{if $cronjob->isDeletable()}
-									<span class="icon icon16 fa-times jsObjectAction jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-action="delete" data-confirm-message="{lang __encode=true}wcf.acp.cronjob.delete.sure{/lang}"></span>
+									{include file='__objectActionDeleteIcon' objectActionConfirmMessage='wcf.acp.cronjob.delete.sure'}
 								{else}
 									<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 								{/if}

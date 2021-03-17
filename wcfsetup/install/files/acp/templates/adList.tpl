@@ -40,9 +40,9 @@
 						
 						<span class="statusDisplay sortableButtonContainer">
 							<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
-							<span class="icon icon16 fa-{if !$ad->isDisabled}check-{/if}square-o jsObjectAction jsTooltip pointer" title="{lang}wcf.global.button.{if $ad->isDisabled}enable{else}disable{/if}{/lang}" data-object-action="toggle"></span>
+							{include file='__objectActionToogleIcon' object=$ad}
 							<a href="{link controller='AdEdit' object=$ad}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-							<span class="icon icon16 fa-times jsObjectAction jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-action="delete" data-confirm-message="{lang __encode=true}wcf.acp.ad.delete.confirmMessage{/lang}"></span>
+							{include file='__objectActionDeleteIcon' objectActionConfirmMessage='wcf.acp.ad.delete.confirmMessage'}
 							
 							{event name='itemButtons'}
 						</span>
