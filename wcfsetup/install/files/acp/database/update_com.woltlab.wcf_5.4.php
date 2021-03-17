@@ -251,9 +251,9 @@ return [
             VarcharDatabaseTableColumn::create('urlHash')
                 ->notNull()
                 ->length(40),
-            NotNullVarchar255DatabaseTableColumn::create('title'),
-            TextDatabaseTableColumn::create('description')
-                ->notNull(),
+            NotNullVarchar255DatabaseTableColumn::create('title')
+                ->defaultValue(''),
+            TextDatabaseTableColumn::create('description'),
             IntDatabaseTableColumn::create('imageID')
                 ->length(10),
             NotNullVarchar255DatabaseTableColumn::create('status')
