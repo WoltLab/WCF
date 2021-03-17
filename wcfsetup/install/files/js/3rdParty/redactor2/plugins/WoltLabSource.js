@@ -109,7 +109,7 @@ $.Redactor.prototype.WoltLabSource = function() {
 			}).bind(this);
 			
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'validate_' + id, (function (data) {
-				if (textarea.clientHeight) {
+				if (this.WoltLabSource.isActive()) {
 					data.api.throwError(this.$element[0], WCF.Language.get('wcf.editor.source.error.active'));
 					data.valid = false;
 				}
