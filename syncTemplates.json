@@ -33,6 +33,8 @@
     "__multipleSelectionFormField",
     "__nonEmptyFormFieldDependency",
     "__numericFormField",
+    "__objectActionDeleteIcon",
+    "__objectActionToogleIcon",
     "__pollOptionsFormField",
     "__radioButtonFormField",
     "__ratingFormField",
