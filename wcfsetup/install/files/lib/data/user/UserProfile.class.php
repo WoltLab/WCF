@@ -257,10 +257,9 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
     /**
      * Returns a list of user ids that are ignoring this user.
      *
-     * @param  ?int  $type One of the UserIgnore::TYPE_* constants.
      * @return  int[]
      */
-    public function getIgnoredByUsers(?int $type = null)
+    public function getIgnoredByUsers()
     {
         if ($this->ignoredByUserIDs === null) {
             $this->ignoredByUserIDs = [];
@@ -290,17 +289,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
             }
         }
 
-        return \array_keys(\array_filter($this->ignoredByUserIDs, static function ($userType) use ($type) {
-            if ($type === null) {
-                return true;
-            } elseif ($type === UserIgnore::TYPE_BLOCK_DIRECT_CONTACT) {
-                return \in_array($userType, [UserIgnore::TYPE_BLOCK_DIRECT_CONTACT, UserIgnore::TYPE_HIDE_MESSAGES]);
-            } elseif ($type === UserIgnore::TYPE_HIDE_MESSAGES) {
-                return $userType === UserIgnore::TYPE_HIDE_MESSAGES;
-            } else {
-                return false;
-            }
-        }));
+        return \array_keys($this->ignoredByUserIDs);
     }
 
     /**
@@ -341,12 +330,11 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject
      * Returns true if the given user ignores the current user.
      *
      * @param int $userID
-     * @param  ?int  $type One of the UserIgnore::TYPE_* constants.
      * @return  bool
      */
-    public function isIgnoredByUser($userID, ?int $type = null)
+    public function isIgnoredByUser($userID)
     {
-        return \in_array($userID, $this->getIgnoredByUsers($type));
+        return \in_array($userID, $this->getIgnoredByUsers());
     }
 
     /**
