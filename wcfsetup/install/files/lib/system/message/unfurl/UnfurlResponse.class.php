@@ -10,6 +10,7 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Client\ClientExceptionInterface;
+use wcf\system\io\http\RedirectGuard;
 use wcf\system\io\HttpFactory;
 use wcf\system\message\unfurl\exception\DownloadFailed;
 use wcf\system\message\unfurl\exception\ParsingFailed;
@@ -328,6 +329,9 @@ final class UnfurlResponse
                 RequestOptions::STREAM => true,
                 RequestOptions::HEADERS => [
                     'user-agent' => HttpFactory::getDefaultUserAgent("UrlUnfurling"),
+                ],
+                RequestOptions::ALLOW_REDIRECTS => [
+                    'on_redirect' => new RedirectGuard(),
                 ],
             ]);
         }
