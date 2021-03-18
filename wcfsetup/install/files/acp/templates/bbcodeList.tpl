@@ -39,7 +39,7 @@
 						<td class="columnIcon">
 							<a href="{link controller='BBCodeEdit' object=$bbcode}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 							{if $bbcode->canDelete()}
-								{include file='__objectActionDeleteIcon' objectActionConfirmMessage='wcf.acp.bbcode.delete.sure'}
+								{objectAction action="delete" objectTitle=$bbcode->getTitle()}
 							{else}
 								<span class="icon icon16 fa-times disabled"></span>
 							{/if}

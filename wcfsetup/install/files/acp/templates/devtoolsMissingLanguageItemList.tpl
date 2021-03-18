@@ -47,7 +47,7 @@
 				{foreach from=$objects item=logEntry}
 					<tr class="jsObjectRow jsObjectActionObject" data-object-id="{@$logEntry->getObjectID()}">
 						<td class="columnIcon">
-							{include file='__objectActionDeleteIcon' objectActionConfirmMessage='wcf.acp.devtools.missingLanguageItem.delete.confirmMessage'}
+							{objectAction action="delete" confirmMessage='wcf.acp.devtools.missingLanguageItem.delete.confirmMessage'}
 							<span class="icon icon16 fa-align-justify jsStackTraceButton jsTooltip pointer" title="{lang}wcf.acp.devtools.missingLanguageItem.showStackTrace{/lang}" data-stack-trace="{$logEntry->getStackTrace()}"></span>
 						</td>
 						<td class="columnID">{@$logEntry->getObjectID()}</td>

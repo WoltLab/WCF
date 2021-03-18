@@ -37,7 +37,6 @@
 		<item name="wcf.acp.ad.conditions.pointInTime.description"><![CDATA[Sets the point in time at which the ad is displayed.]]></item>
 		<item name="wcf.acp.ad.conditions.user"><![CDATA[Active user]]></item>
 		<item name="wcf.acp.ad.conditions.user.description"><![CDATA[The active user has to fulfill the following conditions to see the ad.]]></item>
-		<item name="wcf.acp.ad.delete.confirmMessage"><![CDATA[Do you really want to delete the ad <span class="confirmationObject">{$ad->adName}</span>?]]></item>
 		<item name="wcf.acp.ad.edit"><![CDATA[Edit Ad]]></item>
 		<item name="wcf.acp.ad.isDisabled"><![CDATA[Disable Ad]]></item>
 		<item name="wcf.acp.ad.list"><![CDATA[Ads]]></item>
@@ -140,7 +139,6 @@
 		<item name="wcf.acp.bbcode.buttonLabel"><![CDATA[Button Label]]></item>
 		<item name="wcf.acp.bbcode.className"><![CDATA[PHP Class Name]]></item>
 		<item name="wcf.acp.bbcode.className.error.notFound"><![CDATA[Unable to find specified class.]]></item>
-		<item name="wcf.acp.bbcode.delete.sure"><![CDATA[Do you really want to delete the BBCode <span class="confirmationObject">[{$bbcode->bbcodeTag}]</span>?]]></item>
 		<item name="wcf.acp.bbcode.edit"><![CDATA[Edit BBCode]]></item>
 		<item name="wcf.acp.bbcode.htmlClose"><![CDATA[Closing HTML tag]]></item>
 		<item name="wcf.acp.bbcode.htmlOpen"><![CDATA[Opening HTML tag]]></item>
@@ -152,7 +150,6 @@
 		<item name="wcf.acp.bbcode.mediaProvider.add"><![CDATA[Add Media Provider]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.className"><![CDATA[PHP Class Name]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.className.error.notFound"><![CDATA[Unable to find specified class.]]></item>
-		<item name="wcf.acp.bbcode.mediaProvider.delete.sure"><![CDATA[Do you really want to delete the media provider <span class="confirmationObject">{$mediaProvider->title}</span>?]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.edit"><![CDATA[Edit Media Provider]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.html"><![CDATA[HTML Code]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.html.description"><![CDATA[{literal}Enter the media’s HTML code here. Variables are recognized as <kbd>{$variable}</kbd> and will be replaced with the regular expression’s matching named group.<br>
@@ -176,7 +173,6 @@
 		<item name="wcf.acp.box.content"><![CDATA[Content]]></item>
 		<item name="wcf.acp.box.contents"><![CDATA[Contents]]></item>
 		<item name="wcf.acp.box.cssClassName"><![CDATA[CSS Class Name]]></item>
-		<item name="wcf.acp.box.delete.confirmMessage"><![CDATA[Do you really want to delete the box <span class="confirmationObject">{$box->name}</span>?]]></item>
 		<item name="wcf.acp.box.edit"><![CDATA[Edit Box]]></item>
 		<item name="wcf.acp.box.image"><![CDATA[Box Image]]></item>
 		<item name="wcf.acp.box.i18n"><![CDATA[Multilingualism]]></item>
@@ -276,7 +272,6 @@
 		<item name="wcf.acp.captcha.question.answers"><![CDATA[Answers]]></item>
 		<item name="wcf.acp.captcha.question.answers.description"><![CDATA[Answers beginning and ending with “~” will be interpreted as regular expressions. Enter one answer per line.]]></item>
 		<item name="wcf.acp.captcha.question.answers.error.invalidRegex"><![CDATA[The regular expression “{$invalidRegex}” is invalid.]]></item>
-		<item name="wcf.acp.captcha.question.delete.confirmMessage"><![CDATA[Do you really want to delete the question <span class="confirmationObject">{$question->getQuestion()}</span>?]]></item>
 		<item name="wcf.acp.captcha.question.edit"><![CDATA[Edit Captcha Question]]></item>
 		<item name="wcf.acp.captcha.question.isDisabled"><![CDATA[Disable Captcha Question]]></item>
 		<item name="wcf.acp.captcha.question.list"><![CDATA[Captcha Questions]]></item>
@@ -310,7 +305,6 @@
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Run Cronjob]]></item>
 		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[Unable to find the specified class.]]></item>
 		<item name="wcf.acp.cronjob.timing.error.invalid"><![CDATA[Invalid time format.]]></item>
-		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[Do you really want to delete the cronjob <span class="confirmationObject">{$cronjob->getDescription()}</span>?]]></item>
 		<item name="wcf.acp.cronjob.log"><![CDATA[Cronjob Log]]></item>
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Clear Protocol]]></item>
 		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[Do you really want to clear the cronjob log?]]></item>
@@ -381,7 +375,6 @@
 	<category name="wcf.acp.devtools">
 		<item name="wcf.acp.devtools.project.add"><![CDATA[Add Project]]></item>
 		<item name="wcf.acp.devtools.project.edit"><![CDATA[Edit Project]]></item>
-		<item name="wcf.acp.devtools.project.delete.confirmMessage"><![CDATA[Do you really want to delete the project <span class="confirmationObject">{$object->name}</span>?]]></item>
 		<item name="wcf.acp.devtools.project.introduction"><![CDATA[Please read the <a href="https://docs.woltlab.com/getting-started_quick-start.html#developer-tools" class="externalURL">usage instructions</a> in the developer documentation.]]></item>
 		<item name="wcf.acp.devtools.project.list"><![CDATA[Projects]]></item>
 		<item name="wcf.acp.devtools.project.name"><![CDATA[Name]]></item>
@@ -1791,7 +1784,6 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.customOption.edit"><![CDATA[Edit Option Field]]></item>
 		<item name="wcf.acp.customOption.error.validationFailed"><![CDATA[You have entered an invalid value.]]></item>
 		<item name="wcf.acp.customOption.showOrder"><![CDATA[Display Order]]></item>
-		<item name="wcf.acp.customOption.delete.confirmMessage"><![CDATA[Do you really want to delete the option field <span class="confirmationObject">{$option->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.customOption.defaultValue"><![CDATA[Default Value]]></item>
 		<item name="wcf.acp.customOption.defaultValue.description"><![CDATA[Default option value suggested on initial request.]]></item>
 		<item name="wcf.acp.customOption.typeData"><![CDATA[Properties]]></item>
@@ -2930,7 +2922,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	<category name="wcf.acp.tag">
 		<item name="wcf.acp.tag.add"><![CDATA[Add Tag]]></item>
 		<item name="wcf.acp.tag.edit"><![CDATA[Edit Tag]]></item>
-		<item name="wcf.acp.tag.delete.sure"><![CDATA[Do you really want to delete the tag <span class="confirmationObject">{$tag}</span>?]]></item>
 		<item name="wcf.acp.tag.error.languageID.notFound"><![CDATA[Selected language is invalid.]]></item>
 		<item name="wcf.acp.tag.languageID"><![CDATA[Language]]></item>
 		<item name="wcf.acp.tag.list"><![CDATA[Tags]]></item>
@@ -3487,7 +3478,6 @@ Attachments:
 		<item name="wcf.acp.contact.option.edit"><![CDATA[Edit Input Field]]></item>
 		<item name="wcf.acp.contact.recipients"><![CDATA[Recipients]]></item>
 		<item name="wcf.acp.contact.recipient.add"><![CDATA[Add Recipient]]></item>
-		<item name="wcf.acp.contact.recipient.delete.confirmMessage"><![CDATA[Do you really want to delete the recipient <span class="confirmationObject">{$recipient}</span>?]]></item>
 		<item name="wcf.acp.contact.recipient.edit"><![CDATA[Edit Recipient]]></item>
 		<item name="wcf.acp.contact.recipient.isDisabled"><![CDATA[Disable recipient]]></item>
 		<item name="wcf.acp.contact.recipient.name"><![CDATA[Display Name]]></item>
@@ -3826,6 +3816,7 @@ Attachments:
 		<item name="wcf.global.button.close"><![CDATA[Close]]></item>
 		<item name="wcf.global.button.collapsible"><![CDATA[Expand and Collapse]]></item>
 		<item name="wcf.global.button.delete"><![CDATA[Delete]]></item>
+		<item name="wcf.global.button.delete.confirmMessage"><![CDATA[Do you really want to delete <strong>{$objectTitle}</strong>?]]></item>
 		<item name="wcf.global.button.disable"><![CDATA[Disable]]></item>
 		<item name="wcf.global.button.disabledI18n"><![CDATA[monolingual]]></item>
 		<item name="wcf.global.button.edit"><![CDATA[Edit]]></item>

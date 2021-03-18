@@ -74,7 +74,7 @@
 						<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$tag->tagID}"></td>
 						<td class="columnIcon">
 							<a href="{link controller='TagEdit' object=$tag}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-							{include file='__objectActionDeleteIcon' objectActionConfirmMessage='wcf.acp.tag.delete.sure'}
+							{objectAction action="delete" objectTitle=$tag->getTitle()}
 							
 							{event name='rowButtons'}
 						</td>

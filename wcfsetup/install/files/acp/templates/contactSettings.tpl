@@ -50,10 +50,10 @@
 				{foreach from=$optionList item=option}
 					<tr class="sortableNode jsOptionRow jsObjectActionObject" data-object-id="{@$option->optionID}">
 						<td class="columnIcon">
-							{include file='__objectActionToogleIcon' object=$option}
+							{objectAction action="toggle" isDisabled=$option->isDisabled}
 							<a href="{link controller='ContactOptionEdit' id=$option->optionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 							{if $option->canDelete()}
-								{include file='__objectActionDeleteIcon' objectActionConfirmMessage='wcf.acp.customOption.delete.confirmMessage'}
+								{objectAction action="delete" objectTitle=$option->getTitle()}
 							{else}
 								<span class="icon icon16 fa-times disabled"></span>
 							{/if}
@@ -89,12 +89,12 @@
 						
 						<span class="statusDisplay sortableButtonContainer">
 							<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
-							{include file='__objectActionToogleIcon' object=$recipient}
+							{objectAction action="toggle" isDisabled=$recipient->isDisabled}
 							<a href="{link controller='ContactRecipientEdit' id=$recipient->recipientID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 fa-pencil"></a>
 							{if $recipient->originIsSystem}
 								<span class="icon icon16 fa-times disabled"></span>
 							{else}
-								{include file='__objectActionDeleteIcon' objectActionConfirmMessage='wcf.acp.contact.recipient.delete.confirmMessage'}
+								{objectAction action="delete" objectTitle=$recipient->getName()}
 							{/if}
 							
 							{event name='itemButtons'}

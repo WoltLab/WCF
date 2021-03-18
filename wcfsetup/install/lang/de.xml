@@ -37,7 +37,6 @@
 		<item name="wcf.acp.ad.conditions.pointInTime.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Leg{else}Legen Sie{/if} den Zeitpunkt fest, zu dem die Werbung angezeigt werden soll.]]></item>
 		<item name="wcf.acp.ad.conditions.user"><![CDATA[Aktiver Benutzer]]></item>
 		<item name="wcf.acp.ad.conditions.user.description"><![CDATA[Der aktive Benutzer muss die folgenden Bedingungen erfüllen, damit die Werbung angezeigt wird.]]></item>
-		<item name="wcf.acp.ad.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Werbung <span class="confirmationObject">{$ad->adName}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.ad.edit"><![CDATA[Werbung bearbeiten]]></item>
 		<item name="wcf.acp.ad.isDisabled"><![CDATA[Werbung deaktivieren]]></item>
 		<item name="wcf.acp.ad.list"><![CDATA[Werbung]]></item>
@@ -139,7 +138,6 @@
 		<item name="wcf.acp.bbcode.buttonLabel"><![CDATA[Button-Beschriftung]]></item>
 		<item name="wcf.acp.bbcode.className"><![CDATA[Klassen-Name]]></item>
 		<item name="wcf.acp.bbcode.className.error.notFound"><![CDATA[Diese Klasse wurde nicht gefunden.]]></item>
-		<item name="wcf.acp.bbcode.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den BBCode <span class="confirmationObject">[{$bbcode->bbcodeTag}]</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.bbcode.edit"><![CDATA[BBCode bearbeiten]]></item>
 		<item name="wcf.acp.bbcode.htmlClose"><![CDATA[Schließendes HTML-Tag]]></item>
 		<item name="wcf.acp.bbcode.htmlOpen"><![CDATA[Öffnendes HTML-Tag]]></item>
@@ -151,7 +149,6 @@
 		<item name="wcf.acp.bbcode.mediaProvider.add"><![CDATA[Medienanbieter hinzufügen]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.className"><![CDATA[Klassen-Name]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.className.error.notFound"><![CDATA[Diese Klasse wurde nicht gefunden.]]></item>
-		<item name="wcf.acp.bbcode.mediaProvider.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Medienanbieter <span class="confirmationObject">{$mediaProvider->title}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.edit"><![CDATA[Medienanbieter bearbeiten]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.html"><![CDATA[HTML-Code]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.html.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if}{literal} hier den HTML-Code für das Medium an. Variablen im Format <kbd>{$variable}</kbd> werden durch die entsprechend benannte Untergruppe des regulären Ausdrucks ersetzt.<br>
@@ -177,7 +174,6 @@
 		<item name="wcf.acp.box.content"><![CDATA[Inhalt]]></item>
 		<item name="wcf.acp.box.contents"><![CDATA[Inhalte]]></item>
 		<item name="wcf.acp.box.cssClassName"><![CDATA[CSS-Klassen]]></item>
-		<item name="wcf.acp.box.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Box <span class="confirmationObject">{$box->name}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.box.edit"><![CDATA[Box bearbeiten]]></item>
 		<item name="wcf.acp.box.image"><![CDATA[Box-Bild]]></item>
 		<item name="wcf.acp.box.i18n"><![CDATA[Mehrsprachigkeit]]></item>
@@ -277,7 +273,6 @@
 		<item name="wcf.acp.captcha.question.answers"><![CDATA[Antworten]]></item>
 		<item name="wcf.acp.captcha.question.answers.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} pro Zeile eine mögliche Antwort ein. Antworten, die mit „~“ beginnen und enden, werden als reguläre Ausdrücke interpretiert.]]></item>
 		<item name="wcf.acp.captcha.question.answers.error.invalidRegex"><![CDATA[Der reguläre Ausdruck „{$invalidRegex}“ ist ungültig.]]></item>
-		<item name="wcf.acp.captcha.question.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Frage <span class="confirmationObject">{$question->getQuestion()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.captcha.question.edit"><![CDATA[Captcha-Frage bearbeiten]]></item>
 		<item name="wcf.acp.captcha.question.isDisabled"><![CDATA[Frage deaktivieren]]></item>
 		<item name="wcf.acp.captcha.question.list"><![CDATA[Captcha-Fragen]]></item>
@@ -289,7 +284,6 @@
 		<item name="wcf.acp.contact.option.edit"><![CDATA[Eingabefeld bearbeiten]]></item>
 		<item name="wcf.acp.contact.recipients"><![CDATA[Empfänger]]></item>
 		<item name="wcf.acp.contact.recipient.add"><![CDATA[Empfänger hinzufügen]]></item>
-		<item name="wcf.acp.contact.recipient.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Empfänger <span class="confirmationObject">{$recipient}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.contact.recipient.edit"><![CDATA[Empfänger bearbeiten]]></item>
 		<item name="wcf.acp.contact.recipient.isDisabled"><![CDATA[Empfänger deaktivieren]]></item>
 		<item name="wcf.acp.contact.recipient.name"><![CDATA[Angezeigter Name]]></item>
@@ -333,7 +327,6 @@
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Cronjob jetzt ausführen]]></item>
 		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegebenen Namen existiert nicht.]]></item>
 		<item name="wcf.acp.cronjob.timing.error.invalid"><![CDATA[Das Zeitformat ist ungültig.]]></item>
-		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Cronjob <span class="confirmationObject">{$cronjob->getDescription()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.cronjob.log"><![CDATA[Protokoll der ausgeführten Cronjobs]]></item>
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Protokoll leeren]]></item>
 		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} alle Protokoll-Einträge wirklich löschen?]]></item>
@@ -405,7 +398,6 @@
 	<category name="wcf.acp.devtools">
 		<item name="wcf.acp.devtools.project.add"><![CDATA[Projekt hinzufügen]]></item>
 		<item name="wcf.acp.devtools.project.edit"><![CDATA[Projekt bearbeiten]]></item>
-		<item name="wcf.acp.devtools.project.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Projekt <span class="confirmationObject">{$object->name}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.devtools.project.introduction"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}beachte{else}beachten Sie{/if} die <a href="https://docs.woltlab.com/getting-started_quick-start.html#developer-tools" class="externalURL">Hinweise zur Benutzung</a> in der Entwickler-Dokumentation.]]></item>
 		<item name="wcf.acp.devtools.project.list"><![CDATA[Projekte]]></item>
 		<item name="wcf.acp.devtools.project.name"><![CDATA[Name]]></item>
@@ -1807,7 +1799,6 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.customOption.edit"><![CDATA[Eingabefeld bearbeiten]]></item>
 		<item name="wcf.acp.customOption.error.validationFailed"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Inhalt eingegeben.]]></item>
 		<item name="wcf.acp.customOption.showOrder"><![CDATA[Reihenfolge]]></item>
-		<item name="wcf.acp.customOption.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Eingabefeld <span class="confirmationObject">{$option->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.customOption.defaultValue"><![CDATA[Standardwert]]></item>
 		<item name="wcf.acp.customOption.defaultValue.description"><![CDATA[Wert, der beim erstmaligen Ausfüllen als Standard vorgegeben ist.]]></item>
 		<item name="wcf.acp.customOption.typeData"><![CDATA[Eigenschaften]]></item>
@@ -3002,7 +2993,6 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 	<category name="wcf.acp.tag">
 		<item name="wcf.acp.tag.add"><![CDATA[Tag hinzufügen]]></item>
 		<item name="wcf.acp.tag.edit"><![CDATA[Tag bearbeiten]]></item>
-		<item name="wcf.acp.tag.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Tag <span class="confirmationObject">{$tag}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.tag.error.languageID.notFound"><![CDATA[Die gewählte Sprache ist ungültig]]></item>
 		<item name="wcf.acp.tag.languageID"><![CDATA[Sprache]]></item>
 		<item name="wcf.acp.tag.list"><![CDATA[Tags]]></item>
@@ -3880,6 +3870,7 @@ Dateianhänge:
 		<item name="wcf.global.button.close"><![CDATA[Schließen]]></item>
 		<item name="wcf.global.button.collapsible"><![CDATA[Auf- und Zuklappen]]></item>
 		<item name="wcf.global.button.delete"><![CDATA[Löschen]]></item>
+		<item name="wcf.global.button.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} <span class="confirmationObject">{$objectTitle}</span> wirklich löschen?]]></item>
 		<item name="wcf.global.button.disable"><![CDATA[Deaktivieren]]></item>
 		<item name="wcf.global.button.disabledI18n"><![CDATA[einsprachig]]></item>
 		<item name="wcf.global.button.edit"><![CDATA[Bearbeiten]]></item>

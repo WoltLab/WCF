@@ -37,9 +37,9 @@
 					{foreach from=$objects item='question'}
 						<tr class="jsQuestionRow jsObjectActionObject" data-object-id="{@$question->getObjectID()}">
 							<td class="columnIcon">
-								{include file='__objectActionToogleIcon' object=$question}
+								{objectAction action="toggle" isDisabled=$question->isDisabled}
 								<a href="{link controller='CaptchaQuestionEdit' id=$question->questionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-								{include file='__objectActionDeleteIcon' objectActionConfirmMessage='wcf.acp.captcha.question.delete.confirmMessage'}
+								{objectAction action="delete" objectTitle=$question->getQuestion()}
 								
 								{event name='rowButtons'}
 							</td>
