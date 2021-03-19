@@ -25,6 +25,10 @@
 		<name>Acoon</name>
 		<url>http://www.acoon.de/robot.asp</url>
 	</spider>
+	<spider ident="Adsbot/3.1">
+		<name>Adsbot</name>
+		<url>https://seostar.co/robot</url>
+	</spider>						 							   
 	<spider ident="Ahoy!">
 		<name>Ahoy!</name>
 		<url>http://www.robotstxt.org/wc/active/html/ahoythehomepagefinder.html</url>
@@ -103,6 +107,10 @@
 		<name>Baiduspider</name>
 		<url>http://www.baidu.com/search/spider.htm</url>
 	</spider>
+	<spider ident="Barkrowler/0.9">
+		<name>Barkrowler</name>
+		<url>https://babbar.tech/crawler</url>
+	</spider>							
 	<spider ident="bbot">
 		<name>BBot</name>
 		<url>http://www.robotstxt.org/wc/active/html/bbot.html</url>
@@ -511,6 +519,10 @@
 	<spider ident="Google-AdWords-Express">
 		<name>Google-AdWords-Express</name>
 	</spider>
+	<spider ident="Googlebot-Video/1.0">
+		<name>Googlebot-Video</name>
+		<url>https://developers.google.com/search/docs/advanced/crawling/overview-google-crawlers?hl=de</url>
+	</spider>
 	<spider ident="AdsBot-Google">
 		<name>Google Ads-Bot</name>
 		<url>http://www.google.com/adsbot.html</url>
@@ -702,6 +714,10 @@
 	</spider>
 	<spider ident="legs">
 		<name>legs</name>
+	</spider>
+	<spider ident="Let's Encrypt validation server">
+		<name>Let's Encrypt Validation Bot</name>
+		<url>https://www.letsencrypt.org</url>
 	</spider>
 	<spider ident="linkdexbot">
 		<name>Linkdex</name>
@@ -910,6 +926,10 @@
 	</spider>
 	<spider ident="PerlCrawler/1.0 Xavatoria/2.0">
 		<name>PerlCrawler 1.0</name>
+	</spider>
+	<spider ident="PetalBot">
+		<name>PetalBot</name>
+		<url>http://aspiegel.com/petalbot</url>
 	</spider>
 	<spider ident="PGP-KA">
 		<name>PGP Key Agent</name>
