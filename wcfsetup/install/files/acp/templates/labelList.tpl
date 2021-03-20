@@ -3,14 +3,18 @@
 <script data-relocate="true">
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\label\\LabelAction', '.jsLabelRow');
-		
-		{if $labelGroup && !$labelSearch && !$cssClassName && $items > 1}
-			new WCF.Sortable.List('labelTableContainer', 'wcf\\data\\label\\LabelAction', {@$startIndex}, {
-				items: 'tr',
-				toleranceElement: null
-			}, true);
-		{/if}
 	});
+	
+	{if $labelGroup && !$labelSearch && !$cssClassName && $items > 1}
+		require(['WoltLabSuite/Core/Ui/Sortable/List'], function (UiSortableList) {
+			new UiSortableList({
+				containerId: 'labelTableContainer',
+				className: 'wcf\\data\\label\\LabelAction',
+				isSimpleSorting: true,
+				offset: {@$startIndex},
+			});
+		});
+	{/if}
 </script>
 
 <header class="contentHeader">
