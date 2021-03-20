@@ -36,7 +36,8 @@ class RecaptchaHandlerV2 extends SingletonFactory {
 			$key = RECAPTCHA_PRIVATEKEY_INVISIBLE;
 		}
 		else {
-			throw new \InvalidArgumentException('$type must be either v2 or invisible.');
+			// The bot modified the `recaptcha-type` form field.
+			throw new UserInputException('recaptchaString', 'false');
 		}
 		
 		$request = new HTTPRequest('https://www.google.com/recaptcha/api/siteverify?secret='.rawurlencode($key).'&response='.rawurlencode($response).'&remoteip='.rawurlencode(UserUtil::getIpAddress()), ['timeout' => 10]);
