@@ -1,11 +1,5 @@
 {include file='header' pageTitle='wcf.acp.user.option.category.list'}
 
-<script data-relocate="true">
-	$(function() {
-		new WCF.Action.Delete('wcf\\data\\user\\option\\category\\UserOptionCategoryAction', '.jsCategoryRow');
-	});
-</script>
-
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.user.option.category.list{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
@@ -29,7 +23,7 @@
 
 {if $objects|count}
 	<div class="section tabularBox">
-		<table class="table">
+		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\user\option\category\UserOptionCategoryAction">
 			<thead>
 				<tr>
 					<th class="columnID columnCategoryID{if $sortField == 'categoryID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='UserOptionCategoryList'}pageNo={@$pageNo}&sortField=categoryID&sortOrder={if $sortField == 'categoryID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
@@ -43,13 +37,13 @@
 			
 			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=category}
-					<tr class="jsCategoryRow">
+					<tr class="jsCategoryRow jsObjectActionObject" data-object-id="{@$category->getObjectID()}">
 						<td class="columnIcon">
 							<a href="{link controller='UserOptionCategoryEdit' id=$category->categoryID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 							{if $category->userOptions > 0}
 								<span class="icon icon16 fa-times disabled"></span>
 							{else}
-								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$category->categoryID}" data-confirm-message-html="{lang __encode="true"}wcf.acp.user.option.category.delete.sure{/lang}"></span>
+								{objectAction action="delete" objectTitle=$category->getTitle()}
 							{/if}
 							
 							{event name='rowButtons'}

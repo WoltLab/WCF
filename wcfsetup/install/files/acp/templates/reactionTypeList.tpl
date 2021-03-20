@@ -11,7 +11,6 @@
 		});
 		
 		$(function() {
-			new WCF.Action.Delete('wcf\\data\\reaction\\type\\ReactionTypeAction', '.reactionTypeRow');
 			new WCF.Action.Toggle('wcf\\data\\reaction\\type\\ReactionTypeAction', '.reactionTypeRow');
 		});
 	</script>
@@ -39,9 +38,9 @@
 
 {if $objects|count}
 	<div id="reactionTypeList" class="sortableListContainer section">
-		<ol class="sortableList jsReloadPageWhenEmpty" data-object-id="0" start="{@($pageNo - 1) * $itemsPerPage + 1}">
+		<ol class="sortableList jsReloadPageWhenEmpty jsObjectActionContainer" data-object-action-class-name="wcf\data\reaction\type\ReactionTypeAction" data-object-id="0" start="{@($pageNo - 1) * $itemsPerPage + 1}">
 			{foreach from=$objects item=reactionType}
-				<li class="sortableNode sortableNoNesting reactionTypeRow" data-object-id="{@$reactionType->reactionTypeID}">
+				<li class="sortableNode sortableNoNesting reactionTypeRow jsObjectActionObject" data-object-id="{@$reactionType->getObjectID()}">
 					<span class="sortableNodeLabel">
 						<a href="{link controller='ReactionTypeEdit' id=$reactionType->reactionTypeID}{/link}">{@$reactionType->renderIcon()} {$reactionType->getTitle()}</a>
 						
@@ -49,7 +48,7 @@
 							<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
 							<span class="jsOnly icon icon16 fa-{if $reactionType->isAssignable}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.acp.reactionType.is{if !$reactionType->isAssignable}Not{/if}Assignable{/lang}" data-disable-title="{lang}wcf.acp.reactionType.isAssignable{/lang}" data-enable-title="{lang}wcf.acp.reactionType.isNotAssignable{/lang}" data-object-id="{@$reactionType->reactionTypeID}"></span>
 							<a href="{link controller='ReactionTypeEdit' id=$reactionType->reactionTypeID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 fa-pencil"></span></a>
-							<span title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton pointer jsTooltip icon icon16 fa-times" data-object-id="{@$reactionType->reactionTypeID}" data-confirm-message-html="{lang __encode=true}wcf.acp.reactionType.delete.confirmMessage{/lang}"></span>
+							{objectAction action="delete" objectTitle=$reactionType->getTitle()}
 							
 							{event name='itemButtons'}
 						</span>

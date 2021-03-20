@@ -1,11 +1,5 @@
 {include file='header' pageTitle="wcf.acp.template.list"}
 
-<script data-relocate="true">
-	$(function() {
-		new WCF.Action.Delete('wcf\\data\\template\\TemplateAction', '.jsTemplateRow');
-	});
-</script>
-
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.template.list{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
@@ -85,7 +79,7 @@
 
 {if $objects|count}
 	<div id="templateTableContainer" class="section tabularBox">
-		<table class="table">
+		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\template\TemplateAction">
 			<thead>
 				<tr>
 					<th class="columnID columnTemplateID{if $sortField == 'templateID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='TemplateList'}pageNo={@$pageNo}&sortField=templateID&sortOrder={if $sortField == 'templateID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
@@ -99,14 +93,14 @@
 			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=template}
 					{if $template->canCopy()}
-						<tr class="jsTemplateRow">
+						<tr class="jsTemplateRow jsObjectActionObject" data-object-id="{@$template->getObjectID()}">
 							<td class="columnIcon">
 								<a href="{link controller='TemplateAdd'}copy={@$template->templateID}{/link}" title="{lang}wcf.acp.template.copy{/lang}" class="jsTooltip"><span class="icon icon16 fa-files-o"></span></a>
 								
 								{if $template->templateGroupID}
 									<a href="{link controller='TemplateDiff' id=$template->templateID}{/link}" title="{lang}wcf.acp.template.diff{/lang}" class="jsTooltip"><span class="icon icon16 fa-exchange"></span></a>
 									<a href="{link controller='TemplateEdit' id=$template->templateID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-									<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$template->templateID}" data-confirm-message-html="{lang __encode=true}wcf.acp.template.delete.sure{/lang}"></span>
+									{objectAction action="delete" objectTitle=$template->templateName}
 								{else}
 									<span class="icon icon16 fa-exchange disabled" title="{lang}wcf.acp.template.diff{/lang}"></span>
 									<span class="icon icon16 fa-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>

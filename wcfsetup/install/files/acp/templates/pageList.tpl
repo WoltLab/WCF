@@ -1,12 +1,5 @@
 {include file='header' pageTitle='wcf.acp.page.list'}
 
-<script data-relocate="true">
-	$(function() {
-		new WCF.Action.Delete('wcf\\data\\page\\PageAction', '.jsPageRow');
-		new WCF.Action.Toggle('wcf\\data\\page\\PageAction', '.jsPageRow');
-	});
-</script>
-
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.page.list{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
@@ -109,7 +102,7 @@
 
 {if $objects|count}
 	<div class="section tabularBox">
-		<table class="table">
+		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\page\PageAction">
 			<thead>
 				<tr>
 					<th class="columnPageID{if $sortField == 'pageID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='PageList'}pageNo={@$pageNo}&sortField=pageID&sortOrder={if $sortField == 'pageID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
@@ -124,16 +117,16 @@
 			
 			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=page}
-					<tr class="jsPageRow">
+					<tr class="jsPageRow jsObjectActionObject" data-object-id="{@$page->getObjectID()}">
 						<td class="columnIcon">
 							{if $page->canDisable()}
-								<span class="icon icon16 fa-{if !$page->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$page->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$page->pageID}"></span>
+								{objectAction action="toggle" isDisabled=$page->isDisabled}
 							{else}
 								<span class="icon icon16 fa-{if !$page->isDisabled}check-{/if}square-o disabled" title="{lang}wcf.global.button.{if !$page->isDisabled}disable{else}enable{/if}{/lang}"></span>
 							{/if}
 							<a href="{link controller='PageEdit' id=$page->pageID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 							{if $page->canDelete()}
-								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$page->pageID}" data-confirm-message-html="{lang __encode=true}wcf.acp.page.delete.confirmMessage{/lang}"></span>
+								{objectAction action="delete" objectTitle=$page->name}
 							{else}
 								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 							{/if}

@@ -9,10 +9,6 @@
 				offset: {@$startIndex}
 			});
 		});
-		
-		$(function() {
-			new WCF.Action.Delete('wcf\\data\\smiley\\SmileyAction', $('.smileyRow'));
-		});
 	</script>
 {/if}
 
@@ -48,16 +44,16 @@
 		<div class="tabMenuContent">
 			<section id="smileyList" class="sortableListContainer">
 				{if $objects|count}
-					<ol class="sortableList jsReloadPageWhenEmpty" data-object-id="0" start="{@($pageNo - 1) * $itemsPerPage + 1}">
+					<ol class="sortableList jsReloadPageWhenEmpty jsObjectActionContainer" data-object-action-class-name="wcf\data\smiley\SmileyAction" data-object-id="0" start="{@($pageNo - 1) * $itemsPerPage + 1}">
 						{foreach from=$objects item=smiley}
-							<li class="sortableNode sortableNoNesting smileyRow" data-object-id="{@$smiley->smileyID}">
+							<li class="sortableNode sortableNoNesting smileyRow jsObjectActionObject" data-object-id="{@$smiley->getObjectID()}">
 								<span class="sortableNodeLabel">
 									<a href="{link controller='SmileyEdit' id=$smiley->smileyID}{/link}">{@$smiley->getHtml()} {$smiley->getTitle()}</a> <span class="badge">{$smiley->smileyCode}</span>{foreach from=$smiley->getAliases() item='alias'} <span class="badge" style="margin-left: 5px">{$alias}</span>{/foreach}
 									
 									<span class="statusDisplay sortableButtonContainer">
 										<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
 										<a href="{link controller='SmileyEdit' id=$smiley->smileyID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 fa-pencil"></span></a>
-										<span title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton jsTooltip icon icon16 fa-times" data-object-id="{@$smiley->smileyID}" data-confirm-message-html="{lang __encode=true}wcf.acp.smiley.delete.sure{/lang}"></span>
+										{objectAction action="delete" objectTitle=$smiley->smileyCode}
 										
 										{event name='itemButtons'}
 									</span>

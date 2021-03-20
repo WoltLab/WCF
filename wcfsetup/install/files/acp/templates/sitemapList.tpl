@@ -1,11 +1,5 @@
 {include file='header' pageTitle='wcf.acp.menu.link.maintenance.sitemap'}
 
-<script data-relocate="true">
-	$(function() {
-		new WCF.Action.Toggle('wcf\\data\\object\\type\\SitemapObjectTypeAction', '.sitemapObjectRow');
-	});
-</script>
-
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.menu.link.maintenance.sitemap{/lang}</h1>
@@ -26,7 +20,7 @@
 
 {if $sitemapObjectTypes|count}
 	<div class="section tabularBox">
-		<table class="table">
+		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\object\type\SitemapObjectTypeAction">
 			<thead>
 				<tr>
 					<th class="columnTitle columnSitemap" colspan="2">{lang}wcf.acp.sitemap{/lang}</th>
@@ -40,9 +34,13 @@
 			
 			<tbody>
 				{foreach from=$sitemapObjectTypes item=object}
-					<tr class="sitemapObjectRow">
+					<tr class="sitemapObjectRow jsObjectActionObject" data-object-id="{@$object->getObjectID()}">
 						<td class="columnIcon">
-							<span class="icon icon16 fa-{if !$object->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$object->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$object->objectTypeID}"></span>
+							{assign var='sitemapIsDisabled' value=false}
+							{if $object->isDisabled}
+								{assign var='sitemapIsDisabled' value=true}
+							{/if}
+							{objectAction action="toggle" isDisabled=$sitemapIsDisabled}
 							<a href="{link controller="SitemapEdit"}objectType={$object->objectType}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 						</td>
 						<td class="columnTitle columnSitemap"><a href="{link controller="SitemapEdit"}objectType={$object->objectType}{/link}">{lang}wcf.acp.sitemap.objectType.{$object->objectType}{/lang}</a></td>

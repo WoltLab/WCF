@@ -673,7 +673,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 	</category>
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Benutzergruppe hinzufügen]]></item>
-		<item name="wcf.acp.group.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Benutzergruppe <span class="confirmationObject">{$group->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.group.edit"><![CDATA[Benutzergruppe bearbeiten]]></item>
 		<item name="wcf.acp.group.option.editingOption"><![CDATA[Benutzergruppeneinstellung bearbeiten]]></item>
 		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du bist{else}Sie sind{/if} Mitglied dieser Benutzergruppe! Änderungen an den Zugriffsrechten dieser Benutzergruppe können dazu führen, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} aus der Administrationsoberfläche ausgeschlossen {if LANGUAGE_USE_INFORMAL_VARIANT}wirst{else}werden{/if}. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}sei{else}seien Sie{/if} entsprechend vorsichtig!]]></item>
@@ -826,7 +825,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.group.assignment.button.list"><![CDATA[Automatische Zuordnungen auflisten]]></item>
 		<item name="wcf.acp.group.assignment.conditions"><![CDATA[Bedingungen]]></item>
 		<item name="wcf.acp.group.assignment.conditions.description"><![CDATA[Benutzer müssen die folgenden Bedingungen erfüllen, um automatisch der Benutzergruppe hinzugefügt zu werden]]></item>
-		<item name="wcf.acp.group.assignment.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die automatische Benutzergruppen-Zuordnung <span class="confirmationObject">{$assignment->title}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.group.assignment.edit"><![CDATA[Automatische Benutzergruppen-Zuordnung bearbeiten]]></item>
 		<item name="wcf.acp.group.assignment.error.noConditions"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} keine Bedingungen ausgewählt.]]></item>
 		<item name="wcf.acp.group.assignment.list"><![CDATA[Automatische Benutzergruppen-Zuordnungen]]></item>
@@ -961,13 +959,11 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.label.cssClassName"><![CDATA[CSS-Klassen]]></item>
 		<item name="wcf.acp.label.cssClassName.error.invalid"><![CDATA[Die gewählte CSS-Klasse ist ungültig.]]></item>
 		<item name="wcf.acp.label.defaultValue"><![CDATA[Label]]></item>
-		<item name="wcf.acp.label.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Label <span class="confirmationObject">{$label}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.label.edit"><![CDATA[Label bearbeiten]]></item>
 		<item name="wcf.acp.label.error.noGroups"><![CDATA[Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} ein Label hinzufügen {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} eine <a href="{link controller='LabelGroupAdd'}{/link}">Labelgruppe hinzufügen</a>.]]></item>
 		<item name="wcf.acp.label.group"><![CDATA[Labelgruppe]]></item>
 		<item name="wcf.acp.label.group.add"><![CDATA[Labelgruppe hinzufügen]]></item>
 		<item name="wcf.acp.label.group.category.connect"><![CDATA[Verfügbarkeit]]></item>
-		<item name="wcf.acp.label.group.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Labelgruppe <span class="confirmationObject">{$group->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.label.group.edit"><![CDATA[Labelgruppe bearbeiten]]></item>
 		<item name="wcf.acp.label.group.error.invalid"><![CDATA[Die gewählte Labelgruppe ist ungültig.]]></item>
 		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Label aus dieser Gruppe muss zwingend ausgewählt werden]]></item>
@@ -991,7 +987,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.language.countryCode"><![CDATA[Ländercode]]></item>
 		<item name="wcf.acp.language.countryCode.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} hier den passenden Ländercode nach <strong>ISO 3166-1</strong> an. Weitere Informationen zu Ländercodes {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} unter <a href="https://de.wikipedia.org/wiki/ISO-3166-1-Kodierliste" class="externalURL">https://de.wikipedia.org/wiki/ISO-3166-1-Kodierliste</a>.]]></item>
 		<item name="wcf.acp.language.customVariables"><![CDATA[Veränderte Variablen]]></item>
-		<item name="wcf.acp.language.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Sprache <span class="confirmationObject">{$language->languageName}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.language.edit"><![CDATA[Sprache bearbeiten]]></item>
 		<item name="wcf.acp.language.export"><![CDATA[Sprache exportieren]]></item>
 		<item name="wcf.acp.language.export.allPackages"><![CDATA[Alle Pakete]]></item>
@@ -1179,7 +1174,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.menu.link.article.category.add"><![CDATA[Kategorie hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.maintenance.sitemap"><![CDATA[Sitemaps]]></item>
 		<item name="wcf.acp.menu.add"><![CDATA[Menü hinzufügen]]></item>
-		<item name="wcf.acp.menu.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Menü <span class="confirmationObject">{$menu->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.menu.edit"><![CDATA[Menü bearbeiten]]></item>
 		<item name="wcf.acp.menu.list"><![CDATA[Menüs]]></item>
 		<item name="wcf.acp.menu.item.add"><![CDATA[Menüpunkt hinzufügen]]></item>
@@ -1250,7 +1244,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.notice.conditions.pointInTime.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Leg{else}Legen Sie{/if} den Zeitpunkt fest, zu dem der Hinweis angezeigt werden soll.]]></item>
 		<item name="wcf.acp.notice.conditions.user"><![CDATA[Aktiver Benutzer]]></item>
 		<item name="wcf.acp.notice.conditions.user.description"><![CDATA[Der aktive Benutzer muss die folgenden Bedingungen erfüllen, damit der Hinweis angezeigt wird.]]></item>
-		<item name="wcf.acp.notice.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Hinweis <span class="confirmationObject">{$notice->noticeName}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.notice.edit"><![CDATA[Hinweis bearbeiten]]></item>
 		<item name="wcf.acp.notice.example"><![CDATA[Beispieltext für einen Hinweis]]></item>
 		<item name="wcf.acp.notice.isDisabled"><![CDATA[Hinweis deaktivieren]]></item>
@@ -2018,7 +2011,6 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.page.customURL"><![CDATA[Individuelle URL]]></item>
 		<item name="wcf.acp.page.customURL.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} eine ungültige URL eingegeben. Erlaubte Zeichen sind Buchstaben, Nummern, Bindestrich, Unterstrich und Schrägstrich.]]></item>
 		<item name="wcf.acp.page.customURL.error.notUnique"><![CDATA[Diese URL wird bereits von einer anderen Seite verwendet.]]></item>
-		<item name="wcf.acp.page.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Seite <span class="confirmationObject">{$page->name}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.page.edit"><![CDATA[Seite bearbeiten]]></item>
 		<item name="wcf.acp.page.i18n"><![CDATA[Mehrsprachigkeit]]></item>
 		<item name="wcf.acp.page.i18n.i18n"><![CDATA[Mehrsprachige Seite]]></item>
@@ -2089,7 +2081,6 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.paidSubscription.user.add"><![CDATA[Mitgliedschaft manuell zuweisen]]></item>
 		<item name="wcf.acp.paidSubscription.user.edit"><![CDATA[Aktive Mitgliedschaft bearbeiten]]></item>
 		<item name="wcf.acp.paidSubscription.error.noPaymentMethods"><![CDATA[Es muss mindestens ein Zahlungsanbieter in den Optionen unter „Zahlungsoptionen“ ausgewählt sein, um bezahlte Mitgliedschaften erstellen zu können.]]></item>
-		<item name="wcf.acp.paidSubscription.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die bezahlte Mitgliedschaft <span class="confirmationObject">{$subscription->title|language}</span> wirklich löschen?]]></item>
 	</category>
 	<category name="wcf.acp.pluginStore">
 		<item name="wcf.acp.pluginStore.api.error"><![CDATA[Fehler {@$status}: Der Server konnte die Anfrage nicht erfolgreich bearbeiten.]]></item>
@@ -2634,7 +2625,6 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.pip.option.optionName.error.pattern"><![CDATA[Der Optionsname darf ausschließlich aus kleinen lateinischen Buchstaben, Ziffern und Unterstrichen bestehen. Das erste und letzte Zeichen muss jeweils ein Buchstabe sein.]]></item>
 	</category>
 	<category name="wcf.acp.reactionType">
-		<item name="wcf.acp.reactionType.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Reaktions-Typen <span class="confirmationObject">{$reactionType->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.reactionType.type"><![CDATA[Reaktions-Typ]]></item>
 		<item name="wcf.acp.reactionType.image"><![CDATA[Reaktions-Datei]]></item>
 		<item name="wcf.acp.reactionType.showOrder.description"><![CDATA[Der Reaktions-Typ wird nach dem ausgewählten Reaktions-Typ angezeigt.]]></item>
@@ -2797,7 +2787,6 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 	</category>
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Server hinzufügen]]></item>
-		<item name="wcf.acp.updateServer.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Server <span class="confirmationObject">{$updateServer->serverURL}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.updateServer.edit"><![CDATA[Server bearbeiten]]></item>
 		<item name="wcf.acp.updateServer.errorMessage"><![CDATA[Fehlermeldungen]]></item>
 		<item name="wcf.acp.updateServer.list"><![CDATA[Paket-Server]]></item>
@@ -2828,7 +2817,6 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 	</category>
 	<category name="wcf.acp.smiley">
 		<item name="wcf.acp.smiley.list"><![CDATA[Smileys]]></item>
-		<item name="wcf.acp.smiley.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Smiley <span class="confirmationObject">{$smiley->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.smiley.add"><![CDATA[Smiley hinzufügen]]></item>
 		<item name="wcf.acp.smiley.edit"><![CDATA[Smiley bearbeiten]]></item>
 		<item name="wcf.acp.smiley.title"><![CDATA[Titel]]></item>
@@ -3031,11 +3019,9 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.template.group.folderName.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Verzeichnis-Namen eingegeben.]]></item>
 		<item name="wcf.acp.template.group.folderName.error.notUnique"><![CDATA[Das angegebene Verzeichnis wird bereits von einer anderen Templategruppe verwendet.]]></item>
 		<item name="wcf.acp.template.group.parentTemplateGroupID.error.invalid"><![CDATA[Die ausgewählte übergeordnete Templategruppe ist ungültig.]]></item>
-		<item name="wcf.acp.template.group.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Templategruppe <span class="confirmationObject">{$templateGroup->getName()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.template.source"><![CDATA[Template-Quelltext]]></item>
 		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[Der eingegebene Name wird bereits von einem anderen Template verwendet.]]></item>
 		<item name="wcf.acp.template.name.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Namen eingegeben.]]></item>
-		<item name="wcf.acp.template.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Template <span class="confirmationObject">{$template->templateName}</span> wirklich löschen?]]></item>
 	</category>
 	<category name="wcf.acp.user">
 		<item name="wcf.acp.user.add"><![CDATA[Benutzer hinzufügen]]></item>
@@ -3052,7 +3038,6 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.user.ban.expires.description"><![CDATA[Der Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
 		<item name="wcf.acp.user.ban.neverExpires"><![CDATA[Dauerhafte Sperrung]]></item>
 		<item name="wcf.acp.user.ban.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den/die Benutzer wirklich sperren?]]></item>
-		<item name="wcf.acp.user.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Benutzer <span class="confirmationObject">{$user->username}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.user.edit"><![CDATA[Benutzer bearbeiten]]></item>
 		<item name="wcf.acp.user.edit.warning.selfEdit"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du bearbeitest dein{else}Sie bearbeiten Ihr{/if} eigenes Benutzerkonto. Änderungen an den Mitgliedschaften in Benutzergruppen können womöglich dazu führen, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} aus der Administrationsoberfläche ausgeschlossen {if LANGUAGE_USE_INFORMAL_VARIANT}wirst{else}werden{/if}. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}sei{else}seien Sie{/if} entsprechend vorsichtig!]]></item>
 		<item name="wcf.acp.user.exportEmailAddress"><![CDATA[E-Mail-Adressen exportieren]]></item>
@@ -3106,14 +3091,12 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter „Konfiguration �
 		<item name="wcf.acp.user.option.access"><![CDATA[Zugriff]]></item>
 		<item name="wcf.acp.user.option.add"><![CDATA[Benutzerprofilfeld hinzufügen]]></item>
 		<item name="wcf.acp.user.option.category.add"><![CDATA[Benutzerprofilfeld-Kategorie hinzufügen]]></item>
-		<item name="wcf.acp.user.option.category.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Benutzerprofilfeld-Kategorie <span class="confirmationObject">{$category->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.user.option.category.edit"><![CDATA[Benutzerprofilfeld-Kategorie bearbeiten]]></item>
 		<item name="wcf.acp.user.option.category.options"><![CDATA[Felder]]></item>
 		<item name="wcf.acp.user.option.category.list"><![CDATA[Benutzerprofilfeld-Kategorien]]></item>
 		<item name="wcf.acp.user.option.categoryName"><![CDATA[Kategorie]]></item>
 		<item name="wcf.acp.user.option.defaultValue"><![CDATA[Standardwert]]></item>
 		<item name="wcf.acp.user.option.defaultValue.description"><![CDATA[Wert, der beim erstmaligen Ausfüllen als Standard vorgegeben ist.]]></item>
-		<item name="wcf.acp.user.option.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Benutzerprofilfeld <span class="confirmationObject">{$option->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.user.option.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.acp.user.option.edit"><![CDATA[Benutzerprofilfeld bearbeiten]]></item>
 		<item name="wcf.acp.user.option.editable"><![CDATA[Wer darf den Inhalt verändern?]]></item>
@@ -3161,7 +3144,6 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter „Konfiguration �
 		<item name="wcf.acp.user.rank.cssClassName.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} aus den vorgegebenen Darstellungen wählen oder eine eigene Darstellung durch Angabe einer <abbr title="Cascading Style Sheets">CSS</abbr>-Klasse nutzen.]]></item>
 		<item name="wcf.acp.user.rank.cssClassName.error.invalid"><![CDATA[Die gewählte CSS-Klasse ist ungültig.]]></item>
 		<item name="wcf.acp.user.rank.currentImage"><![CDATA[Aktuelle Ranggrafik]]></item>
-		<item name="wcf.acp.user.rank.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Benutzerrang <span class="confirmationObject">{$userRank->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.user.rank.edit"><![CDATA[Benutzerrang bearbeiten]]></item>
 		<item name="wcf.acp.user.rank.hideTitle"><![CDATA[Rangbezeichnung ausblenden]]></item>
 		<item name="wcf.acp.user.rank.hideTitle.description"><![CDATA[Es wird nur die Ranggrafik angezeigt. Dies gilt nicht, wenn der Benutzer einen individuellen Titel eingestellt hat.]]></item>
@@ -5048,7 +5030,6 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.acp.trophy.conditions"><![CDATA[Bedingungen]]></item>
 		<item name="wcf.acp.trophy.conditions.description"><![CDATA[Der aktive Benutzer muss die folgenden Bedingungen erfüllen, damit die Trophäe vergeben wird.]]></item>
 		<item name="wcf.acp.trophy.conditions.error.noConditions"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} keine Bedingungen ausgewählt.]]></item>
-		<item name="wcf.acp.trophy.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Trophäe <span class="confirmationObject">{$trophy->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.trophy.userTrophy.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.trophy.userTrophy.user.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gebe{else}Geben Sie{/if} hier die Benutzer an, welche die Trophäe erhalten sollen.]]></item>
 		<item name="wcf.acp.trophy.userTrophy.user.error.notFound"><![CDATA[Der Benutzername „{$errorData[username]}“ konnte nicht gefunden werden.]]></item>

@@ -8,11 +8,6 @@
 			offset: {@$startIndex}
 		});
 	});
-	
-	$(function() {
-		new WCF.Action.Delete('wcf\\data\\trophy\\TrophyAction', '.trophyRow');
-		new WCF.Action.Toggle('wcf\\data\\trophy\\TrophyAction', '.trophyRow');
-	});
 </script>
 
 <header class="contentHeader">
@@ -38,18 +33,18 @@
 
 {if $objects|count}
 	<div class="section sortableListContainer" id="trophyList">
-		<ol class="sortableList jsReloadPageWhenEmpty" data-object-id="0" start="{@($pageNo - 1) * $itemsPerPage + 1}">
+		<ol class="sortableList jsReloadPageWhenEmpty jsObjectActionContainer" data-object-action-class-name="wcf\data\trophy\TrophyAction" data-object-id="0" start="{@($pageNo - 1) * $itemsPerPage + 1}">
 			{foreach from=$objects item='trophy'}
-				<li class="sortableNode sortableNoNesting trophyRow" data-object-id="{@$trophy->trophyID}">
+				<li class="sortableNode sortableNoNesting trophyRow jsObjectActionObject" data-object-id="{@$trophy->getObjectID()}">
 					<span class="sortableNodeLabel">
 						{@$trophy->renderTrophy(32)}
 						<a href="{link controller='TrophyEdit' object=$trophy}{/link}">{$trophy->getTitle()}</a>
 						
 						<span class="statusDisplay sortableButtonContainer">
 							<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
-							<span class="icon icon16 fa-{if !$trophy->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $trophy->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$trophy->trophyID}"></span>
+							{objectAction action="toggle" isDisabled=$trophy->isDisabled}
 							<a href="{link controller='TrophyEdit' object=$trophy}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-							<span class="icon icon16 fa-times pointer jsDeleteButton jsTooltip" data-confirm-message-html="{lang __encode=true}wcf.acp.trophy.delete.confirmMessage{/lang}" data-object-id="{@$trophy->getObjectID()}" title="{lang}wcf.global.button.delete{/lang}"></span>
+							{objectAction action="delete" objectTitle=$trophy->getTitle()}
 							
 							{event name='itemButtons'}
 						</span>

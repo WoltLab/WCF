@@ -9,11 +9,7 @@
 {event name='javascriptInclude'}
 <script data-relocate="true">
 	$(function() {
-		var actionObjects = { };
-		actionObjects['com.woltlab.wcf.user'] = { };
-		actionObjects['com.woltlab.wcf.user']['delete'] = new WCF.Action.Delete('wcf\\data\\user\\UserAction', '.jsUserRow');
-		
-		WCF.Clipboard.init('wcf\\acp\\page\\UserListPage', {@$hasMarkedItems}, actionObjects);
+		WCF.Clipboard.init('wcf\\acp\\page\\UserListPage', {@$hasMarkedItems});
 		
 		WCF.Language.addObject({
 			'wcf.acp.user.banReason': '{jslang}wcf.acp.user.banReason{/jslang}',
@@ -85,7 +81,7 @@
 
 {if $users|count}
 	<div id="userTableContainer" class="section tabularBox">
-		<table data-type="com.woltlab.wcf.user" class="table jsClipboardContainer">
+		<table data-type="com.woltlab.wcf.user" class="table jsClipboardContainer jsObjectActionContainer" data-object-action-class-name="wcf\data\user\UserAction">
 			<thead>
 				<tr>
 					<th class="columnMark"><label><input type="checkbox" class="jsClipboardMarkAll"></label></th>
@@ -102,7 +98,7 @@
 			
 			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$users item=user}
-					<tr class="jsUserRow jsClipboardObject" data-object-id="{@$user->userID}" data-banned="{if $user->banned}true{else}false{/if}" data-enabled="{if !$user->activationCode}true{else}false{/if}" data-email-confirmed="{if $user->isEmailConfirmed()}true{else}false{/if}">
+					<tr class="jsUserRow jsClipboardObject jsObjectActionObject" data-object-id="{@$user->getObjectID()}" data-banned="{if $user->banned}true{else}false{/if}" data-enabled="{if !$user->activationCode}true{else}false{/if}" data-email-confirmed="{if $user->isEmailConfirmed()}true{else}false{/if}">
 						<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$user->userID}"></td>
 						<td class="columnIcon">
 							<div class="dropdown" id="userListDropdown{@$user->userID}">
@@ -149,7 +145,7 @@
 								   significant downside, other than "just" some more legacy code. *}
 								
 								{if $user->deletable}
-									<span class="icon icon16 fa-times jsTooltip jsDeleteButton pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$user->userID}" data-confirm-message-html="{lang __encode=true}wcf.acp.user.delete.sure{/lang}"></span>
+									{objectAction action="delete" objectTitle=$user->getTitle()}
 								{/if}
 								{if $user->bannable}
 									<span class="icon icon16 fa-{if $user->banned}lock{else}unlock{/if} jsBanButton jsTooltip pointer" title="{lang}wcf.acp.user.{if $user->banned}unban{else}ban{/if}{/lang}" data-object-id="{@$user->userID}" data-ban-message="{lang}wcf.acp.user.ban{/lang}" data-unban-message="{lang}wcf.acp.user.unban{/lang}" data-banned="{if $user->banned}true{else}false{/if}"></span>

@@ -8,11 +8,6 @@
 			offset: {@$startIndex}
 		});
 	});
-	
-	$(function() {
-		new WCF.Action.Delete('wcf\\data\\notice\\NoticeAction', '.jsNotice');
-		new WCF.Action.Toggle('wcf\\data\\notice\\NoticeAction', '.jsNotice');
-	});
 </script>
 
 <header class="contentHeader">
@@ -37,17 +32,17 @@
 
 {if $objects|count}
 	<div class="section sortableListContainer" id="noticeList">
-		<ol class="sortableList jsReloadPageWhenEmpty" data-object-id="0" start="{@($pageNo - 1) * $itemsPerPage + 1}">
+		<ol class="sortableList jsReloadPageWhenEmpty jsObjectActionContainer" data-object-action-class-name="wcf\data\notice\NoticeAction" data-object-id="0" start="{@($pageNo - 1) * $itemsPerPage + 1}">
 			{foreach from=$objects item='notice'}
-				<li class="sortableNode sortableNoNesting jsNotice" data-object-id="{@$notice->noticeID}">
+				<li class="sortableNode sortableNoNesting jsNotice jsObjectActionObject" data-object-id="{@$notice->getObjectID()}">
 					<span class="sortableNodeLabel">
 						<a href="{link controller='NoticeEdit' object=$notice}{/link}">{$notice->noticeName}</a>
 						
 						<span class="statusDisplay sortableButtonContainer">
 							<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
-							<span class="icon icon16 fa-{if !$notice->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $notice->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$notice->noticeID}"></span>
+							{objectAction action="toggle" isDisabled=$notice->isDisabled}
 							<a href="{link controller='NoticeEdit' object=$notice}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$notice->noticeID}" data-confirm-message-html="{lang __encode=true}wcf.acp.notice.delete.confirmMessage{/lang}"></span>
+							{objectAction action="delete" objectTitle=$notice->noticeName}
 							
 							{event name='itemButtons'}
 						</span>
