@@ -61,6 +61,7 @@ class HtmlOutputUnfurlUrlNode extends AbstractHtmlOutputNode
     {
         /** @var \wcf\data\unfurl\url\UnfurlUrl $object */
         $object = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.unfurlUrl', $data['urlId']);
+
         return $object->render($data['enableUgc']);
     }
 }
