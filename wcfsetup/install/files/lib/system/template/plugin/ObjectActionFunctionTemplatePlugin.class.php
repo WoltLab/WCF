@@ -9,7 +9,7 @@ use wcf\util\StringUtil;
 /**
  * Template function plugin which generate delete and toggle buttons for objects to be used in
  * combination with `WoltLabSuite/Core/Ui/Object/Action`.
- * 
+ *
  * TODO: More information and examples
  *
  * @author  Matthias Schmidt
@@ -24,7 +24,7 @@ class ObjectActionFunctionTemplatePlugin implements IFunctionTemplatePlugin
         'delete',
         'toggle',
     ];
-    
+
     /**
      * @inheritDoc
      */
@@ -34,7 +34,7 @@ class ObjectActionFunctionTemplatePlugin implements IFunctionTemplatePlugin
             throw new \InvalidArgumentException("Missing 'action' argument.");
         }
         $action = $tagArgs['action'];
-        if (!in_array($action, static::SUPPORTED_ACTIONS)) {
+        if (!\in_array($action, static::SUPPORTED_ACTIONS)) {
             throw new \InvalidArgumentException("Unsupported action '{$action}'.");
         }
 
@@ -48,7 +48,7 @@ class ObjectActionFunctionTemplatePlugin implements IFunctionTemplatePlugin
         }
         foreach ($tagArgs as $key => $value) {
             if (\preg_match('~^parameter.+$~', $key)) {
-                $additionalAttributes .= sprintf(
+                $additionalAttributes .= \sprintf(
                     ' data-object-action-%s="%s"',
                     \strtolower(\preg_replace(
                         '~([A-Z])~',
@@ -74,15 +74,16 @@ class ObjectActionFunctionTemplatePlugin implements IFunctionTemplatePlugin
                             'objectTitle' => $tagArgs['objectTitle'],
                         ]
                     ));
-                }
-                else if (isset($tagArgs['confirmMessage'])) {
-                    $confirmMessage = StringUtil::encodeHTML($tplObj->fetchString(
-                        $tplObj->getCompiler()->compileString(
-                            $tagArgs['confirmMessage'],
-                            $language->get($tagArgs['confirmMessage'])
-                        )['template']));
-                }
-                else {
+                } elseif (isset($tagArgs['confirmMessage'])) {
+                    $confirmMessage = StringUtil::encodeHTML(
+                        $tplObj->fetchString(
+                            $tplObj->getCompiler()->compileString(
+                                $tagArgs['confirmMessage'],
+                                $language->get($tagArgs['confirmMessage'])
+                            )['template']
+                        )
+                    );
+                } else {
                     throw new \InvalidArgumentException("Missing 'objectTitle' or 'confirmMessage' argument for 'delete' action.");
                 }
 
@@ -91,14 +92,14 @@ class ObjectActionFunctionTemplatePlugin implements IFunctionTemplatePlugin
                 return <<<HTML
 <span class="icon icon16 fa-times jsObjectAction jsTooltip pointer" title="{$title}" data-object-action="delete" data-confirm-message="{$confirmMessage}"{$additionalAttributes}></span>
 HTML;
-                
+
                 break;
-                
+
             case 'toggle':
                 if (!isset($tagArgs['isDisabled'])) {
                     throw new \InvalidArgumentException("Missing 'isDisabled' argument for 'toggle' action.");
                 }
-                
+
                 $icon = 'fa-check-square-o';
                 $title = $language->getDynamicVariable('wcf.global.button.disable');
                 if ($tagArgs['isDisabled']) {
@@ -106,11 +107,11 @@ HTML;
                     $title = $language->getDynamicVariable('wcf.global.button.enable');
                 }
                 $title = StringUtil::encodeHTML($title);
-                
+
                 return <<<HTML
 <span class="icon icon16 {$icon} jsObjectAction jsTooltip pointer" title="{$title}" data-object-action="toggle"{$additionalAttributes}></span>
 HTML;
-                
+
             default:
                 throw new \LogicException("Unreachable.");
         }
