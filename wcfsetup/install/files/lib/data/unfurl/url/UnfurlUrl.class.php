@@ -78,10 +78,11 @@ class UnfurlUrl extends DatabaseObject
     /**
      * Renders the unfurl url card and returns the template.
      */
-    public function render(): string
+    public function render(bool $enableUgc = true): string
     {
         return WCF::getTPL()->fetch('unfurlUrl', 'wcf', [
             'object' => $this,
+            'enableUgc' => $enableUgc,
         ]);
     }
 

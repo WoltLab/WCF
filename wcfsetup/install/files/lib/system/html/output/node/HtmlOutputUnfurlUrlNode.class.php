@@ -4,6 +4,7 @@ namespace wcf\system\html\output\node;
 
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\html\node\HtmlNodeUnfurlLink;
+use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\util\StringUtil;
 
@@ -36,8 +37,17 @@ class HtmlOutputUnfurlUrlNode extends AbstractHtmlOutputNode
                 && !empty($attribute)
                 && MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.unfurlUrl', $attribute) !== null
             ) {
+                $enableUgc = true;
+                $processor = $htmlNodeProcessor->getHtmlProcessor();
+                if ($processor instanceof HtmlOutputProcessor) {
+                    $enableUgc = $processor->enableUgc;
+                }
+
                 $nodeIdentifier = StringUtil::getRandomID();
-                $htmlNodeProcessor->addNodeData($this, $nodeIdentifier, ['urlId' => $attribute]);
+                $htmlNodeProcessor->addNodeData($this, $nodeIdentifier, [
+                    'urlId' => $attribute,
+                    'enableUgc' => $enableUgc,
+                ]);
 
                 $htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
             }
@@ -49,6 +59,8 @@ class HtmlOutputUnfurlUrlNode extends AbstractHtmlOutputNode
      */
     public function replaceTag(array $data)
     {
-        return MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.unfurlUrl', $data['urlId'])->render();
+        /** @var \wcf\data\unfurl\url\UnfurlUrl $object */
+        $object = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.unfurlUrl', $data['urlId']);
+        return $object->render($data['enableUgc']);
     }
 }

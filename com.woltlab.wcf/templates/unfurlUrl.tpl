@@ -1,6 +1,6 @@
 {if $object->status == "SUCCESSFUL"}
 	{if $object->isPlainUrl()}
-		<a {anchorAttributes url=$object->url isUgc=true}>{$object->title}</a>
+		<a {anchorAttributes url=$object->url isUgc=$enableUgc}>{$object->title}</a>
 	{else}
 		<div class="
 			unfurlUrlCard
@@ -14,9 +14,9 @@
 				<div class="unfurlUrlDescription">{$object->description}</div>
 				<div class="unfurlUrlHost">{$object->getHost()}</div>
 			</div>
-			<a class="unfurlUrlLinkShadow" {anchorAttributes url=$object->url appendClassname=false isUgc=true}></a>
+			<a class="unfurlUrlLinkShadow" {anchorAttributes url=$object->url appendClassname=false isUgc=$enableUgc}></a>
 		</div>
 	{/if}
 {else}
-	<a {anchorAttributes url=$object->url isUgc=true}>{$object->url}</a>
+	<a {anchorAttributes url=$object->url isUgc=$enableUgc}>{$object->url}</a>
 {/if}
