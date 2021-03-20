@@ -12,9 +12,9 @@
 
 {if $objects|count}
 	<div class="section sectionContainerList">
-		<ol class="containerList userList jsReloadPageWhenEmpty">
+		<ol class="containerList userList jsReloadPageWhenEmpty jsObjectActionContainer" data-object-action-class-name="wcf\data\user\follow\UserFollowAction">
 			{foreach from=$objects item=user}
-				<li class="jsFollowing">
+				<li class="jsFollowing jsObjectActionObject" data-object-id="{@$user->getObjectID()}">
 					<div class="box48">
 						{user object=$user type='avatar48' ariaHidden='true' tabindex='-1'}
 						
@@ -23,7 +23,7 @@
 							
 							<nav class="jsMobileNavigation buttonGroupNavigation">
 								<ul class="buttonList iconList jsOnly">
-									<li><a class="pointer jsTooltip jsDeleteButton" title="{lang}wcf.user.button.unfollow{/lang}" data-object-id="{@$user->followID}"><span class="icon icon16 fa-times"></span> <span class="invisible">{lang}wcf.user.button.unfollow{/lang}</span></a></li>
+									<li><a class="pointer jsTooltip jsObjectAction" data-object-action="delete" title="{lang}wcf.user.button.unfollow{/lang}" data-object-id="{@$user->followID}"><span class="icon icon16 fa-times"></span> <span class="invisible">{lang}wcf.user.button.unfollow{/lang}</span></a></li>
 									{event name='userButtons'}
 								</ul>
 							</nav>
@@ -56,11 +56,5 @@
 {else}
 	<p class="info" role="status">{lang}wcf.user.following.noUsers{/lang}</p>
 {/if}
-
-<script data-relocate="true">
-	$(function() {
-		new WCF.Action.Delete('wcf\\data\\user\\follow\\UserFollowAction', '.jsFollowing');
-	});
-</script>
 
 {include file='footer'}
