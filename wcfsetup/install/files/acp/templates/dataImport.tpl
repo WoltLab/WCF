@@ -59,20 +59,22 @@
 		{if $showMappingNotice}
 			<p class="warning">{lang}wcf.acp.dataImport.existingMapping.notice{/lang}</p>
 			<script data-relocate="true">
-				$(function() {
-					$('#deleteMapping').click(function() {
-						WCF.System.Confirmation.show('{jslang}wcf.acp.dataImport.existingMapping.confirmMessage{/jslang}', function(action) {
-							if (action === 'confirm') {
-								new WCF.Action.Proxy({
-									autoSend: true,
+				require(['Ajax', 'Ui/Confirmation'], (Ajax, UiConfirmation) => {
+					document.getElementById('deleteMapping').addEventListener('click', () => {
+						UiConfirmation.show({
+							confirm() {
+								Ajax.apiOnce({
 									data: {
 										actionName: 'resetMapping',
-										className: 'wcf\\system\\importer\\ImportHandler'
+										className: 'wcf\\system\\importer\\ImportHandler',
 									},
-									success: function() { window.location.reload(); },
-									url: 'index.php/AJAXInvoke/?t=' + SECURITY_TOKEN
+									success() {
+										window.location.reload();
+									},
+									url: 'index.php/AJAXInvoke/?t=' + SECURITY_TOKEN,
 								});
-							}
+							},
+							message: '{jslang}wcf.acp.dataImport.existingMapping.confirmMessage{/jslang}'
 						});
 						
 						return false;
