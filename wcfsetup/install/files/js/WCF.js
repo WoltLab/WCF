@@ -1708,6 +1708,8 @@ WCF.Action.SimpleProxy = Class.extend({
  * @param        string                className
  * @param        string                containerSelector
  * @param        string                buttonSelector
+ * 
+ * @deprecated  5.4 Use `WoltLabSuite/Core/Ui/Object/Action/Delete` instead
  */
 WCF.Action.Delete = Class.extend({
 	/**
@@ -1908,6 +1910,8 @@ if (COMPILER_TARGET_DEFAULT) {
 	 * element of the deleted element.
 	 *
 	 * @see        WCF.Action.Delete
+	 *
+	 * @deprecated  5.4 Use `WoltLabSuite/Core/Ui/Object/Action/Delete` instead
 	 */
 	WCF.Action.NestedDelete = WCF.Action.Delete.extend({
 		/**
@@ -1948,6 +1952,8 @@ if (COMPILER_TARGET_DEFAULT) {
 	 * @param        string                className
 	 * @param        jQuery                containerList
 	 * @param        string                buttonSelector
+	 *
+	 * @deprecated  5.4 Use `WoltLabSuite/Core/Ui/Object/Action/Toggle` instead
 	 */
 	WCF.Action.Toggle = Class.extend({
 		/**
