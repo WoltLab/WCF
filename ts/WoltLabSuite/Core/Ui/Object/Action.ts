@@ -14,6 +14,7 @@ import { ObjectActionData } from "./Data";
 import * as UiConfirmation from "../Confirmation";
 import * as Language from "../../Language";
 import * as StringUtil from "../../StringUtil";
+import DomChangeListener from "../../Dom/Change/Listener";
 
 const containerSelector = ".jsObjectActionContainer[data-object-action-class-name]";
 const objectSelector = ".jsObjectActionObject[data-object-id]";
@@ -89,12 +90,21 @@ function processAction(actionElement: HTMLElement, data: ResponseData | Database
   } as ObjectActionData);
 }
 
-export function setup(): void {
+const actions = new Set<HTMLElement>();
+
+function registerElements(): void {
   document
     .querySelectorAll(`${containerSelector} ${objectSelector} ${actionSelector}`)
     .forEach((action: HTMLElement) => {
-      action.addEventListener("click", (ev) => executeAction(ev));
-    });
+      if (!actions.has(action)) {
+        action.addEventListener("click", (ev) => executeAction(ev));
 
-  // TODO: handle elements added later on
+        actions.add(action);
+      }
+    });
+}
+
+export function setup(): void {
+  registerElements();
+  DomChangeListener.add("WoltLabSuite/Core/Ui/Empty", () => registerElements());
 }

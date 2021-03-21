@@ -45,13 +45,6 @@ export function init(options: MediaListOptions): void {
     clipboardDeleteMedia: (mediaIds: number[]) => clipboardDeleteMedia(mediaIds),
   } as MediaManager);
 
-  EventHandler.add("com.woltlab.wcf.media.upload", "removedErroneousUploadRow", () => deleteCallback());
-
-  // eslint-disable-next-line
-  //@ts-ignore
-  const deleteAction = new WCF.Action.Delete("wcf\\data\\media\\MediaAction", ".jsMediaRow");
-  deleteAction.setCallback(deleteCallback);
-
   addButtonEventListeners();
 
   DomChangeListener.add("WoltLabSuite/Core/Controller/Media/List", () => addButtonEventListeners());

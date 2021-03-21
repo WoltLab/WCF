@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Ui/Object/Action
  */
-define(["require", "exports", "tslib", "../../Ajax", "../../Event/Handler", "../Confirmation", "../../Language", "../../StringUtil"], function (require, exports, tslib_1, Ajax, EventHandler, UiConfirmation, Language, StringUtil) {
+define(["require", "exports", "tslib", "../../Ajax", "../../Event/Handler", "../Confirmation", "../../Language", "../../StringUtil", "../../Dom/Change/Listener"], function (require, exports, tslib_1, Ajax, EventHandler, UiConfirmation, Language, StringUtil, Listener_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -15,6 +15,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Event/Handler", "../
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
     Language = tslib_1.__importStar(Language);
     StringUtil = tslib_1.__importStar(StringUtil);
+    Listener_1 = tslib_1.__importDefault(Listener_1);
     const containerSelector = ".jsObjectActionContainer[data-object-action-class-name]";
     const objectSelector = ".jsObjectActionObject[data-object-id]";
     const actionSelector = ".jsObjectAction[data-object-action]";
@@ -80,13 +81,20 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Event/Handler", "../
             objectElement: actionElement.closest(objectSelector),
         });
     }
-    function setup() {
+    const actions = new Set();
+    function registerElements() {
         document
             .querySelectorAll(`${containerSelector} ${objectSelector} ${actionSelector}`)
             .forEach((action) => {
-            action.addEventListener("click", (ev) => executeAction(ev));
+            if (!actions.has(action)) {
+                action.addEventListener("click", (ev) => executeAction(ev));
+                actions.add(action);
+            }
         });
-        // TODO: handle elements added later on
+    }
+    function setup() {
+        registerElements();
+        Listener_1.default.add("WoltLabSuite/Core/Ui/Empty", () => registerElements());
     }
     exports.setup = setup;
 });

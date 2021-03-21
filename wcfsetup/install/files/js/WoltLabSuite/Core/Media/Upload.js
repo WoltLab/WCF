@@ -63,7 +63,7 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                     else if (cell.classList.contains("columnIcon")) {
                         cell.querySelectorAll("[data-object-id]").forEach((el) => DomUtil.hide(el));
                         cell.querySelector(".mediaEditButton").classList.add("jsMediaEditButton");
-                        cell.querySelector(".jsDeleteButton").dataset.confirmMessageHtml = Language.get("wcf.media.delete.confirmMessage", {
+                        cell.querySelector(".jsObjectAction[data-object-action='delete']").dataset.confirmMessage = Language.get("wcf.media.delete.confirmMessage", {
                             title: file.name,
                         });
                     }
@@ -167,6 +167,7 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                 if (file.tagName === "TR") {
                     if (media) {
                         // update object id
+                        file.dataset.objectId = media.mediaID.toString();
                         file.querySelectorAll("[data-object-id]").forEach((el) => {
                             el.dataset.objectId = media.mediaID.toString();
                             el.style.removeProperty("display");
@@ -205,7 +206,7 @@ define(["require", "exports", "tslib", "../Upload", "../Core", "../Dom/Util", ".
                     if (media) {
                         const fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, "mediaThumbnail"), "SPAN");
                         this._replaceFileIcon(fileIcon, media, 144);
-                        file.className = "jsClipboardObject mediaFile";
+                        file.classList.add("jsClipboardObject", "mediaFile", "jsObjectActionObject");
                         file.dataset.objectId = media.mediaID.toString();
                         if (this._mediaManager) {
                             this._mediaManager.setupMediaElement(media, file);

@@ -25,6 +25,7 @@ import MediaManagerSearch from "./Search";
 import MediaUpload from "../Upload";
 import MediaEditor from "../Editor";
 import * as MediaClipboard from "../Clipboard";
+import { ObjectActionData } from "../../Ui/Object/Data";
 
 let mediaManagerCounter = 0;
 
@@ -185,10 +186,9 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
           mediaManager: this,
         });
 
-        // eslint-disable-next-line
-        //@ts-ignore
-        const deleteAction = new WCF.Action.Delete("wcf\\data\\media\\MediaAction", ".mediaFile");
-        deleteAction._didTriggerEffect = (element) => this.removeMedia(element[0].dataset.objectId);
+        EventHandler.add("WoltLabSuite/Core/Ui/Object/Action", "delete", (data: ObjectActionData) =>
+          this.removeMedia(~~data.objectElement.dataset.objectId!),
+        );
       }
 
       if (Permission.get("admin.content.cms.canManageMedia") || this._forceClipboard) {
@@ -523,12 +523,12 @@ abstract class MediaManager<TOptions extends MediaManagerOptions = MediaManagerO
         </a>`;
 
       const deleteButton = document.createElement("li");
-      deleteButton.className = "jsDeleteButton";
-      deleteButton.dataset.objectId = media.mediaID.toString();
+      deleteButton.classList.add("jsObjectAction");
+      deleteButton.dataset.objectAction = "delete";
 
       // use temporary title to not unescape html in filename
       const uuid = Core.getUuid();
-      deleteButton.dataset.confirmMessageHtml = StringUtil.unescapeHTML(
+      deleteButton.dataset.confirmMessage = StringUtil.unescapeHTML(
         Language.get("wcf.media.delete.confirmMessage", {
           title: uuid,
         }),

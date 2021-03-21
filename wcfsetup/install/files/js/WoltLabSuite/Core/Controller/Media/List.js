@@ -37,11 +37,6 @@ define(["require", "exports", "tslib", "../../Media/List/Upload", "../../Media/C
         MediaClipboard.init("wcf\\acp\\page\\MediaListPage", options.hasMarkedItems || false, {
             clipboardDeleteMedia: (mediaIds) => clipboardDeleteMedia(mediaIds),
         });
-        EventHandler.add("com.woltlab.wcf.media.upload", "removedErroneousUploadRow", () => deleteCallback());
-        // eslint-disable-next-line
-        //@ts-ignore
-        const deleteAction = new WCF.Action.Delete("wcf\\data\\media\\MediaAction", ".jsMediaRow");
-        deleteAction.setCallback(deleteCallback);
         addButtonEventListeners();
         DomChangeListener.add("WoltLabSuite/Core/Controller/Media/List", () => addButtonEventListeners());
         EventHandler.add("com.woltlab.wcf.media.upload", "success", (data) => openEditorAfterUpload(data));
