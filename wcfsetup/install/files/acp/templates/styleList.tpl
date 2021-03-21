@@ -3,7 +3,6 @@
 <script data-relocate="true" src="{@$__wcf->getPath()}acp/js/WCF.ACP.Style.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true">
 	$(function() {
-		new WCF.Action.Toggle('wcf\\data\\style\\StyleAction', '.buttonList');
 		new WCF.ACP.Style.List();
 	});
 </script>
@@ -30,9 +29,9 @@
 {/hascontent}
 
 <div class="section sectionContainerList">
-	<ol class="containerList styleList">
+	<ol class="containerList styleList jsObjectActionContainer" data-object-action-class-name="wcf\data\style\StyleAction">
 		{foreach from=$objects item=style}
-			<li>
+			<li class="jsObjectActionObject" data-object-id="{@$style->getObjectID()}">
 				<div class="box64">
 					<span>
 						<img src="{@$style->getPreviewImage()}" srcset="{@$style->getPreviewImage2x()} 2x" height="64" alt="">
@@ -60,7 +59,7 @@
 								<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" title="{lang}wcf.acp.style.exportStyle{/lang}" class="jsTooltip"><span class="icon icon16 fa-download"></span> <span class="invisible">{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
 								
 								{if !$style->isDefault}
-									<li><a href="#" title="{lang}wcf.global.button.{if $style->isDisabled}enable{else}disable{/if}{/lang}" class="jsTooltip"><span class="icon icon16 fa-{if !$style->isDisabled}check-{/if}square-o jsToggleButton" data-object-id="{@$style->styleID}"></span> <span class="invisible">{lang}wcf.global.button.{if $style->isDisabled}enable{else}disable{/if}{/lang}</span></a></li>
+									<li><a href="#" title="{lang}wcf.global.button.{if $style->isDisabled}enable{else}disable{/if}{/lang}" class="jsTooltip"><span class="icon icon16 fa-{if !$style->isDisabled}check-{/if}square-o jsObjectAction" data-object-action="toggle"></span> <span class="invisible">{lang}wcf.global.button.{if $style->isDisabled}enable{else}disable{/if}{/lang}</span></a></li>
 									<li><a href="#" title="{lang}wcf.acp.style.button.setAsDefault{/lang}" class="jsSetAsDefault jsTooltip"><span class="icon icon16 fa-check-circle"></span> <span class="invisible">{lang}wcf.acp.style.button.setAsDefault{/lang}</span></a></li>
 									<li><a href="#" title="{lang}wcf.global.button.delete{/lang}" class="jsDelete jsTooltip" data-confirm-message-html="{lang __encode=true}wcf.acp.style.delete.confirmMessage{/lang}"><span class="icon icon16 fa-times"></span> <span class="invisible">{lang}wcf.global.button.delete{/lang}</span></a></li>
 								{/if}

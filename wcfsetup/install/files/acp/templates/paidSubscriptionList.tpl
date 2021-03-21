@@ -1,12 +1,5 @@
 {include file='header' pageTitle='wcf.acp.paidSubscription.list'}
 
-<script data-relocate="true">
-	$(function() {
-		new WCF.Action.Delete('wcf\\data\\paid\\subscription\\PaidSubscriptionAction', '.jsPaidSubscriptionRow');
-		new WCF.Action.Toggle('wcf\\data\\paid\\subscription\\PaidSubscriptionAction', '.jsPaidSubscriptionRow');
-	});
-</script>
-
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.paidSubscription.list{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>

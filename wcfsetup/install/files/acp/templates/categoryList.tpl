@@ -11,8 +11,6 @@
 				new WCF.Action.NestedDelete('wcf\\data\\category\\CategoryAction', '.jsCategory');
 			{/if}
 			{if $objectType->getProcessor()->canEditCategory()}
-				new WCF.Action.Toggle('wcf\\data\\category\\CategoryAction', '.jsCategory', '> .sortableNodeLabel > .buttons > .jsToggleButton');
-				
 				var sortableNodes = $('.sortableNode');
 				sortableNodes.each(function(index, node) {
 					$(node).wcfIdentify();
@@ -94,13 +92,13 @@
 
 {hascontent}
 	<div id="categoryList" class="section{if $objectType->getProcessor()->canEditCategory()} sortableListContainer{/if}">
-		<ol class="categoryList sortableList" data-object-id="0">
+		<ol class="categoryList sortableList jsObjectActionContainer" data-object-action-class-name="wcf\data\category\CategoryAction" data-object-id="0">
 			{content}
 				{assign var=oldDepth value=0}
 				{foreach from=$categoryNodeList item='category'}
 					{section name=i loop=$oldDepth-$categoryNodeList->getDepth()}</ol></li>{/section}
 					
-					<li class="{if $objectType->getProcessor()->canEditCategory()}sortableNode {if $categoryNodeList->getDepth() == $objectType->getProcessor()->getMaximumNestingLevel()}sortableNoNesting {/if}{/if}jsCategory" data-object-id="{@$category->categoryID}"{if $collapsedCategoryIDs|is_array} data-is-open="{if $collapsedCategoryIDs[$category->categoryID]|isset}0{else}1{/if}"{/if}>
+					<li class="{if $objectType->getProcessor()->canEditCategory()}sortableNode {if $categoryNodeList->getDepth() == $objectType->getProcessor()->getMaximumNestingLevel()}sortableNoNesting {/if}{/if}jsCategory jsObjectActionObject" data-object-id="{@$category->getObjectID()}"{if $collapsedCategoryIDs|is_array} data-is-open="{if $collapsedCategoryIDs[$category->categoryID]|isset}0{else}1{/if}"{/if}>
 						<span class="sortableNodeLabel">
 							<span class="title">
 								{event name='beforeTitle'}
@@ -116,7 +114,7 @@
 								<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
 								
 								{if $objectType->getProcessor()->canEditCategory()}
-									<span class="icon icon16 fa-{if !$category->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$category->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$category->categoryID}"></span>
+									{objectAction action="toggle" isDisabled=$category->isDisabled}
 									<a href="{link controller=$editController application=$objectType->getProcessor()->getApplication() id=$category->categoryID title=$category->getTitle()}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 								{/if}
 								
