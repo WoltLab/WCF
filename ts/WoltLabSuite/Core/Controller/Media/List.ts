@@ -12,7 +12,6 @@ import * as MediaClipboard from "../../Media/Clipboard";
 import * as EventHandler from "../../Event/Handler";
 import MediaEditor from "../../Media/Editor";
 import * as DomChangeListener from "../../Dom/Change/Listener";
-import * as Clipboard from "../../Controller/Clipboard";
 import { Media, MediaUploadSuccessEventData } from "../../Media/Data";
 import MediaManager from "../../Media/Manager/Base";
 
