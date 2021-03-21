@@ -356,7 +356,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
                     this._listItems.get(mediaId).remove();
                 }
                 catch (e) {
-                    // ignore errors if item has already been removed like by WCF.Action.Delete
+                    // ignore errors if item has already been removed by other code
                 }
                 this._listItems.delete(mediaId);
                 this._media.delete(mediaId);
