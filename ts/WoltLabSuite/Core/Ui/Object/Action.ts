@@ -84,10 +84,14 @@ function executeAction(event: Event): void {
 }
 
 function processAction(actionElement: HTMLElement, data: ResponseData | DatabaseObjectActionResponse): void {
-  EventHandler.fire("WoltLabSuite/Core/Ui/Object/Action", actionElement.dataset.objectAction!, {
-    data,
-    objectElement: actionElement.closest(objectSelector),
-  } as ObjectActionData);
+  if (actionElement.dataset.objectActionSuccess === "reload") {
+    window.location.reload();
+  } else {
+    EventHandler.fire("WoltLabSuite/Core/Ui/Object/Action", actionElement.dataset.objectAction!, {
+      data,
+      objectElement: actionElement.closest(objectSelector),
+    } as ObjectActionData);
+  }
 }
 
 const actions = new Set<HTMLElement>();

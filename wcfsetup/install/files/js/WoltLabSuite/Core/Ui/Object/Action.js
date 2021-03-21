@@ -76,10 +76,15 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Event/Handler", "../
         }
     }
     function processAction(actionElement, data) {
-        EventHandler.fire("WoltLabSuite/Core/Ui/Object/Action", actionElement.dataset.objectAction, {
-            data,
-            objectElement: actionElement.closest(objectSelector),
-        });
+        if (actionElement.dataset.objectActionSuccess === "reload") {
+            window.location.reload();
+        }
+        else {
+            EventHandler.fire("WoltLabSuite/Core/Ui/Object/Action", actionElement.dataset.objectAction, {
+                data,
+                objectElement: actionElement.closest(objectSelector),
+            });
+        }
     }
     const actions = new Set();
     function registerElements() {

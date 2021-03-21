@@ -1,19 +1,5 @@
 {include file='header' pageTitle='wcf.acp.language.list'}
 
-<script data-relocate="true">
-	$(function() {
-		new WCF.Action.SimpleProxy({
-			action: 'setAsDefault',
-			className: 'wcf\\data\\language\\LanguageAction',
-			elements: $('.jsLanguageRow .jsSetAsDefaultButton')
-		}, {
-			success: function(data, statusText, jqXHR) {
-				window.location.reload();
-			}
-		});
-	});
-</script>
-
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.language.list{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
@@ -58,7 +44,7 @@
 							
 							{if !$language->isDefault}
 								{objectAction action="toggle" isDisabled=$language->isDisabled}
-								<span class="icon icon16 fa-check-circle jsSetAsDefaultButton jsTooltip pointer" title="{lang}wcf.acp.language.setAsDefault{/lang}" title="{lang}wcf.acp.language.setAsDefault{/lang}" data-object-id="{@$language->languageID}"></span>
+								<span class="icon icon16 fa-check-circle jsObjectAction jsTooltip pointer" data-object-action="setAsDefault" data-object-action-success="reload" title="{lang}wcf.acp.language.setAsDefault{/lang}"></span>
 							{else}
 								<span class="icon icon16 fa-{if !$language->isDisabled}check-{/if}square-o disabled" title="{lang}wcf.global.button.{if $language->isDisabled}enable{else}disable{/if}{/lang}"></span>
 								<span class="icon icon16 fa-check-circle disabled" title="{lang}wcf.acp.language.setAsDefault{/lang}"></span>
