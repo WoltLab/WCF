@@ -71,17 +71,17 @@ define(["require", "exports", "tslib", "../Core", "../Ui/Notification", "../Ui/D
             if (data.returnValues.mediaData) {
                 this._media = data.returnValues.mediaData;
             }
-            const mediaId = this._media.mediaID;
+            const media = this._media;
+            const mediaId = media.mediaID;
             // make sure that the language chooser is initialized first
             setTimeout(() => {
-                var _a, _b, _c;
                 if (this._availableLanguageCount > 1) {
-                    LanguageChooser.setLanguageId(`mediaEditor_${mediaId}_languageID`, this._media.languageID || window.LANGUAGE_ID);
+                    LanguageChooser.setLanguageId(`mediaEditor_${mediaId}_languageID`, media.languageID || window.LANGUAGE_ID);
                 }
                 if (this._categoryIds.length) {
                     const categoryID = content.querySelector("select[name=categoryID]");
-                    if (this._media.categoryID) {
-                        categoryID.value = this._media.categoryID.toString();
+                    if (media.categoryID) {
+                        categoryID.value = media.categoryID.toString();
                     }
                     else {
                         categoryID.value = "0";
@@ -90,22 +90,22 @@ define(["require", "exports", "tslib", "../Core", "../Ui/Notification", "../Ui/D
                 const title = content.querySelector("input[name=title]");
                 const altText = content.querySelector("input[name=altText]");
                 const caption = content.querySelector("textarea[name=caption]");
-                if (this._availableLanguageCount > 1 && this._media.isMultilingual) {
+                if (this._availableLanguageCount > 1 && media.isMultilingual) {
                     if (document.getElementById(`altText_${mediaId}`)) {
-                        LanguageInput.setValues(`altText_${mediaId}`, (this._media.altText || {}));
+                        LanguageInput.setValues(`altText_${mediaId}`, (media.altText || {}));
                     }
                     if (document.getElementById(`caption_${mediaId}`)) {
-                        LanguageInput.setValues(`caption_${mediaId}`, (this._media.caption || {}));
+                        LanguageInput.setValues(`caption_${mediaId}`, (media.caption || {}));
                     }
-                    LanguageInput.setValues(`title_${mediaId}`, (this._media.title || {}));
+                    LanguageInput.setValues(`title_${mediaId}`, (media.title || {}));
                 }
                 else {
-                    title.value = ((_a = this._media) === null || _a === void 0 ? void 0 : _a.title[this._media.languageID || window.LANGUAGE_ID]) || "";
+                    title.value = media.title ? media.title[media.languageID || window.LANGUAGE_ID] : "";
                     if (altText) {
-                        altText.value = ((_b = this._media) === null || _b === void 0 ? void 0 : _b.altText[this._media.languageID || window.LANGUAGE_ID]) || "";
+                        altText.value = media.altText ? media.altText[media.languageID || window.LANGUAGE_ID] : "";
                     }
                     if (caption) {
-                        caption.value = ((_c = this._media) === null || _c === void 0 ? void 0 : _c.caption[this._media.languageID || window.LANGUAGE_ID]) || "";
+                        caption.value = media.caption ? media.caption[media.languageID || window.LANGUAGE_ID] : "";
                     }
                 }
                 if (this._availableLanguageCount > 1) {
