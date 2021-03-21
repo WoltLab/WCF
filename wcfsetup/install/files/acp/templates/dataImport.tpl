@@ -62,13 +62,13 @@
 				require(['Ajax', 'Ui/Confirmation'], (Ajax, UiConfirmation) => {
 					document.getElementById('deleteMapping').addEventListener('click', () => {
 						UiConfirmation.show({
-							confirm: () => {
+							confirm() {
 								Ajax.apiOnce({
 									data: {
 										actionName: 'resetMapping',
 										className: 'wcf\\system\\importer\\ImportHandler',
 									},
-									success: () => {
+									success() {
 										window.location.reload();
 									},
 									url: 'index.php/AJAXInvoke/?t=' + SECURITY_TOKEN,
