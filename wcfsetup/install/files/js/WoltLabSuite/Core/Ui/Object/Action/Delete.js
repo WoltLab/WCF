@@ -12,6 +12,12 @@ define(["require", "exports", "tslib", "./Handler"], function (require, exports,
     exports.setup = void 0;
     Handler_1 = tslib_1.__importDefault(Handler_1);
     function deleteObject(data, objectElement) {
+        const childContainer = objectElement.querySelector(".jsObjectActionObjectChildren");
+        if (childContainer) {
+            Array.from(childContainer.children).forEach((child) => {
+                objectElement.parentNode.insertBefore(child, objectElement);
+            });
+        }
         objectElement.remove();
     }
     function setup() {

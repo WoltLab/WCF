@@ -11,6 +11,13 @@ import UiObjectActionHandler from "./Handler";
 import { DatabaseObjectActionResponse } from "../../../Ajax/Data";
 
 function deleteObject(data: DatabaseObjectActionResponse, objectElement: HTMLElement): void {
+  const childContainer = objectElement.querySelector(".jsObjectActionObjectChildren");
+  if (childContainer) {
+    Array.from(childContainer.children).forEach((child: HTMLElement) => {
+      objectElement.parentNode!.insertBefore(child, objectElement);
+    });
+  }
+
   objectElement.remove();
 }
 

@@ -13,22 +13,6 @@
 			}
 		});
 	});
-	
-	$(function() {
-		var deleteAction = new WCF.Action.Delete('wcf\\data\\menu\\item\\MenuItemAction', '.sortableNode', '> .sortableNodeLabel .jsDeleteButton');
-		var mpTriggerEffect = deleteAction.triggerEffect;
-		deleteAction.triggerEffect = function (objectIDs) {
-			// move children up by one
-			objectIDs.forEach(function (objectId) {
-				var item = elBySel('#menuItemList li[data-object-id="' + objectId + '"]');
-				elBySelAll('.sortableList[data-object-id="' + objectId + '"] > li', item, function(childItem) {
-					item.parentNode.insertBefore(childItem, item);
-				});
-			});
-			
-			mpTriggerEffect.call(deleteAction, objectIDs);
-		};
-	});
 </script>
 
 <header class="contentHeader">
@@ -64,7 +48,7 @@
 								{/if}
 								<a href="{link controller='MenuItemEdit' id=$menuItemNode->itemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><span class="icon icon16 fa-pencil"></span></a>
 								{if $menuItemNode->canDelete()}
-									<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$menuItemNode->itemID}" data-confirm-message-html="{lang __encode=true}wcf.acp.menu.item.delete.confirmMessage{/lang}"></span>
+									{objectAction action="delete" objectTitle=$menuItemNode->getTitle()}
 								{else}
 									<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 								{/if}
@@ -73,7 +57,7 @@
 							</span>
 						</span>
 					
-						<ol class="sortableList" data-object-id="{@$menuItemNode->itemID}">{if !$menuItemNode->hasChildren()}</ol></li>{/if}
+						<ol class="sortableList jsObjectActionObjectChildren" data-object-id="{@$menuItemNode->itemID}">{if !$menuItemNode->hasChildren()}</ol></li>{/if}
 						
 						{if !$menuItemNode->hasChildren() && $menuItemNode->isLastSibling()}
 							{@"</ol></li>"|str_repeat:$menuItemNode->getOpenParentNodes()}
