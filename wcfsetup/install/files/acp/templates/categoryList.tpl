@@ -7,9 +7,6 @@
 				new WCF.ACP.Category.Collapsible('wcf\\data\\category\\CategoryAction', {@$collapsibleObjectTypeID});
 			{/if}
 			
-			{if $objectType->getProcessor()->canDeleteCategory()}
-				new WCF.Action.NestedDelete('wcf\\data\\category\\CategoryAction', '.jsCategory');
-			{/if}
 			{if $objectType->getProcessor()->canEditCategory()}
 				var sortableNodes = $('.sortableNode');
 				sortableNodes.each(function(index, node) {
@@ -119,14 +116,14 @@
 								{/if}
 								
 								{if $objectType->getProcessor()->canDeleteCategory()}
-									<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$category->categoryID}" data-confirm-message="{@$objectType->getProcessor()->getLanguageVariable('delete.sure')}"></span>
+									{objectAction action="delete" objectTitle=$category->getTitle()}
 								{/if}
 								
 								{event name='itemButtons'}
 							</span>
 						</span>
 						
-						<ol class="categoryList sortableList" data-object-id="{@$category->categoryID}">{if !$categoryNodeList->current()->hasChildren()}</ol></li>{/if}
+						<ol class="categoryList sortableList jsObjectActionObjectChildren" data-object-id="{@$category->categoryID}">{if !$categoryNodeList->current()->hasChildren()}</ol></li>{/if}
 					{assign var=oldDepth value=$categoryNodeList->getDepth()}
 				{/foreach}
 				{section name=i loop=$oldDepth}</ol></li>{/section}

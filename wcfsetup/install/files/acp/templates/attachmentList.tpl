@@ -4,7 +4,6 @@
 {include file='imageViewer'}
 <script data-relocate="true">
 	$(function() {
-		new WCF.Action.Delete('wcf\\data\\attachment\\AttachmentAction', '.jsAttachmentRow');
 		new WCF.Search.User('#username', null, false, [ ], true);
 	});
 </script>
@@ -82,7 +81,7 @@
 
 {if $objects|count}
 	<div class="section tabularBox">
-		<table class="table">
+		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\attachment\AttachmentAction"
 			<thead>
 				<tr>
 					<th class="columnID columnAttachmentID{if $sortField == 'attachmentID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='AttachmentList'}pageNo={@$pageNo}&sortField=attachmentID&sortOrder={if $sortField == 'attachmentID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
@@ -98,9 +97,9 @@
 			
 			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=attachment}
-					<tr class="jsAttachmentRow">
+					<tr class="jsAttachmentRow jsObjectActionObject" data-object-id="{@$attachment->getObjectID()}">
 						<td class="columnIcon">
-							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$attachment->attachmentID}" data-confirm-message="{lang}wcf.attachment.delete.sure{/lang}"></span>
+							{objectAction action="delete" objectTitle=$attachment->filename|tableWordwrap}
 							
 							{event name='rowButtons'}
 						</td>

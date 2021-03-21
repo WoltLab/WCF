@@ -2,7 +2,6 @@
 
 <script data-relocate="true">
 	$(function() {
-		new WCF.Action.Delete('wcf\\data\\paid\\subscription\\user\\PaidSubscriptionUserAction', '.jsPaidSubscriptionUserRow');
 		new WCF.Search.User('#username');
 	});
 </script>
@@ -69,7 +68,7 @@
 
 {if $objects|count}
 	<div class="section tabularBox">
-		<table class="table">
+		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\paid\subscription\user\PaidSubscriptionUserAction"
 			<thead>
 				<tr>
 					<th class="columnID columnSubscriptionUserID{if $sortField == 'subscriptionUserID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='PaidSubscriptionUserList'}pageNo={@$pageNo}&sortField=subscriptionUserID&sortOrder={if $sortField == 'subscriptionUserID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
@@ -83,14 +82,14 @@
 			
 			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=subscriptionUser}
-					<tr class="jsPaidSubscriptionUserRow">
+					<tr class="jsPaidSubscriptionUserRow jsObjectActionObject" data-object-id="{@$subscriptionUser->getObjectID()}">
 						<td class="columnIcon">
 							{if $subscriptionUser->endDate}
 								<a href="{link controller='PaidSubscriptionUserEdit' id=$subscriptionUser->subscriptionUserID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 							{else}
 								<span class="icon icon16 fa-pencil disabled"></span>
 							{/if}
-							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$subscriptionUser->subscriptionUserID}" data-confirm-message-html="{lang __encode=true}wcf.acp.paidSubscription.user.delete.confirmMessage{/lang}"></span>
+							{objectAction action="delete" confirmMessage='wcf.acp.paidSubscription.user.delete.confirmMessage'}
 							
 							{event name='itemButtons'}
 						</td>
