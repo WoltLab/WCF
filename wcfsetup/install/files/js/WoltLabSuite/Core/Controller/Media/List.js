@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/Controller/Media/List
  */
-define(["require", "exports", "tslib", "../../Media/List/Upload", "../../Media/Clipboard", "../../Event/Handler", "../../Media/Editor", "../../Dom/Change/Listener", "../../Controller/Clipboard"], function (require, exports, tslib_1, Upload_1, MediaClipboard, EventHandler, Editor_1, DomChangeListener, Clipboard) {
+define(["require", "exports", "tslib", "../../Media/List/Upload", "../../Media/Clipboard", "../../Event/Handler", "../../Media/Editor", "../../Dom/Change/Listener"], function (require, exports, tslib_1, Upload_1, MediaClipboard, EventHandler, Editor_1, DomChangeListener) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.init = void 0;
@@ -15,7 +15,6 @@ define(["require", "exports", "tslib", "../../Media/List/Upload", "../../Media/C
     EventHandler = tslib_1.__importStar(EventHandler);
     Editor_1 = tslib_1.__importDefault(Editor_1);
     DomChangeListener = tslib_1.__importStar(DomChangeListener);
-    Clipboard = tslib_1.__importStar(Clipboard);
     const _mediaEditor = new Editor_1.default({
         _editorSuccess: (media, oldCategoryId) => {
             if (media.categoryID != oldCategoryId) {
@@ -50,24 +49,6 @@ define(["require", "exports", "tslib", "../../Media/List/Upload", "../../Media/C
             button.classList.remove("jsMediaEditButton");
             button.addEventListener("click", (ev) => edit(ev));
         });
-    }
-    /**
-     * Is triggered after media files have been deleted using the delete icon.
-     */
-    function deleteCallback(objectIds) {
-        const tableRowCount = _tableBody.getElementsByTagName("tr").length;
-        if (objectIds === undefined) {
-            if (!tableRowCount) {
-                window.location.reload();
-            }
-        }
-        else if (objectIds.length === tableRowCount) {
-            // table is empty, reload page
-            window.location.reload();
-        }
-        else {
-            Clipboard.reload();
-        }
     }
     /**
      * Is called when a media edit icon is clicked.

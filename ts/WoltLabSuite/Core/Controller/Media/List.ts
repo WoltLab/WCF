@@ -65,23 +65,6 @@ function addButtonEventListeners(): void {
 }
 
 /**
- * Is triggered after media files have been deleted using the delete icon.
- */
-function deleteCallback(objectIds?: number[]): void {
-  const tableRowCount = _tableBody.getElementsByTagName("tr").length;
-  if (objectIds === undefined) {
-    if (!tableRowCount) {
-      window.location.reload();
-    }
-  } else if (objectIds.length === tableRowCount) {
-    // table is empty, reload page
-    window.location.reload();
-  } else {
-    Clipboard.reload();
-  }
-}
-
-/**
  * Is called when a media edit icon is clicked.
  */
 function edit(event: Event): void {
