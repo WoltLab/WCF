@@ -108,6 +108,21 @@ HTML;
                 }
                 $title = StringUtil::encodeHTML($title);
 
+                if (isset($tagArgs['disableTitle'])) {
+                    $disableTitle = StringUtil::encodeHTML($language->getDynamicVariable($tagArgs['disableTitle']));
+                    $additionalAttributes .= 'data-disable-title="' . $disableTitle . '"';
+                    if (!$tagArgs['isDisabled']) {
+                        $title = $disableTitle;
+                    }
+                }
+                if (isset($tagArgs['enableTitle'])) {
+                    $enableTitle = StringUtil::encodeHTML($language->getDynamicVariable($tagArgs['enableTitle']));
+                    $additionalAttributes .= 'data-enable-title="' . $enableTitle . '"';
+                    if ($tagArgs['isDisabled']) {
+                        $title = $enableTitle;
+                    }
+                }
+
                 return <<<HTML
 <span class="icon icon16 {$icon} jsObjectAction jsTooltip pointer" title="{$title}" data-object-action="toggle"{$additionalAttributes}></span>
 HTML;
