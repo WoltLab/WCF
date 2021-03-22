@@ -18,17 +18,17 @@ use wcf\util\StringUtil;
  *      by the closest `jsObjectActionContainer` element)
  *  - attributes beginning with `parameter` are mapped to `data-object-action-parameter-*`
  *      attributes of the button
- * 
+ *
  * One of the following aguments for `delete` action is required:
  *  - `objectTitle`: name of the object used in the `wcf.global.button.delete.confirmMessage`
  *      confirmation language item
  *  - `confirmMessage`: confirmation message or confirmation language item
- * 
+ *
  * Arguments for `toggle` action:
  *  - `isDisabled` (required): indicates the current toggle state of the relevant object
  *  - `disableTitle`: title or language item with the title of the button for the disable action
  *  - `enableTitle`: title or language item with the title of the button for the enable action
- * 
+ *
  * Examples:
  *
  *  {objectAction action="delete" objectTitle=$object->getTitle()}
