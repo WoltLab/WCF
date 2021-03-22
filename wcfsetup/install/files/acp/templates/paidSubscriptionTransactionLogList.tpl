@@ -1,8 +1,8 @@
 {include file='header' pageTitle='wcf.acp.paidSubscription.transactionLog.list'}
 
 <script data-relocate="true">
-	$(function() {
-		new WCF.Search.User('#username');
+	require(['WoltLabSuite/Core/Ui/User/Search/Input'], (UiUserSearchInput) => {
+		new UiUserSearchInput(document.getElementById('username'));
 	});
 </script>
 

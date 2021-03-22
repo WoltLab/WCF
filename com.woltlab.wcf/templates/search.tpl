@@ -124,10 +124,9 @@
 </form>
 
 <script data-relocate="true">
-	$(function() {
-		new WCF.Search.User($('#searchAuthor'), function(data) {
-			$('#searchAuthor').val(data.label);//.focus();
-		});
+	// TODO: Dropdown is shown below the following checkboxes
+	require(['WoltLabSuite/Core/Ui/User/Search/Input'], (UiUserSearchInput) => {
+		new UiUserSearchInput(document.getElementById('searchAuthor'));
 	});
 </script>
 
