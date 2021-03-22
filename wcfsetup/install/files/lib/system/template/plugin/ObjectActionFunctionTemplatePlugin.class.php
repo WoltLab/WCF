@@ -10,7 +10,31 @@ use wcf\util\StringUtil;
  * Template function plugin which generate delete and toggle buttons for objects to be used in
  * combination with `WoltLabSuite/Core/Ui/Object/Action`.
  *
- * TODO: More information and examples
+ * Required argument: `action` with value `delete` or `toggle`.
+ * Optional arguments for all actions:
+ *  - `objectId` (to override the objectId set via the `data-object-id` attribute by the closest
+ *      `jsObjectActionObject` element)
+ *  - `className` (to override the objectId set via the `data-object-action-class-name` attribute
+ *      by the closest `jsObjectActionContainer` element)
+ *  - attributes beginning with `parameter` are mapped to `data-object-action-parameter-*`
+ *      attributes of the button
+ * 
+ * One of the following aguments for `delete` action is required:
+ *  - `objectTitle`: name of the object used in the `wcf.global.button.delete.confirmMessage`
+ *      confirmation language item
+ *  - `confirmMessage`: confirmation message or confirmation language item
+ * 
+ * Arguments for `toggle` action:
+ *  - `isDisabled` (required): indicates the current toggle state of the relevant object
+ *  - `disableTitle`: title or language item with the title of the button for the disable action
+ *  - `enableTitle`: title or language item with the title of the button for the enable action
+ * 
+ * Examples:
+ *
+ *  {objectAction action="delete" objectTitle=$object->getTitle()}
+ *  {objectAction action="delete" confirmMessage='wcf.foo.delete.confirmMessage' parameterFoo='bar'}
+ *  {objectAction action="toggle" isDisabled=$object->isDisabled}
+ *  {objectAction action="toggle" isDisabled=$object->isDisabled disableTitle='wcf.foo.button.disable' enableTitle='wcf.foo.button.enable'}
  *
  * @author  Matthias Schmidt
  * @copyright   2001-2021 WoltLab GmbH
