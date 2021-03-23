@@ -566,10 +566,10 @@ const UiDropdownSimple = {
   /**
    * Opens the dropdown unless it is already open.
    */
-  open(containerId: string, disableAutoFocus?: boolean): void {
+  open(containerId: string, disableAutoFocus?: boolean, referenceElement?: HTMLElement): void {
     const menu = _menus.get(containerId);
     if (menu !== undefined && !menu.classList.contains("dropdownOpen")) {
-      UiDropdownSimple.toggleDropdown(containerId, undefined, disableAutoFocus);
+      UiDropdownSimple.toggleDropdown(containerId, referenceElement, disableAutoFocus);
     }
   },
 

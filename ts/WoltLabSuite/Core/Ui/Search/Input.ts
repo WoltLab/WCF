@@ -288,10 +288,8 @@ class UiSearchInput {
 
     if (typeof data.returnValues === "object") {
       const callbackClick = this.clickSelectItem.bind(this);
-      let listItem;
-
       Object.keys(data.returnValues).forEach((key) => {
-        listItem = this.createListItem(data.returnValues[key]);
+        const listItem = this.createListItem(data.returnValues[key]);
 
         listItem.addEventListener("click", callbackClick);
         this.list!.appendChild(listItem);
@@ -312,7 +310,7 @@ class UiSearchInput {
       if (!this.list.childElementCount && !this.handleEmptyResult()) {
         UiDropdownSimple.close(this.dropdownContainerId);
       } else {
-        UiDropdownSimple.open(this.dropdownContainerId, true);
+        UiDropdownSimple.open(this.dropdownContainerId, true, this.element);
 
         // mark first item as active
         const firstChild = this.list.childElementCount ? (this.list.children[0] as HTMLLIElement) : undefined;

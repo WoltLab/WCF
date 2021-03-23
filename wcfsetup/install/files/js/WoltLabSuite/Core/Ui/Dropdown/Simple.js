@@ -472,10 +472,10 @@ define(["require", "exports", "tslib", "../../CallbackList", "../../Core", "../.
         /**
          * Opens the dropdown unless it is already open.
          */
-        open(containerId, disableAutoFocus) {
+        open(containerId, disableAutoFocus, referenceElement) {
             const menu = _menus.get(containerId);
             if (menu !== undefined && !menu.classList.contains("dropdownOpen")) {
-                UiDropdownSimple.toggleDropdown(containerId, undefined, disableAutoFocus);
+                UiDropdownSimple.toggleDropdown(containerId, referenceElement, disableAutoFocus);
             }
         },
         /**
