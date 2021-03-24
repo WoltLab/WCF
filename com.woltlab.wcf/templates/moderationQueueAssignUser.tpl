@@ -31,11 +31,14 @@
 		<button data-type="submit">{lang}wcf.global.button.submit{/lang}</button>
 	</div>
 </div>
-<script>
-	$(function() {
-		new WCF.Search.User('#assignedUsername');
-		$('#assignedUsername').click(function() {
-			$(this).parents('li').find('input[type=radio]').click();
+
+<script data-relocate="true">
+	require(['WoltLabSuite/Core/Ui/User/Search/Input'], (UiUserSearchInput) => {
+		const username = document.getElementById('assignedUsername');
+		new UiUserSearchInput(username);
+		
+		username.addEventListener('click', (event) => {
+			event.currentTarget.closest('li').querySelector('input[type=radio]').click();
 		});
 	});
 </script>

@@ -1,12 +1,13 @@
 {include file='header' pageTitle='wcf.acp.menu.link.userTrophy.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
+	require(['WoltLabSuite/Core/Ui/User/Search/Input'], (UiUserSearchInput) => {
+		new UiUserSearchInput(document.getElementById('username'));
+	});
+	
 	$(function() {
-		new WCF.Search.User('#username');
 		new WCF.Action.Delete('wcf\\data\\user\\trophy\\UserTrophyAction', '.userTrophyRow');
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

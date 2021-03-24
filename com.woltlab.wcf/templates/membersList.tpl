@@ -141,11 +141,15 @@
 		
 		new WCF.User.Action.Follow($('.userList > li'));
 		new WCF.User.Action.Ignore($('.userList > li'));
-		
-		new WCF.Search.User('#searchUsername', function(data) {
-			var $link = '{link controller='User' id=2147483646 title='wcfTitlePlaceholder' encode=false}{/link}';
-			window.location = $link.replace('2147483646', data.objectID).replace('wcfTitlePlaceholder', data.label);
-		}, false, [ ], false);
+	});
+	
+	require(['WoltLabSuite/Core/Ui/User/Search/Input'], (UiUserSearchInput) => {
+		new UiUserSearchInput(document.getElementById('searchUsername'), {
+			callbackSelect(item) {
+				const link = '{link controller='User' id=2147483646 title='wcftitleplaceholder' encode=false}{/link}';
+				window.location = link.replace('2147483646', item.dataset.objectId).replace('wcftitleplaceholder', item.dataset.label);
+			}
+		});
 	});
 </script>
 

@@ -3,7 +3,10 @@
 <script data-relocate="true">
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\paid\\subscription\\user\\PaidSubscriptionUserAction', '.jsPaidSubscriptionUserRow');
-		new WCF.Search.User('#username');
+	});
+	
+	require(['WoltLabSuite/Core/Ui/User/Search/Input'], (UiUserSearchInput) => {
+		new UiUserSearchInput(document.getElementById('username'));
 	});
 </script>
 
