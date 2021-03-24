@@ -1,11 +1,9 @@
 {include file='header' pageTitle='wcf.acp.menu.link.userTrophy.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
-	$(function() {
-		new WCF.Search.User('#username');
+	require(['WoltLabSuite/Core/Ui/User/Search/Input'], (UiUserSearchInput) => {
+		new UiUserSearchInput(document.getElementById('username'));
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">

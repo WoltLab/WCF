@@ -39,8 +39,8 @@
 </form>
 
 <script data-relocate="true">
-	$(function() {
-		new WCF.Search.User('#searchUsername', null, false, [ ], false);
+	require(['WoltLabSuite/Core/Ui/User/Search/Input'], (UiUserSearchInput) => {
+		new UiUserSearchInput(document.getElementById('searchUsername'));
 	});
 </script>
 

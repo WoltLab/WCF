@@ -59,6 +59,10 @@
 	<spider ident="AppleSyndication">
 		<name>Apple</name>
 	</spider>
+	<spider ident="Applebot">
+		<name>Applebot</name>
+		<url>https://support.apple.com/en-gb/HT204683</url>
+	</spider>
 	<spider ident="Arachnophilia">
 		<name>Arachnophilia</name>
 		<url>http://www.robotstxt.org/wc/active/html/arachnophilia.html</url>

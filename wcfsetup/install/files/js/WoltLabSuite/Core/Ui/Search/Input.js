@@ -242,9 +242,8 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
             }
             if (typeof data.returnValues === "object") {
                 const callbackClick = this.clickSelectItem.bind(this);
-                let listItem;
                 Object.keys(data.returnValues).forEach((key) => {
-                    listItem = this.createListItem(data.returnValues[key]);
+                    const listItem = this.createListItem(data.returnValues[key]);
                     listItem.addEventListener("click", callbackClick);
                     this.list.appendChild(listItem);
                 });
@@ -261,7 +260,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Core", "../../Dom/Ut
                     Simple_1.default.close(this.dropdownContainerId);
                 }
                 else {
-                    Simple_1.default.open(this.dropdownContainerId, true);
+                    Simple_1.default.open(this.dropdownContainerId, true, this.element);
                     // mark first item as active
                     const firstChild = this.list.childElementCount ? this.list.children[0] : undefined;
                     if (this.autoFocus && firstChild && ~~(firstChild.dataset.objectId || "")) {
