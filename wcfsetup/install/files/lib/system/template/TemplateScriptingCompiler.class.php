@@ -7,6 +7,7 @@ use wcf\system\template\plugin\ICompilerTemplatePlugin;
 use wcf\system\template\plugin\IPrefilterTemplatePlugin;
 use wcf\util\StringStack;
 use wcf\util\StringUtil;
+use wcf\system\event\EventHandler;
 
 /**
  * Compiles template sources into valid PHP code.
@@ -288,6 +289,12 @@ class TemplateScriptingCompiler
     protected $foreachLoops = [];
 
     /**
+     * source content of template for event modifications
+     * @var string
+     */
+    public $sourceContent;
+
+    /**
      * Creates a new TemplateScriptingCompiler object.
      *
      * @param TemplateEngine $template
@@ -316,6 +323,11 @@ class TemplateScriptingCompiler
      */
     public function compileString($identifier, $sourceContent, array $metaData = [], $isolated = false)
     {
+        $this->sourceContent = $sourceContent;
+        $data = [ 'metaData' => $metaData ]
+        EventHandler::getInstance()->fireAction($this, 'beforeCompile', $data);
+        $sourceContent = $this->sourceContent;
+
         $previousData = [];
         if ($isolated) {
             $previousData = [
