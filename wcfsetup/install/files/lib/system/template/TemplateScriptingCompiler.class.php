@@ -324,7 +324,10 @@ class TemplateScriptingCompiler
     public function compileString($identifier, $sourceContent, array $metaData = [], $isolated = false)
     {
         $this->sourceContent = $sourceContent;
-        $data = [ 'metaData' => $metaData ]
+        $data = [
+            'identifier' => $identifier,
+            'metaData' => $metaData
+        ];
         EventHandler::getInstance()->fireAction($this, 'beforeCompile', $data);
         $sourceContent = $this->sourceContent;
 
