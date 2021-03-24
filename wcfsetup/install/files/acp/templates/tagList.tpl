@@ -4,14 +4,7 @@
 	require(['WoltLabSuite/Core/Controller/Clipboard', 'Language'], function(ControllerClipboard, Language) {
 		Language.add('wcf.acp.tag.setAsSynonyms', '{jslang}wcf.acp.tag.setAsSynonyms{/jslang}');
 		
-		var deleteAction = new WCF.Action.Delete('wcf\\data\\tag\\TagAction', '.jsTagRow');
-		deleteAction.setCallback(ControllerClipboard.reload.bind(ControllerClipboard));
-		
-		WCF.Clipboard.init('wcf\\acp\\page\\TagListPage', {@$hasMarkedItems}, {
-			'com.woltlab.wcf.tag': {
-				'delete': deleteAction
-			}
-		});
+		WCF.Clipboard.init('wcf\\acp\\page\\TagListPage', {@$hasMarkedItems});
 		
 		new WCF.ACP.Tag.SetAsSynonymsHandler();
 	});
@@ -61,7 +54,7 @@
 
 {if $objects|count}
 	<div class="section tabularBox">
-		<table data-type="com.woltlab.wcf.tag" class="table jsClipboardContainer">
+		<table class="table jsClipboardContainer jsObjectActionContainer" data-type="com.woltlab.wcf.tag" data-object-action-class-name="wcf\data\tag\TagAction">
 			<thead>
 				<tr>
 					<th class="columnMark"><label><input type="checkbox" class="jsClipboardMarkAll"></label></th>
@@ -77,11 +70,11 @@
 			
 			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=tag}
-					<tr class="jsTagRow jsClipboardObject">
+					<tr class="jsTagRow jsClipboardObject jsObjectActionObject" data-object-id="{@$tag->tagID}">
 						<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$tag->tagID}"></td>
 						<td class="columnIcon">
 							<a href="{link controller='TagEdit' object=$tag}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$tag->tagID}" data-confirm-message-html="{lang __encode=true}wcf.acp.tag.delete.sure{/lang}"></span>
+							{objectAction action="delete" objectTitle=$tag->getTitle()}
 							
 							{event name='rowButtons'}
 						</td>

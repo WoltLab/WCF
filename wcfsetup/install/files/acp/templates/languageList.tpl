@@ -1,21 +1,5 @@
 {include file='header' pageTitle='wcf.acp.language.list'}
 
-<script data-relocate="true">
-	$(function() {
-		new WCF.Action.Delete('wcf\\data\\language\\LanguageAction', '.jsLanguageRow');
-		new WCF.Action.SimpleProxy({
-			action: 'setAsDefault',
-			className: 'wcf\\data\\language\\LanguageAction',
-			elements: $('.jsLanguageRow .jsSetAsDefaultButton')
-		}, {
-			success: function(data, statusText, jqXHR) {
-				window.location.reload();
-			}
-		});
-		new WCF.Action.Toggle('wcf\\data\\language\\LanguageAction', $('.jsLanguageRow'));
-	});
-</script>
-
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.language.list{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
@@ -39,7 +23,7 @@
 
 {if $objects|count}
 	<div id="userTableContainer" class="section tabularBox">
-		<table class="table">
+		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\language\LanguageAction">
 			<thead>
 				<tr>
 					<th class="columnID columnLanguageID{if $sortField == 'languageID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='LanguageList'}pageNo={@$pageNo}&sortField=languageID&sortOrder={if $sortField == 'languageID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
@@ -54,13 +38,13 @@
 			
 			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=language}
-					<tr class="jsLanguageRow">
+					<tr class="jsLanguageRow jsObjectActionObject" data-object-id="{@$language->getObjectID()}">
 						<td class="columnIcon">
 							<a href="{link controller='LanguageExport' id=$language->languageID}{/link}" title="{lang}wcf.acp.language.export{/lang}" class="jsTooltip"><span class="icon icon16 fa-download"></span></a>
 							
 							{if !$language->isDefault}
-								<span class="icon icon16 fa-{if !$language->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $language->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$language->languageID}"></span>
-								<span class="icon icon16 fa-check-circle jsSetAsDefaultButton jsTooltip pointer" title="{lang}wcf.acp.language.setAsDefault{/lang}" title="{lang}wcf.acp.language.setAsDefault{/lang}" data-object-id="{@$language->languageID}"></span>
+								{objectAction action="toggle" isDisabled=$language->isDisabled}
+								<span class="icon icon16 fa-check-circle jsObjectAction jsTooltip pointer" data-object-action="setAsDefault" data-object-action-success="reload" title="{lang}wcf.acp.language.setAsDefault{/lang}"></span>
 							{else}
 								<span class="icon icon16 fa-{if !$language->isDisabled}check-{/if}square-o disabled" title="{lang}wcf.global.button.{if $language->isDisabled}enable{else}disable{/if}{/lang}"></span>
 								<span class="icon icon16 fa-check-circle disabled" title="{lang}wcf.acp.language.setAsDefault{/lang}"></span>
@@ -69,7 +53,7 @@
 							<a href="{link controller='LanguageEdit' id=$language->languageID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 							
 							{if $language->isDeletable()}
-								<span class="icon icon16 fa-times jsTooltip jsDeleteButton pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$language->languageID}" data-confirm-message-html="{lang __encode=true}wcf.acp.language.delete.sure{/lang}"></span>
+								{objectAction action="delete" objectTitle=$language->languageName}
 							{else}
 								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 							{/if}

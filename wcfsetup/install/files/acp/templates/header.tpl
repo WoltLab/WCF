@@ -92,6 +92,7 @@
 				'wcf.global.button.close': '{jslang}wcf.global.button.close{/jslang}',
 				'wcf.global.button.collapsible': '{jslang}wcf.global.button.collapsible{/jslang}',
 				'wcf.global.button.delete': '{jslang}wcf.global.button.delete{/jslang}',
+				'wcf.button.delete.confirmMessage': '{jslang __literal=true}wcf.button.delete.confirmMessage{/jslang}',
 				'wcf.global.button.disable': '{jslang}wcf.global.button.disable{/jslang}',
 				'wcf.global.button.disabledI18n': '{jslang}wcf.global.button.disabledI18n{/jslang}',
 				'wcf.global.button.edit': '{jslang}wcf.global.button.edit{/jslang}',

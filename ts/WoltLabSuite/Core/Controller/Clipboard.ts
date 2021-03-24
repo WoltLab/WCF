@@ -18,55 +18,7 @@ import * as UiConfirmation from "../Ui/Confirmation";
 import UiDropdownSimple from "../Ui/Dropdown/Simple";
 import * as UiPageAction from "../Ui/Page/Action";
 import * as UiScreen from "../Ui/Screen";
-
-interface ClipboardOptions {
-  hasMarkedItems: boolean;
-  pageClassName: string;
-  pageObjectId?: number;
-}
-
-interface ContainerData {
-  checkboxes: HTMLCollectionOf<HTMLInputElement>;
-  element: HTMLElement;
-  markAll: HTMLInputElement | null;
-  markedObjectIds: Set<number>;
-}
-
-interface ItemData {
-  items: { [key: string]: ClipboardActionData };
-  label: string;
-  reloadPageOnSuccess: string[];
-}
-
-interface ClipboardActionData {
-  actionName: string;
-  internalData: ArbitraryObject;
-  label: string;
-  parameters: {
-    actionName?: string;
-    className?: string;
-    objectIDs: number[];
-    template: string;
-  };
-  url: string;
-}
-
-interface AjaxResponseMarkedItems {
-  [key: string]: number[];
-}
-
-interface AjaxResponse {
-  actionName: string;
-  returnValues: {
-    action: string;
-    items?: {
-      // They key is the `typeName`
-      [key: string]: ItemData;
-    };
-    markedItems?: AjaxResponseMarkedItems;
-    objectType: string;
-  };
-}
+import { ClipboardOptions, ContainerData, ClipboardActionData, AjaxResponse } from "./Clipboard/Data";
 
 const _specialCheckboxSelector =
   '.messageCheckboxLabel > input[type="checkbox"], .message .messageClipboardCheckbox > input[type="checkbox"], .messageGroupList .columnMark > label > input[type="checkbox"]';

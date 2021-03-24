@@ -524,6 +524,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				if (attachmentData.tinyURL) {
 					$li.children('.fa-spinner').replaceWith($('<img src="' + attachmentData.tinyURL + '" alt="" class="attachmentTinyThumbnail" />'));
 					
+					$li.addClass('jsObjectActionObject');
 					$li.data('height', attachmentData.height);
 					$li.data('width', attachmentData.width);
 					elData($li[0], 'is-image', attachmentData.isImage);
@@ -548,7 +549,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				
 				// init buttons
 				var $buttonList = $li.find('ul').addClass('buttonGroup');
-				var $deleteButton = $('<li><span class="button small jsDeleteButton" data-object-id="' + attachmentData.attachmentID + '" data-confirm-message="' + WCF.Language.get('wcf.attachment.delete.sure') + '" data-event-name="attachment">' + WCF.Language.get('wcf.global.button.delete') + '</span></li>');
+				var $deleteButton = $('<li><span class="button small jsObjectAction" data-object-action="delete" data-confirm-message="' + WCF.Language.get('wcf.attachment.delete.sure') + '" data-event-name="attachment">' + WCF.Language.get('wcf.global.button.delete') + '</span></li>');
 				$buttonList.append($deleteButton);
 				
 				$li.data('objectID', attachmentData.attachmentID);

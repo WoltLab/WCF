@@ -37,7 +37,6 @@
 		<item name="wcf.acp.ad.conditions.pointInTime.description"><![CDATA[Sets the point in time at which the ad is displayed.]]></item>
 		<item name="wcf.acp.ad.conditions.user"><![CDATA[Active user]]></item>
 		<item name="wcf.acp.ad.conditions.user.description"><![CDATA[The active user has to fulfill the following conditions to see the ad.]]></item>
-		<item name="wcf.acp.ad.delete.confirmMessage"><![CDATA[Do you really want to delete the ad <span class="confirmationObject">{$ad->adName}</span>?]]></item>
 		<item name="wcf.acp.ad.edit"><![CDATA[Edit Ad]]></item>
 		<item name="wcf.acp.ad.isDisabled"><![CDATA[Disable Ad]]></item>
 		<item name="wcf.acp.ad.list"><![CDATA[Ads]]></item>
@@ -140,7 +139,6 @@
 		<item name="wcf.acp.bbcode.buttonLabel"><![CDATA[Button Label]]></item>
 		<item name="wcf.acp.bbcode.className"><![CDATA[PHP Class Name]]></item>
 		<item name="wcf.acp.bbcode.className.error.notFound"><![CDATA[Unable to find specified class.]]></item>
-		<item name="wcf.acp.bbcode.delete.sure"><![CDATA[Do you really want to delete the BBCode <span class="confirmationObject">[{$bbcode->bbcodeTag}]</span>?]]></item>
 		<item name="wcf.acp.bbcode.edit"><![CDATA[Edit BBCode]]></item>
 		<item name="wcf.acp.bbcode.htmlClose"><![CDATA[Closing HTML tag]]></item>
 		<item name="wcf.acp.bbcode.htmlOpen"><![CDATA[Opening HTML tag]]></item>
@@ -152,7 +150,6 @@
 		<item name="wcf.acp.bbcode.mediaProvider.add"><![CDATA[Add Media Provider]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.className"><![CDATA[PHP Class Name]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.className.error.notFound"><![CDATA[Unable to find specified class.]]></item>
-		<item name="wcf.acp.bbcode.mediaProvider.delete.sure"><![CDATA[Do you really want to delete the media provider <span class="confirmationObject">{$mediaProvider->title}</span>?]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.edit"><![CDATA[Edit Media Provider]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.html"><![CDATA[HTML Code]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.html.description"><![CDATA[{literal}Enter the media’s HTML code here. Variables are recognized as <kbd>{$variable}</kbd> and will be replaced with the regular expression’s matching named group.<br>
@@ -176,7 +173,6 @@
 		<item name="wcf.acp.box.content"><![CDATA[Content]]></item>
 		<item name="wcf.acp.box.contents"><![CDATA[Contents]]></item>
 		<item name="wcf.acp.box.cssClassName"><![CDATA[CSS Class Name]]></item>
-		<item name="wcf.acp.box.delete.confirmMessage"><![CDATA[Do you really want to delete the box <span class="confirmationObject">{$box->name}</span>?]]></item>
 		<item name="wcf.acp.box.edit"><![CDATA[Edit Box]]></item>
 		<item name="wcf.acp.box.image"><![CDATA[Box Image]]></item>
 		<item name="wcf.acp.box.i18n"><![CDATA[Multilingualism]]></item>
@@ -276,7 +272,6 @@
 		<item name="wcf.acp.captcha.question.answers"><![CDATA[Answers]]></item>
 		<item name="wcf.acp.captcha.question.answers.description"><![CDATA[Answers beginning and ending with “~” will be interpreted as regular expressions. Enter one answer per line.]]></item>
 		<item name="wcf.acp.captcha.question.answers.error.invalidRegex"><![CDATA[The regular expression “{$invalidRegex}” is invalid.]]></item>
-		<item name="wcf.acp.captcha.question.delete.confirmMessage"><![CDATA[Do you really want to delete the question <span class="confirmationObject">{$question->getQuestion()}</span>?]]></item>
 		<item name="wcf.acp.captcha.question.edit"><![CDATA[Edit Captcha Question]]></item>
 		<item name="wcf.acp.captcha.question.isDisabled"><![CDATA[Disable Captcha Question]]></item>
 		<item name="wcf.acp.captcha.question.list"><![CDATA[Captcha Questions]]></item>
@@ -310,7 +305,6 @@
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Run Cronjob]]></item>
 		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[Unable to find the specified class.]]></item>
 		<item name="wcf.acp.cronjob.timing.error.invalid"><![CDATA[Invalid time format.]]></item>
-		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[Do you really want to delete the cronjob <span class="confirmationObject">{$cronjob->getDescription()}</span>?]]></item>
 		<item name="wcf.acp.cronjob.log"><![CDATA[Cronjob Log]]></item>
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Clear Protocol]]></item>
 		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[Do you really want to clear the cronjob log?]]></item>
@@ -381,7 +375,6 @@
 	<category name="wcf.acp.devtools">
 		<item name="wcf.acp.devtools.project.add"><![CDATA[Add Project]]></item>
 		<item name="wcf.acp.devtools.project.edit"><![CDATA[Edit Project]]></item>
-		<item name="wcf.acp.devtools.project.delete.confirmMessage"><![CDATA[Do you really want to delete the project <span class="confirmationObject">{$object->name}</span>?]]></item>
 		<item name="wcf.acp.devtools.project.introduction"><![CDATA[Please read the <a href="https://docs.woltlab.com/getting-started_quick-start.html#developer-tools" class="externalURL">usage instructions</a> in the developer documentation.]]></item>
 		<item name="wcf.acp.devtools.project.list"><![CDATA[Projects]]></item>
 		<item name="wcf.acp.devtools.project.name"><![CDATA[Name]]></item>
@@ -657,7 +650,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 	</category>
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Add User Group]]></item>
-		<item name="wcf.acp.group.delete.sure"><![CDATA[Do you really want to delete the user group <span class="confirmationObject">{$group->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.group.edit"><![CDATA[Edit User Group]]></item>
 		<item name="wcf.acp.group.option.editingOption"><![CDATA[Edit User Group Option]]></item>
 		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[Warning! You are a member of this user group, any changes could result in yourself being locked out of the Administration Control Panel.]]></item>
@@ -810,7 +802,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.group.assignment.button.list"><![CDATA[Automatic Assignments]]></item>
 		<item name="wcf.acp.group.assignment.conditions"><![CDATA[Conditions]]></item>
 		<item name="wcf.acp.group.assignment.conditions.description"><![CDATA[The users need to fulfill the following conditions to automatically be added to the user group.]]></item>
-		<item name="wcf.acp.group.assignment.delete.confirmMessage"><![CDATA[Do you really want to delete the automatic user group assignment <span class="confirmationObject">{$assignment->title}</span>?]]></item>
 		<item name="wcf.acp.group.assignment.edit"><![CDATA[Edit User Group Automatic Assignment]]></item>
 		<item name="wcf.acp.group.assignment.error.noConditions"><![CDATA[You have not provided any conditions yet.]]></item>
 		<item name="wcf.acp.group.assignment.list"><![CDATA[Automatic User Group Assignments]]></item>
@@ -946,13 +937,11 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.label.cssClassName"><![CDATA[CSS Class Name]]></item>
 		<item name="wcf.acp.label.cssClassName.error.invalid"><![CDATA[The entered CSS class name is invalid.]]></item>
 		<item name="wcf.acp.label.defaultValue"><![CDATA[Label]]></item>
-		<item name="wcf.acp.label.delete.sure"><![CDATA[Do you really want to delete the label <span class="confirmationObject">{$label}</span>?]]></item>
 		<item name="wcf.acp.label.edit"><![CDATA[Edit Label]]></item>
 		<item name="wcf.acp.label.error.noGroups"><![CDATA[Please <a href="{link controller='LabelGroupAdd'}{/link}">add a label group</a> before creating labels.]]></item>
 		<item name="wcf.acp.label.group"><![CDATA[Label Group]]></item>
 		<item name="wcf.acp.label.group.add"><![CDATA[Add Label Group]]></item>
 		<item name="wcf.acp.label.group.category.connect"><![CDATA[Availability]]></item>
-		<item name="wcf.acp.label.group.delete.sure"><![CDATA[Do you really want to delete the label group <span class="confirmationObject">{$group->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.label.group.edit"><![CDATA[Edit Label Group]]></item>
 		<item name="wcf.acp.label.group.error.invalid"><![CDATA[The selected label group is invalid.]]></item>
 		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Force selection of a label]]></item>
@@ -976,7 +965,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.language.countryCode"><![CDATA[ISO Country-Code]]></item>
 		<item name="wcf.acp.language.countryCode.description"><![CDATA[Please enter the <strong>ISO 3166-1</strong> country code, you can look up the country code at <a href="https://en.wikipedia.org/wiki/ISO_3166-1" class="externalURL">https://en.wikipedia.org/wiki/ISO_3166-1</a>.]]></item>
 		<item name="wcf.acp.language.customVariables"><![CDATA[Custom Phrases]]></item>
-		<item name="wcf.acp.language.delete.sure"><![CDATA[Do you really want to delete the language <span class="confirmationObject">{$language->languageName}</span>?]]></item>
 		<item name="wcf.acp.language.edit"><![CDATA[Edit Language]]></item>
 		<item name="wcf.acp.language.export"><![CDATA[Export Language]]></item>
 		<item name="wcf.acp.language.export.allPackages"><![CDATA[All Packages]]></item>
@@ -1164,12 +1152,10 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.menu.link.article.category.add"><![CDATA[Add Category]]></item>
 		<item name="wcf.acp.menu.link.maintenance.sitemap"><![CDATA[Sitemaps]]></item>
 		<item name="wcf.acp.menu.add"><![CDATA[Add Menu]]></item>
-		<item name="wcf.acp.menu.delete.confirmMessage"><![CDATA[Do you really want to delete the menu <span class="confirmationObject">{$menu->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.menu.edit"><![CDATA[Edit Menu]]></item>
 		<item name="wcf.acp.menu.list"><![CDATA[Menus]]></item>
 		<item name="wcf.acp.menu.item.add"><![CDATA[Add Menu Item]]></item>
 		<item name="wcf.acp.menu.item.action.description"><![CDATA[Menu: {$menu->getTitle()}]]></item>
-		<item name="wcf.acp.menu.item.delete.confirmMessage"><![CDATA[Do you really want to delete the menu item <span class="confirmationObject">{$menuItemNode->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.menu.item.edit"><![CDATA[Edit Menu Item]]></item>
 		<item name="wcf.acp.menu.item.externalURL"><![CDATA[External URL]]></item>
 		<item name="wcf.acp.menu.item.isDisabled"><![CDATA[Disable menu item]]></item>
@@ -1235,7 +1221,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.notice.conditions.pointInTime.description"><![CDATA[Sets the point in time at which the notice is displayed.]]></item>
 		<item name="wcf.acp.notice.conditions.user"><![CDATA[Active user]]></item>
 		<item name="wcf.acp.notice.conditions.user.description"><![CDATA[The active user has to fulfill the following conditions to view the notice.]]></item>
-		<item name="wcf.acp.notice.delete.confirmMessage"><![CDATA[Do you really want to delete the notice <span class="confirmationObject">{$notice->noticeName}</span>?]]></item>
 		<item name="wcf.acp.notice.edit"><![CDATA[Edit Notice]]></item>
 		<item name="wcf.acp.notice.example"><![CDATA[Example text of a notice]]></item>
 		<item name="wcf.acp.notice.isDisabled"><![CDATA[Disable notice]]></item>
@@ -1791,7 +1776,6 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.customOption.edit"><![CDATA[Edit Option Field]]></item>
 		<item name="wcf.acp.customOption.error.validationFailed"><![CDATA[You have entered an invalid value.]]></item>
 		<item name="wcf.acp.customOption.showOrder"><![CDATA[Display Order]]></item>
-		<item name="wcf.acp.customOption.delete.confirmMessage"><![CDATA[Do you really want to delete the option field <span class="confirmationObject">{$option->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.customOption.defaultValue"><![CDATA[Default Value]]></item>
 		<item name="wcf.acp.customOption.defaultValue.description"><![CDATA[Default option value suggested on initial request.]]></item>
 		<item name="wcf.acp.customOption.typeData"><![CDATA[Properties]]></item>
@@ -2027,7 +2011,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.paidSubscription.user.add"><![CDATA[Manually Add Subscription]]></item>
 		<item name="wcf.acp.paidSubscription.user.edit"><![CDATA[Edit Active Subscription]]></item>
 		<item name="wcf.acp.paidSubscription.error.noPaymentMethods"><![CDATA[Adding subscriptions requires at least one active payment provider for the “Supported Payment Methods” option.]]></item>
-		<item name="wcf.acp.paidSubscription.delete.confirmMessage"><![CDATA[Do you really want to delete the paid subscription <span class="confirmationObject">{$subscription->title|language}</span>?]]></item>
 	</category>
 	<category name="wcf.acp.pluginStore">
 		<item name="wcf.acp.pluginStore.api.error"><![CDATA[Error {@$status}: The server was unable to process your request.]]></item>
@@ -2571,7 +2554,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.option.optionName.error.pattern"><![CDATA[The option name must consist of lowercase latin letters, digits and underscores only. The first and last character must be letters.]]></item>
 	</category>
 	<category name="wcf.acp.reactionType">
-		<item name="wcf.acp.reactionType.delete.confirmMessage"><![CDATA[Do you really want to delete the reaction type <span class="confirmationObject">{$reactionType->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.reactionType.type"><![CDATA[Reaction Type]]></item>
 		<item name="wcf.acp.reactionType.image"><![CDATA[Reaction File]]></item>
 		<item name="wcf.acp.reactionType.showOrder.description"><![CDATA[The reaction type will be shown after the selected reaction type.]]></item>
@@ -2734,7 +2716,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	</category>
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Add Server]]></item>
-		<item name="wcf.acp.updateServer.delete.sure"><![CDATA[Do you really want to delete the server <span class="confirmationObject">{$updateServer->serverURL}</span>?]]></item>
 		<item name="wcf.acp.updateServer.edit"><![CDATA[Edit Server]]></item>
 		<item name="wcf.acp.updateServer.errorMessage"><![CDATA[Error Message]]></item>
 		<item name="wcf.acp.updateServer.list"><![CDATA[Package Servers]]></item>
@@ -2765,7 +2746,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	</category>
 	<category name="wcf.acp.smiley">
 		<item name="wcf.acp.smiley.list"><![CDATA[Smilies]]></item>
-		<item name="wcf.acp.smiley.delete.sure"><![CDATA[Do you really want to delete the smiley <span class="confirmationObject">{$smiley->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.smiley.add"><![CDATA[Add Smiley]]></item>
 		<item name="wcf.acp.smiley.edit"><![CDATA[Edit Smiley]]></item>
 		<item name="wcf.acp.smiley.title"><![CDATA[Title]]></item>
@@ -2930,7 +2910,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	<category name="wcf.acp.tag">
 		<item name="wcf.acp.tag.add"><![CDATA[Add Tag]]></item>
 		<item name="wcf.acp.tag.edit"><![CDATA[Edit Tag]]></item>
-		<item name="wcf.acp.tag.delete.sure"><![CDATA[Do you really want to delete the tag <span class="confirmationObject">{$tag}</span>?]]></item>
 		<item name="wcf.acp.tag.error.languageID.notFound"><![CDATA[Selected language is invalid.]]></item>
 		<item name="wcf.acp.tag.languageID"><![CDATA[Language]]></item>
 		<item name="wcf.acp.tag.list"><![CDATA[Tags]]></item>
@@ -2969,11 +2948,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.template.group.folderName.error.invalid"><![CDATA[The specified directory is invalid.]]></item>
 		<item name="wcf.acp.template.group.folderName.error.notUnique"><![CDATA[The specified directory is already in use by another template group.]]></item>
 		<item name="wcf.acp.template.group.parentTemplateGroupID.error.invalid"><![CDATA[The specified Parent Template Group is invalid.]]></item>
-		<item name="wcf.acp.template.group.delete.sure"><![CDATA[Do you really want to remove the template group <span class="confirmationObject">{$templateGroup->getName()}</span>?]]></item>
 		<item name="wcf.acp.template.source"><![CDATA[Template Source Code]]></item>
 		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[This name is already taken by a different template.]]></item>
 		<item name="wcf.acp.template.name.error.invalid"><![CDATA[The specified name is invalid.]]></item>
-		<item name="wcf.acp.template.delete.sure"><![CDATA[Do you really want to delete the template <span class="confirmationObject">{$template->templateName}</span>?]]></item>
 	</category>
 	<category name="wcf.acp.user">
 		<item name="wcf.acp.user.add"><![CDATA[Add User]]></item>
@@ -2990,7 +2967,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.user.ban"><![CDATA[Ban]]></item>
 		<item name="wcf.acp.user.unban"><![CDATA[Unban]]></item>
 		<item name="wcf.acp.user.ban.sure"><![CDATA[Do you really want to ban this user?]]></item>
-		<item name="wcf.acp.user.delete.sure"><![CDATA[Do you really want to delete the user <span class="confirmationObject">{$user->username}</span>?]]></item>
 		<item name="wcf.acp.user.edit"><![CDATA[Edit User]]></item>
 		<item name="wcf.acp.user.edit.warning.selfEdit"><![CDATA[Warning! You are editing your user account, any changes could result in yourself being locked out of the Administration Control Panel.]]></item>
 		<item name="wcf.acp.user.exportEmailAddress"><![CDATA[Export Email Addresses]]></item>
@@ -3044,14 +3020,12 @@ You can define the default sender in “Configuration » Options » General » E
 		<item name="wcf.acp.user.option.access"><![CDATA[Access]]></item>
 		<item name="wcf.acp.user.option.add"><![CDATA[Add Custom User Field]]></item>
 		<item name="wcf.acp.user.option.category.add"><![CDATA[Add Custom User Field Category]]></item>
-		<item name="wcf.acp.user.option.category.delete.sure"><![CDATA[Do you really want to delete the category <span class="confirmationObject">{$category->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.user.option.category.edit"><![CDATA[Edit Custom User Field Category]]></item>
 		<item name="wcf.acp.user.option.category.options"><![CDATA[Fields]]></item>
 		<item name="wcf.acp.user.option.category.list"><![CDATA[Custom User Field Categories]]></item>
 		<item name="wcf.acp.user.option.categoryName"><![CDATA[Category]]></item>
 		<item name="wcf.acp.user.option.defaultValue"><![CDATA[Default Value]]></item>
 		<item name="wcf.acp.user.option.defaultValue.description"><![CDATA[Default option value suggested on first edit.]]></item>
-		<item name="wcf.acp.user.option.delete.sure"><![CDATA[Do you really want to delete the field <span class="confirmationObject">{$option->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.user.option.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.user.option.edit"><![CDATA[Edit Custom User Field]]></item>
 		<item name="wcf.acp.user.option.editable"><![CDATA[Editable by]]></item>
@@ -3099,7 +3073,6 @@ You can define the default sender in “Configuration » Options » General » E
 		<item name="wcf.acp.user.rank.cssClassName.description"><![CDATA[You can select a predefined appearance or provide your own <abbr title="Cascading Style Sheets">CSS</abbr> class name.]]></item>
 		<item name="wcf.acp.user.rank.cssClassName.error.invalid"><![CDATA[The entered CSS class name is invalid.]]></item>
 		<item name="wcf.acp.user.rank.currentImage"><![CDATA[Current Rank Image]]></item>
-		<item name="wcf.acp.user.rank.delete.sure"><![CDATA[Do you really want to delete the user rank <span class="confirmationObject">{$userRank->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.user.rank.edit"><![CDATA[Edit User Rank]]></item>
 		<item name="wcf.acp.user.rank.hideTitle"><![CDATA[Hide title]]></item>
 		<item name="wcf.acp.user.rank.hideTitle.description"><![CDATA[Hides the title of this rank. Does not work for users that have an individual title set.]]></item>
@@ -3306,6 +3279,9 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.bbcode.spoiler.text"><![CDATA[(Hidden Content)]]></item>
 		<item name="wcf.bbcode.spoiler.simplified"><![CDATA[(Hidden Content)]]></item>
 	</category>
+	<category name="wcf.button">
+		<item name="wcf.button.delete.confirmMessage"><![CDATA[Do you really want to delete <strong>{$objectTitle}</strong>?]]></item>
+	</category>
 	<category name="wcf.captcha">
 		<item name="wcf.captcha.useNoCaptcha"><![CDATA[(No Captcha)]]></item>
 		<item name="wcf.captcha.com.woltlab.wcf.recaptcha"><![CDATA[reCAPTCHA]]></item>
@@ -3487,7 +3463,6 @@ Attachments:
 		<item name="wcf.acp.contact.option.edit"><![CDATA[Edit Input Field]]></item>
 		<item name="wcf.acp.contact.recipients"><![CDATA[Recipients]]></item>
 		<item name="wcf.acp.contact.recipient.add"><![CDATA[Add Recipient]]></item>
-		<item name="wcf.acp.contact.recipient.delete.confirmMessage"><![CDATA[Do you really want to delete the recipient <span class="confirmationObject">{$recipient}</span>?]]></item>
 		<item name="wcf.acp.contact.recipient.edit"><![CDATA[Edit Recipient]]></item>
 		<item name="wcf.acp.contact.recipient.isDisabled"><![CDATA[Disable recipient]]></item>
 		<item name="wcf.acp.contact.recipient.name"><![CDATA[Display Name]]></item>
@@ -4376,7 +4351,6 @@ Attachments:
 		<item name="wcf.acp.page.customURL"><![CDATA[Custom URL]]></item>
 		<item name="wcf.acp.page.customURL.error.invalid"><![CDATA[URL is invalid. You may use letters a-z/A-Z, numbers, dashes, underscores and forward slashes.]]></item>
 		<item name="wcf.acp.page.customURL.error.notUnique"><![CDATA[URL is already in use.]]></item>
-		<item name="wcf.acp.page.delete.confirmMessage"><![CDATA[Do you really want to delete the page <span class="confirmationObject">{$page->name}</span>?]]></item>
 		<item name="wcf.acp.page.edit"><![CDATA[Edit Page]]></item>
 		<item name="wcf.acp.page.i18n"><![CDATA[Multilingualism]]></item>
 		<item name="wcf.acp.page.i18n.i18n"><![CDATA[Multilingual page]]></item>
@@ -5054,7 +5028,6 @@ You also received a list of emergency codes to use when your second factor becom
 		<item name="wcf.acp.trophy.conditions"><![CDATA[Conditions]]></item>
 		<item name="wcf.acp.trophy.conditions.description"><![CDATA[The users need to fulfill the following conditions to automatically be awarded with the trophy.]]></item>
 		<item name="wcf.acp.trophy.conditions.error.noConditions"><![CDATA[You have not provided any conditions yet.]]></item>
-		<item name="wcf.acp.trophy.delete.confirmMessage"><![CDATA[Do you really want to delete the trophy <span class="confirmationObject">{$trophy->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.trophy.userTrophy.user"><![CDATA[User]]></item>
 		<item name="wcf.acp.trophy.userTrophy.user.description"><![CDATA[Enter the names of the users who should be awarded the trophy.]]></item>
 		<item name="wcf.acp.trophy.userTrophy.user.error.notFound"><![CDATA[The username “{$errorData[username]}” does not exist.]]></item>

@@ -1,11 +1,5 @@
 {include file='header' pageTitle='wcf.acp.template.group.list'}
 
-<script data-relocate="true">
-	$(function() {
-		new WCF.Action.Delete('wcf\\data\\template\\group\\TemplateGroupAction', '.jsTemplateGroupRow');
-	});
-</script>
-
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.template.group.list{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
@@ -28,7 +22,7 @@
 
 {if $objects|count}
 	<div id="templateGroupTableContainer" class="section tabularBox">
-		<table class="table">
+		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\template\group\TemplateGroupAction">
 			<thead>
 				<tr>
 					<th class="columnID columnTemplateGroupID{if $sortField == 'templateGroupID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='TemplateGroupList'}pageNo={@$pageNo}&sortField=templateGroupID&sortOrder={if $sortField == 'templateGroupID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
@@ -43,7 +37,7 @@
 			
 			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=templateGroup}
-					<tr class="jsTemplateGroupRow">
+					<tr class="jsTemplateGroupRow jsObjectActionObject" data-object-id="{@$templateGroup->getObjectID()}">
 						<td class="columnIcon">
 							{if $templateGroup->isImmutable()}
 								<span class="icon icon16 fa-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>
@@ -56,7 +50,7 @@
 							{if $templateGroup->isImmutable()}
 								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 							{else}
-								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$templateGroup->templateGroupID}" data-confirm-message-html="{lang __encode=true}wcf.acp.template.group.delete.sure{/lang}"></span>
+								{objectAction action="delete" objectTitle=$templateGroup->getName()}
 							{/if}
 							
 							{event name='rowButtons'}

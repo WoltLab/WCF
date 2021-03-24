@@ -1,11 +1,5 @@
 {include file='header' pageTitle='wcf.acp.group.list'}
 
-<script data-relocate="true">
-	$(function() {
-		new WCF.Action.Delete('wcf\\data\\user\\group\\UserGroupAction', '.jsUserGroupRow');
-	});
-</script>
-
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.group.list{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
@@ -33,7 +27,7 @@
 {/hascontent}
 
 <div class="section tabularBox">
-	<table class="table">
+	<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\user\group\UserGroupAction">
 		<thead>
 			<tr>
 				<th class="columnID columnGroupID{if $sortField == 'groupID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='UserGroupList'}pageNo={@$pageNo}&sortField=groupID&sortOrder={if $sortField == 'groupID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
@@ -47,7 +41,7 @@
 		
 		<tbody class="jsReloadPageWhenEmpty">
 			{foreach from=$objects item=group}
-				<tr id="groupContainer{@$group->groupID}" class="jsUserGroupRow">
+				<tr id="groupContainer{@$group->groupID}" class="jsUserGroupRow jsObjectActionObject" data-object-id="{@$group->getObjectID()}">
 					<td class="columnIcon">
 						{if $group->isEditable()}
 							<a href="{link controller='UserGroupEdit' id=$group->groupID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
@@ -55,7 +49,7 @@
 							<span class="icon icon16 fa-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>
 						{/if}
 						{if $group->isDeletable()}
-							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$group->groupID}" data-confirm-message-html="{lang __encode=true}wcf.acp.group.delete.sure{/lang}"></span>
+							{objectAction action="delete" objectTitle=$group->getTitle()}
 						{else}
 							<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 						{/if}

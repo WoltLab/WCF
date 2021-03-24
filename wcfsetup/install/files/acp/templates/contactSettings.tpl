@@ -13,14 +13,6 @@
 			isSimpleSorting: true
 		});
 	});
-	
-	$(function() {
-		new WCF.Action.Delete('wcf\\data\\contact\\option\\ContactOptionAction', '.jsOptionRow');
-		new WCF.Action.Toggle('wcf\\data\\contact\\option\\ContactOptionAction', $('.jsOptionRow'));
-		
-		new WCF.Action.Delete('wcf\\data\\contact\\recipient\\ContactRecipientAction', '.jsRecipient');
-		new WCF.Action.Toggle('wcf\\data\\contact\\recipient\\ContactRecipientAction', '.jsRecipient');
-	});
 </script>
 
 <header class="contentHeader">
@@ -42,7 +34,7 @@
 	<h2 class="sectionTitle">{lang}wcf.acp.contact.options{/lang}</h2>
 	
 	<div id="optionList" class="sortableListContainer">
-		<table class="table">
+		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\contact\option\ContactOptionAction">
 			<thead>
 				<tr>
 					<th class="columnID columnOptionID" colspan="2">{lang}wcf.global.objectID{/lang}</th>
@@ -56,12 +48,12 @@
 			
 			<tbody class="sortableList" data-object-id="0">
 				{foreach from=$optionList item=option}
-					<tr class="sortableNode jsOptionRow" data-object-id="{@$option->optionID}">
+					<tr class="sortableNode jsOptionRow jsObjectActionObject" data-object-id="{@$option->optionID}">
 						<td class="columnIcon">
-							<span class="icon icon16 fa-{if !$option->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $option->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$option->optionID}"></span>
+							{objectAction action="toggle" isDisabled=$option->isDisabled}
 							<a href="{link controller='ContactOptionEdit' id=$option->optionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 							{if $option->canDelete()}
-								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$option->optionID}" data-confirm-message-html="{lang __encode=true}wcf.acp.customOption.delete.confirmMessage{/lang}"></span>
+								{objectAction action="delete" objectTitle=$option->getTitle()}
 							{else}
 								<span class="icon icon16 fa-times disabled"></span>
 							{/if}
@@ -89,20 +81,20 @@
 	<h2 class="sectionTitle">{lang}wcf.acp.contact.recipients{/lang}</h2>
 	
 	<div id="recipientList" class="sortableListContainer">
-		<ol class="sortableList" data-object-id="0">
+		<ol class="sortableList jsObjectActionContainer" data-object-id="0" data-object-action-class-name="wcf\data\contact\recipient\ContactRecipientAction">
 			{foreach from=$recipientList item=recipient}
-				<li class="sortableNode sortableNoNesting jsRecipient" data-object-id="{@$recipient->recipientID}">
+				<li class="sortableNode sortableNoNesting jsRecipient jsObjectActionObject" data-object-id="{@$recipient->recipientID}">
 					<span class="sortableNodeLabel">
 						<a href="{link controller='ContactRecipientEdit' id=$recipient->recipientID}{/link}">{$recipient}</a>
 						
 						<span class="statusDisplay sortableButtonContainer">
 							<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
-							<span class="icon icon16 fa-{if !$recipient->isDisabled}check-square-o{else}square-o{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $recipient->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$recipient->recipientID}"></span>
+							{objectAction action="toggle" isDisabled=$recipient->isDisabled}
 							<a href="{link controller='ContactRecipientEdit' id=$recipient->recipientID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 fa-pencil"></a>
 							{if $recipient->originIsSystem}
 								<span class="icon icon16 fa-times disabled"></span>
 							{else}
-								<span title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton jsTooltip icon icon16 fa-times pointer" data-object-id="{@$recipient->recipientID}" data-confirm-message-html="{lang __encode=true}wcf.acp.contact.recipient.delete.confirmMessage{/lang}">
+								{objectAction action="delete" objectTitle=$recipient->getName()}
 							{/if}
 							
 							{event name='itemButtons'}

@@ -124,7 +124,7 @@ define(["require", "exports", "tslib", "./Content/Remove/Handler", "../../../Aja
             const items = [];
             let deleteButton = null;
             Array.from(legacyButtonContainer.children).forEach((button) => {
-                if (button.classList.contains("jsDeleteButton")) {
+                if (button.classList.contains("jsObjectAction") && button.dataset.objectAction === "delete") {
                     deleteButton = button;
                     return;
                 }

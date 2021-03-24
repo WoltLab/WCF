@@ -1,12 +1,5 @@
 {include file='header' pageTitle='wcf.acp.box.list'}
 
-<script data-relocate="true">
-	$(function() {
-		new WCF.Action.Delete('wcf\\data\\box\\BoxAction', '.jsBoxRow');
-		new WCF.Action.Toggle('wcf\\data\\box\\BoxAction', '.jsBoxRow');
-	});
-</script>
-
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.box.list{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
@@ -107,7 +100,7 @@
 
 {if $objects|count}
 	<div class="section tabularBox">
-		<table class="table">
+		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\box\BoxAction">
 			<thead>
 				<tr>
 					<th class="columnID columnBoxID{if $sortField == 'boxID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='BoxList'}pageNo={@$pageNo}&sortField=boxID&sortOrder={if $sortField == 'boxID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
@@ -122,12 +115,12 @@
 			
 			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=box}
-					<tr class="jsBoxRow">
+					<tr class="jsBoxRow jsObjectActionObject" data-object-id="{@$box->getObjectID()}">
 						<td class="columnIcon">
-							<span class="icon icon16 fa-{if !$box->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$box->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$box->boxID}"></span>
+							{objectAction action="toggle" isDisabled=$box->isDisabled}
 							<a href="{link controller='BoxEdit' id=$box->boxID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 							{if $box->canDelete()}
-								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$box->boxID}" data-confirm-message-html="{lang __encode=true}wcf.acp.box.delete.confirmMessage{/lang}"></span>
+								{objectAction action="delete" objectTitle=$box->name}
 							{else}
 								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 							{/if}

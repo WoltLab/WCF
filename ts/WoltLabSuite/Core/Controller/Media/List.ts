@@ -12,7 +12,6 @@ import * as MediaClipboard from "../../Media/Clipboard";
 import * as EventHandler from "../../Event/Handler";
 import MediaEditor from "../../Media/Editor";
 import * as DomChangeListener from "../../Dom/Change/Listener";
-import * as Clipboard from "../../Controller/Clipboard";
 import { Media, MediaUploadSuccessEventData } from "../../Media/Data";
 import MediaManager from "../../Media/Manager/Base";
 
@@ -45,13 +44,6 @@ export function init(options: MediaListOptions): void {
     clipboardDeleteMedia: (mediaIds: number[]) => clipboardDeleteMedia(mediaIds),
   } as MediaManager);
 
-  EventHandler.add("com.woltlab.wcf.media.upload", "removedErroneousUploadRow", () => deleteCallback());
-
-  // eslint-disable-next-line
-  //@ts-ignore
-  const deleteAction = new WCF.Action.Delete("wcf\\data\\media\\MediaAction", ".jsMediaRow");
-  deleteAction.setCallback(deleteCallback);
-
   addButtonEventListeners();
 
   DomChangeListener.add("WoltLabSuite/Core/Controller/Media/List", () => addButtonEventListeners());
@@ -69,23 +61,6 @@ function addButtonEventListeners(): void {
     button.classList.remove("jsMediaEditButton");
     button.addEventListener("click", (ev) => edit(ev));
   });
-}
-
-/**
- * Is triggered after media files have been deleted using the delete icon.
- */
-function deleteCallback(objectIds?: number[]): void {
-  const tableRowCount = _tableBody.getElementsByTagName("tr").length;
-  if (objectIds === undefined) {
-    if (!tableRowCount) {
-      window.location.reload();
-    }
-  } else if (objectIds.length === tableRowCount) {
-    // table is empty, reload page
-    window.location.reload();
-  } else {
-    Clipboard.reload();
-  }
 }
 
 /**

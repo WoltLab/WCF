@@ -1,11 +1,5 @@
 {include file='header' pageTitle='wcf.acp.bbcode.list'}
 
-<script data-relocate="true">
-	$(function() {
-		new WCF.Action.Delete('wcf\\data\\bbcode\\BBCodeAction', '.jsBBCodeRow');
-	});
-</script>
-
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.bbcode.list{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
@@ -28,7 +22,7 @@
 
 {if $objects|count}
 	<div class="section tabularBox">
-		<table class="table">
+		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\bbcode\BBCodeAction">
 			<thead>
 				<tr>
 					<th class="columnID columnBBCodeID{if $sortField == 'bbcodeID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='BBCodeList'}pageNo={@$pageNo}&sortField=bbcodeID&sortOrder={if $sortField == 'bbcodeID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
@@ -41,11 +35,11 @@
 			
 			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=bbcode}
-					<tr class="jsBBCodeRow">
+					<tr class="jsBBCodeRow jsObjectActionObject" data-object-id="{@$bbcode->getObjectID()}">
 						<td class="columnIcon">
 							<a href="{link controller='BBCodeEdit' object=$bbcode}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 							{if $bbcode->canDelete()}
-								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$bbcode->bbcodeID}" data-confirm-message-html="{lang __encode=true}wcf.acp.bbcode.delete.sure{/lang}"></span>
+								{objectAction action="delete" objectTitle=$bbcode->getTitle()}
 							{else}
 								<span class="icon icon16 fa-times disabled"></span>
 							{/if}

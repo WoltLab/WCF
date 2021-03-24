@@ -31,7 +31,7 @@
 
 {if $items}
 	<div id="missingLanguageItemTable" class="section tabularBox">
-		<table class="table">
+		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\devtools\missing\language\item\DevtoolsMissingLanguageItemAction">
 			<thead>
 				<tr>
 					<th class="columnID{if $sortField === 'itemID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='DevtoolsMissingLanguageItemList'}sortField=itemID&sortOrder={if $sortField === 'itemID' && $sortOrder === 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
@@ -45,9 +45,9 @@
 			
 			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=logEntry}
-					<tr class="jsObjectRow">
+					<tr class="jsObjectRow jsObjectActionObject" data-object-id="{@$logEntry->getObjectID()}">
 						<td class="columnIcon">
-							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$logEntry->getObjectID()}" data-confirm-message-html="{lang __encode=true}wcf.acp.devtools.missingLanguageItem.delete.confirmMessage{/lang}"></span>
+							{objectAction action="delete" confirmMessage='wcf.acp.devtools.missingLanguageItem.delete.confirmMessage'}
 							<span class="icon icon16 fa-align-justify jsStackTraceButton jsTooltip pointer" title="{lang}wcf.acp.devtools.missingLanguageItem.showStackTrace{/lang}" data-stack-trace="{$logEntry->getStackTrace()}"></span>
 						</td>
 						<td class="columnID">{@$logEntry->getObjectID()}</td>
@@ -87,8 +87,6 @@
 			});
 			
 			new UiDevtoolsMissingLanguageItemList.default();
-			
-			new WCF.Action.Delete('wcf\\data\\devtools\\missing\\language\\item\\DevtoolsMissingLanguageItemAction', '.jsObjectRow');
 		});
 	</script>
 {else}

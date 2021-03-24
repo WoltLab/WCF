@@ -1,10 +1,11 @@
 <ul id="{@$field->getPrefixedID()}_attachmentList" {*
-	*}class="formAttachmentList"{*
+	*}class="formAttachmentList jsObjectActionContainer" {*
+	*}data-object-action-class-name="wcf\data\attachment\AttachmentAction"{*
 	*}{if !$field->getAttachmentHandler()->getAttachmentList()|count} style="display: none"{/if}{*
 *}>
 	{foreach from=$field->getAttachmentHandler()->getAttachmentList() item=$attachment}
-		<li class="box64" {*
-			*}data-object-id="{@$attachment->attachmentID}" {*
+		<li class="box64 jsObjectActionObject" {*
+			*}data-object-id="{@$attachment->getObjectID()}" {*
 			*}data-height="{@$attachment->height}" {*
 			*}data-width="{@$attachment->width}" {*
 			*}data-is-image="{@$attachment->isImage}"{*
@@ -22,7 +23,7 @@
 				</div>
 				
 				<ul class="buttonGroup">
-					<li><span class="button small jsDeleteButton" data-object-id="{@$attachment->attachmentID}" data-confirm-message="{lang}wcf.attachment.delete.sure{/lang}">{lang}wcf.global.button.delete{/lang}</span></li>
+					<li><span class="button small jsObjectAction" data-object-action="delete" data-confirm-message="{lang}wcf.attachment.delete.sure{/lang}">{lang}wcf.global.button.delete{/lang}</span></li>
 					{if $attachment->isImage}
 						{if $attachment->thumbnailType}
 							<li><span class="button small jsButtonAttachmentInsertThumbnail" data-object-id="{@$attachment->attachmentID}" data-url="{$attachment->getThumbnailLink('thumbnail')}">{lang}wcf.attachment.insertThumbnail{/lang}</span></li>
@@ -64,7 +65,6 @@
 			{@$field->getAttachmentHandler()->getMaxCount()},
 			'{@$field->getPrefixedWysiwygId()}'
 		);
-		new WCF.Action.Delete('wcf\\data\\attachment\\AttachmentAction', '.formAttachmentList > li');
 	});
 </script>
 

@@ -106,7 +106,7 @@
 {/hascontent}
 
 <div class="section tabularBox"{if !$objects|count} style="display: none;{/if}">
-	<table class="table jsClipboardContainer" data-type="com.woltlab.wcf.media">
+	<table class="table jsClipboardContainer jsObjectActionContainer" data-object-action-class-name="wcf\data\media\MediaAction" data-type="com.woltlab.wcf.media">
 		<thead>
 			<tr>
 				<th class="columnMark"><label><input type="checkbox" class="jsClipboardMarkAll"></label></th>
@@ -122,13 +122,13 @@
 			</tr>
 		</thead>
 		
-		<tbody id="mediaListTableBody" data-no-items-info="noItemsInfo">
+		<tbody class="jsReloadPageWhenEmpty" id="mediaListTableBody" data-no-items-info="noItemsInfo">
 			{foreach from=$objects item=media}
-				<tr class="jsMediaRow jsClipboardObject">
+				<tr class="jsMediaRow jsClipboardObject jsObjectActionObject" data-object-id="{@$media->getObjectID()}">
 					<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$media->mediaID}"></td>
 					<td class="columnIcon">
 						<span class="icon icon16 fa-pencil mediaEditButton jsMediaEditButton jsTooltip pointer" title="{lang}wcf.global.button.edit{/lang}" data-object-id="{@$media->mediaID}"></span>
-						<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$media->mediaID}" data-confirm-message-html="{lang title=$media->filename __encode=true}wcf.media.delete.confirmMessage{/lang}"></span>
+						{objectAction action="delete" objectTitle=$media->filename}
 						
 						{event name='rowButtons'}
 					</td>
@@ -152,11 +152,11 @@
 					{event name='columns'}
 				</tr>
 			{foreachelse}
-				<tr class="jsMediaRow jsClipboardObject">
+				<tr class="jsMediaRow jsClipboardObject jsObjectActionObject" data-object-id="0">
 					<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="0"></td>
 					<td class="columnIcon">
 						<span class="icon icon16 fa-pencil mediaEditButton jsMediaEditButton jsTooltip pointer" title="{lang}wcf.global.button.edit{/lang}" data-object-id="0"></span>
-						<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="0"></span>
+						{objectAction action="delete" confirmMessage=""}
 						
 						{event name='rowButtons'}
 					</td>

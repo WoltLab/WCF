@@ -140,10 +140,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
                     this._upload = new Upload_1.default(DomUtil.identify(uploadButton), DomUtil.identify(this._mediaManagerMediaList), {
                         mediaManager: this,
                     });
-                    // eslint-disable-next-line
-                    //@ts-ignore
-                    const deleteAction = new WCF.Action.Delete("wcf\\data\\media\\MediaAction", ".mediaFile");
-                    deleteAction._didTriggerEffect = (element) => this.removeMedia(element[0].dataset.objectId);
+                    EventHandler.add("WoltLabSuite/Core/Ui/Object/Action", "delete", (data) => this.removeMedia(~~data.objectElement.dataset.objectId));
                 }
                 if (Permission.get("admin.content.cms.canManageMedia") || this._forceClipboard) {
                     MediaClipboard.init("menuManagerDialog-" + this.getMode(), this._hadInitiallyMarkedItems ? true : false, this);
@@ -359,7 +356,7 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
                     this._listItems.get(mediaId).remove();
                 }
                 catch (e) {
-                    // ignore errors if item has already been removed like by WCF.Action.Delete
+                    // ignore errors if item has already been removed by other code
                 }
                 this._listItems.delete(mediaId);
                 this._media.delete(mediaId);
@@ -424,11 +421,11 @@ define(["require", "exports", "tslib", "../../Core", "../../Language", "../../Pe
           <span class="invisible">${Language.get("wcf.global.button.edit")}</span>
         </a>`;
                 const deleteButton = document.createElement("li");
-                deleteButton.className = "jsDeleteButton";
-                deleteButton.dataset.objectId = media.mediaID.toString();
+                deleteButton.classList.add("jsObjectAction");
+                deleteButton.dataset.objectAction = "delete";
                 // use temporary title to not unescape html in filename
                 const uuid = Core.getUuid();
-                deleteButton.dataset.confirmMessageHtml = StringUtil.unescapeHTML(Language.get("wcf.media.delete.confirmMessage", {
+                deleteButton.dataset.confirmMessage = StringUtil.unescapeHTML(Language.get("wcf.media.delete.confirmMessage", {
                     title: uuid,
                 })).replace(uuid, StringUtil.escapeHTML(media.filename));
                 buttons.appendChild(deleteButton);

@@ -13,24 +13,6 @@
 			}
 		});
 	});
-	
-	$(function() {
-		new WCF.Action.Toggle('wcf\\data\\menu\\item\\MenuItemAction', '.sortableNode', '> .sortableNodeLabel .jsToggleButton');
-		
-		var deleteAction = new WCF.Action.Delete('wcf\\data\\menu\\item\\MenuItemAction', '.sortableNode', '> .sortableNodeLabel .jsDeleteButton');
-		var mpTriggerEffect = deleteAction.triggerEffect;
-		deleteAction.triggerEffect = function (objectIDs) {
-			// move children up by one
-			objectIDs.forEach(function (objectId) {
-				var item = elBySel('#menuItemList li[data-object-id="' + objectId + '"]');
-				elBySelAll('.sortableList[data-object-id="' + objectId + '"] > li', item, function(childItem) {
-					item.parentNode.insertBefore(childItem, item);
-				});
-			});
-			
-			mpTriggerEffect.call(deleteAction, objectIDs);
-		};
-	});
 </script>
 
 <header class="contentHeader">
@@ -51,22 +33,22 @@
 
 {hascontent}
 	<div id="menuItemList" class="section sortableListContainer">
-		<ol class="sortableList jsReloadPageWhenEmpty" data-object-id="0">
+		<ol class="sortableList jsReloadPageWhenEmpty jsObjectActionContainer" data-object-action-class-name="wcf\data\menu\item\MenuItemAction" data-object-id="0">
 			{content}
 				{foreach from=$menuItemNodeList item=menuItemNode}
-					<li class="sortableNode" data-object-id="{@$menuItemNode->itemID}">
+					<li class="sortableNode jsObjectActionObject" data-object-id="{@$menuItemNode->getObjectID()}">
 						<span class="sortableNodeLabel">
 							<a href="{link controller='MenuItemEdit' id=$menuItemNode->itemID}{/link}">{$menuItemNode->getTitle()}</a>
 							<span class="statusDisplay sortableButtonContainer">
 								<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
 								{if $menuItemNode->canDisable()}
-									<span class="icon icon16 fa-{if !$menuItemNode->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $menuItemNode->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$menuItemNode->itemID}"></span>
+									{objectAction action="toggle" isDisabled=$menuItemNode->isDisabled}
 								{else}
 									<span class="icon icon16 fa-{if !$menuItemNode->isDisabled}check-{/if}square-o disabled" title="{lang}wcf.global.button.{if $menuItemNode->isDisabled}enable{else}disable{/if}{/lang}"></span>
 								{/if}
 								<a href="{link controller='MenuItemEdit' id=$menuItemNode->itemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><span class="icon icon16 fa-pencil"></span></a>
 								{if $menuItemNode->canDelete()}
-									<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$menuItemNode->itemID}" data-confirm-message-html="{lang __encode=true}wcf.acp.menu.item.delete.confirmMessage{/lang}"></span>
+									{objectAction action="delete" objectTitle=$menuItemNode->getTitle()}
 								{else}
 									<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 								{/if}
@@ -75,7 +57,7 @@
 							</span>
 						</span>
 					
-						<ol class="sortableList" data-object-id="{@$menuItemNode->itemID}">{if !$menuItemNode->hasChildren()}</ol></li>{/if}
+						<ol class="sortableList jsObjectActionObjectChildren" data-object-id="{@$menuItemNode->itemID}">{if !$menuItemNode->hasChildren()}</ol></li>{/if}
 						
 						{if !$menuItemNode->hasChildren() && $menuItemNode->isLastSibling()}
 							{@"</ol></li>"|str_repeat:$menuItemNode->getOpenParentNodes()}

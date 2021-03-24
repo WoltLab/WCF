@@ -12,9 +12,9 @@
 
 {if $objects|count}
 	<div class="section sectionContainerList">
-		<ol class="containerList userList jsReloadPageWhenEmpty">
+		<ol class="containerList userList jsReloadPageWhenEmpty jsObjectActionContainer" data-object-action-class-name="wcf\data\user\ignore\UserIgnoreAction">
 			{foreach from=$objects item=user}
-				<li class="jsIgnoredUser">
+				<li class="jsIgnoredUser jsObjectActionObject" data-object-id="{@$user->getObjectID()}">
 					<div class="box48">
 						{user object=$user type='avatar48' ariaHidden='true' tabindex='-1'}
 						
@@ -23,7 +23,7 @@
 							
 							<nav class="jsMobileNavigation buttonGroupNavigation">
 								<ul class="buttonList iconList jsOnly">
-									<li><a class="pointer jsTooltip jsDeleteButton" title="{lang}wcf.user.button.unignore{/lang}" data-object-id="{@$user->ignoreID}"><span class="icon icon16 fa-times"></span> <span class="invisible">{lang}wcf.user.button.unignore{/lang}</span></a></li>
+									<li><a class="pointer jsTooltip jsObjectAction" data-object-action="delete" title="{lang}wcf.user.button.unignore{/lang}" data-object-id="{@$user->ignoreID}"><span class="icon icon16 fa-times"></span> <span class="invisible">{lang}wcf.user.button.unignore{/lang}</span></a></li>
 									{event name='userButtons'}
 								</ul>
 							</nav>
@@ -56,11 +56,5 @@
 {else}
 	<p class="info" role="status">{lang}wcf.user.ignoredUsers.noUsers{/lang}</p>
 {/if}
-
-<script data-relocate="true">
-	$(function() {
-		new WCF.Action.Delete('wcf\\data\\user\\ignore\\UserIgnoreAction', '.jsIgnoredUser');
-	});
-</script>
 
 {include file='footer'}

@@ -152,7 +152,7 @@ class AcpUiUserEditor {
     const items: HTMLLIElement[] = [];
     let deleteButton: HTMLAnchorElement | null = null;
     Array.from(legacyButtonContainer.children).forEach((button: HTMLAnchorElement) => {
-      if (button.classList.contains("jsDeleteButton")) {
+      if (button.classList.contains("jsObjectAction") && button.dataset.objectAction === "delete") {
         deleteButton = button;
 
         return;

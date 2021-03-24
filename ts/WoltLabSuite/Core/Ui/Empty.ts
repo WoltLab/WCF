@@ -36,6 +36,7 @@ function observeElements(): void {
     });
   });
 }
+
 export function setup(): void {
   observeElements();
   DomChangeListener.add("WoltLabSuite/Core/Ui/Empty", () => observeElements());

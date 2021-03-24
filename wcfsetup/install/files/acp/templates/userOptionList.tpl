@@ -1,12 +1,5 @@
 {include file='header' pageTitle='wcf.acp.user.option.list'}
 
-<script data-relocate="true">
-	$(function() {
-		new WCF.Action.Delete('wcf\\data\\user\\option\\UserOptionAction', '.jsOptionRow');
-		new WCF.Action.Toggle('wcf\\data\\user\\option\\UserOptionAction', $('.jsOptionRow'));
-	});
-</script>
-
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.user.option.list{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
@@ -29,7 +22,7 @@
 
 {if $objects|count}
 	<div class="section tabularBox">
-		<table class="table">
+		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\user\option\UserOptionAction">
 			<thead>
 				<tr>
 					<th class="columnID columnOptionID{if $sortField == 'optionID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='UserOptionList'}pageNo={@$pageNo}&sortField=optionID&sortOrder={if $sortField == 'optionID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
@@ -44,12 +37,12 @@
 			
 			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=option}
-					<tr class="jsOptionRow">
+					<tr class="jsOptionRow jsObjectActionObject" data-object-id="{@$option->getObjectID()}">
 						<td class="columnIcon">
-							<span class="icon icon16 fa-{if !$option->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $option->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$option->optionID}"></span>
+							{objectAction action="toggle" isDisabled=$option->isDisabled}
 							<a href="{link controller='UserOptionEdit' id=$option->optionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 							{if $option->canDelete()}
-								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$option->optionID}" data-confirm-message-html="{lang __encode=true}wcf.acp.user.option.delete.sure{/lang}"></span>
+								{objectAction action="delete" objectTitle=$option->getTitle()}
 							{else}
 								<span class="icon icon16 fa-times disabled"></span>
 							{/if}

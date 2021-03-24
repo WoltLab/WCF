@@ -1,12 +1,5 @@
 {include file='header' pageTitle='wcf.acp.paidSubscription.list'}
 
-<script data-relocate="true">
-	$(function() {
-		new WCF.Action.Delete('wcf\\data\\paid\\subscription\\PaidSubscriptionAction', '.jsPaidSubscriptionRow');
-		new WCF.Action.Toggle('wcf\\data\\paid\\subscription\\PaidSubscriptionAction', '.jsPaidSubscriptionRow');
-	});
-</script>
-
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.paidSubscription.list{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
@@ -29,7 +22,7 @@
 
 {if $objects|count}
 	<div class="section tabularBox">
-		<table class="table">
+		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\paid\subscription\PaidSubscriptionAction">
 			<thead>
 				<tr>
 					<th class="columnID columnSubscriptionID{if $sortField == 'subscriptionID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='PaidSubscriptionList'}pageNo={@$pageNo}&sortField=subscriptionID&sortOrder={if $sortField == 'subscriptionID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
@@ -44,11 +37,11 @@
 			
 			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=subscription}
-					<tr class="jsPaidSubscriptionRow">
+					<tr class="jsPaidSubscriptionRow jsObjectActionObject" data-object-id="{@$subscription->getObjectID()}">
 						<td class="columnIcon">
-							<span class="icon icon16 fa-{if !$subscription->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$subscription->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$subscription->subscriptionID}"></span>
+							{objectAction action="toggle" isDisabled=$subscription->isDisabled}
 							<a href="{link controller='PaidSubscriptionEdit' id=$subscription->subscriptionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$subscription->subscriptionID}" data-confirm-message-html="{lang __encode=true}wcf.acp.paidSubscription.delete.confirmMessage{/lang}"></span>
+							{objectAction action="delete" objectTitle=$subscription->getTitle()}
 							<a href="{link controller='PaidSubscriptionUserAdd' id=$subscription->subscriptionID}{/link}" title="{lang}wcf.acp.paidSubscription.user.add{/lang}" class="jsTooltip"><span class="icon icon16 fa-plus"></span></a>
 							
 							{event name='itemButtons'}

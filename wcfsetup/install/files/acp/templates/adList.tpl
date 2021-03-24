@@ -8,11 +8,6 @@
 			offset: {@$startIndex}
 		});
 	});
-	
-	$(function() {
-		new WCF.Action.Delete('wcf\\data\\ad\\AdAction', '.jsAd');
-		new WCF.Action.Toggle('wcf\\data\\ad\\AdAction', '.jsAd');
-	});
 </script>
 
 <header class="contentHeader">
@@ -37,17 +32,17 @@
 
 {if $objects|count}
 	<div class="section sortableListContainer" id="adList">
-		<ol class="sortableList jsReloadPageWhenEmpty" data-object-id="0" start="{@($pageNo - 1) * $itemsPerPage + 1}">
+		<ol class="sortableList jsObjectActionContainer jsReloadPageWhenEmpty" data-object-id="0" start="{@($pageNo - 1) * $itemsPerPage + 1}" data-object-action-class-name="wcf\data\ad\AdAction">
 			{foreach from=$objects item='ad'}
-				<li class="sortableNode sortableNoNesting jsAd" data-object-id="{@$ad->adID}">
+				<li class="sortableNode sortableNoNesting jsAd jsObjectActionObject" data-object-id="{@$ad->adID}">
 					<span class="sortableNodeLabel">
 						<a href="{link controller='AdEdit' object=$ad}{/link}">{$ad->adName}</a>
 						
 						<span class="statusDisplay sortableButtonContainer">
 							<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
-							<span class="icon icon16 fa-{if !$ad->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $ad->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$ad->adID}"></span>
+							{objectAction action="toggle" isDisabled=$ad->isDisabled}
 							<a href="{link controller='AdEdit' object=$ad}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$ad->adID}" data-confirm-message-html="{lang __encode=true}wcf.acp.ad.delete.confirmMessage{/lang}"></span>
+							{objectAction action="delete" objectTitle=$ad->getTitle()}
 							
 							{event name='itemButtons'}
 						</span>

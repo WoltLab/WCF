@@ -1,10 +1,6 @@
 {include file='header' pageTitle='wcf.acp.user.rank.list'}
 
 <script data-relocate="true">
-	$(function() {
-		new WCF.Action.Delete('wcf\\data\\user\\rank\\UserRankAction', '.jsUserRankRow');
-	});
-	
 	require(['Language', 'Ui/Notification', 'WoltLabSuite/Core/Acp/Ui/Worker'], function (Language, UiNotification, AcpUiWorker) {
 		Language.add('wcf.acp.worker.abort.confirmMessage', '{jslang}wcf.acp.worker.abort.confirmMessage{/jslang}');
 		
@@ -44,7 +40,7 @@
 
 {if $objects|count}
 	<div class="section tabularBox">
-		<table class="table">
+		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\user\rank\UserRankAction">
 			<thead>
 				<tr>
 					<th class="columnID columnRankID{if $sortField == 'rankID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='UserRankList'}pageNo={@$pageNo}&sortField=rankID&sortOrder={if $sortField == 'rankID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
@@ -60,10 +56,10 @@
 			
 			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=userRank}
-					<tr class="jsUserRankRow">
+					<tr class="jsUserRankRow jsObjectActionObject" data-object-id="{@$userRank->getObjectID()}">
 						<td class="columnIcon">
 							<a href="{link controller='UserRankEdit' id=$userRank->rankID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$userRank->rankID}" data-confirm-message-html="{lang __encode=true}wcf.acp.user.rank.delete.sure{/lang}"></span>
+							{objectAction action="delete" objectTitle=$userRank->getTitle()}
 							
 							{event name='rowButtons'}
 						</td>

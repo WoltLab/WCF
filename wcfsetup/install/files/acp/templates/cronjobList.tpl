@@ -2,9 +2,6 @@
 
 <script data-relocate="true">
 	$(function() {
-		new WCF.Action.Delete('wcf\\data\\cronjob\\CronjobAction', '.jsCronjobRow');
-		new WCF.Action.Toggle('wcf\\data\\cronjob\\CronjobAction', '.jsCronjobRow');
-		
 		new WCF.ACP.Cronjob.ExecutionHandler();
 	});
 </script>
@@ -32,7 +29,7 @@
 
 {hascontent}
 	<div class="section tabularBox">
-		<table class="table">
+		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\cronjob\CronjobAction">
 			<thead>
 				<tr>
 					<th class="columnID columnCronjobID{if $sortField == 'cronjobID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='CronjobList'}pageNo={@$pageNo}&sortField=cronjobID&sortOrder={if $sortField == 'cronjobID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
@@ -51,12 +48,12 @@
 			<tbody class="jsReloadPageWhenEmpty">
 				{content}
 					{foreach from=$objects item=cronjob}
-						<tr class="jsCronjobRow">
+						<tr class="jsCronjobRow jsObjectActionObject" data-object-id="{@$cronjob->getObjectID()}">
 							<td class="columnIcon">
 								<span class="icon icon16 fa-play jsExecuteButton jsTooltip pointer" title="{lang}wcf.acp.cronjob.execute{/lang}" data-object-id="{@$cronjob->cronjobID}"></span>
 								
 								{if $cronjob->canBeDisabled()}
-									<span class="icon icon16 fa-{if !$cronjob->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$cronjob->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$cronjob->cronjobID}"></span>
+									{objectAction action="toggle" isDisabled=$cronjob->isDisabled}
 								{else}
 									{if !$cronjob->isDisabled}
 										<span class="icon icon16 fa-check-square-o disabled" title="{lang}wcf.global.button.disable{/lang}"></span>
@@ -71,7 +68,7 @@
 									<span class="icon icon16 fa-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>
 								{/if}
 								{if $cronjob->isDeletable()}
-									<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$cronjob->cronjobID}" data-confirm-message-html="{lang __encode=true}wcf.acp.cronjob.delete.sure{/lang}"></span>
+									{objectAction action="delete" objectTitle=$cronjob->getDescription()}
 								{else}
 									<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 								{/if}

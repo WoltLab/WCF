@@ -1,10 +1,6 @@
 {include file='header' pageTitle='wcf.acp.devtools.project.list'}
 
 <script data-relocate="true">
-	$(function() {
-		new WCF.Action.Delete('wcf\\data\\devtools\\project\\DevtoolsProjectAction', '.jsObjectRow');
-	});
-	
 	require(['WoltLabSuite/Core/Acp/Ui/Devtools/Project/QuickSetup', 'Language'], function(AcpUiDevtoolsProjectQuickSetup, Language) {
 		Language.add('wcf.acp.devtools.project.quickSetup', '{jslang}wcf.acp.devtools.project.quickSetup{/jslang}');
 		
@@ -31,7 +27,7 @@
 
 {hascontent}
 	<div class="section tabularBox">
-		<table class="table">
+		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\devtools\project\DevtoolsProjectAction">
 			<thead>
 				<tr>
 					<th class="columnID{if $sortField === 'projectID'} active {@$sortOrder}{/if}" colspan="3"><a href="{link controller='DevtoolsProjectList'}sortField=projectID&sortOrder={if $sortField === 'projectID' && $sortOrder === 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
@@ -45,14 +41,14 @@
 			<tbody>
 				{content}
 					{foreach from=$objects item=object}
-						<tr class="jsObjectRow">
+						<tr class="jsObjectRow jsObjectActionObject" data-object-id="{@$object->getObjectID()}">
 							<td class="columnIcon">
 								<a href="{link controller='DevtoolsProjectSync' id=$object->getObjectID()}{/link}" class="button small">{lang}wcf.acp.devtools.project.sync{/lang}</a>
 								<a href="{link controller='DevtoolsProjectPipList' id=$object->getObjectID()}{/link}" class="button small">{lang}wcf.acp.devtools.project.pips{/lang}</a>
 							</td>
 							<td class="columnIcon">
 								<a href="{link controller='DevtoolsProjectEdit' id=$object->getObjectID()}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$object->getObjectID()}" data-confirm-message-html="{lang __encode=true}wcf.acp.devtools.project.delete.confirmMessage{/lang}"></span>
+								{objectAction action="delete" objectTitle=$object->name}
 							</td>
 							<td class="columnID">{@$object->getObjectID()}</td>
 							<td class="columnText"><a href="{link controller='DevtoolsProjectEdit' id=$object->getObjectID()}{/link}">{$object->name}</a></td>

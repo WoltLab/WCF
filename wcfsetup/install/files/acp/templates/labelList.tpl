@@ -1,10 +1,6 @@
 {include file='header' pageTitle='wcf.acp.label.list'}
 
 <script data-relocate="true">
-	$(function() {
-		new WCF.Action.Delete('wcf\\data\\label\\LabelAction', '.jsLabelRow');
-	});
-	
 	{if $labelGroup && !$labelSearch && !$cssClassName && $items > 1}
 		require(['WoltLabSuite/Core/Ui/Sortable/List'], function (UiSortableList) {
 			new UiSortableList({
@@ -94,7 +90,7 @@
 
 {if $objects|count}
 	<div id="labelTableContainer" class="section tabularBox{if $labelGroup && !$labelSearch && !$cssClassName && $items > 1} sortableListContainer{/if}">
-		<table class="table">
+		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\label\LabelAction">
 			<thead>
 				<tr>
 					<th class="columnID columnLabelID{if $sortField == 'labelID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='LabelList' object=$labelGroup}pageNo={@$pageNo}&sortField=labelID&sortOrder={if $sortField == 'labelID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
@@ -110,10 +106,10 @@
 			
 			<tbody class="jsReloadPageWhenEmpty{if $labelGroup && !$labelSearch && !$cssClassName && $items > 1} sortableList" data-object-id="{@$labelGroup->groupID}{/if}">
 				{foreach from=$objects item=label}
-					<tr class="jsLabelRow{if $labelGroup && !$labelSearch && !$cssClassName && $items > 1} sortableNode" data-object-id="{@$label->labelID}{/if}">
+					<tr class="jsLabelRow jsObjectActionObject{if $labelGroup && !$labelSearch && !$cssClassName && $items > 1} sortableNode{/if}" data-object-id="{@$label->getObjectID()}">
 						<td class="columnIcon">
 							<a href="{link controller='LabelEdit' object=$label}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$label->labelID}" data-confirm-message-html="{lang __encode=true}wcf.acp.label.delete.sure{/lang}"></span>
+							{objectAction action="delete" objectTitle=$label->getTitle()}
 							
 							{event name='rowButtons'}
 						</td>

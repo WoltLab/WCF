@@ -37,7 +37,7 @@
 
 <div class="jsClipboardContainer" data-type="com.woltlab.wcf.media">
 	<input type="checkbox" class="jsClipboardMarkAll" style="display: none;">
-	<ul class="mediaManagerMediaList">
+	<ul class="mediaManagerMediaList jsObjectActionContainer" data-object-action-class-name="wcf\data\media\MediaAction">
 		{include file='mediaListItems'}
 	</ul>
 </div>

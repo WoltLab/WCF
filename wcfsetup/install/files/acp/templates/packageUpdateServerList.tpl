@@ -1,12 +1,5 @@
 {include file='header' pageTitle='wcf.acp.updateServer.list'}
 
-<script data-relocate="true">
-	$(function() {
-		new WCF.Action.Delete('wcf\\data\\package\\update\\server\\PackageUpdateServerAction', '.jsUpdateServerRow');
-		new WCF.Action.Toggle('wcf\\data\\package\\update\\server\\PackageUpdateServerAction', '.jsUpdateServerRow');
-	});
-</script>
-
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.updateServer.list{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
@@ -29,7 +22,7 @@
 
 {if $objects|count}
 	<div class="section tabularBox">
-		<table class="table">
+		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\package\update\server\PackageUpdateServerAction">
 			<thead>
 				<tr>
 					<th class="columnID columnPackageUpdateServerID{if $sortField == 'packageUpdateServerID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='PackageUpdateServerList'}pageNo={@$pageNo}&sortField=packageUpdateServerID&sortOrder={if $sortField == 'packageUpdateServerID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
@@ -46,15 +39,19 @@
 			
 			<tbody class="jsReloadPageWhenEmpty">
 				{foreach from=$objects item=updateServer}
-					<tr class="jsUpdateServerRow">
+					<tr class="jsUpdateServerRow jsObjectActionObject" data-object-id="{@$updateServer->getObjectID()}">
 						<td class="columnIcon">
 							{if $updateServer->canDisable()}
-								<span class="icon icon16 fa-{if !$updateServer->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$updateServer->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$updateServer->packageUpdateServerID}"></span>
+								{objectAction action="toggle" isDisabled=$updateServer->isDisabled}
 							{else}
 								<span class="icon icon16 fa-check-square-o disabled"></span>
 							{/if}
 							<a href="{link controller='PackageUpdateServerEdit' id=$updateServer->packageUpdateServerID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-							<span class="icon icon16 fa-times {if $updateServer->canDelete()}jsDeleteButton jsTooltip pointer{else}disabled{/if}"{if $updateServer->canDelete()} title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$updateServer->packageUpdateServerID}" data-confirm-message-html="{lang __encode=true}wcf.acp.updateServer.delete.sure{/lang}"{/if}></span>
+							{if $updateServer->canDelete()}
+								{objectAction action="delete" objectTitle=$updateServer->serverURL}
+							{else}
+								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+							{/if}
 							
 							{event name='itemButtons'}
 						</td>

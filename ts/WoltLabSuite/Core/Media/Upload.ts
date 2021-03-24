@@ -87,12 +87,11 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
           cell.querySelectorAll("[data-object-id]").forEach((el: HTMLElement) => DomUtil.hide(el));
 
           cell.querySelector(".mediaEditButton")!.classList.add("jsMediaEditButton");
-          (cell.querySelector(".jsDeleteButton") as HTMLElement).dataset.confirmMessageHtml = Language.get(
-            "wcf.media.delete.confirmMessage",
-            {
-              title: file.name,
-            },
-          );
+          (cell.querySelector(
+            ".jsObjectAction[data-object-action='delete']",
+          ) as HTMLElement).dataset.confirmMessage = Language.get("wcf.media.delete.confirmMessage", {
+            title: file.name,
+          });
         } else if (cell.classList.contains("columnFilename")) {
           // replace copied image with spinner
           let image = cell.querySelector("img");
@@ -210,6 +209,7 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
       if (file.tagName === "TR") {
         if (media) {
           // update object id
+          file.dataset.objectId = media.mediaID.toString();
           file.querySelectorAll("[data-object-id]").forEach((el: HTMLElement) => {
             el.dataset.objectId = media.mediaID.toString();
             el.style.removeProperty("display");
@@ -259,7 +259,7 @@ class MediaUpload<TOptions extends MediaUploadOptions = MediaUploadOptions> exte
           const fileIcon = DomTraverse.childByTag(DomTraverse.childByClass(file, "mediaThumbnail")!, "SPAN")!;
           this._replaceFileIcon(fileIcon, media, 144);
 
-          file.className = "jsClipboardObject mediaFile";
+          file.classList.add("jsClipboardObject", "mediaFile", "jsObjectActionObject");
           file.dataset.objectId = media.mediaID.toString();
 
           if (this._mediaManager) {

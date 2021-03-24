@@ -1,12 +1,5 @@
 {include file='header' pageTitle='wcf.acp.captcha.question.list'}
 
-<script data-relocate="true">
-	$(function() {
-		new WCF.Action.Delete('wcf\\data\\captcha\\question\\CaptchaQuestionAction', '.jsQuestionRow');
-		new WCF.Action.Toggle('wcf\\data\\captcha\\question\\CaptchaQuestionAction', '.jsQuestionRow');
-	});
-</script>
-
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.captcha.question.list{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
@@ -29,7 +22,7 @@
 
 {hascontent}
 	<div id="captchaQuestionTabelContainer" class="section tabularBox">
-		<table class="table">
+		<table class="table jsObjectActionContainer" data-object-action-class-name="wcf\data\captcha\question\CaptchaQuestionAction">
 			<thead>
 				<tr>
 					<th class="columnID columnQuestionID active ASC" colspan="2">{lang}wcf.global.objectID{/lang}</th>
@@ -42,11 +35,11 @@
 			<tbody class="jsReloadPageWhenEmpty">
 				{content}
 					{foreach from=$objects item='question'}
-						<tr class="jsQuestionRow">
+						<tr class="jsQuestionRow jsObjectActionObject" data-object-id="{@$question->getObjectID()}">
 							<td class="columnIcon">
-								<span class="icon icon16 fa-{if !$question->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $question->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$question->questionID}"></span>
+								{objectAction action="toggle" isDisabled=$question->isDisabled}
 								<a href="{link controller='CaptchaQuestionEdit' id=$question->questionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$question->questionID}" data-confirm-message-html="{lang __encode=true}wcf.acp.captcha.question.delete.confirmMessage{/lang}"></span>
+								{objectAction action="delete" objectTitle=$question->getQuestion()}
 								
 								{event name='rowButtons'}
 							</td>
