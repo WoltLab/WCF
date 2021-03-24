@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  *      attributes of the button
  *
  * One of the following aguments for `delete` action is required:
- *  - `objectTitle`: name of the object used in the `wcf.global.button.delete.confirmMessage`
+ *  - `objectTitle`: name of the object used in the `wcf.button.delete.confirmMessage`
  *      confirmation language item
  *  - `confirmMessage`: confirmation message or confirmation language item
  *
@@ -89,23 +89,17 @@ class ObjectActionFunctionTemplatePlugin implements IFunctionTemplatePlugin
         switch ($action) {
             case 'delete':
                 if (isset($tagArgs['objectTitle'])) {
-                    $confirmMessage = StringUtil::encodeHTML($tplObj->fetchString(
-                        $tplObj->getCompiler()->compileString(
-                            'wcf.global.button.delete.confirmMessage',
-                            $language->get('wcf.global.button.delete.confirmMessage')
-                        )['template'],
-                        [
-                            'objectTitle' => $tagArgs['objectTitle'],
-                        ]
-                    ));
+                    $confirmMessage = StringUtil::encodeHTML(
+                        $language->getDynamicVariable(
+                            'wcf.button.delete.confirmMessage',
+                            [
+                                'objectTitle' => $tagArgs['objectTitle'],
+                            ]
+                        )
+                    );
                 } elseif (isset($tagArgs['confirmMessage'])) {
                     $confirmMessage = StringUtil::encodeHTML(
-                        $tplObj->fetchString(
-                            $tplObj->getCompiler()->compileString(
-                                $tagArgs['confirmMessage'],
-                                $language->get($tagArgs['confirmMessage'])
-                            )['template']
-                        )
+                        $language->getDynamicVariable($tagArgs['confirmMessage'])
                     );
                 } else {
                     throw new \InvalidArgumentException("Missing 'objectTitle' or 'confirmMessage' argument for 'delete' action.");

@@ -3353,6 +3353,9 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.bbcode.spoiler.text"><![CDATA[(Versteckter Text)]]></item>
 		<item name="wcf.bbcode.spoiler.simplified"><![CDATA[(Versteckter Text)]]></item>
 	</category>
+	<category name="wcf.button">
+		<item name="wcf.button.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} <span class="confirmationObject">{$objectTitle}</span> wirklich löschen?]]></item>
+	</category>
 	<category name="wcf.captcha">
 		<item name="wcf.captcha.useNoCaptcha"><![CDATA[(Kein Captcha)]]></item>
 		<item name="wcf.captcha.com.woltlab.wcf.recaptcha"><![CDATA[reCAPTCHA]]></item>
@@ -3851,7 +3854,6 @@ Dateianhänge:
 		<item name="wcf.global.button.close"><![CDATA[Schließen]]></item>
 		<item name="wcf.global.button.collapsible"><![CDATA[Auf- und Zuklappen]]></item>
 		<item name="wcf.global.button.delete"><![CDATA[Löschen]]></item>
-		<item name="wcf.global.button.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} <span class="confirmationObject">{$objectTitle}</span> wirklich löschen?]]></item>
 		<item name="wcf.global.button.disable"><![CDATA[Deaktivieren]]></item>
 		<item name="wcf.global.button.disabledI18n"><![CDATA[einsprachig]]></item>
 		<item name="wcf.global.button.edit"><![CDATA[Bearbeiten]]></item>

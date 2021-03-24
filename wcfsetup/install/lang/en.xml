@@ -3279,6 +3279,9 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.bbcode.spoiler.text"><![CDATA[(Hidden Content)]]></item>
 		<item name="wcf.bbcode.spoiler.simplified"><![CDATA[(Hidden Content)]]></item>
 	</category>
+	<category name="wcf.button">
+		<item name="wcf.button.delete.confirmMessage"><![CDATA[Do you really want to delete <strong>{$objectTitle}</strong>?]]></item>
+	</category>
 	<category name="wcf.captcha">
 		<item name="wcf.captcha.useNoCaptcha"><![CDATA[(No Captcha)]]></item>
 		<item name="wcf.captcha.com.woltlab.wcf.recaptcha"><![CDATA[reCAPTCHA]]></item>
@@ -3798,7 +3801,6 @@ Attachments:
 		<item name="wcf.global.button.close"><![CDATA[Close]]></item>
 		<item name="wcf.global.button.collapsible"><![CDATA[Expand and Collapse]]></item>
 		<item name="wcf.global.button.delete"><![CDATA[Delete]]></item>
-		<item name="wcf.global.button.delete.confirmMessage"><![CDATA[Do you really want to delete <strong>{$objectTitle}</strong>?]]></item>
 		<item name="wcf.global.button.disable"><![CDATA[Disable]]></item>
 		<item name="wcf.global.button.disabledI18n"><![CDATA[monolingual]]></item>
 		<item name="wcf.global.button.edit"><![CDATA[Edit]]></item>
