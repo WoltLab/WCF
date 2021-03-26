@@ -44,6 +44,7 @@ class TemplateScriptingCompiler {
 	 */
 	protected $enterpriseFunctions = [
 		'addslashes',
+		'array_diff',
 		'array_fill',
 		'array_keys',
 		'array_pop',
