@@ -9,6 +9,7 @@ use GuzzleHttp\RequestOptions;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
+use wcf\system\io\http\RedirectGuard;
 use wcf\system\io\HttpFactory;
 use wcf\system\WCF;
 use wcf\util\CryptoUtil;
@@ -68,6 +69,9 @@ class ImageProxyAction extends AbstractAction
             RequestOptions::STREAM => true,
             RequestOptions::HEADERS => [
                 'user-agent' => HttpFactory::getDefaultUserAgent("Image Proxy"),
+            ],
+            RequestOptions::ALLOW_REDIRECTS => [
+                'on_redirect' => new RedirectGuard(),
             ],
         ]);
     }
