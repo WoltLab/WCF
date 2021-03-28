@@ -4897,17 +4897,11 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 	</category>
 	<category name="wcf.user.usersOnline">
 		<item name="wcf.user.usersOnline"><![CDATA[Benutzer online]]></item>
-		<item name="wcf.user.usersOnline.detail"><![CDATA[
-{if $usersOnlineList->stats[members] > 0}
-	{#$usersOnlineList->stats[members]} Mitglied{if $usersOnlineList->stats[members] != 1}er{/if}
-{/if}
-{if $usersOnlineList->stats[invisible] > 0}
-	(davon {#$usersOnlineList->stats[invisible]} unsichtbar)
-{/if}
-{if $usersOnlineList->stats[guests] > 0 && $usersOnlineList->stats[members] > 0}und{/if}
-{if $usersOnlineList->stats[guests] > 0}
-	{#$usersOnlineList->stats[guests]} Besucher
-{/if}]]></item>
+		<item name="wcf.user.usersOnline.detail"><![CDATA[{*
+*}{if $usersOnlineList->stats[members] > 0}{#$usersOnlineList->stats[members]} Mitglied{if $usersOnlineList->stats[members] != 1}er{/if}{/if}{*
+*}{if $usersOnlineList->stats[invisible] > 0} (davon {#$usersOnlineList->stats[invisible]} unsichtbar){/if}{*
+*}{if $usersOnlineList->stats[guests] > 0 && $usersOnlineList->stats[members] > 0} und {/if}{*
+*}{if $usersOnlineList->stats[guests] > 0}{#$usersOnlineList->stats[guests]} Besucher{/if}]]></item>
 		<item name="wcf.user.usersOnline.invisible"><![CDATA[ (unsichtbar)]]></item>
 		<item name="wcf.user.usersOnline.marking.legend"><![CDATA[Legende]]></item>
 		<item name="wcf.user.usersOnline.guests"><![CDATA[Gäste]]></item>
