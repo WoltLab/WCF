@@ -297,12 +297,19 @@ class UserProfileAction extends UserAction {
 			// user groups because of the changed user options
 			UserGroupAssignmentHandler::getInstance()->checkUsers([$this->userProfile->userID]);
 			
-			// return parsed template
+			// reload user object to get updated data
 			$user = new User($this->userProfile->userID);
+
+			// update user rank
+			if (MODULE_USER_RANK) {
+				$action = new UserProfileAction([new UserEditor($user)], 'updateUserRank');
+				$action->executeAction();
+			}
 			
 			// reload option handler
 			$optionHandler = $this->getOptionHandler($user, false);
 			
+			// return parsed template
 			$options = $optionHandler->getOptionTree();
 			WCF::getTPL()->assign([
 				'options' => $options,
