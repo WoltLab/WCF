@@ -35,13 +35,17 @@ define(["require", "exports", "tslib", "../../../Event/Handler", "../../../Contr
                 const objectId = clipboardObject.dataset.objectId;
                 data.responseData.objectIDs.forEach((deletedObjectId) => {
                     if (~~deletedObjectId === ~~objectId) {
-                        this.objectAction(data.responseData, clipboardObject);
+                        this.objectAction({
+                            containerElement: clipboardObject.closest(".jsObjectActionContainer"),
+                            data: data.responseData,
+                            objectElement: clipboardObject,
+                        });
                     }
                 });
             });
         }
         handleObjectAction(data) {
-            this.objectAction(data.data, data.objectElement);
+            this.objectAction(data);
             ControllerClipboard.reload();
         }
     }

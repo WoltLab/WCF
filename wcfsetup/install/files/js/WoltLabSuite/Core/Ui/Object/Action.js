@@ -81,6 +81,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Event/Handler", "../
         }
         else {
             EventHandler.fire("WoltLabSuite/Core/Ui/Object/Action", actionElement.dataset.objectAction, {
+                containerElement: actionElement.closest(containerSelector),
                 data,
                 objectElement: actionElement.closest(objectSelector),
             });

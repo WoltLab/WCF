@@ -88,6 +88,7 @@ function processAction(actionElement: HTMLElement, data: ResponseData | Database
     window.location.reload();
   } else {
     EventHandler.fire("WoltLabSuite/Core/Ui/Object/Action", actionElement.dataset.objectAction!, {
+      containerElement: actionElement.closest(containerSelector),
       data,
       objectElement: actionElement.closest(objectSelector),
     } as ObjectActionData);
