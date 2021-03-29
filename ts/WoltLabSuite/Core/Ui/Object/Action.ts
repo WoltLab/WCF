@@ -110,5 +110,5 @@ function registerElements(): void {
 
 export function setup(): void {
   registerElements();
-  DomChangeListener.add("WoltLabSuite/Core/Ui/Empty", () => registerElements());
+  DomChangeListener.add("WoltLabSuite/Core/Ui/Action", () => registerElements());
 }

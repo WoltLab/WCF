@@ -99,7 +99,7 @@ define(["require", "exports", "tslib", "../../Ajax", "../../Event/Handler", "../
     }
     function setup() {
         registerElements();
-        Listener_1.default.add("WoltLabSuite/Core/Ui/Empty", () => registerElements());
+        Listener_1.default.add("WoltLabSuite/Core/Ui/Action", () => registerElements());
     }
     exports.setup = setup;
 });
