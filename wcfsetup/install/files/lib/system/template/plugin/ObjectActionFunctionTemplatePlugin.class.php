@@ -66,9 +66,11 @@ class ObjectActionFunctionTemplatePlugin implements IFunctionTemplatePlugin
         if (isset($tagArgs['objectId'])) {
             $additionalAttributes .= " data-object-id=\"{$tagArgs['objectId']}\"";
         }
-        $className = null;
         if (isset($tagArgs['className'])) {
             $additionalAttributes .= " data-object-action-class-name=\"{$tagArgs['className']}\"";
+        }
+        if (isset($tagArgs['objectActionHandler'])) {
+            $additionalAttributes .= " data-object-action-handler=\"{$tagArgs['objectActionHandler']}\"";
         }
         foreach ($tagArgs as $key => $value) {
             if (\preg_match('~^parameter.+$~', $key)) {

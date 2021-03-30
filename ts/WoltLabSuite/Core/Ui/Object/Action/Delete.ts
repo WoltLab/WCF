@@ -8,17 +8,22 @@
  */
 
 import UiObjectActionHandler from "./Handler";
-import { DatabaseObjectActionResponse } from "../../../Ajax/Data";
+import { ObjectActionData } from "../Data";
 
-function deleteObject(data: DatabaseObjectActionResponse, objectElement: HTMLElement): void {
-  const childContainer = objectElement.querySelector(".jsObjectActionObjectChildren");
+function deleteObject(data: ObjectActionData): void {
+  const actionElement = data.objectElement.querySelector('.jsObjectAction[data-object-action="delete"]') as HTMLElement;
+  if (!actionElement || actionElement.dataset.objectActionHandler) {
+    return;
+  }
+
+  const childContainer = data.objectElement.querySelector(".jsObjectActionObjectChildren");
   if (childContainer) {
     Array.from(childContainer.children).forEach((child: HTMLElement) => {
-      objectElement.parentNode!.insertBefore(child, objectElement);
+      data.objectElement.insertAdjacentElement("beforebegin", child);
     });
   }
 
-  objectElement.remove();
+  data.objectElement.remove();
 }
 
 export function setup(): void {

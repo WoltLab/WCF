@@ -9,21 +9,24 @@
 
 import * as Language from "../../../Language";
 import UiObjectActionHandler from "./Handler";
-import { DatabaseObjectActionResponse } from "../../../Ajax/Data";
+import { ObjectActionData } from "../Data";
 
-function toggleObject(data: DatabaseObjectActionResponse, objectElement: HTMLElement): void {
-  const toggleButton = objectElement.querySelector('.jsObjectAction[data-object-action="toggle"]') as HTMLElement;
+function toggleObject(data: ObjectActionData): void {
+  const actionElement = data.objectElement.querySelector('.jsObjectAction[data-object-action="toggle"]') as HTMLElement;
+  if (!actionElement || actionElement.dataset.objectActionHandler) {
+    return;
+  }
 
-  if (toggleButton.classList.contains("fa-square-o")) {
-    toggleButton.classList.replace("fa-square-o", "fa-check-square-o");
+  if (actionElement.classList.contains("fa-square-o")) {
+    actionElement.classList.replace("fa-square-o", "fa-check-square-o");
 
-    const newTitle = toggleButton.dataset.disableTitle || Language.get("wcf.global.button.disable");
-    toggleButton.title = newTitle;
+    const newTitle = actionElement.dataset.disableTitle || Language.get("wcf.global.button.disable");
+    actionElement.title = newTitle;
   } else {
-    toggleButton.classList.replace("fa-check-square-o", "fa-square-o");
+    actionElement.classList.replace("fa-check-square-o", "fa-square-o");
 
-    const newTitle = toggleButton.dataset.enableTitle || Language.get("wcf.global.button.enable");
-    toggleButton.title = newTitle;
+    const newTitle = actionElement.dataset.enableTitle || Language.get("wcf.global.button.enable");
+    actionElement.title = newTitle;
   }
 }
 

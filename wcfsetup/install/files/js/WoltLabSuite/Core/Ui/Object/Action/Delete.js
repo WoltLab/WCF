@@ -11,14 +11,18 @@ define(["require", "exports", "tslib", "./Handler"], function (require, exports,
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
     Handler_1 = tslib_1.__importDefault(Handler_1);
-    function deleteObject(data, objectElement) {
-        const childContainer = objectElement.querySelector(".jsObjectActionObjectChildren");
+    function deleteObject(data) {
+        const actionElement = data.objectElement.querySelector('.jsObjectAction[data-object-action="delete"]');
+        if (!actionElement || actionElement.dataset.objectActionHandler) {
+            return;
+        }
+        const childContainer = data.objectElement.querySelector(".jsObjectActionObjectChildren");
         if (childContainer) {
             Array.from(childContainer.children).forEach((child) => {
-                objectElement.parentNode.insertBefore(child, objectElement);
+                data.objectElement.insertAdjacentElement("beforebegin", child);
             });
         }
-        objectElement.remove();
+        data.objectElement.remove();
     }
     function setup() {
         new Handler_1.default("delete", ["delete"], deleteObject);

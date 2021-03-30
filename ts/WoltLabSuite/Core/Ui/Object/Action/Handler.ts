@@ -10,9 +10,8 @@
 import * as EventHandler from "../../../Event/Handler";
 import { ClipboardData, ObjectActionData } from "../Data";
 import * as ControllerClipboard from "../../../Controller/Clipboard";
-import { DatabaseObjectActionResponse } from "../../../Ajax/Data";
 
-export type ObjectAction = (data: DatabaseObjectActionResponse, objectElement: HTMLElement) => void;
+export type ObjectAction = (data: ObjectActionData) => void;
 
 export default class UiObjectActionHandler {
   protected readonly objectAction: ObjectAction;
@@ -48,14 +47,18 @@ export default class UiObjectActionHandler {
 
         data.responseData.objectIDs.forEach((deletedObjectId) => {
           if (~~deletedObjectId === ~~objectId) {
-            this.objectAction(data.responseData, clipboardObject);
+            this.objectAction({
+              containerElement: clipboardObject.closest(".jsObjectActionContainer") as HTMLElement,
+              data: data.responseData,
+              objectElement: clipboardObject,
+            });
           }
         });
       });
   }
 
   protected handleObjectAction(data: ObjectActionData): void {
-    this.objectAction(data.data, data.objectElement);
+    this.objectAction(data);
 
     ControllerClipboard.reload();
   }
