@@ -57,13 +57,15 @@
 							{include file='__topReaction' cachedReactions=$article->cachedReactions render='short'}
 						</div>
 					{/if}
-					<div class="contentItemMetaIcon">
-						<span class="icon icon16 fa-comments"></span>
-						<span aria-label="{$article->getDiscussionProvider()->getDiscussionCountPhrase()}">
-							{$article->getDiscussionProvider()->getDiscussionCount()}
-						</span>
-					</div>
-					
+					{if $article->getDiscussionProvider()->getDiscussionCountPhrase()}{* empty phrase indicates that comments are disabled *}
+						<div class="contentItemMetaIcon">
+							<span class="icon icon16 fa-comments"></span>
+							<span aria-label="{$article->getDiscussionProvider()->getDiscussionCountPhrase()}">
+								{$article->getDiscussionProvider()->getDiscussionCount()}
+							</span>
+						</div>
+					{/if}
+
 					{event name='contentItemMetaIcons'}
 				</div>
 			</div>

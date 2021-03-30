@@ -20,8 +20,7 @@
 			'wcf.style.colorPicker': '{jslang}wcf.style.colorPicker{/jslang}',
 			'wcf.style.colorPicker.new': '{jslang}wcf.style.colorPicker.new{/jslang}',
 			'wcf.style.colorPicker.current': '{jslang}wcf.style.colorPicker.current{/jslang}',
-			'wcf.style.colorPicker.button.apply': '{jslang}wcf.style.colorPicker.button.apply{/jslang}',
-			'wcf.acp.style.image.error.invalidExtension': '{jslang}wcf.acp.style.image.error.invalidExtension{/jslang}'
+			'wcf.style.colorPicker.button.apply': '{jslang}wcf.style.colorPicker.button.apply{/jslang}'
 		});
 		
 		{if $action == 'edit'}
@@ -244,6 +243,8 @@
 							<small class="innerError">
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
+								{elseif $errorType == 'invalid'}
+									{lang}wcf.upload.error.noImage{/lang}
 								{else}
 									{lang}wcf.acp.style.image.error.{$errorType}{/lang}
 								{/if}
@@ -260,6 +261,8 @@
 							<small class="innerError">
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
+								{elseif $errorType == 'invalid'}
+									{lang}wcf.upload.error.noImage{/lang}
 								{else}
 									{lang}wcf.acp.style.image2x.error.{$errorType}{/lang}
 								{/if}
@@ -322,6 +325,8 @@
 									{lang}wcf.global.form.error.empty{/lang}
 								{elseif $errorType == 'minWidth' || $errorType == 'minHeight' || $errorType == 'maxWidth' || $errorType == 'maxHeight'}
 									{lang}wcf.acp.style.favicon.error.dimensions{/lang}
+								{elseif $errorType == 'invalid'}
+									{lang}wcf.upload.error.noImage{/lang}
 								{else}
 									{lang}wcf.acp.style.favicon.error.{$errorType}{/lang}
 								{/if}
@@ -350,6 +355,8 @@
 									{lang}wcf.global.form.error.empty{/lang}
 								{elseif $errorType == 'minWidth' || $errorType == 'minHeight'}
 									{lang}wcf.image.coverPhoto.upload.error.{$errorType}{/lang}
+								{elseif $errorType == 'invalid'}
+									{lang}wcf.upload.error.noImage{/lang}
 								{else}
 									{lang}wcf.acp.style.coverPhoto.error.{$errorType}{/lang}
 								{/if}

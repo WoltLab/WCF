@@ -27,6 +27,7 @@ class HtmlToc
         $titleRegex = new Regex('[^\p{L}\p{N}]+', Regex::UTF_8);
 
         // fetch all headings in their order of appearance
+        $usedIDs = [];
         /** @var HtmlTocItem[] $headings */
         $headings = [];
         /** @var \DOMElement $hElement */
@@ -42,6 +43,15 @@ class HtmlToc
             // trim to 80 characters
             $id = \rtrim(\mb_substr($id, 0, 80), '-');
             $id = \mb_strtolower($id);
+
+            if (isset($usedIDs[$id])) {
+                $i = 2;
+                do {
+                    $newID = $id . '--' . ($i++);
+                } while (isset($usedIDs[$newID]));
+                $id = $newID;
+            }
+            $usedIDs[$id] = $id;
 
             // Using the 'normalized' title allows for human-readable anchors that will remain
             // valid even when new headings are being added or existing ones are removed. This

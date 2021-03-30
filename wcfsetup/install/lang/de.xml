@@ -2951,7 +2951,6 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.style.styleVersion"><![CDATA[Version]]></item>
 		<item name="wcf.acp.style.templateGroupID"><![CDATA[Templategruppe]]></item>
 		<item name="wcf.acp.style.users"><![CDATA[Benutzer]]></item>
-		<item name="wcf.acp.style.image.error.invalidExtension"><![CDATA[Die Datei hat eine ungültige Dateiendung.]]></item>
 		<item name="wcf.acp.style.imagePath.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Pfad eingegeben.]]></item>
 		<item name="wcf.acp.style.styleVersion.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} eine ungültige Versionsnummer eingegeben.]]></item>
 		<item name="wcf.acp.style.styleDate.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} ein ungültiges Datum eingegeben.]]></item>
@@ -2975,7 +2974,6 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.style.favicon"><![CDATA[Individuelles Favicon]]></item>
 		<item name="wcf.acp.style.favicon.description"><![CDATA[Laden Sie hier ein 256×256 Pixel großes Bild hoch, als Bildformate sind JPG und PNG zulässig. Das hochgeladene Bild wird für die Erzeugung aller notwendigen Grafiken verwendet.]]></item>
 		<item name="wcf.acp.style.favicon.error.dimensions"><![CDATA[Das Bild muss exakt 256×256 Pixel groß sein.]]></item>
-		<item name="wcf.acp.style.favicon.error.invalidExtension"><![CDATA[Die Datei hat eine ungültige Dateiendung.]]></item>
 	</category>
 	<category name="wcf.acp.tag">
 		<item name="wcf.acp.tag.add"><![CDATA[Tag hinzufügen]]></item>
@@ -5045,17 +5043,11 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 	</category>
 	<category name="wcf.user.usersOnline">
 		<item name="wcf.user.usersOnline"><![CDATA[Benutzer online]]></item>
-		<item name="wcf.user.usersOnline.detail"><![CDATA[
-{if $usersOnlineList->stats[members] > 0}
-	{#$usersOnlineList->stats[members]} Mitglied{if $usersOnlineList->stats[members] != 1}er{/if}
-{/if}
-{if $usersOnlineList->stats[invisible] > 0}
-	(davon {#$usersOnlineList->stats[invisible]} unsichtbar)
-{/if}
-{if $usersOnlineList->stats[guests] > 0 && $usersOnlineList->stats[members] > 0}und{/if}
-{if $usersOnlineList->stats[guests] > 0}
-	{#$usersOnlineList->stats[guests]} Besucher
-{/if}]]></item>
+		<item name="wcf.user.usersOnline.detail"><![CDATA[{*
+*}{if $usersOnlineList->stats[members] > 0}{#$usersOnlineList->stats[members]} Mitglied{if $usersOnlineList->stats[members] != 1}er{/if}{/if}{*
+*}{if $usersOnlineList->stats[invisible] > 0} (davon {#$usersOnlineList->stats[invisible]} unsichtbar){/if}{*
+*}{if $usersOnlineList->stats[guests] > 0 && $usersOnlineList->stats[members] > 0} und {/if}{*
+*}{if $usersOnlineList->stats[guests] > 0}{#$usersOnlineList->stats[guests]} Besucher{/if}]]></item>
 		<item name="wcf.user.usersOnline.invisible"><![CDATA[ (unsichtbar)]]></item>
 		<item name="wcf.user.usersOnline.marking.legend"><![CDATA[Legende]]></item>
 		<item name="wcf.user.usersOnline.guests"><![CDATA[Gäste]]></item>

@@ -99,6 +99,12 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
         $userTrophyAction = new UserTrophyAction($userTrophyList->getObjects(), 'delete');
         $userTrophyAction->executeAction();
 
+        foreach ($this->getObjects() as $trophy) {
+            if ($trophy->iconFile) {
+                @\unlink(WCF_DIR . 'images/trophy/' . $trophy->iconFile);
+            }
+        }
+
         $returnValues = parent::delete();
 
         UserStorageHandler::getInstance()->resetAll('specialTrophies');
@@ -116,7 +122,7 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
         if (isset($this->parameters['data']['type']) && $this->parameters['data']['type'] === Trophy::TYPE_IMAGE) {
             foreach ($this->getObjects() as $trophy) {
                 if (isset($this->parameters['tmpHash'])) {
-                    $this->updateTrophyImage($trophy);
+                    $this->updateTrophyImage($trophy->getDecoratedObject());
                 }
             }
         }

@@ -2882,7 +2882,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.styleVersion"><![CDATA[Version]]></item>
 		<item name="wcf.acp.style.templateGroupID"><![CDATA[Template Group]]></item>
 		<item name="wcf.acp.style.users"><![CDATA[Users]]></item>
-		<item name="wcf.acp.style.image.error.invalidExtension"><![CDATA[The file extension is invalid.]]></item>
 		<item name="wcf.acp.style.imagePath.error.invalid"><![CDATA[You have provided an invalid path.]]></item>
 		<item name="wcf.acp.style.styleVersion.error.invalid"><![CDATA[You have provided an invalid version number.]]></item>
 		<item name="wcf.acp.style.styleDate.error.invalid"><![CDATA[You have provided an invalid date.]]></item>
@@ -2905,7 +2904,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.favicon"><![CDATA[Individual Favicon]]></item>
 		<item name="wcf.acp.style.favicon.description"><![CDATA[Upload an 256×256 pixels image, acceptable image types are JPG and PNG. The uploaded image will be used to derive all required favicon sizes.]]></item>
 		<item name="wcf.acp.style.favicon.error.dimensions"><![CDATA[The image must be exactly 256×256 pixels large.]]></item>
-		<item name="wcf.acp.style.favicon.error.invalidExtension"><![CDATA[The file extension is invalid.]]></item>
 	</category>
 	<category name="wcf.acp.tag">
 		<item name="wcf.acp.tag.add"><![CDATA[Add Tag]]></item>
@@ -5042,17 +5040,11 @@ You also received a list of emergency codes to use when your second factor becom
 	</category>
 	<category name="wcf.user.usersOnline">
 		<item name="wcf.user.usersOnline"><![CDATA[Users Online]]></item>
-		<item name="wcf.user.usersOnline.detail"><![CDATA[
-{if $usersOnlineList->stats[members] > 0}
-	{#$usersOnlineList->stats[members]} Member{if $usersOnlineList->stats[members] != 1}s{/if}
-{/if} 
-{if $usersOnlineList->stats[invisible] > 0}
-	({#$usersOnlineList->stats[invisible]} invisible)
-{/if}
-{if $usersOnlineList->stats[guests] > 0 && $usersOnlineList->stats[members] > 0}and{/if}
-{if $usersOnlineList->stats[guests] > 0}
-	{#$usersOnlineList->stats[guests]} Guest{if $usersOnlineList->stats[guests] != 1}s{/if}
-{/if}]]></item>
+		<item name="wcf.user.usersOnline.detail"><![CDATA[{*
+*}{if $usersOnlineList->stats[members] > 0}{#$usersOnlineList->stats[members]} Member{if $usersOnlineList->stats[members] != 1}s{/if}{/if}{*
+*}{if $usersOnlineList->stats[invisible] > 0} ({#$usersOnlineList->stats[invisible]} invisible){/if}{*
+*}{if $usersOnlineList->stats[guests] > 0 && $usersOnlineList->stats[members] > 0} and {/if}{*
+*}{if $usersOnlineList->stats[guests] > 0}{#$usersOnlineList->stats[guests]} Guest{if $usersOnlineList->stats[guests] != 1}s{/if}{/if}]]></item>
 		<item name="wcf.user.usersOnline.invisible"><![CDATA[ (invisible)]]></item>
 		<item name="wcf.user.usersOnline.marking.legend"><![CDATA[Legend]]></item>
 		<item name="wcf.user.usersOnline.guests"><![CDATA[Guests]]></item>
