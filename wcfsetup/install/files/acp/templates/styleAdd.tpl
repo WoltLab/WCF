@@ -20,8 +20,7 @@
 			'wcf.style.colorPicker': '{jslang}wcf.style.colorPicker{/jslang}',
 			'wcf.style.colorPicker.new': '{jslang}wcf.style.colorPicker.new{/jslang}',
 			'wcf.style.colorPicker.current': '{jslang}wcf.style.colorPicker.current{/jslang}',
-			'wcf.style.colorPicker.button.apply': '{jslang}wcf.style.colorPicker.button.apply{/jslang}',
-			'wcf.acp.style.image.error.invalidExtension': '{jslang}wcf.acp.style.image.error.invalidExtension{/jslang}'
+			'wcf.style.colorPicker.button.apply': '{jslang}wcf.style.colorPicker.button.apply{/jslang}'
 		});
 		
 		{if $action == 'edit'}
