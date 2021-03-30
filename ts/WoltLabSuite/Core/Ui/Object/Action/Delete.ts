@@ -19,7 +19,7 @@ function deleteObject(data: ObjectActionData): void {
   const childContainer = data.objectElement.querySelector(".jsObjectActionObjectChildren");
   if (childContainer) {
     Array.from(childContainer.children).forEach((child: HTMLElement) => {
-      data.objectElement.parentNode!.insertBefore(child, data.objectElement);
+      data.objectElement.insertAdjacentElement("beforebegin", child);
     });
   }
 

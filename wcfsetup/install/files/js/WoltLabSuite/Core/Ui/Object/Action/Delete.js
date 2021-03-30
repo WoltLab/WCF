@@ -19,7 +19,7 @@ define(["require", "exports", "tslib", "./Handler"], function (require, exports,
         const childContainer = data.objectElement.querySelector(".jsObjectActionObjectChildren");
         if (childContainer) {
             Array.from(childContainer.children).forEach((child) => {
-                data.objectElement.parentNode.insertBefore(child, data.objectElement);
+                data.objectElement.insertAdjacentElement("beforebegin", child);
             });
         }
         data.objectElement.remove();
