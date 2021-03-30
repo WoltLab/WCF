@@ -1,7 +1,9 @@
 <?php
 namespace wcf\system\cronjob;
 use wcf\data\cronjob\Cronjob;
+use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageUpdateDispatcher;
+use wcf\system\WCF;
 
 /**
  * Fetches update package information.
@@ -19,7 +21,20 @@ class GetUpdateInfoCronjob extends AbstractCronjob {
 		parent::execute($cronjob);
 		
 		if (!ENABLE_BENCHMARK) {
-			PackageUpdateDispatcher::getInstance()->refreshPackageDatabase([], true);
+			try {
+				$currentLanguage = WCF::getLanguage();
+				// Always fetch package information using the default language.
+				if ($currentLanguage->languageID !== LanguageFactory::getInstance()->getDefaultLanguage()->languageID) {
+					WCF::setLanguage(LanguageFactory::getInstance()->getDefaultLanguage());
+				}
+				
+				PackageUpdateDispatcher::getInstance()->refreshPackageDatabase([], true);
+			}
+			finally {
+				if ($currentLanguage->languageID !== LanguageFactory::getInstance()->getDefaultLanguage()->languageID) {
+					WCF::setLanguage($currentLanguage);
+				}
+			}
 		}
 	}
 }
