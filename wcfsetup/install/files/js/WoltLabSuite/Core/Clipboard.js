@@ -60,7 +60,7 @@ define(['Environment', 'Ui/Screen'], function(Environment, UiScreen) {
 		},
 		
 		copyElementTextToClipboard: function (element) {
-			return this.copyTextToClipboard(element.textContent);
+			return this.copyTextToClipboard(element.textContent.replace(/\u200B/g, '').replace(/\u00A0/g, ' '));
 		}
 	};
 });
