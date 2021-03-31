@@ -462,8 +462,7 @@ BROWSERCONFIG;
                     'coverPhotoExtension' => '',
                 ]);
             }
-        }
-        else if ($style->coverPhotoExtension) {
+        } elseif ($style->coverPhotoExtension) {
             (new StyleEditor($style))->update([
                 'coverPhotoExtension' => '',
             ]);
