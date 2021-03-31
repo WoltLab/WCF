@@ -916,7 +916,11 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				/** @var \SplFileInfo $file */
 				if (!$file->isFile()) continue;
 				if (!$regEx->match($file->getPathName())) continue;
-				
+				// Skip preview images and cover photos.
+				if ($this->image && FileUtil::unifyDirSeparator($file->getPathname()) === FileUtil::unifyDirSeparator(WCF_DIR.'images/'.$this->image)) continue;
+				if ($this->image2x && FileUtil::unifyDirSeparator($file->getPathname()) === FileUtil::unifyDirSeparator(WCF_DIR.'images/'.$this->image2x)) continue;
+				if ($coverPhoto && FileUtil::unifyDirSeparator($file->getPathname()) === FileUtil::unifyDirSeparator($coverPhoto)) continue;
+
 				$imagesTar->add($file->getPathName(), '', $this->getAssetPath());
 			}
 			// append images tar to style tar
