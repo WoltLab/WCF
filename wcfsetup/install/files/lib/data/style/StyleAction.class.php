@@ -463,6 +463,11 @@ BROWSERCONFIG;
                 ]);
             }
         }
+        else if ($style->coverPhotoExtension) {
+            (new StyleEditor($style))->update([
+                'coverPhotoExtension' => '',
+            ]);
+        }
     }
 
     /**

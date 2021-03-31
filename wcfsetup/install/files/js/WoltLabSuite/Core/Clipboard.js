@@ -18,7 +18,7 @@ define(["require", "exports"], function (require, exports) {
     }
     exports.copyTextToClipboard = copyTextToClipboard;
     async function copyElementTextToClipboard(element) {
-        return copyTextToClipboard(element.textContent);
+        return copyTextToClipboard(element.textContent.replace(/\u200B/g, "").replace(/\u00A0/g, " "));
     }
     exports.copyElementTextToClipboard = copyElementTextToClipboard;
 });
