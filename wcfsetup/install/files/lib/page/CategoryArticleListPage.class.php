@@ -6,9 +6,11 @@ use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\CategoryArticleList;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\MetaTagHandler;
 use wcf\system\page\PageLocationManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Shows a list of cms articles in a certain category.
@@ -120,6 +122,32 @@ class CategoryArticleListPage extends ArticleListPage
                 'com.woltlab.wcf.CategoryArticleList',
                 $parentCategory->categoryID,
                 $parentCategory
+            );
+        }
+
+        // Add meta tags.
+        MetaTagHandler::getInstance()->addTag(
+            'og:title',
+            'og:title',
+            $this->category->getTitle() . ' - ' . WCF::getLanguage()->get(PAGE_TITLE),
+            true
+        );
+        MetaTagHandler::getInstance()->addTag(
+            'og:url',
+            'og:url',
+            $this->category->getLink(),
+            true
+        );
+        if ($this->category->getDescription()) {
+            $description = $this->category->getDescription();
+            if ($this->category->descriptionUseHtml) {
+                $description = StringUtil::decodeHTML(StringUtil::stripHTML($description));
+            }
+            MetaTagHandler::getInstance()->addTag(
+                'og:description',
+                'og:description',
+                $description,
+                true
             );
         }
     }
