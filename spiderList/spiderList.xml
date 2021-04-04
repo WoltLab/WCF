@@ -919,6 +919,10 @@
 	<spider ident="PerlCrawler/1.0 Xavatoria/2.0">
 		<name>PerlCrawler 1.0</name>
 	</spider>
+	<spider ident="PetalBot">
+		<name>PetalBot</name>
+		<url>https://aspiegel.com/petalbot</url>
+	</spider>
 	<spider ident="PGP-KA">
 		<name>PGP Key Agent</name>
 	</spider>
