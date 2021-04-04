@@ -1430,6 +1430,9 @@
 	<spider ident="zyborg">
 		<name>WiseNut</name>
 	</spider>
+	<spider ident="WoltLabSuite">
+		<name>WoltLab Suite</name>
+	</spider>
 	<spider ident="OmniExplorer_Bot">
 		<name>WorldIndexer</name>
 		<url>http://www.omni-explorer.com</url>
