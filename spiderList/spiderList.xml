@@ -505,6 +505,10 @@
 		<name>Googlebot-Mobile</name>
 		<url>http://www.google.com/bot.html</url>
 	</spider>
+	<spider ident="Googlebot-Video/1.0">
+		<name>Googlebot-Video</name>
+		<url>https://developers.google.com/search/docs/advanced/crawling/overview-google-crawlers?hl=de</url>
+	</spider>
 	<spider ident="GoogleStackdriverMonitoring-UptimeChecks">
 		<name>Google Stackdriver Monitoring</name>
 		<url>https://cloud.google.com/monitoring/alerts/uptime-checks</url>
