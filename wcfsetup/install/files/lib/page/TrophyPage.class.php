@@ -13,9 +13,11 @@ use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\MetaTagHandler;
 use wcf\system\page\PageLocationManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Represents a trophy page.
@@ -90,6 +92,33 @@ class TrophyPage extends MultipleLinkPage
             $this->trophy->getCategory()->getObjectID(),
             $this->trophy->getCategory()
         );
+
+        // Add meta tags.
+        MetaTagHandler::getInstance()->addTag(
+            'og:title',
+            'og:title',
+            $this->trophy->getTitle() . ' - ' . WCF::getLanguage()->get(PAGE_TITLE),
+            true
+        );
+        MetaTagHandler::getInstance()->addTag('og:url', 'og:url', $this->trophy->getLink(), true);
+
+        if ($this->trophy->getDescription()) {
+            MetaTagHandler::getInstance()->addTag(
+                'og:description',
+                'og:description',
+                StringUtil::decodeHTML(StringUtil::stripHTML($this->trophy->getDescription())),
+                true
+            );
+        }
+
+        if ($this->trophy->type == Trophy::TYPE_IMAGE) {
+            MetaTagHandler::getInstance()->addTag(
+                'og:image',
+                'og:image',
+                WCF::getPath() . 'images/trophy/' . $this->trophy->iconFile,
+                true
+            );
+        }
     }
 
     /**
