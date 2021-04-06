@@ -268,7 +268,7 @@ class WCF {
 	/**
 	 * Calls the show method on the given exception.
 	 * 
-	 * @param	\Exception	$e
+	 * @param	\Throwable	$e
 	 */
 	public static final function handleException($e) {
 		// backwards compatibility
