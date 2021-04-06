@@ -99,11 +99,15 @@ class StreamHandler
     {
         $hdrs = $this->lastHeaders;
         $this->lastHeaders = [];
-        $parts = \explode(' ', \array_shift($hdrs), 3);
-        $ver = \explode('/', $parts[0])[1];
-        $status = (int) $parts[1];
-        $reason = $parts[2] ?? null;
-        $headers = Utils::headersFromLines($hdrs);
+
+        try {
+            [$ver, $status, $reason, $headers] = HeaderProcessor::parseHeaders($hdrs);
+        } catch (\Exception $e) {
+            return P\Create::rejectionFor(
+                new RequestException('An error was encountered while creating the response', $request, null, $e)
+            );
+        }
+
         [$stream, $headers] = $this->checkDecode($options, $headers, $stream);
         $stream = Psr7\Utils::streamFor($stream);
         $sink = $stream;
@@ -112,15 +116,21 @@ class StreamHandler
             $sink = $this->createSink($stream, $options);
         }
 
-        $response = new Psr7\Response($status, $headers, $sink, $ver, $reason);
+        try {
+            $response = new Psr7\Response($status, $headers, $sink, $ver, $reason);
+        } catch (\Exception $e) {
+            return P\Create::rejectionFor(
+                new RequestException('An error was encountered while creating the response', $request, null, $e)
+            );
+        }
 
         if (isset($options['on_headers'])) {
             try {
                 $options['on_headers']($response);
             } catch (\Exception $e) {
-                $msg = 'An error was encountered during the on_headers event';
-                $ex = new RequestException($msg, $request, $response, $e);
-                return P\Create::rejectionFor($ex);
+                return P\Create::rejectionFor(
+                    new RequestException('An error was encountered during the on_headers event', $request, $response, $e)
+                );
             }
         }
 
@@ -141,7 +151,7 @@ class StreamHandler
             return $stream;
         }
 
-        $sink = $options['sink'] ?? \fopen('php://temp', 'r+');
+        $sink = $options['sink'] ?? Psr7\Utils::tryFopen('php://temp', 'r+');
 
         return \is_string($sink) ? new Psr7\LazyOpenStream($sink, 'w+') : Psr7\Utils::streamFor($sink);
     }
@@ -304,7 +314,7 @@ class StreamHandler
 
         return $this->createResource(
             function () use ($uri, &$http_response_header, $contextResource, $context, $options, $request) {
-                $resource = \fopen((string) $uri, 'r', false, $contextResource);
+                $resource = @\fopen((string) $uri, 'r', false, $contextResource);
                 $this->lastHeaders = $http_response_header;
 
                 if (false === $resource) {
