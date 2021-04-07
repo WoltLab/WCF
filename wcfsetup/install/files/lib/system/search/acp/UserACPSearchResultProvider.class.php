@@ -36,7 +36,7 @@ class UserACPSearchResultProvider implements IACPSearchResultProvider
 
         $sql = "SELECT  *
                 FROM    wcf" . WCF_N . "_user
-                " . $conditionBuilder;
+                {$conditionBuilder}";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute($conditionBuilder->getParameters());
 
