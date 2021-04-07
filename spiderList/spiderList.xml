@@ -507,7 +507,7 @@
 	</spider>
 	<spider ident="Googlebot-Video/1.0">
 		<name>Googlebot-Video</name>
-		<url>https://developers.google.com/search/docs/advanced/crawling/overview-google-crawlers?hl=de</url>
+		<url>https://developers.google.com/search/docs/advanced/crawling/overview-google-crawlers</url>
 	</spider>
 	<spider ident="GoogleStackdriverMonitoring-UptimeChecks">
 		<name>Google Stackdriver Monitoring</name>
