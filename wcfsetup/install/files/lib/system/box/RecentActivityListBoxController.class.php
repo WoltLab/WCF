@@ -201,6 +201,9 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 			/** @noinspection PhpUndefinedMethodInspection */
 			$this->objectList->getConditionBuilder()->add('user_activity_event.userID IN (?)', [WCF::getUserProfileHandler()->getFollowingUsers()]);
 		}
+		else if (!empty(UserProfileHandler::getInstance()->getIgnoredUsers())) {
+			$this->objectList->getConditionBuilder()->add("user_activity_event.userID NOT IN (?)", [UserProfileHandler::getInstance()->getIgnoredUsers()]);
+		}
 		
 		return $this->objectList;
 	}
