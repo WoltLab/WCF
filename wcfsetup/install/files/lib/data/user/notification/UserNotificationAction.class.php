@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\user\notification;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\user\storage\UserStorageHandler;
@@ -232,23 +233,51 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 	 * @return	boolean[]
 	 */
 	public function markAllAsConfirmed() {
-		// remove notifications for this user
-		$sql = "UPDATE	wcf".WCF_N."_user_notification
-			SET	confirmTime = ?
-			WHERE	userID = ?";
+		// Step 1) Find the IDs of the unread notifications.
+		// This is done in a separate step, because this allows the UPDATE query to
+		// leverage fine-grained locking of exact rows based off the PRIMARY KEY.
+		// Simply updating all notifications belonging to a specific user will need
+		// to prevent concurrent threads from inserting new notifications for proper
+		// consistency, possibly leading to deadlocks.
+		$sql = "SELECT  notificationID
+			FROM    wcf".WCF_N."_user_notification
+			WHERE   userID = ?
+			    AND confirmTime = ?
+			    AND time < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
+			WCF::getUser()->userID,
+			0,
 			TIME_NOW,
-			WCF::getUser()->userID
 		]);
+		$notificationIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
-		// delete notification_to_user assignments (mimic legacy notification system)
-		$sql = "DELETE FROM	wcf".WCF_N."_user_notification_to_user
-			WHERE		userID = ?";
+		// Step 2) Mark the notifications as read.
+		$condition = new PreparedStatementConditionBuilder();
+		$condition->add('notificationID IN (?)', [$notificationIDs]);
+		
+		$sql = "UPDATE	wcf".WCF_N."_user_notification
+			SET	confirmTime = ?
+			{$condition}";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([WCF::getUser()->userID]);
+		$statement->execute(\array_merge(
+			[TIME_NOW],
+			$condition->getParameters()
+		));
 		
-		// reset notification count
+		// Step 3) Delete notification_to_user assignments (mimic legacy notification system)
+		
+		// This conditions technically is not required, because notificationIDs are unique.
+		// As this is not enforced at the database layer we play safe until this legacy table
+		// finally is removed.
+		$condition->add('userID = ?', [WCF::getUser()->userID]);
+		
+		$sql = "DELETE FROM	wcf".WCF_N."_user_notification_to_user
+			{$condition}";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($condition->getParameters());
+		
+		// Step 4) Clear cached values.
 		UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'userNotificationCount');
 		
 		return [
