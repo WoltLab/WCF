@@ -284,7 +284,7 @@ class WCF
     /**
      * Calls the show method on the given exception.
      *
-     * @param \Exception $e
+     * @param \Throwable $e
      */
     final public static function handleException($e)
     {
