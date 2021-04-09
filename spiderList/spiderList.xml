@@ -1508,6 +1508,10 @@
 		<name>Zookabotk</name>
 		<url>http://zookabot.com/</url>
 	</spider>
+	<spider ident="ZoominfoBot">
+		<name>ZoominfoBot</name>
+		<url>https://www.zoominfo.com/about-zoominfo/zoominfobot</url>
+	</spider>
 	<spider ident="360Spider">
 		<name>360Spider</name>
 	</spider>
