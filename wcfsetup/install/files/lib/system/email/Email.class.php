@@ -551,6 +551,8 @@ class Email
         }
         $headers[] = ['mime-version', '1.0'];
 
+        $headers[] = ['x-auto-response-suppress', 'OOF'];
+
         if (!$this->body) {
             throw new \LogicException("Cannot generate message headers, you must set a body.");
         }
