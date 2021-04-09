@@ -61,7 +61,7 @@ function getDialogElements(shareButton: HTMLElement): string {
 
     dialogOptions += getDialogElement(
       "wcf.message.share.permalink.html",
-      `<a href="${permalink}">${StringUtil.escapeHTML(shareButton.dataset.linkTitle)}</a>`,
+      `<a href="${StringUtil.escapeHTML(permalink)}">${StringUtil.escapeHTML(shareButton.dataset.linkTitle)}</a>`,
     );
   }
 

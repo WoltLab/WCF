@@ -50,7 +50,7 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
             if (!shareButton.dataset.bbcode) {
                 dialogOptions += getDialogElement("wcf.message.share.permalink.bbcode", `[url='${permalink}']${shareButton.dataset.linkTitle}[/url]`);
             }
-            dialogOptions += getDialogElement("wcf.message.share.permalink.html", `<a href="${permalink}">${StringUtil.escapeHTML(shareButton.dataset.linkTitle)}</a>`);
+            dialogOptions += getDialogElement("wcf.message.share.permalink.html", `<a href="${StringUtil.escapeHTML(permalink)}">${StringUtil.escapeHTML(shareButton.dataset.linkTitle)}</a>`);
         }
         return dialogOptions;
     }
