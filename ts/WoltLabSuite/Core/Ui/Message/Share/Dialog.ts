@@ -55,13 +55,13 @@ function getDialogElements(shareButton: HTMLElement): string {
     if (!shareButton.dataset.bbcode) {
       dialogOptions += getDialogElement(
         "wcf.message.share.permalink.bbcode",
-        `[url='${permalink}']${shareButton.dataset.linkTitle}[/url]`,
+        `[url='${StringUtil.escapeHTML(permalink)}']${StringUtil.escapeHTML(shareButton.dataset.linkTitle)}[/url]`,
       );
     }
 
     dialogOptions += getDialogElement(
       "wcf.message.share.permalink.html",
-      '<a href="' + permalink + '">' + shareButton.dataset.linkTitle + "</a>",
+      `<a href="${StringUtil.escapeHTML(permalink)}">${StringUtil.escapeHTML(shareButton.dataset.linkTitle)}</a>`,
     );
   }
 
@@ -88,12 +88,11 @@ function getDialogElement(label: string, value: string): string {
 }
 
 function getProviderButtons(): string {
-  let providerButtons = "";
+  const providerButtons = Array.from(UiMessageShareProviders.getEnabledProviders())
+    .map((provider) => {
+      const label = Language.get(provider.label);
 
-  UiMessageShareProviders.getEnabledProviders().forEach((provider) => {
-    const label = Language.get(provider.label);
-
-    providerButtons += `
+      return `
       <li>
         <a href="#" role="button" class="button ${provider.cssClass}" title="${label}" aria-label="${label}">
           <span class="icon icon24 ${provider.iconClassName}"></span>
@@ -101,13 +100,14 @@ function getProviderButtons(): string {
         </a>
       </li>
     `;
-  });
+    })
+    .join("\n");
 
   if (providerButtons) {
-    providerButtons = `<ul class="inlineList">${providerButtons}</ul>`;
+    return `<ul class="inlineList">${providerButtons}</ul>`;
   }
 
-  return providerButtons;
+  return "";
 }
 
 /**

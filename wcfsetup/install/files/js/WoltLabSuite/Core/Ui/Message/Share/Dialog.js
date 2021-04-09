@@ -48,9 +48,9 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
         }
         if (permalink && shareButton.dataset.linkTitle) {
             if (!shareButton.dataset.bbcode) {
-                dialogOptions += getDialogElement("wcf.message.share.permalink.bbcode", `[url='${permalink}']${shareButton.dataset.linkTitle}[/url]`);
+                dialogOptions += getDialogElement("wcf.message.share.permalink.bbcode", `[url='${StringUtil.escapeHTML(permalink)}']${StringUtil.escapeHTML(shareButton.dataset.linkTitle)}[/url]`);
             }
-            dialogOptions += getDialogElement("wcf.message.share.permalink.html", '<a href="' + permalink + '">' + shareButton.dataset.linkTitle + "</a>");
+            dialogOptions += getDialogElement("wcf.message.share.permalink.html", `<a href="${StringUtil.escapeHTML(permalink)}">${StringUtil.escapeHTML(shareButton.dataset.linkTitle)}</a>`);
         }
         return dialogOptions;
     }
@@ -71,10 +71,10 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
   `;
     }
     function getProviderButtons() {
-        let providerButtons = "";
-        UiMessageShareProviders.getEnabledProviders().forEach((provider) => {
+        const providerButtons = Array.from(UiMessageShareProviders.getEnabledProviders())
+            .map((provider) => {
             const label = Language.get(provider.label);
-            providerButtons += `
+            return `
       <li>
         <a href="#" role="button" class="button ${provider.cssClass}" title="${label}" aria-label="${label}">
           <span class="icon icon24 ${provider.iconClassName}"></span>
@@ -82,11 +82,12 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
         </a>
       </li>
     `;
-        });
+        })
+            .join("\n");
         if (providerButtons) {
-            providerButtons = `<ul class="inlineList">${providerButtons}</ul>`;
+            return `<ul class="inlineList">${providerButtons}</ul>`;
         }
-        return providerButtons;
+        return "";
     }
     /**
      * Opens the share dialog after clicking on the share button.

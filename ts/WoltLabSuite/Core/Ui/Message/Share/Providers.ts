@@ -89,10 +89,10 @@ export function enableShareProviders(providerNames: string[]): void {
   });
 }
 
-export function getProviders(): Map<string, ShareProvider> {
+export function getProviders(): ReadonlyMap<string, ShareProvider> {
   return providers;
 }
 
-export function getEnabledProviders(): Set<ShareProvider> {
+export function getEnabledProviders(): ReadonlySet<ShareProvider> {
   return enabledProviders;
 }
