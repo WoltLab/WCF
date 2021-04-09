@@ -6,7 +6,7 @@
  * @license  GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module  WoltLabSuite/Core/BootstrapFrontend
  */
-define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Controller/Style/Changer", "./Controller/Popover", "./Ui/User/Ignore", "./Ui/Page/Header/Menu", "./Ui/Message/UserConsent", "./Ajax"], function (require, exports, tslib_1, BackgroundQueue, Bootstrap, ControllerStyleChanger, ControllerPopover, UiUserIgnore, UiPageHeaderMenu, UiMessageUserConsent, Ajax) {
+define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Controller/Style/Changer", "./Controller/Popover", "./Ui/User/Ignore", "./Ui/Page/Header/Menu", "./Ui/Message/UserConsent", "./Ajax", "./Ui/Message/Share/Dialog", "./Ui/Message/Share/Providers"], function (require, exports, tslib_1, BackgroundQueue, Bootstrap, ControllerStyleChanger, ControllerPopover, UiUserIgnore, UiPageHeaderMenu, UiMessageUserConsent, Ajax, UiMessageShareDialog, UiMessageShareProviders) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setup = void 0;
@@ -18,6 +18,8 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Co
     UiPageHeaderMenu = tslib_1.__importStar(UiPageHeaderMenu);
     UiMessageUserConsent = tslib_1.__importStar(UiMessageUserConsent);
     Ajax = tslib_1.__importStar(Ajax);
+    UiMessageShareDialog = tslib_1.__importStar(UiMessageShareDialog);
+    UiMessageShareProviders = tslib_1.__importStar(UiMessageShareProviders);
     /**
      * Initializes user profile popover.
      */
@@ -68,6 +70,8 @@ define(["require", "exports", "tslib", "./BackgroundQueue", "./Bootstrap", "./Co
             UiUserIgnore.init();
         }
         UiMessageUserConsent.init();
+        UiMessageShareProviders.enableShareProviders(options.shareButtonProviders || []);
+        UiMessageShareDialog.setup();
     }
     exports.setup = setup;
 });

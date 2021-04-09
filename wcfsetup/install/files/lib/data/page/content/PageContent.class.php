@@ -3,7 +3,7 @@
 namespace wcf\data\page\content;
 
 use wcf\data\DatabaseObject;
-use wcf\data\ILinkableObject;
+use wcf\data\ITitledLinkObject;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\html\simple\HtmlSimpleParser;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
@@ -28,7 +28,7 @@ use wcf\system\WCF;
  * @property-read   string $customURL      custom url of the page in the associated language
  * @property-read   int $hasEmbeddedObjects is `1` if the page content contains embedded objects, otherwise `0`
  */
-class PageContent extends DatabaseObject implements ILinkableObject
+class PageContent extends DatabaseObject implements ITitledLinkObject
 {
     /**
      * @inheritDoc
@@ -137,5 +137,13 @@ class PageContent extends DatabaseObject implements ILinkableObject
     public function getLink()
     {
         return LinkHandler::getInstance()->getCmsLink($this->pageID, $this->languageID);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 }
