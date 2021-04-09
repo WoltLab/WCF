@@ -792,7 +792,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.group.option.admin.management.canRebuildData"><![CDATA[Can rebuild data]]></item>
 		<item name="wcf.acp.group.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.group.button.choose"><![CDATA[Choose User Group]]></item>
-		<item name="wcf.acp.group.option.error.validationFailed"><![CDATA[You have entered an invalid value.]]></item>
+		<item name="wcf.acp.group.option.error.validationFailed"><![CDATA[The entered value is invalid.]]></item>
 		<item name="wcf.acp.group.option.admin.user.canDisableAvatar"><![CDATA[Can block avatars]]></item>
 		<item name="wcf.acp.group.option.admin.user.canDisableCoverPhoto"><![CDATA[Can block cover photos]]></item>
 		<item name="wcf.acp.group.option.admin.user.canDisableSignature"><![CDATA[Can block signatures]]></item>
@@ -1527,7 +1527,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.module_poll"><![CDATA[Polls]]></item>
 		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximum Poll Options]]></item>
 		<item name="wcf.acp.option.poll_full_width"><![CDATA[Display polls over the entire width]]></item>
-		<item name="wcf.acp.option.error.validationFailed"><![CDATA[You have entered an invalid value.]]></item>
+		<item name="wcf.acp.option.error.validationFailed"><![CDATA[The entered value is invalid.]]></item>
 		<item name="wcf.acp.option.module_members_list"><![CDATA[Members list]]></item>
 		<item name="wcf.acp.option.footer_code"><![CDATA[Footer Code]]></item>
 		<item name="wcf.acp.option.footer_code.description"><![CDATA[The entered code will be appended to the page footer of your site. You can use it to embed services like “Google Analytics” or “Matomo”.]]></item>
@@ -1774,7 +1774,7 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.customOption.optionType.URL"><![CDATA[Link]]></item>
 		<item name="wcf.acp.customOption.add"><![CDATA[Add Option Field]]></item>
 		<item name="wcf.acp.customOption.edit"><![CDATA[Edit Option Field]]></item>
-		<item name="wcf.acp.customOption.error.validationFailed"><![CDATA[You have entered an invalid value.]]></item>
+		<item name="wcf.acp.customOption.error.validationFailed"><![CDATA[The entered value is invalid.]]></item>
 		<item name="wcf.acp.customOption.showOrder"><![CDATA[Display Order]]></item>
 		<item name="wcf.acp.customOption.defaultValue"><![CDATA[Default Value]]></item>
 		<item name="wcf.acp.customOption.defaultValue.description"><![CDATA[Default option value suggested on initial request.]]></item>
@@ -1988,7 +1988,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.paidSubscription.subscriptionLengthUnit.D"><![CDATA[Day(s)]]></item>
 		<item name="wcf.acp.paidSubscription.subscriptionLengthUnit.M"><![CDATA[Month(s)]]></item>
 		<item name="wcf.acp.paidSubscription.subscriptionLengthUnit.Y"><![CDATA[Year(s)]]></item>
-		<item name="wcf.acp.paidSubscription.subscriptionLength.error.invalid"><![CDATA[You have entered an invalid length. You can set a maximum of 90 for “Day(s)”, 24 for “Month(s)” or 5 for “Year(s)”.]]></item>
+		<item name="wcf.acp.paidSubscription.subscriptionLength.error.invalid"><![CDATA[The entered length is invalid. You can set a maximum of 90 for “Day(s)”, 24 for “Month(s)” or 5 for “Year(s)”.]]></item>
 		<item name="wcf.acp.paidSubscription.showOrder.description"><![CDATA[Choose display order of paid subscriptions.]]></item>
 		<item name="wcf.acp.paidSubscription.isDisabled"><![CDATA[Disable subscription]]></item>
 		<item name="wcf.acp.paidSubscription.isDisabled.description"><![CDATA[Disabling a subscription will make it unpurchasable.]]></item>
@@ -3286,7 +3286,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.captcha.com.woltlab.wcf.captchaQuestion"><![CDATA[Question]]></item>
 	</category>
 	<category name="wcf.captcha.question">
-		<item name="wcf.captcha.question.answer.error.false"><![CDATA[You have entered an incorrect answer.]]></item>
+		<item name="wcf.captcha.question.answer.error.false"><![CDATA[The entered answer is incorrect.]]></item>
 		<item name="wcf.captcha.question.captcha"><![CDATA[Question]]></item>
 		<item name="wcf.captcha.question.captcha.description"><![CDATA[Please answer the question respectively to solve the problem below.]]></item>
 	</category>
@@ -3752,17 +3752,17 @@ Attachments:
 		<item name="wcf.editor.image.edit"><![CDATA[Edit Image]]></item>
 		<item name="wcf.editor.image.insert"><![CDATA[Insert Image]]></item>
 		<item name="wcf.editor.image.link"><![CDATA[Link]]></item>
-		<item name="wcf.editor.image.link.error.invalid"><![CDATA[You have entered an invalid link.]]></item>
+		<item name="wcf.editor.image.link.error.invalid"><![CDATA[The entered link is invalid.]]></item>
 		<item name="wcf.editor.image.float"><![CDATA[Float]]></item>
 		<item name="wcf.editor.image.float.left"><![CDATA[Left]]></item>
 		<item name="wcf.editor.image.float.right"><![CDATA[Right]]></item>
 		<item name="wcf.editor.image.source"><![CDATA[Source]]></item>
 		<item name="wcf.editor.image.source.error.blocked"><![CDATA[Images from external sources have been disabled, please use the file attachment function.]]></item>
 		<item name="wcf.editor.image.source.error.insecure"><![CDATA[Insecure sources (“http://”) for images have been disabled, please use secure sources only (“https://”).]]></item>
-		<item name="wcf.editor.image.source.error.invalid"><![CDATA[You have entered an invalid link.]]></item>
+		<item name="wcf.editor.image.source.error.invalid"><![CDATA[The entered link is invalid.]]></item>
 		<item name="wcf.editor.link.add"><![CDATA[Insert Link]]></item>
 		<item name="wcf.editor.link.edit"><![CDATA[Edit Link]]></item>
-		<item name="wcf.editor.link.error.invalid"><![CDATA[You have entered an invalid link.]]></item>
+		<item name="wcf.editor.link.error.invalid"><![CDATA[The entered link is invalid.]]></item>
 		<item name="wcf.editor.link.unlink"><![CDATA[Unlink]]></item>
 		<item name="wcf.editor.link.url"><![CDATA[Link]]></item>
 		<item name="wcf.editor.link.text"><![CDATA[Text]]></item>
@@ -3773,7 +3773,7 @@ Attachments:
 		<item name="wcf.editor.quote.title"><![CDATA[{if $author}Quote from {@$author}{else}Quote{/if}]]></item>
 		<item name="wcf.editor.quote.url"><![CDATA[Link]]></item>
 		<item name="wcf.editor.quote.url.description"><![CDATA[Optional: Specify the link to the source.]]></item>
-		<item name="wcf.editor.quote.url.error.invalid"><![CDATA[You have entered an invalid link.]]></item>
+		<item name="wcf.editor.quote.url.error.invalid"><![CDATA[The entered link is invalid.]]></item>
 		<item name="wcf.editor.source.error.active"><![CDATA[Please return to the normal view before submitting.]]></item>
 		<item name="wcf.editor.spoiler.label"><![CDATA[Label]]></item>
 		<item name="wcf.editor.spoiler.label.description"><![CDATA[Optional: Specify the label for the spoiler toggle button.]]></item>
@@ -4410,7 +4410,7 @@ Attachments:
 		<item name="wcf.poll.button.showVote"><![CDATA[Vote]]></item>
 		<item name="wcf.poll.button.vote"><![CDATA[Vote]]></item>
 		<item name="wcf.poll.endTime"><![CDATA[Poll Ends (optional)]]></item>
-		<item name="wcf.poll.endTime.error.invalid"><![CDATA[You have entered an invalid date.]]></item>
+		<item name="wcf.poll.endTime.error.invalid"><![CDATA[The entered date is invalid.]]></item>
 		<item name="wcf.poll.isChangeable"><![CDATA[Votes can be changed]]></item>
 		<item name="wcf.poll.isPublic"><![CDATA[Publicize participants]]></item>
 		<item name="wcf.poll.management"><![CDATA[Poll]]></item>
@@ -4449,7 +4449,7 @@ Attachments:
 		<item name="wcf.recaptcha.audio"><![CDATA[Audio Version]]></item>
 		<item name="wcf.recaptcha.image"><![CDATA[Image Version]]></item>
 		<item name="wcf.recaptcha.help"><![CDATA[Help]]></item>
-		<item name="wcf.recaptcha.error.recaptchaString.false"><![CDATA[You have entered the security code incorrectly. Please try again.]]></item>
+		<item name="wcf.recaptcha.error.recaptchaString.false"><![CDATA[The entered security code is incorrect. Please try again.]]></item>
 	</category>
 	<category name="wcf.search">
 		<item name="wcf.search.author"><![CDATA[Search by Author]]></item>
