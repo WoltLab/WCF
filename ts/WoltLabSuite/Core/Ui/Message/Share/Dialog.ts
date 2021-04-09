@@ -55,7 +55,7 @@ function getDialogElements(shareButton: HTMLElement): string {
     if (!shareButton.dataset.bbcode) {
       dialogOptions += getDialogElement(
         "wcf.message.share.permalink.bbcode",
-        `[url='${StringUtil.escapeHTML(permalink)}']${StringUtil.escapeHTML(shareButton.dataset.linkTitle)}[/url]`,
+        `[url='${permalink}']${shareButton.dataset.linkTitle}[/url]`,
       );
     }
 
