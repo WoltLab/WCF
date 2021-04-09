@@ -225,7 +225,7 @@ define(['Ajax', 'Core', 'EventHandler', 'StringUtil'], function(Ajax, Core, Even
 			if (typeof pollData.notification === 'object' && typeof pollData.notification.message ===  'string') {
 				//noinspection JSUnresolvedVariable
 				var notification = new window.Notification(pollData.notification.title, {
-					body: StringUtil.unescapeHTML(pollData.notification.message),
+					body: StringUtil.unescapeHTML(pollData.notification.message).replace(/&#x202F;/g, "\u202F"),
 					icon: _icon
 				});
 				notification.onclick = function () {
