@@ -4188,6 +4188,9 @@ Dateianhänge:
 		<item name="wcf.message.share.linkedIn"><![CDATA[LinkedIn]]></item>
 		<item name="wcf.message.share.pinterest"><![CDATA[Pinterest]]></item>
 		<item name="wcf.message.share.xing"><![CDATA[XING]]></item>
+		<item name="wcf.message.share.socialMedia"><![CDATA[Social Media]]></item>
+		<item name="wcf.message.share.copy"><![CDATA[Code kopiere]]></item>
+		<item name="wcf.message.share.copy.success"><![CDATA[Der Code wurde erfolgreich kopiert.]]></item>
 		<item name="wcf.message.smilies"><![CDATA[Smileys]]></item>
 		<item name="wcf.message.button.extendedReply"><![CDATA[Erweiterte Antwort]]></item>
 		<item name="wcf.message.button.extendedEdit"><![CDATA[Erweiterte Bearbeitung]]></item>

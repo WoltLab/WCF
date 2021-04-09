@@ -12,6 +12,14 @@
 {/capture}
 
 {capture assign='contentHeaderNavigation'}
+	{if $page->showShareButtons()}
+		<li>
+			<a href="{$content->getLink()}" class="button shareButton jsOnly" data-link-title="{$content->getTitle()}">
+				<span class="icon icon16 fa-share-alt"></span> <span>{lang}wcf.message.share{/lang}</span>
+			</a>
+		</li>
+	{/if}
+	
 	{if $page->isMultilingual && $__wcf->user->userID && $page->getPageLanguages()|count > 1}
 		<li class="dropdown">
 			<a class="dropdownToggle boxFlag box24 button">
@@ -57,17 +65,5 @@
 		</nav>
 	{/hascontent}
 </footer>
-
-{if $page->showShareButtons()}
-	{capture assign='footerBoxes'}
-		<section class="box boxFullWidth jsOnly">
-			<h2 class="boxTitle">{lang}wcf.message.share{/lang}</h2>
-			
-			<div class="boxContent">
-				{include file='shareButtons'}
-			</div>
-		</section>
-	{/capture}
-{/if}
 
 {include file='footer'}

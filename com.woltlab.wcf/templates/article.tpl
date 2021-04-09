@@ -180,9 +180,13 @@
 				</div>
 			{/if}
 			
-			
 			<div class="col-xs-12 col-md-6 col-md{if !(MODULE_LIKE && ARTICLE_ENABLE_LIKE && $__wcf->session->getPermission('user.like.canViewLike'))} col-md-offset-6{/if}">
 				<ul class="articleLikeButtons buttonGroup buttonList smallButtons">
+					<li>
+						<a href="{$articleContent->getLink()}" class="button shareButton jsOnly" data-link-title="{$articleContent->getTitle()}">
+							<span class="icon icon16 fa-share-alt"></span> <span>{lang}wcf.message.share{/lang}</span>
+						</a>
+					</li>
 					{if $__wcf->session->getPermission('user.profile.canReportContent')}
 						<li class="jsReportArticle jsOnly" data-object-id="{@$articleContent->articleID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="button jsTooltip"><span class="icon icon16 fa-exclamation-triangle"></span> <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
 					{/if}
@@ -227,18 +231,6 @@
 		</div>
 	{/if}
 </div>
-
-{if ENABLE_SHARE_BUTTONS}
-	{capture assign='footerBoxes'}
-		<section class="box boxFullWidth jsOnly">
-			<h2 class="boxTitle">{lang}wcf.message.share{/lang}</h2>
-			
-			<div class="boxContent">
-				{include file='shareButtons'}
-			</div>
-		</section>
-	{/capture}
-{/if}
 
 <footer class="contentFooter">
 	{hascontent}

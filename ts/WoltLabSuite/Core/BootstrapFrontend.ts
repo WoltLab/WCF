@@ -15,6 +15,8 @@ import * as UiUserIgnore from "./Ui/User/Ignore";
 import * as UiPageHeaderMenu from "./Ui/Page/Header/Menu";
 import * as UiMessageUserConsent from "./Ui/Message/UserConsent";
 import * as Ajax from "./Ajax";
+import * as UiMessageShareDialog from "./Ui/Message/Share/Dialog";
+import * as UiMessageShareProviders from "./Ui/Message/Share/Providers";
 
 interface BoostrapOptions {
   backgroundQueue: {
@@ -23,6 +25,7 @@ interface BoostrapOptions {
   };
   enableUserPopover: boolean;
   executeCronjobs: boolean;
+  shareButtonProviders?: string[];
   styleChanger: boolean;
 }
 
@@ -85,4 +88,7 @@ export function setup(options: BoostrapOptions): void {
   }
 
   UiMessageUserConsent.init();
+
+  UiMessageShareProviders.enableShareProviders(options.shareButtonProviders || []);
+  UiMessageShareDialog.setup();
 }

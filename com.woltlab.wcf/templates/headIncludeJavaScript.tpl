@@ -133,7 +133,21 @@ window.addEventListener('pageshow', function(event) {
 			'wcf.date.datePicker.hour': '{jslang}wcf.date.datePicker.hour{/jslang}',
 			'wcf.date.datePicker.minute': '{jslang}wcf.date.datePicker.minute{/jslang}',
 			'wcf.global.form.password.button.hide': '{jslang}wcf.global.form.password.button.hide{/jslang}',
-			'wcf.global.form.password.button.show': '{jslang}wcf.global.form.password.button.show{/jslang}'
+			'wcf.global.form.password.button.show': '{jslang}wcf.global.form.password.button.show{/jslang}',
+			'wcf.message.share': '{jslang}wcf.message.share{/jslang}',
+			'wcf.message.share.facebook': '{jslang}wcf.message.share.facebook{/jslang}',
+			'wcf.message.share.twitter': '{jslang}wcf.message.share.twitter{/jslang}',
+			'wcf.message.share.reddit': '{jslang}wcf.message.share.reddit{/jslang}',
+			'wcf.message.share.whatsApp': '{jslang}wcf.message.share.whatsApp{/jslang}',
+			'wcf.message.share.linkedIn': '{jslang}wcf.message.share.linkedIn{/jslang}',
+			'wcf.message.share.pinterest': '{jslang}wcf.message.share.pinterest{/jslang}',
+			'wcf.message.share.xing': '{jslang}wcf.message.share.xing{/jslang}',
+			'wcf.message.share.permalink': '{jslang}wcf.message.share.permalink{/jslang}',
+			'wcf.message.share.permalink.bbcode': '{jslang}wcf.message.share.permalink.bbcode{/jslang}',
+			'wcf.message.share.permalink.html': '{jslang}wcf.message.share.permalink.html{/jslang}',
+			'wcf.message.share.socialMedia': '{jslang}wcf.message.share.socialMedia{/jslang}',
+			'wcf.message.share.copy': '{jslang}wcf.message.share.copy{/jslang}',
+			'wcf.message.share.copy.success': '{jslang}wcf.message.share.copy.success{/jslang}'
 			{if MODULE_LIKE}
 				,'wcf.like.button.like': '{jslang}wcf.like.button.like{/jslang}',
 				'wcf.like.button.dislike': '{jslang}wcf.like.button.dislike{/jslang}',
@@ -153,6 +167,9 @@ window.addEventListener('pageshow', function(event) {
 			},
 			enableUserPopover: {if $__wcf->getSession()->getPermission('user.profile.canViewUserProfile')}true{else}false{/if},
 			executeCronjobs: {if $executeCronjobs}true{else}false{/if},
+			{if ENABLE_SHARE_BUTTONS}
+			    shareButtonProviders: [{implode from="\n"|explode:SHARE_BUTTONS_PROVIDERS item=shareButtonProvider}'{$shareButtonProvider}'{/implode}],
+			{/if}
 			styleChanger: {if $__wcf->getStyleHandler()->showStyleChanger()}true{else}false{/if}
 		});
 		
