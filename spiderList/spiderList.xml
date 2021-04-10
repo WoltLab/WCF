@@ -205,6 +205,10 @@
 		<name>BSpider</name>
 		<url>http://www.robotstxt.org/wc/active/html/bspider.html</url>
 	</spider>
+	<spider ident="Buck/2.2">
+		<name>Buck</name>
+		<url>https://app.hypefactors.com/media-monitoring/about.html</url>
+	</spider>
 	<spider ident="CACTVS Chemistry Spider">
 		<name>CACTVS Chemistry</name>
 	</spider>
