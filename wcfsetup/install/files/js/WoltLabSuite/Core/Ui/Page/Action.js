@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Page/Action
  */
-define(['Dictionary', 'Language'], function (Dictionary, Language) {
+define(['Dictionary', 'Language', 'Ui/Screen'], function (Dictionary, Language, UiScreen) {
 	'use strict';
 	
 	var _buttons = new Dictionary();
@@ -27,6 +27,8 @@ define(['Dictionary', 'Language'], function (Dictionary, Language) {
 	var _resetLastPosition = window.debounce(function () {
 		_lastPosition = -1;
 	}, 50, false);
+
+	var _toTopButtonThreshold = 300;
 	
 	/**
 	 * @exports     WoltLabSuite/Core/Ui/Page/Action
@@ -82,6 +84,18 @@ define(['Dictionary', 'Language'], function (Dictionary, Language) {
 					_lastPosition = -1;
 				}
 			}, {passive: true});
+
+			UiScreen.on('screen-sm-down', {
+				match() {
+					_toTopButtonThreshold = 50;
+				},
+				unmatch() {
+					_toTopButtonThreshold = 300;
+				},
+				setup() {
+					_toTopButtonThreshold = 50;
+				}
+			});
 			
 			this._onScroll();
 		},
@@ -114,7 +128,7 @@ define(['Dictionary', 'Language'], function (Dictionary, Language) {
 				return;
 			}
 			
-			if (offset >= 300) {
+			if (offset >= _toTopButtonThreshold) {
 				if (_toTopButton.classList.contains('initiallyHidden')) {
 					_toTopButton.classList.remove('initiallyHidden');
 				}
@@ -293,6 +307,13 @@ define(['Dictionary', 'Language'], function (Dictionary, Language) {
 			}
 			
 			_container.classList[(hasVisibleItems ? 'add' : 'remove')]('active');
+
+			if (hasVisibleItems) {
+				_wrapper.classList.add("pageActionHasContextButtons");
+			}
+			else {
+				_wrapper.classList.remove("pageActionHasContextButtons");
+			}
 		}
 	};
 });
