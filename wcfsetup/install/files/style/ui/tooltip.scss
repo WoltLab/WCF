@@ -50,7 +50,7 @@
 	z-index: 350;
 	
 	&.touchForceInaccessible {
-		pointer-events: none !important;
+		display: none;
 	}
 	
 	@include screen-md-down {
