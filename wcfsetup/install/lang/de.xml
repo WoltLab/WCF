@@ -752,7 +752,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.group.option.admin.content.bbcode.canManageBBCode"><![CDATA[Kann BBCodes verwalten]]></item>
 		<item name="wcf.acp.group.option.category.admin.content.smiley"><![CDATA[Smileys]]></item>
 		<item name="wcf.acp.group.option.admin.content.smiley.canManageSmiley"><![CDATA[Kann Smileys verwalten]]></item>
-		<item name="wcf.acp.group.option.user.comment.floodControlTime"><![CDATA[Mindestzeit zwischen zwei Kommentaren]]></item>
+		<item name="wcf.acp.group.option.user.comment.floodControlTime"><![CDATA[Mindestzeit zwischen Kommentaren]]></item>
 		<item name="wcf.acp.group.option.user.comment.floodControlTime.description"><![CDATA[Mindestzeit, die zwischen zwei hintereinander folgenden Kommentaren oder Antworten vergehen muss. [0 für unbeschränkt]]]></item>
 		<item name="wcf.acp.group.option.user.comment.disallowedBBCodes"><![CDATA[Nicht erlaubte BBCodes]]></item>
 		<item name="wcf.acp.group.option.user.comment.disallowedBBCodes.description"><![CDATA[Die hier ausgewählten BBCodes dürfen von Mitgliedern dieser Benutzergruppe <em>nicht</em> verwendet werden.]]></item>
