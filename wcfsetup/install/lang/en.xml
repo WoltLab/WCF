@@ -571,7 +571,7 @@
 		<item name="wcf.acp.devtools.project.pip.entry.delete.confirmMessage"><![CDATA[Do you really want to delete the entry?]]></item>
 		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction"><![CDATA[Add delete instruction]]></item>
 		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description"><![CDATA[The entry will not only be deleted from database and its installation instruction removed, but a delete instruction will also be explicitly added.]]></item>
-		<item name="wcf.acp.devtools.project.edit.error.brokenPath"><![CDATA[There is no <kbd>package.xml</kbd> in the given directory. The package files have either been deleted or moved.]]></item>
+		<item name="wcf.acp.devtools.project.edit.error.brokenPath"><![CDATA[There is no <kbd>package.xml</kbd> in the entered directory. The package files have either been deleted or moved.]]></item>
 		<item name="wcf.acp.devtools.project.edit.warning.missingElements"><![CDATA[The following information is missing from the <kbd>package.xml</kbd> file: {implode from=$missingElements item=missingElement}<kbd>{$missingElement}</kbd>{/implode}.]]></item>
 		<item name="wcf.acp.devtools.project.license"><![CDATA[License]]></item>
 		<item name="wcf.acp.devtools.missingLanguageItem.languageID"><![CDATA[Language]]></item>
@@ -2515,7 +2515,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.integerCondition.propertyName"><![CDATA[Object Property Name]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.data.title"><![CDATA[Message Type Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission"><![CDATA[Permission for Disallowed BBCodes]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission.description"><![CDATA[If the form builder API is used to create a message of this type, the given user group permission will be used to determine the disallowed BBCodes. If no permission is given, the general permission for disallowed BBCodes for messages is used.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission.description"><![CDATA[If the form builder API is used to create a message of this type, the entered user group permission will be used to determine the disallowed BBCodes. If no permission is given, the general permission for disallowed BBCodes for messages is used.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission.error.optionType"><![CDATA[The entered user group permission’s type has to be BBCodeSelect.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc"><![CDATA[Generate Table of Contents]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc.description"><![CDATA[If selected, a table of contents is created for each message of this type.]]></item>
@@ -2729,7 +2729,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.updateServer.serverURL"><![CDATA[Address]]></item>
 		<item name="wcf.acp.updateServer.serverURL.error.invalid"><![CDATA[The address is invalid.]]></item>
 		<item name="wcf.acp.updateServer.serverURL.error.woltlab"><![CDATA[The official servers are already set up and correctly configured.]]></item>
-		<item name="wcf.acp.updateServer.serverURL.error.duplicate"><![CDATA[The given server already exists. You can <a href="{link controller="PackageUpdateServerEdit" id=$errorType[duplicate]->packageUpdateServerID}{/link}"><strong>edit this server instead</strong></a>.]]></item>
+		<item name="wcf.acp.updateServer.serverURL.error.duplicate"><![CDATA[The entered server already exists. You can <a href="{link controller="PackageUpdateServerEdit" id=$errorType[duplicate]->packageUpdateServerID}{/link}"><strong>edit this server instead</strong></a>.]]></item>
 		<item name="wcf.acp.updateServer.status"><![CDATA[Status]]></item>
 		<item name="wcf.acp.updateServer.lastUpdateTime"><![CDATA[Last Access]]></item>
 	</category>
@@ -2761,7 +2761,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.smiley.aliases.error.notUnique"><![CDATA[At least one alternative smiley code is already in use by another smiley.]]></item>
 		<item name="wcf.acp.smiley.smileyPath"><![CDATA[Smiley Path]]></item>
 		<item name="wcf.acp.smiley.smileyPath.description"><![CDATA[The smiley path is relative to “{$__wcf->getPath()}”.]]></item>
-		<item name="wcf.acp.smiley.smileyPath.error.notFound"><![CDATA[Unable to find a file on given path.]]></item>
+		<item name="wcf.acp.smiley.smileyPath.error.notFound"><![CDATA[Unable to find a file on entered path.]]></item>
 		<item name="wcf.acp.smiley.smileyFile"><![CDATA[Smiley File]]></item>
 		<item name="wcf.acp.smiley.smileyFile2x"><![CDATA[Smiley File (HD)]]></item>
 		<item name="wcf.acp.smiley.smileyFile2x.description"><![CDATA[Optional image used for display on high resolution displays such as Apple Retina or 4K/UHD-displays. Image must be double times the dimensions of the normal image to work.]]></item>
@@ -2898,8 +2898,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.globals.fontSizeTitle"><![CDATA[Font Size (Page Title)]]></item>
 		<item name="wcf.acp.style.globals.fontFamilyGoogle"><![CDATA[Font Face]]></item>
 		<item name="wcf.acp.style.globals.fontFamilyGoogle.description"><![CDATA[The selected font face will be downloaded when saving the style and afterwards will be delivered as a web font to your users without connecting to external services.]]></item>
-		<item name="wcf.acp.style.globals.fontFamilyGoogle.error.downloadFailed"><![CDATA[Downloading the given font face failed.]]></item>
-		<item name="wcf.acp.style.globals.fontFamilyGoogle.error.downloadFailed.notFound"><![CDATA[The given font face could not be found.]]></item>
+		<item name="wcf.acp.style.globals.fontFamilyGoogle.error.downloadFailed"><![CDATA[Downloading the entered font face failed.]]></item>
+		<item name="wcf.acp.style.globals.fontFamilyGoogle.error.downloadFailed.notFound"><![CDATA[The entered font face could not be found.]]></item>
 		<item name="wcf.acp.style.globals.fontFamilyFallback"><![CDATA[Font Face (Fallback)]]></item>
 		<item name="wcf.acp.style.favicon"><![CDATA[Individual Favicon]]></item>
 		<item name="wcf.acp.style.favicon.description"><![CDATA[Upload an 256×256 pixels image, acceptable image types are JPG and PNG. The uploaded image will be used to derive all required favicon sizes.]]></item>
@@ -2987,7 +2987,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.user.merge.warning"><![CDATA[The process to merge users does not update all counters and references due to technical limitations. You’re required to manually run the rebuild data tasks in the maintenance section afterwards in order to solve any conflicts or inconsistencies.]]></item>
 		<item name="wcf.acp.user.revertChanges"><![CDATA[Revert Changes To Contents]]></item>
 		<item name="wcf.acp.user.revertChanges.timeframe"><![CDATA[Time Period]]></item>
-		<item name="wcf.acp.user.revertChanges.timeframe.description"><![CDATA[Changes made in the previous days will be reverted to the newest version, that is either older than the given number of days or made by an unrelated user.]]></item>
+		<item name="wcf.acp.user.revertChanges.timeframe.description"><![CDATA[Changes made in the previous days will be reverted to the newest version, that is either older than the entered number of days or made by an unrelated user.]]></item>
 		<item name="wcf.acp.user.revertChanges.markedUsers"><![CDATA[Revert changes by the following users]]></item>
 		<item name="wcf.acp.user.search"><![CDATA[Search Users]]></item>
 		<item name="wcf.acp.user.search.conditions.profile"><![CDATA[Profile]]></item>
@@ -3314,7 +3314,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 	</category>
 	<category name="wcf.cli">
 		<item name="wcf.cli.help.noLongHelp"><![CDATA[There is no long help for the parameter "{$topic}".]]></item>
-		<item name="wcf.cli.help.language"><![CDATA[Forces the language with the given language code.]]></item>
+		<item name="wcf.cli.help.language"><![CDATA[Forces the language with the entered language code.]]></item>
 		<item name="wcf.cli.help.version"><![CDATA[Displays the version number and exits.]]></item>
 		<item name="wcf.cli.help.help"><![CDATA[Displays this help and exits.]]></item>
 		<item name="wcf.cli.help.q"><![CDATA[Quiet: Display less information.]]></item>
@@ -3331,7 +3331,7 @@ Errors are:
 		<item name="wcf.cli.worker.threads"><![CDATA[Requested number of parallel processes.]]></item>
 		<item name="wcf.cli.worker.threads.windows"><![CDATA[Parallel processing using --threads is not available on Windows.]]></item>
 		<item name="wcf.cli.worker.threadId"><![CDATA[Specifies the thread id when processing in parallel. Used internally when --threads is given.]]></item>
-		<item name="wcf.cli.worker.threadId.invalid"><![CDATA[The given thread id is not valid.]]></item>
+		<item name="wcf.cli.worker.threadId.invalid"><![CDATA[The entered thread id is not valid.]]></item>
 		<item name="wcf.cli.error.help.noArguments"><![CDATA[The command "{$command}" does not support any parameters.]]></item>
 		<item name="wcf.cli.error.language.notFound"><![CDATA[The language with the language code "{$languageCode}" could not be found.]]></item>
 		<item name="wcf.cli.error.command.notFound"><![CDATA[The command "{$command}" could not be found. Type in "commands" to list available commands.]]></item>
@@ -4944,7 +4944,7 @@ You can manage multi-factor authentication within the Account Security page [URL
 <p>Use the <a href="{link controller='AccountSecurity'}#section_multifactor{/link}">Overview in Account Security</a> if you want to disable multi-factor authentication.</p>]]></item>
 		<item name="wcf.user.security.multifactor.email.subject"><![CDATA[{$code} is your one time code for {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.security.multifactor.email.success"><![CDATA[The additional authentication via email has successfully been enabled.]]></item>
-		<item name="wcf.user.security.multifactor.error.invalidCode"><![CDATA[The given code is invalid.]]></item>
+		<item name="wcf.user.security.multifactor.error.invalidCode"><![CDATA[The entered code is invalid.]]></item>
 		<item name="wcf.user.security.multifactor.initialBackup"><![CDATA[<p>The multi-factor authentication is enabled for your account starting now. Going forward you will need to have your second factor handy for every login.</p>
 <p><br></p>
 <p>In addition we generated emergency codes for you. They will allow you to gain access to your account in case your second factor becomes unavailable.</p>
