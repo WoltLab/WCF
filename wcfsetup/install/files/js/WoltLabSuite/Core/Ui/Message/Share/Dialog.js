@@ -35,14 +35,8 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
      * Returns all of the dialog elements shown in the dialog.
      */
     function getDialogElements(shareButton) {
-        let dialogOptions = "";
-        let permalink = "";
-        if (shareButton instanceof HTMLAnchorElement && shareButton.href) {
-            permalink = shareButton.href;
-        }
-        if (permalink) {
-            dialogOptions += getDialogElement("wcf.message.share.permalink", permalink);
-        }
+        const permalink = shareButton.href;
+        let dialogOptions = getDialogElement("wcf.message.share.permalink", permalink);
         if (shareButton.dataset.bbcode) {
             dialogOptions += getDialogElement("wcf.message.share.permalink.bbcode", shareButton.dataset.bbcode);
         }
@@ -101,7 +95,7 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
             let providerElement = "";
             if (providerButtons) {
                 providerElement = `
-        <dl class="messageShareButtons jsMessageShareButtons">
+        <dl class="messageShareButtons jsMessageShareButtons" data-url="${StringUtil.escapeHTML(target.href)}">
           <dt>${Language.get("wcf.message.share.socialMedia")}</dt>
           <dd>${providerButtons}</dd>
         </dl>
@@ -117,7 +111,7 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
                 title: Language.get("wcf.message.share"),
             });
             dialogData.content.style.maxWidth = "600px";
-            dialogData.dialog
+            dialogData.content
                 .querySelectorAll(".shareDialogCopyButton")
                 .forEach((el) => el.addEventListener("click", (ev) => copy(ev)));
             if (providerButtons) {
@@ -129,7 +123,7 @@ define(["require", "exports", "tslib", "../../Dialog", "../../../Dom/Util", "../
         }
     }
     function registerButtons() {
-        document.querySelectorAll(".shareButton").forEach((shareButton) => {
+        document.querySelectorAll("a.shareButton").forEach((shareButton) => {
             if (!shareButtons.has(shareButton)) {
                 shareButton.addEventListener("click", (ev) => openDialog(ev));
                 shareButtons.add(shareButton);

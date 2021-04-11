@@ -37,17 +37,11 @@ async function copy(event: Event): Promise<void> {
 /**
  * Returns all of the dialog elements shown in the dialog.
  */
-function getDialogElements(shareButton: HTMLElement): string {
-  let dialogOptions = "";
+function getDialogElements(shareButton: HTMLAnchorElement): string {
+  const permalink = shareButton.href;
 
-  let permalink = "";
-  if (shareButton instanceof HTMLAnchorElement && shareButton.href) {
-    permalink = shareButton.href;
-  }
+  let dialogOptions = getDialogElement("wcf.message.share.permalink", permalink);
 
-  if (permalink) {
-    dialogOptions += getDialogElement("wcf.message.share.permalink", permalink);
-  }
   if (shareButton.dataset.bbcode) {
     dialogOptions += getDialogElement("wcf.message.share.permalink.bbcode", shareButton.dataset.bbcode);
   }
@@ -116,14 +110,14 @@ function getProviderButtons(): string {
 function openDialog(event: MouseEvent): void {
   event.preventDefault();
 
-  const target = event.currentTarget as HTMLElement;
+  const target = event.currentTarget as HTMLAnchorElement;
   const dialogId = `shareContentDialog_${DomUtil.identify(target)}`;
   if (!UiDialog.getDialog(dialogId)) {
     const providerButtons = getProviderButtons();
     let providerElement = "";
     if (providerButtons) {
       providerElement = `
-        <dl class="messageShareButtons jsMessageShareButtons">
+        <dl class="messageShareButtons jsMessageShareButtons" data-url="${StringUtil.escapeHTML(target.href)}">
           <dt>${Language.get("wcf.message.share.socialMedia")}</dt>
           <dd>${providerButtons}</dd>
         </dl>
@@ -142,7 +136,7 @@ function openDialog(event: MouseEvent): void {
     });
 
     dialogData.content.style.maxWidth = "600px";
-    dialogData.dialog
+    dialogData.content
       .querySelectorAll(".shareDialogCopyButton")
       .forEach((el) => el.addEventListener("click", (ev) => copy(ev)));
 
@@ -155,7 +149,7 @@ function openDialog(event: MouseEvent): void {
 }
 
 function registerButtons(): void {
-  document.querySelectorAll(".shareButton").forEach((shareButton: HTMLElement) => {
+  document.querySelectorAll("a.shareButton").forEach((shareButton: HTMLElement) => {
     if (!shareButtons.has(shareButton)) {
       shareButton.addEventListener("click", (ev) => openDialog(ev));
 
