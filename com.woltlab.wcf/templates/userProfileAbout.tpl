@@ -7,7 +7,7 @@
 					
 					{foreach from=$optionCategory[options] item=userOption}
 						<dl>
-							<dt>{lang}wcf.user.option.{@$userOption[object]->optionName}{/lang}</dt>
+							<dt>{$userOption[object]->getTitle()}</dt>
 							<dd>{@$userOption[object]->optionValue}</dd>
 						</dl>
 					{/foreach}
