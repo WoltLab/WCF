@@ -2,6 +2,7 @@
 namespace wcf\data\user\group;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
+use wcf\system\cache\builder\UserGroupAssignmentCacheBuilder;
 use wcf\system\cache\builder\UserGroupCacheBuilder;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\exception\SystemException;
@@ -174,6 +175,9 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 		// clear cache
 		UserGroupCacheBuilder::getInstance()->reset();
 		UserGroupPermissionCacheBuilder::getInstance()->reset();
+
+		// https://github.com/WoltLab/WCF/issues/4045
+		UserGroupAssignmentCacheBuilder::getInstance()->reset();
 		
 		// clear sessions
 		SessionHandler::resetSessions();
