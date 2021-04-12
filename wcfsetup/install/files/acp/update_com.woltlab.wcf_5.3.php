@@ -1,6 +1,7 @@
 <?php
 
 use wcf\system\database\table\column\CharDatabaseTableColumn;
+use wcf\system\database\table\column\EnumDatabaseTableColumn;
 use wcf\system\database\table\column\IntDatabaseTableColumn;
 use wcf\system\database\table\column\MediumtextDatabaseTableColumn;
 use wcf\system\database\table\column\NotNullInt10DatabaseTableColumn;
@@ -52,6 +53,11 @@ $tables = [
 				->referencedTable('wcf1_language')
 				->referencedColumns(['languageID'])
 				->onDelete('SET NULL')
+		]),
+	PartialDatabaseTable::create('wcf1_event_listener')
+		->columns([
+			EnumDatabaseTableColumn::create('environment')
+				->enumValues(['user', 'admin', 'all'])
 		]),
 	PartialDatabaseTable::create('wcf1_media')
 		->columns([
