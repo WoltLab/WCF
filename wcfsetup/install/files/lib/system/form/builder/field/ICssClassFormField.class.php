@@ -17,15 +17,17 @@ interface ICssClassFormField extends IFormField
      * Adds the given CSS class to the actual field element and returns this field.
      *
      * @throws      \InvalidArgumentException       if the given class is invalid
+     * @return      static                          this form field
      */
-    public function addFieldClass(string $class): self;
+    public function addFieldClass(string $class);
 
     /**
      * Adds the given CSS classes to the actual field element and returns this field.
      *
      * @throws      \InvalidArgumentException       if any of the given classes is invalid
+     * @return      static                          this form field
      */
-    public function addFieldClasses(array $classes): self;
+    public function addFieldClasses(array $classes);
 
     /**
      * Returns all CSS classes of the actual field element.
@@ -46,6 +48,7 @@ interface ICssClassFormField extends IFormField
      * If the actual field element does not have the given CSS class, this method silently ignores that fact.
      *
      * @throws      \InvalidArgumentException       if the given class is invalid
+     * @return      static                          this form field
      */
-    public function removeFieldClass(string $class): self;
+    public function removeFieldClass(string $class);
 }

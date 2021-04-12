@@ -574,7 +574,7 @@ class FormDocument implements IFormDocument
      * @inheritDoc
      * @since       5.4
      */
-    public function markRequiredFields(bool $markRequiredFields = true): self
+    public function markRequiredFields(bool $markRequiredFields = true)
     {
         $this->markRequiredFields = $markRequiredFields;
 

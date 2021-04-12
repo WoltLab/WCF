@@ -27,6 +27,7 @@ interface IInputModeFormField
      * If `null` is given, the attribute is unset.
      *
      * @throws      \InvalidArgumentException       if an invalid `inputmode` token is included in the attribute value
+     * @return      static                          this form field
      */
-    public function inputMode(?string $inputMode): self;
+    public function inputMode(?string $inputMode);
 }

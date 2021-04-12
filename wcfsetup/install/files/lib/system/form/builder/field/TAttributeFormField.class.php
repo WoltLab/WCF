@@ -40,8 +40,9 @@ trait TAttributeFormField
      * Returns the value of the additional attribute of the actual field element with the given name.
      *
      * @throws      \InvalidArgumentException       if the given attribute is invalid or no such attribute exists
+     * @return      static                          this form field
      */
-    public function getFieldAttribute(string $name): self
+    public function getFieldAttribute(string $name)
     {
         if (!$this->hasFieldAttribute($name)) {
             throw new \InvalidArgumentException("Unknown attribute '{$name}' requested.");
@@ -62,8 +63,9 @@ trait TAttributeFormField
      * Adds the given additional attribute to the actual field element and returns this field.
      *
      * @throws      \InvalidArgumentException       if the given attribute is invalid
+     * @return      static                          this form field
      */
-    public function fieldAttribute(string $name, ?string $value = null): self
+    public function fieldAttribute(string $name, ?string $value = null)
     {
         static::validateFieldAttribute($name);
 
@@ -91,8 +93,9 @@ trait TAttributeFormField
      * If the actual field element does not have the given attribute, this method silently ignores that fact.
      *
      * @throws      \InvalidArgumentException       if the given attribute is invalid
+     * @return      static                          this form field
      */
-    public function removeFieldAttribute(string $name): self
+    public function removeFieldAttribute(string $name)
     {
         static::validateFieldAttribute($name);
 
