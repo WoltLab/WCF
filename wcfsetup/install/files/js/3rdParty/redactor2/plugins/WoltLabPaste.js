@@ -351,7 +351,7 @@ $.Redactor.prototype.WoltLabPaste = function() {
 				if (!data.pre && !data.text) {
 					elBySelAll('img', div, (function(img) {
 						var src = img.src;
-						if ((src.indexOf('data:image') === 0 | src.indexOf("blob:") === 0) && src !== transparentGif) {
+						if ((src.indexOf('data:image') === 0 || src.indexOf("blob:") === 0) && src !== transparentGif) {
 							img.src = transparentGif;
 							
 							var uuid = WCF.getUUID();

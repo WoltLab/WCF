@@ -7,7 +7,7 @@
 		{assign var=error value=''}
 	{/if}
 	<dl class="{$option->optionName}Input{if $error} formError{/if}">
-		<dt{if $optionData[cssClassName]} class="{$optionData[cssClassName]}"{/if}>{if $isSearchMode|empty || !$optionData[hideLabelInSearch]}<label for="{$option->optionName}">{if VISITOR_USE_TINY_BUILD && $isGuestGroup && $option->excludedInTinyBuild}<span class="icon icon16 fa-bolt red jsTooltip" title="{lang}wcf.acp.group.excludedInTinyBuild{/lang}"></span> {/if}{lang}{@$langPrefix}{$option->optionName}{/lang}</label>{/if}</dt>
+		<dt{if $optionData[cssClassName]} class="{$optionData[cssClassName]}"{/if}>{if $isSearchMode|empty || !$optionData[hideLabelInSearch]}<label for="{$option->optionName}">{if VISITOR_USE_TINY_BUILD && $isGuestGroup && $option->excludedInTinyBuild}<span class="icon icon16 fa-bolt red jsTooltip" title="{lang}wcf.acp.group.excludedInTinyBuild{/lang}"></span> {/if}{$langPrefix|concat:$option->optionName|language}</label>{/if}</dt>
 		<dd>{@$optionData[html]}
 			{if $error}
 				<small class="innerError">

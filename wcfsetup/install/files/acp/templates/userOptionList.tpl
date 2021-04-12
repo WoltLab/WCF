@@ -50,7 +50,7 @@
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID">{@$option->optionID}</td>
-						<td class="columnTitle columnOptionName"><a href="{link controller='UserOptionEdit' id=$option->optionID}{/link}">{lang}wcf.user.option.{$option->optionName}{/lang}</a></td>
+						<td class="columnTitle columnOptionName"><a href="{link controller='UserOptionEdit' id=$option->optionID}{/link}">{$option->getTitle()}</a></td>
 						<td class="columnText columnCategoryName">{lang}wcf.user.option.category.{$option->categoryName}{/lang}</td>
 						<td class="columnText columnOptionType">{$option->optionType}</td>
 						<td class="columnDigits columnShowOrder">{#$option->showOrder}</td>
