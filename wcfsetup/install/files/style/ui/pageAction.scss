@@ -57,14 +57,14 @@
 		/* The iOS bottom touch zone is approximately 30px high. Any touches within will show the
 		   menu instead of registering any touch on a button. */
 		bottom: 30px;
-		transition: bottom .12s linear;
-		
+		transition: bottom 0.12s linear;
+
 		&:not(.pageActionHasContextButtons) {
 			&.scrolledDown .pageActionButton,
 			&.scrolledDown .pageActionButtonToTop {
 				opacity: 0;
 				visibility: hidden;
-				transition-delay: .4s;
+				transition-delay: 0.4s;
 			}
 		}
 	}
