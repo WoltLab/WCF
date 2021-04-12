@@ -483,8 +483,13 @@ final class DOMUtil {
 				throw new \InvalidArgumentException("Preserving child nodes is only supported for DOMElement.");
 			}
 			
-			while ($node->hasChildNodes()) {
-				self::insertBefore($node->childNodes->item(0), $node);
+			$children = [];
+			foreach ($node->childNodes as $childNode) {
+				$children[] = $childNode;
+			}
+
+			foreach ($children as $child) {
+				self::insertBefore($child, $node);
 			}
 		}
 		
