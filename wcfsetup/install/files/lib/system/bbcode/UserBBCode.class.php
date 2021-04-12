@@ -20,11 +20,23 @@ class UserBBCode extends AbstractBBCode {
 	public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser) {
 		$userID = (!empty($openingTag['attributes'][0])) ? intval($openingTag['attributes'][0]) : 0;
 		if (!$userID) {
+			if ($parser->getOutputType() === 'text/plain') {
+				return "@{$content}";
+			}
+
 			return "[user]{$content}[/user]";
 		}
 		
 		/** @var UserProfile $userProfile */
 		$userProfile = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.user', $userID);
+
+		if ($parser->getOutputType() === 'text/plain') {
+			if ($userProfile === null) {
+				return "@{$content}";
+			}
+
+			return "@{$userProfile->username}";
+		}
 		
 		return WCF::getTPL()->fetch('userBBCodeTag', 'wcf', [
 			'username' => $content,
