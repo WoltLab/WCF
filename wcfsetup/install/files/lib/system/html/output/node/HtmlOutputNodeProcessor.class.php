@@ -98,7 +98,6 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 		
 		if ($this->outputType !== 'text/html') {
 			// convert `<p>...</p>` into `...<br><br>`
-			$paragraphs = [];
 			foreach ($this->getXPath()->query('//p') as $paragraph) {
 				$isLastNode = true;
 				$sibling = $paragraph;

@@ -283,7 +283,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 		}
 		
 		$elements = [];
-		foreach ($this->getDocument()->getElementsByTagName($tagName) as $element) {
+		foreach ($this->getXPath()->query("//{$tagName}") as $element) {
 			$elements[] = $element;
 		}
 		
