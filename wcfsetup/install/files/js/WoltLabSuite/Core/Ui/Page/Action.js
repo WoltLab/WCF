@@ -86,13 +86,13 @@ define(['Dictionary', 'Language', 'Ui/Screen'], function (Dictionary, Language, 
 			}, {passive: true});
 
 			UiScreen.on('screen-sm-down', {
-				match() {
+				match: function() {
 					_toTopButtonThreshold = 50;
 				},
-				unmatch() {
+				unmatch: function() {
 					_toTopButtonThreshold = 300;
 				},
-				setup() {
+				setup: function() {
 					_toTopButtonThreshold = 50;
 				}
 			});
