@@ -25,6 +25,8 @@ interface IPatternFormField
      * Sets the `pattern` attribute of the form field.
      *
      * If `null` is given, the attribute is unset.
+     *
+     * @return      static  this form field
      */
-    public function pattern(?string $pattern): self;
+    public function pattern(?string $pattern);
 }

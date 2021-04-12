@@ -23,8 +23,9 @@ interface IAttributeFormField extends IFormField
      * Returns the value of the additional attribute of the actual field element with the given name.
      *
      * @throws      \InvalidArgumentException       if the given attribute is invalid or no such attribute exists
+     * @return      static                          this form field
      */
-    public function getFieldAttribute(string $name): self;
+    public function getFieldAttribute(string $name);
 
     /**
      * Returns all additional attributes of the actual field element.
@@ -35,8 +36,9 @@ interface IAttributeFormField extends IFormField
      * Adds the given additional attribute to the actual field element and returns this field.
      *
      * @throws      \InvalidArgumentException       if the given attribute is invalid
+     * @return      static                          this form field
      */
-    public function fieldAttribute(string $name, ?string $value = null): self;
+    public function fieldAttribute(string $name, ?string $value = null);
 
     /**
      * Returns `true` if an additional attribute of the actual field element with the given name exists and returns
@@ -52,8 +54,9 @@ interface IAttributeFormField extends IFormField
      * If the actual field element does not have the given attribute, this method silently ignores that fact.
      *
      * @throws      \InvalidArgumentException       if the given attribute is invalid
+     * @return      static                          this form field
      */
-    public function removeFieldAttribute(string $name): self;
+    public function removeFieldAttribute(string $name);
 
     /**
      * Checks if the given name is a valid additional attribute name.

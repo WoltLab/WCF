@@ -20,8 +20,9 @@ interface IAutoCompleteFormField
      * Multiple tokens can be separated by spaces and if `null` is given, the attribute is unset.
      *
      * @throws      \InvalidArgumentException       if an invalid `autocomplete` token is included in the attribute value
+     * @return      static                          this form field
      */
-    public function autoComplete(?string $autoComplete): self;
+    public function autoComplete(?string $autoComplete);
 
     /**
      * Returns the `autocomplete` attribute of the form field.

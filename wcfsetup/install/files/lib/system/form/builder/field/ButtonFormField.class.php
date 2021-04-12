@@ -38,8 +38,10 @@ class ButtonFormField extends AbstractFormField implements IAttributeFormField, 
 
     /**
      * Sets the text shown on the button and returns this form field.
+     *
+     * @return  ButtonFormField     this form field
      */
-    public function buttonLabel(string $languageItem, array $variables = []): self
+    public function buttonLabel(string $languageItem, array $variables = [])
     {
         $this->buttonLabel = WCF::getLanguage()->getDynamicVariable($languageItem, $variables);
 

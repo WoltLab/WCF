@@ -22,8 +22,9 @@ trait TAutoCompleteFormField
      * Multiple tokens can be separated by spaces and if `null` is given, the attribute is unset.
      *
      * @throws      \InvalidArgumentException       if an invalid `autocomplete` token is included in the attribute value
+     * @return      static                          this form field
      */
-    public function autocomplete(?string $autoComplete): self
+    public function autocomplete(?string $autoComplete)
     {
         if ($autoComplete !== null && $autoComplete !== 'on' && $autoComplete !== 'off') {
             if (\preg_match('~^(?:section-\w+ )?(?:(shipping|billing) )?(?P<token>.+)$~', $autoComplete, $matches)) {

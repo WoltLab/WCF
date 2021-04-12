@@ -36,7 +36,7 @@ final class RejectEverythingFormField extends AbstractFormField
     /**
      * @inheritDoc
      */
-    public function readValue(): self
+    public function readValue()
     {
         return $this;
     }

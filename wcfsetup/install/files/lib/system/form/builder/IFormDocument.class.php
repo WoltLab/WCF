@@ -315,8 +315,9 @@ interface IFormDocument extends IFormParentNode
      * Sets whether required fields are marked in the output and returns this document.
      *
      * @since       5.4
+     * @return      static      this document
      */
-    public function markRequiredFields(bool $markRequiredFields = true): self;
+    public function markRequiredFields(bool $markRequiredFields = true);
 
     /**
      * Returns `true` if required fields are marked in the output and `false` otherwise.

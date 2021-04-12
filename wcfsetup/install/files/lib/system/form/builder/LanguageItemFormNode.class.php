@@ -62,8 +62,10 @@ class LanguageItemFormNode implements IFormChildNode
 
     /**
      * Sets the language item shown in the form node and returns this form node.
+     *
+     * @return      static  this form field
      */
-    public function languageItem(string $languageItem): self
+    public function languageItem(string $languageItem)
     {
         $this->languageItem = $languageItem;
 
@@ -80,8 +82,10 @@ class LanguageItemFormNode implements IFormChildNode
 
     /**
      * Sets the template variables passed to the language item and returns this form node.
+     *
+     * @return      static      this form field
      */
-    public function variables(array $variables): self
+    public function variables(array $variables)
     {
         $this->variables = $variables;
 
