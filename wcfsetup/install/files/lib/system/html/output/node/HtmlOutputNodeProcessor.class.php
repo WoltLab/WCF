@@ -99,10 +99,14 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 		
 		if ($this->outputType !== 'text/html') {
 			// convert `<p>...</p>` into `...<br><br>`
-			$paragraphs = $this->getDocument()->getElementsByTagName('p');
-			while ($paragraphs->length) {
-				$paragraph = $paragraphs->item(0);
-				
+			$paragraphs = [];
+			// The DOMNodeList returned by `getElementsByTagName()` is live, causing a performance
+			// penalty when modifying it a lot.
+			foreach ($this->getDocument()->getElementsByTagName('p') as $node) {
+				$paragraphs[] = $node;
+			}
+			
+			foreach ($paragraphs as $paragraph) {
 				$isLastNode = true;
 				$sibling = $paragraph;
 				while ($sibling = $sibling->nextSibling) {
@@ -143,6 +147,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 				
 				DOMUtil::removeNode($paragraph, true);
 			}
+			unset($paragraphs);
 			
 			if ($this->outputType === 'text/plain') {
 				// remove all `\n` first
